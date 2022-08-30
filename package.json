@@ -9,9 +9,7 @@
     "build": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build",
     "build contracts": "typechain --target ethers-v5 --input-dir \"./src/ABI\" --out-dir \"./src/Contracts\" \"./src/ABI/**/*.json\"",
     "test": "vitest --silent",
-    "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\"",
-    "postinstall": "npm run patch-vue-compiler-sfc",
-    "patch-vue-compiler-sfc": "git apply --ignore-whitespace ./vue-compiler-sfc.patch"
+    "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\""
   },
   "dependencies": {
     "@gnosis.pm/safe-apps-sdk": "^7.6.0",
