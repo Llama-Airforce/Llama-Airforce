@@ -1,0 +1,3 @@
+[submodule "airdrop"]
+	path = airdrop
+	url = https://github.com/0xAlunara/Llama-Airforce-Airdrops.git
