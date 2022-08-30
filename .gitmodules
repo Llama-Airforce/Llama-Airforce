@@ -1,3 +1,6 @@
 [submodule "airdrop"]
 	path = airdrop
 	url = https://github.com/0xAlunara/Llama-Airforce-Airdrops.git
+[submodule "src/Pages/Union"]
+	path = src/Pages/Union
+	url = https://github.com/0xAlunara/Llama-Airforce-Union.git
