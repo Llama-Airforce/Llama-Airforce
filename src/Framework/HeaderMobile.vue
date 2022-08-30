@@ -1,0 +1,167 @@
+<template>
+  <header>
+    <div class="header-mobile">
+      <div class="title">
+        <img src="@/Assets/logo.png" />Llama<br />Airforce
+      </div>
+
+      <Wallet class="wallet"></Wallet>
+
+      <nav class="support">
+        <ul>
+          <li>
+            <a
+              class="nav-link"
+              href="https://etherscan.io/address/0x9Bc7c6ad7E7Cf3A6fCB58fb21e27752AC1e53f99"
+              target="_blank"
+            >
+              <div class="nav-link-container donate">Donate</div>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <button
+        class="hamburger hamburger--spin"
+        :class="{ 'is-active': menuOpen, open: menuOpen, closed: !menuOpen }"
+        type="button"
+        @click="toggleMenu"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+    </div>
+
+    <MenuMobile
+      :open="menuOpen"
+      @closed="onNavigated"
+      @navigated="onNavigated"
+    ></MenuMobile>
+  </header>
+</template>
+
+<script
+  setup
+  lang="ts"
+>
+import { $ref } from "vue/macros";
+import MenuMobile from "@/Framework/MenuMobile.vue";
+import Wallet from "@/Wallet/Wallet.vue";
+
+// Vars
+let menuOpen = $ref(false);
+
+// Methods
+const toggleMenu = (): void => {
+  menuOpen = !menuOpen;
+};
+
+const onNavigated = (): void => {
+  menuOpen = false;
+};
+</script>
+
+<style
+  lang="scss"
+  scoped
+>
+@import "@/Styles/Variables.scss";
+@import "@/Styles/Hamburger.scss";
+
+header {
+  width: 100%;
+  display: flex;
+
+  background: $header-background;
+  user-select: none;
+
+  > .header-mobile {
+    display: flex;
+    align-items: center;
+
+    height: 65px;
+    width: 100%;
+    margin: 0 1rem;
+    font-size: 1rem;
+    color: #71717a;
+
+    border-bottom: 1px solid #27272a;
+
+    > .title {
+      display: flex;
+      flex-grow: 1;
+      align-items: flex-end;
+      pointer-events: none;
+
+      color: #e8f0f8;
+      font-weight: bold;
+      line-height: 1.25rem;
+
+      img {
+        width: 33px;
+        height: 33px;
+        padding-right: 0.75rem;
+      }
+    }
+
+    > .wallet {
+      flex-grow: 1;
+    }
+
+    > .support {
+      flex-grow: 1;
+
+      .donate {
+        font-weight: 500;
+        color: $blue;
+      }
+    }
+
+    > .hamburger {
+      padding-top: 5px;
+      padding-left: 1.25rem;
+      padding-right: 1rem;
+      z-index: 21;
+      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+      transition: transform 2 * $content-show-duration
+        cubic-bezier(0.65, 0.05, 0.36, 1);
+
+      &.closed {
+        transform: translateX(0);
+      }
+
+      &.open {
+        transform: translateX(calc(-300px - 2.5rem));
+      }
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+
+      &.support {
+        ul {
+          justify-content: space-between;
+        }
+      }
+
+      ul {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+
+        li {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+        }
+      }
+    }
+  }
+}
+</style>

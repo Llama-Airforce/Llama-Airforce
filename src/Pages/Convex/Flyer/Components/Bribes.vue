@@ -1,0 +1,80 @@
+<template>
+  <div class="bribes">
+    <div class="title">Incentives</div>
+    <ul>
+      <li>
+        CVX acts as a union controlling CRV rewards for Curve LP pools. To
+        receive rewards, incentives must be paid to locked CVX holders.
+      </li>
+      <li>
+        CVX holders will potentially earn over
+        <AsyncValue
+          :value="bribesIncomeAnnually"
+          :precision="0"
+          type="dollar"
+        />
+        in incentives over a 1 year period.
+      </li>
+      <li>
+        Incentives to CVX holders are very likely to reach
+        <AsyncValue
+          :value="bribesIncomeBiWeekly"
+          :precision="0"
+          type="dollar"
+        />
+        biweekly in the coming weeks (based on total rewards paid by Votium app)
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script
+  setup
+  lang="ts"
+>
+import { $computed } from "vue/macros";
+import AsyncValue from "@/Framework/AsyncValue.vue";
+import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
+
+// Props
+interface Props {
+  model: FlyerConvex | null;
+}
+
+const { model } = defineProps<Props>();
+
+// Refs
+const bribesIncomeAnnually = $computed((): number | undefined => {
+  return model?.bribesIncomeAnnually;
+});
+
+const bribesIncomeBiWeekly = $computed((): number | undefined => {
+  return model?.bribesIncomeBiWeekly;
+});
+</script>
+
+<style
+  lang="scss"
+  scoped
+>
+@import "@/Styles/Variables.scss";
+
+.bribes {
+  display: flex;
+  flex-direction: column;
+
+  ul {
+    li {
+      background: url("@/Assets/triangle.png") no-repeat left center;
+      padding-left: 3rem;
+      margin: 1rem 0;
+      min-height: 1.75rem;
+    }
+  }
+
+  .title {
+    font-weight: normal;
+    color: $green;
+  }
+}
+</style>

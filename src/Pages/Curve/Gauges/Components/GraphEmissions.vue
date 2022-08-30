@@ -1,0 +1,234 @@
+<template>
+  <CardGraph
+    class="emissions"
+    :title="title"
+    :options="options"
+    :series="series"
+  >
+  </CardGraph>
+</template>
+
+<script
+  setup
+  lang="ts"
+>
+import { $computed } from "vue/macros";
+import CardGraph from "@/Framework/CardGraph.vue";
+import createChartStyles from "@/Styles/ChartStyles";
+import Gauge from "@/Pages/Curve/Gauges/Models/Gauge";
+import Fee from "@/Pages/Curve/Gauges/Models/Fee";
+import Emission from "@/Pages/Curve/Gauges/Models/Emission";
+import { round, unit } from "@/Util/NumberHelper";
+import { useCurveStore } from "@/Pages/Curve/Store";
+import { aggregateDataPoints } from "@/Pages/Curve/Gauges/Util/SnapshotHelper";
+import { shorten } from "@/Util/PoolHelper";
+import { formatNumber } from "@/Util/NumberHelper";
+import type { DataPoint } from "@/Util/DataPoint";
+
+type Serie = {
+  name: string;
+  type: string;
+  data: { x: number; y: number }[];
+};
+
+// Props
+interface Props {
+  gaugeSelected: Gauge;
+}
+
+const { gaugeSelected } = defineProps<Props>();
+
+// Refs
+const store = useCurveStore();
+
+const title = $computed((): string => {
+  let title = "Emissions & Revenues";
+  if (gaugeSelected) {
+    title += ` - ${shorten(gaugeSelected.name)}`;
+  }
+
+  return title;
+});
+
+const emissions = $computed((): Emission[] => {
+  return gaugeSelected ? store.emissions[gaugeSelected.name] ?? [] : [];
+});
+
+const fees = $computed((): Fee[] => {
+  return gaugeSelected ? store.fees[gaugeSelected.name] ?? [] : [];
+});
+
+const yMin = $computed((): number => {
+  return Math.min(
+    ...aggregateDataPoints(emissions)
+      .map((e) => e.value)
+      .concat(aggregateDataPoints(fees).map((f) => f.value))
+  );
+});
+
+const yMax = $computed((): number => {
+  return Math.max(
+    ...aggregateDataPoints(emissions)
+      .map((e) => e.value)
+      .concat(aggregateDataPoints(fees).map((f) => f.value))
+      .map((x) => Math.abs(x))
+  );
+});
+
+// eslint-disable-next-line max-lines-per-function
+const options = $computed((): unknown => {
+  return createChartStyles({
+    chart: {
+      id: "curve-emissions",
+      animations: {
+        enabled: false,
+      },
+      toolbar: {
+        tools: {
+          download: true,
+        },
+      },
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: [
+      {
+        seriesName: "emissions",
+        tickAmount: 4,
+        labels: {
+          formatter: (y: number): string => formatterEmissions(y),
+        },
+        min: yMin,
+        max: yMax,
+      },
+      {
+        seriesName: "emissions",
+        tickAmount: 4,
+        labels: {
+          formatter: (y: number): string => formatterFees(y),
+        },
+        show: false,
+        min: yMin,
+        max: yMax,
+      },
+    ],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
+        },
+      },
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<Serie>) => {
+        const emissions = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
+
+        const fees = x.w.globals.initialSeries[1].data[x.dataPointIndex]
+          ? x.w.globals.initialSeries[1].data[x.dataPointIndex].y
+          : 0;
+
+        const data = [
+          `<div><b>Emissions</b>:</div><div>${formatterEmissions(
+            emissions
+          )}</div>`,
+          `<div><b>Fees</b>:</div><div>${formatterFees(fees)}</div>`,
+          `<div><b>Ratio</b>:</div><div>${formatterRatio(
+            fees / emissions
+          )}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    csv: {
+      filename: "emissions.csv",
+      columnDelimiter: ",",
+      headerCategory: "category",
+      headerValue: "value",
+      dateFormatter(timestamp: number) {
+        return timestamp;
+      },
+    },
+  });
+});
+
+const series = $computed((): Serie[] => {
+  const aggregatedEmissions = aggregateDataPoints(emissions);
+  const aggregatedFees = aggregateDataPoints(fees);
+  interface feeIndex {
+    [timeStamp: number]: number;
+  }
+  const indexedFees = Object.assign(
+    {},
+    ...aggregatedFees.map((x) => ({ [x.timeStamp]: x.value }))
+  ) as feeIndex;
+  return [
+    {
+      name: "Emissions",
+      type: "line",
+      data: aggregatedEmissions.map((s) => ({
+        x: s.timeStamp * 1000,
+        y: s.value,
+      })),
+    },
+    {
+      name: "Fees",
+      type: "line",
+      data: aggregatedEmissions.map((emissions) => ({
+        x: emissions.timeStamp * 1000,
+        y: indexedFees[emissions.timeStamp]
+          ? Math.abs(indexedFees[emissions.timeStamp])
+          : 0,
+      })),
+    },
+  ];
+});
+
+// Methods
+const formatterEmissions = (x: number): string => {
+  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
+};
+
+const formatterFees = (x: number): string => {
+  return `$${round(x, 1, "dollar")}${unit(x, "dollar")}`;
+};
+
+const formatterRatio = (x: number): string => {
+  return `${formatNumber(x, 2)}`;
+};
+</script>
+
+<style
+  lang="scss"
+  scoped
+>
+@import "@/Styles/Variables.scss";
+
+.emissions {
+  ::v-deep(.card-body) {
+    flex-direction: column;
+    justify-content: center;
+
+    .apexcharts-tooltip {
+      width: auto;
+      background: rgb(30, 30, 30);
+      padding: 1rem;
+      line-height: 0.5rem;
+
+      display: grid;
+      grid-template-rows: auto auto auto;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+    }
+  }
+}
+</style>

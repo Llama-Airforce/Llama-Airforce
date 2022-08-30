@@ -1,0 +1,18 @@
+diff --git a/Web/node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js b/Web/node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js
+index 3c9ccfe..4bc5c61 100644
+--- a/Web/node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js
++++ b/Web/node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js
+@@ -3352,7 +3352,12 @@ function rewriteDefault(input, as, parserPlugins) {
+     }).program.body;
+     ast.forEach(node => {
+         if (node.type === 'ExportDefaultDeclaration') {
+-            s.overwrite(node.start, node.declaration.start, `const ${as} = `);
++          if (node.declaration.type === 'ClassDeclaration') {
++            s.overwrite(node.start, node.declaration.id.start, `class `)
++            s.append(`\nconst ${as} = ${node.declaration.id.name}`)
++          } else {
++            s.overwrite(node.start, node.declaration.start, `const ${as} = `)
++          }
+         }
+         if (node.type === 'ExportNamedDeclaration') {
+             for (const specifier of node.specifiers) {
