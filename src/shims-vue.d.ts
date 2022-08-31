@@ -15,3 +15,10 @@ declare module "*.json" {
   const value: { [key: string]: any };
   export default value;
 }
+
+// Shim exists so the app still compiles in case the Union git submodule is not loaded.
+declare module "@/Pages/Union/Page" {
+  import type { Page } from "@/Pages/Page";
+  const pageUnion: Page;
+  export { pageUnion };
+}

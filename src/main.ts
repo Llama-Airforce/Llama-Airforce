@@ -18,7 +18,13 @@ const pinia = createPinia();
 app.use(pinia);
 
 // Configure pages.
-const pages = [pageCurve, pageConvex, pageBribes, pageUnion];
+const pages = [pageCurve, pageConvex, pageBribes];
+
+// Only add Union if specifically configured to do so.
+if (import.meta.env.VITE_UNION === "true") {
+  pages.push(pageUnion);
+}
+
 const pageStore = usePageStore();
 pageStore.pages = pages;
 

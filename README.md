@@ -26,9 +26,13 @@ The front-end makes use of the following technologies, frameworks and libraries:
 npm install
 ```
 
-## Usage
+## Union
 
-### NPM Scripts
+Union functionality is disabled by default, as its source is behind a private git submodule. The Union is a key revenue generator for Llama Airforce, and although we welcome any competition, we don't feel like we should hand our work on a silver platter.
+
+The Union functionality can be enabled by adding `VITE_UNION=true` to `.env`. By doing so, the Union page imported into `main.ts` will no longer be aliased in `vite.config.js` to a mock Union page, and instead will be pointing towards the real implementation. The import in `main.ts` is also shimmed in `shims-vue.d.ts` so that compilation and linting will not fail when the git submodule is empty.
+
+## NPM Scripts
 
 | Command           | Description                                                                                                                                                                                           |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,50 +1,60 @@
 import path from "path";
-import { defineConfig } from "vite";
+import process from "process";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 
-export default defineConfig({
-  plugins: [vue({reactivityTransform: true})],
-  server: {
-    port: 8080,
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      stream: "stream-browserify",
-      crypto: "crypto-browserify",
-      process: 'process/browser',
-      os: "os-browserify",
-      https: "https-browserify",
-      assert: "assert",
-      util: "util"
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd());
+
+  return {
+    plugins: [vue({ reactivityTransform: true })],
+    server: {
+      port: 8080,
     },
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      // Node.js global to browser globalThis
-      define: {
-        global: "globalThis",
+    resolve: {
+      alias: {
+        // Import mock Union page if not configured.
+        "@/Pages/Union/Page":
+          env.VITE_UNION === "true"
+            ? path.resolve(__dirname, "./src/Pages/Union/Page")
+            : path.resolve(__dirname, "./src/Pages/PageMock"),
+        "@": path.resolve(__dirname, "./src"),
+        stream: "stream-browserify",
+        crypto: "crypto-browserify",
+        process: "process/browser",
+        os: "os-browserify",
+        https: "https-browserify",
+        assert: "assert",
+        util: "util",
       },
-      // Enable esbuild polyfill plugins
-      plugins: [
-        NodeGlobalsPolyfillPlugin({
-          process: true,
-          buffer: true,
-        }),
-      ],
     },
-  },
-  build: {
-    rollupOptions: {
-      plugins: [
-        /*
-         * Enable rollup polyfills plugin
-         * used during production bundling
-         */
-        rollupNodePolyFill()
-      ]
-    }
-  }
+    optimizeDeps: {
+      esbuildOptions: {
+        // Node.js global to browser globalThis
+        define: {
+          global: "globalThis",
+        },
+        // Enable esbuild polyfill plugins
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+          }),
+        ],
+      },
+    },
+    build: {
+      rollupOptions: {
+        plugins: [
+          /*
+           * Enable rollup polyfills plugin
+           * used during production bundling
+           */
+          rollupNodePolyFill(),
+        ],
+      },
+    },
+  };
 });
