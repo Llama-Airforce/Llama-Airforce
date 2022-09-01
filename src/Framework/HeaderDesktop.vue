@@ -157,6 +157,7 @@ header {
 
     > .support {
       .donate {
+        display: none !important;
         font-weight: 500;
         color: $blue;
       }

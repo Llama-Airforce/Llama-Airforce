@@ -107,6 +107,7 @@ header {
     }
 
     > .support {
+      display: none;
       flex-grow: 1;
 
       .donate {
