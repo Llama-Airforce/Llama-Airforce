@@ -2,6 +2,30 @@
   <div class="contracts">
     <div class="dashboard">
       <DataTable
+        class="datatable-repositories"
+        columns-data="repositories-columns-data"
+        :rows="repositories"
+        :columns="['Repository', 'Description']"
+      >
+        <template #header-title>
+          <div>Repositories</div>
+        </template>
+
+        <template #row="props: { item: Repository }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
+
+          <div>{{ props.item.description }}</div>
+        </template>
+      </DataTable>
+
+      <DataTable
         v-for="(bundle, i) in bundles"
         :key="i"
         class="datatable-contracts"
@@ -17,7 +41,7 @@
         <template #row="props: { item: Contract }">
           <div>
             <a
-              :href="link(props.item)"
+              :href="linkContract(props.item)"
               target="_blank"
             >
               {{ props.item.contract }}
@@ -80,6 +104,12 @@ interface Contract {
 interface Bundle {
   name: string;
   contracts: Contract[];
+}
+
+interface Repository {
+  name: string;
+  url: string;
+  description: string;
 }
 
 const union: Bundle = {
@@ -299,7 +329,26 @@ const bundles: Bundle[] = [
   outdated,
 ];
 
-const link = (contract: Contract): string => {
+const repositories: Repository[] = [
+  {
+    name: "Llama Airforce",
+    url: "https://github.com/Llama-Airforce/Llama-Airforce",
+    description: "This website's front-end, excluding the Union",
+  },
+  {
+    name: "Union Contracts",
+    url: "https://github.com/convex-community/union_contracts",
+    description: "All deployed Union contracts and tests",
+  },
+  {
+    name: "Subgraphs",
+    url: "https://github.com/convex-community/convex-subgraph",
+    description:
+      "The Graph subgraphs related to Curve, Convex, Votium and more",
+  },
+];
+
+const linkContract = (contract: Contract): string => {
   switch (contract.network) {
     case "arbitrum":
       return contract.gnosis
@@ -337,8 +386,20 @@ const link = (contract: Contract): string => {
     .datatable-contracts {
       grid-column: 1;
       grid-row: 1;
+      gap: 0;
 
       ::v-deep(.contracts-columns-data) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .datatable-repositories {
+      grid-column: 1;
+      grid-row: 1;
+      margin-bottom: 1.5rem;
+
+      ::v-deep(.repositories-columns-data) {
         display: grid;
         grid-template-columns: 1fr 1fr;
       }
