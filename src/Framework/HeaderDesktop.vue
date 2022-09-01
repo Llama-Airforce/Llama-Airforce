@@ -72,7 +72,7 @@
 
           <li>
             <router-link
-              to="/contracts"
+              to="/code"
               class="nav-link"
             >
               <div class="nav-link-container icon">

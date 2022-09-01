@@ -7,7 +7,7 @@ import { usePageStore } from "@/Pages/Store";
 import Home from "@/Pages/Home.vue";
 
 import NotFound from "@/Pages/NotFound.vue";
-import Contracts from "@/Pages/Contracts.vue";
+import Code from "@/Pages/Code.vue";
 import Debug from "@/Pages/Debug/Debug.vue";
 
 export default function createRouter() {
@@ -18,7 +18,7 @@ export default function createRouter() {
   const routes = [
     { path: "/", component: Home },
 
-    { path: "/contracts", component: Contracts },
+    { path: "/code", component: Code },
     { path: "/debug", component: Debug },
 
     // Add all page routes.
