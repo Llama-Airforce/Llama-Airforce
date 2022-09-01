@@ -5,7 +5,7 @@
         to="/"
         class="title"
       >
-        <img src="@/Assets/logo.png" />Llama<br />Airforce
+        <img src="@/Assets/logo.svg" />
       </router-link>
 
       <nav class="navigation">
@@ -150,8 +150,7 @@ header {
       line-height: 1.25rem;
 
       img {
-        width: 50px;
-        height: 50px;
+        height: 75px;
         padding-right: 0.75rem;
       }
     }

@@ -2,7 +2,7 @@
   <header>
     <div class="header-mobile">
       <div class="title">
-        <img src="@/Assets/logo.png" />Llama<br />Airforce
+        <img src="@/Assets/logo.svg" />
       </div>
 
       <Wallet class="wallet"></Wallet>
@@ -90,7 +90,6 @@ header {
 
     > .title {
       display: flex;
-      flex-grow: 1;
       align-items: flex-end;
       pointer-events: none;
 
@@ -99,9 +98,7 @@ header {
       line-height: 1.25rem;
 
       img {
-        width: 33px;
-        height: 33px;
-        padding-right: 0.75rem;
+        height: 50px;
       }
     }
 
