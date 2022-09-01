@@ -390,7 +390,7 @@ const linkContract = (contract: Contract): string => {
 
       ::v-deep(.contracts-columns-data) {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 3fr 4fr;
       }
     }
 
@@ -401,7 +401,7 @@ const linkContract = (contract: Contract): string => {
 
       ::v-deep(.repositories-columns-data) {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 3fr 4fr;
       }
     }
   }
