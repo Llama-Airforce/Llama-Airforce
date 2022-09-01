@@ -74,6 +74,7 @@ interface Contract {
   contract: string;
   description: string;
   network?: Network;
+  gnosis?: boolean;
 }
 
 interface Bundle {
@@ -87,15 +88,18 @@ const union: Bundle = {
     {
       contract: MultisigAddress,
       description: "Multisig",
+      gnosis: true,
     },
     {
       contract: TreasuryAddress,
       description: "Treasury",
+      gnosis: true,
     },
     {
       contract: TreasuryArbitrumAddress,
       description: "Treasury Arbitrum",
       network: "arbitrum",
+      gnosis: true,
     },
     {
       contract: last(UnionAddresses) || "",
@@ -298,10 +302,14 @@ const bundles: Bundle[] = [
 const link = (contract: Contract): string => {
   switch (contract.network) {
     case "arbitrum":
-      return `https://arbiscan.io/address/${contract.contract}`;
+      return contract.gnosis
+        ? `https://gnosis-safe.io/app/arb1:${contract.contract}`
+        : `https://arbiscan.io/address/${contract.contract}`;
     case "ethereum":
     default:
-      return `https://etherscan.io/address/${contract.contract}`;
+      return contract.gnosis
+        ? `https://gnosis-safe.io/app/eth:${contract.contract}`
+        : `https://etherscan.io/address/${contract.contract}`;
   }
 };
 </script>
