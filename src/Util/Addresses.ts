@@ -56,7 +56,8 @@ export const ZapsUFxsClaimAddress =
   "0x56e9db574c8d5015d198671cbf1200b6bb2ed944";
 export const ZapsUBalAddress = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
 export const ZapsUCvxAddress = "0x6753f23905f15376429e6f0c381fcc4862e48222";
-export const ZapsUCvxClaimAddress = "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
+export const ZapsUCvxClaimAddress =
+  "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
 
 // Tokens
 export const CvxAddress = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
@@ -89,5 +90,6 @@ export const veFunderGaugeController =
 
 // Other
 export const PirexCvxAddress = "0x35a398425d9f1029021a92bc3d2557d42c8588d7";
+export const UBalHarvester = "0x2251af9804d0a1a04e8e0e7a1fbb83f4d7423f9e";
 export const WEthAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const EmptyAddress = "0x0000000000000000000000000000000000000000";

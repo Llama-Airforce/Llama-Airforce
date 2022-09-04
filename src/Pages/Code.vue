@@ -91,6 +91,7 @@ import {
   BbUsdHandlerAddress,
   ZapsUCvxAddress,
   ZapsUCvxClaimAddress,
+  UBalHarvester,
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
@@ -246,6 +247,10 @@ const ubal: Bundle = {
     {
       contract: ZapsUBalAddress,
       description: "Zaps",
+    },
+    {
+      contract: UBalHarvester,
+      description: "Bot Harvester Zap",
     },
   ],
 };
