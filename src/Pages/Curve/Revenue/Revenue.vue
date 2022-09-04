@@ -3,15 +3,11 @@
     <div class="dashboard">
       <div
         class="revenues"
-        :class="{ loading }"
       >
         <GraphPoolRevenue
+          title="Historical revenue breakdown"
           class="graph-pool-revenue"
         ></GraphPoolRevenue>
-        <Spinner
-          v-if="loading"
-          class="spinner"
-        ></Spinner>
       </div>
     </div>
   </div>
