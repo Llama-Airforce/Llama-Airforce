@@ -3,7 +3,7 @@ import Pool from "@/Pages/Curve/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
 
 const ENDPOINT =
-  "http://localhost:5001/curve/v1/pools/mainnet/volume/";
+  "https://api-py.llama.airforce/curve/v1/pools/mainnet/volume/";
 
 export class PoolVolumeResponse {
   volume: Volume[];
