@@ -55,6 +55,8 @@ export const ZapsUFxsAddress = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
 export const ZapsUFxsClaimAddress =
   "0x56e9db574c8d5015d198671cbf1200b6bb2ed944";
 export const ZapsUBalAddress = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
+export const ZapsUCvxAddress = "0x6753f23905f15376429e6f0c381fcc4862e48222";
+export const ZapsUCvxClaimAddress = "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
 
 // Tokens
 export const CvxAddress = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
