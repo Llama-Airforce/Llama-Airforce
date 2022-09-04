@@ -20,7 +20,7 @@
       <div class="logo">
         <img
           class="logo-img"
-          :src="icon(props.item.pool, protocol === 'cvx-crv')"
+          :src="icon(props.item.pool, false)"
         />
       </div>
       <div>
