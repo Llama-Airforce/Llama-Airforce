@@ -4,6 +4,7 @@ import CurveGauges from "@/Pages/Curve/Gauges/Gauges.vue";
 import CurvePrices from "@/Pages/Curve/Prices/Prices.vue";
 import CurveReserves from "@/Pages/Curve/Reserves/Reserves.vue";
 import CurveVolume from "@/Pages/Curve/Volume/Volume.vue";
+import CurveRevenue from "@/Pages/Curve/Revenue/Revenue.vue";
 import CurveUtilization from "@/Pages/Curve/Utilization/Utilization.vue";
 import CurveVeFunder from "@/Pages/Curve/VeFunder/VeFunder.vue";
 
@@ -33,6 +34,11 @@ export const pageCurve: Page = {
       name: "curvevolume",
       component: CurveVolume,
     },
+    {
+      path: "/curve/revenue",
+      name: "curverevenue",
+      component: CurveRevenue,
+    },
     { path: "/curve/utilization/", component: CurveUtilization },
     { path: "/curve/vefunder/", component: CurveVeFunder },
   ],
@@ -57,6 +63,11 @@ export const pageCurve: Page = {
       to: "/curve/volume",
       icon: "fa fa-exchange",
       label: "Volume",
+    },
+    {
+      to: "/curve/revenue",
+      icon: "fa fa-usd",
+      label: "Revenue",
     },
     {
       to: "/curve/utilization",

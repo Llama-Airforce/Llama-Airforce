@@ -7,6 +7,7 @@ import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
 import Candle from "@/Pages/Curve/Prices/Models/Candle";
 import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
 import Volume from "@/Pages/Curve/Volume/Models/Volume";
+import PoolRevenues from "@/Pages/Curve/Revenue/Models/Revenue";
 
 type State = {
   pools: Pool[];
@@ -16,7 +17,8 @@ type State = {
   ratios: { [pool: string]: Ratio[] };
   candles: { [pool: string]: Candle[] };
   reserves: { [pool: string]: Reserves[] };
-  volumes: {[pool: string]: Volume[]}
+  volumes: {[pool: string]: Volume[]};
+  poolRevenues: PoolRevenues[];
 };
 
 export const useCurveStore = defineStore({
@@ -30,6 +32,7 @@ export const useCurveStore = defineStore({
     candles: {},
     reserves: {},
     volumes: {},
+    poolRevenues: []
   }),
   actions: {
     setEmissions(gauge: GaugeId, emissions: Emission[]) {
@@ -49,6 +52,9 @@ export const useCurveStore = defineStore({
     },
     setVolumes(gauge: GaugeId, volumes: Volume[]) {
       this.volumes[gauge] = volumes;
+    },
+    setPoolRevenues(poolRevenues: PoolRevenues[]) {
+      this.poolRevenues = poolRevenues;
     },
   },
 });
