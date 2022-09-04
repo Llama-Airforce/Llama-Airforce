@@ -89,6 +89,8 @@ import {
   ZapsUBalAddress,
   AuraHandlerAddress,
   BbUsdHandlerAddress,
+  ZapsUCvxAddress,
+  ZapsUCvxClaimAddress,
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
@@ -170,6 +172,14 @@ const ucvx: Bundle = {
     {
       contract: UCvxStrategyAddress,
       description: "Strategy",
+    },
+    {
+      contract: ZapsUCvxAddress,
+      description: "Zaps",
+    },
+    {
+      contract: ZapsUCvxClaimAddress,
+      description: "Distributor Claim Zaps",
     },
   ],
 };
