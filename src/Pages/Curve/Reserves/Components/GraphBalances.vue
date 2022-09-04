@@ -42,7 +42,7 @@ const reserves = $computed((): Reserves[] => {
 
 const numCoins = $computed((): number => {
   return poolSelected
-    ? store.reserves[poolSelected.id]?.[0]?.reservesUsd?.length
+    ? store.reserves[poolSelected.id]?.[0]?.reservesUSD?.length
     : 0;
 });
 
@@ -121,7 +121,7 @@ const createSerie = (i: number): Serie => {
     data: reserves.map((r) => ({
       x: r.timestamp * 1000,
       y:
-        (r.reservesUsd[i] / r.reservesUsd.reduce((acc, x) => acc + x, 0)) * 100,
+        (r.reservesUSD[i] / r.reservesUSD.reduce((acc, x) => acc + x, 0)) * 100,
     })),
   };
 };

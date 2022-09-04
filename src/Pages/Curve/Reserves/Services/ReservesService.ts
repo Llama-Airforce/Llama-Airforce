@@ -7,7 +7,7 @@ const THEGRAPH_URL =
 
 type PoolReserves = {
   timestamp: string;
-  reservesUsd: string[];
+  reservesUSD: string[];
 };
 
 export class PoolReservesResponse {
@@ -29,7 +29,7 @@ export default class ReservesService extends ServiceBase {
         )
         {
           timestamp
-          reservesUsd
+          reservesUSD
         }
       }`;
 
@@ -38,7 +38,7 @@ export default class ReservesService extends ServiceBase {
         resp.data.dailyPoolSnapshots.map((snapshot) => {
           return {
             timestamp: parseInt(snapshot.timestamp, 10),
-            reservesUsd: snapshot.reservesUsd.map((x) => parseFloat(x)),
+            reservesUSD: snapshot.reservesUSD.map((x) => parseFloat(x)),
           };
         })
     );

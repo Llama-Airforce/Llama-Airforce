@@ -98,7 +98,7 @@ const series = $computed((): Serie[] => {
       name: "reserves",
       data: reserves.map((r) => ({
         x: r.timestamp * 1000,
-        y: r.reservesUsd.reduce((acc, x) => acc + x, 0),
+        y: r.reservesUSD.reduce((acc, x) => acc + x, 0),
       })),
     },
   ];
