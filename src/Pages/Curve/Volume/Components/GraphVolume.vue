@@ -11,14 +11,14 @@
   setup
   lang="ts"
 >
-import { $computed } from "vue/macros";
+import {$computed} from "vue/macros";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Curve/Models/Pool";
 import Volume from "@/Pages/Curve/Volume/Models/Volume";
-import { round, unit } from "@/Util/NumberHelper";
-import { useCurveStore } from "@/Pages/Curve/Store";
-import { DataPoint } from "@/Util/DataPoint";
+import {round, unit} from "@/Util/NumberHelper";
+import {useCurveStore} from "@/Pages/Curve/Store";
+import {DataPoint} from "@/Util/DataPoint";
 
 type Serie = {
   name: string;
@@ -31,7 +31,7 @@ interface Props {
   poolSelected: Pool | null;
 }
 
-const { poolSelected } = defineProps<Props>();
+const {poolSelected} = defineProps<Props>();
 
 // Refs
 const store = useCurveStore();

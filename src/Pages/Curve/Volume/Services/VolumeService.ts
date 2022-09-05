@@ -12,6 +12,8 @@ export class PoolVolumeResponse {
 export default class VolumeService extends ServiceBase {
   public async get(pool: Pool): Promise<Volume[]> {
 
-    return this.fetch(ENDPOINT + pool.id, PoolVolumeResponse).then(
-      (resp) => resp.volume);}
+    return this.fetch(ENDPOINT + pool.id, PoolVolumeResponse)
+      .then(
+        (resp) => resp.volume);
+  }
 }

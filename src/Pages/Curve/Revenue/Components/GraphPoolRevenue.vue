@@ -11,12 +11,12 @@
   setup
   lang="ts"
 >
-import { $computed } from "vue/macros";
+import {$computed} from "vue/macros";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import PoolRevenue from "@/Pages/Curve/Revenue/Models/Revenue";
-import { round, unit } from "@/Util/NumberHelper";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import {round, unit} from "@/Util/NumberHelper";
+import {useCurveStore} from "@/Pages/Curve/Store";
 
 type Serie = {
   name: string;
@@ -68,7 +68,8 @@ const options = $computed((): unknown => {
         formatter: (y: number): string => formatter(y),
       },
       min: 0,
-      max: series.map((x) => Math.max(...x.data.map((x) => x.y))).reduce((acc, rev) => acc + rev, 0),
+      max: series.map((x) => Math.max(...x.data.map((x) => x.y)))
+        .reduce((acc, rev) => acc + rev, 0),
     }],
     dataLabels: {
       enabled: false,
@@ -87,12 +88,16 @@ const options = $computed((): unknown => {
 
 
 const series = $computed((): Serie[] => {
-  const data = poolRevenues.reduce((acc: {[key: string]: { x: number, y: number }[]}, elem) => {
-    const {pool, timestamp, revenue } = elem;
-    return {...acc, [pool]: [...(acc[pool] || []), {'x': timestamp * 1000, 'y': revenue}]};}, {});
-  return Object.entries(data).map((x) => ({
-    name: x[0],
-    data: x[1]})).reverse();
+  const data = poolRevenues.reduce((acc: { [key: string]: { x: number, y: number }[] }, elem) => {
+    const {pool, timestamp, revenue} = elem;
+    return {...acc, [pool]: [...(acc[pool] || []), {'x': timestamp * 1000, 'y': revenue}]};
+  }, {});
+  return Object.entries(data)
+    .map((x) => ({
+      name: x[0],
+      data: x[1]
+    }))
+    .reverse();
 });
 
 // Methods

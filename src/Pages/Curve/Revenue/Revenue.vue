@@ -18,11 +18,11 @@
   lang="ts"
 >
 
-import { onMounted } from "vue";
+import {onMounted} from "vue";
 import RevenueService from "@/Pages/Curve/Revenue/Services/RevenueService";
-import { minDelay } from "@/Util/PromiseHelper";
-import { useCurveStore } from "@/Pages/Curve/Store";
-import { getHost } from "@/Services/Host";
+import {minDelay} from "@/Util/PromiseHelper";
+import {useCurveStore} from "@/Pages/Curve/Store";
+import {getHost} from "@/Services/Host";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 
 const revenueService = new RevenueService(getHost());

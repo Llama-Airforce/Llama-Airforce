@@ -11,6 +11,8 @@ export class PoolRevenueResponse {
 export default class PoolRevenueService extends ServiceBase {
   public async get(): Promise<PoolRevenue[]> {
 
-    return this.fetch(ENDPOINT, PoolRevenueResponse).then(
-      (resp) => resp.revenue);}
+    return this.fetch(ENDPOINT, PoolRevenueResponse)
+      .then(
+        (resp) => resp.revenue);
+  }
 }
