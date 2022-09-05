@@ -40,7 +40,7 @@ export class ChainRevenueService extends ServiceBase {
 
 export class ChainTopPoolsRevenueService extends ServiceBase {
   public async get(chain: string): Promise<ChainTopPoolRevenue[]> {
-    const endpoint = `http://localhost:5001/curve/v1/protocol/revenue/${chain}/toppools/10`;
+    const endpoint = `https://api-py.llama.airforce/curve/v1/protocol/revenue/${chain}/toppools/10`;
     return this.fetch(endpoint, ChainTopPoolRevenueResponse).then(
       (resp) => resp.revenue
     );
