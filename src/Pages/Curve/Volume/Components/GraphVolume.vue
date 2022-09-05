@@ -119,7 +119,7 @@ const formatter = (x: number): string => {
 >
 @import "@/Styles/Variables.scss";
 
-.balances {
+.volumes {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
