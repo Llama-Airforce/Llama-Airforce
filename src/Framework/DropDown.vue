@@ -1,34 +1,35 @@
 <template>
-  <select class="dropdown-list">
+  <select
+    class="dropdown-list"
+    :placeholder="placeholder"
+  >
     <option
       v-for="(option, index) in options"
       :key="index"
-      :value="option.value"
-      @click="$emit('select', index)"
+      :value="option"
     >
-      {{ option.text }}
+      {{ option }}
     </option>
   </select>
 </template>
 
-<script>
-export default {
-  name: 'DropDown',
-  props: {
-    options: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  }
-};
+<script
+  setup
+  lang="ts"
+>
+// Props
+interface Props {
+  placeholder: string;
+  options?: string[];
+}
+
+const { placeholder = "mainnet", options = [] } = defineProps<Props>();
 </script>
 
 <style
   lang="scss"
-  scoped>
-
+  scoped
+>
 @import "@/Styles/Variables.scss";
 .dropdown-list {
   display: flex;
@@ -46,7 +47,6 @@ export default {
   cursor: pointer;
 
   > select {
-
   }
   > option {
     color: $text;

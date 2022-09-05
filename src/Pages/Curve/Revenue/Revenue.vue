@@ -12,12 +12,16 @@
           <GraphChainTopPools
             title="Top 10 pools by revenue (last 7 days)"
             class="graph-top-pools"
+            :chain-selected="chain"
           ></GraphChainTopPools>
           <div class="chain-selector">
-            <Dropdown v-model="pool"
-                      :options="['a', 'b', 'c']"
-                      optionLabel="name"
-                      placeholder="Select a chain" >
+            <Dropdown
+              v-model="chain"
+              :options="chains"
+              optionLabel="name"
+              @change="onSelect"
+              placeholder="mainnet"
+            >
             </Dropdown>
           </div>
         </div>
@@ -39,6 +43,7 @@
 import { onMounted } from "vue";
 import RevenueService, {
   ChainRevenueService,
+  ChainTopPoolsRevenueService,
 } from "@/Pages/Curve/Revenue/Services/RevenueService";
 import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
@@ -47,12 +52,17 @@ import Dropdown from "@/Framework/DropDown.vue";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
+import ChainService from "@/Pages/Curve/Services/ChainService";
+import { $computed, $ref } from "vue/macros";
 
+const chainService = new ChainService(getHost());
 const revenueService = new RevenueService(getHost());
 const chainRevenueService = new ChainRevenueService(getHost());
+const topPoolService = new ChainTopPoolsRevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
+let chain = $ref("");
 
 onMounted(async (): Promise<void> => {
   const revenues = await minDelay(revenueService.get(), 500);
@@ -64,7 +74,37 @@ onMounted(async (): Promise<void> => {
   if (chainRevenues) {
     store.setChainRevenues(chainRevenues);
   }
+  if (store.chains.length > 0) {
+    return;
+  }
+  const chains = await minDelay(chainService.get());
+  if (chains) {
+    store.chains = chains;
+  }
 });
+
+const getTopPools = async (chain: string): Promise<void> => {
+  if (!chain) {
+    return;
+  }
+  if (store.topPools[chain]) {
+    return;
+  }
+  const topPools = await minDelay(topPoolService.get(chain), 500);
+
+  if (topPools) {
+    store.setTopPools(chain, topPools);
+  }
+};
+
+const chains = $computed((): string[] => {
+  return store.chains;
+});
+
+const onSelect = (event: Event): void => {
+  chain = (event.target as HTMLInputElement).value;
+  void getTopPools(chain);
+};
 </script>
 
 <style

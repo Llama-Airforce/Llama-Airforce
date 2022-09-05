@@ -1,10 +1,10 @@
 <template>
-    <CardGraph
-      class="chain-top=pools"
-      :options="options"
-      :series="series"
-    >
-    </CardGraph>
+  <CardGraph
+    class="chain-top=pools"
+    :options="options"
+    :series="series"
+  >
+  </CardGraph>
 </template>
 
 <script
@@ -14,15 +14,22 @@
 import { $computed } from "vue/macros";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
-import { ChainRevenue } from "@/Pages/Curve/Revenue/Models/Revenue";
+import { ChainTopPoolRevenue } from "@/Pages/Curve/Revenue/Models/Revenue";
 import { round, unit } from "@/Util/NumberHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
+
+// Props
+interface Props {
+  chainSelected: string | null;
+}
+
+const { chainSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurveStore();
 
-const chainRevenues = $computed((): ChainRevenue[] => {
-  return store.chainRevenues ?? [];
+const topPools = $computed((): ChainTopPoolRevenue[] => {
+  return chainSelected ? store.topPools[chainSelected] ?? [] : [];
 });
 
 const options = $computed((): unknown => {
@@ -47,7 +54,7 @@ const options = $computed((): unknown => {
       dropShadow: false,
     },
     tooltip: {
-      enabled: false
+      enabled: false,
     },
     chart: {
       id: "chainRevenues",
@@ -56,16 +63,18 @@ const options = $computed((): unknown => {
         enabled: false,
       },
     },
-    xaxis:{
-      categories: chainRevenues.map((x) => x.chain),
+    xaxis: {
+      categories: topPools.map((x) => x.name),
       labels: {
-        formatter: dollarFormatter
-      }
+        formatter: dollarFormatter,
+      },
     },
   });
 });
 
-const series = [{data: chainRevenues.map((x) => x.totalDailyFeesUSD)}];
+const series = $computed((): { data: number[] }[] => {
+  return [{ data: topPools.map((x) => x.totalDailyFeesUSD) }];
+});
 
 // Methods
 

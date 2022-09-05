@@ -8,3 +8,8 @@ export class ChainRevenue {
   chain: string;
   totalDailyFeesUSD: number;
 }
+
+export class ChainTopPoolRevenue {
+  name: string;
+  totalDailyFeesUSD: number;
+}

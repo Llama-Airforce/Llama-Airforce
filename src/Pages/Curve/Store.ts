@@ -7,10 +7,11 @@ import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
 import Candle from "@/Pages/Curve/Prices/Models/Candle";
 import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
 import Volume from "@/Pages/Curve/Volume/Models/Volume";
-import PoolRevenue, {ChainRevenue} from "@/Pages/Curve/Revenue/Models/Revenue";
+import PoolRevenue, {ChainRevenue, ChainTopPoolRevenue} from "@/Pages/Curve/Revenue/Models/Revenue";
 
 type State = {
   pools: Pool[];
+  chains: string[];
   gauges: Gauge[];
   emissions: { [pool: string]: Emission[] };
   fees: { [pool: string]: Fee[] };
@@ -20,6 +21,7 @@ type State = {
   volumes: {[pool: string]: Volume[]};
   poolRevenues: PoolRevenue[];
   chainRevenues: ChainRevenue[];
+  topPools: {[chain: string]: ChainTopPoolRevenue[]};
 };
 
 export const useCurveStore = defineStore({
@@ -27,6 +29,7 @@ export const useCurveStore = defineStore({
   state: (): State => ({
     pools: [],
     gauges: [],
+    chains: [],
     emissions: {},
     fees: {},
     ratios: {},
@@ -34,7 +37,8 @@ export const useCurveStore = defineStore({
     reserves: {},
     volumes: {},
     poolRevenues: [],
-    chainRevenues: []
+    chainRevenues: [],
+    topPools: {}
   }),
   actions: {
     setEmissions(gauge: GaugeId, emissions: Emission[]) {
@@ -61,5 +65,8 @@ export const useCurveStore = defineStore({
     setChainRevenues(chainRevenues: ChainRevenue[]) {
       this.chainRevenues = chainRevenues;
     },
+    setTopPools(chain: string, topPools: ChainTopPoolRevenue[]) {
+      this.topPools[chain] = topPools;
+    }
   },
 });
