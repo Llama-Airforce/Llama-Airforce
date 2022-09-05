@@ -13,7 +13,14 @@
             title="Top 10 pools by revenue (last 7 days)"
             class="graph-top-pools"
           ></GraphChainTopPools>
+          <div class="chain-selector">
+            <Dropdown v-model="pool"
+                      :options="['a', 'b', 'c']"
+                      optionLabel="name"
+                      placeholder="Select a chain" >
+            </Dropdown>
           </div>
+        </div>
         <div class="historical-revenue">
           <GraphPoolRevenue
             title="Historical revenue breakdown"
@@ -36,6 +43,7 @@ import RevenueService, {
 import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { getHost } from "@/Services/Host";
+import Dropdown from "@/Framework/DropDown.vue";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
@@ -98,7 +106,13 @@ onMounted(async (): Promise<void> => {
         grid-row: 1;
         grid-column: auto;
         .graph-top-pools {
-          height: 100%;
+          height: 90%;
+        }
+        .chain-selector {
+          height: 10%;
+          background-color: $background-color-widget;
+          padding-left: 10px;
+          padding-right: 10px;
         }
       }
       .chain-revenues {
