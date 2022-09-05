@@ -54,7 +54,7 @@ const bribes = $computed((): Bribe[] => {
 
   return (
     (
-      store.epochs[platform][protocol].find((epoch) => epoch === epoch)
+      store.epochs[platform][protocol].find((e) => e === epoch)
         ?.bribes ?? []
     )
       // Filter stink bids.
