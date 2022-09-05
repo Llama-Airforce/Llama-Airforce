@@ -1,15 +1,25 @@
 <template>
   <div class="pools">
     <div class="dashboard">
-      <div class="revenues">
-        <GraphChainRevenue
-          title="Total revenue by chain"
-          class="graph-chain-revenue"
-        ></GraphChainRevenue>
-        <GraphPoolRevenue
-          title="Historical revenue breakdown"
-          class="graph-pool-revenue"
-        ></GraphPoolRevenue>
+      <div class="revenue-charts">
+        <div class="chain-revenues">
+          <GraphChainRevenue
+            title="Total revenue by chain"
+            class="graph-chain-revenue"
+          ></GraphChainRevenue>
+        </div>
+        <div class="chain-top-pools">
+          <GraphChainTopPools
+            title="Top 10 pools by revenue (last 7 days)"
+            class="graph-top-pools"
+          ></GraphChainTopPools>
+          </div>
+        <div class="historical-revenue">
+          <GraphPoolRevenue
+            title="Historical revenue breakdown"
+            class="graph-pool-revenue"
+          ></GraphPoolRevenue>
+        </div>
       </div>
     </div>
   </div>
@@ -28,6 +38,7 @@ import { useCurveStore } from "@/Pages/Curve/Store";
 import { getHost } from "@/Services/Host";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
+import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
 
 const revenueService = new RevenueService(getHost());
 const chainRevenueService = new ChainRevenueService(getHost());
@@ -65,7 +76,7 @@ onMounted(async (): Promise<void> => {
     display: grid;
     grid-gap: 1.5rem;
 
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr;
     grid-template-columns: 1fr;
 
     @media only screen and (max-width: 1280px) {
@@ -74,21 +85,35 @@ onMounted(async (): Promise<void> => {
       padding: 1.5rem 1rem;
     }
 
-    .revenues {
+    .revenue-charts {
       position: relative;
       grid-column: 1;
       grid-row: 2;
 
       display: grid;
+      grid-template-columns: 1fr;
       grid-template-rows: 400px 600px;
       gap: 1rem;
-
-      .graph-pool-revenues {
-        grid-row: 2;
-      }
-
-      .graph-chain-revenues {
+      .chain-top-pools {
         grid-row: 1;
+        grid-column: auto;
+        .graph-top-pools {
+          height: 100%;
+        }
+      }
+      .chain-revenues {
+        grid-row: 1;
+        grid-column: auto;
+        .graph-chain-revenue {
+          height: 100%;
+        }
+      }
+      .historical-revenue {
+        grid-row: 2;
+        grid-column: 1 / span 2;
+        .graph-pool-revenue {
+          height: 100%;
+        }
       }
     }
   }
