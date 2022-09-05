@@ -16,7 +16,7 @@
             v-if="props.item"
             class="item"
           >
-            <img :src="icon(props.item.name)"/>
+            <img :src="icon(props.item.name)" />
             <div class="label">{{ shorten(props.item.name) }}</div>
             <div class="volume">
               <AsyncValue
@@ -51,20 +51,20 @@
   setup
   lang="ts"
 >
-import {onMounted, onBeforeUnmount} from "vue";
-import {$computed, $ref} from "vue/macros";
+import { onMounted, onBeforeUnmount } from "vue";
+import { $computed, $ref } from "vue/macros";
 import Pool from "@/Pages/Curve/Models/Pool";
 import PoolService from "@/Pages/Curve/Services/PoolService";
 import VolumeService from "@/Pages/Curve/Volume/Services/VolumeService";
-import {minDelay} from "@/Util/PromiseHelper";
-import {useCurveStore} from "@/Pages/Curve/Store";
-import {shorten, icon} from "@/Util/PoolHelper";
-import {match} from "@/Pages/Curve/Util/PoolHelper";
+import { minDelay } from "@/Util/PromiseHelper";
+import { useCurveStore } from "@/Pages/Curve/Store";
+import { shorten, icon } from "@/Util/PoolHelper";
+import { match } from "@/Pages/Curve/Util/PoolHelper";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import InputText from "@/Framework/InputText.vue";
 import Spinner from "@/Framework/Spinner.vue";
 import GraphVolume from "@/Pages/Curve/Volume/Components/GraphVolume.vue";
-import {getHost} from "@/Services/Host";
+import { getHost } from "@/Services/Host";
 
 const poolService = new PoolService(getHost());
 const volumeService = new VolumeService(getHost());

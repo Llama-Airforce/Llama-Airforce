@@ -1,9 +1,11 @@
 <template>
   <div class="pools">
     <div class="dashboard">
-      <div
-        class="revenues"
-      >
+      <div class="revenues">
+        <GraphChainRevenue
+          title="Total revenue by chain"
+          class="graph-chain-revenue"
+        ></GraphChainRevenue>
         <GraphPoolRevenue
           title="Historical revenue breakdown"
           class="graph-pool-revenue"
@@ -17,27 +19,33 @@
   setup
   lang="ts"
 >
-
-import {onMounted} from "vue";
-import RevenueService from "@/Pages/Curve/Revenue/Services/RevenueService";
-import {minDelay} from "@/Util/PromiseHelper";
-import {useCurveStore} from "@/Pages/Curve/Store";
-import {getHost} from "@/Services/Host";
+import { onMounted } from "vue";
+import RevenueService, {
+  ChainRevenueService,
+} from "@/Pages/Curve/Revenue/Services/RevenueService";
+import { minDelay } from "@/Util/PromiseHelper";
+import { useCurveStore } from "@/Pages/Curve/Store";
+import { getHost } from "@/Services/Host";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
+import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
 
 const revenueService = new RevenueService(getHost());
+const chainRevenueService = new ChainRevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
 
 onMounted(async (): Promise<void> => {
   const revenues = await minDelay(revenueService.get(), 500);
+  const chainRevenues = await minDelay(chainRevenueService.get(), 500);
 
   if (revenues) {
     store.setPoolRevenues(revenues);
   }
+  if (chainRevenues) {
+    store.setChainRevenues(chainRevenues);
+  }
 });
-
 </script>
 
 <style
@@ -72,10 +80,14 @@ onMounted(async (): Promise<void> => {
       grid-row: 2;
 
       display: grid;
-      grid-template-rows: 600px 400px;
+      grid-template-rows: 400px 600px;
       gap: 1rem;
 
       .graph-pool-revenues {
+        grid-row: 2;
+      }
+
+      .graph-chain-revenues {
         grid-row: 1;
       }
     }

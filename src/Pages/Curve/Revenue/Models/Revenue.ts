@@ -3,3 +3,8 @@ export default class PoolRevenue {
   pool: string;
   revenue: number;
 }
+
+export class ChainRevenue {
+  chain: string;
+  totalDailyFeesUSD: number;
+}
