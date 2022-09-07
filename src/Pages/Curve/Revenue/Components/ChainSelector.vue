@@ -149,6 +149,7 @@ const onChainSelect = (option: unknown): void => {
 
     background: lighten($background-color-widget, 6%);
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    z-index: 1000000;
 
     &:hover {
       background: lighten($background-color-widget, 12%);

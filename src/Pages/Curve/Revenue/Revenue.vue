@@ -14,9 +14,9 @@
             class="graph-top-pools"
             :chain-selected="selectedChain"
           ></GraphChainTopPools>
-          <div class="chain-selector">
+          <div class="chain-selector-container">
             <ChainSelector
-              class="chain-selector-2"
+              class="chain-selector"
               @select-chain="onSelectChain"
             >
             </ChainSelector>
@@ -137,11 +137,15 @@ const onSelectChain = (chain: Chain): void => {
       .chain-top-pools {
         grid-row: 1;
         grid-column: auto;
+        display: grid;
+        grid-template-rows: 85% 15%;
         .graph-top-pools {
-          height: 90%;
+          height: auto;
+          grid-row: 1;
         }
-        .chain-selector {
-          height: 10%;
+        .chain-selector-container {
+          grid-row: 2;
+          height: auto;
           background-color: $background-color-widget;
           padding-left: 10px;
           padding-right: 10px;
