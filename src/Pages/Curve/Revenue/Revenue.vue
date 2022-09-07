@@ -12,17 +12,14 @@
           <GraphChainTopPools
             title="Top 10 pools by revenue (last 7 days)"
             class="graph-top-pools"
-            :chain-selected="chain"
+            :chain-selected="selectedChain"
           ></GraphChainTopPools>
           <div class="chain-selector">
-            <Dropdown
-              v-model="chain"
-              :options="chains"
-              optionLabel="name"
-              @change="onSelect"
-              placeholder="mainnet"
+            <ChainSelector
+              class="chain-selector-2"
+              @select-chain="onSelectChain"
             >
-            </Dropdown>
+            </ChainSelector>
           </div>
         </div>
         <div class="historical-revenue">
@@ -48,21 +45,19 @@ import RevenueService, {
 import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { getHost } from "@/Services/Host";
-import Dropdown from "@/Framework/DropDown.vue";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
+import ChainSelector from "@/Pages/Curve/Revenue/Components/ChainSelector.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
-import ChainService from "@/Pages/Curve/Services/ChainService";
-import { $computed, $ref } from "vue/macros";
+import { $computed } from "vue/macros";
+import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
 
-const chainService = new ChainService(getHost());
 const revenueService = new RevenueService(getHost());
 const chainRevenueService = new ChainRevenueService(getHost());
 const topPoolService = new ChainTopPoolsRevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
-let chain = $ref("");
 
 onMounted(async (): Promise<void> => {
   const revenues = await minDelay(revenueService.get(), 500);
@@ -74,13 +69,8 @@ onMounted(async (): Promise<void> => {
   if (chainRevenues) {
     store.setChainRevenues(chainRevenues);
   }
-  if (store.chains.length > 0) {
-    return;
-  }
-  const chains = await minDelay(chainService.get());
-  if (chains) {
-    store.chains = chains;
-  }
+
+  onSelectChain("mainnet");
 });
 
 const getTopPools = async (chain: string): Promise<void> => {
@@ -97,12 +87,14 @@ const getTopPools = async (chain: string): Promise<void> => {
   }
 };
 
-const chains = $computed((): string[] => {
-  return store.chains;
+const selectedChain = $computed((): Chain | null => {
+  return store.selectedChain;
 });
 
-const onSelect = (event: Event): void => {
-  chain = (event.target as HTMLInputElement).value;
+// Events
+const onSelectChain = (chain: Chain): void => {
+  store.selectedChain = chain;
+  console.log(chain);
   void getTopPools(chain);
 };
 </script>
