@@ -8,6 +8,7 @@
         v-if="loading"
         class="spinner"
       ></Spinner>
+
       <div class="revenue-charts">
         <div class="chain-revenues">
           <GraphChainRevenue
@@ -15,12 +16,14 @@
             class="graph-chain-revenue"
           ></GraphChainRevenue>
         </div>
+
         <div class="chain-top-pools">
           <GraphChainTopPools
             title="Top 10 pools by revenue (last 7 days)"
             class="graph-top-pools"
             :chain-selected="selectedChain"
           ></GraphChainTopPools>
+
           <div class="chain-selector-container">
             <ChainSelect
               class="chain-selector"
@@ -29,6 +32,7 @@
             </ChainSelect>
           </div>
         </div>
+
         <div class="historical-revenue">
           <GraphPoolRevenue
             title="Historical revenue breakdown"
@@ -175,6 +179,12 @@ const onSelectChain = (chain: Chain): void => {
       grid-template-rows: 400px 600px;
       gap: 1rem;
 
+      @media only screen and (max-width: 1280px) {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+      }
+
       .chain-top-pools {
         grid-row: 1;
         grid-column: auto;
@@ -184,6 +194,10 @@ const onSelectChain = (chain: Chain): void => {
         .graph-top-pools {
           height: auto;
           grid-row: 1;
+
+          @media only screen and (max-width: 1280px) {
+            height: 400px;
+          }
         }
 
         .chain-selector-container {
@@ -201,6 +215,10 @@ const onSelectChain = (chain: Chain): void => {
 
         .graph-chain-revenue {
           height: 100%;
+
+          @media only screen and (max-width: 1280px) {
+            height: 250px;
+          }
         }
       }
 
@@ -210,6 +228,10 @@ const onSelectChain = (chain: Chain): void => {
 
         .graph-pool-revenue {
           height: 100%;
+
+          @media only screen and (max-width: 1280px) {
+            height: 600px;
+          }
         }
       }
     }
