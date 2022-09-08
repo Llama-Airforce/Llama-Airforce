@@ -91,10 +91,13 @@ const getTopPools = async (chain: string): Promise<void> => {
   if (!chain) {
     return;
   }
+
   if (store.topPools[chain]) {
     return;
   }
+
   loading = true;
+
   try {
     const topPools = await minDelay(topPoolService.get(chain), 500);
 
