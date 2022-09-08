@@ -48,7 +48,7 @@ const options = $computed((): unknown => {
     },
     dataLabels: {
       style: {
-        fontSize: "12px",
+        fontSize: "11px",
       },
       formatter: dollarFormatter,
       dropShadow: false,
@@ -77,7 +77,6 @@ const series = $computed((): { data: number[] }[] => {
 });
 
 // Methods
-
 const dollarFormatter = (x: number): string => {
   return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
