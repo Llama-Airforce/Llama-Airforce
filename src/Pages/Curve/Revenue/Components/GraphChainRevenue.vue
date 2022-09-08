@@ -89,10 +89,9 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = chainRevenues.map((x) => x.totalDailyFeesUSD);
+const series = $computed(() => chainRevenues.map((x) => x.totalDailyFeesUSD));
 
 // Methods
-
 const dollarFormatter = (x: number): string => {
   return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
