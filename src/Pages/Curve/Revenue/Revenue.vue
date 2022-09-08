@@ -69,6 +69,11 @@ const store = useCurveStore();
 let loading = $ref(false);
 
 onMounted(async (): Promise<void> => {
+  // Don't request new data if there's already cached.
+  if (store.poolRevenues.length > 0 || store.chainRevenues.length > 0) {
+    return;
+  }
+
   const { revenues, chainRevenues } = await minDelay(
     (async () => ({
       revenues: await revenueService.get(),
