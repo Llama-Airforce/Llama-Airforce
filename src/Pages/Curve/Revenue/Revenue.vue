@@ -144,7 +144,6 @@ const onSelectChain = (chain: Chain): void => {
     padding: $page-margin;
 
     display: grid;
-    grid-gap: 1.5rem;
 
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;

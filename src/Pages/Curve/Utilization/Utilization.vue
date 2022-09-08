@@ -49,7 +49,6 @@ onMounted(async (): Promise<void> => {
     padding: $page-margin;
 
     display: grid;
-    grid-gap: 1.5rem;
 
     grid-template-rows: auto;
     grid-template-columns: auto;
