@@ -53,6 +53,9 @@ const options = $computed((): unknown => {
       formatter: dollarFormatter,
       dropShadow: false,
     },
+    grid: {
+      strokeDashArray: 2,
+    },
     tooltip: {
       enabled: false,
     },
