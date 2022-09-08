@@ -22,11 +22,11 @@
             :chain-selected="selectedChain"
           ></GraphChainTopPools>
           <div class="chain-selector-container">
-            <ChainSelector
+            <ChainSelect
               class="chain-selector"
               @select-chain="onSelectChain"
             >
-            </ChainSelector>
+            </ChainSelect>
           </div>
         </div>
         <div class="historical-revenue">
@@ -54,7 +54,7 @@ import { useCurveStore } from "@/Pages/Curve/Store";
 import { getHost } from "@/Services/Host";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
-import ChainSelector from "@/Pages/Curve/Revenue/Components/ChainSelector.vue";
+import ChainSelect from "@/Pages/Curve/Revenue/Components/ChainSelect.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
 import { $computed, $ref } from "vue/macros";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
