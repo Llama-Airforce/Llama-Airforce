@@ -69,8 +69,13 @@ const store = useCurveStore();
 let loading = $ref(false);
 
 onMounted(async (): Promise<void> => {
-  const revenues = await minDelay(revenueService.get(), 500);
-  const chainRevenues = await minDelay(chainRevenueService.get(), 500);
+  const { revenues, chainRevenues } = await minDelay(
+    (async () => ({
+      revenues: await revenueService.get(),
+      chainRevenues: await chainRevenueService.get(),
+    }))(),
+    500
+  );
 
   if (revenues) {
     store.setPoolRevenues(revenues);
