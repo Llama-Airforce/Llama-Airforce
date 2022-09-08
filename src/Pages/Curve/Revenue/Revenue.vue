@@ -1,6 +1,13 @@
 <template>
   <div class="pools">
-    <div class="dashboard">
+    <div
+      class="dashboard"
+      :class="{ loading }"
+    >
+      <Spinner
+        v-if="loading"
+        class="spinner"
+      ></Spinner>
       <div class="revenue-charts">
         <div class="chain-revenues">
           <GraphChainRevenue
@@ -49,8 +56,9 @@ import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
 import ChainSelector from "@/Pages/Curve/Revenue/Components/ChainSelector.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
-import { $computed } from "vue/macros";
+import { $computed, $ref } from "vue/macros";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
+import Spinner from "@/Framework/Spinner.vue";
 
 const revenueService = new RevenueService(getHost());
 const chainRevenueService = new ChainRevenueService(getHost());
@@ -58,6 +66,7 @@ const topPoolService = new ChainTopPoolsRevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
+let loading = $ref(false);
 
 onMounted(async (): Promise<void> => {
   const revenues = await minDelay(revenueService.get(), 500);
@@ -80,10 +89,15 @@ const getTopPools = async (chain: string): Promise<void> => {
   if (store.topPools[chain]) {
     return;
   }
-  const topPools = await minDelay(topPoolService.get(chain), 500);
+  loading = true;
+  try {
+    const topPools = await minDelay(topPoolService.get(chain), 500);
 
-  if (topPools) {
-    store.setTopPools(chain, topPools);
+    if (topPools) {
+      store.setTopPools(chain, topPools);
+    }
+  } finally {
+    loading = false;
   }
 };
 
@@ -94,7 +108,6 @@ const selectedChain = $computed((): Chain | null => {
 // Events
 const onSelectChain = (chain: Chain): void => {
   store.selectedChain = chain;
-  console.log(chain);
   void getTopPools(chain);
 };
 </script>
@@ -125,6 +138,20 @@ const onSelectChain = (chain: Chain): void => {
       padding: 1.5rem 1rem;
     }
 
+    &.loading {
+      .revenue-charts {
+        opacity: 0.5;
+      }
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(100%);
+      z-index: 1;
+    }
+
     .revenue-charts {
       position: relative;
       grid-column: 1;
@@ -134,15 +161,18 @@ const onSelectChain = (chain: Chain): void => {
       grid-template-columns: 1fr;
       grid-template-rows: 400px 600px;
       gap: 1rem;
+
       .chain-top-pools {
         grid-row: 1;
         grid-column: auto;
         display: grid;
         grid-template-rows: 85% 15%;
+
         .graph-top-pools {
           height: auto;
           grid-row: 1;
         }
+
         .chain-selector-container {
           grid-row: 2;
           height: auto;
@@ -151,16 +181,20 @@ const onSelectChain = (chain: Chain): void => {
           padding-right: 10px;
         }
       }
+
       .chain-revenues {
         grid-row: 1;
         grid-column: auto;
+
         .graph-chain-revenue {
           height: 100%;
         }
       }
+
       .historical-revenue {
         grid-row: 2;
         grid-column: 1 / span 2;
+
         .graph-pool-revenue {
           height: 100%;
         }
