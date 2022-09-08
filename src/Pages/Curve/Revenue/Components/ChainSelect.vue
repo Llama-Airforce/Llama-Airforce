@@ -145,6 +145,7 @@ const onChainSelect = (option: unknown): void => {
       line-height: 1.5rem;
       font-size: 1rem;
       width: 100%;
+      z-index: 15;
 
       > div {
         padding: 0.4rem 0.75rem;
