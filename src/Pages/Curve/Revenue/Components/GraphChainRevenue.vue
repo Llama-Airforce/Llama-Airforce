@@ -17,12 +17,13 @@ import createChartStyles from "@/Styles/ChartStyles";
 import { ChainRevenue } from "@/Pages/Curve/Revenue/Models/Revenue";
 import { round, unit } from "@/Util/NumberHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
+import { orderBy } from "lodash";
 
 // Refs
 const store = useCurveStore();
 
 const chainRevenues = $computed((): ChainRevenue[] => {
-  return store.chainRevenues ?? [];
+  return orderBy(store.chainRevenues ?? [], (x) => x.totalDailyFeesUSD, "asc");
 });
 
 const options = $computed((): unknown => {
