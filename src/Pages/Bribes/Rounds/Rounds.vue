@@ -1,12 +1,12 @@
 <template>
   <div class="bribes">
     <div class="dashboard">
-      <SystemSelector
-        class="system-selector"
+      <SystemSelect
+        class="system-select"
         @select-platform="onSelectPlatform"
         @select-protocol="onSelectProtocol"
       >
-      </SystemSelector>
+      </SystemSelect>
 
       <Summary
         class="summary"
@@ -27,7 +27,7 @@
 import { onBeforeMount, onBeforeUnmount } from "vue";
 import { $computed } from "vue/macros";
 import { useRouter, useRoute } from "vue-router";
-import SystemSelector from "@/Pages/Bribes/Components/SystemSelector.vue";
+import SystemSelect from "@/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@/Pages/Bribes/Rounds/Components/Summary.vue";
 import TableBribed from "@/Pages/Bribes/Rounds/Components/TableBribed.vue";
 import TablePersonal from "@/Pages/Bribes/Rounds/Components/TablePersonal.vue";
@@ -267,7 +267,7 @@ const initFromRouter = async (): Promise<void> => {
       padding: 1.5rem 1rem;
     }
 
-    .system-selector {
+    .system-select {
       grid-column: 1 / span 2;
       grid-row: 1;
     }

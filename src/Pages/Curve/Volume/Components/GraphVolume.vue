@@ -1,7 +1,6 @@
 <template>
   <CardGraph
-    class="reserves"
-    :title="title"
+    class="volumes"
     :options="options"
     :series="series"
   >
@@ -16,13 +15,16 @@ import { $computed } from "vue/macros";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Curve/Models/Pool";
-import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
+import Volume from "@/Pages/Curve/Volume/Models/Volume";
 import { round, unit } from "@/Util/NumberHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import { shorten } from "@/Util/PoolHelper";
 import { DataPoint } from "@/Util/DataPoint";
 
-type Serie = { name: string; data: { x: number; y: number }[] };
+type Serie = {
+  name: string;
+  type: string;
+  data: { x: number; y: number }[];
+};
 
 // Props
 interface Props {
@@ -34,59 +36,59 @@ const { poolSelected } = defineProps<Props>();
 // Refs
 const store = useCurveStore();
 
-const title = $computed((): string => {
-  let title = "Reserves";
-  if (poolSelected) {
-    title = shorten(poolSelected.name);
-  }
-
-  return title;
-});
-
-const reserves = $computed((): Reserves[] => {
-  return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
+const volumes = $computed((): Volume[] => {
+  return poolSelected ? store.volumes[poolSelected.id] ?? [] : [];
 });
 
 const options = $computed((): unknown => {
   return createChartStyles({
     chart: {
-      id: "reserves",
-      type: "area",
+      id: "volumes",
       animations: {
         enabled: false,
       },
     },
+    stroke: {
+      width: 2,
+    },
     xaxis: {
       type: "datetime",
     },
-    yaxis: {
-      labels: {
-        formatter: (y: number): string => formatter(y),
+    yaxis: [
+      {
+        seriesName: "volume",
+        tickAmount: 4,
+        labels: {
+          formatter: (y: number): string => formatter(y),
+        },
+        min: Math.min(...volumes.map((x) => x.volumeUSD)),
+        max: Math.max(...volumes.map((x) => x.volumeUSD)),
       },
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        type: "vertical",
-        shadeIntensity: 0,
-        inverseColors: false,
-        opacityFrom: 0.5,
-        opacityTo: 0,
-        stops: [0, 90, 100],
-      },
-    },
+    ],
     dataLabels: {
       enabled: false,
+    },
+    plotOptions: {
+      bar: {
+        distributed: false,
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
+        },
+      },
     },
     tooltip: {
       followCursor: false,
       enabled: true,
       intersect: false,
       custom: (x: DataPoint<Serie>) => {
-        const tvl =
-          x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
+        const volumes = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
 
-        return `<div><b>TVL</b>:</div><div>${formatter(tvl)}</div>`;
+        const data = [
+          `<div><b>Volume</b>:</div><div>${formatter(volumes)}</div>`,
+        ];
+
+        return data.join("");
       },
     },
   });
@@ -95,18 +97,20 @@ const options = $computed((): unknown => {
 const series = $computed((): Serie[] => {
   return [
     {
-      name: "reserves",
-      data: reserves.map((r) => ({
-        x: r.timestamp * 1000,
-        y: r.reservesUSD.reduce((acc, x) => acc + x, 0),
+      name: "Volume",
+      type: "line",
+      data: volumes.map((s) => ({
+        x: s.timestamp * 1000,
+        y: s.volumeUSD,
       })),
     },
   ];
 });
 
 // Methods
-const formatter = (y: number): string => {
-  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
+
+const formatter = (x: number): string => {
+  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
 </script>
 
@@ -116,7 +120,7 @@ const formatter = (y: number): string => {
 >
 @import "@/Styles/Variables.scss";
 
-.reserves {
+.volumes {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
@@ -128,7 +132,7 @@ const formatter = (y: number): string => {
       line-height: 0.5rem;
 
       display: grid;
-      grid-template-rows: auto;
+      grid-template-rows: auto auto;
       grid-template-columns: 1fr auto;
       gap: 0.5rem;
     }

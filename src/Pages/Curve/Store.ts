@@ -6,6 +6,12 @@ import Emission from "@/Pages/Curve/Gauges/Models/Emission";
 import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
 import Candle from "@/Pages/Curve/Prices/Models/Candle";
 import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
+import Volume from "@/Pages/Curve/Volume/Models/Volume";
+import PoolRevenue, {
+  ChainRevenue,
+  ChainTopPoolRevenue,
+} from "@/Pages/Curve/Revenue/Models/Revenue";
+import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
 
 type State = {
   pools: Pool[];
@@ -15,6 +21,11 @@ type State = {
   ratios: { [pool: string]: Ratio[] };
   candles: { [pool: string]: Candle[] };
   reserves: { [pool: string]: Reserves[] };
+  volumes: { [pool: string]: Volume[] };
+  poolRevenues: PoolRevenue[];
+  chainRevenues: ChainRevenue[];
+  selectedChain: Chain | null;
+  topPools: { [chain: string]: ChainTopPoolRevenue[] };
 };
 
 export const useCurveStore = defineStore({
@@ -27,6 +38,11 @@ export const useCurveStore = defineStore({
     ratios: {},
     candles: {},
     reserves: {},
+    volumes: {},
+    poolRevenues: [],
+    chainRevenues: [],
+    selectedChain: "mainnet",
+    topPools: {},
   }),
   actions: {
     setEmissions(gauge: GaugeId, emissions: Emission[]) {
@@ -43,6 +59,18 @@ export const useCurveStore = defineStore({
     },
     setReserves(gauge: GaugeId, reserves: Reserves[]) {
       this.reserves[gauge] = reserves;
+    },
+    setVolumes(gauge: GaugeId, volumes: Volume[]) {
+      this.volumes[gauge] = volumes;
+    },
+    setPoolRevenues(poolRevenues: PoolRevenue[]) {
+      this.poolRevenues = poolRevenues;
+    },
+    setChainRevenues(chainRevenues: ChainRevenue[]) {
+      this.chainRevenues = chainRevenues;
+    },
+    setTopPools(chain: string, topPools: ChainTopPoolRevenue[]) {
+      this.topPools[chain] = topPools;
     },
   },
 });
