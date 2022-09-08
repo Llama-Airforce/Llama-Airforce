@@ -219,7 +219,7 @@ const onSelect = (option: unknown): void => {
       grid-row: 2;
 
       display: grid;
-      grid-template-rows: 400px 400px;
+      grid-template-rows: 400px;
       gap: 1rem;
 
       .graph-volumes {
