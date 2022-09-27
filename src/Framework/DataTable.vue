@@ -432,7 +432,7 @@ const sortColumn = (index: number): void => {
       }
 
       // These direct divs are most likely your individual cells.
-      > div {
+      div {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
