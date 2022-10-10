@@ -132,5 +132,5 @@ export function bigNumToNumber(value: BigNumber, decimals: number): number {
 }
 
 export function numToBigNumber(value: number, decimals: number): BigNumber {
-  return utils.parseUnits(value.toString(), decimals);
+  return utils.parseUnits(value.toFixed(decimals), decimals);
 }
