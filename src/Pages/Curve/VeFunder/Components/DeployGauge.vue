@@ -63,7 +63,7 @@ const emit = defineEmits<{
 
 let deploying = $ref(false);
 const receiver = $ref("");
-const amount = $ref(0);
+let amount = $ref(0);
 
 const receiverPlaceholder = $computed((): string => {
   return MultisigAddress;
@@ -88,6 +88,9 @@ const execute = async (): Promise<void> => {
 
   deploying = true;
 
+  if (typeof amount === "string") {
+    amount = parseFloat(amount);
+  }
   const amountFinal = numToBigNumber(amount, 18);
 
   try {
