@@ -1,6 +1,6 @@
 import {
   Delegation,
-  Proposal,
+  Proposal as SnapshotProposal,
   Scores,
   Vote,
 } from "@/Pages/Bribes/Rounds/Services/SnapshotService";
@@ -9,9 +9,8 @@ import type {
   BribedPersonal,
   VoteDistribution,
 } from "@/Pages/Bribes/Models/Bribed";
-import type { Epoch, ProposalId } from "@/Pages/Bribes/Models/Epoch";
+import type { Epoch, Proposal, ProposalId } from "@/Pages/Bribes/Models/Epoch";
 import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
-import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
 import { notEmpty } from "@/Util/ArrayHelper";
 import { chain, isFinite } from "lodash";
 
@@ -27,12 +26,12 @@ export function dollarPerVlAsset(epoch: Epoch): number {
   return totalAmountDollars(epoch) / totalAmountBribed(epoch);
 }
 
-export function getDateRaw(epoch: Epoch | EpochOverview): Date {
-  return new Date(epoch.end * 1000);
+export function getDateRaw(proposal: Proposal): Date {
+  return new Date(proposal.end * 1000);
 }
 
-export function getDate(epoch: Epoch | EpochOverview): string {
-  return getDateRaw(epoch).toLocaleDateString();
+export function getDate(proposal: Proposal): string {
+  return getDateRaw(proposal).toLocaleDateString();
 }
 
 export function getLink(epoch: EpochId, proposal: ProposalId): string {
@@ -116,7 +115,7 @@ export function prioritizeDelegates(
 
 /** Calculate a user's voting distribution. */
 export function getVoteDistribution(
-  proposal: Proposal,
+  proposal: SnapshotProposal,
   voter: string,
   delegate: string | undefined,
   votes: Vote[],

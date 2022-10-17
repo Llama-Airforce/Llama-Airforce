@@ -2,6 +2,7 @@ import { Page } from "@/Pages/Page";
 
 import BribesRounds from "@/Pages/Bribes/Rounds/Rounds.vue";
 import BribesOverview from "@/Pages/Bribes/Overview/Overview.vue";
+import FraxMatch from "@/Pages/Bribes/FraxMatch/FraxMatch.vue";
 
 export const pageBribes: Page = {
   title: "Bribes",
@@ -21,6 +22,11 @@ export const pageBribes: Page = {
       name: "overview",
       component: BribesOverview,
     },
+    {
+      path: "/bribes/fraxmatch",
+      name: "fraxmatch",
+      component: FraxMatch,
+    },
   ],
   menuHeader: "headers/votium.png",
   menuItems: [
@@ -33,6 +39,11 @@ export const pageBribes: Page = {
       to: "/bribes/rounds",
       icon: "far fa-chart-bar",
       label: "Rounds",
+    },
+    {
+      to: "/bribes/fraxmatch",
+      icon: "fas fa-gift",
+      label: "Frax Match",
     },
   ],
 };
