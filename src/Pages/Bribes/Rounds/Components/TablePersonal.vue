@@ -93,7 +93,10 @@ import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { BribedPersonal } from "@/Pages/Bribes/Models/Bribed";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
 import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
-import SnapshotService from "@/Pages/Bribes/Rounds/Services/SnapshotService";
+import SnapshotService, {
+  Delegation,
+} from "@/Pages/Bribes/Rounds/Services/SnapshotService";
+import AuraService from "@/Pages/Bribes/Rounds/Services/AuraService";
 import { useWalletStore } from "@/Wallet/Store";
 import {
   getBribedPersonal,
@@ -108,6 +111,7 @@ import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getHost } from "@/Services/Host";
 
 const snapshotService = new SnapshotService(getHost());
+const auraService = new AuraService(getHost());
 
 // Refs
 const store = useBribesStore();
@@ -211,22 +215,34 @@ const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
 
   const proposal = await snapshotService.getProposal(newEpoch.proposal);
   const block = parseInt(proposal.snapshot, 10);
-  const delegations = await snapshotService.getDelegations(block, {
-    delegators: [voter],
-    space: snapshotService.getSpace(protocol),
-  });
+
+  let delegations: Delegation[];
+
+  if (protocol === "aura-bal")
+    delegations = [await auraService.getDelegation(voter, block)];
+  else {
+    delegations = await snapshotService.getDelegations(block, {
+      delegators: [voter],
+      space: snapshotService.getSpace(protocol),
+    });
+  }
 
   const votes = await snapshotService.getVotes(newEpoch.proposal, [
     voter,
     ...delegations.map((d) => d.delegate),
   ]);
-  const scores = await snapshotService.getScores(protocol, block, [voter]);
 
   // Find the correct delegate by given priority to the space delegate (eg cvx.eth).
-  const delegate = prioritizeDelegates(
-    [delegations[0], delegations[1]],
-    votes.map((v) => v.voter)
-  )[0]?.delegate;
+  let delegate: string;
+  if (protocol === "aura-bal") delegate = delegations[0].delegate;
+  else {
+    delegate = prioritizeDelegates(
+      [delegations[0], delegations[1]],
+      votes.map((v) => v.voter)
+    )[0]?.delegate;
+  }
+
+  const scores = await snapshotService.getScores(protocol, block, [voter]);
 
   // Calculate the voting distribution of a user.
   const distribution = getVoteDistribution(

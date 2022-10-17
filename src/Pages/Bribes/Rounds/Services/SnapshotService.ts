@@ -268,7 +268,7 @@ export default class SnapshotService extends ServiceBase {
 
     const strategies = [
       {
-        name: "erc20-votes",
+        name: "erc20-votes-with-override",
         params: {
           symbol: "vlAURA",
           address,
