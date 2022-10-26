@@ -3,7 +3,7 @@
     class="datatable-match"
     columns-header="1fr"
     columns-data="match-columns-data"
-    :rows="matches"
+    :rows="epochsSorted"
     :columns="['', 'Deadline', 'Native', `Frax`, 'Total']"
     :sorting="true"
     :sorting-columns="['', 'deadline', 'native', 'frax', 'total']"
@@ -12,10 +12,6 @@
     sorting-default-dir="Descending"
     @sort-column="onSort"
   >
-    <template #header-title>
-      <div>All Rounds</div>
-    </template>
-
     <template #row="props: { item: EpochFrax }">
       <Tooltip>
         <template #item>
@@ -62,7 +58,7 @@
         </template>
 
         <div class="bribes">
-          <ul>
+          <!-- <ul>
             <li
               v-for="(bribe, i) in bribes(props.item)"
               :key="i"
@@ -84,7 +80,8 @@
                 />
               </div>
             </li>
-          </ul>
+          </ul> -->
+          No token breakdown yet
         </div>
       </Tooltip>
     </template>
@@ -102,84 +99,35 @@ import Tooltip from "@/Framework/Tooltip.vue";
 import { SortOrder } from "@/Framework/SortOrder";
 import { orderBy } from "lodash";
 import { getDate, getDateRaw, getLink } from "@/Pages/Bribes/Util/EpochHelper";
-import type { Proposal } from "@/Pages/Bribes/Models/Epoch";
-import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
-import { Bribe } from "@/Pages/Bribes/Models/Bribe";
+import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
+import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
-type EpochFrax = EpochId &
-  Proposal & {
-    round: number;
-    native: number;
-    frax: number;
-  };
+// Props
+interface Props {
+  epochs: EpochFrax[];
+}
 
-const rounds: EpochFrax[] = [
-  {
-    platform: "votium",
-    protocol: "cvx-crv",
-    round: 1,
-    proposal: "none",
-    end: 0,
-    native: 1,
-    frax: 1,
-  },
-  {
-    platform: "votium",
-    protocol: "cvx-crv",
-    round: 2,
-    proposal: "none",
-    end: 0,
-    native: 5,
-    frax: 4,
-  },
-  {
-    platform: "votium",
-    protocol: "cvx-crv",
-    round: 3,
-    proposal: "none",
-    end: 0,
-    native: 3,
-    frax: 1.5,
-  },
-  {
-    platform: "votium",
-    protocol: "cvx-crv",
-    round: 4,
-    proposal: "none",
-    end: 0,
-    native: 7,
-    frax: 4,
-  },
-  {
-    platform: "votium",
-    protocol: "cvx-crv",
-    round: 5,
-    proposal: "none",
-    end: 0,
-    native: 10,
-    frax: 8.5,
-  },
-];
+const { epochs = [] } = defineProps<Props>();
 
 // Refs
 let sortColumn: "deadline" | "native" | "frax" | "total" = $ref("deadline");
 let sortOrder: SortOrder = $ref(SortOrder.Descending);
 
-const matches = $computed((): EpochFrax[] => {
+const epochsSorted = $computed((): EpochFrax[] => {
   return orderBy(
-    rounds,
-    (round: EpochFrax) => {
+    epochs,
+    (epoch: EpochFrax) => {
       switch (sortColumn) {
         case "deadline":
-          return round.round;
+          return epoch.round;
         case "native":
-          return native(round);
+          return native(epoch);
         case "frax":
-          return frax(round);
+          return frax(epoch);
         case "total":
-          return total(round);
+          return total(epoch);
         default:
-          return round.round;
+          return epoch.round;
       }
     },
     sortOrder === SortOrder.Descending ? "desc" : "asc"

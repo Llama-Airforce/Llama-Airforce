@@ -16,20 +16,30 @@ import { $computed } from "vue/macros";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util/NumberHelper";
-import { DataPoint } from "@/Util/DataPoint";
+import type { DataPoint } from "@/Util/DataPoint";
+import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 type Serie = {
   name: string;
   data: number[];
 };
 
+// Props
+interface Props {
+  epochs: EpochFrax[];
+}
+
+const { epochs = [] } = defineProps<Props>();
+
 // Refs
 const title = "Round By Round";
 
-const bribesNative: number[] = [1, 5, 3, 7, 10];
-const bribesFrax: number[] = [1, 4, 1.5, 4, 8.5];
+const bribesNative = $computed((): number[] =>
+  epochs.map((epoch) => epoch.native)
+);
+const bribesFrax = $computed((): number[] => epochs.map((epoch) => epoch.frax));
 
-const categories = bribesNative.map((_x, i) => i);
+const categories = $computed(() => epochs.map((epoch) => epoch.round));
 
 // eslint-disable-next-line max-lines-per-function
 const options = $computed((): unknown => {

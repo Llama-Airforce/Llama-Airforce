@@ -21,9 +21,28 @@
         </template>
       </InputText>
 
-      <Summary class="summary"></Summary>
-      <GraphMatch class="graph"></GraphMatch>
-      <TableMatch class="table"></TableMatch>
+      <Summary
+        class="summary"
+        :class="{ loading }"
+        :epochs="epochs"
+      ></Summary>
+
+      <GraphMatch
+        class="graph"
+        :class="{ loading }"
+        :epochs="epochs"
+      ></GraphMatch>
+
+      <TableMatch
+        class="table"
+        :class="{ loading }"
+        :epochs="epochs"
+      ></TableMatch>
+
+      <Spinner
+        v-if="loading"
+        class="spinner"
+      ></Spinner>
     </div>
   </div>
 </template>
@@ -32,45 +51,56 @@
   setup
   lang="ts"
 >
+import { onMounted, onBeforeUnmount } from "vue";
 import { $ref, $computed } from "vue/macros";
 import InputText from "@/Framework/InputText.vue";
 import Summary from "@/Pages/Bribes/FraxMatch/Components/Summary.vue";
 import GraphMatch from "@/Pages/Bribes/FraxMatch/Components/GraphMatch.vue";
 import TableMatch from "@/Pages/Bribes/FraxMatch/Components/TableMatch.vue";
-import Pool from "@/Pages/Curve/Models/Pool";
-import { match } from "@/Pages/Curve/Util/PoolHelper";
+import type { Pool } from "@/Pages/Bribes/FraxMatch/Models/Pool";
+import { match } from "@/Pages/Bribes/FraxMatch/Util/PoolHelper";
 import { shorten } from "@/Util/PoolHelper";
+import { getHost } from "@/Services/Host";
+import FraxMatchService from "@/Pages/Bribes/FraxMatch/Services/FraxMatchService";
+import { minDelay } from "@/Util/PromiseHelper";
+import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
+import Spinner from "@/Framework/Spinner.vue";
+
+let isMounted = false;
+
+const fraxMatchService = new FraxMatchService(getHost());
 
 // Refs
 let pool = $ref("");
+let pools: Pool[] = $ref([]);
+let epochs: EpochFrax[] = $ref([]);
 let autoComplete = $ref(false);
-
-const pools: Pool[] = [
-  {
-    id: "ApeUSD+crvFRAX (0x04b7…)",
-    name: "ApeUSD+crvFRAX (0x04b7…)",
-    symbol: "ApeUSD+crvFRAX (0x04b7…)",
-    cumulateVolumeUsd: 0,
-    coins: [],
-  },
-  {
-    id: "DOLA+crvFRAX (0xE571…)",
-    name: "DOLA+crvFRAX (0xE571…)",
-    symbol: "DOLA+crvFRAX (0xE571…)",
-    cumulateVolumeUsd: 0,
-    coins: [],
-  },
-  {
-    id: "DOLA+crvFRAX (0xE571…)",
-    name: "DOLA+crvFRAX (0xE571…)",
-    symbol: "DOLA+crvFRAX (0xE571…)",
-    cumulateVolumeUsd: 0,
-    coins: [],
-  },
-];
+let loading = $ref(false);
 
 const filter = $computed(() => {
   return (input: string, option: unknown) => match(input, option as Pool);
+});
+
+// Hooks
+onMounted(async (): Promise<void> => {
+  isMounted = true;
+  const resp = await minDelay(fraxMatchService.getPools());
+
+  if (resp) {
+    pools = resp.pools;
+
+    /*
+     * Select first pool by default if none given by the URL.
+     * It's possible the component has unmounted before we arrive here.
+     */
+    if (!isMounted) {
+      return;
+    }
+  }
+});
+
+onBeforeUnmount((): void => {
+  isMounted = false;
 });
 
 // Events
@@ -78,9 +108,30 @@ const onInput = (input: string): void => {
   autoComplete = !!input;
 };
 
+const getEpochs = async (pool?: Pool): Promise<void> => {
+  if (!pool) {
+    return;
+  }
+
+  // Introduce delay so the animation doesn't lag immediately.
+  loading = true;
+
+  try {
+    const resp = await minDelay(fraxMatchService.getEpochs(pool.id), 500);
+
+    if (resp) {
+      epochs = resp.epochs;
+    }
+  } finally {
+    loading = false;
+  }
+};
+
 const toggleExpansion = (newPool: Pool): void => {
   pool = shorten(newPool.name);
   autoComplete = false;
+
+  void getEpochs(newPool);
 };
 
 const onSelect = (option: unknown): void => {
@@ -137,6 +188,21 @@ const onSelect = (option: unknown): void => {
 
       grid-column: 1;
       grid-row: 4;
+    }
+
+    .spinner {
+      grid-column: 1;
+      grid-row: 2 / span 3;
+    }
+
+    .loading {
+      opacity: 0.5;
+    }
+
+    .spinner {
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
     }
   }
 }

@@ -5,7 +5,7 @@
       :has-value="true"
     >
       <AsyncValue
-        :value="500"
+        :value="total"
         :precision="2"
         type="dollar"
       />
@@ -16,7 +16,7 @@
       :has-value="true"
     >
       <AsyncValue
-        :value="69"
+        :value="ratio"
         :precision="0"
         type="percentage"
       />
@@ -28,8 +28,27 @@
   setup
   lang="ts"
 >
+import { $computed } from "vue/macros";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import KPI from "@/Framework/KPI.vue";
+import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
+
+interface Props {
+  epochs: EpochFrax[];
+}
+
+const { epochs = [] } = defineProps<Props>();
+
+const totalNative = $computed((): number =>
+  epochs.reduce((acc, epoch) => acc + epoch.native, 0)
+);
+
+const totalFrax = $computed((): number =>
+  epochs.reduce((acc, epoch) => acc + epoch.frax, 0)
+);
+
+const total = $computed((): number => totalNative + totalFrax);
+const ratio = $computed((): number => (totalFrax / totalNative) * 100);
 </script>
 
 <style
