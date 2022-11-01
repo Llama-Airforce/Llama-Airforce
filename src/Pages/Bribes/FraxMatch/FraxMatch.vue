@@ -157,7 +157,7 @@ const onSelect = (option: unknown): void => {
     display: grid;
     grid-gap: 1.5rem;
 
-    grid-template-rows: auto auto 1fr 1fr;
+    grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 1fr;
 
     @media only screen and (max-width: 1280px) {
