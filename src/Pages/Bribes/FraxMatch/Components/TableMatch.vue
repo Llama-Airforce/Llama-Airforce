@@ -163,6 +163,7 @@ const isFinished = (epoch: EpochFrax): boolean => {
   return new Date() > getDateRaw(epoch);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const bribes = (epoch: EpochFrax): Bribe[] => {
   if (!epoch) {
     return [];
