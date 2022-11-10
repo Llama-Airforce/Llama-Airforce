@@ -4,6 +4,7 @@
       <InputText
         v-model="pool"
         class="select-pool"
+        :placeholder="placeholder"
         :search="true"
         :auto-complete="autoComplete"
         :options="pools"
@@ -76,6 +77,7 @@ let pools: Pool[] = $ref([]);
 let epochs: EpochFrax[] = $ref([]);
 let autoComplete = $ref(false);
 let loading = $ref(false);
+let placeholder = $ref("Loading Frax pools with matches, please wait...");
 
 const filter = $computed(() => {
   return (input: string, option: unknown) => match(input, option as Pool);
@@ -88,6 +90,7 @@ onMounted(async (): Promise<void> => {
 
   if (resp) {
     pools = resp.pools;
+    placeholder = "Search for Frax pools with matches";
 
     /*
      * Select first pool by default if none given by the URL.
@@ -96,6 +99,8 @@ onMounted(async (): Promise<void> => {
     if (!isMounted) {
       return;
     }
+  } else {
+    placeholder = "Failed loading Frax pools with matches";
   }
 });
 

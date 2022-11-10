@@ -4,6 +4,7 @@
       <InputText
         v-model="pool"
         class="select-pool"
+        :placeholder="placeholder"
         :search="true"
         :auto-complete="autoComplete"
         :options="pools"
@@ -84,18 +85,21 @@ let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
 let autoComplete = $ref(false);
 let loading = $ref(false);
+let placeholder = $ref("Loading pools, please wait...");
 
 onMounted(async (): Promise<void> => {
   isMounted = true;
 
   // Don't request new pools if there's already cached.
   if (store.pools.length > 0) {
+    placeholder = "Search for Curve pools";
     return;
   }
 
   const resp = await minDelay(poolService.get());
   if (resp) {
     store.pools = resp;
+    placeholder = "Search for Curve pools";
 
     /*
      * Select first pool by default if none given by the URL.
@@ -104,6 +108,8 @@ onMounted(async (): Promise<void> => {
     if (!isMounted) {
       return;
     }
+  } else {
+    placeholder = "Failed loading Curve pools";
   }
 });
 
