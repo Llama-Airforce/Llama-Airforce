@@ -21,7 +21,7 @@
       <div class="logo">
         <img
           class="logo-img"
-          :src="icon(props.item.name)"
+          :src="icon(props.item.name, false)"
         />
       </div>
       <div>{{ shorten(props.item.name) }}</div>

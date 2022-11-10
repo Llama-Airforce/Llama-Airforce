@@ -16,7 +16,7 @@
             v-if="props.item"
             class="item"
           >
-            <img :src="icon(props.item.name)" />
+            <img :src="icon(props.item.name, false)" />
             <div class="label">{{ shorten(props.item.name) }}</div>
             <div class="volume">
               <AsyncValue
