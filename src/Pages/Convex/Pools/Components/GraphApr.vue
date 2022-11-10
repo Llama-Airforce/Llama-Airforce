@@ -17,10 +17,9 @@ import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Convex/Pools/Models/Pool";
 import Snapshot from "@/Pages/Convex/Pools/Models/Snapshot";
-import createAnnotations from "@/Pages/Convex/Pools/Models/Annotations";
 import { round, unit } from "@/Util/NumberHelper";
 import { useConvexStore } from "@/Pages/Convex/Store";
-import { startDate, totalApr } from "@/Pages/Convex/Pools/Util/SnapshotHelper";
+import { totalApr } from "@/Pages/Convex/Pools/Util/SnapshotHelper";
 import type { DataPoint } from "@/Util/DataPoint";
 
 type Serie = {
@@ -94,7 +93,6 @@ const options = $computed((): unknown => {
         return data.join("");
       },
     },
-    ...createAnnotations(startDate(snapshots)),
   });
 });
 
