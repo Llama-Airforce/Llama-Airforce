@@ -79,9 +79,8 @@ let autoComplete = $ref(false);
 let loading = $ref(false);
 let placeholder = $ref("Loading Frax pools with matches, please wait...");
 
-const filter = $computed(() => {
-  return (input: string, option: unknown) => match(input, option as Pool);
-});
+// Methods
+const filter = (input: string, option: unknown) => match(input, option as Pool);
 
 // Hooks
 onMounted(async (): Promise<void> => {

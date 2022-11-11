@@ -121,11 +121,9 @@ const pools = $computed((): Pool[] => {
   return store.pools;
 });
 
-const filter = $computed(() => {
-  return (input: string, option: unknown) => match(input, option as Pool);
-});
-
 // Methods.
+const filter = (input: string, option: unknown) => match(input, option as Pool);
+
 const volume = (pool: Pool): number => {
   return pool.cumulateVolumeUsd;
 };
