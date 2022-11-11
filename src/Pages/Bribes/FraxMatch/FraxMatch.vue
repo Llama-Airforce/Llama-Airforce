@@ -53,7 +53,7 @@
   lang="ts"
 >
 import { onMounted, onBeforeUnmount } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { $ref } from "vue/macros";
 import InputText from "@/Framework/InputText.vue";
 import Summary from "@/Pages/Bribes/FraxMatch/Components/Summary.vue";
 import GraphMatch from "@/Pages/Bribes/FraxMatch/Components/GraphMatch.vue";
