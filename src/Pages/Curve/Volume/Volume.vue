@@ -18,7 +18,7 @@
             class="item"
           >
             <img :src="icon(props.item.name, false)" />
-            <div class="label">{{ shorten(props.item.name) }}</div>
+            <div class="label">{{ name(props.item) }}</div>
             <div
               v-if="isFirst(props.item)"
               class="description"
@@ -128,6 +128,14 @@ const filter = $computed(() => {
 // Methods.
 const volume = (pool: Pool): number => {
   return pool.cumulateVolumeUsd;
+};
+
+const name = (pool: Pool): string => {
+  const nameShort = shorten(pool.name);
+  const nameTrimmed =
+    nameShort.substring(0, 9) === "Curve.fi " ? nameShort.slice(9) : nameShort;
+
+  return nameTrimmed;
 };
 
 const isFirst = (poolCheck: Pool): boolean => {
