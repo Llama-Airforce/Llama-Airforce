@@ -29,6 +29,7 @@
         <slot
           name="item"
           :item="(option as never)"
+          :idx="i"
         >
           {{ option }}
         </slot>

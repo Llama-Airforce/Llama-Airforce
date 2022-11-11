@@ -13,7 +13,7 @@
         @input="onInput"
         @select="onSelect"
       >
-        <template #item="props: { item: Pool }">
+        <template #item="props: { item: Pool, idx: number }">
           <div
             v-if="props.item"
             class="item"
@@ -21,7 +21,7 @@
             <img :src="icon(props.item.name, false)" />
             <div class="label">{{ name(props.item) }}</div>
             <div
-              v-if="isFirst(props.item)"
+              v-if="props.idx === 0"
               class="description"
             >
               Cumulative Volume
@@ -142,16 +142,6 @@ const name = (pool: Pool): string => {
     nameShort.substring(0, 9) === "Curve.fi " ? nameShort.slice(9) : nameShort;
 
   return nameTrimmed;
-};
-
-const isFirst = (poolCheck: Pool): boolean => {
-  const poolsFiltered = pools.filter((p) => filter(pool, p));
-
-  if (poolsFiltered.length > 0) {
-    return poolCheck.id === poolsFiltered[0].id;
-  }
-
-  return false;
 };
 
 // Events
