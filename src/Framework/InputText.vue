@@ -22,7 +22,7 @@
       :class="{ selectHide: !autoComplete }"
     >
       <div
-        v-for="(option, i) of optionsFiltered"
+        v-for="(option, i) of optionsProcessed"
         :key="i"
         @click="emit('select', option)"
       >
@@ -51,6 +51,7 @@ interface Props {
   search?: boolean;
   autoComplete?: boolean;
   filter?: (input: string, option: unknown) => boolean;
+  sort?: (a: unknown, b: unknown) => number;
 }
 
 const {
@@ -60,6 +61,7 @@ const {
   search = false,
   autoComplete = false,
   filter = () => () => true,
+  sort = null,
 } = defineProps<Props>();
 
 // Emits
@@ -70,8 +72,15 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const optionsFiltered = $computed((): unknown[] => {
-  return options.filter((option) => filter(modelValue, option));
+const optionsProcessed = $computed((): unknown[] => {
+  const optionsFiltered = options.filter((option) =>
+    filter(modelValue, option)
+  );
+  const optionsSorted = sort
+    ? [...optionsFiltered].sort(sort)
+    : optionsFiltered;
+
+  return optionsSorted;
 });
 
 // Events
