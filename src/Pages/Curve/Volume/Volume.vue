@@ -19,6 +19,12 @@
           >
             <img :src="icon(props.item.name, false)" />
             <div class="label">{{ shorten(props.item.name) }}</div>
+            <div
+              v-if="isFirst(props.item)"
+              class="description"
+            >
+              Cumulative Volume
+            </div>
             <div class="volume">
               <AsyncValue
                 :value="volume(props.item)"
@@ -119,8 +125,19 @@ const filter = $computed(() => {
   return (input: string, option: unknown) => match(input, option as Pool);
 });
 
+// Methods.
 const volume = (pool: Pool): number => {
   return pool.cumulateVolumeUsd;
+};
+
+const isFirst = (poolCheck: Pool): boolean => {
+  const poolsFiltered = pools.filter((p) => filter(pool, p));
+
+  if (poolsFiltered.length > 0) {
+    return poolCheck.id === poolsFiltered[0].id;
+  }
+
+  return false;
 };
 
 // Events
@@ -212,9 +229,14 @@ const onSelect = (option: unknown): void => {
           margin-left: 0.75rem;
         }
 
-        > .volume {
+        > .volume,
+        > .description {
           font-size: 0.875rem;
           margin-left: 0.75rem;
+        }
+
+        > .description {
+          color: #71717a;
         }
       }
     }
