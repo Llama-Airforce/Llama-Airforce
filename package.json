@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@gnosis.pm/safe-apps-sdk": "^7.6.0",
-    "@kyvg/vue3-notification": "^2.4.1",
+    "@kyvg/vue3-notification": "^2.6.1",
     "@web3-onboard/coinbase": "^2.1.1",
     "@web3-onboard/core": "^2.8.1",
     "@web3-onboard/gnosis": "^2.1.1",
