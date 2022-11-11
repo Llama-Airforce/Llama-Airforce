@@ -33,7 +33,7 @@
     "vue3-popper": "^1.5.0"
   },
   "devDependencies": {
-    "@azure/cosmos": "^3.16.4",
+    "@azure/cosmos": "^3.17.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@gnosis.pm/safe-core-sdk": "^2.3.2",
     "@gnosis.pm/safe-core-sdk-types": "^1.4.0",
