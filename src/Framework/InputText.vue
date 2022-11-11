@@ -134,7 +134,7 @@ const onInput = (evt: Event): void => {
     position: absolute;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 12;
     line-height: 1.75rem;
     margin-top: 2.75rem;
     width: 100%;
