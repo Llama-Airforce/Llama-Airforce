@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import { createI18n } from "vue-i18n";
 import App from "@/App.vue";
 import createRouter from "@/Router";
 import VueApexCharts from "vue3-apexcharts";
@@ -12,6 +13,14 @@ import { pageUnion } from "@/Pages/Union/Page";
 import { usePageStore } from "@/Pages/Store";
 
 const app = createApp(App);
+
+// Add i18n.
+const i18n = createI18n({
+  legacy: false, // Needed for composition API.
+  locale: "en",
+  fallbackLocale: "en",
+});
+app.use(i18n);
 
 // Add pinia.
 const pinia = createPinia();
