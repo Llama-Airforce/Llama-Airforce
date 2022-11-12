@@ -5,10 +5,10 @@
         class="datatable-repositories"
         columns-data="repositories-columns-data"
         :rows="repositories"
-        :columns="['Repository', 'Description']"
+        :columns="[t('repository'), t('description')]"
       >
         <template #header-title>
-          <div>Repositories</div>
+          <div>{{ t("repositories") }}</div>
         </template>
 
         <template #row="props: { item: Repository }">
@@ -21,7 +21,7 @@
             </a>
           </div>
 
-          <div>{{ props.item.description }}</div>
+          <div>{{ t(props.item.description) }}</div>
         </template>
       </DataTable>
 
@@ -32,10 +32,10 @@
         columns-header="1fr"
         columns-data="contracts-columns-data"
         :rows="bundle.contracts"
-        :columns="['Contract', 'Description']"
+        :columns="[t('contract'), t('description')]"
       >
         <template #header-title>
-          <div>{{ bundle.name }}</div>
+          <div>{{ t(bundle.name) }}</div>
         </template>
 
         <template #row="props: { item: Contract }">
@@ -48,17 +48,15 @@
             </a>
           </div>
 
-          <div>{{ props.item.description }}</div>
+          <div>{{ t(props.item.description) }}</div>
         </template>
       </DataTable>
     </div>
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import DataTable from "@/Framework/DataTable.vue";
 import {
   DistributorUCrvAddress,
@@ -116,49 +114,49 @@ interface Repository {
 }
 
 const union: Bundle = {
-  name: "Union",
+  name: "union",
   contracts: [
     {
       contract: MultisigAddress,
-      description: "Multisig",
+      description: "multisig",
       gnosis: true,
     },
     {
       contract: TreasuryAddress,
-      description: "Treasury",
+      description: "treasury",
       gnosis: true,
     },
     {
       contract: TreasuryArbitrumAddress,
-      description: "Treasury Arbitrum",
+      description: "treasury-arbitrum",
       network: "arbitrum",
       gnosis: true,
     },
     {
       contract: last(UnionAddresses) || "",
-      description: "Zap V6",
+      description: "union-zap",
     },
     {
       contract: UnionAddresses[0],
-      description: "Forwarding Address",
+      description: "union-forward",
     },
   ],
 };
 
 const distributors: Bundle = {
-  name: "Distributors",
+  name: "distributors",
   contracts: [
     {
       contract: DistributorUCrvAddress,
-      description: "Merkle Distributor - uCRV",
+      description: "distributor-ucrv",
     },
     {
       contract: DistributorUFxsAddress,
-      description: "Merkle Distributor - uFXS",
+      description: "distributor-ufxs",
     },
     {
       contract: DistributorUCvxAddress,
-      description: "Merkle Distributor - uCVX",
+      description: "distributor-ucvx",
     },
   ],
 };
@@ -168,19 +166,19 @@ const ucvx: Bundle = {
   contracts: [
     {
       contract: UnionCvxVaultAddress,
-      description: "Vault",
+      description: "vault",
     },
     {
       contract: UCvxStrategyAddress,
-      description: "Strategy",
+      description: "strategy",
     },
     {
       contract: ZapsUCvxAddress,
-      description: "Zaps",
+      description: "zaps",
     },
     {
       contract: ZapsUCvxClaimAddress,
-      description: "Distributor Claim Zaps",
+      description: "zaps-claim",
     },
   ],
 };
@@ -190,11 +188,11 @@ const ucrv: Bundle = {
   contracts: [
     {
       contract: UnionCrvVaultAddress,
-      description: "Vault",
+      description: "vault",
     },
     {
       contract: ZapsUCrvAddress,
-      description: "Zaps",
+      description: "zaps",
     },
     {
       contract: ZapsUCrv2Address,
@@ -208,19 +206,19 @@ const ufxs: Bundle = {
   contracts: [
     {
       contract: UnionFxsVaultAddress,
-      description: "Vault",
+      description: "vault",
     },
     {
       contract: UFxsStrategyAddress,
-      description: "Strategy",
+      description: "strategy",
     },
     {
       contract: ZapsUFxsAddress,
-      description: "Zaps",
+      description: "zaps",
     },
     {
       contract: ZapsUFxsClaimAddress,
-      description: "Distributor Claim Zaps",
+      description: "zaps-claim",
     },
   ],
 };
@@ -230,27 +228,27 @@ const ubal: Bundle = {
   contracts: [
     {
       contract: UnionBalVaultAddress,
-      description: "Vault",
+      description: "vault",
     },
     {
       contract: UBalStrategyAddress,
-      description: "Strategy",
+      description: "strategy",
     },
     {
       contract: AuraHandlerAddress,
-      description: "Aura Handler",
+      description: "handler-aura",
     },
     {
       contract: BbUsdHandlerAddress,
-      description: "BBUSD Handler",
+      description: "handler-bbusd",
     },
     {
       contract: ZapsUBalAddress,
-      description: "Zaps",
+      description: "zaps",
     },
     {
       contract: UBalHarvester,
-      description: "Bot Harvester Zap",
+      description: "zap-harvester",
     },
   ],
 };
@@ -260,29 +258,29 @@ const vefunder: Bundle = {
   contracts: [
     {
       contract: veFunderGaugeFactoryAddress,
-      description: "Gauge Factory",
+      description: "gauge-factory",
     },
     {
       contract: veFunderGaugeController,
-      description: "Gauge Controller",
+      description: "gauge-controller",
     },
   ],
 };
 
 const registries: Bundle = {
-  name: "Registries",
+  name: "registries",
   contracts: [
     {
       contract: AssetRegistryAddress,
-      description: "Union - Allocation Registry",
+      description: "registry-union",
     },
     {
       contract: VotiumRegistryAddress,
-      description: "Votium - Registry",
+      description: "registry-votium",
     },
     {
       contract: SnapshotRegistryAddress,
-      description: "Snapshot - Registry",
+      description: "registry-snapshot",
     },
   ],
 };
@@ -302,7 +300,7 @@ const pirex: Bundle = {
 };
 
 const outdated: Bundle = {
-  name: "Outdated",
+  name: "outdated",
   contracts: [
     {
       contract: UnionAddresses[4],
@@ -348,18 +346,17 @@ const repositories: Repository[] = [
   {
     name: "Llama Airforce",
     url: "https://github.com/Llama-Airforce/Llama-Airforce",
-    description: "This website's front-end, excluding the Union",
+    description: "repo-laf",
   },
   {
     name: "Union Contracts",
     url: "https://github.com/convex-community/union_contracts",
-    description: "All deployed Union contracts and tests",
+    description: "repo-union",
   },
   {
     name: "Subgraphs",
     url: "https://github.com/convex-community/convex-subgraph",
-    description:
-      "The Graph subgraphs related to Curve, Convex, Votium and more",
+    description: "repo-graphs",
   },
 ];
 
@@ -376,12 +373,11 @@ const linkContract = (contract: Contract): string => {
         : `https://etherscan.io/address/${contract.contract}`;
   }
 };
+
+const { t } = useI18n();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .contracts {
@@ -422,3 +418,45 @@ const linkContract = (contract: Contract): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+repositories: Repositories
+repository: Repository
+description: Description
+contract: Contract
+
+repo-laf: This website's front-end, excluding the Union
+repo-union: All deployed Union contracts and tests
+repo-graphs: The Graph subgraphs related to Curve, Convex, Votium and more
+
+union: Union
+distributors: Distributors
+registries: Registries
+outdated: Outdated
+
+multisig: Multisig
+treasury: Treasury
+treasury-arbitrum: Treasury Arbitrum
+union-zap: Zap V6
+union-forward: Forwarding Address
+
+distributor-ucrv: Merkle Distributor - uCRV
+distributor-ufxs: Merkle Distributor - uFXS
+distributor-ucvx: Merkle Distributor - uCVX
+
+vault: Vault
+strategy: Strategy
+zaps: Zaps
+zaps-claim: Distributor Claim Zaps
+zap-harvester: Bot Harvester Zap
+
+handler-aura: Aura Handler
+handler-bbusd: BBUSD Handler
+
+gauge-factory: Gauge Factory
+gauge-controller: Gauge Controller
+
+registry-union: Union - Allocation Registry
+registry-votium: Votium - Registry
+registry-snapshot: Snapshot - Registry
+</i18n>
