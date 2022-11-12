@@ -25,10 +25,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import Tooltip from "@/Framework/Tooltip.vue";
 
 // Props
@@ -49,10 +46,7 @@ const {
 } = defineProps<Props>();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .kpi {

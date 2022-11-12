@@ -15,10 +15,7 @@
   </button>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { isDevelopment } from "@/Util/DevHelper";
 import { getProvider } from "@/Wallet/ProviderFactory";
 import { isMainnet } from "@/Wallet/WalletHelper";
@@ -65,10 +62,7 @@ const onClick = async (evt: Event): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 button {

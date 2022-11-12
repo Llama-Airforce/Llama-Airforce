@@ -2,10 +2,7 @@
   <slot></slot>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 // Props
 interface Props {
   header?: string;

@@ -26,10 +26,7 @@
   </Popper>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref } from "vue/macros";
 import Popper from "vue3-popper";
 
@@ -44,10 +41,7 @@ const { icon = "" } = defineProps<Props>();
 const show = $ref(false);
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .tooltip {
   display: flex;
   border: 0 !important;

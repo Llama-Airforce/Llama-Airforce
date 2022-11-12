@@ -27,10 +27,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch, useSlots } from "vue";
 import { $ref, $computed } from "vue/macros";
 import TabItem from "@/Framework/TabItem.vue";
@@ -76,10 +73,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .tab-view {

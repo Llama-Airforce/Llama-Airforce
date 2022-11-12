@@ -29,10 +29,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { useSlots } from "vue";
 import { $computed } from "vue/macros";
 import Collapsible from "@/Framework/Collapsible.vue";
@@ -83,10 +80,7 @@ const onClick = (): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .row {
   display: flex;

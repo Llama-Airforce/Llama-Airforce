@@ -11,10 +11,7 @@
   </Card>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { nextTick, onUpdated } from "vue";
 import Card from "@/Framework/Card.vue";
 
@@ -35,10 +32,7 @@ onUpdated(async (): Promise<void> => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .card-graph {

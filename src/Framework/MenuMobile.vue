@@ -48,10 +48,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useRoute } from "vue-router";
@@ -107,10 +104,7 @@ watch(
 );
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .menu-mobile {

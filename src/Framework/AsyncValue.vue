@@ -3,10 +3,7 @@
   }}{{ showUnit ? unit : "" }}
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { unit as unitF, round } from "@/Util/NumberHelper";

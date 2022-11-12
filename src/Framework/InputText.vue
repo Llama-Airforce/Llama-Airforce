@@ -38,10 +38,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
 
 // Props
@@ -93,10 +90,7 @@ const onInput = (evt: Event): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .input-text {
   display: flex;

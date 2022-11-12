@@ -41,10 +41,7 @@
   </header>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref } from "vue/macros";
 import MenuMobile from "@/Framework/MenuMobile.vue";
 import Wallet from "@/Wallet/Wallet.vue";
@@ -62,10 +59,7 @@ const onNavigated = (): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 @import "@/Styles/Hamburger.scss";
 

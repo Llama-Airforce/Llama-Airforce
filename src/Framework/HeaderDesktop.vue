@@ -86,10 +86,7 @@
   </header>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util/RouterHelper";
@@ -112,10 +109,7 @@ const planeX = $computed((): string => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 header {

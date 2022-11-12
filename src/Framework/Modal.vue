@@ -14,10 +14,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 // Props
 interface Props {
   show?: boolean;
@@ -31,10 +28,7 @@ const emit = defineEmits<{
 }>();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .modal {

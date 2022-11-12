@@ -9,10 +9,7 @@
   </component>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 
@@ -192,10 +189,7 @@ const onTransitionEnd = (event: TransitionEvent): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 [data-height-collapsible] {
   // Disabled (0ms from 280ms) for now for performance reasons.
   transition: height 0ms cubic-bezier(0.4, 0, 0.2, 1);

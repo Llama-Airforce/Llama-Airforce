@@ -32,10 +32,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 // Props
 interface Props {
   title?: string;
@@ -55,10 +52,7 @@ const {
 } = defineProps<Props>();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .card {

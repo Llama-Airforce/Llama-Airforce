@@ -16,10 +16,7 @@
   </li>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util/RouterHelper";
 // Props
@@ -35,10 +32,7 @@ const { icon = "", label, to } = defineProps<Props>();
 const route = useRoute();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 i {

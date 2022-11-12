@@ -8,10 +8,7 @@
   />
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 // Props
 interface Props {
   modelValue: number;
@@ -32,10 +29,7 @@ const onInput = (evt: Event): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 input {
   all: unset;

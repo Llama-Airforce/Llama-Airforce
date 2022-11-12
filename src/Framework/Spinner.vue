@@ -5,15 +5,9 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
-></script>
+<script setup lang="ts"></script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .lds-ripple {
   display: inline-block;

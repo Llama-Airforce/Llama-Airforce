@@ -6,12 +6,13 @@
       <div class="buttons">
         <Button
           class="no"
-          value="No"
+          :value="t('no')"
           @click="emit('no')"
         ></Button>
+
         <Button
           class="yes"
-          value="Yes"
+          :value="t('yes')"
           @click="emit('yes')"
         ></Button>
       </div>
@@ -19,10 +20,8 @@
   </Modal>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import Button from "@/Framework/Button.vue";
 import Card from "@/Framework/Card.vue";
 import Modal from "@/Framework/Modal.vue";
@@ -40,12 +39,12 @@ const emit = defineEmits<{
   (e: "yes"): void;
   (e: "no"): void;
 }>();
+
+// Methods
+const { t } = useI18n();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .modal {
@@ -72,3 +71,8 @@ const emit = defineEmits<{
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+yes: Yes
+no: No
+</i18n>

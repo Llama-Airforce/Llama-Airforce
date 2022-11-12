@@ -5,18 +5,12 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import HeaderDesktop from "@/Framework/HeaderDesktop.vue";
 import HeaderMobile from "@/Framework/HeaderMobile.vue";
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .headers {

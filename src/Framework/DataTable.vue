@@ -106,17 +106,15 @@
       v-else-if="!rowsMin"
       class="no-data"
     >
-      <slot name="no-data">No data :(</slot>
+      <slot name="no-data">{{ t("no-data") }}</slot>
     </div>
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onBeforeMount } from "vue";
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import DataTableRow from "@/Framework/DataTableRow.vue";
 import { SortOrder } from "@/Framework/SortOrder";
 
@@ -214,6 +212,8 @@ const onSelect = (data: unknown): void => {
 };
 
 // Methods
+const { t } = useI18n();
+
 /** Return whether the row below the given row's index is selected */
 const selectedBelow = (index: number): boolean => {
   const rowBelowIndex = index + 1;
@@ -282,10 +282,7 @@ const sortColumn = (index: number): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable {
@@ -453,3 +450,7 @@ const sortColumn = (index: number): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+no-data: No data :(
+</i18n>
