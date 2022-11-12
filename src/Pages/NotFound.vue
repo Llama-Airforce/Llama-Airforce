@@ -1,19 +1,17 @@
 <template>
   <div class="not-found">
-    Where are you going, pilot? Page not found, please return home fren.
+    {{ t("404") }}
     <img src="@/Assets/404.png" />
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
-></script>
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
 
-<style
-  lang="scss"
-  scoped
->
+const { t } = useI18n();
+</script>
+
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .not-found {
@@ -34,3 +32,7 @@
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+404: Where are you going, pilot? Page not found, please return home fren.
+</i18n>
