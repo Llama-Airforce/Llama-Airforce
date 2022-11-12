@@ -12,31 +12,13 @@
           />
         </router-link>
 
-        <div class="description">
-          Curve is a decentralized exchange liquidity pool on Ethereum designed
-          for extremely efficient stablecoin trading, but also supports volatile
-          crypto pairs that automatically manage concentrated liquidity for
-          liquidity providers.
-        </div>
-
+        <div class="description">{{ t("description-curve") }}</div>
         <div class="points">
           <ul>
-            <li>
-              Offers one of the deepest liquidity pools for DAI/USDC/USDT (3crv)
-              with the lowest amount of slippage.
-            </li>
-            <li>
-              Protocols can create their own stable or crypto pools, and can
-              even pair them against 3crv or other base pools.
-            </li>
-            <li>
-              Liquidity providers may be incentivized with CRV emissions through
-              governance votes.
-            </li>
-            <li>
-              Locking veCRV gives you both governance power and a share of the
-              protocol's weekly revenue.
-            </li>
+            <li>{{ t("point-curve-1") }}</li>
+            <li>{{ t("point-curve-2") }}</li>
+            <li>{{ t("point-curve-3") }}</li>
+            <li>{{ t("point-curve-4") }}</li>
           </ul>
         </div>
 
@@ -45,7 +27,7 @@
           class="visit"
         >
           <Button
-            value="Go to Curve"
+            :value="t('go-to-curve')"
             :primary="true"
           ></Button>
         </router-link>
@@ -62,29 +44,12 @@
           />
         </router-link>
 
-        <div class="description">
-          Convex simplifies maximizing your yields by offering what is known as
-          "communist boosties". Curve and Frax allow liquidity providers to
-          boost their CRV rewards, but this requires locking tokens which costs
-          a lot of gas. By incentivizing locking CRV and FXS on their platform,
-          it is possible for Convex to give everybody a share of these boosts
-          without locking.
-        </div>
-
+        <div class="description">{{ t("description-convex") }}</div>
         <div class="points">
           <ul>
-            <li>
-              Allows liquidity providers to receive boosted yields for a small
-              fee.
-            </li>
-            <li>
-              Offers cvxCRV and cvxFXS, liquid veCRV and veFXS tokens whose
-              revenue will always exceed that vanilla locking.
-            </li>
-            <li>
-              Offers CVX, a token that gives users governance rights, platform
-              fees and 'birbs'.
-            </li>
+            <li>{{ t("point-convex-1") }}</li>
+            <li>{{ t("point-convex-2") }}</li>
+            <li>{{ t("point-convex-3") }}</li>
           </ul>
         </div>
 
@@ -93,7 +58,7 @@
           class="visit"
         >
           <Button
-            value="Go to Convex"
+            :value="t('go-to-convex')"
             :primary="true"
           ></Button>
         </router-link>
@@ -110,31 +75,13 @@
           />
         </router-link>
 
-        <div class="description">
-          Votium is an incentives platform where vlCVX and veCRV holders can
-          receive compensation from buyers interested in amassing deep liquidity
-          through emission rewards. Delegating/Voting incurs no risk to user
-          funds, you always retain custody of your vlCVX and veCRV.
-        </div>
-
+        <div class="description">{{ t("description-votium") }}</div>
         <div class="points">
           <ul>
-            <li>
-              Allows protocols to buy CRV emissions through Convex's governance
-              system.
-            </li>
-            <li>
-              vlCVX holders are free to accept the incentive rewards to their
-              likings.
-            </li>
-            <li>
-              Rewards roll over to the next round and claiming immediately is
-              not required.
-            </li>
-            <li>
-              Delegating to votium.eth automates voting for the best $ / vlCVX
-              possible.
-            </li>
+            <li>{{ t("point-votium-1") }}</li>
+            <li>{{ t("point-votium-2") }}</li>
+            <li>{{ t("point-votium-3") }}</li>
+            <li>{{ t("point-votium-4") }}</li>
           </ul>
         </div>
 
@@ -143,7 +90,7 @@
           class="visit"
         >
           <Button
-            value="Go to Votium"
+            :value="t('go-to-votium')"
             :primary="true"
           ></Button>
         </router-link>
@@ -160,29 +107,13 @@
           />
         </router-link>
 
-        <div class="description">
-          By joining The Union you forward your bribe rewards to Llama Airforce,
-          we collectively claim them, swap all of them for cvxCRV, put it in an
-          auto-compounder and finally airdrop you the pounder shares.
-        </div>
-
+        <div class="description">{{ t("description-union") }}</div>
         <div class="points">
           <ul>
-            <li>
-              The Union does not hold custody of your CVX, you remain in full
-              control of your tokens.
-            </li>
-            <li>
-              Just like with Votium, the rewards roll over and you are not
-              required to claim immediately.
-            </li>
-            <li>
-              The airdropped rewards will auto-compound even when unclaimed.
-            </li>
-            <li>
-              By also delegating to votium.eth you don't even have to worry
-              about voting and maximizing your output.
-            </li>
+            <li>{{ t("point-union-1") }}</li>
+            <li>{{ t("point-union-2") }}</li>
+            <li>{{ t("point-union-3") }}</li>
+            <li>{{ t("point-union-4") }}</li>
           </ul>
         </div>
 
@@ -191,7 +122,7 @@
           class="visit"
         >
           <Button
-            value="Go to Union"
+            :value="t('go-to-union')"
             :primary="true"
           ></Button>
         </router-link>
@@ -200,18 +131,15 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import Button from "@/Framework/Button.vue";
 import Card from "@/Framework/Card.vue";
+
+const { t } = useI18n();
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .home {
@@ -312,3 +240,74 @@ import Card from "@/Framework/Card.vue";
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+go-to-curve: Go to Curve
+go-to-convex: Go to Convex
+go-to-votium: Go to Votium
+go-to-union: Go to Union
+
+description-curve:
+  Curve is a decentralized exchange liquidity pool on Ethereum designed
+  for extremely efficient stablecoin trading, but also supports volatile crypto pairs
+  that automatically manage concentrated liquidity for liquidity providers.
+
+point-curve-1:
+  Offers one of the deepest liquidity pools for DAI/USDC/USDT (3crv)
+  with the lowest amount of slippage.
+point-curve-2:
+  Protocols can create their own stable or crypto pools, and can even
+  pair them against 3crv or other base pools.
+point-curve-3:
+  Liquidity providers may be incentivized with CRV emissions through
+  governance votes.
+point-curve-4:
+  Locking veCRV gives you both governance power and a share of the protocol's
+  weekly revenue.
+
+description-convex:
+  Convex simplifies maximizing your yields by offering what is known
+  as "communist boosties". Curve and Frax allow liquidity providers to boost their
+  CRV rewards, but this requires locking tokens which costs a lot of gas. By incentivizing
+  locking CRV and FXS on their platform, it is possible for Convex to give everybody
+  a share of these boosts without locking.
+
+point-convex-1: Allows liquidity providers to receive boosted yields for a small fee.
+point-convex-2:
+  Offers cvxCRV and cvxFXS, liquid veCRV and veFXS tokens whose revenue
+  will always exceed that vanilla locking.
+point-convex-3:
+  Offers CVX, a token that gives users governance rights, platform fees
+  and 'birbs'.
+
+description-votium:
+  Votium is an incentives platform where vlCVX and veCRV holders
+  can receive compensation from buyers interested in amassing deep liquidity through
+  emission rewards. Delegating/Voting incurs no risk to user funds, you always retain
+  custody of your vlCVX and veCRV.
+
+point-votium-1:
+  Allows protocols to buy CRV emissions through Convex's governance
+  system.
+point-votium-2: vlCVX holders are free to accept the incentive rewards to their likings.
+point-votium-3:
+  Rewards roll over to the next round and claiming immediately is not
+  required.
+point-votium-4: Delegating to votium.eth automates voting for the best $ / vlCVX possible.
+
+description-union:
+  By joining The Union you forward your bribe rewards to Llama Airforce,
+  we collectively claim them, swap all of them for cvxCRV, put it in an auto-compounder
+  and finally airdrop you the pounder shares.
+
+point-union-1:
+  The Union does not hold custody of your CVX, you remain in full control
+  of your tokens.
+point-union-2:
+  Just like with Votium, the rewards roll over and you are not required
+  to claim immediately.
+point-union-3: The airdropped rewards will auto-compound even when unclaimed.
+point-union-4:
+  By also delegating to votium.eth you don't even have to worry about
+  voting and maximizing your output.
+</i18n>
