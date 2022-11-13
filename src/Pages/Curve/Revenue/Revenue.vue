@@ -12,15 +12,15 @@
       <div class="revenue-charts">
         <div class="chain-revenues">
           <GraphChainRevenue
-            title="Total revenue by chain"
+            :title="t('revenue-charts')"
             class="graph-chain-revenue"
           ></GraphChainRevenue>
         </div>
 
         <div class="chain-top-pools">
           <GraphChainTopPools
-            title="Top 10 pools by revenue (last 7 days)"
             class="graph-top-pools"
+            :title="t('chain-top-pools')"
             :chain-selected="selectedChain"
           ></GraphChainTopPools>
 
@@ -35,8 +35,8 @@
 
         <div class="historical-revenue">
           <GraphPoolRevenue
-            title="Historical revenue breakdown"
             class="graph-pool-revenue"
+            :title="t('historical-revenue')"
           ></GraphPoolRevenue>
         </div>
       </div>
@@ -44,11 +44,9 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import RevenueService, {
   ChainRevenueService,
   ChainTopPoolsRevenueService,
@@ -67,6 +65,8 @@ import Spinner from "@/Framework/Spinner.vue";
 const revenueService = new RevenueService(getHost());
 const chainRevenueService = new ChainRevenueService(getHost());
 const topPoolService = new ChainTopPoolsRevenueService(getHost());
+
+const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
@@ -129,10 +129,7 @@ const onSelectChain = (chain: Chain): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .pools {
@@ -237,3 +234,9 @@ const onSelectChain = (chain: Chain): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+revenue-charts: Total revenue by chain
+chain-top-pools: Top 10 pools by revenue (last 7 days)
+historical-revenue: Historical revenue breakdown
+</i18n>

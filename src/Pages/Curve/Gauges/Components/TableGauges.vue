@@ -4,7 +4,7 @@
     columns-header="1fr"
     columns-data="gauges-columns-data"
     :rows="gauges"
-    :columns="['', 'Name', 'TVL']"
+    :columns="['', t('name'), t('tvl')]"
     :sorting="true"
     :sorting-columns="['', 'name', 'tvl']"
     :sorting-columns-enabled="['name', 'tvl']"
@@ -14,7 +14,7 @@
     @sort-column="onSort"
   >
     <template #header-title>
-      <div>Curve Pools</div>
+      <div>{{ t("title") }}</div>
     </template>
 
     <template #row="props: { item: Gauge }">
@@ -46,11 +46,9 @@
   </DataTable>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import DataTable from "@/Framework/DataTable.vue";
 import { SortOrder } from "@/Framework/SortOrder";
@@ -66,6 +64,8 @@ interface Props {
 }
 
 const { expanded = [] } = defineProps<Props>();
+
+const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
@@ -97,10 +97,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-gauges {
@@ -139,3 +136,9 @@ const onSort = (columnName: string, order: SortOrder): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+name: Name
+tvl: TVL
+title: Curve Pools
+</i18n>

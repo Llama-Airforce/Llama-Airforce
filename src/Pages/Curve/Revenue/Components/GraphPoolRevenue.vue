@@ -7,10 +7,7 @@
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -129,16 +126,12 @@ const series = $computed((): Serie[] => {
 });
 
 // Methods
-
 const formatter = (x: number): string => {
   return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .pool-revenue {

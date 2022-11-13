@@ -4,35 +4,26 @@
       <div class="explanation">
         <Card>
           <div class="step-one">
-            <strong>veFunder</strong> process:
+            <span v-html="t('process')"></span>
             <ol>
-              <li>
-                Create a fundraising gauge contract that allows a receiver to
-                get a certain amount of CRV.
-              </li>
-              <li>
-                Request a vote to add the gauge to the controller.<br />When
-                passed, the newly created gauge can be voted on during gauge
-                votes and can then receive gauge emissions.
-              </li>
+              <li>{{ t("process-1") }}</li>
+              <li v-html="t('process-2')"></li>
             </ol>
           </div>
 
           <div class="step-two">
-            <strong>Gauge vote requirements:</strong>
+            <span v-html="t('requirements')"></span>
             <ol>
               <li>
-                New gauge votes must have a vote on the governance forum
+                {{ t("requirements-1a") }}
                 <a
                   href="https://gov.curve.fi/"
                   target="_blank"
                 >
-                  at this address
+                  {{ t("requirements-1b") }}
                 </a>
               </li>
-              <li>
-                You must have a minimum of 2,500 veCRV to create this vote
-              </li>
+              <li>{{ t("requirements-2") }}</li>
             </ol>
           </div>
         </Card>
@@ -46,14 +37,14 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import Card from "@/Framework/Card.vue";
 import DeployGauge from "@/Pages/Curve/VeFunder/Components/DeployGauge.vue";
 import GaugeVote from "@/Pages/Curve/VeFunder/Components/GaugeVote.vue";
+
+const { t } = useI18n();
 
 // Refs
 let gauge = $ref("");
@@ -64,10 +55,7 @@ const onGauge = (newGauge: string): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .ve-funder {
@@ -106,3 +94,18 @@ const onGauge = (newGauge: string): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+process: "<strong>veFunder</strong> process:"
+
+process-1: Create a fundraising gauge contract that allows a receiver to get a certain amount of CRV.
+process-2: Request a vote to add the gauge to the controller.<br />When
+  passed, the newly created gauge can be voted on during gauge
+  votes and can then receive gauge emissions.
+
+requirements: "<strong>Gauge vote requirements:</strong>"
+
+requirements-1a: New gauge votes must have a vote on the governance forum
+requirements-1b: at this address
+requirements-2: You must have a minimum of 2,500 veCRV to create this vote
+</i18n>

@@ -24,7 +24,7 @@
               v-if="props.idx === 0"
               class="description"
             >
-              Cumulative Volume
+              {{ t("search-description") }}
             </div>
             <div class="volume">
               <AsyncValue
@@ -55,12 +55,10 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted, onBeforeUnmount } from "vue";
 import { $computed, $ref } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import Pool from "@/Pages/Curve/Models/Pool";
 import PoolService from "@/Pages/Curve/Services/PoolService";
 import VolumeService from "@/Pages/Curve/Volume/Services/VolumeService";
@@ -79,6 +77,8 @@ const volumeService = new VolumeService(getHost());
 
 let isMounted = false;
 
+const { t } = useI18n();
+
 // Refs
 const store = useCurveStore();
 
@@ -86,21 +86,21 @@ let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
 let autoComplete = $ref(false);
 let loading = $ref(false);
-let placeholder = $ref("Loading pools, please wait...");
+let placeholder = $ref(t("search-loading"));
 
 onMounted(async (): Promise<void> => {
   isMounted = true;
 
   // Don't request new pools if there's already cached.
   if (store.pools.length > 0) {
-    placeholder = "Search for Curve pools";
+    placeholder = t("search-placeholder");
     return;
   }
 
   const resp = await minDelay(poolService.get());
   if (resp) {
     store.pools = resp;
-    placeholder = "Search for Curve pools";
+    placeholder = t("search-placeholder");
 
     /*
      * Select first pool by default if none given by the URL.
@@ -110,7 +110,7 @@ onMounted(async (): Promise<void> => {
       return;
     }
   } else {
-    placeholder = "Failed loading Curve pools";
+    placeholder = t("search-error");
   }
 });
 
@@ -181,10 +181,7 @@ const onSelect = (option: unknown): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .pools {
@@ -268,3 +265,10 @@ const onSelect = (option: unknown): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+search-loading: Loading pools, please wait...
+search-placeholder: Search for Curve pools
+search-error: Failed loading Curve pools
+search-description: Cumulative Volume
+</i18n>

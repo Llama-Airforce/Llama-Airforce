@@ -8,11 +8,9 @@
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Gauge from "@/Pages/Curve/Gauges/Models/Gauge";
@@ -38,11 +36,13 @@ interface Props {
 
 const { gaugeSelected } = defineProps<Props>();
 
+const { t } = useI18n();
+
 // Refs
 const store = useCurveStore();
 
 const title = $computed((): string => {
-  let title = "Emissions & Revenues";
+  let title = t("title");
   if (gaugeSelected) {
     title += ` - ${shorten(gaugeSelected.name)}`;
   }
@@ -134,11 +134,11 @@ const options = $computed((): unknown => {
           : 0;
 
         const data = [
-          `<div><b>Emissions</b>:</div><div>${formatterEmissions(
+          `<div><b>${t("emissions")}</b>:</div><div>${formatterEmissions(
             emissions
           )}</div>`,
-          `<div><b>Fees</b>:</div><div>${formatterFees(fees)}</div>`,
-          `<div><b>Ratio</b>:</div><div>${formatterRatio(
+          `<div><b>${t("fees")}</b>:</div><div>${formatterFees(fees)}</div>`,
+          `<div><b>${t("ratio")}</b>:</div><div>${formatterRatio(
             fees / emissions
           )}</div>`,
         ];
@@ -173,7 +173,7 @@ const series = $computed((): Serie[] => {
   ) as feeIndex;
   return [
     {
-      name: "Emissions",
+      name: t("emissions"),
       type: "line",
       data: aggregatedEmissions.map((s) => ({
         x: s.timeStamp * 1000,
@@ -181,7 +181,7 @@ const series = $computed((): Serie[] => {
       })),
     },
     {
-      name: "Fees",
+      name: t("fees"),
       type: "line",
       data: aggregatedEmissions.map((emissions) => ({
         x: emissions.timeStamp * 1000,
@@ -207,10 +207,7 @@ const formatterRatio = (x: number): string => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .emissions {
@@ -232,3 +229,10 @@ const formatterRatio = (x: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Emissions & Revenues
+emissions: Emissions
+fees: Fees
+ratio: Ratio
+</i18n>

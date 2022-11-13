@@ -7,11 +7,9 @@
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Curve/Models/Pool";
@@ -32,6 +30,8 @@ interface Props {
 }
 
 const { poolSelected } = defineProps<Props>();
+
+const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
@@ -85,7 +85,7 @@ const options = $computed((): unknown => {
         const volumes = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
 
         const data = [
-          `<div><b>Volume</b>:</div><div>${formatter(volumes)}</div>`,
+          `<div><b>${t("volume")}</b>:</div><div>${formatter(volumes)}</div>`,
         ];
 
         return data.join("");
@@ -97,7 +97,7 @@ const options = $computed((): unknown => {
 const series = $computed((): Serie[] => {
   return [
     {
-      name: "Volume",
+      name: t("volume"),
       type: "line",
       data: volumes.map((s) => ({
         x: s.timestamp * 1000,
@@ -114,10 +114,7 @@ const formatter = (x: number): string => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .volumes {
@@ -139,3 +136,7 @@ const formatter = (x: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+volume: Volume
+</i18n>

@@ -1,18 +1,16 @@
 <template>
   <CardGraph
     class="ratios"
-    title="Fees / Emissions Ratios"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
@@ -25,6 +23,8 @@ type Serie = {
   name: string;
   data: { x: number; y: number; ratio: number }[];
 };
+
+const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
@@ -138,7 +138,7 @@ const series = $computed((): Serie[] => {
 });
 
 // Methods
-const fill = <T,>(array: T[], num: number, empty: T): T[] => {
+const fill = <T>(array: T[], num: number, empty: T): T[] => {
   const diff = num - array.length;
   if (diff > 0) {
     return [...Array<T>(diff).fill(empty), ...array];
@@ -148,10 +148,7 @@ const fill = <T,>(array: T[], num: number, empty: T): T[] => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .emissions {
@@ -161,3 +158,7 @@ const fill = <T,>(array: T[], num: number, empty: T): T[] => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Fees / Emissions Ratios
+</i18n>

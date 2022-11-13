@@ -10,10 +10,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted, onBeforeUnmount } from "vue";
 import { $ref } from "vue/macros";
 import { useRoute, useRouter } from "vue-router";
@@ -123,10 +120,7 @@ const onSelected = async (gauge: Gauge): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .gauges {

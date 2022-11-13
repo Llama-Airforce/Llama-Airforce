@@ -30,10 +30,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
 import Select from "@/Framework/Select.vue";
@@ -100,10 +97,7 @@ const onChainSelect = (option: unknown): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .chain-select {

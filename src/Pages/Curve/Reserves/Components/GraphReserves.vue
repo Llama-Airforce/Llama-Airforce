@@ -8,11 +8,9 @@
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Curve/Models/Pool";
@@ -31,11 +29,13 @@ interface Props {
 
 const { poolSelected } = defineProps<Props>();
 
+const { t } = useI18n();
+
 // Refs
 const store = useCurveStore();
 
 const title = $computed((): string => {
-  let title = "Reserves";
+  let title = t("title");
   if (poolSelected) {
     title = shorten(poolSelected.name);
   }
@@ -86,7 +86,7 @@ const options = $computed((): unknown => {
         const tvl =
           x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
 
-        return `<div><b>TVL</b>:</div><div>${formatter(tvl)}</div>`;
+        return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
       },
     },
   });
@@ -110,10 +110,7 @@ const formatter = (y: number): string => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .reserves {
@@ -135,3 +132,8 @@ const formatter = (y: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Reserves
+tvl: TVL
+</i18n>

@@ -5,7 +5,7 @@
   >
     <div class="form">
       <div class="field">
-        <div class="label">Gauge Address:</div>
+        <div class="label">{{ t("gauge") }}:</div>
         <div class="value">
           <InputText
             v-model="gauge_"
@@ -15,7 +15,7 @@
       </div>
 
       <div class="field">
-        <div class="label">Vote Description</div>
+        <div class="label">{{ t("description") }}:</div>
         <div class="value">
           <InputText v-model="description"></InputText>
         </div>
@@ -24,7 +24,7 @@
 
     <Button
       class="action-button request"
-      value="Create Gauge Addition Vote"
+      :value="t('submit')"
       :disabled="!canRequest"
       :primary="true"
       :web3="true"
@@ -33,12 +33,10 @@
   </Card>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { notify } from "@kyvg/vue3-notification";
 import Card from "@/Framework/Card.vue";
 import Button from "@/Framework/Button.vue";
@@ -48,12 +46,11 @@ import {
   AragonVoting__factory,
   GaugeController__factory,
 } from "@/Contracts";
-import {
-  MultisigAddress,
-  veFunderGaugeController,
-} from "@/Util/Addresses";
+import { MultisigAddress, veFunderGaugeController } from "@/Util/Addresses";
 import { Signer, utils } from "ethers";
 import { getProvider } from "@/Wallet/ProviderFactory";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -69,7 +66,7 @@ const { gauge = "" } = defineProps<Props>();
 
 let creating = $ref(false);
 let gauge_ = $ref("");
-const description = $ref("Add a grant gauge: ");
+const description = $ref(t("placeholder"));
 
 const gaugePlaceholder = $computed((): string => {
   return MultisigAddress;
@@ -165,10 +162,7 @@ const createVote = async (signer: Signer): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .add-new {
   ::v-deep(.card-body) {
@@ -208,3 +202,10 @@ const createVote = async (signer: Signer): Promise<void> => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+gauge: Gauge Address
+description: Vote Description
+placeholder: "Add a grant gauge: "
+submit: Create Gauge Addition Vote
+</i18n>

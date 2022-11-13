@@ -9,17 +9,15 @@
     ></div>
 
     <div class="buttons">
-      <ButtonToggle v-model="invert">Invert</ButtonToggle>
+      <ButtonToggle v-model="invert">{{ t("invert") }}</ButtonToggle>
     </div>
   </Card>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import Pool from "@/Pages/Curve/Models/Pool";
 import Card from "@/Framework/Card.vue";
 import ButtonToggle from "@/Framework/ButtonToggle.vue";
@@ -47,6 +45,8 @@ interface Props {
 }
 
 const { poolSelected } = defineProps<Props>();
+
+const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
@@ -133,7 +133,7 @@ onMounted((): void => {
 });
 
 const title = $computed((): string => {
-  let title = "Price";
+  let title = t("price");
   if (poolSelected) {
     title = shorten(poolSelected.name);
   }
@@ -215,10 +215,7 @@ const formatterPrice = (x: number): string => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .candles {
@@ -234,3 +231,8 @@ const formatterPrice = (x: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Price
+invert: Invert
+</i18n>

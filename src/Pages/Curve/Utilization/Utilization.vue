@@ -6,10 +6,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted } from "vue";
 import GraphRatios from "@/Pages/Curve/Utilization/Components/GraphRatios.vue";
 import GaugeRatiosService from "@/Pages/Curve/Utilization/Services/GaugeRatiosService";
@@ -34,10 +31,7 @@ onMounted(async (): Promise<void> => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .overview {

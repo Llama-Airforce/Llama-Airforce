@@ -5,7 +5,7 @@
   >
     <div class="form">
       <div class="field">
-        <div class="label">Receiver:</div>
+        <div class="label">{{ t("receiver") }}:</div>
         <div class="value">
           <InputText
             v-model="receiver"
@@ -15,7 +15,7 @@
       </div>
 
       <div class="field">
-        <div class="label">CRV Amount (Max):</div>
+        <div class="label">{{ t("amount") }}:</div>
         <div class="value">
           <InputNumber
             v-model="amount"
@@ -28,7 +28,7 @@
 
     <Button
       class="action-button request"
-      value="Create Fundraising Gauge"
+      :value="t('submit')"
       :disabled="!isValid || deploying"
       :primary="true"
       :web3="true"
@@ -37,24 +37,21 @@
   </Card>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { notify } from "@kyvg/vue3-notification";
 import Card from "@/Framework/Card.vue";
 import Button from "@/Framework/Button.vue";
 import InputNumber from "@/Framework/InputNumber.vue";
 import InputText from "@/Framework/InputText.vue";
 import { GaugeFactory__factory } from "@/Contracts";
-import {
-  MultisigAddress,
-  veFunderGaugeFactoryAddress,
-} from "@/Util/Addresses";
+import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
 import { utils } from "ethers";
 import { numToBigNumber } from "@/Util/NumberHelper";
 import { getProvider } from "@/Wallet/ProviderFactory";
+
+const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
@@ -109,10 +106,7 @@ const execute = async (): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .add-new {
   ::v-deep(.card-body) {
@@ -152,3 +146,9 @@ const execute = async (): Promise<void> => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+receiver: Receiver
+amount: CRV Amount (Max)
+submit: Create Fundraising Gauge
+</i18n>
