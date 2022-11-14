@@ -7,15 +7,9 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
-></script>
+<script setup lang="ts"></script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 // Small hack because the current header is a placeholder for something real.
 .header {
   width: 100%;

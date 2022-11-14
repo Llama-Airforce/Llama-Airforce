@@ -1,18 +1,16 @@
 <template>
   <CardGraph
     class="tvl"
-    title="Total Value Locked"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Convex/Pools/Models/Pool";
@@ -22,6 +20,8 @@ import { useConvexStore } from "@/Pages/Convex/Store";
 import type { DataPoint } from "@/Util/DataPoint";
 
 type Serie = { name: string; data: { x: number; y: number }[] };
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -76,7 +76,7 @@ const options = $computed((): unknown => {
         const tvl =
           x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
 
-        return `<div><b>TVL</b>:</div><div>${formatter(tvl)}</div>`;
+        return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
       },
     },
   });
@@ -100,10 +100,7 @@ const formatter = (y: number): string => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .tvl {
@@ -125,3 +122,8 @@ const formatter = (y: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Total Value Locked
+tvl: TVL
+</i18n>

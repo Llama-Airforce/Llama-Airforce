@@ -1,18 +1,16 @@
 <template>
   <CardGraph
     class="apr"
-    title="Annual Percentage Rate"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Convex/Pools/Models/Pool";
@@ -26,6 +24,8 @@ type Serie = {
   name: string;
   data: { x: number; y: number; snapshot: Snapshot }[];
 };
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -82,10 +82,16 @@ const options = $computed((): unknown => {
             .snapshot;
 
         const data = [
-          `<div><b>Base</b>:</div><div>${formatter(snapshot.baseApr)}</div>`,
-          `<div><b>CRV</b>:</div><div>${formatter(snapshot.crvApr)}</div>`,
-          `<div><b>CVX</b>:</div><div>${formatter(snapshot.cvxApr)}</div>`,
-          `<div><b>Extra</b>:</div><div>${formatter(
+          `<div><b>${t("base")}</b>:</div><div>${formatter(
+            snapshot.baseApr
+          )}</div>`,
+          `<div><b>${t("crv")}</b>:</div><div>${formatter(
+            snapshot.crvApr
+          )}</div>`,
+          `<div><b>${t("cvx")}</b>:</div><div>${formatter(
+            snapshot.cvxApr
+          )}</div>`,
+          `<div><b>${t("extra")}</b>:</div><div>${formatter(
             snapshot.extraRewardsApr
           )}</div>`,
         ];
@@ -116,10 +122,7 @@ const formatter = (y: number): string => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .apr {
@@ -141,3 +144,11 @@ const formatter = (y: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Annual Percentage Rate
+base: Base
+crv: CRV
+cvx: CVX
+exta: Extra
+</i18n>

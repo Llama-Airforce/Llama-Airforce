@@ -1,6 +1,6 @@
 <template>
   <div class="revenue">
-    <div class="title">Revenue</div>
+    <div class="title">{{ t("revenue") }}</div>
 
     <div class="values">
       <div class="monthly">
@@ -11,7 +11,7 @@
             type="dollar"
           />
         </span>
-        <span class="description">Average monthly revenue</span>
+        <span class="description">{{ t("revenue-monthly") }}</span>
       </div>
 
       <div class="yearly">
@@ -22,19 +22,19 @@
             type="dollar"
           />
         </span>
-        <span class="description">Annualized revenue</span>
+        <span class="description">{{ t("revenue-annually") }}</span>
       </div>
     </div>
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -53,10 +53,7 @@ const revenueAnnually = $computed((): number | undefined => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .revenue {
@@ -100,3 +97,9 @@ const revenueAnnually = $computed((): number | undefined => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+revenue: Revenue
+revenue-monthly: Average monthly revenue
+revenue-annually: Annualized revenue
+</i18n>

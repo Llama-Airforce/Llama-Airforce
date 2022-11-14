@@ -1,6 +1,6 @@
 <template>
   <div class="farm">
-    <div class="title">Income</div>
+    <div class="title">{{ t("income") }}</div>
 
     <div class="values">
       <div class="cvx">
@@ -11,16 +11,16 @@
               :precision="0"
               type="percentage"
             />
-            APR
+            {{ t("apr") }}
           </span>
           <span class="description">
-            Locked CVX earns
+            {{ t("apr-1") }}
             <AsyncValue
               :value="cvxApr"
               :precision="0"
               type="percentage"
             />
-            APR with incentives.
+            {{ t("apr-2") }}
           </span>
         </div>
 
@@ -43,16 +43,16 @@
               :precision="0"
               type="percentage"
             />
-            APR
+            {{ t("apr") }}
           </span>
           <span class="description">
-            Staked cvxCRV earns
+            {{ t("staked") }}
             <AsyncValue
               :value="cvxCrvApr"
               :precision="0"
               type="percentage"
             />
-            APR.
+            {{ t("apr") }}.
           </span>
         </div>
       </div>
@@ -60,13 +60,13 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -85,10 +85,7 @@ const cvxCrvApr = $computed((): number | undefined => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .farm {
@@ -170,3 +167,13 @@ const cvxCrvApr = $computed((): number | undefined => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+income: Income
+apr: APR
+
+apr-1: Locked CVX earns
+apr-2: APR with incentives.
+
+staked: Staked cvxCRV earns
+</i18n>

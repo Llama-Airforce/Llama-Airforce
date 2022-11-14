@@ -10,10 +10,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import Header from "@/Pages/Convex/Flyer/Components/Header.vue";
@@ -40,10 +37,7 @@ onMounted(async (): Promise<void> => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .flyer {

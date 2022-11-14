@@ -4,7 +4,7 @@
     columns-header="1fr"
     columns-data="pools-columns-data"
     :rows="pools"
-    :columns="['', 'Name', 'APR', 'TVL']"
+    :columns="['', t('name'), t('apr'), t('tvl')]"
     :sorting="true"
     :sorting-columns="['', 'name', 'apr', 'tvl']"
     :sorting-columns-enabled="['name', 'apr', 'tvl']"
@@ -14,7 +14,7 @@
     @sort-column="onSort"
   >
     <template #header-title>
-      <div>Convex Pools</div>
+      <div>{{ t("title") }}</div>
     </template>
 
     <template #row="props: { item: Pool }">
@@ -57,11 +57,9 @@
   </DataTable>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import DataTable from "@/Framework/DataTable.vue";
 import { SortOrder } from "@/Framework/SortOrder";
@@ -72,6 +70,8 @@ import { shorten, icon, disabled } from "@/Util/PoolHelper";
 import { totalApr } from "@/Pages/Convex/Pools/Util/PoolHelper";
 import { useConvexStore } from "@/Pages/Convex/Store";
 import { orderBy } from "lodash";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -112,10 +112,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-pools {
@@ -160,3 +157,10 @@ const onSort = (columnName: string, order: SortOrder): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Convex Pools
+name: Name
+tvl: TVL
+apr: APR
+</i18n>

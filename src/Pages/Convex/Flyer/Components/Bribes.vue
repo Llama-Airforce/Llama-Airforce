@@ -1,40 +1,37 @@
 <template>
   <div class="bribes">
-    <div class="title">Incentives</div>
+    <div class="title">{{ t("incentives") }}</div>
     <ul>
+      <li>{{ t("description") }}</li>
       <li>
-        CVX acts as a union controlling CRV rewards for Curve LP pools. To
-        receive rewards, incentives must be paid to locked CVX holders.
-      </li>
-      <li>
-        CVX holders will potentially earn over
+        {{ t("annual-1") }}
         <AsyncValue
           :value="bribesIncomeAnnually"
           :precision="0"
           type="dollar"
         />
-        in incentives over a 1 year period.
+        {{ t("annual-2") }}
       </li>
       <li>
-        Incentives to CVX holders are very likely to reach
+        {{ t("biweek-1") }}
         <AsyncValue
           :value="bribesIncomeBiWeekly"
           :precision="0"
           type="dollar"
         />
-        biweekly in the coming weeks (based on total rewards paid by Votium app)
+        {{ t("biweek-2") }}
       </li>
     </ul>
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -53,10 +50,7 @@ const bribesIncomeBiWeekly = $computed((): number | undefined => {
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .bribes {
@@ -78,3 +72,15 @@ const bribesIncomeBiWeekly = $computed((): number | undefined => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+incentives: Incentives
+description: CVX acts as a union controlling CRV rewards for Curve LP pools. To
+  receive rewards, incentives must be paid to locked CVX holders.
+
+annual-1: CVX holders will potentially earn over
+annual-2: in incentives over a 1 year period.
+
+biweek-1: Incentives to CVX holders are very likely to reach
+biweek-2: biweekly in the coming weeks (based on total rewards paid by Votium app)
+</i18n>
