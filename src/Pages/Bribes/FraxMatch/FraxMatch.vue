@@ -48,12 +48,10 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted, onBeforeUnmount } from "vue";
 import { $ref } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import InputText from "@/Framework/InputText.vue";
 import Summary from "@/Pages/Bribes/FraxMatch/Components/Summary.vue";
 import GraphMatch from "@/Pages/Bribes/FraxMatch/Components/GraphMatch.vue";
@@ -71,13 +69,15 @@ let isMounted = false;
 
 const fraxMatchService = new FraxMatchService(getHost());
 
+const { t } = useI18n();
+
 // Refs
 let pool = $ref("");
 let pools: Pool[] = $ref([]);
 let epochs: EpochFrax[] = $ref([]);
 let autoComplete = $ref(false);
 let loading = $ref(false);
-let placeholder = $ref("Loading Frax pools with matches, please wait...");
+let placeholder = $ref(t("search-loading"));
 
 // Methods
 const filter = (input: string, option: unknown) => match(input, option as Pool);
@@ -89,7 +89,7 @@ onMounted(async (): Promise<void> => {
 
   if (resp) {
     pools = resp.pools;
-    placeholder = "Search for Frax pools with matches";
+    placeholder = t("search-placeholder");
 
     /*
      * Select first pool by default if none given by the URL.
@@ -99,7 +99,7 @@ onMounted(async (): Promise<void> => {
       return;
     }
   } else {
-    placeholder = "Failed loading Frax pools with matches";
+    placeholder = t("search-error");
   }
 });
 
@@ -144,10 +144,7 @@ const onSelect = (option: unknown): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .fraxmatch {
@@ -211,3 +208,9 @@ const onSelect = (option: unknown): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+search-loading: Loading Frax pools with matches, please wait...
+search-placeholder: Search for Frax pools with matches
+search-error: Failed loading Frax pools with matches
+</i18n>

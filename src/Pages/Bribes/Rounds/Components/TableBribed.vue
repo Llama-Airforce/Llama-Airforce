@@ -4,7 +4,7 @@
     columns-header="1fr"
     columns-data="bribed-columns-data"
     :rows="bribed"
-    :columns="['', 'Pool', `$/${vlAssetSymbol(protocol)}`, 'Total']"
+    :columns="['', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
     :sorting-columns="['', 'pool', 'vlasset', 'total']"
     :sorting-columns-enabled="['pool', 'vlasset', 'total']"
@@ -13,7 +13,7 @@
     @sort-column="onSort"
   >
     <template #header-title>
-      <div>All Pools</div>
+      <div>{{ t("title") }}</div>
     </template>
 
     <template #row="props: { item: Bribed }">
@@ -76,11 +76,9 @@
   </DataTable>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import DataTable from "@/Framework/DataTable.vue";
 import Tooltip from "@/Framework/Tooltip.vue";
@@ -94,6 +92,8 @@ import { getBribed } from "@/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
 import { icon } from "@/Util/PoolHelper";
 import { orderBy } from "lodash";
+
+const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
@@ -164,10 +164,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-bribed {
@@ -253,3 +250,9 @@ const onSort = (columnName: string, order: SortOrder): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: All Pools
+pool: Pool
+total: Total
+</i18n>

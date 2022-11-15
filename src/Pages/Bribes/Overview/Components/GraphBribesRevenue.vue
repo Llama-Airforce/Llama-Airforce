@@ -1,18 +1,16 @@
 <template>
   <CardGraph
     class="revenue"
-    title="Round by Round"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util/NumberHelper";
@@ -22,6 +20,8 @@ import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
 import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
 import type { Overview } from "@/Pages/Bribes/Models/Overview";
 import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+
+const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
@@ -102,7 +102,7 @@ const series = $computed(
   }[] => {
     return [
       {
-        name: "Revenue",
+        name: t("revenue"),
         type: "column",
         data: [...epochs]
           // Duplicate and order from old to new.
@@ -128,10 +128,7 @@ const series = $computed(
 );
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .revenue {
@@ -141,3 +138,8 @@ const series = $computed(
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Round by Round
+revenue: Revenue
+</i18n>

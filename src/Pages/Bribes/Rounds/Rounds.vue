@@ -20,10 +20,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onBeforeMount, onBeforeUnmount } from "vue";
 import { $computed } from "vue/macros";
 import { useRouter, useRoute } from "vue-router";
@@ -241,10 +238,7 @@ const initFromRouter = async (): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .bribes {

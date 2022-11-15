@@ -4,7 +4,7 @@
     columns-header="1fr auto"
     columns-data="personal-columns-data"
     :rows="bribedOrdered"
-    :columns="['', '%', 'Pool', `$/${vlAssetSymbol(protocol)}`, 'Total']"
+    :columns="['', '%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :selected-row="epoch"
     :sorting="true"
     :sorting-columns="['', 'percentage', 'pool', 'vlasset', 'total']"
@@ -15,7 +15,7 @@
   >
     <template #header-title>
       <div>
-        Personal Rewards
+        {{ t("title") }}
         <span v-if="bribedAmount">
           -
           <AsyncValue
@@ -71,7 +71,7 @@
     </template>
 
     <template #no-data>
-      <div v-if="loading">Loading {{ voterShort }}</div>
+      <div v-if="loading">{{ t("loading") }} {{ voterShort }}</div>
       <WalletConnectButton
         v-if="!connected"
         @connected="onConnected"
@@ -80,12 +80,10 @@
   </DataTable>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import DataTable from "@/Framework/DataTable.vue";
 import { SortOrder } from "@/Framework/SortOrder";
@@ -112,6 +110,8 @@ import { getHost } from "@/Services/Host";
 
 const snapshotService = new SnapshotService(getHost());
 const auraService = new AuraService(getHost());
+
+const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
@@ -277,10 +277,7 @@ watch(
 );
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-personal {
@@ -322,3 +319,10 @@ watch(
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Personal Rewards
+pool: Pool
+total: Total
+loading: Loading
+</i18n>

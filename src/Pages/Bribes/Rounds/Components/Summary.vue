@@ -2,8 +2,8 @@
   <div class="summary">
     <KPI
       class="round"
-      label="Round Number"
       tabindex="2"
+      :label="t('round-number')"
       :has-value="!!round"
       @click.stop="onRoundOpen"
       @blur="roundOpen = false"
@@ -33,7 +33,7 @@
     </KPI>
 
     <KPI
-      label="Deadline"
+      :label="t('deadline')"
       :value="date"
       :has-value="!!date"
     >
@@ -43,7 +43,7 @@
           target="_blank"
           class="vote-link"
         >
-          <span v-if="isFinished">Voting Ended</span>
+          <span v-if="isFinished">{{ t("voting-ended") }}</span>
           <span v-else><i class="far fa-clock"></i> {{ countdownString }}</span>
         </a>
       </template>
@@ -62,12 +62,10 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import KPI from "@/Framework/KPI.vue";
 import Select from "@/Framework/Select.vue";
@@ -82,6 +80,8 @@ import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
 import { countdown } from "@/Util/DateHelper";
 import { orderBy, reverse } from "lodash";
 import type { Product } from "@/Pages/Bribes/Models/Product";
+
+const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
@@ -182,10 +182,7 @@ const onRoundSelect = (option: unknown): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .summary {
@@ -234,3 +231,9 @@ const onRoundSelect = (option: unknown): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+round-number: Round Number
+deadline: Deadline
+voting-ended: Voting Ended
+</i18n>

@@ -4,7 +4,7 @@
     columns-header="1fr"
     columns-data="match-columns-data"
     :rows="epochsSorted"
-    :columns="['', 'Deadline', 'Native', `Frax`, 'Total']"
+    :columns="['', t('deadline'), t('native'), t(`frax`), t('total')]"
     :sorting="true"
     :sorting-columns="['', 'deadline', 'native', 'frax', 'total']"
     :sorting-columns-enabled="['deadline', 'native', 'frax', 'total']"
@@ -26,7 +26,7 @@
                   round(props.item)
                 }}</span>
                 <span v-else>
-                  <Tooltip icon="far fa-clock"> Ongoing </Tooltip>
+                  <Tooltip icon="far fa-clock"> {{ t("ongoing") }} </Tooltip>
                 </span>
               </a>
             </div>
@@ -81,18 +81,16 @@
               </div>
             </li>
           </ul> -->
-          No token breakdown yet
+          {{ t("no-breakdown") }}
         </div>
       </Tooltip>
     </template>
   </DataTable>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import DataTable from "@/Framework/DataTable.vue";
 import Tooltip from "@/Framework/Tooltip.vue";
@@ -106,6 +104,8 @@ import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 interface Props {
   epochs: EpochFrax[];
 }
+
+const { t } = useI18n();
 
 const { epochs = [] } = defineProps<Props>();
 
@@ -186,10 +186,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-match {
@@ -271,3 +268,12 @@ const onSort = (columnName: string, order: SortOrder): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+deadline: Deadline
+native: Native
+frax: Frax
+total: Total
+ongoing: Ongoing
+no-breakdown: No token breakdown yet
+</i18n>

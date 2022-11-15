@@ -1,7 +1,7 @@
 <template>
   <div class="summary">
     <KPI
-      label="Total"
+      :label="t('total')"
       :has-value="true"
     >
       <AsyncValue
@@ -12,7 +12,7 @@
     </KPI>
 
     <KPI
-      label="Match Ratio"
+      :label="t('match-ratio')"
       :has-value="true"
     >
       <AsyncValue
@@ -24,11 +24,9 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import KPI from "@/Framework/KPI.vue";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
@@ -36,6 +34,8 @@ import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 interface Props {
   epochs: EpochFrax[];
 }
+
+const { t } = useI18n();
 
 const { epochs = [] } = defineProps<Props>();
 
@@ -51,10 +51,7 @@ const total = $computed((): number => totalNative + totalFrax);
 const ratio = $computed((): number => (totalFrax / totalNative) * 100);
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .summary {
@@ -64,3 +61,8 @@ const ratio = $computed((): number => (totalFrax / totalNative) * 100);
   gap: 1.5rem;
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+total: Total
+match-ratio: Match Ratio
+</i18n>

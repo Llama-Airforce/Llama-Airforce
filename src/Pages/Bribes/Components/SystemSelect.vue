@@ -66,10 +66,7 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
 import KPI from "@/Framework/KPI.vue";
@@ -190,10 +187,7 @@ const onProtocolSelect = (option: unknown): void => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .system-selector {

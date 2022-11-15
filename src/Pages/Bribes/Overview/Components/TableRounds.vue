@@ -4,7 +4,7 @@
     columns-header="1fr"
     columns-data="bribes-columns-data"
     :rows="epochs"
-    :columns="['', 'Deadline', `$/${vlAssetSymbol(protocol)}`, 'Total']"
+    :columns="['', t('deadline'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
     :sorting-columns="['', 'deadline', 'vlasset', 'total']"
     :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
@@ -14,14 +14,11 @@
     @selected="onSelected"
   >
     <template #header-title>
-      <div>All Rounds</div>
+      <div>{{ t("all-rounds") }}</div>
     </template>
 
     <template #header-actions>
-      <Tooltip>
-        Dollar values for finished rounds are dollar values at the time of
-        snapshot ending.
-      </Tooltip>
+      <Tooltip>{{ t("tooltip") }}</Tooltip>
     </template>
 
     <template #row="props: { item: EpochOverview }">
@@ -36,7 +33,7 @@
         >
           <span v-if="isFinished(props.item)">{{ round(props.item) }}</span>
           <span v-else>
-            <Tooltip icon="far fa-clock"> Ongoing </Tooltip>
+            <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
           </span>
         </a>
       </div>
@@ -61,11 +58,9 @@
   </DataTable>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import DataTable from "@/Framework/DataTable.vue";
@@ -78,6 +73,8 @@ import { orderBy } from "lodash";
 import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
 import type { Overview } from "@/Pages/Bribes/Models/Overview";
 import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+
+const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
@@ -154,10 +151,7 @@ const onSelected = async (data: unknown): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-bribe-rounds {
@@ -193,3 +187,11 @@ const onSelected = async (data: unknown): Promise<void> => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+deadline: Deadline
+total: Total
+all-rounds: All Rounds
+tooltip: Dollar values for finished rounds are dollar values at the time of snapshot ending.
+ongoing: Ongoing
+</i18n>

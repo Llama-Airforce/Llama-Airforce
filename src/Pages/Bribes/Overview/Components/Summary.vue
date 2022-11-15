@@ -2,7 +2,7 @@
   <div class="summary">
     <KPI
       class="all-time-revenue"
-      label="All time revenue"
+      :label="t('all-time-revenue')"
       :has-value="!!totalRevenue"
     >
       <AsyncValue
@@ -14,7 +14,7 @@
 
     <KPI
       class="emissions-per-bribe"
-      label="Emissions / $1 spent on bribes"
+      :label="t('emissions')"
       :has-value="!!rewardPerDollarBribe"
       :tooltip="rewardsPerDollarBribeTooltip"
     >
@@ -39,11 +39,9 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import KPI from "@/Framework/KPI.vue";
 import { useBribesStore } from "@/Pages/Bribes/Store";
@@ -51,6 +49,8 @@ import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
 import type { Overview } from "@/Pages/Bribes/Models/Overview";
 import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
+
+const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
@@ -68,7 +68,7 @@ const protocol = $computed((): Protocol | null => {
 });
 
 const recordEarningsLabel = $computed((): string => {
-  return `Record earnings per ${vlAssetSymbol(protocol)}`;
+  return t("record-earnings", [vlAssetSymbol(protocol)]);
 });
 
 const totalRevenue = $computed((): number => {
@@ -97,14 +97,11 @@ const rewardsPerDollarBribeTooltip = $computed((): string => {
       tokens = "???";
   }
 
-  return `This statistic is for <u><strong>bribers</strong></u>:<br />It tells you how much gauge emission rewards (${tokens}) liquidity providers will get for each dollar spent on pool bribes.<br />A value above $1 means that it's cheaper to bribe compared to directly handing out liquidity mining rewards.`;
+  return t("tooltip", [tokens]);
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .summary {
@@ -134,3 +131,12 @@ const rewardsPerDollarBribeTooltip = $computed((): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+all-time-revenue: All time revenue
+emissions: Emissions / $1 spent on bribes
+record-earnings: Record earnings per {0}
+tooltip: "This statistic is for <u><strong>bribers</strong></u>:<br />
+  It tells you how much gauge emission rewards ({0}) liquidity providers will get for each dollar spent on pool bribes.<br />
+  A value above $1 means that it's cheaper to bribe compared to directly handing out liquidity mining rewards."
+</i18n>

@@ -1,18 +1,16 @@
 <template>
   <CardGraph
     class="matching"
-    :title="title"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util/NumberHelper";
@@ -24,6 +22,8 @@ type Serie = {
   data: number[];
 };
 
+const { t } = useI18n();
+
 // Props
 interface Props {
   epochs: EpochFrax[];
@@ -32,8 +32,6 @@ interface Props {
 const { epochs = [] } = defineProps<Props>();
 
 // Refs
-const title = "Round By Round";
-
 const bribesNative = $computed((): number[] =>
   epochs.map((epoch) => epoch.native)
 );
@@ -145,10 +143,7 @@ const optimalColumnWidthPercent = (numBars: number): number => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .matching {
@@ -170,3 +165,7 @@ const optimalColumnWidthPercent = (numBars: number): number => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Round by Round
+</i18n>

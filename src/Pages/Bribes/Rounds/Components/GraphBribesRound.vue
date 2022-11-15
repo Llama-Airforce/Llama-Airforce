@@ -1,18 +1,16 @@
 <template>
   <CardGraph
     class="bribes"
-    title="Rewards"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardGraph>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import CardGraph from "@/Framework/CardGraph.vue";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util/NumberHelper";
@@ -24,6 +22,8 @@ import type { DataPoint } from "@/Util/DataPoint";
 import type { Product } from "@/Pages/Bribes/Models/Product";
 
 type Serie = { name: string; data: number[] };
+
+const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
@@ -53,10 +53,7 @@ const bribes = $computed((): Bribe[] => {
   const stinkBid = protocol === "aura-bal" ? 0 : 2500;
 
   return (
-    (
-      store.epochs[platform][protocol].find((e) => e === epoch)
-        ?.bribes ?? []
-    )
+    (store.epochs[platform][protocol].find((e) => e === epoch)?.bribes ?? [])
       // Filter stink bids.
       .filter((bribe) => bribe.amountDollars > stinkBid)
   );
@@ -180,10 +177,7 @@ const optimalColumnWidthPercent = (numBars: number): number => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .bribes {
@@ -204,3 +198,7 @@ const optimalColumnWidthPercent = (numBars: number): number => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Rewards
+</i18n>
