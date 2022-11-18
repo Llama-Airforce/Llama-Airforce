@@ -1,0 +1,101 @@
+en:
+  apy: APY
+  tvl: TVL
+  submit: Submit
+  submitting: Submitting...
+
+  # Apy.vue
+  apy-info: "APY calculation assumes weekly compounding<br />and excludes the
+    following fees:"
+  fee-on-yield: "Fee on yield:"
+  caller-inventive: "Caller incentive (fee on yield):"
+  withdrawal-fee: "Withdrawal fee (on total deposit):"
+
+  # Balance.vue
+  your-balance: Your Balance
+
+  # PounderDetails.vue
+  claim-first: In order to withdraw the requested amount you first need to claim
+    your Union rewards
+
+  # PounderInput.vue
+  balance: "Balance:"
+  max: Max
+  dollars: "Dollars:"
+
+  # Balance.vue
+  rewards-balance: Rewards Balance ($)
+
+  # Frozen.vue
+  frozen: Bribe rewards are being processed, balances are temporarily frozen and
+    show $0. No panik.
+
+  # Deadline.vue
+  membership-activation: New memberships will activate in {0}
+
+  # Delegation.vue
+  delegate: Delegate
+  delegating: Delegating...
+  delegated: You're Delegated to Votium
+  not-delegated: You're Not Delegated to Votium
+  delegation-advice:
+    Delegating to votium both automates voting and ensures you get the
+    highest $/vlCVX possible.
+
+  # Claim.vue
+  claim-notice:
+    Your unclaimed balance is already auto-compounding, so claiming is
+    optional.
+  withdraw-as: "Withdraw as:"
+  withdraw-as-token: Withdraw as {0}
+  nothing: Nothing to claim
+  claim-info: If you change the 'withdraw as' asset, we will swap your
+    {0} for the chosen asset before depositing in your wallet.
+    {0} is a share token whose number stays constant. The
+    underlying {1} value will grow as it compounds.
+
+  # Join.vue
+  title: Welcome to The Union
+  join-1:
+    Rising Ethereum gas costs, CVX locker dilution and an increasing amount
+    of different Votium reward tokens makes it harder and harder for the
+    small-time player to join in on the Votium pool parties and make a
+    profit.
+  join-2:
+    It is time for the working class to unionize and collectively pool their
+    rewards together and convert it into a single claimable asset without
+    wastefully burning profits, while also turbo charging the flywheel we
+    all love so dearly.
+  join-3: By joining The Union we will take care of your bribe rewards and
+    consolidate them into auto compounded cvxCRV.
+  modal-title: Membership of the Union
+  no-lock: You have not locked any CVX yet. Are you sure want to join the Union?
+  join: Join the Union
+  joining: Joining ...
+  already-forwarded: Already forwarded to another address
+  forwarding-in-progress: Address forwarding expiration in progress
+
+  # ModalSlippage.vue
+  price-modal-title: Price control
+  percentage: Percentage
+  min-amount: Min Amount
+
+  # Locks.vue
+  nothing-locked: You do not have any CVX locked for the upcoming round
+
+  # Membership.vue
+  member: You're a member of The Union
+  no-member: You're not a member of The Union
+  leave: Leave The Union
+  leave-title: Membership of the Union
+  leave-confirmation: Are you sure you want to leave The Union?
+  leave-notice:
+    When you leave you will not be able to rejoin until at least one round
+    has passed.
+  rejoin: Rejoin The Union
+  active-in: Membership active in {0}
+
+  # Pounders.vue
+  pounders-info:
+    Union auto-compounders makes life for hard working llamas just a little
+    bit easier to manage.
