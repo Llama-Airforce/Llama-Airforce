@@ -137,7 +137,8 @@
   {
     "inputs": [
       { "internalType": "uint256", "name": "_minAmountOut", "type": "uint256" },
-      { "internalType": "address", "name": "_to", "type": "address" }
+      { "internalType": "address", "name": "_to", "type": "address" },
+      { "internalType": "bool", "name": "_lock", "type": "bool" }
     ],
     "name": "depositFromEth",
     "outputs": [],
@@ -152,7 +153,8 @@
         "type": "uint256[2]"
       },
       { "internalType": "uint256", "name": "_minAmountOut", "type": "uint256" },
-      { "internalType": "address", "name": "_to", "type": "address" }
+      { "internalType": "address", "name": "_to", "type": "address" },
+      { "internalType": "bool", "name": "_lock", "type": "bool" }
     ],
     "name": "depositFromUnderlyingAssets",
     "outputs": [],
@@ -165,7 +167,8 @@
       { "internalType": "uint256", "name": "_minAmountOut", "type": "uint256" },
       { "internalType": "address", "name": "_router", "type": "address" },
       { "internalType": "address", "name": "_inputToken", "type": "address" },
-      { "internalType": "address", "name": "_to", "type": "address" }
+      { "internalType": "address", "name": "_to", "type": "address" },
+      { "internalType": "bool", "name": "_lock", "type": "bool" }
     ],
     "name": "depositViaUniV2EthPair",
     "outputs": [],

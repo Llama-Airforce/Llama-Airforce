@@ -40,9 +40,9 @@ export interface ZapsUBalInterface extends utils.Interface {
     "bptDepositor()": FunctionFragment;
     "claimFromVaultAsUnderlying(uint256,uint256,uint256,address,bool)": FunctionFragment;
     "claimFromVaultViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
-    "depositFromEth(uint256,address)": FunctionFragment;
-    "depositFromUnderlyingAssets(uint256[2],uint256,address)": FunctionFragment;
-    "depositViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
+    "depositFromEth(uint256,address,bool)": FunctionFragment;
+    "depositFromUnderlyingAssets(uint256[2],uint256,address,bool)": FunctionFragment;
+    "depositViaUniV2EthPair(uint256,uint256,address,address,address,bool)": FunctionFragment;
     "setApprovals()": FunctionFragment;
     "vault()": FunctionFragment;
   };
@@ -131,14 +131,19 @@ export interface ZapsUBalInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromEth",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromUnderlyingAssets",
     values: [
       [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
     ]
   ): string;
   encodeFunctionData(
@@ -148,7 +153,8 @@ export interface ZapsUBalInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
     ]
   ): string;
   encodeFunctionData(
@@ -291,6 +297,7 @@ export interface ZapsUBal extends BaseContract {
     depositFromEth(
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -298,6 +305,7 @@ export interface ZapsUBal extends BaseContract {
       _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -307,6 +315,7 @@ export interface ZapsUBal extends BaseContract {
       _router: PromiseOrValue<string>,
       _inputToken: PromiseOrValue<string>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -362,6 +371,7 @@ export interface ZapsUBal extends BaseContract {
   depositFromEth(
     _minAmountOut: PromiseOrValue<BigNumberish>,
     _to: PromiseOrValue<string>,
+    _lock: PromiseOrValue<boolean>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -369,6 +379,7 @@ export interface ZapsUBal extends BaseContract {
     _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
     _minAmountOut: PromiseOrValue<BigNumberish>,
     _to: PromiseOrValue<string>,
+    _lock: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -378,6 +389,7 @@ export interface ZapsUBal extends BaseContract {
     _router: PromiseOrValue<string>,
     _inputToken: PromiseOrValue<string>,
     _to: PromiseOrValue<string>,
+    _lock: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -433,6 +445,7 @@ export interface ZapsUBal extends BaseContract {
     depositFromEth(
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -440,6 +453,7 @@ export interface ZapsUBal extends BaseContract {
       _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -449,6 +463,7 @@ export interface ZapsUBal extends BaseContract {
       _router: PromiseOrValue<string>,
       _inputToken: PromiseOrValue<string>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -505,6 +520,7 @@ export interface ZapsUBal extends BaseContract {
     depositFromEth(
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -512,6 +528,7 @@ export interface ZapsUBal extends BaseContract {
       _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -521,6 +538,7 @@ export interface ZapsUBal extends BaseContract {
       _router: PromiseOrValue<string>,
       _inputToken: PromiseOrValue<string>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -581,6 +599,7 @@ export interface ZapsUBal extends BaseContract {
     depositFromEth(
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -588,6 +607,7 @@ export interface ZapsUBal extends BaseContract {
       _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
       _minAmountOut: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -597,6 +617,7 @@ export interface ZapsUBal extends BaseContract {
       _router: PromiseOrValue<string>,
       _inputToken: PromiseOrValue<string>,
       _to: PromiseOrValue<string>,
+      _lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
