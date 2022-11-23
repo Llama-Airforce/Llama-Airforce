@@ -73,7 +73,8 @@ module.exports = {
     "vue/singleline-html-element-content-newline": "off",
     "vue/html-self-closing": "off",
     "vue/no-setup-props-destructure": "off",
-    "vue/multi-word-component-names": "off"
+    "vue/multi-word-component-names": "off",
+    "vue/no-v-html": "off"
   },
   overrides: [
     {
