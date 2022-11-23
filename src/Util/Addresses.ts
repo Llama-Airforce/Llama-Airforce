@@ -54,7 +54,8 @@ export const ZapsUCrv2Address = "0xaaf75554249209114ced07027c67bee7cfb1f29c";
 export const ZapsUFxsAddress = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
 export const ZapsUFxsClaimAddress =
   "0x56e9db574c8d5015d198671cbf1200b6bb2ed944";
-export const ZapsUBalAddress = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
+export const ZapsUBalAddress = "0xbda1daacd2a5d7770edbdf9c6039861cad83ac02";
+export const ZapsUBalAddressOld = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
 export const ZapsUCvxAddress = "0x6753f23905f15376429e6f0c381fcc4862e48222";
 export const ZapsUCvxClaimAddress =
   "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
