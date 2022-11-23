@@ -1,8 +1,6 @@
 import path from "path";
 import process from "process";
 import { defineConfig, loadEnv } from "vite";
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'url';
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
@@ -13,7 +11,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [vue({ reactivityTransform: true }), vueI18n({
-      include: resolve(dirname(fileURLToPath(import.meta.url)), './locales/**'),
+      include: path.resolve(__dirname, './src/locales/**')
     })],
     server: {
       port: 8080,
