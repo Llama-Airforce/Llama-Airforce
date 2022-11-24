@@ -133,7 +133,7 @@ onMounted((): void => {
 });
 
 const title = $computed((): string => {
-  let title = t("price");
+  let title = t("title");
   if (poolSelected) {
     title = shorten(poolSelected.name);
   }
