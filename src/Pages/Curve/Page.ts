@@ -45,24 +45,36 @@ export const pageCurve: Page = {
   menuHeader: "headers/curve.png",
   menuItems: [
     {
-      to: "/curve/gauges",
       icon: "fas fa-chart-pie",
-      label: "Gauges",
+      label: "Pools",
+      children: [
+        {
+          to: "/curve/gauges",
+          label: "Gauges",
+        },
+        {
+          to: "/curve/prices",
+          label: "Prices",
+        },
+        {
+          to: "/curve/reserves",
+          label: "Reserves",
+        },
+        {
+          to: "/curve/volume",
+          label: "Volume",
+        },
+      ],
     },
     {
-      to: "/curve/prices",
-      icon: "fas fa-chart-line",
-      label: "Prices",
-    },
-    {
-      to: "/curve/reserves",
-      icon: "fas fa-balance-scale",
-      label: "Reserves",
-    },
-    {
-      to: "/curve/volume",
-      icon: "fa fa-exchange",
-      label: "Volume",
+      icon: "fas fa-funnel-dollar",
+      label: "DAO",
+      children: [
+        {
+          to: "/curve/vefunder",
+          label: "veFunder",
+        },
+      ],
     },
     {
       to: "/curve/revenue",
@@ -73,11 +85,6 @@ export const pageCurve: Page = {
       to: "/curve/utilization",
       icon: "fas fa-burn",
       label: "Utilization",
-    },
-    {
-      to: "/curve/vefunder",
-      icon: "fas fa-funnel-dollar",
-      label: "veFunder",
     },
   ],
 };

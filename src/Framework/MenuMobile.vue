@@ -36,9 +36,7 @@
           :key="menuItem.label"
         >
           <MenuItem
-            :to="menuItem.to"
-            :icon="menuItem.icon"
-            :label="menuItem.label"
+            :item="menuItem"
             @click="emit('navigated')"
           >
           </MenuItem>
