@@ -6,6 +6,10 @@
       </div>
 
       <Wallet class="wallet"></Wallet>
+      <SelectLanguage
+        class="language"
+        direction="down"
+      ></SelectLanguage>
 
       <nav class="support">
         <ul>
@@ -45,6 +49,7 @@
 import { $ref } from "vue/macros";
 import MenuMobile from "@/Framework/MenuMobile.vue";
 import Wallet from "@/Wallet/Wallet.vue";
+import SelectLanguage from "@/Framework/SelectLanguage.vue";
 
 // Vars
 let menuOpen = $ref(false);
@@ -73,6 +78,7 @@ header {
   > .header-mobile {
     display: flex;
     align-items: center;
+    gap: 1rem;
 
     height: 65px;
     width: 100%;
@@ -98,6 +104,10 @@ header {
 
     > .wallet {
       flex-grow: 1;
+    }
+
+    > .language {
+      width: 10rem;
     }
 
     > .support {

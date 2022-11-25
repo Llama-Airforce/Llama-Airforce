@@ -21,10 +21,10 @@
         </ul>
       </nav>
 
-      <Wallet
-        v-if="hasMenu"
-        class="wallet"
-      ></Wallet>
+      <div class="bottom">
+        <SelectLanguage></SelectLanguage>
+        <Wallet v-if="hasMenu"></Wallet>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ import { $computed } from "vue/macros";
 import { useRoute } from "vue-router";
 import MenuItem from "@/Framework/MenuItem.vue";
 import Wallet from "@/Wallet/Wallet.vue";
+import SelectLanguage from "@/Framework/SelectLanguage.vue";
 import type { Page } from "@/Pages/Page";
 import { subIsActive } from "@/Util/RouterHelper";
 import { usePageStore } from "@/Pages/Store";
@@ -101,8 +102,12 @@ const hasMenu = $computed((): boolean => {
       }
     }
 
-    > .wallet {
+    > .bottom {
       position: fixed;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
       bottom: 2rem;
       width: $menu-width;
     }
