@@ -6,7 +6,7 @@ import CurveReserves from "@/Pages/Curve/Reserves/Reserves.vue";
 import CurveVolume from "@/Pages/Curve/Volume/Volume.vue";
 import CurveRevenue from "@/Pages/Curve/Revenue/Revenue.vue";
 import CurveUtilization from "@/Pages/Curve/Utilization/Utilization.vue";
-import CurveVeFunder from "@/Pages/Curve/VeFunder/VeFunder.vue";
+import CurveDaoVeFunder from "@/Pages/Curve/DAO/VeFunder/VeFunder.vue";
 
 export const pageCurve: Page = {
   title: "Curve",
@@ -40,7 +40,12 @@ export const pageCurve: Page = {
       component: CurveRevenue,
     },
     { path: "/curve/utilization/", component: CurveUtilization },
-    { path: "/curve/vefunder/", component: CurveVeFunder },
+    { path: "/curve/vefunder/", redirect: { name: "curvevefunder" } },
+    {
+      path: "/curve/dao/vefunder/",
+      name: "curvevefunder",
+      component: CurveDaoVeFunder,
+    },
   ],
   menuHeader: "headers/curve.png",
   menuItems: [
@@ -71,7 +76,7 @@ export const pageCurve: Page = {
       label: "DAO",
       children: [
         {
-          to: "/curve/vefunder",
+          to: "/curve/dao/vefunder",
           label: "veFunder",
         },
       ],

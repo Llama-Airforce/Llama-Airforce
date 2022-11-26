@@ -41,8 +41,8 @@
 import { $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import Card from "@/Framework/Card.vue";
-import DeployGauge from "@/Pages/Curve/VeFunder/Components/DeployGauge.vue";
-import GaugeVote from "@/Pages/Curve/VeFunder/Components/GaugeVote.vue";
+import DeployGauge from "@/Pages/Curve/DAO/VeFunder/Components/DeployGauge.vue";
+import GaugeVote from "@/Pages/Curve/DAO/VeFunder/Components/GaugeVote.vue";
 
 const { t } = useI18n();
 
