@@ -3,14 +3,53 @@
     class="kpi"
     :class="{ disabled: !hasValue }"
   >
-    <div class="value">
+    <div
+      class="value-container"
+      :class="{ underline: tooltipType === 'underline' }"
+    >
       <slot>
-        <span v-if="hasValue">{{ value }}</span>
-        <span v-else>?</span>
+        <Tooltip v-if="tooltip && tooltipType === 'underline'">
+          <template #item>
+            <span
+              v-if="hasValue"
+              class="value"
+            >
+              {{ value }}
+            </span>
+
+            <span
+              v-else
+              class="value"
+            >
+              ?
+            </span>
+          </template>
+
+          <slot name="tooltip">
+            <span v-html="tooltip"></span>
+          </slot>
+        </Tooltip>
+
+        <template v-else>
+          <span
+            v-if="hasValue"
+            class="value"
+          >
+            {{ value }}
+          </span>
+
+          <span
+            v-else
+            class="value"
+          >
+            ?
+          </span>
+        </template>
       </slot>
-      <!-- eslint-disable vue/no-v-html -->
-      <Tooltip v-if="tooltip"><span v-html="tooltip"></span></Tooltip>
-      <!-- eslint-enable -->
+
+      <Tooltip v-if="tooltip && tooltipType === 'icon'">
+        <span v-html="tooltip"></span>
+      </Tooltip>
     </div>
 
     <div class="labels">
@@ -33,6 +72,7 @@ interface Props {
   label?: string;
   labelSecond?: string;
   tooltip?: string;
+  tooltipType?: "icon" | "underline";
   value?: unknown;
   hasValue?: boolean;
 }
@@ -41,6 +81,7 @@ const {
   label = "",
   labelSecond = "",
   tooltip = "",
+  tooltipType = "icon",
   value,
   hasValue = false,
 } = defineProps<Props>();
@@ -78,7 +119,8 @@ const {
     }
   }
 
-  > .value {
+  .value-container,
+  .value {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -86,6 +128,10 @@ const {
     color: white;
     font-size: 1.25rem;
     font-weight: bold;
+
+    &.underline {
+      border-bottom: dotted 2px lighten(#303034, 12%);
+    }
 
     .tooltip {
       color: $text;

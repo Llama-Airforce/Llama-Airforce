@@ -6,6 +6,9 @@ import CurveReserves from "@/Pages/Curve/Reserves/Reserves.vue";
 import CurveVolume from "@/Pages/Curve/Volume/Volume.vue";
 import CurveRevenue from "@/Pages/Curve/Revenue/Revenue.vue";
 import CurveUtilization from "@/Pages/Curve/Utilization/Utilization.vue";
+
+import CurveDaoOverview from "@/Pages/Curve/DAO/Overview/Overview.vue";
+import CurveDaoProposals from "@/Pages/Curve/DAO/Proposals/Proposals.vue";
 import CurveDaoVeFunder from "@/Pages/Curve/DAO/VeFunder/VeFunder.vue";
 
 export const pageCurve: Page = {
@@ -40,11 +43,22 @@ export const pageCurve: Page = {
       component: CurveRevenue,
     },
     { path: "/curve/utilization/", component: CurveUtilization },
+
     { path: "/curve/vefunder/", redirect: { name: "curvevefunder" } },
     {
       path: "/curve/dao/vefunder/",
       name: "curvevefunder",
       component: CurveDaoVeFunder,
+    },
+    {
+      path: "/curve/dao/overview/",
+      name: "curvedaooverview",
+      component: CurveDaoOverview,
+    },
+    {
+      path: "/curve/dao/proposals/",
+      name: "curvedaoporposals",
+      component: CurveDaoProposals,
     },
   ],
   menuHeader: "headers/curve.png",
@@ -75,6 +89,14 @@ export const pageCurve: Page = {
       icon: "fas fa-funnel-dollar",
       label: "DAO",
       children: [
+        {
+          to: "/curve/dao/overview",
+          label: "Overview",
+        },
+        {
+          to: "/curve/dao/proposals",
+          label: "Proposals",
+        },
         {
           to: "/curve/dao/vefunder",
           label: "veFunder",
