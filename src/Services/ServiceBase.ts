@@ -4,12 +4,11 @@ import { ClassConstructor, plainToClass } from "class-transformer";
 export const hostDev = "https://localhost:7019";
 export const hostProd = "https://api.llama.airforce/";
 
-export async function fetch<T>(
+async function fetchWork(
   url: string,
-  type: ClassConstructor<T>,
   body?: Record<string, unknown>
-): Promise<T> {
-  const res = await crossFetch(url, {
+): Promise<Response> {
+  return await crossFetch(url, {
     method: body ? "POST" : "GET",
     headers: {
       Accept: "application/json",
@@ -17,26 +16,34 @@ export async function fetch<T>(
     },
     body: JSON.stringify(body),
   });
+}
 
+export async function fetchType<T>(
+  url: string,
+  body?: Record<string, unknown>
+): Promise<T> {
+  const res = await fetchWork(url, body);
   const json = (await res.json()) as T;
 
-  return plainToClass(type, json);
+  return json;
+}
+
+export async function fetchClass<T>(
+  url: string,
+  type: ClassConstructor<T>,
+  body?: Record<string, unknown>
+): Promise<T> {
+  return plainToClass(type, await fetchType<T>(url, body));
 }
 
 export async function fetchText(
   url: string,
   body?: Record<string, unknown>
 ): Promise<string> {
-  const res = await crossFetch(url, {
-    method: body ? "POST" : "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const res = await fetchWork(url, body);
+  const text = await res.text();
 
-  return await res.text();
+  return text;
 }
 
 export default class ServiceBase {
@@ -46,12 +53,19 @@ export default class ServiceBase {
     this.host = host;
   }
 
+  public async fetchType<T>(
+    url: string,
+    body?: Record<string, unknown>
+  ): Promise<T> {
+    return fetchType<T>(url, body);
+  }
+
   public async fetch<T>(
     url: string,
     type: ClassConstructor<T>,
     body?: Record<string, unknown>
   ): Promise<T> {
-    return fetch(url, type, body);
+    return fetchClass(url, type, body);
   }
 
   public async fetchArray<T>(

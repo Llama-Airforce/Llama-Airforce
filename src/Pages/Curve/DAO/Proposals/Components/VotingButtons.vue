@@ -27,27 +27,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import Button from "@/Framework/Button.vue";
-import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
-import type { Results } from "@/Pages/Curve/DAO/Proposals/Models/Results";
 
 const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
-
-const results: Results = {
-  token: "veCRV",
-  choices: [
-    { label: "Yes", amount: 453453 },
-    { label: "No", amount: 151151 },
-  ],
-};
-
-// Refs
 </script>
 
 <style lang="scss" scoped>

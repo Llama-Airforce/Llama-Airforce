@@ -41,7 +41,7 @@ const { active = 0 } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "tab", tab: typeof TabItem): void;
+  (e: "tab", params: { tab: typeof TabItem; index: number }): void;
 }>();
 
 // Refs
@@ -62,7 +62,7 @@ watch(
   () => active,
   (newActive): void => {
     tabActive = newActive;
-    emit("tab", tabs[tabActive]);
+    emit("tab", { tab: tabs[tabActive], index: tabActive });
   },
   { immediate: true }
 );
@@ -70,6 +70,7 @@ watch(
 // Events
 const onTabClick = (_tab: typeof TabItem, index: number): void => {
   tabActive = index;
+  emit("tab", { tab: tabs[tabActive], index: tabActive });
 };
 </script>
 

@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
+import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import KPI from "@/Framework/KPI.vue";
-import { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
-import { $computed } from "vue/macros";
+import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 

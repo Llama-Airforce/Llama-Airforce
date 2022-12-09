@@ -1,23 +1,44 @@
 <template>
   <div class="quorum">
     <div class="heading">{{ t("quorum") }}</div>
-    <div class="amount">7102 / 23674 veCRV</div>
+    <div class="amount">
+      <AsyncValue
+        :value="votesSupport"
+        :precision="0"
+        :show-symbol="false"
+        type="dollar"
+      />
+      /
+      <AsyncValue
+        :value="votesQuorum"
+        :precision="0"
+        :show-symbol="false"
+        type="dollar"
+      />
+      veCRV
+    </div>
 
     <div class="bar">
       <div
         class="support"
-        :style="{ width: `${(support / quorum) * 100}%` }"
+        :style="{ width: `${reached}%` }"
       ></div>
 
       <div
         class="quorum"
-        :style="{ width: `${100 - (support / quorum) * 100}%` }"
+        :style="{ width: `${100 - reached}%` }"
       ></div>
     </div>
 
     <div class="percentages">
       <div class="zero">0%</div>
-      <div class="quorum">30%</div>
+      <div class="quorum">
+        <AsyncValue
+          :value="proposal.quorum * 100"
+          :precision="0"
+          type="percentage"
+        ></AsyncValue>
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +46,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import type { Results } from "@/Pages/Curve/DAO/Proposals/Models/Results";
+import AsyncValue from "@/Framework/AsyncValue.vue";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();
@@ -33,18 +54,22 @@ const { t } = useI18n();
 // Props
 interface Props {
   proposal: Proposal;
-  results: Results;
 }
 
-const { results } = defineProps<Props>();
+const { proposal } = defineProps<Props>();
 
 // Methods
-const support = $computed((): number => {
-  return 10;
+const votesSupport = $computed((): number => {
+  return proposal.votesFor + proposal.votesAgainst;
 });
 
-const quorum = $computed((): number => {
-  return 30;
+const votesQuorum = $computed((): number => {
+  return proposal.quorum * proposal.totalSupply;
+});
+
+/** What's the % of the quorum % that's been reached so far? */
+const reached = $computed((): number => {
+  return (votesSupport / votesQuorum) * 100;
 });
 </script>
 
@@ -75,11 +100,11 @@ const quorum = $computed((): number => {
     height: 0.5rem;
 
     > .support {
-      background-color: rgb(126, 217, 87);
+      background-color: $green;
     }
 
     > .quorum {
-      background-color: rgb(255, 87, 87);
+      background-color: $red;
     }
   }
 

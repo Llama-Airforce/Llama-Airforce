@@ -2,53 +2,91 @@
   <div class="results">
     <div class="heading">{{ t("results") }}</div>
 
-    <div
-      v-for="choice in results.choices"
-      :key="choice.label"
-      class="choice"
-    >
-      <div class="label">{{ t(choice.label) }}</div>
+    <!-- For -->
+    <div class="choice">
+      <div class="label">{{ t("for") }}</div>
 
       <div class="amount">
-        {{ choice.amount }} {{ results.token }} (<AsyncValue
-          :value="percentage(choice)"
+        <AsyncValue
+          :value="proposal.votesFor"
+          :precision="0"
+          :show-symbol="false"
+          :show-zero="true"
+          type="dollar"
+        />
+        <span>&nbsp;veCRV (</span>
+        <AsyncValue
+          :value="forPercentage"
           :precision="2"
+          :show-zero="true"
           type="percentage"
-        ></AsyncValue
-        >)
+        />
+        <span>)</span>
       </div>
 
       <div
         class="bar"
-        :style="{ width: `${percentage(choice)}%` }"
+        :style="{ width: `${forPercentage}%` }"
+      ></div>
+    </div>
+
+    <!-- Against -->
+    <div class="choice">
+      <div class="label">{{ t("against") }}</div>
+
+      <div class="amount">
+        <AsyncValue
+          :value="proposal.votesAgainst"
+          :precision="0"
+          :show-symbol="false"
+          :show-zero="true"
+          type="dollar"
+        />
+        <span>&nbsp;veCRV (</span>
+        <AsyncValue
+          :value="againstPercentage"
+          :precision="2"
+          :show-zero="true"
+          type="percentage"
+        />
+        <span>)</span>
+      </div>
+
+      <div
+        class="bar"
+        :style="{ width: `${againstPercentage}%` }"
       ></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
-import type {
-  Choice,
-  Results,
-} from "@/Pages/Curve/DAO/Proposals/Models/Results";
+import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  results: Results;
+  proposal: Proposal;
 }
 
-const { results } = defineProps<Props>();
+const { proposal } = defineProps<Props>();
 
 // Methods
-const percentage = (choice: Choice): number => {
-  const total = results.choices.reduce((acc, x) => acc + x.amount, 0);
+const total = $computed(() => {
+  return proposal.votesFor + proposal.votesAgainst;
+});
 
-  return (choice.amount / total) * 100;
-};
+const forPercentage = $computed((): number => {
+  return (proposal.votesFor / total) * 100;
+});
+
+const againstPercentage = $computed(() => {
+  return (proposal.votesAgainst / total) * 100;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -81,7 +119,7 @@ const percentage = (choice: Choice): number => {
 
     > .bar {
       height: 0.5rem;
-      background-color: rgb(255, 204, 0);
+      background-color: $yellow;
     }
   }
 }

@@ -1,23 +1,40 @@
 <template>
   <KPI
     class="status"
+    tooltip-type="underline"
     :label="t('status')"
     :has-value="true"
+    :tooltip="statusDetails"
   >
-    <span
-      class="status-value"
-      :class="proposal.status"
-    >
-      {{ status }}
-    </span>
+    <Tooltip>
+      <template #item>
+        <span
+          class="status-value"
+          :class="getStatus(proposal)"
+        >
+          {{ statusLabel }}
+        </span>
+      </template>
+
+      <slot name="tooltip">
+        {{ statusDetails }}
+      </slot>
+    </Tooltip>
   </KPI>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import KPI from "@/Framework/KPI.vue";
-import { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
+import Tooltip from "@/Framework/Tooltip.vue";
+import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import { $computed } from "vue/macros";
+import {
+  getStatus,
+  hasWon,
+  hasReachedQuorum,
+  hasReachedSupport,
+} from "@/Pages/Curve/DAO/Proposals/Util/ProposalHelper";
 
 const { t } = useI18n();
 
@@ -28,12 +45,31 @@ interface Props {
 
 const { proposal } = defineProps<Props>();
 
-const status = $computed((): string => {
-  switch (proposal.status) {
+// Refs
+const statusDetails = $computed((): string => {
+  if (getStatus(proposal) === "denied") {
+    if (!hasReachedQuorum(proposal)) {
+      return t("no-quorum");
+    } else if (!hasWon(proposal)) {
+      return t("no-win");
+    } else if (!hasReachedSupport(proposal)) {
+      return t("no-support");
+    }
+  }
+
+  return "";
+});
+
+const statusLabel = $computed((): string => {
+  switch (getStatus(proposal)) {
     case "active":
       return t("active");
-    case "closed":
-      return t("closed");
+    case "denied":
+      return t("denied");
+    case "passed":
+      return t("passed");
+    case "executed":
+      return t("executed");
     default:
       return "Unk. Status";
   }
@@ -46,11 +82,19 @@ const status = $computed((): string => {
 .status {
   .status-value {
     &.active {
-      color: rgb(126, 217, 87);
+      color: $yellow;
     }
 
-    &.closed {
-      color: rgb(255, 87, 87);
+    &.denied {
+      color: $red;
+    }
+
+    &.passed {
+      color: $green;
+    }
+
+    &.executed {
+      color: lighten($purple, 8%);
     }
   }
 }
@@ -59,5 +103,11 @@ const status = $computed((): string => {
 <i18n lang="yaml" locale="en">
 status: Status
 active: Active
-closed: Closed
+denied: Denied
+passed: Passed
+executed: Executed
+
+no-quorum: Quorum was not reached
+no-support: Quorum was reached and 'for' won, but not enough for support
+no-win: More 'against' votes than 'for' votes
 </i18n>

@@ -2,98 +2,103 @@
   <div class="technicals">
     <div class="technical">
       <div class="heading">{{ t("description") }}</div>
-      <div class="description">{{ proposal.description }}</div>
+      <div class="description">{{ proposal.metadata }}</div>
     </div>
 
     <div class="technical">
-      <div class="heading">
+      <div
+        class="heading"
+        @click="expandedCallData = !expandedCallData"
+      >
         {{ t("calldata") }}
         <i
           class="fas fa-chevron-up expander"
-          :class="{ expanded }"
+          :class="{ expandedCallData }"
         ></i>
       </div>
-      <div class="calldata">
-        Call via agent: 0x40907540d8a6C65c637785e8f8B742ae6b0b9968
-        <br />
-        ├─ To: 0x2EF1Bc1961d3209E5743C91cd3fBfa0d08656bC3
-        <br />
-        ├─ Function: set_killed
-        <br />
-        └─ Inputs:
-        <br />
-        &nbsp;&nbsp;├─ _gauge: 0x16C2beE6f55dAB7F494dBa643fF52ef2D47FBA36
-        <br />
-        &nbsp;&nbsp;└─ _is_killed: True
-      </div>
+      <Collapsible :is-open="expandedCallData">
+        <div
+          v-if="proposalDetails"
+          class="calldata"
+          v-html="callData"
+        ></div>
+      </Collapsible>
     </div>
 
     <div class="technical">
-      <div class="heading">
-        {{ t("voters") }} (4)
+      <div
+        class="heading"
+        @click="expandedVoters = !expandedVoters"
+      >
+        {{ t("voters") }} ({{ proposal.votes }})
         <i
           class="fas fa-chevron-up expander"
-          :class="{ expanded }"
+          :class="{ expandedVoters }"
         ></i>
       </div>
 
-      <div class="voters">
-        <div class="for">
-          <div class="title">(2) {{ t("for") }}</div>
-
-          <div class="vote">
-            <div class="address">
-              <a href="">0xAAA...AAA</a>
-            </div>
-            <div class="amount">1234</div>
-          </div>
-
-          <div class="vote">
-            <div class="address">
-              <a href="">0xBBB...BBB</a>
-            </div>
-            <div class="amount">1234</div>
-          </div>
-        </div>
-
-        <div class="against">
-          <div class="title">{{ t("against") }} (2)</div>
-
-          <div class="vote">
-            <div class="amount">1234</div>
-            <div class="address">
-              <a href="">0xAAA...AAA</a>
-            </div>
-          </div>
-
-          <div class="vote">
-            <div class="amount">1234</div>
-            <div class="address">
-              <a href="">0xBBB...BBB</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Make scroll, not collabsible -->
+      <Collapsible :is-open="expandedVoters">
+        <Voters
+          v-if="proposalDetails"
+          class="voters"
+          :proposal="proposal"
+          :proposal-details="proposalDetails"
+        ></Voters>
+      </Collapsible>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { watch } from "vue";
+import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
+import Collapsible from "@/Framework/Collapsible.vue";
+import Voters from "@/Pages/Curve/DAO/Proposals/Components/Voters.vue";
+import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
+import type { ProposalDetails } from "@/Pages/Curve/DAO/Proposals/Models/ProposalDetails";
+import ProposalService from "@/Pages/Curve/DAO/Proposals/Services/ProposalService";
+import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
+
+const proposalService = new ProposalService(getHost());
 
 // Props
 interface Props {
   proposal: Proposal;
+  expanded: boolean;
 }
 
-const { proposal } = defineProps<Props>();
+const { proposal, expanded = false } = defineProps<Props>();
 
 // Refs
-const expanded = $ref(true);
+let proposalDetails: ProposalDetails | null = $ref(null);
+const expandedCallData = $ref(true);
+const expandedVoters = $ref(false);
+
+const callData = $computed(() => {
+  if (!proposalDetails) {
+    return null;
+  }
+
+  return proposalDetails.script
+    .replace(/(?:\r\n|\r|\n)/g, "<br>")
+    .replace("/\u251c/g", "├")
+    .replace("/\u2500/g", "─");
+});
+
+// Watches
+watch(
+  () => expanded,
+  async (expandedNew) => {
+    if (expandedNew && proposalDetails === null) {
+      proposalDetails = await proposalService.getProposalDetails(proposal);
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -122,66 +127,20 @@ const expanded = $ref(true);
       margin-bottom: 0.25rem;
     }
 
-    > .voters {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      row-gap: 0.25rem;
-      gap: 2rem;
-
-      > .for,
-      > .against {
-        > .title {
-          display: flex;
-          grid-row: 1 / span 2;
-          font-weight: bold;
-        }
-
-        > .vote {
-          display: grid;
-          gap: 1rem;
-
-          grid-template-columns: 1fr 1fr;
-
-          > .amount,
-          > .address {
-            display: flex;
-          }
-        }
-      }
-
-      > .for {
-        > .title {
-          justify-content: end;
-          color: rgb(126, 217, 87);
-        }
-
-        > .vote {
-          > .amount {
-            justify-content: end;
-          }
-        }
-      }
-
-      > .against {
-        > .title {
-          color: rgb(255, 87, 87);
-        }
-
-        > .vote {
-          > .address {
-            justify-content: end;
-          }
-        }
-      }
-    }
-
     .expander {
       transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
       transform: rotate(90deg);
 
-      &.expanded {
+      &.expandedCallData,
+      &.expandedVoters {
         transform: rotate(180deg);
       }
+    }
+
+    .calldata,
+    .voters {
+      max-height: 20rem;
+      overflow-y: auto;
     }
   }
 }
@@ -191,6 +150,4 @@ const expanded = $ref(true);
 description: Description
 calldata: Calldata
 voters: Voters
-for: For
-against: Against
 </i18n>

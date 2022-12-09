@@ -5,7 +5,7 @@
   >
     <div
       class="value-container"
-      :class="{ underline: tooltipType === 'underline' }"
+      :class="{ underline: tooltip && tooltipType === 'underline' }"
     >
       <slot>
         <Tooltip v-if="tooltip && tooltipType === 'underline'">

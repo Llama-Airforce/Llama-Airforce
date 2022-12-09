@@ -44,11 +44,11 @@ export async function getAddress(provider: JsonRpcProvider): Promise<string> {
 
 export function addressShort(address?: string): string {
   if (!address) {
-    return "0x00...00";
+    return "0x000...000";
   }
 
-  return `${address.substring(0, 4)}...${address.substring(
-    address.length - 2
+  return `${address.substring(0, 5)}...${address.substring(
+    address.length - 3
   )}`;
 }
 

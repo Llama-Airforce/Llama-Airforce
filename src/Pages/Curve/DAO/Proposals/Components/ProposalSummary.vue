@@ -3,7 +3,12 @@
     class="proposal"
     @click="emit('toggleExpand')"
   >
-    <div class="title">{{ proposal.title }}</div>
+    <div
+      class="title"
+      :class="{ 'no-title': !proposal.metadata }"
+    >
+      {{ proposal.metadata || t("no-title") }}
+    </div>
 
     <div class="row">
       <Status
@@ -44,11 +49,14 @@
 </template>
 
 <script setup lang="ts">
-import { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
+import { useI18n } from "vue-i18n";
+import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import Status from "@/Pages/Curve/DAO/Proposals/Components/Status.vue";
 import Type from "@/Pages/Curve/DAO/Proposals/Components/Type.vue";
 import Proposer from "@/Pages/Curve/DAO/Proposals/Components/Proposer.vue";
 import Date from "@/Pages/Curve/DAO/Proposals/Components/Date.vue";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -70,11 +78,22 @@ const emit = defineEmits<{
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  padding: 0.5rem 0;
 
   > .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     margin-left: 2rem;
     margin-top: 1rem;
+    margin-right: 4.5rem;
     font-size: 1.125rem;
+    font-weight: 400;
+
+    &.no-title {
+      color: #a1a1aa;
+    }
   }
 
   > .row {
@@ -88,8 +107,18 @@ const emit = defineEmits<{
       align-items: center;
       justify-content: center;
 
-      > .value {
-        font-size: 1.125rem;
+      > .value-container {
+        span,
+        a {
+          font-size: 1rem;
+          font-weight: 100;
+        }
+      }
+
+      > .labels {
+        > .label {
+          font-weight: 100;
+        }
       }
     }
 
@@ -104,3 +133,7 @@ const emit = defineEmits<{
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+no-title: < No Title >
+</i18n>
