@@ -8,7 +8,7 @@ en:
   apy-info: "APY calculation assumes weekly compounding<br />and excludes the
     following fees:"
   fee-on-yield: "Fee on yield:"
-  caller-inventive: "Caller incentive (fee on yield):"
+  caller-incentive: "Caller incentive (fee on yield):"
   withdrawal-fee: "Withdrawal fee (on total deposit):"
 
   # Balance.vue
