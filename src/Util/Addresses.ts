@@ -37,16 +37,21 @@ export const UnionFxsVaultAddress =
   "0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e";
 export const UnionCvxVaultAddress =
   "0x8659fc767cad6005de79af65dafe4249c57927af";
-export const UnionBalVaultAddress =
+export const UnionBalVaultAddressV1 =
   "0xd6fc1ecd9965ba9cac895654979564a291c74c29";
+export const UnionBalVaultAddress =
+  "0x8c4eb0fc6805ee7337ac126f89a807271a88dd67";
 
 // Strategies
 export const UFxsStrategyAddress = "0xf761c0098967d756c9673f2798dbf23342badff8";
 export const UCvxStrategyAddress = "0x45f97d07dab04b21f36fa3b1149c35e316b35d03";
-export const UBalStrategyAddress = "0xca7b5b6a9b135fc7e29ba7bc5d4cca936395025c";
+export const UBalStrategyAddressV1 = "0xca7b5b6a9b135fc7e29ba7bc5d4cca936395025c";
+export const UBalStrategyAddress = "0x4b0987bef3f966354c6ecd22f6d844d621ee5077";
 
-export const AuraHandlerAddress = "0x09ee25e4f85826705b385ab863e6f1701a85940e";
-export const BbUsdHandlerAddress = "0x1d2fc9222633d33271f03255b56e7e50636c8e37";
+export const AuraHandlerAddressV1 = "0x09ee25e4f85826705b385ab863e6f1701a85940e";
+export const BbUsdHandlerAddressV2 = "0x1d2fc9222633d33271f03255b56e7e50636c8e37";
+export const AuraHandlerAddress = "0x83d6cdd50110cb3fd9547618cc94540b79733f76";
+export const BbUsdHandlerAddress = "0x5c53174c8d88f0f56c33f923b8c6a84a1760e484";
 
 // Zaps
 export const ZapsUCrvAddress = "0x5d69b683bf963648137b3ab5244e9d31d529838e";
@@ -54,8 +59,9 @@ export const ZapsUCrv2Address = "0xaaf75554249209114ced07027c67bee7cfb1f29c";
 export const ZapsUFxsAddress = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
 export const ZapsUFxsClaimAddress =
   "0x56e9db574c8d5015d198671cbf1200b6bb2ed944";
-export const ZapsUBalAddress = "0xbda1daacd2a5d7770edbdf9c6039861cad83ac02";
-export const ZapsUBalAddressOld = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
+export const ZapsUBalAddressV1 = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
+export const ZapsUBalAddressV2 = "0xbda1daacd2a5d7770edbdf9c6039861cad83ac02";
+export const ZapsUBalAddress = "0x7374c3dcaf8ff2c9bb706eaff7bf4ebbf9ac6067";
 export const ZapsUCvxAddress = "0x6753f23905f15376429e6f0c381fcc4862e48222";
 export const ZapsUCvxClaimAddress =
   "0x49a8056440065900a3a21b33594815aa0fb6e6b8";

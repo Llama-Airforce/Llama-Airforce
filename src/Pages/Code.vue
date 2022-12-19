@@ -90,7 +90,6 @@ import {
   ZapsUCvxAddress,
   ZapsUCvxClaimAddress,
   UBalHarvester,
-  ZapsUBalAddressOld,
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
@@ -326,10 +325,6 @@ const outdated: Bundle = {
     {
       contract: "0xba5602730824340d714c92a153460db958fd8562",
       description: "Union - Merkle Distributor - uCRV",
-    },
-    {
-      contract: ZapsUBalAddressOld,
-      description: "uBAL - Old Zaps",
     },
   ],
 };

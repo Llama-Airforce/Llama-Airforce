@@ -99,3 +99,9 @@ en:
   pounders-info:
     Union auto-compounders makes life for hard working llamas just a little
     bit easier to manage.
+
+  # Migrations.vue
+  withdraw: Withdraw from old vault
+  deposit: Deposit into new vault
+  migrateUBal: Hello ser, you have {0} uBAL you need to migrate!
+    <br />It's sitting in the old pounder now, not earning rewards!
