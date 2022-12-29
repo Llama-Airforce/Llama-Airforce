@@ -50,15 +50,12 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import AsyncValue from "@/Framework/AsyncValue.vue";
 import KPI from "@/Framework/KPI.vue";
 import GraphGauges from "@/Pages/Curve/DAO/Overview/Components/GraphGauges.vue";
 import GraphLocked from "@/Pages/Curve/DAO/Overview/Components/GraphLocked.vue";
 import GraphVersus from "@/Pages/Curve/DAO/Overview/Components/GraphVersus.vue";
 import GraphEmissions from "@/Pages/Curve/DAO/Overview/Components/GraphEmissions.vue";
-
-const { t } = useI18n();
 
 // Refs
 </script>
