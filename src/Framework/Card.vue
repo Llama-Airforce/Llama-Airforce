@@ -119,7 +119,7 @@ const {
       }
 
       &.collapsed {
-        margin: 0;
+        margin: 0 $card-margin;
       }
     }
   }

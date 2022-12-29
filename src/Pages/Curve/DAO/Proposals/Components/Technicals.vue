@@ -16,7 +16,7 @@
           :class="{ expandedCallData }"
         ></i>
       </div>
-      <Collapsible :is-open="expandedCallData">
+      <Collapsible :expanded="expandedCallData">
         <div
           v-if="proposalDetails"
           class="calldata"
@@ -38,7 +38,7 @@
       </div>
 
       <!-- Make scroll, not collabsible -->
-      <Collapsible :is-open="expandedVoters">
+      <Collapsible :expanded="expandedVoters">
         <Voters
           v-if="proposalDetails"
           class="voters"

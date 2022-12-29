@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <Collapsible :is-open="expanded">
+    <Collapsible :expanded="expanded">
       <div
         v-if="expanded"
         class="row-details"

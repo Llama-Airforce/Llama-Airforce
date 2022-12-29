@@ -9,7 +9,7 @@
       @toggle-expand="expanded = !expanded"
     ></ProposalSummary>
 
-    <Collapsible :is-open="expanded">
+    <Collapsible :expanded="expanded">
       <ProposalDetails
         v-if="expanded"
         :proposal="proposal"
