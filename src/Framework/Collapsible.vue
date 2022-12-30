@@ -31,6 +31,7 @@ const { expanded = true } = defineProps<Props>();
 
   > .collapsible-inside {
     min-height: 0;
+    overflow-x: auto;
   }
 }
 </style>
