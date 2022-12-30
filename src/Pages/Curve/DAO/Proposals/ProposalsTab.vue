@@ -41,8 +41,10 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { chain } from "lodash";
 import InputText from "@/Framework/InputText.vue";
 import Pagination from "@/Framework/Pagination.vue";
 import ProposalComponent from "@/Pages/Curve/DAO/Proposals/Components/Proposal.vue";
@@ -51,7 +53,6 @@ import type {
   Proposal,
   ProposalType,
 } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
-import { chain } from "lodash";
 
 const { t } = useI18n();
 
@@ -99,6 +100,19 @@ const onTypeSelect = (type: "all" & ProposalType): void => {
 const onPage = (pageNew: number): void => {
   page = pageNew;
 };
+
+// Watches
+watch(
+  () => proposalsPage,
+  (ps) => {
+    if (ps.length === 0) {
+      page = Math.max(
+        1,
+        Math.ceil(proposalsFiltered.length / proposalsPerPage)
+      );
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
