@@ -6,7 +6,7 @@
     :has-value="true"
     :tooltip="statusDetails"
   >
-    <Tooltip>
+    <Tooltip v-if="statusDetails">
       <template #item>
         <span
           class="status-value"
@@ -20,6 +20,14 @@
         {{ statusDetails }}
       </slot>
     </Tooltip>
+
+    <span
+      v-else
+      class="status-value"
+      :class="getStatus(proposal)"
+    >
+      {{ statusLabel }}
+    </span>
   </KPI>
 </template>
 
