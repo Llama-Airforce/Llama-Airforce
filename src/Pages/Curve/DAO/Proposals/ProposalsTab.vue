@@ -13,6 +13,7 @@
     </div>
 
     <Pagination
+      v-if="proposalsFiltered.length > 0"
       class="pagination"
       :items-count="proposalsFiltered.length"
       :items-per-page="proposalsPerPage"
@@ -27,12 +28,15 @@
     ></ProposalComponent>
 
     <Pagination
+      v-if="proposalsFiltered.length > 0"
       class="pagination"
       :items-count="proposalsFiltered.length"
       :items-per-page="proposalsPerPage"
       :page="page"
       @page="onPage"
     ></Pagination>
+
+    <div v-if="proposalsFiltered.length === 0">{{ t("no-proposals") }}</div>
   </div>
 </template>
 
@@ -123,4 +127,5 @@ const onPage = (pageNew: number): void => {
 
 <i18n lang="yaml" locale="en">
 search-placeholder: Search for Curve proposals
+no-proposals: No proposals could be found.
 </i18n>
