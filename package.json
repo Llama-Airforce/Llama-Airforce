@@ -12,7 +12,7 @@
     "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\""
   },
   "dependencies": {
-    "@kyvg/vue3-notification": "^2.6.1",
+    "@kyvg/vue3-notification": "^2.7.0",
     "@web3-onboard/coinbase": "^2.2.0",
     "@web3-onboard/core": "^2.12.1",
     "@web3-onboard/gnosis": "^2.1.5",
