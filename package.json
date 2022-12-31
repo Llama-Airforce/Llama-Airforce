@@ -24,7 +24,7 @@
     "ethers": "^5.7.2",
     "lightweight-charts": "^3.8.0",
     "lodash": "^4.17.21",
-    "pinia": "^2.0.23",
+    "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6",
