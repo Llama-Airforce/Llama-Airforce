@@ -263,6 +263,11 @@ const dataTable3 = `.datatable-example {
 .data-table {
   .dashboard {
     @include cookbook-item;
+
+    ::v-deep(pre) {
+      margin: 0;
+      margin-top: 1.5rem;
+    }
   }
 }
 
