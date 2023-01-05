@@ -35,3 +35,9 @@ const codeFinal = $computed(function () {
   return code ?? "";
 });
 </script>
+
+<style lang="scss" scoped>
+pre {
+  margin: 0;
+}
+</style>
