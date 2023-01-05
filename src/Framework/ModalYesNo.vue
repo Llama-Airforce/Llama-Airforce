@@ -22,9 +22,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import Button from "@/Framework/Button.vue";
-import Card from "@/Framework/Card.vue";
-import Modal from "@/Framework/Modal.vue";
+import { Button, Card, Modal } from "@/Framework";
 
 // Props
 interface Props {

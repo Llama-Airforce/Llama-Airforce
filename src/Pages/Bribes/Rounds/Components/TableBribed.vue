@@ -79,10 +79,7 @@
 <script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import DataTable from "@/Framework/DataTable.vue";
-import Tooltip from "@/Framework/Tooltip.vue";
-import { SortOrder } from "@/Framework/SortOrder";
+import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 import type { Bribed } from "@/Pages/Bribes/Models/Bribed";
 import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";

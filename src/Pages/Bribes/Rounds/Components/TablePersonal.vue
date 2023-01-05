@@ -84,9 +84,7 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import DataTable from "@/Framework/DataTable.vue";
-import { SortOrder } from "@/Framework/SortOrder";
+import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { BribedPersonal } from "@/Pages/Bribes/Models/Bribed";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";

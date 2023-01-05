@@ -47,9 +47,8 @@
 
 <script setup lang="ts">
 import { $ref } from "vue/macros";
-import MenuMobile from "@/Framework/MenuMobile.vue";
+import { MenuMobile, SelectLanguage } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
-import SelectLanguage from "@/Framework/SelectLanguage.vue";
 
 // Vars
 let menuOpen = $ref(false);

@@ -52,7 +52,7 @@
 import { onMounted, onBeforeUnmount } from "vue";
 import { $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import InputText from "@/Framework/InputText.vue";
+import { InputText, Spinner } from "@/Framework";
 import Summary from "@/Pages/Bribes/FraxMatch/Components/Summary.vue";
 import GraphMatch from "@/Pages/Bribes/FraxMatch/Components/GraphMatch.vue";
 import TableMatch from "@/Pages/Bribes/FraxMatch/Components/TableMatch.vue";
@@ -63,7 +63,6 @@ import { getHost } from "@/Services/Host";
 import FraxMatchService from "@/Pages/Bribes/FraxMatch/Services/FraxMatchService";
 import { minDelay } from "@/Util/PromiseHelper";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
-import Spinner from "@/Framework/Spinner.vue";
 
 let isMounted = false;
 

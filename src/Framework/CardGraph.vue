@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { nextTick, onUpdated } from "vue";
-import Card from "@/Framework/Card.vue";
+import { Card } from "@/Framework";
 
 // Props
 interface Props {

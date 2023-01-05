@@ -27,8 +27,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import KPI from "@/Framework/KPI.vue";
+import { AsyncValue, KPI } from "@/Framework";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 interface Props {

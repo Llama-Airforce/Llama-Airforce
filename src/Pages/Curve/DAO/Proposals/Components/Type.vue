@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import KPI from "@/Framework/KPI.vue";
+import { KPI } from "@/Framework";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();

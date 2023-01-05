@@ -72,9 +72,7 @@
 
 <script setup lang="ts">
 import { $ref } from "vue/macros";
-import Card from "@/Framework/Card.vue";
-import Code from "@/Framework/Code.vue";
-import Collapsible from "@/Framework/Collapsible.vue";
+import { Card, Code, Collapsible } from "@/Framework";
 
 const collapsed = $ref(false);
 

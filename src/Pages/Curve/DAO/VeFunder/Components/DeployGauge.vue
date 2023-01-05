@@ -41,10 +41,7 @@
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { notify } from "@kyvg/vue3-notification";
-import Card from "@/Framework/Card.vue";
-import Button from "@/Framework/Button.vue";
-import InputNumber from "@/Framework/InputNumber.vue";
-import InputText from "@/Framework/InputText.vue";
+import { Card, Button, InputNumber, InputText } from "@/Framework";
 import { GaugeFactory__factory } from "@/Contracts";
 import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
 import { utils } from "ethers";

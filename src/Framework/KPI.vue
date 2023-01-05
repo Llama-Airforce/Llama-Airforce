@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import Tooltip from "@/Framework/Tooltip.vue";
+import { Tooltip } from "@/Framework";
 
 // Props
 interface Props {

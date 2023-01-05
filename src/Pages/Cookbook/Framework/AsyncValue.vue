@@ -125,8 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import Code from "@/Framework/Code.vue";
-import AsyncValue from "@/Framework/AsyncValue.vue";
+import { Code, AsyncValue } from "@/Framework";
 
 const async = `<AsyncValue
   :value="50000">

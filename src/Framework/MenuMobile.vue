@@ -50,9 +50,8 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useRoute } from "vue-router";
+import { MenuItem, Select } from "@/Framework";
 import { usePageStore } from "@/Pages/Store";
-import MenuItem from "@/Framework/MenuItem.vue";
-import Select from "@/Framework/Select.vue";
 import { subIsActive } from "@/Util/RouterHelper";
 
 // Props

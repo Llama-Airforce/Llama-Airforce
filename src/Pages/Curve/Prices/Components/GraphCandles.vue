@@ -18,9 +18,8 @@
 import { onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { Card, ButtonToggle } from "@/Framework";
 import Pool from "@/Pages/Curve/Models/Pool";
-import Card from "@/Framework/Card.vue";
-import ButtonToggle from "@/Framework/ButtonToggle.vue";
 import { round, unit } from "@/Util/NumberHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { shorten } from "@/Util/PoolHelper";

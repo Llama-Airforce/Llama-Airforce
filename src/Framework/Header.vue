@@ -6,8 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import HeaderDesktop from "@/Framework/HeaderDesktop.vue";
-import HeaderMobile from "@/Framework/HeaderMobile.vue";
+import { HeaderDesktop, HeaderMobile } from "@/Framework";
 </script>
 
 <style lang="scss" scoped>

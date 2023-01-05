@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 /* eslint-disable no-useless-escape */
-import Code from "@/Framework/Code.vue";
+import { Code } from "@/Framework";
 
 const html = `<template>
   <div class="dashboard-root">

@@ -45,8 +45,7 @@ import { watch } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import InputText from "@/Framework/InputText.vue";
-import Pagination from "@/Framework/Pagination.vue";
+import { InputText, Pagination } from "@/Framework";
 import ProposalComponent from "@/Pages/Curve/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@/Pages/Curve/DAO/Proposals/Components/ProposalTypeSelect.vue";
 import type {

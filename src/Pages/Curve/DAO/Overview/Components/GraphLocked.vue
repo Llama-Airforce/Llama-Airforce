@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { $computed } from "vue/macros";
-import CardGraph from "@/Framework/CardGraph.vue";
+import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util/NumberHelper";
 import { DataPoint } from "@/Util/DataPoint";

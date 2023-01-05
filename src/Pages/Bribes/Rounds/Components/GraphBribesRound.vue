@@ -11,13 +11,13 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import CardGraph from "@/Framework/CardGraph.vue";
+import { chain } from "lodash";
+import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util/NumberHelper";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
 import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import { chain } from "lodash";
 import type { DataPoint } from "@/Util/DataPoint";
 import type { Product } from "@/Pages/Bribes/Models/Product";
 

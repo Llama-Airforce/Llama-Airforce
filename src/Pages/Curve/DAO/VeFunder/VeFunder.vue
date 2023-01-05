@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import { $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import Card from "@/Framework/Card.vue";
+import { Card } from "@/Framework";
 import DeployGauge from "@/Pages/Curve/DAO/VeFunder/Components/DeployGauge.vue";
 import GaugeVote from "@/Pages/Curve/DAO/VeFunder/Components/GaugeVote.vue";
 

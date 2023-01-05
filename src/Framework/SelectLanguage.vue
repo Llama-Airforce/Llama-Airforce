@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import Select from "@/Framework/Select.vue";
+import { Select } from "@/Framework";
 
 type Direction = "up" | "down";
 

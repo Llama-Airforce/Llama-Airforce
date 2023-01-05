@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import Button from "@/Framework/Button.vue";
+import { Button } from "@/Framework";
 
 const { t } = useI18n();
 </script>

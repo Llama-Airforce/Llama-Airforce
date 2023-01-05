@@ -59,6 +59,7 @@
 import { onMounted, onBeforeUnmount } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { AsyncValue, InputText, Spinner } from "@/Framework";
 import Pool from "@/Pages/Curve/Models/Pool";
 import PoolService from "@/Pages/Curve/Services/PoolService";
 import CandleService from "@/Pages/Curve/Prices/Services/CandleService";
@@ -66,9 +67,6 @@ import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { shorten, icon } from "@/Util/PoolHelper";
 import { match } from "@/Pages/Curve/Util/PoolHelper";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import InputText from "@/Framework/InputText.vue";
-import Spinner from "@/Framework/Spinner.vue";
 import GraphCandles from "@/Pages/Curve/Prices/Components/GraphCandles.vue";
 import { getHost } from "@/Services/Host";
 

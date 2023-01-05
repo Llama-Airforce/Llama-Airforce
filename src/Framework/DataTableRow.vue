@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { useSlots } from "vue";
 import { $computed } from "vue/macros";
-import Collapsible from "@/Framework/Collapsible.vue";
+import { Collapsible } from "@/Framework";
 
 /**
  * A single row of data in the datatable.

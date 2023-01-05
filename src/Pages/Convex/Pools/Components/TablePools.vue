@@ -60,9 +60,7 @@
 <script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import DataTable from "@/Framework/DataTable.vue";
-import { SortOrder } from "@/Framework/SortOrder";
+import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import GraphTvl from "@/Pages/Convex/Pools/Components/GraphTvl.vue";
 import GraphApr from "@/Pages/Convex/Pools/Components/GraphApr.vue";
 import Pool from "@/Pages/Convex/Pools/Models/Pool";

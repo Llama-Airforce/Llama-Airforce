@@ -32,9 +32,8 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useRoute } from "vue-router";
-import MenuItem from "@/Framework/MenuItem.vue";
+import { MenuItem, SelectLanguage } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
-import SelectLanguage from "@/Framework/SelectLanguage.vue";
 import type { Page } from "@/Pages/Page";
 import { subIsActive } from "@/Util/RouterHelper";
 import { usePageStore } from "@/Pages/Store";

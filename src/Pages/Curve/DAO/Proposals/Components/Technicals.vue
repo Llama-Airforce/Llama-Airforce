@@ -54,7 +54,7 @@
 import { watch } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import Collapsible from "@/Framework/Collapsible.vue";
+import { Collapsible } from "@/Framework";
 import Voters from "@/Pages/Curve/DAO/Proposals/Components/Voters.vue";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@/Pages/Curve/DAO/Proposals/Models/ProposalDetails";

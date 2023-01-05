@@ -69,8 +69,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
-import KPI from "@/Framework/KPI.vue";
-import Select from "@/Framework/Select.vue";
+import { KPI, Select } from "@/Framework";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import type { Platform } from "@/Pages/Bribes/Models/Platform";
 import { getProtocols, Protocol } from "@/Pages/Bribes/Models/Protocol";

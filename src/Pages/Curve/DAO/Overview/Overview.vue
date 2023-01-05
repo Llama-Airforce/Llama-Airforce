@@ -50,8 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import KPI from "@/Framework/KPI.vue";
+import { AsyncValue, KPI } from "@/Framework";
 import GraphGauges from "@/Pages/Curve/DAO/Overview/Components/GraphGauges.vue";
 import GraphLocked from "@/Pages/Curve/DAO/Overview/Components/GraphLocked.vue";
 import GraphVersus from "@/Pages/Curve/DAO/Overview/Components/GraphVersus.vue";

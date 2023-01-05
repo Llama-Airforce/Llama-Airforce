@@ -66,9 +66,7 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import KPI from "@/Framework/KPI.vue";
-import Select from "@/Framework/Select.vue";
+import { AsyncValue, KPI, Select } from "@/Framework";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import {

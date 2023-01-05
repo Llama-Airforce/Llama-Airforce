@@ -21,8 +21,7 @@
 
 <script setup lang="ts">
 import { $ref } from "vue/macros";
-import Card from "@/Framework/Card.vue";
-import Collapsible from "@/Framework/Collapsible.vue";
+import { Card, Collapsible } from "@/Framework";
 import ProposalSummary from "@/Pages/Curve/DAO/Proposals/Components/ProposalSummary.vue";
 import ProposalDetails from "@/Pages/Curve/DAO/Proposals/Components/ProposalDetails.vue";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";

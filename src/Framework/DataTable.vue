@@ -115,8 +115,7 @@
 import { onBeforeMount } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import DataTableRow from "@/Framework/DataTableRow.vue";
-import { SortOrder } from "@/Framework/SortOrder";
+import { DataTableRow, SortOrder } from "@/Framework";
 
 // Props
 interface Props {

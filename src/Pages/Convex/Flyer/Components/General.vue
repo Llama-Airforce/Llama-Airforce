@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
+import { AsyncValue } from "@/Framework";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
 
 const { t } = useI18n();

@@ -39,13 +39,10 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
 import { watch, onMounted } from "vue";
 import { $computed } from "vue/macros";
-import Button from "@/Framework/Button.vue";
+import { Button } from "@/Framework";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import { useWalletStore } from "@/Wallet/Store";
 import {
@@ -117,10 +114,7 @@ const onDisconnect = async (): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .wallet {

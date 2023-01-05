@@ -33,8 +33,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import KPI from "@/Framework/KPI.vue";
-import Tooltip from "@/Framework/Tooltip.vue";
+import { KPI, Tooltip } from "@/Framework";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import { $computed } from "vue/macros";
 import {

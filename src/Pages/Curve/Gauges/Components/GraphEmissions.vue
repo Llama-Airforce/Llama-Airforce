@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import CardGraph from "@/Framework/CardGraph.vue";
+import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import Gauge from "@/Pages/Curve/Gauges/Models/Gauge";
 import Fee from "@/Pages/Curve/Gauges/Models/Fee";

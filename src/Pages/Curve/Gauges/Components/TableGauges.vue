@@ -49,9 +49,7 @@
 <script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import DataTable from "@/Framework/DataTable.vue";
-import { SortOrder } from "@/Framework/SortOrder";
+import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import GraphEmissions from "@/Pages/Curve/Gauges/Components/GraphEmissions.vue";
 import Gauge from "@/Pages/Curve/Gauges/Models/Gauge";
 import { shorten, icon } from "@/Util/PoolHelper";

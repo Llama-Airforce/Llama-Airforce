@@ -8,21 +8,15 @@
   </Button>
 </template>
 
-<script
-  setup
-  lang="ts"
->
-import Button from "@/Framework/Button.vue";
+<script setup lang="ts">
+import { Button } from "@/Framework";
 
 const onClearCache = (): void => {
   window.localStorage.removeItem("connectedWallet");
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .button {

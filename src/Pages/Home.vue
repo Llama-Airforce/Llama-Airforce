@@ -133,8 +133,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import Button from "@/Framework/Button.vue";
-import Card from "@/Framework/Card.vue";
+import { Button, Card } from "@/Framework";
 
 const { t } = useI18n();
 </script>

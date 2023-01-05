@@ -22,12 +22,8 @@
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
->
-import Header from "@/Framework/Header.vue";
-import MenuDesktop from "@/Framework/MenuDesktop.vue";
+<script setup lang="ts">
+import { Header, MenuDesktop } from "@/Framework";
 </script>
 
 <style lang="scss">
@@ -116,10 +112,7 @@ a {
 }
 </style>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .root {

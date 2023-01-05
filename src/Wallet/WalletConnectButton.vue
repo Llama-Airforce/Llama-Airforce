@@ -8,11 +8,8 @@
   </Button>
 </template>
 
-<script
-  setup
-  lang="ts"
->
-import Button from "@/Framework/Button.vue";
+<script setup lang="ts">
+import { Button } from "@/Framework";
 import { useWalletStore } from "@/Wallet/Store";
 import { connectWallet, getProvider } from "@/Wallet/ProviderFactory";
 import { isConnected } from "@/Wallet/WalletHelper";
@@ -39,10 +36,7 @@ const onConnect = async (): Promise<void> => {
 };
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .button {

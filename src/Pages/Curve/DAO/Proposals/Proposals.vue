@@ -53,9 +53,7 @@
 import { onMounted } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import TabView from "@/Framework/TabView.vue";
-import TabItem from "@/Framework/TabItem.vue";
-import Spinner from "@/Framework/Spinner.vue";
+import { TabView, TabItem, Spinner } from "@/Framework";
 import ProposalsTab from "@/Pages/Curve/DAO/Proposals/ProposalsTab.vue";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import ProposalService from "@/Pages/Curve/DAO/Proposals/Services/ProposalService";

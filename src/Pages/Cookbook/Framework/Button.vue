@@ -114,8 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from "@/Framework/Button.vue";
-import Code from "@/Framework/Code.vue";
+import { Button, Code } from "@/Framework";
 
 const btnPrimary = `<Button
   value="Value"

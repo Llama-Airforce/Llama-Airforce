@@ -47,6 +47,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { Spinner } from "@/Framework";
 import RevenueService, {
   ChainRevenueService,
   ChainTopPoolsRevenueService,
@@ -60,7 +61,6 @@ import ChainSelect from "@/Pages/Curve/Revenue/Components/ChainSelect.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
 import { $computed, $ref } from "vue/macros";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
-import Spinner from "@/Framework/Spinner.vue";
 
 const revenueService = new RevenueService(getHost());
 const chainRevenueService = new ChainRevenueService(getHost());

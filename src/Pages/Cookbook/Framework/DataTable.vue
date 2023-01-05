@@ -72,12 +72,8 @@
 
 <script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import DataTable from "@/Framework/DataTable.vue";
-import Code from "@/Framework/Code.vue";
-import Tooltip from "@/Framework/Tooltip.vue";
-import { SortOrder } from "@/Framework/SortOrder";
 import { orderBy } from "lodash";
+import { AsyncValue, DataTable, Code, Tooltip, SortOrder } from "@/Framework";
 
 type Round = {
   round: number;
@@ -177,11 +173,8 @@ const dataTable1 = `<DataTable
 </DataTable>`;
 
 const dataTable2 = `import { $ref, $computed } from "vue/macros";
-import AsyncValue from "@/Framework/AsyncValue.vue";
-import DataTable from "@/Framework/DataTable.vue";
-import Tooltip from "@/Framework/Tooltip.vue";
-import { SortOrder } from "@/Framework/SortOrder";
 import { orderBy } from "lodash";
+import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 
 type Round = {
   round: number;

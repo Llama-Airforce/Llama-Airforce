@@ -19,8 +19,7 @@
 
 <script setup lang="ts">
 import { $ref } from "vue/macros";
-import ButtonToggle from "@/Framework/ButtonToggle.vue";
-import Code from "@/Framework/Code.vue";
+import { ButtonToggle, Code } from "@/Framework";
 
 const toggle = $ref(false);
 

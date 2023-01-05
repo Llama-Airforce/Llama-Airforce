@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
-import Select from "@/Framework/Select.vue";
+import { Select } from "@/Framework";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
 

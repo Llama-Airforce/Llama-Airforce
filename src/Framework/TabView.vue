@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { watch, useSlots } from "vue";
 import { $ref, $computed } from "vue/macros";
-import TabItem from "@/Framework/TabItem.vue";
+import { TabItem } from "@/Framework";
 
 // Props
 interface Props {
