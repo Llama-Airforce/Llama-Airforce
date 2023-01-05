@@ -47,12 +47,6 @@ const typescript = `<script setup lang="ts">
 const scss = `@import "@/Styles/Variables.scss";
 
 @include dashboard("dashboard-root");
-
-.dashboard-root {
-  .dashboard {
-    @include cookbook-item;
-  }
-}
 `;
 </script>
 
