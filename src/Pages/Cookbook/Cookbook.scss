@@ -1,0 +1,12 @@
+@mixin cookbook-item {
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 1rem;
+
+    ::v-deep(pre) {
+      margin: 0;
+    }
+  }
+}

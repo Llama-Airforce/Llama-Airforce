@@ -6,6 +6,7 @@ import ConvexPools from "@/Pages/Convex/Pools/Pools.vue";
 export const pageConvex: Page = {
   title: "Convex",
   titleRoute: "/convex",
+  visible: true,
   planeX: 255,
   routes: [
     { path: "/convex", redirect: { name: "flyer" } },

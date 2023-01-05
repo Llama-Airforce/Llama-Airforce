@@ -6,12 +6,14 @@
         class="card-header"
         :class="{ collapsible }"
       >
-        <i
-          v-if="icon"
-          class="icon"
-          :class="icon"
-        ></i>
-        <div class="text">{{ title }}</div>
+        <div class="text">
+          <i
+            v-if="icon"
+            class="icon"
+            :class="icon"
+          ></i>
+          {{ title }}
+        </div>
         <slot name="actions"></slot>
       </div>
 
@@ -84,7 +86,7 @@ const {
       .icon {
         font-size: 1.25rem;
         color: $blue;
-        padding-right: 0.75rem;
+        padding-right: 0.5rem;
       }
 
       .text {

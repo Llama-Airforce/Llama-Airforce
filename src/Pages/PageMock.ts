@@ -4,6 +4,7 @@ import { Page } from "@/Pages/Page";
 export const pageUnion: Page = {
   title: "foo",
   titleRoute: "",
+  visible: false,
   planeX: 0,
   routes: [],
   menuHeader: "",

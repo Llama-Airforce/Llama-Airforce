@@ -3,6 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 export type Page = {
   title: string;
   titleRoute: string;
+  visible: boolean;
   planeX: number;
   routes: RouteRecordRaw[];
   menuHeader: string;

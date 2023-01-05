@@ -7,6 +7,7 @@ import FraxMatch from "@/Pages/Bribes/FraxMatch/FraxMatch.vue";
 export const pageBribes: Page = {
   title: "Bribes",
   titleRoute: "/bribes",
+  visible: true,
   planeX: 420,
   routes: [
     { path: "/votium", redirect: { name: "rounds" } },

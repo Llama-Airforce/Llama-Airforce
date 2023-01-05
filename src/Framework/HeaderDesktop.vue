@@ -24,7 +24,7 @@
           <img src="@/Assets/header-separator.png" />
 
           <template
-            v-for="page in pageStore.pages"
+            v-for="page in pageStore.pages.filter((p) => p.visible)"
             :key="page.title"
           >
             <li>

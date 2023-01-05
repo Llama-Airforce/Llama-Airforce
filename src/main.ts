@@ -6,6 +6,18 @@ import createRouter from "@/Router";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications from "@kyvg/vue3-notification";
 
+import "highlight.js/styles/vs2015.css";
+import hljs from "highlight.js/lib/core";
+import xml from "highlight.js/lib/languages/xml";
+import scss from "highlight.js/lib/languages/scss";
+import typescript from "highlight.js/lib/languages/typescript";
+import hljsVuePlugin from "@highlightjs/vue-plugin";
+
+hljs.registerLanguage('xml', xml);
+hljs.registerLanguage('scss', scss);
+hljs.registerLanguage('typescript', typescript);
+
+import { pageCookbook } from "@/Pages/Cookbook/Page";
 import { pageCurve } from "@/Pages/Curve/Page";
 import { pageConvex } from "@/Pages/Convex/Page";
 import { pageBribes } from "@/Pages/Bribes/Page";
@@ -27,7 +39,7 @@ const pinia = createPinia();
 app.use(pinia);
 
 // Configure pages.
-const pages = [pageCurve, pageConvex, pageBribes];
+const pages = [pageCookbook, pageCurve, pageConvex, pageBribes];
 
 // Only add Union if specifically configured to do so.
 if (import.meta.env.VITE_UNION === "true") {
@@ -42,4 +54,5 @@ const router = createRouter();
 app.use(router)
   .use(VueApexCharts)
   .use(Notifications)
+  .use(hljsVuePlugin)
   .mount("#app");

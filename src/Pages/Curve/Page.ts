@@ -14,6 +14,7 @@ import CurveDaoVeFunder from "@/Pages/Curve/DAO/VeFunder/VeFunder.vue";
 export const pageCurve: Page = {
   title: "Curve",
   titleRoute: "/curve",
+  visible: true,
   planeX: 105,
   routes: [
     { path: "/curve", redirect: { name: "curvegauges" } },

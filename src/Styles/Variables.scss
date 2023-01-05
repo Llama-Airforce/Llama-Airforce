@@ -64,3 +64,26 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
     @include border-flash($rgb);
   }
 }
+
+@mixin dashboard($root) {
+  .#{$root} {
+    display: flex;
+    justify-content: center;
+
+    .dashboard {
+      width: 100%;
+      padding: $page-margin;
+
+      display: grid;
+
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr;
+
+      @media only screen and (max-width: 1280px) {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+      }
+    }
+  }
+}
