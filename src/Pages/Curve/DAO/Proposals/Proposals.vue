@@ -108,26 +108,10 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboard("proposals");
+
 .proposals {
-  display: flex;
-  justify-content: center;
-
   .dashboard {
-    padding: $page-margin;
-    width: 100%;
-
-    display: grid;
-    grid-gap: 1.5rem;
-
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 1rem;
-    }
-
     .spinner {
       position: absolute;
       top: 50%;

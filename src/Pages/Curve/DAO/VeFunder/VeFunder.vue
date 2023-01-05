@@ -58,24 +58,10 @@ const onGauge = (newGauge: string): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboard("ve-funder");
+
 .ve-funder {
-  display: flex;
-  justify-content: center;
-
   .dashboard {
-    width: 100%;
-    padding: $page-margin;
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 1rem;
-    }
-
     > .explanation {
       ::v-deep(.card-body) {
         display: flex;

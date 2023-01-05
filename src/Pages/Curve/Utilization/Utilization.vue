@@ -1,5 +1,5 @@
 <template>
-  <div class="overview">
+  <div class="utilization">
     <div class="dashboard">
       <GraphRatios class="graph-ratios"></GraphRatios>
     </div>
@@ -34,28 +34,13 @@ onMounted(async (): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.overview {
-  display: flex;
-  justify-content: center;
+@include dashboard("utilization");
 
+.utilization {
   .dashboard {
-    width: 100%;
-    padding: $page-margin;
-
-    display: grid;
-
-    grid-template-rows: auto;
-    grid-template-columns: auto;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 1rem;
-    }
-
     .graph-ratios {
       grid-column: 1 / span 2;
-      grid-row: 2;
+      grid-row: 1;
 
       height: 2000px;
     }

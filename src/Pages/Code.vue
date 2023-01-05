@@ -380,19 +380,13 @@ const { t } = useI18n();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboard("contracts");
+
 .contracts {
   .dashboard {
-    width: 100%;
-    padding: $page-margin;
-
     display: flex;
     flex-direction: column;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 1rem;
-    }
+    gap: 0;
 
     .datatable-contracts {
       grid-column: 1;

@@ -132,25 +132,10 @@ const onSelectChain = (chain: Chain): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboard("pools");
+
 .pools {
-  display: flex;
-  justify-content: center;
-
   .dashboard {
-    width: 100%;
-    padding: $page-margin;
-
-    display: grid;
-
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 1rem;
-    }
-
     &.loading {
       .revenue-charts {
         opacity: 0.5;
@@ -168,7 +153,7 @@ const onSelectChain = (chain: Chain): void => {
     .revenue-charts {
       position: relative;
       grid-column: 1;
-      grid-row: 2;
+      grid-row: 1;
 
       display: grid;
       grid-template-columns: 1fr;

@@ -165,25 +165,11 @@ const initFromRouter = async (): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboard("overview");
+
 .overview {
-  display: flex;
-  justify-content: center;
-
   .dashboard {
-    padding: $page-margin;
-    width: 100%;
-
-    display: grid;
-    grid-gap: 1.5rem;
-
     grid-template-rows: 64px 64px auto 1fr;
-    grid-template-columns: 1fr;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem 1rem;
-    }
 
     .system-select {
       grid-column: 1;
