@@ -84,9 +84,10 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import { icon } from "@/Util";
-import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
+import { WalletConnectButton, useWalletStore, addressShort } from "@/Wallet";
 import type { BribedPersonal } from "@/Pages/Bribes/Models/Bribed";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
 import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
@@ -94,15 +95,12 @@ import SnapshotService, {
   Delegation,
 } from "@/Pages/Bribes/Rounds/Services/SnapshotService";
 import AuraService from "@/Pages/Bribes/Rounds/Services/AuraService";
-import { useWalletStore } from "@/Wallet/Store";
 import {
   getBribedPersonal,
   getVoteDistribution,
   prioritizeDelegates,
 } from "@/Pages/Bribes/Util/EpochHelper";
-import { addressShort } from "@/Wallet/WalletHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
-import { orderBy } from "lodash";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getHost } from "@/Services/Host";
 

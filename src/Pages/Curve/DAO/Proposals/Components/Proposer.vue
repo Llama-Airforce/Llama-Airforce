@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { KPI } from "@/Framework";
+import { addressShort } from "@/Wallet";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
-import { addressShort } from "@/Wallet/WalletHelper";
 
 const { t } = useI18n();
 

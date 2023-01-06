@@ -45,8 +45,8 @@ import { utils } from "ethers";
 import { Card, Button, InputNumber, InputText } from "@/Framework";
 import { numToBigNumber } from "@/Util";
 import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
+import { getProvider } from "@/Wallet";
 import { GaugeFactory__factory } from "@/Contracts";
-import { getProvider } from "@/Wallet/ProviderFactory";
 
 const { t } = useI18n();
 

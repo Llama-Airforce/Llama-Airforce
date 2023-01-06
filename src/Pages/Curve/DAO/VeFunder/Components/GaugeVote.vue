@@ -37,16 +37,16 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { Signer, utils } from "ethers";
 import { notify } from "@kyvg/vue3-notification";
 import { Card, Button, InputText } from "@/Framework";
+import { getProvider } from "@/Wallet";
 import {
   AragonAgent__factory,
   AragonVoting__factory,
   GaugeController__factory,
 } from "@/Contracts";
 import { MultisigAddress, veFunderGaugeController } from "@/Util/Addresses";
-import { Signer, utils } from "ethers";
-import { getProvider } from "@/Wallet/ProviderFactory";
 
 const { t } = useI18n();
 

@@ -17,8 +17,7 @@
 
 <script setup lang="ts">
 import { isDevelopment } from "@/Util";
-import { getProvider } from "@/Wallet/ProviderFactory";
-import { isMainnet } from "@/Wallet/WalletHelper";
+import { getProvider, isMainnet } from "@/Wallet";
 
 // Props
 interface Props {

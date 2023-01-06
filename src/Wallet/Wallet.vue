@@ -43,19 +43,17 @@
 import { watch, onMounted } from "vue";
 import { $computed } from "vue/macros";
 import { Button } from "@/Framework";
-import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
-import { useWalletStore } from "@/Wallet/Store";
 import {
+  WalletConnectButton,
+  useWalletStore,
   getProvider,
   clearProvider,
   connectWallet,
-} from "@/Wallet/ProviderFactory";
-import {
   isConnected,
   getAddress,
   addressShort,
   isMainnet,
-} from "@/Wallet/WalletHelper";
+} from "@/Wallet";
 
 // Refs
 const store = useWalletStore();
