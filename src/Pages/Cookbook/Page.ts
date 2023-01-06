@@ -8,6 +8,8 @@ import CookbookButton from "@/Pages/Cookbook/Framework/Button.vue";
 import CookbookButtonToggle from "@/Pages/Cookbook/Framework/ButtonToggle.vue";
 import CookbookCard from "@/Pages/Cookbook/Framework/Card.vue";
 import CookbookDataTable from "@/Pages/Cookbook/Framework/DataTable.vue";
+import CookbookInputText from "@/Pages/Cookbook/Framework/InputText.vue";
+import CookbookInputNumber from "@/Pages/Cookbook/Framework/InputNumber.vue";
 
 export const pageCookbook: Page = {
   title: "Cookbook",
@@ -51,6 +53,16 @@ export const pageCookbook: Page = {
       name: "data-table",
       component: CookbookDataTable,
     },
+    {
+      path: "/cookbook/input-text",
+      name: "input-text",
+      component: CookbookInputText,
+    },
+    {
+      path: "/cookbook/input-number",
+      name: "input-number",
+      component: CookbookInputNumber,
+    },
   ],
   menuHeader: "headers/cookbook.png",
   menuItems: [
@@ -85,6 +97,14 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/data-table",
           label: "DataTable",
+        },
+        {
+          to: "/cookbook/input-text",
+          label: "InputText",
+        },
+        {
+          to: "/cookbook/input-number",
+          label: "InputNumber",
         },
       ],
     },
