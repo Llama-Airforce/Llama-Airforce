@@ -15,10 +15,8 @@ import { chain } from "lodash";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
-import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
+import type { Epoch, Bribe, Product } from "@/Pages/Bribes/Models";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import type { Product } from "@/Pages/Bribes/Models/Product";
 
 type Serie = { name: string; data: number[] };
 

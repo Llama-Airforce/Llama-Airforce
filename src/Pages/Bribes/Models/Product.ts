@@ -1,5 +1,4 @@
-import type { Platform } from "@/Pages/Bribes/Models/Platform";
-import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+import type { Platform, Protocol } from "@/Pages/Bribes/Models";
 
 /** A product is simply the combination of a platform and protocol. */
 export type Product = {

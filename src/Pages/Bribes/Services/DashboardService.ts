@@ -1,4 +1,4 @@
-import type { Overview, OverviewId } from "@/Pages/Bribes/Models/Overview";
+import type { Overview, OverviewId } from "@/Pages/Bribes/Models";
 import ServiceBase from "@/Services/ServiceBase";
 
 export class OverviewResponse {

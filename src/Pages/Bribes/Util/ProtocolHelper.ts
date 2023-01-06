@@ -1,4 +1,4 @@
-import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+import type { Protocol } from "@/Pages/Bribes/Models";
 
 export function vlAssetSymbol(protocol: Protocol | null | undefined): string {
   switch (protocol) {

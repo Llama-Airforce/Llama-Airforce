@@ -1,4 +1,4 @@
-import type { Platform } from "@/Pages/Bribes/Models/Platform";
+import type { Platform } from "@/Pages/Bribes/Models";
 
 const protocols = ["cvx-crv", "aura-bal"] as const;
 

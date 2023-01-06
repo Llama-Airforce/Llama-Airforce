@@ -1,7 +1,9 @@
-import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
-import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
-import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
-import type { Product } from "@/Pages/Bribes/Models/Product";
+import type {
+  Epoch,
+  EpochId,
+  EpochOverview,
+  Product,
+} from "@/Pages/Bribes/Models";
 import ServiceBase from "@/Services/ServiceBase";
 
 export class RoundsResponse {

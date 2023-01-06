@@ -72,8 +72,11 @@ import { $ref, $computed } from "vue/macros";
 import { KPI, Select } from "@/Framework";
 import { notEmpty } from "@/Util";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import type { Platform } from "@/Pages/Bribes/Models/Platform";
-import { getProtocols, Protocol } from "@/Pages/Bribes/Models/Protocol";
+import {
+  getProtocols,
+  type Protocol,
+  type Platform,
+} from "@/Pages/Bribes/Models";
 
 type SelectItem = {
   label: string;

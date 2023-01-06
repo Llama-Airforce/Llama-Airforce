@@ -88,9 +88,7 @@ import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import { icon } from "@/Util";
 import { WalletConnectButton, useWalletStore, addressShort } from "@/Wallet";
-import type { BribedPersonal } from "@/Pages/Bribes/Models/Bribed";
-import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
-import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+import type { Epoch, Protocol, BribedPersonal } from "@/Pages/Bribes/Models";
 import SnapshotService, {
   Delegation,
 } from "@/Pages/Bribes/Rounds/Services/SnapshotService";

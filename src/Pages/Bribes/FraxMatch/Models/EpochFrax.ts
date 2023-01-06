@@ -1,5 +1,4 @@
-import type { Proposal } from "@/Pages/Bribes/Models/Epoch";
-import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
+import type { EpochId, Proposal } from "@/Pages/Bribes/Models";
 
 export type Matches = {
   native: number;

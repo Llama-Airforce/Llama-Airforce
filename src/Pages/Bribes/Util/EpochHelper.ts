@@ -10,9 +10,11 @@ import type {
   Bribed,
   BribedPersonal,
   VoteDistribution,
-} from "@/Pages/Bribes/Models/Bribed";
-import type { Epoch, Proposal, ProposalId } from "@/Pages/Bribes/Models/Epoch";
-import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
+  EpochId,
+  Epoch,
+  Proposal,
+  ProposalId,
+} from "@/Pages/Bribes/Models";
 
 export function totalAmountDollars(epoch: Epoch): number {
   return epoch.bribes.reduce((acc, cur) => acc + cur.amountDollars, 0);

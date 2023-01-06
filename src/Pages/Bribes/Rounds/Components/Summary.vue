@@ -66,9 +66,10 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { orderBy, reverse } from "lodash";
 import { AsyncValue, KPI, Select } from "@/Framework";
 import { countdown } from "@/Util";
-import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
+import type { Epoch, Product } from "@/Pages/Bribes/Models";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import {
   dollarPerVlAsset as dollarPerVlAssetFunc,
@@ -76,8 +77,6 @@ import {
 } from "@/Pages/Bribes/Util/EpochHelper";
 import { getDate, getDateRaw, getLink } from "@/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
-import { orderBy, reverse } from "lodash";
-import type { Product } from "@/Pages/Bribes/Models/Product";
 
 const { t } = useI18n();
 

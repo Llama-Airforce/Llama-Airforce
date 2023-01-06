@@ -1,4 +1,4 @@
-import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
+import type { EpochId } from "@/Pages/Bribes/Models";
 
 export type ProposalId = string;
 

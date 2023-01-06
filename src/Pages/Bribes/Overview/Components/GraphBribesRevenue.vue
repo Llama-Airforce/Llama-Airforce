@@ -17,9 +17,7 @@ import createChartStyles from "@/Styles/ChartStyles";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getDate } from "@/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
-import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
-import type { Overview } from "@/Pages/Bribes/Models/Overview";
-import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+import type { EpochOverview, Overview, Protocol } from "@/Pages/Bribes/Models";
 
 const { t } = useI18n();
 

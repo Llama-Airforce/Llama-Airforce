@@ -94,7 +94,7 @@ import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 import { orderBy } from "lodash";
 import { getDate, getDateRaw, getLink } from "@/Pages/Bribes/Util/EpochHelper";
-import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
+import type { Bribe } from "@/Pages/Bribes/Models";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 // Props

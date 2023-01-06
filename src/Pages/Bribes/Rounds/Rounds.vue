@@ -29,12 +29,10 @@ import Summary from "@/Pages/Bribes/Rounds/Components/Summary.vue";
 import TableBribed from "@/Pages/Bribes/Rounds/Components/TableBribed.vue";
 import TablePersonal from "@/Pages/Bribes/Rounds/Components/TablePersonal.vue";
 import GraphBribesRound from "@/Pages/Bribes/Rounds/Components/GraphBribesRound.vue";
-import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
+import type { Epoch, Platform, Protocol, Product } from "@/Pages/Bribes/Models";
+import { isPlatform, isProtocol } from "@/Pages/Bribes/Models";
 import BribesService from "@/Pages/Bribes/Services/BribesService";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import { isPlatform, Platform } from "@/Pages/Bribes/Models/Platform";
-import { isProtocol, Protocol } from "@/Pages/Bribes/Models/Protocol";
-import type { Product } from "@/Pages/Bribes/Models/Product";
 import { getHost } from "@/Services/Host";
 
 const bribesService = new BribesService(getHost());

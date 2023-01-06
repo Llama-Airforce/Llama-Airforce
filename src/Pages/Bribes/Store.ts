@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
-import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
-import type { Overview, OverviewId } from "@/Pages/Bribes/Models/Overview";
-import type { Platform } from "@/Pages/Bribes/Models/Platform";
-import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
-import type { Product } from "@/Pages/Bribes/Models/Product";
 import { orderBy } from "lodash";
+import type {
+  Epoch,
+  Overview,
+  OverviewId,
+  Platform,
+  Protocol,
+  Product,
+} from "@/Pages/Bribes/Models";
 
 type ProductState<T> = Record<Platform, Record<Protocol, T>>;
 type Rounds = ProductState<number[]>;

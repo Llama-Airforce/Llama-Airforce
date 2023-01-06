@@ -23,12 +23,16 @@ import SystemSelect from "@/Pages/Bribes/Components/SystemSelect.vue";
 import GraphBribesRevenue from "@/Pages/Bribes/Overview/Components/GraphBribesRevenue.vue";
 import TableRounds from "@/Pages/Bribes/Overview/Components/TableRounds.vue";
 import Summary from "@/Pages/Bribes/Overview/Components/Summary.vue";
-import type { Overview, OverviewId } from "@/Pages/Bribes/Models/Overview";
+import { isPlatform, isProtocol } from "@/Pages/Bribes/Models";
+import type {
+  Overview,
+  OverviewId,
+  Product,
+  Platform,
+  Protocol,
+} from "@/Pages/Bribes/Models";
 import DashboardService from "@/Pages/Bribes/Services/DashboardService";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import { isPlatform, Platform } from "@/Pages/Bribes/Models/Platform";
-import { isProtocol, Protocol } from "@/Pages/Bribes/Models/Protocol";
-import type { Product } from "@/Pages/Bribes/Models/Product";
 import { getHost } from "@/Services/Host";
 
 const dashboardService = new DashboardService(getHost());

@@ -44,9 +44,7 @@ import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, KPI } from "@/Framework";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
-import type { Overview } from "@/Pages/Bribes/Models/Overview";
-import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
+import type { EpochOverview, Overview, Protocol } from "@/Pages/Bribes/Models";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
 
 const { t } = useI18n();

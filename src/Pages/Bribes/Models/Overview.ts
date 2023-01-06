@@ -1,4 +1,4 @@
-import type { EpochOverview } from "@/Pages/Bribes/Models/EpochOverview";
+import type { EpochOverview } from "@/Pages/Bribes/Models";
 
 export type OverviewId = "bribes-overview-votium" | "bribes-overview-aura";
 
