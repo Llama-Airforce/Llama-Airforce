@@ -11,6 +11,9 @@ import CookbookDataTable from "@/Pages/Cookbook/Framework/DataTable.vue";
 import CookbookInputText from "@/Pages/Cookbook/Framework/InputText.vue";
 import CookbookInputNumber from "@/Pages/Cookbook/Framework/InputNumber.vue";
 import CookbookModal from "@/Pages/Cookbook/Framework/Modal.vue";
+import CookbookPagination from "@/Pages/Cookbook/Framework/Pagination.vue";
+import CookbookSlider from "@/Pages/Cookbook/Framework/Slider.vue";
+import CookbookSpinner from "@/Pages/Cookbook/Framework/Spinner.vue";
 
 export const pageCookbook: Page = {
   title: "Cookbook",
@@ -69,6 +72,21 @@ export const pageCookbook: Page = {
       name: "modal",
       component: CookbookModal,
     },
+    {
+      path: "/cookbook/pagination",
+      name: "pagination",
+      component: CookbookPagination,
+    },
+    {
+      path: "/cookbook/slider",
+      name: "slider",
+      component: CookbookSlider,
+    },
+    {
+      path: "/cookbook/spinner",
+      name: "spinner",
+      component: CookbookSpinner,
+    },
   ],
   menuHeader: "headers/cookbook.png",
   menuItems: [
@@ -115,6 +133,18 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/modal",
           label: "Modal",
+        },
+        {
+          to: "/cookbook/pagination",
+          label: "Pagination",
+        },
+        {
+          to: "/cookbook/slider",
+          label: "Slider",
+        },
+        {
+          to: "/cookbook/spinner",
+          label: "Spinner",
         },
       ],
     },
