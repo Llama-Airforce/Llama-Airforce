@@ -34,7 +34,7 @@ import { $computed } from "vue/macros";
 import { useRoute } from "vue-router";
 import { MenuItem, SelectLanguage } from "@/Framework";
 import { subIsActive } from "@/Util";
-import { Wallet } from "@/Wallet";
+import Wallet from "@/Wallet/Wallet.vue";
 import type { Page } from "@/Pages/Page";
 import { usePageStore } from "@/Pages/Store";
 

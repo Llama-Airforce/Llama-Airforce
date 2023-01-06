@@ -44,7 +44,6 @@ import { watch, onMounted } from "vue";
 import { $computed } from "vue/macros";
 import { Button } from "@/Framework";
 import {
-  WalletConnectButton,
   useWalletStore,
   getProvider,
   clearProvider,
@@ -54,6 +53,7 @@ import {
   addressShort,
   isMainnet,
 } from "@/Wallet";
+import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 
 // Refs
 const store = useWalletStore();

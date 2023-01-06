@@ -87,7 +87,8 @@ import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import { icon } from "@/Util";
-import { WalletConnectButton, useWalletStore, addressShort } from "@/Wallet";
+import { useWalletStore, addressShort } from "@/Wallet";
+import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, Protocol, BribedPersonal } from "@/Pages/Bribes/Models";
 import SnapshotService, {
   Delegation,
