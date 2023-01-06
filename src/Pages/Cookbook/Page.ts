@@ -1,5 +1,6 @@
 import { Page } from "@/Pages/Page";
 
+import CookbookColors from "@/Pages/Cookbook/Colors.vue";
 import CookbookDashboard from "@/Pages/Cookbook/Dashboard.vue";
 
 import CookbookAsyncValue from "@/Pages/Cookbook/Framework/AsyncValue.vue";
@@ -15,6 +16,11 @@ export const pageCookbook: Page = {
   planeX: 15,
   routes: [
     { path: "/cookbook", redirect: { name: "button" } },
+    {
+      path: "/cookbook/colors",
+      name: "colors",
+      component: CookbookColors,
+    },
     {
       path: "/cookbook/dashboard",
       name: "dashboard",
@@ -48,6 +54,10 @@ export const pageCookbook: Page = {
   ],
   menuHeader: "headers/cookbook.png",
   menuItems: [
+    {
+      to: "/cookbook/colors",
+      label: "Colors",
+    },
     {
       to: "/cookbook/dashboard",
       label: "Dashboard",
