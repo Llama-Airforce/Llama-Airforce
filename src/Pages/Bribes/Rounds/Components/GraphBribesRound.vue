@@ -13,12 +13,12 @@ import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { CardGraph } from "@/Framework";
+import { round, unit } from "@/Util";
+import type { DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import { round, unit } from "@/Util/NumberHelper";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
 import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
 import { useBribesStore } from "@/Pages/Bribes/Store";
-import type { DataPoint } from "@/Util/DataPoint";
 import type { Product } from "@/Pages/Bribes/Models/Product";
 
 type Serie = { name: string; data: number[] };

@@ -60,14 +60,14 @@
 <script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
+import { shorten, icon, disabled } from "@/Util";
 import GraphTvl from "@/Pages/Convex/Pools/Components/GraphTvl.vue";
 import GraphApr from "@/Pages/Convex/Pools/Components/GraphApr.vue";
 import Pool from "@/Pages/Convex/Pools/Models/Pool";
-import { shorten, icon, disabled } from "@/Util/PoolHelper";
 import { totalApr } from "@/Pages/Convex/Pools/Util/PoolHelper";
 import { useConvexStore } from "@/Pages/Convex/Store";
-import { orderBy } from "lodash";
 
 const { t } = useI18n();
 

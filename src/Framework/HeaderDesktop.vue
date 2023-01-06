@@ -89,7 +89,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useRoute } from "vue-router";
-import { subIsActive } from "@/Util/RouterHelper";
+import { subIsActive } from "@/Util";
 import { usePageStore } from "@/Pages/Store";
 
 const pageStore = usePageStore();

@@ -54,12 +54,12 @@ import { onMounted } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { TabView, TabItem, Spinner } from "@/Framework";
+import { minDelay } from "@/Util";
 import ProposalsTab from "@/Pages/Curve/DAO/Proposals/ProposalsTab.vue";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import ProposalService from "@/Pages/Curve/DAO/Proposals/Services/ProposalService";
 import { getHost } from "@/Services/Host";
 import { getStatus } from "@/Pages/Curve/DAO/Proposals/Util/ProposalHelper";
-import { minDelay } from "@/Util/PromiseHelper";
 
 const { t } = useI18n();
 

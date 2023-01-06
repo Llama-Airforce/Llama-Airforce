@@ -8,9 +8,9 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { minDelay } from "@/Util";
 import GraphRatios from "@/Pages/Curve/Utilization/Components/GraphRatios.vue";
 import GaugeRatiosService from "@/Pages/Curve/Utilization/Services/GaugeRatiosService";
-import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { getHost } from "@/Services/Host";
 

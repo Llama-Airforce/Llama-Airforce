@@ -1,6 +1,6 @@
+import { paginate } from "@/Util";
 import Pool from "@/Pages/Curve/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
-import { paginate } from "@/Util/PaginationHelper";
 
 const THEGRAPH_URL =
   "https://api.thegraph.com/subgraphs/name/convex-community/volume-mainnet";

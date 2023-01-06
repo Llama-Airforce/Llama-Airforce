@@ -80,6 +80,7 @@
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
+import { icon } from "@/Util";
 import type { Bribed } from "@/Pages/Bribes/Models/Bribed";
 import type { Bribe } from "@/Pages/Bribes/Models/Bribe";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
@@ -87,7 +88,6 @@ import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getBribed } from "@/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
-import { icon } from "@/Util/PoolHelper";
 import { orderBy } from "lodash";
 
 const { t } = useI18n();

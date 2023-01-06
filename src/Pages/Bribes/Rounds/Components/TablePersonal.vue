@@ -85,6 +85,7 @@ import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
+import { icon } from "@/Util";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { BribedPersonal } from "@/Pages/Bribes/Models/Bribed";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
@@ -101,7 +102,6 @@ import {
 } from "@/Pages/Bribes/Util/EpochHelper";
 import { addressShort } from "@/Wallet/WalletHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
-import { icon } from "@/Util/PoolHelper";
 import { orderBy } from "lodash";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getHost } from "@/Services/Host";

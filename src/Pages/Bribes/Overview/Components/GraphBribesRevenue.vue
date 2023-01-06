@@ -12,8 +12,8 @@
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
+import { round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import { round, unit } from "@/Util/NumberHelper";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getDate } from "@/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";

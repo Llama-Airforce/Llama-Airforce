@@ -12,16 +12,14 @@
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
+import { round, unit, formatNumber, shorten } from "@/Util";
+import type { DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import Gauge from "@/Pages/Curve/Gauges/Models/Gauge";
 import Fee from "@/Pages/Curve/Gauges/Models/Fee";
 import Emission from "@/Pages/Curve/Gauges/Models/Emission";
-import { round, unit } from "@/Util/NumberHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { aggregateDataPoints } from "@/Pages/Curve/Gauges/Util/SnapshotHelper";
-import { shorten } from "@/Util/PoolHelper";
-import { formatNumber } from "@/Util/NumberHelper";
-import type { DataPoint } from "@/Util/DataPoint";
 
 type Serie = {
   name: string;

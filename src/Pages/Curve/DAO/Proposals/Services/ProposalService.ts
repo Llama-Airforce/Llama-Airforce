@@ -1,8 +1,8 @@
+import { BigNumber } from "ethers";
+import { bigNumToNumber } from "@/Util";
 import ServiceBase from "@/Services/ServiceBase";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@/Pages/Curve/DAO/Proposals/Models/ProposalDetails";
-import { bigNumToNumber } from "@/Util/NumberHelper";
-import { BigNumber } from "ethers";
 
 const PROPOSAL_URL = "https://api-py.llama.airforce/curve/v1/dao/proposals";
 const PROPOSAL_OWNERSHIP_URL =

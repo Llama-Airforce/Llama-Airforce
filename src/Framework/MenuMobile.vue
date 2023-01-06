@@ -51,8 +51,8 @@ import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useRoute } from "vue-router";
 import { MenuItem, Select } from "@/Framework";
+import { subIsActive } from "@/Util";
 import { usePageStore } from "@/Pages/Store";
-import { subIsActive } from "@/Util/RouterHelper";
 
 // Props
 interface Props {

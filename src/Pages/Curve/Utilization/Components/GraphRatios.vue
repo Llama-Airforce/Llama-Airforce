@@ -11,13 +11,13 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
+import { orderBy, last } from "lodash";
 import { CardGraph } from "@/Framework";
+import { shorten } from "@/Util";
+import type { DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import { shorten } from "@/Util/PoolHelper";
-import { orderBy, last } from "lodash";
-import { DataPoint } from "@/Util/DataPoint";
 
 type Serie = {
   name: string;

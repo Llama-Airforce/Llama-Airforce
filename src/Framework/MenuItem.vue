@@ -39,7 +39,7 @@
 import { watch } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useRoute } from "vue-router";
-import { subIsActive } from "@/Util/RouterHelper";
+import { subIsActive } from "@/Util";
 import { MenuItem, isNode, isLeaf } from "@/Pages/Page";
 
 // Props

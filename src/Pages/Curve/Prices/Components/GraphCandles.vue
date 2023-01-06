@@ -18,12 +18,7 @@
 import { onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle } from "@/Framework";
-import Pool from "@/Pages/Curve/Models/Pool";
-import { round, unit } from "@/Util/NumberHelper";
-import { useCurveStore } from "@/Pages/Curve/Store";
-import { shorten } from "@/Util/PoolHelper";
-import Candle from "@/Pages/Curve/Prices/Models/Candle";
+import { chain } from "lodash";
 import {
   CandlestickData,
   ColorType,
@@ -35,9 +30,12 @@ import {
   LineStyle,
   UTCTimestamp,
 } from "lightweight-charts";
+import { Card, ButtonToggle } from "@/Framework";
+import { round, unit, shorten } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
-import { chain } from "lodash";
-
+import Pool from "@/Pages/Curve/Models/Pool";
+import { useCurveStore } from "@/Pages/Curve/Store";
+import Candle from "@/Pages/Curve/Prices/Models/Candle";
 // Props
 interface Props {
   poolSelected: Pool | null;

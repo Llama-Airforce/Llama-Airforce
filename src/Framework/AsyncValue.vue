@@ -6,8 +6,8 @@
 <script setup lang="ts">
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
-import { unit as unitF, round } from "@/Util/NumberHelper";
 import { isFinite } from "lodash";
+import { unit as unitF, round } from "@/Util";
 
 // Props
 interface Props {

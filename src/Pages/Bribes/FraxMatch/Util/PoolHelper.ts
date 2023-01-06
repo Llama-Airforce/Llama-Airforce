@@ -1,5 +1,5 @@
+import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/Bribes/FraxMatch/Models/Pool";
-import { shorten } from "@/Util/PoolHelper";
 
 /** Match function used for searching by pool name or contract address. */
 export function match(input: string, option: Pool): boolean {

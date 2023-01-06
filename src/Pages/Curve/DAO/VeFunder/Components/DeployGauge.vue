@@ -41,11 +41,11 @@
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { notify } from "@kyvg/vue3-notification";
-import { Card, Button, InputNumber, InputText } from "@/Framework";
-import { GaugeFactory__factory } from "@/Contracts";
-import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
 import { utils } from "ethers";
-import { numToBigNumber } from "@/Util/NumberHelper";
+import { Card, Button, InputNumber, InputText } from "@/Framework";
+import { numToBigNumber } from "@/Util";
+import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
+import { GaugeFactory__factory } from "@/Contracts";
 import { getProvider } from "@/Wallet/ProviderFactory";
 
 const { t } = useI18n();

@@ -1,3 +1,5 @@
+import { chain, isFinite } from "lodash";
+import { notEmpty } from "@/Util";
 import {
   Delegation,
   Proposal as SnapshotProposal,
@@ -11,8 +13,6 @@ import type {
 } from "@/Pages/Bribes/Models/Bribed";
 import type { Epoch, Proposal, ProposalId } from "@/Pages/Bribes/Models/Epoch";
 import type { EpochId } from "@/Pages/Bribes/Models/EpochId";
-import { notEmpty } from "@/Util/ArrayHelper";
-import { chain, isFinite } from "lodash";
 
 export function totalAmountDollars(epoch: Epoch): number {
   return epoch.bribes.reduce((acc, cur) => acc + cur.amountDollars, 0);

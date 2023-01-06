@@ -14,13 +14,12 @@
 import { onMounted, onBeforeUnmount } from "vue";
 import { $ref } from "vue/macros";
 import { useRoute, useRouter } from "vue-router";
+import { shorten, longen, minDelay } from "@/Util";
 import TableGauges from "@/Pages/Curve/Gauges/Components/TableGauges.vue";
 import Gauge from "@/Pages/Curve/Gauges/Models/Gauge";
 import GaugeService from "@/Pages/Curve/Gauges/Services/GaugeService";
 import GaugeSnapshotsService from "@/Pages/Curve/Gauges/Services/GaugeSnapshotsService";
-import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import { shorten, longen } from "@/Util/PoolHelper";
 import { getHost } from "@/Services/Host";
 
 let isMounted = false;

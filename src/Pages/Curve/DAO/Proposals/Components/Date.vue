@@ -15,8 +15,8 @@ import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { KPI } from "@/Framework";
+import { countdown } from "@/Util";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
-import { countdown } from "@/Util/DateHelper";
 
 const { t } = useI18n();
 

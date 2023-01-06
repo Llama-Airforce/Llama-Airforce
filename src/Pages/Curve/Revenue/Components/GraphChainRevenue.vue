@@ -9,12 +9,12 @@
 
 <script setup lang="ts">
 import { $computed } from "vue/macros";
+import { orderBy } from "lodash";
 import { CardGraph } from "@/Framework";
+import { round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import { ChainRevenue } from "@/Pages/Curve/Revenue/Models/Revenue";
-import { round, unit } from "@/Util/NumberHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import { orderBy } from "lodash";
 
 // Refs
 const store = useCurveStore();

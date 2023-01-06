@@ -46,20 +46,20 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { Spinner } from "@/Framework";
+import { minDelay } from "@/Util";
 import RevenueService, {
   ChainRevenueService,
   ChainTopPoolsRevenueService,
 } from "@/Pages/Curve/Revenue/Services/RevenueService";
-import { minDelay } from "@/Util/PromiseHelper";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { getHost } from "@/Services/Host";
 import GraphPoolRevenue from "@/Pages/Curve/Revenue/Components/GraphPoolRevenue.vue";
 import GraphChainRevenue from "@/Pages/Curve/Revenue/Components/GraphChainRevenue.vue";
 import ChainSelect from "@/Pages/Curve/Revenue/Components/ChainSelect.vue";
 import GraphChainTopPools from "@/Pages/Curve/Revenue/Components/GraphChainTopPools.vue";
-import { $computed, $ref } from "vue/macros";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
 
 const revenueService = new RevenueService(getHost());

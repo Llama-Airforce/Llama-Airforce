@@ -70,10 +70,10 @@
 import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { KPI, Select } from "@/Framework";
+import { notEmpty } from "@/Util";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import type { Platform } from "@/Pages/Bribes/Models/Platform";
 import { getProtocols, Protocol } from "@/Pages/Bribes/Models/Protocol";
-import { notEmpty } from "@/Util/ArrayHelper";
 
 type SelectItem = {
   label: string;

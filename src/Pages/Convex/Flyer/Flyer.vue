@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref } from "vue/macros";
+import { minDelay } from "@/Util";
 import Header from "@/Pages/Convex/Flyer/Components/Header.vue";
 import Revenue from "@/Pages/Convex/Flyer/Components/Revenue.vue";
 import General from "@/Pages/Convex/Flyer/Components/General.vue";
@@ -20,7 +21,6 @@ import Bribes from "@/Pages/Convex/Flyer/Components/Bribes.vue";
 import Farm from "@/Pages/Convex/Flyer/Components/Farm.vue";
 import FlyerService from "@/Pages/Convex/Flyer/Services/FlyerService";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
-import { minDelay } from "@/Util/PromiseHelper";
 import { getHost } from "@/Services/Host";
 
 const flyerService = new FlyerService(getHost());

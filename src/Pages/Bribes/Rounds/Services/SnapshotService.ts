@@ -1,8 +1,8 @@
+import { paginate } from "@/Util";
+import { mapKeys } from "lodash";
 import type { ProposalId } from "@/Pages/Bribes/Models/Epoch";
 import type { Protocol } from "@/Pages/Bribes/Models/Protocol";
 import ServiceBase from "@/Services/ServiceBase";
-import { paginate } from "@/Util/PaginationHelper";
-import { mapKeys } from "lodash";
 
 const SNAPSHOT_URL = "https://hub.snapshot.org/graphql";
 const SNAPSHOT_SCORE_URL = "https://score.snapshot.org/api/scores";

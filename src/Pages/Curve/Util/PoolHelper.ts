@@ -1,5 +1,5 @@
+import { shorten } from "@/Util";
 import Pool from "@/Pages/Curve/Models/Pool";
-import { shorten } from "@/Util/PoolHelper";
 
 /** Match function used for searching by pool name or contract address. */
 export function match(input: string, option: Pool): boolean {

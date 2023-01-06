@@ -67,6 +67,7 @@ import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, KPI, Select } from "@/Framework";
+import { countdown } from "@/Util";
 import type { Epoch } from "@/Pages/Bribes/Models/Epoch";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import {
@@ -75,7 +76,6 @@ import {
 } from "@/Pages/Bribes/Util/EpochHelper";
 import { getDate, getDateRaw, getLink } from "@/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
-import { countdown } from "@/Util/DateHelper";
 import { orderBy, reverse } from "lodash";
 import type { Product } from "@/Pages/Bribes/Models/Product";
 
