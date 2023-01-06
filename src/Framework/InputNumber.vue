@@ -38,6 +38,7 @@ input {
   padding: 0.1rem 0.5rem;
   text-align: start;
   height: 2rem;
+  cursor: text;
 
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,

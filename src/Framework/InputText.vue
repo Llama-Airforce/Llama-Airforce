@@ -104,6 +104,7 @@ const onInput = (evt: Event): void => {
     text-align: start;
     height: 2rem;
     width: calc(100% - 1rem - 4px); // minus padding and border twice.
+    cursor: text;
 
     /* Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
@@ -143,7 +144,8 @@ const onInput = (evt: Event): void => {
     margin-top: 2.75rem;
     width: 100%;
 
-    background: linear-gradient(0deg, $level1-color, $level1-color), $background-color;
+    background: linear-gradient(0deg, $level1-color, $level1-color),
+      $background-color;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 
     > div {
@@ -152,6 +154,7 @@ const onInput = (evt: Event): void => {
       user-select: none;
       border-bottom: 1px solid $level4-color;
       padding: 0.5rem 0.75rem;
+      cursor: pointer;
 
       &:hover {
         background-color: $blue;
