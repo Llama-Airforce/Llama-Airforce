@@ -1,71 +1,80 @@
 <template>
   <div class="data-table">
     <div class="dashboard">
-      <DataTable
-        class="datatable-example"
-        columns-header="1fr"
-        columns-data="example-columns-data"
-        :rows="rows"
-        :columns="['', 'Deadline', '$/vlCVX', 'Total']"
-        :sorting="true"
-        :sorting-columns="['', 'deadline', 'vlasset', 'total']"
-        :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
-        sorting-default-column="deadline"
-        sorting-default-dir="Descending"
-        @sort-column="onSort"
-        @selected="onSelected"
+      <Recipe
+        title="DataTable"
+        class="recipe"
       >
-        <template #header-title>
-          <div>All Rounds</div>
-        </template>
-
-        <template #header-actions>
-          <Tooltip>Tooltip data goes here</Tooltip>
-        </template>
-
-        <template #row="props: { item: Round }">
-          <div
-            class="round-number"
-            @click.stop
+        <template #example>
+          <DataTable
+            class="datatable-example"
+            columns-header="1fr"
+            columns-data="example-columns-data"
+            :rows="rows"
+            :columns="['', 'Deadline', '$/vlCVX', 'Total']"
+            :sorting="true"
+            :sorting-columns="['', 'deadline', 'vlasset', 'total']"
+            :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
+            sorting-default-column="deadline"
+            sorting-default-dir="Descending"
+            @sort-column="onSort"
+            @selected="onSelected"
           >
-            <a class="vote-link">
-              {{ props.item.round }}
-            </a>
-          </div>
-          <div>
-            {{ new Date(Date.now()).toLocaleDateString() }}
-          </div>
-          <div class="number">
-            <AsyncValue
-              :value="props.item.value"
-              :precision="5"
-              type="dollar"
-            />
-          </div>
-          <div class="number">
-            <AsyncValue
-              :value="props.item.value * 10000"
-              :precision="2"
-              type="dollar"
-            />
-          </div>
+            <template #header-title>
+              <div>All Rounds</div>
+            </template>
+
+            <template #header-actions>
+              <Tooltip>Tooltip data goes here</Tooltip>
+            </template>
+
+            <template #row="props: { item: Round }">
+              <div
+                class="round-number"
+                @click.stop
+              >
+                <a class="vote-link">
+                  {{ props.item.round }}
+                </a>
+              </div>
+              <div>
+                {{ new Date(Date.now()).toLocaleDateString() }}
+              </div>
+              <div class="number">
+                <AsyncValue
+                  :value="props.item.value"
+                  :precision="5"
+                  type="dollar"
+                />
+              </div>
+              <div class="number">
+                <AsyncValue
+                  :value="props.item.value * 10000"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
+            </template>
+          </DataTable>
         </template>
-      </DataTable>
 
-      <Code
-        lang="xml"
-        :code="dataTable1"
-      />
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="dataTable1"
+          ></Code>
 
-      <Code
-        lang="typescript"
-        :code="dataTable2"
-      />
+          <Code
+            lang="typescript"
+            :code="dataTable2"
+          ></Code>
 
-      <Code
-        lang="scss"
-        :code="dataTable3"
-      />
+          <Code
+            lang="scss"
+            :code="dataTable3"
+          ></Code>
+        </template>
+      </Recipe>
     </div>
   </div>
 </template>
@@ -74,6 +83,7 @@
 import { $ref, $computed } from "vue/macros";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, Code, Tooltip, SortOrder } from "@/Framework";
+import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
 type Round = {
   round: number;
@@ -249,13 +259,14 @@ const dataTable3 = `.datatable-example {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Pages/Cookbook/Cookbook.scss";
 
 @include dashboard("data-table");
 
 .data-table {
   .dashboard {
-    @include cookbook-item;
+    .recipe {
+      align-items: stretch;
+    }
   }
 }
 

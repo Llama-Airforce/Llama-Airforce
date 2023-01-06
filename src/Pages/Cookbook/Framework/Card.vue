@@ -1,71 +1,79 @@
 <template>
   <div class="card-root">
     <div class="dashboard">
-      <div class="item">
-        <Card
-          title="Card Title"
-          icon="fas fa-plane"
-        >
-          Content goes here
-        </Card>
+      <Recipe title="Card">
+        <template #example>
+          <Card
+            title="Card Title"
+            icon="fas fa-plane"
+          >
+            Content goes here
+          </Card>
+        </template>
 
-        <div class="info">Card</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="card"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="card"
-        />
-      </div>
+      <Recipe title="Compact / no padding">
+        <template #example>
+          <Card :compact="true"> Content goes here </Card>
+        </template>
 
-      <div class="item">
-        <Card :compact="true"> Content goes here </Card>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="cardCompact"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <div class="info">Compact / no padding</div>
-
-        <Code
-          lang="xml"
-          :code="cardCompact"
-        />
-      </div>
-
-      <div
-        class="item"
+      <Recipe
+        title="Collapsible"
         style="grid-column: 1 / span 2"
       >
-        <Card
-          title="Card Title"
-          icon="fas fa-plane"
-          :collapsible="true"
-          :collapsed="collapsed"
-          @click="collapsed = !collapsed"
-        >
-          <template #actions>
-            <i
-              class="expander fas fa-chevron-up"
-              :class="{ expanded: collapsed }"
-            ></i>
-          </template>
+        <template #example>
+          <Card
+            title="Card Title"
+            icon="fas fa-plane"
+            :collapsible="true"
+            :collapsed="collapsed"
+            @click="collapsed = !collapsed"
+          >
+            <template #actions>
+              <i
+                class="expander fas fa-chevron-up"
+                :class="{ expanded: collapsed }"
+              ></i>
+            </template>
 
-          <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>
-        </Card>
+            <Collapsible :expanded="!collapsed">
+              Content goes here
+            </Collapsible>
+          </Card>
+        </template>
 
-        <div class="info">Collapsible</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="cardCollapsible1"
+          ></Code>
 
-        <Code
-          lang="xml"
-          :code="cardCollapsible1"
-        />
+          <Code
+            lang="typescript"
+            :code="cardCollapsible2"
+          ></Code>
 
-        <Code
-          lang="typescript"
-          :code="cardCollapsible2"
-        />
-
-        <Code
-          lang="scss"
-          :code="cardCollapsible3"
-        />
-      </div>
+          <Code
+            lang="scss"
+            :code="cardCollapsible3"
+          ></Code>
+        </template>
+      </Recipe>
     </div>
   </div>
 </template>
@@ -73,6 +81,7 @@
 <script setup lang="ts">
 import { $ref } from "vue/macros";
 import { Card, Code, Collapsible } from "@/Framework";
+import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
 const collapsed = $ref(false);
 
@@ -125,7 +134,6 @@ const cardCollapsible3 = `::v-deep(.card-header) {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Pages/Cookbook/Cookbook.scss";
 
 @include dashboard("card-root");
 
@@ -134,8 +142,6 @@ const cardCollapsible3 = `::v-deep(.card-header) {
     row-gap: 3rem;
     column-gap: 1.5rem;
     grid-template-columns: 1fr 1fr;
-
-    @include cookbook-item;
 
     ::v-deep(.card-header) {
       .expander {

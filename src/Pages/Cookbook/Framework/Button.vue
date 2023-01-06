@@ -1,120 +1,135 @@
 <template>
   <div class="button">
     <div class="dashboard">
-      <div class="item">
-        <Button
-          value="Value"
-          :primary="true"
-        ></Button>
+      <Recipe title="Primary">
+        <template #example>
+          <Button
+            value="Value"
+            :primary="true"
+          ></Button>
+        </template>
 
-        <div class="info">Primary</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnPrimary"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="btnPrimary"
-        />
-      </div>
+      <Recipe title="Not Primary">
+        <template #example>
+          <Button
+            value="Value"
+            :primary="false"
+          ></Button>
+        </template>
 
-      <div class="item">
-        <Button
-          value="Value"
-          :primary="false"
-        ></Button>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnPrimaryNon"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <div class="info">Not Primary</div>
+      <Recipe title="Disabled">
+        <template #example>
+          <Button
+            value="Value"
+            :disabled="true"
+          ></Button>
+        </template>
 
-        <Code
-          lang="xml"
-          :code="btnPrimaryNon"
-        />
-      </div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnDisabled"
+          ></Code>
+        </template>
+      </Recipe>
 
-      <div class="item">
-        <Button
-          value="Value"
-          :disabled="true"
-        ></Button>
+      <Recipe title="Web3">
+        <template #example>
+          <Button
+            value="Value"
+            :web3="true"
+          ></Button>
+        </template>
 
-        <div class="info">Disabled</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnWeb3"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="btnDisabled"
-        />
-      </div>
+      <Recipe title="Icon">
+        <template #example>
+          <Button
+            value="Value"
+            icon="fas fa-plane"
+          ></Button>
+        </template>
 
-      <div class="item">
-        <Button
-          value="Value"
-          :web3="true"
-        ></Button>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnIcon"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <div class="info">Web3</div>
-
-        <Code
-          lang="xml"
-          :code="btnWeb3"
-        />
-      </div>
-
-      <div class="item">
-        <Button
-          value="Value"
-          icon="fas fa-plane"
-        ></Button>
-
-        <div class="info">Icon</div>
-
-        <Code
-          lang="xml"
-          :code="btnIcon"
-        />
-      </div>
-
-      <div
-        class="item"
+      <Recipe
+        title="Slot"
         style="grid-column: 2 / span 3"
       >
-        <Button>
-          <div style="margin-right: 1rem">Content goes here</div>
-          <i class="fas fa-plane"></i>
-        </Button>
+        <template #example>
+          <Button>
+            <div style="margin-right: 1rem">Content goes here</div>
+            <i class="fas fa-plane"></i>
+          </Button>
+        </template>
 
-        <div class="info">Slot</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnSlot"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="btnSlot"
-        />
-      </div>
-
-      <div
-        class="item"
+      <Recipe
+        title="Event - Click"
         style="grid-column: 1 / span 4"
       >
-        <Button
-          value="Click me!"
-          @click="showAlert('You clicked me!')"
-        ></Button>
+        <template #example>
+          <Button
+            value="Click me!"
+            @click="showAlert('You clicked me!')"
+          ></Button>
+        </template>
 
-        <div class="info">Event - Click</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnClick1"
+          />
 
-        <Code
-          lang="xml"
-          :code="btnClick1"
-        />
-
-        <Code
-          lang="typescript"
-          :code="btnClick2"
-        />
-      </div>
+          <Code
+            lang="typescript"
+            :code="btnClick2"
+          ></Code>
+        </template>
+      </Recipe>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Button, Code } from "@/Framework";
+import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
 const btnPrimary = `<Button
   value="Value"
@@ -158,7 +173,6 @@ const showAlert = (msg: string) => alert(msg);
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Pages/Cookbook/Cookbook.scss";
 
 @include dashboard("button");
 
@@ -166,8 +180,6 @@ const showAlert = (msg: string) => alert(msg);
   .dashboard {
     row-gap: 3rem;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-
-    @include cookbook-item;
   }
 }
 </style>

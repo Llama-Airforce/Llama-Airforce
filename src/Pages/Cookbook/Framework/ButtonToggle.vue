@@ -1,18 +1,22 @@
 <template>
   <div class="button-toggle">
     <div class="dashboard">
-      <div class="item">
-        <ButtonToggle
-          v-model="toggle"
-          value="Value"
-          icon="fas fa-plane"
-        ></ButtonToggle>
+      <Recipe title="Toggle">
+        <template #example>
+          <ButtonToggle
+            v-model="toggle"
+            value="Value"
+            icon="fas fa-plane"
+          ></ButtonToggle>
+        </template>
 
-        <Code
-          lang="xml"
-          :code="btnToggle"
-        />
-      </div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="btnToggle"
+          ></Code>
+        </template>
+      </Recipe>
     </div>
   </div>
 </template>
@@ -20,6 +24,7 @@
 <script setup lang="ts">
 import { $ref } from "vue/macros";
 import { ButtonToggle, Code } from "@/Framework";
+import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
 const toggle = $ref(false);
 
@@ -32,13 +37,6 @@ const btnToggle = `<ButtonToggle
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Pages/Cookbook/Cookbook.scss";
 
 @include dashboard("button-toggle");
-
-.button-toggle {
-  .dashboard {
-    @include cookbook-item;
-  }
-}
 </style>

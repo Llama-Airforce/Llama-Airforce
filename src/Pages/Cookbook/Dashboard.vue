@@ -1,10 +1,8 @@
 <template>
   <div class="dashboard-root">
     <div class="dashboard">
-      <div class="row">
-        <div class="item">
-          Dashboard.vue
-
+      <Recipe title="Dashboard.vue">
+        <template #snippets>
           <Code
             lang="xml"
             :code="html"
@@ -23,8 +21,8 @@
           />
 
           &lt;/style&gt;
-        </div>
-      </div>
+        </template>
+      </Recipe>
     </div>
   </div>
 </template>
@@ -32,6 +30,7 @@
 <script setup lang="ts">
 /* eslint-disable no-useless-escape */
 import { Code } from "@/Framework";
+import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
 const html = `<template>
   <div class="dashboard-root">
@@ -52,13 +51,6 @@ const scss = `@import "@/Styles/Variables.scss";
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Pages/Cookbook/Cookbook.scss";
 
 @include dashboard("dashboard-root");
-
-.dashboard-root {
-  .dashboard {
-    @include cookbook-item;
-  }
-}
 </style>

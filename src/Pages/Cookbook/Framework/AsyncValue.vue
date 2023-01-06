@@ -1,131 +1,150 @@
 <template>
   <div class="async-value">
     <div class="dashboard">
-      <div class="item">
-        <AsyncValue :value="50000"></AsyncValue>
+      <Recipe title="AsyncValue">
+        <template #example>
+          <AsyncValue :value="50000"></AsyncValue>
+        </template>
 
-        <div class="info">AsyncValue</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="async"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="async"
-        />
-      </div>
+      <Recipe title="Dollar">
+        <template #example>
+          <AsyncValue
+            :value="50000"
+            type="dollar"
+          ></AsyncValue>
+        </template>
 
-      <div class="item">
-        <AsyncValue
-          :value="50000"
-          type="dollar"
-        ></AsyncValue>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncDollar"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <div class="info">Dollar</div>
+      <Recipe title="Percentage">
+        <template #example>
+          <AsyncValue
+            :value="50000"
+            type="percentage"
+          ></AsyncValue>
+        </template>
 
-        <Code
-          lang="xml"
-          :code="asyncDollar"
-        />
-      </div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncPercentage"
+          ></Code>
+        </template>
+      </Recipe>
 
-      <div class="item">
-        <AsyncValue
-          :value="50000"
-          type="percentage"
-        ></AsyncValue>
+      <Recipe title="Loading">
+        <template #example>
+          <AsyncValue :value="null"></AsyncValue>
+        </template>
 
-        <div class="info">Percentage</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncLoading"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="asyncPercentage"
-        />
-      </div>
+      <Recipe title="Unknown">
+        <template #example>
+          <AsyncValue :value="0"></AsyncValue>
+        </template>
 
-      <div class="item">
-        <AsyncValue :value="null"></AsyncValue>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncUnknown"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <div class="info">Loading</div>
+      <Recipe title="Zero">
+        <template #example>
+          <AsyncValue
+            :value="0"
+            :show-zero="true"
+          ></AsyncValue>
+        </template>
 
-        <Code
-          lang="xml"
-          :code="asyncLoading"
-        />
-      </div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncZero"
+          ></Code>
+        </template>
+      </Recipe>
 
-      <div class="item">
-        <AsyncValue :value="0"></AsyncValue>
+      <Recipe title="Precision">
+        <template #example>
+          <AsyncValue
+            :value="50000"
+            :precision="5"
+            type="dollar"
+          ></AsyncValue>
+        </template>
 
-        <div class="info">Unknown</div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncPrecision"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <Code
-          lang="xml"
-          :code="asyncUnknown"
-        />
-      </div>
+      <Recipe title="No Symbol">
+        <template #example>
+          <AsyncValue
+            :value="50000"
+            :show-symbol="false"
+            type="dollar"
+          ></AsyncValue>
+        </template>
 
-      <div class="item">
-        <AsyncValue
-          :value="0"
-          :show-zero="true"
-        ></AsyncValue>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncSymbol"
+          ></Code>
+        </template>
+      </Recipe>
 
-        <div class="info">Zero</div>
+      <Recipe title="No Unit">
+        <template #example>
+          <AsyncValue
+            :value="50000"
+            :show-unit="false"
+            type="dollar"
+          ></AsyncValue>
+        </template>
 
-        <Code
-          lang="xml"
-          :code="asyncZero"
-        />
-      </div>
-
-      <div class="item">
-        <AsyncValue
-          :value="50000"
-          :precision="5"
-          type="dollar"
-        ></AsyncValue>
-
-        <div class="info">Precision</div>
-
-        <Code
-          lang="xml"
-          :code="asyncPrecision"
-        />
-      </div>
-
-      <div class="item">
-        <AsyncValue
-          :value="50000"
-          :show-symbol="false"
-          type="dollar"
-        ></AsyncValue>
-
-        <div class="info">No Symbol</div>
-
-        <Code
-          lang="xml"
-          :code="asyncSymbol"
-        />
-      </div>
-
-      <div class="item">
-        <AsyncValue
-          :value="50000"
-          :show-unit="false"
-          type="dollar"
-        ></AsyncValue>
-
-        <div class="info">No Unit</div>
-
-        <Code
-          lang="xml"
-          :code="asyncUnit"
-        />
-      </div>
+        <template #snippets>
+          <Code
+            lang="xml"
+            :code="asyncUnit"
+          ></Code>
+        </template>
+      </Recipe>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Code, AsyncValue } from "@/Framework";
+import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
 const async = `<AsyncValue
   :value="50000">
@@ -175,7 +194,6 @@ const asyncUnit = `<AsyncValue
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Pages/Cookbook/Cookbook.scss";
 
 @include dashboard("async-value");
 
@@ -183,8 +201,6 @@ const asyncUnit = `<AsyncValue
   .dashboard {
     row-gap: 3rem;
     grid-template-columns: 1fr 1fr 1fr;
-
-    @include cookbook-item;
   }
 }
 </style>
