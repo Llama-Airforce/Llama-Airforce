@@ -42,11 +42,13 @@
         :class="{ loading }"
       >
         <GraphReserves
+          v-if="poolSelected"
           class="graph-reserves"
           :pool-selected="poolSelected"
         ></GraphReserves>
 
         <GraphBalances
+          v-if="poolSelected"
           class="graph-balances"
           :pool-selected="poolSelected"
         ></GraphBalances>

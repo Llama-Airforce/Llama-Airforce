@@ -42,6 +42,7 @@
         :class="{ loading }"
       >
         <GraphCandles
+          v-if="poolSelected"
           class="graph"
           :pool-selected="poolSelected"
         ></GraphCandles>

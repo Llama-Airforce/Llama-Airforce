@@ -42,6 +42,7 @@
         :class="{ loading }"
       >
         <GraphVolume
+          v-if="poolSelected"
           class="graph-volumes"
           :pool-selected="poolSelected"
         ></GraphVolume>
