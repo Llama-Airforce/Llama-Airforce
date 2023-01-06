@@ -13,8 +13,7 @@ import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
-import { round, unit } from "@/Util";
-import type { DataPoint } from "@/Util";
+import { round, unit, type DataPoint } from "@/Util";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 type Serie = {

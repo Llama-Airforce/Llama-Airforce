@@ -11,8 +11,7 @@
 <script setup lang="ts">
 import { $computed } from "vue/macros";
 import { CardGraph } from "@/Framework";
-import { round, unit } from "@/Util";
-import type { DataPoint } from "@/Util";
+import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 
 type Serie = {

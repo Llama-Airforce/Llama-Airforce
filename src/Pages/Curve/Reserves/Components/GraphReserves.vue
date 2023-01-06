@@ -12,8 +12,7 @@
 import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
-import { round, unit, shorten } from "@/Util";
-import type { DataPoint } from "@/Util";
+import { round, unit, shorten, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/Curve/Models/Pool";
 import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
