@@ -10,6 +10,7 @@ import CookbookCard from "@/Pages/Cookbook/Framework/Card.vue";
 import CookbookDataTable from "@/Pages/Cookbook/Framework/DataTable.vue";
 import CookbookInputText from "@/Pages/Cookbook/Framework/InputText.vue";
 import CookbookInputNumber from "@/Pages/Cookbook/Framework/InputNumber.vue";
+import CookbookModal from "@/Pages/Cookbook/Framework/Modal.vue";
 
 export const pageCookbook: Page = {
   title: "Cookbook",
@@ -63,6 +64,11 @@ export const pageCookbook: Page = {
       name: "input-number",
       component: CookbookInputNumber,
     },
+    {
+      path: "/cookbook/modal",
+      name: "modal",
+      component: CookbookModal,
+    },
   ],
   menuHeader: "headers/cookbook.png",
   menuItems: [
@@ -105,6 +111,10 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/input-number",
           label: "InputNumber",
+        },
+        {
+          to: "/cookbook/modal",
+          label: "Modal",
         },
       ],
     },
