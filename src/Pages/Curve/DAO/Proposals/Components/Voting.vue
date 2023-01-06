@@ -28,7 +28,7 @@ const { proposal } = defineProps<Props>();
   gap: 2rem;
 
   padding: 1rem;
-  background-color: #18181b;
-  border: solid 1px #35353b;
+  background-color: $background-color;
+  border: solid 1px $level4-color;
 }
 </style>

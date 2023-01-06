@@ -50,7 +50,7 @@ button {
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
   height: calc(40px - 1rem);
 
-  border: solid 2px #35353b;
+  border: solid 2px $level4-color;
   border-radius: 0;
 
   .icon {
@@ -59,7 +59,7 @@ button {
     margin-right: 1rem;
   }
 
-  background: $background-color-widget;
+  background: $level1-color;
 
   &:disabled {
     pointer-events: none;

@@ -285,7 +285,7 @@ const sortColumn = (index: number): void => {
 @import "@/Styles/Variables.scss";
 
 .datatable {
-  background: $background-color-widget;
+  background: $level1-color;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -340,14 +340,14 @@ const sortColumn = (index: number): void => {
   ::v-deep(.row) {
     &.expanded {
       .row-data {
-        background: $background-color-widget;
+        background: $level1-color;
         border-bottom-width: 0;
       }
     }
   }
 
   ::v-deep(.row-details) {
-    border-bottom: 2px solid #35353b;
+    border-bottom: 2px solid $level4-color;
   }
 
   ::v-deep(.row-data) {
@@ -358,7 +358,7 @@ const sortColumn = (index: number): void => {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    border-bottom: 2px solid #35353b;
+    border-bottom: 2px solid $level4-color;
     align-items: center;
     font-weight: lighter;
     transition: background $datatable-hover-duration;
@@ -407,7 +407,7 @@ const sortColumn = (index: number): void => {
 
           > .sorting-arrow {
             font-size: 1rem;
-            color: #35353b;
+            color: $level4-color;
           }
         }
       }

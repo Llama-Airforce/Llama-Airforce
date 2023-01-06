@@ -96,13 +96,13 @@ a {
   text-decoration: none;
 
   &:hover {
-    color: #18181b;
-    background: #aea8af;
+    color: $background-color;
+    background: $level6-color;
   }
 
   &:active {
-    color: #18181b;
-    background: #aea8af;
+    color: $background-color;
+    background: $level6-color;
   }
 }
 

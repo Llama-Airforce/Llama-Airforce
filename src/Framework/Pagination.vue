@@ -169,12 +169,12 @@ ul {
 
   > li:nth-child(2) {
     margin-right: 1rem;
-    background: #303034;
+    background: $level3-color;
   }
 
   > li:nth-last-child(2) {
     margin-left: 1rem;
-    background: #303034;
+    background: $level3-color;
   }
 
   > li:last-child {

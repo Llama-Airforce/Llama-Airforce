@@ -35,7 +35,7 @@ input {
   -webkit-appearance: none;
   width: 100%;
   height: 1rem;
-  background: lighten($background-color-widget, 6%);
+  background: lighten($level1-color, 6%);
   outline: none;
   opacity: 0.7;
   -webkit-transition: 0.2s;
@@ -63,7 +63,7 @@ input {
 
   &:disabled {
     &::-webkit-slider-thumb {
-      background: #aea8af;
+      background: $level6-color;
     }
   }
 }

@@ -215,7 +215,7 @@ const onSelect = (option: unknown): void => {
         }
 
         > .description {
-          color: #71717a;
+          color: $level5-color;
         }
       }
     }

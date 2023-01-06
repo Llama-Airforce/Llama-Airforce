@@ -58,7 +58,7 @@ const options = $computed((): unknown => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: ["rgb(32, 129, 240)"] },
+          style: { colors: ["$blue"] },
         },
       },
       {
@@ -67,7 +67,7 @@ const options = $computed((): unknown => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: ["rgb(255, 204, 0)"] },
+          style: { colors: ["$yellow"] },
         },
       },
     ],

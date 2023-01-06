@@ -58,7 +58,7 @@ const { t } = useI18n();
 
       button {
         &.no {
-          color: rgb(255, 87, 87);
+          color: $red;
         }
 
         &.yes {

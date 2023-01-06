@@ -127,9 +127,9 @@ header {
     width: 100%;
     padding: 0 2.5rem;
     font-size: 1rem;
-    color: #71717a;
+    color: $level5-color;
 
-    border-bottom: 1px solid #27272a;
+    border-bottom: 1px solid $level2-color;
 
     > .title {
       &:hover {
@@ -158,7 +158,7 @@ header {
 
       .icon {
         font-size: 1.25rem;
-        color: #71717a;
+        color: $level5-color;
 
         height: 1.5rem;
         display: flex;

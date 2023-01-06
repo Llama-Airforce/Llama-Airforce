@@ -83,13 +83,13 @@ const onLocaleSelect = (option: unknown): void => {
     -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
     transition: background $hover-duration;
 
-    background: lighten($background-color-widget, 6%);
+    background: lighten($level1-color, 6%);
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 
     line-height: 1.75rem;
 
     &:hover {
-      background: lighten($background-color-widget, 12%);
+      background: lighten($level1-color, 12%);
     }
 
     > .selected {

@@ -71,7 +71,7 @@ const {
     flex-direction: column;
     flex-grow: 1;
     justify-content: stretch;
-    background: $background-color-widget;
+    background: $level1-color;
 
     > .card-header {
       display: flex;

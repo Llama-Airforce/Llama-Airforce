@@ -84,7 +84,7 @@ button {
     margin-right: 1rem;
   }
 
-  background: $background-color-widget;
+  background: $level1-color;
 
   &:disabled {
     pointer-events: none;

@@ -75,7 +75,7 @@ const emit = defineEmits<{
     margin-top: 2.25rem;
     width: 15.75rem;
 
-    background: linear-gradient(0deg, #212124, #212124), #18181b;
+    background: linear-gradient(0deg, $level1-color, $level1-color), $background-color;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 
     > div {
@@ -83,7 +83,7 @@ const emit = defineEmits<{
       cursor: pointer;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
       user-select: none;
-      border-bottom: 1px solid #35353b;
+      border-bottom: 1px solid $level4-color;
       padding: 0.5rem 0.75rem;
 
       &:hover {

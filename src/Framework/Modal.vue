@@ -52,7 +52,7 @@ const emit = defineEmits<{
   }
 
   .modal-popup {
-    border: solid 2px #35353b;
+    border: solid 2px $level4-color;
     z-index: 2;
     overflow: hidden;
   }

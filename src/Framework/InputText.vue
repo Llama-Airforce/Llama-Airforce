@@ -99,7 +99,7 @@ const onInput = (evt: Event): void => {
   > input {
     all: unset;
     background-color: $datatable-background;
-    border: solid 2px #35353b;
+    border: solid 2px $level4-color;
     padding: 0.1rem 0.5rem;
     text-align: start;
     height: 2rem;
@@ -114,12 +114,12 @@ const onInput = (evt: Event): void => {
 
     &:hover {
       background-color: $datatable-background-hover;
-      border-color: lighten(#35353b, 6%);
+      border-color: lighten($level4-color, 6%);
     }
 
     &:active {
       background-color: $datatable-background-active;
-      border-color: lighten(#35353b, 12%);
+      border-color: lighten($level4-color, 12%);
     }
   }
 
@@ -143,14 +143,14 @@ const onInput = (evt: Event): void => {
     margin-top: 2.75rem;
     width: 100%;
 
-    background: linear-gradient(0deg, #212124, #212124), #18181b;
+    background: linear-gradient(0deg, $level1-color, $level1-color), $background-color;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 
     > div {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
       user-select: none;
-      border-bottom: 1px solid #35353b;
+      border-bottom: 1px solid $level4-color;
       padding: 0.5rem 0.75rem;
 
       &:hover {

@@ -79,7 +79,7 @@ const hasMenu = $computed((): boolean => {
     transition: width $content-show-duration $ease-out;
 
     padding: 0 1.5rem 0 2.5rem;
-    border-right: 1px solid #27272a;
+    border-right: 1px solid $level2-color;
   }
 
   margin: 1.5rem 0;
@@ -138,19 +138,19 @@ const hasMenu = $computed((): boolean => {
             transition: all $header-hover-duration;
 
             &.router-link-active {
-              background: #27272a;
+              background: $level2-color;
             }
 
             &:not(.router-link-active) {
-              color: #71717a;
+              color: $level5-color;
 
               &:hover {
-                color: lighten(#71717a, 6%);
+                color: lighten($level5-color, 6%);
                 background: #1e1e21;
               }
 
               &:active {
-                color: lighten(#71717a, 12%);
+                color: lighten($level5-color, 12%);
               }
             }
 
@@ -163,7 +163,7 @@ const hasMenu = $computed((): boolean => {
               transition: all $header-hover-duration;
 
               &:active {
-                background: lighten(#27272a, 6%);
+                background: lighten($level2-color, 6%);
               }
             }
           }

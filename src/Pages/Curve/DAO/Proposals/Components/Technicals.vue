@@ -109,8 +109,8 @@ watch(
   padding: 1rem;
   gap: 2rem;
 
-  background-color: #18181b;
-  border: solid 1px #35353b;
+  background-color: $background-color;
+  border: solid 1px $level4-color;
 
   > .technical {
     display: flex;

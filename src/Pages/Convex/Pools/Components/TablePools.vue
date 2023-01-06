@@ -142,7 +142,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
   .graphs {
     display: flex;
     flex-direction: column;
-    background: $background-color-widget;
+    background: $level1-color;
 
     > .tvl {
       height: 400px;

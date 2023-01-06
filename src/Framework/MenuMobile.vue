@@ -160,7 +160,7 @@ watch(
     > .page {
       position: relative;
       padding-bottom: 2rem;
-      border-bottom: 1px solid #27272a;
+      border-bottom: 1px solid $level2-color;
 
       .selector {
         position: absolute;
@@ -176,11 +176,11 @@ watch(
         -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
         transition: background $hover-duration;
 
-        background: lighten($background-color-widget, 6%);
+        background: lighten($level1-color, 6%);
         box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 
         &:hover {
-          background: lighten($background-color-widget, 12%);
+          background: lighten($level1-color, 12%);
         }
 
         > .selected {
@@ -228,19 +228,19 @@ watch(
             font-size: 1.75rem;
 
             &.router-link-active {
-              background: #27272a;
+              background: $level2-color;
             }
 
             &:not(.router-link-active) {
-              color: #71717a;
+              color: $level5-color;
 
               &:hover {
-                color: lighten(#71717a, 6%);
+                color: lighten($level5-color, 6%);
                 background: #1e1e21;
               }
 
               &:active {
-                color: lighten(#71717a, 12%);
+                color: lighten($level5-color, 12%);
               }
             }
 
@@ -253,7 +253,7 @@ watch(
               transition: all $header-hover-duration;
 
               &:active {
-                background: lighten(#27272a, 6%);
+                background: lighten($level2-color, 6%);
               }
 
               > i {
