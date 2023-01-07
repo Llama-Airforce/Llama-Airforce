@@ -1,75 +1,54 @@
 <template>
   <div class="system-selector">
-    <KPI
+    <Select
       class="platform"
-      label="Platform"
-      tabindex="0"
-      :has-value="!!platform"
-      @click.stop="onPlatformOpen"
-      @blur="platformOpen = false"
+      :label="t('platform')"
+      :options="platforms"
+      :selected="platform"
+      :open="platformOpen"
+      @open="onPlatformOpen"
+      @close="platformOpen = false"
+      @input="onPlatformSelect"
     >
-      <Select
-        class="select"
-        :options="platforms"
-        :selected="platform"
-        :open="platformOpen"
-        @input="onPlatformSelect"
-      >
-        <template #item="props: { item: PlatformInfo }">
-          <div
-            v-if="props.item"
-            class="item"
-          >
-            <img :src="icon(props.item)" />
-            <div class="label">{{ label(props.item) }}</div>
-          </div>
-        </template>
-      </Select>
+      <template #item="props: { item: PlatformInfo }">
+        <div
+          v-if="props.item"
+          class="item"
+        >
+          <img :src="icon(props.item)" />
+          <div class="label">{{ label(props.item) }}</div>
+        </div>
+      </template>
+    </Select>
 
-      <div class="selector">
-        <i class="fas fa-chevron-up"></i>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-    </KPI>
-
-    <KPI
+    <Select
       class="protocol"
-      label="Protocol"
-      tabindex="1"
-      :has-value="!!protocol"
-      @click.stop="onProtocolOpen"
-      @blur="protocolOpen = false"
+      :label="t('protocol')"
+      :options="protocols"
+      :selected="protocol"
+      :open="protocolOpen"
+      @open="onProtocolOpen"
+      @close="protocolOpen = false"
+      @input="onProtocolSelect"
     >
-      <Select
-        class="select"
-        :options="protocols"
-        :selected="protocol"
-        :open="protocolOpen"
-        @input="onProtocolSelect"
-      >
-        <template #item="props: { item: SelectItem }">
-          <div
-            v-if="props.item"
-            class="item"
-          >
-            <img :src="icon(props.item)" />
-            <div class="label">{{ label(props.item) }}</div>
-          </div>
-        </template>
-      </Select>
-
-      <div class="selector">
-        <i class="fas fa-chevron-up"></i>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-    </KPI>
+      <template #item="props: { item: SelectItem }">
+        <div
+          v-if="props.item"
+          class="item"
+        >
+          <img :src="icon(props.item)" />
+          <div class="label">{{ label(props.item) }}</div>
+        </div>
+      </template>
+    </Select>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref, $computed } from "vue/macros";
-import { KPI, Select } from "@/Framework";
+import { useI18n } from "vue-i18n";
+import { Select } from "@/Framework";
 import { notEmpty } from "@/Util";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import {
@@ -77,6 +56,8 @@ import {
   type Protocol,
   type Platform,
 } from "@/Pages/Bribes/Models";
+
+const { t } = useI18n();
 
 type SelectItem = {
   label: string;
@@ -214,51 +195,44 @@ const onProtocolSelect = (option: unknown): void => {
     }
   }
 
-  .platform,
-  .protocol {
-    position: relative;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-    transition: background $hover-duration;
+  ::v-deep(.platform),
+  ::v-deep(.protocol) {
+    flex-grow: 1;
+    flex-basis: 0;
 
-    background: lighten($level1-color, 6%);
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-
-    &:hover {
-      background: lighten($level1-color, 12%);
-    }
-
-    ::v-deep(.select) {
+    .select {
+      > .selected > .item,
       > .items {
-        width: 105%;
+        font-size: 1.25rem;
+        font-weight: 700;
       }
 
-      .item {
-        display: flex;
-        align-items: center;
-
-        img {
-          width: 20px;
-          height: 20px;
-          object-fit: scale-down;
-        }
-
-        > .label {
-          font-size: 0.875rem;
-          margin-left: 0.75rem;
-        }
+      > .items {
+        margin-top: 3.75rem;
+        line-height: 1.75rem;
       }
     }
 
-    .selector {
-      position: absolute;
+    .item {
       display: flex;
-      flex-direction: column;
-      font-size: 0.75rem;
-      right: 0.75rem;
-      top: 50%;
-      transform: translateY(-50%);
+      align-items: center;
+
+      img {
+        width: 20px;
+        height: 20px;
+        object-fit: scale-down;
+      }
+
+      > .label {
+        font-size: 0.875rem;
+        margin-left: 0.75rem;
+      }
     }
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+platform: Platform
+protocol: Protocol
+</i18n>

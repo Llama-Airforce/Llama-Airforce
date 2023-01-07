@@ -1,25 +1,15 @@
 <template>
   <div class="summary">
-    <KPI
-      class="round"
-      tabindex="2"
+    <Select
+      class="select-summary"
       :label="t('round-number')"
-      :has-value="!!round"
-      @click.stop="onRoundOpen"
-      @blur="roundOpen = false"
-    >
-      <Select
-        :options="rounds"
-        :selected="epoch?.round"
-        :open="roundOpen"
-        @input="onRoundSelect"
-      ></Select>
-
-      <div class="selector">
-        <i class="fas fa-chevron-up"></i>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-    </KPI>
+      :options="rounds"
+      :selected="epoch?.round"
+      :open="roundOpen"
+      @open="onRoundOpen"
+      @close="roundOpen = false"
+      @input="onRoundSelect"
+    ></Select>
 
     <KPI
       :label="'$/' + vlAssetSymbol(product?.protocol)"
@@ -122,10 +112,6 @@ const rounds = $computed((): number[] => {
     : [];
 });
 
-const round = $computed((): number | undefined => {
-  return epoch?.round;
-});
-
 const voteLink = $computed((): string => {
   return epoch ? getLink(epoch, epoch.proposal) : "";
 });
@@ -191,7 +177,7 @@ const onRoundSelect = (option: unknown): void => {
   @media only screen and (max-width: 1280px) {
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     > .round {
       grid-row: 1;
@@ -199,27 +185,21 @@ const onRoundSelect = (option: unknown): void => {
     }
   }
 
-  .round {
-    position: relative;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-    transition: background $hover-duration;
+  ::v-deep(.select-summary) {
+    flex-grow: 1;
+    flex-basis: 0;
 
-    background: lighten($level1-color, 6%);
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    .select {
+      > .selected > .item,
+      > .items {
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
 
-    &:hover {
-      background: lighten($level1-color, 12%);
-    }
-
-    .selector {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      font-size: 0.75rem;
-      right: 0.75rem;
-      top: 50%;
-      transform: translateY(-50%);
+      > .items {
+        margin-top: 3.75rem;
+        line-height: 1.75rem;
+      }
     }
   }
 

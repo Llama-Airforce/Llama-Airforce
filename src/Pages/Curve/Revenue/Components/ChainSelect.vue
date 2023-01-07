@@ -1,33 +1,23 @@
 <template>
-  <div
-    class="chain-select"
-    tabindex="0"
-    @click.stop="onChainOpen"
-    @blur="chainOpen = false"
+  <Select
+    class="select"
+    :options="chains"
+    :selected="chain"
+    :open="chainOpen"
+    @open="onChainOpen"
+    @close="chainOpen = false"
+    @input="onChainSelect"
   >
-    <Select
-      class="select"
-      :options="chains"
-      :selected="chain"
-      :open="chainOpen"
-      @input="onChainSelect"
-    >
-      <template #item="props: { item: ChainInfo }">
-        <div
-          v-if="props.item"
-          class="item"
-        >
-          <img :src="icon(props.item)" />
-          <div class="label">{{ label(props.item) }}</div>
-        </div>
-      </template>
-    </Select>
-
-    <div class="selector">
-      <i class="fas fa-chevron-up"></i>
-      <i class="fas fa-chevron-down"></i>
-    </div>
-  </div>
+    <template #item="props: { item: ChainInfo }">
+      <div
+        v-if="props.item"
+        class="item"
+      >
+        <img :src="icon(props.item)" />
+        <div class="label">{{ label(props.item) }}</div>
+      </div>
+    </template>
+  </Select>
 </template>
 
 <script setup lang="ts">
@@ -100,66 +90,20 @@ const onChainSelect = (option: unknown): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chain-select {
-  position: relative;
-  display: flex;
-
-  .selector {
-    position: absolute;
+::v-deep(.select) {
+  .item {
     display: flex;
-    flex-direction: column;
-    font-size: 0.75rem;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+    align-items: center;
 
-  ::v-deep(.select) {
-    position: relative;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-    transition: background $hover-duration;
-
-    background: lighten($level1-color, 6%);
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-
-    &:hover {
-      background: lighten($level1-color, 12%);
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
     }
 
-    > .selected {
-      font-size: 1rem;
-      padding: 0.4rem 0.75rem;
-    }
-
-    > .items {
-      margin-top: 0.5rem;
-      right: 10px;
-      left: 0;
-      line-height: 1.5rem;
-      font-size: 1rem;
-      width: 100%;
-      z-index: 15;
-
-      > div {
-        padding: 0.4rem 0.75rem;
-      }
-    }
-
-    .item {
-      display: flex;
-      align-items: center;
-
-      img {
-        width: 20px;
-        height: 20px;
-        object-fit: scale-down;
-      }
-
-      > .label {
-        font-size: 0.875rem;
-        margin-left: 0.75rem;
-      }
+    > .label {
+      font-size: 0.875rem;
+      margin-left: 0.75rem;
     }
   }
 }

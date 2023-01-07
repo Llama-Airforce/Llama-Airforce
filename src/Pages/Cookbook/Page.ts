@@ -12,6 +12,7 @@ import CookbookInputText from "@/Pages/Cookbook/Framework/InputText.vue";
 import CookbookInputNumber from "@/Pages/Cookbook/Framework/InputNumber.vue";
 import CookbookModal from "@/Pages/Cookbook/Framework/Modal.vue";
 import CookbookPagination from "@/Pages/Cookbook/Framework/Pagination.vue";
+import CookbookSelect from "@/Pages/Cookbook/Framework/Select.vue";
 import CookbookSlider from "@/Pages/Cookbook/Framework/Slider.vue";
 import CookbookSpinner from "@/Pages/Cookbook/Framework/Spinner.vue";
 import CookbookTabs from "@/Pages/Cookbook/Framework/Tabs.vue";
@@ -78,6 +79,11 @@ export const pageCookbook: Page = {
       path: "/cookbook/pagination",
       name: "pagination",
       component: CookbookPagination,
+    },
+    {
+      path: "/cookbook/select",
+      name: "select",
+      component: CookbookSelect,
     },
     {
       path: "/cookbook/slider",
@@ -149,6 +155,10 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/pagination",
           label: "Pagination",
+        },
+        {
+          to: "/cookbook/select",
+          label: "Select",
         },
         {
           to: "/cookbook/slider",

@@ -10,25 +10,15 @@
       class="menu"
       :class="{ open, closed: !open }"
     >
-      <div
-        class="page"
-        tabindex="0"
-        @click.stop="onPageOpen"
-        @blur="pageOpen = false"
-      >
-        <Select
-          class="select"
-          :options="pages"
-          :selected="page"
-          :open="pageOpen"
-          @input="onPageSelect"
-        ></Select>
-
-        <div class="selector">
-          <i class="fas fa-chevron-up"></i>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </div>
+      <Select
+        class="select"
+        :options="pages"
+        :selected="page"
+        :open="pageOpen"
+        @open="onPageOpen"
+        @close="pageOpen = false"
+        @input="onPageSelect"
+      ></Select>
 
       <nav class="navigation">
         <ul
@@ -157,48 +147,28 @@ watch(
       //transform: translateX(0);
     }
 
-    > .page {
-      position: relative;
+    ::v-deep(> .select) {
       padding-bottom: 2rem;
       border-bottom: 1px solid $level2-color;
 
-      .selector {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
+      .chevrons {
         font-size: 1rem;
-        top: 1rem;
+        top: 2.5rem;
         right: 1.75rem;
       }
 
-      ::v-deep(> .select) {
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-        transition: background $hover-duration;
+      .selected {
+        line-height: 4rem;
+        font-size: 1.75rem;
+        padding: 0.5rem 2rem;
+      }
 
-        background: lighten($level1-color, 6%);
-        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+      .items {
+        line-height: 4rem;
+        font-size: 1.75rem;
 
-        &:hover {
-          background: lighten($level1-color, 12%);
-        }
-
-        > .selected {
-          font-size: 1.75rem;
-          padding: 1.35rem 2rem;
-        }
-
-        > .items {
-          margin-top: 0.5rem;
-          right: 10px;
-          left: 0;
-          line-height: 4rem;
-          font-size: 1.75rem;
-          width: 100%;
-
-          > div {
-            padding: 0.5rem 2rem;
-          }
+        > div {
+          padding: 0.5rem 2rem;
         }
       }
     }
