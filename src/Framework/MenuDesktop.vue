@@ -114,7 +114,9 @@ const hasMenu = $computed((): boolean => {
     > .navigation {
       display: flex;
       flex-direction: column;
-      height: 70vh;
+      flex-grow: 1;
+      overflow-y: auto;
+      max-height: 680px;
     }
 
     nav {
