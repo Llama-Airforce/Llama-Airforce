@@ -14,6 +14,7 @@ import CookbookModal from "@/Pages/Cookbook/Framework/Modal.vue";
 import CookbookPagination from "@/Pages/Cookbook/Framework/Pagination.vue";
 import CookbookSlider from "@/Pages/Cookbook/Framework/Slider.vue";
 import CookbookSpinner from "@/Pages/Cookbook/Framework/Spinner.vue";
+import CookbookTabs from "@/Pages/Cookbook/Framework/Tabs.vue";
 
 export const pageCookbook: Page = {
   title: "Cookbook",
@@ -87,6 +88,11 @@ export const pageCookbook: Page = {
       name: "spinner",
       component: CookbookSpinner,
     },
+    {
+      path: "/cookbook/tabs",
+      name: "tabs",
+      component: CookbookTabs,
+    },
   ],
   menuHeader: "headers/cookbook.png",
   menuItems: [
@@ -145,6 +151,10 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/spinner",
           label: "Spinner",
+        },
+        {
+          to: "/cookbook/tabs",
+          label: "Tabs",
         },
       ],
     },
