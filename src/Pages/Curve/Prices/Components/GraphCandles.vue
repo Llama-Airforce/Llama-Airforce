@@ -68,7 +68,7 @@ onMounted((): void => {
         type: ColorType.Solid,
         color: "rgba(255, 255, 255, 0)",
       },
-      textColor: "$level5-color",
+      textColor: "#71717a",
       fontFamily: "SF Mono, Consolas, monospace",
     },
     grid: {
@@ -76,7 +76,7 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: "$level5-color",
+        color: "#71717a",
         style: LineStyle.Dashed,
       },
     },
@@ -102,12 +102,12 @@ onMounted((): void => {
   });
 
   candleSeries = chart.addCandlestickSeries({
-    upColor: "$green",
-    borderUpColor: "$green",
-    wickUpColor: "$green",
-    downColor: "$red",
-    borderDownColor: "$red",
-    wickDownColor: "$red",
+    upColor: "rgb(126, 217, 87)",
+    borderUpColor: "rgb(126, 217, 87)",
+    wickUpColor: "rgb(126, 217, 87)",
+    downColor: "rgb(255, 87, 87)",
+    borderDownColor: "rgb(255, 87, 87)",
+    wickDownColor: "rgb(255, 87, 87)",
     priceFormat: {
       type: "price",
       precision: 6,
@@ -116,7 +116,7 @@ onMounted((): void => {
   });
 
   volumeSeries = chart.addHistogramSeries({
-    color: "$blue",
+    color: "rgb(32, 129, 240)",
     lastValueVisible: false,
     priceFormat: {
       type: "volume",
@@ -186,7 +186,7 @@ const createChart = (newCandles: Candle[], newInvert: boolean): void => {
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.token0TotalAmount,
-      color: "$blue",
+      color: "rgb(32, 129, 240)",
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

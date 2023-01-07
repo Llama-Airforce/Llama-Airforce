@@ -7,6 +7,7 @@ import CookbookAsyncValue from "@/Pages/Cookbook/Framework/AsyncValue.vue";
 import CookbookButton from "@/Pages/Cookbook/Framework/Button.vue";
 import CookbookButtonToggle from "@/Pages/Cookbook/Framework/ButtonToggle.vue";
 import CookbookCard from "@/Pages/Cookbook/Framework/Card.vue";
+import CookbookCardGraph from "@/Pages/Cookbook/Framework/CardGraph.vue";
 import CookbookDataTable from "@/Pages/Cookbook/Framework/DataTable.vue";
 import CookbookInputText from "@/Pages/Cookbook/Framework/InputText.vue";
 import CookbookInputNumber from "@/Pages/Cookbook/Framework/InputNumber.vue";
@@ -54,6 +55,11 @@ export const pageCookbook: Page = {
       path: "/cookbook/card",
       name: "card",
       component: CookbookCard,
+    },
+    {
+      path: "/cookbook/graph-card",
+      name: "graph-card",
+      component: CookbookCardGraph,
     },
     {
       path: "/cookbook/data-table",
@@ -135,6 +141,10 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/card",
           label: "Card",
+        },
+        {
+          to: "/cookbook/graph-card",
+          label: "CardGraph",
         },
         {
           to: "/cookbook/data-table",
