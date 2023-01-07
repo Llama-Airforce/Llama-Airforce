@@ -143,6 +143,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
     display: flex;
     flex-direction: column;
     background: $level1-color;
+    overflow-y: hidden;
 
     > .tvl {
       height: 400px;

@@ -127,6 +127,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
   .graphs {
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
 
     > .fees-and-emissions {
       height: 400px;
