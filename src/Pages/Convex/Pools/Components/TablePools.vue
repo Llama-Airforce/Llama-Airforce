@@ -130,7 +130,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 
   ::v-deep(.pools-columns-data) {
     display: grid;
-    grid-template-columns: 20px 3fr 2fr 2fr auto;
+    grid-template-columns: 20px 3fr 2fr 2fr 1rem;
 
     // Right adjust number columns.
     div:nth-child(3),
