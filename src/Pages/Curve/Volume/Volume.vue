@@ -4,14 +4,12 @@
       <SearchPool
         v-model="pool"
         class="select-pool"
-        :loading="loading"
-        :error="error"
         @select="onSelect"
       ></SearchPool>
 
       <div
         class="volumes"
-        :class="{ loading }"
+        :class="{ loading: store.poolsLoading }"
       >
         <GraphVolume
           v-if="poolSelected"
@@ -20,7 +18,7 @@
         ></GraphVolume>
 
         <Spinner
-          v-if="loading"
+          v-if="store.poolsLoading"
           class="spinner"
         ></Spinner>
       </div>
@@ -29,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
+import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import { Spinner } from "@/Framework";
 import { shorten, minDelay } from "@/Util";
@@ -44,48 +42,14 @@ import { getHost } from "@/Services/Host";
 const poolService = new PoolService(getHost());
 const volumeService = new VolumeService(getHost());
 
-let isMounted = false;
-
 // Refs
 const store = useCurveStore();
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
-let loading = $ref(false);
-let error = $ref(false);
 
 onMounted(async (): Promise<void> => {
-  isMounted = true;
-
-  // Don't request new pools if there's already cached.
-  if (store.pools.length > 0) {
-    loading = false;
-    return;
-  }
-
-  loading = true;
-  const resp = await minDelay(poolService.get());
-
-  if (resp) {
-    store.pools = resp;
-    loading = false;
-
-    /*
-     * Select first pool by default if none given by the URL.
-     * It's possible the component has unmounted before we arrive here.
-     */
-    if (!isMounted) {
-      return;
-    }
-  } else {
-    error = true;
-  }
-
-  loading = false;
-});
-
-onBeforeUnmount((): void => {
-  isMounted = false;
+  await store.loadPools(poolService);
 });
 
 // Events
@@ -100,7 +64,7 @@ const getVolumes = async (pool?: Pool): Promise<void> => {
   }
 
   // Introduce delay so the animation doesn't lag immediately.
-  loading = true;
+  store.poolsLoading = true;
 
   try {
     const volumes = await minDelay(volumeService.get(pool), 500);
@@ -109,7 +73,7 @@ const getVolumes = async (pool?: Pool): Promise<void> => {
       store.setVolumes(pool.id, volumes);
     }
   } finally {
-    loading = false;
+    store.poolsLoading = false;
   }
 };
 

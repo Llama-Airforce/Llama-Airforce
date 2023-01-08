@@ -4,14 +4,12 @@
       <SearchPool
         v-model="pool"
         class="select-pool"
-        :loading="loading"
-        :error="error"
         @select="onSelect"
       ></SearchPool>
 
       <div
         class="reserves"
-        :class="{ loading }"
+        :class="{ loading: store.poolsLoading }"
       >
         <GraphReserves
           v-if="poolSelected"
@@ -26,7 +24,7 @@
         ></GraphBalances>
 
         <Spinner
-          v-if="loading"
+          v-if="store.poolsLoading"
           class="spinner"
         ></Spinner>
       </div>
@@ -35,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
+import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import { Spinner } from "@/Framework";
 import { shorten, minDelay } from "@/Util";
@@ -51,49 +49,14 @@ import { getHost } from "@/Services/Host";
 const poolService = new PoolService(getHost());
 const reservesSerice = new ReservesService(getHost());
 
-let isMounted = false;
-
 // Refs
 const store = useCurveStore();
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
-let loading = $ref(false);
-let error = $ref(false);
 
 onMounted(async (): Promise<void> => {
-  isMounted = true;
-
-  // Don't request new pools if there's already cached.
-  if (store.pools.length > 0) {
-    loading = false;
-    return;
-  }
-
-  loading = true;
-  const resp = await minDelay(poolService.get());
-
-  if (resp) {
-    store.pools = resp;
-    loading = false;
-
-    /*
-     * Select first pool by default if none given by the URL.
-     * It's possible the component has unmounted before we arrive here.
-     */
-    if (!isMounted) {
-      return;
-    }
-  } else {
-    error = true;
-  }
-
-  loading = false;
-  isMounted = false;
-});
-
-onBeforeUnmount((): void => {
-  isMounted = false;
+  await store.loadPools(poolService);
 });
 
 // Events
@@ -108,7 +71,7 @@ const getReserves = async (pool?: Pool): Promise<void> => {
   }
 
   // Introduce delay so the animation doesn't lag immediately.
-  loading = true;
+  store.poolsLoading = true;
 
   try {
     const reserves = await minDelay(reservesSerice.get(pool), 500);
@@ -117,7 +80,7 @@ const getReserves = async (pool?: Pool): Promise<void> => {
       store.setReserves(pool.id, reserves);
     }
   } finally {
-    loading = false;
+    store.poolsLoading = false;
   }
 };
 
