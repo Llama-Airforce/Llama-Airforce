@@ -11,7 +11,7 @@
       :class="{ open, closed: !open }"
     >
       <Select
-        class="select"
+        class="select-menu"
         :options="pages"
         :selected="page"
         :open="pageOpen"
@@ -148,10 +148,7 @@ watch(
       //transform: translateX(0);
     }
 
-    ::v-deep(> .select) {
-      padding-bottom: 2rem;
-      border-bottom: 1px solid $level2-color;
-
+    ::v-deep(> .select-menu) {
       .chevrons {
         font-size: 1rem;
         top: 2.5rem;
@@ -161,12 +158,13 @@ watch(
       .selected {
         line-height: 4rem;
         font-size: 1.75rem;
-        padding: 0.5rem 2rem;
+        padding: 0 2rem;
       }
 
       .items {
         line-height: 4rem;
         font-size: 1.75rem;
+        margin-top: 4.25rem;
 
         > div {
           padding: 0.5rem 2rem;
@@ -176,6 +174,8 @@ watch(
 
     nav {
       margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid $level2-color;
 
       ul {
         display: flex;
