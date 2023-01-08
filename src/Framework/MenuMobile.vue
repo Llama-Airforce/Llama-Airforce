@@ -27,7 +27,7 @@
         >
           <MenuItem
             :item="menuItem"
-            @click="emit('navigated')"
+            @navigated="emit('navigated')"
           >
           </MenuItem>
         </ul>

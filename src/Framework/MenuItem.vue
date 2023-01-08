@@ -8,6 +8,7 @@
       :to="menuItem.to"
       class="nav-link leaf"
       :class="{ 'router-link-active': subIsActive(menuItem.to, route) }"
+      @click="emit('navigated')"
     >
       <div class="nav-link-container">
         <i
@@ -48,6 +49,11 @@ interface Props {
 }
 
 const { item } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  (e: "navigated"): void;
+}>();
 
 // Refs
 const route = useRoute();
