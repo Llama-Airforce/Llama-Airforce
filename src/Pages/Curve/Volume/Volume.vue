@@ -1,41 +1,13 @@
 <template>
   <div class="pools">
     <div class="dashboard">
-      <InputText
+      <SearchPool
         v-model="pool"
         class="select-pool"
-        :placeholder="placeholder"
-        :search="true"
-        :auto-complete="autoComplete"
-        :options="pools"
-        :filter="filter"
-        :sort="sort"
-        @input="onInput"
+        :loading="loading"
+        :error="error"
         @select="onSelect"
-      >
-        <template #item="props: { item: Pool, idx: number }">
-          <div
-            v-if="props.item"
-            class="item"
-          >
-            <img :src="icon(props.item.name, false)" />
-            <div class="label">{{ name(props.item) }}</div>
-            <div
-              v-if="props.idx === 0"
-              class="description"
-            >
-              {{ t("search-description") }}
-            </div>
-            <div class="volume">
-              <AsyncValue
-                :value="volume(props.item)"
-                :precision="2"
-                type="dollar"
-              />
-            </div>
-          </div>
-        </template>
-      </InputText>
+      ></SearchPool>
 
       <div
         class="volumes"
@@ -58,15 +30,14 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount } from "vue";
-import { $computed, $ref } from "vue/macros";
-import { useI18n } from "vue-i18n";
-import { AsyncValue, InputText, Spinner } from "@/Framework";
-import { shorten, icon, minDelay } from "@/Util";
+import { $ref } from "vue/macros";
+import { Spinner } from "@/Framework";
+import { shorten, minDelay } from "@/Util";
 import Pool from "@/Pages/Curve/Models/Pool";
 import PoolService from "@/Pages/Curve/Services/PoolService";
 import VolumeService from "@/Pages/Curve/Volume/Services/VolumeService";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import { match } from "@/Pages/Curve/Util/PoolHelper";
+import SearchPool from "@/Pages/Curve/Components/SearchPool.vue";
 import GraphVolume from "@/Pages/Curve/Volume/Components/GraphVolume.vue";
 import { getHost } from "@/Services/Host";
 
@@ -75,30 +46,29 @@ const volumeService = new VolumeService(getHost());
 
 let isMounted = false;
 
-const { t } = useI18n();
-
 // Refs
 const store = useCurveStore();
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
-let autoComplete = $ref(false);
 let loading = $ref(false);
-let placeholder = $ref(t("search-loading"));
+let error = $ref(false);
 
 onMounted(async (): Promise<void> => {
   isMounted = true;
 
   // Don't request new pools if there's already cached.
   if (store.pools.length > 0) {
-    placeholder = t("search-placeholder");
+    loading = false;
     return;
   }
 
+  loading = true;
   const resp = await minDelay(poolService.get());
+
   if (resp) {
     store.pools = resp;
-    placeholder = t("search-placeholder");
+    loading = false;
 
     /*
      * Select first pool by default if none given by the URL.
@@ -108,39 +78,17 @@ onMounted(async (): Promise<void> => {
       return;
     }
   } else {
-    placeholder = t("search-error");
+    error = true;
   }
+
+  loading = false;
 });
 
 onBeforeUnmount((): void => {
   isMounted = false;
 });
 
-const pools = $computed((): Pool[] => {
-  return store.pools;
-});
-
-// Methods.
-const filter = (input: string, option: unknown) => match(input, option as Pool);
-const sort = (a: unknown, b: unknown) => volume(b as Pool) - volume(a as Pool);
-
-const volume = (pool: Pool): number => {
-  return pool.cumulateVolumeUsd;
-};
-
-const name = (pool: Pool): string => {
-  const nameShort = shorten(pool.name);
-  const nameTrimmed =
-    nameShort.substring(0, 9) === "Curve.fi " ? nameShort.slice(9) : nameShort;
-
-  return nameTrimmed;
-};
-
 // Events
-const onInput = (input: string): void => {
-  autoComplete = !!input;
-};
-
 const getVolumes = async (pool?: Pool): Promise<void> => {
   if (!pool) {
     return;
@@ -168,7 +116,6 @@ const getVolumes = async (pool?: Pool): Promise<void> => {
 const toggleExpansion = (newPool: Pool): void => {
   pool = shorten(newPool.name);
   poolSelected = newPool;
-  autoComplete = false;
 
   void getVolumes(newPool);
 };
@@ -189,33 +136,6 @@ const onSelect = (option: unknown): void => {
     .select-pool {
       grid-column: 1;
       grid-row: 1;
-
-      .item {
-        display: flex;
-        align-items: center;
-
-        img {
-          width: 20px;
-          height: 20px;
-          object-fit: scale-down;
-        }
-
-        > .label {
-          flex-grow: 1;
-          font-size: 0.875rem;
-          margin-left: 0.75rem;
-        }
-
-        > .volume,
-        > .description {
-          font-size: 0.875rem;
-          margin-left: 0.75rem;
-        }
-
-        > .description {
-          color: $level5-color;
-        }
-      }
     }
 
     .volumes {
@@ -247,10 +167,3 @@ const onSelect = (option: unknown): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-search-loading: Loading pools, please wait...
-search-placeholder: Search for Curve pools
-search-error: Failed loading Curve pools
-search-description: Cumulative Volume
-</i18n>
