@@ -56,10 +56,12 @@ let menuOpen = $ref(false);
 // Methods
 const toggleMenu = (): void => {
   menuOpen = !menuOpen;
+  document.documentElement.style.overflow = menuOpen ? "hidden" : "";
 };
 
 const onNavigated = (): void => {
   menuOpen = false;
+  document.documentElement.style.overflow = "";
 };
 </script>
 
