@@ -1,4 +1,4 @@
-import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
+import Reserves from "@/Pages/Curve/Pools/Models/Reserves";
 import Pool from "@/Pages/Curve/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
 

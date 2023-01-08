@@ -1,5 +1,5 @@
 import { paginate } from "@/Util";
-import Candle from "@/Pages/Curve/Prices/Models/Candle";
+import Candle from "@/Pages/Curve/Pools/Models/Candle";
 import Pool from "@/Pages/Curve/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
 

@@ -34,6 +34,7 @@ const createDefault = (): Object => ({
   },
   stroke: {
     curve: "smooth",
+    width: 2,
   },
   theme: {
     mode: "dark",

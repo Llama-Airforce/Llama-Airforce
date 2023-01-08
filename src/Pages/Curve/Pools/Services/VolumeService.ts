@@ -1,4 +1,4 @@
-import Volume from "@/Pages/Curve/Volume/Models/Volume";
+import Volume from "@/Pages/Curve/Pools/Models/Volume";
 import Pool from "@/Pages/Curve/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
 

@@ -70,6 +70,21 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
+@mixin dashboard-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-gap: 1.5rem;
+
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+  }
+}
+
 @mixin dashboard($root) {
   .#{$root} {
     display: flex;
@@ -79,18 +94,7 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
       width: 100%;
       padding: $page-margin;
 
-      display: grid;
-      gap: 1.5rem;
-      grid-gap: 1.5rem;
-
-      grid-template-rows: 1fr;
-      grid-template-columns: 1fr;
-
-      @media only screen and (max-width: 1280px) {
-        display: flex;
-        flex-direction: column;
-        padding: 1.5rem 1rem;
-      }
+      @include dashboard-grid;
     }
   }
 }

@@ -35,7 +35,7 @@ import { round, unit, shorten } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import Pool from "@/Pages/Curve/Models/Pool";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import Candle from "@/Pages/Curve/Prices/Models/Candle";
+import Candle from "@/Pages/Curve/Pools/Models/Candle";
 // Props
 interface Props {
   poolSelected: Pool | null;
@@ -222,7 +222,7 @@ const formatterPrice = (x: number): string => {
     gap: 1rem;
 
     .chart {
-      height: 600px;
+      height: 400px;
       z-index: 0;
     }
   }

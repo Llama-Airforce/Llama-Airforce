@@ -115,7 +115,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 
   ::v-deep(.gauges-columns-data) {
     display: grid;
-    grid-template-columns: 20px 4fr 1fr auto;
+    grid-template-columns: 20px 4fr 1fr 1rem;
 
     // Right adjust number columns.
     div:nth-child(3),

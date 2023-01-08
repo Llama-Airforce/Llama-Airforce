@@ -88,11 +88,15 @@ const onClick = (): void => {
 
   > .row-data {
     > .expander {
-      transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
-      transform: rotate(90deg);
+      > i {
+        transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
+        transform: rotate(90deg);
+      }
 
       &.expanded {
-        transform: rotate(180deg);
+        > i {
+          transform: rotate(180deg);
+        }
       }
     }
   }

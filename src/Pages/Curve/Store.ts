@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
-import { minDelay } from "@/Util";
 import Pool from "@/Pages/Curve/Models/Pool";
 import Gauge, { GaugeId } from "@/Pages/Curve/Gauges/Models/Gauge";
 import Fee from "@/Pages/Curve/Gauges/Models/Fee";
 import Emission from "@/Pages/Curve/Gauges/Models/Emission";
 import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
-import Candle from "@/Pages/Curve/Prices/Models/Candle";
-import Reserves from "@/Pages/Curve/Reserves/Models/Reserves";
-import Volume from "@/Pages/Curve/Volume/Models/Volume";
+import Candle from "@/Pages/Curve/Pools/Models/Candle";
+import Reserves from "@/Pages/Curve/Pools/Models/Reserves";
+import Volume from "@/Pages/Curve/Pools/Models/Volume";
 import PoolRevenue, {
   ChainRevenue,
   ChainTopPoolRevenue,
 } from "@/Pages/Curve/Revenue/Models/Revenue";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
 import PoolService from "@/Pages/Curve/Services/PoolService";
+import { getPools } from "@/Pages/Curve/Pools/DataLoaders";
 
 type State = {
   pools: Pool[];
@@ -51,23 +51,6 @@ export const useCurveStore = defineStore({
     topPools: {},
   }),
   actions: {
-    async loadPools(poolService: PoolService) {
-      // Don't request new pools if there's already cached or loading.
-      if (this.pools.length > 0 || this.poolsLoading) {
-        return;
-      }
-
-      this.poolsLoading = true;
-      const resp = await minDelay(poolService.get());
-
-      if (resp) {
-        this.pools = resp;
-      } else {
-        this.poolsLoadingError = true;
-      }
-
-      this.poolsLoading = false;
-    },
     setEmissions(gauge: GaugeId, emissions: Emission[]) {
       this.emissions[gauge] = emissions;
     },
