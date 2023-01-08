@@ -52,11 +52,9 @@ const { t } = useI18n();
 // Props
 interface Props {
   modelValue: string;
-  loading: boolean;
-  error: boolean;
 }
 
-const { modelValue, loading, error } = defineProps<Props>();
+const { modelValue } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -103,15 +101,18 @@ const onSelect = (option: unknown): void => {
 };
 
 // Watches
-watch([() => loading, () => error], ([newLoading, newError]) => {
-  if (newError) {
-    placeholder = t("search-error");
-  } else if (newLoading) {
-    placeholder = t("search-loading");
-  } else {
-    placeholder = t("search-placeholder");
+watch(
+  [() => store.poolsLoading, () => store.poolsLoadingError],
+  ([newLoading, newError]) => {
+    if (newError) {
+      placeholder = t("search-error");
+    } else if (newLoading) {
+      placeholder = t("search-loading");
+    } else {
+      placeholder = t("search-placeholder");
+    }
   }
-});
+);
 </script>
 
 <style lang="scss" scoped>
