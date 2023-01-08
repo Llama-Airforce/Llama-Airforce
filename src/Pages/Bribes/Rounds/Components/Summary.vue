@@ -177,9 +177,9 @@ const onRoundSelect = (option: unknown): void => {
   @media only screen and (max-width: 1280px) {
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 
-    > .round {
+    > .select-summary {
       grid-row: 1;
       grid-column: 1 / span 3;
     }
