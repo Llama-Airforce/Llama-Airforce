@@ -68,7 +68,7 @@ const menuItems = $computed(() => {
 });
 
 const pages = $computed((): string[] => {
-  return pageStore.pages.map((p) => p.title);
+  return pageStore.pages.filter((p) => p.visible).map((p) => p.title);
 });
 
 // Events
