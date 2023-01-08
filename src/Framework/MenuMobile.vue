@@ -127,6 +127,7 @@ watch(
     background: $header-background;
     padding: 1.25rem;
     visibility: hidden;
+    overflow-y: auto;
 
     width: 300px;
 
