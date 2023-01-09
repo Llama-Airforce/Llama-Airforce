@@ -12,10 +12,10 @@
         class="data"
         :class="{ loading: store.poolsLoading }"
       >
-        <Trades
+        <Transactions
           v-if="poolSelected"
-          class="trades"
-        ></Trades>
+          class="transactions"
+        ></Transactions>
 
         <Candles
           v-if="poolSelected"
@@ -64,7 +64,7 @@ import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
-import Trades from "@/Pages/CurveMonitor/Components/Trades.vue";
+import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
@@ -141,7 +141,7 @@ const onSelect = (option: unknown): void => {
     transform: translateY(-50%) translateX(-50%);
   }
 
-  .trades {
+  .transactions {
     grid-row: 1;
     grid-column: 1 / -1;
   }
