@@ -1,5 +1,5 @@
 <template>
-  <div class="mev">
+  <div class="pools">
     <div class="dashboard">
       <SearchPool
         v-model="pool"
@@ -10,11 +10,6 @@
         class="data"
         :class="{ loading: store.poolsLoading }"
       >
-        <Trades
-          v-if="poolSelected"
-          class="trades"
-        ></Trades>
-
         <Candles
           v-if="poolSelected"
           class="candles"
@@ -39,11 +34,6 @@
           :pool-selected="poolSelected"
         ></Balances>
 
-        <Bonding
-          v-if="poolSelected"
-          class="bonding"
-        ></Bonding>
-
         <Spinner
           v-if="store.poolsLoading"
           class="spinner"
@@ -62,8 +52,6 @@ import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
-import Trades from "@/Pages/CurveMonitor/Components/Trades.vue";
-import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
 import Candles from "@/Pages/CurveMonitor/Components/Candles.vue";
@@ -111,16 +99,16 @@ const onSelect = (option: unknown): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("mev");
+@include dashboard("pools");
 
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: auto auto repeat(2, 300px);
+  grid-template-rows: auto repeat(2, 300px);
   grid-template-columns: 1fr 1fr;
 
   .spinner {
-    grid-row: 2;
+    grid-row: 1;
     grid-column: 1 / -1;
 
     position: relative;
@@ -129,34 +117,24 @@ const onSelect = (option: unknown): void => {
     transform: translateY(-50%) translateX(-50%);
   }
 
-  .trades {
+  .candles {
     grid-row: 1;
     grid-column: 1 / -1;
   }
 
-  .candles {
-    grid-row: 2;
-    grid-column: 1 / -1;
-  }
-
   .reserves {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 1;
   }
 
   .volume {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 2;
-  }
-
-  .bonding {
-    grid-row: 4;
-    grid-column: 1;
   }
 
   .balances {
-    grid-row: 4;
-    grid-column: 2;
+    grid-row: 3;
+    grid-column: 1 / -1;
   }
 }
 </style>

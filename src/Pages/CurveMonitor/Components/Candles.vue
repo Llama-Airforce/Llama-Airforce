@@ -1,7 +1,7 @@
 <template>
   <Card
     class="candles"
-    :title="title"
+    title="Prices"
   >
     <div
       ref="chartRef"
@@ -31,7 +31,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card, ButtonToggle } from "@/Framework";
-import { round, unit, shorten } from "@/Util";
+import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import Candle from "@/Pages/CurveMonitor/Models/Candle";
@@ -127,15 +127,6 @@ onMounted((): void => {
       bottom: 0,
     },
   });
-});
-
-const title = $computed((): string => {
-  let title = t("title");
-  if (poolSelected) {
-    title = shorten(poolSelected.name);
-  }
-
-  return title;
 });
 
 const candles = $computed((): Candle[] => {
