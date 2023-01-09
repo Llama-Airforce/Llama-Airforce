@@ -3,6 +3,8 @@
     <div class="dashboard">
       <SearchPool
         v-model="pool"
+        class="search"
+        :class="{ hasPool: !!poolSelected }"
         @select="onSelect"
       ></SearchPool>
 
@@ -112,6 +114,16 @@ const onSelect = (option: unknown): void => {
 @import "@/Styles/Variables.scss";
 
 @include dashboard("curve-monitor");
+
+.search {
+  width: 30vw;
+  margin-top: 30vh;
+  justify-self: center;
+
+  &.hasPool {
+    margin-top: 0;
+  }
+}
 
 .data {
   @include dashboard-grid;
