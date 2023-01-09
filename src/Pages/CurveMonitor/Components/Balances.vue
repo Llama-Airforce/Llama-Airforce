@@ -1,7 +1,7 @@
 <template>
   <CardGraph
-    title="Balances"
     class="balances"
+    :title="t('title')"
     :options="options"
     :series="series"
   >
@@ -10,12 +10,15 @@
 
 <script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import Reserves from "@/Pages/CurveMonitor/Models/Reserves";
 import { useCurveStore } from "@/Pages/Curve/Store";
+
+const { t } = useI18n();
 
 type Serie = {
   name: string;
@@ -150,3 +153,7 @@ const formatter = (y: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Balances
+</i18n>

@@ -1,7 +1,7 @@
 <template>
   <CardGraph
     class="bonding"
-    title="Bonding Curve"
+    :title="t('title')"
     :options="options"
     :series="series"
   ></CardGraph>
@@ -9,9 +9,12 @@
 
 <script setup lang="ts">
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint } from "@/Util";
+
+const { t } = useI18n();
 
 /** Line Chart */
 type Serie = {
@@ -125,3 +128,7 @@ const formatter = (x: number): string => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Bonding Curve
+</i18n>
