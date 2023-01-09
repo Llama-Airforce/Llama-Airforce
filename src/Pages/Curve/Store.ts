@@ -1,19 +1,17 @@
 import { defineStore } from "pinia";
-import Pool from "@/Pages/Curve/Models/Pool";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import Gauge, { GaugeId } from "@/Pages/Curve/Gauges/Models/Gauge";
 import Fee from "@/Pages/Curve/Gauges/Models/Fee";
 import Emission from "@/Pages/Curve/Gauges/Models/Emission";
 import Ratio from "@/Pages/Curve/Utilization/Models/Ratio";
-import Candle from "@/Pages/Curve/Pools/Models/Candle";
-import Reserves from "@/Pages/Curve/Pools/Models/Reserves";
-import Volume from "@/Pages/Curve/Pools/Models/Volume";
+import Candle from "@/Pages/CurveMonitor/Models/Candle";
+import Reserves from "@/Pages/CurveMonitor/Models/Reserves";
+import Volume from "@/Pages/CurveMonitor/Models/Volume";
 import PoolRevenue, {
   ChainRevenue,
   ChainTopPoolRevenue,
 } from "@/Pages/Curve/Revenue/Models/Revenue";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
-import PoolService from "@/Pages/Curve/Services/PoolService";
-import { getPools } from "@/Pages/Curve/Pools/DataLoaders";
 
 type State = {
   pools: Pool[];

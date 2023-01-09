@@ -1,7 +1,7 @@
 <template>
   <CardGraph
-    class="reserves"
-    title="Reserves"
+    class="volumes"
+    title="Volume"
     :options="options"
     :series="series"
   >
@@ -14,11 +14,14 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import Pool from "@/Pages/Curve/Models/Pool";
-import Reserves from "@/Pages/Curve/Pools/Models/Reserves";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import Volume from "@/Pages/CurveMonitor/Models/Volume";
 import { useCurveStore } from "@/Pages/Curve/Store";
 
-type Serie = { name: string; data: { x: number; y: number }[] };
+type Serie = {
+  name: string;
+  data: { x: number; y: number }[];
+};
 
 // Props
 interface Props {
@@ -32,14 +35,14 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-const reserves = $computed((): Reserves[] => {
-  return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
+const volumes = $computed((): Volume[] => {
+  return poolSelected ? store.volumes[poolSelected.id] ?? [] : [];
 });
 
 const options = $computed((): unknown => {
   return createChartStyles({
     chart: {
-      id: "reserves",
+      id: "volumes",
       type: "area",
       animations: {
         enabled: false,
@@ -49,9 +52,13 @@ const options = $computed((): unknown => {
       type: "datetime",
     },
     yaxis: {
+      seriesName: "volume",
+      tickAmount: 4,
       labels: {
         formatter: (y: number): string => formatter(y),
       },
+      min: Math.min(...volumes.map((x) => x.volumeUSD)),
+      max: Math.max(...volumes.map((x) => x.volumeUSD)),
     },
     fill: {
       type: "gradient",
@@ -67,15 +74,27 @@ const options = $computed((): unknown => {
     dataLabels: {
       enabled: false,
     },
+    plotOptions: {
+      bar: {
+        distributed: false,
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
+        },
+      },
+    },
     tooltip: {
       followCursor: false,
       enabled: true,
       intersect: false,
       custom: (x: DataPoint<Serie>) => {
-        const tvl =
-          x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
+        const volumes = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
 
-        return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
+        const data = [
+          `<div><b>${t("volume")}</b>:</div><div>${formatter(volumes)}</div>`,
+        ];
+
+        return data.join("");
       },
     },
   });
@@ -84,25 +103,26 @@ const options = $computed((): unknown => {
 const series = $computed((): Serie[] => {
   return [
     {
-      name: "reserves",
-      data: reserves.map((r) => ({
-        x: r.timestamp * 1000,
-        y: r.reservesUSD.reduce((acc, x) => acc + x, 0),
+      name: t("volume"),
+      data: volumes.map((s) => ({
+        x: s.timestamp * 1000,
+        y: s.volumeUSD,
       })),
     },
   ];
 });
 
 // Methods
-const formatter = (y: number): string => {
-  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
+
+const formatter = (x: number): string => {
+  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.reserves {
+.volumes {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
@@ -114,7 +134,7 @@ const formatter = (y: number): string => {
       line-height: 0.5rem;
 
       display: grid;
-      grid-template-rows: auto;
+      grid-template-rows: auto auto;
       grid-template-columns: 1fr auto;
       gap: 0.5rem;
     }
@@ -123,6 +143,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Reserves
-tvl: TVL
+volume: Volume
 </i18n>

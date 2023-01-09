@@ -1,6 +1,6 @@
 import { paginate } from "@/Util";
-import Candle from "@/Pages/Curve/Pools/Models/Candle";
-import Pool from "@/Pages/Curve/Models/Pool";
+import Candle from "@/Pages/CurveMonitor/Models/Candle";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
 
 const THEGRAPH_URL =

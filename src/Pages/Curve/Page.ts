@@ -1,7 +1,7 @@
 import { Page } from "@/Pages/Page";
 
+import CurvePools from "@/Pages/Curve/Pools.vue";
 import CurveGauges from "@/Pages/Curve/Gauges/Gauges.vue";
-import CurvePools from "@/Pages/Curve/Pools/Pools.vue";
 import CurveRevenue from "@/Pages/Curve/Revenue/Revenue.vue";
 import CurveUtilization from "@/Pages/Curve/Utilization/Utilization.vue";
 
@@ -15,7 +15,7 @@ export const pageCurve: Page = {
   visible: true,
   planeX: 105,
   routes: [
-    { path: "/curve", redirect: { name: "curvegauges" } },
+    { path: "/curve", redirect: { name: "curvepools" } },
     {
       path: "/curve/pools/:pool?",
       name: "curvepools",

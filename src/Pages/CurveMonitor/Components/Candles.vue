@@ -33,9 +33,9 @@ import {
 import { Card, ButtonToggle } from "@/Framework";
 import { round, unit, shorten } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
-import Pool from "@/Pages/Curve/Models/Pool";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import Candle from "@/Pages/CurveMonitor/Models/Candle";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import Candle from "@/Pages/Curve/Pools/Models/Candle";
 // Props
 interface Props {
   poolSelected: Pool | null;

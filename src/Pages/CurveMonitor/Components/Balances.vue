@@ -13,8 +13,8 @@ import { $computed } from "vue/macros";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import Pool from "@/Pages/Curve/Models/Pool";
-import Reserves from "@/Pages/Curve/Pools/Models/Reserves";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import Reserves from "@/Pages/CurveMonitor/Models/Reserves";
 import { useCurveStore } from "@/Pages/Curve/Store";
 
 type Serie = {

@@ -44,8 +44,8 @@ import { useI18n } from "vue-i18n";
 import { InputText, AsyncValue } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import { match } from "@/Pages/Curve/Util/PoolHelper";
-import Pool from "@/Pages/Curve/Models/Pool";
+import { match } from "@/Pages/CurveMonitor/Util/PoolHelper";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
 
 const { t } = useI18n();
 
