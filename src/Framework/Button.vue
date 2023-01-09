@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { isDevelopment } from "@/Util";
+import { isDevelopment } from "@/Util/DevHelper";
 import { getProvider, isMainnet } from "@/Wallet";
 
 // Props

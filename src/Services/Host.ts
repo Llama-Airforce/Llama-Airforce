@@ -1,4 +1,4 @@
-import { isDevelopment } from "@/Util";
+import { isDevelopment } from "@/Util/DevHelper";
 import { hostDev, hostProd } from "@/Services/ServiceBase";
 
 export function getHost(): string {
