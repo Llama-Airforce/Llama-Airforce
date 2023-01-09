@@ -1,7 +1,7 @@
 <template>
   <CardGraph
     class="volumes"
-    title="Volume"
+    :title="t('volume')"
     :options="options"
     :series="series"
   >

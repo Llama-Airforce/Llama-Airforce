@@ -1,7 +1,7 @@
 <template>
   <Card
     class="candles"
-    title="Prices"
+    :title="t('title')"
   >
     <div
       ref="chartRef"
@@ -36,14 +36,15 @@ import { WEthAddress } from "@/Util/Addresses";
 import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import Candle from "@/Pages/CurveMonitor/Models/Candle";
 import { useCurveStore } from "@/Pages/Curve/Store";
+
+const { t } = useI18n();
+
 // Props
 interface Props {
   poolSelected: Pool | null;
 }
 
 const { poolSelected } = defineProps<Props>();
-
-const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();

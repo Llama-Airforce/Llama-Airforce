@@ -15,7 +15,7 @@
     @selected="onSelected"
   >
     <template #header-title>
-      <div>Trades</div>
+      <div>{{ t("title") }}</div>
     </template>
 
     <template #header-actions>
@@ -85,10 +85,14 @@
 
 <script setup lang="ts">
 import { $ref, $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder, Pagination } from "@/Framework";
 import { addressShort } from "@/Wallet";
 
+const { t } = useI18n();
+
+// Refs
 let page = $ref(1);
 
 type Round = {
@@ -193,3 +197,7 @@ const onPage = (pageNew: number) => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Trades
+</i18n>
