@@ -199,5 +199,5 @@ const onPage = (pageNew: number) => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Trades
+title: Transactions
 </i18n>
