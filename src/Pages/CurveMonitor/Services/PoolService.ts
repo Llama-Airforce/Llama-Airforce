@@ -1,5 +1,5 @@
 import { paginate } from "@/Util";
-import Pool from "@/Pages/Curve/Models/Pool";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import ServiceBase from "@/Services/ServiceBase";
 
 const THEGRAPH_URL =

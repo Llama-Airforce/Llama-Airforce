@@ -58,26 +58,26 @@ import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
-import Pool from "@/Pages/Curve/Models/Pool";
+import Pool from "@/Pages/CurveMonitor/Models/Pool";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import SearchPool from "@/Pages/Curve/Components/SearchPool.vue";
-import Trades from "@/Pages/Curve/Pools/Components/Trades.vue";
-import Bonding from "@/Pages/Curve/Pools/Components/Bonding.vue";
-import Balances from "@/Pages/Curve/Pools/Components/Balances.vue";
-import Reserves from "@/Pages/Curve/Pools/Components/Reserves.vue";
-import Candles from "@/Pages/Curve/Pools/Components/Candles.vue";
-import Volume from "@/Pages/Curve/Pools/Components/Volume.vue";
-import ReservesService from "@/Pages/Curve/Pools/Services/ReservesService";
-import CandleService from "@/Pages/Curve/Pools/Services/CandleService";
-import VolumeService from "@/Pages/Curve/Pools/Services/VolumeService";
-import PoolService from "@/Pages/Curve/Services/PoolService";
+import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
+import Trades from "@/Pages/CurveMonitor/Components/Trades.vue";
+import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
+import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
+import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
+import Candles from "@/Pages/CurveMonitor/Components/Candles.vue";
+import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
+import ReservesService from "@/Pages/CurveMonitor/Services/ReservesService";
+import CandleService from "@/Pages/CurveMonitor/Services/CandleService";
+import VolumeService from "@/Pages/CurveMonitor/Services/VolumeService";
+import PoolService from "@/Pages/CurveMonitor/Services/PoolService";
 import {
   getCandles,
   getPools,
   getReserves,
   getVolumes,
-} from "@/Pages/Curve/Pools/DataLoaders";
+} from "@/Pages/CurveMonitor/DataLoaders";
 
 const poolService = new PoolService(getHost());
 const reservesSerice = new ReservesService(getHost());

@@ -1,4 +1,4 @@
-import { PoolId } from "@/Pages/Curve/Models/Pool";
+import { PoolId } from "@/Pages/CurveMonitor/Models/Pool";
 
 export type Bribed = {
   pool: PoolId;
