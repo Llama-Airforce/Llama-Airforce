@@ -80,6 +80,12 @@ const hasMenu = $computed((): boolean => {
 
     padding: 0 1.5rem 0 2.5rem;
     border-right: 1px solid $level2-color;
+
+    > .sticky-wrapper {
+      > .bottom {
+        display: flex;
+      }
+    }
   }
 
   margin: 1.5rem 0;
@@ -103,7 +109,7 @@ const hasMenu = $computed((): boolean => {
 
     > .bottom {
       position: fixed;
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 1rem;
 
