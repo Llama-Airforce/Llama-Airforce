@@ -1,4 +1,4 @@
-export default class Reserves {
+export type Reserves = {
   timestamp: number;
   reservesUSD: number[];
-}
+};

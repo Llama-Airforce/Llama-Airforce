@@ -1,5 +1,4 @@
-import Volume from "@/Pages/CurveMonitor/Models/Volume";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import type { Volume, Pool } from "@/Pages/CurveMonitor/Models";
 import ServiceBase from "@/Services/ServiceBase";
 
 const ENDPOINT = "https://api-py.llama.airforce/curve/v1/pools/mainnet/volume/";

@@ -1,9 +1,9 @@
 export type PoolId = string;
 
-export default class Pool {
+export type Pool = {
   id: PoolId;
   name: string;
   symbol: string;
   cumulateVolumeUsd: number;
   coins: string[];
-}
+};
