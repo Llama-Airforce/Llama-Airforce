@@ -1,13 +1,16 @@
 import { minDelay } from "@/Util";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
-import ReservesService from "@/Pages/CurveMonitor/Services/ReservesService";
-import CandleService from "@/Pages/CurveMonitor/Services/CandleService";
-import VolumeService from "@/Pages/CurveMonitor/Services/VolumeService";
-import PoolService from "@/Pages/CurveMonitor/Services/PoolService";
+import {
+  PoolService,
+  ReservesService,
+  CandleService,
+  VolumeService,
+  TransactionService,
+} from "@/Pages/CurveMonitor/Services";
 
 export async function getPools(
-  store: ReturnType<typeof useCurveStore>,
+  store: ReturnType<typeof useCurveMonitorStore>,
   service: PoolService
 ) {
   // Don't request new pools if there's already cached or loading.
@@ -28,7 +31,7 @@ export async function getPools(
 }
 
 export async function getReserves(
-  store: ReturnType<typeof useCurveStore>,
+  store: ReturnType<typeof useCurveMonitorStore>,
   service: ReservesService,
   pool?: Pool
 ) {
@@ -56,7 +59,7 @@ export async function getReserves(
 }
 
 export async function getCandles(
-  store: ReturnType<typeof useCurveStore>,
+  store: ReturnType<typeof useCurveMonitorStore>,
   service: CandleService,
   pool?: Pool
 ) {
@@ -84,7 +87,7 @@ export async function getCandles(
 }
 
 export async function getVolumes(
-  store: ReturnType<typeof useCurveStore>,
+  store: ReturnType<typeof useCurveMonitorStore>,
   service: VolumeService,
   pool?: Pool
 ) {
@@ -105,6 +108,34 @@ export async function getVolumes(
 
     if (volumes) {
       store.setVolumes(pool.id, volumes);
+    }
+  } finally {
+    store.poolsLoading = false;
+  }
+}
+
+export async function getTransactions(
+  store: ReturnType<typeof useCurveMonitorStore>,
+  service: TransactionService,
+  pool?: Pool
+) {
+  if (!pool) {
+    return;
+  }
+
+  // Don't request new transactions if there's already cached.
+  if (store.transactions[pool.name]) {
+    return;
+  }
+
+  // Introduce delay so the animation doesn't lag immediately.
+  store.poolsLoading = true;
+
+  try {
+    const txs = await minDelay(service.get(pool), 500);
+
+    if (txs) {
+      store.setTransactions(pool.id, txs);
     }
   } finally {
     store.poolsLoading = false;

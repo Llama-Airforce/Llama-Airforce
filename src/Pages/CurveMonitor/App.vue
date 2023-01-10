@@ -15,6 +15,7 @@
         <Transactions
           v-if="poolSelected"
           class="transactions"
+          :pool-selected="poolSelected"
         ></Transactions>
 
         <Candles
@@ -62,7 +63,7 @@ import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { getHost } from "@/Services/Host";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
@@ -75,11 +76,13 @@ import {
   CandleService,
   VolumeService,
   PoolService,
+  TransactionService,
 } from "@/Pages/CurveMonitor/Services";
 import {
   getCandles,
   getPools,
   getReserves,
+  getTransactions,
   getVolumes,
 } from "@/Pages/CurveMonitor/DataLoaders";
 
@@ -87,9 +90,10 @@ const poolService = new PoolService(getHost());
 const reservesSerice = new ReservesService(getHost());
 const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
+const transactionService = new TransactionService();
 
 // Refs.
-const store = useCurveStore();
+const store = useCurveMonitorStore();
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
@@ -109,6 +113,7 @@ const onSelect = (option: unknown): void => {
   void getCandles(store, candleService, poolNew);
   void getReserves(store, reservesSerice, poolNew);
   void getVolumes(store, volumeService, poolNew);
+  void getTransactions(store, transactionService, poolNew);
 };
 </script>
 

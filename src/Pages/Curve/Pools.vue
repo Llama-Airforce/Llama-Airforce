@@ -50,7 +50,7 @@ import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { getHost } from "@/Services/Host";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
@@ -75,7 +75,7 @@ const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
 
 // Refs.
-const store = useCurveStore();
+const store = useCurveMonitorStore();
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);

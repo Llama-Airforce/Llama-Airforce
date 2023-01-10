@@ -1,98 +1,180 @@
 <template>
   <DataTable
     class="datatable-trades"
-    columns-header="1fr"
+    columns-header="auto auto 1fr"
     columns-data="trades-columns-data"
-    :rows="rows"
-    :columns="['Block', 'Tx', 'Time', 'Trader', 'Pair', 'Amount', 'Fees', '']"
-    :expanded="[]"
-    :sorting="true"
-    :sorting-columns="['', 'Time', 'vlasset', 'total']"
-    :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
-    sorting-default-column="deadline"
-    sorting-default-dir="Descending"
-    @sort-column="onSort"
+    :rows="transactionsPage"
+    :columns="[
+      'Type',
+      'Block',
+      'Tx',
+      'Trader',
+      'Assets',
+      'Value',
+      'Fees',
+      'Time',
+    ]"
     @selected="onSelected"
   >
     <template #header-title>
-      <div>{{ t("title") }}</div>
+      <div class="title">{{ t("title") }}</div>
+
+      <TabView
+        class="types"
+        @tab="onType($event.index)"
+      >
+        <TabItem header="All"></TabItem>
+        <TabItem header="Swaps"></TabItem>
+        <TabItem header="Deposits"></TabItem>
+        <TabItem header="Withdrawals"></TabItem>
+      </TabView>
+
+      <InputText
+        class="search"
+        v-model="search"
+        :search="true"
+      >
+      </InputText>
     </template>
 
     <template #header-actions>
       <Pagination
         class="pagination"
-        :items-count="96"
+        :items-count="transactions.length"
         :items-per-page="10"
         :page="page"
         @page="onPage"
       ></Pagination>
     </template>
 
-    <template #row="props: { item: Round }">
-      <div class="number">
-        <a class="vote-link"> 16363298 </a>
-      </div>
-      <div @click.stop>
-        <a class="vote-link">
-          {{
-            addressShort(
-              "0x59703d575568b3d732da821a54f76e8f6d28ceabe92a6d5c610201a70fe36fc4"
-            )
-          }}
-        </a>
-      </div>
-      <div>
-        {{ new Date(Date.now()).toLocaleDateString() }}
-        {{ new Date(Date.now()).toLocaleTimeString() }}
-      </div>
-      <div @click.stop>
-        <a class="vote-link">
-          {{
-            addressShort(
-              "0x59703d575568b3d732da821a54f76e8f6d28ceabe92a6d5c610201a70fe36fc4"
-            )
-          }}
-        </a>
-      </div>
-      <div>GEAR/ETH</div>
+    <template #row="props: { item: Transaction }">
       <div
-        class="number"
-        :class="{ buy: props.item.value > 0, sell: props.item.value < 0 }"
+        :class="{
+          deposit: props.item.type === 'deposit',
+          withdraw: props.item.type === 'withdraw',
+          swap: props.item.type === 'swap',
+        }"
       >
+        <i
+          v-if="props.item.type === 'deposit'"
+          class="fas fa-arrow-up"
+        ></i>
+
+        <i
+          v-else-if="props.item.type === 'withdraw'"
+          class="fas fa-arrow-down"
+        ></i>
+
+        <i
+          v-else
+          class="fas fa-exchange-alt"
+        ></i>
+
+        {{ t(props.item.type) }}
+      </div>
+
+      <div class="number">
+        <a
+          class="vote-link"
+          :href="`https://etherscan.io/block/${props.item.blockNumber}`"
+          target="_blank"
+        >
+          {{ props.item.blockNumber }}
+        </a>
+      </div>
+
+      <div @click.stop>
+        <a
+          class="vote-link"
+          :href="`https://etherscan.io/tx/${props.item.txHash}`"
+          target="_blank"
+        >
+          {{ addressShort(props.item.txHash) }}
+        </a>
+      </div>
+
+      <div @click.stop>
+        <a
+          class="vote-link"
+          :href="`https://etherscan.io/address/${props.item.trader}`"
+          target="_blank"
+        >
+          {{ addressShort(props.item.trader) }}
+        </a>
+      </div>
+
+      <div>{{ getAssetsString(props.item) }}</div>
+
+      <div class="number">
         <AsyncValue
           :value="Math.abs(props.item.value)"
-          :precision="5"
+          :precision="2"
+          :show-zero="true"
           type="dollar"
         />
       </div>
+
       <div class="number">
         <AsyncValue
-          :value="Math.abs(props.item.value) * 10000"
+          v-if="props.item.type === 'swap'"
+          :value="Math.abs((props.item as Swap).fee)"
           :precision="2"
+          :show-zero="true"
           type="dollar"
         />
       </div>
-      <div class="sandwiched">
-        <i class="fas fa-hamburger"> </i>
-      </div>
-    </template>
 
-    <template #row-details="props: { item: never }">
-      <div class="details">{{ props.item }}</div>
+      <div>
+        {{ new Date(props.item.timestamp * 1000).toLocaleDateString() }}
+        {{ new Date(props.item.timestamp * 1000).toLocaleTimeString() }}
+      </div>
+
+      <!-- <div class="sandwiched">
+        <i class="fas fa-hamburger"> </i>
+      </div> -->
     </template>
   </DataTable>
 </template>
 
 <script setup lang="ts">
+import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder, Pagination } from "@/Framework";
+import { chain } from "lodash";
+import {
+  AsyncValue,
+  DataTable,
+  InputText,
+  Pagination,
+  TabView,
+  TabItem,
+} from "@/Framework";
 import { addressShort } from "@/Wallet";
+import type { Pool, Transaction } from "@/Pages/CurveMonitor/Models";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
+import {
+  isDeposit,
+  isSwap,
+  isWithdraw,
+  Swap,
+  TransactionType,
+} from "@/Pages/CurveMonitor/Models/Transaction";
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  poolSelected: Pool | null;
+}
+
+const { poolSelected } = defineProps<Props>();
+
 // Refs
+const store = useCurveMonitorStore();
+
+const search = $ref("");
+const txsPerPage = 10;
+let types: TransactionType[] = $ref(["swap", "deposit", "withdraw"]);
 let page = $ref(1);
 
 type Round = {
@@ -100,42 +182,46 @@ type Round = {
   value: number;
 };
 
-let sortColumn: "deadline" | "vlasset" | "total" = $ref("deadline");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const transactions: Transaction[] = $computed(() => {
+  const txs = poolSelected ? store.transactions[poolSelected.id] ?? [] : [];
 
-const data: Round[] = [
-  { round: 1, value: 1 * Math.random() },
-  { round: 2, value: 7 * Math.random() },
-  { round: 3, value: -5 * Math.random() },
-  { round: 4, value: 2 * Math.random() },
-  { round: 5, value: 3 * Math.random() },
-];
+  return txs
+    .filter((tx) => types.includes(tx.type))
+    .filter((tx) => {
+      const terms = search.toLocaleLowerCase().split(" ");
 
-const rows = $computed((): Round[] => {
-  return orderBy(
-    data ?? [],
-    (row: Round) => {
-      switch (sortColumn) {
-        case "deadline":
-          return row.round;
-        case "vlasset":
-          return row.value;
-        case "total":
-          return row.value;
-        default:
-          return row.round;
-      }
-    },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
-  );
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return (
+        includesTerm(tx.blockNumber.toString()) ||
+        includesTerm(tx.trader) ||
+        includesTerm(tx.txHash)
+      );
+    });
 });
 
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "deadline" | "vlasset" | "total";
-  sortOrder = order;
+const transactionsPage = $computed(() =>
+  chain(transactions)
+    .drop((page - 1) * txsPerPage)
+    .take(txsPerPage)
+    .value()
+);
+
+// Methods
+const getAssetsString = (tx: Transaction): string => {
+  if (isSwap(tx)) {
+    return `${tx.tokenIn} -> ${tx.tokenOut}`;
+  } else if (isDeposit(tx)) {
+    return tx.tokenIn;
+  } else if (isWithdraw(tx)) {
+    return tx.tokenOut;
+  }
+
+  return "???";
 };
 
+// Events
 const onSelected = (data: unknown): void => {
   const epoch = data as Round;
   console.log(epoch.round);
@@ -144,12 +230,42 @@ const onSelected = (data: unknown): void => {
 const onPage = (pageNew: number) => {
   page = pageNew;
 };
+
+const onType = (tabIndex: number) => {
+  if (tabIndex === 0) {
+    types = ["swap", "deposit", "withdraw"];
+  } else if (tabIndex === 1) {
+    types = ["swap"];
+  } else if (tabIndex === 2) {
+    types = ["deposit"];
+  } else if (tabIndex === 3) {
+    types = ["withdraw"];
+  } else {
+    types = [];
+  }
+};
+
+// Watches
+watch(
+  () => transactionsPage,
+  (ps) => {
+    if (ps.length === 0) {
+      page = Math.max(1, Math.ceil(transactions.length / txsPerPage));
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .datatable-trades {
+  padding-top: 0.25rem;
+
+  .title {
+    margin-right: 1rem;
+  }
+
   ::v-deep(.pagination) {
     li {
       button {
@@ -159,35 +275,55 @@ const onPage = (pageNew: number) => {
     }
   }
 
+  ::v-deep(.types) {
+    margin: 0 1rem;
+    font-size: 0.85rem;
+
+    ul {
+      width: auto;
+      border-bottom: 0;
+    }
+  }
+
+  .search {
+    margin-right: 2rem;
+    font-size: 0.9rem;
+    width: auto;
+  }
+
   .sandwiched {
     display: flex;
     justify-content: center;
     color: $yellow;
   }
 
-  .buy {
+  .deposit {
     color: $green;
   }
 
-  .sell {
+  .withdraw {
     color: $red;
+  }
+
+  .swap {
+    color: lighten($purple, 10%);
   }
 
   ::v-deep(.trades-columns-data) {
     display: grid;
-    grid-column-gap: 2rem;
+    grid-column-gap: 2.5rem;
     grid-template-columns:
-      4rem 6rem minmax(15rem, 2fr) 6rem minmax(5rem, 1fr) minmax(5rem, 1fr)
-      minmax(5rem, 1fr) 1rem 1rem;
+      6rem 4rem 6rem 6rem minmax(5rem, 2fr)
+      6rem 6rem minmax(13rem, 1fr);
 
     // Right adjust number columns.
-    div:nth-child(1),
+    div:nth-child(2),
     div:nth-child(6),
     div:nth-child(7) {
       justify-content: end;
     }
 
-    div:nth-child(8) {
+    div:nth-child(10) {
       justify-content: center;
     }
 
@@ -200,4 +336,8 @@ const onPage = (pageNew: number) => {
 
 <i18n lang="yaml" locale="en">
 title: Transactions
+
+swap: Swap
+withdraw: Withdraw
+deposit: Deposit
 </i18n>

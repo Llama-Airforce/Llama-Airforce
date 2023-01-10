@@ -34,7 +34,7 @@ import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import type { Pool, Candle } from "@/Pages/CurveMonitor/Models";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 const { t } = useI18n();
 
@@ -46,7 +46,7 @@ interface Props {
 const { poolSelected } = defineProps<Props>();
 
 // Refs
-const store = useCurveStore();
+const store = useCurveMonitorStore();
 
 const chartRef = $ref<HTMLElement | null>(null);
 let chart: IChartApi | null = $ref(null);

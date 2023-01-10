@@ -15,7 +15,7 @@ import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import type { Pool, Reserves } from "@/Pages/CurveMonitor/Models";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 type Serie = { name: string; data: { x: number; y: number }[] };
 
@@ -29,7 +29,7 @@ const { poolSelected } = defineProps<Props>();
 const { t } = useI18n();
 
 // Refs
-const store = useCurveStore();
+const store = useCurveMonitorStore();
 
 const reserves = $computed((): Reserves[] => {
   return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];

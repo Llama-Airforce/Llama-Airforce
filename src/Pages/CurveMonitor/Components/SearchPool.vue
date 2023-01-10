@@ -43,7 +43,7 @@ import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { InputText, AsyncValue } from "@/Framework";
 import { shorten, icon } from "@/Util";
-import { useCurveStore } from "@/Pages/Curve/Store";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { match } from "@/Pages/CurveMonitor/Util/PoolHelper";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 
@@ -63,7 +63,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const store = useCurveStore();
+const store = useCurveMonitorStore();
 
 let autoComplete = $ref(false);
 let placeholder = $ref(t("search-placeholder"));
