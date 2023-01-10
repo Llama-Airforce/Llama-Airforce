@@ -1,6 +1,6 @@
 import { minDelay } from "@/Util";
 import { useCurveStore } from "@/Pages/Curve/Store";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import type { Pool } from "@/Pages/CurveMonitor/Models";
 import ReservesService from "@/Pages/CurveMonitor/Services/ReservesService";
 import CandleService from "@/Pages/CurveMonitor/Services/CandleService";
 import VolumeService from "@/Pages/CurveMonitor/Services/VolumeService";

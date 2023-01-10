@@ -1,5 +1,5 @@
-export default class Volume {
+export type Volume = {
   timestamp: number;
   volume: number;
   volumeUSD: number;
-}
+};

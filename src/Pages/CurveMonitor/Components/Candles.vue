@@ -33,8 +33,7 @@ import {
 import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
-import Candle from "@/Pages/CurveMonitor/Models/Candle";
+import type { Pool, Candle } from "@/Pages/CurveMonitor/Models";
 import { useCurveStore } from "@/Pages/Curve/Store";
 
 const { t } = useI18n();

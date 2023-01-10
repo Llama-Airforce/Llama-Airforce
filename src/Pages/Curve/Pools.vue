@@ -48,7 +48,7 @@ import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
@@ -56,10 +56,12 @@ import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
 import Candles from "@/Pages/CurveMonitor/Components/Candles.vue";
 import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
-import ReservesService from "@/Pages/CurveMonitor/Services/ReservesService";
-import CandleService from "@/Pages/CurveMonitor/Services/CandleService";
-import VolumeService from "@/Pages/CurveMonitor/Services/VolumeService";
-import PoolService from "@/Pages/CurveMonitor/Services/PoolService";
+import {
+  ReservesService,
+  CandleService,
+  VolumeService,
+  PoolService,
+} from "@/Pages/CurveMonitor/Services";
 import {
   getCandles,
   getPools,

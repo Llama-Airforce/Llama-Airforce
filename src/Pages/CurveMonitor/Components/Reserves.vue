@@ -14,8 +14,7 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
-import Reserves from "@/Pages/CurveMonitor/Models/Reserves";
+import type { Pool, Reserves } from "@/Pages/CurveMonitor/Models";
 import { useCurveStore } from "@/Pages/Curve/Store";
 
 type Serie = { name: string; data: { x: number; y: number }[] };

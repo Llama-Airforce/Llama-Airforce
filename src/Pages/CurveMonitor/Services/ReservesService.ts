@@ -1,5 +1,4 @@
-import Reserves from "@/Pages/CurveMonitor/Models/Reserves";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import type { Reserves, Pool } from "@/Pages/CurveMonitor/Models";
 import ServiceBase from "@/Services/ServiceBase";
 
 const THEGRAPH_URL =

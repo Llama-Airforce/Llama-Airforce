@@ -45,7 +45,7 @@ import { InputText, AsyncValue } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { match } from "@/Pages/CurveMonitor/Util/PoolHelper";
-import Pool from "@/Pages/CurveMonitor/Models/Pool";
+import type { Pool } from "@/Pages/CurveMonitor/Models";
 
 const { t } = useI18n();
 
