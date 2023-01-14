@@ -1,14 +1,24 @@
 <template>
   <div class="curve-monitor">
     <div class="dashboard">
-      <SearchPool
-        v-model="pool"
-        class="search"
+      <div
+        class="top"
         :class="{ hasPool: !!poolSelected }"
-        @select="onSelect"
-      ></SearchPool>
+      >
+        <img
+          class="logo"
+          src="/headers/curve.png"
+        />
+
+        <SearchPool
+          v-model="pool"
+          class="search"
+          @select="onSelect"
+        ></SearchPool>
+      </div>
 
       <div
+        v-if="poolSelected"
         class="data"
         :class="{ loading: store.poolsLoading }"
       >
@@ -46,12 +56,12 @@
           v-if="poolSelected"
           class="bonding"
         ></Bonding>
-
-        <Spinner
-          v-if="store.poolsLoading"
-          class="spinner"
-        ></Spinner>
       </div>
+
+      <Spinner
+        v-if="store.poolsLoading"
+        class="spinner"
+      ></Spinner>
     </div>
   </div>
 </template>
@@ -122,13 +132,50 @@ const onSelect = (option: unknown): void => {
 
 @include dashboard("curve-monitor");
 
-.search {
-  width: 30vw;
-  margin-top: 30vh;
+.curve-monitor {
+  .dashboard {
+    @media only screen and (max-width: 1280px) {
+      gap: 0;
+    }
+  }
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
   justify-self: center;
 
-  &.hasPool {
-    margin-top: 0;
+  &:not(.hasPool) {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    .logo {
+      display: flex;
+    }
+  }
+
+  width: 30vw;
+  min-width: 768px;
+
+  @media only screen and (max-width: 1280px) {
+    width: calc(100% - 2rem);
+    padding: 0 1rem;
+  }
+
+  .logo {
+    display: none;
+    width: 100%;
+    height: 38px;
+    object-fit: none;
+  }
+
+  .search {
+    &.hasPool {
+      margin-top: 0;
+    }
   }
 }
 
@@ -137,16 +184,6 @@ const onSelect = (option: unknown): void => {
 
   grid-template-rows: auto auto repeat(2, 300px);
   grid-template-columns: 1fr 1fr;
-
-  .spinner {
-    grid-row: 2;
-    grid-column: 1 / -1;
-
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-  }
 
   .transactions {
     grid-row: 1;
@@ -177,5 +214,12 @@ const onSelect = (option: unknown): void => {
     grid-row: 4;
     grid-column: 2;
   }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 }
 </style>
