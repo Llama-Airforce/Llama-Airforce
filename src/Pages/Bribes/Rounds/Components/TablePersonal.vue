@@ -218,7 +218,7 @@ const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
   else {
     delegations = await snapshotService.getDelegations(block, {
       delegators: [voter],
-      space: snapshotService.getSpace(protocol),
+      space: "cvx.eth",
     });
   }
 

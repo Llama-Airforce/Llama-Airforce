@@ -190,19 +190,6 @@ export default class SnapshotService extends ServiceBase {
     return paginate(fs);
   }
 
-  public getSpace(protocol: Protocol): string {
-    switch (protocol) {
-      case "cvx-crv":
-        return "cvx.eth";
-      case "aura-bal":
-        return "aurafinance.eth";
-      default:
-        throw new Error(
-          `Protocol '${protocol as string}' has no Snapshot space`
-        );
-    }
-  }
-
   public async getScores(
     protocol: Protocol,
     snapshot: number,
@@ -243,7 +230,7 @@ export default class SnapshotService extends ServiceBase {
     ];
 
     const params = {
-      space: this.getSpace("cvx-crv"),
+      space: "cvx.eth",
       network: "1",
       snapshot,
       strategies,
@@ -263,6 +250,9 @@ export default class SnapshotService extends ServiceBase {
     snapshot: number,
     voters: string[]
   ): Promise<Scores> {
+    const space =
+      snapshot >= 16438041 ? "gauges.aurafinance.eth" : "aurafinance.eth";
+
     const address = "0x3Fa73f1E5d8A792C80F426fc8F84FBF7Ce9bBCAC";
 
     const strategies = [
@@ -277,7 +267,7 @@ export default class SnapshotService extends ServiceBase {
     ];
 
     const params = {
-      space: this.getSpace("aura-bal"),
+      space,
       network: "1",
       snapshot,
       strategies,
