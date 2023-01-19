@@ -42,5 +42,12 @@ export const useCurveMonitorStore = defineStore({
     setTransactions(pool: PoolId, txs: Transaction[]) {
       this.transactions[pool] = txs;
     },
+    addTransaction(pool: PoolId, tx: Transaction) {
+      if (!this.transactions[pool] || this.transactions[pool].length === 0) {
+        this.transactions[pool] = [];
+      }
+
+      this.transactions[pool].push(tx);
+    },
   },
 });

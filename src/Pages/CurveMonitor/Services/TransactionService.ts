@@ -1,17 +1,25 @@
-import Transactions from "@/Pages/CurveMonitor/Json/Transactions.json";
-import type {
-  Pool,
-  Transaction,
-  TransactionType,
-} from "@/Pages/CurveMonitor/Models";
+import { Observable } from "rxjs";
+import { io, Socket } from "socket.io-client";
+import type { Transaction, TransactionType } from "@/Pages/CurveMonitor/Models";
 import {
   Swap,
   Deposit,
   Withdraw,
 } from "@/Pages/CurveMonitor/Models/Transaction";
 
+type ClientToServerEvents = Record<string, never>;
+type ServerToClientEvents = {
+  initial_all: (dto: TransactionDto) => void;
+  message: (dto: TransactionDto) => void;
+};
+
 type TransactionDto = {
-  type: "swap" | "deposit" | "remove";
+  type: "swap" | "deposit" | "remove" | string;
+  txHash: string;
+  blockNumber: number;
+  position: number;
+  trader: string;
+  unixtime: number;
 };
 
 type TransactionDtoSwap = TransactionDto & {
@@ -45,78 +53,111 @@ type TransactionDtoRemove = TransactionDto & {
 };
 
 export default class TransactionService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, max-lines-per-function
-  async get(pool: Pool): Promise<Transaction[]> {
-    const txs: Transaction[] = Transactions[
-      "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
-    ]
-      .map((tx) => {
-        let type: TransactionType = "swap";
-        if (tx.type === "deposit") {
-          type = "deposit";
-        } else if (tx.type === "remove") {
-          type = "withdraw";
+  private readonly socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+
+  public readonly get$: Observable<Transaction>;
+
+  constructor(url: string, poolAddress: string) {
+    this.socket = io(`${url}/${poolAddress}`, {
+      autoConnect: false,
+      secure: true,
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.get$ = new Observable((subscriber) => {
+      const onData = (data: TransactionDto | TransactionDto[]) => {
+        const txs = Array.isArray(data)
+          ? data.map((d) => this.get(d)).flat(1)
+          : this.get(data);
+
+        for (const tx of txs) {
+          subscriber.next(tx);
         }
+      };
 
-        const txHash = tx.txHash.toLocaleLowerCase() as Lowercase<string>;
-        const blockNumber = tx.blockNumber;
-        const trader = tx.trader.toLocaleLowerCase() as Lowercase<string>;
-        const timestamp = tx.unixtime;
+      this.socket.on("initial_all", onData);
+      this.socket.on("message", onData);
 
-        let transaction: Swap[] | Deposit[] | Withdraw[];
+      return () => this.socket.off("message", onData);
+    });
+  }
 
-        if (type === "swap") {
-          const swap = tx as TransactionDtoSwap;
+  public connect() {
+    this.socket.connect();
+  }
 
-          transaction = [
-            {
-              type,
-              txHash,
-              blockNumber,
-              trader,
-              timestamp,
-              fee: swap.tradeDetails.feeUSD,
-              value: swap.tradeDetails.valueUSD,
-              amountIn: swap.tradeDetails.amountIn,
-              amountOut: swap.tradeDetails.amountOut,
-              tokenIn: swap.tradeDetails.nameIn,
-              tokenOut: swap.tradeDetails.nameOut,
-            },
-          ];
+  public close() {
+    this.socket.close();
+  }
 
-          return transaction;
-        } else if (type === "deposit") {
-          const swap = tx as TransactionDtoDeposit;
+  private get(tx: TransactionDto): Transaction[] {
+    let type: TransactionType;
+    if (tx.type === "swap") {
+      type = "swap";
+    } else if (tx.type === "deposit") {
+      type = "deposit";
+    } else if (tx.type === "remove") {
+      type = "withdraw";
+    } else {
+      // Unsupported message type.
+      return [];
+    }
 
-          transaction = swap.tradeDetails.map((td) => ({
-            type: "deposit",
-            txHash,
-            blockNumber,
-            trader,
-            timestamp,
-            value: td.valueUSD,
-            amountIn: td.amountIn,
-            tokenIn: td.nameIn,
-          }));
-        } else {
-          const swap = tx as TransactionDtoRemove;
+    const txHash = tx.txHash.toLocaleLowerCase() as Lowercase<string>;
+    const blockNumber = tx.blockNumber;
+    const trader = tx.trader.toLocaleLowerCase() as Lowercase<string>;
+    const timestamp = tx.unixtime;
 
-          transaction = swap.tradeDetails.map((td) => ({
-            type: "withdraw",
-            txHash,
-            blockNumber,
-            trader,
-            timestamp,
-            value: td.valueUSD,
-            amountOut: td.amountOut,
-            tokenOut: td.nameOut,
-          }));
-        }
+    let transaction: Swap[] | Deposit[] | Withdraw[];
 
-        return transaction;
-      })
-      .flat(1);
+    if (type === "swap") {
+      const swap = tx as TransactionDtoSwap;
 
-    return Promise.resolve(txs);
+      transaction = [
+        {
+          type,
+          txHash,
+          blockNumber,
+          trader,
+          timestamp,
+          fee: swap.tradeDetails.feeUSD,
+          value: swap.tradeDetails.valueUSD,
+          amountIn: swap.tradeDetails.amountIn,
+          amountOut: swap.tradeDetails.amountOut,
+          tokenIn: swap.tradeDetails.nameIn,
+          tokenOut: swap.tradeDetails.nameOut,
+        },
+      ];
+
+      return transaction;
+    } else if (type === "deposit") {
+      const swap = tx as TransactionDtoDeposit;
+
+      transaction = swap.tradeDetails.map((td) => ({
+        type: "deposit",
+        txHash,
+        blockNumber,
+        trader,
+        timestamp,
+        value: td.valueUSD,
+        amountIn: td.amountIn,
+        tokenIn: td.nameIn,
+      }));
+    } else {
+      const swap = tx as TransactionDtoRemove;
+
+      transaction = swap.tradeDetails.map((td) => ({
+        type: "withdraw",
+        txHash,
+        blockNumber,
+        trader,
+        timestamp,
+        value: td.valueUSD,
+        amountOut: td.amountOut,
+        tokenOut: td.nameOut,
+      }));
+    }
+
+    return transaction;
   }
 }

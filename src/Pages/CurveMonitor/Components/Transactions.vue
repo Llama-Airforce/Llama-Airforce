@@ -30,8 +30,8 @@
       </TabView>
 
       <InputText
-        class="search"
         v-model="search"
+        class="search"
         :search="true"
       >
       </InputText>
@@ -185,7 +185,7 @@ type Round = {
 const transactions: Transaction[] = $computed(() => {
   const txs = poolSelected ? store.transactions[poolSelected.id] ?? [] : [];
 
-  return txs
+  return chain(txs)
     .filter((tx) => types.includes(tx.type))
     .filter((tx) => {
       const terms = search.toLocaleLowerCase().split(" ");
@@ -198,7 +198,9 @@ const transactions: Transaction[] = $computed(() => {
         includesTerm(tx.trader) ||
         includesTerm(tx.txHash)
       );
-    });
+    })
+    .reverse() // Server gives us the data in order already, just reversed.
+    .value();
 });
 
 const transactionsPage = $computed(() =>

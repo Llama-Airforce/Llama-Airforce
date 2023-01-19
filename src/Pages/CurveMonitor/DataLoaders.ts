@@ -1,3 +1,4 @@
+import { Subscription } from "rxjs";
 import { minDelay } from "@/Util";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
@@ -114,30 +115,33 @@ export async function getVolumes(
   }
 }
 
-export async function getTransactions(
+let subscriptionTx: Subscription | null = null;
+export function getTransactions(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: TransactionService,
-  pool?: Pool
-) {
-  if (!pool) {
-    return;
+  pool: Pool
+): Subscription | null {
+  if (subscriptionTx) {
+    return subscriptionTx;
   }
-
-  // Don't request new transactions if there's already cached.
-  if (store.transactions[pool.name]) {
-    return;
-  }
+  // TODO: unsusbscribe if different pool.
 
   // Introduce delay so the animation doesn't lag immediately.
   store.poolsLoading = true;
 
   try {
-    const txs = await minDelay(service.get(pool), 500);
-
-    if (txs) {
-      store.setTransactions(pool.id, txs);
-    }
+    subscriptionTx = service.get$.subscribe({
+      next: (tx) => {
+        store.addTransaction(pool.id, tx);
+      },
+      error: (err) => console.error(err),
+    });
+    service.connect();
+  } catch (err) {
+    console.error(err);
   } finally {
     store.poolsLoading = false;
   }
+
+  return subscriptionTx;
 }

@@ -100,7 +100,10 @@ const poolService = new PoolService(getHost());
 const reservesSerice = new ReservesService(getHost());
 const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
-const transactionService = new TransactionService();
+const transactionService = new TransactionService(
+  "https://ws.llama.airforce:2053",
+  "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
+);
 
 // Refs.
 const store = useCurveMonitorStore();
