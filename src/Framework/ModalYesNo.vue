@@ -11,10 +11,18 @@
         ></Button>
 
         <Button
+          v-if="ready"
           class="yes"
           :value="t('yes')"
           @click="emit('yes')"
         ></Button>
+
+        <div
+          v-else
+          class="not-ready"
+        >
+          {{ readyMsg }}
+        </div>
       </div>
     </Card>
   </Modal>
@@ -28,9 +36,16 @@ import { Button, Card, Modal } from "@/Framework";
 interface Props {
   show?: boolean;
   title?: string;
+  ready?: boolean;
+  readyMsg?: string;
 }
 
-const { show = false, title = "" } = defineProps<Props>();
+const {
+  show = false,
+  title = "",
+  ready = true,
+  readyMsg = "",
+} = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -64,6 +79,11 @@ const { t } = useI18n();
         &.yes {
           margin-right: 1rem;
         }
+      }
+
+      .not-ready {
+        display: flex;
+        align-items: center;
       }
     }
   }

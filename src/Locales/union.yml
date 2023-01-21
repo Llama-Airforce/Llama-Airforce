@@ -79,6 +79,7 @@ en:
   price-modal-title: Price control
   percentage: Percentage
   min-amount: Min Amount
+  no-zero: Zero min amount not allowed
 
   # Locks.vue
   nothing-locked: You do not have any CVX locked for the upcoming round
