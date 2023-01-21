@@ -24,4 +24,17 @@ export default class DefiLlamaService extends ServiceBase {
       body
     ).then((resp) => resp.coins[key]);
   }
+
+  public async getPrices(address: string[]): Promise<Record<string, Price>> {
+    const coins = address.map((a) => `ethereum:${a}`);
+    const body = {
+      coins: coins,
+    };
+
+    return this.fetch(
+      "https://coins.llama.fi/prices",
+      PriceResponse,
+      body
+    ).then((resp) => resp.coins);
+  }
 }

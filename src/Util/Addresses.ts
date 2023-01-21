@@ -110,3 +110,4 @@ export const veFunderGaugeController =
 export const PirexCvxAddress = "0x35a398425d9f1029021a92bc3d2557d42c8588d7";
 export const WEthAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const EmptyAddress = "0x0000000000000000000000000000000000000000";
+export const CvxCrvUtilities = "0xadd2f542f9ff06405fabf8cae4a74bd0fe29c673";
