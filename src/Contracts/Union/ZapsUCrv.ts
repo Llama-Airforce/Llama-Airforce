@@ -14,11 +14,7 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -30,162 +26,36 @@ import type {
 
 export interface ZapsUCrvInterface extends utils.Interface {
   functions: {
-    "CRVETH_CRV_INDEX()": FunctionFragment;
-    "CRVETH_ETH_INDEX()": FunctionFragment;
-    "CRV_TOKEN()": FunctionFragment;
-    "CURVE_CRV_ETH_POOL()": FunctionFragment;
-    "CURVE_CVXCRV_CRV_POOL()": FunctionFragment;
-    "CURVE_CVX_ETH_POOL()": FunctionFragment;
-    "CVXCRV_CRV_INDEX()": FunctionFragment;
-    "CVXCRV_CVXCRV_INDEX()": FunctionFragment;
-    "CVXCRV_STAKING_CONTRACT()": FunctionFragment;
-    "CVXCRV_TOKEN()": FunctionFragment;
-    "CVXETH_CVX_INDEX()": FunctionFragment;
-    "CVXETH_ETH_INDEX()": FunctionFragment;
-    "CVX_TOKEN()": FunctionFragment;
-    "claimFromDistributorAndStakeIn3PoolConvex(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
-    "claimFromDistributorAsCvxAndLock(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
-    "claimFromDistributorAsUsdt(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
-    "claimFromDistributorViaUniV2EthPair(uint256,address,uint256,bytes32[],uint256,address,address,address)": FunctionFragment;
     "claimFromVaultAndStakeIn3PoolConvex(uint256,uint256,address)": FunctionFragment;
-    "claimFromVaultAsCvxAndLock(uint256,uint256,address)": FunctionFragment;
+    "claimFromVaultAsCrv(uint256,uint256,address)": FunctionFragment;
+    "claimFromVaultAsCvx(uint256,uint256,address,bool)": FunctionFragment;
+    "claimFromVaultAsEth(uint256,uint256,address)": FunctionFragment;
     "claimFromVaultAsUsdt(uint256,uint256,address)": FunctionFragment;
     "claimFromVaultViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
     "depositFromCrv(uint256,uint256,address)": FunctionFragment;
     "depositFromEth(uint256,address)": FunctionFragment;
+    "depositFromUCrv(uint256,uint256,address)": FunctionFragment;
     "depositViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "setApprovals()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
     "vault()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CRVETH_CRV_INDEX"
-      | "CRVETH_ETH_INDEX"
-      | "CRV_TOKEN"
-      | "CURVE_CRV_ETH_POOL"
-      | "CURVE_CVXCRV_CRV_POOL"
-      | "CURVE_CVX_ETH_POOL"
-      | "CVXCRV_CRV_INDEX"
-      | "CVXCRV_CVXCRV_INDEX"
-      | "CVXCRV_STAKING_CONTRACT"
-      | "CVXCRV_TOKEN"
-      | "CVXETH_CVX_INDEX"
-      | "CVXETH_ETH_INDEX"
-      | "CVX_TOKEN"
-      | "claimFromDistributorAndStakeIn3PoolConvex"
-      | "claimFromDistributorAsCvxAndLock"
-      | "claimFromDistributorAsUsdt"
-      | "claimFromDistributorViaUniV2EthPair"
       | "claimFromVaultAndStakeIn3PoolConvex"
-      | "claimFromVaultAsCvxAndLock"
+      | "claimFromVaultAsCrv"
+      | "claimFromVaultAsCvx"
+      | "claimFromVaultAsEth"
       | "claimFromVaultAsUsdt"
       | "claimFromVaultViaUniV2EthPair"
       | "depositFromCrv"
       | "depositFromEth"
+      | "depositFromUCrv"
       | "depositViaUniV2EthPair"
-      | "owner"
-      | "renounceOwnership"
       | "setApprovals"
-      | "transferOwnership"
       | "vault"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "CRVETH_CRV_INDEX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CRVETH_ETH_INDEX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "CRV_TOKEN", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "CURVE_CRV_ETH_POOL",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CURVE_CVXCRV_CRV_POOL",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CURVE_CVX_ETH_POOL",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CVXCRV_CRV_INDEX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CVXCRV_CVXCRV_INDEX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CVXCRV_STAKING_CONTRACT",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CVXCRV_TOKEN",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CVXETH_CVX_INDEX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CVXETH_ETH_INDEX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "CVX_TOKEN", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "claimFromDistributorAndStakeIn3PoolConvex",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimFromDistributorAsCvxAndLock",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimFromDistributorAsUsdt",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimFromDistributorViaUniV2EthPair",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
-  ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultAndStakeIn3PoolConvex",
     values: [
@@ -195,7 +65,24 @@ export interface ZapsUCrvInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "claimFromVaultAsCvxAndLock",
+    functionFragment: "claimFromVaultAsCrv",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimFromVaultAsCvx",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimFromVaultAsEth",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -233,6 +120,14 @@ export interface ZapsUCrvInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "depositFromUCrv",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "depositViaUniV2EthPair",
     values: [
       PromiseOrValue<BigNumberish>,
@@ -242,89 +137,26 @@ export interface ZapsUCrvInterface extends utils.Interface {
       PromiseOrValue<string>
     ]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "setApprovals",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
   encodeFunctionData(functionFragment: "vault", values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CRVETH_CRV_INDEX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CRVETH_ETH_INDEX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "CRV_TOKEN", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "CURVE_CRV_ETH_POOL",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CURVE_CVXCRV_CRV_POOL",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CURVE_CVX_ETH_POOL",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CVXCRV_CRV_INDEX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CVXCRV_CVXCRV_INDEX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CVXCRV_STAKING_CONTRACT",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CVXCRV_TOKEN",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CVXETH_CVX_INDEX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CVXETH_ETH_INDEX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "CVX_TOKEN", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "claimFromDistributorAndStakeIn3PoolConvex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimFromDistributorAsCvxAndLock",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimFromDistributorAsUsdt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimFromDistributorViaUniV2EthPair",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "claimFromVaultAndStakeIn3PoolConvex",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimFromVaultAsCvxAndLock",
+    functionFragment: "claimFromVaultAsCrv",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimFromVaultAsCvx",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimFromVaultAsEth",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -344,42 +176,21 @@ export interface ZapsUCrvInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "depositViaUniV2EthPair",
+    functionFragment: "depositFromUCrv",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
+    functionFragment: "depositViaUniV2EthPair",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setApprovals",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "vault", data: BytesLike): Result;
 
-  events: {
-    "OwnershipTransferred(address,address)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  events: {};
 }
-
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
-}
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface ZapsUCrv extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -408,74 +219,6 @@ export interface ZapsUCrv extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    CRVETH_CRV_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    CRVETH_ETH_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    CRV_TOKEN(overrides?: CallOverrides): Promise<[string]>;
-
-    CURVE_CRV_ETH_POOL(overrides?: CallOverrides): Promise<[string]>;
-
-    CURVE_CVXCRV_CRV_POOL(overrides?: CallOverrides): Promise<[string]>;
-
-    CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<[string]>;
-
-    CVXCRV_CRV_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    CVXCRV_CVXCRV_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    CVXCRV_STAKING_CONTRACT(overrides?: CallOverrides): Promise<[string]>;
-
-    CVXCRV_TOKEN(overrides?: CallOverrides): Promise<[string]>;
-
-    CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    CVX_TOKEN(overrides?: CallOverrides): Promise<[string]>;
-
-    claimFromDistributorAndStakeIn3PoolConvex(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    claimFromDistributorAsCvxAndLock(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     claimFromVaultAndStakeIn3PoolConvex(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -483,7 +226,22 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    claimFromVaultAsCvxAndLock(
+    claimFromVaultAsCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    claimFromVaultAsCvx(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    claimFromVaultAsEth(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
@@ -519,6 +277,13 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    depositFromUCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     depositViaUniV2EthPair(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -528,91 +293,12 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
   };
-
-  CRVETH_CRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  CRVETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  CRV_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-  CURVE_CRV_ETH_POOL(overrides?: CallOverrides): Promise<string>;
-
-  CURVE_CVXCRV_CRV_POOL(overrides?: CallOverrides): Promise<string>;
-
-  CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<string>;
-
-  CVXCRV_CRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  CVXCRV_CVXCRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  CVXCRV_STAKING_CONTRACT(overrides?: CallOverrides): Promise<string>;
-
-  CVXCRV_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-  CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-  CVX_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-  claimFromDistributorAndStakeIn3PoolConvex(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  claimFromDistributorAsCvxAndLock(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  claimFromDistributorAsUsdt(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  claimFromDistributorViaUniV2EthPair(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    router: PromiseOrValue<string>,
-    outputToken: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   claimFromVaultAndStakeIn3PoolConvex(
     amount: PromiseOrValue<BigNumberish>,
@@ -621,7 +307,22 @@ export interface ZapsUCrv extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  claimFromVaultAsCvxAndLock(
+  claimFromVaultAsCrv(
+    amount: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  claimFromVaultAsCvx(
+    amount: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    lock: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  claimFromVaultAsEth(
     amount: PromiseOrValue<BigNumberish>,
     minAmountOut: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
@@ -657,6 +358,13 @@ export interface ZapsUCrv extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  depositFromUCrv(
+    amount: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   depositViaUniV2EthPair(
     amount: PromiseOrValue<BigNumberish>,
     minAmountOut: PromiseOrValue<BigNumberish>,
@@ -666,92 +374,13 @@ export interface ZapsUCrv extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   setApprovals(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    CRVETH_CRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CRVETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CRV_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-    CURVE_CRV_ETH_POOL(overrides?: CallOverrides): Promise<string>;
-
-    CURVE_CVXCRV_CRV_POOL(overrides?: CallOverrides): Promise<string>;
-
-    CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<string>;
-
-    CVXCRV_CRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXCRV_CVXCRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXCRV_STAKING_CONTRACT(overrides?: CallOverrides): Promise<string>;
-
-    CVXCRV_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-    CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVX_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-    claimFromDistributorAndStakeIn3PoolConvex(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    claimFromDistributorAsCvxAndLock(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     claimFromVaultAndStakeIn3PoolConvex(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -759,12 +388,27 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    claimFromVaultAsCvxAndLock(
+    claimFromVaultAsCrv(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
+
+    claimFromVaultAsCvx(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    claimFromVaultAsEth(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     claimFromVaultAsUsdt(
       amount: PromiseOrValue<BigNumberish>,
@@ -795,6 +439,13 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    depositFromUCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     depositViaUniV2EthPair(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -804,100 +455,14 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
     setApprovals(overrides?: CallOverrides): Promise<void>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     vault(overrides?: CallOverrides): Promise<string>;
   };
 
-  filters: {
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter;
-  };
+  filters: {};
 
   estimateGas: {
-    CRVETH_CRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CRVETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CRV_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CURVE_CRV_ETH_POOL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CURVE_CVXCRV_CRV_POOL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXCRV_CRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXCRV_CVXCRV_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXCRV_STAKING_CONTRACT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXCRV_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CVX_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimFromDistributorAndStakeIn3PoolConvex(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    claimFromDistributorAsCvxAndLock(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     claimFromVaultAndStakeIn3PoolConvex(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -905,7 +470,22 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    claimFromVaultAsCvxAndLock(
+    claimFromVaultAsCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    claimFromVaultAsCvx(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    claimFromVaultAsEth(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
@@ -941,6 +521,13 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    depositFromUCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     depositViaUniV2EthPair(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -950,18 +537,7 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -969,84 +545,6 @@ export interface ZapsUCrv extends BaseContract {
   };
 
   populateTransaction: {
-    CRVETH_CRV_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CRVETH_ETH_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CRV_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CURVE_CRV_ETH_POOL(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    CURVE_CVXCRV_CRV_POOL(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    CURVE_CVX_ETH_POOL(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    CVXCRV_CRV_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CVXCRV_CVXCRV_INDEX(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    CVXCRV_STAKING_CONTRACT(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    CVXCRV_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CVX_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    claimFromDistributorAndStakeIn3PoolConvex(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    claimFromDistributorAsCvxAndLock(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     claimFromVaultAndStakeIn3PoolConvex(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -1054,7 +552,22 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    claimFromVaultAsCvxAndLock(
+    claimFromVaultAsCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    claimFromVaultAsCvx(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    claimFromVaultAsEth(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
@@ -1090,6 +603,13 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    depositFromUCrv(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     depositViaUniV2EthPair(
       amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
@@ -1099,18 +619,7 @@ export interface ZapsUCrv extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

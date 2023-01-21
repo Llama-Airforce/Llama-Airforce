@@ -9,6 +9,7 @@ export { UnionVaultPirex__factory } from "./UnionVaultPirex__factory";
 export { UnionVaultUCrv__factory } from "./UnionVaultUCrv__factory";
 export { ZapsUBal__factory } from "./ZapsUBal__factory";
 export { ZapsUCrv__factory } from "./ZapsUCrv__factory";
+export { ZapsUCrvV1__factory } from "./ZapsUCrvV1__factory";
 export { ZapsUCvx__factory } from "./ZapsUCvx__factory";
 export { ZapsUCvxClaim__factory } from "./ZapsUCvxClaim__factory";
 export { ZapsUFxs__factory } from "./ZapsUFxs__factory";

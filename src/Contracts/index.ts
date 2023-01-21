@@ -45,6 +45,8 @@ export type { ZapsUBal } from "./Union/ZapsUBal";
 export { ZapsUBal__factory } from "./factories/Union/ZapsUBal__factory";
 export type { ZapsUCrv } from "./Union/ZapsUCrv";
 export { ZapsUCrv__factory } from "./factories/Union/ZapsUCrv__factory";
+export type { ZapsUCrvV1 } from "./Union/ZapsUCrvV1";
+export { ZapsUCrvV1__factory } from "./factories/Union/ZapsUCrvV1__factory";
 export type { ZapsUCvx } from "./Union/ZapsUCvx";
 export { ZapsUCvx__factory } from "./factories/Union/ZapsUCvx__factory";
 export type { ZapsUCvxClaim } from "./Union/ZapsUCvxClaim";
