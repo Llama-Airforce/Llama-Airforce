@@ -794,7 +794,7 @@ const _abi = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
 
 export class UnionVault__factory {
   static readonly abi = _abi;

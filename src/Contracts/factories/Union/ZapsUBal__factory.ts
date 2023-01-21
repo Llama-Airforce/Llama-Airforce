@@ -353,7 +353,7 @@ const _abi = [
     stateMutability: "payable",
     type: "receive",
   },
-];
+] as const;
 
 export class ZapsUBal__factory {
   static readonly abi = _abi;

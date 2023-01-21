@@ -321,7 +321,7 @@ const _abi = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
 
 export class ZapsUCvxClaim__factory {
   static readonly abi = _abi;

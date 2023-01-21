@@ -1375,7 +1375,7 @@ const _abi = [
       },
     ],
   },
-];
+] as const;
 
 export class CurveV2FactoryPool__factory {
   static readonly abi = _abi;

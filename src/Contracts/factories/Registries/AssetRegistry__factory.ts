@@ -66,7 +66,7 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
 
 export class AssetRegistry__factory {
   static readonly abi = _abi;
