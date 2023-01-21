@@ -65,7 +65,6 @@ import {
   SnapshotRegistryAddress,
   UnionAddresses,
   UnionCrvVaultAddress,
-  ZapsUCrv2Address,
   ZapsUCrvAddress,
   VotiumRegistryAddress,
   UnionFxsVaultAddress,
@@ -76,6 +75,7 @@ import {
   AssetRegistryAddress,
   ZapsUFxsClaimAddress,
   UnionCvxVaultAddress,
+  UCrvStrategyAddress,
   UCvxStrategyAddress,
   PirexCvxAddress,
   PxCvxAddress,
@@ -90,6 +90,7 @@ import {
   ZapsUCvxAddress,
   ZapsUCvxClaimAddress,
   UBalHarvester,
+  UCrvHarvester,
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
@@ -191,12 +192,16 @@ const ucrv: Bundle = {
       description: "vault",
     },
     {
-      contract: ZapsUCrvAddress,
-      description: "zaps",
+      contract: UCrvStrategyAddress,
+      description: "strategy",
     },
     {
-      contract: ZapsUCrv2Address,
-      description: "Zaps 2",
+      contract: UCrvHarvester,
+      description: "zap-harvester",
+    },
+    {
+      contract: ZapsUCrvAddress,
+      description: "zaps",
     },
   ],
 };
