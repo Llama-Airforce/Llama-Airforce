@@ -23,8 +23,10 @@ export const UnionAddresses = [
 ];
 export const AssetRegistryAddress =
   "0xcfa23b8f9062369b21049b9f4a4ce79d640d1873";
-export const DistributorUCrvAddress =
+export const DistributorUCrvAddressV1 =
   "0xa83043df401346a67eddeb074679b4570b956183";
+export const DistributorUCrvAddress =
+  "0x0ed7d0497194fc029ae02223fec6d4d567696f17";
 export const DistributorUFxsAddress =
   "0x11fe17c5ab68cc4cc6d3c281feddfff80bc1d4c7";
 export const DistributorUCvxAddress =
@@ -63,6 +65,7 @@ export const BbUsdHandlerAddress = "0x5c53174c8d88f0f56c33f923b8c6a84a1760e484";
 export const ZapsUCrvAddressV1 = "0x5d69b683bf963648137b3ab5244e9d31d529838e";
 export const ZapsUCrv2AddressV1 = "0xaaf75554249209114ced07027c67bee7cfb1f29c";
 export const ZapsUCrvAddress = "0xc8d1335d18c0ef56a00dbb8b7a639183ee1c4d78";
+export const ZapsUCrvClaimAddress = "0x2a24bb027d7fe2a62e39871187d644daf03406f2";
 export const ZapsUFxsAddress = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
 export const ZapsUFxsClaimAddress =
   "0x56e9db574c8d5015d198671cbf1200b6bb2ed944";

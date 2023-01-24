@@ -9,7 +9,8 @@
     "build": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build",
     "build contracts": "typechain --target ethers-v5 --input-dir \"./src/ABI\" --out-dir \"./src/Contracts\" \"./src/ABI/**/*.json\"",
     "test": "vitest --silent",
-    "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\""
+    "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\"",
+    "union migrate": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.migrate.ts\""
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
