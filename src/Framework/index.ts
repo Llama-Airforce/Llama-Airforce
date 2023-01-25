@@ -26,4 +26,4 @@ export { SortOrder } from "@/Framework/SortOrder";
 export { default as Spinner } from "@/Framework/Spinner.vue";
 export { default as TabItem } from "@/Framework/TabItem.vue";
 export { default as TabView } from "@/Framework/TabView.vue";
-export { default as Tooltip } from "@/Framework/ToolTip.vue";
+export { default as Tooltip } from "@/Framework/Tooltip.vue";
