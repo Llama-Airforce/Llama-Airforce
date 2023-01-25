@@ -374,12 +374,12 @@ const linkContract = (contract: Contract): string => {
   switch (contract.network) {
     case "arbitrum":
       return contract.gnosis
-        ? `https://gnosis-safe.io/app/arb1:${contract.contract}`
+        ? `https://app.safe.global/arb1:${contract.contract}`
         : `https://arbiscan.io/address/${contract.contract}`;
     case "ethereum":
     default:
       return contract.gnosis
-        ? `https://gnosis-safe.io/app/eth:${contract.contract}`
+        ? `https://app.safe.global/eth:${contract.contract}`
         : `https://etherscan.io/address/${contract.contract}`;
   }
 };
