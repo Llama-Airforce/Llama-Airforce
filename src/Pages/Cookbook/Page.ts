@@ -2,6 +2,7 @@ import { Page } from "@/Pages/Page";
 
 import CookbookColors from "@/Pages/Cookbook/Colors.vue";
 import CookbookDashboard from "@/Pages/Cookbook/Dashboard.vue";
+import CookbookSocket from "@/Pages/Cookbook/Socket.vue";
 
 import CookbookAsyncValue from "@/Pages/Cookbook/Framework/AsyncValue.vue";
 import CookbookButton from "@/Pages/Cookbook/Framework/Button.vue";
@@ -35,6 +36,11 @@ export const pageCookbook: Page = {
       path: "/cookbook/dashboard",
       name: "dashboard",
       component: CookbookDashboard,
+    },
+    {
+      path: "/cookbook/socket",
+      name: "socket",
+      component: CookbookSocket,
     },
     {
       path: "/cookbook/async-value",
@@ -121,6 +127,10 @@ export const pageCookbook: Page = {
     {
       to: "/cookbook/dashboard",
       label: "Dashboard",
+    },
+    {
+      to: "/cookbook/socket",
+      label: "Socket.IO",
     },
     {
       icon: "fas fa-toolbox",
