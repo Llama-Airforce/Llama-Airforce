@@ -7,7 +7,8 @@
       class="title"
       :class="{ 'no-title': !proposal.metadata }"
     >
-      {{ proposal.metadata || t("no-title") }}
+      <div class="id">{{ proposal.id }}</div>
+      <div class="metadata">{{ proposal.metadata || t("no-title") }}</div>
     </div>
 
     <div class="row">
@@ -81,17 +82,32 @@ const emit = defineEmits<{
   padding: 0.5rem 0;
 
   > .title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: flex;
+    gap: 1rem;
 
     margin-left: 2rem;
     margin-top: 1rem;
     margin-right: 4.5rem;
-    font-size: 1.125rem;
-    font-weight: 400;
 
     &.no-title {
+      color: #a1a1aa;
+    }
+
+    > .metadata {
+      display: flex;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 1.125rem;
+      font-weight: 400;
+    }
+
+    > .id {
+      display: flex;
+      align-items: center;
+
       color: #a1a1aa;
     }
   }
