@@ -1,6 +1,6 @@
 import { Page } from "@/Pages/Page";
 
-import CurvePools from "@/Pages/Curve/Pools.vue";
+import CurvePools from "@/Pages/Curve/Pools/Pools.vue";
 import CurveGauges from "@/Pages/Curve/Gauges/Gauges.vue";
 import CurveRevenue from "@/Pages/Curve/Revenue/Revenue.vue";
 import CurveUtilization from "@/Pages/Curve/Utilization/Utilization.vue";

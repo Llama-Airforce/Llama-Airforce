@@ -48,26 +48,26 @@ import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
-import type { Pool } from "@/Pages/CurveMonitor/Models";
+import type { Pool } from "@/Pages/Curve/Pools/Models";
 import { getHost } from "@/Services/Host";
-import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
-import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
-import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
-import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
-import Candles from "@/Pages/CurveMonitor/Components/Candles.vue";
-import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
+import { useCurvePoolsStore } from "@/Pages/Curve/Pools/Store";
+import SearchPool from "@/Pages/Curve/Pools/Components/SearchPool.vue";
+import Balances from "@/Pages/Curve/Pools/Components/Balances.vue";
+import Reserves from "@/Pages/Curve/Pools/Components/Reserves.vue";
+import Candles from "@/Pages/Curve/Pools/Components/Candles.vue";
+import Volume from "@/Pages/Curve/Pools/Components/Volume.vue";
 import {
   ReservesService,
   CandleService,
   VolumeService,
   PoolService,
-} from "@/Pages/CurveMonitor/Services";
+} from "@/Pages/Curve/Pools/Services";
 import {
   getCandles,
   getPools,
   getReserves,
   getVolumes,
-} from "@/Pages/CurveMonitor/DataLoaders";
+} from "@/Pages/Curve/Pools/DataLoaders";
 
 const poolService = new PoolService(getHost());
 const reservesSerice = new ReservesService(getHost());
@@ -75,7 +75,7 @@ const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
 
 // Refs.
-const store = useCurveMonitorStore();
+const store = useCurvePoolsStore();
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
