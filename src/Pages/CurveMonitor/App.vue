@@ -160,11 +160,10 @@ const onSelect = (option: unknown): void => {
     }
   }
 
-  width: 30vw;
-  min-width: 768px;
+  width: 600px;
 
   @media only screen and (max-width: 1280px) {
-    width: calc(100% - 2rem);
+    width: calc(80% - 2rem);
     padding: 0 1rem;
   }
 
