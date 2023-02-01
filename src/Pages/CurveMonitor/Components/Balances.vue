@@ -79,10 +79,7 @@ const options = $computed((): unknown => {
         );
 
         const data = percentages.map(
-          (p, i) =>
-            `<div><b>${address(i).substring(0, 10)}</b>:</div><div>${formatter(
-              p
-            )}</div>`
+          (p, i) => `<div><b>0x${i}</b>:</div><div>${formatter(p)}</div>`
         );
 
         return data.join("");
@@ -96,13 +93,9 @@ const series = $computed((): Serie[] => {
 });
 
 // Methods
-const address = (i: number): string => {
-  return poolSelected?.coins?.[i] ?? "0x?";
-};
-
 const createAxisY = (i: number): unknown => {
   return {
-    seriesName: address(i),
+    seriesName: `0x${i}`,
     tickAmount: 4,
     labels: {
       formatter: (y: number): string => formatter(y),
@@ -115,7 +108,7 @@ const createAxisY = (i: number): unknown => {
 
 const createSerie = (i: number): Serie => {
   return {
-    name: address(i),
+    name: `0x${i}`,
     type: "line",
     data: reserves.map((r) => ({
       x: r.timestamp * 1000,

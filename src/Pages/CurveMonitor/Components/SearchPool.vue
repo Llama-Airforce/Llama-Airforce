@@ -6,8 +6,6 @@
     :search="true"
     :auto-complete="autoComplete"
     :options="pools"
-    :filter="filter"
-    :sort="sort"
     @update:model-value="emit('update:modelValue', $event)"
     @input="onInput"
     @select="onSelect"
@@ -19,19 +17,6 @@
       >
         <img :src="icon(props.item.name, false)" />
         <div class="label">{{ name(props.item) }}</div>
-        <div
-          v-if="props.idx === 0"
-          class="description"
-        >
-          {{ t("search-description") }}
-        </div>
-        <div class="volume">
-          <AsyncValue
-            :value="volume(props.item)"
-            :precision="2"
-            type="dollar"
-          />
-        </div>
       </div>
     </template>
   </InputText>
@@ -41,20 +26,23 @@
 import { watch } from "vue";
 import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { InputText, AsyncValue } from "@/Framework";
+import { debounce } from "lodash";
+import { InputText } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
-import { match } from "@/Pages/CurveMonitor/Util/PoolHelper";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
+import { PoolService } from "@/Pages/CurveMonitor/Services";
+import { getPools } from "@/Pages/CurveMonitor/DataLoaders";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
   modelValue: string;
+  poolService: PoolService;
 }
 
-const { modelValue } = defineProps<Props>();
+const { modelValue, poolService } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -73,13 +61,6 @@ const pools = $computed((): Pool[] => {
 });
 
 // Methods.
-const filter = (input: string, option: unknown) => match(input, option as Pool);
-const sort = (a: unknown, b: unknown) => volume(b as Pool) - volume(a as Pool);
-
-const volume = (pool: Pool): number => {
-  return pool.cumulateVolumeUsd;
-};
-
 const name = (pool: Pool): string => {
   const nameShort = shorten(pool.name);
   const nameTrimmed =
@@ -89,7 +70,10 @@ const name = (pool: Pool): string => {
 };
 
 // Events
+const getPoolsDebounced = debounce(getPools, 200, { maxWait: 1000 });
+
 const onInput = (input: string): void => {
+  void getPoolsDebounced(store, poolService, input);
   autoComplete = !!input;
 };
 
@@ -102,12 +86,10 @@ const onSelect = (option: unknown): void => {
 
 // Watches
 watch(
-  [() => store.poolsLoading, () => store.poolsLoadingError],
-  ([newLoading, newError]) => {
+  () => store.poolsLoadingError,
+  (newError) => {
     if (newError) {
       placeholder = t("search-error");
-    } else if (newLoading) {
-      placeholder = t("search-loading");
     } else {
       placeholder = t("search-placeholder");
     }
@@ -134,16 +116,6 @@ watch(
       font-size: 0.875rem;
       margin-left: 0.75rem;
     }
-
-    > .volume,
-    > .description {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
-
-    > .description {
-      color: $level5-color;
-    }
   }
 }
 </style>
@@ -152,5 +124,4 @@ watch(
 search-loading: Loading pools, please wait...
 search-placeholder: Search for Curve pools
 search-error: Failed loading Curve pools
-search-description: Cumulative Volume
 </i18n>

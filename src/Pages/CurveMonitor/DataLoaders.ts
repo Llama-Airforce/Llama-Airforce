@@ -12,15 +12,17 @@ import {
 
 export async function getPools(
   store: ReturnType<typeof useCurveMonitorStore>,
-  service: PoolService
+  service: PoolService,
+  input: string
 ) {
-  // Don't request new pools if there's already cached or loading.
-  if (store.pools.length > 0 || store.poolsLoading) {
+  // Don't request new pools if it's still loading.
+  if (store.poolsLoading) {
     return;
   }
 
   store.poolsLoading = true;
-  const resp = await minDelay(service.get());
+
+  const resp = await service.get(input);
 
   if (resp) {
     store.pools = resp;

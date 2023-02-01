@@ -13,6 +13,7 @@
         <SearchPool
           v-model="pool"
           class="search"
+          :pool-service="poolService"
           @select="onSelect"
         ></SearchPool>
       </div>
@@ -57,11 +58,6 @@
           class="bonding"
         ></Bonding>
       </div>
-
-      <Spinner
-        v-if="store.poolsLoading"
-        class="spinner"
-      ></Spinner>
     </div>
   </div>
 </template>
@@ -69,7 +65,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { $ref } from "vue/macros";
-import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { getHost } from "@/Services/Host";
@@ -90,13 +85,12 @@ import {
 } from "@/Pages/CurveMonitor/Services";
 import {
   getCandles,
-  getPools,
   getReserves,
   getTransactions,
   getVolumes,
 } from "@/Pages/CurveMonitor/DataLoaders";
 
-const poolService = new PoolService(getHost());
+const poolService = new PoolService("https://ws.llama.airforce:2053");
 const reservesSerice = new ReservesService(getHost());
 const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
@@ -111,11 +105,6 @@ const store = useCurveMonitorStore();
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  await getPools(store, poolService);
-});
-
 // Events
 const onSelect = (option: unknown): void => {
   const poolNew = option as Pool;
@@ -128,6 +117,11 @@ const onSelect = (option: unknown): void => {
   void getVolumes(store, volumeService, poolNew);
   void getTransactions(store, transactionService, poolNew);
 };
+
+// Hooks
+onMounted(() => {
+  poolService.connect();
+});
 </script>
 
 <style lang="scss" scoped>

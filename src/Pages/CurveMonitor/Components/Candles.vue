@@ -32,7 +32,6 @@ import {
 } from "lightweight-charts";
 import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
-import { WEthAddress } from "@/Util/Addresses";
 import type { Pool, Candle } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
@@ -156,10 +155,7 @@ const createChart = (newCandles: Candle[], newInvert: boolean): void => {
     return;
   }
 
-  // Make price ETH/X if the first coin is WETH.
-  let invertMultiplier =
-    poolSelected.coins[0].toLocaleLowerCase() === WEthAddress ? -1 : 1;
-  invertMultiplier = invertMultiplier * (newInvert ? -1 : 1);
+  const invertMultiplier = newInvert ? -1 : 1;
 
   const newCandleSeries: CandlestickData[] = chain(newCandles)
     .map((c) => ({
