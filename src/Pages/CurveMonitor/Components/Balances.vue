@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import type { Pool, Reserves } from "@/Pages/CurveMonitor/Models";
+import type { Reserves } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 const { t } = useI18n();
@@ -25,24 +25,15 @@ type Serie = {
   data: { x: number; y: number }[];
 };
 
-// Props
-interface Props {
-  poolSelected: Pool | null;
-}
-
-const { poolSelected } = defineProps<Props>();
-
 // Refs
 const store = useCurveMonitorStore();
 
 const reserves = $computed((): Reserves[] => {
-  return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
+  return store.reserves;
 });
 
 const numCoins = $computed((): number => {
-  return poolSelected
-    ? store.reserves[poolSelected.id]?.[0]?.reservesUSD?.length
-    : 0;
+  return store.reserves[0]?.reservesUSD?.length ?? 0;
 });
 
 const options = $computed((): unknown => {

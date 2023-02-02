@@ -22,40 +22,12 @@
         v-if="poolSelected"
         class="data"
       >
-        <Transactions
-          v-if="poolSelected"
-          class="transactions"
-          :pool-selected="poolSelected"
-        ></Transactions>
-
-        <Candles
-          v-if="poolSelected"
-          class="candles"
-          :pool-selected="poolSelected"
-        ></Candles>
-
-        <Reserves
-          v-if="poolSelected"
-          class="reserves"
-          :pool-selected="poolSelected"
-        ></Reserves>
-
-        <Volume
-          v-if="poolSelected"
-          class="volumes"
-          :pool-selected="poolSelected"
-        ></Volume>
-
-        <Balances
-          v-if="poolSelected"
-          class="balances"
-          :pool-selected="poolSelected"
-        ></Balances>
-
-        <Bonding
-          v-if="poolSelected"
-          class="bonding"
-        ></Bonding>
+        <Transactions class="transactions"></Transactions>
+        <Candles class="candles"></Candles>
+        <Reserves class="reserves"></Reserves>
+        <Volume class="volumes"></Volume>
+        <Balances class="balances"></Balances>
+        <Bonding class="bonding"></Bonding>
       </div>
     </div>
   </div>
@@ -121,7 +93,7 @@ const onSelect = (option: unknown): void => {
     "https://ws.llama.airforce:2053",
     "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
   );
-  void getTransactions(store, transactionService, poolNew);
+  void getTransactions(store, transactionService);
 };
 
 // Hooks

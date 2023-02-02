@@ -150,7 +150,7 @@ import {
   TabItem,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import type { Pool, Transaction } from "@/Pages/CurveMonitor/Models";
+import type { Transaction } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import {
   isDeposit,
@@ -161,13 +161,6 @@ import {
 } from "@/Pages/CurveMonitor/Models/Transaction";
 
 const { t } = useI18n();
-
-// Props
-interface Props {
-  poolSelected: Pool | null;
-}
-
-const { poolSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurveMonitorStore();
@@ -182,10 +175,8 @@ type Round = {
   value: number;
 };
 
-const transactions: Transaction[] = $computed(() => {
-  const txs = poolSelected ? store.transactions[poolSelected.id] ?? [] : [];
-
-  return chain(txs)
+const transactions: Transaction[] = $computed(() =>
+  chain(store.transactions)
     .filter((tx) => types.includes(tx.type))
     .filter((tx) => {
       const terms = search.toLocaleLowerCase().split(" ");
@@ -200,8 +191,8 @@ const transactions: Transaction[] = $computed(() => {
       );
     })
     .reverse() // Server gives us the data in order already, just reversed.
-    .value();
-});
+    .value()
+);
 
 const transactionsPage = $computed(() =>
   chain(transactions)

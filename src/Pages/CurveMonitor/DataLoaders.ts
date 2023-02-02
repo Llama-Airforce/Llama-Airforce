@@ -32,7 +32,7 @@ export async function getReserves(
     const reserves = await service.get(pool);
 
     if (reserves) {
-      store.setReserves(pool.id, reserves);
+      store.reserves = reserves;
     }
   } catch {
     store.poolsLoadingError = true;
@@ -48,7 +48,7 @@ export async function getCandles(
     const candles = await service.get(pool);
 
     if (candles) {
-      store.setCandles(pool.id, candles);
+      store.candles = candles;
     }
   } catch {
     store.poolsLoadingError = true;
@@ -64,7 +64,7 @@ export async function getVolumes(
     const volumes = await service.get(pool);
 
     if (volumes) {
-      store.setVolumes(pool.id, volumes);
+      store.volumes = volumes;
     }
   } catch {
     store.poolsLoadingError = true;
@@ -74,8 +74,7 @@ export async function getVolumes(
 let subscriptionTx: Subscription | null = null;
 export function getTransactions(
   store: ReturnType<typeof useCurveMonitorStore>,
-  service: TransactionService,
-  pool: Pool
+  service: TransactionService
 ) {
   // Unsubscribe from from existing subscriptions.
   if (subscriptionTx) {
@@ -85,7 +84,7 @@ export function getTransactions(
   try {
     subscriptionTx = service.get$.subscribe({
       next: (tx) => {
-        store.addTransaction(pool.id, tx);
+        store.addTransaction(tx);
       },
       error: (err) => console.error(err),
     });

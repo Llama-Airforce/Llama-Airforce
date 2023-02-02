@@ -32,17 +32,10 @@ import {
 } from "lightweight-charts";
 import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
-import type { Pool, Candle } from "@/Pages/CurveMonitor/Models";
+import type { Candle } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 const { t } = useI18n();
-
-// Props
-interface Props {
-  poolSelected: Pool | null;
-}
-
-const { poolSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurveMonitorStore();
@@ -56,6 +49,11 @@ const invert = $ref(false);
 let max = $ref(1);
 let min = $ref(0);
 
+const candles = $computed((): Candle[] => {
+  return store.candles;
+});
+
+// Hooks
 onMounted((): void => {
   if (!chartRef) return;
 
@@ -128,12 +126,6 @@ onMounted((): void => {
   });
 });
 
-const candles = $computed((): Candle[] => {
-  const id = poolSelected?.id;
-
-  return id ? store.candles[id] ?? [] : [];
-});
-
 // Watches
 watch(
   () => candles,
@@ -151,7 +143,7 @@ watch(
 
 // Methods
 const createChart = (newCandles: Candle[], newInvert: boolean): void => {
-  if (!chart || !candleSeries || !volumeSeries || !poolSelected) {
+  if (!chart || !candleSeries || !volumeSeries) {
     return;
   }
 

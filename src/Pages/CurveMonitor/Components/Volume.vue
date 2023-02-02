@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import type { Pool, Volume } from "@/Pages/CurveMonitor/Models";
+import type { Volume } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 type Serie = {
@@ -22,20 +22,13 @@ type Serie = {
   data: { x: number; y: number }[];
 };
 
-// Props
-interface Props {
-  poolSelected: Pool | null;
-}
-
-const { poolSelected } = defineProps<Props>();
-
 const { t } = useI18n();
 
 // Refs
 const store = useCurveMonitorStore();
 
 const volumes = $computed((): Volume[] => {
-  return poolSelected ? store.volumes[poolSelected.id] ?? [] : [];
+  return store.volumes;
 });
 
 const options = $computed((): unknown => {
@@ -112,7 +105,6 @@ const series = $computed((): Serie[] => {
 });
 
 // Methods
-
 const formatter = (x: number): string => {
   return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
