@@ -94,9 +94,9 @@ const poolService = new PoolService("https://ws.llama.airforce:2053");
 const reservesSerice = new ReservesService(getHost());
 const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
-const transactionService = new TransactionService(
+let transactionService = new TransactionService(
   "https://ws.llama.airforce:2053",
-  "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
+  "0x0"
 );
 
 // Refs.
@@ -115,6 +115,13 @@ const onSelect = (option: unknown): void => {
   void getCandles(store, candleService, poolNew);
   void getReserves(store, reservesSerice, poolNew);
   void getVolumes(store, volumeService, poolNew);
+
+  // New pool, new transaction service.
+  transactionService.close();
+  transactionService = new TransactionService(
+    "https://ws.llama.airforce:2053",
+    "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
+  );
   void getTransactions(store, transactionService, poolNew);
 };
 

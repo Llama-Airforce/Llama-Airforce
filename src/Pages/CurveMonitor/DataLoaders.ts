@@ -122,11 +122,11 @@ export function getTransactions(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: TransactionService,
   pool: Pool
-): Subscription | null {
+) {
+  // Unsubscribe from from existing subscriptions.
   if (subscriptionTx) {
-    return subscriptionTx;
+    subscriptionTx.unsubscribe();
   }
-  // TODO: unsusbscribe if different pool.
 
   // Introduce delay so the animation doesn't lag immediately.
   store.poolsLoading = true;
@@ -144,6 +144,4 @@ export function getTransactions(
   } finally {
     store.poolsLoading = false;
   }
-
-  return subscriptionTx;
 }

@@ -9,8 +9,8 @@ import {
 
 type ClientToServerEvents = Record<string, never>;
 type ServerToClientEvents = {
-  initial_all: (dto: TransactionDto) => void;
-  message: (dto: TransactionDto) => void;
+  table_all: (dto: TransactionDto) => void;
+  "Update Table-ALL": (dto: TransactionDto) => void;
 };
 
 type TransactionDto = {
@@ -75,10 +75,13 @@ export default class TransactionService {
         }
       };
 
-      this.socket.on("initial_all", onData);
-      this.socket.on("message", onData);
+      this.socket.on("table_all", onData);
+      this.socket.on("Update Table-ALL", onData);
 
-      return () => this.socket.off("message", onData);
+      return () => {
+        this.socket.off("table_all", onData);
+        this.socket.off("Update Table-ALL", onData);
+      };
     });
   }
 
