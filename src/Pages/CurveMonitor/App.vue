@@ -21,7 +21,6 @@
       <div
         v-if="poolSelected"
         class="data"
-        :class="{ loading: store.poolsLoading }"
       >
         <Transactions
           v-if="poolSelected"

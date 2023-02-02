@@ -10,7 +10,6 @@ import type {
 
 type State = {
   pools: Pool[];
-  poolsLoading: boolean;
   poolsLoadingError: boolean;
   candles: { [pool: PoolId]: Candle[] };
   reserves: { [pool: PoolId]: Reserves[] };
@@ -22,7 +21,6 @@ export const useCurveMonitorStore = defineStore({
   id: "curveMonitorStore",
   state: (): State => ({
     pools: [],
-    poolsLoading: false,
     poolsLoadingError: false,
     candles: {},
     reserves: {},
