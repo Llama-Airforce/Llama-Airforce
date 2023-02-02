@@ -5,10 +5,10 @@
         class="top"
         :class="{ hasPool: !!poolSelected }"
       >
-        <img
-          class="logo"
-          src="/headers/curve.png"
-        />
+        <div class="logo">
+          <img src="@/Assets/crv.png" />
+          <span>Curve</span>
+        </div>
 
         <SearchPool
           v-model="pool"
@@ -107,6 +107,20 @@ onMounted(() => {
 
 @include dashboard("curve-monitor");
 
+@keyframes pulse {
+  0% {
+    transform: scale(0.94);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.94);
+  }
+}
+
 .curve-monitor {
   .dashboard {
     @media only screen and (max-width: 1280px) {
@@ -118,18 +132,34 @@ onMounted(() => {
 .top {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 8rem;
   justify-self: center;
 
   &:not(.hasPool) {
+    .logo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+
+      img {
+        height: 128px;
+        object-fit: contain;
+        justify-self: end;
+        margin-right: 3rem;
+
+        transform: scale(1);
+        animation: pulse 2s infinite;
+      }
+
+      span {
+        font-size: 3rem;
+      }
+    }
+
     position: absolute;
     top: 30%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-
-    .logo {
-      display: flex;
-    }
   }
 
   width: 600px;
@@ -137,6 +167,7 @@ onMounted(() => {
   @media only screen and (max-width: 1280px) {
     width: calc(80% - 2rem);
     padding: 0 1rem;
+    gap: 10rem;
   }
 
   .logo {
