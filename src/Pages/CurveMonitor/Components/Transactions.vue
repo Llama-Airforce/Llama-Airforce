@@ -125,8 +125,7 @@
       </div>
 
       <div>
-        {{ new Date(props.item.timestamp * 1000).toLocaleDateString() }}
-        {{ new Date(props.item.timestamp * 1000).toLocaleTimeString() }}
+        {{ relativeTime(props.item.timestamp) }}
       </div>
 
       <!-- <div class="sandwiched">
@@ -137,7 +136,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
+import { onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
@@ -160,6 +159,11 @@ import {
   TransactionType,
 } from "@/Pages/CurveMonitor/Models/Transaction";
 
+type Round = {
+  round: number;
+  value: number;
+};
+
 const { t } = useI18n();
 
 // Refs
@@ -170,10 +174,7 @@ const txsPerPage = 10;
 let types: TransactionType[] = $ref(["swap", "deposit", "withdraw"]);
 let page = $ref(1);
 
-type Round = {
-  round: number;
-  value: number;
-};
+let now = $ref(Date.now());
 
 const transactions: Transaction[] = $computed(() =>
   chain(store.transactions)
@@ -201,6 +202,13 @@ const transactionsPage = $computed(() =>
     .value()
 );
 
+// Hooks
+onMounted(() => {
+  setInterval(() => {
+    now = Date.now();
+  });
+});
+
 // Methods
 const getAssetsString = (tx: Transaction): string => {
   if (isSwap(tx)) {
@@ -212,6 +220,22 @@ const getAssetsString = (tx: Transaction): string => {
   }
 
   return "???";
+};
+
+// returns eg "2 minutes ago"
+const relativeTime = (unixtime: number): string => {
+  const nowUnixTime = Math.round(now / 1000);
+  const secondsPast = nowUnixTime - unixtime;
+
+  if (secondsPast < 60) {
+    return `${Math.round(secondsPast)} seconds ago`;
+  } else if (secondsPast < 60 * 60) {
+    return `${Math.round(secondsPast / 60)} minutes ago`;
+  } else if (secondsPast < 60 * 60 * 24) {
+    return `${Math.round(secondsPast / (60 * 60))} hours ago`;
+  } else {
+    return `${Math.round(secondsPast / (60 * 60 * 24))} days ago`;
+  }
 };
 
 // Events
