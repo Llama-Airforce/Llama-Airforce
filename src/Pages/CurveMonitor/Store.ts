@@ -27,6 +27,13 @@ export const useCurveMonitorStore = defineStore({
     transactions: [],
   }),
   actions: {
+    addCandle(candle: Candle) {
+      if (this.candles.length === 0) {
+        this.candles = [];
+      }
+
+      this.candles.push(candle);
+    },
     addTransaction(tx: Transaction) {
       if (this.transactions.length === 0) {
         this.transactions = [];

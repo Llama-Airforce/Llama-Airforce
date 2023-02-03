@@ -61,14 +61,12 @@ import {
   getVolumes,
 } from "@/Pages/CurveMonitor/DataLoaders";
 
-const poolService = new PoolService("https://ws.llama.airforce:2053");
+const host = "https://ws.llama.airforce:2053";
+const poolService = new PoolService(host);
 const reservesSerice = new ReservesService(getHost());
-const candleService = new CandleService(getHost());
 const volumeService = new VolumeService(getHost());
-let transactionService = new TransactionService(
-  "https://ws.llama.airforce:2053",
-  "0x0"
-);
+let candleService = new CandleService(host, "0x0");
+let transactionService = new TransactionService(host, "0x0");
 
 // Refs.
 const store = useCurveMonitorStore();
@@ -83,17 +81,28 @@ const onSelect = (option: unknown): void => {
   pool = shorten(poolNew.name);
   poolSelected = poolNew;
 
-  void getCandles(store, candleService, poolNew);
   void getReserves(store, reservesSerice, poolNew);
   void getVolumes(store, volumeService, poolNew);
+
+  // TODO: reuse same socket, connect and close that, not the service.
 
   // New pool, new transaction service.
   transactionService.close();
   transactionService = new TransactionService(
-    "https://ws.llama.airforce:2053",
+    host,
     "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
   );
   void getTransactions(store, transactionService);
+  transactionService.connect();
+
+  // New pool, new candle service.
+  candleService.close();
+  candleService = new CandleService(
+    host,
+    "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
+  );
+  void getCandles(store, candleService);
+  candleService.connect();
 };
 
 // Hooks

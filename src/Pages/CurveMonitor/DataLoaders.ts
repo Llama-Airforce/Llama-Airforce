@@ -39,18 +39,24 @@ export async function getReserves(
   }
 }
 
-export async function getCandles(
+let subCandles: Subscription | null = null;
+export function getCandles(
   store: ReturnType<typeof useCurveMonitorStore>,
-  service: CandleService,
-  pool: Pool
+  service: CandleService
 ) {
-  try {
-    const candles = await service.get(pool);
+  // Unsubscribe from from existing subscriptions.
+  if (subCandles) {
+    subCandles.unsubscribe();
+  }
 
-    if (candles) {
-      store.candles = candles;
-    }
-  } catch {
+  try {
+    subCandles = service.get$.subscribe({
+      next: (tx) => {
+        store.addCandle(tx);
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
     store.poolsLoadingError = true;
   }
 }
@@ -71,26 +77,24 @@ export async function getVolumes(
   }
 }
 
-let subscriptionTx: Subscription | null = null;
+let subTxs: Subscription | null = null;
 export function getTransactions(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: TransactionService
 ) {
   // Unsubscribe from from existing subscriptions.
-  if (subscriptionTx) {
-    subscriptionTx.unsubscribe();
+  if (subTxs) {
+    subTxs.unsubscribe();
   }
 
   try {
-    subscriptionTx = service.get$.subscribe({
+    subTxs = service.get$.subscribe({
       next: (tx) => {
         store.addTransaction(tx);
       },
       error: (err) => console.error(err),
     });
-    service.connect();
   } catch (err) {
-    console.error(err);
     store.poolsLoadingError = true;
   }
 }

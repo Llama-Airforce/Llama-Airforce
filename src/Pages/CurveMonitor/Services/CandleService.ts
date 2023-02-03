@@ -1,69 +1,77 @@
-import { paginate } from "@/Util";
-import type { Candle, Pool } from "@/Pages/CurveMonitor/Models";
-import ServiceBase from "@/Services/ServiceBase";
+import { Observable } from "rxjs";
+import { io, Socket } from "socket.io-client";
+import type { Candle } from "@/Pages/CurveMonitor/Models";
 
-const THEGRAPH_URL =
-  "https://api.thegraph.com/subgraphs/name/convex-community/volume-mainnet";
-
-type CandleGraph = {
-  timestamp: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  token0TotalAmount: string;
+type ClientToServerEvents = Record<string, never>;
+type ServerToClientEvents = {
+  price_chart: (dto: PriceDto[]) => void;
+  "Update Price-Chart": (dto: PriceDto) => void;
 };
 
-export class CandlesResponse {
-  data: {
-    candles: CandleGraph[];
-  };
-}
+type PriceDto = {
+  [unixtime: string]: number;
+};
 
-export default class CandleService extends ServiceBase {
-  public async get(pool: Pool): Promise<Candle[]> {
-    let timestampLast = 0;
+export default class TransactionService {
+  private readonly socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-    // Period 3600 = 1 hour.
-    const fs = async (_page: number, offset: number) => {
-      const query = `{
-        candles(
-          where: {
-            pool: "${pool.id}"
-            period: 3600
-            timestamp_gte: ${timestampLast}
-          }
-          first: ${offset}
-        ) {
-          timestamp
-          open
-          close
-          low
-          high
-          token0TotalAmount
+  public readonly get$: Observable<Candle>;
+
+  constructor(url: string, poolAddress: string) {
+    this.socket = io(`${url}/${poolAddress}`, {
+      autoConnect: false,
+      secure: true,
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.get$ = new Observable((subscriber) => {
+      const onData = (data: PriceDto | PriceDto[]) => {
+        const candles = Array.isArray(data)
+          ? data.map((d) => this.get(d))
+          : [this.get(data)];
+
+        for (const candle of candles) {
+          subscriber.next(candle);
         }
-      }`;
+      };
 
-      const resp = await this.fetch(THEGRAPH_URL, CandlesResponse, {
-        query,
-      }).then((candles) =>
-        candles.data.candles.map((candle) => {
-          return {
-            timestamp: parseInt(candle.timestamp, 10),
-            open: parseFloat(candle.open),
-            high: parseFloat(candle.high),
-            low: parseFloat(candle.low),
-            close: parseFloat(candle.close),
-            token0TotalAmount: parseFloat(candle.token0TotalAmount),
-          };
-        })
-      );
+      this.socket.on("price_chart", onData);
+      this.socket.on("Update Price-Chart", onData);
 
-      timestampLast = Math.max(...resp.map((c) => c.timestamp));
+      return () => {
+        this.socket.off("price_chart", onData);
+        this.socket.off("Update Price-Chart", onData);
+      };
+    });
+  }
 
-      return resp;
+  public connect() {
+    this.socket.connect();
+  }
+
+  public close() {
+    this.socket.close();
+  }
+
+  private get(price: PriceDto): Candle {
+    const key = Object.keys(price)[0];
+
+    const timestamp = parseInt(key, 10);
+    const open = price[key];
+    const high = price[key];
+    const low = price[key];
+    const close = price[key];
+    const token0TotalAmount = 0;
+
+    const candle: Candle = {
+      timestamp,
+      open,
+      high,
+      low,
+      close,
+      token0TotalAmount,
     };
 
-    return paginate(fs);
+    return candle;
   }
 }
