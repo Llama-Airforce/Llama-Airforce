@@ -1,6 +1,6 @@
 <template>
   <Card
-    class="candles"
+    class="prices"
     :title="t('title')"
   >
     <div
@@ -194,7 +194,7 @@ const formatterPrice = (x: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.candles {
+.prices {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;

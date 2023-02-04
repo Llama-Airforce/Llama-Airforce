@@ -4,7 +4,7 @@ import type { Pool } from "@/Pages/CurveMonitor/Models";
 import {
   PoolService,
   ReservesService,
-  CandleService,
+  PriceService,
   VolumeService,
   TransactionService,
 } from "@/Pages/CurveMonitor/Services";
@@ -39,18 +39,18 @@ export async function getReserves(
   }
 }
 
-let subCandles: Subscription | null = null;
-export function getCandles(
+let subPrices: Subscription | null = null;
+export function getPrices(
   store: ReturnType<typeof useCurveMonitorStore>,
-  service: CandleService
+  service: PriceService
 ) {
   // Unsubscribe from from existing subscriptions.
-  if (subCandles) {
-    subCandles.unsubscribe();
+  if (subPrices) {
+    subPrices.unsubscribe();
   }
 
   try {
-    subCandles = service.get$.subscribe({
+    subPrices = service.get$.subscribe({
       next: (tx) => {
         store.addCandle(tx);
       },

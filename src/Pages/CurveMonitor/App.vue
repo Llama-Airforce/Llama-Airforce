@@ -25,7 +25,7 @@
         class="data"
       >
         <Transactions class="transactions"></Transactions>
-        <Candles class="candles"></Candles>
+        <Prices class="prices"></Prices>
         <Reserves class="reserves"></Reserves>
         <Volume class="volumes"></Volume>
         <Balances class="balances"></Balances>
@@ -48,18 +48,18 @@ import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
-import Candles from "@/Pages/CurveMonitor/Components/Candles.vue";
+import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
 import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
 import {
   ReservesService,
-  CandleService,
+  PriceService,
   VolumeService,
   PoolService,
   TransactionService,
   StatusService,
 } from "@/Pages/CurveMonitor/Services";
 import {
-  getCandles,
+  getPrices,
   getReserves,
   getTransactions,
   getVolumes,
@@ -77,7 +77,7 @@ const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
 const reservesSerice = new ReservesService(getHost());
 const volumeService = new VolumeService(getHost());
-let candleService = new CandleService(socketPool);
+let priceService = new PriceService(socketPool);
 let transactionService = new TransactionService(socketPool);
 
 // Refs.
@@ -104,11 +104,11 @@ const onSelect = (option: unknown): void => {
 
   // New pool, new transaction service.
   transactionService = new TransactionService(socketPool);
-  candleService = new CandleService(socketPool);
+  priceService = new PriceService(socketPool);
   socketPool.connect();
 
   void getTransactions(store, transactionService);
-  void getCandles(store, candleService);
+  void getPrices(store, priceService);
 };
 
 // Hooks
@@ -221,7 +221,7 @@ onMounted(() => {
     grid-column: 1 / -1;
   }
 
-  .candles {
+  .prices {
     grid-row: 2;
     grid-column: 1 / -1;
   }
