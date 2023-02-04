@@ -193,6 +193,7 @@ onMounted(() => {
     width: calc(80% - 2rem);
     padding: 0 1rem;
     gap: 10rem;
+    align-self: center;
   }
 
   .logo {
