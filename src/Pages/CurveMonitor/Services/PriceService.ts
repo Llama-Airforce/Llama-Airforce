@@ -1,12 +1,12 @@
 import { Observable } from "rxjs";
-import type { Candle } from "@/Pages/CurveMonitor/Models";
+import type { Price } from "@/Pages/CurveMonitor/Models";
 import type {
   PriceDto,
   SocketPool,
 } from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class TransactionService {
-  public readonly get$: Observable<Candle>;
+  public readonly get$: Observable<Price>;
 
   constructor(socket: SocketPool) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,23 +31,15 @@ export default class TransactionService {
     });
   }
 
-  private get(price: PriceDto): Candle {
+  private get(price: PriceDto): Price {
     const key = Object.keys(price)[0];
 
     const timestamp = parseInt(key, 10);
-    const open = price[key];
-    const high = price[key];
-    const low = price[key];
-    const close = price[key];
-    const token0TotalAmount = 0;
+    const value = price[key];
 
-    const candle: Candle = {
+    const candle: Price = {
       timestamp,
-      open,
-      high,
-      low,
-      close,
-      token0TotalAmount,
+      value,
     };
 
     return candle;

@@ -7,10 +7,6 @@
       ref="chartRef"
       class="chart"
     ></div>
-
-    <div class="buttons">
-      <ButtonToggle v-model="invert">{{ t("invert") }}</ButtonToggle>
-    </div>
   </Card>
 </template>
 
@@ -20,19 +16,19 @@ import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  CandlestickData,
   ColorType,
   createChart as createChartFunc,
   CrosshairMode,
-  HistogramData,
   IChartApi,
   ISeriesApi,
+  LineData,
   LineStyle,
+  LineType,
   UTCTimestamp,
 } from "lightweight-charts";
-import { Card, ButtonToggle } from "@/Framework";
+import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
-import type { Candle } from "@/Pages/CurveMonitor/Models";
+import type { Price } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 const { t } = useI18n();
@@ -42,15 +38,13 @@ const store = useCurveMonitorStore();
 
 const chartRef = $ref<HTMLElement | null>(null);
 let chart: IChartApi | null = $ref(null);
-let candleSeries: ISeriesApi<"Candlestick"> | null = $ref(null);
-let volumeSeries: ISeriesApi<"Histogram"> | null = $ref(null);
+let areaSeries: ISeriesApi<"Area"> | null = $ref(null);
 
-const invert = $ref(false);
 let max = $ref(1);
 let min = $ref(0);
 
-const candles = $computed((): Candle[] => {
-  return store.candles;
+const prices = $computed((): Price[] => {
+  return store.prices;
 });
 
 // Hooks
@@ -98,86 +92,49 @@ onMounted((): void => {
     },
   });
 
-  candleSeries = chart.addCandlestickSeries({
-    upColor: "rgb(126, 217, 87)",
-    borderUpColor: "rgb(126, 217, 87)",
-    wickUpColor: "rgb(126, 217, 87)",
-    downColor: "rgb(255, 87, 87)",
-    borderDownColor: "rgb(255, 87, 87)",
-    wickDownColor: "rgb(255, 87, 87)",
+  areaSeries = chart.addAreaSeries({
     priceFormat: {
       type: "price",
       precision: 6,
       minMove: 0.000001,
     },
-  });
-
-  volumeSeries = chart.addHistogramSeries({
-    color: "rgb(32, 129, 240)",
-    lastValueVisible: false,
-    priceFormat: {
-      type: "volume",
-    },
-    priceScaleId: "",
-    scaleMargins: {
-      top: 0.8,
-      bottom: 0,
-    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    lineColor: "rgb(32, 129, 240)",
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
   });
 });
 
 // Watches
 watch(
-  () => candles,
-  (newCandles) => {
-    createChart(newCandles, invert);
-  }
-);
-
-watch(
-  () => invert,
-  (newInvert) => {
-    createChart(candles, newInvert);
+  () => prices,
+  (newPrices) => {
+    createChart(newPrices);
   }
 );
 
 // Methods
-const createChart = (newCandles: Candle[], newInvert: boolean): void => {
-  if (!chart || !candleSeries || !volumeSeries) {
+const createChart = (newPrices: Price[]): void => {
+  if (!chart || !areaSeries) {
     return;
   }
 
-  const invertMultiplier = newInvert ? -1 : 1;
-
-  const newCandleSeries: CandlestickData[] = chain(newCandles)
+  const newLineSeries: LineData[] = chain(newPrices)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      open: Math.pow(c.open, invertMultiplier),
-      high: Math.pow(c.high, invertMultiplier),
-      low: Math.pow(c.low, invertMultiplier),
-      close: Math.pow(c.close, invertMultiplier),
+      value: c.value,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newVolumeSeries: HistogramData[] = chain(newCandles)
-    .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
-      value: c.token0TotalAmount,
-      color: "rgb(32, 129, 240)",
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
-
-  if (newCandleSeries.length > 0 && newVolumeSeries.length > 0) {
-    candleSeries.setData(newCandleSeries);
-    volumeSeries.setData(newVolumeSeries);
+  if (newLineSeries.length > 0) {
+    areaSeries.setData(newLineSeries);
     chart.timeScale().fitContent();
 
-    min = Math.min(...newCandleSeries.map((c) => c.low));
-    max = Math.max(...newCandleSeries.map((c) => c.high));
+    min = Math.min(...newLineSeries.map((c) => c.value));
+    max = Math.max(...newLineSeries.map((c) => c.value));
   }
 };
 
@@ -210,5 +167,4 @@ const formatterPrice = (x: number): string => {
 
 <i18n lang="yaml" locale="en">
 title: Price
-invert: Invert
 </i18n>

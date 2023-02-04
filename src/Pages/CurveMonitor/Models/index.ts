@@ -1,4 +1,4 @@
-export type { Candle } from "@/Pages/CurveMonitor/Models/Candle";
+export type { Price } from "@/Pages/CurveMonitor/Models/Price";
 
 export type { PoolId, Pool } from "@/Pages/CurveMonitor/Models/Pool";
 

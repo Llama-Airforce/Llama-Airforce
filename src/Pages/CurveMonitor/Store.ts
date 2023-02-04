@@ -3,14 +3,14 @@ import type {
   Pool,
   Reserves,
   Volume,
-  Candle,
+  Price,
   Transaction,
 } from "@/Pages/CurveMonitor/Models";
 
 type State = {
   pools: Pool[];
   poolsLoadingError: boolean;
-  candles: Candle[];
+  prices: Price[];
   reserves: Reserves[];
   volumes: Volume[];
   transactions: Transaction[];
@@ -21,18 +21,18 @@ export const useCurveMonitorStore = defineStore({
   state: (): State => ({
     pools: [],
     poolsLoadingError: false,
-    candles: [],
+    prices: [],
     reserves: [],
     volumes: [],
     transactions: [],
   }),
   actions: {
-    addCandle(candle: Candle) {
-      if (this.candles.length === 0) {
-        this.candles = [];
+    addPrice(price: Price) {
+      if (this.prices.length === 0) {
+        this.prices = [];
       }
 
-      this.candles.push(candle);
+      this.prices.push(price);
     },
     addTransaction(tx: Transaction) {
       if (this.transactions.length === 0) {

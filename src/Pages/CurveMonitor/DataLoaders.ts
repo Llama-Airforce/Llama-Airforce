@@ -52,7 +52,7 @@ export function getPrices(
   try {
     subPrices = service.get$.subscribe({
       next: (tx) => {
-        store.addCandle(tx);
+        store.addPrice(tx);
       },
       error: (err) => console.error(err),
     });
