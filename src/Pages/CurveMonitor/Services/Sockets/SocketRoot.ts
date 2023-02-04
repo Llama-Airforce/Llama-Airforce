@@ -1,10 +1,12 @@
 import { io, Socket } from "socket.io-client";
 
 type ClientToServerEvents = {
+  ping: () => void;
   search: (input: string) => void;
 };
 
 type ServerToClientEvents = {
+  pong: () => void;
   search_res: (dto: PoolsDto) => void;
 };
 

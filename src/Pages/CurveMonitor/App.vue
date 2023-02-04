@@ -1,6 +1,8 @@
 <template>
   <div class="curve-monitor">
     <div class="dashboard">
+      <Status :status-service="statusService"></Status>
+
       <div
         class="top"
         :class="{ hasPool: !!poolSelected }"
@@ -40,6 +42,7 @@ import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { getHost } from "@/Services/Host";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
+import Status from "@/Pages/CurveMonitor/Components/Status.vue";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
@@ -53,6 +56,7 @@ import {
   VolumeService,
   PoolService,
   TransactionService,
+  StatusService,
 } from "@/Pages/CurveMonitor/Services";
 import {
   getCandles,
@@ -69,6 +73,7 @@ const host = "https://ws.llama.airforce:2053";
 const socket = createSocketRoot(host);
 let socketPool = createSocketPool(host, "0x0");
 
+const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
 const reservesSerice = new ReservesService(getHost());
 const volumeService = new VolumeService(getHost());
@@ -136,6 +141,16 @@ onMounted(() => {
     @media only screen and (max-width: 1280px) {
       gap: 0;
     }
+  }
+}
+
+.status {
+  position: fixed;
+  top: 0.5rem;
+  right: 1rem;
+
+  @media only screen and (max-width: 1280px) {
+    position: absolute;
   }
 }
 
