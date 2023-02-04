@@ -33,6 +33,7 @@
         v-model="search"
         class="search"
         :search="true"
+        :placeholder="t('search-placeholder')"
       >
       </InputText>
     </template>
@@ -357,4 +358,5 @@ title: Transactions
 swap: Swap
 withdraw: Withdraw
 deposit: Deposit
+search-placeholder: Search for...
 </i18n>
