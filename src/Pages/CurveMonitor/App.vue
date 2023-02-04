@@ -60,13 +60,20 @@ import {
   getTransactions,
   getVolumes,
 } from "@/Pages/CurveMonitor/DataLoaders";
+import {
+  createSocketPool,
+  createSocketRoot,
+} from "@/Pages/CurveMonitor/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";
-const poolService = new PoolService(host);
+const socket = createSocketRoot(host);
+let socketPool = createSocketPool(host, "0x0");
+
+const poolService = new PoolService(socket);
 const reservesSerice = new ReservesService(getHost());
 const volumeService = new VolumeService(getHost());
-let candleService = new CandleService(host, "0x0");
-let transactionService = new TransactionService(host, "0x0");
+let candleService = new CandleService(socketPool);
+let transactionService = new TransactionService(socketPool);
 
 // Refs.
 const store = useCurveMonitorStore();
@@ -84,30 +91,24 @@ const onSelect = (option: unknown): void => {
   void getReserves(store, reservesSerice, poolNew);
   void getVolumes(store, volumeService, poolNew);
 
-  // TODO: reuse same socket, connect and close that, not the service.
+  socketPool.close();
+  socketPool = createSocketPool(
+    host,
+    "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
+  );
 
   // New pool, new transaction service.
-  transactionService.close();
-  transactionService = new TransactionService(
-    host,
-    "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
-  );
-  void getTransactions(store, transactionService);
-  transactionService.connect();
+  transactionService = new TransactionService(socketPool);
+  candleService = new CandleService(socketPool);
+  socketPool.connect();
 
-  // New pool, new candle service.
-  candleService.close();
-  candleService = new CandleService(
-    host,
-    "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
-  );
+  void getTransactions(store, transactionService);
   void getCandles(store, candleService);
-  candleService.connect();
 };
 
 // Hooks
 onMounted(() => {
-  poolService.connect();
+  socket.connect();
 });
 </script>
 

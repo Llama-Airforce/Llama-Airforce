@@ -1,34 +1,11 @@
-import { io, Socket } from "socket.io-client";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
-
-type ClientToServerEvents = {
-  search: (input: string) => void;
-};
-
-type ServerToClientEvents = {
-  search_res: (dto: PoolsDto) => void;
-};
-
-type PoolsDto = {
-  [poolAddress: string]: string;
-};
+import type { SocketRoot } from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class PoolService {
-  private readonly socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+  private readonly socket: SocketRoot;
 
-  constructor(url: string) {
-    this.socket = io(`${url}/`, {
-      autoConnect: false,
-      secure: true,
-    });
-  }
-
-  public connect() {
-    this.socket.connect();
-  }
-
-  public close() {
-    this.socket.close();
+  constructor(socket: SocketRoot) {
+    this.socket = socket;
   }
 
   public get(input: string): Promise<Pool[]> {

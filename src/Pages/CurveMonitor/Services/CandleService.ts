@@ -1,28 +1,14 @@
 import { Observable } from "rxjs";
-import { io, Socket } from "socket.io-client";
 import type { Candle } from "@/Pages/CurveMonitor/Models";
-
-type ClientToServerEvents = Record<string, never>;
-type ServerToClientEvents = {
-  price_chart: (dto: PriceDto[]) => void;
-  "Update Price-Chart": (dto: PriceDto) => void;
-};
-
-type PriceDto = {
-  [unixtime: string]: number;
-};
+import type {
+  PriceDto,
+  SocketPool,
+} from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class TransactionService {
-  private readonly socket: Socket<ServerToClientEvents, ClientToServerEvents>;
-
   public readonly get$: Observable<Candle>;
 
-  constructor(url: string, poolAddress: string) {
-    this.socket = io(`${url}/${poolAddress}`, {
-      autoConnect: false,
-      secure: true,
-    });
-
+  constructor(socket: SocketPool) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.get$ = new Observable((subscriber) => {
       const onData = (data: PriceDto | PriceDto[]) => {
@@ -35,22 +21,14 @@ export default class TransactionService {
         }
       };
 
-      this.socket.on("price_chart", onData);
-      this.socket.on("Update Price-Chart", onData);
+      socket.on("price_chart", onData);
+      socket.on("Update Price-Chart", onData);
 
       return () => {
-        this.socket.off("price_chart", onData);
-        this.socket.off("Update Price-Chart", onData);
+        socket.off("price_chart", onData);
+        socket.off("Update Price-Chart", onData);
       };
     });
-  }
-
-  public connect() {
-    this.socket.connect();
-  }
-
-  public close() {
-    this.socket.close();
   }
 
   private get(price: PriceDto): Candle {
