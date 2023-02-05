@@ -26,7 +26,7 @@
       >
         <Transactions class="transactions"></Transactions>
         <Prices class="prices"></Prices>
-        <Reserves class="reserves"></Reserves>
+        <TVL class="tvl"></TVL>
         <Volume class="volumes"></Volume>
         <Balances class="balances"></Balances>
         <Bonding class="bonding"></Bonding>
@@ -47,7 +47,7 @@ import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
-import Reserves from "@/Pages/CurveMonitor/Components/Reserves.vue";
+import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
 import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
 import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
 import {
@@ -226,7 +226,7 @@ onMounted(() => {
     grid-column: 1 / -1;
   }
 
-  .reserves {
+  .tvl {
     grid-row: 3;
     grid-column: 1;
   }

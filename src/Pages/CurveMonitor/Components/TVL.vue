@@ -115,6 +115,6 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Reserves
+title: TVL
 tvl: TVL
 </i18n>
