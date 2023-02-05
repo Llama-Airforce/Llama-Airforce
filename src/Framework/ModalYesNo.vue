@@ -94,3 +94,8 @@ const { t } = useI18n();
 yes: Yes
 no: No
 </i18n>
+
+<i18n lang="yaml" locale="zh">
+yes: 是的
+no: 不是
+</i18n>

@@ -4,6 +4,9 @@ en:
   submit: Submit
   submitting: Submitting...
 
+  # Member.vue
+  allocation: Allocation
+
   # Apy.vue
   apy-info: "APY calculation assumes weekly compounding<br />and excludes the
     following fees:"
@@ -114,8 +117,11 @@ en:
 zh:
   apy: APY
   tvl: TVL
-  submit: Submit
-  submitting: Submitting...
+  submit: 递交
+  submitting: 递交...
+
+  # Member.vue
+  allocation: 分配
 
   # Apy.vue
   apy-info: "APY计算基于按周复投的计算<br />并排除了以下费用:"
@@ -188,10 +194,9 @@ zh:
   leave-confirmation: 您确定要注销Union会员嘛?
   leave-notice: 如果您注销会员，您将无法重新加入直到本周期结束.
   rejoin: 重新加入会员
-  active-in:
-    活跃会员数量 {0}
+  active-in: 活跃会员数量 {0}
 
-    # Pounders.vue
+  # Pounders.vue
   pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
 
   # Migrations

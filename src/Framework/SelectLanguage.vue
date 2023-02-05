@@ -93,8 +93,3 @@ const onLocaleSelect = (option: unknown): void => {
 en: English
 zh: 中文
 </i18n>
-
-<i18n lang="yaml" locale="zh">
-en: English
-zh: 中文
-</i18n>

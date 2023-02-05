@@ -236,3 +236,8 @@ const onProtocolSelect = (option: unknown): void => {
 platform: Platform
 protocol: Protocol
 </i18n>
+
+<i18n lang="yaml" locale="zh">
+platform: 平台
+protocol: 协议
+</i18n>

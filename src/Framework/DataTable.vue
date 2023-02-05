@@ -453,3 +453,7 @@ const sortColumn = (index: number): void => {
 <i18n lang="yaml" locale="en">
 no-data: No data :(
 </i18n>
+
+<i18n lang="yaml" locale="zh">
+no-data: 没有数据 :(
+</i18n>
