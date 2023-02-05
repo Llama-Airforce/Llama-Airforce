@@ -24,11 +24,12 @@ import { Select } from "@/Framework";
 
 type Direction = "up" | "down";
 
-const locales = ["en"] as const;
+const locales = ["en", "zh"] as const;
 
 type Locale = typeof locales[number];
 
-const { t, locale: loc } = useI18n();
+const { t } = useI18n();
+const { locale: loc } = useI18n({ useScope: "global" });
 
 // Props
 interface Props {
@@ -77,5 +78,10 @@ const onLocaleSelect = (option: unknown): void => {
 
 <i18n lang="yaml" locale="en">
 en: English
-ja: Japanese
+zh: 中文
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+en: English
+zh: 中文
 </i18n>
