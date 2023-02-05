@@ -15,7 +15,7 @@
           @click="changeNetwork"
         ></Button>
         <span class="info">
-          You are not on the correct network; should be Ethereum
+          {{ t("incorrect-network") }}
         </span>
       </div>
 
@@ -33,7 +33,7 @@
     >
       <WalletConnectButton></WalletConnectButton>
       <span class="info">
-        Connect your wallet to see your personal earnings in each round
+        {{ t("please-connect") }}
       </span>
     </div>
   </div>
@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { watch, onMounted } from "vue";
 import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { Button } from "@/Framework";
 import {
   useWalletStore,
@@ -54,6 +55,8 @@ import {
   isMainnet,
 } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
+
+const { t } = useI18n();
 
 // Refs
 const store = useWalletStore();
@@ -161,3 +164,8 @@ const onDisconnect = async (): Promise<void> => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+incorrect-network: You are not on the correct network; should be Ethereum
+please-connect: Connect your wallet to see your personal earnings in each round
+</i18n>

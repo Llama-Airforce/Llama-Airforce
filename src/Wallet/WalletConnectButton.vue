@@ -4,11 +4,12 @@
     :primary="true"
     @click="onConnect"
   >
-    Connect Your Wallet
+    {{ t("connect-your-wallet") }}
   </Button>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import {
   useWalletStore,
   connectWallet,
@@ -16,6 +17,8 @@ import {
   isConnected,
 } from "@/Wallet";
 import { Button } from "@/Framework";
+
+const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
@@ -46,3 +49,11 @@ const onConnect = async (): Promise<void> => {
   font-size: 1rem;
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+connect-your-wallet: Connect Your Wallet
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+connect-your-wallet: 连接你的钱包
+</i18n>
