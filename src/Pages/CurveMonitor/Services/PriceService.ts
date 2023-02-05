@@ -9,7 +9,6 @@ export default class TransactionService {
   public readonly get$: Observable<Price>;
 
   constructor(socket: SocketPool) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.get$ = new Observable((subscriber) => {
       const onData = (data: PriceDto | PriceDto[]) => {
         const candles = Array.isArray(data)
