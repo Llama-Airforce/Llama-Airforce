@@ -110,3 +110,96 @@ en:
     <br />It's sitting in the old pounder now, not earning rewards!
   migrateUCrv: Hello ser, you have {0} uCRV you need to migrate!
     <br />It might still earn yield, but it will be subpar!
+
+zh:
+  apy: APY
+  tvl: TVL
+  submit: Submit
+  submitting: Submitting...
+
+  # Apy.vue
+  apy-info: "APY计算基于按周复投的计算<br />并排除了以下费用:"
+  fee-on-yield: "收益费:"
+  caller-incentive: "触发激励 (基于收益的费用):"
+  withdrawal-fee: "提款费 (基于总存款的费用):"
+
+  # Balance.vue
+  your-balance: 你的余额
+
+  # PounderDetails.vue
+  claim-first: 在提取您要求的金额之前，请先领取您的收益
+
+  # PounderInput.vue
+  balance: "余额:"
+  max: 最大
+  dollars: "美元:"
+
+  # Balance.vue
+  rewards-balance: 奖励余额 ($)
+
+  # Frozen.vue
+  frozen: 贿赂奖励正在处理中，余额暂时被冻结并显示为0，请不要担心，您的资金是安全的。
+
+  # Deadline.vue
+  membership-activation: 新会员资格将会在 {0}激活
+
+  # Delegation.vue
+  delegate: 托管
+  delegating: 正在托管...
+  delegated: 您已托管给Votium
+  not-delegated: 您尚未托管给 Votium
+  delegation-advice: 将投票权托管给Votium，既可以自动投票，又能确保您能获得最高的收益。
+
+  # Claim.vue
+  claim-notice: 您尚未领取的收益已经自动复利，您可以自由选择是否领取。
+  withdraw-as: "提款币种:"
+  withdraw-as-token: 提款为{0}
+  nothing: 没有未提取的收益
+  claim-info: 如果您修改收益结算的币种, 我们将在存款之前，帮您将
+    {0} 兑换为您的所选资产 .
+    {0} 是一种共享代币，将会保持不变. 潜在的{1}将会因自动复投而增长.
+
+  # Join.vue
+  title: 欢迎来到 Union
+  join-1: 以太坊的Gas正在不断上涨, CVX锁仓量正在不断提高。 小玩家将越来越没有能力处理从votium领取的不同种类的奖励代币。
+  join-2: union将会帮助用户领取收益，并处理为单一的资产，节省处理奖励代币的费用。
+  join-3: 加入union，我们将会帮助处理您的贿赂奖励，并复投到cvxCRV获取更多收益。
+  modal-title: Union会员
+  no-lock: 你还没有锁定任何CVX，您确定想要加入Union会员嘛？
+  join: 加入Union
+  joining: 正在加入 ...
+  already-forwarded: 已经转发给另外一个地址
+  forwarding-in-progress: 地址转发即将过期
+
+  # ModalSlippage.vue
+  price-modal-title: 价格控制
+  percentage: 百分比
+  min-amount: 最小数量
+  no-zero: 最小数量不能为0
+
+  # Locks.vue
+  nothing-locked: 你在下一个周期中没有锁定的CVX
+
+  # Membership.vue
+  member: 您是Union的会员
+  no-member: 您不是Union的会员
+  leave: 注销会员
+  leave-title: Union会员
+  leave-confirmation: 您确定要注销Union会员嘛?
+  leave-notice: 如果您注销会员，您将无法重新加入直到本周期结束.
+  rejoin: 重新加入会员
+  active-in:
+    活跃会员数量 {0}
+
+    # Pounders.vue
+  pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
+
+  # Migrations
+  migrate: 迁移
+  migrating: 迁移中...
+  withdraw: 从旧金库中提款
+  deposit: 存款到新的金库
+  migrateUBal: 您好，您有{0} uBAL 需要迁移到新金库！
+    <br />您在旧金库中无法获得收益
+  migrateUCrv: 您好，您好 {0} uCRV 需要迁移到新金库!
+    <br />您在旧金库中可以继续获得收益，但会逐步减少!
