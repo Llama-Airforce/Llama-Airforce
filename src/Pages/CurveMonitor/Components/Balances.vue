@@ -1,112 +1,162 @@
 <template>
-  <CardGraph
+  <Card
     class="balances"
     :title="t('title')"
-    :options="options"
-    :series="series"
   >
-  </CardGraph>
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
-import { round, unit, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
-import type { Reserves } from "@/Pages/CurveMonitor/Models";
+import { chain } from "lodash";
+import {
+  ColorType,
+  createChart as createChartFunc,
+  CrosshairMode,
+  IChartApi,
+  ISeriesApi,
+  LineData,
+  LineStyle,
+  LineType,
+  UTCTimestamp,
+} from "lightweight-charts";
+import { Card } from "@/Framework";
+import { round, unit } from "@/Util";
+import type { Balances } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
+import { onMounted, watch } from "vue";
 
 const { t } = useI18n();
 
-type Serie = {
-  name: string;
-  type: string;
-  data: { x: number; y: number }[];
-};
+const chartRef = $ref<HTMLElement | null>(null);
+let chart: IChartApi | null = $ref(null);
+let lineSeries: ISeriesApi<"Line">[] = $ref([]);
 
 // Refs
 const store = useCurveMonitorStore();
 
-const reserves = $computed((): Reserves[] => {
-  return store.reserves;
+const balances = $computed((): Balances[] => {
+  return store.balances;
 });
 
 const numCoins = $computed((): number => {
-  return store.reserves[0]?.reservesUSD?.length ?? 0;
+  return store.balances[0]?.balances?.length ?? 0;
 });
 
-const options = $computed((): unknown => {
-  return createChartStyles({
-    chart: {
-      id: "balances",
-      animations: {
-        enabled: false,
-      },
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: [...Array(numCoins).keys()].map((i) => createAxisY(i)),
-    dataLabels: {
-      enabled: false,
-    },
-    plotOptions: {
-      bar: {
-        distributed: false,
-        dataLabels: {
-          position: "top",
-          hideOverflowingLabels: false,
-        },
-      },
-    },
-    tooltip: {
-      followCursor: false,
-      enabled: true,
-      intersect: false,
-      custom: (x: DataPoint<Serie>) => {
-        const percentages = [...Array(numCoins).keys()].map(
-          (i) => x.w.globals.initialSeries[i].data[x.dataPointIndex].y
-        );
+// Hooks
+onMounted((): void => {
+  if (!chartRef) return;
 
-        const data = percentages.map(
-          (p, i) => `<div><b>0x${i}</b>:</div><div>${formatter(p)}</div>`
-        );
-
-        return data.join("");
+  chart = createChartFunc(chartRef, {
+    width: chartRef.clientWidth,
+    height: chartRef.clientHeight,
+    layout: {
+      background: {
+        type: ColorType.Solid,
+        color: "rgba(255, 255, 255, 0)",
       },
+      textColor: "#71717a",
+      fontFamily: "SF Mono, Consolas, monospace",
+    },
+    grid: {
+      vertLines: {
+        visible: false,
+      },
+      horzLines: {
+        color: "#35353b",
+        style: LineStyle.Solid,
+      },
+    },
+    crosshair: {
+      mode: CrosshairMode.Magnet,
+      horzLine: {
+        visible: false,
+      },
+    },
+    rightPriceScale: {
+      borderVisible: false,
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.1,
+      },
+    },
+    timeScale: {
+      borderVisible: false,
+    },
+    localization: {
+      priceFormatter: (price: number) => formatter(price),
     },
   });
 });
 
-const series = $computed((): Serie[] => {
-  return [...Array(numCoins).keys()].map((i) => createSerie(i));
-});
+// Watches
+watch(
+  () => balances,
+  (newBalances) => {
+    initCharts();
+    createChart(newBalances);
+  }
+);
 
 // Methods
-const createAxisY = (i: number): unknown => {
-  return {
-    seriesName: `0x${i}`,
-    tickAmount: 4,
-    labels: {
-      formatter: (y: number): string => formatter(y),
-    },
-    min: 0,
-    max: 100,
-    show: i === 0,
-  };
+const initCharts = (): void => {
+  if (!chart) {
+    return;
+  }
+
+  const colors = [
+    "rgb(32, 129, 240)",
+    "rgb(255, 204, 0)",
+    "rgb(126, 217, 87)",
+    "rgb(255, 87, 87)",
+  ];
+
+  lineSeries = [];
+  for (let i = 0; i < numCoins; i++) {
+    const lineSerie = chart.addLineSeries({
+      priceFormat: {
+        type: "price",
+        precision: 6,
+        minMove: 0.000001,
+      },
+      lineWidth: 2,
+      lineType: LineType.WithSteps,
+      color: colors[i],
+      lastValueVisible: false,
+      priceLineVisible: false,
+    });
+
+    lineSeries.push(lineSerie);
+  }
 };
 
-const createSerie = (i: number): Serie => {
-  return {
-    name: `0x${i}`,
-    type: "line",
-    data: reserves.map((r) => ({
-      x: r.timestamp * 1000,
-      y:
-        (r.reservesUSD[i] / r.reservesUSD.reduce((acc, x) => acc + x, 0)) * 100,
-    })),
-  };
+const createChart = (newBalances: Balances[]): void => {
+  if (!chart || lineSeries.length < 0) {
+    return;
+  }
+
+  for (let i = 0; i < numCoins; i++) {
+    const newLineSerie: LineData[] = chain(newBalances)
+      .map((b) => ({
+        time: b.timestamp as UTCTimestamp,
+        value:
+          (b.balances[i] / b.balances.reduce((acc, x) => acc + x, 0)) * 100,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+      .value();
+
+    if (newLineSerie.length > 0) {
+      lineSeries[i].setData(newLineSerie);
+    }
+  }
+
+  chart.timeScale().fitContent();
 };
 
 const formatter = (y: number): string => {
@@ -121,17 +171,11 @@ const formatter = (y: number): string => {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
+    gap: 1rem;
 
-    .apexcharts-tooltip {
-      width: auto;
-      background: rgb(30, 30, 30);
-      padding: 1rem;
-      line-height: 0.5rem;
-
-      display: grid;
-      grid-template-rows: auto auto;
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem;
+    .chart {
+      height: 400px;
+      z-index: 0;
     }
   }
 }

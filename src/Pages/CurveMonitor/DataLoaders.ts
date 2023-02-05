@@ -3,7 +3,7 @@ import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import {
   PoolService,
-  ReservesService,
+  BalanceService,
   PriceService,
   VolumeService,
   TransactionService,
@@ -23,36 +23,42 @@ export async function getPools(
   }
 }
 
-export async function getReserves(
+let balances$_: Subscription | null = null;
+export function getBalances(
   store: ReturnType<typeof useCurveMonitorStore>,
-  service: ReservesService,
-  pool: Pool
+  service: BalanceService
 ) {
-  try {
-    const reserves = await service.get(pool);
+  // Unsubscribe from from existing subscriptions.
+  if (balances$_) {
+    balances$_.unsubscribe();
+  }
 
-    if (reserves) {
-      store.reserves = reserves;
-    }
-  } catch {
+  try {
+    balances$_ = service.get$.subscribe({
+      next: (balances) => {
+        store.addBalances(balances);
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
     store.poolsLoadingError = true;
   }
 }
 
-let subPrices: Subscription | null = null;
+let prices$_: Subscription | null = null;
 export function getPrices(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: PriceService
 ) {
   // Unsubscribe from from existing subscriptions.
-  if (subPrices) {
-    subPrices.unsubscribe();
+  if (prices$_) {
+    prices$_.unsubscribe();
   }
 
   try {
-    subPrices = service.get$.subscribe({
-      next: (tx) => {
-        store.addPrice(tx);
+    prices$_ = service.get$.subscribe({
+      next: (price) => {
+        store.addPrice(price);
       },
       error: (err) => console.error(err),
     });
@@ -77,18 +83,18 @@ export async function getVolumes(
   }
 }
 
-let subTxs: Subscription | null = null;
+let txs$_: Subscription | null = null;
 export function getTransactions(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: TransactionService
 ) {
   // Unsubscribe from from existing subscriptions.
-  if (subTxs) {
-    subTxs.unsubscribe();
+  if (txs$_) {
+    txs$_.unsubscribe();
   }
 
   try {
-    subTxs = service.get$.subscribe({
+    txs$_ = service.get$.subscribe({
       next: (tx) => {
         store.addTransaction(tx);
       },

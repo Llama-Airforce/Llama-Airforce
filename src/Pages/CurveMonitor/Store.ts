@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type {
   Pool,
-  Reserves,
+  Balances,
   Volume,
   Price,
   Transaction,
@@ -11,7 +11,7 @@ type State = {
   pools: Pool[];
   poolsLoadingError: boolean;
   prices: Price[];
-  reserves: Reserves[];
+  balances: Balances[];
   volumes: Volume[];
   transactions: Transaction[];
 };
@@ -22,11 +22,18 @@ export const useCurveMonitorStore = defineStore({
     pools: [],
     poolsLoadingError: false,
     prices: [],
-    reserves: [],
+    balances: [],
     volumes: [],
     transactions: [],
   }),
   actions: {
+    addTransaction(tx: Transaction) {
+      if (this.transactions.length === 0) {
+        this.transactions = [];
+      }
+
+      this.transactions.push(tx);
+    },
     addPrice(price: Price) {
       if (this.prices.length === 0) {
         this.prices = [];
@@ -34,12 +41,12 @@ export const useCurveMonitorStore = defineStore({
 
       this.prices.push(price);
     },
-    addTransaction(tx: Transaction) {
-      if (this.transactions.length === 0) {
-        this.transactions = [];
+    addBalances(balances: Balances) {
+      if (this.balances.length === 0) {
+        this.balances = [];
       }
 
-      this.transactions.push(tx);
+      this.balances.push(balances);
     },
   },
 });

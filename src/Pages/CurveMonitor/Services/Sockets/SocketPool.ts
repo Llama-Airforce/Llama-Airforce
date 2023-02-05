@@ -4,8 +4,12 @@ type ClientToServerEvents = Record<string, never>;
 type ServerToClientEvents = {
   table_all: (dto: TransactionDto) => void;
   "Update Table-ALL": (dto: TransactionDto) => void;
+
   price_chart: (dto: PriceDto[]) => void;
   "Update Price-Chart": (dto: PriceDto) => void;
+
+  balances_chart: (dto: BalancesDto[]) => void;
+  "Update Balance-Chart": (dto: BalancesDto) => void;
 };
 
 export type TransactionDto = {
@@ -49,6 +53,10 @@ export type TransactionDtoRemove = TransactionDto & {
 
 export type PriceDto = {
   [unixtime: string]: number;
+};
+
+export type BalancesDto = {
+  [unixtime: string]: number[];
 };
 
 export type SocketPool = Socket<ServerToClientEvents, ClientToServerEvents>;

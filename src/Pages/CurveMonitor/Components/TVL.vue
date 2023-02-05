@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
-import type { Reserves } from "@/Pages/CurveMonitor/Models";
+import type { Balances } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 type Serie = { name: string; data: { x: number; y: number }[] };
@@ -24,8 +24,8 @@ const { t } = useI18n();
 // Refs
 const store = useCurveMonitorStore();
 
-const reserves = $computed((): Reserves[] => {
-  return store.reserves;
+const balances = $computed((): Balances[] => {
+  return store.balances;
 });
 
 const options = $computed((): unknown => {
@@ -77,9 +77,9 @@ const series = $computed((): Serie[] => {
   return [
     {
       name: "reserves",
-      data: reserves.map((r) => ({
+      data: balances.map((r) => ({
         x: r.timestamp * 1000,
-        y: r.reservesUSD.reduce((acc, x) => acc + x, 0),
+        y: r.balances.reduce((acc, x) => acc + x, 0),
       })),
     },
   ];

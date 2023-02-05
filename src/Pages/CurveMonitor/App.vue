@@ -51,7 +51,7 @@ import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
 import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
 import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
 import {
-  ReservesService,
+  BalanceService,
   PriceService,
   VolumeService,
   PoolService,
@@ -60,7 +60,7 @@ import {
 } from "@/Pages/CurveMonitor/Services";
 import {
   getPrices,
-  getReserves,
+  getBalances,
   getTransactions,
   getVolumes,
 } from "@/Pages/CurveMonitor/DataLoaders";
@@ -75,10 +75,10 @@ let socketPool = createSocketPool(host, "0x0");
 
 const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
-const reservesSerice = new ReservesService(getHost());
 const volumeService = new VolumeService(getHost());
 let priceService = new PriceService(socketPool);
 let transactionService = new TransactionService(socketPool);
+let balanceService = new BalanceService(socketPool);
 
 // Refs.
 const store = useCurveMonitorStore();
@@ -93,7 +93,6 @@ const onSelect = (option: unknown): void => {
   pool = shorten(poolNew.name);
   poolSelected = poolNew;
 
-  void getReserves(store, reservesSerice, poolNew);
   void getVolumes(store, volumeService, poolNew);
 
   socketPool.close();
@@ -105,10 +104,12 @@ const onSelect = (option: unknown): void => {
   // New pool, new transaction service.
   transactionService = new TransactionService(socketPool);
   priceService = new PriceService(socketPool);
+  balanceService = new BalanceService(socketPool);
   socketPool.connect();
 
   void getTransactions(store, transactionService);
   void getPrices(store, priceService);
+  void getBalances(store, balanceService);
 };
 
 // Hooks
