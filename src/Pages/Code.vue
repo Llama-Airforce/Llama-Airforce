@@ -1,29 +1,55 @@
 <template>
   <div class="contracts">
     <div class="dashboard">
-      <DataTable
-        class="datatable-repositories"
-        columns-data="repositories-columns-data"
-        :rows="repositories"
-        :columns="[t('repository'), t('description')]"
-      >
-        <template #header-title>
-          <div>{{ t("repositories") }}</div>
-        </template>
+      <div class="row">
+        <DataTable
+          class="datatable-repositories"
+          columns-data="repositories-columns-data"
+          :rows="repositories"
+          :columns="[t('repository'), t('description')]"
+        >
+          <template #header-title>
+            <div>{{ t("repositories") }}</div>
+          </template>
 
-        <template #row="props: { item: Repository }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
-            </a>
-          </div>
+          <template #row="props: { item: Repository }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
 
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </DataTable>
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+
+        <DataTable
+          class="datatable-other"
+          columns-data="other-columns-data"
+          :rows="other"
+          :columns="[t('other'), t('description')]"
+        >
+          <template #header-title>
+            <div>{{ t("other") }}</div>
+          </template>
+
+          <template #row="props: { item: Other }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
+
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+      </div>
 
       <DataTable
         v-for="(bundle, i) in bundles"
@@ -110,6 +136,12 @@ interface Bundle {
 }
 
 interface Repository {
+  name: string;
+  url: string;
+  description: string;
+}
+
+interface Other {
   name: string;
   url: string;
   description: string;
@@ -370,6 +402,14 @@ const repositories: Repository[] = [
   },
 ];
 
+const other: Other[] = [
+  {
+    name: "haowi.eth",
+    url: "https://twitter.com/HaowiWang",
+    description: "Translation: Chinese / 中文",
+  },
+];
+
 const linkContract = (contract: Contract): string => {
   switch (contract.network) {
     case "arbitrum":
@@ -398,11 +438,12 @@ const { t } = useI18n();
     flex-direction: column;
     gap: 0;
 
-    .datatable-contracts {
-      grid-column: 1;
-      grid-row: 1;
-      gap: 0;
+    .row {
+      display: flex;
+      gap: 1.5rem;
+    }
 
+    .datatable-contracts {
       ::v-deep(.contracts-columns-data) {
         display: grid;
         grid-template-columns: 3fr 4fr;
@@ -410,11 +451,20 @@ const { t } = useI18n();
     }
 
     .datatable-repositories {
-      grid-column: 1;
-      grid-row: 1;
+      width: 60%;
       margin-bottom: 1.5rem;
 
       ::v-deep(.repositories-columns-data) {
+        display: grid;
+        grid-template-columns: 2fr 6fr;
+      }
+    }
+
+    .datatable-other {
+      width: 40%;
+      margin-bottom: 1.5rem;
+
+      ::v-deep(.other-columns-data) {
         display: grid;
         grid-template-columns: 3fr 4fr;
       }
@@ -428,6 +478,7 @@ repositories: Repositories
 repository: Repository
 description: Description
 contract: Contract
+other: Other
 
 repo-laf: This website's front-end, excluding the Union
 repo-union: All deployed Union contracts and tests
