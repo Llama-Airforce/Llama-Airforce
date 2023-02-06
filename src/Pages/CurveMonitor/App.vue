@@ -213,8 +213,8 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: auto auto repeat(2, 300px);
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 300px 450px;
+  grid-template-columns: 1fr 1fr 1fr;
 
   .transactions {
     grid-row: 2;
@@ -237,13 +237,13 @@ onMounted(() => {
   }
 
   .bonding {
-    grid-row: 4;
-    grid-column: 1;
+    grid-row: 3;
+    grid-column: 3;
   }
 
   .balances {
     grid-row: 4;
-    grid-column: 2;
+    grid-column: 1 / -1;
   }
 }
 
