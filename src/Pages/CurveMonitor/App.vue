@@ -24,8 +24,8 @@
         v-if="poolSelected"
         class="data"
       >
-        <Transactions class="transactions"></Transactions>
         <Prices class="prices"></Prices>
+        <Transactions class="transactions"></Transactions>
         <TVL class="tvl"></TVL>
         <Volume class="volumes"></Volume>
         <Balances class="balances"></Balances>
@@ -217,12 +217,12 @@ onMounted(() => {
   grid-template-columns: 1fr 1fr;
 
   .transactions {
-    grid-row: 1;
+    grid-row: 2;
     grid-column: 1 / -1;
   }
 
   .prices {
-    grid-row: 2;
+    grid-row: 1;
     grid-column: 1 / -1;
   }
 
