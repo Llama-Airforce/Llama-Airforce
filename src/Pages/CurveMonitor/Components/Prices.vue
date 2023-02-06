@@ -67,8 +67,8 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: "#71717a",
-        style: LineStyle.Dashed,
+        color: "#35353b",
+        style: LineStyle.Solid,
       },
     },
     crosshair: {
