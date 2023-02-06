@@ -5,7 +5,7 @@ import type {
   SocketPool,
 } from "@/Pages/CurveMonitor/Services/Sockets";
 
-export default class TransactionService {
+export default class PriceService {
   public readonly get$: Observable<Price>;
 
   constructor(socket: SocketPool) {
