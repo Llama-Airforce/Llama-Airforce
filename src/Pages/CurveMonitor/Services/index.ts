@@ -5,3 +5,4 @@ export { default as BalanceService } from "@/Pages/CurveMonitor/Services/Balance
 export { default as VolumeService } from "@/Pages/CurveMonitor/Services/VolumeService";
 export { default as TransactionService } from "@/Pages/CurveMonitor/Services/TransactionService";
 export { default as TvlService } from "@/Pages/CurveMonitor/Services/TvlService";
+export { default as BondingService } from "@/Pages/CurveMonitor/Services/BondingService";

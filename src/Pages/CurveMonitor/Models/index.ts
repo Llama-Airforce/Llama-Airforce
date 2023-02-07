@@ -8,6 +8,8 @@ export type { Tvl } from "@/Pages/CurveMonitor/Models/Tvl";
 
 export type { Volume } from "@/Pages/CurveMonitor/Models/Volume";
 
+export type { Bonding } from "@/Pages/CurveMonitor/Models/Bonding";
+
 export type {
   TransactionType,
   Transaction,

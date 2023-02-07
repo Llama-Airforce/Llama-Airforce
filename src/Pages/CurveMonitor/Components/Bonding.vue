@@ -1,104 +1,157 @@
 <template>
-  <CardGraph
-    class="bonding"
+  <Card
+    class="bondings"
     :title="t('title')"
-    :options="options"
-    :series="series"
-  ></CardGraph>
+  >
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
-import createChartStyles from "@/Styles/ChartStyles";
-import { round, unit, type DataPoint } from "@/Util";
+import { chain } from "lodash";
+import {
+  ColorType,
+  createChart as createChartFunc,
+  CrosshairMode,
+  IChartApi,
+  ISeriesApi,
+  LineData,
+  LineStyle,
+  LineType,
+  UTCTimestamp,
+} from "lightweight-charts";
+import { Card } from "@/Framework";
+import { round, unit } from "@/Util";
+import type { Bonding } from "@/Pages/CurveMonitor/Models";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
+import { onMounted, watch } from "vue";
 
 const { t } = useI18n();
 
-/** Line Chart */
-type Serie = {
-  name: string;
-  type: string;
-  data: { x: number; y: number }[];
-};
+const chartRef = $ref<HTMLElement | null>(null);
+let chart: IChartApi | null = $ref(null);
+let lineSerie: ISeriesApi<"Line"> | null = $ref(null);
 
-// eslint-disable-next-line max-lines-per-function
-const options = $computed((): unknown => {
-  return createChartStyles({
-    chart: {
-      id: "bonding",
-      animations: {
-        enabled: false,
-      },
-    },
-    stroke: {
-      curve: "straight",
-    },
-    xaxis: {
-      type: "numeric",
-      tickAmount: 4,
-      labels: {
-        formatter: (y: number): string => formatter(y),
-      },
-      min: 0,
-    },
-    yaxis: [
-      {
-        seriesName: "bonding",
-        tickAmount: 4,
-        labels: {
-          formatter: (y: number): string => formatter(y),
-        },
-        min: 0,
-        max: 10000,
-      },
-    ],
-    plotOptions: {
-      bar: {
-        distributed: false,
-        dataLabels: {
-          position: "top",
-          hideOverflowingLabels: false,
-        },
-      },
-    },
-    tooltip: {
-      followCursor: false,
-      enabled: true,
-      intersect: false,
-      custom: (x: DataPoint<Serie>) => {
-        const bondings = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
+// Refs
+const store = useCurveMonitorStore();
 
-        const data = [
-          `<div><b>Bonding</b>:</div><div>${Math.round(bondings)}</div>`,
-        ];
+const bondings = $computed((): Bonding[] => {
+  return store.bondings;
+});
 
-        return data.join("");
+// Hooks
+onMounted((): void => {
+  if (!chartRef) return;
+
+  chart = createChartFunc(chartRef, {
+    width: chartRef.clientWidth,
+    height: chartRef.clientHeight,
+    layout: {
+      background: {
+        type: ColorType.Solid,
+        color: "rgba(255, 255, 255, 0)",
+      },
+      textColor: "#71717a",
+      fontFamily: "SF Mono, Consolas, monospace",
+    },
+    grid: {
+      vertLines: {
+        visible: false,
+      },
+      horzLines: {
+        color: "#35353b",
+        style: LineStyle.Solid,
       },
     },
-    dataLabels: {
-      enabled: false,
+    crosshair: {
+      mode: CrosshairMode.Magnet,
+      horzLine: {
+        visible: false,
+      },
+    },
+    rightPriceScale: {
+      visible: false,
+    },
+    leftPriceScale: {
+      visible: true,
+      borderVisible: false,
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.1,
+      },
+    },
+    timeScale: {
+      borderVisible: false,
+      fixLeftEdge: true,
+      fixRightEdge: true,
+      tickMarkFormatter: (time: UTCTimestamp) => time,
+    },
+    handleScale: {
+      axisPressedMouseMove: {
+        time: false,
+        price: false,
+      },
+    },
+    localization: {
+      priceFormatter: (price: number) => formatter(price),
+      timeFormatter: (time: number) => formatter(time),
     },
   });
 });
 
-const series = $computed((): Serie[] => {
-  return [
-    {
-      name: "Bonding",
-      type: "line",
-      data: [...Array(250).keys()].map((i) => {
-        return {
-          x: i + 1,
-          y: 10000 / ((i + 1) / 20),
-        };
-      }),
-    },
-  ];
-});
+// Watches
+watch(
+  () => bondings,
+  (newBondings) => {
+    initCharts();
+    createChart(newBondings);
+  }
+);
 
 // Methods
+const initCharts = (): void => {
+  if (!chart) {
+    return;
+  }
+
+  lineSerie = chart.addLineSeries({
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    color: "rgb(32, 129, 240)",
+    lastValueVisible: false,
+    priceLineVisible: false,
+  });
+};
+
+const createChart = (newBondings: Bonding[]): void => {
+  if (!chart || !lineSerie) {
+    return;
+  }
+
+  const newSerie: LineData[] = chain(newBondings)
+    .map((x) => ({
+      time: x.x as UTCTimestamp,
+      value: x.y,
+    }))
+    .value();
+
+  if (newSerie.length > 0) {
+    lineSerie.setData(newSerie);
+  }
+
+  chart.timeScale().fitContent();
+};
+
 const formatter = (x: number): string => {
   return `${round(Math.abs(x), 0, "dollar")}${unit(x, "dollar")}`;
 };
@@ -107,23 +160,15 @@ const formatter = (x: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("mev");
-
-.bonding {
+.bondings {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
+    gap: 1rem;
 
-    .apexcharts-tooltip {
-      width: auto;
-      background: rgb(30, 30, 30);
-      padding: 1rem;
-      line-height: 0.5rem;
-
-      display: grid;
-      grid-template-rows: auto;
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem;
+    .chart {
+      height: 100%;
+      z-index: 0;
     }
   }
 }

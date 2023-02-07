@@ -7,6 +7,7 @@ import {
   VolumeService,
   TransactionService,
   TvlService,
+  BondingService,
 } from "@/Pages/CurveMonitor/Services";
 
 export async function getPools(
@@ -125,6 +126,28 @@ export function getTransactions(
     txs$_ = service.get$.subscribe({
       next: (tx) => {
         store.addTransaction(tx);
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
+    store.poolsLoadingError = true;
+  }
+}
+
+let bondings$_: Subscription | null = null;
+export function getBondings(
+  store: ReturnType<typeof useCurveMonitorStore>,
+  service: BondingService
+) {
+  // Unsubscribe from from existing subscriptions.
+  if (bondings$_) {
+    bondings$_.unsubscribe();
+  }
+
+  try {
+    bondings$_ = service.get$.subscribe({
+      next: (bonding) => {
+        store.addBonding(bonding);
       },
       error: (err) => console.error(err),
     });

@@ -57,6 +57,7 @@ import {
   TransactionService,
   StatusService,
   TvlService,
+  BondingService,
 } from "@/Pages/CurveMonitor/Services";
 import {
   getPrices,
@@ -64,6 +65,7 @@ import {
   getTransactions,
   getVolumes,
   getTvl,
+  getBondings,
 } from "@/Pages/CurveMonitor/DataLoaders";
 import {
   createSocketPool,
@@ -81,6 +83,7 @@ let priceService = new PriceService(socketPool);
 let transactionService = new TransactionService(socketPool);
 let balanceService = new BalanceService(socketPool);
 let tvlService = new TvlService(socketPool);
+let bondingService = new BondingService(socketPool);
 
 // Refs.
 const store = useCurveMonitorStore();
@@ -107,6 +110,7 @@ const onSelect = (option: unknown): void => {
   balanceService = new BalanceService(socketPool);
   tvlService = new TvlService(socketPool);
   volumeService = new VolumeService(socketPool);
+  bondingService = new BondingService(socketPool);
   socketPool.connect();
 
   void getTransactions(store, transactionService);
@@ -114,6 +118,7 @@ const onSelect = (option: unknown): void => {
   void getBalances(store, balanceService);
   void getTvl(store, tvlService);
   void getVolumes(store, volumeService);
+  void getBondings(store, bondingService);
 };
 
 // Hooks
