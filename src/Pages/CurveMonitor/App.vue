@@ -224,7 +224,7 @@ onMounted(() => {
   @include dashboard-grid;
 
   grid-template-rows: auto auto 400px 450px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
 
   .transactions {
     grid-row: 2;
@@ -238,22 +238,22 @@ onMounted(() => {
 
   .tvl {
     grid-row: 3;
-    grid-column: 1;
+    grid-column: 1 / span 3;
   }
 
-  .volume {
+  .volumes {
     grid-row: 3;
-    grid-column: 2;
+    grid-column: 4 / -1;
   }
 
   .bonding {
-    grid-row: 3;
-    grid-column: 3;
+    grid-row: 4;
+    grid-column: 5 / -1;
   }
 
   .balances {
     grid-row: 4;
-    grid-column: 1 / -1;
+    grid-column: 1 / 5;
   }
 }
 

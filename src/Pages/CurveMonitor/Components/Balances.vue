@@ -174,7 +174,7 @@ const formatter = (y: number): string => {
     gap: 1rem;
 
     .chart {
-      height: 400px;
+      height: 100%;
       z-index: 0;
     }
   }
