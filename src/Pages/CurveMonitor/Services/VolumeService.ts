@@ -1,16 +1,46 @@
-import type { Volume, Pool } from "@/Pages/CurveMonitor/Models";
-import ServiceBase from "@/Services/ServiceBase";
+import { Observable } from "rxjs";
+import type { Volume } from "@/Pages/CurveMonitor/Models";
+import type {
+  VolumeDto,
+  SocketPool,
+} from "@/Pages/CurveMonitor/Services/Sockets";
 
-const ENDPOINT = "https://api-py.llama.airforce/curve/v1/pools/mainnet/volume/";
+export default class VolumeService {
+  public readonly get$: Observable<Volume>;
 
-export class PoolVolumeResponse {
-  volume: Volume[];
-}
+  constructor(socket: SocketPool) {
+    this.get$ = new Observable((subscriber) => {
+      const onData = (data: VolumeDto | VolumeDto[]) => {
+        const volumes = Array.isArray(data)
+          ? data.map((d) => this.get(d))
+          : [this.get(data)];
 
-export default class VolumeService extends ServiceBase {
-  public async get(pool: Pool): Promise<Volume[]> {
-    return this.fetch(ENDPOINT + pool.id, PoolVolumeResponse).then(
-      (resp) => resp.volume
-    );
+        for (const volume of volumes) {
+          subscriber.next(volume);
+        }
+      };
+
+      socket.on("volume_chart", onData);
+      socket.on("Update Volume-Chart", onData);
+
+      return () => {
+        socket.off("volume_chart", onData);
+        socket.off("Update Volume-Chart", onData);
+      };
+    });
+  }
+
+  private get(volume: VolumeDto): Volume {
+    const key = Object.keys(volume)[0];
+
+    const timestamp = parseInt(key, 10);
+    const value = volume[key];
+
+    const v: Volume = {
+      timestamp,
+      volume: value,
+    };
+
+    return v;
   }
 }

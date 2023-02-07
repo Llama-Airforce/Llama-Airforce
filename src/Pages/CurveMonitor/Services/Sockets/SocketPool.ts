@@ -13,6 +13,9 @@ type ServerToClientEvents = {
 
   tvl_chart: (dto: TvlDto[]) => void;
   "Update TVL-Chart": (dto: TvlDto) => void;
+
+  volume_chart: (dto: VolumeDto[]) => void;
+  "Update Volume-Chart": (dto: VolumeDto) => void;
 };
 
 export type TransactionDto = {
@@ -63,6 +66,10 @@ export type BalancesDto = {
 };
 
 export type TvlDto = {
+  [unixtime: string]: number;
+};
+
+export type VolumeDto = {
   [unixtime: string]: number;
 };
 

@@ -58,5 +58,12 @@ export const useCurveMonitorStore = defineStore({
 
       this.tvl.push(tvl);
     },
+    addVolume(volume: Volume) {
+      if (this.volumes.length === 0) {
+        this.volumes = [];
+      }
+
+      this.volumes.push(volume);
+    },
   },
 });

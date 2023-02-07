@@ -1,6 +1,5 @@
 import { Subscription } from "rxjs";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
-import type { Pool } from "@/Pages/CurveMonitor/Models";
 import {
   PoolService,
   BalanceService,
@@ -90,18 +89,24 @@ export function getPrices(
   }
 }
 
-export async function getVolumes(
+let volumes$_: Subscription | null = null;
+export function getVolumes(
   store: ReturnType<typeof useCurveMonitorStore>,
-  service: VolumeService,
-  pool: Pool
+  service: VolumeService
 ) {
-  try {
-    const volumes = await service.get(pool);
+  // Unsubscribe from from existing subscriptions.
+  if (volumes$_) {
+    volumes$_.unsubscribe();
+  }
 
-    if (volumes) {
-      store.volumes = volumes;
-    }
-  } catch {
+  try {
+    volumes$_ = service.get$.subscribe({
+      next: (volume) => {
+        store.addVolume(volume);
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
     store.poolsLoadingError = true;
   }
 }

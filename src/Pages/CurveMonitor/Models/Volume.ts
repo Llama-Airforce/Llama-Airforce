@@ -1,5 +1,4 @@
 export type Volume = {
   timestamp: number;
-  volume: number;
-  volumeUSD: number;
+  volume: number; // In dollars
 };

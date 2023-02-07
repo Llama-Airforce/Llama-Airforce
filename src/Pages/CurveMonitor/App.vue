@@ -40,7 +40,6 @@ import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
-import { getHost } from "@/Services/Host";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import Status from "@/Pages/CurveMonitor/Components/Status.vue";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
@@ -77,7 +76,7 @@ let socketPool = createSocketPool(host, "0x0");
 
 const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
-const volumeService = new VolumeService(getHost());
+let volumeService = new VolumeService(socketPool);
 let priceService = new PriceService(socketPool);
 let transactionService = new TransactionService(socketPool);
 let balanceService = new BalanceService(socketPool);
@@ -96,8 +95,6 @@ const onSelect = (option: unknown): void => {
   pool = shorten(poolNew.name);
   poolSelected = poolNew;
 
-  void getVolumes(store, volumeService, poolNew);
-
   socketPool.close();
   socketPool = createSocketPool(
     host,
@@ -109,12 +106,14 @@ const onSelect = (option: unknown): void => {
   priceService = new PriceService(socketPool);
   balanceService = new BalanceService(socketPool);
   tvlService = new TvlService(socketPool);
+  volumeService = new VolumeService(socketPool);
   socketPool.connect();
 
   void getTransactions(store, transactionService);
   void getPrices(store, priceService);
   void getBalances(store, balanceService);
   void getTvl(store, tvlService);
+  void getVolumes(store, volumeService);
 };
 
 // Hooks
