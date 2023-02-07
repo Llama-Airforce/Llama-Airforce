@@ -10,6 +10,9 @@ type ServerToClientEvents = {
 
   balances_chart: (dto: BalancesDto[]) => void;
   "Update Balance-Chart": (dto: BalancesDto) => void;
+
+  tvl_chart: (dto: TvlDto[]) => void;
+  "Update TVL-Chart": (dto: TvlDto) => void;
 };
 
 export type TransactionDto = {
@@ -57,6 +60,10 @@ export type PriceDto = {
 
 export type BalancesDto = {
   [unixtime: string]: number[];
+};
+
+export type TvlDto = {
+  [unixtime: string]: number;
 };
 
 export type SocketPool = Socket<ServerToClientEvents, ClientToServerEvents>;

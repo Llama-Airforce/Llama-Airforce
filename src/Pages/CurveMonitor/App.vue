@@ -57,12 +57,14 @@ import {
   PoolService,
   TransactionService,
   StatusService,
+  TvlService,
 } from "@/Pages/CurveMonitor/Services";
 import {
   getPrices,
   getBalances,
   getTransactions,
   getVolumes,
+  getTvl,
 } from "@/Pages/CurveMonitor/DataLoaders";
 import {
   createSocketPool,
@@ -79,6 +81,7 @@ const volumeService = new VolumeService(getHost());
 let priceService = new PriceService(socketPool);
 let transactionService = new TransactionService(socketPool);
 let balanceService = new BalanceService(socketPool);
+let tvlService = new TvlService(socketPool);
 
 // Refs.
 const store = useCurveMonitorStore();
@@ -105,11 +108,13 @@ const onSelect = (option: unknown): void => {
   transactionService = new TransactionService(socketPool);
   priceService = new PriceService(socketPool);
   balanceService = new BalanceService(socketPool);
+  tvlService = new TvlService(socketPool);
   socketPool.connect();
 
   void getTransactions(store, transactionService);
   void getPrices(store, priceService);
   void getBalances(store, balanceService);
+  void getTvl(store, tvlService);
 };
 
 // Hooks
@@ -214,7 +219,7 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: auto auto 300px 450px;
+  grid-template-rows: auto auto 400px 450px;
   grid-template-columns: 1fr 1fr 1fr;
 
   .transactions {

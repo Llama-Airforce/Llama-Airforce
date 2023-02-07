@@ -7,6 +7,7 @@ import {
   PriceService,
   VolumeService,
   TransactionService,
+  TvlService,
 } from "@/Pages/CurveMonitor/Services";
 
 export async function getPools(
@@ -37,6 +38,28 @@ export function getBalances(
     balances$_ = service.get$.subscribe({
       next: (balances) => {
         store.addBalances(balances);
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
+    store.poolsLoadingError = true;
+  }
+}
+
+let tvl$_: Subscription | null = null;
+export function getTvl(
+  store: ReturnType<typeof useCurveMonitorStore>,
+  service: TvlService
+) {
+  // Unsubscribe from from existing subscriptions.
+  if (tvl$_) {
+    tvl$_.unsubscribe();
+  }
+
+  try {
+    tvl$_ = service.get$.subscribe({
+      next: (tvl) => {
+        store.addTvl(tvl);
       },
       error: (err) => console.error(err),
     });

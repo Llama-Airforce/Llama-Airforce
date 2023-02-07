@@ -1,91 +1,147 @@
 <template>
-  <CardGraph
-    class="reserves"
+  <Card
+    class="tvl"
     :title="t('title')"
-    :options="options"
-    :series="series"
   >
-  </CardGraph>
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { $computed, $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
-import { round, unit, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
-import type { Balances } from "@/Pages/CurveMonitor/Models";
+import { chain } from "lodash";
+import {
+  ColorType,
+  createChart as createChartFunc,
+  CrosshairMode,
+  IChartApi,
+  ISeriesApi,
+  LineData,
+  LineStyle,
+  LineType,
+  UTCTimestamp,
+} from "lightweight-charts";
+import { Card } from "@/Framework";
+import { round, unit } from "@/Util";
+import type { Tvl } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
-
-type Serie = { name: string; data: { x: number; y: number }[] };
+import { onMounted, watch } from "vue";
 
 const { t } = useI18n();
+
+const chartRef = $ref<HTMLElement | null>(null);
+let chart: IChartApi | null = $ref(null);
+let areaSerie: ISeriesApi<"Area"> | null = $ref(null);
 
 // Refs
 const store = useCurveMonitorStore();
 
-const balances = $computed((): Balances[] => {
-  return store.balances;
+const tvl = $computed((): Tvl[] => {
+  return store.tvl;
 });
 
-const options = $computed((): unknown => {
-  return createChartStyles({
-    chart: {
-      id: "reserves",
-      type: "area",
-      animations: {
-        enabled: false,
-      },
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: {
-      labels: {
-        formatter: (y: number): string => formatter(y),
-      },
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        type: "vertical",
-        shadeIntensity: 0,
-        inverseColors: false,
-        opacityFrom: 0.5,
-        opacityTo: 0,
-        stops: [0, 90, 100],
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    tooltip: {
-      followCursor: false,
-      enabled: true,
-      intersect: false,
-      custom: (x: DataPoint<Serie>) => {
-        const tvl =
-          x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
+// Hooks
+onMounted((): void => {
+  if (!chartRef) return;
 
-        return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
+  chart = createChartFunc(chartRef, {
+    width: chartRef.clientWidth,
+    height: chartRef.clientHeight,
+    layout: {
+      background: {
+        type: ColorType.Solid,
+        color: "rgba(255, 255, 255, 0)",
       },
+      textColor: "#71717a",
+      fontFamily: "SF Mono, Consolas, monospace",
+    },
+    grid: {
+      vertLines: {
+        visible: false,
+      },
+      horzLines: {
+        color: "#35353b",
+        style: LineStyle.Solid,
+      },
+    },
+    crosshair: {
+      mode: CrosshairMode.Magnet,
+      horzLine: {
+        visible: false,
+      },
+    },
+    rightPriceScale: {
+      borderVisible: false,
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.1,
+      },
+    },
+    timeScale: {
+      borderVisible: false,
+    },
+    localization: {
+      priceFormatter: (price: number) => formatter(price),
     },
   });
 });
 
-const series = $computed((): Serie[] => {
-  return [
-    {
-      name: "reserves",
-      data: balances.map((r) => ({
-        x: r.timestamp * 1000,
-        y: r.balances.reduce((acc, x) => acc + x, 0),
-      })),
-    },
-  ];
-});
+// Watches
+watch(
+  () => tvl,
+  (newTvl) => {
+    initCharts();
+    createChart(newTvl);
+  }
+);
 
 // Methods
+const initCharts = (): void => {
+  if (!chart) {
+    return;
+  }
+
+  areaSerie = chart.addAreaSeries({
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    lineColor: "rgb(32, 129, 240)",
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
+    lastValueVisible: false,
+    priceLineVisible: false,
+  });
+};
+
+const createChart = (newTvl: Tvl[]): void => {
+  if (!chart || !areaSerie) {
+    return;
+  }
+
+  const newSerie: LineData[] = chain(newTvl)
+    .map((x) => ({
+      time: x.timestamp as UTCTimestamp,
+      value: x.tvl,
+    }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
+    .value();
+
+  if (newSerie.length > 0) {
+    areaSerie.setData(newSerie);
+  }
+
+  chart.timeScale().fitContent();
+};
+
 const formatter = (y: number): string => {
   return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 };
@@ -94,21 +150,15 @@ const formatter = (y: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.reserves {
+.tvl {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
+    gap: 1rem;
 
-    .apexcharts-tooltip {
-      width: auto;
-      background: rgb(30, 30, 30);
-      padding: 1rem;
-      line-height: 0.5rem;
-
-      display: grid;
-      grid-template-rows: auto;
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem;
+    .chart {
+      height: 100%;
+      z-index: 0;
     }
   }
 }
@@ -116,5 +166,4 @@ const formatter = (y: number): string => {
 
 <i18n lang="yaml" locale="en">
 title: TVL
-tvl: TVL
 </i18n>
