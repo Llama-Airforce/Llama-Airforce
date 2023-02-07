@@ -1,18 +1,12 @@
 <template>
-  <Card
-    class="volumes"
-    :title="t('title')"
-  >
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
+  <div
+    ref="chartRef"
+    class="chart"
+  ></div>
 </template>
 
 <script setup lang="ts">
 import { $computed, $ref } from "vue/macros";
-import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   ColorType,
@@ -25,13 +19,10 @@ import {
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import type { Volume } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { onMounted, watch } from "vue";
-
-const { t } = useI18n();
 
 const chartRef = $ref<HTMLElement | null>(null);
 let chart: IChartApi | null = $ref(null);
@@ -88,19 +79,22 @@ onMounted((): void => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
+
+  initChart();
+  createChart(volumes);
 });
 
 // Watches
 watch(
   () => volumes,
   (newVolumes) => {
-    initCharts();
+    initChart();
     createChart(newVolumes);
   }
 );
 
 // Methods
-const initCharts = (): void => {
+const initChart = (): void => {
   if (!chart) {
     return;
   }
@@ -150,20 +144,8 @@ const formatter = (x: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.volumes {
-  ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-
-    .chart {
-      height: 100%;
-      z-index: 0;
-    }
-  }
+.chart {
+  height: 400px;
+  z-index: 0;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Volume
-</i18n>

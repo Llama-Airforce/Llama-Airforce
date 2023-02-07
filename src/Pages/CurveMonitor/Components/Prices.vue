@@ -1,19 +1,13 @@
 <template>
-  <Card
-    class="prices"
-    :title="t('title')"
-  >
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
+  <div
+    ref="chartRef"
+    class="chart"
+  ></div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
-import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   ColorType,
@@ -26,12 +20,9 @@ import {
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import type { Price } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
-
-const { t } = useI18n();
 
 // Refs
 const store = useCurveMonitorStore();
@@ -92,6 +83,25 @@ onMounted((): void => {
     },
   });
 
+  initChart();
+  createChart(prices);
+});
+
+// Watches
+watch(
+  () => prices,
+  (newPrices) => {
+    initChart();
+    createChart(newPrices);
+  }
+);
+
+// Methods
+const initChart = (): void => {
+  if (!chart) {
+    return;
+  }
+
   areaSeries = chart.addAreaSeries({
     priceFormat: {
       type: "price",
@@ -104,17 +114,8 @@ onMounted((): void => {
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
   });
-});
+};
 
-// Watches
-watch(
-  () => prices,
-  (newPrices) => {
-    createChart(newPrices);
-  }
-);
-
-// Methods
 const createChart = (newPrices: Price[]): void => {
   if (!chart || !areaSeries) {
     return;
@@ -151,20 +152,8 @@ const formatterPrice = (x: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.prices {
-  ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-
-    .chart {
-      height: 400px;
-      z-index: 0;
-    }
-  }
+.chart {
+  height: 400px;
+  z-index: 0;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Price
-</i18n>

@@ -24,10 +24,8 @@
         v-if="poolSelected"
         class="data"
       >
-        <Prices class="prices"></Prices>
+        <Charts class="charts"></Charts>
         <Transactions class="transactions"></Transactions>
-        <TVL class="tvl"></TVL>
-        <Volume class="volumes"></Volume>
         <Balances class="balances"></Balances>
         <Bonding class="bonding"></Bonding>
       </div>
@@ -46,9 +44,7 @@ import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
-import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
-import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
-import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
+import Charts from "@/Pages/CurveMonitor/Components/Charts.vue";
 import {
   BalanceService,
   PriceService,
@@ -223,7 +219,7 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: auto auto 400px 450px;
+  grid-template-rows: auto auto 450px;
   grid-template-columns: repeat(6, 1fr);
 
   .transactions {
@@ -231,28 +227,18 @@ onMounted(() => {
     grid-column: 1 / -1;
   }
 
-  .prices {
+  .charts {
     grid-row: 1;
     grid-column: 1 / -1;
   }
 
-  .tvl {
-    grid-row: 3;
-    grid-column: 1 / span 3;
-  }
-
-  .volumes {
-    grid-row: 3;
-    grid-column: 4 / -1;
-  }
-
   .bonding {
-    grid-row: 4;
+    grid-row: 3;
     grid-column: 5 / -1;
   }
 
   .balances {
-    grid-row: 4;
+    grid-row: 3;
     grid-column: 1 / 5;
   }
 }
