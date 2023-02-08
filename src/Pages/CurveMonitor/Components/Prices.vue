@@ -113,6 +113,8 @@ const initChart = (): void => {
     lineColor: "rgb(32, 129, 240)",
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
+    lastValueVisible: false,
+    priceLineVisible: false,
   });
 };
 
