@@ -45,24 +45,8 @@ import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Charts from "@/Pages/CurveMonitor/Components/Charts.vue";
-import {
-  BalanceService,
-  PriceService,
-  VolumeService,
-  PoolService,
-  TransactionService,
-  StatusService,
-  TvlService,
-  BondingService,
-} from "@/Pages/CurveMonitor/Services";
-import {
-  getPrices,
-  getBalances,
-  getTransactions,
-  getVolumes,
-  getTvl,
-  getBondings,
-} from "@/Pages/CurveMonitor/DataLoaders";
+import { PoolService, StatusService } from "@/Pages/CurveMonitor/Services";
+import { loadPool } from "@/Pages/CurveMonitor/DataLoaders";
 import {
   createSocketPool,
   createSocketRoot,
@@ -74,12 +58,6 @@ let socketPool = createSocketPool(host, "0x0");
 
 const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
-let volumeService = new VolumeService(socketPool);
-let priceService = new PriceService(socketPool);
-let transactionService = new TransactionService(socketPool);
-let balanceService = new BalanceService(socketPool);
-let tvlService = new TvlService(socketPool);
-let bondingService = new BondingService(socketPool);
 
 // Refs.
 const store = useCurveMonitorStore();
@@ -95,26 +73,11 @@ const onSelect = (option: unknown): void => {
   poolSelected = poolNew;
 
   socketPool.close();
-  socketPool = createSocketPool(
+  socketPool = loadPool(
+    store,
     host,
     "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
   );
-
-  // New pool, new transaction service.
-  transactionService = new TransactionService(socketPool);
-  priceService = new PriceService(socketPool);
-  balanceService = new BalanceService(socketPool);
-  tvlService = new TvlService(socketPool);
-  volumeService = new VolumeService(socketPool);
-  bondingService = new BondingService(socketPool);
-  socketPool.connect();
-
-  void getTransactions(store, transactionService);
-  void getPrices(store, priceService);
-  void getBalances(store, balanceService);
-  void getTvl(store, tvlService);
-  void getVolumes(store, volumeService);
-  void getBondings(store, bondingService);
 };
 
 // Hooks

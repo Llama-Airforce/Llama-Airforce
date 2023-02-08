@@ -9,6 +9,33 @@ import {
   TvlService,
   BondingService,
 } from "@/Pages/CurveMonitor/Services";
+import { createSocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
+
+export function loadPool(
+  store: ReturnType<typeof useCurveMonitorStore>,
+  host: string,
+  pool: string
+): ReturnType<typeof createSocketPool> {
+  const socketPool = createSocketPool(host, pool);
+
+  const volumeService = new VolumeService(socketPool);
+  const priceService = new PriceService(socketPool);
+  const transactionService = new TransactionService(socketPool);
+  const balanceService = new BalanceService(socketPool);
+  const tvlService = new TvlService(socketPool);
+  const bondingService = new BondingService(socketPool);
+
+  void getTransactions(store, transactionService);
+  void getPrices(store, priceService);
+  void getBalances(store, balanceService);
+  void getTvl(store, tvlService);
+  void getVolumes(store, volumeService);
+  void getBondings(store, bondingService);
+
+  socketPool.connect();
+
+  return socketPool;
+}
 
 export async function getPools(
   store: ReturnType<typeof useCurveMonitorStore>,
@@ -25,7 +52,7 @@ export async function getPools(
 }
 
 let balances$_: Subscription | null = null;
-export function getBalances(
+function getBalances(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: BalanceService
 ) {
@@ -47,7 +74,7 @@ export function getBalances(
 }
 
 let tvl$_: Subscription | null = null;
-export function getTvl(
+function getTvl(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: TvlService
 ) {
@@ -69,7 +96,7 @@ export function getTvl(
 }
 
 let prices$_: Subscription | null = null;
-export function getPrices(
+function getPrices(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: PriceService
 ) {
@@ -91,7 +118,7 @@ export function getPrices(
 }
 
 let volumes$_: Subscription | null = null;
-export function getVolumes(
+function getVolumes(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: VolumeService
 ) {
@@ -113,7 +140,7 @@ export function getVolumes(
 }
 
 let txs$_: Subscription | null = null;
-export function getTransactions(
+function getTransactions(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: TransactionService
 ) {
@@ -135,7 +162,7 @@ export function getTransactions(
 }
 
 let bondings$_: Subscription | null = null;
-export function getBondings(
+function getBondings(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: BondingService
 ) {
