@@ -153,7 +153,7 @@ const formatterPrice = (x: number): string => {
 @import "@/Styles/Variables.scss";
 
 .chart {
-  height: 400px;
+  height: 100%;
   z-index: 0;
 }
 </style>
