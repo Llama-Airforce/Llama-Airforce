@@ -91,12 +91,7 @@ onMounted((): void => {
       fixRightEdge: true,
       tickMarkFormatter: (time: UTCTimestamp) => formatter(time),
     },
-    handleScale: {
-      axisPressedMouseMove: {
-        time: false,
-        price: false,
-      },
-    },
+    handleScale: false,
     localization: {
       priceFormatter: (price: number) => formatter(price),
       timeFormatter: (time: number) => formatter(time),
