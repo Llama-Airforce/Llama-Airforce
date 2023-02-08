@@ -219,11 +219,11 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: auto auto 450px;
+  grid-template-rows: auto 450px auto;
   grid-template-columns: repeat(6, 1fr);
 
   .transactions {
-    grid-row: 2;
+    grid-row: 3;
     grid-column: 1 / -1;
   }
 
@@ -233,12 +233,12 @@ onMounted(() => {
   }
 
   .bonding {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 5 / -1;
   }
 
   .balances {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 1 / 5;
   }
 }
