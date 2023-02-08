@@ -89,7 +89,7 @@ onMounted((): void => {
       borderVisible: false,
       fixLeftEdge: true,
       fixRightEdge: true,
-      tickMarkFormatter: (time: UTCTimestamp) => time,
+      tickMarkFormatter: (time: UTCTimestamp) => formatter(time),
     },
     handleScale: {
       axisPressedMouseMove: {
