@@ -88,6 +88,9 @@ onMounted((): void => {
     timeScale: {
       borderVisible: false,
     },
+    handleScale: {
+      mouseWheel: false,
+    },
     localization: {
       priceFormatter: (price: number) => formatter(price),
     },
