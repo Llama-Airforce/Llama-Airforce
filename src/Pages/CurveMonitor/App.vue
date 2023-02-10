@@ -24,7 +24,7 @@
         v-if="poolSelected"
         class="data"
       >
-        <Charts class="charts"></Charts>
+        <Prices class="prices"></Prices>
         <Transactions class="transactions"></Transactions>
         <Balances class="balances"></Balances>
         <TVL class="tvl"></TVL>
@@ -46,7 +46,7 @@ import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
-import Charts from "@/Pages/CurveMonitor/Components/Charts.vue";
+import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
 import { PoolService, StatusService } from "@/Pages/CurveMonitor/Services";
 import { loadPool } from "@/Pages/CurveMonitor/DataLoaders";
 import {
@@ -192,7 +192,7 @@ onMounted(() => {
     grid-column: 1 / -1;
   }
 
-  .charts {
+  .prices {
     grid-row: 1;
     grid-column: 1 / -1;
   }
