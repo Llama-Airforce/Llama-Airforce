@@ -23,6 +23,7 @@ import {
   LineData,
   LineStyle,
   LineType,
+  SeriesMarker,
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
@@ -40,8 +41,8 @@ let lineSerie: ISeriesApi<"Line"> | null = $ref(null);
 // Refs
 const store = useCurveMonitorStore();
 
-const bondings = $computed((): Bonding[] => {
-  return store.bondings;
+const bonding = $computed((): Bonding => {
+  return store.bonding;
 });
 
 // Hooks
@@ -101,10 +102,10 @@ onMounted((): void => {
 
 // Watches
 watch(
-  () => bondings,
-  (newBondings) => {
+  () => bonding,
+  (newBonding) => {
     initCharts();
-    createChart(newBondings);
+    createChart(newBonding);
   }
 );
 
@@ -128,20 +129,30 @@ const initCharts = (): void => {
   });
 };
 
-const createChart = (newBondings: Bonding[]): void => {
+const createChart = (newBonding: Bonding): void => {
   if (!chart || !lineSerie) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newBondings)
+  const newSerie: LineData[] = chain(newBonding.curve)
     .map((x) => ({
       time: x.x as UTCTimestamp,
       value: x.y,
     }))
     .value();
 
+  const markers: SeriesMarker<UTCTimestamp>[] = [
+    {
+      time: newBonding.balanceCoin1 as UTCTimestamp,
+      position: "inBar",
+      color: "rgb(255, 204, 0)",
+      shape: "circle",
+    },
+  ];
+
   if (newSerie.length > 0) {
     lineSerie.setData(newSerie);
+    lineSerie.setMarkers(markers);
   }
 
   chart.timeScale().fitContent();

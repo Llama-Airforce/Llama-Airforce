@@ -174,7 +174,7 @@ function getBondings(
   try {
     bondings$_ = service.get$.subscribe({
       next: (bonding) => {
-        store.addBonding(bonding);
+        store.bonding = bonding;
       },
       error: (err) => console.error(err),
     });

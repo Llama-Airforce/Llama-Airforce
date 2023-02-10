@@ -17,7 +17,7 @@ type State = {
   volumes: Volume[];
   transactions: Transaction[];
   tvl: Tvl[];
-  bondings: Bonding[];
+  bonding: Bonding;
 };
 
 export const useCurveMonitorStore = defineStore({
@@ -30,7 +30,11 @@ export const useCurveMonitorStore = defineStore({
     volumes: [],
     transactions: [],
     tvl: [],
-    bondings: [],
+    bonding: {
+      curve: [],
+      balanceCoin0: 0,
+      balanceCoin1: 0,
+    },
   }),
   actions: {
     addTransaction(tx: Transaction) {
@@ -67,13 +71,6 @@ export const useCurveMonitorStore = defineStore({
       }
 
       this.volumes.push(volume);
-    },
-    addBonding(bonding: Bonding) {
-      if (this.bondings.length === 0) {
-        this.bondings = [];
-      }
-
-      this.bondings.push(bonding);
     },
   },
 });

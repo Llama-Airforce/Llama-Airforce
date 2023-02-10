@@ -1,4 +1,8 @@
 export type Bonding = {
-  x: number;
-  y: number;
+  curve: {
+    x: number;
+    y: number;
+  }[];
+  balanceCoin0: number;
+  balanceCoin1: number;
 };
