@@ -27,6 +27,7 @@
         <Charts class="charts"></Charts>
         <Transactions class="transactions"></Transactions>
         <Balances class="balances"></Balances>
+        <TVL class="tvl"></TVL>
         <Bonding class="bonding"></Bonding>
       </div>
     </div>
@@ -42,6 +43,7 @@ import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import Status from "@/Pages/CurveMonitor/Components/Status.vue";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
+import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
 import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Charts from "@/Pages/CurveMonitor/Components/Charts.vue";
@@ -182,11 +184,11 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: 450px 400px auto;
+  grid-template-rows: 450px 400px 400px auto;
   grid-template-columns: repeat(6, 1fr);
 
   .transactions {
-    grid-row: 3;
+    grid-row: 4;
     grid-column: 1 / -1;
   }
 
@@ -196,13 +198,18 @@ onMounted(() => {
   }
 
   .bonding {
-    grid-row: 2;
-    grid-column: 5 / -1;
+    grid-row: 3;
+    grid-column: 4 / -1;
   }
 
   .balances {
     grid-row: 2;
-    grid-column: 1 / 5;
+    grid-column: 1 / -1;
+  }
+
+  .tvl {
+    grid-row: 3;
+    grid-column: 1 / 4;
   }
 }
 

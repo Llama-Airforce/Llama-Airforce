@@ -9,7 +9,6 @@
         @tab="tabIndex = $event.index"
       >
         <TabItem :header="t('price')"> </TabItem>
-        <TabItem :header="t('tvl')"> </TabItem>
         <TabItem :header="t('volume')"> </TabItem>
       </TabView>
     </template>
@@ -19,13 +18,8 @@
       class="prices"
     ></Prices>
 
-    <TVL
-      v-if="tabIndex === 1"
-      class="tvl"
-    ></TVL>
-
     <Volume
-      v-if="tabIndex === 2"
+      v-if="tabIndex === 1"
       class="volumes"
     ></Volume>
   </Card>
@@ -35,7 +29,6 @@
 import { $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { Card, TabView, TabItem } from "@/Framework";
-import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
 import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
 import Volume from "@/Pages/CurveMonitor/Components/Volume.vue";
 
@@ -74,6 +67,5 @@ const tabIndex = $ref(0);
 <i18n lang="yaml" locale="en">
 title: Charts
 price: Price
-tvl: TVL
 volume: Volume
 </i18n>

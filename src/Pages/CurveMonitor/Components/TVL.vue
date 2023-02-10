@@ -1,12 +1,18 @@
 <template>
-  <div
-    ref="chartRef"
-    class="chart"
-  ></div>
+  <Card
+    class="tvl"
+    :title="t('title')"
+  >
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
 </template>
 
 <script setup lang="ts">
 import { $computed, $ref } from "vue/macros";
+import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   ColorType,
@@ -19,10 +25,13 @@ import {
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
+import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import type { Tvl } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { onMounted, watch } from "vue";
+
+const { t } = useI18n();
 
 const chartRef = $ref<HTMLElement | null>(null);
 let chart: IChartApi | null = $ref(null);
@@ -144,8 +153,20 @@ const formatter = (y: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart {
-  height: 100%;
-  z-index: 0;
+.tvl {
+  ::v-deep(.card-body) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    .chart {
+      height: 100%;
+      z-index: 0;
+    }
+  }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: TVL
+</i18n>
