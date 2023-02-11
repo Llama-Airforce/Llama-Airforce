@@ -7,6 +7,7 @@ import type {
   Transaction,
   Tvl,
   Bonding,
+  Coin,
 } from "@/Pages/CurveMonitor/Models";
 
 type State = {
@@ -18,6 +19,7 @@ type State = {
   transactions: Transaction[];
   tvl: Tvl[];
   bonding: Bonding;
+  coins: Coin[];
 };
 
 export const useCurveMonitorStore = defineStore({
@@ -35,6 +37,7 @@ export const useCurveMonitorStore = defineStore({
       balanceCoin0: 0,
       balanceCoin1: 0,
     },
+    coins: [],
   }),
   actions: {
     addTransaction(tx: Transaction) {

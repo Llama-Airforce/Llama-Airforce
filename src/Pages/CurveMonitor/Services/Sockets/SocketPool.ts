@@ -18,6 +18,8 @@ type ServerToClientEvents = {
   "Update Volume-Chart": (dto: VolumeDto) => void;
 
   bonding_curve: (dto: BondingDto) => void;
+
+  "token names inside pool": (dto: NamesDto) => void;
 };
 
 export type TransactionDto = {
@@ -83,6 +85,8 @@ export type BondingDto = {
   balance0: number;
   balance1: number;
 };
+
+export type NamesDto = string[];
 
 export type SocketPool = Socket<ServerToClientEvents, ClientToServerEvents>;
 

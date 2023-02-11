@@ -8,6 +8,7 @@ import {
   TransactionService,
   TvlService,
   BondingService,
+  CoinService,
 } from "@/Pages/CurveMonitor/Services";
 import { createSocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
 
@@ -24,6 +25,7 @@ export function loadPool(
   const balanceService = new BalanceService(socketPool);
   const tvlService = new TvlService(socketPool);
   const bondingService = new BondingService(socketPool);
+  const coinService = new CoinService(socketPool);
 
   void getTransactions(store, transactionService);
   void getPrices(store, priceService);
@@ -31,6 +33,7 @@ export function loadPool(
   void getTvl(store, tvlService);
   void getVolumes(store, volumeService);
   void getBondings(store, bondingService);
+  void getCoins(store, coinService);
 
   socketPool.connect();
 
@@ -175,6 +178,28 @@ function getBondings(
     bondings$_ = service.get$.subscribe({
       next: (bonding) => {
         store.bonding = bonding;
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
+    store.poolsLoadingError = true;
+  }
+}
+
+let coins$_: Subscription | null = null;
+function getCoins(
+  store: ReturnType<typeof useCurveMonitorStore>,
+  service: CoinService
+) {
+  // Unsubscribe from from existing subscriptions.
+  if (coins$_) {
+    coins$_.unsubscribe();
+  }
+
+  try {
+    coins$_ = service.get$.subscribe({
+      next: (coins) => {
+        store.coins = coins;
       },
       error: (err) => console.error(err),
     });
