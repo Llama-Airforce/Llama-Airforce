@@ -31,6 +31,8 @@ import type { Balances } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { onMounted, watch } from "vue";
 
+type Mode = "percentage" | "absolute";
+
 const { t } = useI18n();
 
 const chartRef = $ref<HTMLElement | null>(null);
@@ -39,6 +41,7 @@ let lineSeries: ISeriesApi<"Line">[] = $ref([]);
 
 // Refs
 const store = useCurveMonitorStore();
+const mode: Mode = $ref("absolute");
 
 const balances = $computed((): Balances[] => {
   return store.balances;
@@ -92,7 +95,10 @@ onMounted((): void => {
       mouseWheel: false,
     },
     localization: {
-      priceFormatter: (price: number) => formatter(price),
+      priceFormatter:
+        mode === "absolute"
+          ? (price: number) => formatterAbsolute(price)
+          : (price: number) => formatterPercentage(price),
     },
   });
 });
@@ -148,7 +154,9 @@ const createChart = (newBalances: Balances[]): void => {
       .map((b) => ({
         time: b.timestamp as UTCTimestamp,
         value:
-          (b.balances[i] / b.balances.reduce((acc, x) => acc + x, 0)) * 100,
+          mode === "absolute"
+            ? b.balances[i]
+            : (b.balances[i] / b.balances.reduce((acc, x) => acc + x, 0)) * 100,
       }))
       .uniqWith((x, y) => x.time === y.time)
       .orderBy((c) => c.time, "asc")
@@ -162,8 +170,12 @@ const createChart = (newBalances: Balances[]): void => {
   chart.timeScale().fitContent();
 };
 
-const formatter = (y: number): string => {
+const formatterPercentage = (y: number): string => {
   return `${round(y, 2, "percentage")}${unit(y, "percentage")}`;
+};
+
+const formatterAbsolute = (y: number): string => {
+  return `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 };
 </script>
 
