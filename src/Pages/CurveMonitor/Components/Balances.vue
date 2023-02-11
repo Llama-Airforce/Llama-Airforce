@@ -17,7 +17,6 @@ import { chain } from "lodash";
 import {
   ColorType,
   createChart as createChartFunc,
-  CrosshairMode,
   IChartApi,
   ISeriesApi,
   LineData,
@@ -47,6 +46,7 @@ const balances = $computed((): Balances[] => {
   return store.balances;
 });
 
+// Using balances directly instead of coins, because coins array info may come later.
 const numCoins = $computed((): number => {
   return store.balances[0]?.balances?.length ?? 0;
 });
@@ -73,12 +73,6 @@ onMounted((): void => {
       horzLines: {
         color: "#35353b",
         style: LineStyle.Solid,
-      },
-    },
-    crosshair: {
-      mode: CrosshairMode.Magnet,
-      horzLine: {
-        visible: false,
       },
     },
     rightPriceScale: {
