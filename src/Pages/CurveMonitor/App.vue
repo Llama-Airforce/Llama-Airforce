@@ -184,7 +184,7 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: 450px 400px 400px auto;
+  grid-template-rows: 350px auto 350px auto;
   grid-template-columns: repeat(6, 1fr);
 
   .transactions {

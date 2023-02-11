@@ -7,6 +7,8 @@
       ref="chartRef"
       class="chart"
     ></div>
+
+    <Legend></Legend>
   </Card>
 </template>
 
@@ -27,6 +29,7 @@ import {
 import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import type { Balances } from "@/Pages/CurveMonitor/Models";
+import Legend from "@/Pages/CurveMonitor/Components/Legend.vue";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { onMounted, watch } from "vue";
 
@@ -183,8 +186,12 @@ const formatterAbsolute = (y: number): string => {
     gap: 1rem;
 
     .chart {
-      height: 100%;
+      height: 350px;
       z-index: 0;
+    }
+
+    > .legend {
+      justify-content: center;
     }
   }
 }
