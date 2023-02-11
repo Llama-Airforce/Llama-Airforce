@@ -17,7 +17,6 @@ import { chain } from "lodash";
 import {
   ColorType,
   createChart as createChartFunc,
-  CrosshairMode,
   IChartApi,
   ISeriesApi,
   LineData,
@@ -67,12 +66,6 @@ onMounted((): void => {
       horzLines: {
         color: "#35353b",
         style: LineStyle.Solid,
-      },
-    },
-    crosshair: {
-      mode: CrosshairMode.Magnet,
-      horzLine: {
-        visible: false,
       },
     },
     rightPriceScale: {
