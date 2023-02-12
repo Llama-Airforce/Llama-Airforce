@@ -27,7 +27,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { round, unit } from "@/Util";
+import { Colors, ColorsArray, round, unit } from "@/Util";
 import type { Balances } from "@/Pages/CurveMonitor/Models";
 import Legend from "@/Pages/CurveMonitor/Components/Legend.vue";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
@@ -66,7 +66,7 @@ onMounted((): void => {
         type: ColorType.Solid,
         color: "rgba(255, 255, 255, 0)",
       },
-      textColor: "#71717a",
+      textColor: Colors.level5,
       fontFamily: "SF Mono, Consolas, monospace",
     },
     grid: {
@@ -74,7 +74,7 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: "#35353b",
+        color: Colors.level4,
         style: LineStyle.Solid,
       },
     },
@@ -115,13 +115,6 @@ const initCharts = (): void => {
     return;
   }
 
-  const colors = [
-    "rgb(32, 129, 240)",
-    "rgb(255, 204, 0)",
-    "rgb(126, 217, 87)",
-    "rgb(255, 87, 87)",
-  ];
-
   lineSeries = [];
   for (let i = 0; i < numCoins; i++) {
     const lineSerie = chart.addLineSeries({
@@ -132,7 +125,7 @@ const initCharts = (): void => {
       },
       lineWidth: 2,
       lineType: LineType.WithSteps,
-      color: colors[i],
+      color: ColorsArray[i],
       lastValueVisible: false,
       priceLineVisible: false,
     });

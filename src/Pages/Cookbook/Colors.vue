@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
 import { DataTable } from "@/Framework";
+import { Colors } from "@/Util";
 
 type Color = {
   variable: string;
@@ -36,55 +37,55 @@ type Color = {
 const colors: Color[] = [
   {
     variable: "$background-color",
-    value: "#18181b",
+    value: Colors.backgroundColor,
   },
   {
     variable: "$level1-color",
-    value: "#212124",
+    value: Colors.level1,
   },
   {
     variable: "$level2-color",
-    value: "#27272a",
+    value: Colors.level2,
   },
   {
     variable: "$level3-color",
-    value: "#303034",
+    value: Colors.level3,
   },
   {
     variable: "$level4-color",
-    value: "#35353b",
+    value: Colors.level4,
   },
   {
     variable: "$level5-color",
-    value: "#71717a",
+    value: Colors.level5,
   },
   {
     variable: "$level6-color",
-    value: "#aea8af",
+    value: Colors.level6,
   },
   {
     variable: "$text",
-    value: "#fafafa",
+    value: Colors.text,
   },
   {
     variable: "$red",
-    value: "rgb(255, 87, 87)",
+    value: Colors.red,
   },
   {
     variable: "$green",
-    value: "rgb(126, 217, 87)",
+    value: Colors.green,
   },
   {
     variable: "$blue",
-    value: "rgb(32, 129, 240)",
+    value: Colors.blue,
   },
   {
     variable: "$yellow",
-    value: "rgb(255, 204, 0)",
+    value: Colors.yellow,
   },
   {
     variable: "$purple",
-    value: "rgb(140, 82, 255)",
+    value: Colors.purple,
   },
 ];
 </script>

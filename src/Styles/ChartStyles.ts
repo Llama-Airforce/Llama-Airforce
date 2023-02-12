@@ -1,4 +1,5 @@
 import { mergeWith } from "lodash";
+import { Colors } from "@/Util/Colors";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const createDefault = (): Object => ({
@@ -6,7 +7,7 @@ const createDefault = (): Object => ({
     id: "chart",
     background: "transparant",
     fontFamily: "SF Mono, Consolas, monospace",
-    foreColor: "#71717A",
+    foreColor: Colors.level5,
     toolbar: {
       autoSelected: "zoom",
       tools: {
@@ -18,15 +19,9 @@ const createDefault = (): Object => ({
       autoScaleYaxis: true,
     },
   },
-  colors: [
-    "rgb(32, 129, 240)",
-    "rgb(255, 204, 0)",
-    "rgb(126, 217, 87)",
-    "rgb(255, 87, 87)",
-    "rgb(140, 82, 255)",
-  ],
+  colors: [Colors.blue, Colors.yellow, Colors.green, Colors.red, Colors.purple],
   grid: {
-    borderColor: "#71717A",
+    borderColor: Colors.level5,
     strokeDashArray: 4,
     padding: {
       top: 20,
@@ -42,26 +37,26 @@ const createDefault = (): Object => ({
   xaxis: {
     type: "category",
     axisBorder: {
-      color: "#71717A",
+      color: Colors.level5,
       height: 1,
     },
     axisTicks: {
-      color: "#71717A",
+      color: Colors.level5,
     },
     title: {
-      color: "#71717A",
+      color: Colors.level5,
     },
   },
   yaxis: {
     tickAmount: 4,
     axisBorder: {
-      color: "#71717A",
+      color: Colors.level5,
     },
     axisTicks: {
-      color: "#71717A",
+      color: Colors.level5,
     },
     title: {
-      color: "#71717A",
+      color: Colors.level5,
     },
   },
 });

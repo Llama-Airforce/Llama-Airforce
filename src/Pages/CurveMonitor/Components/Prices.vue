@@ -28,7 +28,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { round, unit } from "@/Util";
+import { Colors, round, unit } from "@/Util";
 import type { Price, Volume } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
@@ -65,7 +65,7 @@ onMounted((): void => {
         type: ColorType.Solid,
         color: "rgba(255, 255, 255, 0)",
       },
-      textColor: "#71717a",
+      textColor: Colors.level5,
       fontFamily: "SF Mono, Consolas, monospace",
     },
     grid: {
@@ -73,7 +73,7 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: "#35353b",
+        color: Colors.level4,
         style: LineStyle.Solid,
       },
     },
@@ -135,7 +135,7 @@ const initChart = (): void => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: "rgb(32, 129, 240)",
+    lineColor: Colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -143,7 +143,7 @@ const initChart = (): void => {
   });
 
   volumeSeries = chart.addHistogramSeries({
-    color: "rgb(255, 204, 0)",
+    color: Colors.yellow,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",
@@ -188,7 +188,7 @@ const createChartVolume = (newVolumes: Volume[]): void => {
     .map((v) => ({
       time: v.timestamp as UTCTimestamp,
       value: v.volume,
-      color: "rgb(255, 204, 0)",
+      color: Colors.yellow,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

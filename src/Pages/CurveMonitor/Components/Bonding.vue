@@ -26,7 +26,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { round, unit } from "@/Util";
+import { Colors, round, unit } from "@/Util";
 import type { Bonding } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { onMounted, watch } from "vue";
@@ -56,7 +56,7 @@ onMounted((): void => {
         type: ColorType.Solid,
         color: "rgba(255, 255, 255, 0)",
       },
-      textColor: "#71717a",
+      textColor: Colors.level5,
       fontFamily: "SF Mono, Consolas, monospace",
     },
     grid: {
@@ -64,7 +64,7 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: "#35353b",
+        color: Colors.level4,
         style: LineStyle.Solid,
       },
     },
@@ -116,7 +116,7 @@ const initCharts = (): void => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: "rgb(32, 129, 240)",
+    color: Colors.blue,
     lastValueVisible: false,
     priceLineVisible: false,
   });
@@ -138,7 +138,7 @@ const createChart = (newBonding: Bonding): void => {
     {
       time: newBonding.balanceCoin1 as UTCTimestamp,
       position: "inBar",
-      color: "rgb(255, 204, 0)",
+      color: Colors.yellow,
       shape: "circle",
     },
   ];
