@@ -152,6 +152,10 @@ const createChart = (newBonding: Bonding): void => {
 };
 
 const formatter = (x: number): string => {
+  if (x < 0) {
+    return "";
+  }
+
   return `${round(Math.abs(x), 0, "dollar")}${unit(x, "dollar")}`;
 };
 </script>
