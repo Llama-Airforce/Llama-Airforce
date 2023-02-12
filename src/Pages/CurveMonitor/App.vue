@@ -1,8 +1,6 @@
 <template>
   <div class="curve-monitor">
     <div class="dashboard">
-      <Status :status-service="statusService"></Status>
-
       <div
         class="top"
         :class="{ hasPool: !!poolSelected }"
@@ -18,6 +16,8 @@
           :pool-service="poolService"
           @select="onSelect"
         ></SearchPool>
+
+        <Status :status-service="statusService"></Status>
       </div>
 
       <div
@@ -115,23 +115,30 @@ onMounted(() => {
   }
 }
 
-.status {
-  position: fixed;
-  top: 0.5rem;
-  right: 1rem;
-
-  @media only screen and (max-width: 1280px) {
-    position: absolute;
-  }
-}
-
 .top {
-  display: flex;
-  flex-direction: column;
-  gap: 8rem;
-  justify-self: center;
-
   &:not(.hasPool) {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    gap: 8rem;
+    width: 600px;
+
+    position: absolute;
+    top: 25%;
+    left: 50%;
+
+    @media only screen and (max-width: 1280px) {
+      width: calc(80% - 2rem);
+      padding: 0 1rem;
+      gap: 10rem;
+      align-self: center;
+    }
+
+    .logo,
+    .search {
+      transform: translateY(-50%) translateX(-50%);
+    }
+
     .logo {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -152,22 +159,28 @@ onMounted(() => {
       }
     }
 
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
+    .status {
+      position: fixed;
+      top: 0.5rem;
+      right: 1rem;
+
+      @media only screen and (max-width: 1280px) {
+        position: absolute;
+        right: 50%;
+      }
+    }
   }
 
-  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 600px 1fr;
 
   @media only screen and (max-width: 1280px) {
-    width: calc(80% - 2rem);
     padding: 0 1rem;
-    gap: 10rem;
-    align-self: center;
   }
 
   .logo {
+    grid-column: 1;
+
     display: none;
     width: 100%;
     height: 38px;
@@ -175,9 +188,19 @@ onMounted(() => {
   }
 
   .search {
+    grid-column: 2;
+
     &.hasPool {
       margin-top: 0;
     }
+  }
+
+  .status {
+    grid-column: 3;
+
+    display: flex;
+    align-items: center;
+    justify-self: end;
   }
 }
 
