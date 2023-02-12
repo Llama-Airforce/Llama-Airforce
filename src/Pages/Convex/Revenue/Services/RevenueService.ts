@@ -3,10 +3,10 @@ import {HistoricalRevenue, ProtocolRevenue} from "@/Pages/Convex/Revenue/Models/
 
 
 const HISTORICAL_REVENUE_ENDPOINT =
-  "http://localhost:5001/convex/v1/platform/revenue/snapshots?groupby=m";
+  "http://api-py.llama.airforce/convex/v1/platform/revenue/snapshots?groupby=m";
 
 const TOTAL_REVENUE_ENDPOINT =
-  "http://localhost:5001/convex/v1/platform/revenue";
+  "http://api-py.llama.airforce/convex/v1/platform/revenue";
 
 
 export class HistoricalRevenueResponse {
