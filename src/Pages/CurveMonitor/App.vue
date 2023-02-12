@@ -109,9 +109,8 @@ onMounted(() => {
 
 .curve-monitor {
   .dashboard {
-    @media only screen and (max-width: 1280px) {
-      gap: 0;
-    }
+    gap: 0;
+    padding-top: 0;
   }
 }
 
@@ -124,7 +123,7 @@ onMounted(() => {
     width: 600px;
 
     position: absolute;
-    top: 25%;
+    top: 22%;
     left: 50%;
 
     @media only screen and (max-width: 1280px) {
@@ -143,15 +142,13 @@ onMounted(() => {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
+      align-self: auto;
 
       img {
         height: 128px;
         object-fit: contain;
         justify-self: end;
         margin-right: 3rem;
-
-        transform: scale(1);
-        animation: pulse 2s infinite;
       }
 
       span {
@@ -171,20 +168,40 @@ onMounted(() => {
     }
   }
 
+  background: $background-color;
+  position: sticky;
+  top: 0;
+  padding: 1.5rem 0;
+  z-index: 1;
+
   display: grid;
   grid-template-columns: 1fr 600px 1fr;
 
   @media only screen and (max-width: 1280px) {
-    padding: 0 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .logo {
     grid-column: 1;
 
-    display: none;
-    width: 100%;
-    height: 38px;
-    object-fit: none;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    gap: 1rem;
+    height: 30px;
+
+    img {
+      height: 30px;
+      object-fit: contain;
+
+      transform: scale(1);
+      animation: pulse 2s infinite;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .search {
@@ -209,6 +226,10 @@ onMounted(() => {
 
   grid-template-rows: 350px auto 350px auto;
   grid-template-columns: repeat(6, 1fr);
+
+  @media only screen and (max-width: 1280px) {
+    padding-top: 0;
+  }
 
   .transactions {
     grid-row: 4;
