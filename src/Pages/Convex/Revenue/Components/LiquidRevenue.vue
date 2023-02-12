@@ -23,18 +23,18 @@ const liquidRevenueBreakdown = $computed((): RevenueBreakdown[] => {
     "name": "CRV",
     "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.crvRevenueToCvxCrvStakersAmount) : [0]
   },
-    {
-      "name": "CVX",
-      "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.cvxRevenueToCvxCrvStakersAmount) : [0]
-    },
-    {
-      "name": "3CRV",
-      "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.threeCrvRevenueToCvxCrvStakersAmount) : [0]
-    },
-    {
-      "name": "FXS",
-      "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.fxsRevenueToCvxFxsStakersAmount) : [0]
-    }
+  {
+    "name": "CVX",
+    "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.cvxRevenueToCvxCrvStakersAmount) : [0]
+  },
+  {
+    "name": "3CRV",
+    "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.threeCrvRevenueToCvxCrvStakersAmount) : [0]
+  },
+  {
+    "name": "FXS",
+    "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.fxsRevenueToCvxFxsStakersAmount) : [0]
+  }
   ];
 });
 

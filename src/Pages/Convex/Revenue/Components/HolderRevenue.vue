@@ -23,11 +23,11 @@ const holderRevenueBreakdown = $computed((): RevenueBreakdown[] => {
     "name": "CRV",
     "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.crvRevenueToCvxStakersAmount) : [0]
   },
-    {
-      "name": "FXS",
-      "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.fxsRevenueToCvxStakersAmount) : [0]
-    },
-    {"name": "Bribes", "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.bribeRevenue) : [0]}
+  {
+    "name": "FXS",
+    "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.fxsRevenueToCvxStakersAmount) : [0]
+  },
+  {"name": "Bribes", "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.bribeRevenue) : [0]}
   ];
 });
 

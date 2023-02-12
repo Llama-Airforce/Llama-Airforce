@@ -1,7 +1,8 @@
 <template>
   <div
     class="dashboard"
-    :class="{ loading }">
+    :class="{ loading }"
+  >
     <Spinner
       v-if="loading"
       class="spinner"
@@ -30,10 +31,9 @@
         class="graph-liquid-revenue"
         :title="t('revenue-liquid')"
       ></LiquidRevenue>
-
     </div>
   </div>
-  <p/>
+  <p />
 </template>
 
 <script setup lang="ts">

@@ -23,14 +23,14 @@ const lpRevenueBreakdown = $computed((): RevenueBreakdown[] => {
     "name": "CRV",
     "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.crvRevenueToLpProvidersAmount) : [0]
   },
-    {
-      "name": "CVX",
-      "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.cvxRevenueToLpProvidersAmount) : [0]
-    },
-    {
-      "name": "FXS",
-      "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.fxsRevenueToLpProvidersAmount) : [0]
-    }
+  {
+    "name": "CVX",
+    "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.cvxRevenueToLpProvidersAmount) : [0]
+  },
+  {
+    "name": "FXS",
+    "data": store.historicalRevenue ? store.historicalRevenue.map((x) => x.fxsRevenueToLpProvidersAmount) : [0]
+  }
   ];
 });
 
