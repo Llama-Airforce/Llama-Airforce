@@ -74,12 +74,12 @@ onBeforeMount(async (): Promise<void> => {
   const totalRevenue = await protocolRevenueService.get();
 
   if (totalRevenue) {
-    store.setRevenue(totalRevenue);
+    store.revenue = totalRevenue;
   }
 
   const historicalRevenue = await historicalRevenueService.get();
   if (historicalRevenue) {
-    store.setHistoricalRevenue(historicalRevenue);
+    store.historicalRevenue = historicalRevenue;
   }
 
   loading = false;

@@ -25,11 +25,5 @@ export const useConvexStore = defineStore({
     setSnapshots(pool: Pool, snapshots: Snapshot[]) {
       this.snapshots[pool.name] = snapshots;
     },
-    setRevenue(revenue: ProtocolRevenue) {
-      this.revenue = revenue;
-    },
-    setHistoricalRevenue(revenueSnapshots: HistoricalRevenue[]) {
-      this.historicalRevenue = revenueSnapshots;
-    },
   },
 });
