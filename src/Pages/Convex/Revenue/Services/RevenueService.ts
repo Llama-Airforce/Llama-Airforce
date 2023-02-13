@@ -19,7 +19,7 @@ export class ProtocolRevenueResponse {
 }
 
 export default class ProtocolRevenueService extends ServiceBase {
-  public async get(): Promise<ProtocolRevenue> {
+  public get(): Promise<ProtocolRevenue> {
     return this.fetch(TOTAL_REVENUE_ENDPOINT, ProtocolRevenueResponse).then(
       (resp) => resp.revenue[0]
     );
@@ -27,7 +27,7 @@ export default class ProtocolRevenueService extends ServiceBase {
 }
 
 export class HistoricalRevenueService extends ServiceBase {
-  public async get(): Promise<HistoricalRevenue[]> {
+  public get(): Promise<HistoricalRevenue[]> {
     return this.fetch(
       HISTORICAL_REVENUE_ENDPOINT,
       HistoricalRevenueResponse
