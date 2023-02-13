@@ -18,29 +18,27 @@ import { useConvexStore } from "@/Pages/Convex/Store";
 // Refs
 const store = useConvexStore();
 
-const lpRevenueBreakdown = $computed((): RevenueBreakdown[] => {
-  return [
-    {
-      name: "CRV",
-      data: store.historicalRevenue.map((x) => x.crvRevenueToLpProvidersAmount),
-    },
-    {
-      name: "CVX",
-      data: store.historicalRevenue.map((x) => x.cvxRevenueToLpProvidersAmount),
-    },
-    {
-      name: "FXS",
-      data: store.historicalRevenue.map((x) => x.fxsRevenueToLpProvidersAmount),
-    },
-  ];
-});
+const lpRevenueBreakdown = $computed((): RevenueBreakdown[] => [
+  {
+    name: "CRV",
+    data: store.historicalRevenue.map((x) => x.crvRevenueToLpProvidersAmount),
+  },
+  {
+    name: "CVX",
+    data: store.historicalRevenue.map((x) => x.cvxRevenueToLpProvidersAmount),
+  },
+  {
+    name: "FXS",
+    data: store.historicalRevenue.map((x) => x.fxsRevenueToLpProvidersAmount),
+  },
+]);
 
-const categories = $computed((): Date[] => {
-  return store.historicalRevenue.map((x) => new Date(x.timestamp * 1000));
-});
+const categories = $computed((): Date[] =>
+  store.historicalRevenue.map((x) => new Date(x.timestamp * 1000))
+);
 
-const options = $computed((): unknown => {
-  return createChartStyles({
+const options = $computed((): unknown =>
+  createChartStyles({
     legend: {
       inverseOrder: true,
     },
@@ -86,11 +84,10 @@ const options = $computed((): unknown => {
     },
     colors: [Colors.blue, Colors.yellow, Colors.purple],
     labels: lpRevenueBreakdown.map((x) => x.name),
-  });
-});
+  })
+);
 
 // Methods
-const dollarFormatter = (x: number): string => {
-  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
-};
+const dollarFormatter = (x: number): string =>
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>

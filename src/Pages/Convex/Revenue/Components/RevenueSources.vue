@@ -18,23 +18,21 @@ import { useConvexStore } from "@/Pages/Convex/Store";
 // Refs
 const store = useConvexStore();
 
-const revenueBreakdown = $computed((): RevenueSource[] => {
-  return [
-    { source: "CRV", value: store.revenue.totalCrvRevenue },
-    {
-      source: "3CRV",
-      value: store.revenue.totalThreeCrvRevenueToCvxCrvStakers,
-    },
-    { source: "FXS", value: store.revenue.totalFxsRevenue },
-    {
-      source: "Bribes",
-      value: store.revenue.totalBribeRevenue,
-    },
-  ];
-});
+const revenueBreakdown = $computed((): RevenueSource[] => [
+  { source: "CRV", value: store.revenue.totalCrvRevenue },
+  {
+    source: "3CRV",
+    value: store.revenue.totalThreeCrvRevenueToCvxCrvStakers,
+  },
+  { source: "FXS", value: store.revenue.totalFxsRevenue },
+  {
+    source: "Bribes",
+    value: store.revenue.totalBribeRevenue,
+  },
+]);
 
-const options = $computed((): unknown => {
-  return createChartStyles({
+const options = $computed((): unknown =>
+  createChartStyles({
     legend: {
       inverseOrder: true,
     },
@@ -83,13 +81,12 @@ const options = $computed((): unknown => {
     },
     colors: [Colors.blue, Colors.green, Colors.purple, Colors.red],
     labels: revenueBreakdown.map((x) => x.source),
-  });
-});
+  })
+);
 
 const series = $computed(() => revenueBreakdown.map((x) => x.value));
 
 // Methods
-const dollarFormatter = (x: number): string => {
-  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
-};
+const dollarFormatter = (x: number): string =>
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>

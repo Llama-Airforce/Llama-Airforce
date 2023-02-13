@@ -73,52 +73,42 @@ const { t } = useI18n();
 // Refs
 const store = useConvexStore();
 
-const totalRevenue = $computed((): number => {
-  const rev =
+const totalRevenue = $computed(
+  (): number =>
     store.revenue.totalBribeRevenue +
     store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
     store.revenue.totalCrvRevenue +
-    store.revenue.totalFxsRevenue;
+    store.revenue.totalFxsRevenue
+);
 
-  return rev;
-});
-
-const lpRevenue = $computed((): number => {
-  const rev =
+const lpRevenue = $computed(
+  (): number =>
     store.revenue.totalCrvRevenueToLpProviders +
     store.revenue.totalFxsRevenueToLpProviders +
-    store.revenue.totalCvxRevenueToLpProviders;
+    store.revenue.totalCvxRevenueToLpProviders
+);
 
-  return rev;
-});
-
-const treasuryRevenue = $computed((): number => {
-  const rev =
+const treasuryRevenue = $computed(
+  (): number =>
     store.revenue.totalCrvRevenueToPlatform +
     store.revenue.totalFxsRevenueToPlatform +
-    store.revenue.totalFxsRevenueToCallers;
+    store.revenue.totalFxsRevenueToCallers
+);
 
-  return rev;
-});
-
-const tokenRevenue = $computed((): number => {
-  const rev =
+const tokenRevenue = $computed(
+  (): number =>
     store.revenue.totalBribeRevenue +
     store.revenue.totalCrvRevenueToCvxStakers +
-    store.revenue.totalFxsRevenueToCvxStakers;
+    store.revenue.totalFxsRevenueToCvxStakers
+);
 
-  return rev;
-});
-
-const liquidRevenue = $computed((): number => {
-  const rev =
+const liquidRevenue = $computed(
+  (): number =>
     store.revenue.totalCrvRevenueToCvxCrvStakers +
     store.revenue.totalCvxRevenueToCvxCrvStakers +
     store.revenue.totalFxsRevenueToCvxFxsStakers +
-    store.revenue.totalThreeCrvRevenueToCvxCrvStakers;
-
-  return rev;
-});
+    store.revenue.totalThreeCrvRevenueToCvxCrvStakers
+);
 </script>
 
 <style lang="scss" scoped>
