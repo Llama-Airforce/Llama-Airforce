@@ -7,6 +7,7 @@
       v-if="loading"
       class="spinner"
     ></Spinner>
+
     <div class="total-revenue-charts">
       <Summary class="summary"></Summary>
       <RevenueSources
@@ -14,6 +15,7 @@
         :title="t('revenue-breakdown')"
       ></RevenueSources>
     </div>
+
     <div class="spec-revenue-charts">
       <HistoricalRevenue
         class="graph-historical-revenue"
@@ -38,20 +40,22 @@
 
 <script setup lang="ts">
 import Summary from "@/Pages/Convex/Revenue/Components/Summary.vue";
-import {onBeforeMount, onBeforeUnmount} from "vue";
-import {getHost} from "@/Services/Host";
-import ProtocolRevenueService, {HistoricalRevenueService} from "@/Pages/Convex/Revenue/Services/RevenueService";
-import {useConvexStore} from "@/Pages/Convex/Store";
+import { onBeforeMount, onBeforeUnmount } from "vue";
+import { getHost } from "@/Services/Host";
+import ProtocolRevenueService, {
+  HistoricalRevenueService,
+} from "@/Pages/Convex/Revenue/Services/RevenueService";
+import { useConvexStore } from "@/Pages/Convex/Store";
 import RevenueSources from "@/Pages/Convex/Revenue/Components/RevenueSources.vue";
 import LPRevenue from "@/Pages/Convex/Revenue/Components/LPRevenue.vue";
 import HolderRevenue from "@/Pages/Convex/Revenue/Components/HolderRevenue.vue";
 import HistoricalRevenue from "@/Pages/Convex/Revenue/Components/HistoricalRevenue.vue";
 import LiquidRevenue from "@/Pages/Convex/Revenue/Components/LiquidRevenue.vue";
-import {useI18n} from "vue-i18n";
-import {Spinner} from "@/Framework";
-import {$ref} from "vue/macros";
+import { useI18n } from "vue-i18n";
+import { Spinner } from "@/Framework";
+import { $ref } from "vue/macros";
 
-const {t} = useI18n();
+const { t } = useI18n();
 let loading = $ref(false);
 let isInitializing = false;
 const store = useConvexStore();
@@ -60,17 +64,19 @@ const historicalRevenueService = new HistoricalRevenueService(getHost());
 
 // Hooks.
 onBeforeMount(async (): Promise<void> => {
-
   if (isInitializing) {
     return;
   }
+
   isInitializing = true;
   loading = true;
 
   const totalRevenue = await protocolRevenueService.get();
+
   if (totalRevenue) {
     store.setRevenue(totalRevenue);
   }
+
   const historicalRevenue = await historicalRevenueService.get();
   if (historicalRevenue) {
     store.setHistoricalRevenue(historicalRevenue);
@@ -131,9 +137,7 @@ onBeforeUnmount((): void => {
     .graph-revenue-sources {
       grid-row: 1;
       grid-column: 2;
-
     }
-
   }
 
   .spec-revenue-charts {
@@ -172,7 +176,6 @@ onBeforeUnmount((): void => {
       grid-column: 2;
       height: 400px;
     }
-
   }
 }
 </style>

@@ -63,58 +63,62 @@
 </template>
 
 <script setup lang="ts">
-import {$computed} from "vue/macros";
-import {useI18n} from "vue-i18n";
-import {AsyncValue, KPI} from "@/Framework";
-import {useConvexStore} from "@/Pages/Convex/Store";
+import { $computed } from "vue/macros";
+import { useI18n } from "vue-i18n";
+import { AsyncValue, KPI } from "@/Framework";
+import { useConvexStore } from "@/Pages/Convex/Store";
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 // Refs
 const store = useConvexStore();
 
 const totalRevenue = $computed((): number => {
-  const rev = store.revenue ? store.revenue.totalBribeRevenue
-    + store.revenue.totalThreeCrvRevenueToCvxCrvStakers
-    + store.revenue.totalCrvRevenue
-    + store.revenue.totalFxsRevenue
+  const rev = store.revenue
+    ? store.revenue.totalBribeRevenue +
+      store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
+      store.revenue.totalCrvRevenue +
+      store.revenue.totalFxsRevenue
     : 0;
   return rev;
 });
 
 const lpRevenue = $computed((): number => {
-  const rev = store.revenue ? store.revenue.totalCrvRevenueToLpProviders
-    + store.revenue.totalFxsRevenueToLpProviders
-    + store.revenue.totalCvxRevenueToLpProviders
+  const rev = store.revenue
+    ? store.revenue.totalCrvRevenueToLpProviders +
+      store.revenue.totalFxsRevenueToLpProviders +
+      store.revenue.totalCvxRevenueToLpProviders
     : 0;
   return rev;
 });
 
 const treasuryRevenue = $computed((): number => {
-  const rev = store.revenue ? store.revenue.totalCrvRevenueToPlatform
-    + store.revenue.totalFxsRevenueToPlatform
-    + store.revenue.totalFxsRevenueToCallers
+  const rev = store.revenue
+    ? store.revenue.totalCrvRevenueToPlatform +
+      store.revenue.totalFxsRevenueToPlatform +
+      store.revenue.totalFxsRevenueToCallers
     : 0;
   return rev;
 });
 
 const tokenRevenue = $computed((): number => {
-  const rev = store.revenue ? store.revenue.totalBribeRevenue
-    + store.revenue.totalCrvRevenueToCvxStakers
-    + store.revenue.totalFxsRevenueToCvxStakers
+  const rev = store.revenue
+    ? store.revenue.totalBribeRevenue +
+      store.revenue.totalCrvRevenueToCvxStakers +
+      store.revenue.totalFxsRevenueToCvxStakers
     : 0;
   return rev;
 });
 
 const liquidRevenue = $computed((): number => {
-  const rev = store.revenue ? store.revenue.totalCrvRevenueToCvxCrvStakers
-    + store.revenue.totalCvxRevenueToCvxCrvStakers
-    + store.revenue.totalFxsRevenueToCvxFxsStakers
-    + store.revenue.totalThreeCrvRevenueToCvxCrvStakers
+  const rev = store.revenue
+    ? store.revenue.totalCrvRevenueToCvxCrvStakers +
+      store.revenue.totalCvxRevenueToCvxCrvStakers +
+      store.revenue.totalFxsRevenueToCvxFxsStakers +
+      store.revenue.totalThreeCrvRevenueToCvxCrvStakers
     : 0;
   return rev;
 });
-
 </script>
 
 <style lang="scss" scoped>

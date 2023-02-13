@@ -1,7 +1,10 @@
 import { defineStore } from "pinia";
 import Pool from "@/Pages/Convex/Pools/Models/Pool";
 import Snapshot from "@/Pages/Convex/Pools/Models/Snapshot";
-import {HistoricalRevenue, ProtocolRevenue} from "@/Pages/Convex/Revenue/Models/Revenue";
+import {
+  HistoricalRevenue,
+  ProtocolRevenue,
+} from "@/Pages/Convex/Revenue/Models/Revenue";
 
 type State = {
   pools: Pool[];
@@ -16,7 +19,7 @@ export const useConvexStore = defineStore({
     pools: [],
     snapshots: {},
     revenue: null,
-    historicalRevenue: []
+    historicalRevenue: [],
   }),
   actions: {
     setSnapshots(pool: Pool, snapshots: Snapshot[]) {
@@ -27,6 +30,6 @@ export const useConvexStore = defineStore({
     },
     setHistoricalRevenue(revenueSnapshots: HistoricalRevenue[]) {
       this.historicalRevenue = revenueSnapshots;
-    }
+    },
   },
 });
