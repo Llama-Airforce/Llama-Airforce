@@ -20,17 +20,15 @@ const store = useConvexStore();
 
 const revenueBreakdown = $computed((): RevenueSource[] => {
   return [
-    { source: "CRV", value: store.revenue ? store.revenue.totalCrvRevenue : 0 },
+    { source: "CRV", value: store.revenue.totalCrvRevenue },
     {
       source: "3CRV",
-      value: store.revenue
-        ? store.revenue.totalThreeCrvRevenueToCvxCrvStakers
-        : 0,
+      value: store.revenue.totalThreeCrvRevenueToCvxCrvStakers,
     },
-    { source: "FXS", value: store.revenue ? store.revenue.totalFxsRevenue : 0 },
+    { source: "FXS", value: store.revenue.totalFxsRevenue },
     {
       source: "Bribes",
-      value: store.revenue ? store.revenue.totalBribeRevenue : 0,
+      value: store.revenue.totalBribeRevenue,
     },
   ];
 });

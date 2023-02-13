@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable indent */
 import { $computed } from "vue/macros";
 import { CardGraph } from "@/Framework";
 import { Colors, round, unit } from "@/Util";
@@ -23,37 +22,27 @@ const historicalRevenueBreakdown = $computed((): RevenueBreakdown[] => {
   return [
     {
       name: "CRV",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.totalCrvRevenue)
-        : [0],
+      data: store.historicalRevenue.map((x) => x.totalCrvRevenue),
     },
     {
       name: "FXS",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.totalFxsRevenue)
-        : [0],
+      data: store.historicalRevenue.map((x) => x.totalFxsRevenue),
     },
     {
       name: "3CRV",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map(
-            (x) => x.threeCrvRevenueToCvxCrvStakersAmount
-          )
-        : [0],
+      data: store.historicalRevenue.map(
+        (x) => x.threeCrvRevenueToCvxCrvStakersAmount
+      ),
     },
     {
       name: "Bribes",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.bribeRevenue)
-        : [0],
+      data: store.historicalRevenue.map((x) => x.bribeRevenue),
     },
   ];
 });
 
 const categories = $computed((): Date[] => {
-  return store.historicalRevenue
-    ? store.historicalRevenue.map((x) => new Date(x.timestamp * 1000))
-    : [];
+  return store.historicalRevenue.map((x) => new Date(x.timestamp * 1000));
 });
 
 const options = $computed((): unknown => {

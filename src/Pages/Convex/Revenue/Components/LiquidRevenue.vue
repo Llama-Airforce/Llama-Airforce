@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable indent */
 import { $computed } from "vue/macros";
 import { CardGraph } from "@/Framework";
 import { Colors, round, unit } from "@/Util";
@@ -23,37 +22,33 @@ const liquidRevenueBreakdown = $computed((): RevenueBreakdown[] => {
   return [
     {
       name: "CRV",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.crvRevenueToCvxCrvStakersAmount)
-        : [0],
+      data: store.historicalRevenue.map(
+        (x) => x.crvRevenueToCvxCrvStakersAmount
+      ),
     },
     {
       name: "CVX",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.cvxRevenueToCvxCrvStakersAmount)
-        : [0],
+      data: store.historicalRevenue.map(
+        (x) => x.cvxRevenueToCvxCrvStakersAmount
+      ),
     },
     {
       name: "3CRV",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map(
-            (x) => x.threeCrvRevenueToCvxCrvStakersAmount
-          )
-        : [0],
+      data: store.historicalRevenue.map(
+        (x) => x.threeCrvRevenueToCvxCrvStakersAmount
+      ),
     },
     {
       name: "FXS",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.fxsRevenueToCvxFxsStakersAmount)
-        : [0],
+      data: store.historicalRevenue.map(
+        (x) => x.fxsRevenueToCvxFxsStakersAmount
+      ),
     },
   ];
 });
 
 const categories = $computed((): Date[] => {
-  return store.historicalRevenue
-    ? store.historicalRevenue.map((x) => new Date(x.timestamp * 1000))
-    : [];
+  return store.historicalRevenue.map((x) => new Date(x.timestamp * 1000));
 });
 
 const options = $computed((): unknown => {

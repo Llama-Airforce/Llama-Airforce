@@ -74,49 +74,49 @@ const { t } = useI18n();
 const store = useConvexStore();
 
 const totalRevenue = $computed((): number => {
-  const rev = store.revenue
-    ? store.revenue.totalBribeRevenue +
-      store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
-      store.revenue.totalCrvRevenue +
-      store.revenue.totalFxsRevenue
-    : 0;
+  const rev =
+    store.revenue.totalBribeRevenue +
+    store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
+    store.revenue.totalCrvRevenue +
+    store.revenue.totalFxsRevenue;
+
   return rev;
 });
 
 const lpRevenue = $computed((): number => {
-  const rev = store.revenue
-    ? store.revenue.totalCrvRevenueToLpProviders +
-      store.revenue.totalFxsRevenueToLpProviders +
-      store.revenue.totalCvxRevenueToLpProviders
-    : 0;
+  const rev =
+    store.revenue.totalCrvRevenueToLpProviders +
+    store.revenue.totalFxsRevenueToLpProviders +
+    store.revenue.totalCvxRevenueToLpProviders;
+
   return rev;
 });
 
 const treasuryRevenue = $computed((): number => {
-  const rev = store.revenue
-    ? store.revenue.totalCrvRevenueToPlatform +
-      store.revenue.totalFxsRevenueToPlatform +
-      store.revenue.totalFxsRevenueToCallers
-    : 0;
+  const rev =
+    store.revenue.totalCrvRevenueToPlatform +
+    store.revenue.totalFxsRevenueToPlatform +
+    store.revenue.totalFxsRevenueToCallers;
+
   return rev;
 });
 
 const tokenRevenue = $computed((): number => {
-  const rev = store.revenue
-    ? store.revenue.totalBribeRevenue +
-      store.revenue.totalCrvRevenueToCvxStakers +
-      store.revenue.totalFxsRevenueToCvxStakers
-    : 0;
+  const rev =
+    store.revenue.totalBribeRevenue +
+    store.revenue.totalCrvRevenueToCvxStakers +
+    store.revenue.totalFxsRevenueToCvxStakers;
+
   return rev;
 });
 
 const liquidRevenue = $computed((): number => {
-  const rev = store.revenue
-    ? store.revenue.totalCrvRevenueToCvxCrvStakers +
-      store.revenue.totalCvxRevenueToCvxCrvStakers +
-      store.revenue.totalFxsRevenueToCvxFxsStakers +
-      store.revenue.totalThreeCrvRevenueToCvxCrvStakers
-    : 0;
+  const rev =
+    store.revenue.totalCrvRevenueToCvxCrvStakers +
+    store.revenue.totalCvxRevenueToCvxCrvStakers +
+    store.revenue.totalFxsRevenueToCvxFxsStakers +
+    store.revenue.totalThreeCrvRevenueToCvxCrvStakers;
+
   return rev;
 });
 </script>

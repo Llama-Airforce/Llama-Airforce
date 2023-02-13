@@ -22,29 +22,21 @@ const holderRevenueBreakdown = $computed((): RevenueBreakdown[] => {
   return [
     {
       name: "CRV",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.crvRevenueToCvxStakersAmount)
-        : [0],
+      data: store.historicalRevenue.map((x) => x.crvRevenueToCvxStakersAmount),
     },
     {
       name: "FXS",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.fxsRevenueToCvxStakersAmount)
-        : [0],
+      data: store.historicalRevenue.map((x) => x.fxsRevenueToCvxStakersAmount),
     },
     {
       name: "Bribes",
-      data: store.historicalRevenue
-        ? store.historicalRevenue.map((x) => x.bribeRevenue)
-        : [0],
+      data: store.historicalRevenue.map((x) => x.bribeRevenue),
     },
   ];
 });
 
 const categories = $computed((): Date[] => {
-  return store.historicalRevenue
-    ? store.historicalRevenue.map((x) => new Date(x.timestamp * 1000))
-    : [];
+  return store.historicalRevenue.map((x) => new Date(x.timestamp * 1000));
 });
 
 const options = $computed((): unknown => {

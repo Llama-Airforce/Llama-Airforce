@@ -17,6 +17,25 @@ export class ProtocolRevenue {
   totalBribeRevenue: number;
 }
 
+export const EmptyProtocolRevenue: ProtocolRevenue = {
+  totalCrvRevenueToLpProviders: 0,
+  totalCvxRevenueToLpProviders: 0,
+  totalFxsRevenueToLpProviders: 0,
+  totalCrvRevenueToCvxCrvStakers: 0,
+  totalCvxRevenueToCvxCrvStakers: 0,
+  totalThreeCrvRevenueToCvxCrvStakers: 0,
+  totalFxsRevenueToCvxFxsStakers: 0,
+  totalCrvRevenueToCvxStakers: 0,
+  totalFxsRevenueToCvxStakers: 0,
+  totalCrvRevenueToCallers: 0,
+  totalFxsRevenueToCallers: 0,
+  totalCrvRevenueToPlatform: 0,
+  totalFxsRevenueToPlatform: 0,
+  totalCrvRevenue: 0,
+  totalFxsRevenue: 0,
+  totalBribeRevenue: 0,
+};
+
 export class HistoricalRevenue {
   crvRevenueToLpProvidersAmount: number;
   cvxRevenueToLpProvidersAmount: number;
@@ -36,6 +55,26 @@ export class HistoricalRevenue {
   bribeRevenue: number;
   timestamp: number;
 }
+
+export const EmptyHistoricalRevenue: HistoricalRevenue = {
+  crvRevenueToLpProvidersAmount: 0,
+  cvxRevenueToLpProvidersAmount: 0,
+  crvRevenueToCvxCrvStakersAmount: 0,
+  cvxRevenueToCvxCrvStakersAmount: 0,
+  threeCrvRevenueToCvxCrvStakersAmount: 0,
+  crvRevenueToCvxStakersAmount: 0,
+  crvRevenueToCallersAmount: 0,
+  crvRevenueToPlatformAmount: 0,
+  totalCrvRevenue: 0,
+  fxsRevenueToCvxStakersAmount: 0,
+  fxsRevenueToCvxFxsStakersAmount: 0,
+  fxsRevenueToLpProvidersAmount: 0,
+  fxsRevenueToCallersAmount: 0,
+  fxsRevenueToPlatformAmount: 0,
+  totalFxsRevenue: 0,
+  bribeRevenue: 0,
+  timestamp: 0,
+};
 
 export class RevenueSource {
   source: string;
