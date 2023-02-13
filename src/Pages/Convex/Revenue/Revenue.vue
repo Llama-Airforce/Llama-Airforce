@@ -21,26 +21,30 @@
         class="graph-historical-revenue"
         :title="t('revenue-historical')"
       ></HistoricalRevenue>
+
       <LPRevenue
         class="graph-lp-revenue"
         :title="t('revenue-lp')"
       ></LPRevenue>
+
       <HolderRevenue
         class="graph-holder-revenue"
         :title="t('revenue-holder')"
       ></HolderRevenue>
+
       <LiquidRevenue
         class="graph-liquid-revenue"
         :title="t('revenue-liquid')"
       ></LiquidRevenue>
     </div>
   </div>
-  <p />
 </template>
 
 <script setup lang="ts">
-import Summary from "@/Pages/Convex/Revenue/Components/Summary.vue";
 import { onBeforeMount, onBeforeUnmount } from "vue";
+import { $ref } from "vue/macros";
+import { useI18n } from "vue-i18n";
+import { Spinner } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import ProtocolRevenueService, {
   HistoricalRevenueService,
@@ -51,9 +55,7 @@ import LPRevenue from "@/Pages/Convex/Revenue/Components/LPRevenue.vue";
 import HolderRevenue from "@/Pages/Convex/Revenue/Components/HolderRevenue.vue";
 import HistoricalRevenue from "@/Pages/Convex/Revenue/Components/HistoricalRevenue.vue";
 import LiquidRevenue from "@/Pages/Convex/Revenue/Components/LiquidRevenue.vue";
-import { useI18n } from "vue-i18n";
-import { Spinner } from "@/Framework";
-import { $ref } from "vue/macros";
+import Summary from "@/Pages/Convex/Revenue/Components/Summary.vue";
 
 const { t } = useI18n();
 let loading = $ref(false);
