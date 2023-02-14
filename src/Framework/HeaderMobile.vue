@@ -109,6 +109,7 @@ header {
 
     > .language {
       width: 10rem;
+      display: none;
     }
 
     > .support {
