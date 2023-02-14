@@ -43,6 +43,7 @@ export function getOnboard(): OnboardAPI {
       icon: "/wallet-icon.png",
       description: "Airdropping knowledge bombs about the Curve ecosystem",
     },
+    theme: "dark",
   });
 
   onboard.state.actions.updateAccountCenter({
