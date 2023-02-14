@@ -26,6 +26,11 @@ const createDefault = (): Object => ({
     padding: {
       top: 20,
     },
+    xaxis: {
+      lines: {
+        show: false,
+      },
+    },
   },
   stroke: {
     curve: "smooth",
