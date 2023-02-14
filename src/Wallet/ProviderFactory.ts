@@ -40,7 +40,7 @@ export function getOnboard(): OnboardAPI {
     ],
     appMetadata: {
       name: "Llama Airforce",
-      icon: "/card.png",
+      icon: "/wallet-icon.png",
       description: "Airdropping knowledge bombs about the Curve ecosystem",
     },
   });
