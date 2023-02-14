@@ -1,41 +1,41 @@
 <template>
-  <div
-    class="dashboard"
-    :class="{ loading }"
-  >
-    <Spinner
-      v-if="loading"
-      class="spinner"
-    ></Spinner>
+  <div class="revenue">
+    <div
+      class="dashboard"
+      :class="{ loading }"
+    >
+      <Spinner
+        v-if="loading"
+        class="spinner"
+      ></Spinner>
 
-    <div class="total-revenue-charts">
-      <Summary class="summary"></Summary>
-      <RevenueSources
-        class="graph-revenue-sources"
-        :title="t('revenue-breakdown')"
-      ></RevenueSources>
-    </div>
+      <div class="revenue-charts">
+        <Summary class="summary"></Summary>
+        <RevenueSources
+          class="graph-revenue-sources"
+          :title="t('revenue-breakdown')"
+        ></RevenueSources>
 
-    <div class="spec-revenue-charts">
-      <HistoricalRevenue
-        class="graph-historical-revenue"
-        :title="t('revenue-historical')"
-      ></HistoricalRevenue>
+        <HistoricalRevenue
+          class="graph-historical-revenue"
+          :title="t('revenue-historical')"
+        ></HistoricalRevenue>
 
-      <LPRevenue
-        class="graph-lp-revenue"
-        :title="t('revenue-lp')"
-      ></LPRevenue>
+        <LPRevenue
+          class="graph-lp-revenue"
+          :title="t('revenue-lp')"
+        ></LPRevenue>
 
-      <HolderRevenue
-        class="graph-holder-revenue"
-        :title="t('revenue-holder')"
-      ></HolderRevenue>
+        <HolderRevenue
+          class="graph-holder-revenue"
+          :title="t('revenue-holder')"
+        ></HolderRevenue>
 
-      <LiquidRevenue
-        class="graph-liquid-revenue"
-        :title="t('revenue-liquid')"
-      ></LiquidRevenue>
+        <LiquidRevenue
+          class="graph-liquid-revenue"
+          :title="t('revenue-liquid')"
+        ></LiquidRevenue>
+      </div>
     </div>
   </div>
 </template>
@@ -96,87 +96,72 @@ onBeforeUnmount((): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("pools");
+@include dashboard("revenue");
 
-.dashboard {
-  &.loading {
-    .total-revenue-charts {
-      opacity: 0.5;
+.revenue {
+  .dashboard {
+    gap: unset;
+    grid-gap: unset;
+
+    &.loading {
+      .total-revenue-charts,
+      .spec-revenue-charts {
+        opacity: 0.5;
+      }
     }
 
-    .spec-revenue-charts {
-      opacity: 0.5;
-    }
-  }
-
-  .spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(100%);
-    z-index: 1;
-  }
-
-  .total-revenue-charts {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1rem;
-    padding: 1.5rem 1rem 0rem;
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(100%);
+      z-index: 1;
     }
 
-    .summary {
-      grid-row: 1;
-      grid-column: 1;
+    .revenue-charts {
       display: grid;
-    }
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto auto;
+      gap: 1rem;
 
-    .graph-revenue-sources {
-      grid-row: 1;
-      grid-column: 2;
-    }
-  }
+      @media only screen and (max-width: 1280px) {
+        display: flex;
+        flex-direction: column;
+      }
 
-  .spec-revenue-charts {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1rem;
-    padding: 0rem 1rem;
+      .summary {
+        grid-row: 1;
+        grid-column: 1;
+      }
 
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-    }
+      .graph-revenue-sources {
+        grid-row: 1;
+        grid-column: 2;
+      }
 
-    .graph-historical-revenue {
-      grid-row: 1;
-      grid-column: 1;
-      height: 400px;
-    }
+      .graph-historical-revenue {
+        grid-row: 2;
+        grid-column: 1;
+        height: 400px;
+      }
 
-    .graph-holder-revenue {
-      grid-row: 1;
-      grid-column: 2;
-      height: 400px;
-    }
+      .graph-holder-revenue {
+        grid-row: 2;
+        grid-column: 2;
+        height: 400px;
+      }
 
-    .graph-lp-revenue {
-      grid-row: 2;
-      grid-column: 1;
-      height: 400px;
-    }
+      .graph-lp-revenue {
+        grid-row: 3;
+        grid-column: 1;
+        height: 400px;
+      }
 
-    .graph-liquid-revenue {
-      grid-row: 2;
-      grid-column: 2;
-      height: 400px;
+      .graph-liquid-revenue {
+        grid-row: 3;
+        grid-column: 2;
+        height: 400px;
+      }
     }
   }
 }

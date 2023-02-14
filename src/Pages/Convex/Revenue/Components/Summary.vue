@@ -116,37 +116,7 @@ const liquidRevenue = $computed(
 
 .summary {
   display: flex;
-  flex-grow: 1;
-
-  @media only screen and (max-width: 1280px) {
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr;
-
-    > .all-time-revenue {
-      grid-row: 1;
-      grid-column: 1;
-    }
-
-    > .lp-revenue {
-      grid-row: 2;
-      grid-column: 1;
-    }
-
-    > .holder-revenue {
-      grid-row: 3;
-      grid-column: 1;
-    }
-
-    > .liquid-revenue {
-      grid-row: 4;
-      grid-column: 1;
-    }
-
-    > .protocol-revenue {
-      grid-row: 5;
-      grid-column: 1;
-    }
-  }
+  flex-direction: column;
 }
 </style>
 
