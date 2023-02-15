@@ -6,25 +6,32 @@ import type {
 } from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class VolumeService {
-  public readonly get$: Observable<Volume>;
+  public readonly init$: Observable<Volume[]>;
+  public readonly update$: Observable<Volume>;
 
   constructor(socket: SocketPool) {
-    this.get$ = new Observable((subscriber) => {
-      const onData = (data: VolumeDto | VolumeDto[]) => {
-        const volumes = Array.isArray(data)
-          ? data.map((d) => this.get(d))
-          : [this.get(data)];
-
-        for (const volume of volumes) {
-          subscriber.next(volume);
-        }
+    this.init$ = new Observable((subscriber) => {
+      const onData = (data: VolumeDto[]) => {
+        const xs = data.map((d) => this.get(d));
+        subscriber.next(xs);
       };
 
       socket.on("volume_chart", onData);
-      socket.on("Update Volume-Chart", onData);
 
       return () => {
         socket.off("volume_chart", onData);
+      };
+    });
+
+    this.update$ = new Observable((subscriber) => {
+      const onData = (data: VolumeDto) => {
+        const x = this.get(data);
+        subscriber.next(x);
+      };
+
+      socket.on("Update Volume-Chart", onData);
+
+      return () => {
         socket.off("Update Volume-Chart", onData);
       };
     });

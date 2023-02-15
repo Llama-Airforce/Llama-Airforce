@@ -14,26 +14,35 @@ import type {
 } from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class TransactionService {
-  public readonly get$: Observable<Transaction>;
+  public readonly init$: Observable<Transaction[]>;
+  public readonly update$: Observable<Transaction>;
 
   constructor(socket: SocketPool) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.get$ = new Observable((subscriber) => {
-      const onData = (data: TransactionDto | TransactionDto[]) => {
-        const txs = Array.isArray(data)
-          ? data.map((d) => this.get(d)).flat(1)
-          : this.get(data);
-
-        for (const tx of txs) {
-          subscriber.next(tx);
-        }
+    this.init$ = new Observable((subscriber) => {
+      const onData = (data: TransactionDto[]) => {
+        const xs = data.map((d) => this.get(d)).flat(1);
+        subscriber.next(xs);
       };
 
       socket.on("table_all", onData);
-      socket.on("Update Table-ALL", onData);
 
       return () => {
         socket.off("table_all", onData);
+      };
+    });
+
+    this.update$ = new Observable((subscriber) => {
+      const onData = (data: TransactionDto) => {
+        const xs = this.get(data);
+
+        for (const x of xs) {
+          subscriber.next(x);
+        }
+      };
+
+      socket.on("Update Table-ALL", onData);
+
+      return () => {
         socket.off("Update Table-ALL", onData);
       };
     });

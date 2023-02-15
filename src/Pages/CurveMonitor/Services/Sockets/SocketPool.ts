@@ -2,7 +2,7 @@ import { io, Socket } from "socket.io-client";
 
 type ClientToServerEvents = Record<string, never>;
 type ServerToClientEvents = {
-  table_all: (dto: TransactionDto) => void;
+  table_all: (dto: TransactionDto[]) => void;
   "Update Table-ALL": (dto: TransactionDto) => void;
 
   price_chart: (dto: PriceDto[]) => void;

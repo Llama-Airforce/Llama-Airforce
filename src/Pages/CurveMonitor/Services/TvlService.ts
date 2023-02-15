@@ -3,25 +3,32 @@ import type { Tvl } from "@/Pages/CurveMonitor/Models";
 import type { TvlDto, SocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class TvlService {
-  public readonly get$: Observable<Tvl>;
+  public readonly init$: Observable<Tvl[]>;
+  public readonly update$: Observable<Tvl>;
 
   constructor(socket: SocketPool) {
-    this.get$ = new Observable((subscriber) => {
-      const onData = (data: TvlDto | TvlDto[]) => {
-        const tvls = Array.isArray(data)
-          ? data.map((d) => this.get(d))
-          : [this.get(data)];
-
-        for (const tvl of tvls) {
-          subscriber.next(tvl);
-        }
+    this.init$ = new Observable((subscriber) => {
+      const onData = (data: TvlDto[]) => {
+        const xs = data.map((d) => this.get(d));
+        subscriber.next(xs);
       };
 
       socket.on("tvl_chart", onData);
-      socket.on("Update TVL-Chart", onData);
 
       return () => {
         socket.off("tvl_chart", onData);
+      };
+    });
+
+    this.update$ = new Observable((subscriber) => {
+      const onData = (data: TvlDto) => {
+        const x = this.get(data);
+        subscriber.next(x);
+      };
+
+      socket.on("Update TVL-Chart", onData);
+
+      return () => {
         socket.off("Update TVL-Chart", onData);
       };
     });

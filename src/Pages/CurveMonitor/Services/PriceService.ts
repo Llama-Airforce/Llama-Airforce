@@ -6,25 +6,32 @@ import type {
 } from "@/Pages/CurveMonitor/Services/Sockets";
 
 export default class PriceService {
-  public readonly get$: Observable<Price>;
+  public readonly init$: Observable<Price[]>;
+  public readonly update$: Observable<Price>;
 
   constructor(socket: SocketPool) {
-    this.get$ = new Observable((subscriber) => {
-      const onData = (data: PriceDto | PriceDto[]) => {
-        const candles = Array.isArray(data)
-          ? data.map((d) => this.get(d))
-          : [this.get(data)];
-
-        for (const candle of candles) {
-          subscriber.next(candle);
-        }
+    this.init$ = new Observable((subscriber) => {
+      const onData = (data: PriceDto[]) => {
+        const xs = data.map((d) => this.get(d));
+        subscriber.next(xs);
       };
 
       socket.on("price_chart", onData);
-      socket.on("Update Price-Chart", onData);
 
       return () => {
         socket.off("price_chart", onData);
+      };
+    });
+
+    this.update$ = new Observable((subscriber) => {
+      const onData = (data: PriceDto) => {
+        const x = this.get(data);
+        subscriber.next(x);
+      };
+
+      socket.on("Update Price-Chart", onData);
+
+      return () => {
         socket.off("Update Price-Chart", onData);
       };
     });

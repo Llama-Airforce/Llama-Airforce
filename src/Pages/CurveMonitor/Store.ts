@@ -39,41 +39,4 @@ export const useCurveMonitorStore = defineStore({
     },
     coins: [],
   }),
-  actions: {
-    addTransaction(tx: Transaction) {
-      if (this.transactions.length === 0) {
-        this.transactions = [];
-      }
-
-      this.transactions.push(tx);
-    },
-    addPrice(price: Price) {
-      if (this.prices.length === 0) {
-        this.prices = [];
-      }
-
-      this.prices.push(price);
-    },
-    addBalances(balances: Balances) {
-      if (this.balances.length === 0) {
-        this.balances = [];
-      }
-
-      this.balances.push(balances);
-    },
-    addTvl(tvl: Tvl) {
-      if (this.tvl.length === 0) {
-        this.tvl = [];
-      }
-
-      this.tvl.push(tvl);
-    },
-    addVolume(volume: Volume) {
-      if (this.volumes.length === 0) {
-        this.volumes = [];
-      }
-
-      this.volumes.push(volume);
-    },
-  },
 });

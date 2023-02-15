@@ -59,18 +59,26 @@ function getBalances(
   store: ReturnType<typeof useCurveMonitorStore>,
   service: BalanceService
 ) {
-  // Unsubscribe from from existing subscriptions.
   if (balances$_) {
     balances$_.unsubscribe();
   }
 
   try {
-    balances$_ = service.get$.subscribe({
+    balances$_ = service.init$.subscribe({
       next: (balances) => {
-        store.addBalances(balances);
+        store.balances = balances;
       },
       error: (err) => console.error(err),
     });
+
+    balances$_.add(
+      service.update$.subscribe({
+        next: (balances) => {
+          store.balances.push(balances);
+        },
+        error: (err) => console.error(err),
+      })
+    );
   } catch (err) {
     store.poolsLoadingError = true;
   }
@@ -87,12 +95,21 @@ function getTvl(
   }
 
   try {
-    tvl$_ = service.get$.subscribe({
-      next: (tvl) => {
-        store.addTvl(tvl);
+    tvl$_ = service.init$.subscribe({
+      next: (tvls) => {
+        store.tvl = tvls;
       },
       error: (err) => console.error(err),
     });
+
+    tvl$_.add(
+      service.update$.subscribe({
+        next: (tvl) => {
+          store.tvl.push(tvl);
+        },
+        error: (err) => console.error(err),
+      })
+    );
   } catch (err) {
     store.poolsLoadingError = true;
   }
@@ -109,12 +126,21 @@ function getPrices(
   }
 
   try {
-    prices$_ = service.get$.subscribe({
-      next: (price) => {
-        store.addPrice(price);
+    prices$_ = service.init$.subscribe({
+      next: (prices) => {
+        store.prices = prices;
       },
       error: (err) => console.error(err),
     });
+
+    prices$_.add(
+      service.update$.subscribe({
+        next: (price) => {
+          store.prices.push(price);
+        },
+        error: (err) => console.error(err),
+      })
+    );
   } catch (err) {
     store.poolsLoadingError = true;
   }
@@ -131,12 +157,21 @@ function getVolumes(
   }
 
   try {
-    volumes$_ = service.get$.subscribe({
-      next: (volume) => {
-        store.addVolume(volume);
+    volumes$_ = service.init$.subscribe({
+      next: (volumes) => {
+        store.volumes = volumes;
       },
       error: (err) => console.error(err),
     });
+
+    volumes$_.add(
+      service.update$.subscribe({
+        next: (volume) => {
+          store.volumes.push(volume);
+        },
+        error: (err) => console.error(err),
+      })
+    );
   } catch (err) {
     store.poolsLoadingError = true;
   }
@@ -153,12 +188,21 @@ function getTransactions(
   }
 
   try {
-    txs$_ = service.get$.subscribe({
-      next: (tx) => {
-        store.addTransaction(tx);
+    txs$_ = service.init$.subscribe({
+      next: (txs) => {
+        store.transactions = txs;
       },
       error: (err) => console.error(err),
     });
+
+    txs$_.add(
+      service.update$.subscribe({
+        next: (tx) => {
+          store.transactions.push(tx);
+        },
+        error: (err) => console.error(err),
+      })
+    );
   } catch (err) {
     store.poolsLoadingError = true;
   }
