@@ -146,6 +146,7 @@ const initChart = (): void => {
       top: 0.6,
       bottom: 0,
     },
+    priceLineVisible: false,
   });
 };
 
