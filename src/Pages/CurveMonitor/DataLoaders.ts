@@ -9,6 +9,7 @@ import {
   TvlService,
   BondingService,
   CoinService,
+  CombinationService,
 } from "@/Pages/CurveMonitor/Services";
 import { createSocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
 
@@ -26,6 +27,7 @@ export function loadPool(
   const tvlService = new TvlService(socketPool);
   const bondingService = new BondingService(socketPool);
   const coinService = new CoinService(socketPool);
+  const combinationService = new CombinationService(socketPool);
 
   void getTransactions(store, transactionService);
   void getPrices(store, priceService);
@@ -34,6 +36,7 @@ export function loadPool(
   void getVolumes(store, volumeService);
   void getBondings(store, bondingService);
   void getCoins(store, coinService);
+  void getPair(store, combinationService);
 
   socketPool.connect();
 
@@ -244,6 +247,28 @@ function getCoins(
     coins$_ = service.get$.subscribe({
       next: (coins) => {
         store.coins = coins;
+      },
+      error: (err) => console.error(err),
+    });
+  } catch (err) {
+    store.poolsLoadingError = true;
+  }
+}
+
+let pair$_: Subscription | null = null;
+function getPair(
+  store: ReturnType<typeof useCurveMonitorStore>,
+  service: CombinationService
+) {
+  // Unsubscribe from from existing subscriptions.
+  if (pair$_) {
+    pair$_.unsubscribe();
+  }
+
+  try {
+    pair$_ = service.update$.subscribe({
+      next: (pair) => {
+        store.pair = pair;
       },
       error: (err) => console.error(err),
     });

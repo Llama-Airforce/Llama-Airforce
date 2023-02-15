@@ -17,6 +17,8 @@
           @select="onSelect"
         ></SearchPool>
 
+        <SelectorPair></SelectorPair>
+        <SelectorRange></SelectorRange>
         <Status :status-service="statusService"></Status>
       </div>
 
@@ -40,6 +42,8 @@ import { $ref } from "vue/macros";
 import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
+import SelectorPair from "@/Pages/CurveMonitor/Components/SelectorPair.vue";
+import SelectorRange from "@/Pages/CurveMonitor/Components/SelectorRange.vue";
 import Status from "@/Pages/CurveMonitor/Components/Status.vue";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
@@ -49,20 +53,17 @@ import Balances from "@/Pages/CurveMonitor/Components/Balances.vue";
 import Prices from "@/Pages/CurveMonitor/Components/Prices.vue";
 import { PoolService, StatusService } from "@/Pages/CurveMonitor/Services";
 import { loadPool } from "@/Pages/CurveMonitor/DataLoaders";
-import {
-  createSocketPool,
-  createSocketRoot,
-} from "@/Pages/CurveMonitor/Services/Sockets";
+import { createSocketRoot } from "@/Pages/CurveMonitor/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";
 const socket = createSocketRoot(host);
-let socketPool = createSocketPool(host, "0x0");
 
 const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
 
 // Refs.
 const store = useCurveMonitorStore();
+store.socket = socket;
 
 let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
@@ -74,8 +75,8 @@ const onSelect = (option: unknown): void => {
   pool = shorten(poolNew.name);
   poolSelected = poolNew;
 
-  socketPool.close();
-  socketPool = loadPool(
+  store.socketPool?.close();
+  store.socketPool = loadPool(
     store,
     host,
     "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
@@ -152,7 +153,9 @@ onMounted(() => {
       }
 
       span {
+        display: flex;
         font-size: 3rem;
+        align-items: center;
       }
     }
 
@@ -166,16 +169,23 @@ onMounted(() => {
         right: 50%;
       }
     }
+
+    .pair,
+    .range {
+      display: none;
+    }
   }
 
   background: $background-color;
   position: sticky;
   top: 0;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   z-index: 1;
 
   display: grid;
-  grid-template-columns: 1fr 600px 1fr;
+  grid-template-rows: auto;
+  grid-template-columns: auto 1fr auto auto auto;
+  gap: 2rem;
 
   @media only screen and (max-width: 1280px) {
     padding: 1.5rem 1rem;
@@ -199,8 +209,7 @@ onMounted(() => {
     }
 
     span {
-      display: flex;
-      align-items: center;
+      display: none;
     }
   }
 
@@ -213,11 +222,21 @@ onMounted(() => {
   }
 
   .status {
-    grid-column: 3;
+    grid-column: 5;
 
     display: flex;
     align-items: center;
     justify-self: end;
+  }
+
+  .pair {
+    grid-column: 3;
+    align-self: center;
+  }
+
+  .range {
+    grid-column: 4;
+    align-self: center;
   }
 }
 

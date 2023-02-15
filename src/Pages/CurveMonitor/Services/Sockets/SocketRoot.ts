@@ -16,7 +16,7 @@ type PoolsDto = {
 
 export type SocketRoot = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function createSocketRoot(url: string) {
+export function createSocketRoot(url: string): SocketRoot {
   return io(`${url}/`, {
     autoConnect: false,
     secure: true,

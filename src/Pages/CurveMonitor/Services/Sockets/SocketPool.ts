@@ -1,6 +1,9 @@
 import { io, Socket } from "socket.io-client";
 
-type ClientToServerEvents = Record<string, never>;
+type ClientToServerEvents = {
+  "new combination": (dto: [string, string, string]) => void;
+};
+
 type ServerToClientEvents = {
   table_all: (dto: TransactionDto[]) => void;
   "Update Table-ALL": (dto: TransactionDto) => void;
@@ -20,6 +23,8 @@ type ServerToClientEvents = {
   bonding_curve: (dto: BondingDto) => void;
 
   "token names inside pool": (dto: NamesDto) => void;
+
+  price_chart_combination: (dto: PairDto) => void;
 };
 
 export type TransactionDto = {
@@ -88,9 +93,11 @@ export type BondingDto = {
 
 export type NamesDto = string[];
 
+export type PairDto = [string, string];
+
 export type SocketPool = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function createSocketPool(url: string, poolAddress: string) {
+export function createSocketPool(url: string, poolAddress: string): SocketPool {
   return io(`${url}/${poolAddress}`, {
     autoConnect: false,
     secure: true,

@@ -8,9 +8,17 @@ import type {
   Tvl,
   Bonding,
   Coin,
+  Pair,
 } from "@/Pages/CurveMonitor/Models";
+import type {
+  SocketPool,
+  SocketRoot,
+} from "@/Pages/CurveMonitor/Services/Sockets";
 
 type State = {
+  socket: SocketRoot | null;
+  socketPool: SocketPool | null;
+
   pools: Pool[];
   poolsLoadingError: boolean;
   prices: Price[];
@@ -20,11 +28,15 @@ type State = {
   tvl: Tvl[];
   bonding: Bonding;
   coins: Coin[];
+  pair: Pair | null;
 };
 
 export const useCurveMonitorStore = defineStore({
   id: "curveMonitorStore",
   state: (): State => ({
+    socket: null,
+    socketPool: null,
+
     pools: [],
     poolsLoadingError: false,
     prices: [],
@@ -38,5 +50,6 @@ export const useCurveMonitorStore = defineStore({
       balanceCoin1: 0,
     },
     coins: [],
+    pair: null,
   }),
 });

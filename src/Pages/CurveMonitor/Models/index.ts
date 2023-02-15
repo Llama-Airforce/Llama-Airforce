@@ -11,6 +11,7 @@ export type { Volume } from "@/Pages/CurveMonitor/Models/Volume";
 export type { Bonding } from "@/Pages/CurveMonitor/Models/Bonding";
 
 export type { Coin } from "@/Pages/CurveMonitor/Models/Coin";
+export type { Pair } from "@/Pages/CurveMonitor/Models/Pair";
 
 export type {
   TransactionType,
