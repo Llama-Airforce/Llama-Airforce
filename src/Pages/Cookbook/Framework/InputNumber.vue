@@ -5,6 +5,7 @@
         <template #example>
           <InputNumber
             v-model="value"
+            placeholder="Number goes here"
             :min="-5"
             :max="Infinity"
           ></InputNumber>
@@ -30,6 +31,7 @@ const value = $ref(0);
 
 const inputNumber = `<InputNumber
   v-model="value"
+  placeholder="Number goes here"
   :min="-5"
   :max="Infinity"
 ></InputNumber>`;
