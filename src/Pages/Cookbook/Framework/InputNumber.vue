@@ -7,7 +7,6 @@
             v-model="value"
             :min="-5"
             :max="Infinity"
-            :step="0.1"
           ></InputNumber>
         </template>
 
@@ -33,7 +32,6 @@ const inputNumber = `<InputNumber
   v-model="value"
   :min="-5"
   :max="Infinity"
-  :step="0.1"
 ></InputNumber>`;
 </script>
 
