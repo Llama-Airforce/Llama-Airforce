@@ -171,7 +171,7 @@ onMounted(() => {
     }
 
     .pair,
-    .range {
+    .ranges {
       display: none;
     }
   }
@@ -234,7 +234,7 @@ onMounted(() => {
     align-self: center;
   }
 
-  .range {
+  .ranges {
     grid-column: 4;
     align-self: center;
   }

@@ -114,8 +114,10 @@ const onCoinSelect = (i: 0 | 1, option: unknown): void => {
   }
 
   if (store.socketPool && coin[0] && coin[1]) {
-    const pairService = new CombinationService(store.socketPool as SocketPool);
-    pairService.update([coin[0].label, coin[1].label]);
+    const combinationService = new CombinationService(
+      store.socketPool as SocketPool
+    );
+    combinationService.update(store.timeRange, [coin[0].label, coin[1].label]);
   }
 };
 

@@ -9,6 +9,7 @@ import type {
   Bonding,
   Coin,
   Pair,
+  TimeRange,
 } from "@/Pages/CurveMonitor/Models";
 import type {
   SocketPool,
@@ -29,6 +30,7 @@ type State = {
   bonding: Bonding;
   coins: Coin[];
   pair: Pair | null;
+  timeRange: TimeRange;
 };
 
 export const useCurveMonitorStore = defineStore({
@@ -51,5 +53,6 @@ export const useCurveMonitorStore = defineStore({
     },
     coins: [],
     pair: null,
+    timeRange: "month",
   }),
 });

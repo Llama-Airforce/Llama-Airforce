@@ -20,6 +20,8 @@ import {
   timeRanges,
 } from "@/Pages/CurveMonitor/Models/TimeRange";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
+import type { SocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
+import { CombinationService } from "@/Pages/CurveMonitor/Services";
 
 const { t } = useI18n();
 
@@ -37,8 +39,12 @@ const onRange = (range: TimeRange) => {
 
   timeRange = range;
 
-  const pairService = new CombinationService(store.socketPool as SocketPool);
-  pairService.update([coin[0].label, coin[1].label]);
+  if (store.pair) {
+    const combinationService = new CombinationService(
+      store.socketPool as SocketPool
+    );
+    combinationService.update(range, store.pair);
+  }
 };
 </script>
 

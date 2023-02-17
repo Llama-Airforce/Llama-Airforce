@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import type { Pair } from "@/Pages/CurveMonitor/Models";
+import type { Pair, TimeRange } from "@/Pages/CurveMonitor/Models";
 import type {
   PairDto,
   SocketPool,
@@ -26,7 +26,7 @@ export default class CombinationService {
     });
   }
 
-  update(pair: Pair) {
-    this.socket.emit("new combination", ["month", pair[0], pair[1]]);
+  update(timeRange: TimeRange, pair: Pair) {
+    this.socket.emit("new combination", [timeRange, pair[0], pair[1]]);
   }
 }

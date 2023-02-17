@@ -13,6 +13,8 @@ export type { Bonding } from "@/Pages/CurveMonitor/Models/Bonding";
 export type { Coin } from "@/Pages/CurveMonitor/Models/Coin";
 export type { Pair } from "@/Pages/CurveMonitor/Models/Pair";
 
+export type { TimeRange } from "@/Pages/CurveMonitor/Models/TimeRange";
+
 export type {
   TransactionType,
   Transaction,
