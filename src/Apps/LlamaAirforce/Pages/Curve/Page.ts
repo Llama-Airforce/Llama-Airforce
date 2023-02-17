@@ -2,6 +2,7 @@ import { Page } from "@LAF/Pages/Page";
 
 import CurvePools from "@LAF/Pages/Curve/Pools/Pools.vue";
 import CurveGauges from "@LAF/Pages/Curve/Gauges/Gauges.vue";
+import CurvePerf from "@LAF/Pages/Curve/Performance/Performance.vue";
 import CurveRevenue from "@LAF/Pages/Curve/Revenue/Revenue.vue";
 import CurveUtilization from "@LAF/Pages/Curve/Utilization/Utilization.vue";
 
@@ -20,6 +21,11 @@ export const pageCurve: Page = {
       path: "/curve/pools/:pool?",
       name: "curvepools",
       component: CurvePools,
+    },
+    {
+      path: "/curve/performance/:pool?",
+      name: "curveperf",
+      component: CurvePerf,
     },
     {
       path: "/curve/gauges/:gauge?",
@@ -68,6 +74,11 @@ export const pageCurve: Page = {
       to: "/curve/revenue",
       icon: "fa fa-usd",
       label: "Revenue",
+    },
+    {
+      to: "/curve/performance",
+      icon: "fa fa-stopwatch",
+      label: "Performance",
     },
     {
       icon: "fas fa-landmark",
