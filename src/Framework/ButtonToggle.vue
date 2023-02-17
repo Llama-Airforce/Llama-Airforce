@@ -50,7 +50,6 @@ button {
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
   height: calc(40px - 1rem);
 
-  border: solid 2px $level4-color;
   border-radius: 0;
 
   .icon {
