@@ -87,10 +87,11 @@ onMounted((): void => {
     },
     timeScale: {
       borderVisible: false,
+      fixLeftEdge: true,
+      fixRightEdge: true,
     },
-    handleScale: {
-      mouseWheel: false,
-    },
+    handleScale: false,
+    handleScroll: false,
     localization: {
       priceFormatter:
         mode === "absolute"

@@ -86,6 +86,7 @@ onMounted((): void => {
       tickMarkFormatter: (time: UTCTimestamp) => formatter(time),
     },
     handleScale: false,
+    handleScroll: false,
     localization: {
       priceFormatter: (price: number) => formatter(price),
       timeFormatter: (time: number) => formatter(time),
