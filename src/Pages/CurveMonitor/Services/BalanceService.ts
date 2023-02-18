@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Balances } from "@/Pages/CurveMonitor/Models";
 import type {
   BalancesDto,
@@ -10,7 +10,7 @@ export default class BalanceService {
   public readonly update$: Observable<Balances>;
 
   constructor(socket: SocketPool) {
-    this.init$ = new Observable((subscriber) => {
+    this.init$ = new Observable<Balances[]>((subscriber) => {
       const onData = (data: BalancesDto[]) => {
         const xs = data.map((d) => this.map(d));
         subscriber.next(xs);
@@ -21,9 +21,9 @@ export default class BalanceService {
       return () => {
         socket.off("balances_chart", onData);
       };
-    });
+    }).pipe(share());
 
-    this.update$ = new Observable((subscriber) => {
+    this.update$ = new Observable<Balances>((subscriber) => {
       const onData = (data: BalancesDto) => {
         const x = this.map(data);
         subscriber.next(x);
@@ -34,7 +34,7 @@ export default class BalanceService {
       return () => {
         socket.off("Update Balance-Chart", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private map(balances: BalancesDto): Balances {

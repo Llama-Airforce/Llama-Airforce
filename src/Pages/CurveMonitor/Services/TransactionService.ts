@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Transaction, TransactionType } from "@/Pages/CurveMonitor/Models";
 import type {
   Swap,
@@ -18,7 +18,7 @@ export default class TransactionService {
   public readonly update$: Observable<Transaction>;
 
   constructor(socket: SocketPool) {
-    this.init$ = new Observable((subscriber) => {
+    this.init$ = new Observable<Transaction[]>((subscriber) => {
       const onData = (data: TransactionDto[]) => {
         const xs = data.map((d) => this.get(d)).flat(1);
         subscriber.next(xs);
@@ -29,9 +29,9 @@ export default class TransactionService {
       return () => {
         socket.off("table_all", onData);
       };
-    });
+    }).pipe(share());
 
-    this.update$ = new Observable((subscriber) => {
+    this.update$ = new Observable<Transaction>((subscriber) => {
       const onData = (data: TransactionDto) => {
         const xs = this.get(data);
 
@@ -45,7 +45,7 @@ export default class TransactionService {
       return () => {
         socket.off("Update Table-ALL", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private get(tx: TransactionDto): Transaction[] {

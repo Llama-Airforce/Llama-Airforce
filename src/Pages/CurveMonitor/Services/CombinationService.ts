@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Pair, TimeRange } from "@/Pages/CurveMonitor/Models";
 import type {
   PairDto,
@@ -13,7 +13,7 @@ export default class CombinationService {
   constructor(socket: SocketPool) {
     this.socket = socket;
 
-    this.update$ = new Observable((subscriber) => {
+    this.update$ = new Observable<Pair>((subscriber) => {
       const onData = (data: PairDto) => {
         subscriber.next(data);
       };
@@ -23,7 +23,7 @@ export default class CombinationService {
       return () => {
         socket.off("price_chart_combination", onData);
       };
-    });
+    }).pipe(share());
   }
 
   update(timeRange: TimeRange, pair: Pair) {

@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Price } from "@/Pages/CurveMonitor/Models";
 import type {
   PriceDto,
@@ -10,7 +10,7 @@ export default class PriceService {
   public readonly update$: Observable<Price>;
 
   constructor(socket: SocketPool) {
-    this.init$ = new Observable((subscriber) => {
+    this.init$ = new Observable<Price[]>((subscriber) => {
       const onData = (data: PriceDto[]) => {
         const xs = data.map((d) => this.get(d));
         subscriber.next(xs);
@@ -21,9 +21,9 @@ export default class PriceService {
       return () => {
         socket.off("price_chart", onData);
       };
-    });
+    }).pipe(share());
 
-    this.update$ = new Observable((subscriber) => {
+    this.update$ = new Observable<Price>((subscriber) => {
       const onData = (data: PriceDto) => {
         const x = this.get(data);
         subscriber.next(x);
@@ -34,7 +34,7 @@ export default class PriceService {
       return () => {
         socket.off("Update Price-Chart", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private get(price: PriceDto): Price {

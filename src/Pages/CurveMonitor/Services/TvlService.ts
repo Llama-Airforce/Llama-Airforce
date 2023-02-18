@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Tvl } from "@/Pages/CurveMonitor/Models";
 import type { TvlDto, SocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
 
@@ -7,7 +7,7 @@ export default class TvlService {
   public readonly update$: Observable<Tvl>;
 
   constructor(socket: SocketPool) {
-    this.init$ = new Observable((subscriber) => {
+    this.init$ = new Observable<Tvl[]>((subscriber) => {
       const onData = (data: TvlDto[]) => {
         const xs = data.map((d) => this.get(d));
         subscriber.next(xs);
@@ -18,9 +18,9 @@ export default class TvlService {
       return () => {
         socket.off("tvl_chart", onData);
       };
-    });
+    }).pipe(share());
 
-    this.update$ = new Observable((subscriber) => {
+    this.update$ = new Observable<Tvl>((subscriber) => {
       const onData = (data: TvlDto) => {
         const x = this.get(data);
         subscriber.next(x);
@@ -31,7 +31,7 @@ export default class TvlService {
       return () => {
         socket.off("Update TVL-Chart", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private get(tvl: TvlDto): Tvl {

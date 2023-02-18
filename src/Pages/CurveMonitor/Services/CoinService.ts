@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Coin } from "@/Pages/CurveMonitor/Models";
 import type {
   NamesDto,
@@ -9,7 +9,7 @@ export default class CoinService {
   public readonly get$: Observable<Coin[]>;
 
   constructor(socket: SocketPool) {
-    this.get$ = new Observable((subscriber) => {
+    this.get$ = new Observable<Coin[]>((subscriber) => {
       const onData = (data: NamesDto) => {
         const coins = this.get(data);
         subscriber.next(coins);
@@ -20,7 +20,7 @@ export default class CoinService {
       return () => {
         socket.off("token names inside pool", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private get(names: NamesDto): Coin[] {

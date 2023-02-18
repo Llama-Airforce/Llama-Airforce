@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import { zipWith } from "lodash";
 import type { Bonding } from "@/Pages/CurveMonitor/Models";
 import type {
@@ -10,7 +10,7 @@ export default class BondingService {
   public readonly get$: Observable<Bonding>;
 
   constructor(socket: SocketPool) {
-    this.get$ = new Observable((subscriber) => {
+    this.get$ = new Observable<Bonding>((subscriber) => {
       const onData = (data: BondingDto) => {
         const bonding = this.get(data);
         subscriber.next(bonding);
@@ -21,7 +21,7 @@ export default class BondingService {
       return () => {
         socket.off("bonding_curve", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private get(bonding: BondingDto): Bonding {

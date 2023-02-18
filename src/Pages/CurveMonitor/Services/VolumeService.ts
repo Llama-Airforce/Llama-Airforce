@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, share } from "rxjs";
 import type { Volume } from "@/Pages/CurveMonitor/Models";
 import type {
   VolumeDto,
@@ -10,7 +10,7 @@ export default class VolumeService {
   public readonly update$: Observable<Volume>;
 
   constructor(socket: SocketPool) {
-    this.init$ = new Observable((subscriber) => {
+    this.init$ = new Observable<Volume[]>((subscriber) => {
       const onData = (data: VolumeDto[]) => {
         const xs = data.map((d) => this.get(d));
         subscriber.next(xs);
@@ -21,9 +21,9 @@ export default class VolumeService {
       return () => {
         socket.off("volume_chart", onData);
       };
-    });
+    }).pipe(share());
 
-    this.update$ = new Observable((subscriber) => {
+    this.update$ = new Observable<Volume>((subscriber) => {
       const onData = (data: VolumeDto) => {
         const x = this.get(data);
         subscriber.next(x);
@@ -34,7 +34,7 @@ export default class VolumeService {
       return () => {
         socket.off("Update Volume-Chart", onData);
       };
-    });
+    }).pipe(share());
   }
 
   private get(volume: VolumeDto): Volume {
