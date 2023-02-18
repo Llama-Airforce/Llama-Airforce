@@ -1,17 +1,23 @@
 <template>
   <div class="status">
-    <div class="ping">{{ ping === Infinity ? "?" : ping }}</div>
-    <div
-      class="indicator"
-      :class="status"
-    ></div>
+    <Tooltip class="tooltip">
+      <template #item>
+        <div
+          class="indicator"
+          :class="status"
+        ></div>
+      </template>
+
+      <div class="ping">Ping: {{ ping === Infinity ? "?" : ping }}ms</div>
+    </Tooltip>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import StatusService from "@/Pages/CurveMonitor/Services/StatusService";
 import { $ref } from "vue/macros";
+import { Tooltip } from "@/Framework";
+import StatusService from "@/Pages/CurveMonitor/Services/StatusService";
 
 // Props
 interface Props {
@@ -39,15 +45,20 @@ onMounted(() => {
 .status {
   display: flex;
 
-  > .ping {
+  .tooltip {
+    div {
+      display: flex;
+    }
+  }
+
+  .ping {
     display: flex;
     align-items: center;
 
     font-size: 0.75rem;
-    margin-right: 0.5rem;
   }
 
-  > .indicator {
+  .indicator {
     height: 1rem;
     width: 1rem;
     background-color: #bbb;
