@@ -9,6 +9,7 @@
             :placeholder="yearPlaceholder"
             :min="2020"
             :max="2100"
+            @input="emitDateIfValid"
           ></InputNumber>
         </div>
       </div>
@@ -19,6 +20,7 @@
             :placeholder="monthPlaceholder"
             :min="1"
             :max="12"
+            @input="emitDateIfValid"
           ></InputNumber>
         </div>
       </div>
@@ -29,6 +31,7 @@
             :placeholder="dayPlaceholder"
             :min="1"
             :max="31"
+            @input="emitDateIfValid"
           ></InputNumber>
         </div>
       </div>
@@ -38,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { $computed,  $ref } from "vue/macros";
 import { InputNumber } from "@/Framework";
 
 // Props
@@ -49,6 +52,7 @@ interface Props {
 const {
   label = "",
 } = defineProps<Props>();
+
 
 const yearPlaceholder = $computed((): string => {
   return new Date().getFullYear().toString();
@@ -61,6 +65,34 @@ const monthPlaceholder = $computed((): string => {
 const dayPlaceholder = $computed((): string => {
   return new Date().getDate().toString();
 });
+
+const year: number | null = $ref(null);
+const month: number | null = $ref(null);
+const day: number | null = $ref(null);
+
+// Events
+const emitDateIfValid = (): void => {
+  if (year !== null && month !== null && day !== null) {
+    const date = new Date(year, month - 1, day);
+    if (!isNaN(date.getTime())) {
+      // The date is valid, emit it as an event
+      emit("date-selected", date);
+    } else {
+      // The date is invalid, emit null as an event
+      emit("date-selected", null);
+    }
+  } else {
+    // Some inputs are missing, emit null as an event
+    emit("date-selected", null);
+  }
+};
+
+// Emits
+const emit = defineEmits<{
+  (e: "date-selected", data: Date | null): void;
+}>();
+
+
 </script>
 
 <style scoped>
