@@ -166,7 +166,11 @@ const createChartPrice = (newPrices: Price[]): void => {
 
   if (newLineSeries.length > 0) {
     areaSeries.setData(newLineSeries);
-    chart.timeScale().fitContent();
+
+    const from = newLineSeries[0].time;
+    const to = newLineSeries[newLineSeries.length - 1].time;
+
+    chart.timeScale().setVisibleRange({ from, to });
 
     min = Math.min(...newLineSeries.map((c) => c.value));
     max = Math.max(...newLineSeries.map((c) => c.value));
