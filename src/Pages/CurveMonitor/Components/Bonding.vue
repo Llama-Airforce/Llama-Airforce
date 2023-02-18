@@ -92,13 +92,15 @@ onMounted((): void => {
       timeFormatter: (time: number) => formatter(time),
     },
   });
+
+  initCharts();
+  createChart(bonding);
 });
 
 // Watches
 watch(
   () => bonding,
   (newBonding) => {
-    initCharts();
     createChart(newBonding);
   }
 );

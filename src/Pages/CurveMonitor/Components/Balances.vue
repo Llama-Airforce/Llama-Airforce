@@ -99,6 +99,9 @@ onMounted((): void => {
           : (price: number) => formatterPercentage(price),
     },
   });
+
+  initCharts();
+  createChart(balances);
 });
 
 // Watches
@@ -114,6 +117,11 @@ watch(
 const initCharts = (): void => {
   if (!chart) {
     return;
+  }
+
+  // Clear old line series before adding new ones.
+  for (const serie of lineSeries) {
+    chart.removeSeries(serie);
   }
 
   lineSeries = [];

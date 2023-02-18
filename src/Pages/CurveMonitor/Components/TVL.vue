@@ -94,7 +94,6 @@ onMounted((): void => {
 watch(
   () => tvl,
   (newTvl) => {
-    initChart();
     createChart(newTvl);
   }
 );
