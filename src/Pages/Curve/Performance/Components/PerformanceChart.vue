@@ -87,7 +87,7 @@ function transformSeries(input: PoolPerformanceResponse): Serie[] {
 
 
 const series = $computed((): Serie[] => {
-  if (data) {
+  if (data.returns) {
     const test = transformSeries(data);
     return test;
   }
