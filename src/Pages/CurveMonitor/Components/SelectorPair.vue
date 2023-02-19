@@ -47,7 +47,7 @@ import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { Select } from "@/Framework";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
-import { CombinationService } from "@/Pages/CurveMonitor/Services";
+import { PairService } from "@/Pages/CurveMonitor/Services";
 import { SocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
 
 type Coin = {
@@ -114,10 +114,8 @@ const onCoinSelect = (i: 0 | 1, option: unknown): void => {
   }
 
   if (store.socketPool && coin[0] && coin[1]) {
-    const combinationService = new CombinationService(
-      store.socketPool as SocketPool
-    );
-    combinationService.update(store.timeRange, [coin[0].label, coin[1].label]);
+    const pairService = new PairService(store.socketPool as SocketPool);
+    pairService.update(store.timeRange, [coin[0].label, coin[1].label]);
   }
 };
 

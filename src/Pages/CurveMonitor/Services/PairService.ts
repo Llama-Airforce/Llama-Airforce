@@ -5,7 +5,7 @@ import type {
   SocketPool,
 } from "@/Pages/CurveMonitor/Services/Sockets";
 
-export default class CombinationService {
+export default class PairService {
   private readonly socket: SocketPool;
 
   public readonly update$: Observable<Pair>;
@@ -26,6 +26,7 @@ export default class CombinationService {
     }).pipe(share());
   }
 
+  /** This does not update the time, but is for getting the correct timerange data of the new pair!  */
   update(timeRange: TimeRange, pair: Pair) {
     this.socket.emit("new combination", [timeRange, pair[0], pair[1]]);
   }

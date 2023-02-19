@@ -7,4 +7,4 @@ export { default as TransactionService } from "@/Pages/CurveMonitor/Services/Tra
 export { default as TvlService } from "@/Pages/CurveMonitor/Services/TvlService";
 export { default as BondingService } from "@/Pages/CurveMonitor/Services/BondingService";
 export { default as CoinService } from "@/Pages/CurveMonitor/Services/CoinService";
-export { default as CombinationService } from "@/Pages/CurveMonitor/Services/CombinationService";
+export { default as PairService } from "@/Pages/CurveMonitor/Services/PairService";
