@@ -11,6 +11,7 @@
         v-if="poolSelected"
         class="data"
       >
+        <Sandwiches class="sandwiches"></Sandwiches>
         <Prices class="prices"></Prices>
         <Transactions class="transactions"></Transactions>
         <Balances class="balances"></Balances>
@@ -27,6 +28,7 @@ import { $ref } from "vue/macros";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import Controls from "@/Pages/CurveMonitor/Components/Controls.vue";
+import Sandwiches from "@/Pages/CurveMonitor/Components/Sandwiches.vue";
 import Transactions from "@/Pages/CurveMonitor/Components/Transactions.vue";
 import TVL from "@/Pages/CurveMonitor/Components/TVL.vue";
 import Bonding from "@/Pages/CurveMonitor/Components/Bonding.vue";
@@ -83,15 +85,20 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: 350px auto 350px auto;
+  grid-template-rows: 350px auto 350px auto auto;
   grid-template-columns: repeat(6, 1fr);
 
   @media only screen and (max-width: 1280px) {
     padding-top: 0;
   }
 
-  .transactions {
+  .sandwiches {
     grid-row: 4;
+    grid-column: 1 / -1;
+  }
+
+  .transactions {
+    grid-row: 5;
     grid-column: 1 / -1;
   }
 

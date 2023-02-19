@@ -10,6 +10,7 @@ import type {
   Coin,
   Pair,
   TimeRange,
+  Sandwich,
 } from "@/Pages/CurveMonitor/Models";
 import type {
   SocketPool,
@@ -31,6 +32,7 @@ type State = {
   coins: Coin[];
   pair: Pair | null;
   timeRange: TimeRange;
+  sandwiches: Sandwich[];
 };
 
 export const useCurveMonitorStore = defineStore({
@@ -54,5 +56,6 @@ export const useCurveMonitorStore = defineStore({
     coins: [],
     pair: null,
     timeRange: "month",
+    sandwiches: [],
   }),
 });

@@ -1,12 +1,16 @@
 <template>
   <DataTable
     class="datatable-trades"
+    :class="{ compact, time }"
     columns-header="auto auto 1fr"
     columns-data="trades-columns-data"
     :rows="transactionsPage"
-    :columns="['Type', 'Block', 'Tx', 'Trader', 'Assets', 'Fees', 'Time']"
+    :columns="columns"
   >
-    <template #header-title>
+    <template
+      v-if="header"
+      #header-title
+    >
       <div class="title">{{ t("title") }}</div>
 
       <TabView
@@ -28,11 +32,14 @@
       </InputText>
     </template>
 
-    <template #header-actions>
+    <template
+      v-if="header"
+      #header-actions
+    >
       <Pagination
         class="pagination"
         :items-count="transactions.length"
-        :items-per-page="10"
+        :items-per-page="txsPerPage"
         :page="page"
         @page="onPage"
       ></Pagination>
@@ -65,7 +72,10 @@
         {{ t(props.item.type) }}
       </div>
 
-      <div class="number">
+      <div
+        v-if="time"
+        class="number"
+      >
         <a
           class="vote-link"
           :href="`https://etherscan.io/block/${props.item.blockNumber}`"
@@ -103,13 +113,16 @@
         v-html="getAssetsString(props.item)"
       ></div>
 
-      <div class="number">
+      <div :class="{ number: time }">
         <span v-if="props.item.type === 'swap'">
           ${{ round((props.item as Swap).fee).toLocaleString() }}
         </span>
       </div>
 
-      <div>
+      <div
+        v-if="time"
+        class="number"
+      >
         {{ relativeTime(props.item.timestamp) }}
       </div>
     </template>
@@ -118,7 +131,7 @@
 
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { $ref, $computed, $$ } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { chain, round } from "lodash";
 import {
@@ -138,8 +151,24 @@ import {
   Swap,
   TransactionType,
 } from "@/Pages/CurveMonitor/Models/Transaction";
+import { relativeTime as relativeTimeFunc } from "@/Pages/CurveMonitor/Util";
 
 const { t } = useI18n();
+
+// Props
+interface Props {
+  txs?: Transaction[];
+  header?: boolean;
+  compact?: boolean;
+  time?: boolean;
+}
+
+const {
+  txs = null,
+  header = true,
+  compact = false,
+  time = true,
+} = defineProps<Props>();
 
 // Refs
 const store = useCurveMonitorStore();
@@ -151,8 +180,14 @@ let page = $ref(1);
 
 let now = $ref(Date.now());
 
+const columns: string[] = $computed(() => {
+  return time
+    ? ["Type", "Block", "Tx", "Trader", "Assets", "Fees", "Time"]
+    : ["Type", "Tx", "Trader", "Assets", "Fees"];
+});
+
 const transactions: Transaction[] = $computed(() =>
-  chain(store.transactions)
+  chain(txs ? txs : store.transactions)
     .filter((tx) => types.includes(tx.type))
     .filter((tx) => {
       const terms = search.toLocaleLowerCase().split(" ");
@@ -185,6 +220,10 @@ onMounted(() => {
 });
 
 // Methods
+const relativeTime = (unixtime: number): string => {
+  return relativeTimeFunc($$(now), unixtime);
+};
+
 const getAssetsString = (tx: Transaction): string => {
   if (isSwap(tx)) {
     const amountIn = tx.amountIn.toLocaleString();
@@ -206,22 +245,6 @@ const getAssetsString = (tx: Transaction): string => {
   }
 
   return "???";
-};
-
-// returns eg "2 minutes ago"
-const relativeTime = (unixtime: number): string => {
-  const nowUnixTime = Math.round(now / 1000);
-  const secondsPast = nowUnixTime - unixtime;
-
-  if (secondsPast < 60) {
-    return `${Math.round(secondsPast)} seconds ago`;
-  } else if (secondsPast < 60 * 60) {
-    return `${Math.round(secondsPast / 60)} minutes ago`;
-  } else if (secondsPast < 60 * 60 * 24) {
-    return `${Math.round(secondsPast / (60 * 60))} hours ago`;
-  } else {
-    return `${Math.round(secondsPast / (60 * 60 * 24))} days ago`;
-  }
 };
 
 // Events
@@ -259,6 +282,10 @@ watch(
 
 .datatable-trades {
   padding-top: 0.25rem;
+
+  &.compact {
+    padding: 0 0 1rem 0;
+  }
 
   .title {
     margin-right: 1rem;
@@ -316,24 +343,35 @@ watch(
 
   ::v-deep(.trades-columns-data) {
     display: grid;
-    grid-column-gap: 2.5rem;
+    grid-column-gap: 4rem;
     grid-template-columns:
-      6rem 4rem 6rem 6rem minmax(5rem, 2fr)
-      6rem minmax(13rem, 1fr);
+      6rem 4rem 7rem 7rem minmax(5rem, 2fr)
+      6rem minmax(10rem, 0.75fr);
 
     // Right adjust number columns.
-    div:nth-child(2),
     div:nth-child(6),
+    div:nth-child(7),
     div:nth-child(8) {
       justify-content: end;
     }
 
-    div:nth-child(10) {
-      justify-content: center;
-    }
-
     .vote-link {
       text-align: center;
+    }
+  }
+
+  :not(&.time) {
+    ::v-deep(.trades-columns-data) {
+      display: grid;
+      grid-column-gap: 4rem;
+      grid-template-columns:
+        6rem 7rem 7rem minmax(5rem, 1fr)
+        minmax(6rem, 0.75fr);
+
+      // Right adjust number columns.
+      div:nth-child(5) {
+        justify-content: start;
+      }
     }
   }
 }

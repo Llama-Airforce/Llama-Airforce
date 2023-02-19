@@ -15,6 +15,8 @@ export type { Pair } from "@/Pages/CurveMonitor/Models/Pair";
 
 export type { TimeRange } from "@/Pages/CurveMonitor/Models/TimeRange";
 
+export type { Sandwich } from "@/Pages/CurveMonitor/Models/Sandwich";
+
 export type {
   TransactionType,
   Transaction,

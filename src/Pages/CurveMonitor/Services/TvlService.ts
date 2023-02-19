@@ -9,7 +9,7 @@ export default class TvlService {
   constructor(socket: SocketPool) {
     this.init$ = new Observable<Tvl[]>((subscriber) => {
       const onData = (data: TvlDto[]) => {
-        const xs = data.map((d) => this.get(d));
+        const xs = data.map((d) => map(d));
         subscriber.next(xs);
       };
 
@@ -22,7 +22,7 @@ export default class TvlService {
 
     this.update$ = new Observable<Tvl>((subscriber) => {
       const onData = (data: TvlDto) => {
-        const x = this.get(data);
+        const x = map(data);
         subscriber.next(x);
       };
 
@@ -33,18 +33,18 @@ export default class TvlService {
       };
     }).pipe(share());
   }
+}
 
-  private get(tvl: TvlDto): Tvl {
-    const key = Object.keys(tvl)[0];
+export function map(tvl: TvlDto): Tvl {
+  const key = Object.keys(tvl)[0];
 
-    const timestamp = parseInt(key, 10);
-    const value = tvl[key];
+  const timestamp = parseInt(key, 10);
+  const value = tvl[key];
 
-    const ts: Tvl = {
-      timestamp,
-      tvl: value,
-    };
+  const ts: Tvl = {
+    timestamp,
+    tvl: value,
+  };
 
-    return ts;
-  }
+  return ts;
 }

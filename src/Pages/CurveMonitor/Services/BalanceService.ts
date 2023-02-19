@@ -12,7 +12,7 @@ export default class BalanceService {
   constructor(socket: SocketPool) {
     this.init$ = new Observable<Balances[]>((subscriber) => {
       const onData = (data: BalancesDto[]) => {
-        const xs = data.map((d) => this.map(d));
+        const xs = data.map((d) => map(d));
         subscriber.next(xs);
       };
 
@@ -25,7 +25,7 @@ export default class BalanceService {
 
     this.update$ = new Observable<Balances>((subscriber) => {
       const onData = (data: BalancesDto) => {
-        const x = this.map(data);
+        const x = map(data);
         subscriber.next(x);
       };
 
@@ -36,18 +36,18 @@ export default class BalanceService {
       };
     }).pipe(share());
   }
+}
 
-  private map(balances: BalancesDto): Balances {
-    const key = Object.keys(balances)[0];
+export function map(balances: BalancesDto): Balances {
+  const key = Object.keys(balances)[0];
 
-    const timestamp = parseInt(key, 10);
-    const values = balances[key];
+  const timestamp = parseInt(key, 10);
+  const values = balances[key];
 
-    const bs: Balances = {
-      timestamp,
-      balances: values,
-    };
+  const bs: Balances = {
+    timestamp,
+    balances: values,
+  };
 
-    return bs;
-  }
+  return bs;
 }

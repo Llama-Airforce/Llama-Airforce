@@ -12,7 +12,7 @@ export default class PriceService {
   constructor(socket: SocketPool) {
     this.init$ = new Observable<Price[]>((subscriber) => {
       const onData = (data: PriceDto[]) => {
-        const xs = data.map((d) => this.get(d));
+        const xs = data.map((d) => map(d));
         subscriber.next(xs);
       };
 
@@ -25,7 +25,7 @@ export default class PriceService {
 
     this.update$ = new Observable<Price>((subscriber) => {
       const onData = (data: PriceDto) => {
-        const x = this.get(data);
+        const x = map(data);
         subscriber.next(x);
       };
 
@@ -36,18 +36,18 @@ export default class PriceService {
       };
     }).pipe(share());
   }
+}
 
-  private get(price: PriceDto): Price {
-    const key = Object.keys(price)[0];
+export function map(price: PriceDto): Price {
+  const key = Object.keys(price)[0];
 
-    const timestamp = parseInt(key, 10);
-    const value = price[key];
+  const timestamp = parseInt(key, 10);
+  const value = price[key];
 
-    const candle: Price = {
-      timestamp,
-      value,
-    };
+  const candle: Price = {
+    timestamp,
+    value,
+  };
 
-    return candle;
-  }
+  return candle;
 }

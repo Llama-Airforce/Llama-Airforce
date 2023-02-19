@@ -12,7 +12,7 @@ export default class BondingService {
   constructor(socket: SocketPool) {
     this.get$ = new Observable<Bonding>((subscriber) => {
       const onData = (data: BondingDto) => {
-        const bonding = this.get(data);
+        const bonding = map(data);
         subscriber.next(bonding);
       };
 
@@ -23,14 +23,14 @@ export default class BondingService {
       };
     }).pipe(share());
   }
+}
 
-  private get(bonding: BondingDto): Bonding {
-    const curve = zipWith(bonding.x, bonding.y, (x, y) => ({ x, y }));
+export function map(bonding: BondingDto): Bonding {
+  const curve = zipWith(bonding.x, bonding.y, (x, y) => ({ x, y }));
 
-    return {
-      curve,
-      balanceCoin0: bonding.balance0,
-      balanceCoin1: bonding.balance1,
-    };
-  }
+  return {
+    curve,
+    balanceCoin0: bonding.balance0,
+    balanceCoin1: bonding.balance1,
+  };
 }

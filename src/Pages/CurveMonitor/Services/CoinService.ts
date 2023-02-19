@@ -11,7 +11,7 @@ export default class CoinService {
   constructor(socket: SocketPool) {
     this.get$ = new Observable<Coin[]>((subscriber) => {
       const onData = (data: NamesDto) => {
-        const coins = this.get(data);
+        const coins = map(data);
         subscriber.next(coins);
       };
 
@@ -22,10 +22,10 @@ export default class CoinService {
       };
     }).pipe(share());
   }
+}
 
-  private get(names: NamesDto): Coin[] {
-    return names.map((name) => ({
-      name,
-    }));
-  }
+export function map(names: NamesDto): Coin[] {
+  return names.map((name) => ({
+    name,
+  }));
 }

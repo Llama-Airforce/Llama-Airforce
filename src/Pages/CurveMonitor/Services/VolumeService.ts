@@ -12,7 +12,7 @@ export default class VolumeService {
   constructor(socket: SocketPool) {
     this.init$ = new Observable<Volume[]>((subscriber) => {
       const onData = (data: VolumeDto[]) => {
-        const xs = data.map((d) => this.get(d));
+        const xs = data.map((d) => map(d));
         subscriber.next(xs);
       };
 
@@ -25,7 +25,7 @@ export default class VolumeService {
 
     this.update$ = new Observable<Volume>((subscriber) => {
       const onData = (data: VolumeDto) => {
-        const x = this.get(data);
+        const x = map(data);
         subscriber.next(x);
       };
 
@@ -36,18 +36,18 @@ export default class VolumeService {
       };
     }).pipe(share());
   }
+}
 
-  private get(volume: VolumeDto): Volume {
-    const key = Object.keys(volume)[0];
+export function map(volume: VolumeDto): Volume {
+  const key = Object.keys(volume)[0];
 
-    const timestamp = parseInt(key, 10);
-    const value = volume[key];
+  const timestamp = parseInt(key, 10);
+  const value = volume[key];
 
-    const v: Volume = {
-      timestamp,
-      volume: value,
-    };
+  const v: Volume = {
+    timestamp,
+    volume: value,
+  };
 
-    return v;
-  }
+  return v;
 }

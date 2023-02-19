@@ -12,6 +12,9 @@ type ServerToClientEvents = {
   table_all: (dto: TransactionDto[]) => void;
   "Update Table-ALL": (dto: TransactionDto) => void;
 
+  table_mev: (dto: SandwichDto[]) => void;
+  "Update Table-MEV": (dto: SandwichDto) => void;
+
   price_chart: (dto: PriceDto[]) => void;
   "Update Price-Chart": (dto: PriceDto) => void;
 
@@ -68,6 +71,16 @@ export type TransactionDtoRemove = TransactionDto & {
     nameOut: string;
     valueUSD: number;
   }[];
+};
+
+export type SandwichDto = {
+  blockNumber: number;
+  unixtime: number;
+  profit: number;
+  profitUnit: string;
+  loss: number;
+  lossUnit: string;
+  tx: TransactionDto[];
 };
 
 export type PriceDto = {

@@ -9,3 +9,4 @@ export { default as BondingService } from "@/Pages/CurveMonitor/Services/Bonding
 export { default as CoinService } from "@/Pages/CurveMonitor/Services/CoinService";
 export { default as PairService } from "@/Pages/CurveMonitor/Services/PairService";
 export { default as TimeRangeService } from "@/Pages/CurveMonitor/Services/TimeRangeService";
+export { default as SandwichService } from "@/Pages/CurveMonitor/Services/SandwichService";
