@@ -1,16 +1,19 @@
 <template>
   <div class="gauges">
-    <div class="dashboard"
-         :class="{loading}">
+    <div
+      class="dashboard"
+      :class="{loading}"
+    >
       <Card
         class="perf-params"
-        :title="t('title')">
+        :title="t('title')"
+      >
         <div class="v-container">
           <div class="note">
             <span>
               This tool allows you to query the performance of a position when providing liquidity in a Curve pool, including impermanent loss, rewards from trading fees and rewards from CRV and CVX tokens.
             </span>
-            <br/>
+            <br />
             <span>
               Select the pool you want to query. Enter the date at which you entered the position and the date until which you would like to query the pool's performance. Indicate the amount of LP tokens you received when you entered the position and press "Check".
             </span>
@@ -25,11 +28,13 @@
 
           <div class="input-params">
             <InputDate
+              :label="t('start-date')"
               @date-selected="updateStartDate"
-              :label="t('start-date')"/>
+            />
             <InputDate
+              :label="t('end-date')"
               @date-selected="updateEndDate"
-              :label="t('end-date')"/>
+            />
             <div class="v-container">
               <div class="label">{{ t('lp-amount') }}</div>
               <InputNumber
@@ -60,7 +65,6 @@
         :data="perfData"
       />
     </div>
-
   </div>
 </template>
 

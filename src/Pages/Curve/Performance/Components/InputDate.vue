@@ -36,7 +36,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -66,23 +65,18 @@ const dayPlaceholder = $computed((): string => {
   return new Date().getDate().toString();
 });
 
-const year: number | null = $ref(null);
-const month: number | null = $ref(null);
-const day: number | null = $ref(null);
+const year: number = $ref(2023);
+const month: number = $ref(1);
+const day: number = $ref(1);
 
 // Events
 const emitDateIfValid = (): void => {
-  if (year !== null && month !== null && day !== null) {
-    const date = new Date(year, month - 1, day);
-    if (!isNaN(date.getTime())) {
-      // The date is valid, emit it as an event
-      emit("date-selected", date);
-    } else {
-      // The date is invalid, emit null as an event
-      emit("date-selected", null);
-    }
+  const date = new Date(year, month - 1, day);
+  if (!isNaN(date.getTime())) {
+    // The date is valid, emit it as an event
+    emit("date-selected", date);
   } else {
-    // Some inputs are missing, emit null as an event
+    // The date is invalid, emit null as an event
     emit("date-selected", null);
   }
 };
