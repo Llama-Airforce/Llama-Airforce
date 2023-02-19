@@ -2,6 +2,10 @@ import { io, Socket } from "socket.io-client";
 
 type ClientToServerEvents = {
   "new combination": (dto: [string, string, string]) => void;
+
+  day: () => void;
+  week: () => void;
+  month: () => void;
 };
 
 type ServerToClientEvents = {

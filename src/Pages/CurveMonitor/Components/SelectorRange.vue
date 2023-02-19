@@ -21,7 +21,7 @@ import {
 } from "@/Pages/CurveMonitor/Models/TimeRange";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import type { SocketPool } from "@/Pages/CurveMonitor/Services/Sockets";
-import { PairService } from "@/Pages/CurveMonitor/Services";
+import { TimeRangeService } from "@/Pages/CurveMonitor/Services";
 
 const { t } = useI18n();
 
@@ -40,8 +40,10 @@ const onRange = (range: TimeRange) => {
   timeRange = range;
 
   if (store.pair) {
-    const pairService = new PairService(store.socketPool as SocketPool);
-    pairService.update(range, store.pair);
+    const timeRangeService = new TimeRangeService(
+      store.socketPool as SocketPool
+    );
+    timeRangeService.update(range);
   }
 };
 </script>
