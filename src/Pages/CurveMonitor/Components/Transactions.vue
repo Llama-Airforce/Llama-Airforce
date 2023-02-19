@@ -106,23 +106,11 @@
 
       <div>{{ getAssetsString(props.item) }}</div>
 
+      <div class="number">${{ props.item.value.toLocaleString() }}</div>
       <div class="number">
-        <AsyncValue
-          :value="Math.abs(props.item.value)"
-          :precision="2"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
-
-      <div class="number">
-        <AsyncValue
-          v-if="props.item.type === 'swap'"
-          :value="Math.abs((props.item as Swap).fee)"
-          :precision="2"
-          :show-zero="true"
-          type="dollar"
-        />
+        <span v-if="props.item.type === 'swap'">
+          ${{ (props.item as Swap).fee.toLocaleString() }}
+        </span>
       </div>
 
       <div>
@@ -142,7 +130,6 @@ import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  AsyncValue,
   DataTable,
   InputText,
   Pagination,
