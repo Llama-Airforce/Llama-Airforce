@@ -99,15 +99,15 @@ let pool = $ref("");
 let poolSelected: Pool | null = $ref(null);
 let startDate: Date | null = $ref(null);
 let endDate: Date | null = $ref(null);
-const lpAmount: string | null = $ref('');
-let perfData: PoolPerformanceResponse | null = $ref(null);
+const lpAmount: number = $ref(1000000000000000000);
+let perfData: PoolPerformanceResponse = $ref(new PoolPerformanceResponse());
 let loading = $ref(false);
 
 const canSubmit = $computed((): boolean => {
   return !(startDate !== null &&
     endDate !== null &&
     pool !== '' &&
-    lpAmount !== '');
+    lpAmount !== 0);
 });
 
 // Hooks
