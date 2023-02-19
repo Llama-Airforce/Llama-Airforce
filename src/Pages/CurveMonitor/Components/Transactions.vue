@@ -109,7 +109,7 @@
       <div class="number">${{ props.item.value.toLocaleString() }}</div>
       <div class="number">
         <span v-if="props.item.type === 'swap'">
-          ${{ (props.item as Swap).fee.toLocaleString() }}
+          ${{ round((props.item as Swap).fee).toLocaleString() }}
         </span>
       </div>
 
@@ -128,7 +128,7 @@
 import { onMounted, watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
-import { chain } from "lodash";
+import { chain, round } from "lodash";
 import {
   DataTable,
   InputText,
