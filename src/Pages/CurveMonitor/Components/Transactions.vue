@@ -4,16 +4,7 @@
     columns-header="auto auto 1fr"
     columns-data="trades-columns-data"
     :rows="transactionsPage"
-    :columns="[
-      'Type',
-      'Block',
-      'Tx',
-      'Trader',
-      'Assets',
-      'Value',
-      'Fees',
-      'Time',
-    ]"
+    :columns="['Type', 'Block', 'Tx', 'Trader', 'Assets', 'Fees', 'Time']"
     @selected="onSelected"
   >
     <template #header-title>
@@ -50,6 +41,7 @@
 
     <template #row="props: { item: Transaction }">
       <div
+        class="type"
         :class="{
           deposit: props.item.type === 'deposit',
           withdraw: props.item.type === 'withdraw',
@@ -104,9 +96,14 @@
         </a>
       </div>
 
-      <div>{{ getAssetsString(props.item) }}</div>
+      <div
+        class="assets"
+        :class="{
+          swap: props.item.type === 'swap',
+        }"
+        v-html="getAssetsString(props.item)"
+      ></div>
 
-      <div class="number">${{ props.item.value.toLocaleString() }}</div>
       <div class="number">
         <span v-if="props.item.type === 'swap'">
           ${{ round((props.item as Swap).fee).toLocaleString() }}
@@ -200,11 +197,22 @@ onMounted(() => {
 // Methods
 const getAssetsString = (tx: Transaction): string => {
   if (isSwap(tx)) {
-    return `${tx.tokenIn} -> ${tx.tokenOut}`;
+    const amountIn = tx.amountIn.toLocaleString();
+    const amountOut = tx.amountOut.toLocaleString();
+
+    const from = `<span>${amountIn} ${tx.tokenIn}</span>`;
+    const arrow = `<i class='fas fa-arrow-right'></i>`;
+    const to = `<span style='justify-self: end;'>${amountOut} ${tx.tokenOut}</span>`;
+
+    return `${from}${arrow}${to}`;
   } else if (isDeposit(tx)) {
-    return tx.tokenIn;
+    const amountIn = tx.amountIn.toLocaleString();
+
+    return `${amountIn} ${tx.tokenIn}`;
   } else if (isWithdraw(tx)) {
-    return tx.tokenOut;
+    const amountOut = tx.amountOut.toLocaleString();
+
+    return `${amountOut} ${tx.tokenOut}`;
   }
 
   return "???";
@@ -302,16 +310,29 @@ watch(
     color: $yellow;
   }
 
-  .deposit {
-    color: $green;
+  .type {
+    &.swap {
+      color: lighten($purple, 10%);
+    }
+
+    &.deposit {
+      color: $green;
+    }
+
+    &.withdraw {
+      color: $red;
+    }
   }
 
-  .withdraw {
-    color: $red;
-  }
+  .assets {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
-  .swap {
-    color: lighten($purple, 10%);
+    &.swap {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+    }
   }
 
   ::v-deep(.trades-columns-data) {
@@ -319,12 +340,12 @@ watch(
     grid-column-gap: 2.5rem;
     grid-template-columns:
       6rem 4rem 6rem 6rem minmax(5rem, 2fr)
-      6rem 6rem minmax(13rem, 1fr);
+      6rem minmax(13rem, 1fr);
 
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(6),
-    div:nth-child(7) {
+    div:nth-child(8) {
       justify-content: end;
     }
 
