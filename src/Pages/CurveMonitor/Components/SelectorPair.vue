@@ -7,7 +7,7 @@
       :open="selectCoinOpen[0]"
       @open="onCoinOpen(0)"
       @close="selectCoinOpen[0] = false"
-      @input="onCoinSelect(0, $event)"
+      @input="onCoinSelect(0, $event, true)"
     >
       <template #item="props: { item: Coin }">
         <div class="item">
@@ -27,7 +27,7 @@
       :open="selectCoinOpen[1]"
       @open="onCoinOpen(1)"
       @close="selectCoinOpen[1] = false"
-      @input="onCoinSelect(1, $event)"
+      @input="onCoinSelect(1, $event, true)"
     >
       <template #item="props: { item: Coin }">
         <div class="item">
@@ -96,7 +96,7 @@ const onCoinOpen = (i: 0 | 1): void => {
   selectCoinOpen[i] = !selectCoinOpen[i];
 };
 
-const onCoinSelect = (i: 0 | 1, option: unknown): void => {
+const onCoinSelect = (i: 0 | 1, option: unknown, update: boolean): void => {
   const oldCoin = coin[i];
   const newCoin = option as Coin;
   const j = i === 0 ? 1 : 0;
@@ -113,7 +113,7 @@ const onCoinSelect = (i: 0 | 1, option: unknown): void => {
     coin[j] = oldCoin;
   }
 
-  if (store.socketPool && coin[0] && coin[1]) {
+  if (update && store.socketPool && coin[0] && coin[1]) {
     const pairService = new PairService(store.socketPool as SocketPool);
     pairService.update(store.timeRange, [coin[0].label, coin[1].label]);
   }
@@ -123,8 +123,8 @@ const onCoinSelect = (i: 0 | 1, option: unknown): void => {
 watch(
   () => pair,
   () => {
-    onCoinSelect(0, pair ? pair[0] : null);
-    onCoinSelect(1, pair ? pair[1] : null);
+    onCoinSelect(0, pair ? pair[0] : null, false);
+    onCoinSelect(1, pair ? pair[1] : null, false);
   }
 );
 </script>
