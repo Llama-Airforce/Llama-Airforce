@@ -3,7 +3,7 @@
     <ButtonToggle
       v-for="range in timeRanges"
       :key="range"
-      :model-value="timeRange === range"
+      :model-value="store.timeRange === range"
       :value="t(range)"
       @click="onRange(range)"
     >
@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { ButtonToggle } from "@/Framework";
 import {
@@ -27,17 +26,14 @@ const { t } = useI18n();
 
 const store = useCurveMonitorStore();
 
-// Refs
-let timeRange: TimeRange = $ref(store.timeRange);
-
 // Events
 const onRange = (range: TimeRange) => {
   // Don't do anything if we're not changing the range.
-  if (timeRange === range) {
+  if (store.timeRange === range) {
     return;
   }
 
-  timeRange = range;
+  store.timeRange = range;
 
   if (store.pair) {
     const timeRangeService = new TimeRangeService(
