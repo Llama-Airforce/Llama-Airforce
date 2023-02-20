@@ -176,7 +176,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 
   ::v-deep(.bribed-columns-data) {
     display: grid;
-    grid-template-columns: 20px 1.5fr 1fr 1fr;
+    grid-template-columns: 20px 1.5fr 0.6fr 0.6fr;
 
     // Right adjust number columns.
     div:nth-child(3),
@@ -206,7 +206,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
         > .tooltip-bribed-columns-data {
           flex-grow: 1;
           display: grid;
-          grid-template-columns: 20px 1.5fr 1fr 1fr;
+          grid-template-columns: 20px 1.5fr 0.6fr 0.6fr;
           grid-column-gap: 1rem;
 
           // Right adjust number columns.
