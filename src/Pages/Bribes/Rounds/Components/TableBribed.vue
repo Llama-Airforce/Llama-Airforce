@@ -47,6 +47,7 @@
         </template>
 
         <div class="bribes">
+          <span>{{ pool(props.item) }}</span>
           <ul>
             <li
               v-for="(bribe, i) in bribes(props.item)"
@@ -222,12 +223,18 @@ const onSort = (columnName: string, order: SortOrder): void => {
       height: auto;
 
       > .bribes {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 2rem;
+
         > ul {
           display: flex;
           flex-direction: column;
           padding: 0;
           margin: 0;
           list-style-type: none;
+          min-width: 15rem;
 
           > li {
             display: grid;
