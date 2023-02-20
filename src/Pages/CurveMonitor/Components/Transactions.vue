@@ -5,7 +5,6 @@
     columns-data="trades-columns-data"
     :rows="transactionsPage"
     :columns="['Type', 'Block', 'Tx', 'Trader', 'Assets', 'Fees', 'Time']"
-    @selected="onSelected"
   >
     <template #header-title>
       <div class="title">{{ t("title") }}</div>
@@ -113,10 +112,6 @@
       <div>
         {{ relativeTime(props.item.timestamp) }}
       </div>
-
-      <!-- <div class="sandwiched">
-        <i class="fas fa-hamburger"> </i>
-      </div> -->
     </template>
   </DataTable>
 </template>
@@ -143,11 +138,6 @@ import {
   Swap,
   TransactionType,
 } from "@/Pages/CurveMonitor/Models/Transaction";
-
-type Round = {
-  round: number;
-  value: number;
-};
 
 const { t } = useI18n();
 
@@ -235,11 +225,6 @@ const relativeTime = (unixtime: number): string => {
 };
 
 // Events
-const onSelected = (data: unknown): void => {
-  const epoch = data as Round;
-  console.log(epoch.round);
-};
-
 const onPage = (pageNew: number) => {
   page = pageNew;
 };
@@ -302,12 +287,6 @@ watch(
     margin-right: 2rem;
     font-size: 0.9rem;
     width: auto;
-  }
-
-  .sandwiched {
-    display: flex;
-    justify-content: center;
-    color: $yellow;
   }
 
   .type {
