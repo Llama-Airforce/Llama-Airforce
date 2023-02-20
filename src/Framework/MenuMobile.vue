@@ -32,6 +32,11 @@
           </MenuItem>
         </ul>
       </nav>
+
+      <SelectLanguage
+        class="language"
+        direction="up"
+      ></SelectLanguage>
     </div>
   </div>
 </template>
@@ -40,7 +45,7 @@
 import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useRoute } from "vue-router";
-import { MenuItem, Select } from "@/Framework";
+import { MenuItem, Select, SelectLanguage } from "@/Framework";
 import { subIsActive } from "@/Util";
 import { usePageStore } from "@/Pages/Store";
 
@@ -120,6 +125,9 @@ watch(
   }
 
   > .menu {
+    display: flex;
+    flex-direction: column;
+
     position: fixed;
     height: 100%;
     right: 0;
@@ -173,6 +181,10 @@ watch(
     }
 
     nav {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+
       margin-top: 2rem;
       padding-top: 2rem;
       border-top: 1px solid $level2-color;
@@ -234,6 +246,25 @@ watch(
           }
         }
       }
+    }
+  }
+
+  ::v-deep(.language) {
+    margin-bottom: calc(2 * 1.25rem);
+
+    .chevrons {
+      font-size: 1rem;
+      top: 2.5rem;
+      right: 1.75rem;
+    }
+
+    .item .label {
+      font-size: 1.75rem;
+    }
+
+    .selected,
+    .items {
+      line-height: 4rem !important;
     }
   }
 }
