@@ -38,36 +38,46 @@
     </template>
 
     <template #row="props: { item: BribedPersonal }">
-      <div class="logo">
-        <img
-          class="logo-img"
-          :src="icon(props.item.pool, false)"
-        />
-      </div>
-      <div>
-        <AsyncValue
-          :value="percentage(props.item)"
-          :precision="0"
-          type="percentage"
-        />
-      </div>
-      <div>
-        {{ pool(props.item) }}
-      </div>
-      <div class="number">
-        <AsyncValue
-          :value="dollarPerVlAsset(props.item)"
-          :precision="5"
-          type="dollar"
-        />
-      </div>
-      <div class="number">
-        <AsyncValue
-          :value="amountDollars(props.item)"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
+      <Tooltip>
+        <template #item>
+          <div class="tooltip-personal-columns-data">
+            <div class="logo">
+              <img
+                class="logo-img"
+                :src="icon(props.item.pool, false)"
+              />
+            </div>
+            <div>
+              <AsyncValue
+                :value="percentage(props.item)"
+                :precision="0"
+                type="percentage"
+              />
+            </div>
+            <div>
+              {{ pool(props.item) }}
+            </div>
+            <div class="number">
+              <AsyncValue
+                :value="dollarPerVlAsset(props.item)"
+                :precision="5"
+                type="dollar"
+              />
+            </div>
+            <div class="number">
+              <AsyncValue
+                :value="amountDollars(props.item)"
+                :precision="2"
+                type="dollar"
+              />
+            </div>
+          </div>
+        </template>
+
+        <div class="tooltip-hover">
+          {{ pool(props.item) }}
+        </div>
+      </Tooltip>
     </template>
 
     <template #no-data>
@@ -85,7 +95,7 @@ import { watch } from "vue";
 import { $ref, $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder } from "@/Framework";
+import { AsyncValue, DataTable, SortOrder, Tooltip } from "@/Framework";
 import { icon } from "@/Util";
 import { useWalletStore, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
@@ -310,6 +320,43 @@ watch(
     div:nth-child(4),
     div:nth-child(5) {
       justify-content: end;
+    }
+  }
+
+  ::v-deep(.tooltip) {
+    grid-column: 1 / span 5;
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    > div {
+      display: flex;
+      flex-grow: 1;
+      height: 100%;
+      align-items: center;
+
+      > div {
+        display: flex;
+        flex-grow: 1;
+        height: 100%;
+        align-items: center;
+
+        > .tooltip-personal-columns-data {
+          flex-grow: 1;
+          display: grid;
+          grid-template-columns: 20px 1fr 3fr 2fr 2fr;
+
+          // Right adjust number columns.
+          div:nth-child(4),
+          div:nth-child(5) {
+            justify-content: end;
+          }
+        }
+      }
+    }
+
+    > .popper {
+      height: auto;
     }
   }
 }
