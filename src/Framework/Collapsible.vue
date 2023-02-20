@@ -22,7 +22,7 @@ const { expanded = true } = defineProps<Props>();
 .collapsible-content {
   display: grid;
   grid-template-rows: 0fr;
-  transition: 0s;
+  transition: grid-template-rows 0s;
   overflow: hidden;
 
   &.expanded {

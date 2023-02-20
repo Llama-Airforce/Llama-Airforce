@@ -339,7 +339,7 @@ const sortColumn = (index: number): void => {
 
   ::v-deep(.row) {
     &.expanded {
-      .row-data {
+      > .row-data {
         background: $level1-color;
         border-bottom-width: 0;
       }

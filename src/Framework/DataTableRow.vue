@@ -19,10 +19,7 @@
     </div>
 
     <Collapsible :expanded="expanded">
-      <div
-        v-if="expanded"
-        class="row-details"
-      >
+      <div class="row-details">
         <slot name="row-details"></slot>
       </div>
     </Collapsible>

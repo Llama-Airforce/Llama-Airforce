@@ -42,7 +42,10 @@
     </template>
 
     <template #row-details="props: { item: Pool }">
-      <div class="graphs">
+      <div
+        v-if="expanded.includes(props.item)"
+        class="graphs"
+      >
         <GraphTvl
           class="tvl"
           :pool-selected="props.item"

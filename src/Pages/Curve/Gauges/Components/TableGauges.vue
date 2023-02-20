@@ -36,7 +36,10 @@
     </template>
 
     <template #row-details="props: { item: Gauge }">
-      <div class="graphs">
+      <div
+        v-if="expanded.includes(props.item)"
+        class="graphs"
+      >
         <GraphEmissions
           class="fees-and-emissions"
           :gauge-selected="props.item"
