@@ -76,12 +76,15 @@ onMounted((): void => {
         style: LineStyle.Solid,
       },
     },
-    rightPriceScale: {
+    leftPriceScale: {
       borderVisible: false,
       scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
+        top: 0.6,
+        bottom: 0,
       },
+    },
+    rightPriceScale: {
+      borderVisible: false,
     },
     timeScale: {
       borderVisible: false,
@@ -142,11 +145,7 @@ const initChart = (): void => {
     priceFormat: {
       type: "volume",
     },
-    priceScaleId: "",
-    scaleMargins: {
-      top: 0.6,
-      bottom: 0,
-    },
+    priceScaleId: "left",
     priceLineVisible: false,
   });
 };

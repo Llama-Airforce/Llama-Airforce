@@ -86,12 +86,15 @@ onMounted((): void => {
         visible: false,
       },
     },
-    rightPriceScale: {
+    leftPriceScale: {
       borderVisible: false,
       scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
+        top: 0.8,
+        bottom: 0,
       },
+    },
+    rightPriceScale: {
+      borderVisible: false,
     },
     timeScale: {
       borderVisible: false,
@@ -121,11 +124,7 @@ onMounted((): void => {
     priceFormat: {
       type: "volume",
     },
-    priceScaleId: "",
-    scaleMargins: {
-      top: 0.8,
-      bottom: 0,
-    },
+    priceScaleId: "left",
   });
 });
 
