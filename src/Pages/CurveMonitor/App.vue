@@ -85,7 +85,7 @@ onMounted(() => {
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: 350px auto 350px auto auto;
+  grid-template-rows: auto 350px 350px auto;
   grid-template-columns: repeat(6, 1fr);
 
   @media only screen and (max-width: 1280px) {
@@ -93,33 +93,33 @@ onMounted(() => {
   }
 
   .sandwiches {
-    grid-row: 4;
-    grid-column: 1 / -1;
-  }
-
-  .transactions {
-    grid-row: 5;
-    grid-column: 1 / -1;
-  }
-
-  .prices {
     grid-row: 1;
     grid-column: 1 / -1;
   }
 
+  .transactions {
+    grid-row: 4;
+    grid-column: 1 / -1;
+  }
+
+  .prices {
+    grid-row: 2;
+    grid-column: 1 / 4;
+  }
+
   .bonding {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 4 / -1;
   }
 
   .balances {
-    grid-row: 2;
-    grid-column: 1 / -1;
+    grid-row: 3;
+    grid-column: 1 / 4;
   }
 
   .tvl {
     grid-row: 3;
-    grid-column: 1 / 4;
+    grid-column: 4 / -1;
   }
 }
 

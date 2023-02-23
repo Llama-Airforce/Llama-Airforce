@@ -3,12 +3,12 @@
     class="balances"
     :title="t('title')"
   >
+    <Legend></Legend>
+
     <div
       ref="chartRef"
       class="chart"
     ></div>
-
-    <Legend></Legend>
   </Card>
 </template>
 
@@ -188,7 +188,7 @@ const formatterAbsolute = (y: number): string => {
     gap: 1rem;
 
     .chart {
-      height: 350px;
+      height: calc(100% - 3.125rem);
       z-index: 0;
     }
 
