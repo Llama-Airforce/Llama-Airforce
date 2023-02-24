@@ -105,21 +105,25 @@ onMounted(() => {
   .prices {
     grid-row: 2;
     grid-column: 1 / 4;
+    min-height: 350px;
   }
 
   .bonding {
     grid-row: 2;
     grid-column: 4 / -1;
+    min-height: 350px;
   }
 
   .balances {
     grid-row: 3;
     grid-column: 1 / 4;
+    min-height: 350px;
   }
 
   .tvl {
     grid-row: 3;
     grid-column: 4 / -1;
+    min-height: 350px;
   }
 }
 
