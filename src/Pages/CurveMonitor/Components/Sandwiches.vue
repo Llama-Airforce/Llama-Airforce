@@ -92,7 +92,7 @@ const { t } = useI18n();
 const store = useCurveMonitorStore();
 
 const search = $ref("");
-const swsPerPage = 10;
+const swsPerPage = 6;
 let page = $ref(1);
 let expanded: Sandwich[] = $ref([]);
 
