@@ -1,7 +1,7 @@
 <template>
   <div
     class="controls"
-    :class="{ hasPool: !!poolSelected }"
+    :class="{ hasPool }"
   >
     <div class="logo">
       <img src="@/Assets/crv.png" />
@@ -22,8 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { $computed, $ref } from "vue/macros";
 import { shorten } from "@/Util";
+import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { PoolService, StatusService } from "@/Pages/CurveMonitor/Services";
 import SelectorPair from "@/Pages/CurveMonitor/Components/SelectorPair.vue";
@@ -32,7 +33,6 @@ import Status from "@/Pages/CurveMonitor/Components/Status.vue";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
 
 let pool = $ref("");
-let poolSelected: Pool | null = $ref(null);
 
 // Props
 interface Props {
@@ -42,19 +42,17 @@ interface Props {
 
 const { statusService, poolService } = defineProps<Props>();
 
-// Emits
-const emit = defineEmits<{
-  (e: "select", pool: Pool): void;
-}>();
+// Refs
+const store = useCurveMonitorStore();
+
+const hasPool = $computed(() => store.pool !== null);
 
 // Events
 const onSelect = (option: unknown): void => {
   const poolNew = option as Pool;
 
   pool = shorten(poolNew.name);
-  poolSelected = poolNew;
-
-  emit("select", poolNew);
+  store.pool = poolNew;
 };
 </script>
 

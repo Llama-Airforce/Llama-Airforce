@@ -18,7 +18,7 @@ export default function createRouter() {
   // Configure all routes, including all pages.
   const routes = [
     { path: "/", component: Home },
-    { path: "/monitor", name: "curvemonitor", component: CurveMonitor },
+    { path: "/monitor/:pool?", name: "curvemonitor", component: CurveMonitor },
 
     { path: "/code", component: Code },
     { path: "/debug", component: Debug },

@@ -4,11 +4,10 @@
       <Controls
         :status-service="statusService"
         :pool-service="poolService"
-        @select="onSelect"
       ></Controls>
 
       <div
-        v-if="poolSelected"
+        v-if="hasPool"
         class="data"
       >
         <Sandwiches class="sandwiches"></Sandwiches>
@@ -23,8 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+import { onMounted, watch } from "vue";
+import { $computed } from "vue/macros";
+import { useRoute, useRouter } from "vue-router";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import Controls from "@/Pages/CurveMonitor/Components/Controls.vue";
@@ -45,29 +45,78 @@ const statusService = new StatusService(socket);
 const poolService = new PoolService(socket);
 
 // Refs.
+const route = useRoute();
+const router = useRouter();
 const store = useCurveMonitorStore();
 store.socket = socket;
 
-let poolSelected: Pool | null = $ref(null);
+const hasPool = $computed(() => store.pool !== null);
 
-// Events
-const onSelect = (option: unknown): void => {
-  const poolNew = option as Pool;
-
-  poolSelected = poolNew;
-
-  store.socketPool?.close();
-  store.socketPool = loadPool(
-    store,
-    host,
-    "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"
-  );
-};
+let poolConnected = "";
 
 // Hooks
-onMounted(() => {
+onMounted(async () => {
+  // Navigate to pool from URL address if set.
+  const routePool = route.params.pool;
+  await onNewPoolRoute(routePool);
+
   socket.connect();
 });
+
+// Methods
+const onNewPool = async (
+  option: unknown,
+  updateUrl: boolean
+): Promise<void> => {
+  const poolNew = option as Pool;
+
+  // Don't do anything if 'new' pool is already loaded.
+  if (poolConnected === poolNew.id) {
+    return;
+  }
+
+  store.pool = {
+    id: "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD",
+    name: "susd",
+  };
+
+  store.socketPool?.close();
+  store.socketPool = loadPool(store, host, store.pool.id);
+  poolConnected = store.pool.id;
+
+  if (updateUrl) {
+    await router.push({
+      name: "curvemonitor",
+      params: { pool: store.pool.id },
+    });
+  }
+};
+
+const onNewPoolRoute = async (routePool: string | string[]) => {
+  if (routePool && typeof routePool === "string") {
+    const option: Pool = {
+      id: routePool,
+      name: "???",
+    };
+    await onNewPool(option, false);
+  }
+};
+
+// Watches
+watch(
+  () => store.pool,
+  async (newPool) => {
+    await onNewPool(newPool, true);
+  }
+);
+
+watch(
+  () => route.params,
+  async (newPool) => {
+    const routePool = newPool.pool;
+    await onNewPoolRoute(routePool);
+  }
+);
 </script>
 
 <style lang="scss" scoped>

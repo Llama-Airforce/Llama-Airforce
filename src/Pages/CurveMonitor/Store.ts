@@ -21,6 +21,7 @@ type State = {
   socket: SocketRoot | null;
   socketPool: SocketPool | null;
 
+  pool: Pool | null;
   pools: Pool[];
   poolsLoadingError: boolean;
   prices: Price[];
@@ -41,6 +42,7 @@ export const useCurveMonitorStore = defineStore({
     socket: null,
     socketPool: null,
 
+    pool: null,
     pools: [],
     poolsLoadingError: false,
     prices: [],
