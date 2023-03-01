@@ -24,6 +24,7 @@ import { TimeRangeService } from "@/Pages/CurveMonitor/Services";
 
 const { t } = useI18n();
 
+// Refs
 const store = useCurveMonitorStore();
 
 // Events

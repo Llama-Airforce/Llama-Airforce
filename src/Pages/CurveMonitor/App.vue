@@ -22,8 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
-import { $computed } from "vue/macros";
+import { onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
@@ -50,7 +49,7 @@ const router = useRouter();
 const store = useCurveMonitorStore();
 store.socket = socket;
 
-const hasPool = $computed(() => store.pool !== null);
+const hasPool = computed((): boolean => store.pool !== null);
 
 let poolConnected = "";
 

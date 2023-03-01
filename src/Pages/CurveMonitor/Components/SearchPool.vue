@@ -23,8 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { debounce } from "lodash";
 import { InputText } from "@/Framework";
@@ -53,10 +52,10 @@ const emit = defineEmits<{
 // Refs
 const store = useCurveMonitorStore();
 
-let autoComplete = $ref(false);
-let placeholder = $ref(t("search-placeholder"));
+const autoComplete = ref(false);
+const placeholder = ref(t("search-placeholder"));
 
-const pools = $computed((): Pool[] => {
+const pools = computed((): Pool[] => {
   return store.pools;
 });
 
@@ -74,12 +73,12 @@ const getPoolsDebounced = debounce(getPools, 200, { maxWait: 1000 });
 
 const onInput = (input: string): void => {
   void getPoolsDebounced(store, poolService, input);
-  autoComplete = !!input;
+  autoComplete.value = !!input;
 };
 
 const onSelect = (option: unknown): void => {
   const pool = option as Pool;
-  autoComplete = false;
+  autoComplete.value = false;
 
   emit("select", pool);
 };
@@ -89,9 +88,9 @@ watch(
   () => store.poolsLoadingError,
   (newError) => {
     if (newError) {
-      placeholder = t("search-error");
+      placeholder.value = t("search-error");
     } else {
-      placeholder = t("search-placeholder");
+      placeholder.value = t("search-placeholder");
     }
   }
 );

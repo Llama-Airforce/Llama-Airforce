@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed, $ref } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -37,30 +37,31 @@ type Mode = "percentage" | "absolute";
 
 const { t } = useI18n();
 
-const chartRef = $ref<HTMLElement | null>(null);
-let chart: IChartApi | null = $ref(null);
-let lineSeries: ISeriesApi<"Line">[] = $ref([]);
+let chart: IChartApi;
+let lineSeries: ISeriesApi<"Line">[] = [];
+const mode: Mode = "absolute";
 
 // Refs
 const store = useCurveMonitorStore();
-const mode: Mode = $ref("absolute");
 
-const balances = $computed((): Balances[] => {
+const chartRef = ref<HTMLElement | null>(null);
+
+const balances = computed((): Balances[] => {
   return store.balances;
 });
 
 // Using balances directly instead of coins, because coins array info may come later.
-const numCoins = $computed((): number => {
+const numCoins = computed((): number => {
   return store.balances[0]?.balances?.length ?? 0;
 });
 
 // Hooks
 onMounted((): void => {
-  if (!chartRef) return;
+  if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef, {
-    width: chartRef.clientWidth,
-    height: chartRef.clientHeight,
+  chart = createChartFunc(chartRef.value, {
+    width: chartRef.value.clientWidth,
+    height: chartRef.value.clientHeight,
     layout: {
       background: {
         type: ColorType.Solid,
@@ -101,17 +102,14 @@ onMounted((): void => {
   });
 
   initCharts();
-  createChart(balances);
+  createChart(balances.value);
 });
 
 // Watches
-watch(
-  () => balances,
-  (newBalances) => {
-    initCharts();
-    createChart(newBalances);
-  }
-);
+watch(balances, (newBalances) => {
+  initCharts();
+  createChart(newBalances);
+});
 
 // Methods
 const initCharts = (): void => {
@@ -125,7 +123,7 @@ const initCharts = (): void => {
   }
 
   lineSeries = [];
-  for (let i = 0; i < numCoins; i++) {
+  for (let i = 0; i < numCoins.value; i++) {
     const lineSerie = chart.addLineSeries({
       priceFormat: {
         type: "price",
@@ -148,7 +146,7 @@ const createChart = (newBalances: Balances[]): void => {
     return;
   }
 
-  for (let i = 0; i < numCoins; i++) {
+  for (let i = 0; i < numCoins.value; i++) {
     const newLineSerie: LineData[] = chain(newBalances)
       .map((b) => ({
         time: b.timestamp as UTCTimestamp,

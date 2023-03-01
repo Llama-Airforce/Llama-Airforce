@@ -43,8 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { Select } from "@/Framework";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { PairService } from "@/Pages/CurveMonitor/Services";
@@ -58,13 +57,16 @@ type Coin = {
 // Refs
 const store = useCurveMonitorStore();
 
-const coins = $computed((): Coin[] => {
+const selectCoinOpen = ref<[boolean, boolean]>([false, false]);
+const coin = ref<[Coin | null, Coin | null]>([null, null]);
+
+const coins = computed((): Coin[] => {
   return store.coins.map((coin) => ({
     label: coin.name,
   }));
 });
 
-const pair = $computed((): [Coin, Coin] | null => {
+const pair = computed((): [Coin, Coin] | null => {
   if (store.pair) {
     return [
       {
@@ -79,9 +81,6 @@ const pair = $computed((): [Coin, Coin] | null => {
   return null;
 });
 
-const selectCoinOpen = $ref([false, false]);
-const coin: [Coin | null, Coin | null] = $ref([null, null]);
-
 // Methods
 const icon = (coin: Coin | null): string => {
   return coin?.logo ? `${coin.logo}` : "";
@@ -93,40 +92,40 @@ const label = (coin: Coin | null): string => {
 
 // Events
 const onCoinOpen = (i: 0 | 1): void => {
-  selectCoinOpen[i] = !selectCoinOpen[i];
+  selectCoinOpen.value[i] = !selectCoinOpen.value[i];
 };
 
 const onCoinSelect = (i: 0 | 1, option: unknown, update: boolean): void => {
-  const oldCoin = coin[i];
-  const newCoin = option as Coin;
   const j = i === 0 ? 1 : 0;
+  const oldCoin = coin.value[i];
+  const newCoin = option as Coin;
 
   // Don't update if same coin is selected.
   if (oldCoin?.label === newCoin.label) {
     return;
   }
 
-  coin[i] = newCoin;
+  coin.value[i] = newCoin;
 
   // Swap other coin if both coins are now equal.
-  if (coin[i]?.label === coin[j]?.label) {
-    coin[j] = oldCoin;
+  if (coin.value[i]?.label === coin.value[j]?.label) {
+    coin.value[j] = oldCoin;
   }
 
-  if (update && store.socketPool && coin[0] && coin[1]) {
+  if (update && store.socketPool && coin.value[0] && coin.value[1]) {
     const pairService = new PairService(store.socketPool as SocketPool);
-    pairService.update(store.timeRange, [coin[0].label, coin[1].label]);
+    pairService.update(store.timeRange, [
+      coin.value[0].label,
+      coin.value[1].label,
+    ]);
   }
 };
 
 // Watches
-watch(
-  () => pair,
-  () => {
-    onCoinSelect(0, pair ? pair[0] : null, false);
-    onCoinSelect(1, pair ? pair[1] : null, false);
-  }
-);
+watch(pair, () => {
+  onCoinSelect(0, pair.value ? pair.value[0] : null, false);
+  onCoinSelect(1, pair.value ? pair.value[1] : null, false);
+});
 </script>
 
 <style lang="scss" scoped>

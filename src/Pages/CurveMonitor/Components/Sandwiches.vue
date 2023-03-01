@@ -76,8 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
-import { $ref, $computed, $$ } from "vue/macros";
+import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { DataTable, InputText, Pagination } from "@/Framework";
@@ -88,20 +87,20 @@ import { relativeTime as relativeTimeFunc } from "@/Pages/CurveMonitor/Util";
 
 const { t } = useI18n();
 
+const swsPerPage = 6;
+
 // Refs
 const store = useCurveMonitorStore();
 
-const search = $ref("");
-const swsPerPage = 6;
-let page = $ref(1);
-let expanded: Sandwich[] = $ref([]);
+const search = ref("");
+const page = ref(1);
+const expanded = ref<Sandwich[]>([]);
+const now = ref(Date.now());
 
-let now = $ref(Date.now());
-
-const sandwiches: Sandwich[] = $computed(() =>
+const sandwiches = computed((): Sandwich[] =>
   chain(store.sandwiches)
     .filter((tx) => {
-      const terms = search.toLocaleLowerCase().split(" ");
+      const terms = search.value.toLocaleLowerCase().split(" ");
 
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
@@ -112,9 +111,9 @@ const sandwiches: Sandwich[] = $computed(() =>
     .value()
 );
 
-const sandwichesPage = $computed(() =>
-  chain(sandwiches)
-    .drop((page - 1) * swsPerPage)
+const sandwichesPage = computed((): Sandwich[] =>
+  chain(sandwiches.value)
+    .drop((page.value - 1) * swsPerPage)
     .take(swsPerPage)
     .value()
 );
@@ -122,28 +121,28 @@ const sandwichesPage = $computed(() =>
 // Hooks
 onMounted(() => {
   setInterval(() => {
-    now = Date.now();
+    now.value = Date.now();
   });
 });
 
 // Methods
 const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc($$(now), unixtime);
+  return relativeTimeFunc(now, unixtime);
 };
 
 const toggleExpansion = (sw: Sandwich): boolean => {
-  if (!expanded.includes(sw)) {
-    expanded.push(sw);
+  if (!expanded.value.includes(sw)) {
+    expanded.value.push(sw);
     return true;
   } else {
-    expanded = expanded.filter((x) => x !== sw);
+    expanded.value = expanded.value.filter((x) => x !== sw);
     return false;
   }
 };
 
 // Events
 const onPage = (pageNew: number) => {
-  page = pageNew;
+  page.value = pageNew;
 };
 
 const onSelected = (data: unknown): void => {
@@ -152,14 +151,11 @@ const onSelected = (data: unknown): void => {
 };
 
 // Watches
-watch(
-  () => sandwichesPage,
-  (ps) => {
-    if (ps.length === 0) {
-      page = Math.max(1, Math.ceil(sandwiches.length / swsPerPage));
-    }
+watch(sandwichesPage, (ps) => {
+  if (ps.length === 0) {
+    page.value = Math.max(1, Math.ceil(sandwiches.value.length / swsPerPage));
   }
-);
+});
 </script>
 
 <style lang="scss" scoped>

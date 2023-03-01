@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed, $ref } from "vue/macros";
+import { computed, ref } from "vue";
 import { shorten } from "@/Util";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import type { Pool } from "@/Pages/CurveMonitor/Models";
@@ -31,8 +31,6 @@ import SelectorPair from "@/Pages/CurveMonitor/Components/SelectorPair.vue";
 import SelectorRange from "@/Pages/CurveMonitor/Components/SelectorRange.vue";
 import Status from "@/Pages/CurveMonitor/Components/Status.vue";
 import SearchPool from "@/Pages/CurveMonitor/Components/SearchPool.vue";
-
-let pool = $ref("");
 
 // Props
 interface Props {
@@ -45,13 +43,15 @@ const { statusService, poolService } = defineProps<Props>();
 // Refs
 const store = useCurveMonitorStore();
 
-const hasPool = $computed(() => store.pool !== null);
+const pool = ref("");
+
+const hasPool = computed(() => store.pool !== null);
 
 // Events
 const onSelect = (option: unknown): void => {
   const poolNew = option as Pool;
 
-  pool = shorten(poolNew.name);
+  pool.value = shorten(poolNew.name);
   store.pool = poolNew;
 };
 </script>

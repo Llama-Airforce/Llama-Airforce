@@ -130,8 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
-import { $ref, $computed, $$ } from "vue/macros";
+import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain, round } from "lodash";
 import {
@@ -155,6 +154,8 @@ import { relativeTime as relativeTimeFunc } from "@/Pages/CurveMonitor/Util";
 
 const { t } = useI18n();
 
+const txsPerPage = 10;
+
 // Props
 interface Props {
   txs?: Transaction[];
@@ -173,24 +174,22 @@ const {
 // Refs
 const store = useCurveMonitorStore();
 
-const search = $ref("");
-const txsPerPage = 10;
-let types: TransactionType[] = $ref(["swap", "deposit", "withdraw"]);
-let page = $ref(1);
+const search = ref("");
+const types = ref<TransactionType[]>(["swap", "deposit", "withdraw"]);
+const page = ref(1);
+const now = ref(Date.now());
 
-let now = $ref(Date.now());
-
-const columns: string[] = $computed(() => {
+const columns = computed((): string[] => {
   return time
     ? ["Type", "Block", "Tx", "Trader", "Assets", "Fees", "Time"]
     : ["Type", "Tx", "Trader", "Assets", "Fees"];
 });
 
-const transactions: Transaction[] = $computed(() =>
+const transactions = computed((): Transaction[] =>
   chain(txs ? txs : store.transactions)
-    .filter((tx) => types.includes(tx.type))
+    .filter((tx) => types.value.includes(tx.type))
     .filter((tx) => {
-      const terms = search.toLocaleLowerCase().split(" ");
+      const terms = search.value.toLocaleLowerCase().split(" ");
 
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
@@ -205,9 +204,9 @@ const transactions: Transaction[] = $computed(() =>
     .value()
 );
 
-const transactionsPage = $computed(() =>
-  chain(transactions)
-    .drop((page - 1) * txsPerPage)
+const transactionsPage = computed((): Transaction[] =>
+  chain(transactions.value)
+    .drop((page.value - 1) * txsPerPage)
     .take(txsPerPage)
     .value()
 );
@@ -215,13 +214,13 @@ const transactionsPage = $computed(() =>
 // Hooks
 onMounted(() => {
   setInterval(() => {
-    now = Date.now();
+    now.value = Date.now();
   });
 });
 
 // Methods
 const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc($$(now), unixtime);
+  return relativeTimeFunc(now, unixtime);
 };
 
 const getAssetsString = (tx: Transaction): string => {
@@ -249,32 +248,29 @@ const getAssetsString = (tx: Transaction): string => {
 
 // Events
 const onPage = (pageNew: number) => {
-  page = pageNew;
+  page.value = pageNew;
 };
 
 const onType = (tabIndex: number) => {
   if (tabIndex === 0) {
-    types = ["swap", "deposit", "withdraw"];
+    types.value = ["swap", "deposit", "withdraw"];
   } else if (tabIndex === 1) {
-    types = ["swap"];
+    types.value = ["swap"];
   } else if (tabIndex === 2) {
-    types = ["deposit"];
+    types.value = ["deposit"];
   } else if (tabIndex === 3) {
-    types = ["withdraw"];
+    types.value = ["withdraw"];
   } else {
-    types = [];
+    types.value = [];
   }
 };
 
 // Watches
-watch(
-  () => transactionsPage,
-  (ps) => {
-    if (ps.length === 0) {
-      page = Math.max(1, Math.ceil(transactions.length / txsPerPage));
-    }
+watch(transactionsPage, (ps) => {
+  if (ps.length === 0) {
+    page.value = Math.max(1, Math.ceil(transactions.value.length / txsPerPage));
   }
-);
+});
 </script>
 
 <style lang="scss" scoped>

@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed, $ref } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -32,24 +32,25 @@ import { onMounted, watch } from "vue";
 
 const { t } = useI18n();
 
-const chartRef = $ref<HTMLElement | null>(null);
-let chart: IChartApi | null = $ref(null);
-let areaSerie: ISeriesApi<"Area"> | null = $ref(null);
+let chart: IChartApi;
+let areaSerie: ISeriesApi<"Area">;
 
 // Refs
 const store = useCurveMonitorStore();
 
-const tvl = $computed((): Tvl[] => {
+const chartRef = ref<HTMLElement | null>(null);
+
+const tvl = computed((): Tvl[] => {
   return store.tvl;
 });
 
 // Hooks
 onMounted((): void => {
-  if (!chartRef) return;
+  if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef, {
-    width: chartRef.clientWidth,
-    height: chartRef.clientHeight,
+  chart = createChartFunc(chartRef.value, {
+    width: chartRef.value.clientWidth,
+    height: chartRef.value.clientHeight,
     layout: {
       background: {
         type: ColorType.Solid,
@@ -87,16 +88,13 @@ onMounted((): void => {
   });
 
   initChart();
-  createChart(tvl);
+  createChart(tvl.value);
 });
 
 // Watches
-watch(
-  () => tvl,
-  (newTvl) => {
-    createChart(newTvl);
-  }
-);
+watch(tvl, (newTvl) => {
+  createChart(newTvl);
+});
 
 // Methods
 const initChart = (): void => {

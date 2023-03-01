@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 import { Coin } from "@/Pages/CurveMonitor/Models";
 import { ColorsArray } from "@/Util";
@@ -24,7 +24,7 @@ import { ColorsArray } from "@/Util";
 // Refs
 const store = useCurveMonitorStore();
 
-const coins = $computed((): Coin[] => {
+const coins = computed((): Coin[] => {
   return store.coins;
 });
 </script>

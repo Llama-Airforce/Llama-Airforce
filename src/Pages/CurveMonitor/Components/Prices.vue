@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -33,32 +32,32 @@ import { useCurveMonitorStore } from "@/Pages/CurveMonitor/Store";
 
 const { t } = useI18n();
 
+let chart: IChartApi;
+let areaSeries: ISeriesApi<"Area">;
+let volumeSeries: ISeriesApi<"Histogram">;
+let max = 1;
+let min = 0;
+
 // Refs
 const store = useCurveMonitorStore();
 
-const chartRef = $ref<HTMLElement | null>(null);
-let chart: IChartApi | null = $ref(null);
-let areaSeries: ISeriesApi<"Area"> | null = $ref(null);
-let volumeSeries: ISeriesApi<"Histogram"> | null = $ref(null);
+const chartRef = ref<HTMLElement | null>(null);
 
-let max = $ref(1);
-let min = $ref(0);
-
-const prices = $computed((): Price[] => {
+const prices = computed((): Price[] => {
   return store.prices;
 });
 
-const volumes = $computed((): Volume[] => {
+const volumes = computed((): Volume[] => {
   return store.volumes;
 });
 
 // Hooks
 onMounted((): void => {
-  if (!chartRef) return;
+  if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef, {
-    width: chartRef.clientWidth,
-    height: chartRef.clientHeight,
+  chart = createChartFunc(chartRef.value, {
+    width: chartRef.value.clientWidth,
+    height: chartRef.value.clientHeight,
     layout: {
       background: {
         type: ColorType.Solid,
@@ -99,24 +98,18 @@ onMounted((): void => {
   });
 
   initChart();
-  createChartPrice(prices);
-  createChartVolume(volumes);
+  createChartPrice(prices.value);
+  createChartVolume(volumes.value);
 });
 
 // Watches
-watch(
-  () => prices,
-  (newPrices) => {
-    createChartPrice(newPrices);
-  }
-);
+watch(prices, (newPrices) => {
+  createChartPrice(newPrices);
+});
 
-watch(
-  () => volumes,
-  (newVolumes) => {
-    createChartVolume(newVolumes);
-  }
-);
+watch(volumes, (newVolumes) => {
+  createChartVolume(newVolumes);
+});
 
 // Methods
 const initChart = (): void => {

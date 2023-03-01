@@ -14,8 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+import { onMounted, ref } from "vue";
 import { Tooltip } from "@/Framework";
 import StatusService from "@/Pages/CurveMonitor/Services/StatusService";
 
@@ -27,14 +26,14 @@ interface Props {
 const { statusService } = defineProps<Props>();
 
 // Refs
-let ping = $ref(Infinity);
-let status: "good" | "meh" | "bad" = $ref("bad");
+const ping = ref(Infinity);
+const status = ref<"good" | "meh" | "bad">("bad");
 
 // Hooks
 onMounted(() => {
   statusService.get$.subscribe((ms) => {
-    ping = ms;
-    status = ms <= 50 ? "good" : ms <= 500 ? "meh" : "bad";
+    ping.value = ms;
+    status.value = ms <= 50 ? "good" : ms <= 500 ? "meh" : "bad";
   });
 });
 </script>

@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed, $ref } from "vue/macros";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -33,24 +33,25 @@ import { onMounted, watch } from "vue";
 
 const { t } = useI18n();
 
-const chartRef = $ref<HTMLElement | null>(null);
-let chart: IChartApi | null = $ref(null);
-let lineSerie: ISeriesApi<"Line"> | null = $ref(null);
+let chart: IChartApi;
+let lineSerie: ISeriesApi<"Line">;
 
 // Refs
 const store = useCurveMonitorStore();
 
-const bonding = $computed((): Bonding => {
+const chartRef = ref<HTMLElement | null>(null);
+
+const bonding = computed((): Bonding => {
   return store.bonding;
 });
 
 // Hooks
 onMounted((): void => {
-  if (!chartRef) return;
+  if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef, {
-    width: chartRef.clientWidth,
-    height: chartRef.clientHeight,
+  chart = createChartFunc(chartRef.value, {
+    width: chartRef.value.clientWidth,
+    height: chartRef.value.clientHeight,
     layout: {
       background: {
         type: ColorType.Solid,
@@ -94,16 +95,13 @@ onMounted((): void => {
   });
 
   initCharts();
-  createChart(bonding);
+  createChart(bonding.value);
 });
 
 // Watches
-watch(
-  () => bonding,
-  (newBonding) => {
-    createChart(newBonding);
-  }
-);
+watch(bonding, (newBonding) => {
+  createChart(newBonding);
+});
 
 // Methods
 const initCharts = (): void => {
