@@ -5,8 +5,10 @@
   "scripts": {
     "lint": "eslint src/**/*.{ts,vue}",
     "typecheck": "vue-tsc --noEmit",
-    "dev": "vite",
-    "build": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build",
+    "dev laf": "vite",
+    "dev cm": "vite src/Apps/CurveMonitor",
+    "build laf": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build",
+    "build cm": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/CurveMonitor",
     "build contracts": "typechain --target ethers-v5 --input-dir \"./src/ABI\" --out-dir \"./src/Contracts\" \"./src/ABI/**/*.json\"",
     "test": "vitest --silent",
     "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\"",

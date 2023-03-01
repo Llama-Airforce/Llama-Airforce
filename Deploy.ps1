@@ -1,17 +1,49 @@
-# Build website.
-iex "npm run build"
+param (
+    [Parameter(Mandatory = $True)]
+    [string]$App,
 
-# Remove source mappings.
-Remove-Item -Path .\dist -Recurse -Include *.js.map
+    [Parameter(Mandatory = $True)]
+    [string]$Env
+)
+
+If (@("laf", "cm") -notcontains $App) {
+    throw ("App '$App' is not a valid app")
+}
+
+If (@("prod", "next") -notcontains $Env) {
+    throw ("Environment '$Env' is not a valid app")
+}
+
+switch ($App) {
+    "LAF" {
+        $dirDist = "Llama-Airforce\dist"
+        switch ($Env) {
+            "Prod" {
+                $dirOutput = "Llama-Airforce-Web"
+            }
+            "Next" {
+                $dirOutput = "Llama-Airforce-Web-Next"
+            }
+        }
+    }
+    "CM" {
+        $dirDist = "Llama-Airforce\src\Apps\CurveMonitor\dist"
+        $dirOutput = "Curve-Monitor-Web"
+    }
+}
+# Build website.
+Invoke-Expression "npm run 'build $App'"
 
 # Clean git directory
-cd ..\Llama-Airforce-Web
-iex "git rm -rf ."
+Set-Location ..\$dirOutput
+Invoke-Expression "git rm -rf ."
 
 # Move dist to git golder
-Move-Item -Path ..\Llama-Airforce\dist\*
+Move-Item -Path ..\$dirDist\*
 
 # Create new commit & push
-iex "git add --all"
-iex "git commit -m 'New release'"
-iex "git push"
+Invoke-Expression "git add --all"
+Invoke-Expression "git commit -m 'New release'"
+Invoke-Expression "git push"
+
+Set-Location ..\Llama-Airforce

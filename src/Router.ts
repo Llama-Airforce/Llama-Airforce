@@ -5,7 +5,6 @@ import {
 import { usePageStore } from "@/Pages/Store";
 
 import Home from "@/Pages/Home.vue";
-import CurveMonitor from "@/Pages/CurveMonitor/App.vue";
 
 import NotFound from "@/Pages/NotFound.vue";
 import Code from "@/Pages/Code.vue";
@@ -18,7 +17,6 @@ export default function createRouter() {
   // Configure all routes, including all pages.
   const routes = [
     { path: "/", component: Home },
-    { path: "/monitor/:pool?", name: "curvemonitor", component: CurveMonitor },
 
     { path: "/code", component: Code },
     { path: "/debug", component: Debug },
