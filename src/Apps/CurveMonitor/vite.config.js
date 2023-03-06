@@ -1,12 +1,16 @@
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
-import VueI18nPlugin  from "@intlify/unplugin-vue-i18n/vite";
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 
 export default defineConfig(() => {
   return {
-    plugins: [vue({ reactivityTransform: true }), VueI18nPlugin()],
+    plugins: [
+      vue({ reactivityTransform: true }),
+      VueI18nPlugin(),
+      splitVendorChunkPlugin(),
+    ],
     server: {
       port: 8080,
     },

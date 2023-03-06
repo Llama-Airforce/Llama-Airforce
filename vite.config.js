@@ -1,8 +1,8 @@
 import path from "path";
 import process from "process";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
-import VueI18nPlugin  from "@intlify/unplugin-vue-i18n/vite";
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 
@@ -10,9 +10,13 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
   return {
-    plugins: [vue({ reactivityTransform: true }), VueI18nPlugin({
-      include: path.resolve(__dirname, './src/locales/**')
-    })],
+    plugins: [
+      vue({ reactivityTransform: true }),
+      VueI18nPlugin({
+        include: path.resolve(__dirname, "./src/locales/**"),
+      }),
+      splitVendorChunkPlugin(),
+    ],
     server: {
       port: 8080,
     },
