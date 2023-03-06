@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { KPI } from "@/Framework";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
@@ -23,7 +23,7 @@ interface Props {
 
 const { proposal } = defineProps<Props>();
 
-const type = $computed((): string => {
+const type = computed((): string => {
   switch (proposal.type) {
     case "gauge":
       return t("gauge");

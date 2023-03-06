@@ -15,8 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -38,6 +37,12 @@ import { useCurvePoolsStore } from "@/Pages/Curve/Pools/Store";
 
 const { t } = useI18n();
 
+let chart: IChartApi;
+let candleSeries: ISeriesApi<"Candlestick">;
+let volumeSeries: ISeriesApi<"Histogram">;
+let max = 1;
+let min = 0;
+
 // Props
 interface Props {
   poolSelected: Pool | null;
@@ -48,21 +53,15 @@ const { poolSelected } = defineProps<Props>();
 // Refs
 const store = useCurvePoolsStore();
 
-const chartRef = $ref<HTMLElement | null>(null);
-let chart: IChartApi | null = $ref(null);
-let candleSeries: ISeriesApi<"Candlestick"> | null = $ref(null);
-let volumeSeries: ISeriesApi<"Histogram"> | null = $ref(null);
-
-const invert = $ref(false);
-let max = $ref(1);
-let min = $ref(0);
+const chartRef = ref<HTMLElement | null>(null);
+const invert = ref(false);
 
 onMounted((): void => {
-  if (!chartRef) return;
+  if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef, {
-    width: chartRef.clientWidth,
-    height: chartRef.clientHeight,
+  chart = createChartFunc(chartRef.value, {
+    width: chartRef.value.clientWidth,
+    height: chartRef.value.clientHeight,
     layout: {
       background: {
         type: ColorType.Solid,
@@ -128,26 +127,20 @@ onMounted((): void => {
   });
 });
 
-const candles = $computed((): Candle[] => {
+const candles = computed((): Candle[] => {
   const id = poolSelected?.id;
 
   return id ? store.candles[id] ?? [] : [];
 });
 
 // Watches
-watch(
-  () => candles,
-  (newCandles) => {
-    createChart(newCandles, invert);
-  }
-);
+watch(candles, (newCandles) => {
+  createChart(newCandles, invert.value);
+});
 
-watch(
-  () => invert,
-  (newInvert) => {
-    createChart(candles, newInvert);
-  }
-);
+watch(invert, (newInvert) => {
+  createChart(candles.value, newInvert);
+});
 
 // Methods
 const createChart = (newCandles: Candle[], newInvert: boolean): void => {

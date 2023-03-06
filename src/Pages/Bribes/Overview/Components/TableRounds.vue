@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { orderBy } from "lodash";
@@ -75,22 +75,22 @@ const { t } = useI18n();
 const store = useBribesStore();
 const router = useRouter();
 
-let sortColumn: "deadline" | "vlasset" | "total" = $ref("deadline");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
+const sortOrder = ref(SortOrder.Descending);
 
-const overview = $computed((): Overview | null => {
+const overview = computed((): Overview | null => {
   return store.selectedOverview;
 });
 
-const protocol = $computed((): Protocol | null => {
+const protocol = computed((): Protocol | null => {
   return store.selectedProtocol;
 });
 
-const epochs = $computed((): EpochOverview[] => {
+const epochs = computed((): EpochOverview[] => {
   return orderBy(
-    overview?.epochs ?? [],
+    overview.value?.epochs ?? [],
     (epoch: EpochOverview) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "deadline":
           return epoch.round;
         case "vlasset":
@@ -101,7 +101,7 @@ const epochs = $computed((): EpochOverview[] => {
           return epoch.round;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
@@ -132,8 +132,8 @@ const isFinished = (epoch: EpochOverview): boolean => {
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "deadline" | "vlasset" | "total";
-  sortOrder = order;
+  sortColumn.value = columnName as "deadline" | "vlasset" | "total";
+  sortOrder.value = order;
 };
 
 const onSelected = async (data: unknown): Promise<void> => {

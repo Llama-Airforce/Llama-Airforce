@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy, last } from "lodash";
 import { CardGraph } from "@/Framework";
@@ -28,7 +28,7 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-const ratios = $computed((): { [gauge: string]: Ratio[] } => {
+const ratios = computed((): { [gauge: string]: Ratio[] } => {
   return Object.entries(store.ratios)
     .filter(([gauge, ratios]) => gauge.length > 0 && ratios.length > 0)
     .reduce(
@@ -37,7 +37,7 @@ const ratios = $computed((): { [gauge: string]: Ratio[] } => {
     );
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "curve-ratios",
@@ -110,9 +110,9 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return orderBy(
-    Object.entries(ratios).map(([gauge, ratios]) => ({
+    Object.entries(ratios.value).map(([gauge, ratios]) => ({
       name: shorten(gauge),
       data: orderBy(
         fill(

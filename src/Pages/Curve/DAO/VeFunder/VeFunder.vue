@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card } from "@/Framework";
 import DeployGauge from "@/Pages/Curve/DAO/VeFunder/Components/DeployGauge.vue";
@@ -47,11 +47,11 @@ import GaugeVote from "@/Pages/Curve/DAO/VeFunder/Components/GaugeVote.vue";
 const { t } = useI18n();
 
 // Refs
-let gauge = $ref("");
+const gauge = ref("");
 
 // Events
 const onGauge = (newGauge: string): void => {
-  gauge = newGauge;
+  gauge.value = newGauge;
 };
 </script>
 

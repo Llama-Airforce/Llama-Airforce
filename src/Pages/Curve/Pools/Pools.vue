@@ -44,8 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted } from "vue";
 import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import type { Pool } from "@/Pages/Curve/Pools/Models";
@@ -77,8 +76,8 @@ const volumeService = new VolumeService(getHost());
 // Refs.
 const store = useCurvePoolsStore();
 
-let pool = $ref("");
-let poolSelected: Pool | null = $ref(null);
+const pool = ref("");
+const poolSelected = ref<Pool | null>(null);
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -89,8 +88,8 @@ onMounted(async (): Promise<void> => {
 const onSelect = (option: unknown): void => {
   const poolNew = option as Pool;
 
-  pool = shorten(poolNew.name);
-  poolSelected = poolNew;
+  pool.value = shorten(poolNew.name);
+  poolSelected.value = poolNew;
 
   void getCandles(store, candleService, poolNew);
   void getReserves(store, reservesSerice, poolNew);

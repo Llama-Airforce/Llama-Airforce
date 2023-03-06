@@ -77,14 +77,13 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { InputText, AsyncValue, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-const text1 = $ref("");
-
-let pool = $ref("");
-let autoComplete = $ref(false);
+const text1 = ref("");
+const pool = ref("");
+const autoComplete = ref(false);
 
 type Pool = {
   name: string;
@@ -115,12 +114,12 @@ const sort = (a: unknown, b: unknown) =>
 
 // Events
 const onInput = (input: string): void => {
-  autoComplete = !!input;
+  autoComplete.value = !!input;
 };
 
 const toggleExpansion = (newPool: Pool): void => {
-  pool = newPool.name;
-  autoComplete = false;
+  pool.value = newPool.name;
+  autoComplete.value = false;
 };
 
 const onSelect = (option: unknown): void => {
@@ -168,11 +167,11 @@ const inputTextSearch1 = `<InputText
   </template>
 </InputText>`;
 
-const inputTextSearch2 = `import { $ref } from "vue/macros";
+const inputTextSearch2 = `import { ref } from "vue";
 import { InputText, AsyncValue } from "@/Framework";
 
-let pool = $ref("");
-let autoComplete = $ref(false);
+const pool = ref("");
+const autoComplete = ref(false);
 
 type Pool = {
   name: string;
@@ -203,12 +202,12 @@ const sort = (a: unknown, b: unknown) =>
 
 // Events
 const onInput = (input: string): void => {
-  autoComplete = !!input;
+  autoComplete.value = !!input;
 };
 
 const toggleExpansion = (newPool: Pool): void => {
-  pool = newPool.name;
-  autoComplete = false;
+  pool.value = newPool.name;
+  autoComplete.value = false;
 };
 
 const onSelect = (option: unknown): void => {

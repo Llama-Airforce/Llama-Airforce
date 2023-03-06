@@ -16,8 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from "vue";
-import { $computed } from "vue/macros";
+import { computed, onBeforeMount, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import SystemSelect from "@/Pages/Bribes/Components/SystemSelect.vue";
 import GraphBribesRevenue from "@/Pages/Bribes/Overview/Components/GraphBribesRevenue.vue";
@@ -44,7 +43,7 @@ const store = useBribesStore();
 const router = useRouter();
 const route = useRoute();
 
-const product = $computed((): Product | null => {
+const product = computed((): Product | null => {
   const platform = store.selectedPlatform;
   const protocol = store.selectedProtocol;
 
@@ -56,8 +55,8 @@ const product = $computed((): Product | null => {
   };
 });
 
-const overviewId = $computed((): OverviewId | null => {
-  switch (product?.platform) {
+const overviewId = computed((): OverviewId | null => {
+  switch (product.value?.platform) {
     case "votium":
       return "bribes-overview-votium";
     case "hh":
@@ -113,14 +112,14 @@ const onSelectProtocol = async (
   store.selectedProtocol = protocol;
 
   // Check if dashboard is loaded for this protocol.
-  const platform = product?.platform;
-  if (platform && overviewId) {
-    const dashboard = await findOrGetDashboard(overviewId);
+  const platform = product.value?.platform;
+  if (platform && overviewId.value) {
+    const dashboard = await findOrGetDashboard(overviewId.value);
 
     if (dashboard) {
       store.selectedOverview = dashboard;
 
-      if (product) void updateRouter(product);
+      if (product.value) void updateRouter(product.value);
     }
   }
 };
@@ -156,9 +155,9 @@ const initFromRouter = async (): Promise<void> => {
     await onSelectProtocol(paramProtocol, true);
   } else {
     // Default to default product.
-    if (product) {
-      onSelectPlatform(product.platform, true);
-      await onSelectProtocol(product.protocol, true);
+    if (product.value) {
+      onSelectPlatform(product.value.platform, true);
+      await onSelectProtocol(product.value.protocol, true);
     }
   }
 

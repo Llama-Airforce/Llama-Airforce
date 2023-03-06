@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
@@ -68,27 +68,27 @@ interface Props {
 const { model } = defineProps<Props>();
 
 // Refs
-const crvLockedDollars = $computed((): number | undefined => {
+const crvLockedDollars = computed((): number | undefined => {
   return model?.crvLockedDollars;
 });
 
-const crvLockedDollarsMonthly = $computed((): number | undefined => {
+const crvLockedDollarsMonthly = computed((): number | undefined => {
   return model?.crvLockedDollarsMonthly;
 });
 
-const cvxTvl = $computed((): number | undefined => {
+const cvxTvl = computed((): number | undefined => {
   return model?.cvxTvl;
 });
 
-const cvxVotingPercentage = $computed((): number | undefined => {
+const cvxVotingPercentage = computed((): number | undefined => {
   return model?.cvxVotingPercentage;
 });
 
-const cvxMarketCap = $computed((): number | undefined => {
+const cvxMarketCap = computed((): number | undefined => {
   return model?.cvxMarketCap;
 });
 
-const cvxMarketCapFullyDiluted = $computed((): number | undefined => {
+const cvxMarketCapFullyDiluted = computed((): number | undefined => {
   return model?.cvxMarketCapFullyDiluted;
 });
 </script>

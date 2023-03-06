@@ -78,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 import { icon } from "@/Util";
@@ -93,28 +93,28 @@ const { t } = useI18n();
 // Refs
 const store = useBribesStore();
 
-let sortColumn: "pool" | "vlasset" | "total" = $ref("vlasset");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"pool" | "vlasset" | "total">("vlasset");
+const sortOrder = ref(SortOrder.Descending);
 
-const epoch = $computed((): Epoch | null => {
+const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;
 });
 
-const protocol = $computed((): Protocol | null => {
+const protocol = computed((): Protocol | null => {
   return store.selectedProtocol;
 });
 
-const bribed = $computed((): Bribed[] => {
-  if (!epoch) {
+const bribed = computed((): Bribed[] => {
+  if (!epoch.value) {
     return [];
   }
 
-  const bribed = getBribed(epoch);
+  const bribed = getBribed(epoch.value);
 
   return orderBy(
     bribed,
     (b: Bribed) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "pool":
           return b.pool;
         case "vlasset":
@@ -125,7 +125,7 @@ const bribed = $computed((): Bribed[] => {
           return b.dollarPerVlAsset;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
@@ -143,19 +143,21 @@ const dollarPerVlAsset = (bribed: Bribed): number => {
 };
 
 const bribes = (bribed: Bribed): Bribe[] => {
-  if (!epoch) {
+  if (!epoch.value) {
     return [];
   }
 
-  const bribes = epoch.bribes.filter((bribe) => bribe.pool === bribed.pool);
+  const bribes = epoch.value.bribes.filter(
+    (bribe) => bribe.pool === bribed.pool
+  );
 
   return orderBy(bribes, (bribe) => bribe.amountDollars, "desc");
 };
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "pool" | "vlasset" | "total";
-  sortOrder = order;
+  sortColumn.value = columnName as "pool" | "vlasset" | "total";
+  sortOrder.value = order;
 };
 </script>
 

@@ -23,11 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { InputNumber, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-const value = $ref(0);
+const value = ref(0);
 
 const inputNumber = `<InputNumber
   v-model="value"

@@ -39,15 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { Button, ModalYesNo, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-let openModal = $ref(false);
+const openModal = ref(false);
 
 const onYes = () => {
   alert("You clicked yes!");
-  openModal = false;
+  openModal.value = false;
 };
 
 const modalYesNo1 = `<ModalYesNo
@@ -61,13 +61,13 @@ const modalYesNo1 = `<ModalYesNo
   <div class="content">Content goes here</div>
 </ModalYesNo>`;
 
-const modalYesNo2 = `import { $ref } from "vue/macros";
+const modalYesNo2 = `import { ref } from "vue";
 
-let openModal = $ref(false);
+const openModal = ref(false);
 
 const onYes = () => {
   alert("You clicked yes!");
-  openModal = false;
+  openModal.value = false;
 };`;
 
 const modalYesNo3 = `.my-modal {

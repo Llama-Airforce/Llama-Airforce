@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { Colors, round, unit } from "@/Util";
@@ -24,19 +24,19 @@ const { t } = useI18n();
 // Refs
 const store = useBribesStore();
 
-const overview = $computed((): Overview | null => {
+const overview = computed((): Overview | null => {
   return store.selectedOverview;
 });
 
-const epochs = $computed((): EpochOverview[] => {
-  return overview?.epochs ?? [];
+const epochs = computed((): EpochOverview[] => {
+  return overview.value?.epochs ?? [];
 });
 
-const protocol = $computed((): Protocol | null => {
+const protocol = computed((): Protocol | null => {
   return store.selectedProtocol;
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "votium-bribe-revenue",
@@ -45,7 +45,7 @@ const options = $computed((): unknown => {
       width: 2,
     },
     xaxis: {
-      categories: [...epochs]
+      categories: [...epochs.value]
         // Duplicate and order from old to new.
         .sort((x: EpochOverview, y: EpochOverview) => x.round - y.round)
         .map((epoch) => getDate(epoch)),
@@ -92,7 +92,7 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed(
+const series = computed(
   (): {
     name: string;
     type: string;
@@ -102,7 +102,7 @@ const series = $computed(
       {
         name: t("revenue"),
         type: "column",
-        data: [...epochs]
+        data: [...epochs.value]
           // Duplicate and order from old to new.
           .sort((x: EpochOverview, y: EpochOverview) => x.round - y.round)
           .map((epoch) => ({
@@ -111,9 +111,9 @@ const series = $computed(
           })),
       },
       {
-        name: `$/${vlAssetSymbol(protocol)}`,
+        name: `$/${vlAssetSymbol(protocol.value)}`,
         type: "line",
-        data: [...epochs]
+        data: [...epochs.value]
           // Duplicate and order from old to new.
           .sort((x: EpochOverview, y: EpochOverview) => x.round - y.round)
           .map((epoch) => ({

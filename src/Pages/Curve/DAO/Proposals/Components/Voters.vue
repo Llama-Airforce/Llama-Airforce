@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue } from "@/Framework";
@@ -89,7 +89,7 @@ interface Props {
 
 const { proposal, proposalDetails } = defineProps<Props>();
 
-const votesFor = $computed(() => {
+const votesFor = computed(() => {
   if (!proposalDetails) {
     return null;
   }
@@ -100,7 +100,7 @@ const votesFor = $computed(() => {
     .value();
 });
 
-const votesAgainst = $computed(() => {
+const votesAgainst = computed(() => {
   if (!proposalDetails) {
     return null;
   }

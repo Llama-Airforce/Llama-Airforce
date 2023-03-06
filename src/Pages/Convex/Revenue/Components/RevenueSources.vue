@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { Colors, round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -18,7 +18,7 @@ import { useConvexStore } from "@/Pages/Convex/Store";
 // Refs
 const store = useConvexStore();
 
-const revenueBreakdown = $computed((): RevenueSource[] => [
+const revenueBreakdown = computed((): RevenueSource[] => [
   { source: "CRV", value: store.revenue.totalCrvRevenue },
   {
     source: "3CRV",
@@ -31,7 +31,7 @@ const revenueBreakdown = $computed((): RevenueSource[] => [
   },
 ]);
 
-const options = $computed((): unknown =>
+const options = computed((): unknown =>
   createChartStyles({
     legend: {
       inverseOrder: true,
@@ -80,11 +80,11 @@ const options = $computed((): unknown =>
       },
     },
     colors: [Colors.blue, Colors.green, Colors.purple, Colors.red],
-    labels: revenueBreakdown.map((x) => x.source),
+    labels: revenueBreakdown.value.map((x) => x.source),
   })
 );
 
-const series = $computed(() => revenueBreakdown.map((x) => x.value));
+const series = computed(() => revenueBreakdown.value.map((x) => x.value));
 
 // Methods
 const dollarFormatter = (x: number): string =>

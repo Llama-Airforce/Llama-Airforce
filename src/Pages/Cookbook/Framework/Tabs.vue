@@ -29,11 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { TabView, TabItem, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-const tabActive = $ref(0);
+const tabActive = ref(0);
 
 const tabs1 = `<TabView @tab="tabActive = $event.index">
   <TabItem header="Tab One"> Tab 1 content goes here </TabItem>
@@ -43,7 +43,7 @@ const tabs1 = `<TabView @tab="tabActive = $event.index">
 
 const tabs2 = `import { TabView, TabItem } from "@/Framework";
 
-const tabActive = $ref(0);
+const tabActive = ref(0);
 `;
 </script>
 

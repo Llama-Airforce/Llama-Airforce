@@ -22,11 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { ButtonToggle, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-const toggle = $ref(false);
+const toggle = ref(false);
 
 const btnToggle = `<ButtonToggle
   v-model="toggle"

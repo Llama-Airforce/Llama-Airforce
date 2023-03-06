@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 import { orderBy } from "lodash";
@@ -97,24 +97,24 @@ import { getDate, getDateRaw, getLink } from "@/Pages/Bribes/Util/EpochHelper";
 import type { Bribe } from "@/Pages/Bribes/Models";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
+const { t } = useI18n();
+
 // Props
 interface Props {
   epochs: EpochFrax[];
 }
 
-const { t } = useI18n();
-
 const { epochs = [] } = defineProps<Props>();
 
 // Refs
-let sortColumn: "deadline" | "native" | "frax" | "total" = $ref("deadline");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"deadline" | "native" | "frax" | "total">("deadline");
+const sortOrder = ref(SortOrder.Descending);
 
-const epochsSorted = $computed((): EpochFrax[] => {
+const epochsSorted = computed((): EpochFrax[] => {
   return orderBy(
     epochs,
     (epoch: EpochFrax) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "deadline":
           return epoch.round;
         case "native":
@@ -127,7 +127,7 @@ const epochsSorted = $computed((): EpochFrax[] => {
           return epoch.round;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
@@ -178,8 +178,8 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "deadline" | "native" | "frax" | "total";
-  sortOrder = order;
+  sortColumn.value = columnName as "deadline" | "native" | "frax" | "total";
+  sortOrder.value = order;
 };
 </script>
 

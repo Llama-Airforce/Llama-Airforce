@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -23,11 +23,11 @@ type Serie = {
 // Refs
 const store = useCurveStore();
 
-const poolRevenues = $computed((): PoolRevenue[] => {
+const poolRevenues = computed((): PoolRevenue[] => {
   return store.poolRevenues ?? [];
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     stroke: {
       width: 1,
@@ -86,7 +86,7 @@ const options = $computed((): unknown => {
           formatter: (y: number): string => formatter(y),
         },
         min: 0,
-        max: series
+        max: series.value
           .map((x) => Math.max(...x.data.map((x) => x.y)))
           .reduce((acc, rev) => acc + rev, 0),
       },
@@ -106,8 +106,8 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
-  const data = poolRevenues.reduce(
+const series = computed((): Serie[] => {
+  const data = poolRevenues.value.reduce(
     (acc: { [key: string]: { x: number; y: number }[] }, elem) => {
       const { pool, timestamp, revenue } = elem;
       return {

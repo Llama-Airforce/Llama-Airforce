@@ -91,8 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder, Tooltip } from "@/Framework";
@@ -122,26 +121,26 @@ const { t } = useI18n();
 const store = useBribesStore();
 const wallet = useWalletStore();
 
-let sortColumn: "pool" | "vlasset" | "total" = $ref("total");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"pool" | "vlasset" | "total">("total");
+const sortOrder = ref(SortOrder.Descending);
 
-let bribed: BribedPersonal[] = $ref([]);
-let voter = $ref("");
-let loading = $ref(false);
+const bribed = ref<BribedPersonal[]>([]);
+const voter = ref("");
+const loading = ref(false);
 
-const epoch = $computed((): Epoch | null => {
+const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;
 });
 
-const protocol = $computed((): Protocol | null => {
+const protocol = computed((): Protocol | null => {
   return store.selectedProtocol;
 });
 
-const bribedOrdered = $computed((): BribedPersonal[] => {
+const bribedOrdered = computed((): BribedPersonal[] => {
   return orderBy(
-    bribed,
+    bribed.value,
     (bribed) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "pool":
           return bribed.pool;
         case "vlasset":
@@ -151,35 +150,35 @@ const bribedOrdered = $computed((): BribedPersonal[] => {
           return bribed.amountDollars;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
-const voterShort = $computed((): string => {
-  return addressShort(voter);
+const voterShort = computed((): string => {
+  return addressShort(voter.value);
 });
 
-const connected = $computed((): boolean => {
+const connected = computed((): boolean => {
   return wallet.connected;
 });
 
-const bribedAmount = $computed((): number => {
-  return bribedOrdered.reduce((acc, x) => acc + x.amountDollars, 0);
+const bribedAmount = computed((): number => {
+  return bribedOrdered.value.reduce((acc, x) => acc + x.amountDollars, 0);
 });
 
-const personalDollarPerVlAsset = $computed((): number | null => {
-  const vlAsset = bribedOrdered.reduce(
+const personalDollarPerVlAsset = computed((): number | null => {
+  const vlAsset = bribedOrdered.value.reduce(
     (acc, x) => acc + x.amountDollars / x.dollarPerVlAsset,
     0
   );
 
-  return bribedAmount / vlAsset;
+  return bribedAmount.value / vlAsset;
 });
 
 // Events
 const onConnected = async (): Promise<void> => {
-  if (epoch) {
-    await onEpoch(epoch);
+  if (epoch.value) {
+    await onEpoch(epoch.value);
   }
 };
 
@@ -202,44 +201,44 @@ const percentage = (bribed: BribedPersonal): number => {
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "pool" | "vlasset" | "total";
-  sortOrder = order;
+  sortColumn.value = columnName as "pool" | "vlasset" | "total";
+  sortOrder.value = order;
 };
 
 const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
-  bribed = [];
+  bribed.value = [];
 
   if (!wallet.address) return;
-  voter = wallet.address;
+  voter.value = wallet.address;
 
-  if (!newEpoch || !protocol) {
+  if (!newEpoch || !protocol.value) {
     return;
   }
 
-  loading = true;
+  loading.value = true;
 
   const proposal = await snapshotService.getProposal(newEpoch.proposal);
   const block = parseInt(proposal.snapshot, 10);
 
   let delegations: Delegation[];
 
-  if (protocol === "aura-bal")
-    delegations = [await auraService.getDelegation(voter, block)];
+  if (protocol.value === "aura-bal")
+    delegations = [await auraService.getDelegation(voter.value, block)];
   else {
     delegations = await snapshotService.getDelegations(block, {
-      delegators: [voter],
+      delegators: [voter.value],
       space: "cvx.eth",
     });
   }
 
   const votes = await snapshotService.getVotes(newEpoch.proposal, [
-    voter,
+    voter.value,
     ...delegations.map((d) => d.delegate),
   ]);
 
   // Find the correct delegate by given priority to the space delegate (eg cvx.eth).
   let delegate: string;
-  if (protocol === "aura-bal") delegate = delegations[0].delegate;
+  if (protocol.value === "aura-bal") delegate = delegations[0].delegate;
   else {
     delegate = prioritizeDelegates(
       [delegations[0], delegations[1]],
@@ -247,39 +246,38 @@ const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
     )[0]?.delegate;
   }
 
-  const scores = await snapshotService.getScores(protocol, block, [voter]);
+  const scores = await snapshotService.getScores(protocol.value, block, [
+    voter.value,
+  ]);
 
   // Calculate the voting distribution of a user.
   const distribution = getVoteDistribution(
     proposal,
-    voter,
+    voter.value,
     delegate,
     votes,
     scores
   );
 
   // Turn that voting distribution into personal pools bribed for dollars.
-  bribed = getBribedPersonal(newEpoch, distribution);
+  bribed.value = getBribedPersonal(newEpoch, distribution);
 
-  loading = false;
+  loading.value = false;
 };
 
 // Watches
 watch(
   () => wallet.address,
   async (): Promise<void> => {
-    if (epoch) {
-      await onEpoch(epoch);
+    if (epoch.value) {
+      await onEpoch(epoch.value);
     }
   }
 );
 
-watch(
-  () => epoch,
-  async (newEpoch): Promise<void> => {
-    await onEpoch(newEpoch ?? undefined);
-  }
-);
+watch(epoch, async (newEpoch): Promise<void> => {
+  await onEpoch(newEpoch ?? undefined);
+});
 </script>
 
 <style lang="scss" scoped>

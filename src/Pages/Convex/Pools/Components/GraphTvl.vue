@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
@@ -32,11 +32,11 @@ const { poolSelected } = defineProps<Props>();
 // Refs
 const store = useConvexStore();
 
-const snapshots = $computed((): Snapshot[] => {
+const snapshots = computed((): Snapshot[] => {
   return poolSelected ? store.snapshots[poolSelected.name] ?? [] : [];
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "convex-tvl",
@@ -81,11 +81,11 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: "tvl",
-      data: snapshots.map((s) => ({
+      data: snapshots.value.map((s) => ({
         x: s.timeStamp * 1000,
         y: s.tvl,
       })),

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, formatNumber, shorten, type DataPoint } from "@/Util";
@@ -38,7 +38,7 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-const title = $computed((): string => {
+const title = computed((): string => {
   let title = t("title");
   if (gaugeSelected) {
     title += ` - ${shorten(gaugeSelected.name)}`;
@@ -47,33 +47,33 @@ const title = $computed((): string => {
   return title;
 });
 
-const emissions = $computed((): Emission[] => {
+const emissions = computed((): Emission[] => {
   return gaugeSelected ? store.emissions[gaugeSelected.name] ?? [] : [];
 });
 
-const fees = $computed((): Fee[] => {
+const fees = computed((): Fee[] => {
   return gaugeSelected ? store.fees[gaugeSelected.name] ?? [] : [];
 });
 
-const yMin = $computed((): number => {
+const yMin = computed((): number => {
   return Math.min(
-    ...aggregateDataPoints(emissions)
+    ...aggregateDataPoints(emissions.value)
       .map((e) => e.value)
-      .concat(aggregateDataPoints(fees).map((f) => f.value))
+      .concat(aggregateDataPoints(fees.value).map((f) => f.value))
   );
 });
 
-const yMax = $computed((): number => {
+const yMax = computed((): number => {
   return Math.max(
-    ...aggregateDataPoints(emissions)
+    ...aggregateDataPoints(emissions.value)
       .map((e) => e.value)
-      .concat(aggregateDataPoints(fees).map((f) => f.value))
+      .concat(aggregateDataPoints(fees.value).map((f) => f.value))
       .map((x) => Math.abs(x))
   );
 });
 
 // eslint-disable-next-line max-lines-per-function
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "curve-emissions",
@@ -158,9 +158,9 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
-  const aggregatedEmissions = aggregateDataPoints(emissions);
-  const aggregatedFees = aggregateDataPoints(fees);
+const series = computed((): Serie[] => {
+  const aggregatedEmissions = aggregateDataPoints(emissions.value);
+  const aggregatedFees = aggregateDataPoints(fees.value);
   interface feeIndex {
     [timeStamp: number]: number;
   }

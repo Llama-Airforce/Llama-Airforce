@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { Colors, round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -18,7 +18,7 @@ import { useConvexStore } from "@/Pages/Convex/Store";
 // Refs
 const store = useConvexStore();
 
-const liquidRevenueBreakdown = $computed((): RevenueBreakdown[] => [
+const liquidRevenueBreakdown = computed((): RevenueBreakdown[] => [
   {
     name: "CRV",
     data: store.historicalRevenue.map((x) => x.crvRevenueToCvxCrvStakersAmount),
@@ -39,11 +39,11 @@ const liquidRevenueBreakdown = $computed((): RevenueBreakdown[] => [
   },
 ]);
 
-const categories = $computed((): Date[] =>
+const categories = computed((): Date[] =>
   store.historicalRevenue.map((x) => new Date(x.timestamp * 1000))
 );
 
-const options = $computed((): unknown =>
+const options = computed((): unknown =>
   createChartStyles({
     legend: {
       inverseOrder: true,
@@ -61,7 +61,7 @@ const options = $computed((): unknown =>
       },
     },
     xaxis: {
-      categories: categories.map((x) => x.toISOString().split("T")[0]),
+      categories: categories.value.map((x) => x.toISOString().split("T")[0]),
     },
     yaxis: {
       labels: {
@@ -89,7 +89,7 @@ const options = $computed((): unknown =>
       enabled: false,
     },
     colors: [Colors.blue, Colors.yellow, Colors.green, Colors.purple],
-    labels: liquidRevenueBreakdown.map((x) => x.name),
+    labels: liquidRevenueBreakdown.value.map((x) => x.name),
   })
 );
 

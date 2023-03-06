@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
@@ -35,17 +35,17 @@ const { poolSelected } = defineProps<Props>();
 // Refs
 const store = useCurvePoolsStore();
 
-const reserves = $computed((): Reserves[] => {
+const reserves = computed((): Reserves[] => {
   return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
 });
 
-const numCoins = $computed((): number => {
+const numCoins = computed((): number => {
   return poolSelected
     ? store.reserves[poolSelected.id]?.[0]?.reservesUSD?.length
     : 0;
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "balances",
@@ -91,7 +91,7 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return [...Array(numCoins).keys()].map((i) => createSerie(i));
 });
 
@@ -117,7 +117,7 @@ const createSerie = (i: number): Serie => {
   return {
     name: address(i),
     type: "line",
-    data: reserves.map((r) => ({
+    data: reserves.value.map((r) => ({
       x: r.timestamp * 1000,
       y:
         (r.reservesUSD[i] / r.reservesUSD.reduce((acc, x) => acc + x, 0)) * 100,

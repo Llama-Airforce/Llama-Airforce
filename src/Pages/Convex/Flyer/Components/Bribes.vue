@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import FlyerConvex from "@/Pages/Convex/Flyer/Models/FlyerConvex";
@@ -41,11 +41,11 @@ interface Props {
 const { model } = defineProps<Props>();
 
 // Refs
-const bribesIncomeAnnually = $computed((): number | undefined => {
+const bribesIncomeAnnually = computed((): number | undefined => {
   return model?.bribesIncomeAnnually;
 });
 
-const bribesIncomeBiWeekly = $computed((): number | undefined => {
+const bribesIncomeBiWeekly = computed((): number | undefined => {
   return model?.bribesIncomeBiWeekly;
 });
 </script>

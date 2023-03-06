@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -25,11 +25,11 @@ const { chainSelected } = defineProps<Props>();
 // Refs
 const store = useCurveStore();
 
-const topPools = $computed((): ChainTopPoolRevenue[] => {
+const topPools = computed((): ChainTopPoolRevenue[] => {
   return chainSelected ? store.topPools[chainSelected] ?? [] : [];
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     legend: {
       inverseOrder: true,
@@ -64,7 +64,7 @@ const options = $computed((): unknown => {
       },
     },
     xaxis: {
-      categories: topPools.map((x) => x.name),
+      categories: topPools.value.map((x) => x.name),
       labels: {
         formatter: dollarFormatter,
       },
@@ -72,8 +72,8 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): { data: number[] }[] => {
-  return [{ data: topPools.map((x) => x.totalDailyFeesUSD) }];
+const series = computed((): { data: number[] }[] => {
+  return [{ data: topPools.value.map((x) => x.totalDailyFeesUSD) }];
 });
 
 // Methods

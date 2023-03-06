@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
@@ -76,16 +76,16 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Methods
-const total = $computed(() => {
+const total = computed(() => {
   return proposal.votesFor + proposal.votesAgainst;
 });
 
-const forPercentage = $computed((): number => {
-  return (proposal.votesFor / total) * 100;
+const forPercentage = computed((): number => {
+  return (proposal.votesFor / total.value) * 100;
 });
 
-const againstPercentage = $computed(() => {
-  return (proposal.votesAgainst / total) * 100;
+const againstPercentage = computed(() => {
+  return (proposal.votesAgainst / total.value) * 100;
 });
 </script>
 

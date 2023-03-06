@@ -32,10 +32,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { KPI, Tooltip } from "@/Framework";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
-import { $computed } from "vue/macros";
 import {
   getStatus,
   hasWon,
@@ -53,7 +53,7 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Refs
-const statusDetails = $computed((): string => {
+const statusDetails = computed((): string => {
   if (getStatus(proposal) === "denied") {
     if (!hasReachedQuorum(proposal)) {
       return t("no-quorum");
@@ -67,7 +67,7 @@ const statusDetails = $computed((): string => {
   return "";
 });
 
-const statusLabel = $computed((): string => {
+const statusLabel = computed((): string => {
   switch (getStatus(proposal)) {
     case "active":
       return t("active");

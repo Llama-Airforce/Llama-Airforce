@@ -53,8 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy, reverse } from "lodash";
 import { AsyncValue, KPI, Select } from "@/Framework";
@@ -70,6 +69,8 @@ import { vlAssetSymbol } from "@/Pages/Bribes/Util/ProtocolHelper";
 
 const { t } = useI18n();
 
+let countdownTimer: ReturnType<typeof setTimeout>;
+
 // Emits
 const emit = defineEmits<{
   (e: "select-round", round: number): void;
@@ -78,17 +79,15 @@ const emit = defineEmits<{
 // Refs
 const store = useBribesStore();
 
-let roundOpen = $ref(false);
-let roundSelected = $ref(false);
+const roundOpen = ref(false);
+const roundSelected = ref(false);
+const countdownString = ref("");
 
-let countdownString = $ref("");
-let countdownTimer: ReturnType<typeof setTimeout>;
-
-const epoch = $computed((): Epoch | null => {
+const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;
 });
 
-const product = $computed((): Product | null => {
+const product = computed((): Product | null => {
   const platform = store.selectedPlatform;
   const protocol = store.selectedProtocol;
 
@@ -100,67 +99,66 @@ const product = $computed((): Product | null => {
   };
 });
 
-const rounds = $computed((): number[] => {
-  if (!product) {
+const rounds = computed((): number[] => {
+  if (!product.value) {
     return [];
   }
 
-  const { platform, protocol } = product;
+  const { platform, protocol } = product.value;
 
   return platform && protocol
     ? reverse(orderBy(store.rounds[platform][protocol]))
     : [];
 });
 
-const voteLink = $computed((): string => {
-  return epoch ? getLink(epoch, epoch.proposal) : "";
+const voteLink = computed((): string => {
+  return epoch.value ? getLink(epoch.value, epoch.value.proposal) : "";
 });
 
-const dollarPerVlAsset = $computed((): number | undefined => {
-  return epoch ? dollarPerVlAssetFunc(epoch) : undefined;
+const dollarPerVlAsset = computed((): number | undefined => {
+  return epoch.value ? dollarPerVlAssetFunc(epoch.value) : undefined;
 });
 
-const totalAmountDollars = $computed((): number | undefined => {
-  return epoch ? totalAmountDollarsFunc(epoch) : undefined;
+const totalAmountDollars = computed((): number | undefined => {
+  return epoch.value ? totalAmountDollarsFunc(epoch.value) : undefined;
 });
 
-const date = $computed((): string => {
-  return epoch ? getDate(epoch) : "";
+const date = computed((): string => {
+  return epoch.value ? getDate(epoch.value) : "";
 });
 
-const isFinished = $computed((): boolean => {
-  return epoch ? new Date().getTime() > getDateRaw(epoch).getTime() : false;
+const isFinished = computed((): boolean => {
+  return epoch.value
+    ? new Date().getTime() > getDateRaw(epoch.value).getTime()
+    : false;
 });
 
 // Watches
-watch(
-  () => epoch,
-  (newEpoch): void => {
-    clearInterval(countdownTimer);
+watch(epoch, (newEpoch): void => {
+  clearInterval(countdownTimer);
 
-    if (newEpoch) {
-      countdownTimer = setInterval(() => {
-        countdownString = countdown(getDateRaw(newEpoch));
-      });
-    }
+  if (newEpoch) {
+    countdownTimer = setInterval(() => {
+      countdownString.value = countdown(getDateRaw(newEpoch));
+    });
   }
-);
+});
 
 // Events
 const onRoundOpen = (): void => {
-  if (roundSelected) {
-    roundSelected = false;
+  if (roundSelected.value) {
+    roundSelected.value = false;
     return;
   }
 
-  roundOpen = !roundOpen;
+  roundOpen.value = !roundOpen.value;
 };
 
 const onRoundSelect = (option: unknown): void => {
   const round = option as number;
 
-  roundOpen = false;
-  roundSelected = true;
+  roundOpen.value = false;
+  roundSelected.value = true;
   emit("select-round", round);
 };
 </script>

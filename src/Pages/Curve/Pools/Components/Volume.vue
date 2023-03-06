@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
@@ -34,11 +34,11 @@ const { t } = useI18n();
 // Refs
 const store = useCurvePoolsStore();
 
-const volumes = $computed((): Volume[] => {
+const volumes = computed((): Volume[] => {
   return poolSelected ? store.volumes[poolSelected.id] ?? [] : [];
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "volumes",
@@ -56,8 +56,8 @@ const options = $computed((): unknown => {
       labels: {
         formatter: (y: number): string => formatter(y),
       },
-      min: Math.min(...volumes.map((x) => x.volumeUSD)),
-      max: Math.max(...volumes.map((x) => x.volumeUSD)),
+      min: Math.min(...volumes.value.map((x) => x.volumeUSD)),
+      max: Math.max(...volumes.value.map((x) => x.volumeUSD)),
     },
     fill: {
       type: "gradient",
@@ -99,11 +99,11 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: t("volume"),
-      data: volumes.map((s) => ({
+      data: volumes.value.map((s) => ({
         x: s.timestamp * 1000,
         y: s.volumeUSD,
       })),

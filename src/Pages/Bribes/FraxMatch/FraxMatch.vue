@@ -49,8 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useI18n } from "vue-i18n";
 import { InputText, Spinner } from "@/Framework";
 import { shorten, minDelay } from "@/Util";
@@ -70,12 +69,12 @@ const fraxMatchService = new FraxMatchService(getHost());
 const { t } = useI18n();
 
 // Refs
-let pool = $ref("");
-let pools: Pool[] = $ref([]);
-let epochs: EpochFrax[] = $ref([]);
-let autoComplete = $ref(false);
-let loading = $ref(false);
-let placeholder = $ref(t("search-loading"));
+const pool = ref("");
+const pools = ref<Pool[]>([]);
+const epochs = ref<EpochFrax[]>([]);
+const autoComplete = ref(false);
+const loading = ref(false);
+const placeholder = ref(t("search-loading"));
 
 // Methods
 const filter = (input: string, option: unknown) => match(input, option as Pool);
@@ -86,8 +85,8 @@ onMounted(async (): Promise<void> => {
   const resp = await minDelay(fraxMatchService.getPools());
 
   if (resp) {
-    pools = resp.pools;
-    placeholder = t("search-placeholder");
+    pools.value = resp.pools;
+    placeholder.value = t("search-placeholder");
 
     /*
      * Select first pool by default if none given by the URL.
@@ -97,7 +96,7 @@ onMounted(async (): Promise<void> => {
       return;
     }
   } else {
-    placeholder = t("search-error");
+    placeholder.value = t("search-error");
   }
 });
 
@@ -107,7 +106,7 @@ onBeforeUnmount((): void => {
 
 // Events
 const onInput = (input: string): void => {
-  autoComplete = !!input;
+  autoComplete.value = !!input;
 };
 
 const getEpochs = async (pool?: Pool): Promise<void> => {
@@ -116,22 +115,22 @@ const getEpochs = async (pool?: Pool): Promise<void> => {
   }
 
   // Introduce delay so the animation doesn't lag immediately.
-  loading = true;
+  loading.value = true;
 
   try {
     const resp = await minDelay(fraxMatchService.getEpochs(pool.id), 500);
 
     if (resp) {
-      epochs = resp.epochs;
+      epochs.value = resp.epochs;
     }
   } finally {
-    loading = false;
+    loading.value = false;
   }
 };
 
 const toggleExpansion = (newPool: Pool): void => {
-  pool = shorten(newPool.name);
-  autoComplete = false;
+  pool.value = shorten(newPool.name);
+  autoComplete.value = false;
 
   void getEpochs(newPool);
 };

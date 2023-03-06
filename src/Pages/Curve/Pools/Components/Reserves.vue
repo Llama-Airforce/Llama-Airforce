@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
@@ -31,11 +31,11 @@ const { t } = useI18n();
 // Refs
 const store = useCurvePoolsStore();
 
-const reserves = $computed((): Reserves[] => {
+const reserves = computed((): Reserves[] => {
   return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "reserves",
@@ -80,11 +80,11 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: "reserves",
-      data: reserves.map((r) => ({
+      data: reserves.value.map((r) => ({
         x: r.timestamp * 1000,
         y: r.reservesUSD.reduce((acc, x) => acc + x, 0),
       })),

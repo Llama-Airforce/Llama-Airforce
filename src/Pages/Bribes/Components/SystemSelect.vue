@@ -45,8 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
 import { notEmpty } from "@/Util";
@@ -81,45 +80,49 @@ const emit = defineEmits<{
 // Refs
 const store = useBribesStore();
 
-let platformOpen = $ref(false);
-let protocolOpen = $ref(false);
+const platformOpen = ref(false);
+const protocolOpen = ref(false);
 
-let platformSelected = $ref(false);
-let protocolSelected = $ref(false);
+const platformSelected = ref(false);
+const protocolSelected = ref(false);
 
-const platforms = $computed((): PlatformInfo[] => {
+const platforms = computed((): PlatformInfo[] => {
   return [
     { platform: "votium", label: "Votium", logo: "votium.png" },
     { platform: "hh", label: "Hidden Hand", logo: "redacted.png" },
   ];
 });
 
-const protocols = $computed((): ProtocolInfo[] => {
+const platform = computed((): PlatformInfo | null => {
+  return (
+    platforms.value.find((p) => p.platform === store.selectedPlatform) ?? null
+  );
+});
+
+const protocol = computed((): ProtocolInfo | null => {
+  return (
+    protocols.value.find((p) => p.protocol === store.selectedProtocol) ?? null
+  );
+});
+
+const protocols = computed((): ProtocolInfo[] => {
   const protocols: ProtocolInfo[] = [
     { protocol: "cvx-crv", label: "vlCVX", logo: "cvx.svg" },
     { protocol: "aura-bal", label: "AURA", logo: "aura.png" },
   ];
 
-  return getProtocols(platform?.platform)
+  return getProtocols(platform.value?.platform)
     .map((protocol) => protocols.find((p) => p.protocol === protocol))
     .filter(notEmpty);
 });
 
-const platform = $computed((): PlatformInfo | null => {
-  return platforms.find((p) => p.platform === store.selectedPlatform) ?? null;
-});
-
-const protocol = $computed((): ProtocolInfo | null => {
-  return protocols.find((p) => p.protocol === store.selectedProtocol) ?? null;
-});
-
 // Hooks
 onMounted((): void => {
-  onPlatformSelect(platforms[0]);
-  onProtocolSelect(protocols[0]);
+  onPlatformSelect(platforms.value[0]);
+  onProtocolSelect(protocols.value[0]);
 
-  platformSelected = false;
-  protocolSelected = false;
+  platformSelected.value = false;
+  protocolSelected.value = false;
 });
 
 // Methods
@@ -133,39 +136,39 @@ const icon = (item: SelectItem): string => {
 
 // Events
 const onPlatformOpen = (): void => {
-  if (platformSelected) {
-    platformSelected = false;
+  if (platformSelected.value) {
+    platformSelected.value = false;
     return;
   }
 
-  platformOpen = !platformOpen;
+  platformOpen.value = !platformOpen.value;
 };
 
 const onPlatformSelect = (option: unknown): void => {
   const { platform } = option as PlatformInfo;
 
-  platformOpen = false;
-  platformSelected = true;
+  platformOpen.value = false;
+  platformSelected.value = true;
   emit("select-platform", platform);
 
-  onProtocolSelect(protocols[0]);
-  protocolSelected = false;
+  onProtocolSelect(protocols.value[0]);
+  protocolSelected.value = false;
 };
 
 const onProtocolOpen = (): void => {
-  if (protocolSelected) {
-    protocolSelected = false;
+  if (protocolSelected.value) {
+    protocolSelected.value = false;
     return;
   }
 
-  protocolOpen = !protocolOpen;
+  protocolOpen.value = !protocolOpen.value;
 };
 
 const onProtocolSelect = (option: unknown): void => {
   const { protocol } = option as ProtocolInfo;
 
-  protocolOpen = false;
-  protocolSelected = true;
+  protocolOpen.value = false;
+  protocolSelected.value = true;
   emit("select-protocol", protocol);
 };
 </script>

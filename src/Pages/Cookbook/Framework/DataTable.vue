@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, Code, Tooltip, SortOrder } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
@@ -90,8 +90,8 @@ type Round = {
   value: number;
 };
 
-let sortColumn: "deadline" | "vlasset" | "total" = $ref("deadline");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
+const sortOrder = ref(SortOrder.Descending);
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -101,11 +101,11 @@ const data: Round[] = [
   { round: 5, value: 3 * Math.random() },
 ];
 
-const rows = $computed((): Round[] => {
+const rows = computed((): Round[] => {
   return orderBy(
     data ?? [],
     (row: Round) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "deadline":
           return row.round;
         case "vlasset":
@@ -116,17 +116,18 @@ const rows = $computed((): Round[] => {
           return row.round;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "deadline" | "vlasset" | "total";
-  sortOrder = order;
+  sortColumn.value = columnName as "deadline" | "vlasset" | "total";
+  sortOrder.value = order;
 };
 
 const onSelected = (data: unknown): void => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const epoch = data as Round;
   console.log(epoch.round);
 };
@@ -182,7 +183,7 @@ const dataTable1 = `<DataTable
   </template>
 </DataTable>`;
 
-const dataTable2 = `import { $ref, $computed } from "vue/macros";
+const dataTable2 = `import { ref, computed } from "vue";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 
@@ -191,8 +192,8 @@ type Round = {
   value: number;
 };
 
-let sortColumn: "deadline" | "vlasset" | "total" = $ref("deadline");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+let sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
+let sortOrder = ref(SortOrder.Descending);
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -202,11 +203,11 @@ const data: Round[] = [
   { round: 5, value: 3 * Math.random() },
 ];
 
-const rows = $computed((): Round[] => {
+const rows = computed((): Round[] => {
   return orderBy(
     data ?? [],
     (row: Round) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "deadline":
           return row.round;
         case "vlasset":
@@ -217,14 +218,14 @@ const rows = $computed((): Round[] => {
           return row.round;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "deadline" | "vlasset" | "total";
-  sortOrder = order;
+  sortColumn.value = columnName as "deadline" | "vlasset" | "total";
+  sortOrder.value = order;
 };
 
 const onSelected = (data: unknown): void => {

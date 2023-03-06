@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { io, Socket } from "socket.io-client";
 import { InputText, Button } from "@/Framework";
 
@@ -32,12 +32,12 @@ type ServerToClientEvents = {
 let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
 
 // Refs
-const url = $ref("https://ws.llama.airforce:2053");
-let connected = $ref(false);
+const url = ref("https://ws.llama.airforce:2053");
+const connected = ref(false);
 
 // Methods
 const connect = () => {
-  socket = io(`${url}`, {
+  socket = io(`${url.value}`, {
     autoConnect: false,
     reconnection: false,
     secure: true,
@@ -46,7 +46,7 @@ const connect = () => {
   socket.on("connect_error", (err) => console.log(err));
   socket.on("message", (msg) => {
     console.log(msg);
-    connected = true;
+    connected.value = true;
   });
 
   socket.connect();
@@ -56,7 +56,7 @@ const disconnect = () => {
   socket?.close();
   socket = null;
 
-  connected = false;
+  connected.value = false;
 };
 </script>
 

@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
@@ -71,14 +71,14 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-let sortColumn: "name" | "tvl" = $ref("tvl");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"name" | "tvl">("tvl");
+const sortOrder = ref(SortOrder.Descending);
 
-const gauges = $computed((): Gauge[] => {
+const gauges = computed((): Gauge[] => {
   return orderBy(
     store.gauges,
     (gauge) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "name":
           return shorten(gauge.name);
         case "tvl":
@@ -87,14 +87,14 @@ const gauges = $computed((): Gauge[] => {
           return gauge.tvl;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "name" | "tvl";
-  sortOrder = order;
+  sortColumn.value = columnName as "name" | "tvl";
+  sortOrder.value = order;
 };
 </script>
 

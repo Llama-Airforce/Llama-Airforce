@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { shorten, longen, minDelay } from "@/Util";
 import TablePools from "@/Pages/Convex/Pools/Components/TablePools.vue";
@@ -32,7 +31,7 @@ const store = useConvexStore();
 const route = useRoute();
 const router = useRouter();
 
-let expanded: Pool[] = $ref([]);
+const expanded = ref<Pool[]>([]);
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -94,12 +93,12 @@ const routeExpandPool = (poolRoute: string): void => {
 };
 
 const toggleExpansion = (pool: Pool): boolean => {
-  if (!expanded.includes(pool)) {
+  if (!expanded.value.includes(pool)) {
     void getSnapshots(pool);
-    expanded.push(pool);
+    expanded.value.push(pool);
     return true;
   } else {
-    expanded = expanded.filter((x) => x !== pool);
+    expanded.value = expanded.value.filter((x) => x !== pool);
     return false;
   }
 };

@@ -45,8 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Spinner } from "@/Framework";
 import { minDelay } from "@/Util";
@@ -70,7 +69,7 @@ const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
-let loading = $ref(false);
+const loading = ref(false);
 
 onMounted(async (): Promise<void> => {
   // Don't request new data if there's already cached.
@@ -105,7 +104,7 @@ const getTopPools = async (chain: string): Promise<void> => {
     return;
   }
 
-  loading = true;
+  loading.value = true;
 
   try {
     const topPools = await minDelay(topPoolService.get(chain), 500);
@@ -114,11 +113,11 @@ const getTopPools = async (chain: string): Promise<void> => {
       store.setTopPools(chain, topPools);
     }
   } finally {
-    loading = false;
+    loading.value = false;
   }
 };
 
-const selectedChain = $computed((): Chain | null => {
+const selectedChain = computed((): Chain | null => {
   return store.selectedChain;
 });
 

@@ -41,8 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onBeforeMount, onBeforeUnmount } from "vue";
 import { useI18n } from "vue-i18n";
 import { Spinner } from "@/Framework";
 import { getHost } from "@/Services/Host";
@@ -58,11 +57,15 @@ import LiquidRevenue from "@/Pages/Convex/Revenue/Components/LiquidRevenue.vue";
 import Summary from "@/Pages/Convex/Revenue/Components/Summary.vue";
 
 const { t } = useI18n();
-let loading = $ref(false);
-let isInitializing = false;
-const store = useConvexStore();
+
 const protocolRevenueService = new ProtocolRevenueService(getHost());
 const historicalRevenueService = new HistoricalRevenueService(getHost());
+
+let isInitializing = false;
+
+// Refs
+const store = useConvexStore();
+const loading = ref(false);
 
 // Hooks.
 onBeforeMount(async (): Promise<void> => {
@@ -71,7 +74,7 @@ onBeforeMount(async (): Promise<void> => {
   }
 
   isInitializing = true;
-  loading = true;
+  loading.value = true;
 
   const totalRevenue = await protocolRevenueService.get();
 
@@ -84,7 +87,7 @@ onBeforeMount(async (): Promise<void> => {
     store.historicalRevenue = historicalRevenue;
   }
 
-  loading = false;
+  loading.value = false;
   isInitializing = false;
 });
 

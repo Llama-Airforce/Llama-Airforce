@@ -38,8 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { InputText, AsyncValue } from "@/Framework";
 import { shorten, icon } from "@/Util";
@@ -65,10 +64,10 @@ const emit = defineEmits<{
 // Refs
 const store = useCurvePoolsStore();
 
-let autoComplete = $ref(false);
-let placeholder = $ref(t("search-placeholder"));
+const autoComplete = ref(false);
+const placeholder = ref(t("search-placeholder"));
 
-const pools = $computed((): Pool[] => {
+const pools = computed((): Pool[] => {
   return store.pools;
 });
 
@@ -90,12 +89,12 @@ const name = (pool: Pool): string => {
 
 // Events
 const onInput = (input: string): void => {
-  autoComplete = !!input;
+  autoComplete.value = !!input;
 };
 
 const onSelect = (option: unknown): void => {
   const pool = option as Pool;
-  autoComplete = false;
+  autoComplete.value = false;
 
   emit("select", pool);
 };
@@ -105,11 +104,11 @@ watch(
   [() => store.poolsLoading, () => store.poolsLoadingError],
   ([newLoading, newError]) => {
     if (newError) {
-      placeholder = t("search-error");
+      placeholder.value = t("search-error");
     } else if (newLoading) {
-      placeholder = t("search-loading");
+      placeholder.value = t("search-loading");
     } else {
-      placeholder = t("search-placeholder");
+      placeholder.value = t("search-placeholder");
     }
   }
 );

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -21,7 +21,7 @@ type Serie = {
 };
 
 // Refs
-const data = $computed((): { x: number; y: number }[] => {
+const data = computed((): { x: number; y: number }[] => {
   return [
     { x: 1, y: 20 },
     { x: 2, y: 16 },
@@ -31,7 +31,7 @@ const data = $computed((): { x: number; y: number }[] => {
   ];
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "mock",
@@ -59,7 +59,7 @@ const options = $computed((): unknown => {
           formatter: (y: number): string => formatter(y),
         },
         min: 0,
-        max: Math.max(...data.map((d) => d.y)),
+        max: Math.max(...data.value.map((d) => d.y)),
       },
     ],
     dataLabels: {
@@ -89,12 +89,12 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: "mock",
       type: "bar",
-      data: data.map((s) => ({
+      data: data.value.map((s) => ({
         x: s.x,
         y: s.y,
       })),

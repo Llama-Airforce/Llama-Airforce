@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted } from "vue";
 import { minDelay } from "@/Util";
 import Header from "@/Pages/Convex/Flyer/Components/Header.vue";
 import Revenue from "@/Pages/Convex/Flyer/Components/Revenue.vue";
@@ -26,13 +25,13 @@ import { getHost } from "@/Services/Host";
 const flyerService = new FlyerService(getHost());
 
 // Refs
-let model: FlyerConvex | null = $ref(null);
+const model = ref<FlyerConvex | null>(null);
 
 onMounted(async (): Promise<void> => {
   const resp = await minDelay(flyerService.getConvex());
 
   if (resp.success && resp.dashboard) {
-    model = resp.dashboard;
+    model.value = resp.dashboard;
   }
 });
 </script>

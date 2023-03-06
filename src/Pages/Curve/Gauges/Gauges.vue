@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { shorten, longen, minDelay } from "@/Util";
 import TableGauges from "@/Pages/Curve/Gauges/Components/TableGauges.vue";
@@ -32,7 +31,7 @@ const store = useCurveStore();
 const route = useRoute();
 const router = useRouter();
 
-let expanded: Gauge[] = $ref([]);
+const expanded = ref<Gauge[]>([]);
 
 onMounted(async (): Promise<void> => {
   isMounted = true;
@@ -96,12 +95,12 @@ const routeExpandGauge = (gaugeRoute: string): void => {
 };
 
 const toggleExpansion = (gauge: Gauge): boolean => {
-  if (!expanded.includes(gauge)) {
+  if (!expanded.value.includes(gauge)) {
     void getSnapshots(gauge);
-    expanded.push(gauge);
+    expanded.value.push(gauge);
     return true;
   } else {
-    expanded = expanded.filter((x) => x !== gauge);
+    expanded.value = expanded.value.filter((x) => x !== gauge);
     return false;
   }
 };

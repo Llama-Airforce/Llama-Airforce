@@ -23,14 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { Pagination, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-let page = $ref(1);
+const page = ref(1);
 
 const onPage = (pageNew: number): void => {
-  page = pageNew;
+  page.value = pageNew;
 };
 
 const pagination = `<Pagination

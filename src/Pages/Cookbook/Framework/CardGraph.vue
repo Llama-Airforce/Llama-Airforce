@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { CardGraph, Code } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint, addDays } from "@/Util";
@@ -46,8 +46,7 @@ type SerieLineChart = {
   data: { x: number; y: number }[];
 };
 
-// eslint-disable-next-line max-lines-per-function
-const optionsLineChart = $computed((): unknown => {
+const optionsLineChart = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "curve-emissions",
@@ -129,7 +128,7 @@ const optionsLineChart = $computed((): unknown => {
   });
 });
 
-const seriesLineChart = $computed((): SerieLineChart[] => {
+const seriesLineChart = computed((): SerieLineChart[] => {
   return [
     {
       name: "Emissions",
@@ -172,7 +171,7 @@ const cardGraphLine1 = `<CardGraph
   :series="seriesLineChart"
 ></CardGraph>`;
 
-const cardGraphLine2 = `import { $computed } from "vue/macros";
+const cardGraphLine2 = `import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint, addDays } from "@/Util";
@@ -184,8 +183,7 @@ type SerieLineChart = {
   data: { x: number; y: number }[];
 };
 
-// eslint-disable-next-line max-lines-per-function
-const optionsLineChart = $computed((): unknown => {
+const optionsLineChart = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "curve-emissions",
@@ -267,7 +265,7 @@ const optionsLineChart = $computed((): unknown => {
   });
 });
 
-const seriesLineChart = $computed((): SerieLineChart[] => {
+const seriesLineChart = computed((): SerieLineChart[] => {
   return [
     {
       name: "Emissions",

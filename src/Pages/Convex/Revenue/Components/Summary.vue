@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, KPI } from "@/Framework";
 import { useConvexStore } from "@/Pages/Convex/Store";
@@ -73,7 +73,7 @@ const { t } = useI18n();
 // Refs
 const store = useConvexStore();
 
-const totalRevenue = $computed(
+const totalRevenue = computed(
   (): number =>
     store.revenue.totalBribeRevenue +
     store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
@@ -81,28 +81,28 @@ const totalRevenue = $computed(
     store.revenue.totalFxsRevenue
 );
 
-const lpRevenue = $computed(
+const lpRevenue = computed(
   (): number =>
     store.revenue.totalCrvRevenueToLpProviders +
     store.revenue.totalFxsRevenueToLpProviders +
     store.revenue.totalCvxRevenueToLpProviders
 );
 
-const treasuryRevenue = $computed(
+const treasuryRevenue = computed(
   (): number =>
     store.revenue.totalCrvRevenueToPlatform +
     store.revenue.totalFxsRevenueToPlatform +
     store.revenue.totalFxsRevenueToCallers
 );
 
-const tokenRevenue = $computed(
+const tokenRevenue = computed(
   (): number =>
     store.revenue.totalBribeRevenue +
     store.revenue.totalCrvRevenueToCvxStakers +
     store.revenue.totalFxsRevenueToCvxStakers
 );
 
-const liquidRevenue = $computed(
+const liquidRevenue = computed(
   (): number =>
     store.revenue.totalCrvRevenueToCvxCrvStakers +
     store.revenue.totalCvxRevenueToCvxCrvStakers +

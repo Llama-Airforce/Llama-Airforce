@@ -25,29 +25,32 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, KPI } from "@/Framework";
 import type { EpochFrax } from "@/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
+const { t } = useI18n();
+
+// Props
 interface Props {
   epochs: EpochFrax[];
 }
 
-const { t } = useI18n();
-
 const { epochs = [] } = defineProps<Props>();
 
-const totalNative = $computed((): number =>
+const totalNative = computed((): number =>
   epochs.reduce((acc, epoch) => acc + epoch.native, 0)
 );
 
-const totalFrax = $computed((): number =>
+const totalFrax = computed((): number =>
   epochs.reduce((acc, epoch) => acc + epoch.frax, 0)
 );
 
-const total = $computed((): number => totalNative + totalFrax);
-const ratio = $computed((): number => (totalFrax / totalNative) * 100);
+const total = computed((): number => totalNative.value + totalFrax.value);
+const ratio = computed(
+  (): number => (totalFrax.value / totalNative.value) * 100
+);
 </script>
 
 <style lang="scss" scoped>

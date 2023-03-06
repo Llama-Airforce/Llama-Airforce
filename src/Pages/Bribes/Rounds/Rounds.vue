@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from "vue";
-import { $computed } from "vue/macros";
+import { computed, onBeforeMount, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import SystemSelect from "@/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@/Pages/Bribes/Rounds/Components/Summary.vue";
@@ -44,7 +43,7 @@ const store = useBribesStore();
 const router = useRouter();
 const route = useRoute();
 
-const product = $computed((): Product | null => {
+const product = computed((): Product | null => {
   const platform = store.selectedPlatform;
   const protocol = store.selectedProtocol;
 
@@ -104,7 +103,7 @@ const onSelectProtocol = async (
   store.selectedProtocol = protocol;
 
   // Check if rounds are loaded for this protocol.
-  const platform = product?.platform;
+  const platform = product.value?.platform;
   if (platform) {
     await getRounds({ platform, protocol });
 
@@ -173,15 +172,15 @@ const findOrGetEpoch = async (
 };
 
 const onSelectRound = async (round?: number, init = false): Promise<void> => {
-  if ((isInitializing && !init) || !product) {
+  if ((isInitializing && !init) || !product.value) {
     return;
   }
 
-  const epoch = await findOrGetEpoch(product, round);
+  const epoch = await findOrGetEpoch(product.value, round);
   if (epoch) {
     store.selectedEpoch = epoch;
 
-    void updateRouter(product, epoch);
+    void updateRouter(product.value, epoch);
   }
 };
 
@@ -225,9 +224,9 @@ const initFromRouter = async (): Promise<void> => {
     }
   } else {
     // Default to default product.
-    if (product) {
-      onSelectPlatform(product.platform, true);
-      await onSelectProtocol(product.protocol, true);
+    if (product.value) {
+      onSelectPlatform(product.value.platform, true);
+      await onSelectProtocol(product.value.protocol, true);
       await onSelectRound(undefined, true);
     }
   }

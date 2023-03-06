@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, onMounted } from "vue";
 import { Select } from "@/Framework";
 import { useCurveStore } from "@/Pages/Curve/Store";
 import { Chain } from "@/Pages/Curve/Revenue/Models/Chain";
@@ -44,7 +43,7 @@ const emit = defineEmits<{
 // Refs
 const store = useCurveStore();
 
-let chainOpen = $ref(false);
+const chainOpen = ref(false);
 
 const chains: ChainInfo[] = [
   { chain: "mainnet", label: "Ethereum", logo: "mainnet.svg" },
@@ -58,7 +57,7 @@ const chains: ChainInfo[] = [
   { chain: "optimism", label: "Optimism", logo: "optimism.png" },
 ];
 
-const chain = $computed((): ChainInfo | null => {
+const chain = computed((): ChainInfo | null => {
   return chains.find((p) => p.chain === store.selectedChain) ?? null;
 });
 
@@ -78,7 +77,7 @@ const icon = (item: SelectItem): string => {
 
 // Events
 const onChainOpen = (): void => {
-  chainOpen = !chainOpen;
+  chainOpen.value = !chainOpen.value;
 };
 
 const onChainSelect = (option: unknown): void => {

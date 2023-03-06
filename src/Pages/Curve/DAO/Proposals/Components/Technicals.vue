@@ -51,8 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Collapsible } from "@/Framework";
 import Voters from "@/Pages/Curve/DAO/Proposals/Components/Voters.vue";
@@ -74,16 +73,16 @@ interface Props {
 const { proposal, expanded = false } = defineProps<Props>();
 
 // Refs
-let proposalDetails: ProposalDetails | null = $ref(null);
-const expandedCallData = $ref(true);
-const expandedVoters = $ref(false);
+const proposalDetails = ref<ProposalDetails | null>(null);
+const expandedCallData = ref(true);
+const expandedVoters = ref(false);
 
-const callData = $computed(() => {
-  if (!proposalDetails) {
+const callData = computed(() => {
+  if (!proposalDetails.value) {
     return null;
   }
 
-  return proposalDetails.script
+  return proposalDetails.value.script
     .replace(/(?:\r\n|\r|\n)/g, "<br>")
     .replace("/\u251c/g", "├")
     .replace("/\u2500/g", "─");
@@ -93,8 +92,10 @@ const callData = $computed(() => {
 watch(
   () => expanded,
   async (expandedNew) => {
-    if (expandedNew && proposalDetails === null) {
-      proposalDetails = await proposalService.getProposalDetails(proposal);
+    if (expandedNew && proposalDetails.value === null) {
+      proposalDetails.value = await proposalService.getProposalDetails(
+        proposal
+      );
     }
   },
   { immediate: true }

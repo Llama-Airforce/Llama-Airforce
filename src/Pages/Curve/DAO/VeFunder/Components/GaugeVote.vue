@@ -34,8 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Signer, utils } from "ethers";
 import { notify } from "@kyvg/vue3-notification";
@@ -62,40 +61,40 @@ const emit = defineEmits<{
 
 const { gauge = "" } = defineProps<Props>();
 
-let creating = $ref(false);
-let gauge_ = $ref("");
-const description = $ref(t("placeholder"));
+const creating = ref(false);
+const gauge_ = ref("");
+const description = ref(t("placeholder"));
 
-const gaugePlaceholder = $computed((): string => {
+const gaugePlaceholder = computed((): string => {
   return MultisigAddress;
 });
 
-const isValid = $computed((): boolean => {
-  return utils.isAddress(gauge_) && !!description;
+const isValid = computed((): boolean => {
+  return utils.isAddress(gauge_.value) && !!description.value;
 });
 
-const canRequest = $computed((): boolean => {
-  return isValid && !creating;
+const canRequest = computed((): boolean => {
+  return isValid.value && !creating.value;
 });
 
 // Watches
 watch(
   () => gauge,
   (newGauge) => {
-    gauge_ = newGauge.toLocaleLowerCase();
+    gauge_.value = newGauge.toLocaleLowerCase();
   }
 );
 
 // Methods
 const execute = async (): Promise<void> => {
   const provider = getProvider();
-  if (!provider || !gauge_) {
+  if (!provider || !gauge_.value) {
     return;
   }
 
   const signer = provider.getSigner();
 
-  creating = true;
+  creating.value = true;
 
   try {
     await createVote(signer);
@@ -105,7 +104,7 @@ const execute = async (): Promise<void> => {
       notify({ text: err.message, type: "error" });
     }
   } finally {
-    creating = false;
+    creating.value = false;
   }
 };
 
@@ -120,7 +119,7 @@ const createVote = async (signer: Signer): Promise<void> => {
   const gaugeType = "10";
 
   const call_data = gaugeController.encodeFunctionData("add_gauge", [
-    gauge_,
+    gauge_.value,
     gaugeType,
     0,
   ]);
@@ -140,7 +139,7 @@ const createVote = async (signer: Signer): Promise<void> => {
   )}${length}${agent_calldata}`;
 
   const data = new FormData();
-  const vote_description = description.replace(/(\r\n|\n|\r)/gm, ""); //remove line returns cause bah gawd
+  const vote_description = description.value.replace(/(\r\n|\n|\r)/gm, ""); //remove line returns cause bah gawd
   const vote_data = {
     text: vote_description,
   };

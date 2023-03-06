@@ -30,15 +30,15 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { Slider, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
-let value = $ref(0);
+const value = ref(0);
 
 // Events
 const onInput = (newVal: string) => {
-  value = parseFloat(newVal);
+  value.value = parseFloat(newVal);
 };
 
 const slider1 = `<Slider
@@ -49,14 +49,14 @@ const slider1 = `<Slider
   @update:model-value="onInput"
 ></Slider>`;
 
-const slider2 = `import { $ref } from "vue/macros";
+const slider2 = `import { ref } from "vue";
 import { Slider } from "@/Framework";
 
-let value = $ref(0);
+const value = ref(0);
 
 // Events
 const onInput = (newVal: string) => {
-  value = parseFloat(newVal);
+  value.value = parseFloat(newVal);
 };`;
 </script>
 

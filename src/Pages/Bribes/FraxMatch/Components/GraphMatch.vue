@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
@@ -31,15 +31,13 @@ interface Props {
 const { epochs = [] } = defineProps<Props>();
 
 // Refs
-const bribesNative = $computed((): number[] =>
+const bribesNative = computed((): number[] =>
   epochs.map((epoch) => epoch.native)
 );
-const bribesFrax = $computed((): number[] => epochs.map((epoch) => epoch.frax));
+const bribesFrax = computed((): number[] => epochs.map((epoch) => epoch.frax));
+const categories = computed(() => epochs.map((epoch) => epoch.round));
 
-const categories = $computed(() => epochs.map((epoch) => epoch.round));
-
-// eslint-disable-next-line max-lines-per-function
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "frax-match",
@@ -65,7 +63,7 @@ const options = $computed((): unknown => {
     plotOptions: {
       bar: {
         columnWidth:
-          optimalColumnWidthPercent(categories.length).toString() + "%",
+          optimalColumnWidthPercent(categories.value.length).toString() + "%",
         distributed: false,
         dataLabels: {
           position: "top",
@@ -119,15 +117,15 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: "Bribes Native",
-      data: bribesNative,
+      data: bribesNative.value,
     },
     {
       name: "Bribes Frax",
-      data: bribesFrax,
+      data: bribesFrax.value,
     },
   ];
 });

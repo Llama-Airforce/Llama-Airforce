@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { notify } from "@kyvg/vue3-notification";
 import { utils } from "ethers";
@@ -55,22 +55,24 @@ const emit = defineEmits<{
   (e: "gauge", gauge: string): void;
 }>();
 
-let deploying = $ref(false);
-const receiver = $ref("");
-let amount = $ref(0);
+const deploying = ref(false);
+const receiver = ref("");
+const amount = ref(0);
 
-const receiverPlaceholder = $computed((): string => {
+const receiverPlaceholder = computed((): string => {
   return MultisigAddress;
 });
 
-const isValid = $computed(() => {
-  return utils.isAddress(receiver.toLocaleLowerCase()) && amount > 0;
+const isValid = computed(() => {
+  return (
+    utils.isAddress(receiver.value.toLocaleLowerCase()) && amount.value > 0
+  );
 });
 
 // Methods
 const execute = async (): Promise<void> => {
   const provider = getProvider();
-  if (!provider || !receiver || !amount) {
+  if (!provider || !receiver.value || !amount.value) {
     return;
   }
 
@@ -80,16 +82,16 @@ const execute = async (): Promise<void> => {
     signer
   );
 
-  deploying = true;
+  deploying.value = true;
 
-  if (typeof amount === "string") {
-    amount = parseFloat(amount);
+  if (typeof amount.value === "string") {
+    amount.value = parseFloat(amount.value);
   }
-  const amountFinal = numToBigNumber(amount, 18);
+  const amountFinal = numToBigNumber(amount.value, 18);
 
   try {
     const gauge = await gaugeFactory.deploy_gauge(
-      receiver.toLocaleLowerCase(),
+      receiver.value.toLocaleLowerCase(),
       amountFinal
     );
     emit("gauge", gauge as unknown as string);
@@ -98,7 +100,7 @@ const execute = async (): Promise<void> => {
       notify({ text: err.message, type: "error" });
     }
   } finally {
-    deploying = false;
+    deploying.value = false;
   }
 };
 </script>

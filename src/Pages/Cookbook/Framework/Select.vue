@@ -46,8 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted } from "vue";
 import { Select, Code } from "@/Framework";
 import Recipe from "@/Pages/Cookbook/Recipe.vue";
 
@@ -71,8 +70,8 @@ const options: SelectItem[] = [
   },
 ];
 
-let selectOpen = $ref(false);
-let selected: SelectItem | null = $ref(null);
+const selectOpen = ref(false);
+const selected = ref<SelectItem | null>(null);
 
 // Hooks
 onMounted((): void => {
@@ -81,12 +80,12 @@ onMounted((): void => {
 
 // Events
 const onSelectOpen = (): void => {
-  selectOpen = !selectOpen;
+  selectOpen.value = !selectOpen.value;
 };
 
 const onSelect = (option: unknown): void => {
   const item = option as SelectItem;
-  selected = item;
+  selected.value = item;
 };
 
 const select1 = `<Select
@@ -109,8 +108,7 @@ const select1 = `<Select
   </template>
 </Select>`;
 
-const select2 = `import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+const select2 = `import { ref, onMounted } from "vue";
 import { Select } from "@/Framework";
 
 type SelectItem = {
@@ -133,8 +131,8 @@ const options: SelectItem[] = [
   },
 ];
 
-let selectOpen = $ref(false);
-let selected: SelectItem | null = $ref(null);
+const selectOpen = ref(false);
+const selected = ref<SelectItem | null>;
 
 // Hooks
 onMounted((): void => {
@@ -143,12 +141,12 @@ onMounted((): void => {
 
 // Events
 const onSelectOpen = (): void => {
-  selectOpen = !selectOpen;
+  selectOpen.value = !selectOpen.value;
 };
 
 const onSelect = (option: unknown): void => {
   const item = option as SelectItem;
-  selected = item;
+  selected.value = item;
 };`;
 
 const select3 = `::v-deep(.select-component) {

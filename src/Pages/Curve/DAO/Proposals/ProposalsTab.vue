@@ -41,8 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { Ref, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { InputText, Pagination } from "@/Framework";
@@ -55,6 +54,8 @@ import type {
 
 const { t } = useI18n();
 
+const proposalsPerPage = 10;
+
 // Props
 interface Props {
   proposals: Proposal[];
@@ -63,20 +64,20 @@ interface Props {
 const { proposals } = defineProps<Props>();
 
 // Refs
-const proposalsPerPage = 10;
-let page = $ref(1);
+const page = ref(1);
+const proposalSearch = ref("");
+const placeholder = ref(t("search-placeholder"));
+const proposalType: Ref<"all" & ProposalType> = ref<"all" & ProposalType>(
+  "all" as "all" & ProposalType
+);
 
-const proposalSearch = $ref("");
-const placeholder = $ref(t("search-placeholder"));
-let proposalType = $ref("all" as "all" & ProposalType);
-
-const proposalsFiltered = $computed((): Proposal[] => {
-  const search = proposalSearch.toLocaleLowerCase();
+const proposalsFiltered = computed((): Proposal[] => {
+  const search = proposalSearch.value.toLocaleLowerCase();
 
   const proposalTypeFilter =
-    proposalType === "all"
+    proposalType.value === "all"
       ? () => true
-      : (p: Proposal) => p.type === proposalType;
+      : (p: Proposal) => p.type === proposalType.value;
 
   return chain(proposals)
     .filter(proposalTypeFilter)
@@ -84,34 +85,31 @@ const proposalsFiltered = $computed((): Proposal[] => {
     .value();
 });
 
-const proposalsPage = $computed((): Proposal[] => {
-  return chain(proposalsFiltered)
-    .drop((page - 1) * proposalsPerPage)
+const proposalsPage = computed((): Proposal[] => {
+  return chain(proposalsFiltered.value)
+    .drop((page.value - 1) * proposalsPerPage)
     .take(proposalsPerPage)
     .value();
 });
 
 // Events
 const onTypeSelect = (type: "all" & ProposalType): void => {
-  proposalType = type as "all" & ProposalType;
+  proposalType.value = type as "all" & ProposalType;
 };
 
 const onPage = (pageNew: number): void => {
-  page = pageNew;
+  page.value = pageNew;
 };
 
 // Watches
-watch(
-  () => proposalsPage,
-  (ps) => {
-    if (ps.length === 0) {
-      page = Math.max(
-        1,
-        Math.ceil(proposalsFiltered.length / proposalsPerPage)
-      );
-    }
+watch(proposalsPage, (ps) => {
+  if (ps.length === 0) {
+    page.value = Math.max(
+      1,
+      Math.ceil(proposalsFiltered.value.length / proposalsPerPage)
+    );
   }
-);
+});
 </script>
 
 <style lang="scss" scoped>

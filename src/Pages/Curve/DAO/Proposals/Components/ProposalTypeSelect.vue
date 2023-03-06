@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { Ref, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
 import {
@@ -29,24 +29,27 @@ type ProposalTypeAll = "all" & ProposalType;
 
 const { t } = useI18n();
 
+const types = ["all", ...proposalTypes];
+
 // Emits
 const emit = defineEmits<{
   (e: "select", type: ProposalTypeAll): void;
 }>();
 
 // Refs
-let selectTypeOpen = $ref(false);
-const types = ["all", ...proposalTypes];
-let type: ProposalTypeAll = $ref("all" as ProposalTypeAll);
+const selectTypeOpen = ref(false);
+const type: Ref<ProposalTypeAll> = ref<ProposalTypeAll>(
+  "all" as ProposalTypeAll
+);
 
 // Events
 const onTypeOpen = (): void => {
-  selectTypeOpen = !selectTypeOpen;
+  selectTypeOpen.value = !selectTypeOpen.value;
 };
 
 const onTypeSelect = (option: unknown): void => {
-  type = option as ProposalTypeAll;
-  emit("select", type);
+  type.value = option as ProposalTypeAll;
+  emit("select", type.value);
 };
 </script>
 

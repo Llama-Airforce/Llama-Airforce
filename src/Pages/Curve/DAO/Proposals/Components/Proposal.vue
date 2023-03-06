@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { Card, Collapsible } from "@/Framework";
 import ProposalSummary from "@/Pages/Curve/DAO/Proposals/Components/ProposalSummary.vue";
 import ProposalDetails from "@/Pages/Curve/DAO/Proposals/Components/ProposalDetails.vue";
@@ -33,7 +33,7 @@ interface Props {
 
 const { proposal } = defineProps<Props>();
 
-const expanded = $ref(false);
+const expanded = ref(false);
 </script>
 
 <style lang="scss" scoped>

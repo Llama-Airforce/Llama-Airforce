@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { orderBy } from "lodash";
 import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
@@ -19,11 +19,11 @@ import { useCurveStore } from "@/Pages/Curve/Store";
 // Refs
 const store = useCurveStore();
 
-const chainRevenues = $computed((): ChainRevenue[] => {
+const chainRevenues = computed((): ChainRevenue[] => {
   return orderBy(store.chainRevenues ?? [], (x) => x.totalDailyFeesUSD, "asc");
 });
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     legend: {
       inverseOrder: true,
@@ -83,11 +83,13 @@ const options = $computed((): unknown => {
       "#D62728",
       "#9467BD",
     ],
-    labels: chainRevenues.map((x) => x.chain),
+    labels: chainRevenues.value.map((x) => x.chain),
   });
 });
 
-const series = $computed(() => chainRevenues.map((x) => x.totalDailyFeesUSD));
+const series = computed(() =>
+  chainRevenues.value.map((x) => x.totalDailyFeesUSD)
+);
 
 // Methods
 const dollarFormatter = (x: number): string => {

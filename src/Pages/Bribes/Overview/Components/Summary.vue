@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, KPI } from "@/Framework";
 import { useBribesStore } from "@/Pages/Bribes/Store";
@@ -52,38 +52,38 @@ const { t } = useI18n();
 // Refs
 const store = useBribesStore();
 
-const overview = $computed((): Overview | null => {
+const overview = computed((): Overview | null => {
   return store.selectedOverview;
 });
 
-const epochs = $computed((): EpochOverview[] => {
-  return overview?.epochs ?? [];
+const epochs = computed((): EpochOverview[] => {
+  return overview.value?.epochs ?? [];
 });
 
-const protocol = $computed((): Protocol | null => {
+const protocol = computed((): Protocol | null => {
   return store.selectedProtocol;
 });
 
-const recordEarningsLabel = $computed((): string => {
-  return t("record-earnings", [vlAssetSymbol(protocol)]);
+const recordEarningsLabel = computed((): string => {
+  return t("record-earnings", [vlAssetSymbol(protocol.value)]);
 });
 
-const totalRevenue = $computed((): number => {
-  return epochs.reduce((acc, epoch) => acc + epoch.totalAmountDollars, 0);
+const totalRevenue = computed((): number => {
+  return epochs.value.reduce((acc, epoch) => acc + epoch.totalAmountDollars, 0);
 });
 
-const rewardPerDollarBribe = $computed((): number => {
-  return overview?.rewardPerDollarBribe ?? 0;
+const rewardPerDollarBribe = computed((): number => {
+  return overview.value?.rewardPerDollarBribe ?? 0;
 });
 
-const recordEarningPerVlAsset = $computed((): number => {
-  return Math.max(...epochs.map((epoch) => epoch.dollarPerVlAsset));
+const recordEarningPerVlAsset = computed((): number => {
+  return Math.max(...epochs.value.map((epoch) => epoch.dollarPerVlAsset));
 });
 
-const rewardsPerDollarBribeTooltip = $computed((): string => {
+const rewardsPerDollarBribeTooltip = computed((): string => {
   let tokens = "???";
 
-  switch (protocol) {
+  switch (protocol.value) {
     case "cvx-crv":
       tokens = "CRV + CVX";
       break;

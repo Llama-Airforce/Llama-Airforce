@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
@@ -59,17 +59,17 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Methods
-const votesSupport = $computed((): number => {
+const votesSupport = computed((): number => {
   return proposal.votesFor + proposal.votesAgainst;
 });
 
-const votesQuorum = $computed((): number => {
+const votesQuorum = computed((): number => {
   return proposal.quorum * proposal.totalSupply;
 });
 
 /** What's the % of the quorum % that's been reached so far? */
-const reached = $computed((): number => {
-  return (votesSupport / votesQuorum) * 100;
+const reached = computed((): number => {
+  return (votesSupport.value / votesQuorum.value) * 100;
 });
 </script>
 

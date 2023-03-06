@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { CardGraph } from "@/Framework";
@@ -25,11 +25,11 @@ const { t } = useI18n();
 // Refs
 const store = useBribesStore();
 
-const epoch = $computed((): Epoch | null => {
+const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;
 });
 
-const product = $computed((): Product | null => {
+const product = computed((): Product | null => {
   const platform = store.selectedPlatform;
   const protocol = store.selectedProtocol;
 
@@ -41,25 +41,28 @@ const product = $computed((): Product | null => {
   };
 });
 
-const bribes = $computed((): Bribe[] => {
-  if (!epoch || !product) {
+const bribes = computed((): Bribe[] => {
+  if (!epoch.value || !product.value) {
     return [];
   }
 
-  const { platform, protocol } = product;
+  const { platform, protocol } = product.value;
   const stinkBid = protocol === "aura-bal" ? 0 : 2500;
 
   return (
-    (store.epochs[platform][protocol].find((e) => e === epoch)?.bribes ?? [])
+    (
+      store.epochs[platform][protocol].find((e) => e === epoch.value)?.bribes ??
+      []
+    )
       // Filter stink bids.
       .filter((bribe) => bribe.amountDollars > stinkBid)
   );
 });
 
-const categories = $computed((): string[] => {
+const categories = computed((): string[] => {
   type Pool = { pool: string; amountDollars: number };
 
-  return chain(bribes)
+  return chain(bribes.value)
     .groupBy((bribe) => bribe.pool)
     .map((bribes) =>
       bribes.reduce(
@@ -75,8 +78,7 @@ const categories = $computed((): string[] => {
     .value();
 });
 
-// eslint-disable-next-line max-lines-per-function
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "votium-bribe-round",
@@ -84,7 +86,7 @@ const options = $computed((): unknown => {
       stacked: true,
     },
     xaxis: {
-      categories: categories,
+      categories: categories.value,
     },
     yaxis: {
       labels: {
@@ -95,7 +97,7 @@ const options = $computed((): unknown => {
     plotOptions: {
       bar: {
         columnWidth:
-          optimalColumnWidthPercent(categories.length).toString() + "%",
+          optimalColumnWidthPercent(categories.value.length).toString() + "%",
         distributed: true,
         dataLabels: {
           position: "top",
@@ -148,15 +150,15 @@ const options = $computed((): unknown => {
   });
 });
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   return (
-    chain(bribes)
+    chain(bribes.value)
       // Create a series per token paid.
       .groupBy((bribe) => bribe.token)
       .map((bribes, token) => ({
         name: token,
         // For each pool we will aggregate the bribes for that pool.
-        data: categories.map((pool) =>
+        data: categories.value.map((pool) =>
           bribes.reduce(
             (acc, bribe) =>
               bribe.pool === pool ? acc + bribe.amountDollars : acc,

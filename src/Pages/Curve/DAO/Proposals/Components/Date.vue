@@ -11,14 +11,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { KPI } from "@/Framework";
 import { countdown } from "@/Util";
 import type { Proposal } from "@/Pages/Curve/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();
+
+let deadlineTimer: ReturnType<typeof setTimeout>;
 
 // Props
 interface Props {
@@ -29,10 +30,9 @@ interface Props {
 const { proposal, type } = defineProps<Props>();
 
 // Refs
-let deadlineString = $ref("");
-let deadlineTimer: ReturnType<typeof setTimeout>;
+const deadlineString = ref("");
 
-const label = $computed((): string => {
+const label = computed((): string => {
   switch (type) {
     case "start":
       return t("start");
@@ -43,14 +43,14 @@ const label = $computed((): string => {
   }
 });
 
-const date = $computed((): string => {
+const date = computed((): string => {
   switch (type) {
     case "start":
       return new Date(proposal.start * 1000).toLocaleDateString();
     case "end": {
       const endDate = new Date(proposal.end * 1000);
       return endDate > new Date()
-        ? deadlineString
+        ? deadlineString.value
         : endDate.toLocaleDateString();
     }
     default:
@@ -58,7 +58,7 @@ const date = $computed((): string => {
   }
 });
 
-const dateWithTime = $computed((): string => {
+const dateWithTime = computed((): string => {
   switch (type) {
     case "start":
       return (
@@ -91,7 +91,7 @@ const createTimer = (): void => {
   }
 
   deadlineTimer = setInterval(() => {
-    deadlineString = countdown(nextDate);
+    deadlineString.value = countdown(nextDate);
   });
 };
 </script>

@@ -50,8 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { TabView, TabItem, Spinner } from "@/Framework";
 import { minDelay } from "@/Util";
@@ -66,39 +65,39 @@ const { t } = useI18n();
 const proposalService = new ProposalService(getHost());
 
 // Refs
-let loading = $ref(false);
-let proposals: Proposal[] = $ref([]);
-const tabActive = $ref(0);
+const loading = ref(false);
+const proposals = ref<Proposal[]>([]);
+const tabActive = ref(0);
 
-const proposalsActive = $computed((): Proposal[] => {
-  return proposals.filter((p) => getStatus(p) === "active");
+const proposalsActive = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "active");
 });
 
-const proposalsPassed = $computed((): Proposal[] => {
-  return proposals.filter((p) => getStatus(p) === "passed");
+const proposalsPassed = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "passed");
 });
 
-const proposalsDenied = $computed((): Proposal[] => {
-  return proposals.filter((p) => getStatus(p) === "denied");
+const proposalsDenied = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "denied");
 });
 
-const proposalsExecuted = $computed((): Proposal[] => {
-  return proposals.filter((p) => getStatus(p) === "executed");
+const proposalsExecuted = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "executed");
 });
 
 // Hooks
 onMounted(async () => {
-  loading = true;
+  loading.value = true;
 
   try {
-    proposals = await minDelay(
+    proposals.value = await minDelay(
       proposalService
         .getProposals()
         .then((ps) => ps.sort((a, b) => b.start - a.start)),
       1000
     );
   } finally {
-    loading = false;
+    loading.value = false;
   }
 });
 </script>

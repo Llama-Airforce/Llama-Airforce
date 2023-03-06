@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { $ref, $computed } from "vue/macros";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder } from "@/Framework";
@@ -84,14 +84,14 @@ const { expanded = [] } = defineProps<Props>();
 // Refs
 const store = useConvexStore();
 
-let sortColumn: "name" | "apr" | "tvl" = $ref("tvl");
-let sortOrder: SortOrder = $ref(SortOrder.Descending);
+const sortColumn = ref<"name" | "apr" | "tvl">("tvl");
+const sortOrder = ref(SortOrder.Descending);
 
-const pools = $computed((): Pool[] => {
+const pools = computed((): Pool[] => {
   return orderBy(
     store.pools.filter((pool) => !disabled(pool.name)),
     (pool) => {
-      switch (sortColumn) {
+      switch (sortColumn.value) {
         case "name":
           return shorten(pool.name);
         case "apr":
@@ -102,14 +102,14 @@ const pools = $computed((): Pool[] => {
           return pool.tvl;
       }
     },
-    sortOrder === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
 
 // Events
 const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn = columnName as "name" | "apr" | "tvl";
-  sortOrder = order;
+  sortColumn.value = columnName as "name" | "apr" | "tvl";
+  sortOrder.value = order;
 };
 </script>
 
