@@ -59,7 +59,7 @@ const onLocaleOpen = (): void => {
 
 const onLocaleSelect = (option: unknown): void => {
   locale.value = option as Locale;
-  loc.value = locale;
+  loc.value = locale.value;
 
   localStorage.setItem(STORAGE_LOCALE, locale.value);
 };
