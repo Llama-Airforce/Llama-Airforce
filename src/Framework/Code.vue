@@ -9,8 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots } from "vue";
-import { $computed } from "vue/macros";
+import { computed, useSlots } from "vue";
 import hljsVuePlugin from "@highlightjs/vue-plugin";
 
 const HighlightJS = hljsVuePlugin.component;
@@ -26,7 +25,7 @@ const { lang, code } = defineProps<Props>();
 // Refs
 const slots = useSlots();
 
-const codeFinal = $computed(function () {
+const codeFinal = computed(function () {
   if (slots.default) {
     const children = slots.default()[0].children;
     return children as string;

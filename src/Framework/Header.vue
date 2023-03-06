@@ -9,13 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { HeaderDesktop, HeaderMobile } from "@/Framework";
 
 const route = useRoute();
 
-const hasHeader = $computed((): boolean => {
+const hasHeader = computed((): boolean => {
   return route.name !== "curvemonitor";
 });
 </script>

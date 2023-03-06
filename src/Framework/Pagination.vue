@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 
 // Props
 interface Props {
@@ -60,21 +60,21 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const pages = $computed(() => {
+const pages = computed(() => {
   return Math.ceil(itemsCount / itemsPerPage);
 });
 
-const pageButtons = $computed(() => {
+const pageButtons = computed(() => {
   const rangeSize = 5;
   const rangeSizeScan = rangeSize + 1;
   const range = [...Array(rangeSizeScan * 2).keys()]
     .map((x) => x - rangeSizeScan + page)
-    .filter((x) => x >= 1 && x <= pages);
+    .filter((x) => x >= 1 && x <= pages.value);
 
   const i = range.findIndex((x) => x === page);
   const left = [];
   const right = [];
-  const middle = page !== 1 && page !== pages ? [page] : [];
+  const middle = page !== 1 && page !== pages.value ? [page] : [];
 
   let j = 1;
   // eslint-disable-next-line no-constant-condition
@@ -92,7 +92,7 @@ const pageButtons = $computed(() => {
     }
 
     const r = range[i + j];
-    if (r && r !== pages) {
+    if (r && r !== pages.value) {
       right.push(r);
     }
 
@@ -114,9 +114,9 @@ const clamp = (x: number, min: number, max: number): number => {
   return Math.min(Math.max(x, min), max);
 };
 
-const prev = () => emit("page", clamp(page - 1, 1, pages));
-const next = () => emit("page", clamp(page + 1, 1, pages));
-const onPage = (p: number) => emit("page", clamp(p, 1, pages));
+const prev = () => emit("page", clamp(page - 1, 1, pages.value));
+const next = () => emit("page", clamp(page + 1, 1, pages.value));
+const onPage = (p: number) => emit("page", clamp(p, 1, pages.value));
 </script>
 
 <style lang="scss" scoped>

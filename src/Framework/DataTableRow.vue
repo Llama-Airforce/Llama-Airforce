@@ -27,8 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots } from "vue";
-import { $computed } from "vue/macros";
+import { computed, useSlots } from "vue";
 import { Collapsible } from "@/Framework";
 
 /**
@@ -58,7 +57,7 @@ const emit = defineEmits<{
 
 // Refs
 const slots = useSlots();
-const expandable = $computed(() => {
+const expandable = computed((): boolean => {
   const slot = slots["row-details"];
 
   if (slot) {

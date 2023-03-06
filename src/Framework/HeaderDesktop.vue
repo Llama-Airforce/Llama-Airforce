@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
 import { usePageStore } from "@/Pages/Store";
@@ -95,7 +95,7 @@ import { usePageStore } from "@/Pages/Store";
 const pageStore = usePageStore();
 const route = useRoute();
 
-const planeX = $computed((): string => {
+const planeX = computed((): string => {
   let x = 15;
 
   for (const page of pageStore.pages) {

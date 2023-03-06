@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 
 // Props
 interface Props {
@@ -70,7 +70,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const optionsProcessed = $computed((): unknown[] => {
+const optionsProcessed = computed((): unknown[] => {
   const optionsFiltered = options.filter((option) =>
     filter(modelValue, option)
   );

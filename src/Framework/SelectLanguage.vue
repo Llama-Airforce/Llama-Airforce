@@ -18,8 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { $ref } from "vue/macros";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
 
@@ -42,8 +41,8 @@ interface Props {
 const { direction = "up" } = defineProps<Props>();
 
 // Refs
-let locale: Locale | null = $ref("en");
-let selectLocaleOpen = $ref(false);
+const locale = ref<Locale | null>("en");
+const selectLocaleOpen = ref(false);
 
 // Hooks
 onMounted(() => {
@@ -55,14 +54,14 @@ onMounted(() => {
 
 // Events
 const onLocaleOpen = (): void => {
-  selectLocaleOpen = !selectLocaleOpen;
+  selectLocaleOpen.value = !selectLocaleOpen.value;
 };
 
 const onLocaleSelect = (option: unknown): void => {
-  locale = option as Locale;
+  locale.value = option as Locale;
   loc.value = locale;
 
-  localStorage.setItem(STORAGE_LOCALE, locale);
+  localStorage.setItem(STORAGE_LOCALE, locale.value);
 };
 </script>
 

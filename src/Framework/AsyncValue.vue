@@ -4,10 +4,13 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { isFinite } from "lodash";
 import { unit as unitF, round } from "@/Util";
+
+const rodChars = "|/-\\";
+let rodIndex = 0;
+let rodTimer = 0;
 
 // Props
 interface Props {
@@ -28,21 +31,18 @@ const {
   showZero = false,
 } = defineProps<Props>();
 
-// Vars
-const rodChars = "|/-\\";
-let rod = $ref("|");
-let rodIndex = 0;
-let rodTimer = 0;
+// Refs
+const rod = ref("|");
 
 // Getters
-const presentation = $computed((): string => {
+const presentation = computed((): string => {
   if (!value) {
     if (value === 0 && showZero) {
       return "0";
     }
 
     if (value === null || value === undefined) {
-      return rod;
+      return rod.value;
     }
 
     return "?";
@@ -51,7 +51,7 @@ const presentation = $computed((): string => {
   return round(value, precision, type ?? "");
 });
 
-const unit = $computed((): string => {
+const unit = computed((): string => {
   if (!value || !type || !isFinite(value)) {
     return showUnit && type ? unitF(0, type) : "";
   }
@@ -71,7 +71,7 @@ watch(
 
     const updateRod = () => {
       rodIndex = (rodIndex + 1) % 4;
-      rod = rodChars[rodIndex];
+      rod.value = rodChars[rodIndex];
     };
 
     rodTimer = window.setInterval(updateRod, 250);

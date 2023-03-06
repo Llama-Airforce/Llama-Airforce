@@ -112,8 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, onBeforeMount } from "vue";
 import { useI18n } from "vue-i18n";
 import { DataTableRow, SortOrder } from "@/Framework";
 
@@ -175,14 +174,14 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-let currentSort = $ref("");
-let currentSortDir = $ref(SortOrder.Ascending);
+const currentSort = ref("");
+const currentSortDir = ref(SortOrder.Ascending);
 
-const columnsHeaderCss = $computed((): string => {
+const columnsHeaderCss = computed((): string => {
   return `grid-template-columns: ${columnsHeader}`;
 });
 
-const rowsEmpty = $computed((): never[] => {
+const rowsEmpty = computed((): never[] => {
   if (rowsMin === null) {
     return [];
   }
@@ -194,11 +193,11 @@ const rowsEmpty = $computed((): never[] => {
 // Hooks
 onBeforeMount(() => {
   if (sortingDefaultColumn) {
-    currentSort = sortingDefaultColumn;
+    currentSort.value = sortingDefaultColumn;
   }
 
   if (sortingDefaultDir) {
-    currentSortDir =
+    currentSortDir.value =
       sortingDefaultDir === SortOrder.Ascending
         ? SortOrder.Ascending
         : SortOrder.Descending;
@@ -244,13 +243,15 @@ const sortingEnabled = (index: number): boolean => {
 
 const sortAscending = (index: number): boolean => {
   return (
-    currentSort === sortingColumns[index] && currentSortDir === "Ascending"
+    currentSort.value === sortingColumns[index] &&
+    currentSortDir.value === "Ascending"
   );
 };
 
 const sortDescending = (index: number): boolean => {
   return (
-    currentSort === sortingColumns[index] && currentSortDir === "Descending"
+    currentSort.value === sortingColumns[index] &&
+    currentSortDir.value === "Descending"
   );
 };
 
@@ -266,18 +267,18 @@ const sortColumn = (index: number): void => {
 
   const columnName = sortingColumns[index];
 
-  if (columnName === currentSort) {
+  if (columnName === currentSort.value) {
     // Reverse sort direction.
-    currentSortDir =
-      currentSortDir === SortOrder.Ascending
+    currentSortDir.value =
+      currentSortDir.value === SortOrder.Ascending
         ? SortOrder.Descending
         : SortOrder.Ascending;
   } else {
-    currentSortDir = SortOrder.Ascending;
+    currentSortDir.value = SortOrder.Ascending;
   }
-  currentSort = columnName;
+  currentSort.value = columnName;
 
-  emit("sortColumn", currentSort, currentSortDir);
+  emit("sortColumn", currentSort.value, currentSortDir.value);
 };
 </script>
 

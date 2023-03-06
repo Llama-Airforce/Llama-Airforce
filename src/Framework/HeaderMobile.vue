@@ -46,21 +46,21 @@
 </template>
 
 <script setup lang="ts">
-import { $ref } from "vue/macros";
+import { ref } from "vue";
 import { MenuMobile, SelectLanguage } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
 
-// Vars
-let menuOpen = $ref(false);
+// Refs
+const menuOpen = ref(false);
 
 // Methods
 const toggleMenu = (): void => {
-  menuOpen = !menuOpen;
-  document.documentElement.style.overflow = menuOpen ? "hidden" : "";
+  menuOpen.value = !menuOpen.value;
+  document.documentElement.style.overflow = menuOpen.value ? "hidden" : "";
 };
 
 const onNavigated = (): void => {
-  menuOpen = false;
+  menuOpen.value = false;
   document.documentElement.style.overflow = "";
 };
 </script>

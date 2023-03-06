@@ -37,8 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $computed, $ref } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
 import { MenuItem, isNode, isLeaf } from "@/Pages/Page";
@@ -57,13 +56,13 @@ const emit = defineEmits<{
 
 // Refs
 const route = useRoute();
-let expanded = $ref(false);
+const expanded = ref(false);
 
-const items = $computed(() => {
+const items = computed(() => {
   if (isLeaf(item)) {
     return [item];
   } else if (isNode(item)) {
-    return [item, ...(expanded ? item.children : [])];
+    return [item, ...(expanded.value ? item.children : [])];
   } else {
     return [];
   }
@@ -76,14 +75,14 @@ const expandIfChildActive = () => {
       item.children.filter((item) => subIsActive(item.to, route)).length > 0;
 
     if (isOnChildPage) {
-      expanded = true;
+      expanded.value = true;
     }
   }
 };
 
 // Watches
 watch(
-  () => item,
+  item,
   () => {
     expandIfChildActive();
   },
@@ -99,7 +98,7 @@ watch(
 );
 
 const onClickNode = (): void => {
-  expanded = !expanded;
+  expanded.value = !expanded.value;
 };
 </script>
 

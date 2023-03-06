@@ -42,8 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { MenuItem, Select, SelectLanguage } from "@/Framework";
 import { subIsActive } from "@/Util";
@@ -65,31 +64,31 @@ const emit = defineEmits<{
 // Refs
 const pageStore = usePageStore();
 const route = useRoute();
-let page = $ref("Curve");
-let pageOpen = $ref(false);
+const page = ref("Curve");
+const pageOpen = ref(false);
 
-const menuItems = $computed(() => {
-  return pageStore.pages.find((p) => p.title === page)?.menuItems ?? [];
+const menuItems = computed(() => {
+  return pageStore.pages.find((p) => p.title === page.value)?.menuItems ?? [];
 });
 
-const pages = $computed((): string[] => {
+const pages = computed((): string[] => {
   return pageStore.pages.filter((p) => p.visible).map((p) => p.title);
 });
 
 // Events
 const onPageOpen = (): void => {
-  pageOpen = !pageOpen;
+  pageOpen.value = !pageOpen.value;
 };
 
 const onPageSelect = (option: unknown): void => {
-  page = option as string;
+  page.value = option as string;
 };
 
 // Watches
 watch(
   () => open,
   (): void => {
-    page =
+    page.value =
       pageStore.pages.find((p) => subIsActive(p.titleRoute, route))?.title ??
       "Curve";
   }

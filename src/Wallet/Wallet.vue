@@ -40,8 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted } from "vue";
-import { $computed } from "vue/macros";
+import { computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Button } from "@/Framework";
 import {
@@ -61,15 +60,15 @@ const { t } = useI18n();
 // Refs
 const store = useWalletStore();
 
-const connected = $computed((): boolean => {
+const connected = computed((): boolean => {
   return store.connected;
 });
 
-const correctNetwork = $computed((): boolean => {
+const correctNetwork = computed((): boolean => {
   return store.correctNetwork;
 });
 
-const address = $computed((): string => {
+const address = computed((): string => {
   return addressShort(store.address);
 });
 

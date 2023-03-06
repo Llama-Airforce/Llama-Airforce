@@ -28,8 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, useSlots } from "vue";
-import { $ref, $computed } from "vue/macros";
+import { ref, computed, watch, useSlots } from "vue";
 import { TabItem } from "@/Framework";
 
 // Props
@@ -45,10 +44,10 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-let tabActive = $ref<number | null>(null);
+const tabActive = ref<number | null>(null);
 
 const slots = useSlots();
-const tabs = $computed(() => {
+const tabs = computed(() => {
   const tabs =
     slots && slots.default
       ? (slots.default() as unknown as typeof TabItem[])
@@ -61,16 +60,16 @@ const tabs = $computed(() => {
 watch(
   () => active,
   (newActive): void => {
-    tabActive = newActive;
-    emit("tab", { tab: tabs[tabActive], index: tabActive });
+    tabActive.value = newActive;
+    emit("tab", { tab: tabs.value[newActive], index: tabActive.value });
   },
   { immediate: true }
 );
 
 // Events
 const onTabClick = (_tab: typeof TabItem, index: number): void => {
-  tabActive = index;
-  emit("tab", { tab: tabs[tabActive], index: tabActive });
+  tabActive.value = index;
+  emit("tab", { tab: tabs.value[index], index: tabActive.value });
 };
 </script>
 

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { MenuItem, SelectLanguage } from "@/Framework";
 import { subIsActive } from "@/Util";
@@ -47,20 +47,20 @@ const emit = defineEmits<{
 const pageStore = usePageStore();
 const route = useRoute();
 
-const page = $computed((): Page | undefined => {
+const page = computed((): Page | undefined => {
   return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
 });
 
-const menuHeader = $computed(() => {
-  return page?.menuHeader ?? "";
+const menuHeader = computed(() => {
+  return page.value?.menuHeader ?? "";
 });
 
-const menuItems = $computed(() => {
-  return page?.menuItems ?? [];
+const menuItems = computed(() => {
+  return page.value?.menuItems ?? [];
 });
 
-const hasMenu = $computed((): boolean => {
-  return menuItems.length > 0;
+const hasMenu = computed((): boolean => {
+  return menuItems.value.length > 0;
 });
 </script>
 
