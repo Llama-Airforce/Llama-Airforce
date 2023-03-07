@@ -128,6 +128,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 
 const onSelected = (data: unknown): void => {
   const epoch = data as Round;
+  console.log(epoch.round);
 };
 
 const dataTable1 = `<DataTable
@@ -228,6 +229,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 
 const onSelected = (data: unknown): void => {
   const epoch = data as Round;
+  console.log(epoch.round);
 };`;
 
 const dataTable3 = `.datatable-example {
