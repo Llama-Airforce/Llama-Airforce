@@ -113,7 +113,7 @@ const emit = defineEmits<{
 
     width: 100%;
     text-align: left;
-    outline: none;
+    outline-color: transparent;
     line-height: 1.5rem;
 
     > .selected {

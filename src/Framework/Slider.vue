@@ -36,7 +36,7 @@ input {
   width: 100%;
   height: 1rem;
   background: lighten($level1-color, 6%);
-  outline: none;
+  outline-color: transparent;
   opacity: 0.7;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
