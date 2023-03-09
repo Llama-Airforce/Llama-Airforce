@@ -31,7 +31,7 @@
           ></InputNumber>
         </div>
       </div>
-      
+
       <div
         id="day"
         class="field date-input"
@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed, $ref } from "vue/macros";
+import { computed, ref } from "vue";
 import { InputNumber } from "@/Framework";
 
 // Props
@@ -61,25 +61,25 @@ interface Props {
 
 const { label = "" } = defineProps<Props>();
 
-const yearPlaceholder = $computed((): string => {
+const yearPlaceholder = computed((): string => {
   return new Date().getFullYear().toString();
 });
 
-const monthPlaceholder = $computed((): string => {
+const monthPlaceholder = computed((): string => {
   return (new Date().getMonth() + 1).toString();
 });
 
-const dayPlaceholder = $computed((): string => {
+const dayPlaceholder = computed((): string => {
   return new Date().getDate().toString();
 });
 
-const year: number = $ref(2023);
-const month: number = $ref(1);
-const day: number = $ref(1);
+const year = ref(2023);
+const month = ref(1);
+const day = ref(1);
 
 // Events
 const emitDateIfValid = (): void => {
-  const date = new Date(year, month - 1, day);
+  const date = new Date(year.value, month.value - 1, day.value);
   if (!isNaN(date.getTime())) {
     // The date is valid, emit it as an event
     emit("date-selected", date);

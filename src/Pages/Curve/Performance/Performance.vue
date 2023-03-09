@@ -43,10 +43,12 @@
               :label="t('start-date')"
               @date-selected="updateStartDate"
             />
+
             <InputDate
               :label="t('end-date')"
               @date-selected="updateEndDate"
             />
+
             <div class="v-container">
               <div class="label">{{ t("lp-amount") }}</div>
               <InputNumber
@@ -56,6 +58,7 @@
                 :max="2100"
               />
             </div>
+
             <div class="submit-button">
               <Button
                 class="action-button request"
@@ -80,21 +83,17 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-
-import InputDate from "@/Pages/Curve/Performance/Components/InputDate.vue";
-import { Card, Button } from "@/Framework";
-import { InputNumber } from "@/Framework";
+import { Card, Button, InputNumber, Spinner } from "@/Framework";
+import { shorten } from "@/Util";
+import { getHost } from "@/Services/Host";
 import SearchPool from "@/Pages/Curve/Pools/Components/SearchPool.vue";
-import { onMounted } from "vue";
 import { getPools } from "@/Pages/Curve/Pools/DataLoaders";
 import { useCurvePoolsStore } from "@/Pages/Curve/Pools/Store";
-import { $computed, $ref } from "vue/macros";
 import { Pool } from "@/Pages/Curve/Pools/Models";
 import { PoolService } from "@/Pages/Curve/Pools/Services";
-import { getHost } from "@/Services/Host";
-import { shorten } from "@/Util";
-import { Spinner } from "@/Framework";
+import InputDate from "@/Pages/Curve/Performance/Components/InputDate.vue";
 import PerformanceService, {
   PoolPerformanceResponse,
 } from "@/Pages/Curve/Performance/Services/PerformanceService";
@@ -107,20 +106,20 @@ const { t } = useI18n();
 // Refs.
 const store = useCurvePoolsStore();
 
-let pool = $ref("");
-let poolSelected: Pool | null = $ref(null);
-let startDate: Date | null = $ref(null);
-let endDate: Date | null = $ref(null);
-const lpAmount: number = $ref(1000000000000000000);
-let perfData: PoolPerformanceResponse = $ref(new PoolPerformanceResponse());
-let loading = $ref(false);
+const pool = ref("");
+const poolSelected = ref<Pool | null>(null);
+const startDate = ref<Date | null>(null);
+const endDate = ref<Date | null>(null);
+const lpAmount = ref(1000000000000000000);
+const perfData = ref(new PoolPerformanceResponse());
+const loading = ref(false);
 
-const canSubmit = $computed((): boolean => {
+const canSubmit = computed((): boolean => {
   return !(
-    startDate !== null &&
-    endDate !== null &&
-    pool !== "" &&
-    lpAmount !== 0
+    startDate.value !== null &&
+    endDate.value !== null &&
+    pool.value !== "" &&
+    lpAmount.value !== 0
   );
 });
 
@@ -133,35 +132,37 @@ onMounted(async (): Promise<void> => {
 const onSelect = (option: unknown): void => {
   const poolNew = option as Pool;
 
-  pool = shorten(poolNew.name);
-  poolSelected = poolNew;
+  pool.value = shorten(poolNew.name);
+  poolSelected.value = poolNew;
 };
 
 const onSubmit = async (): Promise<void> => {
-  if (startDate && endDate && poolSelected) {
-    loading = true;
+  if (startDate.value && endDate.value && poolSelected.value) {
+    loading.value = true;
+
     try {
       const data = await performanceService.get(
-        poolSelected.id,
-        startDate.getTime() / 1000,
-        endDate.getTime() / 1000,
-        lpAmount
+        poolSelected.value.id,
+        startDate.value.getTime() / 1000,
+        endDate.value.getTime() / 1000,
+        lpAmount.value
       );
+
       if (data) {
-        perfData = data;
+        perfData.value = data;
       }
     } finally {
-      loading = false;
+      loading.value = false;
     }
   }
 };
 
 const updateStartDate = (date: Date | null) => {
-  startDate = date;
+  startDate.value = date;
 };
 
 const updateEndDate = (date: Date | null) => {
-  endDate = date;
+  endDate.value = date;
 };
 </script>
 

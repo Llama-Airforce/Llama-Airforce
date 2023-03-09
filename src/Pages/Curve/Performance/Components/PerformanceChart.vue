@@ -9,12 +9,12 @@
 </template>
 
 <script setup lang="ts">
-import { $computed } from "vue/macros";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
-import { PoolPerformanceResponse } from "@/Pages/Curve/Performance/Services/PerformanceService";
 import { round, unit } from "@/Util";
+import { PoolPerformanceResponse } from "@/Pages/Curve/Performance/Services/PerformanceService";
 
 const { t } = useI18n();
 
@@ -31,7 +31,7 @@ interface Props {
 
 const { data = new PoolPerformanceResponse() } = defineProps<Props>();
 
-const options = $computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStyles({
     chart: {
       id: "performance",
@@ -99,7 +99,7 @@ function transformSeries(input: PoolPerformanceResponse): Serie[] {
   ];
 }
 
-const series = $computed((): Serie[] => {
+const series = computed((): Serie[] => {
   if (data.returns) {
     const test = transformSeries(data);
     return test;
