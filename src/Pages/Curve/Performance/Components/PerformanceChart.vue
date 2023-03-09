@@ -13,8 +13,8 @@ import { $computed } from "vue/macros";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
-import {PoolPerformanceResponse} from "@/Pages/Curve/Performance/Services/PerformanceService";
-import {round, unit} from "@/Util";
+import { PoolPerformanceResponse } from "@/Pages/Curve/Performance/Services/PerformanceService";
+import { round, unit } from "@/Util";
 
 const { t } = useI18n();
 
@@ -29,9 +29,7 @@ interface Props {
   data: PoolPerformanceResponse;
 }
 
-const {
-  data = new PoolPerformanceResponse(),
-} = defineProps<Props>();
+const { data = new PoolPerformanceResponse() } = defineProps<Props>();
 
 const options = $computed((): unknown => {
   return createChartStyles({
@@ -45,7 +43,7 @@ const options = $computed((): unknown => {
       type: "datetime",
     },
     stroke: {
-      width: [1, 2, 2, 2]
+      width: [1, 2, 2, 2],
     },
     dataLabels: {
       enabled: false,
@@ -53,8 +51,8 @@ const options = $computed((): unknown => {
     yaxis: {
       tickAmount: 4,
       labels: {
-        formatter:  (y: number): string => formatter(y),
-      }
+        formatter: (y: number): string => formatter(y),
+      },
     },
     plotOptions: {
       bar: {
@@ -70,21 +68,36 @@ const options = $computed((): unknown => {
 
 function transformSeries(input: PoolPerformanceResponse): Serie[] {
   return [
-    {name: "HODL", type: "line", data: input.returns.map(item => {
-      return { y: item.hodl, x: item.timestamp * 1000 };
-    })},
-    {name: "Curve Base", type: "line", data: input.returns.map(item => {
-      return { y: item.curve, x: item.timestamp * 1000 };
-    })},
-    {name: "Zero Fee XYK", type: "line", data: input.returns.map(item => {
-      return { y: item.xyk, x: item.timestamp  * 1000 };
-    })},
-    {name: "CRV & CVX Rewards", type: "line", data: input.returns.map(item => {
-      return { y: item.curve_rewards, x: item.timestamp * 1000 };
-    })},
+    {
+      name: "HODL",
+      type: "line",
+      data: input.returns.map((item) => {
+        return { y: item.hodl, x: item.timestamp * 1000 };
+      }),
+    },
+    {
+      name: "Curve Base",
+      type: "line",
+      data: input.returns.map((item) => {
+        return { y: item.curve, x: item.timestamp * 1000 };
+      }),
+    },
+    {
+      name: "Zero Fee XYK",
+      type: "line",
+      data: input.returns.map((item) => {
+        return { y: item.xyk, x: item.timestamp * 1000 };
+      }),
+    },
+    {
+      name: "CRV & CVX Rewards",
+      type: "line",
+      data: input.returns.map((item) => {
+        return { y: item.curve_rewards, x: item.timestamp * 1000 };
+      }),
+    },
   ];
 }
-
 
 const series = $computed((): Serie[] => {
   if (data.returns) {
@@ -95,7 +108,10 @@ const series = $computed((): Serie[] => {
 });
 
 const formatter = (x: number): string => {
-  return `${x < 0 ? '-' : ''}$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
+  return `${x < 0 ? "-" : ""}$${round(Math.abs(x), 1, "dollar")}${unit(
+    x,
+    "dollar"
+  )}`;
 };
 </script>
 
@@ -107,7 +123,6 @@ const formatter = (x: number): string => {
     flex-direction: column;
     justify-content: center;
     height: 400px;
-
   }
 }
 </style>

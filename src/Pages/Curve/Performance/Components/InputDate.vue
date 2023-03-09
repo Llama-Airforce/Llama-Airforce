@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <div class="label">{{ label }} </div>
+    <div class="label">{{ label }}</div>
     <div class="date-picker">
-      <div id="year" class="field date-input">
+      <div
+        id="year"
+        class="field date-input"
+      >
         <div class="value">
           <InputNumber
             v-model="year"
@@ -13,7 +16,11 @@
           ></InputNumber>
         </div>
       </div>
-      <div id="month" class="field date-input">
+
+      <div
+        id="month"
+        class="field date-input"
+      >
         <div class="value">
           <InputNumber
             v-model="month"
@@ -24,7 +31,11 @@
           ></InputNumber>
         </div>
       </div>
-      <div id="day" class="field date-input">
+      
+      <div
+        id="day"
+        class="field date-input"
+      >
         <div class="value">
           <InputNumber
             v-model="day"
@@ -40,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { $computed,  $ref } from "vue/macros";
+import { $computed, $ref } from "vue/macros";
 import { InputNumber } from "@/Framework";
 
 // Props
@@ -48,10 +59,7 @@ interface Props {
   label?: string;
 }
 
-const {
-  label = "",
-} = defineProps<Props>();
-
+const { label = "" } = defineProps<Props>();
 
 const yearPlaceholder = $computed((): string => {
   return new Date().getFullYear().toString();
@@ -85,8 +93,6 @@ const emitDateIfValid = (): void => {
 const emit = defineEmits<{
   (e: "date-selected", data: Date | null): void;
 }>();
-
-
 </script>
 
 <style scoped>
@@ -98,7 +104,5 @@ const emit = defineEmits<{
   display: flex;
   justify-content: left;
   gap: 0.5rem;
-
 }
 </style>
-
