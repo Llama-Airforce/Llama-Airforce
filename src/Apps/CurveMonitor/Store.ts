@@ -13,7 +13,7 @@ import type {
   Sandwich,
 } from "@CM/Models";
 import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
-import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
+import type { Theme } from "@CM/Models/Theme";
 
 type State = {
   theme: Theme;

@@ -17,8 +17,8 @@ declare module "*.json" {
 }
 
 // Shim exists so the app still compiles in case the Union git submodule is not loaded.
-declare module "@/Pages/Union/Page" {
-  import type { Page } from "@/Pages/Page";
+declare module "@LAF/Pages/Union/Page" {
+  import type { Page } from "@LAF/Pages/Page";
   const pageUnion: Page;
   export { pageUnion };
 }

@@ -30,8 +30,8 @@ import { getColorsArray, round, unit } from "@/Util";
 import type { Balances } from "@CM/Models";
 import Legend from "@CM/Components/Legend.vue";
 import { useCurveMonitorStore } from "@CM/Store";
-import createChartStyles from "@/Apps/CurveMonitor/Util/ChartStyles";
-import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
+import createChartStyles from "@CM/Util/ChartStyles";
+import type { Theme } from "@CM/Models/Theme";
 
 type Mode = "percentage" | "absolute";
 

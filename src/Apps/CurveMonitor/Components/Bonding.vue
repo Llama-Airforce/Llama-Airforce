@@ -28,8 +28,8 @@ import { Card } from "@/Framework";
 import { getColors, round, unit } from "@/Util";
 import type { Bonding } from "@CM/Models";
 import { useCurveMonitorStore } from "@CM/Store";
-import createChartStyles from "@/Apps/CurveMonitor/Util/ChartStyles";
-import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
+import createChartStyles from "@CM/Util/ChartStyles";
+import type { Theme } from "@CM/Models/Theme";
 
 const { t } = useI18n();
 

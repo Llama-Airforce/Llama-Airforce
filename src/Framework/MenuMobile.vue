@@ -46,7 +46,7 @@ import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { MenuItem, Select, SelectLanguage } from "@/Framework";
 import { subIsActive } from "@/Util";
-import { usePageStore } from "@/Pages/Store";
+import { usePageStore } from "@LAF/Pages/Store";
 
 // Props
 interface Props {

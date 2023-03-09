@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
-import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
-import { useCurveMonitorStore } from "@/Apps/CurveMonitor/Store";
+import type { Theme } from "@CM/Models/Theme";
+import { useCurveMonitorStore } from "@CM/Store";
 
 // Refs
 const store = useCurveMonitorStore();

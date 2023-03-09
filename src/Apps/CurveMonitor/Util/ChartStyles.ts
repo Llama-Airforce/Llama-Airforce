@@ -5,7 +5,7 @@ import {
   LineStyle,
 } from "lightweight-charts";
 import { mergeWith } from "lodash";
-import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
+import type { Theme } from "@CM/Models/Theme";
 import { getColors } from "@/Util";
 
 const createDefault = (

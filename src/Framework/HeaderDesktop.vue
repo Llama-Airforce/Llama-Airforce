@@ -90,7 +90,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
-import { usePageStore } from "@/Pages/Store";
+import { usePageStore } from "@LAF/Pages/Store";
 
 const pageStore = usePageStore();
 const route = useRoute();

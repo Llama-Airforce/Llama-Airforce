@@ -25,7 +25,7 @@ import {
 } from "@/Util/Addresses";
 import { fetchClass } from "@/Services/ServiceBase";
 import DefiLlamaService from "@/Services/DefiLlamaService";
-import FlyerService from "@/Pages/Convex/Flyer/Services/FlyerService";
+import FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
 
 /**
  * Assumes weekly compounding. Apr is a [0, 100] percentage.

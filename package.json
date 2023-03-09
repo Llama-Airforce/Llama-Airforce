@@ -5,14 +5,14 @@
   "scripts": {
     "lint": "eslint src/**/*.{ts,vue}",
     "typecheck": "vue-tsc --noEmit",
-    "dev laf": "vite",
+    "dev laf": "vite src/Apps/LlamaAirforce",
     "dev cm": "vite src/Apps/CurveMonitor",
-    "build laf": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build",
+    "build laf": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/LlamaAirforce",
     "build cm": "eslint src/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/CurveMonitor",
     "build contracts": "typechain --target ethers-v5 --input-dir \"./src/ABI\" --out-dir \"./src/Contracts\" \"./src/ABI/**/*.json\"",
     "test": "vitest --silent",
-    "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.ts\"",
-    "union migrate": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Pages/Union/Scripts/Union.migrate.ts\""
+    "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Apps/LlamaAirforce/Pages/Union/Scripts/Union.ts\"",
+    "union migrate": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Apps/LlamaAirforce/Pages/Union/Scripts/Union.migrate.ts\""
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",

@@ -1,4 +1,4 @@
-import { GaugeId } from "@/Pages/Curve/Gauges/Models/Gauge";
+import { GaugeId } from "@/Apps/LlamaAirforce/Pages/Curve/Gauges/Models/Gauge";
 import { invert } from "lodash";
 
 const poolNameMapping: Record<string, string> = {

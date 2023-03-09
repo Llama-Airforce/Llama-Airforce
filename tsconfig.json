@@ -43,6 +43,12 @@
       ],
       "@CM/*": [
         "src/Apps/CurveMonitor/*"
+      ],
+      "@LAF/*": [
+        "src/Apps/LlamaAirforce/*"
+      ],
+      "@Union/*": [
+        "src/Apps/LlamaAirforce/Pages/Union/*"
       ]
     },
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */

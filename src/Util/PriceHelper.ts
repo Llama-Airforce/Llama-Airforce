@@ -20,7 +20,7 @@ import {
   FxsAddress,
 } from "@/Util/Addresses";
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
-import FlyerService from "@/Pages/Convex/Flyer/Services/FlyerService";
+import FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
 import DefiLlamaService from "@/Services/DefiLlamaService";
 
 export async function getDiscount(

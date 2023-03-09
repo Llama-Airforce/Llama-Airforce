@@ -16,7 +16,7 @@ If (@("prod", "next") -notcontains $Env) {
 
 switch ($App) {
     "LAF" {
-        $dirDist = "Llama-Airforce\dist"
+        $dirDist = "Llama-Airforce\src\Apps\LlamaAirforce\dist"
         switch ($Env) {
             "Prod" {
                 $dirOutput = "Llama-Airforce-Web"
