@@ -1,51 +1,30 @@
 <template>
-  <div class="container">
+  <div class="input-date">
     <div class="label">{{ label }}</div>
     <div class="date-picker">
-      <div
-        id="year"
-        class="field date-input"
-      >
-        <div class="value">
-          <InputNumber
-            v-model="year"
-            :placeholder="yearPlaceholder"
-            :min="2020"
-            :max="2100"
-            @input="emitDateIfValid"
-          ></InputNumber>
-        </div>
-      </div>
+      <InputNumber
+        v-model="year"
+        :placeholder="yearPlaceholder"
+        :min="2020"
+        :max="2100"
+        @input="emitDateIfValid"
+      ></InputNumber>
 
-      <div
-        id="month"
-        class="field date-input"
-      >
-        <div class="value">
-          <InputNumber
-            v-model="month"
-            :placeholder="monthPlaceholder"
-            :min="1"
-            :max="12"
-            @input="emitDateIfValid"
-          ></InputNumber>
-        </div>
-      </div>
+      <InputNumber
+        v-model="month"
+        :placeholder="monthPlaceholder"
+        :min="1"
+        :max="12"
+        @input="emitDateIfValid"
+      ></InputNumber>
 
-      <div
-        id="day"
-        class="field date-input"
-      >
-        <div class="value">
-          <InputNumber
-            v-model="day"
-            :placeholder="dayPlaceholder"
-            :min="1"
-            :max="31"
-            @input="emitDateIfValid"
-          ></InputNumber>
-        </div>
-      </div>
+      <InputNumber
+        v-model="day"
+        :placeholder="dayPlaceholder"
+        :min="1"
+        :max="31"
+        @input="emitDateIfValid"
+      ></InputNumber>
     </div>
   </div>
 </template>
@@ -95,14 +74,15 @@ const emit = defineEmits<{
 }>();
 </script>
 
-<style scoped>
-.container {
+<style lang="scss" scoped>
+.input-date {
   display: grid;
   grid-gap: 1rem;
-}
-.date-picker {
-  display: flex;
-  justify-content: left;
-  gap: 0.5rem;
+
+  .date-picker {
+    display: flex;
+    justify-content: left;
+    gap: 0.5rem;
+  }
 }
 </style>
