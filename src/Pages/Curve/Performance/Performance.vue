@@ -1,44 +1,43 @@
 <template>
-  <div class="gauges">
+  <div class="performance">
     <div
       class="dashboard"
       :class="{ loading }"
     >
-      <Card
-        class="perf-params"
-        :title="t('title')"
-      >
-        <div class="v-container">
-          <div class="note">
-            <span>
-              This tool allows you to query the performance of a position when
-              providing liquidity in a Curve pool, including impermanent loss,
-              rewards from trading fees and rewards from CRV and CVX tokens.
-            </span>
-            <br />
-            <span>
-              Select the pool you want to query. Enter the date at which you
-              entered the position and the date until which you would like to
-              query the pool's performance. Indicate the amount of LP tokens you
-              received when you entered the position and press "Check".
-            </span>
-            <span>
-              The lines on the chart are plotted in absolute US dollar profit or
-              losses relative to a HODL position. The "Curve Base" series
-              includes both impermanent loss and gains accrued from trading
-              fees. The "CRV & CVX Rewards" line includes impermanent loss,
-              trading fees and CRV and CVX rewards. The "Zero Fees XYK" line is
-              given as a benchmark and shows how a 0 fee Uniswap V2 pool would
-              have performed.
-            </span>
-          </div>
+      <Card :title="t('title')">
+        <div class="note">
+          <p>
+            This tool allows you to query the performance of a position when
+            providing liquidity in a Curve pool, including impermanent loss,
+            rewards from trading fees and rewards from CRV and CVX tokens.
+          </p>
 
+          <p>
+            Select the pool you want to query. Enter the date at which you
+            entered the position and the date until which you would like to
+            query the pool's performance. Indicate the amount of LP tokens you
+            received when you entered the position and press "Check".
+          </p>
+
+          <p>
+            The lines on the chart are plotted in absolute US dollar profit or
+            losses relative to a HODL position. The "Curve Base" series includes
+            both impermanent loss and gains accrued from trading fees. The "CRV
+            & CVX Rewards" line includes impermanent loss, trading fees and CRV
+            and CVX rewards. The "Zero Fees XYK" line is given as a benchmark
+            and shows how a 0 fee Uniswap V2 pool would have performed.
+          </p>
+        </div>
+      </Card>
+
+      <Card>
+        <div class="controls">
           <SearchPool
             v-model="pool"
             @select="onSelect"
           ></SearchPool>
 
-          <div class="input-params">
+          <div class="inputs">
             <InputDate
               :label="t('start-date')"
               @date-selected="updateStartDate"
@@ -49,7 +48,7 @@
               @date-selected="updateEndDate"
             />
 
-            <div class="v-container">
+            <div class="lpAmount">
               <div class="label">{{ t("lp-amount") }}</div>
               <InputNumber
                 v-model="lpAmount"
@@ -59,15 +58,12 @@
               />
             </div>
 
-            <div class="submit-button">
-              <Button
-                class="action-button request"
-                :value="t('submit')"
-                :primary="true"
-                :disabled="canSubmit"
-                @click="onSubmit"
-              ></Button>
-            </div>
+            <Button
+              :value="t('submit')"
+              :primary="true"
+              :disabled="canSubmit"
+              @click="onSubmit"
+            ></Button>
           </div>
         </div>
       </Card>
@@ -169,48 +165,56 @@ const updateEndDate = (date: Date | null) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.note {
-  font-size: 0.75rem;
-  display: grid;
-  text-align: justify;
-}
+@include dashboard("performance");
 
 .dashboard {
-  padding: 1.5rem;
-
   &.loading {
-    .performance-chart {
-      opacity: 0.5;
-    }
-    .perf-params {
-      opacity: 0.5;
+    opacity: 0.5;
+  }
+
+  .note {
+    font-size: 0.875rem;
+    font-weight: lighter;
+
+    p {
+      display: flex;
+      margin-block-start: 0.5rem;
+      margin-block-end: 0.5rem;
+      line-height: 1.25rem;
     }
   }
-}
 
-.v-container {
-  display: grid;
-  grid-gap: 1rem;
-}
+  .controls {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 2rem;
 
-.input-params {
-  display: flex;
-  justify-content: center;
-  gap: 2.5rem;
-}
+    .inputs {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
 
-.submit-button {
-  margin: auto;
-  display: flex;
-  justify-content: right;
-}
+      .lpAmount {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
 
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(100%);
-  z-index: 1;
+      button {
+        justify-content: center;
+        align-self: center;
+      }
+    }
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(100%);
+    z-index: 1;
+  }
 }
 </style>
 
