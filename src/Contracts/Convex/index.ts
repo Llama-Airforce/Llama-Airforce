@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { CvxCrvUtilities } from "./CvxCrvUtilities";
+export type { CvxFxsRewards } from "./CvxFxsRewards";

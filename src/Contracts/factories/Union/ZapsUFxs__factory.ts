@@ -23,13 +23,13 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "enum CvxFxsStrategyBase.SwapOption",
+        internalType: "enum stkCvxFxsStrategyBase.SwapOption",
         name: "oldOption",
         type: "uint8",
       },
       {
         indexed: false,
-        internalType: "enum CvxFxsStrategyBase.SwapOption",
+        internalType: "enum stkCvxFxsStrategyBase.SwapOption",
         name: "newOption",
         type: "uint8",
       },
@@ -149,6 +149,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "CURVE_FRAX_USDC_POOL",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "CURVE_FXS_ETH_POOL",
     outputs: [
       {
@@ -188,19 +201,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "CVXFXS_STAKING_CONTRACT",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "CVXFXS_TOKEN",
     outputs: [
       {
@@ -228,6 +228,19 @@ const _abi = [
   {
     inputs: [],
     name: "FRAX_TOKEN",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "FXS_DEPOSIT",
     outputs: [
       {
         internalType: "address",
@@ -407,11 +420,6 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "assetIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
         name: "minAmountOut",
         type: "uint256",
       },
@@ -421,7 +429,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "claimFromVaultAsUnderlying",
+    name: "claimFromVaultAsFxs",
     outputs: [
       {
         internalType: "uint256",
@@ -506,6 +514,11 @@ const _abi = [
         name: "to",
         type: "address",
       },
+      {
+        internalType: "bool",
+        name: "lock",
+        type: "bool",
+      },
     ],
     name: "depositFromEth",
     outputs: [],
@@ -515,9 +528,37 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256[2]",
-        name: "amounts",
-        type: "uint256[2]",
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "minAmountOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "lock",
+        type: "bool",
+      },
+    ],
+    name: "depositFromFxs",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
       },
       {
         internalType: "uint256",
@@ -530,7 +571,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "depositFromUnderlyingAssets",
+    name: "depositFromUFxs",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -562,41 +603,13 @@ const _abi = [
         name: "to",
         type: "address",
       },
+      {
+        internalType: "bool",
+        name: "lock",
+        type: "bool",
+      },
     ],
     name: "depositViaUniV2EthPair",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "lpTokenAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "crvAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "cvxAmount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minAmountOut",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-    ],
-    name: "depositWithRewards",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -631,7 +644,7 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "enum CvxFxsStrategyBase.SwapOption",
+        internalType: "enum stkCvxFxsStrategyBase.SwapOption",
         name: "_newOption",
         type: "uint8",
       },
@@ -646,7 +659,7 @@ const _abi = [
     name: "swapOption",
     outputs: [
       {
-        internalType: "enum CvxFxsStrategyBase.SwapOption",
+        internalType: "enum stkCvxFxsStrategyBase.SwapOption",
         name: "",
         type: "uint8",
       },

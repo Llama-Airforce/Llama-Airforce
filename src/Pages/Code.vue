@@ -117,6 +117,7 @@ import {
   ZapsUCvxClaimAddress,
   UBalHarvester,
   UCrvHarvester,
+  UFxsHarvester,
   ZapsUCrvClaimAddress,
 } from "@/Util/Addresses";
 import { last } from "lodash";
@@ -253,6 +254,10 @@ const ufxs: Bundle = {
     {
       contract: UFxsStrategyAddress,
       description: "strategy",
+    },
+    {
+      contract: UFxsHarvester,
+      description: "zap-harvester",
     },
     {
       contract: ZapsUFxsAddress,

@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { CvxCrvUtilities__factory } from "./CvxCrvUtilities__factory";
+export { CvxFxsRewards__factory } from "./CvxFxsRewards__factory";

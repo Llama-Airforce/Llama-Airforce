@@ -27,8 +27,10 @@ export const DistributorUCrvAddressV1 =
   "0xa83043df401346a67eddeb074679b4570b956183";
 export const DistributorUCrvAddress =
   "0x0ed7d0497194fc029ae02223fec6d4d567696f17";
-export const DistributorUFxsAddress =
+export const DistributorUFxsAddressV1 =
   "0x11fe17c5ab68cc4cc6d3c281feddfff80bc1d4c7";
+export const DistributorUFxsAddress =
+  "0x5682a28919389b528ae74dd627e0d632ca7e398c";
 export const DistributorUCvxAddress =
   "0x27a11054b62c29c166f3fab2b0ac708043b0cb49";
 
@@ -37,8 +39,10 @@ export const UnionCrvVaultAddressV1 =
   "0x83507cc8c8b67ed48badd1f59f684d5d02884c81";
 export const UnionCrvVaultAddress =
   "0x4ebad8dbd4edbd74db0278714fbd67ebc76b89b7";
-export const UnionFxsVaultAddress =
+export const UnionFxsVaultAddressV1 =
   "0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e";
+export const UnionFxsVaultAddress =
+  "0x3a886455E5B33300a31c5e77bAc01E76c0C7B29C";
 export const UnionCvxVaultAddress =
   "0x8659fc767cad6005de79af65dafe4249c57927af";
 export const UnionBalVaultAddressV1 =
@@ -48,7 +52,9 @@ export const UnionBalVaultAddress =
 
 // Strategies
 export const UCrvStrategyAddress = "0x8d2aee9a7d581f3ed29e961a05c54f2be90eb7f3";
-export const UFxsStrategyAddress = "0xf761c0098967d756c9673f2798dbf23342badff8";
+export const UFxsStrategyAddressV1 =
+  "0xf761c0098967d756c9673f2798dbf23342badff8";
+export const UFxsStrategyAddress = "0x110a888f88b65a2c34a6922f518128eda4fb70de";
 export const UCvxStrategyAddress = "0x45f97d07dab04b21f36fa3b1149c35e316b35d03";
 export const UBalStrategyAddressV1 =
   "0xca7b5b6a9b135fc7e29ba7bc5d4cca936395025c";
@@ -65,10 +71,14 @@ export const BbUsdHandlerAddress = "0x5c53174c8d88f0f56c33f923b8c6a84a1760e484";
 export const ZapsUCrvAddressV1 = "0x5d69b683bf963648137b3ab5244e9d31d529838e";
 export const ZapsUCrv2AddressV1 = "0xaaf75554249209114ced07027c67bee7cfb1f29c";
 export const ZapsUCrvAddress = "0xc8d1335d18c0ef56a00dbb8b7a639183ee1c4d78";
-export const ZapsUCrvClaimAddress = "0x2a24bb027d7fe2a62e39871187d644daf03406f2";
-export const ZapsUFxsAddress = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
-export const ZapsUFxsClaimAddress =
+export const ZapsUCrvClaimAddress =
+  "0x2a24bb027d7fe2a62e39871187d644daf03406f2";
+export const ZapsUFxsAddressV1 = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
+export const ZapsUFxsAddress = "0x1f409ec6f395493ad39f5b27945f1a6658a23908";
+export const ZapsUFxsClaimAddressV1 =
   "0x56e9db574c8d5015d198671cbf1200b6bb2ed944";
+export const ZapsUFxsClaimAddress =
+  "0xae12bf0ad604ddb1c5f048e14b48d719fbdc7d7c";
 export const ZapsUBalAddressV1 = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
 export const ZapsUBalAddressV2 = "0xbda1daacd2a5d7770edbdf9c6039861cad83ac02";
 export const ZapsUBalAddress = "0x7374c3dcaf8ff2c9bb706eaff7bf4ebbf9ac6067";
@@ -90,6 +100,7 @@ export const AuraBalAddress = "0x616e8bfa43f920657b3497dbf40d6b1a02d4608d";
 
 // Harvesters
 export const UCrvHarvester = "0x4bf420e8040d6e96218328730e611ea3357c0197";
+export const UFxsHarvester = "0x35d28d77369e825298de76060e96e5ada7f5e906";
 export const UBalHarvester = "0x2251af9804d0a1a04e8e0e7a1fbb83f4d7423f9e";
 
 // Factory pools
@@ -114,3 +125,4 @@ export const PirexCvxAddress = "0x35a398425d9f1029021a92bc3d2557d42c8588d7";
 export const WEthAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const EmptyAddress = "0x0000000000000000000000000000000000000000";
 export const CvxCrvUtilities = "0xadd2f542f9ff06405fabf8cae4a74bd0fe29c673";
+export const CvxFxsStaking = "0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a";

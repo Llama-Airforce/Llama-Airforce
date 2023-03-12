@@ -17,6 +17,8 @@ import type * as veFunder from "./veFunder";
 export type { veFunder };
 export type { CvxCrvUtilities } from "./Convex/CvxCrvUtilities";
 export { CvxCrvUtilities__factory } from "./factories/Convex/CvxCrvUtilities__factory";
+export type { CvxFxsRewards } from "./Convex/CvxFxsRewards";
+export { CvxFxsRewards__factory } from "./factories/Convex/CvxFxsRewards__factory";
 export type { CurveV1FactoryPool } from "./Curve/CurveV1FactoryPool";
 export { CurveV1FactoryPool__factory } from "./factories/Curve/CurveV1FactoryPool__factory";
 export type { CurveV2FactoryPool } from "./Curve/CurveV2FactoryPool";

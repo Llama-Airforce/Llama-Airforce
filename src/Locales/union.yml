@@ -114,6 +114,8 @@ en:
   deposit: Deposit into new vault
   migrateUBal: Hello ser, you have {0} uBAL you need to migrate!
     <br />It's sitting in the old pounder now, not earning rewards!
+  migrateUFxs: Hello ser, you have {0} uFXS you need to migrate!
+    <br />It's sitting in the old pounder now, not earning rewards!
   migrateUCrv: Hello ser, you have {0} uCRV you need to migrate!
     <br />It might still earn yield, but it will be subpar!
 
@@ -211,6 +213,8 @@ zh:
   withdraw: 从旧金库中提款
   deposit: 存款到新的金库
   migrateUBal: 您好，您有{0} uBAL 需要迁移到新金库！
+    <br />您在旧金库中无法获得收益
+  migrateUFxs: 您好，您有{0} uFXS 需要迁移到新金库！
     <br />您在旧金库中无法获得收益
   migrateUCrv: 您好，您好 {0} uCRV 需要迁移到新金库!
     <br />您在旧金库中可以继续获得收益，但会逐步减少!

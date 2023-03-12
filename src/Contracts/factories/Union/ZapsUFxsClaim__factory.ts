@@ -136,8 +136,47 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "assetIndex",
+        name: "minAmountOut",
         type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "claimFromDistributorAsFxs",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes32[]",
+        name: "merkleProof",
+        type: "bytes32[]",
       },
       {
         internalType: "uint256",

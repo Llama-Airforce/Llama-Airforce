@@ -27,7 +27,8 @@ export interface ZapsUFxsClaimInterface extends utils.Interface {
   functions: {
     "claimFromDistributorAsCvx(uint256,address,uint256,bytes32[],uint256,address,bool)": FunctionFragment;
     "claimFromDistributorAsEth(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)": FunctionFragment;
+    "claimFromDistributorAsFxs(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
+    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
     "claimFromDistributorAsUsdt(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
     "claimFromDistributorViaUniV2EthPair(uint256,address,uint256,bytes32[],uint256,address,address,address)": FunctionFragment;
     "distributor()": FunctionFragment;
@@ -40,6 +41,7 @@ export interface ZapsUFxsClaimInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "claimFromDistributorAsCvx"
       | "claimFromDistributorAsEth"
+      | "claimFromDistributorAsFxs"
       | "claimFromDistributorAsUnderlying"
       | "claimFromDistributorAsUsdt"
       | "claimFromDistributorViaUniV2EthPair"
@@ -73,13 +75,23 @@ export interface ZapsUFxsClaimInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "claimFromDistributorAsUnderlying",
+    functionFragment: "claimFromDistributorAsFxs",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>[],
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimFromDistributorAsUnderlying",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
     ]
@@ -125,6 +137,10 @@ export interface ZapsUFxsClaimInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "claimFromDistributorAsEth",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "claimFromDistributorAsFxs",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -201,12 +217,21 @@ export interface ZapsUFxsClaim extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    claimFromDistributorAsFxs(
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -266,12 +291,21 @@ export interface ZapsUFxsClaim extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  claimFromDistributorAsFxs(
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   claimFromDistributorAsUnderlying(
     index: PromiseOrValue<BigNumberish>,
     account: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     merkleProof: PromiseOrValue<BytesLike>[],
-    assetIndex: PromiseOrValue<BigNumberish>,
     minAmountOut: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -331,12 +365,21 @@ export interface ZapsUFxsClaim extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    claimFromDistributorAsFxs(
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -397,12 +440,21 @@ export interface ZapsUFxsClaim extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    claimFromDistributorAsFxs(
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -463,12 +515,21 @@ export interface ZapsUFxsClaim extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    claimFromDistributorAsFxs(
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

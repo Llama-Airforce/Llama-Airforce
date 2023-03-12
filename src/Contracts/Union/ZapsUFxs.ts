@@ -37,13 +37,14 @@ export interface ZapsUFxsInterface extends utils.Interface {
     "CURVE_CVXFXS_FXS_LP_TOKEN()": FunctionFragment;
     "CURVE_CVXFXS_FXS_POOL()": FunctionFragment;
     "CURVE_CVX_ETH_POOL()": FunctionFragment;
+    "CURVE_FRAX_USDC_POOL()": FunctionFragment;
     "CURVE_FXS_ETH_POOL()": FunctionFragment;
     "CVXETH_CVX_INDEX()": FunctionFragment;
     "CVXETH_ETH_INDEX()": FunctionFragment;
-    "CVXFXS_STAKING_CONTRACT()": FunctionFragment;
     "CVXFXS_TOKEN()": FunctionFragment;
     "CVX_TOKEN()": FunctionFragment;
     "FRAX_TOKEN()": FunctionFragment;
+    "FXS_DEPOSIT()": FunctionFragment;
     "FXS_TOKEN()": FunctionFragment;
     "UNISWAP_ROUTER()": FunctionFragment;
     "UNIV3_ROUTER()": FunctionFragment;
@@ -53,13 +54,13 @@ export interface ZapsUFxsInterface extends utils.Interface {
     "_claimAsEth(uint256)": FunctionFragment;
     "claimFromVaultAsCvx(uint256,uint256,address,bool)": FunctionFragment;
     "claimFromVaultAsEth(uint256,uint256,address)": FunctionFragment;
-    "claimFromVaultAsUnderlying(uint256,uint256,uint256,address)": FunctionFragment;
+    "claimFromVaultAsFxs(uint256,uint256,address)": FunctionFragment;
     "claimFromVaultAsUsdt(uint256,uint256,address)": FunctionFragment;
     "claimFromVaultViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
-    "depositFromEth(uint256,address)": FunctionFragment;
-    "depositFromUnderlyingAssets(uint256[2],uint256,address)": FunctionFragment;
-    "depositViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
-    "depositWithRewards(uint256,uint256,uint256,uint256,address)": FunctionFragment;
+    "depositFromEth(uint256,address,bool)": FunctionFragment;
+    "depositFromFxs(uint256,uint256,address,bool)": FunctionFragment;
+    "depositFromUFxs(uint256,uint256,address)": FunctionFragment;
+    "depositViaUniV2EthPair(uint256,uint256,address,address,address,bool)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setApprovals()": FunctionFragment;
@@ -78,13 +79,14 @@ export interface ZapsUFxsInterface extends utils.Interface {
       | "CURVE_CVXFXS_FXS_LP_TOKEN"
       | "CURVE_CVXFXS_FXS_POOL"
       | "CURVE_CVX_ETH_POOL"
+      | "CURVE_FRAX_USDC_POOL"
       | "CURVE_FXS_ETH_POOL"
       | "CVXETH_CVX_INDEX"
       | "CVXETH_ETH_INDEX"
-      | "CVXFXS_STAKING_CONTRACT"
       | "CVXFXS_TOKEN"
       | "CVX_TOKEN"
       | "FRAX_TOKEN"
+      | "FXS_DEPOSIT"
       | "FXS_TOKEN"
       | "UNISWAP_ROUTER"
       | "UNIV3_ROUTER"
@@ -94,13 +96,13 @@ export interface ZapsUFxsInterface extends utils.Interface {
       | "_claimAsEth"
       | "claimFromVaultAsCvx"
       | "claimFromVaultAsEth"
-      | "claimFromVaultAsUnderlying"
+      | "claimFromVaultAsFxs"
       | "claimFromVaultAsUsdt"
       | "claimFromVaultViaUniV2EthPair"
       | "depositFromEth"
-      | "depositFromUnderlyingAssets"
+      | "depositFromFxs"
+      | "depositFromUFxs"
       | "depositViaUniV2EthPair"
-      | "depositWithRewards"
       | "owner"
       | "renounceOwnership"
       | "setApprovals"
@@ -136,6 +138,10 @@ export interface ZapsUFxsInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "CURVE_FRAX_USDC_POOL",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "CURVE_FXS_ETH_POOL",
     values?: undefined
   ): string;
@@ -148,16 +154,16 @@ export interface ZapsUFxsInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "CVXFXS_STAKING_CONTRACT",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "CVXFXS_TOKEN",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "CVX_TOKEN", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "FRAX_TOKEN",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "FXS_DEPOSIT",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "FXS_TOKEN", values?: undefined): string;
@@ -203,9 +209,8 @@ export interface ZapsUFxsInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "claimFromVaultAsUnderlying",
+    functionFragment: "claimFromVaultAsFxs",
     values: [
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
@@ -231,12 +236,25 @@ export interface ZapsUFxsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromEth",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
   ): string;
   encodeFunctionData(
-    functionFragment: "depositFromUnderlyingAssets",
+    functionFragment: "depositFromFxs",
     values: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositFromUFxs",
+    values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
     ]
@@ -248,17 +266,8 @@ export interface ZapsUFxsInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositWithRewards",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
     ]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -310,6 +319,10 @@ export interface ZapsUFxsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "CURVE_FRAX_USDC_POOL",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "CURVE_FXS_ETH_POOL",
     data: BytesLike
   ): Result;
@@ -322,15 +335,15 @@ export interface ZapsUFxsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "CVXFXS_STAKING_CONTRACT",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "CVXFXS_TOKEN",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "CVX_TOKEN", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "FRAX_TOKEN", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "FXS_DEPOSIT",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "FXS_TOKEN", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "UNISWAP_ROUTER",
@@ -356,7 +369,7 @@ export interface ZapsUFxsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimFromVaultAsUnderlying",
+    functionFragment: "claimFromVaultAsFxs",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -372,15 +385,15 @@ export interface ZapsUFxsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "depositFromUnderlyingAssets",
+    functionFragment: "depositFromFxs",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "depositFromUFxs",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "depositViaUniV2EthPair",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositWithRewards",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -476,19 +489,21 @@ export interface ZapsUFxs extends BaseContract {
 
     CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<[string]>;
 
+    CURVE_FRAX_USDC_POOL(overrides?: CallOverrides): Promise<[string]>;
+
     CURVE_FXS_ETH_POOL(overrides?: CallOverrides): Promise<[string]>;
 
     CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    CVXFXS_STAKING_CONTRACT(overrides?: CallOverrides): Promise<[string]>;
-
     CVXFXS_TOKEN(overrides?: CallOverrides): Promise<[string]>;
 
     CVX_TOKEN(overrides?: CallOverrides): Promise<[string]>;
 
     FRAX_TOKEN(overrides?: CallOverrides): Promise<[string]>;
+
+    FXS_DEPOSIT(overrides?: CallOverrides): Promise<[string]>;
 
     FXS_TOKEN(overrides?: CallOverrides): Promise<[string]>;
 
@@ -522,9 +537,8 @@ export interface ZapsUFxs extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    claimFromVaultAsUnderlying(
+    claimFromVaultAsFxs(
       amount: PromiseOrValue<BigNumberish>,
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -549,11 +563,20 @@ export interface ZapsUFxs extends BaseContract {
     depositFromEth(
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    depositFromUnderlyingAssets(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    depositFromFxs(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    depositFromUFxs(
+      amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -565,15 +588,7 @@ export interface ZapsUFxs extends BaseContract {
       router: PromiseOrValue<string>,
       inputToken: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    depositWithRewards(
-      lpTokenAmount: PromiseOrValue<BigNumberish>,
-      crvAmount: PromiseOrValue<BigNumberish>,
-      cvxAmount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -616,19 +631,21 @@ export interface ZapsUFxs extends BaseContract {
 
   CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<string>;
 
+  CURVE_FRAX_USDC_POOL(overrides?: CallOverrides): Promise<string>;
+
   CURVE_FXS_ETH_POOL(overrides?: CallOverrides): Promise<string>;
 
   CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
 
   CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
 
-  CVXFXS_STAKING_CONTRACT(overrides?: CallOverrides): Promise<string>;
-
   CVXFXS_TOKEN(overrides?: CallOverrides): Promise<string>;
 
   CVX_TOKEN(overrides?: CallOverrides): Promise<string>;
 
   FRAX_TOKEN(overrides?: CallOverrides): Promise<string>;
+
+  FXS_DEPOSIT(overrides?: CallOverrides): Promise<string>;
 
   FXS_TOKEN(overrides?: CallOverrides): Promise<string>;
 
@@ -662,9 +679,8 @@ export interface ZapsUFxs extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  claimFromVaultAsUnderlying(
+  claimFromVaultAsFxs(
     amount: PromiseOrValue<BigNumberish>,
-    assetIndex: PromiseOrValue<BigNumberish>,
     minAmountOut: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -689,11 +705,20 @@ export interface ZapsUFxs extends BaseContract {
   depositFromEth(
     minAmountOut: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
+    lock: PromiseOrValue<boolean>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  depositFromUnderlyingAssets(
-    amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  depositFromFxs(
+    amount: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    lock: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  depositFromUFxs(
+    amount: PromiseOrValue<BigNumberish>,
     minAmountOut: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -705,15 +730,7 @@ export interface ZapsUFxs extends BaseContract {
     router: PromiseOrValue<string>,
     inputToken: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  depositWithRewards(
-    lpTokenAmount: PromiseOrValue<BigNumberish>,
-    crvAmount: PromiseOrValue<BigNumberish>,
-    cvxAmount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
+    lock: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -756,19 +773,21 @@ export interface ZapsUFxs extends BaseContract {
 
     CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<string>;
 
+    CURVE_FRAX_USDC_POOL(overrides?: CallOverrides): Promise<string>;
+
     CURVE_FXS_ETH_POOL(overrides?: CallOverrides): Promise<string>;
 
     CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
 
     CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
 
-    CVXFXS_STAKING_CONTRACT(overrides?: CallOverrides): Promise<string>;
-
     CVXFXS_TOKEN(overrides?: CallOverrides): Promise<string>;
 
     CVX_TOKEN(overrides?: CallOverrides): Promise<string>;
 
     FRAX_TOKEN(overrides?: CallOverrides): Promise<string>;
+
+    FXS_DEPOSIT(overrides?: CallOverrides): Promise<string>;
 
     FXS_TOKEN(overrides?: CallOverrides): Promise<string>;
 
@@ -802,9 +821,8 @@ export interface ZapsUFxs extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    claimFromVaultAsUnderlying(
+    claimFromVaultAsFxs(
       amount: PromiseOrValue<BigNumberish>,
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -829,11 +847,20 @@ export interface ZapsUFxs extends BaseContract {
     depositFromEth(
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    depositFromUnderlyingAssets(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    depositFromFxs(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    depositFromUFxs(
+      amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -845,15 +872,7 @@ export interface ZapsUFxs extends BaseContract {
       router: PromiseOrValue<string>,
       inputToken: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    depositWithRewards(
-      lpTokenAmount: PromiseOrValue<BigNumberish>,
-      crvAmount: PromiseOrValue<BigNumberish>,
-      cvxAmount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -910,19 +929,21 @@ export interface ZapsUFxs extends BaseContract {
 
     CURVE_CVX_ETH_POOL(overrides?: CallOverrides): Promise<BigNumber>;
 
+    CURVE_FRAX_USDC_POOL(overrides?: CallOverrides): Promise<BigNumber>;
+
     CURVE_FXS_ETH_POOL(overrides?: CallOverrides): Promise<BigNumber>;
 
     CVXETH_CVX_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
 
     CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<BigNumber>;
 
-    CVXFXS_STAKING_CONTRACT(overrides?: CallOverrides): Promise<BigNumber>;
-
     CVXFXS_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
 
     CVX_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
 
     FRAX_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
+
+    FXS_DEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
 
     FXS_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -956,9 +977,8 @@ export interface ZapsUFxs extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    claimFromVaultAsUnderlying(
+    claimFromVaultAsFxs(
       amount: PromiseOrValue<BigNumberish>,
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -983,11 +1003,20 @@ export interface ZapsUFxs extends BaseContract {
     depositFromEth(
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    depositFromUnderlyingAssets(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    depositFromFxs(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    depositFromUFxs(
+      amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -999,15 +1028,7 @@ export interface ZapsUFxs extends BaseContract {
       router: PromiseOrValue<string>,
       inputToken: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    depositWithRewards(
-      lpTokenAmount: PromiseOrValue<BigNumberish>,
-      crvAmount: PromiseOrValue<BigNumberish>,
-      cvxAmount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1059,6 +1080,10 @@ export interface ZapsUFxs extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    CURVE_FRAX_USDC_POOL(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     CURVE_FXS_ETH_POOL(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1067,15 +1092,13 @@ export interface ZapsUFxs extends BaseContract {
 
     CVXETH_ETH_INDEX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    CVXFXS_STAKING_CONTRACT(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     CVXFXS_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     CVX_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     FRAX_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    FXS_DEPOSIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     FXS_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1109,9 +1132,8 @@ export interface ZapsUFxs extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    claimFromVaultAsUnderlying(
+    claimFromVaultAsFxs(
       amount: PromiseOrValue<BigNumberish>,
-      assetIndex: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1136,11 +1158,20 @@ export interface ZapsUFxs extends BaseContract {
     depositFromEth(
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    depositFromUnderlyingAssets(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    depositFromFxs(
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    depositFromUFxs(
+      amount: PromiseOrValue<BigNumberish>,
       minAmountOut: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1152,15 +1183,7 @@ export interface ZapsUFxs extends BaseContract {
       router: PromiseOrValue<string>,
       inputToken: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    depositWithRewards(
-      lpTokenAmount: PromiseOrValue<BigNumberish>,
-      crvAmount: PromiseOrValue<BigNumberish>,
-      cvxAmount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      lock: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
