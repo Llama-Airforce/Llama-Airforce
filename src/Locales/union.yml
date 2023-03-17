@@ -24,6 +24,16 @@ en:
   claim-first: In order to withdraw the requested amount you first need to claim
     your Union rewards
 
+  description-ucrv:
+    This pounder stakes cvxCRV single-sidedly on Convex.
+    Llama Airforce devs actively choose the highest yielding reward weight option for the staked cvxCRV.
+  description-ufxs: This pounder stakes cvxFXS single-sidedly on Convex.
+  description-ucvx: This pounder stakes pxCVX and compounds the earned bribe rewards for more pxCVX.
+  description-ubal: This pounder stakes auraBAL on Aura.
+  description-ufxslp:
+    This pounder stakes cvxFXS/FXS LP tokens on Convex.
+    This staking method no longer actively rewarded by Convex; these rewards have been moved to single-sided cvxFXS staking.
+
   # PounderInput.vue
   balance: "Balance:"
   max: Max
