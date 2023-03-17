@@ -13,3 +13,5 @@ export type { ZapsUCvx } from "./ZapsUCvx";
 export type { ZapsUCvxClaim } from "./ZapsUCvxClaim";
 export type { ZapsUFxs } from "./ZapsUFxs";
 export type { ZapsUFxsClaim } from "./ZapsUFxsClaim";
+export type { ZapsUFxsLp } from "./ZapsUFxsLp";
+export type { ZapsUFxsLpClaim } from "./ZapsUFxsLpClaim";

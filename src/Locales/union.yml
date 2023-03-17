@@ -106,6 +106,7 @@ en:
   pounders-info:
     Union auto-compounders makes life for hard working llamas just a little
     bit easier to manage.
+  pounders-info-other: The following pounders are not part of the Union's allocation set, but they still make life easier.
 
   # Migrations
   migrate: Migrate
@@ -206,6 +207,7 @@ zh:
 
   # Pounders.vue
   pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
+  pounders-info-other: 以下金库不属于Union的分配集，但它们仍然使生活更容易。
 
   # Migrations
   migrate: 迁移
