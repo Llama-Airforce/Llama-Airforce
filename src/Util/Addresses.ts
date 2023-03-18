@@ -42,7 +42,7 @@ export const UnionCrvVaultAddress =
 export const UnionFxsVaultAddressV1 =
   "0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e";
 export const UnionFxsVaultAddress =
-  "0x3a886455E5B33300a31c5e77bAc01E76c0C7B29C";
+  "0x3a886455e5b33300a31c5e77bac01e76c0c7b29c";
 export const UnionCvxVaultAddress =
   "0x8659fc767cad6005de79af65dafe4249c57927af";
 export const UnionBalVaultAddressV1 =
