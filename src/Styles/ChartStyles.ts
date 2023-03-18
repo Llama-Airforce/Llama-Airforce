@@ -73,6 +73,7 @@ export default function createChartStyles(options: Object): Object {
   const mergeFunction = (objValue: unknown, srcValue: unknown) => {
     if (typeof srcValue === "object") {
       mergeWith(objValue, srcValue, mergeFunction);
+      return undefined;
     } else if (objValue) {
       return objValue;
     } else {
