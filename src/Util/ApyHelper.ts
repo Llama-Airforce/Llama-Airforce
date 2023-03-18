@@ -1,5 +1,5 @@
-import { BigNumber } from "ethers";
-import { JsonRpcSigner } from "@ethersproject/providers";
+import { BigNumber, Signer } from "ethers";
+import { type Provider } from "@ethersproject/providers";
 import { chain, zip } from "lodash";
 import {
   CurveV2FactoryPool__factory,
@@ -43,19 +43,22 @@ export function getCvxApy(flyerService: FlyerService): Promise<number> {
     .catch(() => 0);
 }
 
-export async function getCvxCrvApy(
-  signer: JsonRpcSigner,
-  llamaService: DefiLlamaService
-): Promise<number> {
-  const util = CvxCrvUtilities__factory.connect(CvxCrvUtilities, signer);
+export async function getCvxCrvAprs(
+  provider: Provider | Signer,
+  llamaService: DefiLlamaService,
+  address?: string // If empty, you'll get all APRs of all weights.
+): Promise<number[]> {
+  const util = CvxCrvUtilities__factory.connect(CvxCrvUtilities, provider);
 
-  const mainRates = await util
-    .accountRewardRates(UCrvStrategyAddress)
-    .then((x) => zip(x.tokens, x.rates) as [string, BigNumber][]);
+  const mainRates = await (address
+    ? util.accountRewardRates(address)
+    : util.mainRewardRates()
+  ).then((x) => zip(x.tokens, x.rates) as [string, BigNumber][]);
 
-  const extraRates = await util
-    .accountExtraRewardRates(UCrvStrategyAddress)
-    .then((x) => zip(x.tokens, x.rates) as [string, BigNumber][]);
+  const extraRates = await (address
+    ? util.accountExtraRewardRates(address)
+    : util.extraRewardRates()
+  ).then((x) => zip(x.tokens, x.rates) as [string, BigNumber][]);
 
   const rates = chain(mainRates)
     .concat(extraRates)
@@ -86,7 +89,7 @@ export async function getCvxCrvApy(
     )
   );
 
-  let aprTotal = 0;
+  const aprs = [];
   const priceOfDeposit = prices[CvxCrvAddress];
 
   for (const rate of rates) {
@@ -98,10 +101,22 @@ export async function getCvxCrvApy(
     );
 
     const aprNumber = bigNumToNumber(apr, 18);
-    aprTotal += aprNumber;
+    aprs.push(aprNumber);
   }
 
-  return aprToApy(aprTotal * 100, 52);
+  return aprs;
+}
+
+export async function getCvxCrvApy(
+  provider: Provider | Signer,
+  llamaService: DefiLlamaService
+): Promise<number> {
+  const aprs = await getCvxCrvAprs(provider, llamaService, UCrvStrategyAddress);
+
+  // Sum all individual APRs together.
+  const apr = aprs.reduce((acc, x) => acc + x, 0);
+
+  return aprToApy(apr * 100, 52);
 }
 
 class PoolResponse {
@@ -166,10 +181,13 @@ export function getAuraBalApy(flyerService: FlyerService): Promise<number> {
 }
 
 export async function getCvxFxsApy(
-  signer: JsonRpcSigner,
+  provider: Provider | Signer,
   llamaService: DefiLlamaService
 ): Promise<number> {
-  const rewardsContract = CvxFxsRewards__factory.connect(CvxFxsStaking, signer);
+  const rewardsContract = CvxFxsRewards__factory.connect(
+    CvxFxsStaking,
+    provider
+  );
 
   const getRewardRate = async (address: string): Promise<number> => {
     const rewardData = await rewardsContract.rewardData(address);
@@ -188,7 +206,7 @@ export async function getCvxFxsApy(
 
   const curvePool = CurveV2FactoryPool__factory.connect(
     CvxFxsFactoryAddress,
-    signer
+    provider
   );
 
   const priceCvxFxs = await getCvxFxsPrice(llamaService, curvePool);
