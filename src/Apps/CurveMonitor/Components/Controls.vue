@@ -17,6 +17,8 @@
 
     <SelectorPair></SelectorPair>
     <SelectorRange></SelectorRange>
+
+    <Theme></Theme>
     <Status :status-service="statusService"></Status>
   </div>
 </template>
@@ -29,6 +31,7 @@ import type { Pool } from "@CM/Models";
 import { PoolService, StatusService } from "@CM/Services";
 import SelectorPair from "@CM/Components/SelectorPair.vue";
 import SelectorRange from "@CM/Components/SelectorRange.vue";
+import Theme from "@CM/Components/Theme.vue";
 import Status from "@CM/Components/Status.vue";
 import SearchPool from "@CM/Components/SearchPool.vue";
 
@@ -129,7 +132,8 @@ const onSelect = (option: unknown): void => {
     }
 
     .pair,
-    .ranges {
+    .ranges,
+    .theme {
       display: none;
     }
   }
@@ -179,8 +183,18 @@ const onSelect = (option: unknown): void => {
     }
   }
 
-  .status {
+  .theme {
     grid-column: 5;
+
+    display: flex;
+    align-items: center;
+
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+
+  .status {
+    grid-column: 6;
 
     display: flex;
     align-items: center;
