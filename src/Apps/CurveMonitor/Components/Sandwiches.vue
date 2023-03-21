@@ -181,7 +181,9 @@ watch(sandwichesPage, (ps) => {
     font-size: 0.9rem;
     width: 600px;
     justify-self: end;
-    margin-top: 0.25rem;
+    margin-top: 0.125rem;
+    margin-bottom: 0.125rem;
+    margin-right: 2rem;
   }
 
   ::v-deep(.sandwiches-columns-data) {
