@@ -68,6 +68,6 @@ const toggleTheme = (): void => {
   justify-content: center;
   width: 2rem;
 
-  color: $yellow;
+  color: var(--c-yellow);
 }
 </style>

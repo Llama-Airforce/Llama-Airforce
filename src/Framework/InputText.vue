@@ -157,7 +157,7 @@ const onInput = (evt: Event): void => {
       cursor: pointer;
 
       &:hover {
-        background-color: $blue;
+        background-color: var(--c-primary);
       }
     }
 

@@ -23,6 +23,8 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
+@import "@/Styles/Themes/Dark.scss";
+@import "@/Styles/Themes/Light.scss";
 @import "@/Styles/Variables.scss";
 
 @font-face {
@@ -53,6 +55,14 @@
   src: url("/SF-Mono-Bold.otf") format("opentype");
 }
 
+[data-theme="light"] {
+  @include themeLight();
+}
+
+[data-theme="dark"] {
+  @include themeDark();
+}
+
 html {
   font-family: SF Mono, Consolas, monospace;
   font-size: 16px;
@@ -72,11 +82,11 @@ html {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $blue;
+    background: var(--c-primary);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: lighten($blue, 6%);
+    background: var(--c-primary-hover);
   }
 }
 
@@ -88,7 +98,7 @@ body {
 }
 
 a {
-  color: $blue;
+  color: var(--c-primary);
   text-decoration: none;
 
   &:hover {

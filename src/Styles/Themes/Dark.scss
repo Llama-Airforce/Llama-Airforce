@@ -1,0 +1,39 @@
+@mixin register($colorName, $colorValue) {
+  --c-#{"" + $colorName}: #{$colorValue};
+}
+
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+@mixin themeDark() {
+  $red: #ff5757;
+  $green: #7ed957;
+  $blue: #2081f0;
+  $yellow: #ffcc00;
+  $purple: #8c52ff;
+
+  $primary: $blue;
+
+  $colors: (
+    red: $red,
+    "red-rgb": hexToRGB($red),
+    green: $green,
+    "green-rgb": hexToRGB($green),
+    blue: $blue,
+    "blue-rgb": hexToRGB($blue),
+    yellow: $yellow,
+    "yellow-rgb": hexToRGB($yellow),
+    purple: $purple,
+    "purple-rgb": hexToRGB($purple),
+    primary: $primary,
+    "primary-hover": lighten($primary, 10%),
+    "primary-active": lighten($primary, 20%),
+    "primary-disabled": lighten($primary, 15%),
+  );
+
+  // CSS Variables
+  @each $colorName, $colorValue in $colors {
+    @include register($colorName, $colorValue);
+  }
+}

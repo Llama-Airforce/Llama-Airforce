@@ -304,7 +304,7 @@ const sortColumn = (index: number): void => {
 
       display: flex;
       align-items: center;
-      color: $blue;
+      color: var(--c-primary);
     }
 
     > .header-title {
@@ -369,7 +369,7 @@ const sortColumn = (index: number): void => {
     }
 
     &.selected-below {
-      border-bottom: 2px solid $blue;
+      border-bottom: 2px solid var(--c-primary);
     }
 
     > .column-header {
@@ -383,7 +383,7 @@ const sortColumn = (index: number): void => {
       }
 
       .icon {
-        color: $blue;
+        color: var(--c-primary);
         padding-right: 1rem;
       }
 
@@ -395,7 +395,7 @@ const sortColumn = (index: number): void => {
         &.current-sort {
           > .sorting-arrows {
             > .sorting-arrow {
-              color: $blue;
+              color: var(--c-primary);
             }
           }
         }
@@ -415,7 +415,7 @@ const sortColumn = (index: number): void => {
     }
 
     &.active {
-      border-bottom: 2px solid $blue;
+      border-bottom: 2px solid var(--c-primary);
     }
 
     &.item {

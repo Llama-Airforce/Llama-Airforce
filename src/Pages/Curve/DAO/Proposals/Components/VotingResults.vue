@@ -119,7 +119,7 @@ const againstPercentage = computed(() => {
 
     > .bar {
       height: 0.5rem;
-      background-color: $yellow;
+      background-color: var(--c-yellow);
     }
   }
 }

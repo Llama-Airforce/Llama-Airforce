@@ -68,7 +68,7 @@ const bribesIncomeBiWeekly = computed((): number | undefined => {
 
   .title {
     font-weight: normal;
-    color: $green;
+    color: var(--c-green);
   }
 }
 </style>

@@ -153,7 +153,7 @@ header {
       .donate {
         display: none !important;
         font-weight: 500;
-        color: $blue;
+        color: var(--c-primary);
       }
 
       .icon {

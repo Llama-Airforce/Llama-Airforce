@@ -62,7 +62,7 @@ const revenueAnnually = computed((): number | undefined => {
   text-align: center;
 
   .title {
-    color: $red;
+    color: var(--c-red);
     font-weight: normal;
   }
 
@@ -70,7 +70,7 @@ const revenueAnnually = computed((): number | undefined => {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-gap: $border-size;
-    background-color: $green;
+    background-color: var(--c-green);
 
     > div {
       background-color: $background-color;
@@ -82,7 +82,7 @@ const revenueAnnually = computed((): number | undefined => {
       flex-direction: column;
 
       .value {
-        color: $blue;
+        color: var(--c-blue);
       }
     }
 
@@ -91,7 +91,7 @@ const revenueAnnually = computed((): number | undefined => {
       flex-direction: column;
 
       .value {
-        color: $yellow;
+        color: var(--c-yellow);
       }
     }
   }

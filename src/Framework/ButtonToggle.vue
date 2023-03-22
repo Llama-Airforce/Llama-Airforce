@@ -62,7 +62,7 @@ button {
 
   &:disabled {
     pointer-events: none;
-    background: lighten($blue, 15%);
+    background: var(--c-primary-disabled);
   }
 
   &:hover:not(:disabled) {
@@ -74,14 +74,14 @@ button {
   }
 
   &.toggled:not(:disabled) {
-    background-color: $blue;
+    background-color: var(--c-primary);
 
     &:hover {
-      background-color: lighten($blue, 10%);
+      background-color: var(--c-primary-hover);
     }
 
     &:active {
-      background-color: lighten($blue, 20%);
+      background-color: var(--c-primary-active);
     }
   }
 }

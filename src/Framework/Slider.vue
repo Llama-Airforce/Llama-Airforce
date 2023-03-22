@@ -50,14 +50,14 @@ input {
     appearance: none;
     width: 1.5rem;
     height: 1.5rem;
-    background: $blue;
+    background: var(--c-primary);
     cursor: pointer;
   }
 
   &::-moz-range-thumb {
     width: 1.5rem;
     height: 1.5rem;
-    background: $blue;
+    background: var(--c-primary);
     cursor: pointer;
   }
 

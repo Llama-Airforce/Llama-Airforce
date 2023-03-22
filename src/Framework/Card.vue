@@ -85,7 +85,7 @@ const {
 
       .icon {
         font-size: 1.25rem;
-        color: $blue;
+        color: var(--c-primary);
         padding-right: 0.5rem;
       }
 

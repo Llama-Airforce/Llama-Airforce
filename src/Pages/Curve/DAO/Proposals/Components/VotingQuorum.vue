@@ -100,11 +100,11 @@ const reached = computed((): number => {
     height: 0.5rem;
 
     > .support {
-      background-color: $green;
+      background-color: var(--c-green);
     }
 
     > .quorum {
-      background-color: $red;
+      background-color: var(--c-red);
     }
   }
 

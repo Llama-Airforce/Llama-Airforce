@@ -314,15 +314,15 @@ watch(transactionsPage, (ps) => {
 
   .type {
     &.swap {
-      color: lighten($purple, 10%);
+      color: var(--c-purple);
     }
 
     &.deposit {
-      color: $green;
+      color: var(--c-green);
     }
 
     &.withdraw {
-      color: $red;
+      color: var(--c-red);
     }
   }
 

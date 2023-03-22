@@ -67,15 +67,15 @@ onMounted(() => {
     transition: background-color 0.5s ease;
 
     &.good {
-      background-color: $green;
+      background-color: var(--c-green);
     }
 
     &.meh {
-      background-color: $yellow;
+      background-color: var(--c-yellow);
     }
 
     &.bad {
-      background-color: $red;
+      background-color: var(--c-red);
     }
   }
 }

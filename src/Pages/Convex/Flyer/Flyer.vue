@@ -65,7 +65,7 @@ onMounted(async (): Promise<void> => {
     > div:first-child {
       padding-bottom: 2rem;
       margin-bottom: 2rem;
-      border-bottom: $border-size solid $yellow;
+      border-bottom: $border-size solid var(--c-yellow);
     }
 
     // Except for the last div, ofcourse.

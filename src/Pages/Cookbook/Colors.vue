@@ -68,23 +68,23 @@ const colors: Color[] = [
     value: Colors.text,
   },
   {
-    variable: "$red",
+    variable: "var(--c-red)",
     value: Colors.red,
   },
   {
-    variable: "$green",
+    variable: "var(--c-green)",
     value: Colors.green,
   },
   {
-    variable: "$blue",
+    variable: "var(--c-blue)",
     value: Colors.blue,
   },
   {
-    variable: "$yellow",
+    variable: "var(--c-yellow)",
     value: Colors.yellow,
   },
   {
-    variable: "$purple",
+    variable: "var(--c-purple)",
     value: Colors.purple,
   },
 ];

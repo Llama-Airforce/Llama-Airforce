@@ -118,7 +118,7 @@ header {
 
       .donate {
         font-weight: 500;
-        color: $blue;
+        color: var(--c-primary);
       }
     }
 

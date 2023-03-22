@@ -136,7 +136,7 @@ ul {
 
     &.active {
       button {
-        background-color: $blue;
+        background-color: var(--c-primary);
       }
     }
 
@@ -154,11 +154,11 @@ ul {
       border: none;
 
       &:hover {
-        background-color: lighten($blue, 10%);
+        background-color: var(--c-primary-hover);
       }
 
       &:active {
-        background-color: lighten($blue, 20%);
+        background-color: var(--c-primary-active);
       }
     }
   }

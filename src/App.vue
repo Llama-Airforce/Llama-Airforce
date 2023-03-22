@@ -27,6 +27,7 @@ import { Header, MenuDesktop } from "@/Framework";
 </script>
 
 <style lang="scss">
+@import "@/Styles/Themes/Dark.scss";
 @import "@/Styles/Variables.scss";
 
 @font-face {
@@ -57,6 +58,10 @@ import { Header, MenuDesktop } from "@/Framework";
   src: url("/SF-Mono-Bold.otf") format("opentype");
 }
 
+:root {
+  @include themeDark();
+}
+
 html {
   font-family: SF Mono, Consolas, monospace;
   font-size: 16px;
@@ -76,11 +81,11 @@ html {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $blue;
+    background: var(--c-primary);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: lighten($blue, 6%);
+    background: var(--c-primary-hover);
   }
 }
 
@@ -92,7 +97,7 @@ body {
 }
 
 a {
-  color: $blue;
+  color: var(--c-primary);
   text-decoration: none;
 
   &:hover {

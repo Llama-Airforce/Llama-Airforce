@@ -110,7 +110,7 @@ const cvxMarketCapFullyDiluted = computed((): number | undefined => {
   }
 
   .title {
-    color: $purple;
+    color: var(--c-purple);
     font-weight: normal;
   }
 }

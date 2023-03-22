@@ -158,7 +158,7 @@ const percentage = (voteWeight: number): number => {
   > .for {
     > .title {
       justify-content: end;
-      color: $green;
+      color: var(--c-green);
     }
 
     > .vote {
@@ -173,7 +173,7 @@ const percentage = (voteWeight: number): number => {
 
   > .against {
     > .title {
-      color: $red;
+      color: var(--c-red);
     }
 
     > .vote {

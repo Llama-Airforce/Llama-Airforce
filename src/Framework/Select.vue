@@ -153,7 +153,7 @@ const emit = defineEmits<{
         padding: 0.4rem 0.75rem;
 
         &:hover {
-          background-color: $blue;
+          background-color: var(--c-primary);
         }
       }
 

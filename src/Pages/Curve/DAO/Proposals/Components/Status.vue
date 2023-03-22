@@ -89,19 +89,19 @@ const statusLabel = computed((): string => {
 .status {
   .status-value {
     &.active {
-      color: $yellow;
+      color: var(--c-yellow);
     }
 
     &.denied {
-      color: $red;
+      color: var(--c-red);
     }
 
     &.passed {
-      color: $green;
+      color: var(--c-green);
     }
 
     &.executed {
-      color: lighten($purple, 8%);
+      color: var(--c-purple);
     }
   }
 }

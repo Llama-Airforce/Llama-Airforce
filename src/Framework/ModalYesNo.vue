@@ -73,7 +73,7 @@ const { t } = useI18n();
 
       button {
         &.no {
-          color: $red;
+          color: var(--c-red);
         }
 
         &.yes {

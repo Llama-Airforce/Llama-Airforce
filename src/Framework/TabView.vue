@@ -103,14 +103,14 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       font-weight: 500;
 
       &:hover {
-        border-bottom: 2px solid lighten(lighten($blue, 12%), 12%);
+        border-bottom: 2px solid var(--c-primary-active);
         margin: 0 0 -2px 0;
-        color: lighten(lighten($blue, 12%), 12%);
+        color: var(--c-primary-active);
       }
 
       &:active,
       &.active {
-        border-bottom: 2px solid $blue;
+        border-bottom: 2px solid var(--c-primary);
         margin: 0 0 -2px 0;
         color: $text;
       }

@@ -117,7 +117,7 @@ i {
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
 
   &.node {
-    color: $blue !important;
+    color: var(--c-primary) !important;
   }
 }
 </style>

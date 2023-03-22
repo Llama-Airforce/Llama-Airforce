@@ -126,7 +126,7 @@ onMounted(async () => {
   text-align: center;
 
   .title {
-    color: $blue;
+    color: var(--c-blue);
     font-weight: normal;
   }
 
@@ -134,7 +134,7 @@ onMounted(async () => {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-gap: $border-size;
-    background-color: $green;
+    background-color: var(--c-green);
 
     > div {
       background-color: $background-color;
@@ -181,7 +181,7 @@ onMounted(async () => {
       }
 
       .value {
-        color: $green;
+        color: var(--c-green);
       }
     }
 
@@ -193,7 +193,7 @@ onMounted(async () => {
       }
 
       .value {
-        color: $red;
+        color: var(--c-red);
       }
     }
   }
