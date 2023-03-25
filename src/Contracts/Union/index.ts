@@ -9,6 +9,8 @@ export type { UnionVaultUCrv } from "./UnionVaultUCrv";
 export type { ZapsUBal } from "./ZapsUBal";
 export type { ZapsUCrv } from "./ZapsUCrv";
 export type { ZapsUCrvClaim } from "./ZapsUCrvClaim";
+export type { ZapsUCrvClaimV2 } from "./ZapsUCrvClaimV2";
+export type { ZapsUCrvV2 } from "./ZapsUCrvV2";
 export type { ZapsUCvx } from "./ZapsUCvx";
 export type { ZapsUCvxClaim } from "./ZapsUCvxClaim";
 export type { ZapsUFxs } from "./ZapsUFxs";

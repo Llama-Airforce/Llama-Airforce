@@ -21,6 +21,7 @@ import {
   CvxFxsStaking,
   FxsAddress,
   UCrvStrategyAddress,
+  UCrvStrategyAddressV2,
 } from "@/Util/Addresses";
 import { fetchClass } from "@/Services/ServiceBase";
 import DefiLlamaService from "@/Services/DefiLlamaService";
@@ -112,6 +113,22 @@ export async function getCvxCrvApy(
   llamaService: DefiLlamaService
 ): Promise<number> {
   const aprs = await getCvxCrvAprs(provider, llamaService, UCrvStrategyAddress);
+
+  // Sum all individual APRs together.
+  const apr = aprs.reduce((acc, x) => acc + x, 0);
+
+  return aprToApy(apr * 100, 52);
+}
+
+export async function getCvxCrvApyV2(
+  provider: Provider | Signer,
+  llamaService: DefiLlamaService
+): Promise<number> {
+  const aprs = await getCvxCrvAprs(
+    provider,
+    llamaService,
+    UCrvStrategyAddressV2
+  );
 
   // Sum all individual APRs together.
   const apr = aprs.reduce((acc, x) => acc + x, 0);

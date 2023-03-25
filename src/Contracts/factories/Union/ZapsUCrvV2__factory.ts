@@ -4,24 +4,11 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type {
-  ZapsUCrvClaim,
-  ZapsUCrvClaimInterface,
-} from "../../Union/ZapsUCrvClaim";
+import type { ZapsUCrvV2, ZapsUCrvV2Interface } from "../../Union/ZapsUCrvV2";
 
 const _abi = [
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "_strategyZaps",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_distributor",
-        type: "address",
-      },
       {
         internalType: "address",
         name: "_vault",
@@ -35,23 +22,8 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
         name: "amount",
         type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
       },
       {
         internalType: "uint256",
@@ -64,7 +36,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "claimFromDistributorAndStakeIn3PoolConvex",
+    name: "claimFromVaultAndStakeIn3PoolConvex",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -73,23 +45,8 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
         name: "amount",
         type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
       },
       {
         internalType: "uint256",
@@ -102,8 +59,14 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "claimFromDistributorAsCrv",
-    outputs: [],
+    name: "claimFromVaultAsCrv",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -111,23 +74,8 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
         name: "amount",
         type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
       },
       {
         internalType: "uint256",
@@ -145,88 +93,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    name: "claimFromDistributorAsCvx",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
-      },
-      {
-        internalType: "uint256",
-        name: "minAmountOut",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-    ],
-    name: "claimFromDistributorAsEth",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
-      },
-      {
-        internalType: "uint256",
-        name: "assetIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minAmountOut",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-    ],
-    name: "claimFromDistributorAsUnderlying",
+    name: "claimFromVaultAsCvx",
     outputs: [
       {
         internalType: "uint256",
@@ -241,62 +108,8 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
         name: "amount",
         type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-    ],
-    name: "claimFromDistributorAsUnderlying",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
       },
       {
         internalType: "uint256",
@@ -309,7 +122,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "claimFromDistributorAsUsdt",
+    name: "claimFromVaultAsEth",
     outputs: [
       {
         internalType: "uint256",
@@ -324,23 +137,37 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
         name: "amount",
         type: "uint256",
       },
       {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
+        internalType: "uint256",
+        name: "minAmountOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "claimFromVaultAsUsdt",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
       },
       {
         internalType: "uint256",
@@ -363,22 +190,106 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "claimFromDistributorViaUniV2EthPair",
+    name: "claimFromVaultViaUniV2EthPair",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [],
-    name: "distributor",
-    outputs: [
+    inputs: [
       {
-        internalType: "contract IGenericDistributor",
-        name: "",
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "minAmountOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
         type: "address",
       },
     ],
-    stateMutability: "view",
+    name: "depositFromCrv",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "minAmountOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "depositFromEth",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "minAmountOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "depositFromUCrv",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "minAmountOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "router",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "inputToken",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "depositViaUniV2EthPair",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -402,29 +313,20 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "zaps",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: "payable",
+    type: "receive",
   },
 ] as const;
 
-export class ZapsUCrvClaim__factory {
+export class ZapsUCrvV2__factory {
   static readonly abi = _abi;
-  static createInterface(): ZapsUCrvClaimInterface {
-    return new utils.Interface(_abi) as ZapsUCrvClaimInterface;
+  static createInterface(): ZapsUCrvV2Interface {
+    return new utils.Interface(_abi) as ZapsUCrvV2Interface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): ZapsUCrvClaim {
-    return new Contract(address, _abi, signerOrProvider) as ZapsUCrvClaim;
+  ): ZapsUCrvV2 {
+    return new Contract(address, _abi, signerOrProvider) as ZapsUCrvV2;
   }
 }

@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  ZapsUCrvClaim,
-  ZapsUCrvClaimInterface,
-} from "../../Union/ZapsUCrvClaim";
+  ZapsUCrvClaimV2,
+  ZapsUCrvClaimV2Interface,
+} from "../../Union/ZapsUCrvClaimV2";
 
 const _abi = [
   {
@@ -211,55 +211,6 @@ const _abi = [
         type: "bytes32[]",
       },
       {
-        internalType: "uint256",
-        name: "assetIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minAmountOut",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-    ],
-    name: "claimFromDistributorAsUnderlying",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "merkleProof",
-        type: "bytes32[]",
-      },
-      {
         internalType: "address",
         name: "to",
         type: "address",
@@ -416,15 +367,15 @@ const _abi = [
   },
 ] as const;
 
-export class ZapsUCrvClaim__factory {
+export class ZapsUCrvClaimV2__factory {
   static readonly abi = _abi;
-  static createInterface(): ZapsUCrvClaimInterface {
-    return new utils.Interface(_abi) as ZapsUCrvClaimInterface;
+  static createInterface(): ZapsUCrvClaimV2Interface {
+    return new utils.Interface(_abi) as ZapsUCrvClaimV2Interface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): ZapsUCrvClaim {
-    return new Contract(address, _abi, signerOrProvider) as ZapsUCrvClaim;
+  ): ZapsUCrvClaimV2 {
+    return new Contract(address, _abi, signerOrProvider) as ZapsUCrvClaimV2;
   }
 }

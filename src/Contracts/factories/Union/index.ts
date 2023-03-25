@@ -9,6 +9,8 @@ export { UnionVaultUCrv__factory } from "./UnionVaultUCrv__factory";
 export { ZapsUBal__factory } from "./ZapsUBal__factory";
 export { ZapsUCrv__factory } from "./ZapsUCrv__factory";
 export { ZapsUCrvClaim__factory } from "./ZapsUCrvClaim__factory";
+export { ZapsUCrvClaimV2__factory } from "./ZapsUCrvClaimV2__factory";
+export { ZapsUCrvV2__factory } from "./ZapsUCrvV2__factory";
 export { ZapsUCvx__factory } from "./ZapsUCvx__factory";
 export { ZapsUCvxClaim__factory } from "./ZapsUCvxClaim__factory";
 export { ZapsUFxs__factory } from "./ZapsUFxs__factory";

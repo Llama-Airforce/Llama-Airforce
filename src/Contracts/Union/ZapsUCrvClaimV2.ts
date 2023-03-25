@@ -23,13 +23,12 @@ import type {
   PromiseOrValue,
 } from "../common";
 
-export interface ZapsUCrvClaimInterface extends utils.Interface {
+export interface ZapsUCrvClaimV2Interface extends utils.Interface {
   functions: {
     "claimFromDistributorAndStakeIn3PoolConvex(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
     "claimFromDistributorAsCrv(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
     "claimFromDistributorAsCvx(uint256,address,uint256,bytes32[],uint256,address,bool)": FunctionFragment;
     "claimFromDistributorAsEth(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)": FunctionFragment;
     "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)": FunctionFragment;
     "claimFromDistributorAsUsdt(uint256,address,uint256,bytes32[],uint256,address)": FunctionFragment;
     "claimFromDistributorViaUniV2EthPair(uint256,address,uint256,bytes32[],uint256,address,address,address)": FunctionFragment;
@@ -45,8 +44,7 @@ export interface ZapsUCrvClaimInterface extends utils.Interface {
       | "claimFromDistributorAsCrv"
       | "claimFromDistributorAsCvx"
       | "claimFromDistributorAsEth"
-      | "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)"
-      | "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)"
+      | "claimFromDistributorAsUnderlying"
       | "claimFromDistributorAsUsdt"
       | "claimFromDistributorViaUniV2EthPair"
       | "distributor"
@@ -101,19 +99,7 @@ export interface ZapsUCrvClaimInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)",
+    functionFragment: "claimFromDistributorAsUnderlying",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -174,11 +160,7 @@ export interface ZapsUCrvClaimInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)",
+    functionFragment: "claimFromDistributorAsUnderlying",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -203,12 +185,12 @@ export interface ZapsUCrvClaimInterface extends utils.Interface {
   events: {};
 }
 
-export interface ZapsUCrvClaim extends BaseContract {
+export interface ZapsUCrvClaimV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ZapsUCrvClaimInterface;
+  interface: ZapsUCrvClaimV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -271,18 +253,7 @@ export interface ZapsUCrvClaim extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)"(
+    claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -365,18 +336,7 @@ export interface ZapsUCrvClaim extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)"(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    assetIndex: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)"(
+  claimFromDistributorAsUnderlying(
     index: PromiseOrValue<BigNumberish>,
     account: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -459,18 +419,7 @@ export interface ZapsUCrvClaim extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)"(
+    claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -554,18 +503,7 @@ export interface ZapsUCrvClaim extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)"(
+    claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -649,18 +587,7 @@ export interface ZapsUCrvClaim extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],uint256,uint256,address)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "claimFromDistributorAsUnderlying(uint256,address,uint256,bytes32[],address)"(
+    claimFromDistributorAsUnderlying(
       index: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,

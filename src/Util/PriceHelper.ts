@@ -7,7 +7,11 @@ import {
 } from "ethereum-multicall";
 import CurveV2FactoryPoolABI from "@/ABI/Curve/CurveV2FactoryPool.json";
 import ERC20ABI from "@/ABI/Standards/ERC20.json";
-import { CurveV1FactoryPool, CurveV2FactoryPool } from "@/Contracts";
+import {
+  CurveV1FactoryPool,
+  CurveV2FactoryPool,
+  CvxCrvFactoryPool,
+} from "@/Contracts";
 import {
   CrvAddress,
   CvxAddress,
@@ -56,6 +60,17 @@ export async function getPxCvxPrice(
 }
 
 export async function getCvxCrvPrice(
+  llamaService: DefiLlamaService,
+  cvxCrvFactoryPool: CvxCrvFactoryPool
+): Promise<number> {
+  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
+
+  return cvxCrvFactoryPool
+    .price_oracle()
+    .then((price) => bigNumToNumber(price, 18) * crvPrice);
+}
+
+export async function getCvxCrvPriceV2(
   llamaService: DefiLlamaService,
   cvxCrvFactoryPool: CurveV1FactoryPool
 ): Promise<number> {

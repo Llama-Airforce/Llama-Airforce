@@ -117,6 +117,7 @@ en:
     Union auto-compounders makes life for hard working llamas just a little
     bit easier to manage.
   pounders-info-other: The following pounders are not part of the Union's allocation set, but they still make life easier.
+  pounders-info-legacy: The following pounders are considered legacy. They still work, but we recommend migrating.
 
   # Migrations
   migrate: Migrate
@@ -128,6 +129,8 @@ en:
   migrateUFxs: Hello ser, you have {0} uFXS you need to migrate!
     <br />It's sitting in the old pounder now, not earning rewards!
   migrateUCrv: Hello ser, you have {0} uCRV you need to migrate!
+    <br />The old one will still work, but the new one has a few internal improvements!
+  migrateUCrvV2: Hello ser, you have {0} uCRV you need to migrate!
     <br />It might still earn yield, but it will be subpar!
 
 zh:
@@ -218,6 +221,7 @@ zh:
   # Pounders.vue
   pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
   pounders-info-other: 以下金库不属于Union的分配集，但它们仍然使生活更容易。
+  pounders-info-legacy: 下面的保险库被认为是传统的。它们仍然有效，但我们建议迁移。
 
   # Migrations
   migrate: 迁移
@@ -229,4 +233,6 @@ zh:
   migrateUFxs: 您好，您有{0} uFXS 需要迁移到新金库！
     <br />您在旧金库中无法获得收益
   migrateUCrv: 您好，您好 {0} uCRV 需要迁移到新金库!
+    <br />旧的仍然可以工作，但新的有一些内部改进!
+  migrateUCrvV2: 您好，您好 {0} uCRV 需要迁移到新金库!
     <br />您在旧金库中可以继续获得收益，但会逐步减少!

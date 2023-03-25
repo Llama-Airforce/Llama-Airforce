@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { CurveV1FactoryPool } from "./CurveV1FactoryPool";
 export type { CurveV2FactoryPool } from "./CurveV2FactoryPool";
+export type { CvxCrvFactoryPool } from "./CvxCrvFactoryPool";
