@@ -312,7 +312,7 @@ const sortColumn = (index: number): void => {
       display: grid;
       font-size: 1.25rem;
       font-weight: bold;
-      color: white;
+      color: var(--c-text);
       align-items: center;
     }
 

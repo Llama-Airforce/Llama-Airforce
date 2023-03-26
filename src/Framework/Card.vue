@@ -92,7 +92,7 @@ const {
       .text {
         font-size: 1.25rem;
         font-weight: bold;
-        color: white;
+        color: var(--c-text);
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
