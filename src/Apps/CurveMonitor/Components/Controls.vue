@@ -138,7 +138,6 @@ const onSelect = (option: unknown): void => {
     }
   }
 
-  background: $background-color;
   position: sticky;
   top: 0;
   padding: 1rem 0;
