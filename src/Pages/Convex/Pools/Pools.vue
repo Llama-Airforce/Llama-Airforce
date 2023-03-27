@@ -43,7 +43,7 @@ onMounted(async (): Promise<void> => {
 
     // Order descending by TVL.
     pools.sort((x: Pool, y: Pool) => y.tvl - x.tvl);
-    store.pools = pools;
+    store.pools = pools.filter((pool) => pool.tvl > 1000);
 
     /*
      * Select first pool by default if none given by the URL.
