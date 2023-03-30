@@ -34,7 +34,7 @@ const onInput = (evt: Event): void => {
 input {
   all: unset;
   background-color: $datatable-background;
-  border: solid 2px $level4-color;
+  border: solid 2px var(--c-lvl4);
   padding: 0.1rem 0.5rem;
   text-align: start;
   height: 2rem;
@@ -54,12 +54,12 @@ input {
 
   &:hover {
     background-color: $datatable-background-hover;
-    border-color: lighten($level4-color, 6%);
+    border-color: var(--c-lvl4-hover);
   }
 
   &:active {
     background-color: $datatable-background-active;
-    border-color: lighten($level4-color, 12%);
+    border-color: var(--c-lvl4-active);
   }
 }
 </style>

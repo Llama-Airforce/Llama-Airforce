@@ -100,7 +100,7 @@ const {
   line-height: 1.5rem;
   padding: 0.75rem;
 
-  background: $level1-color;
+  background: var(--c-lvl1);
 
   @media only screen and (max-width: 1280px) {
     padding: 0.75rem 1rem;
@@ -130,11 +130,11 @@ const {
     font-weight: bold;
 
     &.underline {
-      border-bottom: dotted 2px lighten($level3-color, 12%);
+      border-bottom: dotted 2px var(--c-lvl3-active);
     }
 
     .tooltip {
-      color: $text;
+      color: var(--c-text);
       text-align: center;
       font-weight: normal;
     }

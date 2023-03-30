@@ -88,7 +88,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
     margin: 0;
     list-style-type: none;
     align-self: flex-start;
-    border-bottom: 2px solid $level2-color;
+    border-bottom: 2px solid var(--c-lvl2);
 
     > .tab-header {
       display: flex;
@@ -99,7 +99,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       padding: 1rem;
 
       user-select: none;
-      color: $level5-color;
+      color: var(--c-lvl5);
       font-weight: 500;
 
       &:hover {
@@ -112,7 +112,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       &.active {
         border-bottom: 2px solid var(--c-primary);
         margin: 0 0 -2px 0;
-        color: $text;
+        color: var(--c-text);
       }
     }
   }

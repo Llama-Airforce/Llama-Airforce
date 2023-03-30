@@ -117,7 +117,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 @import "@/Styles/Variables.scss";
 
 .datatable-pools {
-  background: $background-color;
+  background: var(--c-lvl0);
 
   .logo {
     display: flex;
@@ -145,7 +145,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
   .graphs {
     display: flex;
     flex-direction: column;
-    background: $level1-color;
+    background: var(--c-lvl1);
     overflow-y: hidden;
 
     > .tvl {

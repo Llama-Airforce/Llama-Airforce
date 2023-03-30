@@ -238,7 +238,7 @@ const inputTextSearch3 = `.search-item {
   }
 
   > .description {
-    color: $level5-color;
+    color: var(--c-lvl5);
   }
 }`;
 </script>
@@ -273,7 +273,7 @@ const inputTextSearch3 = `.search-item {
       }
 
       > .description {
-        color: $level5-color;
+        color: var(--c-lvl5);
       }
     }
   }

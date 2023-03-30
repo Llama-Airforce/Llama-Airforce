@@ -102,7 +102,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 @import "@/Styles/Variables.scss";
 
 .datatable-gauges {
-  background: $background-color;
+  background: var(--c-lvl0);
 
   .logo {
     display: flex;

@@ -88,12 +88,12 @@ const emit = defineEmits<{
   user-select: none;
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
   transition: background $hover-duration;
-  background: lighten($level1-color, 6%);
+  background: var(--c-lvl1-hover);
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   padding: 0.4rem 0.75rem;
 
   &:hover {
-    background: lighten($level1-color, 12%);
+    background: var(--c-lvl1-active);
   }
 
   .chevrons {
@@ -140,8 +140,8 @@ const emit = defineEmits<{
       width: 100%;
       font-size: 1rem;
 
-      background: linear-gradient(0deg, $level1-color, $level1-color),
-        $background-color;
+      background: linear-gradient(0deg, var(--c-lvl1), var(--c-lvl1)),
+        var(--c-lvl0);
       box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 
       > div {
@@ -149,7 +149,7 @@ const emit = defineEmits<{
         cursor: pointer;
         -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
         user-select: none;
-        border-bottom: 1px solid $level4-color;
+        border-bottom: 1px solid var(--c-lvl4);
         padding: 0.4rem 0.75rem;
 
         &:hover {

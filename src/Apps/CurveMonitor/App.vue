@@ -93,8 +93,8 @@ html {
 body {
   margin: 0;
 
-  background-color: $background-color;
-  color: $text;
+  background-color: var(--c-lvl0);
+  color: var(--c-text);
 }
 
 a {
@@ -102,13 +102,13 @@ a {
   text-decoration: none;
 
   &:hover {
-    color: $background-color;
-    background: $level6-color;
+    color: var(--c-lvl0);
+    background: var(--c-lvl6);
   }
 
   &:active {
-    color: $background-color;
-    background: $level6-color;
+    color: var(--c-lvl0);
+    background: var(--c-lvl6);
   }
 }
 

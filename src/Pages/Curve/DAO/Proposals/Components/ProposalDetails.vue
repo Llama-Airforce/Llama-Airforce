@@ -40,7 +40,7 @@ const { proposal, expanded = false } = defineProps<Props>();
 
   margin: 1rem 2rem;
   padding-bottom: 0.5rem;
-  border-top: solid 1px $level4-color;
+  border-top: solid 1px var(--c-lvl4);
 
   > .details-container {
     flex-grow: 1;

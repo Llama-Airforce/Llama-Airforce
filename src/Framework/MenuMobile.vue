@@ -186,7 +186,7 @@ watch(
 
       margin-top: 2rem;
       padding-top: 2rem;
-      border-top: 1px solid $level2-color;
+      border-top: 1px solid var(--c-lvl2);
 
       ul {
         display: flex;
@@ -204,25 +204,25 @@ watch(
           .nav-link {
             display: flex;
             text-decoration: none;
-            color: $text;
+            color: var(--c-text);
             transition: all $header-hover-duration;
             height: 50px;
             font-size: 1.75rem;
 
             &.router-link-active {
-              background: $level2-color;
+              background: var(--c-lvl2);
             }
 
             &:not(.router-link-active) {
-              color: $level5-color;
+              color: var(--c-lvl5);
 
               &:hover {
-                color: lighten($level5-color, 6%);
+                color: var(--c-lvl5-hover);
                 background: #1e1e21;
               }
 
               &:active {
-                color: lighten($level5-color, 12%);
+                color: var(--c-lvl5-active);
               }
             }
 
@@ -235,7 +235,7 @@ watch(
               transition: all $header-hover-duration;
 
               &:active {
-                background: lighten($level2-color, 6%);
+                background: var(--c-lvl2-hover);
               }
 
               > i {

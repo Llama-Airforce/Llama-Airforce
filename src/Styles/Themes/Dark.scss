@@ -7,6 +7,16 @@
 }
 
 @mixin themeDark() {
+  $text: #fafafa;
+
+  $lvl0: #18181b;
+  $lvl1: #212124;
+  $lvl2: #27272a;
+  $lvl3: #303034;
+  $lvl4: #35353b;
+  $lvl5: #71717a;
+  $lvl6: #aea8af;
+
   $red: #ff5757;
   $green: #7ed957;
   $blue: #2081f0;
@@ -16,6 +26,29 @@
   $primary: $blue;
 
   $colors: (
+    "text": $text,
+    "lvl0": $lvl0,
+    "lvl0-hint": lighten($lvl0, 1.5%),
+    "lvl0-hover": lighten($lvl0, 6%),
+    "lvl0-active": lighten($lvl0, 12%),
+    "lvl1": $lvl1,
+    "lvl1-hover": lighten($lvl1, 6%),
+    "lvl1-active": lighten($lvl1, 12%),
+    "lvl2": $lvl2,
+    "lvl2-hover": lighten($lvl2, 6%),
+    "lvl2-active": lighten($lvl2, 12%),
+    "lvl3": $lvl3,
+    "lvl3-hover": lighten($lvl3, 6%),
+    "lvl3-active": lighten($lvl3, 12%),
+    "lvl4": $lvl4,
+    "lvl4-hover": lighten($lvl4, 6%),
+    "lvl4-active": lighten($lvl4, 12%),
+    "lvl5": $lvl5,
+    "lvl5-hover": lighten($lvl5, 6%),
+    "lvl5-active": lighten($lvl5, 12%),
+    "lvl6": $lvl6,
+    "lvl6-hover": lighten($lvl6, 6%),
+    "lvl6-active": lighten($lvl6, 12%),
     red: $red,
     "red-rgb": hexToRGB($red),
     green: $green,

@@ -176,7 +176,7 @@ const onSelected = async (data: unknown): Promise<void> => {
 
       // Fix text in tooltip having link color.
       .popper {
-        color: $text;
+        color: var(--c-text);
       }
     }
   }

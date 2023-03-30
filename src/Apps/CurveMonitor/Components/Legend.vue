@@ -48,7 +48,7 @@ const coins = computed((): Coin[] => {
 
     > .label {
       font-size: 0.875rem;
-      color: $level5-color;
+      color: var(--c-lvl5);
     }
   }
 }

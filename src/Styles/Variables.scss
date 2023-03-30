@@ -1,30 +1,21 @@
-// Colors
-$background-color: #18181b;
-$level1-color: #212124;
-$level2-color: #27272a;
-$level3-color: #303034;
-$level4-color: #35353b;
-$level5-color: #71717a;
-$level6-color: #aea8af;
-$text: #fafafa;
-
 // Hover
 $hover-duration: 75ms;
 
 // Header
 $header-highlight-size: 1px;
-$header-background: $background-color;
+$header-background: var(--c-lvl0);
 $header-hover-duration: $hover-duration;
-$header-primary: #18181b;
-$header-primary-active: #aea8af;
-$header-button-hover: #aea8af;
-$header-button-focus: #aea8af;
-$header-button-active: #aea8af;
+$header-primary: var(--c-lvl0);
+$header-primary-active: var(--c-lvl6);
+$header-button-hover: var(--c-lvl6);
+$header-button-focus: var(--c-lvl6);
+$header-button-active: var(--c-lvl6);
 
 // Datatable
-$datatable-background: $background-color;
-$datatable-background-hover: lighten($background-color, 6%);
-$datatable-background-active: lighten($background-color, 12%);
+$datatable-background: var(--c-lvl0);
+$datatable-background-nested: var(--c-lvl0-hint);
+$datatable-background-hover: var(--c-lvl0-hover);
+$datatable-background-active: var(--c-lvl0-active);
 $datatable-hover-duration: $hover-duration;
 
 // Other

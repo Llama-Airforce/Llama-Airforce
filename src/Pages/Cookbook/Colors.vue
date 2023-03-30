@@ -36,35 +36,35 @@ type Color = {
 
 const colors: Color[] = [
   {
-    variable: "$background-color",
+    variable: "var(--c-lvl0)",
     value: Colors.backgroundColor,
   },
   {
-    variable: "$level1-color",
+    variable: "var(--c-lvl1)",
     value: Colors.level1,
   },
   {
-    variable: "$level2-color",
+    variable: "var(--c-lvl2)",
     value: Colors.level2,
   },
   {
-    variable: "$level3-color",
+    variable: "var(--c-lvl3)",
     value: Colors.level3,
   },
   {
-    variable: "$level4-color",
+    variable: "var(--c-lvl4)",
     value: Colors.level4,
   },
   {
-    variable: "$level5-color",
+    variable: "var(--c-lvl5)",
     value: Colors.level5,
   },
   {
-    variable: "$level6-color",
+    variable: "var(--c-lvl6)",
     value: Colors.level6,
   },
   {
-    variable: "$text",
+    variable: "var(--c-text)",
     value: Colors.text,
   },
   {

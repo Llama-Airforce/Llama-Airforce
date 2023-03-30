@@ -14,7 +14,7 @@ $hamburger-padding-y: 0px !default;
 $hamburger-layer-width: 24px !default;
 $hamburger-layer-height: 3px !default;
 $hamburger-layer-spacing: 6px !default;
-$hamburger-layer-color: $text !default;
+$hamburger-layer-color: var(--c-text) !default;
 $hamburger-layer-border-radius: 4px !default;
 $hamburger-hover-opacity: 1 !default;
 $hamburger-active-layer-color: $hamburger-layer-color !default;

@@ -110,8 +110,8 @@ watch(
   padding: 1rem;
   gap: 2rem;
 
-  background-color: $background-color;
-  border: solid 1px $level4-color;
+  background-color: var(--c-lvl0);
+  border: solid 1px var(--c-lvl4);
 
   > .technical {
     display: flex;

@@ -183,7 +183,7 @@ const onSelectChain = (chain: Chain): void => {
         .chain-selector-container {
           grid-row: 2;
           height: auto;
-          background-color: $level1-color;
+          background-color: var(--c-lvl1);
           padding-left: 10px;
           padding-right: 10px;
         }

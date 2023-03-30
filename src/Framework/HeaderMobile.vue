@@ -85,9 +85,9 @@ header {
     width: 100%;
     margin: 0 1rem;
     font-size: 1rem;
-    color: $level5-color;
+    color: var(--c-lvl5);
 
-    border-bottom: 1px solid $level2-color;
+    border-bottom: 1px solid var(--c-lvl2);
 
     > .title {
       display: flex;

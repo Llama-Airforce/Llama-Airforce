@@ -79,7 +79,7 @@ const hasMenu = computed((): boolean => {
     transition: width $content-show-duration $ease-out;
 
     padding: 0 1.5rem 0 2.5rem;
-    border-right: 1px solid $level2-color;
+    border-right: 1px solid var(--c-lvl2);
 
     > .sticky-wrapper {
       > .bottom {
@@ -142,23 +142,23 @@ const hasMenu = computed((): boolean => {
           .nav-link {
             display: flex;
             text-decoration: none;
-            color: $text;
+            color: var(--c-text);
             transition: all $header-hover-duration;
 
             &.router-link-active {
-              background: $level2-color;
+              background: var(--c-lvl2);
             }
 
             &:not(.router-link-active) {
-              color: $level5-color;
+              color: var(--c-lvl5);
 
               &:hover {
-                color: lighten($level5-color, 6%);
+                color: var(--c-lvl5-hover);
                 background: #1e1e21;
               }
 
               &:active {
-                color: lighten($level5-color, 12%);
+                color: var(--c-lvl5-active);
               }
             }
 
@@ -171,7 +171,7 @@ const hasMenu = computed((): boolean => {
               transition: all $header-hover-duration;
 
               &:active {
-                background: lighten($level2-color, 6%);
+                background: var(--c-lvl2-hover);
               }
             }
           }

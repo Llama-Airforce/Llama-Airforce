@@ -127,9 +127,9 @@ header {
     width: 100%;
     padding: 0 2.5rem;
     font-size: 1rem;
-    color: $level5-color;
+    color: var(--c-lvl5);
 
-    border-bottom: 1px solid $level2-color;
+    border-bottom: 1px solid var(--c-lvl2);
 
     > .title {
       &:hover {
@@ -158,7 +158,7 @@ header {
 
       .icon {
         font-size: 1.25rem;
-        color: $level5-color;
+        color: var(--c-lvl5);
 
         height: 1.5rem;
         display: flex;
@@ -260,7 +260,7 @@ header {
             display: flex;
             justify-content: center;
             text-decoration: none;
-            color: $text;
+            color: var(--c-text);
             border-bottom: $header-highlight-size solid $header-background;
             transition: all $header-hover-duration;
 

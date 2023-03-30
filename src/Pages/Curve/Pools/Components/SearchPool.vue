@@ -141,7 +141,7 @@ watch(
     }
 
     > .description {
-      color: $level5-color;
+      color: var(--c-lvl5);
     }
   }
 }

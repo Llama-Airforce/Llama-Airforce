@@ -73,7 +73,7 @@ const revenueAnnually = computed((): number | undefined => {
     background-color: var(--c-green);
 
     > div {
-      background-color: $background-color;
+      background-color: var(--c-lvl0);
       padding: 1rem 0;
     }
 
