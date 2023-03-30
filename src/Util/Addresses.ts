@@ -86,12 +86,12 @@ export const BbUsdHandlerAddress = "0x5c53174c8d88f0f56c33f923b8c6a84a1760e484";
 export const ZapsUCrvAddressV1 = "0x5d69b683bf963648137b3ab5244e9d31d529838e";
 export const ZapsUCrv2AddressV1 = "0xaaf75554249209114ced07027c67bee7cfb1f29c";
 export const ZapsUCrvAddressV2 = "0xc8d1335d18c0ef56a00dbb8b7a639183ee1c4d78";
-export const ZapsUCrvAddress = "0xac4925a6e9446f619e48709a15948fae853ab2e8";
+export const ZapsUCrvAddress = "0xff87da30e779ca78ff2e9b1582d6c15c1ac31a95";
 
 export const ZapsUCrvClaimAddressV2 =
   "0x2a24bb027d7fe2a62e39871187d644daf03406f2";
 export const ZapsUCrvClaimAddress =
-  "0x2f66e12d94bdac080604768383e65a234dcf775c";
+  "0x1b8b4946a3d1953b145897f4bdd4583b7f8dff7b";
 
 export const ZapsUFxsAddressV1 = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
 export const ZapsUFxsAddress = "0x1f409ec6f395493ad39f5b27945f1a6658a23908";
