@@ -11,10 +11,12 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
-
-type Theme = "dark" | "light";
+import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
+import { useCurveMonitorStore } from "@/Apps/CurveMonitor/Store";
 
 // Refs
+const store = useCurveMonitorStore();
+
 const theme = ref<Theme>("light");
 
 const themeIcon = computed((): string => {
@@ -49,6 +51,7 @@ watch(
   theme,
   (newTheme) => {
     window.document.documentElement.setAttribute("data-theme", newTheme);
+    store.theme = newTheme;
   },
   { immediate: true }
 );
@@ -69,5 +72,9 @@ const toggleTheme = (): void => {
   width: 2rem;
 
   color: var(--c-yellow);
+
+  .sun {
+    color: var(--c-red);
+  }
 }
 </style>

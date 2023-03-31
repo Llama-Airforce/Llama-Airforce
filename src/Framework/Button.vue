@@ -75,7 +75,7 @@ button {
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
   height: calc(40px - 1rem);
 
-  border-radius: 0;
+  border-radius: var(--border-radius);
 
   .icon {
     display: flex;
@@ -91,11 +91,11 @@ button {
   }
 
   &:hover:not(:disabled) {
-    background: $datatable-background-hover;
+    background: var(--container-background-hover);
   }
 
   &:active:not(:disabled) {
-    background: $datatable-background-active;
+    background: var(--container-background-active);
   }
 
   &.primary:not(:disabled) {

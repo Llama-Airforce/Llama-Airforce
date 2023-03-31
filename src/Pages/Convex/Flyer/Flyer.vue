@@ -43,7 +43,7 @@ onMounted(async (): Promise<void> => {
   width: 100%;
   display: flex;
   justify-content: center;
-  font-weight: lighter;
+  font-weight: var(--font-weight);
 
   .flyer-items {
     display: flex;

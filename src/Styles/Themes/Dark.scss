@@ -21,7 +21,7 @@
   $green: #7ed957;
   $blue: #2081f0;
   $yellow: #ffcc00;
-  $purple: #8c52ff;
+  $purple: #905ff2;
 
   $primary: $blue;
 
@@ -64,6 +64,23 @@
     "primary-active": lighten($primary, 20%),
     "primary-disabled": lighten($primary, 15%),
   );
+
+  --font-weight: lighter;
+
+  --border-radius: 0px;
+  --border-thickness: 2px;
+
+  --container-background: var(--c-lvl0);
+  --container-background-hint: var(--c-lvl0-hint);
+  --container-background-hover: var(--c-lvl0-hover);
+  --container-background-active: var(--c-lvl0-active);
+  --container-box-shadow: 0 0 0 0;
+
+  --input-background: var(--container-background);
+  --input-background-hover: var(--container-background-hover);
+  --input-background-active: var(--container-background-active);
+  --input-border-color-hover: var(--c-lvl4-hover);
+  --input-border-color-active: var(--c-lvl4-active);
 
   // CSS Variables
   @each $colorName, $colorValue in $colors {

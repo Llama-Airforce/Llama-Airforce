@@ -286,12 +286,15 @@ const sortColumn = (index: number): void => {
 @import "@/Styles/Variables.scss";
 
 .datatable {
-  background: var(--c-lvl1);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   font-size: 0.875rem;
   padding: 1rem;
+
+  background: var(--c-lvl1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--container-box-shadow);
 
   > .header {
     padding: 0 0 1rem 0rem;
@@ -348,7 +351,7 @@ const sortColumn = (index: number): void => {
   }
 
   ::v-deep(.row-details) {
-    border-bottom: 2px solid var(--c-lvl4);
+    border-bottom: var(--border-thickness) solid var(--c-lvl4);
   }
 
   ::v-deep(.row-data) {
@@ -359,9 +362,9 @@ const sortColumn = (index: number): void => {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    border-bottom: 2px solid var(--c-lvl4);
+    border-bottom: var(--border-thickness) solid var(--c-lvl4);
     align-items: center;
-    font-weight: lighter;
+    font-weight: var(--font-weight);
     transition: background $datatable-hover-duration;
 
     &:last-child {
@@ -369,7 +372,7 @@ const sortColumn = (index: number): void => {
     }
 
     &.selected-below {
-      border-bottom: 2px solid var(--c-primary);
+      border-bottom: var(--border-thickness) solid var(--c-primary);
     }
 
     > .column-header {
@@ -415,17 +418,17 @@ const sortColumn = (index: number): void => {
     }
 
     &.active {
-      border-bottom: 2px solid var(--c-primary);
+      border-bottom: var(--border-thickness) solid var(--c-primary);
     }
 
     &.item {
       &:hover {
-        background: $datatable-background-hover;
+        background: var(--container-background-hover);
       }
 
       &:active,
       &.active {
-        background: $datatable-background-active;
+        background: var(--container-background-active);
       }
 
       // These direct divs are most likely your individual cells.

@@ -71,7 +71,10 @@ const {
     flex-direction: column;
     flex-grow: 1;
     justify-content: stretch;
+
     background: var(--c-lvl1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--container-box-shadow);
 
     > .card-header {
       display: flex;

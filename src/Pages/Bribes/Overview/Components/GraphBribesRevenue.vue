@@ -12,7 +12,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
-import { Colors, round, unit } from "@/Util";
+import { ColorsDark, round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import { useBribesStore } from "@/Pages/Bribes/Store";
 import { getDate } from "@/Pages/Bribes/Util/EpochHelper";
@@ -56,7 +56,7 @@ const options = computed((): unknown => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: [Colors.blue] },
+          style: { colors: [ColorsDark.blue] },
         },
       },
       {
@@ -65,7 +65,7 @@ const options = computed((): unknown => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: [Colors.yellow] },
+          style: { colors: [ColorsDark.yellow] },
         },
       },
     ],

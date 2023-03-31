@@ -11,25 +11,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  ColorType,
   createChart as createChartFunc,
   IChartApi,
   ISeriesApi,
   LineData,
-  LineStyle,
+  LineSeriesPartialOptions,
   LineType,
   SeriesMarker,
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { Colors, round, unit } from "@/Util";
+import { getColors, round, unit } from "@/Util";
 import type { Bonding } from "@CM/Models";
 import { useCurveMonitorStore } from "@CM/Store";
-import { onMounted, watch } from "vue";
+import createChartStyles from "@/Apps/CurveMonitor/Util/ChartStyles";
+import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
 
 const { t } = useI18n();
 
@@ -49,26 +49,34 @@ const bonding = computed((): Bonding => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef.value, {
-    width: chartRef.value.clientWidth,
-    height: chartRef.value.clientHeight,
-    layout: {
-      background: {
-        type: ColorType.Solid,
-        color: "rgba(255, 255, 255, 0)",
-      },
-      textColor: Colors.level5,
-      fontFamily: "SF Mono, Consolas, monospace",
-    },
-    grid: {
-      vertLines: {
-        visible: false,
-      },
-      horzLines: {
-        color: Colors.level4,
-        style: LineStyle.Solid,
-      },
-    },
+  chart = createChartFunc(
+    chartRef.value,
+    createOptionsChart(chartRef.value, store.theme)
+  );
+  lineSerie = chart.addLineSeries(createOptionsSerie(store.theme));
+
+  createSeries(bonding.value);
+});
+
+// Watches
+watch(bonding, (newBonding) => {
+  createSeries(newBonding);
+});
+
+watch(
+  () => store.theme,
+  (newTheme) => {
+    if (chartRef.value) {
+      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
+      lineSerie.applyOptions(createOptionsSerie(newTheme));
+      createMarkers(newTheme);
+    }
+  }
+);
+
+// Methods
+const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
+  return createChartStyles(chartRef, theme, {
     rightPriceScale: {
       visible: false,
     },
@@ -81,35 +89,19 @@ onMounted((): void => {
       },
     },
     timeScale: {
-      borderVisible: false,
-      fixLeftEdge: true,
-      fixRightEdge: true,
       tickMarkFormatter: (time: UTCTimestamp) => formatter(time),
     },
-    handleScale: false,
-    handleScroll: false,
     localization: {
       priceFormatter: (price: number) => formatter(price),
       timeFormatter: (time: number) => formatter(time),
     },
   });
+};
 
-  initCharts();
-  createChart(bonding.value);
-});
+const createOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
+  const colors = getColors(theme);
 
-// Watches
-watch(bonding, (newBonding) => {
-  createChart(newBonding);
-});
-
-// Methods
-const initCharts = (): void => {
-  if (!chart) {
-    return;
-  }
-
-  lineSerie = chart.addLineSeries({
+  return {
     priceFormat: {
       type: "price",
       precision: 6,
@@ -117,13 +109,28 @@ const initCharts = (): void => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: Colors.blue,
+    color: colors.blue,
     lastValueVisible: false,
     priceLineVisible: false,
-  });
+  };
 };
 
-const createChart = (newBonding: Bonding): void => {
+const createMarkers = (theme: Theme) => {
+  const colors = getColors(theme);
+
+  const markers: SeriesMarker<UTCTimestamp>[] = [
+    {
+      time: bonding.value.balanceCoin1 as UTCTimestamp,
+      position: "inBar",
+      color: colors.yellow,
+      shape: "circle",
+    },
+  ];
+
+  lineSerie.setMarkers(markers);
+};
+
+const createSeries = (newBonding: Bonding): void => {
   if (!chart || !lineSerie) {
     return;
   }
@@ -135,18 +142,9 @@ const createChart = (newBonding: Bonding): void => {
     }))
     .value();
 
-  const markers: SeriesMarker<UTCTimestamp>[] = [
-    {
-      time: newBonding.balanceCoin1 as UTCTimestamp,
-      position: "inBar",
-      color: Colors.yellow,
-      shape: "circle",
-    },
-  ];
-
   if (newSerie.length > 0) {
     lineSerie.setData(newSerie);
-    lineSerie.setMarkers(markers);
+    createMarkers(store.theme);
   }
 
   chart.timeScale().fitContent();

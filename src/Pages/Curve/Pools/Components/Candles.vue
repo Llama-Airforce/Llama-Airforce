@@ -30,7 +30,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card, ButtonToggle } from "@/Framework";
-import { Colors, round, unit } from "@/Util";
+import { ColorsDark, round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import type { Pool, Candle } from "@/Pages/Curve/Pools/Models";
 import { useCurvePoolsStore } from "@/Pages/Curve/Pools/Store";
@@ -65,9 +65,9 @@ onMounted((): void => {
     layout: {
       background: {
         type: ColorType.Solid,
-        color: "rgba(255, 255, 255, 0)",
+        color: ColorsDark.backgroundColor,
       },
-      textColor: Colors.level5,
+      textColor: ColorsDark.level5,
       fontFamily: "SF Mono, Consolas, monospace",
     },
     grid: {
@@ -75,7 +75,7 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: Colors.level4,
+        color: ColorsDark.level4,
         style: LineStyle.Dashed,
       },
     },
@@ -104,12 +104,12 @@ onMounted((): void => {
   });
 
   candleSeries = chart.addCandlestickSeries({
-    upColor: Colors.green,
-    borderUpColor: Colors.green,
-    wickUpColor: Colors.green,
-    downColor: Colors.red,
-    borderDownColor: Colors.red,
-    wickDownColor: Colors.red,
+    upColor: ColorsDark.green,
+    borderUpColor: ColorsDark.green,
+    wickUpColor: ColorsDark.green,
+    downColor: ColorsDark.red,
+    borderDownColor: ColorsDark.red,
+    wickDownColor: ColorsDark.red,
     priceFormat: {
       type: "price",
       precision: 6,
@@ -118,7 +118,7 @@ onMounted((): void => {
   });
 
   volumeSeries = chart.addHistogramSeries({
-    color: Colors.blue,
+    color: ColorsDark.blue,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",
@@ -169,7 +169,7 @@ const createChart = (newCandles: Candle[], newInvert: boolean): void => {
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.token0TotalAmount,
-      color: Colors.blue,
+      color: ColorsDark.blue,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

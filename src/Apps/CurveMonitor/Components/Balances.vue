@@ -13,25 +13,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  ColorType,
   createChart as createChartFunc,
   IChartApi,
   ISeriesApi,
   LineData,
-  LineStyle,
+  LineSeriesPartialOptions,
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { Colors, ColorsArray, round, unit } from "@/Util";
+import { getColorsArray, round, unit } from "@/Util";
 import type { Balances } from "@CM/Models";
 import Legend from "@CM/Components/Legend.vue";
 import { useCurveMonitorStore } from "@CM/Store";
-import { onMounted, watch } from "vue";
+import createChartStyles from "@/Apps/CurveMonitor/Util/ChartStyles";
+import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
 
 type Mode = "percentage" | "absolute";
 
@@ -59,40 +59,43 @@ const numCoins = computed((): number => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef.value, {
-    width: chartRef.value.clientWidth,
-    height: chartRef.value.clientHeight,
-    layout: {
-      background: {
-        type: ColorType.Solid,
-        color: "rgba(255, 255, 255, 0)",
-      },
-      textColor: Colors.level5,
-      fontFamily: "SF Mono, Consolas, monospace",
-    },
-    grid: {
-      vertLines: {
-        visible: false,
-      },
-      horzLines: {
-        color: Colors.level4,
-        style: LineStyle.Solid,
-      },
-    },
+  chart = createChartFunc(
+    chartRef.value,
+    createOptionsChart(chartRef.value, store.theme)
+  );
+
+  addSeries();
+  createSeries(balances.value);
+});
+
+// Watches
+watch(balances, (newBalances) => {
+  addSeries();
+  createSeries(newBalances);
+});
+
+watch(
+  () => store.theme,
+  (newTheme) => {
+    if (chartRef.value) {
+      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
+
+      for (const [i, serie] of lineSeries.entries()) {
+        serie.applyOptions(createOptionsSerie(i, store.theme));
+      }
+    }
+  }
+);
+
+// Methods
+const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
+  return createChartStyles(chartRef, theme, {
     rightPriceScale: {
-      borderVisible: false,
       scaleMargins: {
         top: 0.1,
         bottom: 0.1,
       },
     },
-    timeScale: {
-      borderVisible: false,
-      fixLeftEdge: true,
-      fixRightEdge: true,
-    },
-    handleScale: false,
-    handleScroll: false,
     localization: {
       priceFormatter:
         mode === "absolute"
@@ -100,19 +103,29 @@ onMounted((): void => {
           : (price: number) => formatterPercentage(price),
     },
   });
+};
 
-  initCharts();
-  createChart(balances.value);
-});
+const createOptionsSerie = (
+  i: number,
+  theme: Theme
+): LineSeriesPartialOptions => {
+  const colorsArray = getColorsArray(theme);
 
-// Watches
-watch(balances, (newBalances) => {
-  initCharts();
-  createChart(newBalances);
-});
+  return {
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    color: colorsArray[i],
+    lastValueVisible: false,
+    priceLineVisible: false,
+  };
+};
 
-// Methods
-const initCharts = (): void => {
+const addSeries = (): void => {
   if (!chart) {
     return;
   }
@@ -124,24 +137,13 @@ const initCharts = (): void => {
 
   lineSeries = [];
   for (let i = 0; i < numCoins.value; i++) {
-    const lineSerie = chart.addLineSeries({
-      priceFormat: {
-        type: "price",
-        precision: 6,
-        minMove: 0.000001,
-      },
-      lineWidth: 2,
-      lineType: LineType.WithSteps,
-      color: ColorsArray[i],
-      lastValueVisible: false,
-      priceLineVisible: false,
-    });
+    const lineSerie = chart.addLineSeries(createOptionsSerie(i, store.theme));
 
     lineSeries.push(lineSerie);
   }
 };
 
-const createChart = (newBalances: Balances[]): void => {
+const createSeries = (newBalances: Balances[]): void => {
   if (!chart || lineSeries.length < 0) {
     return;
   }

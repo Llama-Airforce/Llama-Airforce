@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
-import { Colors, round, unit } from "@/Util";
+import { ColorsDark, round, unit } from "@/Util";
 import createChartStyles from "@/Styles/ChartStyles";
 import { RevenueSource } from "@/Pages/Convex/Revenue/Models/Revenue";
 import { useConvexStore } from "@/Pages/Convex/Store";
@@ -83,7 +83,13 @@ const options = computed((): unknown =>
         enabled: false,
       },
     },
-    colors: [Colors.blue, Colors.green, Colors.purple, Colors.yellow, Colors.red],
+    colors: [
+      ColorsDark.blue,
+      ColorsDark.green,
+      ColorsDark.purple,
+      ColorsDark.yellow,
+      ColorsDark.red,
+    ],
     labels: revenueBreakdown.value.map((x) => x.source),
   })
 );

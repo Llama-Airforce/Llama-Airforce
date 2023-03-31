@@ -7,7 +7,7 @@
     >
       <div
         class="color"
-        :style="{ 'background-color': ColorsArray[i] }"
+        :style="{ 'background-color': color(i) }"
       ></div>
 
       <div class="label">{{ coin.name }}</div>
@@ -19,7 +19,7 @@
 import { computed } from "vue";
 import { useCurveMonitorStore } from "@CM/Store";
 import { Coin } from "@CM/Models";
-import { ColorsArray } from "@/Util";
+import { getColorsArray } from "@/Util";
 
 // Refs
 const store = useCurveMonitorStore();
@@ -27,6 +27,11 @@ const store = useCurveMonitorStore();
 const coins = computed((): Coin[] => {
   return store.coins;
 });
+
+// Methods
+const color = (i: number): string => {
+  return getColorsArray(store.theme)[i];
+};
 </script>
 
 <style lang="scss" scoped>

@@ -60,7 +60,7 @@ const show = ref(false);
   }
 
   :deep(.popper) {
-    background-color: #1e1e1e;
+    background-color: var(--c-lvl1);
     border-radius: 5px;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
     font-size: 0.875rem;

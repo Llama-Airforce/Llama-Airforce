@@ -33,8 +33,11 @@ const onInput = (evt: Event): void => {
 @import "@/Styles/Variables.scss";
 input {
   all: unset;
-  background-color: $datatable-background;
-  border: solid 2px var(--c-lvl4);
+
+  background-color: var(--input-background);
+  border: solid var(--border-thickness) var(--c-lvl4);
+  border-radius: var(--border-radius);
+
   padding: 0.1rem 0.5rem;
   text-align: start;
   height: 2rem;
@@ -52,13 +55,14 @@ input {
     -moz-appearance: textfield;
   }
 
-  &:hover {
-    background-color: $datatable-background-hover;
+  &:hover,
+  &:focus-visible {
+    background-color: var(--input-background-hover);
     border-color: var(--c-lvl4-hover);
   }
 
   &:active {
-    background-color: $datatable-background-active;
+    background-color: var(--input-background-active);
     border-color: var(--c-lvl4-active);
   }
 }

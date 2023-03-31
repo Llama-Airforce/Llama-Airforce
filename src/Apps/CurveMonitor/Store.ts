@@ -13,8 +13,11 @@ import type {
   Sandwich,
 } from "@CM/Models";
 import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
+import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
 
 type State = {
+  theme: Theme;
+
   socket: SocketRoot | null;
   socketPool: SocketPool | null;
 
@@ -36,6 +39,8 @@ type State = {
 export const useCurveMonitorStore = defineStore({
   id: "curveMonitorStore",
   state: (): State => ({
+    theme: "light",
+
     socket: null,
     socketPool: null,
 

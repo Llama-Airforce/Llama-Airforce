@@ -69,7 +69,7 @@ const onGauge = (newGauge: string): void => {
         gap: 1rem;
 
         font-size: 0.875rem;
-        font-weight: lighter;
+        font-weight: var(--font-weight);
       }
     }
 

@@ -7,47 +7,48 @@
 }
 
 @mixin themeLight() {
-  $text: #fafafa;
+  $text: #333333;
 
-  $lvl0: #18181b;
-  $lvl1: #212124;
-  $lvl2: #27272a;
-  $lvl3: #303034;
-  $lvl4: #35353b;
-  $lvl5: #71717a;
-  $lvl6: #aea8af;
+  $lvl0: #fafcff;
+  $lvl1: #f5f5f5;
+  $lvl2: darken($lvl1, 3%);
+  $lvl3: darken($lvl1, 6%);
+  $lvl4: darken(#fafafa, 35%);
+  $lvl5: #27272a;
+  $lvl6: #212124;
 
-  $red: #ff5757;
-  $green: #7ed957;
-  $blue: #2081f0;
-  $yellow: #ffcc00;
-  $purple: #ae85ff;
+  $red: #f84b5f;
+  $green: #35d190;
+  $blue: #058de1;
+  $yellow: #f5d43b;
+  $purple: #c868ee;
 
   $primary: $blue;
 
   $colors: (
     "text": $text,
-    "lvl0-hint": lighten($lvl0, 1.5%),
-    "lvl0-hover": lighten($lvl0, 6%),
-    "lvl0-active": lighten($lvl0, 12%),
+    "lvl0": $lvl0,
+    "lvl0-hint": darken(#f5f5f5, 2%),
+    "lvl0-hover": darken($lvl0, 6%),
+    "lvl0-active": darken($lvl0, 12%),
     "lvl1": $lvl1,
-    "lvl1-hover": lighten($lvl1, 6%),
-    "lvl1-active": lighten($lvl1, 12%),
+    "lvl1-hover": darken($lvl1, 6%),
+    "lvl1-active": darken($lvl1, 12%),
     "lvl2": $lvl2,
-    "lvl2-hover": lighten($lvl2, 6%),
-    "lvl2-active": lighten($lvl2, 12%),
+    "lvl2-hover": darken($lvl2, 6%),
+    "lvl2-active": darken($lvl2, 12%),
     "lvl3": $lvl3,
-    "lvl3-hover": lighten($lvl3, 6%),
-    "lvl3-active": lighten($lvl3, 12%),
+    "lvl3-hover": darken($lvl3, 6%),
+    "lvl3-active": darken($lvl3, 12%),
     "lvl4": $lvl4,
-    "lvl4-hover": lighten($lvl4, 6%),
-    "lvl4-active": lighten($lvl4, 12%),
+    "lvl4-hover": darken($lvl4, 6%),
+    "lvl4-active": darken($lvl4, 12%),
     "lvl5": $lvl5,
-    "lvl5-hover": lighten($lvl5, 6%),
-    "lvl5-active": lighten($lvl5, 12%),
+    "lvl5-hover": darken($lvl5, 6%),
+    "lvl5-active": darken($lvl5, 12%),
     "lvl6": $lvl6,
-    "lvl6-hover": lighten($lvl6, 6%),
-    "lvl6-active": lighten($lvl6, 12%),
+    "lvl6-hover": darken($lvl6, 6%),
+    "lvl6-active": darken($lvl6, 12%),
     red: $red,
     "red-rgb": hexToRGB($red),
     green: $green,
@@ -58,16 +59,33 @@
     "yellow-rgb": hexToRGB($yellow),
     purple: $purple,
     "purple-rgb": hexToRGB($purple),
-    primary: $primary,
-    "primary-hover": lighten($primary, 10%),
-    "primary-active": lighten($primary, 20%),
-    "primary-disabled": lighten($primary, 15%),
+    primary: lighten($primary, 10%),
+    "primary-hover": lighten($primary, 20%),
+    "primary-active": lighten($primary, 30%),
+    "primary-disabled": darken($primary, 15%),
   );
 
   // CSS Variables
   @each $colorName, $colorValue in $colors {
     @include register($colorName, $colorValue);
   }
+
+  --font-weight: normal;
+
+  --border-radius: 10px;
+  --border-thickness: 1px;
+
+  --container-background: var(--c-lvl0);
+  --container-background-hint: var(--c-lvl0-hint);
+  --container-background-hover: var(--c-lvl0-hover);
+  --container-background-active: var(--c-lvl0-active);
+  --container-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  --input-background: var(--c-lvl2);
+  --input-background-hover: var(--c-lvl2);
+  --input-background-active: var(--c-lvl2);
+  --input-border-color-hover: var(--c-primary-hover);
+  --input-border-color-active: var(--c-primary-active);
 
   body {
     background-color: transparent;
@@ -77,12 +95,22 @@
       hsla(48, 94%, 60%, 0.5),
       hsla(348, 70%, 55%, 0.5)
     );
-    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
-    .card-container,
-    .datatable {
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      border-radius: 10px;
+    .controls {
+      input {
+        background-color: rgba(255, 255, 255, 0.75);
+
+        &:hover,
+        &:focus-visible {
+          background-color: var(--c-lvl1);
+        }
+      }
+    }
+
+    input {
+      font-weight: 500 !important;
     }
   }
 }

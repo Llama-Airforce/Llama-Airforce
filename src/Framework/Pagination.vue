@@ -152,6 +152,7 @@ ul {
       cursor: pointer;
       background-color: transparent;
       border: none;
+      border-radius: var(--border-radius);
 
       &:hover {
         background-color: var(--c-primary-hover);
@@ -170,11 +171,13 @@ ul {
   > li:nth-child(2) {
     margin-right: 1rem;
     background: var(--c-lvl3);
+    border-radius: var(--border-radius);
   }
 
   > li:nth-last-child(2) {
     margin-left: 1rem;
     background: var(--c-lvl3);
+    border-radius: var(--border-radius);
   }
 
   > li:last-child {

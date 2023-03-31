@@ -203,7 +203,7 @@ watch(sandwichesPage, (ps) => {
   ::v-deep(.transactions) {
     .row-data {
       border-bottom-width: 0;
-      background-color: $datatable-background-nested;
+      background-color: var(--container-background-hint);
     }
   }
 

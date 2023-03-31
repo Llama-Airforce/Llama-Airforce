@@ -197,7 +197,7 @@ const { t } = useI18n();
         }
 
         > .description {
-          font-weight: lighter;
+          font-weight: var(--font-weight);
           line-height: 1.4rem;
           font-size: 0.8125rem;
 
@@ -212,7 +212,7 @@ const { t } = useI18n();
             margin-block-end: 0;
             padding-inline-start: 1rem;
 
-            font-weight: lighter;
+            font-weight: var(--font-weight);
             line-height: 1.4rem;
             font-size: 0.8125rem;
 

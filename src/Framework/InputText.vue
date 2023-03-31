@@ -98,8 +98,11 @@ const onInput = (evt: Event): void => {
 
   > input {
     all: unset;
-    background-color: $datatable-background;
-    border: solid 2px var(--c-lvl4);
+
+    background-color: var(--input-background);
+    border: solid var(--border-thickness) var(--c-lvl4);
+    border-radius: var(--border-radius);
+
     padding: 0.1rem 0.5rem;
     text-align: start;
     height: 2rem;
@@ -113,19 +116,20 @@ const onInput = (evt: Event): void => {
       margin: 0;
     }
 
-    &:hover {
-      background-color: $datatable-background-hover;
-      border-color: var(--c-lvl4-hover);
+    &:hover,
+    &:focus-visible {
+      background-color: var(--input-background-hover);
+      border-color: var(--input-border-color-hover);
     }
 
     &:active {
-      background-color: $datatable-background-active;
-      border-color: var(--c-lvl4-active);
+      background-color: var(--input-background-active);
+      border-color: var(--input-border-color-active);
     }
   }
 
   > input[type="search"] {
-    padding-left: 2.75em;
+    padding-left: 2.25rem;
   }
 
   position: relative;
@@ -135,25 +139,28 @@ const onInput = (evt: Event): void => {
   line-height: 1.5rem;
 
   > .items {
+    color: var(--c-text);
     overflow: hidden;
     position: absolute;
     left: 0;
-    right: 0;
-    z-index: 12;
+    right: 10px;
+    z-index: 15;
     line-height: 1.75rem;
-    margin-top: 2.75rem;
+    margin-top: calc(2.5rem - var(--border-radius) / 3);
     width: 100%;
+    font-size: 1rem;
 
-    background: linear-gradient(0deg, var(--c-lvl1), var(--c-lvl1)),
-      var(--c-lvl0);
+    background: var(--c-lvl1);
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    border-radius: var(--border-radius);
 
     > div {
+      color: var(--c-text);
       cursor: pointer;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
       user-select: none;
       border-bottom: 1px solid var(--c-lvl4);
-      padding: 0.5rem 0.75rem;
+      padding: 0.4rem 0.75rem;
       cursor: pointer;
 
       &:hover {
@@ -163,6 +170,8 @@ const onInput = (evt: Event): void => {
 
     > div:last-child {
       border-bottom: 0;
+      border-bottom-left-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
     }
   }
 
@@ -176,7 +185,7 @@ const onInput = (evt: Event): void => {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    left: 0.75em;
+    left: 0.75rem;
   }
 }
 </style>

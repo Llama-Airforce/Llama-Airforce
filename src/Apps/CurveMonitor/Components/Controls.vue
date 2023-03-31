@@ -81,7 +81,7 @@ const onSelect = (option: unknown): void => {
     display: flex;
     flex-direction: column;
     justify-self: center;
-    gap: 8rem;
+    gap: 10rem;
     width: 600px;
 
     position: absolute;

@@ -210,8 +210,8 @@ header {
 
       > ul {
         padding: 3px 0;
-        border-top: 2px solid #52525b;
-        border-bottom: 2px solid #52525b;
+        border-top: var(--border-thickness) solid #52525b;
+        border-bottom: var(--border-thickness) solid #52525b;
 
         > li {
           padding: 0;

@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { DataTable } from "@/Framework";
-import { Colors } from "@/Util";
+import { ColorsDark } from "@/Util";
 
 type Color = {
   variable: string;
@@ -37,55 +37,55 @@ type Color = {
 const colors: Color[] = [
   {
     variable: "var(--c-lvl0)",
-    value: Colors.backgroundColor,
+    value: ColorsDark.backgroundColor,
   },
   {
     variable: "var(--c-lvl1)",
-    value: Colors.level1,
+    value: ColorsDark.level1,
   },
   {
     variable: "var(--c-lvl2)",
-    value: Colors.level2,
+    value: ColorsDark.level2,
   },
   {
     variable: "var(--c-lvl3)",
-    value: Colors.level3,
+    value: ColorsDark.level3,
   },
   {
     variable: "var(--c-lvl4)",
-    value: Colors.level4,
+    value: ColorsDark.level4,
   },
   {
     variable: "var(--c-lvl5)",
-    value: Colors.level5,
+    value: ColorsDark.level5,
   },
   {
     variable: "var(--c-lvl6)",
-    value: Colors.level6,
+    value: ColorsDark.level6,
   },
   {
     variable: "var(--c-text)",
-    value: Colors.text,
+    value: ColorsDark.text,
   },
   {
     variable: "var(--c-red)",
-    value: Colors.red,
+    value: ColorsDark.red,
   },
   {
     variable: "var(--c-green)",
-    value: Colors.green,
+    value: ColorsDark.green,
   },
   {
     variable: "var(--c-blue)",
-    value: Colors.blue,
+    value: ColorsDark.blue,
   },
   {
     variable: "var(--c-yellow)",
-    value: Colors.yellow,
+    value: ColorsDark.yellow,
   },
   {
     variable: "var(--c-purple)",
-    value: Colors.purple,
+    value: ColorsDark.purple,
   },
 ];
 </script>

@@ -130,7 +130,7 @@ const {
     font-weight: bold;
 
     &.underline {
-      border-bottom: dotted 2px var(--c-lvl3-active);
+      border-bottom: dotted var(--border-thickness) var(--c-lvl3-active);
     }
 
     .tooltip {

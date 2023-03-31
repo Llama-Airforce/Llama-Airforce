@@ -15,26 +15,28 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  ColorType,
+  AreaSeriesPartialOptions,
   createChart as createChartFunc,
   HistogramData,
+  HistogramSeriesPartialOptions,
   IChartApi,
   ISeriesApi,
   LineData,
-  LineStyle,
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { Colors, round, unit } from "@/Util";
+import { getColors, round, unit } from "@/Util";
 import type { Price, Volume } from "@CM/Models";
 import { useCurveMonitorStore } from "@CM/Store";
+import createChartStyles from "@/Apps/CurveMonitor/Util/ChartStyles";
+import type { Theme } from "@/Apps/CurveMonitor/Models/Theme";
 
 const { t } = useI18n();
 
 let chart: IChartApi;
-let areaSeries: ISeriesApi<"Area">;
-let volumeSeries: ISeriesApi<"Histogram">;
+let areaSerie: ISeriesApi<"Area">;
+let volumeSerie: ISeriesApi<"Histogram">;
 let max = 1;
 let min = 0;
 
@@ -55,69 +57,56 @@ const volumes = computed((): Volume[] => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(chartRef.value, {
-    width: chartRef.value.clientWidth,
-    height: chartRef.value.clientHeight,
-    layout: {
-      background: {
-        type: ColorType.Solid,
-        color: "rgba(255, 255, 255, 0)",
-      },
-      textColor: Colors.level5,
-      fontFamily: "SF Mono, Consolas, monospace",
-    },
-    grid: {
-      vertLines: {
-        visible: false,
-      },
-      horzLines: {
-        color: Colors.level4,
-        style: LineStyle.Solid,
-      },
-    },
+  chart = createChartFunc(
+    chartRef.value,
+    createOptionsChart(chartRef.value, store.theme)
+  );
+  areaSerie = chart.addAreaSeries(createOptionsSeriePrice(store.theme));
+  volumeSerie = chart.addHistogramSeries(createOptionsSerieVolume(store.theme));
+
+  createSeriesPrice(prices.value);
+  createSeriesVolume(volumes.value);
+});
+
+// Watches
+watch(prices, (newPrices) => {
+  createSeriesPrice(newPrices);
+});
+
+watch(volumes, (newVolumes) => {
+  createSeriesVolume(newVolumes);
+});
+
+watch(
+  () => store.theme,
+  (newTheme) => {
+    if (chartRef.value) {
+      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
+      areaSerie.applyOptions(createOptionsSeriePrice(newTheme));
+      volumeSerie.applyOptions(createOptionsSerieVolume(newTheme));
+    }
+  }
+);
+
+// Methods
+const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
+  return createChartStyles(chartRef, theme, {
     leftPriceScale: {
-      borderVisible: false,
       scaleMargins: {
         top: 0.6,
         bottom: 0,
       },
     },
-    rightPriceScale: {
-      borderVisible: false,
-    },
-    timeScale: {
-      borderVisible: false,
-      fixLeftEdge: true,
-      fixRightEdge: true,
-    },
-    handleScale: false,
-    handleScroll: false,
     localization: {
       priceFormatter: (price: number) => formatterPrice(price),
     },
   });
+};
 
-  initChart();
-  createChartPrice(prices.value);
-  createChartVolume(volumes.value);
-});
+const createOptionsSeriePrice = (theme: Theme): AreaSeriesPartialOptions => {
+  const colors = getColors(theme);
 
-// Watches
-watch(prices, (newPrices) => {
-  createChartPrice(newPrices);
-});
-
-watch(volumes, (newVolumes) => {
-  createChartVolume(newVolumes);
-});
-
-// Methods
-const initChart = (): void => {
-  if (!chart) {
-    return;
-  }
-
-  areaSeries = chart.addAreaSeries({
+  return {
     priceFormat: {
       type: "price",
       precision: 6,
@@ -125,26 +114,32 @@ const initChart = (): void => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: Colors.blue,
+    lineColor: colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
     priceLineVisible: false,
-  });
+  };
+};
 
-  volumeSeries = chart.addHistogramSeries({
-    color: Colors.yellow,
+const createOptionsSerieVolume = (
+  theme: Theme
+): HistogramSeriesPartialOptions => {
+  const colors = getColors(theme);
+
+  return {
+    color: colors.yellow,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",
     },
     priceScaleId: "left",
     priceLineVisible: false,
-  });
+  };
 };
 
-const createChartPrice = (newPrices: Price[]): void => {
-  if (!chart || !areaSeries) {
+const createSeriesPrice = (newPrices: Price[]): void => {
+  if (!chart || !areaSerie) {
     return;
   }
 
@@ -158,7 +153,7 @@ const createChartPrice = (newPrices: Price[]): void => {
     .value();
 
   if (newLineSeries.length > 0) {
-    areaSeries.setData(newLineSeries);
+    areaSerie.setData(newLineSeries);
 
     const from = newLineSeries[0].time;
     const to = newLineSeries[newLineSeries.length - 1].time;
@@ -170,8 +165,8 @@ const createChartPrice = (newPrices: Price[]): void => {
   }
 };
 
-const createChartVolume = (newVolumes: Volume[]): void => {
-  if (!chart || !volumeSeries) {
+const createSeriesVolume = (newVolumes: Volume[]): void => {
+  if (!chart || !volumeSerie) {
     return;
   }
 
@@ -179,14 +174,13 @@ const createChartVolume = (newVolumes: Volume[]): void => {
     .map((v) => ({
       time: v.timestamp as UTCTimestamp,
       value: v.volume,
-      color: Colors.yellow,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
   if (newVolumeSeries.length > 0) {
-    volumeSeries.setData(newVolumeSeries);
+    volumeSerie.setData(newVolumeSeries);
   }
 };
 
