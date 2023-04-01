@@ -14,6 +14,8 @@ export default defineConfig(({ mode }) => {
       vue({ reactivityTransform: true }),
       VueI18nPlugin({
         include: path.resolve(__dirname, "./src/locales/**"),
+        strictMessage: false,
+        escapeHtml: true,
       }),
       splitVendorChunkPlugin(),
     ],
