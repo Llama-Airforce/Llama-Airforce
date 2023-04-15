@@ -37,6 +37,10 @@ const historicalRevenueBreakdown = computed((): RevenueBreakdown[] => [
     name: "Bribes",
     data: store.historicalRevenue.map((x) => x.bribeRevenue),
   },
+  {
+    name: "Others",
+    data: store.historicalRevenue.map((x) => x.otherRevenue),
+  },
 ]);
 
 const categories = computed((): Date[] =>
@@ -88,7 +92,7 @@ const options = computed((): unknown =>
     dataLabels: {
       enabled: false,
     },
-    colors: [Colors.blue, Colors.purple, Colors.green, Colors.red],
+    colors: [Colors.blue, Colors.purple, Colors.green, Colors.red, Colors.yellow],
     labels: historicalRevenueBreakdown.value.map((x) => x.name),
   })
 );
