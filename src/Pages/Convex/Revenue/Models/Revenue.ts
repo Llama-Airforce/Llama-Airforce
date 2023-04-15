@@ -15,6 +15,7 @@ export class ProtocolRevenue {
   totalCrvRevenue: number;
   totalFxsRevenue: number;
   totalBribeRevenue: number;
+  totalOtherRevenue: number;
 }
 
 export const EmptyProtocolRevenue: ProtocolRevenue = {
@@ -34,6 +35,7 @@ export const EmptyProtocolRevenue: ProtocolRevenue = {
   totalCrvRevenue: 0,
   totalFxsRevenue: 0,
   totalBribeRevenue: 0,
+  totalOtherRevenue: 0,
 };
 
 export class HistoricalRevenue {
@@ -53,6 +55,7 @@ export class HistoricalRevenue {
   fxsRevenueToPlatformAmount: number;
   totalFxsRevenue: number;
   bribeRevenue: number;
+  otherRevenue: number;
   timestamp: number;
 }
 
@@ -73,6 +76,7 @@ export const EmptyHistoricalRevenue: HistoricalRevenue = {
   fxsRevenueToPlatformAmount: 0,
   totalFxsRevenue: 0,
   bribeRevenue: 0,
+  otherRevenue: 0,
   timestamp: 0,
 };
 

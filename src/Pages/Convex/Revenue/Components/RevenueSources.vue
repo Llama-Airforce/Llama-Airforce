@@ -26,6 +26,10 @@ const revenueBreakdown = computed((): RevenueSource[] => [
   },
   { source: "FXS", value: store.revenue.totalFxsRevenue },
   {
+    source: "Others (POL, Votemarket)",
+    value: store.revenue.totalOtherRevenue,
+  },
+  {
     source: "Bribes",
     value: store.revenue.totalBribeRevenue,
   },
@@ -79,7 +83,7 @@ const options = computed((): unknown =>
         enabled: false,
       },
     },
-    colors: [Colors.blue, Colors.green, Colors.purple, Colors.red],
+    colors: [Colors.blue, Colors.green, Colors.purple, Colors.yellow, Colors.red],
     labels: revenueBreakdown.value.map((x) => x.source),
   })
 );

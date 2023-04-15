@@ -78,7 +78,8 @@ const totalRevenue = computed(
     store.revenue.totalBribeRevenue +
     store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
     store.revenue.totalCrvRevenue +
-    store.revenue.totalFxsRevenue
+    store.revenue.totalFxsRevenue +
+    store.revenue.totalOtherRevenue
 );
 
 const lpRevenue = computed(
@@ -92,7 +93,8 @@ const treasuryRevenue = computed(
   (): number =>
     store.revenue.totalCrvRevenueToPlatform +
     store.revenue.totalFxsRevenueToPlatform +
-    store.revenue.totalFxsRevenueToCallers
+    store.revenue.totalFxsRevenueToCallers +
+    store.revenue.totalOtherRevenue
 );
 
 const tokenRevenue = computed(
