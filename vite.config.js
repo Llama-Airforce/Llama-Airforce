@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
       VueI18nPlugin({
         include: path.resolve(__dirname, "./src/locales/**"),
         strictMessage: false,
-        escapeHtml: true,
+        escapeHtml: false,
       }),
       splitVendorChunkPlugin(),
     ],
