@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit } from "@/Util";
-import { PoolPerformanceResponse } from "@/Pages/Curve/Performance/Services/PerformanceService";
+import { PoolPerformanceResponse } from "@LAF/Pages/Curve/Performance/Services/PerformanceService";
 
 const { t } = useI18n();
 

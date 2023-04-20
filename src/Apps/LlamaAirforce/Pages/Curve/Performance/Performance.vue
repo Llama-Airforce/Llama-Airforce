@@ -84,16 +84,16 @@ import { useI18n } from "vue-i18n";
 import { Card, Button, InputNumber, Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import { getHost } from "@/Services/Host";
-import SearchPool from "@/Pages/Curve/Pools/Components/SearchPool.vue";
-import { getPools } from "@/Pages/Curve/Pools/DataLoaders";
-import { useCurvePoolsStore } from "@/Pages/Curve/Pools/Store";
-import { Pool } from "@/Pages/Curve/Pools/Models";
-import { PoolService } from "@/Pages/Curve/Pools/Services";
-import InputDate from "@/Pages/Curve/Performance/Components/InputDate.vue";
+import SearchPool from "@LAF/Pages/Curve/Pools/Components/SearchPool.vue";
+import { getPools } from "@LAF/Pages/Curve/Pools/DataLoaders";
+import { useCurvePoolsStore } from "@LAF/Pages/Curve/Pools/Store";
+import { Pool } from "@LAF/Pages/Curve/Pools/Models";
+import { PoolService } from "@LAF/Pages/Curve/Pools/Services";
+import InputDate from "@LAF/Pages/Curve/Performance/Components/InputDate.vue";
 import PerformanceService, {
   PoolPerformanceResponse,
-} from "@/Pages/Curve/Performance/Services/PerformanceService";
-import PerformanceChart from "@/Pages/Curve/Performance/Components/PerformanceChart.vue";
+} from "@LAF/Pages/Curve/Performance/Services/PerformanceService";
+import PerformanceChart from "@LAF/Pages/Curve/Performance/Components/PerformanceChart.vue";
 
 const poolService = new PoolService(getHost());
 const performanceService = new PerformanceService(getHost());

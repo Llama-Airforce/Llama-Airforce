@@ -1,5 +1,5 @@
 import ServiceBase from "@/Services/ServiceBase";
-import { PoolPerformance } from "@/Pages/Curve/Performance/Models/Performance";
+import { PoolPerformance } from "@LAF/Pages/Curve/Performance/Models/Performance";
 
 export class PoolPerformanceResponse {
   returns: PoolPerformance[];
