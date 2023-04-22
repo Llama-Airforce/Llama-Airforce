@@ -87,6 +87,7 @@ const hasMenu = computed((): boolean => {
       > .bottom {
         width: $menu-width;
         transition: width $content-show-duration $ease-out;
+        overflow: visible;
       }
     }
   }
