@@ -85,7 +85,8 @@ const hasMenu = computed((): boolean => {
 
     > .sticky-wrapper {
       > .bottom {
-        display: flex;
+        width: $menu-width;
+        transition: width $content-show-duration $ease-out;
       }
     }
   }
@@ -111,12 +112,14 @@ const hasMenu = computed((): boolean => {
 
     > .bottom {
       position: fixed;
-      display: none;
+      display: flex;
       flex-direction: column;
       gap: 1rem;
 
       bottom: 2rem;
-      width: $menu-width;
+      overflow: hidden;
+      width: 0px;
+      transition: width $content-show-duration $ease-in;
     }
 
     > .navigation {
