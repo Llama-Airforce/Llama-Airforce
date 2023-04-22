@@ -23,7 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { Header, MenuDesktop } from "@/Framework";
+import Header from "@LAF/Navigation/Header.vue";
+import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 </script>
 
 <style lang="scss">

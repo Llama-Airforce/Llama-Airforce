@@ -33,10 +33,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { MenuItem, SelectLanguage } from "@/Framework";
+import { SelectLanguage } from "@/Framework";
 import LlamaNFT from "@/Framework/LlamaNFT.vue";
 import { subIsActive } from "@/Util";
 import Wallet from "@/Wallet/Wallet.vue";
+import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import type { Page } from "@LAF/Pages/Page";
 import { usePageStore } from "@LAF/Pages/Store";
 
