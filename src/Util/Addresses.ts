@@ -20,6 +20,7 @@ export const UnionAddresses = [
   "0xf4112931c955fda9fb7f184da3518e6050a30eb7",
   "0x7a7f79c5706716bae853c1b96e36538c7eaa4925",
   "0x853dcbf4dd00dbc6a70002ff87be3671ac966067",
+  "0xce45e2e9a1ca8ba9a311bf862606b890c1f5d988",
 ];
 export const AssetRegistryAddress =
   "0xcfa23b8f9062369b21049b9f4a4ce79d640d1873";
