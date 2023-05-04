@@ -27,34 +27,6 @@
 @import "@/Styles/Themes/CMLight.scss";
 @import "@/Styles/Variables.scss";
 
-@font-face {
-  font-family: "SF Mono";
-  font-style: normal;
-  font-weight: 300;
-  src: url("/SF-Mono-Light.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "SF Mono";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/SF-Mono-Medium.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "SF Mono";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/SF-Mono-Regular.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "SF Mono";
-  font-style: normal;
-  font-weight: bold;
-  src: url("/SF-Mono-Bold.otf") format("opentype");
-}
-
 [data-theme="light"] {
   @include themeLight();
 }
@@ -64,13 +36,6 @@
 }
 
 html {
-  font-family: SF Mono, Consolas, monospace;
-  font-size: 16px;
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 12px;
-  }
-
   overflow-y: overlay;
 
   ::-webkit-scrollbar {
