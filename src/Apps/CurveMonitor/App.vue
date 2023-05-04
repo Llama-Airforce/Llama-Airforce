@@ -23,8 +23,8 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-@import "@/Styles/Themes/Dark.scss";
-@import "@/Styles/Themes/Light.scss";
+@import "@/Styles/Themes/CMDark.scss";
+@import "@/Styles/Themes/CMLight.scss";
 @import "@/Styles/Variables.scss";
 
 @font-face {
