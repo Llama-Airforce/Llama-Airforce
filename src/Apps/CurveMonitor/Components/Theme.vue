@@ -39,9 +39,10 @@ onMounted(() => {
   const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   const savedTheme = localStorage.getItem("theme");
-  const prefersNoDark = savedTheme && savedTheme !== "dark";
+  const prefersLight = savedTheme && savedTheme !== "dark";
+  const prefersDark = savedTheme && savedTheme === "dark";
 
-  if (browserDark && !prefersNoDark) {
+  if ((browserDark && !prefersLight) || prefersDark) {
     theme.value = "dark";
   }
 });
