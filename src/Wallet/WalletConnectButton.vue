@@ -11,7 +11,7 @@
     <Tooltip class="tooltip">
       <template #item>
         <Button
-          class="button"
+          class="button clear"
           @click="onClearCache"
         >
           <i class="fas fa-trash"></i>

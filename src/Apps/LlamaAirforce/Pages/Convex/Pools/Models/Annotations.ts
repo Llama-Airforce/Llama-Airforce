@@ -1,4 +1,4 @@
-import { ColorsDark } from "@/Util";
+import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function createPoolParties(dates: Date[]): Object {
@@ -7,14 +7,14 @@ function createPoolParties(dates: Date[]): Object {
     .map((x, i) => ({
       x,
       strokeDashArray: 2,
-      borderColor: ColorsDark.yellow,
+      borderColor: ColorsLAFDark.yellow,
       label: {
         text: i === 0 ? "Votium Pool Party" : "",
         orientation: "horizontal",
-        borderColor: ColorsDark.yellow,
+        borderColor: ColorsLAFDark.yellow,
         style: {
           color: "rgb(34, 34, 34)",
-          background: ColorsDark.yellow,
+          background: ColorsLAFDark.yellow,
           fontFamily: "SF Mono, Consolas, monospace",
         },
       },

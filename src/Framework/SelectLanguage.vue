@@ -67,6 +67,7 @@ const onLocaleSelect = (option: unknown): void => {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
+
 ::v-deep(.select) {
   .item {
     display: flex;

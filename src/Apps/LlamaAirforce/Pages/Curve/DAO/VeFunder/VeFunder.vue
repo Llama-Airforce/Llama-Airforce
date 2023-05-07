@@ -58,7 +58,7 @@ const onGauge = (newGauge: string): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("ve-funder");
+@include dashboardLAF("ve-funder");
 
 .ve-funder {
   .dashboard {
@@ -75,7 +75,7 @@ const onGauge = (newGauge: string): void => {
 
     > .forms {
       display: flex;
-      gap: 1.5rem;
+      gap: var(--dashboard-gap);
     }
   }
 }

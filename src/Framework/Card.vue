@@ -1,6 +1,14 @@
 <template>
   <div class="card">
-    <div class="card-container">
+    <Spinner
+      v-if="loading"
+      class="loader"
+    ></Spinner>
+
+    <div
+      class="card-container"
+      :class="{ loading }"
+    >
       <div
         v-if="title"
         class="card-header"
@@ -35,6 +43,8 @@
 </template>
 
 <script setup lang="ts">
+import { Spinner } from "@/Framework";
+
 // Props
 interface Props {
   title?: string;
@@ -43,6 +53,8 @@ interface Props {
 
   collapsible?: boolean;
   collapsed?: boolean;
+
+  loading?: boolean;
 }
 
 const {
@@ -51,6 +63,7 @@ const {
   compact = false,
   collapsible = false,
   collapsed = false,
+  loading = false,
 } = defineProps<Props>();
 </script>
 
@@ -58,13 +71,21 @@ const {
 @import "@/Styles/Variables.scss";
 
 .card {
+  position: relative;
+
   display: flex;
   flex-grow: 1;
   flex-direction: column;
   width: 100%;
 
-  $card-margin: 1rem;
-  $card-margin-bottom: 0.75rem;
+  $card-margin-width: 1.125rem;
+  $card-margin-height: 0.875rem;
+
+  > .loader {
+    position: absolute;
+    inset: 0;
+    margin: auto auto;
+  }
 
   > .card-container {
     display: flex;
@@ -76,24 +97,30 @@ const {
     border-radius: var(--border-radius);
     box-shadow: var(--container-box-shadow);
 
+    &.loading {
+      opacity: 0.33;
+    }
+
     > .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: $card-margin $card-margin $card-margin-bottom $card-margin;
+
+      height: 2.5rem;
+      margin: $card-margin-height $card-margin-width;
 
       &.collapsible {
-        margin-bottom: $card-margin;
+        margin-bottom: $card-margin-height;
       }
 
       .icon {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         color: var(--c-primary);
         padding-right: 0.5rem;
       }
 
       .text {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         font-weight: bold;
         color: var(--c-text);
         white-space: nowrap;
@@ -103,7 +130,7 @@ const {
     }
 
     > .card-no-header {
-      margin-top: $card-margin-bottom;
+      margin-top: $card-margin-height;
 
       &.compact {
         margin-top: 0;
@@ -113,10 +140,10 @@ const {
     > .card-body {
       display: flex;
       flex-grow: 1;
-      margin: 0 $card-margin $card-margin-bottom $card-margin;
+      margin: 0 $card-margin-width $card-margin-height $card-margin-width;
 
       @media only screen and (max-width: 1280px) {
-        margin: 0 $card-margin $card-margin-bottom $card-margin;
+        margin: 0 $card-margin-width $card-margin-height $card-margin-width;
       }
 
       &.compact {
@@ -124,7 +151,7 @@ const {
       }
 
       &.collapsed {
-        margin: 0 $card-margin;
+        margin: 0 $card-margin-width;
       }
     }
   }

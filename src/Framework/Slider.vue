@@ -34,8 +34,9 @@ const onInput = (evt: Event): void => {
 input {
   -webkit-appearance: none;
   width: 100%;
-  height: 1rem;
+  height: 0.75rem;
   background: var(--c-lvl1-hover);
+  border-radius: var(--border-radius);
   outline-color: transparent;
   opacity: 0.7;
   -webkit-transition: 0.2s;
@@ -51,6 +52,7 @@ input {
     width: 1.5rem;
     height: 1.5rem;
     background: var(--c-primary);
+    border-radius: var(--border-radius);
     cursor: pointer;
   }
 
@@ -58,6 +60,7 @@ input {
     width: 1.5rem;
     height: 1.5rem;
     background: var(--c-primary);
+    border-radius: var(--border-radius);
     cursor: pointer;
   }
 

@@ -101,6 +101,8 @@ const {
   padding: 0.75rem;
 
   background: var(--c-lvl1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--container-box-shadow);
 
   @media only screen and (max-width: 1280px) {
     padding: 0.75rem 1rem;
@@ -114,7 +116,7 @@ const {
 
     > .label,
     > .label-second {
-      color: #a1a1aa;
+      color: var(--c-lvl5);
       font-size: 0.75rem;
     }
   }
@@ -125,12 +127,12 @@ const {
     justify-content: space-between;
     align-items: center;
 
-    color: white;
+    color: var(--c-text);
     font-size: 1.25rem;
     font-weight: bold;
 
     &.underline {
-      border-bottom: dotted var(--border-thickness) var(--c-lvl3-active);
+      border-bottom: dotted 2px var(--c-lvl3-active);
     }
 
     .tooltip {

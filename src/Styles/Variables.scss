@@ -15,7 +15,6 @@ $header-button-active: var(--c-lvl6);
 $datatable-hover-duration: $hover-duration;
 
 // Other
-$page-margin: 1.5rem;
 $border-size: 2px;
 
 // Page animation.
@@ -51,10 +50,10 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
-@mixin dashboard-grid {
+@mixin dashboard-grid($padding: false) {
   display: grid;
-  gap: 1.5rem;
-  grid-gap: 1.5rem;
+  gap: var(--dashboard-gap);
+  grid-gap: var(--dashboard-gap);
 
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
@@ -62,20 +61,32 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
   @media only screen and (max-width: 1280px) {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 1rem;
+
+    @if $padding {
+      padding: 1.5rem 1rem;
+    }
   }
 }
 
 @mixin dashboard($root) {
+  .#{$root} {
+    margin: auto;
+    padding: var(--page-margin);
+
+    @include dashboard-grid(true);
+  }
+}
+
+@mixin dashboardLAF($root) {
   .#{$root} {
     display: flex;
     justify-content: center;
 
     .dashboard {
       width: 100%;
-      padding: $page-margin;
+      padding: var(--page-margin);
 
-      @include dashboard-grid;
+      @include dashboard-grid(true);
     }
   }
 }

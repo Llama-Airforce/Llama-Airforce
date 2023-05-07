@@ -2,12 +2,15 @@
   <Card
     class="card-graph"
     :title="title"
+    :loading="loading"
   >
     <apexchart
       height="100%"
       :options="options"
       :series="series"
     ></apexchart>
+
+    <slot></slot>
   </Card>
 </template>
 
@@ -18,11 +21,12 @@ import { Card } from "@/Framework";
 // Props
 interface Props {
   title?: string;
+  loading?: boolean;
   options: unknown;
   series: unknown;
 }
 
-const { title = "", options, series } = defineProps<Props>();
+const { title = "", loading = false, options, series } = defineProps<Props>();
 
 // Hooks
 onUpdated(async (): Promise<void> => {

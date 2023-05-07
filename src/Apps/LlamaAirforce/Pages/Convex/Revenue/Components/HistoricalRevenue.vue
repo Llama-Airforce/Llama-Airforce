@@ -10,8 +10,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
-import { ColorsDark, round, unit } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { round, unit } from "@/Util";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
+import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 import { RevenueBreakdown } from "@LAF/Pages/Convex/Revenue/Models/Revenue";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
 
@@ -48,7 +49,7 @@ const categories = computed((): Date[] =>
 );
 
 const options = computed((): unknown =>
-  createChartStyles({
+  createChartStylesLAF({
     legend: {
       inverseOrder: true,
     },
@@ -93,11 +94,11 @@ const options = computed((): unknown =>
       enabled: false,
     },
     colors: [
-      ColorsDark.blue,
-      ColorsDark.purple,
-      ColorsDark.green,
-      ColorsDark.red,
-      ColorsDark.yellow,
+      ColorsLAFDark.blue,
+      ColorsLAFDark.purple,
+      ColorsLAFDark.green,
+      ColorsLAFDark.red,
+      ColorsLAFDark.yellow,
     ],
     labels: historicalRevenueBreakdown.value.map((x) => x.name),
   })

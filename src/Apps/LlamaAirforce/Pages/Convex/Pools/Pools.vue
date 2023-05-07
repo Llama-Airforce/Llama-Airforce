@@ -119,7 +119,7 @@ const onSelected = async (pool: Pool): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("pools");
+@include dashboardLAF("pools");
 
 .pools {
   .dashboard {

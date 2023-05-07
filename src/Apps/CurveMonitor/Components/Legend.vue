@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { getColorsArray } from "@/Styles/Themes/CM";
 import { useCurveMonitorStore } from "@CM/Store";
 import { Coin } from "@CM/Models";
-import { getColorsArray } from "@/Util";
 
 // Refs
 const store = useCurveMonitorStore();

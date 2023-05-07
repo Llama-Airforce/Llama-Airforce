@@ -144,7 +144,7 @@ const onSelect = (option: unknown): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("fraxmatch");
+@include dashboardLAF("fraxmatch");
 .fraxmatch {
   .dashboard {
     grid-template-rows: auto auto auto 1fr;

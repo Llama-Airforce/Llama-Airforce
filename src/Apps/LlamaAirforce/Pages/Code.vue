@@ -1,76 +1,47 @@
 <template>
   <div class="contracts">
-    <div class="dashboard">
-      <div class="row">
-        <DataTable
-          class="datatable-repositories"
-          columns-data="repositories-columns-data"
-          :rows="repositories"
-          :columns="[t('repository'), t('description')]"
-        >
-          <template #header-title>
-            <div>{{ t("repositories") }}</div>
-          </template>
-
-          <template #row="props: { item: Repository }">
-            <div>
-              <a
-                :href="props.item.url"
-                target="_blank"
-              >
-                {{ props.item.name }}
-              </a>
-            </div>
-
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </DataTable>
-
-        <DataTable
-          class="datatable-other"
-          columns-data="other-columns-data"
-          :rows="other"
-          :columns="[t('other'), t('description')]"
-        >
-          <template #header-title>
-            <div>{{ t("other") }}</div>
-          </template>
-
-          <template #row="props: { item: Other }">
-            <div>
-              <a
-                :href="props.item.url"
-                target="_blank"
-              >
-                {{ props.item.name }}
-              </a>
-            </div>
-
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </DataTable>
-      </div>
-
+    <div class="row">
       <DataTable
-        v-for="(bundle, i) in bundles"
-        :key="i"
-        class="datatable-contracts"
-        columns-header="1fr"
-        columns-data="contracts-columns-data"
-        :rows="bundle.contracts"
-        :columns="[t('contract'), t('description')]"
+        class="datatable-repositories"
+        columns-data="repositories-columns-data"
+        :rows="repositories"
+        :columns="[t('repository'), t('description')]"
       >
         <template #header-title>
-          <div>{{ t(bundle.name) }}</div>
+          <div>{{ t("repositories") }}</div>
         </template>
 
-        <template #row="props: { item: Contract }">
+        <template #row="props: { item: Repository }">
           <div>
             <a
-              :href="linkContract(props.item)"
+              :href="props.item.url"
               target="_blank"
             >
-              {{ props.item.contract }}
+              {{ props.item.name }}
+            </a>
+          </div>
+
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
+
+      <DataTable
+        class="datatable-other"
+        columns-data="other-columns-data"
+        :rows="other"
+        :columns="[t('other'), t('description')]"
+      >
+        <template #header-title>
+          <div>{{ t("other") }}</div>
+        </template>
+
+        <template #row="props: { item: Other }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
             </a>
           </div>
 
@@ -78,6 +49,33 @@
         </template>
       </DataTable>
     </div>
+
+    <DataTable
+      v-for="(bundle, i) in bundles"
+      :key="i"
+      class="datatable-contracts"
+      columns-header="1fr"
+      columns-data="contracts-columns-data"
+      :rows="bundle.contracts"
+      :columns="[t('contract'), t('description')]"
+    >
+      <template #header-title>
+        <div>{{ t(bundle.name) }}</div>
+      </template>
+
+      <template #row="props: { item: Contract }">
+        <div>
+          <a
+            :href="linkContract(props.item)"
+            target="_blank"
+          >
+            {{ props.item.contract }}
+          </a>
+        </div>
+
+        <div>{{ t(props.item.description) }}</div>
+      </template>
+    </DataTable>
   </div>
 </template>
 
@@ -96,8 +94,6 @@ import {
   UnionFxsVaultAddress,
   ZapsUFxsAddress,
   UFxsStrategyAddress,
-  veFunderGaugeFactoryAddress,
-  veFunderGaugeController,
   AssetRegistryAddress,
   ZapsUFxsClaimAddress,
   UnionCvxVaultAddress,
@@ -300,20 +296,6 @@ const ubal: Bundle = {
   ],
 };
 
-const vefunder: Bundle = {
-  name: "veFunder",
-  contracts: [
-    {
-      contract: veFunderGaugeFactoryAddress,
-      description: "gauge-factory",
-    },
-    {
-      contract: veFunderGaugeController,
-      description: "gauge-controller",
-    },
-  ],
-};
-
 const registries: Bundle = {
   name: "registries",
   contracts: [
@@ -383,7 +365,6 @@ const bundles: Bundle[] = [
   ucrv,
   ufxs,
   ubal,
-  vefunder,
   registries,
   pirex,
   outdated,
@@ -435,44 +416,42 @@ const { t } = useI18n();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("contracts");
+@include dashboardLAF("contracts");
 
 .contracts {
-  .dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  .row {
     display: flex;
-    flex-direction: column;
-    gap: 0;
+    gap: var(--dashboard-gap);
+  }
 
-    .row {
-      display: flex;
-      gap: 1.5rem;
+  .datatable-contracts {
+    ::v-deep(.contracts-columns-data) {
+      display: grid;
+      grid-template-columns: 3fr 4fr;
     }
+  }
 
-    .datatable-contracts {
-      ::v-deep(.contracts-columns-data) {
-        display: grid;
-        grid-template-columns: 3fr 4fr;
-      }
+  .datatable-repositories {
+    width: 60%;
+    margin-bottom: 1.5rem;
+
+    ::v-deep(.repositories-columns-data) {
+      display: grid;
+      grid-template-columns: 2fr 6fr;
     }
+  }
 
-    .datatable-repositories {
-      width: 60%;
-      margin-bottom: 1.5rem;
+  .datatable-other {
+    width: 40%;
+    margin-bottom: 1.5rem;
 
-      ::v-deep(.repositories-columns-data) {
-        display: grid;
-        grid-template-columns: 2fr 6fr;
-      }
-    }
-
-    .datatable-other {
-      width: 40%;
-      margin-bottom: 1.5rem;
-
-      ::v-deep(.other-columns-data) {
-        display: grid;
-        grid-template-columns: 3fr 4fr;
-      }
+    ::v-deep(.other-columns-data) {
+      display: grid;
+      grid-template-columns: 3fr 4fr;
     }
   }
 }
@@ -512,9 +491,6 @@ zap-harvester: Bot Harvester Zap
 
 handler-aura: Aura Handler
 handler-bbusd: BBUSD Handler
-
-gauge-factory: Gauge Factory
-gauge-controller: Gauge Controller
 
 registry-union: Union - Allocation Registry
 registry-votium: Votium - Registry

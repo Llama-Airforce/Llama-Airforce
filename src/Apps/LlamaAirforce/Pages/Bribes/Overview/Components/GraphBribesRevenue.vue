@@ -12,8 +12,9 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
-import { ColorsDark, round, unit } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { round, unit } from "@/Util";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
+import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getDate } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
@@ -41,7 +42,7 @@ const protocol = computed((): Protocol | null => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "votium-bribe-revenue",
     },
@@ -60,7 +61,7 @@ const options = computed((): unknown => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: [ColorsDark.blue] },
+          style: { colors: [ColorsLAFDark.blue] },
         },
       },
       {
@@ -69,7 +70,7 @@ const options = computed((): unknown => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: [ColorsDark.yellow] },
+          style: { colors: [ColorsLAFDark.yellow] },
         },
       },
     ],

@@ -3,6 +3,7 @@ export { default as Button } from "@/Framework/Button.vue";
 export { default as ButtonToggle } from "@/Framework/ButtonToggle.vue";
 export { default as Card } from "@/Framework/Card.vue";
 export { default as CardGraph } from "@/Framework/CardGraph.vue";
+export { default as Chip } from "@/Framework/Chip.vue";
 export { default as Code } from "@/Framework/Code.vue";
 export { default as Collapsible } from "@/Framework/Collapsible.vue";
 export { default as DataTable } from "@/Framework/DataTable.vue";

@@ -13,7 +13,7 @@ import ClearCacheButton from "@LAF/Pages/Debug/Components/ClearCacheButton.vue";
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("debug");
+@include dashboardLAF("debug");
 
 .debug {
   .dashboard {

@@ -121,7 +121,7 @@ const onSelected = async (gauge: Gauge): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("gauges");
+@include dashboardLAF("gauges");
 
 .gauges {
   .dashboard {

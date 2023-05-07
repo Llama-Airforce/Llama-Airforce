@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import type { Epoch, Bribe, Product } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
@@ -79,7 +79,7 @@ const categories = computed((): string[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "votium-bribe-round",
       type: "bar",

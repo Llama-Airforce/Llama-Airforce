@@ -15,7 +15,7 @@
         >
           <MenuItem
             :item="menuItem"
-            @click="emit('navigated')"
+            @navigated="emit('navigated')"
           >
           </MenuItem>
         </ul>
@@ -24,7 +24,10 @@
       <div class="bottom">
         <LlamaNFT></LlamaNFT>
         <SelectLanguage></SelectLanguage>
-        <Wallet v-if="hasMenu"></Wallet>
+        <Wallet
+          v-if="hasMenu"
+          :label-please-connect="t('please-connect')"
+        ></Wallet>
       </div>
     </div>
   </div>
@@ -33,6 +36,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { SelectLanguage } from "@/Framework";
 import LlamaNFT from "@/Framework/LlamaNFT.vue";
 import { subIsActive } from "@/Util";
@@ -40,6 +44,8 @@ import Wallet from "@/Wallet/Wallet.vue";
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import type { Page } from "@LAF/Pages/Page";
 import { usePageStore } from "@LAF/Pages/Store";
+
+const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
@@ -188,3 +194,7 @@ const hasMenu = computed((): boolean => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+please-connect: Connect your wallet to see your personal earnings in each round
+</i18n>

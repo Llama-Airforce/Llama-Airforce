@@ -37,11 +37,16 @@ input {
   background-color: var(--input-background);
   border: solid var(--border-thickness) var(--c-lvl4);
   border-radius: var(--border-radius);
+  box-shadow: var(--input-box-shadow);
 
-  padding: 0.1rem 0.5rem;
+  padding: 0rem 0.875rem;
   text-align: start;
-  height: 2rem;
+  height: 2.5rem;
   cursor: text;
+
+  &::placeholder {
+    color: var(--c-lvl5);
+  }
 
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,

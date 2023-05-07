@@ -143,7 +143,7 @@ watch(pair, () => {
     }
 
     .items {
-      margin-top: 1.75rem;
+      margin-top: 2.25rem;
     }
 
     .item {

@@ -100,7 +100,7 @@ const onSelect = (option: unknown): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("pools");
+@include dashboardLAF("pools");
 
 .data {
   @include dashboard-grid;

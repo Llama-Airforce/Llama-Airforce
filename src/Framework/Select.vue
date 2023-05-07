@@ -91,8 +91,8 @@ const emit = defineEmits<{
 
   background: var(--c-lvl1-hover);
   border-radius: var(--border-radius);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-  padding: 0.4rem 0.75rem;
+  box-shadow: var(--select-box-shadow);
+  padding: 0.5rem 0.75rem;
 
   &:hover {
     background: var(--c-lvl1-active);
@@ -125,7 +125,7 @@ const emit = defineEmits<{
       justify-content: center;
 
       > .label {
-        color: #a1a1aa;
+        color: var(--c-lvl5);
         font-size: 0.75rem;
       }
     }
@@ -134,8 +134,8 @@ const emit = defineEmits<{
       color: var(--c-text);
       overflow: hidden;
       position: absolute;
-      right: 10px;
       left: 0;
+      right: 10px;
       z-index: 15;
       line-height: 1.5rem;
       margin-top: 2rem;
@@ -143,7 +143,7 @@ const emit = defineEmits<{
       font-size: 1rem;
 
       background: var(--c-lvl1);
-      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--select-items-box-shadow);
       border-radius: var(--border-radius);
 
       > div {
@@ -151,8 +151,8 @@ const emit = defineEmits<{
         cursor: pointer;
         -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
         user-select: none;
-        border-bottom: 1px solid var(--c-lvl4);
-        padding: 0.4rem 0.75rem;
+        border-bottom: 1px solid var(--c-lvl3);
+        padding: 0.5rem 0.75rem;
 
         &:hover {
           background-color: var(--c-primary);

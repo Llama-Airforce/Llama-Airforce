@@ -62,7 +62,7 @@ import GraphEmissions from "@LAF/Pages/Curve/DAO/Overview/Components/GraphEmissi
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("overview");
+@include dashboardLAF("overview");
 
 .overview {
   .dashboard {
@@ -70,7 +70,7 @@ import GraphEmissions from "@LAF/Pages/Curve/DAO/Overview/Components/GraphEmissi
       display: flex;
       justify-content: space-evenly;
       flex-grow: 1;
-      gap: 1.5rem;
+      gap: var(--dashboard-gap);
     }
 
     > .gauges {
@@ -83,7 +83,7 @@ import GraphEmissions from "@LAF/Pages/Curve/DAO/Overview/Components/GraphEmissi
       display: flex;
       justify-content: space-evenly;
       flex-grow: 1;
-      gap: 1.5rem;
+      gap: var(--dashboard-gap);
       height: 300px;
     }
   }

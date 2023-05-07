@@ -61,8 +61,9 @@ const show = ref(false);
 
   :deep(.popper) {
     background-color: var(--c-lvl1);
-    border-radius: 5px;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    border: solid var(--border-thickness) var(--c-lvl4);
+    border-radius: var(--border-radius);
+    box-shadow: var(--tooltip-box-shadow);
     font-size: 0.875rem;
     pointer-events: none;
     display: flex;

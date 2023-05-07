@@ -11,7 +11,7 @@
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { ChainTopPoolRevenue } from "@LAF/Pages/Curve/Revenue/Models/Revenue";
 import { useCurveStore } from "@LAF/Pages/Curve/Store";
 
@@ -30,7 +30,7 @@ const topPools = computed((): ChainTopPoolRevenue[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     legend: {
       inverseOrder: true,
     },

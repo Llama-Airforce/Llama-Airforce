@@ -243,7 +243,7 @@ const initFromRouter = async (): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("bribes");
+@include dashboardLAF("bribes");
 
 .bribes {
   .dashboard {

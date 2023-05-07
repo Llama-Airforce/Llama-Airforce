@@ -119,9 +119,9 @@ watch(proposalsPage, (ps) => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 1.5rem;
+  gap: var(--dashboard-gap);
 
-  padding-top: 1.5rem;
+  padding-top: var(--dashboard-gap);
 
   > .filters {
     display: grid;

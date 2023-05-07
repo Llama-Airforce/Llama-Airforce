@@ -13,7 +13,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import type { Pool, Reserves } from "@LAF/Pages/Curve/Pools/Models";
 import { useCurvePoolsStore } from "@LAF/Pages/Curve/Pools/Store";
 
@@ -36,7 +36,7 @@ const reserves = computed((): Reserves[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "reserves",
       type: "area",

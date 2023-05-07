@@ -34,7 +34,7 @@ onMounted(async (): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("utilization");
+@include dashboardLAF("utilization");
 
 .utilization {
   .dashboard {

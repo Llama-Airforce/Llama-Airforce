@@ -47,7 +47,7 @@ const { proposal, expanded = false } = defineProps<Props>();
 
     display: grid;
     grid-template-columns: 1fr minmax(auto, 250px);
-    gap: 1.5rem;
+    gap: var(--dashboard-gap);
 
     margin-top: 2rem;
   }

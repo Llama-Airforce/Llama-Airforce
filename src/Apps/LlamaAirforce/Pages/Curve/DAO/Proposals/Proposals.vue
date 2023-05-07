@@ -105,7 +105,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("proposals");
+@include dashboardLAF("proposals");
 
 .proposals {
   .dashboard {

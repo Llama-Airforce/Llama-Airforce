@@ -5,8 +5,8 @@ import {
   LineStyle,
 } from "lightweight-charts";
 import { mergeWith } from "lodash";
+import { getColors } from "@/Styles/Themes/CM";
 import type { Theme } from "@CM/Models/Theme";
-import { getColors } from "@/Util";
 
 const createDefault = (
   chartRef: HTMLElement,
@@ -31,7 +31,7 @@ const createDefault = (
       },
       horzLines: {
         color: colors.level4,
-        style: theme === "light" ? LineStyle.SparseDotted : LineStyle.Solid,
+        style: LineStyle.SparseDotted,
       },
     },
     rightPriceScale: {

@@ -290,14 +290,14 @@ const sortColumn = (index: number): void => {
   flex-direction: column;
   flex-grow: 1;
   font-size: 0.875rem;
-  padding: 1rem;
+  padding: 0.875rem 1.125rem;
 
   background: var(--c-lvl1);
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
   > .header {
-    padding: 0 0 1rem 0rem;
+    padding: 0 0 0.875rem 0rem;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
@@ -314,7 +314,7 @@ const sortColumn = (index: number): void => {
       grid-column: 2;
       display: grid;
       font-size: 1.25rem;
-      font-weight: bold;
+      font-weight: 600;
       color: var(--c-text);
       align-items: center;
     }

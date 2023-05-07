@@ -32,8 +32,11 @@
       class="notConnected"
     >
       <WalletConnectButton></WalletConnectButton>
-      <span class="info">
-        {{ t("please-connect") }}
+      <span
+        v-if="labelPleaseConnect"
+        class="info"
+      >
+        {{ labelPleaseConnect }}
       </span>
     </div>
   </div>
@@ -56,6 +59,13 @@ import {
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 
 const { t } = useI18n();
+
+// Props
+interface Props {
+  labelPleaseConnect?: string;
+}
+
+const { labelPleaseConnect } = defineProps<Props>();
 
 // Refs
 const store = useWalletStore();
@@ -123,12 +133,6 @@ const onDisconnect = async (): Promise<void> => {
   justify-content: center;
   align-items: center;
 
-  button {
-    @media only screen and (max-width: 1280px) {
-      margin: 0 1rem;
-    }
-  }
-
   > .connected {
     display: flex;
     flex-direction: column;
@@ -141,13 +145,13 @@ const onDisconnect = async (): Promise<void> => {
       display: none !important;
     }
 
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .notConnected,
   .incorrectNetwork {
+    width: 100%;
     display: flex;
-
     flex-direction: column;
 
     > .info {
@@ -166,5 +170,4 @@ const onDisconnect = async (): Promise<void> => {
 
 <i18n lang="yaml" locale="en">
 incorrect-network: You are not on the correct network; should be Ethereum
-please-connect: Connect your wallet to see your personal earnings in each round
 </i18n>

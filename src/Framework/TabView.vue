@@ -77,10 +77,6 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 @import "@/Styles/Variables.scss";
 
 .tab-view {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
   > .tab-headers {
     display: flex;
     width: 100%;
@@ -99,32 +95,22 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       padding: 1rem;
 
       user-select: none;
-      color: var(--c-lvl5);
+      color: var(--tab-text-color);
       font-weight: 500;
 
       &:hover {
         border-bottom: 2px solid var(--c-primary-active);
         margin: 0 0 -2px 0;
-        color: var(--c-primary-active);
+        color: var(--tab-text-color-hover);
       }
 
       &:active,
       &.active {
         border-bottom: 2px solid var(--c-primary);
         margin: 0 0 -2px 0;
-        color: var(--c-text);
+        color: var(--tab-text-color-active);
       }
     }
-  }
-}
-
-.tabs {
-  display: flex;
-  flex-grow: 1;
-
-  > .tab {
-    display: flex;
-    flex-grow: 1;
   }
 }
 </style>

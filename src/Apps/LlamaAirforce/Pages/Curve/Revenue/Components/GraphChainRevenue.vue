@@ -12,7 +12,7 @@ import { computed } from "vue";
 import { orderBy } from "lodash";
 import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { ChainRevenue } from "@LAF/Pages/Curve/Revenue/Models/Revenue";
 import { useCurveStore } from "@LAF/Pages/Curve/Store";
 
@@ -24,7 +24,7 @@ const chainRevenues = computed((): ChainRevenue[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     legend: {
       inverseOrder: true,
     },

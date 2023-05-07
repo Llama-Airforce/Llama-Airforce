@@ -11,7 +11,7 @@
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import PoolRevenue from "@LAF/Pages/Curve/Revenue/Models/Revenue";
 import { useCurveStore } from "@LAF/Pages/Curve/Store";
 
@@ -28,7 +28,7 @@ const poolRevenues = computed((): PoolRevenue[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     stroke: {
       width: 1,
     },

@@ -13,7 +13,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import Pool from "@LAF/Pages/Convex/Pools/Models/Pool";
 import Snapshot from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
@@ -37,7 +37,7 @@ const snapshots = computed((): Snapshot[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "convex-tvl",
       type: "area",

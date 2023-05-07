@@ -168,7 +168,7 @@ const initFromRouter = async (): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("overview");
+@include dashboardLAF("overview");
 
 .overview {
   .dashboard {

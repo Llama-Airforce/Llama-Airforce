@@ -1,12 +1,5 @@
 export { default as StatusService } from "@CM/Services/StatusService";
 export { default as PoolService } from "@CM/Services/PoolService";
-export { default as PriceService } from "@CM/Services/PriceService";
-export { default as BalanceService } from "@CM/Services/BalanceService";
-export { default as VolumeService } from "@CM/Services/VolumeService";
-export { default as TransactionService } from "@CM/Services/TransactionService";
-export { default as TvlService } from "@CM/Services/TvlService";
-export { default as BondingService } from "@CM/Services/BondingService";
 export { default as CoinService } from "@CM/Services/CoinService";
 export { default as PairService } from "@CM/Services/PairService";
 export { default as TimeRangeService } from "@CM/Services/TimeRangeService";
-export { default as SandwichService } from "@CM/Services/SandwichService";

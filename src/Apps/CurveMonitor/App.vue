@@ -5,6 +5,8 @@
       :duration="-1"
     />
 
+    <Navigation class="navigation"></Navigation>
+
     <main class="main">
       <div class="content">
         <router-view v-slot="{ Component }">
@@ -20,12 +22,19 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Navigation from "@CM/Navigation/Navigation.vue";
+</script>
 
 <style lang="scss">
-@import "@/Styles/Themes/CMDark.scss";
-@import "@/Styles/Themes/CMLight.scss";
+@import "@/Styles/Themes/CM/Chad.scss";
+@import "@/Styles/Themes/CM/Light.scss";
+@import "@/Styles/Themes/CM/Dark.scss";
 @import "@/Styles/Variables.scss";
+
+[data-theme="chad"] {
+  @include themeChad();
+}
 
 [data-theme="light"] {
   @include themeLight();
@@ -39,7 +48,8 @@ html {
   overflow-y: overlay;
 
   ::-webkit-scrollbar {
-    width: 0.25rem;
+    width: 0.5rem;
+    height: 0.5rem;
   }
 
   ::-webkit-scrollbar-track {
@@ -77,6 +87,12 @@ a {
   }
 }
 
+p {
+  display: flex;
+  margin-block-start: 0rem;
+  margin-block-end: 1rem;
+}
+
 #app {
   display: flex;
   justify-content: center;
@@ -87,15 +103,35 @@ a {
 @import "@/Styles/Variables.scss";
 
 .root {
-  width: 1440px;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: hidden;
 
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr;
+  grid-template-columns: auto 1fr;
+
+  @media only screen and (max-width: 1280px) {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+  }
+
+  > .navigation {
+    grid-row: 1;
+    grid-column: 1;
+  }
 
   > main {
     grid-row: 1;
-    grid-column: 1;
+    grid-column: 2;
+
+    @media only screen and (max-width: 1280px) {
+      grid-row: 2;
+      grid-column: 1;
+    }
+
+    overflow-y: auto;
 
     > .content {
       .fade-enter-active,

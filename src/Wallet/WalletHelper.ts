@@ -42,14 +42,15 @@ export async function getAddress(provider: JsonRpcProvider): Promise<string> {
   return address;
 }
 
-export function addressShort(address?: string): string {
+export function addressShort(address?: string, digits = 6): string {
   if (!address) {
     return "0x000...000";
   }
 
-  return `${address.substring(0, 5)}...${address.substring(
-    address.length - 3
-  )}`;
+  const pre = digits / 2 + 2;
+  const post = address.length - digits / 2;
+
+  return `${address.substring(0, pre)}...${address.substring(post)}`;
 }
 
 export async function approve(

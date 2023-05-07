@@ -1,17 +1,14 @@
 import { defineStore } from "pinia";
+import type { Pool, Coin, Pair, TimeRange } from "@CM/Models";
 import type {
-  Pool,
   Balances,
   Volume,
   Price,
   Transaction,
   Tvl,
   Bonding,
-  Coin,
-  Pair,
-  TimeRange,
   Sandwich,
-} from "@CM/Models";
+} from "@CM/Pages/Pool/Models";
 import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
 import type { Theme } from "@CM/Models/Theme";
 

@@ -12,7 +12,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint } from "@/Util";
 import type { EpochFrax } from "@LAF/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
@@ -38,7 +38,7 @@ const bribesFrax = computed((): number[] => epochs.map((epoch) => epoch.frax));
 const categories = computed(() => epochs.map((epoch) => epoch.round));
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "frax-match",
       type: "bar",

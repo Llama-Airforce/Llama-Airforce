@@ -124,6 +124,7 @@ const onPage = (p: number) => emit("page", clamp(p, 1, pages.value));
 
 ul {
   display: flex;
+  gap: 0.25rem;
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -164,24 +165,14 @@ ul {
     }
   }
 
-  > li:first-child {
-    margin-right: 0.25rem;
-  }
-
   > li:nth-child(2) {
-    margin-right: 1rem;
     background: var(--c-lvl3);
     border-radius: var(--border-radius);
   }
 
   > li:nth-last-child(2) {
-    margin-left: 1rem;
     background: var(--c-lvl3);
     border-radius: var(--border-radius);
-  }
-
-  > li:last-child {
-    margin-left: 0.25rem;
   }
 }
 </style>

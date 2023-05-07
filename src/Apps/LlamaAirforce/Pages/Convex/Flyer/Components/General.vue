@@ -122,6 +122,7 @@ description: Total locked value, incentives &amp; market cap
 locked-1: worth of CRV permanently locked in its contract, and is continuing to
   see a rate of about
 locked-2: worth of CRV permanently locked in its contract per month.
+locked-3: of the voting power of Curve.
 
 tvl-1: Convex currently has about
 tvl-2: TVL and controls close to

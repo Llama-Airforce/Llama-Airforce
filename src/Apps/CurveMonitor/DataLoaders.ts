@@ -1,17 +1,15 @@
 import { Subscription } from "rxjs";
 import { useCurveMonitorStore } from "@CM/Store";
+import { PoolService, CoinService, PairService } from "@CM/Services";
 import {
-  PoolService,
   BalanceService,
   PriceService,
   VolumeService,
   TransactionService,
   TvlService,
   BondingService,
-  CoinService,
-  PairService,
   SandwichService,
-} from "@CM/Services";
+} from "@CM/Pages/Pool/Services";
 import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(

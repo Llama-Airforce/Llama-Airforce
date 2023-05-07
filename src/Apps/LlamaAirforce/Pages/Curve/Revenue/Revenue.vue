@@ -131,7 +131,7 @@ const onSelectChain = (chain: Chain): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("pools");
+@include dashboardLAF("pools");
 
 .pools {
   .dashboard {

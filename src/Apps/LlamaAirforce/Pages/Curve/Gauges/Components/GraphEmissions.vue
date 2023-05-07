@@ -13,7 +13,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, formatNumber, shorten, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import Gauge from "@LAF/Pages/Curve/Gauges/Models/Gauge";
 import Fee from "@LAF/Pages/Curve/Gauges/Models/Fee";
 import Emission from "@LAF/Pages/Curve/Gauges/Models/Emission";
@@ -74,7 +74,7 @@ const yMax = computed((): number => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "curve-emissions",
       animations: {

@@ -17,7 +17,7 @@ hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('scss', scss);
 hljs.registerLanguage('typescript', typescript);
 
-import { pageCookbook } from "@LAF/Pages/Cookbook/Page";
+import { pageCookbook } from "@LAF/Pages/PageCookbook";
 import { pageCurve } from "@LAF/Pages/Curve/Page";
 import { pageConvex } from "@LAF/Pages/Convex/Page";
 import { pageBribes } from "@LAF/Pages/Bribes/Page";

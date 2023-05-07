@@ -1,0 +1,129 @@
+@mixin register($colorName, $colorValue) {
+  --c-#{"" + $colorName}: #{$colorValue};
+}
+
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+@mixin themeChad() {
+  @include themeChadFont();
+
+  $text: black;
+
+  $lvl0: #e6e4f6;
+  $lvl1: #f4f4f6;
+  $lvl2: #d9d8df;
+  $lvl3: darken($lvl1, 6%);
+  $lvl4: darken(#fafafa, 35%);
+  $lvl5: lighten(#27272a, 35%);
+  $lvl6: #212124;
+
+  $red: hsl(7, 95%, 54%);
+  $green: hsl(122, 95%, 40%);
+  $blue: hsl(209, 95%, 54%);
+  $yellow: hsl(39, 95%, 54%);
+  $purple: hsl(284, 95%, 54%);
+
+  $primary: #8f84d7;
+
+  $colors: (
+    "text": $text,
+    "lvl0": $lvl0,
+    "lvl0-hint": darken(#f5f5f5, 2%),
+    "lvl0-hover": darken($lvl0, 6%),
+    "lvl0-active": darken($lvl0, 12%),
+    "lvl1": $lvl1,
+    "lvl1-hover": darken($lvl1, 6%),
+    "lvl1-active": darken($lvl1, 12%),
+    "lvl2": $lvl2,
+    "lvl2-hover": darken($lvl2, 6%),
+    "lvl2-active": darken($lvl2, 12%),
+    "lvl3": $lvl3,
+    "lvl3-hover": darken($lvl3, 6%),
+    "lvl3-active": darken($lvl3, 12%),
+    "lvl4": $lvl4,
+    "lvl4-hover": darken($lvl4, 6%),
+    "lvl4-active": darken($lvl4, 12%),
+    "lvl5": $lvl5,
+    "lvl5-hover": darken($lvl5, 6%),
+    "lvl5-active": darken($lvl5, 12%),
+    "lvl6": $lvl6,
+    "lvl6-hover": darken($lvl6, 6%),
+    "lvl6-active": darken($lvl6, 12%),
+    red: $red,
+    "red-rgb": hexToRGB($red),
+    green: $green,
+    "green-rgb": hexToRGB($green),
+    blue: $blue,
+    "blue-rgb": hexToRGB($blue),
+    yellow: $yellow,
+    "yellow-rgb": hexToRGB($yellow),
+    purple: $purple,
+    "purple-rgb": hexToRGB($purple),
+    primary: lighten($primary, 4%),
+    "primary-hover": lighten($primary, 8%),
+    "primary-active": lighten($primary, 15%),
+    "primary-disabled": lighten($primary, 20%),
+  );
+
+  // CSS Variables
+  @each $colorName, $colorValue in $colors {
+    @include register($colorName, $colorValue);
+  }
+
+  --page-margin: 2.375rem;
+  --dashboard-gap: 1.5rem;
+  --font-weight: normal;
+
+  --border-radius: 0px;
+  --border-thickness: 2px;
+
+  --header-background: #4637a9;
+  --header-font-family: monospace;
+  --header-font-color: white;
+
+  --container-background: var(--c-lvl0);
+  --container-background-hint: var(--c-lvl0-hint);
+  --container-background-hover: var(--c-lvl0-hover);
+  --container-background-active: var(--c-lvl0-active);
+  --container-box-shadow: 0 0 0 0;
+
+  --select-box-shadow: 3px 3px 0 #0d0a1f;
+  --select-items-box-shadow: 3px 3px 0 #0d0a1f;
+
+  --input-background: var(--c-lvl2);
+  --input-background-hover: var(--c-lvl2);
+  --input-background-active: var(--c-lvl2);
+  --input-border-color-hover: var(--c-primary-hover);
+  --input-border-color-active: var(--c-primary-active);
+  --input-box-shadow: inset 0.5px 0.5px 0 0.5px;
+  --input-items-box-shadow: inset 0.5px 0.5px 0 0.5px;
+
+  --tooltip-box-shadow: 0;
+
+  --tab-text-color: var(--c-lvl5);
+  --tab-text-color-hover: var(--c-lvl5);
+  --tab-text-color-active: var(--c-text);
+
+  --gutter-color: var(--c-primary);
+
+  --spinner-color: var(--c-text);
+
+  // body {
+  //   background-image: url("https://curve.fi/_next/static/images/hero-bg-115e1b5f55244753b7ccdab6ad758895.webp");
+  //   background-size: auto 400px;
+  //   background-repeat: repeat-x;
+  //   background-attachment: fixed;
+  // }
+}
+
+@mixin themeChadFont() {
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+}

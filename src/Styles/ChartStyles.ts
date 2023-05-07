@@ -1,11 +1,32 @@
+import { ColorsLAFDark, ColorsLAFDarkArray } from "@/Styles/Themes/LAF/Dark";
 import { mergeWith } from "lodash";
-import { ColorsDark, ColorsDarkArray } from "@/Util/Colors";
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const createDefault = (): Object => ({
+type Theme = {
+  colors: {
+    blue: string;
+    yellow: string;
+    green: string;
+    red: string;
+    purple: string;
+
+    backgroundColor: string;
+    level1: string;
+    level2: string;
+    level3: string;
+    level4: string;
+    level5: string;
+    level6: string;
+
+    text: string;
+  };
+  colorsArray: string[];
+};
+
+const createDefault = (theme: Theme): object => ({
   chart: {
     id: "chart",
     background: "transparant",
+    foreColor: theme.colors.level5,
     fontFamily: "SF Mono, Consolas, monospace",
     toolbar: {
       autoSelected: "zoom",
@@ -18,9 +39,9 @@ const createDefault = (): Object => ({
       autoScaleYaxis: true,
     },
   },
-  colors: ColorsDarkArray,
+  colors: theme.colorsArray,
   grid: {
-    borderColor: ColorsDark.level5,
+    borderColor: theme.colors.level5,
     strokeDashArray: 4,
     padding: {
       top: 20,
@@ -41,33 +62,52 @@ const createDefault = (): Object => ({
   xaxis: {
     type: "category",
     axisBorder: {
-      color: ColorsDark.level5,
+      color: theme.colors.level5,
       height: 1,
     },
     axisTicks: {
-      color: ColorsDark.level5,
+      color: theme.colors.level5,
     },
     title: {
-      color: ColorsDark.level5,
+      color: theme.colors.level5,
     },
   },
   yaxis: {
     tickAmount: 4,
     axisBorder: {
-      color: ColorsDark.level5,
+      color: theme.colors.level5,
     },
     axisTicks: {
-      color: ColorsDark.level5,
+      color: theme.colors.level5,
     },
     title: {
-      color: ColorsDark.level5,
+      color: theme.colors.level5,
     },
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export default function createChartStyles(options: Object): Object {
-  const _default = createDefault();
+export function createChartStylesLAF(options: object): object {
+  const _default = createDefault({
+    colors: ColorsLAFDark,
+    colorsArray: ColorsLAFDarkArray,
+  });
+
+  const mergeFunction = (objValue: unknown, srcValue: unknown) => {
+    if (typeof srcValue === "object") {
+      mergeWith(objValue, srcValue, mergeFunction);
+      return undefined;
+    } else if (objValue) {
+      return objValue;
+    } else {
+      return srcValue;
+    }
+  };
+
+  return mergeWith(options, _default, mergeFunction);
+}
+
+export function createChartStyles(theme: Theme, options: object): object {
+  const _default = createDefault(theme);
 
   const mergeFunction = (objValue: unknown, srcValue: unknown) => {
     if (typeof srcValue === "object") {

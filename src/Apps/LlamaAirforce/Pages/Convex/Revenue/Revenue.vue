@@ -99,7 +99,7 @@ onBeforeUnmount((): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("revenue");
+@include dashboardLAF("revenue");
 
 .revenue {
   .dashboard {

@@ -102,12 +102,17 @@ const onInput = (evt: Event): void => {
     background-color: var(--input-background);
     border: solid var(--border-thickness) var(--c-lvl4);
     border-radius: var(--border-radius);
+    box-shadow: var(--input-box-shadow);
 
-    padding: 0.1rem 0.5rem;
+    padding: 0rem 0.875rem;
     text-align: start;
-    height: 2rem;
+    height: 2.5rem;
     width: calc(100% - 1rem - 4px); // minus padding and border twice.
     cursor: text;
+
+    &::placeholder {
+      color: var(--c-lvl5);
+    }
 
     /* Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
@@ -129,7 +134,7 @@ const onInput = (evt: Event): void => {
   }
 
   > input[type="search"] {
-    padding-left: 2.25rem;
+    padding-left: 2.875rem;
   }
 
   position: relative;
@@ -145,13 +150,13 @@ const onInput = (evt: Event): void => {
     left: 0;
     right: 10px;
     z-index: 15;
-    line-height: 1.75rem;
+    line-height: 1.5rem;
     margin-top: calc(2.5rem - var(--border-radius) / 3);
     width: 100%;
     font-size: 1rem;
 
     background: var(--c-lvl1);
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--input-items-box-shadow);
     border-radius: var(--border-radius);
 
     > div {
@@ -159,9 +164,8 @@ const onInput = (evt: Event): void => {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
       user-select: none;
-      border-bottom: 1px solid var(--c-lvl4);
-      padding: 0.4rem 0.75rem;
-      cursor: pointer;
+      border-bottom: 1px solid var(--c-lvl3);
+      padding: 0.5rem 0.75rem;
 
       &:hover {
         background-color: var(--c-primary);
@@ -185,7 +189,9 @@ const onInput = (evt: Event): void => {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    left: 0.75rem;
+    left: 0.875rem;
+    font-size: 0.875rem;
+    color: var(--c-lvl5);
   }
 }
 </style>

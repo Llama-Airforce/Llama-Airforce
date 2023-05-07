@@ -28,7 +28,7 @@ import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 </script>
 
 <style lang="scss">
-@import "@/Styles/Themes/LAFDark.scss";
+@import "@/Styles/Themes/LAF/Dark.scss";
 @import "@/Styles/Variables.scss";
 
 :root {

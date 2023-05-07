@@ -50,8 +50,6 @@ const onRange = (range: TimeRange) => {
   font-size: 0.875rem;
 
   button {
-    height: 1rem;
-
     &:not(:last-child) {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;

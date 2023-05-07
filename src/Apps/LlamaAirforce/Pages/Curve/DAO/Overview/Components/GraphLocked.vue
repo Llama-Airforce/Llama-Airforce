@@ -12,7 +12,7 @@
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 
 type Serie = {
   name: string;
@@ -32,7 +32,7 @@ const data = computed((): { x: number; y: number }[] => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "mock",
       animations: {

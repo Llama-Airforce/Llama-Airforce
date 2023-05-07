@@ -30,8 +30,9 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { Card, ButtonToggle } from "@/Framework";
-import { ColorsDark, round, unit } from "@/Util";
+import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
+import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 import type { Pool, Candle } from "@LAF/Pages/Curve/Pools/Models";
 import { useCurvePoolsStore } from "@LAF/Pages/Curve/Pools/Store";
 
@@ -65,9 +66,9 @@ onMounted((): void => {
     layout: {
       background: {
         type: ColorType.Solid,
-        color: ColorsDark.backgroundColor,
+        color: ColorsLAFDark.backgroundColor,
       },
-      textColor: ColorsDark.level5,
+      textColor: ColorsLAFDark.level5,
       fontFamily: "SF Mono, Consolas, monospace",
     },
     grid: {
@@ -75,7 +76,7 @@ onMounted((): void => {
         visible: false,
       },
       horzLines: {
-        color: ColorsDark.level4,
+        color: ColorsLAFDark.level4,
         style: LineStyle.Dashed,
       },
     },
@@ -104,12 +105,12 @@ onMounted((): void => {
   });
 
   candleSeries = chart.addCandlestickSeries({
-    upColor: ColorsDark.green,
-    borderUpColor: ColorsDark.green,
-    wickUpColor: ColorsDark.green,
-    downColor: ColorsDark.red,
-    borderDownColor: ColorsDark.red,
-    wickDownColor: ColorsDark.red,
+    upColor: ColorsLAFDark.green,
+    borderUpColor: ColorsLAFDark.green,
+    wickUpColor: ColorsLAFDark.green,
+    downColor: ColorsLAFDark.red,
+    borderDownColor: ColorsLAFDark.red,
+    wickDownColor: ColorsLAFDark.red,
     priceFormat: {
       type: "price",
       precision: 6,
@@ -118,7 +119,7 @@ onMounted((): void => {
   });
 
   volumeSeries = chart.addHistogramSeries({
-    color: ColorsDark.blue,
+    color: ColorsLAFDark.blue,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",
@@ -169,7 +170,7 @@ const createChart = (newCandles: Candle[], newInvert: boolean): void => {
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.token0TotalAmount,
-      color: ColorsDark.blue,
+      color: ColorsLAFDark.blue,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

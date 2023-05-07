@@ -1,6 +1,6 @@
 <template>
   <div
-    class="collapsible-content"
+    class="collapsible-outside"
     :class="{ expanded }"
   >
     <div class="collapsible-inside">
@@ -19,7 +19,7 @@ const { expanded = true } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
-.collapsible-content {
+.collapsible-outside {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0s;

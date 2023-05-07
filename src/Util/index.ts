@@ -7,6 +7,5 @@ export * from "@/Util/PoolHelper";
 export * from "@/Util/PromiseHelper";
 export * from "@/Util/RouterHelper";
 export * from "@/Util/Types";
-export * from "@/Util/Colors";
 export * from "@/Util/PriceHelper";
 export * from "@/Util/ApyHelper";

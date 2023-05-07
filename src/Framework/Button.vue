@@ -7,7 +7,7 @@
       <i
         v-if="icon"
         class="icon"
-        :class="icon"
+        :class="[icon, { noValue: !!value }]"
       >
       </i>
       {{ value }}
@@ -80,7 +80,10 @@ button {
   .icon {
     display: flex;
     align-items: center;
-    margin-right: 1rem;
+
+    &.noValue {
+      margin-right: 1rem;
+    }
   }
 
   background: var(--c-lvl1);

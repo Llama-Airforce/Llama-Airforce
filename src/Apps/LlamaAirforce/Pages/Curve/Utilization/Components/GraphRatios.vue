@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import { orderBy, last } from "lodash";
 import { CardGraph } from "@/Framework";
 import { shorten, type DataPoint } from "@/Util";
-import createChartStyles from "@/Styles/ChartStyles";
+import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import Ratio from "@LAF/Pages/Curve/Utilization/Models/Ratio";
 import { useCurveStore } from "@LAF/Pages/Curve/Store";
 
@@ -38,7 +38,7 @@ const ratios = computed((): { [gauge: string]: Ratio[] } => {
 });
 
 const options = computed((): unknown => {
-  return createChartStyles({
+  return createChartStylesLAF({
     chart: {
       id: "curve-ratios",
       type: "heatmap",
