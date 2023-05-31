@@ -313,7 +313,7 @@ const sortColumn = (index: number): void => {
     > .header-title {
       grid-column: 2;
       display: grid;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 600;
       color: var(--c-text);
       align-items: center;
