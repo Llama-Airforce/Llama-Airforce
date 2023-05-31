@@ -107,6 +107,7 @@ onMounted(async () => {
 // @include dashboard("proposals");
 
 .proposals {
+  position: relative;
   max-width: calc(1920px - 18.125rem);
   margin: auto;
   padding: var(--page-margin);
@@ -117,6 +118,7 @@ onMounted(async () => {
 
   .spinner {
     position: absolute;
+    top: 50vh;
     top: 50dvh;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
