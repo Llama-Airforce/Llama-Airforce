@@ -45,7 +45,7 @@ import SelectTheme from "@CM/Pages/Home/SelectTheme.vue";
 
 // Emits
 const emit = defineEmits<{
-  (e: "navigated"): void;
+  navigated: [];
 }>();
 
 // Methods

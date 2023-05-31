@@ -37,7 +37,7 @@ type ChainInfo = SelectItem & {
 
 // Emits
 const emit = defineEmits<{
-  (e: "select-chain", chain: Chain): void;
+  "select-chain": [chain: Chain];
 }>();
 
 // Refs

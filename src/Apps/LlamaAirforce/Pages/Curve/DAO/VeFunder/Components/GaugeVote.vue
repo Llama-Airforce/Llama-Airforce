@@ -56,7 +56,7 @@ interface Props {
 
 // Emits
 const emit = defineEmits<{
-  (e: "request"): void;
+  request: [];
 }>();
 
 const { gauge = "" } = defineProps<Props>();

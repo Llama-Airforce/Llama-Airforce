@@ -58,8 +58,8 @@ const { open = false } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "closed"): void;
-  (e: "navigated"): void;
+  closed: [];
+  navigated: [];
 }>();
 
 // Refs

@@ -51,7 +51,7 @@ const { item } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "navigated"): void;
+  navigated: [];
 }>();
 
 // Refs
@@ -82,7 +82,7 @@ const expandIfChildActive = () => {
 
 // Watches
 watch(
-  item,
+  () => item,
   () => {
     expandIfChildActive();
   },

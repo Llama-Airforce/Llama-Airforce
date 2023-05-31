@@ -36,7 +36,7 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  (e: "click"): void;
+  click: [];
 }>();
 
 // Events

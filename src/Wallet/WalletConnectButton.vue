@@ -40,7 +40,7 @@ const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
-  (e: "connected"): void;
+  connected: [];
 }>();
 
 // Refs

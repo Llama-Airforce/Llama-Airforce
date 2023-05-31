@@ -23,7 +23,7 @@ import { usePageStore } from "@CM/Pages/Store";
 
 // Emits
 const emit = defineEmits<{
-  (e: "navigated"): void;
+  navigated: [];
 }>();
 
 // Refs

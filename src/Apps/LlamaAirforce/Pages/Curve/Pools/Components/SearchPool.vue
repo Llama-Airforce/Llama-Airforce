@@ -57,8 +57,8 @@ const { modelValue } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "update:modelValue", pool: string): void;
-  (e: "select", pool: Pool): void;
+  "update:modelValue": [pool: string];
+  select: [pool: Pool];
 }>();
 
 // Refs

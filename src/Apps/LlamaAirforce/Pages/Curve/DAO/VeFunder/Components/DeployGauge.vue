@@ -52,7 +52,7 @@ const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
-  (e: "gauge", gauge: string): void;
+  gauge: [gauge: string];
 }>();
 
 const deploying = ref(false);

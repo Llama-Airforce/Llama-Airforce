@@ -69,7 +69,7 @@ const { proposal } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "toggleExpand"): void;
+  toggleExpand: [];
 }>();
 </script>
 

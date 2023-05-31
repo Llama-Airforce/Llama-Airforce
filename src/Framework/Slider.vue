@@ -20,7 +20,7 @@ const { modelValue, min, max } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "update:modelValue", val: string): void;
+  "update:modelValue": [val: string];
 }>();
 
 // Events

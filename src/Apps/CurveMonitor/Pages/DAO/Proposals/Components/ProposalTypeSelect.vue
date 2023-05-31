@@ -33,7 +33,7 @@ const types = ["all", ...proposalTypes];
 
 // Emits
 const emit = defineEmits<{
-  (e: "select", type: ProposalTypeAll): void;
+  select: [type: ProposalTypeAll];
 }>();
 
 // Refs

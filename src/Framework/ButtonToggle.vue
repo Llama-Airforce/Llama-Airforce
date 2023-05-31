@@ -27,7 +27,7 @@ const { modelValue = false, icon = "", value = "" } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "update:modelValue", val: boolean): void;
+  "update:modelValue": [val: boolean];
 }>();
 
 // Events

@@ -49,8 +49,8 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  (e: "yes"): void;
-  (e: "no"): void;
+  yes: [];
+  no: [];
 }>();
 
 // Methods

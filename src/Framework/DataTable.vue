@@ -169,8 +169,8 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  (e: "selected", data: unknown): void;
-  (e: "sortColumn", sort: string, sortOrder: SortOrder): void;
+  selected: [data: unknown];
+  sortColumn: [sort: string, sortOrder: SortOrder];
 }>();
 
 // Refs

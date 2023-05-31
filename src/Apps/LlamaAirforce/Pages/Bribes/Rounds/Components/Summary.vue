@@ -77,7 +77,7 @@ let countdownTimer: ReturnType<typeof setTimeout>;
 
 // Emits
 const emit = defineEmits<{
-  (e: "select-round", round: number): void;
+  "select-round": [round: number];
 }>();
 
 // Refs

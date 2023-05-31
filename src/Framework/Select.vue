@@ -70,9 +70,9 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  (e: "open"): void;
-  (e: "close"): void;
-  (e: "input", option: unknown): void;
+  open: [];
+  close: [];
+  input: [option: unknown];
 }>();
 </script>
 

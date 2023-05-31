@@ -52,7 +52,7 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  (e: "click", data: unknown): void;
+  click: [data: unknown];
 }>();
 
 // Refs

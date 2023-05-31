@@ -23,8 +23,8 @@ import Logo from "@CM/Navigation/Logo.vue";
 
 // Emits
 const emit = defineEmits<{
-  (e: "toggle-expansion"): void;
-  (e: "navigated"): void;
+  "toggle-expansion": [];
+  navigated: [];
 }>();
 </script>
 

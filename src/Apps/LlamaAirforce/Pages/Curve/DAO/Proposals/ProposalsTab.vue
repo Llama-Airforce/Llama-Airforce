@@ -93,7 +93,7 @@ const proposalsPage = computed((): Proposal[] => {
 });
 
 // Events
-const onTypeSelect = (type: "all" & ProposalType): void => {
+const onTypeSelect = (type: ProposalType): void => {
   proposalType.value = type as "all" & ProposalType;
 };
 

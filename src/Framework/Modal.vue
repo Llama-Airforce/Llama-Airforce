@@ -24,7 +24,7 @@ const { show = false } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "close"): void;
+  close: [];
 }>();
 </script>
 

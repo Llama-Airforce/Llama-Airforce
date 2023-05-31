@@ -40,7 +40,7 @@ const { active = 0 } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "tab", params: { tab: typeof TabItem; index: number }): void;
+  tab: [params: { tab: typeof TabItem; index: number }];
 }>();
 
 // Refs

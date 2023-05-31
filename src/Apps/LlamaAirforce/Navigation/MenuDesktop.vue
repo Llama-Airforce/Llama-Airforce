@@ -49,7 +49,7 @@ const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
-  (e: "navigated"): void;
+  navigated: [];
 }>();
 
 // Refs

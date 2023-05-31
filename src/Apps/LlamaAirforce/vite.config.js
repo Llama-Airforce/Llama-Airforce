@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      vue({ reactivityTransform: true }),
+      vue({ script: { propsDestructure: true } }),
       VueI18nPlugin({
         include: path.resolve(__dirname, "../../src/locales/**"),
         strictMessage: false,

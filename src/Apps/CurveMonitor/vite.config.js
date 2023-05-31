@@ -8,7 +8,7 @@ import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 export default defineConfig(() => {
   return {
     plugins: [
-      vue({ reactivityTransform: true }),
+      vue({ script: { propsDestructure: true } }),
       VueI18nPlugin({
         strictMessage: false,
         escapeHtml: false,

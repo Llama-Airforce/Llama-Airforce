@@ -56,7 +56,7 @@ const { page, itemsCount, itemsPerPage } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  (e: "page", page: number): void;
+  page: [page: number];
 }>();
 
 // Refs

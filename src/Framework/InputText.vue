@@ -64,9 +64,9 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  (e: "update:modelValue", val: string): void;
-  (e: "input", val: string): void;
-  (e: "select", option: unknown): void;
+  "update:modelValue": [val: string];
+  input: [val: string];
+  select: [option: unknown];
 }>();
 
 // Refs
