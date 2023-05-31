@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface VotiumRegistryInterface extends utils.Interface {
@@ -77,7 +76,7 @@ export interface VotiumRegistryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "batchAddressCheck",
-    values: [PromiseOrValue<string>[]]
+    values: [string[]]
   ): string;
   encodeFunctionData(
     functionFragment: "currentEpoch",
@@ -86,23 +85,19 @@ export interface VotiumRegistryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "eDuration", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "execute",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "forceRegistry",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "forceToExpire",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "forwardHistory",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "forwardLength",
@@ -110,20 +105,20 @@ export interface VotiumRegistryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "forwardPage",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "inForwardHistory",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "inOptOutHistory",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "nextEpoch", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "optOutHistory",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "optOutLength",
@@ -131,24 +126,18 @@ export interface VotiumRegistryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "optOutPage",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "registry",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRegistry",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "registry", values: [string]): string;
+  encodeFunctionData(functionFragment: "setRegistry", values: [string]): string;
   encodeFunctionData(
     functionFragment: "setToExpire",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -285,7 +274,7 @@ export interface VotiumRegistry extends BaseContract {
 
   functions: {
     batchAddressCheck(
-      accounts: PromiseOrValue<string>[],
+      accounts: string[],
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
@@ -294,65 +283,65 @@ export interface VotiumRegistry extends BaseContract {
     eDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     execute(
-      _to: PromiseOrValue<string>,
-      _value: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      _value: BigNumberish,
+      _data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     forceRegistry(
-      _from: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _from: string,
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     forceToExpire(
-      _from: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _from: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     forwardHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     forwardLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     forwardPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
     inForwardHistory(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     inOptOutHistory(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     nextEpoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     optOutHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     optOutLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     optOutPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     registry(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, string, BigNumber] & {
@@ -363,22 +352,22 @@ export interface VotiumRegistry extends BaseContract {
     >;
 
     setRegistry(
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setToExpire(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   batchAddressCheck(
-    accounts: PromiseOrValue<string>[],
+    accounts: string[],
     overrides?: CallOverrides
   ): Promise<string[]>;
 
@@ -387,65 +376,56 @@ export interface VotiumRegistry extends BaseContract {
   eDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
   execute(
-    _to: PromiseOrValue<string>,
-    _value: PromiseOrValue<BigNumberish>,
-    _data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _to: string,
+    _value: BigNumberish,
+    _data: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   forceRegistry(
-    _from: PromiseOrValue<string>,
-    _to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _from: string,
+    _to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   forceToExpire(
-    _from: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _from: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   forwardHistory(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
   forwardLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   forwardPage(
-    size: PromiseOrValue<BigNumberish>,
-    page: PromiseOrValue<BigNumberish>,
+    size: BigNumberish,
+    page: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string[]>;
 
-  inForwardHistory(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  inForwardHistory(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
-  inOptOutHistory(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  inOptOutHistory(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   nextEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-  optOutHistory(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  optOutHistory(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   optOutLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   optOutPage(
-    size: PromiseOrValue<BigNumberish>,
-    page: PromiseOrValue<BigNumberish>,
+    size: BigNumberish,
+    page: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string[]>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   registry(
-    arg0: PromiseOrValue<string>,
+    arg0: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, string, BigNumber] & {
@@ -456,22 +436,22 @@ export interface VotiumRegistry extends BaseContract {
   >;
 
   setRegistry(
-    _to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setToExpire(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     batchAddressCheck(
-      accounts: PromiseOrValue<string>[],
+      accounts: string[],
       overrides?: CallOverrides
     ): Promise<string[]>;
 
@@ -480,65 +460,56 @@ export interface VotiumRegistry extends BaseContract {
     eDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     execute(
-      _to: PromiseOrValue<string>,
-      _value: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
+      _to: string,
+      _value: BigNumberish,
+      _data: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean, string]>;
 
     forceRegistry(
-      _from: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
+      _from: string,
+      _to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    forceToExpire(
-      _from: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    forceToExpire(_from: string, overrides?: CallOverrides): Promise<void>;
 
     forwardHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     forwardLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     forwardPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string[]>;
 
-    inForwardHistory(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    inForwardHistory(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
-    inOptOutHistory(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    inOptOutHistory(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
     nextEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     optOutHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     optOutLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     optOutPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string[]>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     registry(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, string, BigNumber] & {
@@ -548,53 +519,50 @@ export interface VotiumRegistry extends BaseContract {
       }
     >;
 
-    setRegistry(
-      _to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setRegistry(_to: string, overrides?: CallOverrides): Promise<void>;
 
     setToExpire(overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "expReg(address,uint256)"(
-      _from?: PromiseOrValue<string> | null,
-      _end?: PromiseOrValue<BigNumberish> | null
+      _from?: string | null,
+      _end?: BigNumberish | null
     ): expRegEventFilter;
     expReg(
-      _from?: PromiseOrValue<string> | null,
-      _end?: PromiseOrValue<BigNumberish> | null
+      _from?: string | null,
+      _end?: BigNumberish | null
     ): expRegEventFilter;
 
     "setReg(address,address,uint256)"(
-      _from?: PromiseOrValue<string> | null,
-      _to?: PromiseOrValue<string> | null,
-      _start?: PromiseOrValue<BigNumberish> | null
+      _from?: string | null,
+      _to?: string | null,
+      _start?: BigNumberish | null
     ): setRegEventFilter;
     setReg(
-      _from?: PromiseOrValue<string> | null,
-      _to?: PromiseOrValue<string> | null,
-      _start?: PromiseOrValue<BigNumberish> | null
+      _from?: string | null,
+      _to?: string | null,
+      _start?: BigNumberish | null
     ): setRegEventFilter;
   };
 
   estimateGas: {
     batchAddressCheck(
-      accounts: PromiseOrValue<string>[],
+      accounts: string[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -603,86 +571,81 @@ export interface VotiumRegistry extends BaseContract {
     eDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     execute(
-      _to: PromiseOrValue<string>,
-      _value: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      _value: BigNumberish,
+      _data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     forceRegistry(
-      _from: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _from: string,
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     forceToExpire(
-      _from: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _from: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     forwardHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     forwardLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     forwardPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     inForwardHistory(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     inOptOutHistory(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     nextEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     optOutHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     optOutLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     optOutPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    registry(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    registry(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     setRegistry(
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    setToExpire(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setToExpire(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     batchAddressCheck(
-      accounts: PromiseOrValue<string>[],
+      accounts: string[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -691,80 +654,80 @@ export interface VotiumRegistry extends BaseContract {
     eDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     execute(
-      _to: PromiseOrValue<string>,
-      _value: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      _value: BigNumberish,
+      _data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     forceRegistry(
-      _from: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _from: string,
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     forceToExpire(
-      _from: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _from: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     forwardHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     forwardLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     forwardPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     inForwardHistory(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     inOptOutHistory(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     nextEpoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     optOutHistory(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     optOutLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     optOutPage(
-      size: PromiseOrValue<BigNumberish>,
-      page: PromiseOrValue<BigNumberish>,
+      size: BigNumberish,
+      page: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     registry(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setRegistry(
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setToExpire(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -21,7 +21,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface ZapsUCrvInterface extends utils.Interface {
@@ -58,84 +57,43 @@ export interface ZapsUCrvInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "claimFromVaultAndStakeIn3PoolConvex",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultAsCrv",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultAsCvx",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BigNumberish, BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultAsEth",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultAsUsdt",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultViaUniV2EthPair",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromCrv",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromEth",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromUCrv",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "depositViaUniV2EthPair",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovals",
@@ -220,238 +178,238 @@ export interface ZapsUCrv extends BaseContract {
 
   functions: {
     claimFromVaultAndStakeIn3PoolConvex(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromVaultAsCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromVaultAsCvx(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromVaultAsEth(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromVaultAsUsdt(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromVaultViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositFromCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositFromEth(
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositFromUCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      inputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      inputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
   };
 
   claimFromVaultAndStakeIn3PoolConvex(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromVaultAsCrv(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromVaultAsCvx(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    lock: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    lock: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromVaultAsEth(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromVaultAsUsdt(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromVaultViaUniV2EthPair(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    router: PromiseOrValue<string>,
-    outputToken: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    router: string,
+    outputToken: string,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositFromCrv(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositFromEth(
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositFromUCrv(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositViaUniV2EthPair(
-    amount: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    router: PromiseOrValue<string>,
-    inputToken: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    minAmountOut: BigNumberish,
+    router: string,
+    inputToken: string,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setApprovals(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     claimFromVaultAndStakeIn3PoolConvex(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     claimFromVaultAsCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     claimFromVaultAsCvx(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     claimFromVaultAsEth(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     claimFromVaultAsUsdt(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     claimFromVaultViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositFromCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositFromEth(
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositFromUCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      inputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      inputToken: string,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -464,163 +422,161 @@ export interface ZapsUCrv extends BaseContract {
 
   estimateGas: {
     claimFromVaultAndStakeIn3PoolConvex(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromVaultAsCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromVaultAsCvx(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromVaultAsEth(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromVaultAsUsdt(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromVaultViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositFromCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositFromEth(
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositFromUCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      inputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      inputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     claimFromVaultAndStakeIn3PoolConvex(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromVaultAsCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromVaultAsCvx(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromVaultAsEth(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromVaultAsUsdt(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromVaultViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositFromCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositFromEth(
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositFromUCrv(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositViaUniV2EthPair(
-      amount: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      inputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      minAmountOut: BigNumberish,
+      router: string,
+      inputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;

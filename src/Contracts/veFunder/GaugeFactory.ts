@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface GaugeFactoryInterface extends utils.Interface {
@@ -45,7 +44,7 @@ export interface GaugeFactoryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "deploy_gauge",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "implementation",
@@ -57,7 +56,7 @@ export interface GaugeFactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "get_gauge_by_idx",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -124,9 +123,9 @@ export interface GaugeFactory extends BaseContract {
 
   functions: {
     deploy_gauge(
-      _receiver: PromiseOrValue<string>,
-      _max_emissions: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _receiver: string,
+      _max_emissions: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     implementation(overrides?: CallOverrides): Promise<[string]>;
@@ -134,15 +133,15 @@ export interface GaugeFactory extends BaseContract {
     get_gauge_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     get_gauge_by_idx(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
   };
 
   deploy_gauge(
-    _receiver: PromiseOrValue<string>,
-    _max_emissions: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _receiver: string,
+    _max_emissions: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   implementation(overrides?: CallOverrides): Promise<string>;
@@ -150,14 +149,14 @@ export interface GaugeFactory extends BaseContract {
   get_gauge_count(overrides?: CallOverrides): Promise<BigNumber>;
 
   get_gauge_by_idx(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
   callStatic: {
     deploy_gauge(
-      _receiver: PromiseOrValue<string>,
-      _max_emissions: PromiseOrValue<BigNumberish>,
+      _receiver: string,
+      _max_emissions: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -166,29 +165,29 @@ export interface GaugeFactory extends BaseContract {
     get_gauge_count(overrides?: CallOverrides): Promise<BigNumber>;
 
     get_gauge_by_idx(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
   };
 
   filters: {
     "NewGauge(address,address,uint256)"(
-      _instance?: PromiseOrValue<string> | null,
-      _receiver?: PromiseOrValue<string> | null,
+      _instance?: string | null,
+      _receiver?: string | null,
       _max_emissions?: null
     ): NewGaugeEventFilter;
     NewGauge(
-      _instance?: PromiseOrValue<string> | null,
-      _receiver?: PromiseOrValue<string> | null,
+      _instance?: string | null,
+      _receiver?: string | null,
       _max_emissions?: null
     ): NewGaugeEventFilter;
   };
 
   estimateGas: {
     deploy_gauge(
-      _receiver: PromiseOrValue<string>,
-      _max_emissions: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _receiver: string,
+      _max_emissions: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
@@ -196,16 +195,16 @@ export interface GaugeFactory extends BaseContract {
     get_gauge_count(overrides?: CallOverrides): Promise<BigNumber>;
 
     get_gauge_by_idx(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     deploy_gauge(
-      _receiver: PromiseOrValue<string>,
-      _max_emissions: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _receiver: string,
+      _max_emissions: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -213,7 +212,7 @@ export interface GaugeFactory extends BaseContract {
     get_gauge_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get_gauge_by_idx(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

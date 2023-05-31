@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface AssetRegistryInterface extends utils.Interface {
@@ -39,15 +38,15 @@ export interface AssetRegistryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "assetAllocations",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getAllocations",
-    values: [PromiseOrValue<string>[]]
+    values: [string[]]
   ): string;
   encodeFunctionData(
     functionFragment: "recordAllocation",
-    values: [PromiseOrValue<BigNumberish>[]]
+    values: [BigNumberish[]]
   ): string;
 
   decodeFunctionResult(
@@ -94,52 +93,52 @@ export interface AssetRegistry extends BaseContract {
 
   functions: {
     assetAllocations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[number]>;
 
     getAllocations(
-      members: PromiseOrValue<string>[],
+      members: string[],
       overrides?: CallOverrides
     ): Promise<[number[][]]>;
 
     recordAllocation(
-      choices: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      choices: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   assetAllocations(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
+    arg0: string,
+    arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<number>;
 
   getAllocations(
-    members: PromiseOrValue<string>[],
+    members: string[],
     overrides?: CallOverrides
   ): Promise<number[][]>;
 
   recordAllocation(
-    choices: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    choices: BigNumberish[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     assetAllocations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<number>;
 
     getAllocations(
-      members: PromiseOrValue<string>[],
+      members: string[],
       overrides?: CallOverrides
     ): Promise<number[][]>;
 
     recordAllocation(
-      choices: PromiseOrValue<BigNumberish>[],
+      choices: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -148,37 +147,37 @@ export interface AssetRegistry extends BaseContract {
 
   estimateGas: {
     assetAllocations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getAllocations(
-      members: PromiseOrValue<string>[],
+      members: string[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     recordAllocation(
-      choices: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      choices: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     assetAllocations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getAllocations(
-      members: PromiseOrValue<string>[],
+      members: string[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     recordAllocation(
-      choices: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      choices: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

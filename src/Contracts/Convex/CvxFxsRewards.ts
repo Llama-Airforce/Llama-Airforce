@@ -24,14 +24,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export declare namespace CvxFxsStaking {
-  export type EarnedDataStruct = {
-    token: PromiseOrValue<string>;
-    amount: PromiseOrValue<BigNumberish>;
-  };
+  export type EarnedDataStruct = { token: string; amount: BigNumberish };
 
   export type EarnedDataStructOutput = [string, BigNumber] & {
     token: string;
@@ -129,45 +125,38 @@ export interface CvxFxsRewardsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addReward",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "allowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "approveRewardDistributor",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [string, string, boolean]
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "claimableRewards",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "cvxfxs", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "deposit(uint256,bool)",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
+    values: [BigNumberish, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "deposit(uint256)",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "fxs", values?: undefined): string;
   encodeFunctionData(
@@ -176,48 +165,45 @@ export interface CvxFxsRewardsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getReward(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "getReward(address)",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getRewardForDuration",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "lastTimeRewardApplicable",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "notifyRewardAmount",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "recoverERC20",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "rewardData",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "rewardData", values: [string]): string;
   encodeFunctionData(
     functionFragment: "rewardDistributors",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardPerToken",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardRedirect",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardTokenLength",
@@ -225,11 +211,11 @@ export interface CvxFxsRewardsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "rewardTokens",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "rewards",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardsDuration",
@@ -237,16 +223,13 @@ export interface CvxFxsRewardsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRewardRedirect",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "stake",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "stake", values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: "stakeAll", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "stakeFor",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -255,19 +238,15 @@ export interface CvxFxsRewardsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "userRewardPerTokenPaid",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "vefxsProxy",
@@ -275,7 +254,7 @@ export interface CvxFxsRewardsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "addReward", data: BytesLike): Result;
@@ -559,37 +538,34 @@ export interface CvxFxsRewards extends BaseContract {
 
   functions: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<
       [CvxFxsStaking.EarnedDataStructOutput[]] & {
@@ -602,20 +578,20 @@ export interface CvxFxsRewards extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "deposit(uint256,bool)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "deposit(uint256)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     fxs(overrides?: CallOverrides): Promise<[string]>;
@@ -623,48 +599,48 @@ export interface CvxFxsRewards extends BaseContract {
     fxsDepositor(overrides?: CallOverrides): Promise<[string]>;
 
     "getReward(address,address)"(
-      _address: PromiseOrValue<string>,
-      _forwardTo: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _address: string,
+      _forwardTo: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "getReward(address)"(
-      _address: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _address: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _reward: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     rewardData(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -676,54 +652,51 @@ export interface CvxFxsRewards extends BaseContract {
     >;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    rewardRedirect(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    rewardRedirect(arg0: string, overrides?: CallOverrides): Promise<[string]>;
 
     rewardTokenLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setRewardRedirect(
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stakeAll(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stakeFor(
-      _for: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _for: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -731,64 +704,61 @@ export interface CvxFxsRewards extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     vefxsProxy(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   addReward(
-    _rewardsToken: PromiseOrValue<string>,
-    _distributor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rewardsToken: string,
+    _distributor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   allowance(
-    owner: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
+    owner: string,
+    spender: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   approve(
-    spender: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   approveRewardDistributor(
-    _rewardsToken: PromiseOrValue<string>,
-    _distributor: PromiseOrValue<string>,
-    _approved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rewardsToken: string,
+    _distributor: string,
+    _approved: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   claimableRewards(
-    _account: PromiseOrValue<string>,
+    _account: string,
     overrides?: CallOverrides
   ): Promise<CvxFxsStaking.EarnedDataStructOutput[]>;
 
@@ -797,20 +767,20 @@ export interface CvxFxsRewards extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: PromiseOrValue<string>,
-    subtractedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    subtractedValue: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "deposit(uint256,bool)"(
-    _amount: PromiseOrValue<BigNumberish>,
-    _lock: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    _lock: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "deposit(uint256)"(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   fxs(overrides?: CallOverrides): Promise<string>;
@@ -818,48 +788,48 @@ export interface CvxFxsRewards extends BaseContract {
   fxsDepositor(overrides?: CallOverrides): Promise<string>;
 
   "getReward(address,address)"(
-    _address: PromiseOrValue<string>,
-    _forwardTo: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _address: string,
+    _forwardTo: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "getReward(address)"(
-    _address: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _address: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getRewardForDuration(
-    _rewardsToken: PromiseOrValue<string>,
+    _rewardsToken: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: PromiseOrValue<string>,
-    addedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    addedValue: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   lastTimeRewardApplicable(
-    _rewardsToken: PromiseOrValue<string>,
+    _rewardsToken: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   notifyRewardAmount(
-    _rewardsToken: PromiseOrValue<string>,
-    _reward: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rewardsToken: string,
+    _reward: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   recoverERC20(
-    _tokenAddress: PromiseOrValue<string>,
-    _tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _tokenAddress: string,
+    _tokenAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   rewardData(
-    arg0: PromiseOrValue<string>,
+    arg0: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -871,54 +841,48 @@ export interface CvxFxsRewards extends BaseContract {
   >;
 
   rewardDistributors(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   rewardPerToken(
-    _rewardsToken: PromiseOrValue<string>,
+    _rewardsToken: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  rewardRedirect(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  rewardRedirect(arg0: string, overrides?: CallOverrides): Promise<string>;
 
   rewardTokenLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardTokens(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   rewards(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
   setRewardRedirect(
-    _to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stake(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stakeAll(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stakeFor(
-    _for: PromiseOrValue<string>,
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _for: string,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -926,64 +890,61 @@ export interface CvxFxsRewards extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    sender: string,
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   userRewardPerTokenPaid(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   vefxsProxy(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
+      _rewardsToken: string,
+      _distributor: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      spender: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<CvxFxsStaking.EarnedDataStructOutput[]>;
 
@@ -992,19 +953,19 @@ export interface CvxFxsRewards extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender: string,
+      subtractedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     "deposit(uint256,bool)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      _lock: PromiseOrValue<boolean>,
+      _amount: BigNumberish,
+      _lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "deposit(uint256)"(
-      _amount: PromiseOrValue<BigNumberish>,
+      _amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1013,48 +974,48 @@ export interface CvxFxsRewards extends BaseContract {
     fxsDepositor(overrides?: CallOverrides): Promise<string>;
 
     "getReward(address,address)"(
-      _address: PromiseOrValue<string>,
-      _forwardTo: PromiseOrValue<string>,
+      _address: string,
+      _forwardTo: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "getReward(address)"(
-      _address: PromiseOrValue<string>,
+      _address: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender: string,
+      addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
+      _rewardsToken: string,
+      _reward: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     rewardData(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1066,51 +1027,42 @@ export interface CvxFxsRewards extends BaseContract {
     >;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    rewardRedirect(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    rewardRedirect(arg0: string, overrides?: CallOverrides): Promise<string>;
 
     rewardTokenLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setRewardRedirect(
-      _to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setRewardRedirect(_to: string, overrides?: CallOverrides): Promise<void>;
 
-    stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    stake(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     stakeAll(overrides?: CallOverrides): Promise<void>;
 
     stakeFor(
-      _for: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
+      _for: string,
+      _amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1119,41 +1071,38 @@ export interface CvxFxsRewards extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     vefxsProxy(overrides?: CallOverrides): Promise<string>;
 
-    withdraw(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     "Approval(address,address,uint256)"(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
     Approval(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
 
@@ -1164,106 +1113,97 @@ export interface CvxFxsRewards extends BaseContract {
     Recovered(_token?: null, _amount?: null): RecoveredEventFilter;
 
     "RewardAdded(address,uint256)"(
-      _token?: PromiseOrValue<string> | null,
+      _token?: string | null,
       _reward?: null
     ): RewardAdded_address_uint256_EventFilter;
     "RewardAdded(address,address)"(
-      _reward?: PromiseOrValue<string> | null,
-      _distributor?: PromiseOrValue<string> | null
+      _reward?: string | null,
+      _distributor?: string | null
     ): RewardAdded_address_address_EventFilter;
 
     "RewardDistributorApproved(address,address)"(
-      _reward?: PromiseOrValue<string> | null,
-      _distributor?: PromiseOrValue<string> | null
+      _reward?: string | null,
+      _distributor?: string | null
     ): RewardDistributorApprovedEventFilter;
     RewardDistributorApproved(
-      _reward?: PromiseOrValue<string> | null,
-      _distributor?: PromiseOrValue<string> | null
+      _reward?: string | null,
+      _distributor?: string | null
     ): RewardDistributorApprovedEventFilter;
 
     "RewardPaid(address,address,uint256)"(
-      _user?: PromiseOrValue<string> | null,
-      _rewardsToken?: PromiseOrValue<string> | null,
+      _user?: string | null,
+      _rewardsToken?: string | null,
       _reward?: null
     ): RewardPaidEventFilter;
     RewardPaid(
-      _user?: PromiseOrValue<string> | null,
-      _rewardsToken?: PromiseOrValue<string> | null,
+      _user?: string | null,
+      _rewardsToken?: string | null,
       _reward?: null
     ): RewardPaidEventFilter;
 
     "RewardRedirected(address,address)"(
-      _account?: PromiseOrValue<string> | null,
+      _account?: string | null,
       _forward?: null
     ): RewardRedirectedEventFilter;
     RewardRedirected(
-      _account?: PromiseOrValue<string> | null,
+      _account?: string | null,
       _forward?: null
     ): RewardRedirectedEventFilter;
 
     "Staked(address,uint256)"(
-      _user?: PromiseOrValue<string> | null,
+      _user?: string | null,
       _amount?: null
     ): StakedEventFilter;
-    Staked(
-      _user?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): StakedEventFilter;
+    Staked(_user?: string | null, _amount?: null): StakedEventFilter;
 
     "Transfer(address,address,uint256)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
+      from?: string | null,
+      to?: string | null,
       value?: null
     ): TransferEventFilter;
     Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
+      from?: string | null,
+      to?: string | null,
       value?: null
     ): TransferEventFilter;
 
     "Withdrawn(address,uint256)"(
-      _user?: PromiseOrValue<string> | null,
+      _user?: string | null,
       _amount?: null
     ): WithdrawnEventFilter;
-    Withdrawn(
-      _user?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): WithdrawnEventFilter;
+    Withdrawn(_user?: string | null, _amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1272,20 +1212,20 @@ export interface CvxFxsRewards extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "deposit(uint256,bool)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "deposit(uint256)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     fxs(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1293,100 +1233,92 @@ export interface CvxFxsRewards extends BaseContract {
     fxsDepositor(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getReward(address,address)"(
-      _address: PromiseOrValue<string>,
-      _forwardTo: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _address: string,
+      _forwardTo: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "getReward(address)"(
-      _address: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _address: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _reward: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    rewardData(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewardData(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    rewardRedirect(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewardRedirect(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardTokenLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     setRewardRedirect(
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    stakeAll(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    stakeAll(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     stakeFor(
-      _for: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _for: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1394,65 +1326,65 @@ export interface CvxFxsRewards extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     vefxsProxy(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1461,20 +1393,20 @@ export interface CvxFxsRewards extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "deposit(uint256,bool)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "deposit(uint256)"(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     fxs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1482,100 +1414,100 @@ export interface CvxFxsRewards extends BaseContract {
     fxsDepositor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getReward(address,address)"(
-      _address: PromiseOrValue<string>,
-      _forwardTo: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _address: string,
+      _forwardTo: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "getReward(address)"(
-      _address: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _address: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _reward: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     rewardData(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardRedirect(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardTokenLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setRewardRedirect(
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stakeAll(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stakeFor(
-      _for: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _for: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1583,29 +1515,29 @@ export interface CvxFxsRewards extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     vefxsProxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

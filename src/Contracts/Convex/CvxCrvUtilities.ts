@@ -18,7 +18,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface CvxCrvUtilitiesInterface extends utils.Interface {
@@ -57,19 +56,15 @@ export interface CvxCrvUtilitiesInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "accountExtraRewardRates",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "accountRewardRates",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "apr",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "convexProxy",
@@ -96,7 +91,7 @@ export interface CvxCrvUtilitiesInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "singleRewardRate",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "stkcvxcrv", values?: undefined): string;
 
@@ -169,7 +164,7 @@ export interface CvxCrvUtilities extends BaseContract {
 
   functions: {
     accountExtraRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<
       [string[], BigNumber[], BigNumber[]] & {
@@ -180,7 +175,7 @@ export interface CvxCrvUtilities extends BaseContract {
     >;
 
     accountRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<
       [string[], BigNumber[], BigNumber[]] & {
@@ -191,9 +186,9 @@ export interface CvxCrvUtilities extends BaseContract {
     >;
 
     apr(
-      _rate: PromiseOrValue<BigNumberish>,
-      _priceOfReward: PromiseOrValue<BigNumberish>,
-      _priceOfDeposit: PromiseOrValue<BigNumberish>,
+      _rate: BigNumberish,
+      _priceOfReward: BigNumberish,
+      _priceOfDeposit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { _apr: BigNumber }>;
 
@@ -232,7 +227,7 @@ export interface CvxCrvUtilities extends BaseContract {
     >;
 
     singleRewardRate(
-      _rewardContract: PromiseOrValue<string>,
+      _rewardContract: string,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { token: string; rate: BigNumber }>;
 
@@ -240,7 +235,7 @@ export interface CvxCrvUtilities extends BaseContract {
   };
 
   accountExtraRewardRates(
-    _account: PromiseOrValue<string>,
+    _account: string,
     overrides?: CallOverrides
   ): Promise<
     [string[], BigNumber[], BigNumber[]] & {
@@ -251,7 +246,7 @@ export interface CvxCrvUtilities extends BaseContract {
   >;
 
   accountRewardRates(
-    _account: PromiseOrValue<string>,
+    _account: string,
     overrides?: CallOverrides
   ): Promise<
     [string[], BigNumber[], BigNumber[]] & {
@@ -262,9 +257,9 @@ export interface CvxCrvUtilities extends BaseContract {
   >;
 
   apr(
-    _rate: PromiseOrValue<BigNumberish>,
-    _priceOfReward: PromiseOrValue<BigNumberish>,
-    _priceOfDeposit: PromiseOrValue<BigNumberish>,
+    _rate: BigNumberish,
+    _priceOfReward: BigNumberish,
+    _priceOfDeposit: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -301,7 +296,7 @@ export interface CvxCrvUtilities extends BaseContract {
   >;
 
   singleRewardRate(
-    _rewardContract: PromiseOrValue<string>,
+    _rewardContract: string,
     overrides?: CallOverrides
   ): Promise<[string, BigNumber] & { token: string; rate: BigNumber }>;
 
@@ -309,7 +304,7 @@ export interface CvxCrvUtilities extends BaseContract {
 
   callStatic: {
     accountExtraRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<
       [string[], BigNumber[], BigNumber[]] & {
@@ -320,7 +315,7 @@ export interface CvxCrvUtilities extends BaseContract {
     >;
 
     accountRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<
       [string[], BigNumber[], BigNumber[]] & {
@@ -331,9 +326,9 @@ export interface CvxCrvUtilities extends BaseContract {
     >;
 
     apr(
-      _rate: PromiseOrValue<BigNumberish>,
-      _priceOfReward: PromiseOrValue<BigNumberish>,
-      _priceOfDeposit: PromiseOrValue<BigNumberish>,
+      _rate: BigNumberish,
+      _priceOfReward: BigNumberish,
+      _priceOfDeposit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -370,7 +365,7 @@ export interface CvxCrvUtilities extends BaseContract {
     >;
 
     singleRewardRate(
-      _rewardContract: PromiseOrValue<string>,
+      _rewardContract: string,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { token: string; rate: BigNumber }>;
 
@@ -381,19 +376,19 @@ export interface CvxCrvUtilities extends BaseContract {
 
   estimateGas: {
     accountExtraRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     accountRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     apr(
-      _rate: PromiseOrValue<BigNumberish>,
-      _priceOfReward: PromiseOrValue<BigNumberish>,
-      _priceOfDeposit: PromiseOrValue<BigNumberish>,
+      _rate: BigNumberish,
+      _priceOfReward: BigNumberish,
+      _priceOfDeposit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -414,7 +409,7 @@ export interface CvxCrvUtilities extends BaseContract {
     mainRewardRates(overrides?: CallOverrides): Promise<BigNumber>;
 
     singleRewardRate(
-      _rewardContract: PromiseOrValue<string>,
+      _rewardContract: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -423,19 +418,19 @@ export interface CvxCrvUtilities extends BaseContract {
 
   populateTransaction: {
     accountExtraRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     accountRewardRates(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     apr(
-      _rate: PromiseOrValue<BigNumberish>,
-      _priceOfReward: PromiseOrValue<BigNumberish>,
-      _priceOfDeposit: PromiseOrValue<BigNumberish>,
+      _rate: BigNumberish,
+      _priceOfReward: BigNumberish,
+      _priceOfDeposit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -458,7 +453,7 @@ export interface CvxCrvUtilities extends BaseContract {
     mainRewardRates(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     singleRewardRate(
-      _rewardContract: PromiseOrValue<string>,
+      _rewardContract: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

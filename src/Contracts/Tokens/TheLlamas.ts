@@ -25,7 +25,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface TheLlamasInterface extends utils.Interface {
@@ -114,106 +113,76 @@ export interface TheLlamasInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "allowlistMint",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [BigNumberish, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "mint", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "contractURI",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "set_minter",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "set_minter", values: [string]): string;
   encodeFunctionData(
     functionFragment: "set_al_signer",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "set_base_uri",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "set_contract_uri",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "set_owner",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "set_owner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "set_revealed",
-    values: [PromiseOrValue<boolean>]
+    values: [boolean]
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "admin_withdraw_erc20",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "start_al_mint",
@@ -229,15 +198,15 @@ export interface TheLlamasInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "tokenByIndex",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "tokenOfOwnerByIndex",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "tokensForOwner",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
@@ -256,7 +225,7 @@ export interface TheLlamasInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "minter", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "al_mint_amount",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -442,147 +411,144 @@ export interface TheLlamas extends BaseContract {
 
   functions: {
     supportsInterface(
-      interface_id: PromiseOrValue<BytesLike>,
+      interface_id: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     ownerOf(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     getApproved(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     transferFrom(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     approve(
-      approved: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      approved: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     allowlistMint(
-      mint_amount: PromiseOrValue<BigNumberish>,
-      approved_amount: PromiseOrValue<BigNumberish>,
-      sig: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      mint_amount: BigNumberish,
+      approved_amount: BigNumberish,
+      sig: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     tokenURI(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     set_minter(
-      minter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      minter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     set_al_signer(
-      al_signer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      al_signer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     set_base_uri(
-      base_uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      base_uri: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     set_contract_uri(
-      new_uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      new_uri: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     set_owner(
-      new_addr: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      new_addr: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     set_revealed(
-      flag: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      flag: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     admin_withdraw_erc20(
-      coin: PromiseOrValue<string>,
-      target: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      coin: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     start_al_mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stop_al_mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     tokenByIndex(
-      _index: PromiseOrValue<BigNumberish>,
+      _index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
+      owner: string,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     tokensForOwner(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
@@ -605,153 +571,142 @@ export interface TheLlamas extends BaseContract {
     minter(overrides?: CallOverrides): Promise<[string]>;
 
     al_mint_amount(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
   };
 
   supportsInterface(
-    interface_id: PromiseOrValue<BytesLike>,
+    interface_id: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  balanceOf(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  ownerOf(
-    token_id: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  ownerOf(token_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   getApproved(
-    token_id: PromiseOrValue<BigNumberish>,
+    token_id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
   isApprovedForAll(
-    owner: PromiseOrValue<string>,
-    operator: PromiseOrValue<string>,
+    owner: string,
+    operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   transferFrom(
-    from_addr: PromiseOrValue<string>,
-    to_addr: PromiseOrValue<string>,
-    token_id: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from_addr: string,
+    to_addr: string,
+    token_id: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256)"(
-    from_addr: PromiseOrValue<string>,
-    to_addr: PromiseOrValue<string>,
-    token_id: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from_addr: string,
+    to_addr: string,
+    token_id: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256,bytes)"(
-    from_addr: PromiseOrValue<string>,
-    to_addr: PromiseOrValue<string>,
-    token_id: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from_addr: string,
+    to_addr: string,
+    token_id: BigNumberish,
+    data: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   approve(
-    approved: PromiseOrValue<string>,
-    token_id: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    approved: string,
+    token_id: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: PromiseOrValue<string>,
-    approved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    operator: string,
+    approved: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   allowlistMint(
-    mint_amount: PromiseOrValue<BigNumberish>,
-    approved_amount: PromiseOrValue<BigNumberish>,
-    sig: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    mint_amount: BigNumberish,
+    approved_amount: BigNumberish,
+    sig: BytesLike,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  mint(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  mint(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>;
 
-  tokenURI(
-    token_id: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  tokenURI(token_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   contractURI(overrides?: CallOverrides): Promise<string>;
 
   set_minter(
-    minter: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    minter: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   set_al_signer(
-    al_signer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    al_signer: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   set_base_uri(
-    base_uri: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    base_uri: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   set_contract_uri(
-    new_uri: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    new_uri: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   set_owner(
-    new_addr: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    new_addr: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   set_revealed(
-    flag: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    flag: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   admin_withdraw_erc20(
-    coin: PromiseOrValue<string>,
-    target: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    coin: string,
+    target: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   start_al_mint(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stop_al_mint(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   tokenByIndex(
-    _index: PromiseOrValue<BigNumberish>,
+    _index: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   tokenOfOwnerByIndex(
-    owner: PromiseOrValue<string>,
-    index: PromiseOrValue<BigNumberish>,
+    owner: string,
+    index: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   tokensForOwner(
-    owner: PromiseOrValue<string>,
+    owner: string,
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
@@ -773,124 +728,97 @@ export interface TheLlamas extends BaseContract {
 
   minter(overrides?: CallOverrides): Promise<string>;
 
-  al_mint_amount(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  al_mint_amount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     supportsInterface(
-      interface_id: PromiseOrValue<BytesLike>,
+      interface_id: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    ownerOf(token_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     getApproved(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     approve(
-      approved: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
+      approved: string,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
+      operator: string,
+      approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     allowlistMint(
-      mint_amount: PromiseOrValue<BigNumberish>,
-      approved_amount: PromiseOrValue<BigNumberish>,
-      sig: PromiseOrValue<BytesLike>,
+      mint_amount: BigNumberish,
+      approved_amount: BigNumberish,
+      sig: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     mint(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
-    set_minter(
-      minter: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    set_minter(minter: string, overrides?: CallOverrides): Promise<void>;
 
-    set_al_signer(
-      al_signer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    set_al_signer(al_signer: string, overrides?: CallOverrides): Promise<void>;
 
-    set_base_uri(
-      base_uri: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    set_base_uri(base_uri: string, overrides?: CallOverrides): Promise<void>;
 
-    set_contract_uri(
-      new_uri: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    set_contract_uri(new_uri: string, overrides?: CallOverrides): Promise<void>;
 
-    set_owner(
-      new_addr: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    set_owner(new_addr: string, overrides?: CallOverrides): Promise<void>;
 
-    set_revealed(
-      flag: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    set_revealed(flag: boolean, overrides?: CallOverrides): Promise<void>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
 
     admin_withdraw_erc20(
-      coin: PromiseOrValue<string>,
-      target: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      coin: string,
+      target: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -901,18 +829,18 @@ export interface TheLlamas extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenByIndex(
-      _index: PromiseOrValue<BigNumberish>,
+      _index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
+      owner: string,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokensForOwner(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
@@ -934,190 +862,178 @@ export interface TheLlamas extends BaseContract {
 
     minter(overrides?: CallOverrides): Promise<string>;
 
-    al_mint_amount(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    al_mint_amount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     "Transfer(address,address,uint256)"(
-      _from?: PromiseOrValue<string> | null,
-      _to?: PromiseOrValue<string> | null,
-      _tokenId?: PromiseOrValue<BigNumberish> | null
+      _from?: string | null,
+      _to?: string | null,
+      _tokenId?: BigNumberish | null
     ): TransferEventFilter;
     Transfer(
-      _from?: PromiseOrValue<string> | null,
-      _to?: PromiseOrValue<string> | null,
-      _tokenId?: PromiseOrValue<BigNumberish> | null
+      _from?: string | null,
+      _to?: string | null,
+      _tokenId?: BigNumberish | null
     ): TransferEventFilter;
 
     "Approval(address,address,uint256)"(
-      _owner?: PromiseOrValue<string> | null,
-      _approved?: PromiseOrValue<string> | null,
-      _tokenId?: PromiseOrValue<BigNumberish> | null
+      _owner?: string | null,
+      _approved?: string | null,
+      _tokenId?: BigNumberish | null
     ): ApprovalEventFilter;
     Approval(
-      _owner?: PromiseOrValue<string> | null,
-      _approved?: PromiseOrValue<string> | null,
-      _tokenId?: PromiseOrValue<BigNumberish> | null
+      _owner?: string | null,
+      _approved?: string | null,
+      _tokenId?: BigNumberish | null
     ): ApprovalEventFilter;
 
     "ApprovalForAll(address,address,bool)"(
-      _owner?: PromiseOrValue<string> | null,
-      _operator?: PromiseOrValue<string> | null,
+      _owner?: string | null,
+      _operator?: string | null,
       _approved?: null
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
-      _owner?: PromiseOrValue<string> | null,
-      _operator?: PromiseOrValue<string> | null,
+      _owner?: string | null,
+      _operator?: string | null,
       _approved?: null
     ): ApprovalForAllEventFilter;
   };
 
   estimateGas: {
     supportsInterface(
-      interface_id: PromiseOrValue<BytesLike>,
+      interface_id: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getApproved(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferFrom(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     approve(
-      approved: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      approved: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     allowlistMint(
-      mint_amount: PromiseOrValue<BigNumberish>,
-      approved_amount: PromiseOrValue<BigNumberish>,
-      sig: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      mint_amount: BigNumberish,
+      approved_amount: BigNumberish,
+      sig: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
-    mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    mint(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     tokenURI(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     set_minter(
-      minter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      minter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     set_al_signer(
-      al_signer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      al_signer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     set_base_uri(
-      base_uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      base_uri: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     set_contract_uri(
-      new_uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      new_uri: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     set_owner(
-      new_addr: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      new_addr: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     set_revealed(
-      flag: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      flag: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    withdraw(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     admin_withdraw_erc20(
-      coin: PromiseOrValue<string>,
-      target: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      coin: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     start_al_mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    stop_al_mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    stop_al_mint(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenByIndex(
-      _index: PromiseOrValue<BigNumberish>,
+      _index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
+      owner: string,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokensForOwner(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1139,155 +1055,152 @@ export interface TheLlamas extends BaseContract {
 
     minter(overrides?: CallOverrides): Promise<BigNumber>;
 
-    al_mint_amount(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    al_mint_amount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     supportsInterface(
-      interface_id: PromiseOrValue<BytesLike>,
+      interface_id: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     ownerOf(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getApproved(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from_addr: PromiseOrValue<string>,
-      to_addr: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from_addr: string,
+      to_addr: string,
+      token_id: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     approve(
-      approved: PromiseOrValue<string>,
-      token_id: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      approved: string,
+      token_id: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     allowlistMint(
-      mint_amount: PromiseOrValue<BigNumberish>,
-      approved_amount: PromiseOrValue<BigNumberish>,
-      sig: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      mint_amount: BigNumberish,
+      approved_amount: BigNumberish,
+      sig: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     tokenURI(
-      token_id: PromiseOrValue<BigNumberish>,
+      token_id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set_minter(
-      minter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      minter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     set_al_signer(
-      al_signer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      al_signer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     set_base_uri(
-      base_uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      base_uri: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     set_contract_uri(
-      new_uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      new_uri: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     set_owner(
-      new_addr: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      new_addr: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     set_revealed(
-      flag: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      flag: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     admin_withdraw_erc20(
-      coin: PromiseOrValue<string>,
-      target: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      coin: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     start_al_mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stop_al_mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenByIndex(
-      _index: PromiseOrValue<BigNumberish>,
+      _index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
+      owner: string,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     tokensForOwner(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1310,7 +1223,7 @@ export interface TheLlamas extends BaseContract {
     minter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     al_mint_amount(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

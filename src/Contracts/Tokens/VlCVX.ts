@@ -24,14 +24,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export declare namespace CvxLocker {
-  export type EarnedDataStruct = {
-    token: PromiseOrValue<string>;
-    amount: PromiseOrValue<BigNumberish>;
-  };
+  export type EarnedDataStruct = { token: string; amount: BigNumberish };
 
   export type EarnedDataStructOutput = [string, BigNumber] & {
     token: string;
@@ -39,9 +35,9 @@ export declare namespace CvxLocker {
   };
 
   export type LockedBalanceStruct = {
-    amount: PromiseOrValue<BigNumberish>;
-    boosted: PromiseOrValue<BigNumberish>;
-    unlockTime: PromiseOrValue<BigNumberish>;
+    amount: BigNumberish;
+    boosted: BigNumberish;
+    unlockTime: BigNumberish;
   };
 
   export type LockedBalanceStructOutput = [BigNumber, BigNumber, number] & {
@@ -189,32 +185,18 @@ export interface VlCVXInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addReward",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "approveRewardDistributor",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceAtEpochOf",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balances",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(functionFragment: "balances", values: [string]): string;
   encodeFunctionData(
     functionFragment: "boostPayment",
     values?: undefined
@@ -230,7 +212,7 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "claimableRewards",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "cvxCrv", values?: undefined): string;
   encodeFunctionData(
@@ -248,23 +230,23 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "epochs",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "findEpochId",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getReward(address,bool)",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "getReward(address)",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getRewardForDuration",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "isShutdown",
@@ -272,7 +254,7 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "kickExpiredLocks",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "kickRewardEpochDelay",
@@ -284,15 +266,11 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "lastTimeRewardApplicable",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "lock",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "lockDuration",
@@ -300,11 +278,11 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "lockedBalanceOf",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "lockedBalances",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "lockedSupply",
@@ -333,52 +311,45 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "notifyRewardAmount",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "processExpiredLocks(bool)",
-    values: [PromiseOrValue<boolean>]
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "processExpiredLocks(bool,uint256,address)",
-    values: [
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [boolean, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "recoverERC20",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "rewardData",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "rewardData", values: [string]): string;
   encodeFunctionData(
     functionFragment: "rewardDistributors",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardPerToken",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardTokens",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardWeightOf",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewards",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardsDuration",
@@ -390,23 +361,19 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setBoost",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setKickIncentive",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setStakeLimits",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setStakingContract",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "shutdown", values?: undefined): string;
   encodeFunctionData(
@@ -428,19 +395,19 @@ export interface VlCVXInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupplyAtEpoch",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "userLocks",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "userRewardPerTokenPaid",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "addReward", data: BytesLike): Result;
@@ -776,32 +743,32 @@ export interface VlCVX extends BaseContract {
 
   functions: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _useBoost: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _useBoost: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     balanceAtEpochOf(
-      _epoch: PromiseOrValue<BigNumberish>,
-      _user: PromiseOrValue<string>,
+      _epoch: BigNumberish,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     balanceOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     balances(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -818,11 +785,11 @@ export interface VlCVX extends BaseContract {
     boostedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     checkpointEpoch(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<
       [CvxLocker.EarnedDataStructOutput[]] & {
@@ -841,36 +808,36 @@ export interface VlCVX extends BaseContract {
     epochCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     epochs(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, number] & { supply: BigNumber; date: number }>;
 
     findEpochId(
-      _time: PromiseOrValue<BigNumberish>,
+      _time: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { epoch: BigNumber }>;
 
     "getReward(address,bool)"(
-      _account: PromiseOrValue<string>,
-      _stake: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      _stake: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "getReward(address)"(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     isShutdown(overrides?: CallOverrides): Promise<[boolean]>;
 
     kickExpiredLocks(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     kickRewardEpochDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -878,26 +845,26 @@ export interface VlCVX extends BaseContract {
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     lock(
-      _account: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      _amount: BigNumberish,
+      _spendRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lockedBalanceOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     lockedBalances(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -928,37 +895,37 @@ export interface VlCVX extends BaseContract {
     nextMaximumBoostPayment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _reward: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     "processExpiredLocks(bool)"(
-      _relock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _relock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "processExpiredLocks(bool,uint256,address)"(
-      _relock: PromiseOrValue<boolean>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      _withdrawTo: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _relock: boolean,
+      _spendRatio: BigNumberish,
+      _withdrawTo: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     rewardData(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [boolean, number, BigNumber, number, BigNumber] & {
@@ -971,64 +938,64 @@ export interface VlCVX extends BaseContract {
     >;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     rewardWeightOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setBoost(
-      _max: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _receivingAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _max: BigNumberish,
+      _rate: BigNumberish,
+      _receivingAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setKickIncentive(
-      _rate: PromiseOrValue<BigNumberish>,
-      _delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rate: BigNumberish,
+      _delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setStakeLimits(
-      _minimum: PromiseOrValue<BigNumberish>,
-      _maximum: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _minimum: BigNumberish,
+      _maximum: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setStakingContract(
-      _staking: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _staking: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     shutdown(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stakeOffsetOnLock(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -1044,18 +1011,18 @@ export interface VlCVX extends BaseContract {
     ): Promise<[BigNumber] & { supply: BigNumber }>;
 
     totalSupplyAtEpoch(
-      _epoch: PromiseOrValue<BigNumberish>,
+      _epoch: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { supply: BigNumber }>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     userLocks(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -1066,39 +1033,36 @@ export interface VlCVX extends BaseContract {
     >;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
   };
 
   addReward(
-    _rewardsToken: PromiseOrValue<string>,
-    _distributor: PromiseOrValue<string>,
-    _useBoost: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rewardsToken: string,
+    _distributor: string,
+    _useBoost: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   approveRewardDistributor(
-    _rewardsToken: PromiseOrValue<string>,
-    _distributor: PromiseOrValue<string>,
-    _approved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rewardsToken: string,
+    _distributor: string,
+    _approved: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   balanceAtEpochOf(
-    _epoch: PromiseOrValue<BigNumberish>,
-    _user: PromiseOrValue<string>,
+    _epoch: BigNumberish,
+    _user: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  balanceOf(
-    _user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   balances(
-    arg0: PromiseOrValue<string>,
+    arg0: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, number] & {
@@ -1115,11 +1079,11 @@ export interface VlCVX extends BaseContract {
   boostedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   checkpointEpoch(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimableRewards(
-    _account: PromiseOrValue<string>,
+    _account: string,
     overrides?: CallOverrides
   ): Promise<CvxLocker.EarnedDataStructOutput[]>;
 
@@ -1134,36 +1098,36 @@ export interface VlCVX extends BaseContract {
   epochCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   epochs(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<[BigNumber, number] & { supply: BigNumber; date: number }>;
 
   findEpochId(
-    _time: PromiseOrValue<BigNumberish>,
+    _time: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   "getReward(address,bool)"(
-    _account: PromiseOrValue<string>,
-    _stake: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _account: string,
+    _stake: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "getReward(address)"(
-    _account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _account: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getRewardForDuration(
-    _rewardsToken: PromiseOrValue<string>,
+    _rewardsToken: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   isShutdown(overrides?: CallOverrides): Promise<boolean>;
 
   kickExpiredLocks(
-    _account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _account: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   kickRewardEpochDelay(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1171,26 +1135,23 @@ export interface VlCVX extends BaseContract {
   kickRewardPerEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastTimeRewardApplicable(
-    _rewardsToken: PromiseOrValue<string>,
+    _rewardsToken: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   lock(
-    _account: PromiseOrValue<string>,
-    _amount: PromiseOrValue<BigNumberish>,
-    _spendRatio: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _account: string,
+    _amount: BigNumberish,
+    _spendRatio: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockedBalanceOf(
-    _user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  lockedBalanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   lockedBalances(
-    _user: PromiseOrValue<string>,
+    _user: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber, CvxLocker.LockedBalanceStructOutput[]] & {
@@ -1216,37 +1177,37 @@ export interface VlCVX extends BaseContract {
   nextMaximumBoostPayment(overrides?: CallOverrides): Promise<BigNumber>;
 
   notifyRewardAmount(
-    _rewardsToken: PromiseOrValue<string>,
-    _reward: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rewardsToken: string,
+    _reward: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   "processExpiredLocks(bool)"(
-    _relock: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _relock: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "processExpiredLocks(bool,uint256,address)"(
-    _relock: PromiseOrValue<boolean>,
-    _spendRatio: PromiseOrValue<BigNumberish>,
-    _withdrawTo: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _relock: boolean,
+    _spendRatio: BigNumberish,
+    _withdrawTo: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   recoverERC20(
-    _tokenAddress: PromiseOrValue<string>,
-    _tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _tokenAddress: string,
+    _tokenAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   rewardData(
-    arg0: PromiseOrValue<string>,
+    arg0: string,
     overrides?: CallOverrides
   ): Promise<
     [boolean, number, BigNumber, number, BigNumber] & {
@@ -1259,64 +1220,58 @@ export interface VlCVX extends BaseContract {
   >;
 
   rewardDistributors(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   rewardPerToken(
-    _rewardsToken: PromiseOrValue<string>,
+    _rewardsToken: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  rewardTokens(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  rewardWeightOf(
-    _user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  rewardWeightOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewards(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
   setApprovals(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setBoost(
-    _max: PromiseOrValue<BigNumberish>,
-    _rate: PromiseOrValue<BigNumberish>,
-    _receivingAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _max: BigNumberish,
+    _rate: BigNumberish,
+    _receivingAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setKickIncentive(
-    _rate: PromiseOrValue<BigNumberish>,
-    _delay: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _rate: BigNumberish,
+    _delay: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setStakeLimits(
-    _minimum: PromiseOrValue<BigNumberish>,
-    _maximum: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _minimum: BigNumberish,
+    _maximum: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setStakingContract(
-    _staking: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _staking: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   shutdown(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stakeOffsetOnLock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1330,18 +1285,18 @@ export interface VlCVX extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupplyAtEpoch(
-    _epoch: PromiseOrValue<BigNumberish>,
+    _epoch: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   userLocks(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
+    arg0: string,
+    arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, number] & {
@@ -1352,39 +1307,36 @@ export interface VlCVX extends BaseContract {
   >;
 
   userRewardPerTokenPaid(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   callStatic: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _useBoost: PromiseOrValue<boolean>,
+      _rewardsToken: string,
+      _distributor: string,
+      _useBoost: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     balanceAtEpochOf(
-      _epoch: PromiseOrValue<BigNumberish>,
-      _user: PromiseOrValue<string>,
+      _epoch: BigNumberish,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      _user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balances(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -1403,7 +1355,7 @@ export interface VlCVX extends BaseContract {
     checkpointEpoch(overrides?: CallOverrides): Promise<void>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<CvxLocker.EarnedDataStructOutput[]>;
 
@@ -1418,35 +1370,35 @@ export interface VlCVX extends BaseContract {
     epochCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     epochs(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, number] & { supply: BigNumber; date: number }>;
 
     findEpochId(
-      _time: PromiseOrValue<BigNumberish>,
+      _time: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "getReward(address,bool)"(
-      _account: PromiseOrValue<string>,
-      _stake: PromiseOrValue<boolean>,
+      _account: string,
+      _stake: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "getReward(address)"(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isShutdown(overrides?: CallOverrides): Promise<boolean>;
 
     kickExpiredLocks(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1455,26 +1407,26 @@ export interface VlCVX extends BaseContract {
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     lock(
-      _account: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
+      _account: string,
+      _amount: BigNumberish,
+      _spendRatio: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockedBalanceOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     lockedBalances(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -1505,35 +1457,35 @@ export interface VlCVX extends BaseContract {
     nextMaximumBoostPayment(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
+      _rewardsToken: string,
+      _reward: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     "processExpiredLocks(bool)"(
-      _relock: PromiseOrValue<boolean>,
+      _relock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "processExpiredLocks(bool,uint256,address)"(
-      _relock: PromiseOrValue<boolean>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      _withdrawTo: PromiseOrValue<string>,
+      _relock: boolean,
+      _spendRatio: BigNumberish,
+      _withdrawTo: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewardData(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<
       [boolean, number, BigNumber, number, BigNumber] & {
@@ -1546,29 +1498,29 @@ export interface VlCVX extends BaseContract {
     >;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     rewardWeightOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1577,26 +1529,26 @@ export interface VlCVX extends BaseContract {
     setApprovals(overrides?: CallOverrides): Promise<void>;
 
     setBoost(
-      _max: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _receivingAddress: PromiseOrValue<string>,
+      _max: BigNumberish,
+      _rate: BigNumberish,
+      _receivingAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setKickIncentive(
-      _rate: PromiseOrValue<BigNumberish>,
-      _delay: PromiseOrValue<BigNumberish>,
+      _rate: BigNumberish,
+      _delay: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setStakeLimits(
-      _minimum: PromiseOrValue<BigNumberish>,
-      _maximum: PromiseOrValue<BigNumberish>,
+      _minimum: BigNumberish,
+      _maximum: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setStakingContract(
-      _staking: PromiseOrValue<string>,
+      _staking: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1613,18 +1565,18 @@ export interface VlCVX extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAtEpoch(
-      _epoch: PromiseOrValue<BigNumberish>,
+      _epoch: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     userLocks(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -1635,31 +1587,31 @@ export interface VlCVX extends BaseContract {
     >;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   filters: {
     "KickReward(address,address,uint256)"(
-      _user?: PromiseOrValue<string> | null,
-      _kicked?: PromiseOrValue<string> | null,
+      _user?: string | null,
+      _kicked?: string | null,
       _reward?: null
     ): KickRewardEventFilter;
     KickReward(
-      _user?: PromiseOrValue<string> | null,
-      _kicked?: PromiseOrValue<string> | null,
+      _user?: string | null,
+      _kicked?: string | null,
       _reward?: null
     ): KickRewardEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "Recovered(address,uint256)"(
@@ -1669,45 +1621,42 @@ export interface VlCVX extends BaseContract {
     Recovered(_token?: null, _amount?: null): RecoveredEventFilter;
 
     "RewardAdded(address,uint256)"(
-      _token?: PromiseOrValue<string> | null,
+      _token?: string | null,
       _reward?: null
     ): RewardAddedEventFilter;
-    RewardAdded(
-      _token?: PromiseOrValue<string> | null,
-      _reward?: null
-    ): RewardAddedEventFilter;
+    RewardAdded(_token?: string | null, _reward?: null): RewardAddedEventFilter;
 
     "RewardPaid(address,address,uint256)"(
-      _user?: PromiseOrValue<string> | null,
-      _rewardsToken?: PromiseOrValue<string> | null,
+      _user?: string | null,
+      _rewardsToken?: string | null,
       _reward?: null
     ): RewardPaidEventFilter;
     RewardPaid(
-      _user?: PromiseOrValue<string> | null,
-      _rewardsToken?: PromiseOrValue<string> | null,
+      _user?: string | null,
+      _rewardsToken?: string | null,
       _reward?: null
     ): RewardPaidEventFilter;
 
     "Staked(address,uint256,uint256,uint256)"(
-      _user?: PromiseOrValue<string> | null,
+      _user?: string | null,
       _paidAmount?: null,
       _lockedAmount?: null,
       _boostedAmount?: null
     ): StakedEventFilter;
     Staked(
-      _user?: PromiseOrValue<string> | null,
+      _user?: string | null,
       _paidAmount?: null,
       _lockedAmount?: null,
       _boostedAmount?: null
     ): StakedEventFilter;
 
     "Withdrawn(address,uint256,bool)"(
-      _user?: PromiseOrValue<string> | null,
+      _user?: string | null,
       _amount?: null,
       _relocked?: null
     ): WithdrawnEventFilter;
     Withdrawn(
-      _user?: PromiseOrValue<string> | null,
+      _user?: string | null,
       _amount?: null,
       _relocked?: null
     ): WithdrawnEventFilter;
@@ -1715,34 +1664,28 @@ export interface VlCVX extends BaseContract {
 
   estimateGas: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _useBoost: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _useBoost: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     balanceAtEpochOf(
-      _epoch: PromiseOrValue<BigNumberish>,
-      _user: PromiseOrValue<string>,
+      _epoch: BigNumberish,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      _user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     boostPayment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1751,11 +1694,11 @@ export interface VlCVX extends BaseContract {
     boostedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     checkpointEpoch(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1769,37 +1712,34 @@ export interface VlCVX extends BaseContract {
 
     epochCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    epochs(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    epochs(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     findEpochId(
-      _time: PromiseOrValue<BigNumberish>,
+      _time: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "getReward(address,bool)"(
-      _account: PromiseOrValue<string>,
-      _stake: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      _stake: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "getReward(address)"(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isShutdown(overrides?: CallOverrides): Promise<BigNumber>;
 
     kickExpiredLocks(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     kickRewardEpochDelay(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1807,26 +1747,26 @@ export interface VlCVX extends BaseContract {
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     lock(
-      _account: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      _amount: BigNumberish,
+      _spendRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockedBalanceOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     lockedBalances(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1845,100 +1785,93 @@ export interface VlCVX extends BaseContract {
     nextMaximumBoostPayment(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _reward: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "processExpiredLocks(bool)"(
-      _relock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _relock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "processExpiredLocks(bool,uint256,address)"(
-      _relock: PromiseOrValue<boolean>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      _withdrawTo: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _relock: boolean,
+      _spendRatio: BigNumberish,
+      _withdrawTo: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    rewardData(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewardData(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardWeightOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     setBoost(
-      _max: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _receivingAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _max: BigNumberish,
+      _rate: BigNumberish,
+      _receivingAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setKickIncentive(
-      _rate: PromiseOrValue<BigNumberish>,
-      _delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rate: BigNumberish,
+      _delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setStakeLimits(
-      _minimum: PromiseOrValue<BigNumberish>,
-      _maximum: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _minimum: BigNumberish,
+      _maximum: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setStakingContract(
-      _staking: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _staking: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    shutdown(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    shutdown(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     stakeOffsetOnLock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1951,56 +1884,56 @@ export interface VlCVX extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAtEpoch(
-      _epoch: PromiseOrValue<BigNumberish>,
+      _epoch: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     userLocks(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addReward(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _useBoost: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _useBoost: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: PromiseOrValue<string>,
-      _distributor: PromiseOrValue<string>,
-      _approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _distributor: string,
+      _approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     balanceAtEpochOf(
-      _epoch: PromiseOrValue<BigNumberish>,
-      _user: PromiseOrValue<string>,
+      _epoch: BigNumberish,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balances(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2011,11 +1944,11 @@ export interface VlCVX extends BaseContract {
     boostedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     checkpointEpoch(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimableRewards(
-      _account: PromiseOrValue<string>,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2030,36 +1963,36 @@ export interface VlCVX extends BaseContract {
     epochCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     epochs(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     findEpochId(
-      _time: PromiseOrValue<BigNumberish>,
+      _time: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "getReward(address,bool)"(
-      _account: PromiseOrValue<string>,
-      _stake: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      _stake: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "getReward(address)"(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isShutdown(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     kickExpiredLocks(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     kickRewardEpochDelay(
@@ -2071,26 +2004,26 @@ export interface VlCVX extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     lock(
-      _account: PromiseOrValue<string>,
-      _amount: PromiseOrValue<BigNumberish>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _account: string,
+      _amount: BigNumberish,
+      _spendRatio: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lockedBalanceOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     lockedBalances(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2113,99 +2046,99 @@ export interface VlCVX extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      _rewardsToken: PromiseOrValue<string>,
-      _reward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rewardsToken: string,
+      _reward: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "processExpiredLocks(bool)"(
-      _relock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _relock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "processExpiredLocks(bool,uint256,address)"(
-      _relock: PromiseOrValue<boolean>,
-      _spendRatio: PromiseOrValue<BigNumberish>,
-      _withdrawTo: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _relock: boolean,
+      _spendRatio: BigNumberish,
+      _withdrawTo: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddress: string,
+      _tokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     rewardData(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardDistributors(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardPerToken(
-      _rewardsToken: PromiseOrValue<string>,
+      _rewardsToken: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardTokens(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardWeightOf(
-      _user: PromiseOrValue<string>,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setBoost(
-      _max: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _receivingAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _max: BigNumberish,
+      _rate: BigNumberish,
+      _receivingAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setKickIncentive(
-      _rate: PromiseOrValue<BigNumberish>,
-      _delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _rate: BigNumberish,
+      _delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setStakeLimits(
-      _minimum: PromiseOrValue<BigNumberish>,
-      _maximum: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _minimum: BigNumberish,
+      _maximum: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setStakingContract(
-      _staking: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _staking: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     shutdown(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stakeOffsetOnLock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2219,24 +2152,24 @@ export interface VlCVX extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupplyAtEpoch(
-      _epoch: PromiseOrValue<BigNumberish>,
+      _epoch: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     userLocks(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

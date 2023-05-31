@@ -19,7 +19,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface AragonVotingInterface extends utils.Interface {
@@ -31,12 +30,7 @@ export interface AragonVotingInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "newVote",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BytesLike, string, boolean, boolean]
   ): string;
 
   decodeFunctionResult(functionFragment: "newVote", data: BytesLike): Result;
@@ -72,28 +66,28 @@ export interface AragonVoting extends BaseContract {
 
   functions: {
     newVote(
-      _executionScript: PromiseOrValue<BytesLike>,
-      _metadata: PromiseOrValue<string>,
-      _castVote: PromiseOrValue<boolean>,
-      _executesIfDecided: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _executionScript: BytesLike,
+      _metadata: string,
+      _castVote: boolean,
+      _executesIfDecided: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   newVote(
-    _executionScript: PromiseOrValue<BytesLike>,
-    _metadata: PromiseOrValue<string>,
-    _castVote: PromiseOrValue<boolean>,
-    _executesIfDecided: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _executionScript: BytesLike,
+    _metadata: string,
+    _castVote: boolean,
+    _executesIfDecided: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     newVote(
-      _executionScript: PromiseOrValue<BytesLike>,
-      _metadata: PromiseOrValue<string>,
-      _castVote: PromiseOrValue<boolean>,
-      _executesIfDecided: PromiseOrValue<boolean>,
+      _executionScript: BytesLike,
+      _metadata: string,
+      _castVote: boolean,
+      _executesIfDecided: boolean,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -102,21 +96,21 @@ export interface AragonVoting extends BaseContract {
 
   estimateGas: {
     newVote(
-      _executionScript: PromiseOrValue<BytesLike>,
-      _metadata: PromiseOrValue<string>,
-      _castVote: PromiseOrValue<boolean>,
-      _executesIfDecided: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _executionScript: BytesLike,
+      _metadata: string,
+      _castVote: boolean,
+      _executesIfDecided: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     newVote(
-      _executionScript: PromiseOrValue<BytesLike>,
-      _metadata: PromiseOrValue<string>,
-      _castVote: PromiseOrValue<boolean>,
-      _executesIfDecided: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _executionScript: BytesLike,
+      _metadata: string,
+      _castVote: boolean,
+      _executesIfDecided: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

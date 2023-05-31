@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface MerkleDistributor2Interface extends utils.Interface {
@@ -146,32 +145,21 @@ export interface MerkleDistributor2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "admin", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "claim",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[]
-    ]
+    values: [BigNumberish, string, BigNumberish, BytesLike[]]
   ): string;
   encodeFunctionData(
     functionFragment: "claimAs(uint256,address,uint256,bytes32[],uint8)",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish, BytesLike[], BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "claimAs(uint256,address,uint256,bytes32[],uint8,uint256)",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike[],
+      BigNumberish,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(functionFragment: "depositor", values?: undefined): string;
@@ -179,7 +167,7 @@ export interface MerkleDistributor2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "frozen", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isClaimed",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "merkleRoot",
@@ -191,22 +179,16 @@ export interface MerkleDistributor2Interface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "stake", values?: undefined): string;
   encodeFunctionData(functionFragment: "unfreeze", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "updateAdmin",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "updateAdmin", values: [string]): string;
   encodeFunctionData(
     functionFragment: "updateDepositor",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateMerkleRoot",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
+    values: [BytesLike, boolean]
   ): string;
-  encodeFunctionData(
-    functionFragment: "updateVault",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "updateVault", values: [string]): string;
   encodeFunctionData(functionFragment: "vault", values?: undefined): string;
   encodeFunctionData(functionFragment: "week", values?: undefined): string;
 
@@ -426,78 +408,78 @@ export interface MerkleDistributor2 extends BaseContract {
     admin(overrides?: CallOverrides): Promise<[string]>;
 
     claim(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8,uint256)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      minAmountOut: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositor(overrides?: CallOverrides): Promise<[string]>;
 
     freeze(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     frozen(overrides?: CallOverrides): Promise<[boolean]>;
 
     isClaimed(
-      index: PromiseOrValue<BigNumberish>,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     merkleRoot(overrides?: CallOverrides): Promise<[string]>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stake(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unfreeze(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateAdmin(
-      newAdmin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newAdmin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateDepositor(
-      newDepositor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newDepositor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateMerkleRoot(
-      _merkleRoot: PromiseOrValue<BytesLike>,
-      _unfreeze: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _merkleRoot: BytesLike,
+      _unfreeze: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateVault(
-      newVault: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVault: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
@@ -534,78 +516,75 @@ export interface MerkleDistributor2 extends BaseContract {
   admin(overrides?: CallOverrides): Promise<string>;
 
   claim(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "claimAs(uint256,address,uint256,bytes32[],uint8)"(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    option: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    option: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "claimAs(uint256,address,uint256,bytes32[],uint8,uint256)"(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    option: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    option: BigNumberish,
+    minAmountOut: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositor(overrides?: CallOverrides): Promise<string>;
 
   freeze(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   frozen(overrides?: CallOverrides): Promise<boolean>;
 
-  isClaimed(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
   merkleRoot(overrides?: CallOverrides): Promise<string>;
 
   setApprovals(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stake(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unfreeze(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateAdmin(
-    newAdmin: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newAdmin: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateDepositor(
-    newDepositor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newDepositor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateMerkleRoot(
-    _merkleRoot: PromiseOrValue<BytesLike>,
-    _unfreeze: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _merkleRoot: BytesLike,
+    _unfreeze: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateVault(
-    newVault: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newVault: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
@@ -642,29 +621,29 @@ export interface MerkleDistributor2 extends BaseContract {
     admin(overrides?: CallOverrides): Promise<string>;
 
     claim(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8,uint256)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      minAmountOut: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -674,10 +653,7 @@ export interface MerkleDistributor2 extends BaseContract {
 
     frozen(overrides?: CallOverrides): Promise<boolean>;
 
-    isClaimed(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
     merkleRoot(overrides?: CallOverrides): Promise<string>;
 
@@ -687,26 +663,20 @@ export interface MerkleDistributor2 extends BaseContract {
 
     unfreeze(overrides?: CallOverrides): Promise<void>;
 
-    updateAdmin(
-      newAdmin: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateAdmin(newAdmin: string, overrides?: CallOverrides): Promise<void>;
 
     updateDepositor(
-      newDepositor: PromiseOrValue<string>,
+      newDepositor: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateMerkleRoot(
-      _merkleRoot: PromiseOrValue<BytesLike>,
-      _unfreeze: PromiseOrValue<boolean>,
+      _merkleRoot: BytesLike,
+      _unfreeze: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateVault(
-      newVault: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateVault(newVault: string, overrides?: CallOverrides): Promise<void>;
 
     vault(overrides?: CallOverrides): Promise<string>;
 
@@ -715,52 +685,52 @@ export interface MerkleDistributor2 extends BaseContract {
 
   filters: {
     "AdminUpdated(address,address)"(
-      oldAdmin?: PromiseOrValue<string> | null,
-      newAdmin?: PromiseOrValue<string> | null
+      oldAdmin?: string | null,
+      newAdmin?: string | null
     ): AdminUpdatedEventFilter;
     AdminUpdated(
-      oldAdmin?: PromiseOrValue<string> | null,
-      newAdmin?: PromiseOrValue<string> | null
+      oldAdmin?: string | null,
+      newAdmin?: string | null
     ): AdminUpdatedEventFilter;
 
     "Claimed(uint256,uint256,address,uint256)"(
       index?: null,
-      amount?: PromiseOrValue<BigNumberish> | null,
-      account?: PromiseOrValue<string> | null,
+      amount?: BigNumberish | null,
+      account?: string | null,
       week?: null
     ): ClaimedEventFilter;
     Claimed(
       index?: null,
-      amount?: PromiseOrValue<BigNumberish> | null,
-      account?: PromiseOrValue<string> | null,
+      amount?: BigNumberish | null,
+      account?: string | null,
       week?: null
     ): ClaimedEventFilter;
 
     "DepositorUpdated(address,address)"(
-      oldDepositor?: PromiseOrValue<string> | null,
-      newDepositor?: PromiseOrValue<string> | null
+      oldDepositor?: string | null,
+      newDepositor?: string | null
     ): DepositorUpdatedEventFilter;
     DepositorUpdated(
-      oldDepositor?: PromiseOrValue<string> | null,
-      newDepositor?: PromiseOrValue<string> | null
+      oldDepositor?: string | null,
+      newDepositor?: string | null
     ): DepositorUpdatedEventFilter;
 
     "MerkleRootUpdated(bytes32,uint32)"(
-      merkleRoot?: PromiseOrValue<BytesLike> | null,
-      week?: PromiseOrValue<BigNumberish> | null
+      merkleRoot?: BytesLike | null,
+      week?: BigNumberish | null
     ): MerkleRootUpdatedEventFilter;
     MerkleRootUpdated(
-      merkleRoot?: PromiseOrValue<BytesLike> | null,
-      week?: PromiseOrValue<BigNumberish> | null
+      merkleRoot?: BytesLike | null,
+      week?: BigNumberish | null
     ): MerkleRootUpdatedEventFilter;
 
     "VaultUpdated(address,address)"(
-      oldVault?: PromiseOrValue<string> | null,
-      newVault?: PromiseOrValue<string> | null
+      oldVault?: string | null,
+      newVault?: string | null
     ): VaultUpdatedEventFilter;
     VaultUpdated(
-      oldVault?: PromiseOrValue<string> | null,
-      newVault?: PromiseOrValue<string> | null
+      oldVault?: string | null,
+      newVault?: string | null
     ): VaultUpdatedEventFilter;
   };
 
@@ -794,78 +764,70 @@ export interface MerkleDistributor2 extends BaseContract {
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8,uint256)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      minAmountOut: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    freeze(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    freeze(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     frozen(overrides?: CallOverrides): Promise<BigNumber>;
 
     isClaimed(
-      index: PromiseOrValue<BigNumberish>,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     merkleRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
-    stake(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    stake(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
-    unfreeze(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    unfreeze(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     updateAdmin(
-      newAdmin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newAdmin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateDepositor(
-      newDepositor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newDepositor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateMerkleRoot(
-      _merkleRoot: PromiseOrValue<BytesLike>,
-      _unfreeze: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _merkleRoot: BytesLike,
+      _unfreeze: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateVault(
-      newVault: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVault: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
@@ -913,78 +875,78 @@ export interface MerkleDistributor2 extends BaseContract {
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "claimAs(uint256,address,uint256,bytes32[],uint8,uint256)"(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      option: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      option: BigNumberish,
+      minAmountOut: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     freeze(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     frozen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isClaimed(
-      index: PromiseOrValue<BigNumberish>,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     merkleRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stake(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unfreeze(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateAdmin(
-      newAdmin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newAdmin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateDepositor(
-      newDepositor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newDepositor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateMerkleRoot(
-      _merkleRoot: PromiseOrValue<BytesLike>,
-      _unfreeze: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _merkleRoot: BytesLike,
+      _unfreeze: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateVault(
-      newVault: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVault: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -18,7 +18,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface CurveV1FactoryPoolInterface extends utils.Interface {
@@ -30,11 +29,7 @@ export interface CurveV1FactoryPoolInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "get_dy",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "get_dy", data: BytesLike): Result;
@@ -70,25 +65,25 @@ export interface CurveV1FactoryPool extends BaseContract {
 
   functions: {
     get_dy(
-      i: PromiseOrValue<BigNumberish>,
-      j: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
+      i: BigNumberish,
+      j: BigNumberish,
+      dx: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
   };
 
   get_dy(
-    i: PromiseOrValue<BigNumberish>,
-    j: PromiseOrValue<BigNumberish>,
-    dx: PromiseOrValue<BigNumberish>,
+    i: BigNumberish,
+    j: BigNumberish,
+    dx: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   callStatic: {
     get_dy(
-      i: PromiseOrValue<BigNumberish>,
-      j: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
+      i: BigNumberish,
+      j: BigNumberish,
+      dx: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -97,18 +92,18 @@ export interface CurveV1FactoryPool extends BaseContract {
 
   estimateGas: {
     get_dy(
-      i: PromiseOrValue<BigNumberish>,
-      j: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
+      i: BigNumberish,
+      j: BigNumberish,
+      dx: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     get_dy(
-      i: PromiseOrValue<BigNumberish>,
-      j: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
+      i: BigNumberish,
+      j: BigNumberish,
+      dx: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

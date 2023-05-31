@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface AragonAgentInterface extends utils.Interface {
@@ -32,11 +31,7 @@ export interface AragonAgentInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "execute",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike]
   ): string;
 
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
@@ -72,25 +67,25 @@ export interface AragonAgent extends BaseContract {
 
   functions: {
     execute(
-      _target: PromiseOrValue<string>,
-      _ethValue: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _target: string,
+      _ethValue: BigNumberish,
+      _data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   execute(
-    _target: PromiseOrValue<string>,
-    _ethValue: PromiseOrValue<BigNumberish>,
-    _data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _target: string,
+    _ethValue: BigNumberish,
+    _data: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     execute(
-      _target: PromiseOrValue<string>,
-      _ethValue: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
+      _target: string,
+      _ethValue: BigNumberish,
+      _data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -99,19 +94,19 @@ export interface AragonAgent extends BaseContract {
 
   estimateGas: {
     execute(
-      _target: PromiseOrValue<string>,
-      _ethValue: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _target: string,
+      _ethValue: BigNumberish,
+      _data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     execute(
-      _target: PromiseOrValue<string>,
-      _ethValue: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _target: string,
+      _ethValue: BigNumberish,
+      _data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

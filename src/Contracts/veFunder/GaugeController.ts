@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface GaugeControllerInterface extends utils.Interface {
@@ -32,11 +31,7 @@ export interface GaugeControllerInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "add_gauge",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "add_gauge", data: BytesLike): Result;
@@ -72,25 +67,25 @@ export interface GaugeController extends BaseContract {
 
   functions: {
     add_gauge(
-      addr: PromiseOrValue<string>,
-      gauge_type: PromiseOrValue<BigNumberish>,
-      weight: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      addr: string,
+      gauge_type: BigNumberish,
+      weight: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   add_gauge(
-    addr: PromiseOrValue<string>,
-    gauge_type: PromiseOrValue<BigNumberish>,
-    weight: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    addr: string,
+    gauge_type: BigNumberish,
+    weight: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add_gauge(
-      addr: PromiseOrValue<string>,
-      gauge_type: PromiseOrValue<BigNumberish>,
-      weight: PromiseOrValue<BigNumberish>,
+      addr: string,
+      gauge_type: BigNumberish,
+      weight: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -99,19 +94,19 @@ export interface GaugeController extends BaseContract {
 
   estimateGas: {
     add_gauge(
-      addr: PromiseOrValue<string>,
-      gauge_type: PromiseOrValue<BigNumberish>,
-      weight: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      addr: string,
+      gauge_type: BigNumberish,
+      weight: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add_gauge(
-      addr: PromiseOrValue<string>,
-      gauge_type: PromiseOrValue<BigNumberish>,
-      weight: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      addr: string,
+      gauge_type: BigNumberish,
+      weight: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

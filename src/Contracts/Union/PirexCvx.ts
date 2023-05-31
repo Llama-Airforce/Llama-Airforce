@@ -24,14 +24,13 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export declare namespace PirexCvxConvex {
   export type ConvexRewardStruct = {
-    token: PromiseOrValue<string>;
-    amount: PromiseOrValue<BigNumberish>;
-    balance: PromiseOrValue<BigNumberish>;
+    token: string;
+    amount: BigNumberish;
+    balance: BigNumberish;
   };
 
   export type ConvexRewardStructOutput = [string, BigNumber, BigNumber] & {
@@ -43,8 +42,8 @@ export declare namespace PirexCvxConvex {
 
 export declare namespace PirexCvx {
   export type EmergencyMigrationStruct = {
-    recipient: PromiseOrValue<string>;
-    tokens: PromiseOrValue<string>[];
+    recipient: string;
+    tokens: string[];
   };
 
   export type EmergencyMigrationStructOutput = [string, string[]] & {
@@ -55,10 +54,10 @@ export declare namespace PirexCvx {
 
 export declare namespace IVotiumMultiMerkleStash {
   export type ClaimParamStruct = {
-    token: PromiseOrValue<string>;
-    index: PromiseOrValue<BigNumberish>;
-    amount: PromiseOrValue<BigNumberish>;
-    merkleProof: PromiseOrValue<BytesLike>[];
+    token: string;
+    index: BigNumberish;
+    amount: BigNumberish;
+    merkleProof: BytesLike[];
   };
 
   export type ClaimParamStructOutput = [
@@ -210,7 +209,7 @@ export interface PirexCvxInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "addDeveloper",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "claimMiscRewards",
@@ -235,17 +234,9 @@ export interface PirexCvxInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, boolean, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "developers",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "developers", values: [string]): string;
   encodeFunctionData(
     functionFragment: "emergencyExecutor",
     values?: undefined
@@ -256,37 +247,24 @@ export interface PirexCvxInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "exchangeFutures",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "executeEmergencyMigration",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "fees",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "fees", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "getCurrentEpoch",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "initializeEmergencyExecutor",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "initiateRedemptions",
-    values: [
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish[], BigNumberish, BigNumberish[], string]
   ): string;
   encodeFunctionData(functionFragment: "lock", values?: undefined): string;
   encodeFunctionData(
@@ -307,39 +285,27 @@ export interface PirexCvxInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "pxCvx", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "redeem",
-    values: [
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish[], BigNumberish[], string]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemFuturesRewards",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemLegacy",
-    values: [
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish[], BigNumberish[], string]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemSnapshotRewards",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish[], string]
   ): string;
   encodeFunctionData(
     functionFragment: "redemptions",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "removeDeveloper",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -348,15 +314,15 @@ export interface PirexCvxInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "rpxCvx", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "setContract",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setConvexContract",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setDelegationSpace",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setEmergencyMigration",
@@ -364,33 +330,28 @@ export interface PirexCvxInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setFee",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setPauseState",
-    values: [PromiseOrValue<boolean>]
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setUpxCvxDeprecated",
-    values: [PromiseOrValue<boolean>]
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setVoteDelegate",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "spxCvx", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "stake",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "unionPirex",
@@ -399,11 +360,7 @@ export interface PirexCvxInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "unlock", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "unstake",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(functionFragment: "upxCvx", values?: undefined): string;
   encodeFunctionData(
@@ -969,21 +926,21 @@ export interface PirexCvx extends BaseContract {
     MAX_REDEMPTION_TIME(overrides?: CallOverrides): Promise<[number]>;
 
     addDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimMiscRewards(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimVotiumRewards(
       votiumRewards: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     clearVoteDelegate(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     cvxDelegateRegistry(overrides?: CallOverrides): Promise<[string]>;
@@ -993,17 +950,14 @@ export interface PirexCvx extends BaseContract {
     delegationSpace(overrides?: CallOverrides): Promise<[string]>;
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      shouldCompound: PromiseOrValue<boolean>,
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      shouldCompound: boolean,
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    developers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    developers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     emergencyExecutor(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1012,39 +966,36 @@ export interface PirexCvx extends BaseContract {
     ): Promise<[string] & { recipient: string }>;
 
     exchangeFutures(
-      epoch: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      f: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      amount: BigNumberish,
+      receiver: string,
+      f: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     executeEmergencyMigration(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    fees(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[number]>;
+    fees(arg0: BigNumberish, overrides?: CallOverrides): Promise<[number]>;
 
     getCurrentEpoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initializeEmergencyExecutor(
-      _emergencyExecutor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _emergencyExecutor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     initiateRedemptions(
-      lockIndexes: PromiseOrValue<BigNumberish>[],
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      lockIndexes: BigNumberish[],
+      f: BigNumberish,
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     lock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     outstandingRedemptions(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -1054,7 +1005,7 @@ export interface PirexCvx extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     pausedRelock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     pendingLocks(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -1064,118 +1015,118 @@ export interface PirexCvx extends BaseContract {
     pxCvx(overrides?: CallOverrides): Promise<[string]>;
 
     redeem(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeemFuturesRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeemLegacy(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeemSnapshotRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      rewardIndexes: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      rewardIndexes: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redemptions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     removeDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     rpxCvx(overrides?: CallOverrides): Promise<[string]>;
 
     setContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      c: BigNumberish,
+      contractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setConvexContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      c: BigNumberish,
+      contractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setDelegationSpace(
-      _delegationSpace: PromiseOrValue<string>,
-      shouldClear: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _delegationSpace: string,
+      shouldClear: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setEmergencyMigration(
       _emergencyMigration: PirexCvx.EmergencyMigrationStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setFee(
-      f: PromiseOrValue<BigNumberish>,
-      fee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      f: BigNumberish,
+      fee: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setPauseState(
-      state: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      state: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setUpxCvxDeprecated(
-      state: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      state: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setVoteDelegate(
-      voteDelegate: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      voteDelegate: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     spxCvx(overrides?: CallOverrides): Promise<[string]>;
 
     stake(
-      rounds: PromiseOrValue<BigNumberish>,
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      rounds: BigNumberish,
+      f: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unionPirex(overrides?: CallOverrides): Promise<[string]>;
 
     unlock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unstake(
-      id: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     upxCvx(overrides?: CallOverrides): Promise<[string]>;
@@ -1198,21 +1149,21 @@ export interface PirexCvx extends BaseContract {
   MAX_REDEMPTION_TIME(overrides?: CallOverrides): Promise<number>;
 
   addDeveloper(
-    developer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    developer: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimMiscRewards(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimVotiumRewards(
     votiumRewards: IVotiumMultiMerkleStash.ClaimParamStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   clearVoteDelegate(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   cvxDelegateRegistry(overrides?: CallOverrides): Promise<string>;
@@ -1222,57 +1173,49 @@ export interface PirexCvx extends BaseContract {
   delegationSpace(overrides?: CallOverrides): Promise<string>;
 
   deposit(
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    shouldCompound: PromiseOrValue<boolean>,
-    developer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    assets: BigNumberish,
+    receiver: string,
+    shouldCompound: boolean,
+    developer: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  developers(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  developers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   emergencyExecutor(overrides?: CallOverrides): Promise<string>;
 
   emergencyMigration(overrides?: CallOverrides): Promise<string>;
 
   exchangeFutures(
-    epoch: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    f: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    epoch: BigNumberish,
+    amount: BigNumberish,
+    receiver: string,
+    f: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   executeEmergencyMigration(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  fees(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<number>;
+  fees(arg0: BigNumberish, overrides?: CallOverrides): Promise<number>;
 
   getCurrentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
   initializeEmergencyExecutor(
-    _emergencyExecutor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _emergencyExecutor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   initiateRedemptions(
-    lockIndexes: PromiseOrValue<BigNumberish>[],
-    f: PromiseOrValue<BigNumberish>,
-    assets: PromiseOrValue<BigNumberish>[],
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    lockIndexes: BigNumberish[],
+    f: BigNumberish,
+    assets: BigNumberish[],
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  lock(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  lock(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>;
 
   outstandingRedemptions(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1281,7 +1224,7 @@ export interface PirexCvx extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   pausedRelock(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   pendingLocks(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1291,118 +1234,118 @@ export interface PirexCvx extends BaseContract {
   pxCvx(overrides?: CallOverrides): Promise<string>;
 
   redeem(
-    unlockTimes: PromiseOrValue<BigNumberish>[],
-    assets: PromiseOrValue<BigNumberish>[],
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    unlockTimes: BigNumberish[],
+    assets: BigNumberish[],
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeemFuturesRewards(
-    epoch: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    epoch: BigNumberish,
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeemLegacy(
-    unlockTimes: PromiseOrValue<BigNumberish>[],
-    assets: PromiseOrValue<BigNumberish>[],
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    unlockTimes: BigNumberish[],
+    assets: BigNumberish[],
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeemSnapshotRewards(
-    epoch: PromiseOrValue<BigNumberish>,
-    rewardIndexes: PromiseOrValue<BigNumberish>[],
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    epoch: BigNumberish,
+    rewardIndexes: BigNumberish[],
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redemptions(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   removeDeveloper(
-    developer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    developer: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   rpxCvx(overrides?: CallOverrides): Promise<string>;
 
   setContract(
-    c: PromiseOrValue<BigNumberish>,
-    contractAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    c: BigNumberish,
+    contractAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setConvexContract(
-    c: PromiseOrValue<BigNumberish>,
-    contractAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    c: BigNumberish,
+    contractAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setDelegationSpace(
-    _delegationSpace: PromiseOrValue<string>,
-    shouldClear: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _delegationSpace: string,
+    shouldClear: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setEmergencyMigration(
     _emergencyMigration: PirexCvx.EmergencyMigrationStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setFee(
-    f: PromiseOrValue<BigNumberish>,
-    fee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    f: BigNumberish,
+    fee: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setPauseState(
-    state: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    state: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setUpxCvxDeprecated(
-    state: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    state: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setVoteDelegate(
-    voteDelegate: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    voteDelegate: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   spxCvx(overrides?: CallOverrides): Promise<string>;
 
   stake(
-    rounds: PromiseOrValue<BigNumberish>,
-    f: PromiseOrValue<BigNumberish>,
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    rounds: BigNumberish,
+    f: BigNumberish,
+    assets: BigNumberish,
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unionPirex(overrides?: CallOverrides): Promise<string>;
 
   unlock(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unstake(
-    id: PromiseOrValue<BigNumberish>,
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    assets: BigNumberish,
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   upxCvx(overrides?: CallOverrides): Promise<string>;
@@ -1424,10 +1367,7 @@ export interface PirexCvx extends BaseContract {
 
     MAX_REDEMPTION_TIME(overrides?: CallOverrides): Promise<number>;
 
-    addDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addDeveloper(developer: string, overrides?: CallOverrides): Promise<void>;
 
     claimMiscRewards(overrides?: CallOverrides): Promise<void>;
 
@@ -1445,49 +1385,43 @@ export interface PirexCvx extends BaseContract {
     delegationSpace(overrides?: CallOverrides): Promise<string>;
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      shouldCompound: PromiseOrValue<boolean>,
-      developer: PromiseOrValue<string>,
+      assets: BigNumberish,
+      receiver: string,
+      shouldCompound: boolean,
+      developer: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    developers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    developers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
     emergencyExecutor(overrides?: CallOverrides): Promise<string>;
 
     emergencyMigration(overrides?: CallOverrides): Promise<string>;
 
     exchangeFutures(
-      epoch: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      f: PromiseOrValue<BigNumberish>,
+      epoch: BigNumberish,
+      amount: BigNumberish,
+      receiver: string,
+      f: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     executeEmergencyMigration(overrides?: CallOverrides): Promise<void>;
 
-    fees(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<number>;
+    fees(arg0: BigNumberish, overrides?: CallOverrides): Promise<number>;
 
     getCurrentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     initializeEmergencyExecutor(
-      _emergencyExecutor: PromiseOrValue<string>,
+      _emergencyExecutor: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     initiateRedemptions(
-      lockIndexes: PromiseOrValue<BigNumberish>[],
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
+      lockIndexes: BigNumberish[],
+      f: BigNumberish,
+      assets: BigNumberish[],
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1508,39 +1442,39 @@ export interface PirexCvx extends BaseContract {
     pxCvx(overrides?: CallOverrides): Promise<string>;
 
     redeem(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemFuturesRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
+      epoch: BigNumberish,
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemLegacy(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemSnapshotRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      rewardIndexes: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
+      epoch: BigNumberish,
+      rewardIndexes: BigNumberish[],
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     redemptions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeDeveloper(
-      developer: PromiseOrValue<string>,
+      developer: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1549,20 +1483,20 @@ export interface PirexCvx extends BaseContract {
     rpxCvx(overrides?: CallOverrides): Promise<string>;
 
     setContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
+      c: BigNumberish,
+      contractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setConvexContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
+      c: BigNumberish,
+      contractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setDelegationSpace(
-      _delegationSpace: PromiseOrValue<string>,
-      shouldClear: PromiseOrValue<boolean>,
+      _delegationSpace: string,
+      shouldClear: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1572,38 +1506,35 @@ export interface PirexCvx extends BaseContract {
     ): Promise<void>;
 
     setFee(
-      f: PromiseOrValue<BigNumberish>,
-      fee: PromiseOrValue<BigNumberish>,
+      f: BigNumberish,
+      fee: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setPauseState(
-      state: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPauseState(state: boolean, overrides?: CallOverrides): Promise<void>;
 
     setUpxCvxDeprecated(
-      state: PromiseOrValue<boolean>,
+      state: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setVoteDelegate(
-      voteDelegate: PromiseOrValue<string>,
+      voteDelegate: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     spxCvx(overrides?: CallOverrides): Promise<string>;
 
     stake(
-      rounds: PromiseOrValue<BigNumberish>,
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
+      rounds: BigNumberish,
+      f: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1612,9 +1543,9 @@ export interface PirexCvx extends BaseContract {
     unlock(overrides?: CallOverrides): Promise<void>;
 
     unstake(
-      id: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
+      id: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1641,12 +1572,12 @@ export interface PirexCvx extends BaseContract {
     ): ClaimMiscRewardsEventFilter;
 
     "ClaimVotiumReward(address,uint256,uint256)"(
-      token?: PromiseOrValue<string> | null,
+      token?: string | null,
       index?: null,
       amount?: null
     ): ClaimVotiumRewardEventFilter;
     ClaimVotiumReward(
-      token?: PromiseOrValue<string> | null,
+      token?: string | null,
       index?: null,
       amount?: null
     ): ClaimVotiumRewardEventFilter;
@@ -1656,27 +1587,27 @@ export interface PirexCvx extends BaseContract {
 
     "Deposit(uint256,address,bool,address)"(
       assets?: null,
-      receiver?: PromiseOrValue<string> | null,
-      shouldCompound?: PromiseOrValue<boolean> | null,
-      developer?: PromiseOrValue<string> | null
+      receiver?: string | null,
+      shouldCompound?: boolean | null,
+      developer?: string | null
     ): DepositEventFilter;
     Deposit(
       assets?: null,
-      receiver?: PromiseOrValue<string> | null,
-      shouldCompound?: PromiseOrValue<boolean> | null,
-      developer?: PromiseOrValue<string> | null
+      receiver?: string | null,
+      shouldCompound?: boolean | null,
+      developer?: string | null
     ): DepositEventFilter;
 
     "ExchangeFutures(uint256,uint256,address,uint8)"(
-      epoch?: PromiseOrValue<BigNumberish> | null,
+      epoch?: BigNumberish | null,
       amount?: null,
-      receiver?: PromiseOrValue<string> | null,
+      receiver?: string | null,
       f?: null
     ): ExchangeFuturesEventFilter;
     ExchangeFutures(
-      epoch?: PromiseOrValue<BigNumberish> | null,
+      epoch?: BigNumberish | null,
       amount?: null,
-      receiver?: PromiseOrValue<string> | null,
+      receiver?: string | null,
       f?: null
     ): ExchangeFuturesEventFilter;
 
@@ -1698,37 +1629,37 @@ export interface PirexCvx extends BaseContract {
 
     "InitiateRedemptions(uint256[],uint8,uint256[],address)"(
       lockIndexes?: null,
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): InitiateRedemptionsEventFilter;
     InitiateRedemptions(
       lockIndexes?: null,
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): InitiateRedemptionsEventFilter;
 
     "MintFutures(uint256,uint8,uint256,address)"(
       rounds?: null,
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): MintFuturesEventFilter;
     MintFutures(
       rounds?: null,
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): MintFuturesEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "Paused(address)"(account?: null): PausedEventFilter;
@@ -1737,38 +1668,38 @@ export interface PirexCvx extends BaseContract {
     "Redeem(uint256[],uint256[],address,bool)"(
       unlockTimes?: null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null,
+      receiver?: string | null,
       legacy?: null
     ): RedeemEventFilter;
     Redeem(
       unlockTimes?: null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null,
+      receiver?: string | null,
       legacy?: null
     ): RedeemEventFilter;
 
     "RedeemFuturesRewards(uint256,address,bytes32[])"(
-      epoch?: PromiseOrValue<BigNumberish> | null,
-      receiver?: PromiseOrValue<string> | null,
+      epoch?: BigNumberish | null,
+      receiver?: string | null,
       rewards?: null
     ): RedeemFuturesRewardsEventFilter;
     RedeemFuturesRewards(
-      epoch?: PromiseOrValue<BigNumberish> | null,
-      receiver?: PromiseOrValue<string> | null,
+      epoch?: BigNumberish | null,
+      receiver?: string | null,
       rewards?: null
     ): RedeemFuturesRewardsEventFilter;
 
     "RedeemSnapshotRewards(uint256,uint256[],address,uint256,uint256)"(
-      epoch?: PromiseOrValue<BigNumberish> | null,
+      epoch?: BigNumberish | null,
       rewardIndexes?: null,
-      receiver?: PromiseOrValue<string> | null,
+      receiver?: string | null,
       snapshotBalance?: null,
       snapshotSupply?: null
     ): RedeemSnapshotRewardsEventFilter;
     RedeemSnapshotRewards(
-      epoch?: PromiseOrValue<BigNumberish> | null,
+      epoch?: BigNumberish | null,
       rewardIndexes?: null,
-      receiver?: PromiseOrValue<string> | null,
+      receiver?: string | null,
       snapshotBalance?: null,
       snapshotSupply?: null
     ): RedeemSnapshotRewardsEventFilter;
@@ -1777,11 +1708,11 @@ export interface PirexCvx extends BaseContract {
     RemoveDeveloper(developer?: null): RemoveDeveloperEventFilter;
 
     "SetContract(uint8,address)"(
-      c?: PromiseOrValue<BigNumberish> | null,
+      c?: BigNumberish | null,
       contractAddress?: null
     ): SetContractEventFilter;
     SetContract(
-      c?: PromiseOrValue<BigNumberish> | null,
+      c?: BigNumberish | null,
       contractAddress?: null
     ): SetContractEventFilter;
 
@@ -1811,13 +1742,10 @@ export interface PirexCvx extends BaseContract {
     ): SetEmergencyMigrationEventFilter;
 
     "SetFee(uint8,uint32)"(
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       fee?: null
     ): SetFeeEventFilter;
-    SetFee(
-      f?: PromiseOrValue<BigNumberish> | null,
-      fee?: null
-    ): SetFeeEventFilter;
+    SetFee(f?: BigNumberish | null, fee?: null): SetFeeEventFilter;
 
     "SetUpxCvxDeprecated(bool)"(state?: null): SetUpxCvxDeprecatedEventFilter;
     SetUpxCvxDeprecated(state?: null): SetUpxCvxDeprecatedEventFilter;
@@ -1827,15 +1755,15 @@ export interface PirexCvx extends BaseContract {
 
     "Stake(uint256,uint8,uint256,address)"(
       rounds?: null,
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): StakeEventFilter;
     Stake(
       rounds?: null,
-      f?: PromiseOrValue<BigNumberish> | null,
+      f?: BigNumberish | null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): StakeEventFilter;
 
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
@@ -1844,12 +1772,12 @@ export interface PirexCvx extends BaseContract {
     "Unstake(uint256,uint256,address)"(
       id?: null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): UnstakeEventFilter;
     Unstake(
       id?: null,
       assets?: null,
-      receiver?: PromiseOrValue<string> | null
+      receiver?: string | null
     ): UnstakeEventFilter;
   };
 
@@ -1865,21 +1793,21 @@ export interface PirexCvx extends BaseContract {
     MAX_REDEMPTION_TIME(overrides?: CallOverrides): Promise<BigNumber>;
 
     addDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimMiscRewards(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimVotiumRewards(
       votiumRewards: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     clearVoteDelegate(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     cvxDelegateRegistry(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1889,57 +1817,49 @@ export interface PirexCvx extends BaseContract {
     delegationSpace(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      shouldCompound: PromiseOrValue<boolean>,
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      shouldCompound: boolean,
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    developers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    developers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyExecutor(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyMigration(overrides?: CallOverrides): Promise<BigNumber>;
 
     exchangeFutures(
-      epoch: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      f: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      amount: BigNumberish,
+      receiver: string,
+      f: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     executeEmergencyMigration(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    fees(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    fees(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     getCurrentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     initializeEmergencyExecutor(
-      _emergencyExecutor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _emergencyExecutor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     initiateRedemptions(
-      lockIndexes: PromiseOrValue<BigNumberish>[],
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      lockIndexes: BigNumberish[],
+      f: BigNumberish,
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    lock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    lock(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     outstandingRedemptions(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1947,9 +1867,7 @@ export interface PirexCvx extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pausedRelock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    pausedRelock(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     pendingLocks(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1958,118 +1876,116 @@ export interface PirexCvx extends BaseContract {
     pxCvx(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeem(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeemFuturesRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeemLegacy(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeemSnapshotRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      rewardIndexes: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      rewardIndexes: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     redemptions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     rpxCvx(overrides?: CallOverrides): Promise<BigNumber>;
 
     setContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      c: BigNumberish,
+      contractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setConvexContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      c: BigNumberish,
+      contractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setDelegationSpace(
-      _delegationSpace: PromiseOrValue<string>,
-      shouldClear: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _delegationSpace: string,
+      shouldClear: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setEmergencyMigration(
       _emergencyMigration: PirexCvx.EmergencyMigrationStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setFee(
-      f: PromiseOrValue<BigNumberish>,
-      fee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      f: BigNumberish,
+      fee: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setPauseState(
-      state: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      state: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setUpxCvxDeprecated(
-      state: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      state: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setVoteDelegate(
-      voteDelegate: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      voteDelegate: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     spxCvx(overrides?: CallOverrides): Promise<BigNumber>;
 
     stake(
-      rounds: PromiseOrValue<BigNumberish>,
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      rounds: BigNumberish,
+      f: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     unionPirex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unlock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    unlock(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     unstake(
-      id: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     upxCvx(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2095,21 +2011,21 @@ export interface PirexCvx extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     addDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimMiscRewards(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimVotiumRewards(
       votiumRewards: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     clearVoteDelegate(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     cvxDelegateRegistry(
@@ -2121,15 +2037,15 @@ export interface PirexCvx extends BaseContract {
     delegationSpace(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      shouldCompound: PromiseOrValue<boolean>,
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      shouldCompound: boolean,
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     developers(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2140,39 +2056,39 @@ export interface PirexCvx extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     exchangeFutures(
-      epoch: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      f: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      amount: BigNumberish,
+      receiver: string,
+      f: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     executeEmergencyMigration(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     fees(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getCurrentEpoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initializeEmergencyExecutor(
-      _emergencyExecutor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _emergencyExecutor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     initiateRedemptions(
-      lockIndexes: PromiseOrValue<BigNumberish>[],
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      lockIndexes: BigNumberish[],
+      f: BigNumberish,
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     lock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     outstandingRedemptions(
@@ -2184,7 +2100,7 @@ export interface PirexCvx extends BaseContract {
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pausedRelock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     pendingLocks(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2194,118 +2110,118 @@ export interface PirexCvx extends BaseContract {
     pxCvx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeem(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeemFuturesRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeemLegacy(
-      unlockTimes: PromiseOrValue<BigNumberish>[],
-      assets: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlockTimes: BigNumberish[],
+      assets: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeemSnapshotRewards(
-      epoch: PromiseOrValue<BigNumberish>,
-      rewardIndexes: PromiseOrValue<BigNumberish>[],
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      epoch: BigNumberish,
+      rewardIndexes: BigNumberish[],
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redemptions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     removeDeveloper(
-      developer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      developer: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     rpxCvx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      c: BigNumberish,
+      contractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setConvexContract(
-      c: PromiseOrValue<BigNumberish>,
-      contractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      c: BigNumberish,
+      contractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setDelegationSpace(
-      _delegationSpace: PromiseOrValue<string>,
-      shouldClear: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _delegationSpace: string,
+      shouldClear: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setEmergencyMigration(
       _emergencyMigration: PirexCvx.EmergencyMigrationStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setFee(
-      f: PromiseOrValue<BigNumberish>,
-      fee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      f: BigNumberish,
+      fee: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setPauseState(
-      state: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      state: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setUpxCvxDeprecated(
-      state: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      state: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setVoteDelegate(
-      voteDelegate: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      voteDelegate: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     spxCvx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      rounds: PromiseOrValue<BigNumberish>,
-      f: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      rounds: BigNumberish,
+      f: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unionPirex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unlock(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unstake(
-      id: PromiseOrValue<BigNumberish>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      assets: BigNumberish,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     upxCvx(overrides?: CallOverrides): Promise<PopulatedTransaction>;

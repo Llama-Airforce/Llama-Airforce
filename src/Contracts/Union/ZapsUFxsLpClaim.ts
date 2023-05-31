@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface ZapsUFxsLpClaimInterface extends utils.Interface {
@@ -52,60 +51,60 @@ export interface ZapsUFxsLpClaimInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "claimFromDistributorAsCvx",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike[],
+      BigNumberish,
+      string,
+      boolean
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromDistributorAsEth",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike[],
+      BigNumberish,
+      string
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromDistributorAsUnderlying",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike[],
+      BigNumberish,
+      BigNumberish,
+      string
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromDistributorAsUsdt",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike[],
+      BigNumberish,
+      string
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromDistributorViaUniV2EthPair",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike[],
+      BigNumberish,
+      string,
+      string,
+      string
     ]
   ): string;
   encodeFunctionData(
@@ -181,63 +180,63 @@ export interface ZapsUFxsLpClaim extends BaseContract {
 
   functions: {
     claimFromDistributorAsCvx(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromDistributorAsEth(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromDistributorAsUnderlying(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      assetIndex: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     distributor(overrides?: CallOverrides): Promise<[string]>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
@@ -246,63 +245,63 @@ export interface ZapsUFxsLpClaim extends BaseContract {
   };
 
   claimFromDistributorAsCvx(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    lock: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    minAmountOut: BigNumberish,
+    to: string,
+    lock: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromDistributorAsEth(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromDistributorAsUnderlying(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    assetIndex: PromiseOrValue<BigNumberish>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    assetIndex: BigNumberish,
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromDistributorAsUsdt(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    minAmountOut: BigNumberish,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromDistributorViaUniV2EthPair(
-    index: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    merkleProof: PromiseOrValue<BytesLike>[],
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    router: PromiseOrValue<string>,
-    outputToken: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    index: BigNumberish,
+    account: string,
+    amount: BigNumberish,
+    merkleProof: BytesLike[],
+    minAmountOut: BigNumberish,
+    router: string,
+    outputToken: string,
+    to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   distributor(overrides?: CallOverrides): Promise<string>;
 
   setApprovals(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
@@ -311,56 +310,56 @@ export interface ZapsUFxsLpClaim extends BaseContract {
 
   callStatic: {
     claimFromDistributorAsCvx(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     claimFromDistributorAsEth(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     claimFromDistributorAsUnderlying(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      assetIndex: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -377,64 +376,62 @@ export interface ZapsUFxsLpClaim extends BaseContract {
 
   estimateGas: {
     claimFromDistributorAsCvx(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromDistributorAsEth(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromDistributorAsUnderlying(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      assetIndex: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     distributor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -443,63 +440,63 @@ export interface ZapsUFxsLpClaim extends BaseContract {
 
   populateTransaction: {
     claimFromDistributorAsCvx(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromDistributorAsEth(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromDistributorAsUnderlying(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      assetIndex: PromiseOrValue<BigNumberish>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      assetIndex: BigNumberish,
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromDistributorAsUsdt(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromDistributorViaUniV2EthPair(
-      index: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      merkleProof: PromiseOrValue<BytesLike>[],
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      router: PromiseOrValue<string>,
-      outputToken: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      index: BigNumberish,
+      account: string,
+      amount: BigNumberish,
+      merkleProof: BytesLike[],
+      minAmountOut: BigNumberish,
+      router: string,
+      outputToken: string,
+      to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     distributor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;

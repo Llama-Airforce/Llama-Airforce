@@ -23,7 +23,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface SnapshotRegistryInterface extends utils.Interface {
@@ -39,15 +38,15 @@ export interface SnapshotRegistryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "clearDelegate",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "delegation",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setDelegate",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, string]
   ): string;
 
   decodeFunctionResult(
@@ -121,118 +120,115 @@ export interface SnapshotRegistry extends BaseContract {
 
   functions: {
     clearDelegate(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     delegation(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: BytesLike,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     setDelegate(
-      id: PromiseOrValue<BytesLike>,
-      delegate: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      delegate: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   clearDelegate(
-    id: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   delegation(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BytesLike>,
+    arg0: string,
+    arg1: BytesLike,
     overrides?: CallOverrides
   ): Promise<string>;
 
   setDelegate(
-    id: PromiseOrValue<BytesLike>,
-    delegate: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BytesLike,
+    delegate: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    clearDelegate(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    clearDelegate(id: BytesLike, overrides?: CallOverrides): Promise<void>;
 
     delegation(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     setDelegate(
-      id: PromiseOrValue<BytesLike>,
-      delegate: PromiseOrValue<string>,
+      id: BytesLike,
+      delegate: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
     "ClearDelegate(address,bytes32,address)"(
-      delegator?: PromiseOrValue<string> | null,
-      id?: PromiseOrValue<BytesLike> | null,
-      delegate?: PromiseOrValue<string> | null
+      delegator?: string | null,
+      id?: BytesLike | null,
+      delegate?: string | null
     ): ClearDelegateEventFilter;
     ClearDelegate(
-      delegator?: PromiseOrValue<string> | null,
-      id?: PromiseOrValue<BytesLike> | null,
-      delegate?: PromiseOrValue<string> | null
+      delegator?: string | null,
+      id?: BytesLike | null,
+      delegate?: string | null
     ): ClearDelegateEventFilter;
 
     "SetDelegate(address,bytes32,address)"(
-      delegator?: PromiseOrValue<string> | null,
-      id?: PromiseOrValue<BytesLike> | null,
-      delegate?: PromiseOrValue<string> | null
+      delegator?: string | null,
+      id?: BytesLike | null,
+      delegate?: string | null
     ): SetDelegateEventFilter;
     SetDelegate(
-      delegator?: PromiseOrValue<string> | null,
-      id?: PromiseOrValue<BytesLike> | null,
-      delegate?: PromiseOrValue<string> | null
+      delegator?: string | null,
+      id?: BytesLike | null,
+      delegate?: string | null
     ): SetDelegateEventFilter;
   };
 
   estimateGas: {
     clearDelegate(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     delegation(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setDelegate(
-      id: PromiseOrValue<BytesLike>,
-      delegate: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      delegate: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     clearDelegate(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     delegation(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setDelegate(
-      id: PromiseOrValue<BytesLike>,
-      delegate: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      delegate: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

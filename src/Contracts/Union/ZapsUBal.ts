@@ -21,7 +21,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface ZapsUBalInterface extends utils.Interface {
@@ -111,51 +110,23 @@ export interface ZapsUBalInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultAsUnderlying",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "claimFromVaultViaUniV2EthPair",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromEth",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromUnderlyingAssets",
-    values: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [[BigNumberish, BigNumberish], BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "depositViaUniV2EthPair",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BigNumberish, BigNumberish, string, string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovals",
@@ -277,50 +248,50 @@ export interface ZapsUBal extends BaseContract {
     bptDepositor(overrides?: CallOverrides): Promise<[string]>;
 
     claimFromVaultAsUnderlying(
-      _amount: PromiseOrValue<BigNumberish>,
-      _assetIndex: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _useWrappedEth: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _assetIndex: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _useWrappedEth: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     claimFromVaultViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _outputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _outputToken: string,
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositFromEth(
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositFromUnderlyingAssets(
-      _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amounts: [BigNumberish, BigNumberish],
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _inputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _inputToken: string,
+      _to: string,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
@@ -351,50 +322,50 @@ export interface ZapsUBal extends BaseContract {
   bptDepositor(overrides?: CallOverrides): Promise<string>;
 
   claimFromVaultAsUnderlying(
-    _amount: PromiseOrValue<BigNumberish>,
-    _assetIndex: PromiseOrValue<BigNumberish>,
-    _minAmountOut: PromiseOrValue<BigNumberish>,
-    _to: PromiseOrValue<string>,
-    _useWrappedEth: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    _assetIndex: BigNumberish,
+    _minAmountOut: BigNumberish,
+    _to: string,
+    _useWrappedEth: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   claimFromVaultViaUniV2EthPair(
-    _amount: PromiseOrValue<BigNumberish>,
-    _minAmountOut: PromiseOrValue<BigNumberish>,
-    _router: PromiseOrValue<string>,
-    _outputToken: PromiseOrValue<string>,
-    _to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    _minAmountOut: BigNumberish,
+    _router: string,
+    _outputToken: string,
+    _to: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositFromEth(
-    _minAmountOut: PromiseOrValue<BigNumberish>,
-    _to: PromiseOrValue<string>,
-    _lock: PromiseOrValue<boolean>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    _minAmountOut: BigNumberish,
+    _to: string,
+    _lock: boolean,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositFromUnderlyingAssets(
-    _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-    _minAmountOut: PromiseOrValue<BigNumberish>,
-    _to: PromiseOrValue<string>,
-    _lock: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amounts: [BigNumberish, BigNumberish],
+    _minAmountOut: BigNumberish,
+    _to: string,
+    _lock: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositViaUniV2EthPair(
-    _amount: PromiseOrValue<BigNumberish>,
-    _minAmountOut: PromiseOrValue<BigNumberish>,
-    _router: PromiseOrValue<string>,
-    _inputToken: PromiseOrValue<string>,
-    _to: PromiseOrValue<string>,
-    _lock: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    _minAmountOut: BigNumberish,
+    _router: string,
+    _inputToken: string,
+    _to: string,
+    _lock: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setApprovals(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
@@ -425,45 +396,45 @@ export interface ZapsUBal extends BaseContract {
     bptDepositor(overrides?: CallOverrides): Promise<string>;
 
     claimFromVaultAsUnderlying(
-      _amount: PromiseOrValue<BigNumberish>,
-      _assetIndex: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _useWrappedEth: PromiseOrValue<boolean>,
+      _amount: BigNumberish,
+      _assetIndex: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _useWrappedEth: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     claimFromVaultViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _outputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _outputToken: string,
+      _to: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositFromEth(
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositFromUnderlyingAssets(
-      _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
+      _amounts: [BigNumberish, BigNumberish],
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _inputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _inputToken: string,
+      _to: string,
+      _lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -500,51 +471,49 @@ export interface ZapsUBal extends BaseContract {
     bptDepositor(overrides?: CallOverrides): Promise<BigNumber>;
 
     claimFromVaultAsUnderlying(
-      _amount: PromiseOrValue<BigNumberish>,
-      _assetIndex: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _useWrappedEth: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _assetIndex: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _useWrappedEth: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     claimFromVaultViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _outputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _outputToken: string,
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositFromEth(
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositFromUnderlyingAssets(
-      _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amounts: [BigNumberish, BigNumberish],
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _inputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _inputToken: string,
+      _to: string,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -579,50 +548,50 @@ export interface ZapsUBal extends BaseContract {
     bptDepositor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimFromVaultAsUnderlying(
-      _amount: PromiseOrValue<BigNumberish>,
-      _assetIndex: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _useWrappedEth: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _assetIndex: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _useWrappedEth: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     claimFromVaultViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _outputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _outputToken: string,
+      _to: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositFromEth(
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositFromUnderlyingAssets(
-      _amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amounts: [BigNumberish, BigNumberish],
+      _minAmountOut: BigNumberish,
+      _to: string,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositViaUniV2EthPair(
-      _amount: PromiseOrValue<BigNumberish>,
-      _minAmountOut: PromiseOrValue<BigNumberish>,
-      _router: PromiseOrValue<string>,
-      _inputToken: PromiseOrValue<string>,
-      _to: PromiseOrValue<string>,
-      _lock: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      _minAmountOut: BigNumberish,
+      _router: string,
+      _inputToken: string,
+      _to: string,
+      _lock: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setApprovals(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;

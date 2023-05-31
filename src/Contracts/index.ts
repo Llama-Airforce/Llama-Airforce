@@ -15,6 +15,7 @@ import type * as union from "./Union";
 export type { union };
 import type * as veFunder from "./veFunder";
 export type { veFunder };
+export * as factories from "./factories";
 export type { CvxCrvUtilities } from "./Convex/CvxCrvUtilities";
 export { CvxCrvUtilities__factory } from "./factories/Convex/CvxCrvUtilities__factory";
 export type { CvxFxsRewards } from "./Convex/CvxFxsRewards";
