@@ -2,16 +2,24 @@
   <div class="kpis">
     <KPI
       label="CRV price"
-      value="$3.14"
-      :has-value="true"
+      :has-value="!!price"
     >
+      <AsyncValue
+        :value="price"
+        :precision="2"
+        type="dollar"
+      ></AsyncValue>
     </KPI>
 
     <KPI
       label="CRV market cap"
-      :has-value="true"
-      value="$3.14b"
+      :has-value="!!mcap"
     >
+      <AsyncValue
+        :value="mcap"
+        :precision="2"
+        type="dollar"
+      ></AsyncValue>
     </KPI>
 
     <KPI
@@ -31,7 +39,23 @@
 </template>
 
 <script setup lang="ts">
-import { KPI } from "@/Framework";
+import { ref, onMounted } from "vue";
+import { AsyncValue, KPI } from "@/Framework";
+import { getHost } from "@/Services/Host";
+import DefiLlamaService from "@CM/Pages/Home/Services/DefiLlamaService";
+
+const llamaService = new DefiLlamaService(getHost());
+
+// Refs
+const price = ref<number | null>(null);
+const mcap = ref<number | null>(null);
+
+// Hooks
+onMounted(async () => {
+  const data = await llamaService.getData();
+  price.value = data.price;
+  mcap.value = data.mcap;
+});
 </script>
 
 <style lang="scss" scoped>
