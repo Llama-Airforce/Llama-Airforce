@@ -97,7 +97,7 @@ const {
   flex-grow: 1;
   justify-content: space-around;
 
-  line-height: 1.5rem;
+  line-height: 1.5;
   padding: 0.75rem;
 
   background: var(--c-lvl1);
