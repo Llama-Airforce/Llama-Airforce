@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { Button, SelectLanguage } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
-import SelectTheme from "@CM/Pages/Home/SelectTheme.vue";
+import SelectTheme from "@CM/Navigation/SelectTheme.vue";
 
 // Emits
 const emit = defineEmits<{
