@@ -8,7 +8,7 @@
     "lint cm": "eslint src/Apps/CurveMonitor/**/*.{ts,vue}",
     "dev laf": "vite src/Apps/LlamaAirforce",
     "dev cm": "vite src/Apps/CurveMonitor",
-    "build laf": "eslint src/Apps/LlamaAirforce/**/*.{ts,vue && vue-tsc --noEmit && vite build src/Apps/LlamaAirforce",
+    "build laf": "eslint src/Apps/LlamaAirforce/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/LlamaAirforce",
     "build cm": "eslint src/Apps/CurveMonitor/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/CurveMonitor",
     "build contracts": "typechain --target ethers-v5 --input-dir \"./src/ABI\" --out-dir \"./src/Contracts\" \"./src/ABI/**/*.json\"",
     "test": "vitest --silent",
