@@ -45,8 +45,6 @@ import Navigation from "@CM/Navigation/Navigation.vue";
 }
 
 html {
-  overflow-y: overlay;
-
   ::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
@@ -66,6 +64,7 @@ html {
 }
 
 body {
+  overflow-y: overlay;
   margin: 0;
 
   background-color: var(--c-lvl0);

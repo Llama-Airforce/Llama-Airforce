@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from "vue";
+
 // Props
 interface Props {
   show?: boolean;
@@ -26,6 +28,14 @@ const { show = false } = defineProps<Props>();
 const emit = defineEmits<{
   close: [];
 }>();
+
+// Watches
+watch(
+  () => show,
+  (newShow) => {
+    document.body.style.overflow = newShow ? "hidden" : "";
+  }
+);
 </script>
 
 <style lang="scss" scoped>
