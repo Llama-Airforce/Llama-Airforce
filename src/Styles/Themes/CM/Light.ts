@@ -1,5 +1,5 @@
 export const ColorsCMLight = {
-  blue: "#1a8df9",
+  blue: "#5baefb",
   yellow: "#f9ab1a",
   green: "#05c70c",
   red: "#f9341a",

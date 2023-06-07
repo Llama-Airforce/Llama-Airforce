@@ -49,6 +49,7 @@ const color = (i: number): string => {
     > .color {
       width: 0.75rem;
       height: 0.75rem;
+      border-radius: var(--border-radius) !important;
     }
 
     > .label {

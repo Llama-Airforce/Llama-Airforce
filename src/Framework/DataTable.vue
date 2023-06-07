@@ -301,6 +301,7 @@ const sortColumn = (index: number): void => {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
+    height: 2.5rem;
 
     > .header-icon {
       grid-column: 1;

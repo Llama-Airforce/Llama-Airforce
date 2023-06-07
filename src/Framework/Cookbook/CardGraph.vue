@@ -4,10 +4,10 @@
       <Recipe title="Line Chart">
         <template #example>
           <CardGraph
-            class="lineChart"
+            class="chart"
             title="Line Chart"
-            :options="optionsLineChart"
-            :series="seriesLineChart"
+            :options="options"
+            :series="series"
           ></CardGraph>
         </template>
 
@@ -39,17 +39,15 @@ import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint, addDays } from "@/Util";
 import Recipe from "@/Framework/Cookbook/Recipe.vue";
 
-/** Line Chart */
-type SerieLineChart = {
+type Serie = {
   name: string;
   type: string;
   data: { x: number; y: number }[];
 };
 
-const optionsLineChart = computed((): unknown => {
+const options = computed((): unknown => {
   return createChartStylesLAF({
     chart: {
-      id: "curve-emissions",
       animations: {
         enabled: false,
       },
@@ -96,7 +94,7 @@ const optionsLineChart = computed((): unknown => {
       followCursor: false,
       enabled: true,
       intersect: false,
-      custom: (x: DataPoint<SerieLineChart>) => {
+      custom: (x: DataPoint<Serie>) => {
         const emissions = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
 
         const fees = x.w.globals.initialSeries[1].data[x.dataPointIndex]
@@ -128,7 +126,7 @@ const optionsLineChart = computed((): unknown => {
   });
 });
 
-const seriesLineChart = computed((): SerieLineChart[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: "Emissions",
@@ -165,10 +163,10 @@ const formatterFees = (x: number): string => {
 };
 
 const cardGraphLine1 = `<CardGraph
-  class="lineChart"
+  class="chart"
   title="LineChart"
-  :options="optionsLineChart"
-  :series="seriesLineChart"
+  :options="options"
+  :series="series"
 ></CardGraph>`;
 
 const cardGraphLine2 = `import { computed } from "vue";
@@ -176,8 +174,7 @@ import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint, addDays } from "@/Util";
 
-/** Line Chart */
-type SerieLineChart = {
+type Serie = {
   name: string;
   type: string;
   data: { x: number; y: number }[];
@@ -186,7 +183,6 @@ type SerieLineChart = {
 const optionsLineChart = computed((): unknown => {
   return createChartStyles({
     chart: {
-      id: "curve-emissions",
       animations: {
         enabled: false,
       },
@@ -265,7 +261,7 @@ const optionsLineChart = computed((): unknown => {
   });
 });
 
-const seriesLineChart = computed((): SerieLineChart[] => {
+const series = computed((): Serie[] => {
   return [
     {
       name: "Emissions",
@@ -301,23 +297,13 @@ const formatterFees = (x: number): string => {
   return \`$\${round(x, 1, "dollar")}\${unit(x, "dollar")}\`;
 };`;
 
-const cardGraphLine3 = `.lineChart {
+const cardGraphLine3 = `.chart {
   height: 400px;
 
   ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-
     .apexcharts-tooltip {
-      width: auto;
-      background: rgb(30, 30, 30);
-      padding: 1rem;
-      line-height: 0.5rem;
-
-      display: grid;
       grid-template-rows: auto auto;
       grid-template-columns: 1fr auto;
-      gap: 0.5rem;
     }
   }
 }`;
@@ -328,23 +314,13 @@ const cardGraphLine3 = `.lineChart {
 
 @include dashboard("card-graph");
 
-.lineChart {
+.chart {
   height: 400px;
 
   ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-
     .apexcharts-tooltip {
-      width: auto;
-      background: rgb(30, 30, 30);
-      padding: 1rem;
-      line-height: 0.5rem;
-
-      display: grid;
       grid-template-rows: auto auto;
       grid-template-columns: 1fr auto;
-      gap: 0.5rem;
     }
   }
 }

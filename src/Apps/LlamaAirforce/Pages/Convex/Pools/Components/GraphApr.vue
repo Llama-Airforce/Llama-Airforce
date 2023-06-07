@@ -126,19 +126,9 @@ const formatter = (y: number): string => {
 
 .apr {
   ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-
     .apexcharts-tooltip {
-      width: auto;
-      background: rgb(30, 30, 30);
-      padding: 1rem;
-      line-height: 0.5rem;
-
-      display: grid;
       grid-template-rows: auto auto auto auto;
       grid-template-columns: 1fr auto;
-      gap: 0.5rem;
     }
   }
 }

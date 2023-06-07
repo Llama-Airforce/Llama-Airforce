@@ -228,7 +228,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
         display: flex;
         flex-direction: column;
         align-items: start;
-        gap: 2rem;
+        gap: 1rem;
 
         > ul {
           display: flex;

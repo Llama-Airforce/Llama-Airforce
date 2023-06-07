@@ -43,14 +43,15 @@ const createDefault = (theme: Theme): object => ({
   grid: {
     borderColor: theme.colors.level5,
     strokeDashArray: 4,
-    padding: {
-      top: 20,
-    },
     xaxis: {
       lines: {
         show: false,
       },
     },
+  },
+  fill: {
+    type: "solid",
+    opacity: 1,
   },
   stroke: {
     curve: "smooth",

@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onUpdated } from "vue";
 import { Card } from "@/Framework";
 
 // Props
@@ -27,13 +26,6 @@ interface Props {
 }
 
 const { title = "", loading = false, options, series } = defineProps<Props>();
-
-// Hooks
-onUpdated(async (): Promise<void> => {
-  await nextTick(() => {
-    window.dispatchEvent(new Event("resize"));
-  });
-});
 </script>
 
 <style lang="scss" scoped>
@@ -41,12 +33,27 @@ onUpdated(async (): Promise<void> => {
 
 .card-graph {
   ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
+    display: block !important;
+    margin-top: -1rem !important;
     overflow-x: clip;
 
+    .apexcharts-tooltip {
+      background-color: var(--c-lvl1);
+      border: solid var(--border-thickness) var(--c-lvl4);
+      border-radius: var(--border-radius);
+      box-shadow: var(--tooltip-box-shadow);
+      color: var(--c-text);
+
+      padding: 1rem;
+      line-height: 0.75rem;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
     .apexcharts-legend-marker {
-      border-radius: 0px !important;
+      border-radius: var(--border-radius) !important;
     }
   }
 }

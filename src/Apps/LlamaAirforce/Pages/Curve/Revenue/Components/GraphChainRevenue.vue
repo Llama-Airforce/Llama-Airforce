@@ -102,17 +102,8 @@ const dollarFormatter = (x: number): string => {
 
 .pool-revenue {
   ::v-deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-
     .apexcharts-tooltip {
-      width: auto;
-      padding: 0.5rem;
-      line-height: 0rem;
-
-      display: grid;
       grid-template-rows: auto auto;
-      gap: 0.5rem;
     }
   }
 }

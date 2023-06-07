@@ -12,43 +12,27 @@
       <!-- <Controls></Controls> -->
     </div>
 
-    <div class="data">
+    <div class="data-1">
       <KPIs></KPIs>
-      <Chart></Chart>
+      <ChartChainType></ChartChainType>
+      <ChartLiquidityTop></ChartLiquidityTop>
     </div>
 
-    <Card
-      class="welcome"
-      title="Welcome!"
-    >
-      <p>
-        Introducing Curve Monitor, a user-friendly dashboard website created
-        with Curve power users in mind. This platform is designed to help you
-        easily access essential metrics and insights for your Curve usage,
-        making your experience more enjoyable.
-      </p>
-      <p>
-        With Curve Monitor, you'll find live pool metrics that can guide you in
-        making well-informed decisions when interacting with Curve. You'll also
-        find platform-wide statistics, such as platform revenue, which will
-        provide you with a broader understanding of the overall health of the
-        Curve ecosystem. Plus, we've added some handy DAO pages to keep you
-        updated and informed.
-      </p>
-      <p>
-        No matter your level of experience in the DeFi world, Curve Monitor is
-        here to make things simpler and more accessible. So go ahead, give Curve
-        Monitor a try and see how it can improve your experience with Curve.
-      </p>
-    </Card>
+    <div class="data-2">
+      <TableTrades></TableTrades>
+      <ChartRanking></ChartRanking>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Card, InputText } from "@/Framework";
+import { InputText } from "@/Framework";
 import KPIs from "@CM/Pages/Home/KPIs.vue";
-import Chart from "@CM/Pages/Home/Chart.vue";
+import ChartChainType from "@CM/Pages/Home/ChartChainType.vue";
+import ChartLiquidityTop from "@CM/Pages/Home/ChartLiquidityTop.vue";
+import ChartRanking from "@CM/Pages/Home/ChartRanking.vue";
+import TableTrades from "@CM/Pages/Home/TableTrades.vue";
 
 // Refs
 const pool = ref("");
@@ -61,12 +45,6 @@ const pool = ref("");
 
 .home {
   max-width: calc(1920px - 18.125rem);
-
-  ::v-deep(.welcome) {
-    .card-body {
-      flex-direction: column;
-    }
-  }
 }
 
 .controls-container {
@@ -84,9 +62,20 @@ const pool = ref("");
   }
 }
 
-.data {
+.data-1 {
   display: grid;
-  grid-template-columns: 10rem 1fr;
+  grid-template-columns: 10rem 1fr 1fr;
+  gap: var(--dashboard-gap);
+
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.data-2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   gap: var(--dashboard-gap);
 
   @media only screen and (max-width: 1280px) {
