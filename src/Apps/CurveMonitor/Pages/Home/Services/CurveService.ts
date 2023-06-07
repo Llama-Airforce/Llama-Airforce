@@ -1,17 +1,7 @@
 import ServiceBase from "@/Services/ServiceBase";
+import type { Chain } from "@CM/Models/Chain";
 
 const API_URL = "http://3.69.174.228:5001/curve/v1";
-
-type Chain =
-  | "mainnet"
-  | "arbitrum"
-  | "optimism"
-  | "fantom"
-  | "avalanche"
-  | "xdai"
-  | "matic"
-  | "harmony"
-  | "moonbeam";
 
 type Liquidity = {
   pool: string;

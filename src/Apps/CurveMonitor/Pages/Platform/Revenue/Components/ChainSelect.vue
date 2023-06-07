@@ -23,8 +23,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { Select } from "@/Framework";
+import type { Chain } from "@CM/Models/Chain";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { Chain } from "@CM/Pages/Platform/Revenue/Models/Chain";
 
 type SelectItem = {
   label: string;
@@ -57,9 +57,10 @@ const chains: ChainInfo[] = [
   { chain: "optimism", label: "Optimism", logo: "optimism.png" },
 ];
 
-const chain = computed((): ChainInfo | null => {
-  return chains.find((p) => p.chain === store.selectedChain) ?? null;
-});
+const chain = computed(
+  (): ChainInfo | null =>
+    chains.find((p) => p.chain === store.selectedChain) ?? null
+);
 
 // Hooks
 onMounted((): void => {
@@ -67,13 +68,8 @@ onMounted((): void => {
 });
 
 // Methods
-const label = (item: SelectItem): string => {
-  return item.label;
-};
-
-const icon = (item: SelectItem): string => {
-  return `icons/chains/${item.logo}`;
-};
+const label = (item: SelectItem): string => item.label;
+const icon = (item: SelectItem): string => `icons/chains/${item.logo}`;
 
 // Events
 const onChainOpen = (): void => {

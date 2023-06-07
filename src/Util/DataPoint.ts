@@ -9,6 +9,7 @@ export type DataPoint<T> = {
     globals: {
       initialSeries: T[];
       stackedSeriesTotals: number[];
+      labels: string[];
     };
   };
 };

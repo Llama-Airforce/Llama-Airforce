@@ -11,7 +11,7 @@
 import { computed } from "vue";
 import { orderBy } from "lodash";
 import { CardGraph } from "@/Framework";
-import { round, unit } from "@/Util";
+import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { ChainRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
@@ -33,6 +33,13 @@ const options = computed((): unknown => {
   return createChartStyles(
     { colors, colorsArray },
     {
+      chart: {
+        id: "chainRevenues",
+        type: "donut",
+        animations: {
+          enabled: false,
+        },
+      },
       legend: {
         inverseOrder: true,
       },
@@ -44,49 +51,23 @@ const options = computed((): unknown => {
           donut: {
             size: "60%",
           },
-          dataLabels: {
-            offset: 5,
-            minAngleToShowLabel: 3,
-          },
         },
       },
       dataLabels: {
-        style: {
-          fontSize: "12px",
-        },
-        formatter: function (x: number) {
-          return Math.round(x).toString() + "%";
-        },
-        dropShadow: false,
+        enabled: false,
       },
       tooltip: {
-        inverseOrder: true,
-        style: {
-          fontSize: "10px",
-        },
-        y: {
-          formatter: dollarFormatter,
-        },
-      },
-      chart: {
-        id: "chainRevenues",
-        type: "donut",
-        animations: {
-          enabled: false,
+        custom: (x: DataPoint<number>) => {
+          const chain = x.w.globals.labels[x.seriesIndex];
+          const revenue = x.series[x.seriesIndex][0];
+
+          const data = [
+            `<div><b>${chain}</b>:</div><div>${formatter(revenue)}</div>`,
+          ];
+
+          return data.join("");
         },
       },
-      colors: [
-        "#8C564B",
-        "#E377C2",
-        "#7F7F7F",
-        "#BCBD22",
-        "#17BECF",
-        "#1F77B4",
-        "#FF7F0E",
-        "#2CA02C",
-        "#D62728",
-        "#9467BD",
-      ],
       labels: chainRevenues.value.map((x) => x.chain),
     }
   );
@@ -97,9 +78,8 @@ const series = computed(() =>
 );
 
 // Methods
-const dollarFormatter = (x: number): string => {
-  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
-};
+const formatter = (x: number): string =>
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>

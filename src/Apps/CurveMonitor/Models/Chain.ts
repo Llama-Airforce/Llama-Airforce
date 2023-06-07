@@ -1,13 +1,13 @@
-const chains = [
+export const chains = [
   "mainnet",
   "arbitrum",
-  "avalanche",
-  "fantom",
-  "harmony",
-  "matic",
-  "moonbeam",
   "optimism",
+  "fantom",
+  "avalanche",
   "xdai",
+  "matic",
+  "harmony",
+  "moonbeam",
 ] as const;
 
 export type Chain = typeof chains[number];

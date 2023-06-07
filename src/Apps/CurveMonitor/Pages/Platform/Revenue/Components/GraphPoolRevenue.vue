@@ -127,6 +127,7 @@ const series = computed((): Serie[] => {
     },
     {}
   );
+
   return Object.entries(data)
     .map((x) => ({
       name: x[0],
@@ -136,9 +137,8 @@ const series = computed((): Serie[] => {
 });
 
 // Methods
-const formatter = (x: number): string => {
-  return `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
-};
+const formatter = (x: number): string =>
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>
@@ -148,6 +148,7 @@ const formatter = (x: number): string => {
   ::v-deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
+      line-height: 0.25rem;
     }
   }
 }

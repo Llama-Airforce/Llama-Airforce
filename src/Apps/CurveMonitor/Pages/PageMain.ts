@@ -5,6 +5,7 @@ import Home from "@CM/Pages/Home/Home.vue";
 import Pools from "@CM/Pages/Platform/Pools/Pools.vue";
 import Gauges from "@CM/Pages/Platform/Gauges/Gauges.vue";
 import Revenue from "@CM/Pages/Platform/Revenue/Revenue.vue";
+import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
 
 import Monitor from "@CM/Pages/Pool/Monitor.vue";
 
@@ -24,6 +25,7 @@ export const pageMain: Page = {
       name: "revenue",
       component: Revenue,
     },
+    { path: "/platform/crvusd", component: CrvUsd },
 
     { path: "/pool", redirect: { name: "monitor" } },
     {
@@ -55,6 +57,10 @@ export const pageMain: Page = {
         {
           to: "/platform/revenue",
           label: "Revenue",
+        },
+        {
+          to: "/platform/crvusd",
+          label: "crvUSD",
         },
       ],
     },
