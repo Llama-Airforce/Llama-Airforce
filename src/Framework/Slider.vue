@@ -33,7 +33,6 @@ const onInput = (evt: Event): void => {
 @import "@/Styles/Variables.scss";
 input {
   -webkit-appearance: none;
-  width: 100%;
   height: 0.75rem;
   background: var(--c-lvl1-hover);
   border-radius: var(--border-radius);

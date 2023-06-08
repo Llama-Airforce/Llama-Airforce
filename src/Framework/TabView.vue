@@ -79,7 +79,6 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 .tab-view {
   > .tab-headers {
     display: flex;
-    width: 100%;
     padding: 0;
     margin: 0;
     list-style-type: none;

@@ -76,7 +76,6 @@ const {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  width: 100%;
 
   $card-margin-width: 1.125rem;
   $card-margin-height: 0.875rem;

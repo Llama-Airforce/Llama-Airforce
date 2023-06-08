@@ -138,7 +138,6 @@ const onInput = (evt: Event): void => {
   }
 
   position: relative;
-  width: 100%;
   text-align: left;
   outline-color: transparent;
   line-height: 1.5rem;
