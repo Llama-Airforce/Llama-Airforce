@@ -45,11 +45,11 @@ export interface ZapsUCvxInterface extends utils.Interface {
     "claimFromVaultAsEth(uint256,uint256,address)": FunctionFragment;
     "claimFromVaultAsUsdt(uint256,uint256,address)": FunctionFragment;
     "claimFromVaultViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
-    "depositFromCrv(uint256,uint256,address)": FunctionFragment;
-    "depositFromCvx(uint256,uint256,address)": FunctionFragment;
-    "depositFromCvxCrv(uint256,uint256,address)": FunctionFragment;
-    "depositFromEth(uint256,address)": FunctionFragment;
-    "depositViaUniV2EthPair(uint256,uint256,address,address,address)": FunctionFragment;
+    "depositFromCrv(uint256,uint256,address,bool)": FunctionFragment;
+    "depositFromCvx(uint256,uint256,address,bool)": FunctionFragment;
+    "depositFromCvxCrv(uint256,uint256,address,bool)": FunctionFragment;
+    "depositFromEth(uint256,address,bool)": FunctionFragment;
+    "depositViaUniV2EthPair(uint256,uint256,address,address,address,bool)": FunctionFragment;
     "setApprovals()": FunctionFragment;
   };
 
@@ -159,23 +159,23 @@ export interface ZapsUCvxInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromCrv",
-    values: [BigNumberish, BigNumberish, string]
+    values: [BigNumberish, BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromCvx",
-    values: [BigNumberish, BigNumberish, string]
+    values: [BigNumberish, BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromCvxCrv",
-    values: [BigNumberish, BigNumberish, string]
+    values: [BigNumberish, BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "depositFromEth",
-    values: [BigNumberish, string]
+    values: [BigNumberish, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "depositViaUniV2EthPair",
-    values: [BigNumberish, BigNumberish, string, string, string]
+    values: [BigNumberish, BigNumberish, string, string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovals",
@@ -390,6 +390,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -397,6 +398,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -404,12 +406,14 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositFromEth(
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -419,6 +423,7 @@ export interface ZapsUCvx extends BaseContract {
       router: string,
       inputToken: string,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -506,6 +511,7 @@ export interface ZapsUCvx extends BaseContract {
     amount: BigNumberish,
     minAmountOut: BigNumberish,
     to: string,
+    lock: boolean,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -513,6 +519,7 @@ export interface ZapsUCvx extends BaseContract {
     amount: BigNumberish,
     minAmountOut: BigNumberish,
     to: string,
+    lock: boolean,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -520,12 +527,14 @@ export interface ZapsUCvx extends BaseContract {
     amount: BigNumberish,
     minAmountOut: BigNumberish,
     to: string,
+    lock: boolean,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositFromEth(
     minAmountOut: BigNumberish,
     to: string,
+    lock: boolean,
     overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -535,6 +544,7 @@ export interface ZapsUCvx extends BaseContract {
     router: string,
     inputToken: string,
     to: string,
+    lock: boolean,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -622,6 +632,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -629,6 +640,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -636,12 +648,14 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositFromEth(
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -651,6 +665,7 @@ export interface ZapsUCvx extends BaseContract {
       router: string,
       inputToken: string,
       to: string,
+      lock: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -739,6 +754,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -746,6 +762,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -753,12 +770,14 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositFromEth(
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -768,6 +787,7 @@ export interface ZapsUCvx extends BaseContract {
       router: string,
       inputToken: string,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -864,6 +884,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -871,6 +892,7 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -878,12 +900,14 @@ export interface ZapsUCvx extends BaseContract {
       amount: BigNumberish,
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositFromEth(
       minAmountOut: BigNumberish,
       to: string,
+      lock: boolean,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -893,6 +917,7 @@ export interface ZapsUCvx extends BaseContract {
       router: string,
       inputToken: string,
       to: string,
+      lock: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

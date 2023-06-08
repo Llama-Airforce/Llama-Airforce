@@ -105,7 +105,8 @@ export const ZapsUBalAddressV1 = "0x06ee5f2c2690c3b03718e662dd14282cb9947363";
 export const ZapsUBalAddressV2 = "0xbda1daacd2a5d7770edbdf9c6039861cad83ac02";
 export const ZapsUBalAddress = "0x7374c3dcaf8ff2c9bb706eaff7bf4ebbf9ac6067";
 
-export const ZapsUCvxAddress = "0x6753f23905f15376429e6f0c381fcc4862e48222";
+export const ZapsUCvxAddressV1 = "0x6753f23905f15376429e6f0c381fcc4862e48222";
+export const ZapsUCvxAddress = "0xb192908e533fc64109a20ee7d056175a24f17a55";
 export const ZapsUCvxClaimAddress =
   "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
 
@@ -139,6 +140,8 @@ export const CvxFxsFactoryERC20Address =
   "0xf3a43307dcafa93275993862aae628fcb50dc768";
 
 export const PxCvxFactoryAddress = "0xf3456e8061461e144b3f252e69dcd5b6070fdee0";
+export const LPxCvxFactoryAddress =
+  "0x72725c0c879489986d213a9a6d2116de45624c1c";
 
 // veFunder
 export const veFunderGaugeFactoryAddress =

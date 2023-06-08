@@ -171,7 +171,8 @@
     "inputs": [
       { "internalType": "uint256", "name": "amount", "type": "uint256" },
       { "internalType": "uint256", "name": "minAmountOut", "type": "uint256" },
-      { "internalType": "address", "name": "to", "type": "address" }
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "bool", "name": "lock", "type": "bool" }
     ],
     "name": "depositFromCrv",
     "outputs": [],
@@ -182,7 +183,8 @@
     "inputs": [
       { "internalType": "uint256", "name": "amount", "type": "uint256" },
       { "internalType": "uint256", "name": "minAmountOut", "type": "uint256" },
-      { "internalType": "address", "name": "to", "type": "address" }
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "bool", "name": "lock", "type": "bool" }
     ],
     "name": "depositFromCvx",
     "outputs": [],
@@ -193,7 +195,8 @@
     "inputs": [
       { "internalType": "uint256", "name": "amount", "type": "uint256" },
       { "internalType": "uint256", "name": "minAmountOut", "type": "uint256" },
-      { "internalType": "address", "name": "to", "type": "address" }
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "bool", "name": "lock", "type": "bool" }
     ],
     "name": "depositFromCvxCrv",
     "outputs": [],
@@ -203,7 +206,8 @@
   {
     "inputs": [
       { "internalType": "uint256", "name": "minAmountOut", "type": "uint256" },
-      { "internalType": "address", "name": "to", "type": "address" }
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "bool", "name": "lock", "type": "bool" }
     ],
     "name": "depositFromEth",
     "outputs": [],
@@ -216,7 +220,8 @@
       { "internalType": "uint256", "name": "minAmountOut", "type": "uint256" },
       { "internalType": "address", "name": "router", "type": "address" },
       { "internalType": "address", "name": "inputToken", "type": "address" },
-      { "internalType": "address", "name": "to", "type": "address" }
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "bool", "name": "lock", "type": "bool" }
     ],
     "name": "depositViaUniV2EthPair",
     "outputs": [],
