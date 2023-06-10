@@ -5,10 +5,10 @@ import PoolRevenue, {
 } from "@CM/Pages/Platform/Revenue/Models/Revenue";
 
 const HISTORICAL_POOL_ENDPOINT =
-  "http://3.69.174.228:5001/curve/v1/protocol/revenue/historical/toppools/20";
+  "https://api-py.llama.airforce/curve/v1/protocol/revenue/historical/toppools/20";
 
 const CHAIN_REVENUE_ENDPOINT =
-  "http://3.69.174.228:5001/curve/v1/protocol/chains";
+  "https://api-py.llama.airforce/curve/v1/protocol/chains";
 
 export class PoolRevenueResponse {
   revenue: PoolRevenue[];

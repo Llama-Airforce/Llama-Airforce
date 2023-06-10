@@ -1,7 +1,7 @@
 import ServiceBase from "@/Services/ServiceBase";
 import type { Chain } from "@CM/Models/Chain";
 
-const API_URL = "http://3.69.174.228:5001/curve/v1";
+const API_URL = "https://api-py.llama.airforce/curve/v1";
 
 type Liquidity = {
   pool: string;

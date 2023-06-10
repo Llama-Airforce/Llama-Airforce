@@ -1,32 +1,33 @@
 <template>
   <div class="legend">
     <div
-      v-for="(coin, i) in coins"
-      :key="coin.name"
-      class="coin"
+      v-for="(item, i) in items"
+      :key="item"
+      class="item"
     >
       <div
         class="color"
         :style="{ 'background-color': color(i) }"
       ></div>
 
-      <div class="label">{{ coin.name }}</div>
+      <div class="label">{{ item }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import { useCurveMonitorStore } from "@CM/Store";
-import { Coin } from "@CM/Models";
+
+// Props
+interface Props {
+  items: string[];
+}
+
+const { items } = defineProps<Props>();
 
 // Refs
 const store = useCurveMonitorStore();
-
-const coins = computed((): Coin[] => {
-  return store.coins;
-});
 
 // Methods
 const color = (i: number): string => {
@@ -41,7 +42,7 @@ const color = (i: number): string => {
   display: flex;
   gap: 1.5rem;
 
-  > .coin {
+  > .item {
     display: flex;
     align-items: center;
     gap: 0.5rem;

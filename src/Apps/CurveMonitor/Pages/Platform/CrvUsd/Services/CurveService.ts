@@ -1,0 +1,124 @@
+import ServiceBase from "@/Services/ServiceBase";
+
+const API_URL = "https://api-py.llama.airforce/curve/v1";
+
+export type Market = {
+  name: string;
+  address: string;
+  rate: number;
+  rateDelta: number;
+  borrowed: number;
+  borrowedDelta: number;
+  totalCollateral: number;
+  totalCollateralDelta: number;
+  collateral: number;
+  stableCoin: number;
+  loans: number;
+  loansDelta: number;
+};
+
+export type MarketVolume = {
+  timestamp: number;
+  swapVolumeUsd: number;
+};
+
+export type MarketLoans = {
+  timestamp: number;
+  nLoans: number;
+};
+
+export type MarketRates = {
+  timestamp: number;
+  rate: number;
+};
+
+export type MarketDecile = {
+  debt: number;
+  collateral: number;
+  collateralUsd: number;
+  stableCoin: number;
+};
+
+export type MarketDeciles = {
+  [decile: string]: MarketDecile;
+};
+
+export type MarketState = MarketDecile & {
+  index: number;
+  user: string;
+  N: number;
+  health: number;
+};
+
+export type PoolStats = {
+  address: string;
+  name: string;
+  tvl: number;
+  normalizedReserves: [number, number];
+  reservesUSD: [number, number];
+  volumeUSD: number;
+};
+
+export type PoolPrice = {
+  timestamp: number;
+  [token: string]: number;
+};
+
+export type PriceHistogram = {
+  x: number[];
+  y: number[];
+};
+
+export default class CurveService extends ServiceBase {
+  public async getMarkets(): Promise<{ markets: Market[] }> {
+    return this.fetchType(`${API_URL}/crvusd/markets`);
+  }
+
+  public async getMarketVolume(
+    marketAddr: string
+  ): Promise<{ volumes: MarketVolume[] }> {
+    return this.fetchType(`${API_URL}/crvusd/markets/${marketAddr}/volume`);
+  }
+
+  public async getMarketLoans(
+    marketAddr: string
+  ): Promise<{ loans: MarketLoans[] }> {
+    return this.fetchType(`${API_URL}/crvusd/markets/${marketAddr}/loans`);
+  }
+
+  public async getMarketRates(
+    marketAddr: string
+  ): Promise<{ rates: MarketRates[] }> {
+    return this.fetchType(`${API_URL}/crvusd/markets/${marketAddr}/rate/daily`);
+  }
+
+  public async getMarketUserStates(
+    marketAddr: string,
+    offset: number,
+    limit: number
+  ): Promise<{ states: MarketState[] }> {
+    return this.fetchType(
+      `${API_URL}/crvusd/markets/${marketAddr}/users/states?offset=${offset}&limit=${limit}`
+    );
+  }
+
+  public async getMarketUserDeciles(
+    marketAddr: string
+  ): Promise<{ deciles: MarketDeciles }> {
+    return this.fetchType(
+      `${API_URL}/crvusd/markets/${marketAddr}/users/health/deciles`
+    );
+  }
+
+  public async getPoolStats(): Promise<{ stats: PoolStats[] }> {
+    return this.fetchType(`${API_URL}/crvusd/pools/stats`);
+  }
+
+  public async getPoolPrices(): Promise<{ prices: PoolPrice[] }> {
+    return this.fetchType(`${API_URL}/crvusd/prices`);
+  }
+
+  public async getCrvUsdPriceHistogram(): Promise<PriceHistogram> {
+    return this.fetchType(`${API_URL}/crvusd/prices/hist`);
+  }
+}
