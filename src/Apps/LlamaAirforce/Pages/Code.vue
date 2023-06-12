@@ -220,6 +220,7 @@ const ucvx: Bundle = {
     {
       contract: PirexMultisigAddress,
       description: "Pirex Multisig",
+      gnosis: true,
     },
   ],
 };
