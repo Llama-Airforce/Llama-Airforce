@@ -115,6 +115,8 @@ import {
   UCrvHarvester,
   UFxsHarvester,
   ZapsUCrvClaimAddress,
+  PirexMultisigAddress,
+  ZapsUCvxPirexClaimsAddress,
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
@@ -210,6 +212,14 @@ const ucvx: Bundle = {
     {
       contract: ZapsUCvxClaimAddress,
       description: "zaps-claim",
+    },
+    {
+      contract: ZapsUCvxPirexClaimsAddress,
+      description: "Pirex Claims Distributor Zap",
+    },
+    {
+      contract: PirexMultisigAddress,
+      description: "Pirex Multisig",
     },
   ],
 };

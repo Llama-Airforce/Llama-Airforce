@@ -37,8 +37,10 @@ export const DistributorUFxsAddressV1 =
 export const DistributorUFxsAddress =
   "0x5682a28919389b528ae74dd627e0d632ca7e398c";
 
-export const DistributorUCvxAddress =
+export const DistributorUCvxAddressV1 =
   "0x27a11054b62c29c166f3fab2b0ac708043b0cb49";
+export const DistributorUCvxAddress =
+  "0x6788234f40931ca615b0d221c1afbf0ec07afcc5";
 
 // Vaults
 export const UnionCrvVaultAddressV1 =
@@ -54,6 +56,8 @@ export const UnionFxsVaultAddress =
 
 export const UnionCvxVaultAddress =
   "0x8659fc767cad6005de79af65dafe4249c57927af";
+export const PirexMultisigAddress =
+  "0x6ed9c171e02de08aaedf0fc1d589923d807061d6";
 
 export const UnionBalVaultAddressV1 =
   "0xd6fc1ecd9965ba9cac895654979564a291c74c29";
@@ -107,8 +111,12 @@ export const ZapsUBalAddress = "0x7374c3dcaf8ff2c9bb706eaff7bf4ebbf9ac6067";
 
 export const ZapsUCvxAddressV1 = "0x6753f23905f15376429e6f0c381fcc4862e48222";
 export const ZapsUCvxAddress = "0xb192908e533fc64109a20ee7d056175a24f17a55";
-export const ZapsUCvxClaimAddress =
+export const ZapsUCvxClaimAddressV1 =
   "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
+export const ZapsUCvxClaimAddress =
+  "0xa1fdfcab1c53e6f80439462f7f394c1f2ba65981";
+export const ZapsUCvxPirexClaimsAddress =
+  "0xed41c3402c4b62777939b7334b4d3d2407517ff9";
 
 // Tokens
 export const CvxAddress = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
