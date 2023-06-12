@@ -5,6 +5,7 @@ import Dashboard from "@/Framework/Cookbook/Dashboard.vue";
 import Socket from "@/Framework/Cookbook/Socket.vue";
 
 import AsyncValue from "@/Framework/Cookbook/AsyncValue.vue";
+import Breadcrumb from "@/Framework/Cookbook/Breadcrumb.vue";
 import Button from "@/Framework/Cookbook/Button.vue";
 import ButtonToggle from "@/Framework/Cookbook/ButtonToggle.vue";
 import Card from "@/Framework/Cookbook/Card.vue";
@@ -43,6 +44,11 @@ export const pageCookbook: Page = {
       path: "/cookbook/async-value",
       name: "async-value",
       component: AsyncValue,
+    },
+    {
+      path: "/cookbook/breadcrumb",
+      name: "breadcrumb",
+      component: Breadcrumb,
     },
     {
       path: "/cookbook/button",
@@ -134,6 +140,10 @@ export const pageCookbook: Page = {
         {
           to: "/cookbook/async-value",
           label: "AsyncValue",
+        },
+        {
+          to: "/cookbook/breadcrumb",
+          label: "Breadcrumb",
         },
         {
           to: "/cookbook/button",

@@ -1,4 +1,6 @@
 export { default as AsyncValue } from "@/Framework/AsyncValue.vue";
+export { default as Breadcrumb } from "@/Framework/Breadcrumb.vue";
+export type { Crumb } from "@/Framework/Crumb";
 export { default as Button } from "@/Framework/Button.vue";
 export { default as ButtonToggle } from "@/Framework/ButtonToggle.vue";
 export { default as Card } from "@/Framework/Card.vue";

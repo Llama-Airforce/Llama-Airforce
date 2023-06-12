@@ -381,6 +381,7 @@ const sortColumn = (index: number): void => {
       align-items: center;
       font-weight: 800;
       height: 2.75rem;
+      overflow: hidden;
 
       &.number {
         justify-content: flex-end;

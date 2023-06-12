@@ -64,7 +64,7 @@ onMounted(async () => {
 .datatable-pool-stats {
   ::v-deep(.pool-stats-columns-data) {
     display: grid;
-    grid-template-columns: 1fr repeat(2, 0.9fr);
+    grid-template-columns: 1fr 7rem 8rem;
 
     // Right adjust number columns.
     div:nth-child(2),

@@ -44,7 +44,7 @@ let areaSerie: ISeriesApi<"Area">;
 
 // Props
 interface Props {
-  market: string;
+  market?: string;
 }
 
 const { market } = defineProps<Props>();
@@ -74,6 +74,10 @@ watch(
   () => market,
   async (newMarket) => {
     loading.value = true;
+
+    if (!newMarket) {
+      return;
+    }
 
     volumes.value = await curveService
       .getMarketVolume(newMarket)

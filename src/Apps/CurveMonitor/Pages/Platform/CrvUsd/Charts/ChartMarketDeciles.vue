@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -25,7 +25,7 @@ const curveService = new CurveService(getHost());
 
 // Props
 interface Props {
-  market: string;
+  market?: string;
 }
 
 const { market } = defineProps<Props>();
@@ -101,16 +101,24 @@ const series = computed((): { data: number[] }[] => [
   },
 ]);
 
-// Hooks
-onMounted(async () => {
-  loading.value = true;
+// Watches
+watch(
+  () => market,
+  async (newMarket) => {
+    loading.value = true;
 
-  data.value = await curveService
-    .getMarketUserDeciles(market)
-    .then((x) => x.deciles);
+    if (!newMarket) {
+      return;
+    }
 
-  loading.value = false;
-});
+    data.value = await curveService
+      .getMarketUserDeciles(newMarket)
+      .then((x) => x.deciles);
+
+    loading.value = false;
+  },
+  { immediate: true }
+);
 
 // Methods
 const formatterX = (x: string): string => x;

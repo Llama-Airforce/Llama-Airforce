@@ -41,7 +41,7 @@ const curveService = new CurveService(getHost());
 
 // Props
 interface Props {
-  market: string;
+  market?: string;
 }
 
 const { market } = defineProps<Props>();
@@ -76,6 +76,10 @@ watch(
   async (newMarket) => {
     loading.value = true;
 
+    if (!newMarket) {
+      return;
+    }
+
     rates.value = await curveService
       .getMarketRates(newMarket)
       .then((x) => x.rates);
@@ -103,7 +107,6 @@ watch(rates, (newRates) => {
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   return createChartStyles(chartRef, theme, {
     height: 200,
-    width: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,

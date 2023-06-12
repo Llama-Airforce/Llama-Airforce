@@ -45,6 +45,9 @@
         />
       </div>
     </template>
+
+    <!-- Empty for expander arrow and pointer on hover -->
+    <template #row-details> &nbsp; </template>
   </DataTable>
 </template>
 
@@ -82,7 +85,11 @@ onMounted(async () => {
 .datatable-markets {
   ::v-deep(.markets-columns-data) {
     display: grid;
-    grid-template-columns: 1fr repeat(4, 0.9fr);
+    grid-template-columns: 1fr 5rem 6rem 7rem 8rem 1rem;
+
+    @media only screen and (max-width: 1280px) {
+      grid-template-columns: 1fr 2rem 3rem 4rem 4rem 1rem;
+    }
 
     // Right adjust number columns.
     div:nth-child(2),
