@@ -5,12 +5,13 @@
         v-for="crumb in crumbs"
         :key="crumb.id"
       >
-        <a
+        <component
+          :is="isActive(crumb) ? 'span' : 'a'"
           :class="{ active: isActive(crumb) }"
           @click="emit('crumb', crumb)"
         >
           {{ crumb.label }}
-        </a>
+        </component>
 
         <i
           v-if="!isLast(crumb)"
@@ -63,7 +64,8 @@ ul {
     gap: 1rem;
     overflow: hidden;
 
-    > a {
+    > a,
+    > span {
       padding: 0 0.25rem;
 
       white-space: nowrap;
@@ -78,7 +80,9 @@ ul {
       &.active {
         opacity: 1;
       }
+    }
 
+    > a {
       &:hover {
         cursor: pointer;
       }
