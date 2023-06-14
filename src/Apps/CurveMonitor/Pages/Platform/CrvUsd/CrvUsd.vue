@@ -2,12 +2,13 @@
   <div class="crvusd">
     <div class="col">
       <TableMarkets @selected="onMarketSelect"></TableMarkets>
-      <ChartCrvUsdPriceHistogram class="price"></ChartCrvUsdPriceHistogram>
+      <TablePegkeepers></TablePegkeepers>
+      <ChartPoolPrices></ChartPoolPrices>
     </div>
 
     <div class="col">
-      <TablePoolStats></TablePoolStats>
-      <ChartPoolPrices></ChartPoolPrices>
+      <ChartCrvUsdSupply></ChartCrvUsdSupply>
+      <ChartCrvUsdPriceHistogram class="price"></ChartCrvUsdPriceHistogram>
     </div>
   </div>
 </template>
@@ -15,8 +16,9 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";
-import TablePoolStats from "@CM/Pages/Platform/CrvUsd/Tables/TablePoolStats.vue";
+import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vue";
 import ChartPoolPrices from "@CM/Pages/Platform/CrvUsd/Charts/ChartPoolPrices.vue";
+import ChartCrvUsdSupply from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupply.vue";
 import ChartCrvUsdPriceHistogram from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdPriceHistogram.vue";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
@@ -42,7 +44,7 @@ const onMarketSelect = async (market: Market) => {
 .crvusd {
   max-width: calc(1920px - 18.125rem);
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 5fr 4fr;
 
   > .col {
     display: flex;
@@ -51,6 +53,20 @@ const onMarketSelect = async (market: Market) => {
 
     div {
       flex-grow: 0;
+    }
+  }
+
+  .row {
+    display: flex;
+    gap: var(--dashboard-gap);
+
+    @media only screen and (max-width: 1280px) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    div {
+      flex-grow: 1;
     }
   }
 }

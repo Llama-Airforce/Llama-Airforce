@@ -55,6 +55,19 @@
                 />
               </div>
             </template>
+
+            <template #row-aggregation>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div class="number">
+                <AsyncValue
+                  :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
+            </template>
           </DataTable>
         </template>
 
@@ -176,6 +189,19 @@ const dataTable1 = `<DataTable
     <div class="number">
       <AsyncValue
         :value="props.item.value * 10000"
+        :precision="2"
+        type="dollar"
+      />
+    </div>
+  </template>
+
+  <template #row-aggregation>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div class="number">
+      <AsyncValue
+        :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
         :precision="2"
         type="dollar"
       />

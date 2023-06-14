@@ -1,7 +1,7 @@
 <template>
   <CardGraph
     class="chart"
-    title="crvUSD Price History"
+    title="crvUSD Price Deviation from $1 Histogram"
     :loading="loading"
     :options="options"
     :series="series"
@@ -47,6 +47,12 @@ const options = computed(() => {
         labels: {
           formatter: formatterX,
         },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
       },
       yaxis: {
         labels: {
@@ -55,7 +61,7 @@ const options = computed(() => {
       },
       plotOptions: {
         bar: {
-          columnWidth: "50%",
+          columnWidth: "75%",
         },
       },
       legend: {
@@ -102,10 +108,20 @@ onMounted(async () => {
 });
 
 // Methods
-const formatterX = (x: string): string => `$${x.toString().substring(0, 4)}`;
+const formatterX = (x: number): string => {
+  const delta = x - 1;
 
-const formatterY = (x: number): string =>
-  `${round(x, 0, "dollar")}${unit(x, "percentage")}`;
+  return delta < 0
+    ? `-$${delta.toString().substring(2, 7)}`
+    : `$${delta.toString().substring(1, 6)}`;
+};
+
+const formatterY = (x: number): string => {
+  const sumY = series.value[0]?.data?.reduce((acc, x) => acc + x, 0) ?? 1;
+  const y = (x / sumY) * 100;
+
+  return `${round(y, 0, "dollar")}${unit(y, "percentage")}`;
+};
 </script>
 
 <style lang="scss" scoped>

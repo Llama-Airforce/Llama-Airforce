@@ -4,7 +4,12 @@
     :title="t('title')"
     :loading="loading"
   >
-    <Legend :items="coins"></Legend>
+    <Legend
+      :items="coins"
+      :disabled="coinsDisabled"
+      :clickable="true"
+      @click="onLegendClick"
+    ></Legend>
 
     <div
       ref="chartRef"
@@ -51,6 +56,7 @@ const store = useCurveMonitorStore();
 const chartRef = ref<HTMLElement | null>(null);
 const prices = ref<PoolPrice[]>([{ timestamp: 0 }]);
 const loading = ref(false);
+const coinsDisabled = ref<string[]>([]);
 
 const coins = computed((): string[] =>
   Object.keys(prices.value[0]).filter(
@@ -79,6 +85,11 @@ onMounted(async () => {
 watch(prices, (newPrices) => {
   addSeries();
   createSeries(newPrices);
+});
+
+watch(coinsDisabled, () => {
+  addSeries();
+  createSeries(prices.value);
 });
 
 watch(
@@ -153,6 +164,12 @@ const createSeries = (newPrices: PoolPrice[]): void => {
   }
 
   for (const [i, coin] of coins.value.entries()) {
+    // Don't render disabled coins. But keep the serie so colors don't get mixed up.
+    if (coinsDisabled.value.includes(coin)) {
+      lineSeries[i].setData([]);
+      continue;
+    }
+
     const newLineSerie: LineData[] = chain(newPrices)
       .map((x) => ({
         time: x.timestamp as UTCTimestamp,
@@ -172,6 +189,17 @@ const createSeries = (newPrices: PoolPrice[]): void => {
 
 const formatter = (y: number): string => {
   return `${round(y, 3, "dollar")}${unit(y, "dollar")}`;
+};
+
+// Events
+const onLegendClick = (item: string) => {
+  if (coinsDisabled.value.includes(item)) {
+    const x = new Set(coinsDisabled.value);
+    x.delete(item);
+    coinsDisabled.value = Array.from(x);
+  } else {
+    coinsDisabled.value = Array.from(new Set([item, ...coinsDisabled.value]));
+  }
 };
 </script>
 
@@ -196,5 +224,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Prices
+title: Stablecoin Prices of Pegkeepers
 </i18n>

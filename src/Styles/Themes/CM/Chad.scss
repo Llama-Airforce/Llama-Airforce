@@ -83,6 +83,9 @@
   --header-font-family: monospace;
   --header-font-color: white;
 
+  --datatable-border-aggregation: calc(var(--border-thickness) + 1px) solid
+    var(--c-primary);
+
   --container-background: var(--c-lvl0);
   --container-background-hint: var(--c-lvl0-hint);
   --container-background-hover: var(--c-lvl0-hover);

@@ -6,7 +6,7 @@ export type Market = {
   name: string;
   address: string;
   rate: number;
-  rateDelta: number;
+  rateAbsDelta: number;
   borrowed: number;
   borrowedDelta: number;
   totalCollateral: number;
@@ -69,6 +69,30 @@ export type PriceHistogram = {
   y: number[];
 };
 
+export type CrvUsdSupply = {
+  timestamp: number;
+  name: string;
+  totalSupply: 0;
+};
+
+export type Fees = {
+  pending: number;
+  collected: number;
+};
+
+export type FeesBreakdown = {
+  market: string;
+  crvUsdAdminFees: number;
+  adminBorrowingFees: number;
+  collateralAdminFeesUsd: number;
+};
+
+export type KeepersDebt = {
+  keeper: string;
+  pool: string;
+  debt: 0;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetchType(`${API_URL}/crvusd/markets`);
@@ -120,5 +144,24 @@ export default class CurveService extends ServiceBase {
 
   public async getCrvUsdPriceHistogram(): Promise<PriceHistogram> {
     return this.fetchType(`${API_URL}/crvusd/prices/hist`);
+  }
+
+  public async getCrvUsdSupply(): Promise<{ supply: CrvUsdSupply[] }> {
+    return this.fetchType(`${API_URL}/crvusd/supply`);
+  }
+
+  public async getFees(): Promise<{ fees: Fees }> {
+    return this.fetchType(`${API_URL}/crvusd/fees`);
+  }
+
+  public async getFeesBreakdown(): Promise<{
+    pending: FeesBreakdown[];
+    collected: FeesBreakdown[];
+  }> {
+    return this.fetchType(`${API_URL}/crvusd/fees/breakdown`);
+  }
+
+  public async getKeepersDebt(): Promise<{ keepers: KeepersDebt[] }> {
+    return this.fetchType(`${API_URL}/crvusd/keepers/debt`);
   }
 }

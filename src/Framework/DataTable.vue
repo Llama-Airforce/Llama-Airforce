@@ -98,6 +98,17 @@
           :key="row"
         >
         </DataTableRow>
+
+        <!-- Aggregation -->
+        <DataTableRow
+          v-if="!!$slots['row-aggregation']"
+          class="aggregation"
+          :columns="columnsData"
+        >
+          <template #row>
+            <slot name="row-aggregation"></slot>
+          </template>
+        </DataTableRow>
       </div>
     </div>
 
@@ -348,6 +359,10 @@ const sortColumn = (index: number): void => {
         background: var(--c-lvl1);
         border-bottom-width: 0;
       }
+    }
+
+    &.aggregation {
+      border-top: var(--datatable-border-aggregation);
     }
   }
 

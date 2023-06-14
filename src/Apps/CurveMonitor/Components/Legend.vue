@@ -4,6 +4,12 @@
       v-for="(item, i) in items"
       :key="item"
       class="item"
+      :class="{ clickable, disabled: disabled.includes(item) }"
+      @click="
+        if (clickable) {
+          emit('click', item);
+        }
+      "
     >
       <div
         class="color"
@@ -22,9 +28,16 @@ import { useCurveMonitorStore } from "@CM/Store";
 // Props
 interface Props {
   items: string[];
+  clickable?: boolean;
+  disabled?: string[];
 }
 
-const { items } = defineProps<Props>();
+const { items, clickable = false, disabled = [] } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  click: [item: string];
+}>();
 
 // Refs
 const store = useCurveMonitorStore();
@@ -47,10 +60,22 @@ const color = (i: number): string => {
     align-items: center;
     gap: 0.5rem;
 
+    &.clickable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    &.disabled {
+      > .color {
+        opacity: 0.25;
+      }
+    }
+
     > .color {
       width: 0.75rem;
       height: 0.75rem;
       border-radius: var(--border-radius) !important;
+      transition: opacity 125ms ease-out;
     }
 
     > .label {

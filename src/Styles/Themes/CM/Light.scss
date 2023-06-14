@@ -81,6 +81,9 @@
 
   --header-background: var(--c-lvl0);
 
+  --datatable-border-aggregation: calc(var(--border-thickness) + 2px) solid
+    var(--c-lvl3);
+
   --container-background: var(--c-lvl0);
   --container-background-hint: var(--c-lvl0-hint);
   --container-background-hover: var(--c-lvl0-hover);
