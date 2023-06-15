@@ -1,13 +1,20 @@
 <template>
   <DataTable
     class="datatable-cushions"
-    columns-header="1fr 25rem"
+    columns-header="1fr 10rem minmax(auto, 25rem)"
     columns-data="cushions-columns-data"
     :rows="rows"
-    :columns="['Name', 'Coins', 'Fees ($)']"
+    :columns="['Name', 'Coins', 'Chain', 'Fees ($)']"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
+
+      <SelectChain
+        class="chain-select"
+        :chain="networkChain"
+        :all="true"
+        @select-chain="networkChain = $event"
+      ></SelectChain>
 
       <InputText
         v-model="search"
@@ -21,6 +28,13 @@
     <template #row="props: { item: Row }">
       <div>{{ props.item.pool }}</div>
       <div>{{ props.item.coinNames.join(" / ") }}</div>
+      <div class="chain">
+        <img
+          v-if="icon(props.item.chain)"
+          :src="icon(props.item.chain)"
+        />
+        <span class="label">{{ props.item.chain }}</span>
+      </div>
 
       <div class="number">
         <AsyncValue
@@ -32,6 +46,7 @@
     </template>
 
     <template #row-aggregation>
+      <div></div>
       <div></div>
       <div></div>
 
@@ -52,6 +67,8 @@ import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText } from "@/Framework";
 import { getHost } from "@/Services/Host";
+import SelectChain from "@CM/Components/SelectChain.vue";
+import { type Chain, icon } from "@CM/Models/Chain";
 import CurveService, {
   type Cushion,
 } from "@CM/Pages/Platform/Fees/Services/CurveService";
@@ -66,6 +83,7 @@ type Row = Cushion;
 const loading = ref(true);
 const rowsRaw = ref<Row[]>([]);
 const search = ref("");
+const networkChain = ref<Chain | "all">("all");
 
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)
@@ -75,10 +93,15 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
+      const isChainFilter =
+        networkChain.value === "all" ? true : networkChain.value === row.chain;
+
       return (
-        includesTerm(row.pool) ||
-        includesTerm(row.address) ||
-        includesTerm(row.coins.join(" "))
+        (includesTerm(row.pool) ||
+          includesTerm(row.address) ||
+          includesTerm(row.chain) ||
+          includesTerm(row.coins.join(" "))) &&
+        isChainFilter
       );
     })
     .value()
@@ -102,14 +125,47 @@ onMounted(async () => {
 .datatable-cushions {
   .search {
     font-size: 0.875rem;
+    margin-left: 1rem;
+  }
+
+  .chain-select {
+    margin-left: 1rem;
+  }
+
+  .chain {
+    display: flex;
+    gap: 1rem;
+    text-transform: capitalize;
+
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
+    }
+
+    @media only screen and (max-width: 1280px) {
+      justify-content: center;
+
+      .label {
+        display: none;
+      }
+    }
   }
 
   ::v-deep(.cushions-columns-data) {
     display: grid;
-    grid-template-columns: 1fr 1fr 10rem;
+    grid-template-columns: 1fr 1fr 7rem 10rem;
+
+    @media only screen and (max-width: 1280px) {
+      grid-template-columns: 1fr 2.5rem 4rem;
+
+      div:nth-child(2) {
+        display: none;
+      }
+    }
 
     // Right adjust number columns.
-    div:nth-child(3) {
+    div:nth-child(4) {
       justify-content: end;
     }
   }

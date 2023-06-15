@@ -1,17 +1,18 @@
 <template>
   <DataTable
     class="datatable-markets"
-    columns-header="1fr 25rem"
+    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="markets-columns-data"
     :rows="rows"
     :columns="[
       'Name',
       '# Loans',
-      'Borrow Rate',
+      'Rate',
       'Borrowed',
       'Collateral ($)',
       'Fees (P / C)',
     ]"
+    :loading="loading"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
@@ -110,7 +111,15 @@
       <div></div>
       <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
       <div></div>
-      <div></div>
+
+      <div class="number">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
+          :precision="2"
+          :show-symbol="false"
+          type="dollar"
+        />
+      </div>
 
       <div class="number">
         <AsyncValue
@@ -224,6 +233,7 @@ onMounted(async () => {
 .datatable-markets {
   .search {
     font-size: 0.875rem;
+    margin-left: 1rem;
   }
 
   ::v-deep(.markets-columns-data) {
@@ -231,7 +241,12 @@ onMounted(async () => {
     grid-template-columns: 1fr 4rem 7rem 8rem 8rem 6rem 1rem;
 
     @media only screen and (max-width: 1280px) {
-      grid-template-columns: 1fr 2rem 3rem 4rem 4rem 3rem 1rem;
+      grid-template-columns: 1fr 3rem 4rem 5rem 1rem;
+
+      div:nth-child(2),
+      div:nth-child(6) {
+        display: none;
+      }
     }
 
     // Right adjust number columns.
@@ -245,8 +260,11 @@ onMounted(async () => {
 
     .delta {
       font-size: 0.75rem;
-
       color: var(--c-green);
+
+      @media only screen and (max-width: 1280px) {
+        display: none;
+      }
 
       &.negative {
         color: var(--c-red);

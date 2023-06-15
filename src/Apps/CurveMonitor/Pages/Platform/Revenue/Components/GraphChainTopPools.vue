@@ -9,11 +9,11 @@
       class="chain-selector-container"
       :class="{ loading }"
     >
-      <ChainSelect
-        class="chain-selector"
+      <SelectChain
+        :chain="store.selectedChain"
         @select-chain="onSelectChain"
       >
-      </ChainSelect>
+      </SelectChain>
     </div>
   </CardGraph>
 </template>
@@ -26,7 +26,7 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { getHost } from "@/Services/Host";
 import { ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
-import ChainSelect from "@CM/Pages/Platform/Revenue/Components/ChainSelect.vue";
+import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useCurveMonitorStore } from "@CM/Store";
 import type { Chain } from "@CM/Models/Chain";

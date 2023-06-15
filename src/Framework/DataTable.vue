@@ -1,6 +1,14 @@
 <template>
   <div class="datatable">
-    <div class="header">
+    <Spinner
+      v-if="loading"
+      class="loader"
+    ></Spinner>
+
+    <div
+      class="header"
+      :class="{ loading }"
+    >
       <div
         v-if="icon"
         class="header-icon"
@@ -23,6 +31,7 @@
     <div
       v-if="rowsMin || (rows && rows.length > 0)"
       class="list"
+      :class="{ loading }"
     >
       <!-- DataTable column headers -->
       <div
@@ -116,6 +125,7 @@
     <div
       v-else-if="!rowsMin"
       class="no-data"
+      :class="{ loading }"
     >
       <slot name="no-data">{{ t("no-data") }}</slot>
     </div>
@@ -125,7 +135,7 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeMount } from "vue";
 import { useI18n } from "vue-i18n";
-import { DataTableRow, SortOrder } from "@/Framework";
+import { DataTableRow, SortOrder, Spinner } from "@/Framework";
 
 // Props
 interface Props {
@@ -156,6 +166,8 @@ interface Props {
 
   /** Icon shown to the left of the header title. */
   icon?: string;
+
+  loading?: boolean;
 }
 
 const {
@@ -176,6 +188,7 @@ const {
   sortingDefaultDir = null,
 
   icon = "",
+  loading = false,
 } = defineProps<Props>();
 
 // Emits
@@ -297,6 +310,8 @@ const sortColumn = (index: number): void => {
 @import "@/Styles/Variables.scss";
 
 .datatable {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -307,12 +322,22 @@ const sortColumn = (index: number): void => {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
+  > .loader {
+    position: absolute;
+    inset: 0;
+    margin: auto auto;
+  }
+
   > .header {
     padding: 0 0 0.875rem 0rem;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     height: 2.5rem;
+
+    &.loading {
+      opacity: 0.33;
+    }
 
     > .header-icon {
       grid-column: 1;
@@ -345,6 +370,10 @@ const sortColumn = (index: number): void => {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+
+    &.loading {
+      opacity: 0.33;
+    }
 
     > .rows {
       display: flex;
@@ -467,6 +496,10 @@ const sortColumn = (index: number): void => {
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
+
+    &.loading {
+      opacity: 0.33;
+    }
   }
 }
 </style>

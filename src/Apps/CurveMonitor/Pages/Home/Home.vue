@@ -48,6 +48,8 @@ const pool = ref("");
 }
 
 .controls-container {
+  display: none;
+
   box-shadow: var(--container-box-shadow);
   border-radius: var(--border-radius);
   overflow: hidden;

@@ -2,7 +2,7 @@
   <Select
     class="select"
     :options="chains"
-    :selected="chain"
+    :selected="chainSelected"
     :open="chainOpen"
     @open="onChainOpen"
     @close="chainOpen = false"
@@ -13,7 +13,15 @@
         v-if="props.item"
         class="item"
       >
-        <img :src="icon(props.item)" />
+        <img
+          v-if="icon(props.item.chain)"
+          :src="icon(props.item.chain)"
+        />
+        <div
+          v-else
+          class="empty"
+        ></div>
+
         <div class="label">{{ label(props.item) }}</div>
       </div>
     </template>
@@ -23,43 +31,47 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { Select } from "@/Framework";
-import type { Chain } from "@CM/Models/Chain";
-import { useCurveStore } from "@CM/Pages/Platform/Store";
+import { type Chain, icon } from "@CM/Models/Chain";
 
 type SelectItem = {
   label: string;
-  logo: string;
 };
 
 type ChainInfo = SelectItem & {
-  chain: Chain;
+  chain: Chain | "all";
 };
+
+// Props
+interface Props {
+  chain: Chain | "all" | null;
+  all?: boolean;
+}
+
+const { chain = null, all = false } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  "select-chain": [chain: Chain];
+  "select-chain": [chain: Chain | "all"];
 }>();
 
 // Refs
-const store = useCurveStore();
-
 const chainOpen = ref(false);
 
 const chains: ChainInfo[] = [
-  { chain: "mainnet", label: "Ethereum", logo: "mainnet.svg" },
-  { chain: "avalanche", label: "Avalanche", logo: "avalanche.svg" },
-  { chain: "arbitrum", label: "Arbitrum", logo: "arbitrum.png" },
-  { chain: "fantom", label: "Fantom", logo: "fantom.svg" },
-  { chain: "xdai", label: "Gnosis (xDai)", logo: "xdai.png" },
-  { chain: "harmony", label: "Harmony", logo: "harmony.svg" },
-  { chain: "moonbeam", label: "Moonbeam", logo: "moonbeam.png" },
-  { chain: "matic", label: "Polygon", logo: "matic.svg" },
-  { chain: "optimism", label: "Optimism", logo: "optimism.png" },
+  ...(all ? [{ chain: "all" as const, label: "All" }] : []),
+  { chain: "mainnet", label: "Ethereum" },
+  { chain: "avalanche", label: "Avalanche" },
+  { chain: "arbitrum", label: "Arbitrum" },
+  { chain: "fantom", label: "Fantom" },
+  { chain: "xdai", label: "Gnosis (xDai)" },
+  { chain: "harmony", label: "Harmony" },
+  { chain: "moonbeam", label: "Moonbeam" },
+  { chain: "matic", label: "Polygon" },
+  { chain: "optimism", label: "Optimism" },
 ];
 
-const chain = computed(
-  (): ChainInfo | null =>
-    chains.find((p) => p.chain === store.selectedChain) ?? null
+const chainSelected = computed(
+  (): ChainInfo | null => chains.find((p) => p.chain === chain) ?? null
 );
 
 // Hooks
@@ -69,7 +81,6 @@ onMounted((): void => {
 
 // Methods
 const label = (item: SelectItem): string => item.label;
-const icon = (item: SelectItem): string => `icons/chains/${item.logo}`;
 
 // Events
 const onChainOpen = (): void => {
@@ -90,7 +101,8 @@ const onChainSelect = (option: unknown): void => {
     display: flex;
     align-items: center;
 
-    img {
+    img,
+    .empty {
       width: 20px;
       height: 20px;
       object-fit: scale-down;

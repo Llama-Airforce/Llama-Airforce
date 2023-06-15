@@ -50,7 +50,7 @@
 import { ref, onMounted } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import DefiLlamaService from "@CM/Pages/Home/Services/DefiLlamaService";
+import DefiLlamaService from "@/Services/DefiLlamaService";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
 
 const llamaService = new DefiLlamaService(getHost());
@@ -64,14 +64,18 @@ const volume = ref<number | null>(null);
 
 // Hooks
 onMounted(async () => {
-  const llama_ = llamaService.getData();
   const curveTvl_ = curveService.getTvlBreakdownType();
   const curveVol_ = curveService.getVolumeBreakdownType();
 
   // CRV Price + MCap
   try {
-    const llama = await llama_;
-    [price.value, mcap.value] = [llama.tokenPrice, llama.mcap];
+    mcap.value = await llamaService
+      .getData("curve-finance")
+      .then((x) => x.mcap);
+
+    price.value = await llamaService
+      .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
+      .then((x) => x.price);
   } catch {
     [price.value, mcap.value] = [0, 0];
   }

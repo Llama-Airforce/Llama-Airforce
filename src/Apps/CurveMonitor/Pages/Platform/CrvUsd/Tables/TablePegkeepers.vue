@@ -1,10 +1,11 @@
 <template>
   <DataTable
     class="datatable-pegkeepers"
-    columns-header="1fr 25rem"
+    columns-header="1fr minmax(auto, 25rem)"
     columns-data="pegkeepers-columns-data"
     :rows="rows"
     :columns="['Name', 'Debt', 'TVL', 'Volume']"
+    :loading="loading"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
@@ -41,6 +42,35 @@
       <div class="number">
         <AsyncValue
           :value="props.item.volumeUSD"
+          :precision="2"
+          type="dollar"
+        />
+      </div>
+    </template>
+
+    <template #row-aggregation>
+      <div></div>
+
+      <div class="number">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.debt, 0)"
+          :precision="2"
+          :show-zero="true"
+          type="dollar"
+        />
+      </div>
+
+      <div class="number">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
+          :precision="2"
+          type="dollar"
+        />
+      </div>
+
+      <div class="number">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.volumeUSD, 0)"
           :precision="2"
           type="dollar"
         />
@@ -108,11 +138,16 @@ onMounted(async () => {
 .datatable-pegkeepers {
   .search {
     font-size: 0.875rem;
+    margin-left: 1rem;
   }
 
   ::v-deep(.pegkeepers-columns-data) {
     display: grid;
     grid-template-columns: 1fr 4rem 8rem 8rem;
+
+    @media only screen and (max-width: 1280px) {
+      grid-template-columns: 1fr 4rem 4rem 4rem;
+    }
 
     // Right adjust number columns.
     div:nth-child(2),
