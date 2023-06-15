@@ -1,5 +1,12 @@
 <template>
   <div class="bottom">
+    <div class="wip">
+      <img
+        src="https://www.fg-a.com/under-construction/under-construction-night.gif"
+      />
+      for real though issa WIP
+    </div>
+
     <div class="buttons">
       <Button
         class="copy"
@@ -63,6 +70,17 @@ const copyUrl = async () => {
 
   gap: 1rem;
   margin: 1.125rem;
+
+  .wip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media only screen and (max-width: 1280px) {
+      display: none;
+    }
+  }
 
   .buttons {
     display: flex;
