@@ -2,145 +2,52 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading="loading"
   >
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
+    <template #actions>
+      <div class="chart-types">
+        <ButtonToggle
+          value="Line"
+          :model-value="chartType === 'line'"
+          @click="onChartType('line')"
+        >
+        </ButtonToggle>
+
+        <ButtonToggle
+          value="Breakdown"
+          :model-value="chartType === 'breakdown'"
+          @click="onChartType('breakdown')"
+        >
+        </ButtonToggle>
+      </div>
+    </template>
+
+    <ChartCrvUsdSupplyLine v-if="chartType === 'line'"></ChartCrvUsdSupplyLine>
+    <ChartCrvUsdSupplyBreakdown v-else></ChartCrvUsdSupplyBreakdown>
   </Card>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { chain } from "lodash";
-import {
-  createChart as createChartFunc,
-  IChartApi,
-  ISeriesApi,
-  LineData,
-  AreaSeriesPartialOptions,
-  LineType,
-  UTCTimestamp,
-} from "lightweight-charts";
-import { Card } from "@/Framework";
-import { round, unit } from "@/Util";
-import { getHost } from "@/Services/Host";
-import { getColors } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
-import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
-import CurveService, {
-  type CrvUsdSupply,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import { Card, ButtonToggle } from "@/Framework";
+import ChartCrvUsdSupplyLine from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyLine.vue";
+import ChartCrvUsdSupplyBreakdown from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyBreakdown.vue";
+
+type ChartType = "line" | "breakdown";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
-
-let chart: IChartApi;
-let areaSerie: ISeriesApi<"Area">;
-
 // Refs
-const store = useCurveMonitorStore();
+const chartType = ref<ChartType>("line");
 
-const chartRef = ref<HTMLElement | null>(null);
-const supply = ref<CrvUsdSupply[]>([]);
-const loading = ref(false);
-
-// Hooks
-onMounted(async () => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
-  );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(store.theme));
-
-  loading.value = true;
-  supply.value = await curveService.getCrvUsdSupply().then((x) => x.supply);
-  loading.value = false;
-
-  createSeries(supply.value);
-});
-
-// Watches
-watch(
-  () => store.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      areaSerie.applyOptions(createOptionsSerie(newTheme));
-    }
-  }
-);
-
-watch(supply, (newSupply) => {
-  createSeries(newSupply);
-});
-
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-};
-
-const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
-  const colors = getColors(theme);
-
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-};
-
-const createSeries = (newSupply: CrvUsdSupply[]): void => {
-  if (!chart || !areaSerie) {
+// Events
+const onChartType = (type: ChartType) => {
+  // Don't do anything if we're not changing the type.
+  if (chartType.value === type) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newSupply)
-    .groupBy((x) => x.timestamp)
-    .mapValues((x) => ({
-      time: x[0].timestamp as UTCTimestamp,
-      value: x.reduce((acc, y) => acc + y.totalSupply, 0),
-    }))
-    .entries()
-    .map((x) => x[1])
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
-
-  if (newSerie.length > 0) {
-    areaSerie.setData(newSerie);
-  }
-
-  chart.timeScale().fitContent();
-};
-
-const formatter = (y: number): string => {
-  return `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
+  chartType.value = type;
 };
 </script>
 
@@ -152,10 +59,22 @@ const formatter = (y: number): string => {
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
+  }
 
-    .chart {
-      height: 300px;
-      z-index: 0;
+  .chart-types {
+    display: flex;
+    font-size: 0.875rem;
+
+    button {
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
     }
   }
 }

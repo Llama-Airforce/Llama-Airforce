@@ -10,6 +10,7 @@ export { default as Code } from "@/Framework/Code.vue";
 export { default as Collapsible } from "@/Framework/Collapsible.vue";
 export { default as DataTable } from "@/Framework/DataTable.vue";
 export { default as DataTableRow } from "@/Framework/DataTableRow.vue";
+export { default as GraphApex } from "@/Framework/GraphApex.vue";
 export { default as InputNumber } from "@/Framework/InputNumber.vue";
 export { default as InputText } from "@/Framework/InputText.vue";
 export { default as KPI } from "@/Framework/KPI.vue";

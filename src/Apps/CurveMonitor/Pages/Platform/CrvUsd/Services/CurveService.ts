@@ -72,7 +72,7 @@ export type PriceHistogram = {
 export type CrvUsdSupply = {
   timestamp: number;
   name: string;
-  totalSupply: 0;
+  totalSupply: number;
 };
 
 export type Fees = {
