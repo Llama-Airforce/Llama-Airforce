@@ -133,9 +133,11 @@ const getTopPools = async (chain: string): Promise<void> => {
 };
 
 // Events
-const onSelectChain = (chain: Chain): void => {
-  store.selectedChain = chain;
-  void getTopPools(chain);
+const onSelectChain = (chain: Chain | "all"): void => {
+  if (chain !== "all") {
+    store.selectedChain = chain;
+    void getTopPools(chain);
+  }
 };
 </script>
 
