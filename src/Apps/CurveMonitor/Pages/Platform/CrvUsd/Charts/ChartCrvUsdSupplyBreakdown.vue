@@ -7,27 +7,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed } from "vue";
 import { chain } from "lodash";
 import { GraphApex } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { round, unit } from "@/Util";
-import { getHost } from "@/Services/Host";
 import { useCurveMonitorStore } from "@CM/Store";
-import CurveService, {
-  type CrvUsdSupply,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
-const curveService = new CurveService(getHost());
+// Props
+interface Props {
+  data: CrvUsdSupply[];
+}
+
+const { data = [] } = defineProps<Props>();
 
 // Refs
 const store = useCurveMonitorStore();
-
-const data = ref<CrvUsdSupply[]>([]);
-const loading = ref(false);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
@@ -88,10 +87,11 @@ const options = computed(() => {
 });
 
 const categories = computed((): string[] =>
-  chain(data.value)
+  chain(data)
     .orderBy((x) => x.timestamp, "asc")
-    .map((x) =>
-      new Date(x.timestamp * 1000).toLocaleDateString(undefined, {
+    .groupBy((x) => x.timestamp)
+    .map((_, timestamp) =>
+      new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
       })
@@ -101,7 +101,7 @@ const categories = computed((): string[] =>
 );
 
 const series = computed((): Serie[] =>
-  chain(data.value)
+  chain(data)
     .groupBy((x) => x.name)
     .map((supply, market) => ({
       name: market,
@@ -119,25 +119,14 @@ const series = computed((): Serie[] =>
 const max = computed(
   (): number =>
     Math.max(
-      ...chain(data.value)
+      ...chain(data)
         .groupBy((x) => x.timestamp)
         .map((supply) => supply.reduce((acc, x) => acc + x.totalSupply, 0))
         .value()
     ) * 1.1
 );
 
-// Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await curveService.getCrvUsdSupply().then((x) => x.supply);
-
-  loading.value = false;
-});
-
-const formatterX = (x: string): string => {
-  return x;
-};
+const formatterX = (x: string): string => x;
 
 const formatterY = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
@@ -149,5 +138,9 @@ const formatterY = (y: number): string =>
 .chart {
   height: 300px;
   z-index: 0;
+
+  &::v-deep(.apexcharts-tooltip-title) {
+    display: none;
+  }
 }
 </style>

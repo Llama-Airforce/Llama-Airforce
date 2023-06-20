@@ -18,29 +18,28 @@ import {
   UTCTimestamp,
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
-import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useCurveMonitorStore } from "@CM/Store";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
-import CurveService, {
-  type CrvUsdSupply,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-
-const curveService = new CurveService(getHost());
+import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 let chart: IChartApi;
 let areaSerie: ISeriesApi<"Area">;
+
+interface Props {
+  data: CrvUsdSupply[];
+}
+
+const { data = [] } = defineProps<Props>();
 
 // Refs
 const store = useCurveMonitorStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const supply = ref<CrvUsdSupply[]>([]);
-const loading = ref(false);
 
 // Hooks
-onMounted(async () => {
+onMounted(() => {
   if (!chartRef.value) return;
 
   chart = createChartFunc(
@@ -49,11 +48,7 @@ onMounted(async () => {
   );
   areaSerie = chart.addAreaSeries(createOptionsSerie(store.theme));
 
-  loading.value = true;
-  supply.value = await curveService.getCrvUsdSupply().then((x) => x.supply);
-  loading.value = false;
-
-  createSeries(supply.value);
+  createSeries(data);
 });
 
 // Watches
@@ -67,9 +62,12 @@ watch(
   }
 );
 
-watch(supply, (newSupply) => {
-  createSeries(newSupply);
-});
+watch(
+  () => data,
+  (newData) => {
+    createSeries(newData);
+  }
+);
 
 // Methods
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
@@ -129,9 +127,8 @@ const createSeries = (newSupply: CrvUsdSupply[]): void => {
   chart.timeScale().fitContent();
 };
 
-const formatter = (y: number): string => {
-  return `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
-};
+const formatter = (y: number): string =>
+  `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>

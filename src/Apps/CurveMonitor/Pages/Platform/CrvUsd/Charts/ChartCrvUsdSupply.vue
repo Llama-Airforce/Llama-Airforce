@@ -2,6 +2,7 @@
   <Card
     class="chart-container"
     :title="t('title')"
+    :loading="loading"
   >
     <template #actions>
       <div class="chart-types">
@@ -21,15 +22,26 @@
       </div>
     </template>
 
-    <ChartCrvUsdSupplyLine v-if="chartType === 'line'"></ChartCrvUsdSupplyLine>
-    <ChartCrvUsdSupplyBreakdown v-else></ChartCrvUsdSupplyBreakdown>
+    <ChartCrvUsdSupplyLine
+      v-if="chartType === 'line'"
+      :data="data"
+    ></ChartCrvUsdSupplyLine>
+
+    <ChartCrvUsdSupplyBreakdown
+      v-else
+      :data="data"
+    ></ChartCrvUsdSupplyBreakdown>
   </Card>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle } from "@/Framework";
+import { getHost } from "@/Services/Host";
+import CurveService, {
+  type CrvUsdSupply,
+} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartCrvUsdSupplyLine from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyLine.vue";
 import ChartCrvUsdSupplyBreakdown from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyBreakdown.vue";
 
@@ -37,8 +49,21 @@ type ChartType = "line" | "breakdown";
 
 const { t } = useI18n();
 
+const curveService = new CurveService(getHost());
+
 // Refs
 const chartType = ref<ChartType>("line");
+const data = ref<CrvUsdSupply[]>([]);
+const loading = ref(false);
+
+// Hooks
+onMounted(async () => {
+  loading.value = true;
+
+  data.value = await curveService.getCrvUsdSupply().then((x) => x.supply);
+
+  loading.value = false;
+});
 
 // Events
 const onChartType = (type: ChartType) => {
