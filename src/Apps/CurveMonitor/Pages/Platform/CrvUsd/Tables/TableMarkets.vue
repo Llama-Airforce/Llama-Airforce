@@ -91,7 +91,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="props.item.fees.pending?.adminBorrowingFees"
+          :value="totalFees(props.item.fees.pending)"
           :precision="2"
           type="dollar"
         />
@@ -99,7 +99,7 @@
         /
 
         <AsyncValue
-          :value="props.item.fees.collected?.adminBorrowingFees ?? 0"
+          :value="totalFees(props.item.fees.collected)"
           :precision="0"
           :show-zero="true"
           type="dollar"
@@ -131,7 +131,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="aggrFeesPending"
+          :value="rows.reduce((acc, x) => acc + totalFees(x.fees.pending), 0)"
           :precision="2"
           type="dollar"
         />
@@ -139,7 +139,7 @@
         /
 
         <AsyncValue
-          :value="aggrFeesCollected"
+          :value="rows.reduce((acc, x) => acc + totalFees(x.fees.collected), 0)"
           :precision="0"
           :show-zero="true"
           type="dollar"
@@ -169,8 +169,8 @@ const curveService = new CurveService(getHost());
 
 type Row = Market & {
   fees: {
-    pending: FeesBreakdown | undefined;
-    collected: FeesBreakdown | undefined;
+    pending?: FeesBreakdown;
+    collected?: FeesBreakdown;
   };
 };
 
@@ -192,20 +192,6 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-const aggrFeesPending = computed((): number =>
-  rows.value.reduce(
-    (acc, x) => acc + (x.fees.pending?.adminBorrowingFees ?? 0),
-    0
-  )
-);
-
-const aggrFeesCollected = computed((): number =>
-  rows.value.reduce(
-    (acc, x) => acc + (x.fees.collected?.adminBorrowingFees ?? 0),
-    0
-  )
-);
-
 // Hooks
 onMounted(async () => {
   loading.value = true;
@@ -225,6 +211,14 @@ onMounted(async () => {
 
   loading.value = false;
 });
+
+// Methods
+const totalFees = (fees?: FeesBreakdown): number =>
+  fees
+    ? fees.adminBorrowingFees +
+      fees.collateralAdminFeesUsd +
+      fees.crvUsdAdminFees
+    : 0;
 </script>
 
 <style lang="scss" scoped>
