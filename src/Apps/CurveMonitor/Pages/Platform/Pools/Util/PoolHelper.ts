@@ -11,7 +11,7 @@ export function match(input: string, option: Pool): boolean {
 
   const hasAddress =
     inputLower.startsWith("0x") &&
-    option.id.toLocaleLowerCase().includes(inputLower);
+    option.address.toLocaleLowerCase().includes(inputLower);
 
   return hasName || hasSymbol || hasAddress;
 }

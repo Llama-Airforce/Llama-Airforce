@@ -1,7 +1,7 @@
 export type PoolId = string;
 
 export type Pool = {
-  id: PoolId;
+  address: string;
   name: string;
   symbol: string;
   cumulateVolumeUsd: number;

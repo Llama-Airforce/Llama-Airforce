@@ -1,4 +1,3 @@
-import { minDelay } from "@/Util";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import type { Pool } from "@CM/Pages/Platform/Pools/Models";
 import {
@@ -18,13 +17,8 @@ export async function getPools(
   }
 
   store.poolsLoading = true;
-  const resp = await minDelay(service.get());
-
-  if (resp) {
-    store.pools = resp;
-  } else {
-    store.poolsLoadingError = true;
-  }
+  const { pools } = await service.get();
+  store.pools = pools;
 
   store.poolsLoading = false;
 }
@@ -47,11 +41,8 @@ export async function getReserves(
   store.poolsLoading = true;
 
   try {
-    const reserves = await minDelay(service.get(pool), 500);
-
-    if (reserves) {
-      store.setReserves(pool.id, reserves);
-    }
+    const { reserves } = await service.get(pool);
+    store.setReserves(pool.address, reserves);
   } finally {
     store.poolsLoading = false;
   }
@@ -75,10 +66,10 @@ export async function getCandles(
   store.poolsLoading = true;
 
   try {
-    const candles = await minDelay(service.get(pool), 500);
+    const candles = await service.get(pool);
 
     if (candles) {
-      store.setCandles(pool.id, candles);
+      store.setCandles(pool.address, candles);
     }
   } finally {
     store.poolsLoading = false;
@@ -103,11 +94,8 @@ export async function getVolumes(
   store.poolsLoading = true;
 
   try {
-    const volumes = await minDelay(service.get(pool), 500);
-
-    if (volumes) {
-      store.setVolumes(pool.id, volumes);
-    }
+    const { volume } = await service.get(pool);
+    store.setVolumes(pool.address, volume);
   } finally {
     store.poolsLoading = false;
   }

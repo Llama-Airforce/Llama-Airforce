@@ -35,7 +35,7 @@ const store = useCurvePoolsStore();
 const storeCM = useCurveMonitorStore();
 
 const reserves = computed((): Reserves[] => {
-  return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
+  return poolSelected ? store.reserves[poolSelected.address] ?? [] : [];
 });
 
 const options = computed((): unknown => {

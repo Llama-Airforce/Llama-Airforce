@@ -38,7 +38,7 @@ const store = useCurvePoolsStore();
 const storeCM = useCurveMonitorStore();
 
 const volumes = computed((): Volume[] => {
-  return poolSelected ? store.volumes[poolSelected.id] ?? [] : [];
+  return poolSelected ? store.volumes[poolSelected.address] ?? [] : [];
 });
 
 const options = computed((): unknown => {

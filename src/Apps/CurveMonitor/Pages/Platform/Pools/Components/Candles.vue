@@ -133,7 +133,7 @@ onMounted((): void => {
 });
 
 const candles = computed((): Candle[] => {
-  const id = poolSelected?.id;
+  const id = poolSelected?.address;
 
   return id ? store.candles[id] ?? [] : [];
 });

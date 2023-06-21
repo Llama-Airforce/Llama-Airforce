@@ -39,12 +39,12 @@ const store = useCurvePoolsStore();
 const storeCM = useCurveMonitorStore();
 
 const reserves = computed((): Reserves[] => {
-  return poolSelected ? store.reserves[poolSelected.id] ?? [] : [];
+  return poolSelected ? store.reserves[poolSelected.address] ?? [] : [];
 });
 
 const numCoins = computed((): number => {
   return poolSelected
-    ? store.reserves[poolSelected.id]?.[0]?.reservesUSD?.length
+    ? store.reserves[poolSelected.address]?.[0]?.reservesUSD?.length
     : 0;
 });
 

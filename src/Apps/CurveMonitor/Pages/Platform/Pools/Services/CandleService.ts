@@ -29,7 +29,7 @@ export default class CandleService extends ServiceBase {
       const query = `{
         candles(
           where: {
-            pool: "${pool.id}"
+            pool: "${pool.address}"
             period: 3600
             timestamp_gte: ${timestampLast}
           }
