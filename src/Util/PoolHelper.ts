@@ -1,5 +1,6 @@
-import { GaugeId } from "@/Apps/LlamaAirforce/Pages/Curve/Gauges/Models/Gauge";
 import { invert } from "lodash";
+
+type GaugeId = string;
 
 const poolNameMapping: Record<string, string> = {
   "Curve.fi Factory USD Metapool: Magic Internet Money 3Pool": "mim",

@@ -4,7 +4,10 @@
     :class="{ hasMenu }"
   >
     <div class="sticky-wrapper">
-      <div class="title">
+      <div
+        v-if="hasMenu"
+        class="title"
+      >
         <img :src="menuHeader" />
       </div>
 
