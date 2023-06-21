@@ -161,6 +161,8 @@ const { t } = useI18n();
     }
 
     > .topic {
+      flex: 1 1;
+
       @media only screen and (max-width: 1280px) {
         padding: 0 1rem;
         width: auto;
