@@ -3,9 +3,9 @@
     class="datatable-pegkeepers"
     columns-header="1fr minmax(auto, 25rem)"
     columns-data="pegkeepers-columns-data"
-    :rows="rows"
-    :columns="['Name', 'Debt', 'TVL', 'Volume']"
     :loading="loading"
+    :rows="rows"
+    :columns="['Name', 'Debt', 'TVL', 'Volume', 'Fees']"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
@@ -46,6 +46,14 @@
           type="dollar"
         />
       </div>
+
+      <div class="number">
+        <AsyncValue
+          :value="props.item.profit"
+          :precision="2"
+          type="dollar"
+        />
+      </div>
     </template>
 
     <template #row-aggregation>
@@ -75,6 +83,14 @@
           type="dollar"
         />
       </div>
+
+      <div class="number">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.profit, 0)"
+          :precision="2"
+          type="dollar"
+        />
+      </div>
     </template>
   </DataTable>
 </template>
@@ -88,13 +104,14 @@ import { getHost } from "@/Services/Host";
 import CurveService, {
   type PoolStats,
   type KeepersDebt,
+  type KeepersProfit,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const { t } = useI18n();
 
 const curveService = new CurveService(getHost());
 
-type Row = PoolStats & KeepersDebt;
+type Row = PoolStats & KeepersDebt & KeepersProfit;
 
 // Refs
 const loading = ref(true);
@@ -120,11 +137,13 @@ onMounted(async () => {
 
   const poolStats = await curveService.getPoolStats();
   const keepersDebt = await curveService.getKeepersDebt();
+  const keepersProfit = await curveService.getKeepersProfit();
 
   rowsRaw.value = poolStats.stats
     .map((pool) => ({
       ...pool,
       ...keepersDebt.keepers.find((keeper) => keeper.pool === pool.address)!,
+      ...keepersProfit.profit.find((keeper) => keeper.pool === pool.address)!,
     }))
     .sort((a, b) => b.tvl - a.tvl);
 
@@ -143,16 +162,21 @@ onMounted(async () => {
 
   ::v-deep(.pegkeepers-columns-data) {
     display: grid;
-    grid-template-columns: 1fr 4rem 8rem 8rem;
+    grid-template-columns: 1fr 4rem 8rem 8rem 6rem;
 
     @media only screen and (max-width: 1280px) {
       grid-template-columns: 1fr 4rem 4rem 4rem;
+
+      div:nth-child(5) {
+        display: none;
+      }
     }
 
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3),
-    div:nth-child(4) {
+    div:nth-child(4),
+    div:nth-child(5) {
       justify-content: end;
     }
   }

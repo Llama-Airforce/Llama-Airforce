@@ -90,7 +90,15 @@ export type FeesBreakdown = {
 export type KeepersDebt = {
   keeper: string;
   pool: string;
-  debt: 0;
+  market: string;
+  debt: number;
+};
+
+export type KeepersProfit = {
+  keeper: string;
+  pool: string;
+  market: string;
+  profit: number;
 };
 
 export default class CurveService extends ServiceBase {
@@ -163,5 +171,9 @@ export default class CurveService extends ServiceBase {
 
   public async getKeepersDebt(): Promise<{ keepers: KeepersDebt[] }> {
     return this.fetchType(`${API_URL}/crvusd/keepers/debt`);
+  }
+
+  public async getKeepersProfit(): Promise<{ profit: KeepersProfit[] }> {
+    return this.fetchType(`${API_URL}/crvusd/keepers/profit`);
   }
 }

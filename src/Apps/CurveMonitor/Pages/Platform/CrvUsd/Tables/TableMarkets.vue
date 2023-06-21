@@ -3,6 +3,7 @@
     class="datatable-markets"
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="markets-columns-data"
+    :loading="loading"
     :rows="rows"
     :columns="[
       'Name',
@@ -12,7 +13,6 @@
       'Collateral ($)',
       'Fees (P / C)',
     ]"
-    :loading="loading"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
