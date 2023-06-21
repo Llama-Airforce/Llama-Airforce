@@ -64,7 +64,7 @@ const options = computed((): unknown => {
       xaxis: {
         type: "datetime",
       },
-      yaxis: [...Array(numCoins).keys()].map((i) => createAxisY(i)),
+      yaxis: [...Array(numCoins.value).keys()].map((i) => createAxisY(i)),
       dataLabels: {
         enabled: false,
       },
@@ -82,7 +82,7 @@ const options = computed((): unknown => {
         enabled: true,
         intersect: false,
         custom: (x: DataPoint<Serie>) => {
-          const percentages = [...Array(numCoins).keys()].map(
+          const percentages = [...Array(numCoins.value).keys()].map(
             (i) => x.w.globals.initialSeries[i].data[x.dataPointIndex].y
           );
 
@@ -102,7 +102,7 @@ const options = computed((): unknown => {
 });
 
 const series = computed((): Serie[] => {
-  return [...Array(numCoins).keys()].map((i) => createSerie(i));
+  return [...Array(numCoins.value).keys()].map((i) => createSerie(i));
 });
 
 // Methods
