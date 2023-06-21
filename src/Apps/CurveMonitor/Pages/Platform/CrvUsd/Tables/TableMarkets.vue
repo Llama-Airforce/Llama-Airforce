@@ -41,7 +41,8 @@
           class="delta"
           :class="{ negative: props.item.rateAbsDelta < 0 }"
         >
-          (<AsyncValue
+          ({{ props.item.rateAbsDelta > 0 ? "+" : ""
+          }}<AsyncValue
             :value="props.item.rateAbsDelta * 100"
             :precision="2"
             :show-unit="false"
@@ -62,7 +63,8 @@
           class="delta"
           :class="{ negative: props.item.borrowedDelta < 0 }"
         >
-          (<AsyncValue
+          ({{ props.item.borrowedDelta > 0 ? "+" : ""
+          }}<AsyncValue
             :value="props.item.borrowedDelta * 100"
             :precision="2"
             type="percentage"
@@ -81,7 +83,8 @@
           class="delta"
           :class="{ negative: props.item.totalCollateralDelta < 0 }"
         >
-          (<AsyncValue
+          ({{ props.item.totalCollateralDelta > 0 ? "+" : ""
+          }}<AsyncValue
             :value="props.item.totalCollateralDelta * 100"
             :precision="2"
             type="percentage"
