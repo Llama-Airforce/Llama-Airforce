@@ -76,7 +76,7 @@ const filter = (input: string, option: unknown) => match(input, option as Pool);
 const sort = (a: unknown, b: unknown) => volume(b as Pool) - volume(a as Pool);
 
 const volume = (pool: Pool): number => {
-  return pool.cumulateVolumeUsd;
+  return pool.cumulativeVolumeUSD;
 };
 
 const name = (pool: Pool): string => {

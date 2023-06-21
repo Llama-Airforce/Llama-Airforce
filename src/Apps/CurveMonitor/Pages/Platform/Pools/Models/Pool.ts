@@ -4,6 +4,6 @@ export type Pool = {
   address: string;
   name: string;
   symbol: string;
-  cumulateVolumeUsd: number;
+  cumulativeVolumeUSD: number;
   coins: string[];
 };
