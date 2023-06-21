@@ -45,6 +45,7 @@
           :gauge-selected="props.item"
         ></GraphEmissions>
       </div>
+      <span v-else></span>
     </template>
   </DataTable>
 </template>
