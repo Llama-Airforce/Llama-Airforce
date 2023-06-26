@@ -78,9 +78,33 @@ const onClick = (): void => {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .row {
   display: flex;
   flex-direction: column;
+
+  &:hover {
+    > .row-data {
+      > .expander {
+        color: var(--c-primary-hover);
+        scale: 1.25;
+      }
+    }
+  }
 
   > .row-data {
     &.expandable:hover {
@@ -88,7 +112,11 @@ const onClick = (): void => {
     }
 
     > .expander {
+      color: var(--c-primary);
       text-align: center;
+      animation: pulse 1000ms 2;
+
+      transition: scale $hover-duration ease-in-out; // For hover scaling.
 
       > i {
         transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
