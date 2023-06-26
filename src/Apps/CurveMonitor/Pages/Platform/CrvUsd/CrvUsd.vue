@@ -1,7 +1,11 @@
 <template>
   <div class="crvusd">
+    <TableMarkets
+      style="grid-column: 1 / -1"
+      @selected="onMarketSelect"
+    ></TableMarkets>
+
     <div class="col">
-      <TableMarkets @selected="onMarketSelect"></TableMarkets>
       <TablePegkeepers></TablePegkeepers>
       <ChartPoolPrices></ChartPoolPrices>
     </div>

@@ -9,9 +9,12 @@
       'Name',
       '# Loans',
       'Rate',
+      'Change',
       'Borrowed',
+      'Change',
       'Collateral ($)',
-      'Fees (P / C)',
+      'Fees Pending',
+      'Fees Collected',
     ]"
   >
     <template #header-title>
@@ -36,19 +39,20 @@
           :precision="2"
           type="percentage"
         />
+      </div>
 
-        <span
-          class="delta"
-          :class="{ negative: props.item.rateAbsDelta < 0 }"
-        >
-          ({{ props.item.rateAbsDelta > 0 ? "+" : ""
-          }}<AsyncValue
-            :value="props.item.rateAbsDelta * 100"
-            :precision="2"
-            :show-unit="false"
-            type="percentage"
-          />)
-        </span>
+      <div
+        class="number delta"
+        :class="{ negative: props.item.rateAbsDelta < 0 }"
+      >
+        {{ props.item.rateAbsDelta > 0 ? "+" : "" }}
+        <AsyncValue
+          v-if="props.item.rateAbsDelta"
+          :value="props.item.rateAbsDelta * 100"
+          :precision="2"
+          :show-unit="false"
+          type="percentage"
+        />
       </div>
 
       <div class="number">
@@ -58,18 +62,19 @@
           :show-symbol="false"
           type="dollar"
         />
+      </div>
 
-        <span
-          class="delta"
-          :class="{ negative: props.item.borrowedDelta < 0 }"
-        >
-          ({{ props.item.borrowedDelta > 0 ? "+" : ""
-          }}<AsyncValue
-            :value="props.item.borrowedDelta * 100"
-            :precision="2"
-            type="percentage"
-          />)
-        </span>
+      <div
+        class="number delta"
+        :class="{ negative: props.item.borrowedDelta < 0 }"
+      >
+        {{ props.item.borrowedDelta > 0 ? "+" : "" }}
+        <AsyncValue
+          v-if="props.item.borrowedDelta"
+          :value="props.item.borrowedDelta * 100"
+          :precision="2"
+          type="percentage"
+        />
       </div>
 
       <div class="number">
@@ -78,18 +83,6 @@
           :precision="2"
           type="dollar"
         />
-
-        <span
-          class="delta"
-          :class="{ negative: props.item.totalCollateralDelta < 0 }"
-        >
-          ({{ props.item.totalCollateralDelta > 0 ? "+" : ""
-          }}<AsyncValue
-            :value="props.item.totalCollateralDelta * 100"
-            :precision="2"
-            type="percentage"
-          />)
-        </span>
       </div>
 
       <div class="number">
@@ -98,12 +91,12 @@
           :precision="2"
           type="dollar"
         />
+      </div>
 
-        /
-
+      <div class="number">
         <AsyncValue
           :value="totalFees(props.item.fees.collected)"
-          :precision="0"
+          :precision="2"
           :show-zero="true"
           type="dollar"
         />
@@ -114,6 +107,7 @@
       <div></div>
       <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
       <div></div>
+      <div></div>
 
       <div class="number">
         <AsyncValue
@@ -123,6 +117,8 @@
           type="dollar"
         />
       </div>
+
+      <div></div>
 
       <div class="number">
         <AsyncValue
@@ -138,12 +134,12 @@
           :precision="2"
           type="dollar"
         />
+      </div>
 
-        /
-
+      <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + totalFees(x.fees.collected), 0)"
-          :precision="0"
+          :precision="2"
           :show-zero="true"
           type="dollar"
         />
@@ -228,6 +224,8 @@ const totalFees = (fees?: FeesBreakdown): number =>
 @import "@/Styles/Variables.scss";
 
 .datatable-markets {
+  container-type: inline-size;
+
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
@@ -235,13 +233,37 @@ const totalFees = (fees?: FeesBreakdown): number =>
 
   ::v-deep(.markets-columns-data) {
     display: grid;
-    grid-template-columns: 1fr 4rem 7rem 8rem 8rem 6rem 1rem;
+    grid-template-columns: 1fr 5rem 5rem 5rem 5rem 5rem 6rem 6rem 7rem 1rem;
 
-    @media only screen and (max-width: 1280px) {
-      grid-template-columns: 1fr 3rem 4rem 5rem 1rem;
+    @container (max-width: 1000px) {
+      grid-template-columns: 1fr 5rem 5rem 5rem 7rem 7rem 7rem 1rem;
 
-      div:nth-child(2),
+      div:nth-child(4),
       div:nth-child(6) {
+        display: none;
+      }
+    }
+
+    @container (max-width: 700px) {
+      grid-template-columns: 1fr 5rem 4rem 5rem 6rem 6rem 1rem;
+
+      div:nth-child(8) {
+        display: none;
+      }
+    }
+
+    @container (max-width: 575px) {
+      grid-template-columns: 1fr 4rem 5rem 6rem 6rem 1rem;
+
+      div:nth-child(2) {
+        display: none;
+      }
+    }
+
+    @container (max-width: 460px) {
+      grid-template-columns: 1fr 4rem 5rem 6rem 1rem;
+
+      div:nth-child(9) {
         display: none;
       }
     }
@@ -251,17 +273,15 @@ const totalFees = (fees?: FeesBreakdown): number =>
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
-    div:nth-child(6) {
+    div:nth-child(6),
+    div:nth-child(7),
+    div:nth-child(8),
+    div:nth-child(9) {
       justify-content: end;
     }
 
     .delta {
-      font-size: 0.75rem;
       color: var(--c-green);
-
-      @media only screen and (max-width: 1280px) {
-        display: none;
-      }
 
       &.negative {
         color: var(--c-red);
