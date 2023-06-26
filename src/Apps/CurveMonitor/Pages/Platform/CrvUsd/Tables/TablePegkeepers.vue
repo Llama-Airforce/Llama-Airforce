@@ -100,6 +100,7 @@ import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText } from "@/Framework";
+import { notEmpty } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type PoolStats,
@@ -140,11 +141,26 @@ onMounted(async () => {
   const keepersProfit = await curveService.getKeepersProfit();
 
   rowsRaw.value = poolStats.stats
-    .map((pool) => ({
-      ...pool,
-      ...keepersDebt.keepers.find((keeper) => keeper.pool === pool.address)!,
-      ...keepersProfit.profit.find((keeper) => keeper.pool === pool.address)!,
-    }))
+    .map((pool) => {
+      const debt = keepersDebt.keepers.find(
+        (keeper) => keeper.pool === pool.address
+      );
+
+      const profit = keepersProfit.profit.find(
+        (keeper) => keeper.pool === pool.address
+      );
+
+      if (!debt || !profit) {
+        return undefined;
+      }
+
+      return {
+        ...pool,
+        ...debt,
+        ...profit,
+      };
+    })
+    .filter(notEmpty)
     .sort((a, b) => b.tvl - a.tvl);
 
   loading.value = false;
