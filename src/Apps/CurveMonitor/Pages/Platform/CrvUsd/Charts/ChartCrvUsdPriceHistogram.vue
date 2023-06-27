@@ -18,20 +18,20 @@ import { getHost } from "@/Services/Host";
 import CurveService, {
   type PriceHistogram,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 const curveService = new CurveService(getHost());
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const loading = ref(true);
 const data = ref<PriceHistogram>({ x: [], y: [] });
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(store.theme);
-  const colorsArray = getColorsArray(store.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

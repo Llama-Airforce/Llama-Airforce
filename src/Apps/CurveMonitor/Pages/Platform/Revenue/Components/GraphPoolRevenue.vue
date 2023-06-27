@@ -13,7 +13,7 @@ import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import PoolRevenue from "@CM/Pages/Platform/Revenue/Models/Revenue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 
@@ -24,7 +24,7 @@ type Serie = {
 
 // Refs
 const store = useCurveStore();
-const storeCM = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const poolRevenues = computed((): PoolRevenue[] => {
   return store.poolRevenues ?? [];
@@ -32,8 +32,8 @@ const poolRevenues = computed((): PoolRevenue[] => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeCM.theme);
-  const colorsArray = getColorsArray(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

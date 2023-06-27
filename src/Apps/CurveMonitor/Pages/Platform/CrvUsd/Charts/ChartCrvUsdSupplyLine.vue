@@ -19,7 +19,7 @@ import {
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -34,7 +34,7 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -44,16 +44,16 @@ onMounted(() => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(store.theme));
+  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(data);
 });
 
 // Watches
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));

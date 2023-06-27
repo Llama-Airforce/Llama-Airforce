@@ -3,7 +3,7 @@
     <ButtonToggle
       v-for="range in timeRanges"
       :key="range"
-      :model-value="store.timeRange === range"
+      :model-value="storeMonitor.timeRange === range"
       :value="t(range)"
       @click="onRange(range)"
     >
@@ -15,27 +15,27 @@
 import { useI18n } from "vue-i18n";
 import { ButtonToggle } from "@/Framework";
 import { type TimeRange, timeRanges } from "@CM/Models/TimeRange";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import type { SocketPool } from "@CM/Services/Sockets";
 import { TimeRangeService } from "@CM/Services";
 
 const { t } = useI18n();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeMonitor = useMonitorStore();
 
 // Events
 const onRange = (range: TimeRange) => {
   // Don't do anything if we're not changing the range.
-  if (store.timeRange === range) {
+  if (storeMonitor.timeRange === range) {
     return;
   }
 
-  store.timeRange = range;
+  storeMonitor.timeRange = range;
 
-  if (store.pair) {
+  if (storeMonitor.pair) {
     const timeRangeService = new TimeRangeService(
-      store.socketPool as SocketPool
+      storeMonitor.socketPool as SocketPool
     );
     timeRangeService.update(range);
   }

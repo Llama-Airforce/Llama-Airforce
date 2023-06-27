@@ -13,7 +13,7 @@ import { GraphApex } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { round, unit } from "@/Util";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
@@ -26,12 +26,12 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(store.theme);
-  const colorsArray = getColorsArray(store.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

@@ -28,10 +28,10 @@ import { useI18n } from "vue-i18n";
 import { debounce } from "lodash";
 import { InputText } from "@/Framework";
 import { shorten, icon } from "@/Util";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { getPools } from "@CM/Pages/Pool/DataLoaders";
 import type { Pool } from "@CM/Models";
 import { PoolService } from "@CM/Services";
-import { getPools } from "@CM/DataLoaders";
 
 const { t } = useI18n();
 
@@ -50,13 +50,13 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeMonitor = useMonitorStore();
 
 const autoComplete = ref(false);
 const placeholder = ref(t("search-placeholder"));
 
 const pools = computed((): Pool[] => {
-  return store.pools;
+  return storeMonitor.pools;
 });
 
 // Methods.
@@ -72,7 +72,7 @@ const name = (pool: Pool): string => {
 const getPoolsDebounced = debounce(getPools, 200, { maxWait: 1000 });
 
 const onInput = (input: string): void => {
-  void getPoolsDebounced(store, poolService, input);
+  void getPoolsDebounced(storeMonitor, poolService, input);
   autoComplete.value = !!input;
 };
 
@@ -85,7 +85,7 @@ const onSelect = (option: unknown): void => {
 
 // Watches
 watch(
-  () => store.poolsLoadingError,
+  () => storeMonitor.poolsLoadingError,
   (newError) => {
     if (newError) {
       placeholder.value = t("search-error");

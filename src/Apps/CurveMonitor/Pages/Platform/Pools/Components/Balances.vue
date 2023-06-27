@@ -17,7 +17,7 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import type { Pool, Reserves } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 const { t } = useI18n();
 
@@ -36,7 +36,7 @@ const { poolSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurvePoolsStore();
-const storeCM = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const reserves = computed((): Reserves[] => {
   return poolSelected ? store.reserves[poolSelected.address] ?? [] : [];
@@ -49,8 +49,8 @@ const numCoins = computed((): number => {
 });
 
 const options = computed((): unknown => {
-  const colors = getColors(storeCM.theme);
-  const colorsArray = getColorsArray(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

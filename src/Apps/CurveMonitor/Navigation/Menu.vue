@@ -19,7 +19,7 @@ import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
 import MenuItem from "@CM/Navigation/MenuItem.vue";
 import type { Page } from "@CM/Pages/Page";
-import { usePageStore } from "@CM/Pages/Store";
+import { usePageStore } from "@CM/Stores/PageStore";
 
 // Emits
 const emit = defineEmits<{
@@ -27,11 +27,11 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const pageStore = usePageStore();
+const storePage = usePageStore();
 const route = useRoute();
 
 const page = computed((): Page | undefined => {
-  return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
+  return storePage.pages.find((p) => subIsActive(p.titleRoute, route));
 });
 
 const menuItems = computed(() => {

@@ -16,19 +16,19 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { ChainRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 // Refs
 const store = useCurveStore();
-const storeCM = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chainRevenues = computed((): ChainRevenue[] => {
   return orderBy(store.chainRevenues ?? [], (x) => x.totalDailyFeesUSD, "asc");
 });
 
 const options = computed((): unknown => {
-  const colors = getColors(storeCM.theme);
-  const colorsArray = getColorsArray(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

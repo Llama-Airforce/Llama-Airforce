@@ -27,7 +27,8 @@ import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Tvl } from "@CM/Pages/Pool/Models";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 
@@ -37,7 +38,8 @@ let chart: IChartApi;
 let areaSerie: ISeriesApi<"Area">;
 
 // Refs
-const store = useCurveMonitorStore();
+const store = useMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -51,9 +53,9 @@ onMounted((): void => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(store.theme));
+  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(tvl.value);
 });
@@ -64,7 +66,7 @@ watch(tvl, (newTvl) => {
 });
 
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));

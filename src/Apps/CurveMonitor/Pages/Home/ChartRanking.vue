@@ -16,20 +16,20 @@ import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 const curveService = new CurveService(getHost());
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const loading = ref(true);
 const data = ref<{ name: string; tvl_growth: number }[]>([]);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(store.theme);
-  const colorsArray = getColorsArray(store.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

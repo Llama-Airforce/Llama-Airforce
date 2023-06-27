@@ -82,7 +82,7 @@ import { chain } from "lodash";
 import { DataTable, InputText, Pagination } from "@/Framework";
 import Transactions from "@CM/Pages/Pool/Components/Transactions.vue";
 import type { Sandwich } from "@CM/Pages/Pool/Models";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { relativeTime as relativeTimeFunc } from "@CM/Util";
 
 const { t } = useI18n();
@@ -90,7 +90,7 @@ const { t } = useI18n();
 const swsPerPage = 6;
 
 // Refs
-const store = useCurveMonitorStore();
+const store = useMonitorStore();
 
 const search = ref("");
 const page = ref(1);

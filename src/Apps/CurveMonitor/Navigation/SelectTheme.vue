@@ -62,7 +62,7 @@ import { ref, onMounted } from "vue";
 import { Select } from "@/Framework";
 import { getColors } from "@/Styles/Themes/CM";
 import { Theme } from "@CM/Models/Theme";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 type ThemeDescription = {
   id: Theme;
@@ -76,7 +76,7 @@ const themes: ThemeDescription[] = [
 ];
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const theme = ref<ThemeDescription>(themes[0]);
 const selectThemeOpen = ref(false);
@@ -111,7 +111,7 @@ const onThemeSelect = (option: unknown) => {
   theme.value = option as ThemeDescription;
 
   window.document.documentElement.setAttribute("data-theme", theme.value.id);
-  store.theme = theme.value.id;
+  storeSettings.theme = theme.value.id;
   localStorage.setItem("theme", theme.value.id);
 };
 </script>

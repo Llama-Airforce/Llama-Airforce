@@ -16,19 +16,19 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { Tooltip } from "@/Framework";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { StatusService } from "@CM/Services";
 import { Socket } from "socket.io-client";
 
 // Refs
-const store = useCurveMonitorStore();
+const storeMonitor = useMonitorStore();
 
 const ping = ref(Infinity);
 const status = ref<"good" | "meh" | "bad">("bad");
 
 // Hooks
 watch(
-  () => store.socket as Socket,
+  () => storeMonitor.socket as Socket,
   (socket: Socket) => {
     if (!socket) {
       return;

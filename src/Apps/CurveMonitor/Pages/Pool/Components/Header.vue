@@ -22,7 +22,7 @@
 import { ref } from "vue";
 import { Card } from "@/Framework";
 import { shorten } from "@/Util";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import type { Pool } from "@CM/Models";
 import { PoolService } from "@CM/Services";
 import SearchPool from "@CM/Components/SearchPool.vue";
@@ -36,7 +36,7 @@ interface Props {
 const { poolService } = defineProps<Props>();
 
 // Refs
-const store = useCurveMonitorStore();
+const store = useMonitorStore();
 
 const pool = ref("");
 

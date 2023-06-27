@@ -141,7 +141,7 @@ import {
   TabItem,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import {
   type Transaction,
   isDeposit,
@@ -172,7 +172,7 @@ const {
 } = defineProps<Props>();
 
 // Refs
-const store = useCurveMonitorStore();
+const store = useMonitorStore();
 
 const search = ref("");
 const types = ref<TransactionType[]>(["swap", "deposit", "withdraw"]);

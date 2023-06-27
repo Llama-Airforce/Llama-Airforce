@@ -30,7 +30,8 @@ import { round, unit } from "@/Util";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import type { Balances } from "@CM/Pages/Pool/Models";
 import Legend from "@CM/Components/Legend.vue";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 
@@ -43,7 +44,8 @@ let lineSeries: ISeriesApi<"Line">[] = [];
 const mode: Mode = "absolute";
 
 // Refs
-const store = useCurveMonitorStore();
+const store = useMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -62,7 +64,7 @@ onMounted((): void => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
   addSeries();
@@ -76,13 +78,13 @@ watch(balances, (newBalances) => {
 });
 
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
 
       for (const [i, serie] of lineSeries.entries()) {
-        serie.applyOptions(createOptionsSerie(i, store.theme));
+        serie.applyOptions(createOptionsSerie(i, storeSettings.theme));
       }
     }
   }
@@ -138,7 +140,9 @@ const addSeries = (): void => {
 
   lineSeries = [];
   for (let i = 0; i < numCoins.value; i++) {
-    const lineSerie = chart.addLineSeries(createOptionsSerie(i, store.theme));
+    const lineSerie = chart.addLineSeries(
+      createOptionsSerie(i, storeSettings.theme)
+    );
 
     lineSeries.push(lineSerie);
   }

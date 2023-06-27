@@ -28,7 +28,7 @@ import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
@@ -51,7 +51,7 @@ let chart: IChartApi;
 let ratesSerie: ISeriesApi<"Area">;
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 const rates = ref<MarketRates[]>([]);
@@ -63,9 +63,11 @@ onMounted((): void => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  ratesSerie = chart.addAreaSeries(createOptionsSerieRates(store.theme));
+  ratesSerie = chart.addAreaSeries(
+    createOptionsSerieRates(storeSettings.theme)
+  );
 
   createSeriesRates(rates.value);
 });
@@ -90,7 +92,7 @@ watch(
 );
 
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));

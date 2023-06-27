@@ -19,7 +19,7 @@ import CurveService, {
   type MarketDeciles,
   type MarketDecile,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 const curveService = new CurveService(getHost());
 
@@ -31,15 +31,15 @@ interface Props {
 const { market } = defineProps<Props>();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const loading = ref(true);
 const data = ref<MarketDeciles>({});
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(store.theme);
-  const colorsArray = getColorsArray(store.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

@@ -24,7 +24,7 @@
 import { onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { Pool } from "@CM/Models";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import Header from "@CM/Pages/Pool/Components/Header.vue";
 import Controls from "@CM/Pages/Pool/Components/Controls.vue";
 import Sandwiches from "@CM/Pages/Pool/Components/Sandwiches.vue";
@@ -34,7 +34,7 @@ import Bonding from "@CM/Pages/Pool/Components/Bonding.vue";
 import Balances from "@CM/Pages/Pool/Components/Balances.vue";
 import Prices from "@CM/Pages/Pool/Components/Prices.vue";
 import { PoolService } from "@CM/Services";
-import { loadPool } from "@CM/DataLoaders";
+import { loadPool } from "@CM/Pages/Pool/DataLoaders";
 import { createSocketRoot } from "@CM/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";
@@ -45,7 +45,7 @@ const poolService = new PoolService(socket);
 // Refs.
 const route = useRoute();
 const router = useRouter();
-const store = useCurveMonitorStore();
+const store = useMonitorStore();
 store.socket = socket;
 
 const hasPool = computed((): boolean => store.pool !== null);

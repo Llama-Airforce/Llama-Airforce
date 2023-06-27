@@ -35,7 +35,7 @@ import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColorsArray } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import Legend from "@CM/Components/Legend.vue";
@@ -51,7 +51,7 @@ let chart: IChartApi;
 let lineSeries: ISeriesApi<"Line">[] = [];
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 const prices = ref<PoolPrice[]>([{ timestamp: 0 }]);
@@ -70,7 +70,7 @@ onMounted(async () => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
   loading.value = true;
@@ -93,13 +93,13 @@ watch(coinsDisabled, () => {
 });
 
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
 
       for (const [i, serie] of lineSeries.entries()) {
-        serie.applyOptions(createOptionsSerie(i, store.theme));
+        serie.applyOptions(createOptionsSerie(i, storeSettings.theme));
       }
     }
   }
@@ -152,7 +152,9 @@ const addSeries = (): void => {
 
   lineSeries = [];
   for (let i = 0; i < coins.value.length; i++) {
-    const lineSerie = chart.addLineSeries(createOptionsSerie(i, store.theme));
+    const lineSerie = chart.addLineSeries(
+      createOptionsSerie(i, storeSettings.theme)
+    );
 
     lineSeries.push(lineSerie);
   }

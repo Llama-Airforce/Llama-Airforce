@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { Select } from "@/Framework";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { PairService } from "@CM/Services";
 import { SocketPool } from "@CM/Services/Sockets";
 
@@ -55,25 +55,25 @@ type Coin = {
 };
 
 // Refs
-const store = useCurveMonitorStore();
+const storeMonitor = useMonitorStore();
 
 const selectCoinOpen = ref<[boolean, boolean]>([false, false]);
 const coin = ref<[Coin | null, Coin | null]>([null, null]);
 
-const coins = computed((): Coin[] => {
-  return store.coins.map((coin) => ({
+const coins = computed((): Coin[] =>
+  storeMonitor.coins.map((coin) => ({
     label: coin.name,
-  }));
-});
+  }))
+);
 
 const pair = computed((): [Coin, Coin] | null => {
-  if (store.pair) {
+  if (storeMonitor.pair) {
     return [
       {
-        label: store.pair[0],
+        label: storeMonitor.pair[0],
       },
       {
-        label: store.pair[1],
+        label: storeMonitor.pair[1],
       },
     ];
   }
@@ -112,9 +112,9 @@ const onCoinSelect = (i: 0 | 1, option: unknown, update: boolean): void => {
     coin.value[j] = oldCoin;
   }
 
-  if (update && store.socketPool && coin.value[0] && coin.value[1]) {
-    const pairService = new PairService(store.socketPool as SocketPool);
-    pairService.update(store.timeRange, [
+  if (update && storeMonitor.socketPool && coin.value[0] && coin.value[1]) {
+    const pairService = new PairService(storeMonitor.socketPool as SocketPool);
+    pairService.update(storeMonitor.timeRange, [
       coin.value[0].label,
       coin.value[1].label,
     ]);

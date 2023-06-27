@@ -1,5 +1,5 @@
 import { Subscription } from "rxjs";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { PoolService, CoinService, PairService } from "@CM/Services";
 import {
   BalanceService,
@@ -13,7 +13,7 @@ import {
 import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   host: string,
   pool: string
 ): ReturnType<typeof createSocketPool> {
@@ -45,7 +45,7 @@ export function loadPool(
 }
 
 export async function getPools(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: PoolService,
   input: string
 ) {
@@ -60,7 +60,7 @@ export async function getPools(
 
 let balances$_: Subscription | null = null;
 function getBalances(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: BalanceService
 ) {
   if (balances$_) {
@@ -90,7 +90,7 @@ function getBalances(
 
 let tvl$_: Subscription | null = null;
 function getTvl(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: TvlService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -121,7 +121,7 @@ function getTvl(
 
 let prices$_: Subscription | null = null;
 function getPrices(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: PriceService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -152,7 +152,7 @@ function getPrices(
 
 let volumes$_: Subscription | null = null;
 function getVolumes(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: VolumeService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -183,7 +183,7 @@ function getVolumes(
 
 let txs$_: Subscription | null = null;
 function getTransactions(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: TransactionService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -214,7 +214,7 @@ function getTransactions(
 
 let bondings$_: Subscription | null = null;
 function getBondings(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: BondingService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -236,7 +236,7 @@ function getBondings(
 
 let coins$_: Subscription | null = null;
 function getCoins(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: CoinService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -258,7 +258,7 @@ function getCoins(
 
 let pair$_: Subscription | null = null;
 function getPair(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: PairService
 ) {
   // Unsubscribe from from existing subscriptions.
@@ -280,7 +280,7 @@ function getPair(
 
 let sandwiches$_: Subscription | null = null;
 function getSandwiches(
-  store: ReturnType<typeof useCurveMonitorStore>,
+  store: ReturnType<typeof useMonitorStore>,
   service: SandwichService
 ) {
   // Unsubscribe from from existing subscriptions.

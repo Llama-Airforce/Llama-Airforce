@@ -28,7 +28,7 @@ import { getHost } from "@/Services/Host";
 import { ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import type { Chain } from "@CM/Models/Chain";
 import { ChainTopPoolsRevenueService } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 
@@ -36,7 +36,7 @@ const topPoolService = new ChainTopPoolsRevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
-const storeCM = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const loading = ref(false);
 
@@ -47,8 +47,8 @@ const topPools = computed((): ChainTopPoolRevenue[] =>
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeCM.theme);
-  const colorsArray = getColorsArray(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

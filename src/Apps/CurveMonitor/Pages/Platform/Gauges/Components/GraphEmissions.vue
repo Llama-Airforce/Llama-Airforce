@@ -19,7 +19,7 @@ import Gauge from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import Fee from "@CM/Pages/Platform/Gauges/Models/Fee";
 import Emission from "@CM/Pages/Platform/Gauges/Models/Emission";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import { aggregateDataPoints } from "@CM/Pages/Platform/Gauges/Util/SnapshotHelper";
 
 type Serie = {
@@ -39,7 +39,7 @@ const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
-const storeCM = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const title = computed((): string => {
   let title = t("title");
@@ -77,8 +77,8 @@ const yMax = computed((): number => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeCM.theme);
-  const colorsArray = getColorsArray(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
+  const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
     { colors, colorsArray },

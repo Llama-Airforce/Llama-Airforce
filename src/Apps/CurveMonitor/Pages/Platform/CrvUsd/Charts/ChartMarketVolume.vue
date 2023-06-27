@@ -28,7 +28,7 @@ import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
@@ -50,7 +50,7 @@ interface Props {
 const { market } = defineProps<Props>();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 const volumes = ref<MarketVolume[]>([]);
@@ -62,9 +62,9 @@ onMounted((): void => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(store.theme));
+  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(volumes.value);
 });
@@ -89,7 +89,7 @@ watch(
 );
 
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));

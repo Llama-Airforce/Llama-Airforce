@@ -33,7 +33,7 @@ import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import { getColors } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import type { Pool, Candle } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 
@@ -54,7 +54,7 @@ const { poolSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurvePoolsStore();
-const storeCM = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 const invert = ref(false);
@@ -62,7 +62,7 @@ const invert = ref(false);
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  const colors = getColors(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
 
   chart = createChartFunc(chartRef.value, {
     width: chartRef.value.clientWidth,
@@ -170,7 +170,7 @@ const createChart = (newCandles: Candle[], newInvert: boolean): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const colors = getColors(storeCM.theme);
+  const colors = getColors(storeSettings.theme);
   const newVolumeSeries: HistogramData[] = chain(newCandles)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,

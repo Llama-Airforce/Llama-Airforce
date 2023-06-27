@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { getColorsArray } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 // Props
 interface Props {
@@ -40,11 +40,11 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 // Methods
 const color = (i: number): string => {
-  return getColorsArray(store.theme)[i];
+  return getColorsArray(storeSettings.theme)[i];
 };
 </script>
 

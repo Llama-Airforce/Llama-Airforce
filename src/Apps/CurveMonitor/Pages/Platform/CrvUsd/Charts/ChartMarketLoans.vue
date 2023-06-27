@@ -26,7 +26,7 @@ import {
 import { Card } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
-import { useCurveMonitorStore } from "@CM/Store";
+import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
@@ -49,7 +49,7 @@ let chart: IChartApi;
 let loansSerie: ISeriesApi<"Histogram">;
 
 // Refs
-const store = useCurveMonitorStore();
+const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 const loans = ref<MarketLoans[]>([]);
@@ -61,9 +61,11 @@ onMounted((): void => {
 
   chart = createChartFunc(
     chartRef.value,
-    createOptionsChart(chartRef.value, store.theme)
+    createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  loansSerie = chart.addHistogramSeries(createOptionsSerieLoans(store.theme));
+  loansSerie = chart.addHistogramSeries(
+    createOptionsSerieLoans(storeSettings.theme)
+  );
 
   createSeriesLoans(loans.value);
 });
@@ -88,7 +90,7 @@ watch(
 );
 
 watch(
-  () => store.theme,
+  () => storeSettings.theme,
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
