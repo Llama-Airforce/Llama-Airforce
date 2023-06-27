@@ -7,12 +7,12 @@
     :rows="rows"
     :columns="[
       'Name',
-      '# Loans',
+      'Loans',
       'Rate',
-      'Change',
+      'Change (24h)',
       'Borrowed',
-      'Change',
-      'Collateral ($)',
+      'Change (24h)',
+      'Collateral',
       'Fees Pending',
       'Fees Collected',
     ]"
@@ -58,7 +58,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.borrowed"
-          :precision="2"
+          :precision="0"
           :show-symbol="false"
           type="dollar"
         />
@@ -80,7 +80,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.totalCollateral"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -88,7 +88,7 @@
       <div class="number">
         <AsyncValue
           :value="totalFees(props.item.fees.pending)"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -96,7 +96,7 @@
       <div class="number">
         <AsyncValue
           :value="totalFees(props.item.fees.collected)"
-          :precision="2"
+          :precision="0"
           :show-zero="true"
           type="dollar"
         />
@@ -112,7 +112,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
-          :precision="2"
+          :precision="0"
           :show-symbol="false"
           type="dollar"
         />
@@ -123,7 +123,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.totalCollateral, 0)"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -131,7 +131,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + totalFees(x.fees.pending), 0)"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -139,7 +139,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + totalFees(x.fees.collected), 0)"
-          :precision="2"
+          :precision="0"
           :show-zero="true"
           type="dollar"
         />
@@ -232,39 +232,113 @@ const totalFees = (fees?: FeesBreakdown): number =>
   }
 
   ::v-deep(.markets-columns-data) {
+    --col-width: 12ch;
+
     display: grid;
-    grid-template-columns: 1fr 5rem 5rem 5rem 5rem 5rem 6rem 6rem 7rem 1rem;
+    grid-template-columns: 1fr repeat(8, var(--col-width)) 1rem;
 
-    @container (max-width: 1000px) {
-      grid-template-columns: 1fr 5rem 5rem 5rem 7rem 7rem 7rem 1rem;
+    // Non mobile
+    @media only screen and (min-width: 1280px) {
+      @container (max-width: 1200px) {
+        grid-template-columns: 1fr repeat(7, var(--col-width)) 1rem;
 
-      div:nth-child(4),
-      div:nth-child(6) {
-        display: none;
+        div:nth-child(2) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 1100px) {
+        grid-template-columns: 1fr repeat(6, var(--col-width)) 1rem;
+
+        div:nth-child(6) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 1000px) {
+        grid-template-columns: 1fr repeat(5, var(--col-width)) 1rem;
+
+        div:nth-child(4) {
+          display: none;
+        }
       }
     }
 
-    @container (max-width: 700px) {
-      grid-template-columns: 1fr 5rem 4rem 5rem 6rem 6rem 1rem;
+    // Mobile
+    @media only screen and (max-width: 1280px) {
+      gap: 0.25rem;
 
-      div:nth-child(8) {
-        display: none;
+      @container (max-width: 1000px) {
+        grid-template-columns: 1fr repeat(7, var(--col-width)) 1rem;
+
+        div:nth-child(2) {
+          display: none;
+        }
       }
-    }
 
-    @container (max-width: 575px) {
-      grid-template-columns: 1fr 4rem 5rem 6rem 6rem 1rem;
+      @container (max-width: 900px) {
+        grid-template-columns: 1fr repeat(6, var(--col-width)) 1rem;
 
-      div:nth-child(2) {
-        display: none;
+        div:nth-child(6) {
+          display: none;
+        }
       }
-    }
 
-    @container (max-width: 460px) {
-      grid-template-columns: 1fr 4rem 5rem 6rem 1rem;
+      @container (max-width: 800px) {
+        grid-template-columns: 1fr repeat(5, var(--col-width)) 1rem;
 
-      div:nth-child(9) {
-        display: none;
+        div:nth-child(4) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 700px) {
+        --col-width: 11ch;
+      }
+
+      @container (max-width: 600px) {
+        grid-template-columns: 1fr repeat(4, var(--col-width)) 1rem;
+
+        div:nth-child(8) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 500px) {
+        grid-template-columns: 1fr repeat(3, var(--col-width)) 1rem;
+
+        div:nth-child(9) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 400px) {
+        --col-width: 10ch;
+      }
+
+      @container (max-width: 350px) {
+        --col-width: 9ch;
+      }
+
+      @container (max-width: 325px) {
+        --col-width: 8ch;
+      }
+
+      @container (max-width: 300px) {
+        grid-template-columns: 1fr repeat(2, var(--col-width)) 1rem;
+
+        div:nth-child(7) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 250px) {
+        grid-template-columns: 1fr 1rem;
+
+        div:nth-child(3),
+        div:nth-child(5) {
+          display: none;
+        }
       }
     }
 
@@ -292,7 +366,7 @@ const totalFees = (fees?: FeesBreakdown): number =>
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Markets (24h)
+title: Markets
 
 search-placeholder: Search for...
 </i18n>

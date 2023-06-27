@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-pegkeepers"
-    columns-header="1fr minmax(auto, 25rem)"
+    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="pegkeepers-columns-data"
     :loading="loading"
     :rows="rows"
@@ -25,7 +25,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.debt"
-          :precision="2"
+          :precision="0"
           :show-zero="true"
           type="dollar"
         />
@@ -34,7 +34,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.tvl"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -42,7 +42,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.volumeUSD"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -50,7 +50,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.profit"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -62,7 +62,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.debt, 0)"
-          :precision="2"
+          :precision="0"
           :show-zero="true"
           type="dollar"
         />
@@ -71,7 +71,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -79,7 +79,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.volumeUSD, 0)"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -87,7 +87,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.profit, 0)"
-          :precision="2"
+          :precision="0"
           type="dollar"
         />
       </div>
@@ -171,20 +171,87 @@ onMounted(async () => {
 @import "@/Styles/Variables.scss";
 
 .datatable-pegkeepers {
+  container-type: inline-size;
+
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
   }
 
   ::v-deep(.pegkeepers-columns-data) {
+    --col-width: 12ch;
+
     display: grid;
-    grid-template-columns: 1fr 4rem 8rem 8rem 6rem;
+    grid-template-columns: 1fr repeat(4, var(--col-width));
 
+    // Non mobile
+    @media only screen and (min-width: 1280px) {
+      @container (max-width: 750px) {
+        --col-width: 11ch;
+      }
+
+      @container (max-width: 650px) {
+        --col-width: 10ch;
+      }
+
+      @container (max-width: 600px) {
+        --col-width: 9ch;
+      }
+
+      @container (max-width: 575px) {
+        --col-width: 8ch;
+      }
+    }
+
+    // Mobile
     @media only screen and (max-width: 1280px) {
-      grid-template-columns: 1fr 4rem 4rem 4rem;
+      @container (max-width: 575px) {
+        --col-width: 11ch;
+      }
 
-      div:nth-child(5) {
-        display: none;
+      @container (max-width: 525px) {
+        --col-width: 10ch;
+      }
+
+      @container (max-width: 500px) {
+        --col-width: 9ch;
+      }
+
+      @container (max-width: 475px) {
+        --col-width: 8ch;
+      }
+
+      @container (max-width: 450px) {
+        --col-width: 7ch;
+      }
+
+      @container (max-width: 425px) {
+        --col-width: 6ch;
+      }
+
+      @container (max-width: 375px) {
+        grid-template-columns: 1fr repeat(3, var(--col-width));
+
+        div:nth-child(5) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 325px) {
+        grid-template-columns: 1fr repeat(2, var(--col-width));
+
+        div:nth-child(2) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 250px) {
+        grid-template-columns: 1fr;
+
+        div:nth-child(3),
+        div:nth-child(4) {
+          display: none;
+        }
       }
     }
 
