@@ -135,7 +135,7 @@ watch(proposalsPage, (ps) => {
     }
   }
 
-  > .pagination {
+  .pagination {
     justify-content: end;
   }
 }
