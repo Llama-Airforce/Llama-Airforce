@@ -33,7 +33,7 @@
 
       <div
         class="bar"
-        :style="{ width: `${forPercentage}%` }"
+        :style="{ width: `${Math.max(MIN_WIDTH, forPercentage)}%` }"
       ></div>
     </div>
 
@@ -67,7 +67,7 @@
 
       <div
         class="bar"
-        :style="{ width: `${againstPercentage}%` }"
+        :style="{ width: `${Math.max(MIN_WIDTH, againstPercentage)}%` }"
       ></div>
     </div>
   </div>
@@ -78,6 +78,8 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
+
+const MIN_WIDTH = 4;
 
 const { t } = useI18n();
 
