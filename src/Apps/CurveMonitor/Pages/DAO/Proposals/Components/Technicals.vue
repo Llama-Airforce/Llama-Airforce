@@ -8,26 +8,6 @@
     <div class="technical">
       <div
         class="heading"
-        @click="expandedCallData = !expandedCallData"
-      >
-        {{ t("calldata") }}
-        <i
-          class="fas fa-chevron-up expander"
-          :class="{ expandedCallData }"
-        ></i>
-      </div>
-      <Collapsible :expanded="expandedCallData">
-        <div
-          v-if="proposalDetails"
-          class="calldata"
-          v-html="callData"
-        ></div>
-      </Collapsible>
-    </div>
-
-    <div class="technical">
-      <div
-        class="heading"
         @click="expandedVoters = !expandedVoters"
       >
         {{ t("voters") }} ({{ proposal.votes }})
@@ -45,6 +25,26 @@
           :proposal="proposal"
           :proposal-details="proposalDetails"
         ></Voters>
+      </Collapsible>
+    </div>
+
+    <div class="technical">
+      <div
+        class="heading"
+        @click="expandedCallData = !expandedCallData"
+      >
+        {{ t("calldata") }}
+        <i
+          class="fas fa-chevron-up expander"
+          :class="{ expandedCallData }"
+        ></i>
+      </div>
+      <Collapsible :expanded="expandedCallData">
+        <div
+          v-if="proposalDetails"
+          class="calldata"
+          v-html="callData"
+        ></div>
       </Collapsible>
     </div>
   </div>
@@ -75,7 +75,7 @@ const { proposal, expanded = false } = defineProps<Props>();
 // Refs
 const proposalDetails = ref<ProposalDetails | null>(null);
 const expandedCallData = ref(true);
-const expandedVoters = ref(false);
+const expandedVoters = ref(proposal.votes > 0);
 
 const callData = computed(() => {
   if (!proposalDetails.value) {
