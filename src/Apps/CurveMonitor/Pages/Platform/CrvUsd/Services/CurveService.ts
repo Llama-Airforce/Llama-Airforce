@@ -101,6 +101,12 @@ export type KeepersProfit = {
   profit: number;
 };
 
+export type Yield = {
+  platform: string;
+  pool: string;
+  apy: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetchType(`${API_URL}/crvusd/markets`);
@@ -175,5 +181,9 @@ export default class CurveService extends ServiceBase {
 
   public async getKeepersProfit(): Promise<{ profit: KeepersProfit[] }> {
     return this.fetchType(`${API_URL}/crvusd/keepers/profit`);
+  }
+
+  public async getYield(): Promise<{ yields: Yield[] }> {
+    return this.fetchType(`${API_URL}/crvusd/yield`);
   }
 }

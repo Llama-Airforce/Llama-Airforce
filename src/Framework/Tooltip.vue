@@ -70,7 +70,6 @@ const show = ref(false);
     flex-direction: column;
     overflow: hidden;
     white-space: nowrap;
-    z-index: 12;
     transition: 0.15s ease all;
     padding: 1rem;
 

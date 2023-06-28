@@ -10,6 +10,7 @@
       'Loans',
       'Rate',
       'Change (24h)',
+      'Premia',
       'Borrowed',
       'Change (24h)',
       'Collateral',
@@ -53,6 +54,69 @@
           :show-unit="false"
           type="percentage"
         />
+      </div>
+
+      <div class="number">
+        <Tooltip v-if="yieldsMax">
+          <template #item>
+            <span
+              class="number delta"
+              :class="{
+                negative: yieldsMax.apy - props.item.rate * 100 < 0,
+              }"
+            >
+              <AsyncValue
+                :value="yieldsMax.apy - props.item.rate * 100"
+                :precision="2"
+                type="percentage"
+              />
+            </span>
+          </template>
+
+          <div class="premia">
+            <span class="best">
+              <em>Premia</em> for <strong>{{ props.item.name }}</strong> is max
+              yield (<AsyncValue
+                :value="yieldsMax.apy"
+                :precision="2"
+                type="percentage"
+              />) from <strong>{{ yieldsMax.pool }}</strong> farmed on
+              <strong>{{ yieldsMax.platform }}</strong> minus the borrow rate
+              (<AsyncValue
+                :value="props.item.rate * 100"
+                :precision="2"
+                type="percentage"
+              />)
+            </span>
+
+            <div class="top">
+              <strong>Top {{ yieldsTop.length }} yields: </strong>
+
+              <div class="yields">
+                <template
+                  v-for="(y, i) in yieldsTop"
+                  :key="i"
+                >
+                  <div>{{ y.platform }}</div>
+                  <div>
+                    {{
+                      y.pool
+                        .replace("Curve.fi", "")
+                        .replace("Factory Plain Pool: ", "")
+                    }}
+                  </div>
+                  <div>
+                    <AsyncValue
+                      :value="y.apy"
+                      :precision="2"
+                      type="percentage"
+                    />
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </Tooltip>
       </div>
 
       <div class="number">
@@ -108,6 +172,7 @@
       <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
       <div></div>
       <div></div>
+      <div></div>
 
       <div class="number">
         <AsyncValue
@@ -155,28 +220,47 @@
 import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText } from "@/Framework";
+import { AsyncValue, DataTable, InputText, Tooltip } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type Market,
   type FeesBreakdown,
+  type Yield,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const { t } = useI18n();
 
 const curveService = new CurveService(getHost());
 
-type Row = Market & {
+type Fees = {
   fees: {
     pending?: FeesBreakdown;
     collected?: FeesBreakdown;
   };
 };
 
+type Row = Market & Fees;
+
 // Refs
 const loading = ref(true);
 const rowsRaw = ref<Row[]>([]);
 const search = ref("");
+
+const yields = ref<Yield[]>([]);
+
+const yieldsMax = computed(
+  (): Yield | null =>
+    chain(yields.value)
+      .maxBy((x) => x.apy)
+      .value() ?? null
+);
+
+const yieldsTop = computed((): Yield[] =>
+  chain(yields.value)
+    .orderBy((x) => x.apy, "desc")
+    .take(5)
+    .value()
+);
 
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)
@@ -196,16 +280,24 @@ onMounted(async () => {
   loading.value = true;
 
   const { markets } = await curveService.getMarkets();
-  const fees = await curveService.getFeesBreakdown();
+  const { pending, collected } = await curveService.getFeesBreakdown();
+
+  yields.value = await curveService.getYield().then((x) => x.yields);
 
   rowsRaw.value = markets
-    .map((market) => ({
-      ...market,
-      fees: {
-        pending: fees.pending.find((x) => x.market === market.address),
-        collected: fees.collected.find((x) => x.market === market.address),
-      },
-    }))
+    .map((market) => {
+      const fees: Fees = {
+        fees: {
+          pending: pending.find((x) => x.market === market.address),
+          collected: collected.find((x) => x.market === market.address),
+        },
+      };
+
+      return {
+        ...market,
+        ...fees,
+      };
+    })
     .sort((a, b) => b.totalCollateral - a.totalCollateral);
 
   loading.value = false;
@@ -225,22 +317,50 @@ const totalFees = (fees?: FeesBreakdown): number =>
 
 .datatable-markets {
   container-type: inline-size;
+  z-index: 9999; // Needed for Popper tooltips in the datatable;
 
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
   }
 
+  .premia {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    > .top {
+      display: flex;
+      flex-direction: column;
+
+      > .yields {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        > div {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 20ch;
+        }
+      }
+    }
+  }
+
   ::v-deep(.markets-columns-data) {
-    --col-width: 12ch;
+    --col-width: 11ch;
 
     display: grid;
-    grid-template-columns: 1fr repeat(8, var(--col-width)) 1rem;
+    grid-template-columns:
+      minmax(12ch, 1fr) repeat(9, minmax(var(--col-width), 0.75fr))
+      1rem;
 
     // Non mobile
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1200px) {
-        grid-template-columns: 1fr repeat(7, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(8, minmax(var(--col-width), 0.75fr))
+          1rem;
 
         div:nth-child(2) {
           display: none;
@@ -248,15 +368,19 @@ const totalFees = (fees?: FeesBreakdown): number =>
       }
 
       @container (max-width: 1100px) {
-        grid-template-columns: 1fr repeat(6, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
+          1rem;
 
-        div:nth-child(6) {
+        div:nth-child(7) {
           display: none;
         }
       }
 
       @container (max-width: 1000px) {
-        grid-template-columns: 1fr repeat(5, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
+          1rem;
 
         div:nth-child(4) {
           display: none;
@@ -269,7 +393,9 @@ const totalFees = (fees?: FeesBreakdown): number =>
       gap: 0.25rem;
 
       @container (max-width: 1000px) {
-        grid-template-columns: 1fr repeat(7, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(8, minmax(var(--col-width), 0.75fr))
+          2rem;
 
         div:nth-child(2) {
           display: none;
@@ -277,15 +403,19 @@ const totalFees = (fees?: FeesBreakdown): number =>
       }
 
       @container (max-width: 900px) {
-        grid-template-columns: 1fr repeat(6, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
+          2rem;
 
-        div:nth-child(6) {
+        div:nth-child(7) {
           display: none;
         }
       }
 
       @container (max-width: 800px) {
-        grid-template-columns: 1fr repeat(5, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
+          2rem;
 
         div:nth-child(4) {
           display: none;
@@ -294,49 +424,59 @@ const totalFees = (fees?: FeesBreakdown): number =>
 
       @container (max-width: 700px) {
         --col-width: 11ch;
-      }
 
-      @container (max-width: 600px) {
-        grid-template-columns: 1fr repeat(4, var(--col-width)) 1rem;
-
-        div:nth-child(8) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 500px) {
-        grid-template-columns: 1fr repeat(3, var(--col-width)) 1rem;
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(5, minmax(var(--col-width), 0.75fr))
+          2rem;
 
         div:nth-child(9) {
           display: none;
         }
       }
 
-      @container (max-width: 400px) {
-        --col-width: 10ch;
-      }
+      @container (max-width: 600px) {
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(4, minmax(var(--col-width), 0.75fr))
+          2rem;
 
-      @container (max-width: 350px) {
-        --col-width: 9ch;
-      }
-
-      @container (max-width: 325px) {
-        --col-width: 8ch;
-      }
-
-      @container (max-width: 300px) {
-        grid-template-columns: 1fr repeat(2, var(--col-width)) 1rem;
-
-        div:nth-child(7) {
+        div:nth-child(10) {
           display: none;
         }
       }
 
-      @container (max-width: 250px) {
-        grid-template-columns: 1fr 1rem;
+      @container (max-width: 500px) {
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(3, var(--col-width))
+          2rem;
+
+        div:nth-child(5) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 400px) {
+        --col-width: 9ch;
+      }
+
+      @container (max-width: 350px) {
+        --col-width: 8ch;
+      }
+
+      @container (max-width: 325px) {
+        grid-template-columns:
+          minmax(12ch, 1fr) repeat(2, var(--col-width))
+          2rem;
+
+        div:nth-child(8) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 275px) {
+        grid-template-columns: minmax(12ch, 1fr) 2rem;
 
         div:nth-child(3),
-        div:nth-child(5) {
+        div:nth-child(6) {
           display: none;
         }
       }
@@ -350,7 +490,8 @@ const totalFees = (fees?: FeesBreakdown): number =>
     div:nth-child(6),
     div:nth-child(7),
     div:nth-child(8),
-    div:nth-child(9) {
+    div:nth-child(9),
+    div:nth-child(10) {
       justify-content: end;
     }
 

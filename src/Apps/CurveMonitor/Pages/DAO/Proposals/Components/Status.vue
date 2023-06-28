@@ -16,9 +16,7 @@
         </span>
       </template>
 
-      <slot name="tooltip">
-        {{ statusDetails }}
-      </slot>
+      {{ statusDetails }}
     </Tooltip>
 
     <span
