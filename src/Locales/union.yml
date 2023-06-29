@@ -236,3 +236,135 @@ zh:
     <br />旧的仍然可以工作，但新的有一些内部改进!
   migrateUCrvV2: 您好，您好 {0} uCRV 需要迁移到新金库!
     <br />您在旧金库中可以继续获得收益，但会逐步减少!
+    
+fr:
+  apy: APY
+  tvl: TVL
+  submit: Valider
+  submitting: Validation en cours...
+
+  # Member.vue
+  allocation: Allocation
+
+  # Apy.vue
+  apy-info: "Le calcul de l'APY suppose une capitalisation hebdomadaire<br />et exclut les
+    frais suivants :"
+  fee-on-yield: "Frais sur le rendement :"
+  caller-incentive: "Incitatif pour l'appelant (frais sur le rendement) :"
+  withdrawal-fee: "Frais de retrait (sur le dépôt total) :"
+
+  # Balance.vue
+  your-balance: Votre solde
+
+  # PounderDetails.vue
+  zap-deposit: Déposer
+  zap-withdraw: Retirer
+  claim-rewards-title: Réclamer les récompenses de l'Union
+  claim-first: Pour retirer le montant demandé, vous devez d'abord réclamer 
+    vos récompenses de l'Union
+
+  description-ucrv:
+    Ce pounder stake du cvxCRV en unilatéral sur Convex.
+    Les développeurs de Llama Airforce sélectionnent activement l'option de récompense offrant le rendement le plus élevé pour le cvxCRV staké.
+  description-ufxs: Ce pounder stake du cvxFXS en unilatéral sur Convex.
+  description-ucvx: Ce pounder stake du pxCVX et compounde les récompenses de pots-de-vin gagnées pour plus de pxCVX.
+  description-ubal: Ce pounder stake de l'auraBAL sur Aura.
+  description-ufxslp:
+    Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.
+    Cette méthode de staking n'est plus activement récompensée par Convex; les récompenses ont été déplacées vers le staking cvxFXS unilatéral.
+
+  # PounderInput.vue
+  balance: "Solde :"
+  max: Max
+  dollars: "Dollars :"
+
+  # Balance.vue
+  rewards-balance: Solde des récompenses ($)
+
+  # Frozen.vue
+  frozen: Les récompenses des pots-de-vin sont en cours de traitement, les soldes sont temporairement gelés et
+    affichent $0. Pas de panique.
+
+  # Deadline.vue
+  membership-activation: Les nouvelles adhésions seront activées dans {0}
+
+  # Delegation.vue
+  delegate: Déléguer
+  delegating: Délégation en cours...
+  delegated: Vous avez délégué à Votium
+  not-delegated: Vous n'avez pas délégué à Votium
+  delegation-advice:
+    Déléguer à Votium permet à la fois d'automatiser le vote et de garantir que vous obtenez le
+    meilleur ratio $/vlCVX possible.
+
+  # Claim.vue
+  claim-notice:
+    Votre solde non réclamé est déjà réinvesti automatiquement, donc la réclamation 
+    est facultative.
+  withdraw-as: "Retirer en tant que :"
+  withdraw-as-token: Retirer en tant que {0}
+  nothing: Rien à réclamer
+  claim-info: Si vous modifiez l'actif de retrait 'retirer en tant que', nous échangerons votre
+    {0} contre l'actif choisi avant de le déposer dans votre portefeuille.
+    {0} est un token de part dont le nombre reste constant. La
+    valeur sous-jacente de {1} augmentera à mesure qu'elle se compose.
+
+  # Join.vue
+  title: Bienvenue sur L'Union
+  join-1:
+    L'augmentation des coûts du gaz Ethereum, la dilution des réserves de CVX et la multiplication
+    des différents tokens de récompense Votium rendent de plus en plus difficile pour les 
+    petits investisseurs de participer aux pools de Votium et de réaliser des profits.
+  join-2:
+    Il est temps pour la classe ouvrière de se syndiquer, de regrouper collectivement nos
+    récompenses et de les convertir en un seul actif réclamable, sans 
+    gaspiller inutilement des profits, tout en alimentant notre dynamisme collectif.
+  join-3: En rejoignant L'Union, nous prendrons soin de vos pots-de-vin et 
+    les consoliderons en cvxCRV avec réinvestissement automatique.
+  modal-title: Adhésion à l'Union
+  no-lock: Vous n'avez verrouillé aucun CVX pour l'instant. Êtes-vous sûr de vouloir rejoindre l'Union?
+  join: Rejoindre l'Union
+  joining: Adhésion en cours...
+  already-forwarded: Déjà transféré à une autre adresse
+  forwarding-in-progress: Expiration de la redirection d'adresse en cours
+
+  # ModalSlippage.vue
+  price-modal-title: Contrôle des prix
+  percentage: Pourcentage
+  min-amount: Montant minimum
+  no-zero: Montant minimum zéro non autorisé
+
+  # Locks.vue
+  nothing-locked: Vous n'avez aucun CVX verrouillé pour le tour à venir
+
+  # Membership.vue
+  member: Vous êtes membre de L'Union
+  no-member: Vous n'êtes pas membre de L'Union
+  leave: Quitter L'Union
+  leave-title: Adhésion à l'Union
+  leave-confirmation: Êtes-vous sûr de vouloir quitter L'Union?
+  leave-notice:
+    Lorsque vous partez, vous ne pourrez pas rejoindre avant qu'au moins un tour
+    soit passé.
+  rejoin: Rejoindre à nouveau L'Union
+  active-in: Adhésion active dans {0}
+
+  # Pounders.vue
+  pounders-info:
+    Les auto-compounders de l'Union rendent la vie un peu
+    plus facile à gérer pour les llamas qui travaillent dur.
+  pounders-info-other: Les pounders suivants ne font pas partie de l'ensemble d'allocation de l'Union, mais ils rendent tout de même la vie plus facile.
+  pounders-info-legacy: Les pounders suivants sont considérés comme étant obsolètes. Ils fonctionnent toujours, mais nous recommandons de migrer vers une solution plus récente.
+  # Migrations
+  migrate: Migrer
+  migrating: Migration en cours...
+  withdraw: Retirer de l'ancien coffre
+  deposit: Déposer dans le nouveau coffre
+  migrateUBal: Bonjour, vous avez {0} uBAL que vous devez migrer!
+    <br />Il est actuellement dans l'ancien pounder, il n'accumule pas de récompenses!
+  migrateUFxs: Bonjour, vous avez {0} uFXS que vous devez migrer!
+    <br />Il est actuellement dans l'ancien pounder, il n'accumule pas de récompenses!
+  migrateUCrv: Bonjour, vous avez {0} uCRV que vous devez migrer!
+    <br />L'ancien fonctionnera toujours, mais le nouveau a quelques améliorations internes!
+  migrateUCrvV2: Bonjour, vous avez {0} uCRV que vous devez migrer!
+    <br />Il pourrait toujours générer du rendement, mais il serait inférieur!
