@@ -75,7 +75,6 @@ const show = ref(false);
 
     @media only screen and (max-width: 1280px) {
       white-space: normal;
-      width: 85%;
     }
   }
 }
