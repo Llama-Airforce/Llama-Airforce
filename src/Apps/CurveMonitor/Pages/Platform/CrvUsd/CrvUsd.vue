@@ -18,7 +18,9 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
 import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";
 import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vue";
 import ChartPoolPrices from "@CM/Pages/Platform/CrvUsd/Charts/ChartPoolPrices.vue";
@@ -28,6 +30,20 @@ import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 // Refs
 const router = useRouter();
+
+const storeBreadcrumb = useBreadcrumbStore();
+
+// Hooks
+onMounted(() => {
+  storeBreadcrumb.show = true;
+  storeBreadcrumb.crumbs = [
+    {
+      id: "crvusd",
+      label: "crvUSD",
+      pathName: "crvusd",
+    },
+  ];
+});
 
 // Events
 const onMarketSelect = async (market: Market) => {

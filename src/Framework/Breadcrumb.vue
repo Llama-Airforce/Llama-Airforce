@@ -1,6 +1,9 @@
 <template>
   <Card>
-    <ul>
+    <TransitionGroup
+      name="fade"
+      tag="ul"
+    >
       <li
         v-for="crumb in crumbs"
         :key="crumb.id"
@@ -14,11 +17,11 @@
         </component>
 
         <i
-          v-if="!isLast(crumb)"
+          v-if="!isLast(crumb) || crumbs.length === 1"
           class="fas fa-chevron-right"
         ></i>
       </li>
-    </ul>
+    </TransitionGroup>
   </Card>
 </template>
 
@@ -47,6 +50,16 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.75s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 
 ul {
   display: flex;

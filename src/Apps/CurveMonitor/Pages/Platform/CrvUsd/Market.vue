@@ -1,10 +1,5 @@
 <template>
   <div class="market">
-    <Breadcrumb
-      :crumbs="crumbs"
-      @crumb="onCrumb"
-    ></Breadcrumb>
-
     <div class="row">
       <ChartMarketVolume :market="market"></ChartMarketVolume>
       <ChartMarketRates :market="market"></ChartMarketRates>
@@ -16,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { Breadcrumb, type Crumb } from "@/Framework";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
 import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
 import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
@@ -26,27 +21,26 @@ import ChartMarketDeciles from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketDeci
 
 // Refs
 const route = useRoute();
-const router = useRouter();
+
+const storeBreadcrumb = useBreadcrumbStore();
 
 const market = computed(() => route.params.marketAddr as string);
 
-const crumbs = ref<Crumb[]>([
-  {
-    id: "crvusd",
-    label: "crvUSD",
-  },
-  {
-    id: "market",
-    label: `Market: ${market?.value}`,
-  },
-]);
-
-// Methods
-const onCrumb = async (crumb: Crumb) => {
-  if (crumb.id === "crvusd") {
-    await router.push({ name: "crvusd" });
-  }
-};
+// Hooks
+onMounted(() => {
+  storeBreadcrumb.show = true;
+  storeBreadcrumb.crumbs = [
+    {
+      id: "crvusd",
+      label: "crvUSD",
+      pathName: "crvusd",
+    },
+    {
+      id: "market",
+      label: `Market: ${market?.value}`,
+    },
+  ];
+});
 </script>
 
 <style lang="scss" scoped>

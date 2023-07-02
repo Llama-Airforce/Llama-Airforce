@@ -8,6 +8,18 @@
     <Navigation class="navigation"></Navigation>
 
     <main class="main">
+      <transition
+        name="fade"
+        mode="out-in"
+      >
+        <Breadcrumb
+          v-if="storeBreadcrumb.show"
+          class="breadcrumb"
+          :crumbs="storeBreadcrumb.crumbs"
+          @crumb="onCrumb"
+        ></Breadcrumb>
+      </transition>
+
       <div class="content">
         <router-view v-slot="{ Component }">
           <transition
@@ -23,7 +35,33 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { Breadcrumb, type Crumb } from "@/Framework";
 import Navigation from "@CM/Navigation/Navigation.vue";
+import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
+
+// Refs
+const storeBreadcrumb = useBreadcrumbStore();
+const route = useRoute();
+const router = useRouter();
+
+// Watches
+watch(
+  () => route.fullPath,
+  (newRoute) => {
+    if (!newRoute.includes("crvusd")) {
+      storeBreadcrumb.show = false;
+    }
+  }
+);
+
+// Methods
+const onCrumb = async (crumb: Crumb) => {
+  if (crumb.pathName) {
+    await router.push({ name: crumb.pathName });
+  }
+};
 </script>
 
 <style lang="scss">
@@ -101,6 +139,16 @@ p {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $content-show-duration $ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .root {
   width: 100%;
   height: 100vh;
@@ -132,15 +180,15 @@ p {
 
     overflow-y: auto;
 
-    > .content {
-      .fade-enter-active,
-      .fade-leave-active {
-        transition: opacity $content-show-duration $ease-out;
-      }
+    > .breadcrumb {
+      padding: var(--page-margin);
+      padding-bottom: 0;
+      margin-bottom: calc(var(--page-margin) * -1 + var(--dashboard-gap));
 
-      .fade-enter-from,
-      .fade-leave-to {
-        opacity: 0;
+      @media only screen and (max-width: 1280px) {
+        padding: 1.5rem 1rem;
+        padding-bottom: 0;
+        margin-bottom: 0;
       }
     }
   }
