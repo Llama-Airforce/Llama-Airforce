@@ -26,7 +26,7 @@ const STORAGE_LOCALE = "locale";
 
 type Direction = "up" | "down";
 
-const locales = ["en", "zh"] as const;
+const locales = ["en", "zh", "fr"] as const;
 
 type Locale = typeof locales[number];
 
@@ -92,4 +92,5 @@ const onLocaleSelect = (option: unknown): void => {
 <i18n lang="yaml" locale="en">
 en: English
 zh: 中文
+fr: Français
 </i18n>
