@@ -19,6 +19,7 @@ export { default as ModalYesNo } from "@/Framework/ModalYesNo.vue";
 export { default as Pagination } from "@/Framework/Pagination.vue";
 export { default as Select } from "@/Framework/Select.vue";
 export { default as SelectLanguage } from "@/Framework/SelectLanguage.vue";
+export { locales, type Locale } from "@/Framework/Locale";
 export { default as Slider } from "@/Framework/Slider.vue";
 export { SortOrder } from "@/Framework/SortOrder";
 export { default as Spinner } from "@/Framework/Spinner.vue";

@@ -20,25 +20,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Select } from "@/Framework";
+import { Select, locales as localesAll, type Locale } from "@/Framework";
 
 const STORAGE_LOCALE = "locale";
 
 type Direction = "up" | "down";
-
-const locales = ["en", "zh", "fr"] as const;
-
-type Locale = typeof locales[number];
 
 const { t } = useI18n();
 const { locale: loc } = useI18n({ useScope: "global" });
 
 // Props
 interface Props {
+  locales?: Locale[];
   direction?: Direction;
 }
 
-const { direction = "up" } = defineProps<Props>();
+const { locales = localesAll, direction = "up" } = defineProps<Props>();
 
 // Refs
 const locale = ref<Locale | null>("en");

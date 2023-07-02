@@ -38,7 +38,10 @@
 
     <div class="selectors">
       <SelectTheme class="themes"></SelectTheme>
-      <SelectLanguage class="langs"></SelectLanguage>
+      <SelectLanguage
+        class="langs"
+        :locales="['en']"
+      ></SelectLanguage>
     </div>
 
     <Wallet></Wallet>
