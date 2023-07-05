@@ -181,8 +181,9 @@ p {
     overflow-y: auto;
 
     > .breadcrumb {
-      padding: var(--page-margin);
-      padding-bottom: 0;
+      max-width: calc(1920px - 18.125rem);
+      margin: auto;
+      margin-top: var(--page-margin);
       margin-bottom: calc(var(--page-margin) * -1 + var(--dashboard-gap));
 
       @media only screen and (max-width: 1280px) {
