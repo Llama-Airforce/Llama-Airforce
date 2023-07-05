@@ -17,28 +17,20 @@ export type DataResponse = {
 
 export default class DefiLlamaService extends ServiceBase {
   public async getPrice(address: string): Promise<Price> {
-    const key = `ethereum:${address}`;
-    const body = {
-      coins: [key],
-    };
+    const query = `ethereum:${address}`;
 
     return this.fetch(
-      "https://coins.llama.fi/prices",
-      PriceResponse,
-      body
-    ).then((resp) => resp.coins[key]);
+      `https://coins.llama.fi/prices/current/${query}`,
+      PriceResponse
+    ).then((resp) => resp.coins[query]);
   }
 
   public async getPrices(address: string[]): Promise<Record<string, Price>> {
-    const coins = address.map((a) => `ethereum:${a}`);
-    const body = {
-      coins: coins,
-    };
+    const query = address.map((a) => `ethereum:${a}`).join(",");
 
     return this.fetch(
-      "https://coins.llama.fi/prices",
-      PriceResponse,
-      body
+      `https://coins.llama.fi/prices/current/${query}`,
+      PriceResponse
     ).then((resp) => resp.coins);
   }
 
