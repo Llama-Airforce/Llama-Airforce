@@ -1,6 +1,11 @@
 <template>
   <div class="overview">
-    <div class="dashboard">
+    <div
+      class="dashboard"
+      :class="{ holiday }"
+    >
+      <Holiday v-if="holiday"></Holiday>
+
       <SystemSelect
         class="system-select"
         @select-platform="onSelectPlatform"
@@ -18,6 +23,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import Holiday from "@LAF/Pages/Bribes/Rounds/Components/Holiday.vue";
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import GraphBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/GraphBribesRevenue.vue";
 import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
@@ -54,6 +60,8 @@ const product = computed((): Product | null => {
     protocol,
   };
 });
+
+const holiday = computed((): boolean => product.value?.platform === "hh");
 
 const overviewId = computed((): OverviewId | null => {
   switch (product.value?.platform) {
@@ -174,19 +182,31 @@ const initFromRouter = async (): Promise<void> => {
   .dashboard {
     grid-template-rows: 64px 64px auto 1fr;
 
+    --offset: 0;
+
+    &.holiday {
+      grid-template-rows: auto 64px 64px auto 1fr;
+      --offset: 1;
+    }
+
+    .holiday {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
     .system-select {
       grid-column: 1;
-      grid-row: 1;
+      grid-row: calc(var(--offset) + 1);
     }
 
     .summary {
       grid-column: 1;
-      grid-row: 2;
+      grid-row: calc(var(--offset) + 2);
     }
 
     .graph-bribes-revenue {
       grid-column: 1;
-      grid-row: 3;
+      grid-row: calc(var(--offset) + 3);
 
       height: 370px;
     }
@@ -195,7 +215,7 @@ const initFromRouter = async (): Promise<void> => {
       max-height: 420px;
 
       grid-column: 1;
-      grid-row: 4;
+      grid-row: calc(var(--offset) + 4);
     }
   }
 }
