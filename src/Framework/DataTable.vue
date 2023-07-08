@@ -6,6 +6,7 @@
     ></Spinner>
 
     <div
+      v-if="header"
       class="header"
       :class="{ loading }"
     >
@@ -167,6 +168,7 @@ interface Props {
   /** Icon shown to the left of the header title. */
   icon?: string;
 
+  header?: boolean;
   loading?: boolean;
 }
 
@@ -188,6 +190,7 @@ const {
   sortingDefaultDir = null,
 
   icon = "",
+  header = true,
   loading = false,
 } = defineProps<Props>();
 

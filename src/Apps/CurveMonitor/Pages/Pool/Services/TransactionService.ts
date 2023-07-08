@@ -12,7 +12,7 @@ import type {
   TransactionDtoDeposit,
   TransactionDtoRemove,
   TransactionDtoSwap,
-} from "@CM/Services/Sockets";
+} from "@CM/Services/Sockets/SocketPool";
 
 export default class TransactionService {
   public readonly init$: Observable<Transaction[]>;

@@ -1,30 +1,41 @@
 <template>
   <div class="curve-monitor">
-    <Header
-      class="header"
-      :pool-service="poolService"
-    ></Header>
+    <TabView>
+      <TabItem header="Pool">
+        <Header
+          class="header"
+          :pool-service="poolService"
+        ></Header>
 
-    <div
-      v-if="hasPool"
-      class="data"
-    >
-      <Controls class="controls"></Controls>
-      <Sandwiches class="sandwiches"></Sandwiches>
-      <Prices class="prices"></Prices>
-      <Transactions class="transactions"></Transactions>
-      <Balances class="balances"></Balances>
-      <TVL class="tvl"></TVL>
-      <Bonding class="bonding"></Bonding>
-    </div>
+        <div
+          v-if="hasPool"
+          class="data"
+        >
+          <Controls class="controls"></Controls>
+          <Sandwiches class="sandwiches"></Sandwiches>
+          <Prices class="prices"></Prices>
+          <Transactions class="transactions"></Transactions>
+          <Balances class="balances"></Balances>
+          <TVL class="tvl"></TVL>
+          <Bonding class="bonding"></Bonding>
+        </div>
+      </TabItem>
+
+      <TabItem header="MEV">
+        <MEV></MEV>
+      </TabItem>
+    </TabView>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, watch } from "vue";
+import { computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { TabView, TabItem } from "@/Framework";
 import type { Pool } from "@CM/Models";
+import { PoolService } from "@CM/Services";
 import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { MEVService } from "@CM/Pages/Pool/Services";
 import Header from "@CM/Pages/Pool/Components/Header.vue";
 import Controls from "@CM/Pages/Pool/Components/Controls.vue";
 import Sandwiches from "@CM/Pages/Pool/Components/Sandwiches.vue";
@@ -33,20 +44,25 @@ import TVL from "@CM/Pages/Pool/Components/TVL.vue";
 import Bonding from "@CM/Pages/Pool/Components/Bonding.vue";
 import Balances from "@CM/Pages/Pool/Components/Balances.vue";
 import Prices from "@CM/Pages/Pool/Components/Prices.vue";
-import { PoolService } from "@CM/Services";
+import MEV from "@CM/Pages/Pool/Components/MEV/MEV.vue";
 import { loadPool } from "@CM/Pages/Pool/DataLoaders";
-import { createSocketRoot } from "@CM/Services/Sockets";
+import { createSocketRoot, createSocketMEV } from "@CM/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";
 const socket = createSocketRoot(host);
 
+const hostMEV = "wss://api.curvemonitor.com";
+const socketMEV = createSocketMEV(hostMEV);
+
 const poolService = new PoolService(socket);
+const mevService = new MEVService(socketMEV);
 
 // Refs.
 const route = useRoute();
 const router = useRouter();
 const store = useMonitorStore();
 store.socket = socket;
+store.socketMEV = socketMEV;
 
 const hasPool = computed((): boolean => store.pool !== null);
 
@@ -59,6 +75,17 @@ onMounted(async () => {
   await onNewPoolRoute(routePool);
 
   socket.connect();
+
+  // MEV
+  socketMEV.connect();
+  void mevService.getSandwichLabelOccurrences().then((x) => {
+    store.mev.labelRankingExtended = x;
+    return;
+  });
+  void mevService.getSandwiches().then((x) => {
+    store.mev.sandwiches = x;
+    return;
+  });
 });
 
 // Methods
@@ -127,7 +154,7 @@ watch(
   gap: 0;
 
   .header {
-    margin-bottom: var(--dashboard-gap);
+    margin: var(--dashboard-gap) 0;
   }
 }
 

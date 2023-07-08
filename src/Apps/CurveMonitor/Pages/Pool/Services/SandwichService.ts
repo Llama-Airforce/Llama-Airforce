@@ -1,6 +1,7 @@
 import { Observable, share } from "rxjs";
 import type { Sandwich } from "@CM/Pages/Pool/Models";
-import { type SandwichDto, SocketPool } from "@CM/Services/Sockets";
+import { SocketPool } from "@CM/Services/Sockets";
+import { type SandwichDto } from "@CM/Services/Sockets/SocketPool";
 import { map as mapTx } from "@CM/Pages/Pool/Services/TransactionService";
 
 export default class SandwichService {
