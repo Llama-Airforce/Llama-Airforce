@@ -14,6 +14,7 @@ import {
   ISeriesApi,
   LineData,
   AreaSeriesPartialOptions,
+  LineSeriesPartialOptions,
   LineType,
   UTCTimestamp,
 } from "lightweight-charts";
@@ -25,7 +26,8 @@ import type { Theme } from "@CM/Models/Theme";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 let chart: IChartApi;
-let areaSerie: ISeriesApi<"Area">;
+let supplySerie: ISeriesApi<"Area">;
+let debtSerie: ISeriesApi<"Line">;
 
 interface Props {
   data: CrvUsdSupply[];
@@ -46,7 +48,10 @@ onMounted(() => {
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+  supplySerie = chart.addAreaSeries(
+    createSupplyOptionsSerie(storeSettings.theme)
+  );
+  debtSerie = chart.addLineSeries(createDebtOptionsSerie(storeSettings.theme));
 
   createSeries(data);
 });
@@ -57,7 +62,8 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      areaSerie.applyOptions(createOptionsSerie(newTheme));
+      supplySerie.applyOptions(createSupplyOptionsSerie(newTheme));
+      debtSerie.applyOptions(createDebtOptionsSerie(newTheme));
     }
   }
 );
@@ -84,7 +90,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+const createSupplyOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
@@ -103,16 +109,34 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
+const createDebtOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
+  const colors = getColors(theme);
+
+  return {
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    color: colors.yellow,
+    lastValueVisible: false,
+    priceLineVisible: false,
+  };
+};
+
 const createSeries = (newSupply: CrvUsdSupply[]): void => {
-  if (!chart || !areaSerie) {
+  if (!chart || !supplySerie) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newSupply)
+  const newSupplySerie: (LineData & { debt: number })[] = chain(newSupply)
     .groupBy((x) => x.timestamp)
     .mapValues((x) => ({
       time: x[0].timestamp as UTCTimestamp,
       value: x.reduce((acc, y) => acc + y.totalSupply, 0),
+      debt: x[0].totalSupply,
     }))
     .entries()
     .map((x) => x[1])
@@ -120,8 +144,17 @@ const createSeries = (newSupply: CrvUsdSupply[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  if (newSerie.length > 0) {
-    areaSerie.setData(newSerie);
+  const newDebtSerie: LineData[] = newSupplySerie.map((x) => ({
+    time: x.time,
+    value: x.value - x.debt,
+  }));
+
+  if (newSupplySerie.length > 0) {
+    supplySerie.setData(newSupplySerie);
+  }
+
+  if (newDebtSerie.length > 0) {
+    debtSerie.setData(newDebtSerie);
   }
 
   chart.timeScale().fitContent();

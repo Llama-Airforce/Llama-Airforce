@@ -5,20 +5,27 @@
     :loading="loading"
   >
     <template #actions>
-      <div class="chart-types">
-        <ButtonToggle
-          value="Line"
-          :model-value="chartType === 'line'"
-          @click="onChartType('line')"
-        >
-        </ButtonToggle>
+      <div class="actions">
+        <Legend
+          v-if="chartType === 'line'"
+          :items="['Supply', 'Borrowed']"
+        ></Legend>
 
-        <ButtonToggle
-          value="Breakdown"
-          :model-value="chartType === 'breakdown'"
-          @click="onChartType('breakdown')"
-        >
-        </ButtonToggle>
+        <div class="chart-types">
+          <ButtonToggle
+            value="Line"
+            :model-value="chartType === 'line'"
+            @click="onChartType('line')"
+          >
+          </ButtonToggle>
+
+          <ButtonToggle
+            value="Breakdown"
+            :model-value="chartType === 'breakdown'"
+            @click="onChartType('breakdown')"
+          >
+          </ButtonToggle>
+        </div>
       </div>
     </template>
 
@@ -39,6 +46,7 @@ import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle } from "@/Framework";
 import { getHost } from "@/Services/Host";
+import Legend from "@CM/Components/Legend.vue";
 import CurveService, {
   type CrvUsdSupply,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -86,19 +94,34 @@ const onChartType = (type: ChartType) => {
     gap: 1rem;
   }
 
-  .chart-types {
-    display: flex;
-    font-size: 0.875rem;
+  .actions {
+    flex-grow: 1;
 
-    button {
-      &:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
 
-      &:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+    .legend {
+      grid-column: 1;
+      justify-self: center;
+    }
+
+    .chart-types {
+      grid-column: 2;
+
+      display: flex;
+      font-size: 0.875rem;
+
+      button {
+        &:not(:last-child) {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:not(:first-child) {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
       }
     }
   }
