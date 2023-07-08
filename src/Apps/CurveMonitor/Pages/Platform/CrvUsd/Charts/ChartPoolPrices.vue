@@ -58,9 +58,10 @@ const prices = ref<PoolPrice[]>([{ timestamp: 0 }]);
 const loading = ref(false);
 const coinsDisabled = ref<string[]>([]);
 
+const whitelist = ["USDC", "USDT", "TUSD", "USDP"];
 const coins = computed((): string[] =>
   Object.keys(prices.value[0]).filter(
-    (key) => key !== "timestamp" && key !== "USD"
+    (key) => key !== "timestamp" && key !== "USD" && whitelist.includes(key)
   )
 );
 
