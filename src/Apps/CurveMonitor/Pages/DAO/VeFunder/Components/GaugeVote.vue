@@ -149,7 +149,7 @@ const createVote = async (signer: Signer): Promise<void> => {
     body: data,
   });
   const ipfs_data = (await response.json()) as Record<string, string>;
-  const ipfs_hash = ipfs_data.Hash as string;
+  const ipfs_hash = ipfs_data.Hash;
 
   const voting = AragonVoting__factory.connect(ARAGON_OWNERSHIP_VOTING, signer);
 

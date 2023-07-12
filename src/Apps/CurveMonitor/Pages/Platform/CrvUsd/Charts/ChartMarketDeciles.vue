@@ -17,7 +17,6 @@ import { type DataPoint, round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type MarketDeciles,
-  type MarketDecile,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
@@ -96,7 +95,7 @@ const categories = computed((): string[] => Object.keys(data.value).reverse());
 const series = computed((): { data: number[] }[] => [
   {
     data: Object.values(data.value)
-      .map((x) => (x as MarketDecile).debt)
+      .map((x) => x.debt)
       .reverse(),
   },
 ]);
