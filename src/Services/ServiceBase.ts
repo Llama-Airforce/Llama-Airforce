@@ -1,4 +1,4 @@
-import { fetch as crossFetch } from "cross-fetch";
+import "cross-fetch/polyfill";
 import { ClassConstructor, plainToClass } from "class-transformer";
 
 export const hostDev = "https://localhost:7019";
@@ -8,7 +8,7 @@ async function fetchWork(
   url: string,
   body?: Record<string, unknown>
 ): Promise<Response> {
-  return await crossFetch(url, {
+  return await fetch(url, {
     method: body ? "POST" : "GET",
     headers: {
       Accept: "application/json",
@@ -73,7 +73,7 @@ export default class ServiceBase {
     type: ClassConstructor<T>,
     body?: Record<string, unknown>
   ): Promise<T[]> {
-    const res = await crossFetch(url, {
+    const res = await fetch(url, {
       method: body ? "POST" : "GET",
       headers: {
         Accept: "application/json",
