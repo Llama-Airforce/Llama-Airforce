@@ -81,8 +81,9 @@ const volume = (pool: Pool): number => {
 
 const name = (pool: Pool): string => {
   const nameShort = shorten(pool.name);
-  const nameTrimmed =
-    nameShort.substring(0, 9) === "Curve.fi " ? nameShort.slice(9) : nameShort;
+  const nameTrimmed = nameShort.startsWith("Curve.fi ")
+    ? nameShort.slice(9)
+    : nameShort;
 
   return nameTrimmed;
 };

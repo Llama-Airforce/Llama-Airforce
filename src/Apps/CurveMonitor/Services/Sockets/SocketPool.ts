@@ -35,7 +35,7 @@ type ServerToClientEvents = {
 };
 
 export type TransactionDto = {
-  type: "swap" | "deposit" | "remove" | string;
+  type: "swap" | "deposit" | "remove";
   txHash: string;
   blockNumber: number;
   position: number;

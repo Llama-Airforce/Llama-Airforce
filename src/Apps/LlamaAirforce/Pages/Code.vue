@@ -166,7 +166,7 @@ const union: Bundle = {
       gnosis: true,
     },
     {
-      contract: last(UnionAddresses) || "",
+      contract: last(UnionAddresses) ?? "",
       description: "union-zap",
     },
     {

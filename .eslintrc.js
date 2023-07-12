@@ -5,9 +5,8 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:vue/vue3-recommended"
   ],
   parser: "vue-eslint-parser",
@@ -20,7 +19,7 @@ module.exports = {
     "ecmaVersion": 2020
   },
   "plugins": [
-    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint",
   ],
   rules: {
     "indent": ["error", 2, { "SwitchCase": 1 }],
@@ -60,6 +59,8 @@ module.exports = {
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/no-useless-constructor": ["error"],
     "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/consistent-indexed-object-style": "off",
 
     "vue/max-attributes-per-line": ["error", {
       "singleline": {

@@ -6,7 +6,7 @@ export class DataPoint {
 export function aggregateDataPoints(datapoints: DataPoint[]): DataPoint[] {
   const aggregatedValues = datapoints.reduce(
     (acc, { timeStamp, value }) =>
-      acc.set(timeStamp, (acc.get(timeStamp) || 0) + value),
+      acc.set(timeStamp, (acc.get(timeStamp) ?? 0) + value),
     new Map<number, number>()
   );
 
