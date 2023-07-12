@@ -1,5 +1,5 @@
 import { Observable, of, tap, delay, repeat, shareReplay } from "rxjs";
-import type { SocketRoot } from "@CM/Services/Sockets";
+import { SocketRoot } from "@CM/Services/Sockets";
 
 export default class StatusService {
   /** Returns the time in ms since the last ping pong. */

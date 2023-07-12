@@ -17,11 +17,11 @@ import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
-  HistogramData,
-  HistogramSeriesPartialOptions,
-  IChartApi,
-  ISeriesApi,
-  UTCTimestamp,
+  type HistogramData,
+  type HistogramSeriesPartialOptions,
+  type IChartApi,
+  type ISeriesApi,
+  type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
 import { getHost } from "@/Services/Host";

@@ -1,5 +1,5 @@
-import { Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
-import { Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
+import { type Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
+import { type Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
 
 export type GaugeSnapshots = {
   name: string;

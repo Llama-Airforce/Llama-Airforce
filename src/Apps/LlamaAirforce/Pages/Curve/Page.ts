@@ -1,4 +1,4 @@
-import { Page } from "@LAF/Pages/Page";
+import { type Page } from "@LAF/Pages/Page";
 
 import Curve from "@LAF/Pages/Curve/Curve.vue";
 

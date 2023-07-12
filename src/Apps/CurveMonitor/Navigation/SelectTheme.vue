@@ -61,7 +61,7 @@
 import { ref, onMounted } from "vue";
 import { Select } from "@/Framework";
 import { getColors } from "@/Styles/Themes/CM";
-import { Theme } from "@CM/Models/Theme";
+import { type Theme } from "@CM/Models/Theme";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 type ThemeDescription = {

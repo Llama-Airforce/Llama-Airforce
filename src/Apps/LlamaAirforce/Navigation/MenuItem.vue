@@ -40,7 +40,7 @@
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
-import { MenuItem, isNode, isLeaf } from "@LAF/Pages/Page";
+import { type MenuItem, isNode, isLeaf } from "@LAF/Pages/Page";
 
 // Props
 interface Props {

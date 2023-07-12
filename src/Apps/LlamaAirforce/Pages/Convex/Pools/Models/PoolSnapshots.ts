@@ -1,4 +1,4 @@
-import { Snapshot } from "@LAF/Pages/Convex/Pools/Models/Snapshot";
+import { type Snapshot } from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 
 export type PoolSnapshots = {
   name: string;

@@ -1,5 +1,5 @@
-import { Chain } from "@CM/Models/Chain";
 import ServiceBase from "@/Services/ServiceBase";
+import { type Chain } from "@CM/Models/Chain";
 
 const API_URL = "https://api-py.llama.airforce/curve/v1";
 

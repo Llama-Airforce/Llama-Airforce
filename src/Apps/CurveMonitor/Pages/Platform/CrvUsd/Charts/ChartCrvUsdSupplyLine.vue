@@ -10,13 +10,13 @@ import { ref, watch, onMounted } from "vue";
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
-  IChartApi,
-  ISeriesApi,
-  LineData,
-  AreaSeriesPartialOptions,
-  LineSeriesPartialOptions,
+  type IChartApi,
+  type ISeriesApi,
+  type LineData,
+  type AreaSeriesPartialOptions,
+  type LineSeriesPartialOptions,
   LineType,
-  UTCTimestamp,
+  type UTCTimestamp,
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";

@@ -1,6 +1,6 @@
-import { Subscription } from "rxjs";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
-import { PoolService, CoinService, PairService } from "@CM/Services";
+import { type Subscription } from "rxjs";
+import { type useMonitorStore } from "@CM/Pages/Pool/Store";
+import { type PoolService, CoinService, PairService } from "@CM/Services";
 import {
   BalanceService,
   PriceService,

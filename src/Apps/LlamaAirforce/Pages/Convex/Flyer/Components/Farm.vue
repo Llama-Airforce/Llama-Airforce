@@ -68,7 +68,7 @@ import { getCvxCrvAprs } from "@/Util";
 import { getProvider, useWalletStore } from "@/Wallet";
 import DefiLlamaService from "@/Services/DefiLlamaService";
 import { getHost } from "@/Services/Host";
-import { FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
+import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 
 const { t } = useI18n();
 

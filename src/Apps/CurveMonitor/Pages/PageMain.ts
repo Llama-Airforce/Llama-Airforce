@@ -1,4 +1,4 @@
-import { Page } from "@CM/Pages/Page";
+import { type Page } from "@CM/Pages/Page";
 
 import Home from "@CM/Pages/Home/Home.vue";
 

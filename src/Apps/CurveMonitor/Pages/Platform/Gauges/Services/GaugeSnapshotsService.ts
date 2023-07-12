@@ -1,6 +1,6 @@
 import ServiceBase from "@/Services/ServiceBase";
-import { Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
-import { GaugeSnapshots } from "@CM/Pages/Platform/Gauges/Models/GaugeSnapshots";
+import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
+import { type GaugeSnapshots } from "@CM/Pages/Platform/Gauges/Models/GaugeSnapshots";
 
 export default class GaugeSnapshotsService extends ServiceBase {
   public async get(gauge: Gauge): Promise<{ data: GaugeSnapshots }> {

@@ -16,13 +16,13 @@ import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
-  IChartApi,
-  ISeriesApi,
-  LineData,
-  LineSeriesPartialOptions,
+  type IChartApi,
+  type ISeriesApi,
+  type LineData,
+  type LineSeriesPartialOptions,
   LineType,
-  SeriesMarker,
-  UTCTimestamp,
+  type SeriesMarker,
+  type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
 import { round, unit } from "@/Util";

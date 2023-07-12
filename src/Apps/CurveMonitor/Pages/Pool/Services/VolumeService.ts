@@ -1,6 +1,6 @@
 import { Observable, share } from "rxjs";
 import type { Volume } from "@CM/Pages/Pool/Models";
-import type { VolumeDto, SocketPool } from "@CM/Services/Sockets";
+import { type VolumeDto, SocketPool } from "@CM/Services/Sockets";
 
 export default class VolumeService {
   public readonly init$: Observable<Volume[]>;

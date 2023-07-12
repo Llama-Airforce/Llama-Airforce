@@ -1,7 +1,7 @@
 import ServiceBase from "@/Services/ServiceBase";
 import {
-  HistoricalRevenue,
-  ProtocolRevenue,
+  type HistoricalRevenue,
+  type ProtocolRevenue,
 } from "@LAF/Pages/Convex/Revenue/Models/Revenue";
 
 const HISTORICAL_REVENUE_ENDPOINT =

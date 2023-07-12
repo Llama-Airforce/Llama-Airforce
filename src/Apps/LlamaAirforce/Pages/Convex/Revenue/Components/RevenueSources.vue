@@ -13,7 +13,7 @@ import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
-import { RevenueSource } from "@LAF/Pages/Convex/Revenue/Models/Revenue";
+import { type RevenueSource } from "@LAF/Pages/Convex/Revenue/Models/Revenue";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
 
 // Refs

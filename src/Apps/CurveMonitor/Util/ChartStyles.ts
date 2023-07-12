@@ -1,6 +1,6 @@
 import {
-  ChartOptions,
-  DeepPartial,
+  type ChartOptions,
+  type DeepPartial,
   ColorType,
   LineStyle,
 } from "lightweight-charts";

@@ -1,4 +1,4 @@
-import { Page } from "@LAF/Pages/Page";
+import { type Page } from "@LAF/Pages/Page";
 
 import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.vue";
 import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.vue";

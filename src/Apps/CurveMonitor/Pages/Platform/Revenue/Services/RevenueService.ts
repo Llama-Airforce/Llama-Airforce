@@ -1,5 +1,5 @@
 import ServiceBase from "@/Services/ServiceBase";
-import {
+import type {
   PoolRevenue,
   ChainRevenue,
   ChainTopPoolRevenue,

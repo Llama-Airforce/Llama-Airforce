@@ -6,8 +6,8 @@ import type {
   Deposit,
   Withdraw,
 } from "@CM/Pages/Pool/Models";
+import { SocketPool } from "@CM/Services/Sockets";
 import type {
-  SocketPool,
   TransactionDto,
   TransactionDtoDeposit,
   TransactionDtoRemove,

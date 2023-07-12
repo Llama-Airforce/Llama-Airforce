@@ -19,15 +19,15 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  CandlestickData,
+  type CandlestickData,
   ColorType,
   createChart as createChartFunc,
   CrosshairMode,
-  HistogramData,
-  IChartApi,
-  ISeriesApi,
+  type HistogramData,
+  type IChartApi,
+  type ISeriesApi,
   LineStyle,
-  UTCTimestamp,
+  type UTCTimestamp,
 } from "lightweight-charts";
 import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";

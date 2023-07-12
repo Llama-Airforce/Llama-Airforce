@@ -100,7 +100,7 @@ import { useWalletStore, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, Protocol, BribedPersonal } from "@LAF/Pages/Bribes/Models";
 import SnapshotService, {
-  Delegation,
+  type Delegation,
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
 import AuraService from "@LAF/Pages/Bribes/Rounds/Services/AuraService";
 import {

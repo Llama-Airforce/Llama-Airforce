@@ -1,10 +1,10 @@
 import { chain, isFinite } from "lodash";
 import { notEmpty } from "@/Util";
 import {
-  Delegation,
-  Proposal as SnapshotProposal,
-  Scores,
-  Vote,
+  type Delegation,
+  type Proposal as SnapshotProposal,
+  type Scores,
+  type Vote,
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
 import type {
   Bribed,

@@ -50,7 +50,7 @@ import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { Chip, Collapsible } from "@/Framework";
 import { subIsActive } from "@/Util";
-import { MenuItem, isNode, isLeaf } from "@CM/Pages/Page";
+import { type MenuItem, isNode, isLeaf } from "@CM/Pages/Page";
 
 // Props
 interface Props {

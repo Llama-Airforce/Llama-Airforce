@@ -1,4 +1,4 @@
-import { Ref } from "vue";
+import { type Ref } from "vue";
 
 export function relativeTime(now: Ref<number>, unixtime: number): string {
   const nowUnixTime = Math.round(now.value / 1000);

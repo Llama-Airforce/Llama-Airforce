@@ -1,4 +1,4 @@
-import { Page } from "@LAF/Pages/Page";
+import { type Page } from "@LAF/Pages/Page";
 
 import ConvexFlyer from "@LAF/Pages/Convex/Flyer/Flyer.vue";
 import ConvexPools from "@LAF/Pages/Convex/Pools/Pools.vue";

@@ -1,6 +1,6 @@
 import { Observable, share } from "rxjs";
 import type { Price } from "@CM/Pages/Pool/Models";
-import type { PriceDto, SocketPool } from "@CM/Services/Sockets";
+import { type PriceDto, SocketPool } from "@CM/Services/Sockets";
 
 export default class PriceService {
   public readonly init$: Observable<Price[]>;

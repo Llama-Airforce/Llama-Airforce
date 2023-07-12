@@ -147,8 +147,8 @@ import {
   isDeposit,
   isSwap,
   isWithdraw,
-  Swap,
-  TransactionType,
+  type Swap,
+  type TransactionType,
 } from "@CM/Pages/Pool/Models/Transaction";
 import { relativeTime as relativeTimeFunc } from "@CM/Util";
 

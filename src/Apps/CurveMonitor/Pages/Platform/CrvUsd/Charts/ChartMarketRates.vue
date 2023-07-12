@@ -16,13 +16,13 @@ import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  AreaSeriesPartialOptions,
+  type AreaSeriesPartialOptions,
   createChart as createChartFunc,
-  IChartApi,
-  ISeriesApi,
-  LineData,
+  type IChartApi,
+  type ISeriesApi,
+  type LineData,
   LineType,
-  UTCTimestamp,
+  type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
 import { round, unit } from "@/Util";

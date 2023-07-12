@@ -24,7 +24,7 @@ import { Card } from "@/Framework";
 import { shorten } from "@/Util";
 import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import type { Pool } from "@CM/Models";
-import { PoolService } from "@CM/Services";
+import { type PoolService } from "@CM/Services";
 import SearchPool from "@CM/Components/SearchPool.vue";
 import Status from "@CM/Navigation/Status.vue";
 

@@ -15,10 +15,10 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { type Socket } from "socket.io-client";
 import { Tooltip } from "@/Framework";
 import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { StatusService } from "@CM/Services";
-import { Socket } from "socket.io-client";
 
 // Refs
 const storeMonitor = useMonitorStore();

@@ -25,7 +25,7 @@ import { minDelay, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { getHost } from "@/Services/Host";
-import { ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
+import { type ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";

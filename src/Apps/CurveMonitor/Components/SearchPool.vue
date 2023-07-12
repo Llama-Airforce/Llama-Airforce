@@ -30,8 +30,8 @@ import { InputText } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { getPools } from "@CM/Pages/Pool/DataLoaders";
-import type { Pool } from "@CM/Models";
-import { PoolService } from "@CM/Services";
+import { type Pool } from "@CM/Models";
+import { type PoolService } from "@CM/Services";
 
 const { t } = useI18n();
 

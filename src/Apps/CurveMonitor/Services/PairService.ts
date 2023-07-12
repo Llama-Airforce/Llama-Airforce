@@ -1,6 +1,6 @@
 import { Observable, share } from "rxjs";
 import type { Pair, TimeRange } from "@CM/Models";
-import type { PairDto, SocketPool } from "@CM/Services/Sockets";
+import { type PairDto, SocketPool } from "@CM/Services/Sockets";
 
 export default class PairService {
   private readonly socket: SocketPool;

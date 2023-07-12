@@ -61,6 +61,10 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/consistent-indexed-object-style": "off",
+    "@typescript-eslint/consistent-type-imports": ["error", {
+      "prefer": "type-imports",
+      "fixStyle": "inline-type-imports",
+    }],
 
     "vue/max-attributes-per-line": ["error", {
       "singleline": {

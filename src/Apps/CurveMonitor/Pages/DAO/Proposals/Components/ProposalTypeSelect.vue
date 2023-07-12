@@ -17,11 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { type Ref, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
 import {
-  ProposalType,
+  type ProposalType,
   proposalTypes,
 } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 

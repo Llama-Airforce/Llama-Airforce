@@ -1,4 +1,4 @@
-import {
+import type {
   Proposal,
   ProposalStatus,
 } from "@CM/Pages/DAO/Proposals/Models/Proposal";

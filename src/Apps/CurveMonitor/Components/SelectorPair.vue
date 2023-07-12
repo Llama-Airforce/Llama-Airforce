@@ -47,7 +47,7 @@ import { ref, computed, watch } from "vue";
 import { Select } from "@/Framework";
 import { useMonitorStore } from "@CM/Pages/Pool/Store";
 import { PairService } from "@CM/Services";
-import { SocketPool } from "@CM/Services/Sockets";
+import { type SocketPool } from "@CM/Services/Sockets";
 
 type Coin = {
   label: string;
