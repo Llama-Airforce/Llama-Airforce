@@ -34,7 +34,7 @@
     "socket.io-client": "^4.7.1",
     "vue": "^3.3.4",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.2.3",
+    "vue-router": "^4.2.4",
     "vue3-apexcharts": "^1.4.1",
     "vue3-popper": "^1.5.0"
   },
