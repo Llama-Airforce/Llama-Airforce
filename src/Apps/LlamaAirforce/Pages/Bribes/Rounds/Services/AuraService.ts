@@ -2,7 +2,7 @@ import ServiceBase from "@/Services/ServiceBase";
 
 const THEGRAPH_URL = "https://api.thegraph.com/subgraphs/name/aurafinance/aura";
 
-export class Delegation {
+export type Delegation = {
   id: string;
 
   /** The one who votes on behalf of someone. */
@@ -13,9 +13,9 @@ export class Delegation {
 
   timestamp: number;
   space: string;
-}
+};
 
-export class GetDelegatorResponse {
+type GetDelegatorResponse = {
   data: {
     auraLockerAccounts: {
       id: string;
@@ -25,7 +25,7 @@ export class GetDelegatorResponse {
       };
     }[];
   };
-}
+};
 
 export default class AuraService extends ServiceBase {
   public async getDelegation(
@@ -50,7 +50,7 @@ export default class AuraService extends ServiceBase {
       }
     }`;
 
-    const resp = await this.fetch(THEGRAPH_URL, GetDelegatorResponse, {
+    const resp = await this.fetch<GetDelegatorResponse>(THEGRAPH_URL, {
       query,
     });
 

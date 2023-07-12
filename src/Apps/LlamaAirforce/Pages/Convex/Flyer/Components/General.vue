@@ -56,7 +56,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
-import FlyerConvex from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
+import { FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 
 const { t } = useI18n();
 

@@ -1,4 +1,4 @@
-export class ProtocolRevenue {
+export type ProtocolRevenue = {
   totalCrvRevenueToLpProviders: number;
   totalCvxRevenueToLpProviders: number;
   totalFxsRevenueToLpProviders: number;
@@ -16,7 +16,7 @@ export class ProtocolRevenue {
   totalFxsRevenue: number;
   totalBribeRevenue: number;
   totalOtherRevenue: number;
-}
+};
 
 export const EmptyProtocolRevenue: ProtocolRevenue = {
   totalCrvRevenueToLpProviders: 0,
@@ -38,7 +38,7 @@ export const EmptyProtocolRevenue: ProtocolRevenue = {
   totalOtherRevenue: 0,
 };
 
-export class HistoricalRevenue {
+export type HistoricalRevenue = {
   crvRevenueToLpProvidersAmount: number;
   cvxRevenueToLpProvidersAmount: number;
   crvRevenueToCvxCrvStakersAmount: number;
@@ -57,7 +57,7 @@ export class HistoricalRevenue {
   bribeRevenue: number;
   otherRevenue: number;
   timestamp: number;
-}
+};
 
 export const EmptyHistoricalRevenue: HistoricalRevenue = {
   crvRevenueToLpProvidersAmount: 0,
@@ -80,12 +80,12 @@ export const EmptyHistoricalRevenue: HistoricalRevenue = {
   timestamp: 0,
 };
 
-export class RevenueSource {
+export type RevenueSource = {
   source: string;
   value: number;
-}
+};
 
-export class RevenueBreakdown {
+export type RevenueBreakdown = {
   name: string;
   data: number[];
-}
+};

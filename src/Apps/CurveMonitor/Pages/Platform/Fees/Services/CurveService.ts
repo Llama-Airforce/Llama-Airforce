@@ -16,6 +16,6 @@ export type Cushion = {
 
 export default class CurveService extends ServiceBase {
   public async getCushions(): Promise<{ cushions: Cushion[] }> {
-    return this.fetchType(`${API_URL}/protocol/couch/cushions`);
+    return this.fetch(`${API_URL}/protocol/couch/cushions`);
   }
 }

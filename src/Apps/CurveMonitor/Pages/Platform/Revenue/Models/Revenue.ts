@@ -1,15 +1,15 @@
-export default class PoolRevenue {
+export type PoolRevenue = {
   timestamp: number;
   pool: string;
   revenue: number;
-}
+};
 
-export class ChainRevenue {
+export type ChainRevenue = {
   chain: string;
   totalDailyFeesUSD: number;
-}
+};
 
-export class ChainTopPoolRevenue {
+export type ChainTopPoolRevenue = {
   name: string;
   totalDailyFeesUSD: number;
-}
+};

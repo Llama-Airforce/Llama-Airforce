@@ -1,5 +1,5 @@
-import Snapshot from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 import { last } from "lodash";
+import { Snapshot } from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 
 export function totalApr(snapshot: Snapshot): number {
   return (

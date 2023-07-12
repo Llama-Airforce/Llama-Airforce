@@ -14,8 +14,8 @@ import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import Pool from "@LAF/Pages/Convex/Pools/Models/Pool";
-import Snapshot from "@LAF/Pages/Convex/Pools/Models/Snapshot";
+import { Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
+import { Snapshot } from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
 import { totalApr } from "@LAF/Pages/Convex/Pools/Util/SnapshotHelper";
 

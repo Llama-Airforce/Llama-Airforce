@@ -14,7 +14,7 @@ import { useRoute, useRouter } from "vue-router";
 import { shorten, longen, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import TableGauges from "@CM/Pages/Platform/Gauges/Components/TableGauges.vue";
-import Gauge from "@CM/Pages/Platform/Gauges/Models/Gauge";
+import { Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import GaugeService from "@CM/Pages/Platform/Gauges/Services/GaugeService";
 import GaugeSnapshotsService from "@CM/Pages/Platform/Gauges/Services/GaugeSnapshotsService";
 import { useCurveStore } from "@CM/Pages/Platform/Store";

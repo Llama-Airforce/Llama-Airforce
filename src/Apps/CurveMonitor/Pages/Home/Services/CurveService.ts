@@ -47,42 +47,42 @@ type VolumeBreakdownChain = {
 
 export default class CurveService extends ServiceBase {
   public async getLiquidityTop(): Promise<{ liquidity_use: Liquidity[] }> {
-    return this.fetchType(`${API_URL}/protocol/liquidity/top`);
+    return this.fetch(`${API_URL}/protocol/liquidity/top`);
   }
 
   public async getTradesLarge(): Promise<{ large_trades: Trade[] }> {
-    return this.fetchType(`${API_URL}/protocol/size/trades`);
+    return this.fetch(`${API_URL}/protocol/size/trades`);
   }
 
   public async getTvlGainers(): Promise<{ tvl_gainers: TvlGrower[] }> {
-    return this.fetchType(`${API_URL}/protocol/tvl/gainers`);
+    return this.fetch(`${API_URL}/protocol/tvl/gainers`);
   }
 
   public async getTvlLosers(): Promise<{ tvl_losers: TvlGrower[] }> {
-    return this.fetchType(`${API_URL}/protocol/tvl/losers`);
+    return this.fetch(`${API_URL}/protocol/tvl/losers`);
   }
 
   public async getTvlBreakdownType(): Promise<{
     tvl_breakdown_type: TvlBreakdownType[];
   }> {
-    return this.fetchType(`${API_URL}/protocol/tvl/type_breakdown`);
+    return this.fetch(`${API_URL}/protocol/tvl/type_breakdown`);
   }
 
   public async getTvlBreakdownChain(): Promise<{
     tvl_breakdown_chain: TvlBreakdownChain[];
   }> {
-    return this.fetchType(`${API_URL}/protocol/tvl/chain_breakdown`);
+    return this.fetch(`${API_URL}/protocol/tvl/chain_breakdown`);
   }
 
   public async getVolumeBreakdownType(): Promise<{
     volume_breakdown_type: VolumeBreakdownType[];
   }> {
-    return this.fetchType(`${API_URL}/protocol/volume/type_breakdown`);
+    return this.fetch(`${API_URL}/protocol/volume/type_breakdown`);
   }
 
   public async getVolumeBreakdownChain(): Promise<{
     volume_breakdown_chain: VolumeBreakdownChain[];
   }> {
-    return this.fetchType(`${API_URL}/protocol/volume/chain_breakdown`);
+    return this.fetch(`${API_URL}/protocol/volume/chain_breakdown`);
   }
 }

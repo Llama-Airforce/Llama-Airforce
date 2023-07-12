@@ -68,7 +68,7 @@ import { AsyncValue, DataTable, SortOrder } from "@/Framework";
 import { shorten, icon, disabled } from "@/Util";
 import GraphTvl from "@LAF/Pages/Convex/Pools/Components/GraphTvl.vue";
 import GraphApr from "@LAF/Pages/Convex/Pools/Components/GraphApr.vue";
-import Pool from "@LAF/Pages/Convex/Pools/Models/Pool";
+import { Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
 import { totalApr } from "@LAF/Pages/Convex/Pools/Util/PoolHelper";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
 

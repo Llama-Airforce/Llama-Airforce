@@ -19,7 +19,7 @@ import General from "@LAF/Pages/Convex/Flyer/Components/General.vue";
 import Bribes from "@LAF/Pages/Convex/Flyer/Components/Bribes.vue";
 import Farm from "@LAF/Pages/Convex/Flyer/Components/Farm.vue";
 import FlyerService from "@LAF/Pages/Convex/Flyer/Services/FlyerService";
-import FlyerConvex from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
+import { FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 import { getHost } from "@/Services/Host";
 
 const flyerService = new FlyerService(getHost());

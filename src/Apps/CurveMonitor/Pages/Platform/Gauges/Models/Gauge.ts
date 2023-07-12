@@ -1,6 +1,6 @@
 export type GaugeId = string;
 
-export default class Gauge {
+export type Gauge = {
   name: GaugeId;
   tvl: number;
-}
+};

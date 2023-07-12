@@ -10,7 +10,7 @@ const PROPOSAL_OWNERSHIP_URL =
 const PROPOSAL_PARAMETER_URL =
   "https://api-py.llama.airforce/curve/v1/dao/proposals/parameter/";
 
-export type GetProposalsResponse = {
+type GetProposalsResponse = {
   proposals: {
     voteId: string;
     voteType: "PARAMETER" | "OWNERSHIP";
@@ -27,7 +27,7 @@ export type GetProposalsResponse = {
   }[];
 };
 
-export type GetProposalDetailsResponse =
+type GetProposalDetailsResponse =
   GetProposalsResponse["proposals"][number] & {
     script: string;
     votes: {
@@ -89,7 +89,7 @@ const parseProposalDetails = (
 
 export default class ProposalService extends ServiceBase {
   public async getProposals(): Promise<Proposal[]> {
-    const resp = await this.fetchType<GetProposalsResponse>(PROPOSAL_URL);
+    const resp = await this.fetch<GetProposalsResponse>(PROPOSAL_URL);
 
     return resp.proposals.map(parseProposal);
   }
@@ -102,7 +102,7 @@ export default class ProposalService extends ServiceBase {
         ? PROPOSAL_OWNERSHIP_URL
         : PROPOSAL_PARAMETER_URL;
 
-    const resp = await this.fetchType<GetProposalDetailsResponse>(
+    const resp = await this.fetch<GetProposalDetailsResponse>(
       `${url}${proposal.id}`
     );
 

@@ -15,7 +15,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { shorten, longen, minDelay } from "@/Util";
 import TablePools from "@LAF/Pages/Convex/Pools/Components/TablePools.vue";
-import Pool from "@LAF/Pages/Convex/Pools/Models/Pool";
+import { Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
 import PoolService from "@LAF/Pages/Convex/Pools/Services/PoolService";
 import PoolSnapshotsService from "@LAF/Pages/Convex/Pools/Services/PoolSnapshotsService";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";

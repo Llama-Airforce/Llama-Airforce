@@ -24,7 +24,6 @@
     "@web3-onboard/injected-wallets": "^2.10.2",
     "@web3-onboard/walletconnect": "^2.4.2",
     "apexcharts": "^3.41.0",
-    "class-transformer": "^0.5.1",
     "cross-fetch": "^4.0.0",
     "ethers": "^5.7.2",
     "lightweight-charts": "^4.0.1",

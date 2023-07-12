@@ -1,6 +1,6 @@
-import Snapshot from "@LAF/Pages/Convex/Pools/Models/Snapshot";
+import { Snapshot } from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 
-export default class PoolSnapshots {
+export type PoolSnapshots = {
   name: string;
   snapshots: Snapshot[];
-}
+};

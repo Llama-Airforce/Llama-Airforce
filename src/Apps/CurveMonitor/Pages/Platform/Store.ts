@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 import type { Chain } from "@CM/Models/Chain";
-import Gauge, { GaugeId } from "@CM/Pages/Platform/Gauges/Models/Gauge";
-import Fee from "@CM/Pages/Platform/Gauges/Models/Fee";
-import Emission from "@CM/Pages/Platform/Gauges/Models/Emission";
-import PoolRevenue, {
+import { Gauge, GaugeId } from "@CM/Pages/Platform/Gauges/Models/Gauge";
+import { Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
+import { Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
+import {
+  PoolRevenue,
   ChainRevenue,
   ChainTopPoolRevenue,
 } from "@CM/Pages/Platform/Revenue/Models/Revenue";

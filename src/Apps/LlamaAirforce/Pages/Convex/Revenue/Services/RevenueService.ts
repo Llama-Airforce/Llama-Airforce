@@ -10,27 +10,18 @@ const HISTORICAL_REVENUE_ENDPOINT =
 const TOTAL_REVENUE_ENDPOINT =
   "https://api-py.llama.airforce/convex/v1/platform/revenue";
 
-export class HistoricalRevenueResponse {
-  revenue: HistoricalRevenue[];
-}
-
-export class ProtocolRevenueResponse {
-  revenue: ProtocolRevenue[];
-}
-
 export default class ProtocolRevenueService extends ServiceBase {
   public get(): Promise<ProtocolRevenue> {
-    return this.fetch(TOTAL_REVENUE_ENDPOINT, ProtocolRevenueResponse).then(
-      (resp) => resp.revenue[0]
-    );
+    return this.fetch<{ revenue: ProtocolRevenue[] }>(
+      TOTAL_REVENUE_ENDPOINT
+    ).then((resp) => resp.revenue[0]);
   }
 }
 
 export class HistoricalRevenueService extends ServiceBase {
   public get(): Promise<HistoricalRevenue[]> {
-    return this.fetch(
-      HISTORICAL_REVENUE_ENDPOINT,
-      HistoricalRevenueResponse
+    return this.fetch<{ revenue: HistoricalRevenue[] }>(
+      HISTORICAL_REVENUE_ENDPOINT
     ).then((resp) => resp.revenue);
   }
 }

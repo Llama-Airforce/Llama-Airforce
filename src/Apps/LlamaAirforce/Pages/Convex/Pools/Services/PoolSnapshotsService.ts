@@ -1,14 +1,10 @@
-import Pool from "@LAF/Pages/Convex/Pools/Models/Pool";
-import PoolSnapshots from "@LAF/Pages/Convex/Pools/Models/PoolSnapshots";
+import { Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
+import { PoolSnapshots } from "@LAF/Pages/Convex/Pools/Models/PoolSnapshots";
 import ServiceBase from "@/Services/ServiceBase";
 
-export class PoolSnapshotsResponse {
-  data: PoolSnapshots;
-}
-
 export default class PoolSnapshotsService extends ServiceBase {
-  public async get(pool: Pool): Promise<PoolSnapshotsResponse> {
-    return this.fetch(`${this.host}/poolsnapshots`, PoolSnapshotsResponse, {
+  public async get(pool: Pool): Promise<{ data: PoolSnapshots }> {
+    return this.fetch(`${this.host}/poolsnapshots`, {
       pool: pool.name,
     });
   }

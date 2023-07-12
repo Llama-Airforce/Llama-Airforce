@@ -8,20 +8,14 @@ const SNAPSHOT_SCORE_URL = "https://score.snapshot.org/api/scores";
 const SNAPSHOT_THEGRAPH_URL =
   "https://api.thegraph.com/subgraphs/name/snapshot-labs/snapshot";
 
-export class Proposal {
+export type Proposal = {
   id: ProposalId;
   snapshot: string;
   choices: Record<string, number>;
   end: number;
-}
+};
 
-export class GetProposalResponse {
-  data: {
-    proposal: Proposal;
-  };
-}
-
-export class Delegation {
+export type Delegation = {
   id: string;
 
   /** The one who votes on behalf of someone. */
@@ -32,33 +26,15 @@ export class Delegation {
 
   timestamp: number;
   space: string;
-}
+};
 
-export class GetDelegatorsResponse {
-  data: {
-    delegations: Delegation[];
-  };
-}
-
-export class Vote {
+export type Vote = {
   id: string;
   voter: string;
   choice: Record<string, number>;
-}
-
-export class GetVotesResponse {
-  data: {
-    votes: Vote[];
-  };
-}
+};
 
 export type Scores = Record<string, number>[];
-
-export class GetScoresResponse {
-  result: {
-    scores: Scores;
-  };
-}
 
 export default class SnapshotService extends ServiceBase {
   public async getProposal(proposalId: ProposalId): Promise<Proposal> {
@@ -70,9 +46,11 @@ export default class SnapshotService extends ServiceBase {
                 end
             } }`;
 
-    return this.fetch(SNAPSHOT_URL, GetProposalResponse, { query }).then(
-      (resp) => resp.data.proposal
-    );
+    return this.fetch<{
+      data: {
+        proposal: Proposal;
+      };
+    }>(SNAPSHOT_URL, { query }).then((resp) => resp.data.proposal);
   }
 
   public getDelegations(
@@ -121,13 +99,13 @@ export default class SnapshotService extends ServiceBase {
                 space
             } }`;
 
-      const resp = await this.fetch(
-        SNAPSHOT_THEGRAPH_URL,
-        GetDelegatorsResponse,
-        {
-          query,
-        }
-      );
+      const resp = await this.fetch<{
+        data: {
+          delegations: Delegation[];
+        };
+      }>(SNAPSHOT_THEGRAPH_URL, {
+        query,
+      });
 
       const delegations = resp.data.delegations;
 
@@ -177,13 +155,16 @@ export default class SnapshotService extends ServiceBase {
                     choice
                 } }`;
 
-      return this.fetch(SNAPSHOT_URL, GetVotesResponse, { query }).then(
-        (resp) =>
-          resp.data.votes.map((vote) => {
-            vote.voter = vote.voter.toLocaleLowerCase();
+      return this.fetch<{
+        data: {
+          votes: Vote[];
+        };
+      }>(SNAPSHOT_URL, { query }).then((resp) =>
+        resp.data.votes.map((vote) => {
+          vote.voter = vote.voter.toLocaleLowerCase();
 
-            return vote;
-          })
+          return vote;
+        })
       );
     };
 
@@ -253,13 +234,15 @@ export default class SnapshotService extends ServiceBase {
       addresses: voters,
     };
 
-    return this.fetch(SNAPSHOT_SCORE_URL, GetScoresResponse, { params }).then(
-      (resp) => {
-        return resp.result.scores.map((scores) =>
-          mapKeys(scores, (_, key) => key.toLocaleLowerCase())
-        );
-      }
-    );
+    return this.fetch<{
+      result: {
+        scores: Scores;
+      };
+    }>(SNAPSHOT_SCORE_URL, { params }).then((resp) => {
+      return resp.result.scores.map((scores) =>
+        mapKeys(scores, (_, key) => key.toLocaleLowerCase())
+      );
+    });
   }
 
   public async getScoresAura(
@@ -290,13 +273,15 @@ export default class SnapshotService extends ServiceBase {
       addresses: voters,
     };
 
-    return this.fetch(SNAPSHOT_SCORE_URL, GetScoresResponse, { params }).then(
-      (resp) => {
-        return resp.result.scores.map((scores) =>
-          mapKeys(scores, (_, key) => key.toLocaleLowerCase())
-        );
-      }
-    );
+    return this.fetch<{
+      result: {
+        scores: Scores;
+      };
+    }>(SNAPSHOT_SCORE_URL, { params }).then((resp) => {
+      return resp.result.scores.map((scores) =>
+        mapKeys(scores, (_, key) => key.toLocaleLowerCase())
+      );
+    });
   }
 }
 

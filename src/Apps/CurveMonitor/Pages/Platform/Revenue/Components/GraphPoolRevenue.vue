@@ -14,7 +14,7 @@ import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
-import PoolRevenue from "@CM/Pages/Platform/Revenue/Models/Revenue";
+import { PoolRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 
 type Serie = {

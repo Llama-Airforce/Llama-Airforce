@@ -1,31 +1,27 @@
 import type { FlyerId } from "@LAF/Pages/Convex/Flyer/Models/FlyerId";
-import FlyerConvex from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
-import FlyerAura from "@LAF/Pages/Convex/Flyer/Models/FlyerAura";
+import type { FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
+import type { FlyerAura } from "@LAF/Pages/Convex/Flyer/Models/FlyerAura";
 import ServiceBase from "@/Services/ServiceBase";
 
-export class FlyerConvexResponse {
-  success: boolean;
-  dashboard?: FlyerConvex;
-}
-
-export class FlyerAuraResponse {
-  success: boolean;
-  dashboard?: FlyerAura;
-}
-
 export default class FlyerService extends ServiceBase {
-  public async getConvex(): Promise<FlyerConvexResponse> {
+  public async getConvex(): Promise<{
+    success: boolean;
+    dashboard?: FlyerConvex;
+  }> {
     const id: FlyerId = "flyer-convex";
 
-    return this.fetch(`${this.host}/dashboard`, FlyerConvexResponse, {
+    return this.fetch(`${this.host}/dashboard`, {
       id,
     });
   }
 
-  public async getAura(): Promise<FlyerAuraResponse> {
+  public async getAura(): Promise<{
+    success: boolean;
+    dashboard?: FlyerAura;
+  }> {
     const id: FlyerId = "flyer-aura";
 
-    return this.fetch(`${this.host}/dashboard`, FlyerAuraResponse, {
+    return this.fetch(`${this.host}/dashboard`, {
       id,
     });
   }

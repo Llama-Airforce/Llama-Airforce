@@ -1,4 +1,4 @@
-export default class FlyerConvex {
+export type FlyerConvex = {
   revenueMonthly: number;
   revenueAnnually: number;
 
@@ -14,4 +14,4 @@ export default class FlyerConvex {
 
   cvxApr: number;
   cvxCrvApr: number;
-}
+};

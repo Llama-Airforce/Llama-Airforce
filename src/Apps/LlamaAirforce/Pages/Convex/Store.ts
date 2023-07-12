@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import Pool from "@LAF/Pages/Convex/Pools/Models/Pool";
-import Snapshot from "@LAF/Pages/Convex/Pools/Models/Snapshot";
+import { Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
+import { Snapshot } from "@LAF/Pages/Convex/Pools/Models/Snapshot";
 import {
   EmptyHistoricalRevenue,
   EmptyProtocolRevenue,

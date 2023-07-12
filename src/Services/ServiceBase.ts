@@ -1,5 +1,4 @@
 import "cross-fetch/polyfill";
-import { ClassConstructor, plainToClass } from "class-transformer";
 
 export const hostDev = "https://localhost:7019";
 export const hostProd = "https://api.llama.airforce/";
@@ -28,14 +27,6 @@ export async function fetchType<T>(
   return json;
 }
 
-export async function fetchClass<T>(
-  url: string,
-  type: ClassConstructor<T>,
-  body?: Record<string, unknown>
-): Promise<T> {
-  return plainToClass(type, await fetchType<T>(url, body));
-}
-
 export async function fetchText(
   url: string,
   body?: Record<string, unknown>
@@ -53,36 +44,10 @@ export default class ServiceBase {
     this.host = host;
   }
 
-  public async fetchType<T>(
+  public async fetch<T>(
     url: string,
     body?: Record<string, unknown>
   ): Promise<T> {
     return fetchType<T>(url, body);
-  }
-
-  public async fetch<T>(
-    url: string,
-    type: ClassConstructor<T>,
-    body?: Record<string, unknown>
-  ): Promise<T> {
-    return fetchClass(url, type, body);
-  }
-
-  public async fetchArray<T>(
-    url: string,
-    type: ClassConstructor<T>,
-    body?: Record<string, unknown>
-  ): Promise<T[]> {
-    const res = await fetch(url, {
-      method: body ? "POST" : "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    const json = (await res.json()) as T[];
-
-    return json.map((x) => plainToClass(type, x));
   }
 }

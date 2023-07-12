@@ -109,25 +109,25 @@ export type Yield = {
 
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
-    return this.fetchType(`${API_URL}/crvusd/markets`);
+    return this.fetch(`${API_URL}/crvusd/markets`);
   }
 
   public async getMarketVolume(
     marketAddr: string
   ): Promise<{ volumes: MarketVolume[] }> {
-    return this.fetchType(`${API_URL}/crvusd/markets/${marketAddr}/volume`);
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/volume`);
   }
 
   public async getMarketLoans(
     marketAddr: string
   ): Promise<{ loans: MarketLoans[] }> {
-    return this.fetchType(`${API_URL}/crvusd/markets/${marketAddr}/loans`);
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/loans`);
   }
 
   public async getMarketRates(
     marketAddr: string
   ): Promise<{ rates: MarketRates[] }> {
-    return this.fetchType(`${API_URL}/crvusd/markets/${marketAddr}/rate/daily`);
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/rate/daily`);
   }
 
   public async getMarketUserStates(
@@ -135,7 +135,7 @@ export default class CurveService extends ServiceBase {
     offset: number,
     limit: number
   ): Promise<{ states: MarketState[] }> {
-    return this.fetchType(
+    return this.fetch(
       `${API_URL}/crvusd/markets/${marketAddr}/users/states?offset=${offset}&limit=${limit}`
     );
   }
@@ -143,47 +143,47 @@ export default class CurveService extends ServiceBase {
   public async getMarketUserDeciles(
     marketAddr: string
   ): Promise<{ deciles: MarketDeciles }> {
-    return this.fetchType(
+    return this.fetch(
       `${API_URL}/crvusd/markets/${marketAddr}/users/health/deciles`
     );
   }
 
   public async getPoolStats(): Promise<{ stats: PoolStats[] }> {
-    return this.fetchType(`${API_URL}/crvusd/pools/stats`);
+    return this.fetch(`${API_URL}/crvusd/pools/stats`);
   }
 
   public async getPoolPrices(): Promise<{ prices: PoolPrice[] }> {
-    return this.fetchType(`${API_URL}/crvusd/prices`);
+    return this.fetch(`${API_URL}/crvusd/prices`);
   }
 
   public async getCrvUsdPriceHistogram(): Promise<PriceHistogram> {
-    return this.fetchType(`${API_URL}/crvusd/prices/hist`);
+    return this.fetch(`${API_URL}/crvusd/prices/hist`);
   }
 
   public async getCrvUsdSupply(): Promise<{ supply: CrvUsdSupply[] }> {
-    return this.fetchType(`${API_URL}/crvusd/supply`);
+    return this.fetch(`${API_URL}/crvusd/supply`);
   }
 
   public async getFees(): Promise<{ fees: Fees }> {
-    return this.fetchType(`${API_URL}/crvusd/fees`);
+    return this.fetch(`${API_URL}/crvusd/fees`);
   }
 
   public async getFeesBreakdown(): Promise<{
     pending: FeesBreakdown[];
     collected: FeesBreakdown[];
   }> {
-    return this.fetchType(`${API_URL}/crvusd/fees/breakdown`);
+    return this.fetch(`${API_URL}/crvusd/fees/breakdown`);
   }
 
   public async getKeepersDebt(): Promise<{ keepers: KeepersDebt[] }> {
-    return this.fetchType(`${API_URL}/crvusd/keepers/debt`);
+    return this.fetch(`${API_URL}/crvusd/keepers/debt`);
   }
 
   public async getKeepersProfit(): Promise<{ profit: KeepersProfit[] }> {
-    return this.fetchType(`${API_URL}/crvusd/keepers/profit`);
+    return this.fetch(`${API_URL}/crvusd/keepers/profit`);
   }
 
   public async getYield(): Promise<{ yields: Yield[] }> {
-    return this.fetchType(`${API_URL}/crvusd/yield`);
+    return this.fetch(`${API_URL}/crvusd/yield`);
   }
 }

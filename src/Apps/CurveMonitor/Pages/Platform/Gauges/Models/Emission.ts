@@ -1,7 +1,7 @@
 import { DataPoint } from "@CM/Pages/Platform/Gauges/Util/SnapshotHelper";
 
-export default class Emission extends DataPoint {
+export type Emission = DataPoint & {
   crvAmount: number;
-}
+};
 
-export class AggregatedUsdEmission extends DataPoint {}
+export type AggregatedUsdEmission = DataPoint;

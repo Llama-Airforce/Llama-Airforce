@@ -1,7 +1,7 @@
-export class DataPoint {
+export type DataPoint = {
   timeStamp: number;
   value: number;
-}
+};
 
 export function aggregateDataPoints(datapoints: DataPoint[]): DataPoint[] {
   const aggregatedValues = datapoints.reduce(
@@ -11,9 +11,6 @@ export function aggregateDataPoints(datapoints: DataPoint[]): DataPoint[] {
   );
 
   return Array.from(aggregatedValues).map((aggregatedValue) => {
-    const res = new DataPoint();
-    res.timeStamp = aggregatedValue[0];
-    res.value = aggregatedValue[1];
-    return res;
+    return { timeStamp: aggregatedValue[0], value: aggregatedValue[1] };
   });
 }

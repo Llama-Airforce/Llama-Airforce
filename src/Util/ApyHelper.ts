@@ -23,7 +23,7 @@ import {
   UCrvStrategyAddress,
   UCrvStrategyAddressV2,
 } from "@/Util/Addresses";
-import { fetchClass } from "@/Services/ServiceBase";
+import { fetchType } from "@/Services/ServiceBase";
 import DefiLlamaService from "@/Services/DefiLlamaService";
 import FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
 
@@ -136,7 +136,7 @@ export async function getCvxCrvApyV2(
   return aprToApy(apr * 100, 52);
 }
 
-class PoolResponse {
+type PoolResponse = {
   data: {
     pools: {
       baseApr: string;
@@ -151,7 +151,7 @@ class PoolResponse {
       }[];
     }[];
   };
-}
+};
 
 export function getCvxFxsLpApy(): Promise<number> {
   const SUBGRAPH_URL_CONVEX =
@@ -175,7 +175,7 @@ export function getCvxFxsLpApy(): Promise<number> {
       }
     } }`;
 
-  return fetchClass(SUBGRAPH_URL_CONVEX, PoolResponse, { query }).then(
+  return fetchType<PoolResponse>(SUBGRAPH_URL_CONVEX, { query }).then(
     (resp) => {
       const baseApr = parseFloat(resp.data.pools[0].snapshots[0].baseApr);
       const crvApr = parseFloat(resp.data.pools[0].snapshots[0].crvApr);

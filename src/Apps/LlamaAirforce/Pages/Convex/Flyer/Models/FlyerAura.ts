@@ -1,4 +1,4 @@
-export default class FlyerAura {
+export type FlyerAura = {
   auraBalPrice: number;
   auraBalApr: number;
-}
+};

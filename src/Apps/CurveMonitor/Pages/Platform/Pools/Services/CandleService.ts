@@ -14,12 +14,6 @@ type CandleGraph = {
   token0TotalAmount: string;
 };
 
-export class CandlesResponse {
-  data: {
-    candles: CandleGraph[];
-  };
-}
-
 export default class CandleService extends ServiceBase {
   public async get(pool: Pool): Promise<Candle[]> {
     let timestampLast = 0;
@@ -44,7 +38,11 @@ export default class CandleService extends ServiceBase {
         }
       }`;
 
-      const resp = await this.fetch(THEGRAPH_URL, CandlesResponse, {
+      const resp = await this.fetch<{
+        data: {
+          candles: CandleGraph[];
+        };
+      }>(THEGRAPH_URL, {
         query,
       }).then((candles) =>
         candles.data.candles.map((candle) => {
