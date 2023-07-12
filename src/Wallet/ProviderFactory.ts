@@ -11,16 +11,8 @@ import gnosisModule from "@web3-onboard/gnosis";
 
 const injected = injectedModule();
 const walletConnect = walletConnectModule({
-  qrcodeModalOptions: {
-    mobileLinks: [
-      "rainbow",
-      "metamask",
-      "argent",
-      "trust",
-      "imtoken",
-      "pillar",
-    ],
-  },
+  projectId: "7a61bbd683f613a5308ca86fd4cb14f7",
+  dappUrl: "https://llama.airforce",
 });
 const coinbaseWallet = coinbaseWalletModule({ darkMode: true });
 const gnosis = gnosisModule();
