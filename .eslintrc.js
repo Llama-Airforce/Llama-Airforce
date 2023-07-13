@@ -7,7 +7,8 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
-    "plugin:vue/vue3-recommended"
+    "plugin:vue/vue3-recommended",
+    "plugin:promise/recommended"
   ],
   parser: "vue-eslint-parser",
   parserOptions: {
@@ -20,6 +21,7 @@ module.exports = {
   },
   "plugins": [
     "@typescript-eslint",
+    "promise"
   ],
   rules: {
     "indent": ["error", 2, { "SwitchCase": 1 }],
