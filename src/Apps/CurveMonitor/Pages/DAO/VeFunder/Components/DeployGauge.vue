@@ -87,7 +87,7 @@ const execute = async (): Promise<void> => {
   if (typeof amount.value === "string") {
     amount.value = parseFloat(amount.value);
   }
-  const amountFinal = numToBigNumber(amount.value, 18);
+  const amountFinal = numToBigNumber(amount.value, 18n);
 
   try {
     const gauge = await gaugeFactory.deploy_gauge(

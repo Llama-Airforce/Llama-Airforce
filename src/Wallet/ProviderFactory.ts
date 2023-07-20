@@ -1,9 +1,9 @@
 import {
-  ExternalProvider,
+  type ExternalProvider,
   Web3Provider,
-  JsonRpcProvider,
+  type JsonRpcProvider,
 } from "@ethersproject/providers";
-import Onboard, { OnboardAPI, WalletState } from "@web3-onboard/core";
+import Onboard, { type OnboardAPI, type WalletState } from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import coinbaseWalletModule from "@web3-onboard/coinbase";

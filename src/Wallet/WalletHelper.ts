@@ -1,6 +1,6 @@
-import { ERC20 } from "@/Contracts";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { constants, BigNumber } from "ethers";
+import { constants } from "ethers";
+import { type JsonRpcProvider } from "@ethersproject/providers";
+import { type ERC20 } from "@/Contracts";
 
 export async function isConnected(
   provider?: JsonRpcProvider
@@ -57,11 +57,13 @@ export async function approve(
   erc20: ERC20,
   owner: string,
   spender: string,
-  input: BigNumber
+  input: bigint
 ): Promise<void> {
-  const allowance = await erc20.allowance(owner, spender);
+  const allowance = await erc20
+    .allowance(owner, spender)
+    .then((x) => x.toBigInt());
 
-  if (allowance.lt(input)) {
+  if (allowance < input) {
     await erc20.approve(spender, input).then((x) => x.wait());
   }
 }
@@ -70,11 +72,13 @@ export async function maxApprove(
   erc20: ERC20,
   owner: string,
   spender: string,
-  input: BigNumber
+  input: bigint
 ): Promise<void> {
-  const allowance = await erc20.allowance(owner, spender);
+  const allowance = await erc20
+    .allowance(owner, spender)
+    .then((x) => x.toBigInt());
 
-  if (allowance.lt(input)) {
+  if (allowance < input) {
     await erc20.approve(spender, constants.MaxUint256).then((x) => x.wait());
   }
 }

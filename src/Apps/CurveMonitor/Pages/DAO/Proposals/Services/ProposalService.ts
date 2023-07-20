@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import { bigNumToNumber } from "@/Util";
 import ServiceBase from "@/Services/ServiceBase";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
@@ -27,15 +26,14 @@ type GetProposalsResponse = {
   }[];
 };
 
-type GetProposalDetailsResponse =
-  GetProposalsResponse["proposals"][number] & {
-    script: string;
-    votes: {
-      voter: string;
-      supports: boolean;
-      stake: number;
-    }[];
-  };
+type GetProposalDetailsResponse = GetProposalsResponse["proposals"][number] & {
+  script: string;
+  votes: {
+    voter: string;
+    supports: boolean;
+    stake: number;
+  }[];
+};
 
 const parseProposal = (
   x: GetProposalsResponse["proposals"][number]
@@ -46,13 +44,13 @@ const parseProposal = (
   const proposer = x.creator;
   const start = parseInt(x.startDate, 10);
   const end = start + 604800;
-  const quorum = bigNumToNumber(BigNumber.from(x.minAcceptQuorum), 18);
-  const support = bigNumToNumber(BigNumber.from(x.supportRequired), 18);
+  const quorum = bigNumToNumber(BigInt(x.minAcceptQuorum), 18n);
+  const support = bigNumToNumber(BigInt(x.supportRequired), 18n);
   const votes = parseInt(x.voteCount, 10);
-  const votesFor = bigNumToNumber(BigNumber.from(x.votesFor), 18);
-  const votesAgainst = bigNumToNumber(BigNumber.from(x.votesAgainst), 18);
+  const votesFor = bigNumToNumber(BigInt(x.votesFor), 18n);
+  const votesAgainst = bigNumToNumber(BigInt(x.votesAgainst), 18n);
   const executed = x.executed;
-  const totalSupply = bigNumToNumber(BigNumber.from(x.totalSupply), 18);
+  const totalSupply = bigNumToNumber(BigInt(x.totalSupply), 18n);
 
   return {
     id,

@@ -1,4 +1,4 @@
-import { BigNumber, Signer } from "ethers";
+import { BigNumber, type Signer } from "ethers";
 import { type Provider } from "@ethersproject/providers";
 import { chain, zip } from "lodash";
 import {
@@ -24,8 +24,8 @@ import {
   UCrvStrategyAddressV2,
 } from "@/Util/Addresses";
 import { fetchType } from "@/Services/ServiceBase";
-import DefiLlamaService from "@/Services/DefiLlamaService";
-import FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
+import type DefiLlamaService from "@/Services/DefiLlamaService";
+import type FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
 
 /**
  * Assumes weekly compounding. Apr is a [0, 100] percentage.
@@ -86,7 +86,7 @@ export async function getCvxCrvAprs(
         price: coins[coin].price,
       })),
       (x) => x.address,
-      (x) => numToBigNumber(x.price, 18)
+      (x) => numToBigNumber(x.price, 18n)
     )
   );
 
@@ -95,13 +95,11 @@ export async function getCvxCrvAprs(
 
   for (const rate of rates) {
     // eslint-disable-next-line no-await-in-loop
-    const apr = await util.apr(
-      rate.rate,
-      prices[rate.address.toLocaleLowerCase()],
-      priceOfDeposit
-    );
+    const apr = await util
+      .apr(rate.rate, prices[rate.address.toLocaleLowerCase()], priceOfDeposit)
+      .then((x) => x.toBigInt());
 
-    const aprNumber = bigNumToNumber(apr, 18);
+    const aprNumber = bigNumToNumber(apr, 18n);
     aprs.push(aprNumber);
   }
 
@@ -208,18 +206,21 @@ export async function getCvxFxsApy(
 
   const getRewardRate = async (address: string): Promise<number> => {
     const rewardData = await rewardsContract.rewardData(address);
-    const periodFinish = rewardData.periodFinish;
+    const periodFinish = rewardData.periodFinish.toBigInt();
 
-    if (Date.now() / 1000 >= bigNumToNumber(periodFinish, 0)) {
+    if (Date.now() / 1000 >= bigNumToNumber(periodFinish, 0n)) {
       return 0;
     }
 
-    return bigNumToNumber(rewardData.rewardRate, 18);
+    return bigNumToNumber(rewardData.rewardRate.toBigInt(), 18n);
   };
 
   const rateFxs = await getRewardRate(FxsAddress);
   const rateCvx = await getRewardRate(CvxAddress);
-  const supply = bigNumToNumber(await rewardsContract.totalSupply(), 18);
+  const supply = bigNumToNumber(
+    await rewardsContract.totalSupply().then((x) => x.toBigInt()),
+    18n
+  );
 
   const curvePool = CurveV2FactoryPool__factory.connect(
     CvxFxsFactoryAddress,
