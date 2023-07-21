@@ -20,7 +20,6 @@
         {{ t("locked-2") }}
       </li>
       <li>
-        {{ t("locked-2") }}
         <AsyncValue
           :value="cvxTvl"
           :precision="0"
