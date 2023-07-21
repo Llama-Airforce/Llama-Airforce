@@ -537,7 +537,7 @@ export interface PirexCvxInterface extends utils.Interface {
 
   events: {
     "AddDeveloper(address)": EventFragment;
-    "ClaimMiscRewards(uint256,tuple[])": EventFragment;
+    "ClaimMiscRewards(uint256,(address,uint256,uint256)[])": EventFragment;
     "ClaimVotiumReward(address,uint256,uint256)": EventFragment;
     "ClearVoteDelegate()": EventFragment;
     "Deposit(uint256,address,bool,address)": EventFragment;
@@ -555,7 +555,7 @@ export interface PirexCvxInterface extends utils.Interface {
     "SetContract(uint8,address)": EventFragment;
     "SetConvexContract(uint8,address)": EventFragment;
     "SetDelegationSpace(string,bool)": EventFragment;
-    "SetEmergencyMigration(tuple)": EventFragment;
+    "SetEmergencyMigration((address,address[]))": EventFragment;
     "SetFee(uint8,uint32)": EventFragment;
     "SetUpxCvxDeprecated(bool)": EventFragment;
     "SetVoteDelegate(address)": EventFragment;
@@ -1562,7 +1562,7 @@ export interface PirexCvx extends BaseContract {
     "AddDeveloper(address)"(developer?: null): AddDeveloperEventFilter;
     AddDeveloper(developer?: null): AddDeveloperEventFilter;
 
-    "ClaimMiscRewards(uint256,tuple[])"(
+    "ClaimMiscRewards(uint256,(address,uint256,uint256)[])"(
       timestamp?: null,
       rewards?: null
     ): ClaimMiscRewardsEventFilter;
@@ -1734,7 +1734,7 @@ export interface PirexCvx extends BaseContract {
       shouldClear?: null
     ): SetDelegationSpaceEventFilter;
 
-    "SetEmergencyMigration(tuple)"(
+    "SetEmergencyMigration((address,address[]))"(
       _emergencyMigration?: null
     ): SetEmergencyMigrationEventFilter;
     SetEmergencyMigration(
