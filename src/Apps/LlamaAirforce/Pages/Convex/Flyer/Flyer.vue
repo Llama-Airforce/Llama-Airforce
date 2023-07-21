@@ -5,7 +5,6 @@
       <Farm :model="model"></Farm>
       <General :model="model"></General>
       <Bribes :model="model"></Bribes>
-      <Revenue :model="model"></Revenue>
     </div>
   </div>
 </template>
@@ -14,7 +13,6 @@
 import { ref, onMounted } from "vue";
 import { minDelay } from "@/Util";
 import Header from "@LAF/Pages/Convex/Flyer/Components/Header.vue";
-import Revenue from "@LAF/Pages/Convex/Flyer/Components/Revenue.vue";
 import General from "@LAF/Pages/Convex/Flyer/Components/General.vue";
 import Bribes from "@LAF/Pages/Convex/Flyer/Components/Bribes.vue";
 import Farm from "@LAF/Pages/Convex/Flyer/Components/Farm.vue";
