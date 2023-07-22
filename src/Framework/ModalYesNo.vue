@@ -69,7 +69,7 @@ const { t } = useI18n();
     .buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: 3rem;
+      margin-top: 2rem;
 
       button {
         &.no {
@@ -77,6 +77,7 @@ const { t } = useI18n();
         }
 
         &.yes {
+          color: var(--c-green);
           margin-right: 1rem;
         }
       }
