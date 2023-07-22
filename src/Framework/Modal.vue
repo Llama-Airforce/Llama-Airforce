@@ -54,6 +54,10 @@ watch(
 
   z-index: 100;
 
+  font-size: 0.875rem;
+  font-weight: var(--font-weight);
+  line-height: 1.5;
+
   .modal-mask {
     position: fixed;
     width: 100%;
