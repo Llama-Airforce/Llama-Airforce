@@ -21,6 +21,7 @@
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
+import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";
 import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vue";
 import ChartPoolPrices from "@CM/Pages/Platform/CrvUsd/Charts/ChartPoolPrices.vue";
@@ -32,6 +33,7 @@ import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 const router = useRouter();
 
 const storeBreadcrumb = useBreadcrumbStore();
+const storeCrvUsd = useCrvUsdStore();
 
 // Hooks
 onMounted(() => {
@@ -47,6 +49,8 @@ onMounted(() => {
 
 // Events
 const onMarketSelect = async (market: Market) => {
+  storeCrvUsd.market = market;
+
   await router.push({
     name: "crvusdmarket",
     params: {

@@ -34,6 +34,7 @@ import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type MarketRates,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const { t } = useI18n();
 
@@ -41,10 +42,10 @@ const curveService = new CurveService(getHost());
 
 // Props
 interface Props {
-  market?: string;
+  market?: Market | null;
 }
 
-const { market } = defineProps<Props>();
+const { market = null } = defineProps<Props>();
 
 // Refs
 let chart: IChartApi;
@@ -83,7 +84,7 @@ watch(
     }
 
     rates.value = await curveService
-      .getMarketRates(newMarket)
+      .getMarketRates(newMarket.address)
       .then((x) => x.rates);
 
     loading.value = false;

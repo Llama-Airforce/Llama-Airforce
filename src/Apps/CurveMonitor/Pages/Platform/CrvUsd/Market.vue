@@ -13,21 +13,39 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { getHost } from "@/Services/Host";
 import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
+import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
 import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
 import ChartMarketDeciles from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketDeciles.vue";
+import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+
+const curveService = new CurveService(getHost());
 
 // Refs
 const route = useRoute();
 
 const storeBreadcrumb = useBreadcrumbStore();
+const storeCrvUsd = useCrvUsdStore();
 
-const market = computed(() => route.params.marketAddr as string);
+const marketAddr = computed(() => route.params.marketAddr as string);
+const market = computed(() => storeCrvUsd.market);
 
 // Hooks
-onMounted(() => {
+onMounted(async () => {
+  if (storeCrvUsd.market?.address !== marketAddr.value) {
+    const { markets } = await curveService.getMarkets();
+    const market = markets.find(
+      (market) => market.address === marketAddr.value
+    );
+
+    if (market) {
+      storeCrvUsd.market = market;
+    }
+  }
+
   storeBreadcrumb.show = true;
   storeBreadcrumb.crumbs = [
     {
@@ -37,7 +55,7 @@ onMounted(() => {
     },
     {
       id: "market",
-      label: `Market: ${market?.value}`,
+      label: `Market: ${market.value?.name ?? "?"}`,
     },
   ];
 });

@@ -19,15 +19,16 @@ import CurveService, {
   type MarketDeciles,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const curveService = new CurveService(getHost());
 
 // Props
 interface Props {
-  market?: string;
+  market?: Market | null;
 }
 
-const { market } = defineProps<Props>();
+const { market = null } = defineProps<Props>();
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -111,7 +112,7 @@ watch(
     }
 
     data.value = await curveService
-      .getMarketUserDeciles(newMarket)
+      .getMarketUserDeciles(newMarket.address)
       .then((x) => x.deciles);
 
     loading.value = false;

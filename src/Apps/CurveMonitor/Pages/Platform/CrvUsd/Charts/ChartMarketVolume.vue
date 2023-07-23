@@ -34,6 +34,7 @@ import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type MarketVolume,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const { t } = useI18n();
 
@@ -44,10 +45,10 @@ let areaSerie: ISeriesApi<"Area">;
 
 // Props
 interface Props {
-  market?: string;
+  market?: Market | null;
 }
 
-const { market } = defineProps<Props>();
+const { market = null } = defineProps<Props>();
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -80,7 +81,7 @@ watch(
     }
 
     volumes.value = await curveService
-      .getMarketVolume(newMarket)
+      .getMarketVolume(newMarket.address)
       .then((x) => x.volumes);
 
     loading.value = false;
