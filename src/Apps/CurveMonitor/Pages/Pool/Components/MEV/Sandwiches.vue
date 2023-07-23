@@ -61,30 +61,18 @@
           <span>
             lost
             {{
-              props.item.user_losses_details
-                .reduce((acc, x) => acc + x.amount, 0)
-                .toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })
+              roundPhil(
+                props.item.user_losses_details.reduce(
+                  (acc, x) => acc + x.amount,
+                  0
+                )
+              )
             }}
             {{ props.item.user_losses_details[0].unit }}
           </span>
           (that's -
-          {{
-            props.item.user_losses_details[0].lossInPercentage.toLocaleString(
-              undefined,
-              {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }
-            )
-          }}% slippage, or ${{
-            props.item.lossInUsd.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-          }})
+          {{ roundPhil(props.item.user_losses_details[0].lossInPercentage) }}%
+          slippage, or ${{ roundPhil(props.item.lossInUsd) }})
         </div>
       </div>
 
@@ -110,6 +98,7 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
+import { roundPhil } from "@/Util";
 import { DataTable, InputText, Pagination } from "@/Framework";
 import Transactions from "@CM/Pages/Pool/Components/MEV/Transactions.vue";
 import { useMonitorStore } from "@CM/Pages/Pool/Store";

@@ -135,6 +135,7 @@ import {
   TabView,
   TabItem,
 } from "@/Framework";
+import { roundPhil } from "@/Util";
 import { addressShort } from "@/Wallet";
 import { relativeTime as relativeTimeFunc } from "@CM/Util";
 import {
@@ -215,14 +216,8 @@ const getAssetsString = (tx: TransactionDetail): string => {
     // TODO: make generic for multiple coins.
     const coinIn = tx.coins_leaving_wallet[0];
     const coinOut = tx.coins_entering_wallet[0];
-    const amountIn = parseFloat(coinIn.amount).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-    const amountOut = parseFloat(coinOut.amount).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    const amountIn = roundPhil(parseFloat(coinIn.amount));
+    const amountOut = roundPhil(parseFloat(coinOut.amount));
 
     const from = `<span>${amountIn} ${coinIn.name}</span>`;
     const arrow = `<i class='fas fa-arrow-right'></i>`;
@@ -231,18 +226,12 @@ const getAssetsString = (tx: TransactionDetail): string => {
     return `${from}${arrow}${to}`;
   } else if (tx.transaction_type === "deposit") {
     const coinIn = tx.coins_entering_wallet[0];
-    const amountIn = parseFloat(coinIn.amount).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    const amountIn = roundPhil(parseFloat(coinIn.amount));
 
     return `${amountIn} ${coinIn.name}`;
   } else if (tx.transaction_type === "remove") {
     const coinOut = tx.coins_leaving_wallet[0];
-    const amountOut = parseFloat(coinOut.amount).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    const amountOut = roundPhil(parseFloat(coinOut.amount));
 
     return `${amountOut} ${coinOut.name}`;
   }

@@ -127,6 +127,14 @@ export function round(
   }
 }
 
+export function roundPhil(value: number): string {
+  if (value > 100) {
+    return Number(Number(value).toFixed(0)).toLocaleString();
+  }
+
+  return Number(Number(value).toFixed(2)).toLocaleString();
+}
+
 export function bigNumToNumber(value: bigint, decimals: bigint): number {
   return parseFloat(utils.formatUnits(value, decimals));
 }
