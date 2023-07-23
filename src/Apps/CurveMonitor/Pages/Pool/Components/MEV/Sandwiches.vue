@@ -70,7 +70,7 @@
             }}
             {{ props.item.user_losses_details[0].unit }}
           </span>
-          (that's
+          (that's -
           {{
             props.item.user_losses_details[0].lossInPercentage.toLocaleString(
               undefined,
