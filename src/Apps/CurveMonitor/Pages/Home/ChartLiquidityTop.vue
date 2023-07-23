@@ -24,7 +24,7 @@ const curveService = new CurveService(getHost());
 const storeSettings = useSettingsStore();
 
 const loading = ref(true);
-const data = ref<{ name: string; liq_use: number }[]>([]);
+const data = ref<{ name: string; chain: string; liq_use: number }[]>([]);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
@@ -78,12 +78,14 @@ const options = computed((): unknown => {
         custom: (x: DataPoint<number>) => {
           const pool = categories.value[x.dataPointIndex];
           const delta = x.series[0][x.dataPointIndex];
+          const chain = data.value.find((x) => x.name === pool)?.chain;
 
-          const data = [
-            `<div><b>${pool}</b>:</div><div>${formatterX(delta)}</div>`,
-          ];
+          const tooltip = `
+            <div><b>${pool}</b>:</div>
+            <div>${formatterX(delta)}</div>
+            <div>${chain}<div>`;
 
-          return data.join("");
+          return tooltip;
         },
       },
     }
