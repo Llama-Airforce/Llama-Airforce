@@ -1,11 +1,8 @@
 <template>
   <div class="market">
-    <div class="row">
-      <ChartMarketVolume :market="market"></ChartMarketVolume>
-      <ChartMarketRates :market="market"></ChartMarketRates>
-      <ChartMarketLoans :market="market"></ChartMarketLoans>
-    </div>
-
+    <ChartMarketVolume :market="market"></ChartMarketVolume>
+    <ChartMarketRates :market="market"></ChartMarketRates>
+    <ChartMarketLoans :market="market"></ChartMarketLoans>
     <ChartMarketDeciles :market="market"></ChartMarketDeciles>
   </div>
 </template>
@@ -69,18 +66,13 @@ onMounted(async () => {
 .market {
   max-width: calc(1920px - 18.125rem);
 
-  .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  @media only screen and (max-width: 1280px) {
     display: flex;
-    gap: var(--dashboard-gap);
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-    }
-
-    div {
-      flex-grow: 1;
-    }
+    flex-direction: column;
   }
 }
 </style>
