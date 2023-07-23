@@ -9,7 +9,7 @@ import Revenue from "@CM/Pages/Platform/Revenue/Revenue.vue";
 import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
 import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.vue";
 
-import Fees from "@CM/Pages/Platform/Fees/Fees.vue";
+import Cushions from "@CM/Pages/Platform/Cushions/Cushions.vue";
 
 import Monitor from "@CM/Pages/Pool/Monitor.vue";
 
@@ -37,7 +37,7 @@ export const pageMain: Page = {
       component: CrvUsdMarket,
     },
 
-    { path: "/platform/fees", name: "fees", component: Fees },
+    { path: "/platform/cushions", name: "cushions", component: Cushions },
 
     { path: "/pool", redirect: { name: "monitor" } },
     {
@@ -75,8 +75,8 @@ export const pageMain: Page = {
           label: "crvUSD",
         },
         {
-          to: "/platform/fees",
-          label: "Fees",
+          to: "/platform/cushions",
+          label: "Cushions",
         },
       ],
     },

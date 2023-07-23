@@ -14,7 +14,7 @@ export type Cushion = {
   totalUSD: number;
 };
 
-export default class CurveService extends ServiceBase {
+export default class CushionService extends ServiceBase {
   public async getCushions(): Promise<{ cushions: Cushion[] }> {
     return this.fetch(`${API_URL}/protocol/couch/cushions`);
   }

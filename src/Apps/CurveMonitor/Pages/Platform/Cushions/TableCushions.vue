@@ -69,13 +69,13 @@ import { AsyncValue, DataTable, InputText } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain, icon } from "@CM/Models/Chain";
-import CurveService, {
+import CushionService, {
   type Cushion,
-} from "@CM/Pages/Platform/Fees/Services/CurveService";
+} from "@CM/Pages/Platform/Cushions/CushionService";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const curveService = new CushionService(getHost());
 
 type Row = Cushion;
 

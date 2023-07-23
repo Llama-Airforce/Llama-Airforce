@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import TableCushions from "@CM/Pages/Platform/Fees/Tables/TableCushions.vue";
+import TableCushions from "@CM/Pages/Platform/Cushions/TableCushions.vue";
 </script>
 
 <style lang="scss" scoped>
