@@ -2,7 +2,7 @@
   <div class="bottom">
     <div class="wip">
       <img
-        src="https://www.fg-a.com/under-construction/under-construction-night.gif"
+        src="http://textfiles.com/underconstruction/dedeevatvunderconstruction.gif"
       />
       for real though issa WIP
     </div>
@@ -79,6 +79,10 @@ const copyUrl = async () => {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+
+    img {
+      width: 100%;
+    }
 
     @media only screen and (max-width: 1280px) {
       display: none;
