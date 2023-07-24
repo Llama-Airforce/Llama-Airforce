@@ -1,9 +1,7 @@
 <template>
   <div class="bottom">
     <div class="wip">
-      <img
-        src="http://textfiles.com/underconstruction/dedeevatvunderconstruction.gif"
-      />
+      <img src="@/Assets/underconstruction.gif" />
       for real though issa WIP
     </div>
 
