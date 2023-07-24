@@ -70,8 +70,8 @@
             }}
             {{ props.item.user_losses_details[0].unit }}
           </span>
-          (that's -
-          {{ roundPhil(props.item.user_losses_details[0].lossInPercentage) }}%
+          (that's
+          {{ roundPhil(-props.item.user_losses_details[0].lossInPercentage) }}%
           slippage, or ${{ roundPhil(props.item.lossInUsd) }})
         </div>
       </div>
