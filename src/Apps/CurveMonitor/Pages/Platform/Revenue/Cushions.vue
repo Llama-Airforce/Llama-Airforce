@@ -1,19 +1,17 @@
 <template>
-  <div class="fees">
+  <div class="cushions">
     <TableCushions></TableCushions>
   </div>
 </template>
 
 <script setup lang="ts">
-import TableCushions from "@CM/Pages/Platform/Cushions/TableCushions.vue";
+import TableCushions from "@CM/Pages/Platform/Revenue/Components/TableCushions.vue";
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("fees");
-
-.fees {
-  max-width: calc(1920px - 18.125rem);
+.cushions {
+  margin: var(--dashboard-gap) 0;
 }
 </style>

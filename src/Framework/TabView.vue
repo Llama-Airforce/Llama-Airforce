@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, useSlots } from "vue";
-import { TabItem } from "@/Framework";
+import { type TabItem } from "@/Framework";
 
 // Props
 interface Props {
@@ -48,10 +48,9 @@ const tabActive = ref<number | null>(null);
 
 const slots = useSlots();
 const tabs = computed(() => {
-  const tabs =
-    slots && slots.default
-      ? (slots.default() as unknown as typeof TabItem[])
-      : [];
+  const tabs = slots?.default
+    ? (slots.default() as unknown as (typeof TabItem)[])
+    : [];
 
   return tabs;
 });

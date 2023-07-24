@@ -71,7 +71,7 @@ import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain, icon } from "@CM/Models/Chain";
 import CushionService, {
   type Cushion,
-} from "@CM/Pages/Platform/Cushions/CushionService";
+} from "@CM/Pages/Platform/Revenue/Services/CushionService";
 
 const { t } = useI18n();
 

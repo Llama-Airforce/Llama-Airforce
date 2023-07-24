@@ -9,8 +9,6 @@ import Revenue from "@CM/Pages/Platform/Revenue/Revenue.vue";
 import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
 import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.vue";
 
-import Cushions from "@CM/Pages/Platform/Cushions/Cushions.vue";
-
 import Monitor from "@CM/Pages/Pool/Monitor.vue";
 
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.vue";
@@ -25,7 +23,7 @@ export const pageMain: Page = {
     { path: "/platform/pools", component: Pools },
     { path: "/platform/gauges", component: Gauges },
     {
-      path: "/platform/revenue",
+      path: "/platform/revenue/:tab?",
       name: "revenue",
       component: Revenue,
     },
@@ -36,8 +34,6 @@ export const pageMain: Page = {
       name: "crvusdmarket",
       component: CrvUsdMarket,
     },
-
-    { path: "/platform/cushions", name: "cushions", component: Cushions },
 
     { path: "/pool", redirect: { name: "monitor" } },
     {
@@ -73,10 +69,6 @@ export const pageMain: Page = {
         {
           to: "/platform/crvusd",
           label: "crvUSD",
-        },
-        {
-          to: "/platform/cushions",
-          label: "Cushions",
         },
       ],
     },
