@@ -151,10 +151,13 @@ export async function getCurveV2LpPrice(
   const valuesFactory = results.results.factory.callsReturnContext;
   const valuesFactoryERC20 = results.results.factoryerc20.callsReturnContext;
 
-  const tvl_tkn = BigInt(valuesFactory[0].returnValues[0] as string);
-  const tvl_atkn = BigInt(valuesFactory[1].returnValues[0] as string);
-  const oracle_price = BigInt(valuesFactory[2].returnValues[0] as string);
-  const supply = BigInt(valuesFactoryERC20[0].returnValues[0] as string);
+  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+  const tvl_tkn = BigInt(valuesFactory[0].returnValues[0].hex as string);
+  const tvl_atkn = BigInt(valuesFactory[1].returnValues[0].hex as string);
+  const oracle_price = BigInt(valuesFactory[2].returnValues[0].hex as string);
+  const supply = BigInt(valuesFactoryERC20[0].returnValues[0].hex as string);
+  /* eslint-enable */
+
   const decimals = 18n;
   const fxsPrice = await llamaService
     .getPrice(tokenAddress)
