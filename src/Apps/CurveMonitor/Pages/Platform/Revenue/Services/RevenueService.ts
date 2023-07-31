@@ -9,7 +9,7 @@ const HISTORICAL_POOL_ENDPOINT =
   "https://api-py.llama.airforce/curve/v1/protocol/revenue/historical/toppools/20";
 
 const CHAIN_REVENUE_ENDPOINT =
-  "https://api-py.llama.airforce/curve/v1/protocol/chains";
+  "https://api-py.llama.airforce/curve/v1/protocol/revenue/chains";
 
 export default class PoolRevenueService extends ServiceBase {
   public async get(): Promise<PoolRevenue[]> {
