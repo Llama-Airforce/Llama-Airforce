@@ -36,6 +36,8 @@ import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 }
 
 html {
+  overflow-y: scroll;
+
   ::-webkit-scrollbar {
     width: 0.25rem;
   }
@@ -54,7 +56,6 @@ html {
 }
 
 body {
-  overflow-y: overlay;
   margin: 0;
 
   background-color: var(--c-lvl0);
