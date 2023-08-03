@@ -125,6 +125,7 @@ header {
 
     height: 110px;
     width: 100%;
+    max-width: 1360px;
     padding: 0 2.5rem;
     font-size: 1rem;
     color: var(--c-lvl5);
