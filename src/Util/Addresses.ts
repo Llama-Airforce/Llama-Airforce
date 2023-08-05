@@ -90,12 +90,15 @@ export const BbUsdHandlerAddress = "0x5c53174c8d88f0f56c33f923b8c6a84a1760e484";
 export const ZapsUCrvAddressV1 = "0x5d69b683bf963648137b3ab5244e9d31d529838e";
 export const ZapsUCrv2AddressV1 = "0xaaf75554249209114ced07027c67bee7cfb1f29c";
 export const ZapsUCrvAddressV2 = "0xc8d1335d18c0ef56a00dbb8b7a639183ee1c4d78";
-export const ZapsUCrvAddress = "0xff87da30e779ca78ff2e9b1582d6c15c1ac31a95";
+export const ZapsUCrvAddressV3 = "0xff87da30e779ca78ff2e9b1582d6c15c1ac31a95";
+export const ZapsUCrvAddress = "0xd835cdedc20ca3075f86dea4e0d914499d0c5b25";
 
 export const ZapsUCrvClaimAddressV2 =
   "0x2a24bb027d7fe2a62e39871187d644daf03406f2";
-export const ZapsUCrvClaimAddress =
+export const ZapsUCrvClaimAddressV3 =
   "0x1b8b4946a3d1953b145897f4bdd4583b7f8dff7b";
+export const ZapsUCrvClaimAddress =
+  "0x68b56567af308fe8d94876ab0fe88541ed025e1c";
 
 export const ZapsUFxsAddressV1 = "0x63f0797015489d407fc2ac7e3891467e1ed0166c";
 export const ZapsUFxsAddress = "0x1f409ec6f395493ad39f5b27945f1a6658a23908";
@@ -131,8 +134,9 @@ export const CvxFxsAddress = "0xfeef77d3f69374f66429c91d732a244f074bdf74";
 export const AuraBalAddress = "0x616e8bfa43f920657b3497dbf40d6b1a02d4608d";
 
 // Harvesters
-export const UCrvHarvesterV2 = "0x4bf420e8040d6e96218328730e611ea3357c0197";
-export const UCrvHarvester = "0xf14d2128e4d36aa81b3a46ce57bf427629b5dc9f";
+export const UCrvHarvesterV1 = "0x4bf420e8040d6e96218328730e611ea3357c0197";
+export const UCrvHarvesterV2 = "0xf14d2128e4d36aa81b3a46ce57bf427629b5dc9f";
+export const UCrvHarvester = "0x3e2cad773e36e29a53eaab56726043ac04fe83d7";
 export const UFxsHarvester = "0x35d28d77369e825298de76060e96e5ada7f5e906";
 export const UBalHarvester = "0x2251af9804d0a1a04e8e0e7a1fbb83f4d7423f9e";
 
