@@ -125,7 +125,7 @@
 
     <!-- No data to show. -->
     <div
-      v-else-if="!rowsMin"
+      v-else-if="!rowsMin && !loading"
       class="no-data"
     >
       <slot name="no-data">{{ t("no-data") }}</slot>
