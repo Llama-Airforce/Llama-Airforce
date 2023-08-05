@@ -1,5 +1,8 @@
 <template>
-  <div class="datatable">
+  <div
+    class="datatable"
+    :class="{ loading }"
+  >
     <Spinner
       v-if="loading"
       class="loader"
@@ -8,7 +11,6 @@
     <div
       v-if="header"
       class="header"
-      :class="{ loading }"
     >
       <div
         v-if="icon"
@@ -32,7 +34,6 @@
     <div
       v-if="rowsMin || (rows && rows.length > 0)"
       class="list"
-      :class="{ loading }"
     >
       <!-- DataTable column headers -->
       <div
@@ -126,7 +127,6 @@
     <div
       v-else-if="!rowsMin"
       class="no-data"
-      :class="{ loading }"
     >
       <slot name="no-data">{{ t("no-data") }}</slot>
     </div>
@@ -325,6 +325,10 @@ const sortColumn = (index: number): void => {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
+  &.loading {
+    opacity: 0.33;
+  }
+
   > .loader {
     position: absolute;
     inset: 0;
@@ -337,10 +341,6 @@ const sortColumn = (index: number): void => {
     grid-template-columns: auto 1fr auto;
     align-items: center;
     height: 2.5rem;
-
-    &.loading {
-      opacity: 0.33;
-    }
 
     > .header-icon {
       grid-column: 1;
@@ -373,10 +373,6 @@ const sortColumn = (index: number): void => {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-
-    &.loading {
-      opacity: 0.33;
-    }
 
     > .rows {
       display: flex;
@@ -499,10 +495,6 @@ const sortColumn = (index: number): void => {
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
-
-    &.loading {
-      opacity: 0.33;
-    }
   }
 }
 </style>

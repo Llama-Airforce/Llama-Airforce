@@ -3,6 +3,7 @@
     class="datatable-cushions"
     columns-header="1fr 10rem minmax(auto, 25rem)"
     columns-data="cushions-columns-data"
+    :loading="loading"
     :rows="rows"
     :columns="['Name', 'Coins', 'Chain', 'Fees ($)']"
   >
