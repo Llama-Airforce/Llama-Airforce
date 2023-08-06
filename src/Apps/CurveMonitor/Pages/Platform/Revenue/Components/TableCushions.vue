@@ -88,6 +88,7 @@ const networkChain = ref<Chain | "all">("all");
 
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)
+    .filter((row) => row.totalUSD > 100)
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
