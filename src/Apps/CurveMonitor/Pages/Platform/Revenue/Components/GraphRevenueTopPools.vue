@@ -1,12 +1,12 @@
 <template>
   <CardGraph
-    class="chain-top-pools"
+    class="graph"
     :options="options"
     :series="series"
     :loading="loading"
   >
     <div
-      class="chain-selector-container"
+      class="selector"
       :class="{ loading }"
     >
       <SelectChain
@@ -30,9 +30,9 @@ import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import type { Chain } from "@CM/Models/Chain";
-import { ChainTopPoolsRevenueService } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 
-const topPoolService = new ChainTopPoolsRevenueService(getHost());
+const revenueService = new RevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
@@ -122,7 +122,7 @@ const getTopPools = async (chain: string): Promise<void> => {
   loading.value = true;
 
   try {
-    const topPools = await minDelay(topPoolService.get(chain), 500);
+    const topPools = await minDelay(revenueService.getTopPools(chain), 500);
 
     if (topPools) {
       store.setTopPools(chain, topPools);
@@ -144,10 +144,10 @@ const onSelectChain = (chain: Chain | "all"): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chain-top-pools {
+.graph {
   height: calc(100% - 2.5rem);
 
-  .chain-selector-container {
+  .selector {
     padding-left: 10px;
     padding-right: 10px;
   }

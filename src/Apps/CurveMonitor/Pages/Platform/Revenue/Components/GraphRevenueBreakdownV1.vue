@@ -1,6 +1,6 @@
 <template>
   <CardGraph
-    class="pool-revenue"
+    class="graph"
     :options="options"
     :series="series"
   >
@@ -144,7 +144,7 @@ const formatter = (x: number): string =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.pool-revenue {
+.graph {
   ::v-deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto auto;

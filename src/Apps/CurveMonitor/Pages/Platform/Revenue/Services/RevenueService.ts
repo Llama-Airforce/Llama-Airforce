@@ -11,25 +11,24 @@ const HISTORICAL_POOL_ENDPOINT =
 const CHAIN_REVENUE_ENDPOINT =
   "https://api-py.llama.airforce/curve/v1/protocol/revenue/chains";
 
-export default class PoolRevenueService extends ServiceBase {
-  public async get(): Promise<PoolRevenue[]> {
+export default class RevenueService extends ServiceBase {
+  public async getBreakdownV1(): Promise<PoolRevenue[]> {
     return this.fetch<{
       revenue: PoolRevenue[];
     }>(HISTORICAL_POOL_ENDPOINT).then((resp) => resp.revenue);
   }
-}
 
-export class ChainRevenueService extends ServiceBase {
-  public async get(): Promise<ChainRevenue[]> {
+  public async getByChain(): Promise<ChainRevenue[]> {
     return this.fetch<{ revenue: ChainRevenue[] }>(CHAIN_REVENUE_ENDPOINT).then(
       (resp) => resp.revenue
     );
   }
-}
 
-export class ChainTopPoolsRevenueService extends ServiceBase {
-  public async get(chain: string): Promise<ChainTopPoolRevenue[]> {
-    const endpoint = `https://api-py.llama.airforce/curve/v1/protocol/revenue/${chain}/toppools/10`;
+  public async getTopPools(
+    chain: string,
+    numPools = 10
+  ): Promise<ChainTopPoolRevenue[]> {
+    const endpoint = `https://api-py.llama.airforce/curve/v1/protocol/revenue/${chain}/toppools/${numPools}`;
 
     return this.fetch<{ revenue: ChainTopPoolRevenue[] }>(endpoint).then(
       (resp) => resp.revenue

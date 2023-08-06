@@ -1,21 +1,21 @@
 <template>
   <div class="revenue-charts">
     <div class="chain-revenues">
-      <GraphChainRevenue
+      <GraphRevenueChain
         :title="t('revenue-charts')"
         :loading="loadingRevenueChain"
         class="graph-chain-revenue"
-      ></GraphChainRevenue>
+      ></GraphRevenueChain>
     </div>
 
-    <GraphChainTopPools :title="t('chain-top-pools')"></GraphChainTopPools>
+    <GraphRevenueTopPools :title="t('chain-top-pools')"></GraphRevenueTopPools>
 
     <div class="historical-revenue">
-      <GraphPoolRevenue
+      <GraphRevenueBreakdownV1
         class="graph-pool-revenue"
         :title="t('historical-revenue')"
         :loading="loadingRevenuePools"
-      ></GraphPoolRevenue>
+      ></GraphRevenueBreakdownV1>
     </div>
   </div>
 </template>
@@ -26,15 +26,12 @@ import { useI18n } from "vue-i18n";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import RevenueService, {
-  ChainRevenueService,
-} from "@CM/Pages/Platform/Revenue/Services/RevenueService";
-import GraphPoolRevenue from "@CM/Pages/Platform/Revenue/Components/GraphPoolRevenue.vue";
-import GraphChainRevenue from "@CM/Pages/Platform/Revenue/Components/GraphChainRevenue.vue";
-import GraphChainTopPools from "@CM/Pages/Platform/Revenue/Components/GraphChainTopPools.vue";
+import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import GraphRevenueBreakdownV1 from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdownV1.vue";
+import GraphRevenueChain from "@CM/Pages/Platform/Revenue/Components/GraphRevenueChain.vue";
+import GraphRevenueTopPools from "@CM/Pages/Platform/Revenue/Components/GraphRevenueTopPools.vue";
 
 const revenueService = new RevenueService(getHost());
-const chainRevenueService = new ChainRevenueService(getHost());
 
 const { t } = useI18n();
 
@@ -56,8 +53,8 @@ onMounted(async (): Promise<void> => {
 
   const { revenues, chainRevenues } = await minDelay(
     (async () => ({
-      revenues: await revenueService.get(),
-      chainRevenues: await chainRevenueService.get(),
+      revenues: await revenueService.getBreakdownV1(),
+      chainRevenues: await revenueService.getByChain(),
     }))(),
     500
   );
