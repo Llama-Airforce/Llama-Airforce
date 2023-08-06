@@ -40,7 +40,9 @@ onMounted(() => {
 
 // Watches
 watch(tabActive, async (newTab) => {
-  if (newTab === 1) {
+  if (newTab === 0) {
+    await router.push({ name: "revenue", params: { tab: "" } });
+  } else if (newTab === 1) {
     await router.push({ name: "revenue", params: { tab: "cushions" } });
   }
 });
