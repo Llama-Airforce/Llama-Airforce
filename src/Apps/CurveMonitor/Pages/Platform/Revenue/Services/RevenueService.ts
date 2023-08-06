@@ -12,16 +12,20 @@ const CHAIN_REVENUE_ENDPOINT =
   "https://api-py.llama.airforce/curve/v1/protocol/revenue/chains";
 
 export default class RevenueService extends ServiceBase {
-  public async getBreakdownV1(): Promise<PoolRevenue[]> {
+  public async getBreakdownV1(signal?: AbortSignal): Promise<PoolRevenue[]> {
     return this.fetch<{
       revenue: PoolRevenue[];
-    }>(HISTORICAL_POOL_ENDPOINT).then((resp) => resp.revenue);
-  }
-
-  public async getByChain(): Promise<ChainRevenue[]> {
-    return this.fetch<{ revenue: ChainRevenue[] }>(CHAIN_REVENUE_ENDPOINT).then(
+    }>(HISTORICAL_POOL_ENDPOINT, undefined, signal).then(
       (resp) => resp.revenue
     );
+  }
+
+  public async getByChain(signal?: AbortSignal): Promise<ChainRevenue[]> {
+    return this.fetch<{ revenue: ChainRevenue[] }>(
+      CHAIN_REVENUE_ENDPOINT,
+      undefined,
+      signal
+    ).then((resp) => resp.revenue);
   }
 
   public async getTopPools(

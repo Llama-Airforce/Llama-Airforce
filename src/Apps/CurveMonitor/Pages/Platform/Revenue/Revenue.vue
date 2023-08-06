@@ -5,11 +5,15 @@
       @tab="tabActive = $event.index"
     >
       <TabItem header="Revenue">
-        <Dashboard></Dashboard>
+        <KeepAlive>
+          <Dashboard v-if="tabActive === 0"></Dashboard>
+        </KeepAlive>
       </TabItem>
 
       <TabItem header="Cushions">
-        <Cushions></Cushions>
+        <KeepAlive>
+          <Cushions v-if="tabActive === 1"></Cushions>
+        </KeepAlive>
       </TabItem>
     </TabView>
   </div>

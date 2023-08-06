@@ -5,7 +5,8 @@ export const hostProd = "https://api.llama.airforce/";
 
 async function fetchWork(
   url: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
+  signal?: AbortSignal
 ): Promise<Response> {
   return await fetch(url, {
     method: body ? "POST" : "GET",
@@ -14,14 +15,16 @@ async function fetchWork(
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
+    signal,
   });
 }
 
 export async function fetchType<T>(
   url: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
+  signal?: AbortSignal
 ): Promise<T> {
-  const res = await fetchWork(url, body);
+  const res = await fetchWork(url, body, signal);
   const json = (await res.json()) as T;
 
   return json;
@@ -29,9 +32,10 @@ export async function fetchType<T>(
 
 export async function fetchText(
   url: string,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
+  signal?: AbortSignal
 ): Promise<string> {
-  const res = await fetchWork(url, body);
+  const res = await fetchWork(url, body, signal);
   const text = await res.text();
 
   return text;
@@ -46,8 +50,9 @@ export default class ServiceBase {
 
   public async fetch<T>(
     url: string,
-    body?: Record<string, unknown>
+    body?: Record<string, unknown>,
+    signal?: AbortSignal
   ): Promise<T> {
-    return fetchType<T>(url, body);
+    return fetchType<T>(url, body, signal);
   }
 }

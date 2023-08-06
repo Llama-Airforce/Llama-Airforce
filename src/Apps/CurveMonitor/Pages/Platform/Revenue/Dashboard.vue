@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onActivated, onDeactivated } from "vue";
 import { useI18n } from "vue-i18n";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -41,8 +41,10 @@ const store = useCurveStore();
 const loadingRevenueChain = ref(false);
 const loadingRevenuePools = ref(false);
 
+const abort = new AbortController();
+
 // Hooks
-onMounted(async (): Promise<void> => {
+onActivated(async (): Promise<void> => {
   // Don't request new data if there's already cached.
   if (store.poolRevenues.length > 0 || store.chainRevenues.length > 0) {
     return;
@@ -53,8 +55,8 @@ onMounted(async (): Promise<void> => {
 
   const { revenues, chainRevenues } = await minDelay(
     (async () => ({
-      revenues: await revenueService.getBreakdownV1(),
-      chainRevenues: await revenueService.getByChain(),
+      revenues: await revenueService.getBreakdownV1(abort.signal),
+      chainRevenues: await revenueService.getByChain(abort.signal),
     }))(),
     500
   );
@@ -67,6 +69,10 @@ onMounted(async (): Promise<void> => {
     store.setChainRevenues(chainRevenues);
     loadingRevenueChain.value = false;
   }
+});
+
+onDeactivated(() => {
+  abort.abort();
 });
 </script>
 
