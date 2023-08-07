@@ -28,9 +28,9 @@ import {
 import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColorsArray } from "@/Styles/Themes/CM";
-import type { Balances } from "@CM/Pages/Pool/Models";
+import type { Balances } from "@CM/Pages/Pool/Monitor/Models";
 import Legend from "@CM/Components/Legend.vue";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";

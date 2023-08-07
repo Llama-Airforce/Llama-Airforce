@@ -141,7 +141,7 @@ import {
   TabItem,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import {
   type Transaction,
   isDeposit,
@@ -149,7 +149,7 @@ import {
   isWithdraw,
   type Swap,
   type TransactionType,
-} from "@CM/Pages/Pool/Models/Transaction";
+} from "@CM/Pages/Pool/Monitor/Models/Transaction";
 import { relativeTime as relativeTimeFunc } from "@CM/Util";
 
 const { t } = useI18n();

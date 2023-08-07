@@ -1,68 +1,50 @@
 <template>
   <div class="curve-monitor">
-    <TabView>
-      <TabItem header="Pool">
-        <Header
-          class="header"
-          :pool-service="poolService"
-        ></Header>
+    <Header
+      class="header"
+      :pool-service="poolService"
+    ></Header>
 
-        <div
-          v-if="hasPool"
-          class="data"
-        >
-          <Controls class="controls"></Controls>
-          <Sandwiches class="sandwiches"></Sandwiches>
-          <Prices class="prices"></Prices>
-          <Transactions class="transactions"></Transactions>
-          <Balances class="balances"></Balances>
-          <TVL class="tvl"></TVL>
-          <Bonding class="bonding"></Bonding>
-        </div>
-      </TabItem>
-
-      <TabItem header="MEV">
-        <MEV></MEV>
-      </TabItem>
-    </TabView>
+    <div
+      v-if="hasPool"
+      class="data"
+    >
+      <Controls class="controls"></Controls>
+      <Prices class="prices"></Prices>
+      <Transactions class="transactions"></Transactions>
+      <Balances class="balances"></Balances>
+      <TVL class="tvl"></TVL>
+      <Bonding class="bonding"></Bonding>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { TabView, TabItem } from "@/Framework";
 import type { Pool } from "@CM/Models";
 import { PoolService } from "@CM/Services";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
-import { MEVService } from "@CM/Pages/Pool/Services";
-import Header from "@CM/Pages/Pool/Components/Header.vue";
-import Controls from "@CM/Pages/Pool/Components/Controls.vue";
-import Sandwiches from "@CM/Pages/Pool/Components/Sandwiches.vue";
-import Transactions from "@CM/Pages/Pool/Components/Transactions.vue";
-import TVL from "@CM/Pages/Pool/Components/TVL.vue";
-import Bonding from "@CM/Pages/Pool/Components/Bonding.vue";
-import Balances from "@CM/Pages/Pool/Components/Balances.vue";
-import Prices from "@CM/Pages/Pool/Components/Prices.vue";
-import MEV from "@CM/Pages/Pool/Components/MEV/MEV.vue";
-import { loadPool } from "@CM/Pages/Pool/DataLoaders";
-import { createSocketRoot, createSocketMEV } from "@CM/Services/Sockets";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
+import Header from "@CM/Pages/Pool/Monitor/Components/Header.vue";
+import Controls from "@CM/Pages/Pool/Monitor/Components/Controls.vue";
+import Transactions from "@CM/Pages/Pool/Monitor/Components/Transactions.vue";
+import TVL from "@CM/Pages/Pool/Monitor/Components/TVL.vue";
+import Bonding from "@CM/Pages/Pool/Monitor/Components/Bonding.vue";
+import Balances from "@CM/Pages/Pool/Monitor/Components/Balances.vue";
+import Prices from "@CM/Pages/Pool/Monitor/Components/Prices.vue";
+import { loadPool } from "@CM/Pages/Pool/Monitor/DataLoaders";
+import { createSocketRoot } from "@CM/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";
 const socket = createSocketRoot(host);
 
-const hostMEV = "wss://api.curvemonitor.com";
-const socketMEV = createSocketMEV(hostMEV);
-
 const poolService = new PoolService(socket);
-const mevService = new MEVService(socketMEV);
 
 // Refs.
 const route = useRoute();
 const router = useRouter();
 const store = useMonitorStore();
 store.socket = socket;
-store.socketMEV = socketMEV;
 
 const hasPool = computed((): boolean => store.pool !== null);
 
@@ -75,17 +57,6 @@ onMounted(async () => {
   await onNewPoolRoute(routePool);
 
   socket.connect();
-
-  // MEV
-  socketMEV.connect();
-  void mevService.getSandwichLabelOccurrences().then((x) => {
-    store.mev.labelRankingExtended = x;
-    return;
-  });
-  void mevService.getSandwiches().then((x) => {
-    store.mev.sandwiches = x;
-    return;
-  });
 });
 
 // Methods
@@ -152,16 +123,12 @@ watch(
 .curve-monitor {
   max-width: calc(1920px - 18.125rem);
   gap: 0;
-
-  .header {
-    margin: var(--dashboard-gap) 0;
-  }
 }
 
 .data {
   @include dashboard-grid;
 
-  grid-template-rows: auto auto 350px 350px auto;
+  grid-template-rows: auto 350px 350px auto;
   grid-template-columns: repeat(6, 1fr);
 
   @media only screen and (max-width: 1280px) {
@@ -173,36 +140,31 @@ watch(
     grid-column: 1 / -1;
   }
 
-  .sandwiches {
-    grid-row: 2;
-    grid-column: 1 / -1;
-  }
-
   .transactions {
-    grid-row: 5;
+    grid-row: 4;
     grid-column: 1 / -1;
   }
 
   .prices {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 1 / 4;
     min-height: 350px;
   }
 
   .bonding {
-    grid-row: 3;
+    grid-row: 2;
     grid-column: 4 / -1;
     min-height: 350px;
   }
 
   .balances {
-    grid-row: 4;
+    grid-row: 3;
     grid-column: 1 / 4;
     min-height: 350px;
   }
 
   .tvl {
-    grid-row: 4;
+    grid-row: 3;
     grid-column: 4 / -1;
     min-height: 350px;
   }

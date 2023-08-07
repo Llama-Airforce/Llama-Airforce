@@ -28,8 +28,8 @@ import { useI18n } from "vue-i18n";
 import { debounce } from "lodash";
 import { InputText } from "@/Framework";
 import { shorten, icon } from "@/Util";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
-import { getPools } from "@CM/Pages/Pool/DataLoaders";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
+import { getPools } from "@CM/Pages/Pool/Monitor/DataLoaders";
 import { type Pool } from "@CM/Models";
 import { type PoolService } from "@CM/Services";
 

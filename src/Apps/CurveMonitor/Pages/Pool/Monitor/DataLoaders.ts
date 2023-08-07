@@ -1,5 +1,5 @@
 import { type Subscription } from "rxjs";
-import { type useMonitorStore } from "@CM/Pages/Pool/Store";
+import { type useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { type PoolService, CoinService, PairService } from "@CM/Services";
 import {
   BalanceService,
@@ -8,8 +8,7 @@ import {
   TransactionService,
   TvlService,
   BondingService,
-  SandwichService,
-} from "@CM/Pages/Pool/Services";
+} from "@CM/Pages/Pool/Monitor/Services";
 import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(
@@ -27,7 +26,6 @@ export function loadPool(
   const bondingService = new BondingService(socketPool);
   const coinService = new CoinService(socketPool);
   const pairService = new PairService(socketPool);
-  const sandwichService = new SandwichService(socketPool);
 
   void getTransactions(store, transactionService);
   void getPrices(store, priceService);
@@ -37,7 +35,6 @@ export function loadPool(
   void getBondings(store, bondingService);
   void getCoins(store, coinService);
   void getPair(store, pairService);
-  void getSandwiches(store, sandwichService);
 
   socketPool.connect();
 
@@ -273,37 +270,6 @@ function getPair(
       },
       error: (err) => console.error(err),
     });
-  } catch (err) {
-    store.poolsLoadingError = true;
-  }
-}
-
-let sandwiches$_: Subscription | null = null;
-function getSandwiches(
-  store: ReturnType<typeof useMonitorStore>,
-  service: SandwichService
-) {
-  // Unsubscribe from from existing subscriptions.
-  if (sandwiches$_) {
-    sandwiches$_.unsubscribe();
-  }
-
-  try {
-    sandwiches$_ = service.init$.subscribe({
-      next: (sws) => {
-        store.sandwiches = sws;
-      },
-      error: (err) => console.error(err),
-    });
-
-    sandwiches$_.add(
-      service.update$.subscribe({
-        next: (sw) => {
-          store.sandwiches.push(sw);
-        },
-        error: (err) => console.error(err),
-      })
-    );
   } catch (err) {
     store.poolsLoadingError = true;
   }

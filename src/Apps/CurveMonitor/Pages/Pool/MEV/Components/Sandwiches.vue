@@ -4,7 +4,7 @@
     columns-header="auto 1fr auto"
     columns-data="sandwiches-columns-data"
     :rows="sandwichesPage"
-    :columns="['Block', 'Profit', 'Loss', 'Time']"
+    :columns="['Block', 'Pool', 'Action', 'Time']"
     :expanded="expanded"
     @selected="onSelected"
   >
@@ -33,40 +33,60 @@
       ></Pagination>
     </template>
 
-    <template #row="props: { item: Sandwich }">
+    <template #row="props: { item: SandwichDetail }">
       <div class="number">
         <a
           class="vote-link"
-          :href="`https://etherscan.io/block/${props.item.blockNumber}`"
+          :href="`https://etherscan.io/block/${props.item.frontrun.block_number}`"
           target="_blank"
         >
-          {{ props.item.blockNumber }}
+          {{ props.item.frontrun.block_number }}
         </a>
       </div>
 
-      <div class="number">
-        <span>
-          {{ props.item.profit.toLocaleString() }}
-          {{ props.item.profitUnit }}
-        </span>
+      <div>{{ props.item.poolName }}</div>
+
+      <div>
+        <div
+          style="display: grid; gap: 1ch; grid-template-columns: auto 16ch 1fr"
+        >
+          <a
+            class="vote-link"
+            style="font-family: monospace"
+            target="_blank"
+            :href="`https://etherscan.io/address/${props.item.center[0].trader}`"
+          >
+            {{ addressShort(props.item.center[0].trader) }}
+          </a>
+          <span>
+            lost
+            {{
+              roundPhil(
+                props.item.user_losses_details.reduce(
+                  (acc, x) => acc + x.amount,
+                  0
+                )
+              )
+            }}
+            {{ props.item.user_losses_details[0].unit }}
+          </span>
+          <span>
+            {{
+              roundPhil(-props.item.user_losses_details[0].lossInPercentage)
+            }}% slippage, or ${{ roundPhil(props.item.lossInUsd) }}
+          </span>
+        </div>
       </div>
 
       <div class="number">
-        <span>
-          {{ props.item.loss.toLocaleString() }}
-          {{ props.item.lossUnit }}
-        </span>
-      </div>
-
-      <div class="number">
-        {{ relativeTime(props.item.timestamp) }}
+        {{ relativeTime(props.item.frontrun.block_unixtime) }}
       </div>
     </template>
 
-    <template #row-details="props: { item: Sandwich }">
+    <template #row-details="props: { item: SandwichDetail }">
       <Transactions
         class="transactions"
-        :txs="props.item.txs"
+        :txs="sandwichTxs(props.item)"
         :header="false"
         :compact="true"
         :time="false"
@@ -78,40 +98,52 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { chain } from "lodash";
+import { chain, orderBy } from "lodash";
+import { addressShort } from "@/Wallet";
+import { roundPhil } from "@/Util";
 import { DataTable, InputText, Pagination } from "@/Framework";
-import Transactions from "@CM/Pages/Pool/Components/Transactions.vue";
-import type { Sandwich } from "@CM/Pages/Pool/Models";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import Transactions from "@CM/Pages/Pool/MEV/Components/Transactions.vue";
+import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
 import { relativeTime as relativeTimeFunc } from "@CM/Util";
+import {
+  type TransactionDetail,
+  type SandwichDetail,
+} from "@CM/Services/Sockets/SocketMEV";
 
 const { t } = useI18n();
 
-const swsPerPage = 6;
+const swsPerPage = 10;
 
 // Refs
-const store = useMonitorStore();
+const store = useMEVStore();
 
 const search = ref("");
 const page = ref(1);
-const expanded = ref<Sandwich[]>([]);
+const expanded = ref<SandwichDetail[]>([]);
 const now = ref(Date.now());
 
-const sandwiches = computed((): Sandwich[] =>
+const sandwiches = computed((): SandwichDetail[] =>
   chain(store.sandwiches)
-    .filter((tx) => {
+    .filter((sw) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(tx.blockNumber.toString());
+      return (
+        includesTerm(sw.poolName.toString()) ||
+        includesTerm(sw.poolAddress.toString()) ||
+        includesTerm(sw.label.toString())
+      );
     })
-    .reverse() // Server gives us the data in order already, just reversed.
+    .orderBy(
+      [(x) => x.frontrun.block_unixtime, (x) => x.frontrun.tx_position],
+      "desc"
+    )
     .value()
 );
 
-const sandwichesPage = computed((): Sandwich[] =>
+const sandwichesPage = computed((): SandwichDetail[] =>
   chain(sandwiches.value)
     .drop((page.value - 1) * swsPerPage)
     .take(swsPerPage)
@@ -130,7 +162,7 @@ const relativeTime = (unixtime: number): string => {
   return relativeTimeFunc(now, unixtime);
 };
 
-const toggleExpansion = (sw: Sandwich): boolean => {
+const toggleExpansion = (sw: SandwichDetail): boolean => {
   if (!expanded.value.includes(sw)) {
     expanded.value.push(sw);
     return true;
@@ -140,13 +172,19 @@ const toggleExpansion = (sw: Sandwich): boolean => {
   }
 };
 
+const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
+  orderBy(
+    [sw.frontrun, ...sw.center, sw.backrun],
+    [(x) => x.block_unixtime, (x) => x.tx_position]
+  );
+
 // Events
 const onPage = (pageNew: number) => {
   page.value = pageNew;
 };
 
 const onSelected = (data: unknown): void => {
-  const sw = data as Sandwich;
+  const sw = data as SandwichDetail;
   toggleExpansion(sw);
 };
 
@@ -191,13 +229,11 @@ watch(sandwichesPage, (ps) => {
   ::v-deep(.sandwiches-columns-data) {
     display: grid;
     grid-column-gap: 2.5rem;
-    grid-template-columns: 4rem 1fr 1fr 2fr 1rem;
+    grid-template-columns: 4rem 16rem 1fr auto 1rem;
 
     // Right adjust number columns.
     div:nth-child(1),
-    div:nth-child(2),
-    div:nth-child(4),
-    div:nth-child(3) {
+    div:nth-child(4) {
       justify-content: end;
     }
   }

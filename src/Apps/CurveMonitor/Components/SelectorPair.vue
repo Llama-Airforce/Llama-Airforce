@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { Select } from "@/Framework";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { PairService } from "@CM/Services";
 import { type SocketPool } from "@CM/Services/Sockets";
 

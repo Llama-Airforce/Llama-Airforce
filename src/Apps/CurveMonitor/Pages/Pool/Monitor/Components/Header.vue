@@ -22,11 +22,11 @@
 import { ref } from "vue";
 import { Card } from "@/Framework";
 import { shorten } from "@/Util";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import type { Pool } from "@CM/Models";
 import { type PoolService } from "@CM/Services";
 import SearchPool from "@CM/Components/SearchPool.vue";
-import Status from "@CM/Navigation/Status.vue";
+import Status from "@CM/Components/Status.vue";
 
 // Props
 interface Props {

@@ -1,6 +1,6 @@
 <template>
   <Card
-    class="bondings"
+    class="tvl"
     :title="t('title')"
   >
     <div
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -19,16 +19,15 @@ import {
   type IChartApi,
   type ISeriesApi,
   type LineData,
-  type LineSeriesPartialOptions,
+  type AreaSeriesPartialOptions,
   LineType,
-  type SeriesMarker,
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
-import type { Bonding } from "@CM/Pages/Pool/Models";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import type { Tvl } from "@CM/Pages/Pool/Monitor/Models";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
@@ -36,7 +35,7 @@ import type { Theme } from "@CM/Models/Theme";
 const { t } = useI18n();
 
 let chart: IChartApi;
-let lineSerie: ISeriesApi<"Line">;
+let areaSerie: ISeriesApi<"Area">;
 
 // Refs
 const store = useMonitorStore();
@@ -44,8 +43,8 @@ const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 
-const bonding = computed((): Bonding => {
-  return store.bonding;
+const tvl = computed((): Tvl[] => {
+  return store.tvl;
 });
 
 // Hooks
@@ -56,14 +55,14 @@ onMounted((): void => {
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  lineSerie = chart.addLineSeries(createOptionsSerie(storeSettings.theme));
+  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
-  createSeries(bonding.value);
+  createSeries(tvl.value);
 });
 
 // Watches
-watch(bonding, (newBonding) => {
-  createSeries(newBonding);
+watch(tvl, (newTvl) => {
+  createSeries(newTvl);
 });
 
 watch(
@@ -71,8 +70,7 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      lineSerie.applyOptions(createOptionsSerie(newTheme));
-      createMarkers(newTheme);
+      areaSerie.applyOptions(createOptionsSerie(newTheme));
     }
   }
 );
@@ -81,27 +79,18 @@ watch(
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   return createChartStyles(chartRef, theme, {
     rightPriceScale: {
-      visible: false,
-    },
-    leftPriceScale: {
-      visible: true,
-      borderVisible: false,
       scaleMargins: {
         top: 0.1,
-        bottom: 0,
+        bottom: 0.1,
       },
-    },
-    timeScale: {
-      tickMarkFormatter: (time: UTCTimestamp) => formatter(time),
     },
     localization: {
       priceFormatter: (price: number) => formatter(price),
-      timeFormatter: (time: number) => formatter(time),
     },
   });
 };
 
-const createOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
+const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
@@ -112,60 +101,44 @@ const createOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: colors.blue,
+    lineColor: colors.blue,
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
     priceLineVisible: false,
   };
 };
 
-const createMarkers = (theme: Theme) => {
-  const colors = getColors(theme);
-
-  const markers: SeriesMarker<UTCTimestamp>[] = [
-    {
-      time: bonding.value.balanceCoin1 as UTCTimestamp,
-      position: "inBar",
-      color: colors.yellow,
-      shape: "circle",
-    },
-  ];
-
-  lineSerie.setMarkers(markers);
-};
-
-const createSeries = (newBonding: Bonding): void => {
-  if (!chart || !lineSerie) {
+const createSeries = (newTvl: Tvl[]): void => {
+  if (!chart || !areaSerie) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newBonding.curve)
+  const newSerie: LineData[] = chain(newTvl)
     .map((x) => ({
-      time: x.x as UTCTimestamp,
-      value: x.y,
+      time: x.timestamp as UTCTimestamp,
+      value: x.tvl,
     }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
     .value();
 
   if (newSerie.length > 0) {
-    lineSerie.setData(newSerie);
-    createMarkers(storeSettings.theme);
+    areaSerie.setData(newSerie);
   }
 
   chart.timeScale().fitContent();
 };
 
-const formatter = (x: number): string => {
-  if (x < 0) {
-    return "";
-  }
-
-  return `${round(Math.abs(x), 0, "dollar")}${unit(x, "dollar")}`;
+const formatter = (y: number): string => {
+  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.bondings {
+.tvl {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
@@ -180,5 +153,5 @@ const formatter = (x: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Bonding Curve
+title: TVL
 </i18n>

@@ -7,19 +7,12 @@ import type {
   Transaction,
   Tvl,
   Bonding,
-  Sandwich,
-} from "@CM/Pages/Pool/Models";
-import type { SocketPool, SocketRoot, SocketMEV } from "@CM/Services/Sockets";
-import {
-  type SandwichDetail,
-  type LabelRankingExtended,
-  type LabelRankingShort,
-} from "@CM/Services/Sockets/SocketMEV";
+} from "@CM/Pages/Pool/Monitor/Models";
+import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
 
 type State = {
   socket: SocketRoot | null;
   socketPool: SocketPool | null;
-  socketMEV: SocketMEV | null;
 
   pool: Pool | null;
   pools: Pool[];
@@ -33,13 +26,6 @@ type State = {
   coins: Coin[];
   pair: Pair | null;
   timeRange: TimeRange;
-  sandwiches: Sandwich[];
-
-  mev: {
-    labelRankingShort: LabelRankingShort[];
-    labelRankingExtended: LabelRankingExtended[];
-    sandwiches: SandwichDetail[];
-  };
 };
 
 export const useMonitorStore = defineStore({
@@ -47,7 +33,6 @@ export const useMonitorStore = defineStore({
   state: (): State => ({
     socket: null,
     socketPool: null,
-    socketMEV: null,
 
     pool: null,
     pools: [],
@@ -65,11 +50,5 @@ export const useMonitorStore = defineStore({
     coins: [],
     pair: null,
     timeRange: "month",
-    sandwiches: [],
-    mev: {
-      labelRankingShort: [],
-      labelRankingExtended: [],
-      sandwiches: [],
-    },
   }),
 });

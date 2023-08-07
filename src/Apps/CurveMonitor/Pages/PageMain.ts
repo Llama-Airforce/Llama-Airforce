@@ -9,7 +9,8 @@ import Revenue from "@CM/Pages/Platform/Revenue/Revenue.vue";
 import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
 import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.vue";
 
-import Monitor from "@CM/Pages/Pool/Monitor.vue";
+import Monitor from "@CM/Pages/Pool/Monitor/Monitor.vue";
+import MEV from "@CM/Pages/Pool/MEV/MEV.vue";
 
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.vue";
 import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.vue";
@@ -40,6 +41,10 @@ export const pageMain: Page = {
       path: "/pool/monitor/:pool?",
       name: "curvemonitor",
       component: Monitor,
+    },
+    {
+      path: "/pool/mev",
+      component: MEV,
     },
 
     { path: "/dao", redirect: { name: "proposals" } },
@@ -78,6 +83,11 @@ export const pageMain: Page = {
         {
           to: "/pool/monitor",
           label: "Live Monitor",
+          tag: "beta",
+        },
+        {
+          to: "/pool/mev",
+          label: "MEV",
           tag: "beta",
         },
       ],

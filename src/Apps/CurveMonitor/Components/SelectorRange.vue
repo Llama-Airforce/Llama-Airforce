@@ -15,7 +15,7 @@
 import { useI18n } from "vue-i18n";
 import { ButtonToggle } from "@/Framework";
 import { type TimeRange, timeRanges } from "@CM/Models/TimeRange";
-import { useMonitorStore } from "@CM/Pages/Pool/Store";
+import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import type { SocketPool } from "@CM/Services/Sockets";
 import { TimeRangeService } from "@CM/Services";
 
