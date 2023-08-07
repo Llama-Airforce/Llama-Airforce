@@ -333,6 +333,7 @@ const sortColumn = (index: number): void => {
     position: absolute;
     inset: 0;
     margin: auto auto;
+    z-index: 1;
   }
 
   > .header {
