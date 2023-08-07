@@ -4,7 +4,7 @@
     columns-header="auto 1fr auto"
     columns-data="sandwiches-columns-data"
     :rows="sandwiches"
-    :columns="['Block', 'Pool', 'Action', 'Label', 'Time']"
+    :columns="['Pool', 'Action', 'Label', 'Time']"
     :expanded="expanded"
     @selected="onSelected"
   >
@@ -34,17 +34,15 @@
     </template>
 
     <template #row="props: { item: SandwichDetail }">
-      <div class="number">
+      <div>
         <a
           class="vote-link"
-          :href="`https://etherscan.io/block/${props.item.frontrun.block_number}`"
+          :href="`https://etherscan.io/address/${props.item.poolAddress}`"
           target="_blank"
         >
-          {{ props.item.frontrun.block_number }}
+          {{ props.item.poolName }}
         </a>
       </div>
-
-      <div>{{ props.item.poolName }}</div>
 
       <div>
         <div
@@ -233,11 +231,10 @@ const onSelected = (data: unknown): void => {
   ::v-deep(.sandwiches-columns-data) {
     display: grid;
     grid-column-gap: 2.5rem;
-    grid-template-columns: 4rem 16rem 1fr 16rem 8rem 1rem;
+    grid-template-columns: 16rem 1fr 16rem 8rem 1rem;
 
     // Right adjust number columns.
-    div:nth-child(1),
-    div:nth-child(5) {
+    div:nth-child(4) {
       justify-content: end;
     }
   }
