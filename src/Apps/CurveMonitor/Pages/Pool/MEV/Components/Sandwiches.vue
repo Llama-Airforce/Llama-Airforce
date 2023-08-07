@@ -3,7 +3,7 @@
     class="datatable-sandwiches"
     columns-header="auto 1fr auto"
     columns-data="sandwiches-columns-data"
-    :rows="sandwichesPage"
+    :rows="sandwiches"
     :columns="['Block', 'Pool', 'Action', 'Time']"
     :expanded="expanded"
     @selected="onSelected"
@@ -21,12 +21,12 @@
     </template>
 
     <template
-      v-if="sandwiches.length > swsPerPage"
+      v-if="numSandwiches > swsPerPage"
       #header-actions
     >
       <Pagination
         class="pagination"
-        :items-count="sandwiches.length"
+        :items-count="numSandwiches"
         :items-per-page="swsPerPage"
         :page="page"
         @page="onPage"
@@ -96,18 +96,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
 import { DataTable, InputText, Pagination } from "@/Framework";
+import { MEVService } from "@CM/Pages/Pool/MEV/Services";
 import Transactions from "@CM/Pages/Pool/MEV/Components/Transactions.vue";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
 import { relativeTime as relativeTimeFunc } from "@CM/Util";
 import {
   type TransactionDetail,
   type SandwichDetail,
+  type SocketMEV,
 } from "@CM/Services/Sockets/SocketMEV";
 
 const { t } = useI18n();
@@ -118,9 +120,13 @@ const swsPerPage = 10;
 const store = useMEVStore();
 
 const search = ref("");
-const page = ref(1);
 const expanded = ref<SandwichDetail[]>([]);
 const now = ref(Date.now());
+
+const page = computed((): number => store.sandwichesPage.cur);
+const numSandwiches = computed(
+  (): number => store.sandwichesPage.total * swsPerPage
+);
 
 const sandwiches = computed((): SandwichDetail[] =>
   chain(store.sandwiches)
@@ -140,13 +146,6 @@ const sandwiches = computed((): SandwichDetail[] =>
       [(x) => x.frontrun.block_unixtime, (x) => x.frontrun.tx_position],
       "desc"
     )
-    .value()
-);
-
-const sandwichesPage = computed((): SandwichDetail[] =>
-  chain(sandwiches.value)
-    .drop((page.value - 1) * swsPerPage)
-    .take(swsPerPage)
     .value()
 );
 
@@ -179,21 +178,22 @@ const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
   );
 
 // Events
-const onPage = (pageNew: number) => {
-  page.value = pageNew;
+const onPage = async (pageNew: number) => {
+  if (!store.socket) {
+    return;
+  }
+
+  const mevService = new MEVService(store.socket as SocketMEV);
+
+  const { sandwiches, totalPages } = await mevService.getSandwiches(pageNew);
+  store.sandwiches = sandwiches;
+  store.sandwichesPage = { cur: pageNew, total: totalPages };
 };
 
 const onSelected = (data: unknown): void => {
   const sw = data as SandwichDetail;
   toggleExpansion(sw);
 };
-
-// Watches
-watch(sandwichesPage, (ps) => {
-  if (ps.length === 0) {
-    page.value = Math.max(1, Math.ceil(sandwiches.value.length / swsPerPage));
-  }
-});
 </script>
 
 <style lang="scss" scoped>

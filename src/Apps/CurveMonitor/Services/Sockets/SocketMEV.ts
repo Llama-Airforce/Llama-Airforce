@@ -7,7 +7,10 @@ export type ClientToServerEvents = {
   getSandwichLabelOccurrences: () => void;
   getAbsoluteLabelsRanking: () => void;
   getUserSearchResult: (input: string) => void;
-  getFullSandwichTableContent: (timeDuration: TimeDuration) => void;
+  getFullSandwichTableContent: (
+    timeDuration: TimeDuration,
+    page: number
+  ) => void;
 };
 
 export type ServerToClientEvents = {
@@ -15,7 +18,10 @@ export type ServerToClientEvents = {
   userSearchResult: (searchResults: SearchResult[]) => void;
   sandwichLabelOccurrences: (labelsOccurrence: LabelRankingExtended[]) => void;
   absoluteLabelsRanking: (labelsRanking: LabelRankingShort[]) => void;
-  fullSandwichTableContent: (sandwiches: SandwichDetail[]) => void;
+  fullSandwichTableContent: (resp: {
+    data: SandwichDetail[];
+    totalPages: number;
+  }) => void;
 };
 
 export type SocketMEV = Socket<ServerToClientEvents, ClientToServerEvents>;

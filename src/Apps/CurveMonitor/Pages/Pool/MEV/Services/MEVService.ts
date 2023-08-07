@@ -6,6 +6,8 @@ import {
   type SearchResult,
 } from "@CM/Services/Sockets/SocketMEV";
 
+type GetSandwichesResp = { sandwiches: SandwichDetail[]; totalPages: number };
+
 export default class MEVService {
   private readonly socket: SocketMEV;
 
@@ -49,14 +51,14 @@ export default class MEVService {
     return promise;
   }
 
-  public getSandwiches(): Promise<SandwichDetail[]> {
-    const promise = new Promise<SandwichDetail[]>((resolve) => {
-      this.socket.once("fullSandwichTableContent", (sandwiches) => {
-        resolve(sandwiches);
+  public getSandwiches(page = 1): Promise<GetSandwichesResp> {
+    const promise = new Promise<GetSandwichesResp>((resolve) => {
+      this.socket.once("fullSandwichTableContent", ({ data, totalPages }) => {
+        resolve({ sandwiches: data, totalPages });
       });
     });
 
-    this.socket.emit("getFullSandwichTableContent", "full");
+    this.socket.emit("getFullSandwichTableContent", "full", page);
 
     return promise;
   }

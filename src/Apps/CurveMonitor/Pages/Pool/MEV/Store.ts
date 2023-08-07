@@ -10,6 +10,8 @@ type State = {
   socket: SocketMEV | null;
 
   sandwiches: SandwichDetail[];
+  sandwichesPage: { cur: number; total: number };
+
   labelRankingShort: LabelRankingShort[];
   labelRankingExtended: LabelRankingExtended[];
 };
@@ -20,6 +22,8 @@ export const useMEVStore = defineStore({
     socket: null,
 
     sandwiches: [],
+    sandwichesPage: { cur: 0, total: 0 },
+
     labelRankingShort: [],
     labelRankingExtended: [],
   }),

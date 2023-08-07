@@ -27,14 +27,16 @@ store.socket = socketMEV;
 
 // Hooks
 onMounted(() => {
-  // MEV
   socketMEV.connect();
+
   void mevService.getSandwichLabelOccurrences().then((x) => {
     store.labelRankingExtended = x;
     return;
   });
+
   void mevService.getSandwiches().then((x) => {
-    store.sandwiches = x;
+    store.sandwiches = x.sandwiches;
+    store.sandwichesPage = { cur: 1, total: x.totalPages };
     return;
   });
 });
