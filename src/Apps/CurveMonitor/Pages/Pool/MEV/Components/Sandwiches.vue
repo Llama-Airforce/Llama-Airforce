@@ -4,7 +4,7 @@
     columns-header="auto 1fr auto"
     columns-data="sandwiches-columns-data"
     :rows="sandwiches"
-    :columns="['Block', 'Pool', 'Action', 'Time']"
+    :columns="['Block', 'Pool', 'Action', 'Label', 'Time']"
     :expanded="expanded"
     @selected="onSelected"
   >
@@ -76,6 +76,10 @@
             }}% slippage, or ${{ roundPhil(props.item.lossInUsd) }}
           </span>
         </div>
+      </div>
+
+      <div>
+        {{ props.item.label }}
       </div>
 
       <div class="number">
@@ -229,11 +233,11 @@ const onSelected = (data: unknown): void => {
   ::v-deep(.sandwiches-columns-data) {
     display: grid;
     grid-column-gap: 2.5rem;
-    grid-template-columns: 4rem 16rem 1fr auto 1rem;
+    grid-template-columns: 4rem 16rem 1fr 16rem 8rem 1rem;
 
     // Right adjust number columns.
     div:nth-child(1),
-    div:nth-child(4) {
+    div:nth-child(5) {
       justify-content: end;
     }
   }
