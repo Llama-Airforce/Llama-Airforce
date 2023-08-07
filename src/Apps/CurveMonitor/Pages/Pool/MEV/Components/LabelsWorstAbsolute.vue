@@ -1,6 +1,7 @@
 <template>
   <CardGraph
     class="mevLabels"
+    title="Worst absolute offenders"
     :options="options"
     :series="series"
   >
@@ -10,6 +11,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
+import { type DataPoint } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
@@ -20,8 +22,22 @@ import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 const store = useMEVStore();
 const storeSettings = useSettingsStore();
 
-const labels = computed((): LabelRankingExtended[] =>
-  topBestPerformingLabels(store.labelRankingExtended)
+const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
+  labelsOccurrence
+    .filter((label) => label.numOfAllTx >= 12) // filter labels with at least 12 numOfAllTx
+    .map((label) => ({
+      ...label,
+      occurrences: label.occurrences,
+    }))
+    .sort((a, b) => b.occurrences - a.occurrences) // sort in descending order
+    .slice(0, 10); // get the top 10
+
+const labels = computed(() =>
+  topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.label)
+);
+
+const series = computed(() =>
+  topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.occurrences)
 );
 
 const options = computed((): unknown => {
@@ -33,60 +49,39 @@ const options = computed((): unknown => {
     {
       chart: {
         id: "chainRevenues",
-        type: "bar",
+        type: "donut",
         animations: {
           enabled: false,
         },
       },
-      xaxis: {
-        categories: labels.value.map((x) => x.label),
-        labels: {
-          formatter,
-        },
-      },
       plotOptions: {
-        bar: {
-          horizontal: true,
+        pie: {
+          donut: {
+            size: "60%",
+          },
         },
       },
       dataLabels: {
-        style: {
-          fontSize: "11px",
-        },
-        formatter,
-        dropShadow: false,
-      },
-      grid: {
-        yaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-      },
-      tooltip: {
         enabled: false,
       },
+      tooltip: {
+        custom: (x: DataPoint<number>) => {
+          const chain = x.w.globals.labels[x.seriesIndex];
+          const revenue = x.series[x.seriesIndex] as unknown as number;
+
+          const data = [
+            `<div><b>${chain}</b>:</div><div>Occurences: ${formatter(
+              revenue
+            )}</div>`,
+          ];
+
+          return data.join("");
+        },
+      },
+      labels: labels.value,
     }
   );
 });
-
-const series = computed((): { data: number[] }[] => [
-  { data: topBestPerformingLabels(labels.value).map((x) => x.ratio) },
-]);
-
-const topBestPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
-  labelsOccurrence
-    .map((label) => ({
-      ...label,
-      ratio: Number(((label.occurrences / label.numOfAllTx) * 100).toFixed(2)),
-    })) // calculate the ratio as a percentage with 2 decimal places
-    .sort((a, b) => a.ratio - b.ratio) // sort in ascending order
-    .slice(0, 10); /* get the top 10*/ /* get the top 10*/
 
 // Methods
 const formatter = (x: number): string => `${x}`;

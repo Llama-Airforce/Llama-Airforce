@@ -1,7 +1,12 @@
 <template>
   <div class="mev">
-    <LabelsBest style="grid-row: 1; grid-column: 1"></LabelsBest>
-    <LabelsWorst style="grid-row: 1; grid-column: 2"></LabelsWorst>
+    <LabelsWorstRelative
+      style="grid-row: 1; grid-column: 1"
+    ></LabelsWorstRelative>
+
+    <LabelsWorstAbsolute
+      style="grid-row: 1; grid-column: 2"
+    ></LabelsWorstAbsolute>
 
     <Sandwiches style="grid-row: 2; grid-column: 1 / -1"></Sandwiches>
   </div>
@@ -12,8 +17,8 @@ import { onMounted } from "vue";
 import { createSocketMEV } from "@CM/Services/Sockets";
 import { MEVService } from "@CM/Pages/Pool/MEV/Services";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
-import LabelsBest from "@CM/Pages/Pool/MEV/Components/LabelsBest.vue";
-import LabelsWorst from "@CM/Pages/Pool/MEV/Components/LabelsWorst.vue";
+import LabelsWorstRelative from "@CM/Pages/Pool/MEV/Components/LabelsWorstRelative.vue";
+import LabelsWorstAbsolute from "@CM/Pages/Pool/MEV/Components/LabelsWorstAbsolute.vue";
 import Sandwiches from "@CM/Pages/Pool/MEV/Components/Sandwiches.vue";
 
 const hostMEV = "wss://api.curvemonitor.com";
