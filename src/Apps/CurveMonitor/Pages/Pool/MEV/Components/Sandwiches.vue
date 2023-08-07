@@ -4,7 +4,7 @@
     columns-header="auto 1fr auto"
     columns-data="sandwiches-columns-data"
     :rows="sandwiches"
-    :columns="['Pool', 'Action', 'Label', 'Time']"
+    :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
     :expanded="expanded"
     @selected="onSelected"
   >
