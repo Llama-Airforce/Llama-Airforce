@@ -339,36 +339,6 @@ const pirex: Bundle = {
   ],
 };
 
-const outdated: Bundle = {
-  name: "outdated",
-  contracts: [
-    {
-      contract: UnionAddresses[4],
-      description: "Union - Zap V5",
-    },
-    {
-      contract: UnionAddresses[3],
-      description: "Union - Zap V4",
-    },
-    {
-      contract: UnionAddresses[2],
-      description: "Union - Zap V3",
-    },
-    {
-      contract: UnionAddresses[1],
-      description: "Union - Zap V2",
-    },
-    {
-      contract: UnionAddresses[0],
-      description: "Union - Zap (& Forwarding Address)",
-    },
-    {
-      contract: "0xba5602730824340d714c92a153460db958fd8562",
-      description: "Union - Merkle Distributor - uCRV",
-    },
-  ],
-};
-
 const bundles: Bundle[] = [
   union,
   distributors,
@@ -378,7 +348,6 @@ const bundles: Bundle[] = [
   ubal,
   registries,
   pirex,
-  outdated,
 ];
 
 const repositories: Repository[] = [
@@ -482,7 +451,6 @@ repo-graphs: The Graph subgraphs related to Curve, Convex, Votium and more
 union: Union
 distributors: Distributors
 registries: Registries
-outdated: Outdated
 
 multisig: Multisig
 treasury: Treasury
