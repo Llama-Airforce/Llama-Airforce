@@ -1,5 +1,5 @@
 import { Observable, share } from "rxjs";
-import { SocketPool } from "@CM/Services/Sockets";
+import { type SocketPool } from "@CM/Services/Sockets";
 import { type BalancesDto } from "@CM/Services/Sockets/SocketPool";
 import type { Balances } from "@CM/Pages/Pool/Monitor/Models";
 

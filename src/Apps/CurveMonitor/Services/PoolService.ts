@@ -1,5 +1,5 @@
 import type { Pool } from "@CM/Models";
-import { SocketRoot } from "@CM/Services/Sockets";
+import { type SocketRoot } from "@CM/Services/Sockets";
 
 export default class PoolService {
   private readonly socket: SocketRoot;

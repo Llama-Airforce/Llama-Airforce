@@ -1,4 +1,4 @@
-import { SocketMEV } from "@CM/Services/Sockets";
+import { type SocketMEV } from "@CM/Services/Sockets";
 import {
   type SandwichDetail,
   type LabelRankingExtended,

@@ -1,6 +1,6 @@
 import { Observable, share } from "rxjs";
 import type { Coin } from "@CM/Models";
-import { SocketPool } from "@CM/Services/Sockets";
+import { type SocketPool } from "@CM/Services/Sockets";
 import { type NamesDto } from "@CM/Services/Sockets/SocketPool";
 
 export default class CoinService {

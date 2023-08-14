@@ -1,6 +1,6 @@
 import { Observable, share } from "rxjs";
 import { zipWith } from "lodash";
-import { SocketPool } from "@CM/Services/Sockets";
+import { type SocketPool } from "@CM/Services/Sockets";
 import { type BondingDto } from "@CM/Services/Sockets/SocketPool";
 import type { Bonding } from "@CM/Pages/Pool/Monitor/Models";
 
