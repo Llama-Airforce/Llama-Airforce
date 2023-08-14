@@ -154,7 +154,7 @@ const max = computed(() => {
 const formatterX = (x: string): string => x;
 
 const formatterY = (y: number): string =>
-  `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
+  `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>
