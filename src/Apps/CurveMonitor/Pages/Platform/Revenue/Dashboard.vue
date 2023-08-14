@@ -63,7 +63,7 @@ onActivated(() => {
   // Pool breakdown
   void revenueService.getBreakdownV1(abort.signal).then((revenues) => {
     if (revenues) {
-      store.setPoolRevenues(revenues);
+      store.poolRevenues = revenues;
       loadingRevenuePools.value = false;
     }
 
@@ -73,7 +73,7 @@ onActivated(() => {
   // Chain revenue
   void revenueService.getByChain(abort.signal).then((chainRevenues) => {
     if (chainRevenues) {
-      store.setChainRevenues(chainRevenues);
+      store.chainRevenues = chainRevenues;
       loadingRevenueChain.value = false;
     }
 
@@ -83,7 +83,7 @@ onActivated(() => {
   // Breakdown
   void revenueService.getBreakdownV2(abort.signal).then((breakdown) => {
     if (breakdown) {
-      store.setBreakdown(breakdown);
+      store.breakdown = breakdown;
       loadingRevenueBreakdown.value = false;
     }
 

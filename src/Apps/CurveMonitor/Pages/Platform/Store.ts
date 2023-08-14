@@ -43,15 +43,6 @@ export const useCurveStore = defineStore({
     setFees(gauge: GaugeId, fees: Fee[]) {
       this.fees[gauge] = fees;
     },
-    setPoolRevenues(poolRevenues: BreakdownRevenueV1[]) {
-      this.poolRevenues = poolRevenues;
-    },
-    setBreakdown(breakdown: BreakdownRevenueV2[]) {
-      this.breakdown = breakdown;
-    },
-    setChainRevenues(chainRevenues: ChainRevenue[]) {
-      this.chainRevenues = chainRevenues;
-    },
     setTopPools(chain: string, topPools: ChainTopPoolRevenue[]) {
       this.topPools[chain] = topPools;
     },
