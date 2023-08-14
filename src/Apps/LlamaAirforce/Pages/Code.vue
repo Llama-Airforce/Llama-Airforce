@@ -456,7 +456,7 @@ registries: Registries
 multisig: Multisig
 treasury: Treasury
 treasury-arbitrum: Treasury Arbitrum
-union-zap: Zap V6
+union-zap: Zap V9
 union-forward: Forwarding Address
 
 distributor-ucrv: Merkle Distributor - uCRV
