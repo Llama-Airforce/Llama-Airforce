@@ -1,33 +1,38 @@
 <template>
   <div class="revenue-charts">
-    <div class="chain-revenues">
-      <GraphRevenueChain
-        :title="t('revenue-charts')"
-        :loading="loadingRevenueChain"
-        class="graph-chain-revenue"
-      ></GraphRevenueChain>
-    </div>
+    <GraphRevenueChain
+      class="chain-revenues"
+      :title="t('revenue-charts')"
+      :loading="loadingRevenueChain"
+    ></GraphRevenueChain>
 
-    <GraphRevenueTopPools :title="t('chain-top-pools')"></GraphRevenueTopPools>
+    <GraphRevenueTopPools
+      class="chain-top-pools"
+      :title="t('chain-top-pools')"
+    ></GraphRevenueTopPools>
 
-    <div class="historical-revenue">
-      <GraphRevenueBreakdownV1
-        class="graph-pool-revenue"
-        :title="t('historical-revenue')"
-        :loading="loadingRevenuePools"
-      ></GraphRevenueBreakdownV1>
-    </div>
+    <GraphRevenueBreakdownV2
+      class="breakdown-v2"
+      :title="t('breakdown')"
+      :loading="loadingRevenueBreakdown"
+    ></GraphRevenueBreakdownV2>
+
+    <GraphRevenueBreakdownV1
+      class="breakdown-v1"
+      :title="t('historical-revenue')"
+      :loading="loadingRevenuePools"
+    ></GraphRevenueBreakdownV1>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onActivated, onDeactivated } from "vue";
 import { useI18n } from "vue-i18n";
-import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import GraphRevenueBreakdownV1 from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdownV1.vue";
+import GraphRevenueBreakdownV2 from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdownV2.vue";
 import GraphRevenueChain from "@CM/Pages/Platform/Revenue/Components/GraphRevenueChain.vue";
 import GraphRevenueTopPools from "@CM/Pages/Platform/Revenue/Components/GraphRevenueTopPools.vue";
 
@@ -40,11 +45,12 @@ const store = useCurveStore();
 
 const loadingRevenueChain = ref(false);
 const loadingRevenuePools = ref(false);
+const loadingRevenueBreakdown = ref(false);
 
 const abort = new AbortController();
 
 // Hooks
-onActivated(async (): Promise<void> => {
+onActivated(() => {
   // Don't request new data if there's already cached.
   if (store.poolRevenues.length > 0 || store.chainRevenues.length > 0) {
     return;
@@ -52,23 +58,37 @@ onActivated(async (): Promise<void> => {
 
   loadingRevenueChain.value = true;
   loadingRevenuePools.value = true;
+  loadingRevenueBreakdown.value = true;
 
-  const { revenues, chainRevenues } = await minDelay(
-    (async () => ({
-      revenues: await revenueService.getBreakdownV1(abort.signal),
-      chainRevenues: await revenueService.getByChain(abort.signal),
-    }))(),
-    500
-  );
+  // Pool breakdown
+  void revenueService.getBreakdownV1(abort.signal).then((revenues) => {
+    if (revenues) {
+      store.setPoolRevenues(revenues);
+      loadingRevenuePools.value = false;
+    }
 
-  if (revenues) {
-    store.setPoolRevenues(revenues);
-    loadingRevenuePools.value = false;
-  }
-  if (chainRevenues) {
-    store.setChainRevenues(chainRevenues);
-    loadingRevenueChain.value = false;
-  }
+    return undefined;
+  });
+
+  // Chain revenue
+  void revenueService.getByChain(abort.signal).then((chainRevenues) => {
+    if (chainRevenues) {
+      store.setChainRevenues(chainRevenues);
+      loadingRevenueChain.value = false;
+    }
+
+    return undefined;
+  });
+
+  // Breakdown
+  void revenueService.getBreakdownV2(abort.signal).then((breakdown) => {
+    if (breakdown) {
+      store.setBreakdown(breakdown);
+      loadingRevenueBreakdown.value = false;
+    }
+
+    return undefined;
+  });
 });
 
 onDeactivated(() => {
@@ -95,25 +115,32 @@ onDeactivated(() => {
     grid-row: 1;
     grid-column: 1;
 
-    .graph-chain-revenue {
-      height: 100%;
+    height: 100%;
 
-      @media only screen and (max-width: 1280px) {
-        height: 250px;
-      }
+    @media only screen and (max-width: 1280px) {
+      height: 250px;
     }
   }
 
-  .historical-revenue {
+  .breakdown-v1 {
     grid-row: 2;
-    grid-column: 1 / span 2;
+    grid-column: 2;
 
-    .graph-pool-revenue {
-      height: 100%;
+    height: 100%;
 
-      @media only screen and (max-width: 1280px) {
-        height: 600px;
-      }
+    @media only screen and (max-width: 1280px) {
+      height: 600px;
+    }
+  }
+
+  .breakdown-v2 {
+    grid-row: 2;
+    grid-column: 1;
+
+    height: 100%;
+
+    @media only screen and (max-width: 1280px) {
+      height: 600px;
     }
   }
 }
@@ -122,5 +149,6 @@ onDeactivated(() => {
 <i18n lang="yaml" locale="en">
 revenue-charts: Total revenue by chain
 chain-top-pools: Top 10 pools by revenue (last 7 days)
-historical-revenue: Historical revenue breakdown
+historical-revenue: Pool revenue breakdown
+breakdown: Revenue breakdown by source
 </i18n>

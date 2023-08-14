@@ -14,7 +14,7 @@ import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
-import { type PoolRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
+import { type BreakdownRevenueV1 } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 
 type Serie = {
@@ -26,7 +26,7 @@ type Serie = {
 const store = useCurveStore();
 const storeSettings = useSettingsStore();
 
-const poolRevenues = computed((): PoolRevenue[] => {
+const poolRevenues = computed((): BreakdownRevenueV1[] => {
   return store.poolRevenues ?? [];
 });
 

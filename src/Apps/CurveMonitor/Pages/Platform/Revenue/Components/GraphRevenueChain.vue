@@ -14,7 +14,7 @@ import { CardGraph } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
-import { type ChainRevenue } from "@CM/Pages/Platform/Revenue/Models/Revenue";
+import { type ChainRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
