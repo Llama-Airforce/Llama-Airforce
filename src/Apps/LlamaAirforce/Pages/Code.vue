@@ -402,6 +402,7 @@ const { t } = useI18n();
   display: flex;
   flex-direction: column;
   gap: 0;
+  margin-top: var(--page-margin);
 
   .row {
     display: flex;
