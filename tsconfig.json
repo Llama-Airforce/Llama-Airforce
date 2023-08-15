@@ -44,6 +44,9 @@
       "@CM/*": [
         "src/Apps/CurveMonitor/*"
       ],
+      "@PM/*": [
+        "src/Apps/PrismaMonitor/*"
+      ],
       "@LAF/*": [
         "src/Apps/LlamaAirforce/*"
       ],

@@ -6,7 +6,7 @@ param (
     [string]$Env
 )
 
-If (@("laf", "cm") -notcontains $App) {
+If (@("laf", "cm", "pm") -notcontains $App) {
     throw ("App '$App' is not a valid app")
 }
 
@@ -29,6 +29,10 @@ switch ($App) {
     "CM" {
         $dirDist = "Llama-Airforce\src\Apps\CurveMonitor\dist"
         $dirOutput = "Curve-Monitor-Web"
+    }
+    "PM" {
+        $dirDist = "Llama-Airforce\src\Apps\PrismaMonitor\dist"
+        $dirOutput = "Prisma-Monitor-Web"
     }
 }
 # Build website.
