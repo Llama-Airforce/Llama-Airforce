@@ -2,6 +2,7 @@ import { type PoolId } from "@CM/Models";
 
 export type Bribed = {
   pool: PoolId;
+  vlAsset: number;
   dollarPerVlAsset: number;
   amount: number;
   amountDollars: number;

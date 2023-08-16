@@ -61,6 +61,7 @@ export function getBribed(epoch: Epoch): Bribed[] {
 
       return {
         pool,
+        vlAsset,
         amount,
         amountDollars,
         dollarPerVlAsset: amountDollars / vlAsset,
@@ -89,10 +90,24 @@ export function getBribedPersonal(
         return undefined;
       }
 
+      /**
+       * Example:
+       * If total bribes were 600 FXS ($3600) and 200 vlCVX voted for it,
+       * then Math.min(maxPerVote, totalTokenAmount / totalCVX) would be Math.min(maxPerVote, 3)
+       * which with maxPerVote = 0.5 would reduce to 0.5 FXS per vlCVX.
+       *
+       * So if I voted with 50 vlCVX, I'd get 0.5 * 50 = 25 FXS. Now the total bribe amount was 600 FXS ($3600),
+       * so the price is $3600/600 = $6 per FXS, so my final dollar amount is $6 * 25 = $150.
+       */
+      const tokenPrice = bribed.amountDollars / bribed.amount;
+      const amountPerVlAsset = bribed.amount / bribed.vlAsset;
+      const amount = amountPerVlAsset * allocation.vlAsset;
+      const amountDollars = amount * tokenPrice;
+
       return {
         pool: bribed.pool,
         dollarPerVlAsset: bribed.dollarPerVlAsset,
-        amountDollars: bribed.dollarPerVlAsset * allocation.vlAsset,
+        amountDollars,
         percentage: allocation.percentage,
       };
     })
