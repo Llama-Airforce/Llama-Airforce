@@ -4,11 +4,14 @@ export type Bribed = {
   pool: PoolId;
   vlAsset: number;
   dollarPerVlAsset: number;
-  amount: number;
-  amountDollars: number;
+  amount: number[];
+  amountDollars: number[];
+  maxPerVote: number[];
 };
 
 export type BribedPersonal = Bribed & {
+  amount: number;
+  amountDollars: number;
   percentage: number; // Range: [0, 100]%.
 };
 

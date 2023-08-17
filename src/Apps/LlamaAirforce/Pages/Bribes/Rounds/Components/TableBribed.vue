@@ -135,7 +135,7 @@ const pool = (bribed: Bribed): string => {
 };
 
 const amountDollars = (bribed: Bribed): number => {
-  return bribed.amountDollars;
+  return bribed.amountDollars.reduce((acc, cur) => acc + cur, 0);
 };
 
 const dollarPerVlAsset = (bribed: Bribed): number => {

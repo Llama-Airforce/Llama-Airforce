@@ -3,4 +3,5 @@ export type Bribe = {
   token: string;
   amount: number;
   amountDollars: number;
+  maxPerVote?: number;
 };

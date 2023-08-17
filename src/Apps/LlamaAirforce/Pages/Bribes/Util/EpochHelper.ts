@@ -1,4 +1,4 @@
-import { chain, isFinite } from "lodash";
+import { chain, zip } from "lodash";
 import { notEmpty } from "@/Util";
 import {
   type Delegation,
@@ -53,24 +53,29 @@ export function getBribed(epoch: Epoch): Bribed[] {
     .map(([pool, vlAsset]) => {
       // For each pool, find all the bribes and sum them.
       const bribesPool = epoch.bribes.filter((bribe) => bribe.pool === pool);
-      const amount = bribesPool.reduce((acc, bribe) => acc + bribe.amount, 0);
-      const amountDollars = bribesPool.reduce(
+      const amount = bribesPool.map((bribe) => bribe.amount);
+      const amountDollars = bribesPool.map((bribe) => bribe.amountDollars);
+      const amountDollarsTotal = bribesPool.reduce(
         (acc, bribe) => acc + bribe.amountDollars,
         0
       );
+      const maxPerVote = bribesPool.map((bribe) => bribe.maxPerVote ?? 0);
+      const dollarPerVlAsset = amountDollarsTotal / vlAsset;
 
       return {
         pool,
         vlAsset,
         amount,
         amountDollars,
-        dollarPerVlAsset: amountDollars / vlAsset,
+        amountDollarsTotal,
+        maxPerVote,
+        dollarPerVlAsset,
       };
     })
     .filter(
       (x) =>
         isFinite(x.dollarPerVlAsset) &&
-        x.amountDollars > 100 &&
+        x.amountDollarsTotal > 100 &&
         x.dollarPerVlAsset > 0 &&
         x.dollarPerVlAsset < 100
     );
@@ -99,14 +104,42 @@ export function getBribedPersonal(
        * So if I voted with 50 vlCVX, I'd get 0.5 * 50 = 25 FXS. Now the total bribe amount was 600 FXS ($3600),
        * so the price is $3600/600 = $6 per FXS, so my final dollar amount is $6 * 25 = $150.
        */
-      const tokenPrice = bribed.amountDollars / bribed.amount;
-      const amountPerVlAsset = bribed.amount / bribed.vlAsset;
-      const amount = amountPerVlAsset * allocation.vlAsset;
-      const amountDollars = amount * tokenPrice;
+      const amountDollarsPerBribed = zip(
+        bribed.amount,
+        bribed.amountDollars,
+        bribed.maxPerVote
+      ).map(([amount_, amountDollars_, maxPerVote_]) => {
+        if (
+          amount_ === undefined ||
+          amountDollars_ === undefined ||
+          maxPerVote_ === undefined
+        ) {
+          return 0;
+        }
+
+        const tokenPrice = amountDollars_ / amount_;
+        let amountPerVlAsset = amount_ / bribed.vlAsset;
+        if (maxPerVote_) {
+          amountPerVlAsset = Math.min(maxPerVote_, amountPerVlAsset);
+        }
+
+        const amount = amountPerVlAsset * allocation.vlAsset;
+        const amountDollars = amount * tokenPrice;
+
+        return amountDollars;
+      });
+
+      const amountDollars = amountDollarsPerBribed.reduce(
+        (acc, cur) => acc + cur,
+        0
+      );
+
+      const vlAssetFirst = distribution[Object.keys(distribution)[0]];
+      const vlAsset = (vlAssetFirst.vlAsset / vlAssetFirst.percentage) * 100;
 
       return {
         pool: bribed.pool,
-        dollarPerVlAsset: bribed.dollarPerVlAsset,
+        dollarPerVlAsset: amountDollars / vlAsset,
         amountDollars,
         percentage: allocation.percentage,
       };
