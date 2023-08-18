@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { CvxCrvUtilities__factory } from "./CvxCrvUtilities__factory";
 export { CvxFxsRewards__factory } from "./CvxFxsRewards__factory";
+export { GaugeVotePlatform__factory } from "./GaugeVotePlatform__factory";

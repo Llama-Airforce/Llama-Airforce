@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { CvxCrvUtilities } from "./CvxCrvUtilities";
 export type { CvxFxsRewards } from "./CvxFxsRewards";
+export type { GaugeVotePlatform } from "./GaugeVotePlatform";
