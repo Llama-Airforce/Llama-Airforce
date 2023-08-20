@@ -135,6 +135,23 @@ en:
   migrateUCrvV2: Hello ser, you have {0} uCRV you need to migrate!
     <br />It might still earn yield, but it will be subpar!
 
+  # Prisma Airdrop
+  prisma-warning:
+    Beware of phishing scams and imposters! Always double-check the URL
+    before interacting with smart contracts. Always do your due diligence.
+    It's not worth getting rekt over shortcuts or neglect.
+  prisma-info: Prisma, a DeFi tool, leverages Ethereum's LSTs to mint mkUSD, a
+    stablecoin boosted by incentives on Curve and Convex Finance. Users
+    can receive trading fees, CRV, CVX, and PRISMA on top of their
+    Ethereum staking rewards. Built on Liquity, it's a resilient protocol
+    with a decentralized stablecoin, overseen by the Prisma DAO.
+  prisma-deadline: The airdrop is claimable until <strong>January 2, 2024</strong>.<br>Beyond that date, the unclaimed amount will be converted into CVX and distributed to the people in the uCVX pounder.
+  prisma-learn-more: Learn more about Prisma.
+  prisma-loading: Loading...
+  prisma-eligible-yay: You're eligible!
+  prisma-eligible-nay: You're <strong>NOT</strong> eligible
+  prisma-claim: Claim cvxPRISMA
+
 zh:
   apy: APY
   tvl: TVL
@@ -240,6 +257,16 @@ zh:
     <br />旧的仍然可以工作，但新的有一些内部改进!
   migrateUCrvV2: 您好，您好 {0} uCRV 需要迁移到新金库!
     <br />您在旧金库中可以继续获得收益，但会逐步减少!
+
+  # Prisma Airdrop
+  prisma-warning: 谨防网络钓鱼欺诈和冒名顶替者！在与智能合约互动之前，请务必仔细检查超链接。始终尽职尽责。不值得因为走捷径或疏忽而吃亏。
+  prisma-info: Prisma 是一款 DeFi 工具，它利用以太坊的 LST 来铸造 mkUSD，这是一种稳定币，通过 Curve 和 Convex Finance 上的激励措施而得到提升。用户除了获得以太坊赌注奖励外，还可以获得交易费、CRV、CVX 和 PRISMA。它基于 Liquity 构建，是一个具有去中心化稳定币的弹性协议，由 Prisma DAO 监督。
+  prisma-deadline: 该空投可在<strong>2024 年 1 月 2 日</strong>前申请。<br>超过该日期，无人认领的金额将转换为 CVX，并分配给 uCVX pounder 中的人
+  prisma-learn-more: 了解有关 Prisma 的更多信息。
+  prisma-loading: 正在加载...
+  prisma-eligible-yay: 您符合条件！
+  prisma-eligible-nay: 你<strong>没有</strong>资格
+  prisma-claim: 申请 cvxPRISMA
 
 fr:
   apy: APY
@@ -378,3 +405,13 @@ fr:
     <br />L'ancien fonctionnera toujours, mais le nouveau a quelques améliorations internes!
   migrateUCrvV2: Bonjour, vous avez {0} uCRV que vous devez migrer!
     <br />Il pourrait toujours générer du rendement, mais il serait inférieur!
+
+  # Prisma Airdrop
+  prisma-warning: Attention aux escroqueries par hameçonnage et aux imposteurs ! Vérifiez toujours l'URL avant d'interagir avec les contrats intelligents. Faites toujours preuve de diligence raisonnable. Cela ne vaut pas la peine de se faire reprendre pour des raccourcis ou de la négligence.
+  prisma-info: Prisma, un outil DeFi, exploite les LST d'Ethereum pour frapper mkUSD, un stablecoin stimulé par des incitations sur Curve et Convex Finance. Les utilisateurs peuvent recevoir des commissions de trading, CRV, CVX et PRISMA en plus de leurs récompenses de mise en Ethereum. Construit sur Liquity, c'est un protocole résilient avec un stablecoin décentralisé, supervisé par la DAO Prisma.
+  prisma-deadline: Le parachutage peut être revendiqué jusqu'au <strong>2 janvier 2024</strong>.<br>Au-delà de cette date, le montant non réclamé sera converti en CVX et distribué aux personnes du groupe uCVX.
+  prisma-learn-more: En savoir plus sur Prisma.
+  prisma-loading: Chargement...
+  prisma-eligible-yay: Vous êtes éligible !
+  prisma-eligible-nay: Vous n'êtes <strong>PAS</strong> éligible
+  prisma-claim: Réclamer cvxPRISMA

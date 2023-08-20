@@ -44,6 +44,9 @@ export const DistributorUCvxAddressV1 =
 export const DistributorUCvxAddress =
   "0x6788234f40931ca615b0d221c1afbf0ec07afcc5";
 
+export const DistributorCvxPrismaAddress =
+  "0x8e6d5cf9b9659d4f8e68ee040bf26e728ef1baa4";
+
 // Vaults
 export const UnionCrvVaultAddressV1 =
   "0x83507cc8c8b67ed48badd1f59f684d5d02884c81";
