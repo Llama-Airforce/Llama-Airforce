@@ -169,6 +169,10 @@ export const veFunderGaugeController =
 // Curve
 export const CurveVotingAddress = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
 
+// Convex L2 Voting
+export const GaugeVotePlatformAddress =
+  "0x6d024fa49de64a975980cddd4c3212492d189e57";
+
 // Other
 export const PirexCvxAddress = "0x35a398425d9f1029021a92bc3d2557d42c8588d7";
 export const WEthAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
