@@ -11,7 +11,7 @@
 <script setup lang="ts">
 // Props
 interface Props {
-  modelValue: number;
+  modelValue: number | null;
   min: number;
   max: number;
 }

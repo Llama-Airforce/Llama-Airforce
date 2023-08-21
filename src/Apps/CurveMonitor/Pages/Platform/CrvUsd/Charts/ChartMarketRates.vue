@@ -4,6 +4,18 @@
     :title="t('title')"
     :loading="loading"
   >
+    <template #actions>
+      <div class="actions">
+        <InputNumber
+          v-model="avgLength"
+          class="avg-span"
+          placeholder="Avg span (days)"
+          :min="1"
+          :max="Infinity"
+        ></InputNumber>
+      </div>
+    </template>
+
     <div
       ref="chartRef"
       class="chart"
@@ -23,8 +35,9 @@ import {
   type LineData,
   LineType,
   type UTCTimestamp,
+  type LineSeriesPartialOptions,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, InputNumber } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -50,6 +63,7 @@ const { market = null } = defineProps<Props>();
 // Refs
 let chart: IChartApi;
 let ratesSerie: ISeriesApi<"Area">;
+let ratesEMASerie: ISeriesApi<"Line">;
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -57,6 +71,7 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 const rates = ref<MarketRates[]>([]);
 const loading = ref(false);
+const avgLength = ref<number | null>(null);
 
 // Hooks
 onMounted((): void => {
@@ -69,8 +84,11 @@ onMounted((): void => {
   ratesSerie = chart.addAreaSeries(
     createOptionsSerieRates(storeSettings.theme)
   );
+  ratesEMASerie = chart.addLineSeries(
+    createOptionsSerieRatesEMA(storeSettings.theme)
+  );
 
-  createSeriesRates(rates.value);
+  createSeries(rates.value);
 });
 
 // Watches
@@ -98,12 +116,17 @@ watch(
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
       ratesSerie.applyOptions(createOptionsSerieRates(newTheme));
+      ratesEMASerie.applyOptions(createOptionsSerieRatesEMA(newTheme));
     }
   }
 );
 
 watch(rates, (newRates) => {
-  createSeriesRates(newRates);
+  createSeries(newRates);
+});
+
+watch(avgLength, () => {
+  createSeries(rates.value);
 });
 
 // Methods
@@ -141,12 +164,29 @@ const createOptionsSerieRates = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createSeriesRates = (newRates: MarketRates[]): void => {
+const createOptionsSerieRatesEMA = (theme: Theme): LineSeriesPartialOptions => {
+  const colors = getColors(theme);
+
+  return {
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    color: colors.yellow,
+    lastValueVisible: false,
+    priceLineVisible: false,
+  };
+};
+
+const createSeries = (newRates: MarketRates[]): void => {
   if (!chart || !ratesSerie) {
     return;
   }
 
-  const newRatesSeries: LineData[] = chain(newRates)
+  const newRatesSerie: LineData[] = chain(newRates)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.rate,
@@ -155,11 +195,30 @@ const createSeriesRates = (newRates: MarketRates[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  if (newRatesSeries.length > 0) {
-    ratesSerie.setData(newRatesSeries);
+  const averages = average(
+    newRatesSerie.map((x) => x.value),
+    avgLength.value ?? 31
+  );
 
-    const from = newRatesSeries[0].time;
-    const to = newRatesSeries[newRatesSeries.length - 1].time;
+  const newRatesEMASerie: LineData[] = chain(averages)
+    .zip(newRatesSerie)
+    .map((x) => ({
+      time: x[1]!.time,
+      value: x[0]!,
+    }))
+    .value();
+
+  // EMA rates serie.
+  if (newRatesEMASerie.length > 0) {
+    ratesEMASerie.setData(newRatesEMASerie);
+  }
+
+  // Normal rates serie.
+  if (newRatesSerie.length > 0) {
+    ratesSerie.setData(newRatesSerie);
+
+    const from = newRatesSerie[0].time;
+    const to = newRatesSerie[newRatesSerie.length - 1].time;
 
     chart.timeScale().setVisibleRange({ from, to });
   }
@@ -168,6 +227,24 @@ const createSeriesRates = (newRates: MarketRates[]): void => {
 const formatterRate = (x: number): string => {
   return `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
 };
+
+/**
+ * Normal non-weighted N sized average.
+ * let values: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+ * output: [1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7]
+ */
+const average = (data: number[], n = 7): number[] =>
+  data.map((_x, i) => {
+    // Start from the current index and go back (n - 1) more days (total n days)
+    const start = Math.max(i - (n - 1), 0);
+    const end = i + 1;
+
+    // Slice the portion of the array for the n-day average and compute its average
+    const slice = data.slice(start, end);
+    const average = slice.reduce((acc, value) => acc + value, 0) / slice.length;
+
+    return average;
+  });
 </script>
 
 <style lang="scss" scoped>
@@ -178,6 +255,12 @@ const formatterRate = (x: number): string => {
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
+  }
+
+  .actions {
+    > .avg-span {
+      width: 8rem;
+    }
   }
 }
 </style>
