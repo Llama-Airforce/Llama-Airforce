@@ -53,6 +53,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { isAddress } from "ethers/lib/utils";
 import { Collapsible } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
@@ -85,7 +86,12 @@ const callData = computed(() => {
   return proposalDetails.value.script
     .replace(/(?:\r\n|\r|\n)/g, "<br>")
     .replace("/\u251c/g", "├")
-    .replace("/\u2500/g", "─");
+    .replace("/\u2500/g", "─")
+    .replace(/0x[a-fA-F0-9]{40}/g, (match) =>
+      /[A-F]/g.test(match) && isAddress(match)
+        ? `<a href='https://etherscan.io/address/${match}'>${match}</a>`
+        : match
+    );
 });
 
 // Watches
