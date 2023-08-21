@@ -134,12 +134,12 @@ export function getBribedPersonal(
         0
       );
 
-      const vlAssetFirst = distribution[Object.keys(distribution)[0]];
-      const vlAsset = (vlAssetFirst.vlAsset / vlAssetFirst.percentage) * 100;
+      const vlAsset = distribution[bribed.pool].vlAsset;
+      const dollarPerVlAsset = amountDollars / vlAsset;
 
       return {
         pool: bribed.pool,
-        dollarPerVlAsset: amountDollars / vlAsset,
+        dollarPerVlAsset,
         amountDollars,
         percentage: allocation.percentage,
       };
