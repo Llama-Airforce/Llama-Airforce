@@ -9,7 +9,7 @@ export type Bribed = {
   maxPerVote: number[];
 };
 
-export type BribedPersonal = Bribed & {
+export type BribedPersonal = Omit<Bribed, "amount" | "amountDollars"> & {
   amount: number;
   amountDollars: number;
   percentage: number; // Range: [0, 100]%.
