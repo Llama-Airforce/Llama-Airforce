@@ -7,8 +7,7 @@ import {
 import { type Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
 import { type Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
 import {
-  type BreakdownRevenueV1,
-  type BreakdownRevenueV2,
+  type BreakdownRevenue,
   type ChainRevenue,
   type ChainTopPoolRevenue,
 } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
@@ -17,8 +16,7 @@ type State = {
   gauges: Gauge[];
   emissions: { [pool: string]: Emission[] };
   fees: { [pool: string]: Fee[] };
-  poolRevenues: BreakdownRevenueV1[];
-  breakdown: BreakdownRevenueV2[];
+  breakdown: BreakdownRevenue[];
   chainRevenues: ChainRevenue[];
   selectedChain: Chain | null;
   topPools: { [chain: string]: ChainTopPoolRevenue[] };
@@ -30,7 +28,6 @@ export const useCurveStore = defineStore({
     gauges: [],
     emissions: {},
     fees: {},
-    poolRevenues: [],
     breakdown: [],
     chainRevenues: [],
     selectedChain: "mainnet",

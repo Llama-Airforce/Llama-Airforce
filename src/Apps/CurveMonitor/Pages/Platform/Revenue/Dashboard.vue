@@ -11,17 +11,11 @@
       :title="t('chain-top-pools')"
     ></GraphRevenueTopPools>
 
-    <GraphRevenueBreakdownV2
-      class="breakdown-v2"
+    <GraphRevenueBreakdown
+      class="breakdown"
       :title="t('breakdown')"
       :loading="loadingRevenueBreakdown"
-    ></GraphRevenueBreakdownV2>
-
-    <GraphRevenueBreakdownV1
-      class="breakdown-v1"
-      :title="t('historical-revenue')"
-      :loading="loadingRevenuePools"
-    ></GraphRevenueBreakdownV1>
+    ></GraphRevenueBreakdown>
   </div>
 </template>
 
@@ -31,8 +25,7 @@ import { useI18n } from "vue-i18n";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
-import GraphRevenueBreakdownV1 from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdownV1.vue";
-import GraphRevenueBreakdownV2 from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdownV2.vue";
+import GraphRevenueBreakdown from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdown.vue";
 import GraphRevenueChain from "@CM/Pages/Platform/Revenue/Components/GraphRevenueChain.vue";
 import GraphRevenueTopPools from "@CM/Pages/Platform/Revenue/Components/GraphRevenueTopPools.vue";
 
@@ -52,23 +45,13 @@ const abort = new AbortController();
 // Hooks
 onActivated(() => {
   // Don't request new data if there's already cached.
-  if (store.poolRevenues.length > 0 || store.chainRevenues.length > 0) {
+  if (store.chainRevenues.length > 0) {
     return;
   }
 
   loadingRevenueChain.value = true;
   loadingRevenuePools.value = true;
   loadingRevenueBreakdown.value = true;
-
-  // Pool breakdown
-  void revenueService.getBreakdownV1(abort.signal).then((revenues) => {
-    if (revenues) {
-      store.poolRevenues = revenues;
-      loadingRevenuePools.value = false;
-    }
-
-    return undefined;
-  });
 
   // Chain revenue
   void revenueService.getByChain(abort.signal).then((chainRevenues) => {
@@ -81,7 +64,7 @@ onActivated(() => {
   });
 
   // Breakdown
-  void revenueService.getBreakdownV2(abort.signal).then((breakdown) => {
+  void revenueService.getBreakdown(abort.signal).then((breakdown) => {
     if (breakdown) {
       store.breakdown = breakdown;
       loadingRevenueBreakdown.value = false;
@@ -122,20 +105,9 @@ onDeactivated(() => {
     }
   }
 
-  .breakdown-v1 {
+  .breakdown {
     grid-row: 2;
-    grid-column: 2;
-
-    height: 100%;
-
-    @media only screen and (max-width: 1280px) {
-      height: 600px;
-    }
-  }
-
-  .breakdown-v2 {
-    grid-row: 2;
-    grid-column: 1;
+    grid-column: 1 / -1;
 
     height: 100%;
 
@@ -149,6 +121,5 @@ onDeactivated(() => {
 <i18n lang="yaml" locale="en">
 revenue-charts: Total revenue by chain
 chain-top-pools: Top 10 pools by revenue (last 7 days)
-historical-revenue: Pool revenue breakdown
 breakdown: Revenue breakdown by source
 </i18n>

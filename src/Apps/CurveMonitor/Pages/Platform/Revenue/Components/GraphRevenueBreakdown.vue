@@ -15,7 +15,7 @@ import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
-import { type BreakdownRevenueV2 } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import { type BreakdownRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 
 type Serie = {
@@ -27,7 +27,7 @@ type Serie = {
 const store = useCurveStore();
 const storeSettings = useSettingsStore();
 
-const breakdown = computed((): BreakdownRevenueV2[] => {
+const breakdown = computed((): BreakdownRevenue[] => {
   return store.breakdown ?? [];
 });
 
