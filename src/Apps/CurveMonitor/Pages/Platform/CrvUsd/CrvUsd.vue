@@ -54,6 +54,7 @@ const onMarketSelect = async (market: Market) => {
   await router.push({
     name: "crvusdmarket",
     params: {
+      tab: "",
       marketAddr: market.address,
     },
   });

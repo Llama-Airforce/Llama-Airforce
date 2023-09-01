@@ -1,37 +1,57 @@
 <template>
-  <div class="market">
-    <ChartMarketVolume :market="market"></ChartMarketVolume>
-    <ChartMarketRates :market="market"></ChartMarketRates>
-    <ChartMarketLoans :market="market"></ChartMarketLoans>
-    <ChartMarketDeciles :market="market"></ChartMarketDeciles>
+  <div class="revenue">
+    <TabView
+      :active="tabActive"
+      @tab="tabActive = $event.index"
+    >
+      <TabItem header="Overview">
+        <KeepAlive>
+          <MarketOverview v-if="tabActive === 0" :market="market"></MarketOverview>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Liquidation">
+        <KeepAlive>
+          <Liquidations v-if="tabActive === 1  && market" :market="market"></Liquidations>
+        </KeepAlive>
+      </TabItem>
+    </TabView>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import {computed, onMounted, ref, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import { getHost } from "@/Services/Host";
+import { TabView, TabItem } from "@/Framework";
 import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
-import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
-import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
-import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
-import ChartMarketDeciles from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketDeciles.vue";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-
+import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
+import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
 const curveService = new CurveService(getHost());
 
 // Refs
 const route = useRoute();
+const router = useRouter();
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeCrvUsd = useCrvUsdStore();
+const tabActive = ref(0);
 
 const marketAddr = computed(() => route.params.marketAddr as string);
 const market = computed(() => storeCrvUsd.market);
 
 // Hooks
 onMounted(async () => {
+
+  const tabParam = route.params.tab;
+  if (tabParam && typeof tabParam === "string") {
+    if (tabParam === "liquidations") {
+      tabActive.value = 1;
+    }
+  }
+
   if (storeCrvUsd.market?.address !== marketAddr.value) {
     const { markets } = await curveService.getMarkets();
     const market = markets.find(
@@ -55,6 +75,16 @@ onMounted(async () => {
       label: `Market: ${market.value?.name ?? "?"}`,
     },
   ];
+
+});
+
+// Watches
+watch(tabActive, async (newTab) => {
+  if (newTab === 0) {
+    await router.push({ name: "crvusdmarket", params: { tab: "", marketAddr: marketAddr.value } });
+  } else if (newTab === 1) {
+    await router.push({ name: "crvusdmarket", params: { tab: "liquidations", marketAddr: marketAddr.value } });
+  }
 });
 </script>
 
