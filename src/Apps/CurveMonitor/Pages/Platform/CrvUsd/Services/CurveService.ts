@@ -113,6 +113,11 @@ export type HistoricalSoftLiquidations = {
   proportion: number;
 };
 
+export type HistoricalMedianLoss = {
+  timestamp: number;
+  lossPct: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -197,5 +202,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ losses: HistoricalSoftLiquidations[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/soft`);
+  }
+
+  public async getHistoricalMedianLoss(
+    marketAddr: string
+  ): Promise<{ losses: HistoricalMedianLoss[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/median`);
   }
 }

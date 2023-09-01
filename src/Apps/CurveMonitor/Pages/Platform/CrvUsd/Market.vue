@@ -10,7 +10,7 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Liquidation">
+      <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations v-if="tabActive === 1  && market" :market="market"></Liquidations>
         </KeepAlive>
