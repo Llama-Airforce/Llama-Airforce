@@ -1,6 +1,7 @@
 <template>
   <div class="market">
     <ChartLiquidationSoftLiquidation :market="market"></ChartLiquidationSoftLiquidation>
+    <ChartLiquidationMedianLoss :market="market"></ChartLiquidationMedianLoss>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { defineComponent } from 'vue';
 
 import ChartLiquidationSoftLiquidation from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationSoftLiquidation.vue";
+import ChartLiquidationMedianLoss from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationMedianLoss.vue";
 export default defineComponent({
   props: {
     market: {
@@ -17,6 +19,7 @@ export default defineComponent({
     }
   },
   components: {
+    ChartLiquidationMedianLoss,
     ChartLiquidationSoftLiquidation,
   }
 });
