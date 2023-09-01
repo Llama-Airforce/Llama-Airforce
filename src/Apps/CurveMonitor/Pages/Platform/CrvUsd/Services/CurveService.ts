@@ -107,6 +107,12 @@ export type Yield = {
   apy: number;
 };
 
+export type HistoricalSoftLiquidations = {
+  timestamp: number;
+  collateralPrice: number;
+  proportion: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -185,5 +191,11 @@ export default class CurveService extends ServiceBase {
 
   public async getYield(): Promise<{ yields: Yield[] }> {
     return this.fetch(`${API_URL}/crvusd/yield`);
+  }
+
+  public async getHistoricalSoftLiquidations(
+    marketAddr: string
+  ): Promise<{ losses: HistoricalSoftLiquidations[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/soft`);
   }
 }

@@ -31,7 +31,7 @@ export const pageMain: Page = {
 
     { path: "/platform/crvusd", name: "crvusd", component: CrvUsd },
     {
-      path: "/platform/crvusd/market/:marketAddr",
+      path: "/platform/crvusd/market/:marketAddr/:tab?",
       name: "crvusdmarket",
       component: CrvUsdMarket,
     },
