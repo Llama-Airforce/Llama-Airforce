@@ -123,6 +123,13 @@ export type HistoricalAverageHealth = {
   quartiles: number[];
 };
 
+export type HealthDecile = {
+  decile: string;
+  collateralUsdValue: number;
+  debt: number;
+  stablecoin: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -219,5 +226,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ health: HistoricalAverageHealth[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/health/historical`);
+  }
+
+  public async getHealthDeciles(
+    marketAddr: string
+  ): Promise<{ health: HealthDecile[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/health`);
   }
 }
