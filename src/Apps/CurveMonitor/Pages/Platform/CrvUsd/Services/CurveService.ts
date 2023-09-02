@@ -135,6 +135,14 @@ export type HistoricalLosers = {
   losers: number;
 };
 
+export type HistoricalLiquidations = {
+  timestamp: number;
+  selfCount: number;
+  hardCount: number;
+  selfValue: number;
+  hardValue: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -243,5 +251,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ losses: HistoricalLosers[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/proportions`);
+  }
+
+  public async getHistoricalLiquidations(
+    marketAddr: string
+  ): Promise<{ liquidations: HistoricalLiquidations[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/historical`);
   }
 }
