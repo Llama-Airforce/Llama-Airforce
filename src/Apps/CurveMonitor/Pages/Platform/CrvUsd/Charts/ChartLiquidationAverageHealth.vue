@@ -4,6 +4,13 @@
     :title="t('title')"
     :loading="loading"
   >
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items="['1st Quartile', 'Median', '3rd Quartile']"
+        ></Legend>
+      </div>
+    </template>
     <div
       ref="chartRef"
       class="chart"
@@ -24,6 +31,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
+import Legend from "@CM/Components/Legend.vue";
 import { Card } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -31,7 +39,7 @@ import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
-  type HistoricalMedianLoss,
+  type HistoricalAverageHealth
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
@@ -41,6 +49,8 @@ const curveService = new CurveService(getHost());
 
 let chart: IChartApi;
 let areaSerie: ISeriesApi<"Area">;
+let areaQ1Serie: ISeriesApi<"Area">;
+let areaQ3Serie: ISeriesApi<"Area">;
 
 // Props
 interface Props {
@@ -53,7 +63,7 @@ const { market = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const losses = ref<HistoricalMedianLoss[]>([]);
+const health = ref<HistoricalAverageHealth[]>([]);
 const loading = ref(false);
 
 // Hooks
@@ -65,8 +75,10 @@ onMounted((): void => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
   areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+  areaQ1Serie = chart.addAreaSeries(createQ1OptionsSerie(storeSettings.theme));
+  areaQ3Serie = chart.addAreaSeries(createQ3OptionsSerie(storeSettings.theme));
 
-  createSeries(losses.value);
+  createSeries(health.value);
 });
 
 // Watches
@@ -79,9 +91,9 @@ watch(
       return;
     }
 
-    losses.value = await curveService
-      .getHistoricalMedianLoss(newMarket.address)
-      .then((x) => x.losses);
+    health.value = await curveService
+      .getHistoricalAverageHealth(newMarket.address)
+      .then((x) => x.health);
 
     loading.value = false;
   },
@@ -93,13 +105,15 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
+      areaQ1Serie.applyOptions(createOptionsSerie(newTheme));
       areaSerie.applyOptions(createOptionsSerie(newTheme));
+      areaQ3Serie.applyOptions(createOptionsSerie(newTheme));
     }
   }
 );
 
-watch(losses, (newLosses) => {
-  createSeries(newLosses);
+watch(health, (newHealth) => {
+  createSeries(newHealth);
 });
 
 // Methods
@@ -119,9 +133,28 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
 
   return {
     priceFormat: {
-      type: "percent",
-      precision: 2,
-      minMove: 0.1,
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    lineColor: colors.yellow,
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
+    lastValueVisible: false,
+    priceLineVisible: false,
+  };
+};
+
+const createQ1OptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+  const colors = getColors(theme);
+
+  return {
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
@@ -133,22 +166,68 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createSeries = (newLosses: HistoricalMedianLoss[]): void => {
-  if (!chart || !areaSerie) {
+const createQ3OptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+  const colors = getColors(theme);
+
+  return {
+    priceFormat: {
+      type: "price",
+      precision: 6,
+      minMove: 0.000001,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    lineColor: colors.green,
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
+    lastValueVisible: false,
+    priceLineVisible: false,
+  };
+};
+
+const createSeries = (newLosses: HistoricalAverageHealth[]): void => {
+  if (!chart || !areaSerie || !areaQ1Serie || !areaQ3Serie) {
     return;
   }
 
   const newSerie: LineData[] = chain(newLosses)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.lossPct,
+      value: x.quartiles[2],
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
+  const newQ1Serie: LineData[] = chain(newLosses)
+    .map((x) => ({
+      time: x.timestamp as UTCTimestamp,
+      value: x.quartiles[1],
+    }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
+    .value();
+
+  const newQ3Serie: LineData[] = chain(newLosses)
+    .map((x) => ({
+      time: x.timestamp as UTCTimestamp,
+      value: x.quartiles[3],
+    }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
+    .value();
+
+
+  if (newQ1Serie.length > 0) {
+    areaQ1Serie.setData(newQ1Serie);
+  }
+
   if (newSerie.length > 0) {
     areaSerie.setData(newSerie);
+  }
+
+  if (newQ3Serie.length > 0) {
+    areaQ3Serie.setData(newQ3Serie);
   }
 
   chart.timeScale().fitContent();
@@ -174,5 +253,5 @@ const createSeries = (newLosses: HistoricalMedianLoss[]): void => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Median loss % among users with losses
+title: Historical health distribution
 </i18n>

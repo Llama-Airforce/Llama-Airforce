@@ -118,6 +118,11 @@ export type HistoricalMedianLoss = {
   lossPct: number;
 };
 
+export type HistoricalAverageHealth = {
+  timestamp: number;
+  quartiles: number[];
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -208,5 +213,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ losses: HistoricalMedianLoss[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/median`);
+  }
+
+  public async getHistoricalAverageHealth(
+    marketAddr: string
+  ): Promise<{ health: HistoricalAverageHealth[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/health/historical`);
   }
 }
