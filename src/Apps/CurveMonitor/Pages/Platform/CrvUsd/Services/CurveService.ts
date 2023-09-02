@@ -130,6 +130,11 @@ export type HealthDecile = {
   stablecoin: number;
 };
 
+export type HistoricalLosers = {
+  timestamp: number;
+  losers: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -232,5 +237,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ health: HealthDecile[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/health`);
+  }
+
+  public async getProportionLosers(
+    marketAddr: string
+  ): Promise<{ losses: HistoricalLosers[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/proportions`);
   }
 }
