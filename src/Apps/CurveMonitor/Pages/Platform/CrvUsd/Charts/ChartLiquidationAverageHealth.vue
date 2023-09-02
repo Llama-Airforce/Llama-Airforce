@@ -253,5 +253,5 @@ const createSeries = (newLosses: HistoricalAverageHealth[]): void => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Historical health distribution
+title: Historical Health Distribution
 </i18n>

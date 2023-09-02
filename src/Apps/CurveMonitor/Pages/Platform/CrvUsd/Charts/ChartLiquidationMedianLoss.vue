@@ -174,5 +174,5 @@ const createSeries = (newLosses: HistoricalMedianLoss[]): void => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Median loss % among users with losses
+title: Median Loss % Among Loans with Losses
 </i18n>
