@@ -19,7 +19,7 @@
           :href="`https://etherscan.io/address/${props.item.address}`"
           target="_blank"
         >
-          {{ addressShort(props.item.address, 12) }}
+          {{ addressShort(props.item.address, 8) }}
         </a>
       </div>
       <div class="number">

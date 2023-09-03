@@ -149,6 +149,17 @@ export type Liquidators = {
   value: number;
 };
 
+export type MarketHealthState = {
+  softLiqUsers: number;
+  softLiqRatio: number;
+  liqablePositions: number;
+  liqableDebt: number;
+  liqableCollatUsd: number;
+  liqableStable: number;
+  medianHealth: number;
+  collatRatio: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -269,5 +280,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ liquidations: Liquidators[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators`);
+  }
+
+  public async getMarketStateHealth(
+    marketAddr: string
+  ): Promise<{ health: MarketHealthState }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/state`);
   }
 }
