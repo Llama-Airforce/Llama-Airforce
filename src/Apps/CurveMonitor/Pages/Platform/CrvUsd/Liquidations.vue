@@ -1,5 +1,6 @@
 <template>
   <div class="market">
+    <CardLiquidationOverview :market="market"></CardLiquidationOverview>
     <ChartLiquidationSoftLiquidation :market="market"></ChartLiquidationSoftLiquidation>
     <ChartLiquidationMedianLoss :market="market"></ChartLiquidationMedianLoss>
     <ChartLiquidationProportionLosers :market="market"></ChartLiquidationProportionLosers>
@@ -14,6 +15,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+import CardLiquidationOverview from "@CM/Pages/Platform/CrvUsd/Cards/CardLiquidationOverview.vue";
 import ChartLiquidationSoftLiquidation from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationSoftLiquidation.vue";
 import ChartLiquidationMedianLoss from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationMedianLoss.vue";
 import ChartLiquidationAverageHealth from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationAverageHealth.vue";
@@ -29,6 +31,7 @@ export default defineComponent({
     }
   },
   components: {
+    CardLiquidationOverview,
     ChartLiquidationMedianLoss,
     ChartLiquidationSoftLiquidation,
     ChartLiquidationAverageHealth,

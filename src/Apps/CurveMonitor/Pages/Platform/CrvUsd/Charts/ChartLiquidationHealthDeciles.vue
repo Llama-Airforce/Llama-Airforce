@@ -102,7 +102,7 @@ const series = computed((): { data: number[] }[] => [
       .map((x) => x.debt),
   },
   {
-    name: "Collat. (USD)",
+    name: "Collateral",
     data: Object.values(data.value)
       .map((x) => x.collateralUsdValue),
   },
