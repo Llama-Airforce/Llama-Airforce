@@ -7,7 +7,7 @@
     <template #actions>
       <div class="actions">
         <Legend
-          :items="['Proportion (%) of total loans in soft liquidation', 'Collateral price']"
+          :items="['% of loans in soft liquidation', 'Collateral price']"
         ></Legend>
       </div>
     </template>
@@ -231,5 +231,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Proportion of Loans in Soft Liquidation
+title: Soft Liquidations
 </i18n>

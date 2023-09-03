@@ -49,12 +49,18 @@ const options = computed(() => {
         animations: {
           enabled: false,
         },
+        toolbar: {
+          show: false
+        },
       },
       xaxis: {
         categories: categories.value,
         labels: {
           formatter: formatterX,
+          rotate: -60,
         },
+        tickPlacement: 'on',
+
       },
       yaxis: {
         labels: {
