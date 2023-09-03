@@ -1,5 +1,5 @@
 <template>
-  <div class="revenue">
+  <div class="market-overview">
     <TabView
       :active="tabActive"
       @tab="tabActive = $event.index"
@@ -91,18 +91,9 @@ watch(tabActive, async (newTab) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("market");
-
-.market {
-  max-width: calc(1920px - 18.125rem);
-
+.market-overview {
+  padding-top: 2rem;
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>

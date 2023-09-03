@@ -12,7 +12,7 @@
 
     </template>
 
-    <template #row="props: { item: Row }">
+    <template #row="props: { item: Liquidators }">
 
       <div class="address">
         <a
@@ -60,12 +60,10 @@ const { t } = useI18n();
 
 const curveService = new CurveService(getHost());
 
-type Row = Liquidators;
-
 // Refs
 const loading = ref(true);
-const rowsRaw = ref<Row[]>([]);
-const rows = computed((): Row[] =>
+const rowsRaw = ref<Liquidators[]>([]);
+const rows = computed((): Liquidators[] =>
   chain(rowsRaw.value).map((x) => x)
     .value()
 );
@@ -113,16 +111,11 @@ watch(
 .datatable-liquidators {
   container-type: inline-size;
 
-  .search {
-    font-size: 0.875rem;
-    margin-left: 1rem;
-  }
-
   ::v-deep(.liquidators-columns-data) {
     --col-width: 12ch;
 
     display: grid;
-    grid-template-columns: 1fr repeat(4, var(--col-width));
+    grid-template-columns: 1fr repeat(2, var(--col-width));
 
     // Non mobile
     @media only screen and (min-width: 1280px) {
@@ -170,26 +163,19 @@ watch(
       }
 
       @container (max-width: 375px) {
-        grid-template-columns: 1fr repeat(3, var(--col-width));
+        grid-template-columns: 1fr repeat(2, var(--col-width));
 
-        div:nth-child(5) {
-          display: none;
-        }
       }
 
       @container (max-width: 325px) {
-        grid-template-columns: 1fr repeat(2, var(--col-width));
+        grid-template-columns: 1fr repeat(1, var(--col-width));
 
-        div:nth-child(2) {
-          display: none;
-        }
       }
 
       @container (max-width: 250px) {
         grid-template-columns: 1fr;
 
-        div:nth-child(3),
-        div:nth-child(4) {
+        div:nth-child(2) {
           display: none;
         }
       }
