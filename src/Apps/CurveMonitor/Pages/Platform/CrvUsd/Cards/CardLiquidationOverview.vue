@@ -45,14 +45,6 @@ const content = computed(() => marketState.value);
 const marketState = ref<MarketHealthState | null >(null);
 const loading = ref(false);
 
-// Hooks
-onMounted(async() => {
-  loading.value = true;
-  marketState.value = await curveService
-    .getMarketStateHealth(market.address)
-    .then((x) => x.health);
-  loading.value = false;
-});
 
 // Watches
 watch(
@@ -65,9 +57,10 @@ watch(
     }
 
     marketState.value = await curveService
-      .getMarketStateHealth(market.address)
+      .getMarketStateHealth(newMarket.address)
       .then((x) => x.health);
 
+    loading.value = false;
   },
   { immediate: true }
 );

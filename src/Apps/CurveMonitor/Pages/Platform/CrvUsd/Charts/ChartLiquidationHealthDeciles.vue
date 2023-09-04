@@ -101,7 +101,7 @@ const options = computed(() => {
 
 const categories = computed((): string[] => data.value.map((x) => x.decile));
 
-const series = computed((): { data: number[] }[] => [
+const series = computed((): { name: string, data: number[] }[] => [
   {
     name: "Debt",
     data: Object.values(data.value)

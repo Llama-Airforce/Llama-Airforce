@@ -5,7 +5,6 @@
   >
     <template #actions>
       <div class="actions">
-
         <div class="chart-types">
           <ButtonToggle
             value="Count"
@@ -65,17 +64,6 @@ interface Props {
 const { market = null } = defineProps<Props>();
 const loading = ref(true);
 const data = ref<HistoricalLiquidations[]>([]);
-
-// Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await curveService
-    .getHistoricalLiquidations(market.address)
-    .then((x) => x.liquidations);
-
-  loading.value = false;
-});
 
 
 // Watches

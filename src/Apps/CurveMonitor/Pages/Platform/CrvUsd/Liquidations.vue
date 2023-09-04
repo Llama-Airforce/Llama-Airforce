@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 import CardLiquidationOverview from "@CM/Pages/Platform/CrvUsd/Cards/CardLiquidationOverview.vue";
 import ChartLiquidationSoftLiquidation from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationSoftLiquidation.vue";
@@ -24,12 +25,6 @@ import ChartLiquidationProportionLosers from "@CM/Pages/Platform/CrvUsd/Charts/C
 import ChartLiquidationHistorical from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistorical.vue";
 import TableLiquidationLiquidators from "@CM/Pages/Platform/CrvUsd/Tables/TableLiquidationLiquidators.vue";
 export default defineComponent({
-  props: {
-    market: {
-      type: Object,
-      required: true
-    }
-  },
   components: {
     CardLiquidationOverview,
     ChartLiquidationMedianLoss,
@@ -39,6 +34,12 @@ export default defineComponent({
     ChartLiquidationProportionLosers,
     ChartLiquidationHistorical,
     TableLiquidationLiquidators,
+  },
+  props: {
+    market: {
+      type: Object as () => Market | null,
+      required: true
+    }
   }
 });
 </script>
