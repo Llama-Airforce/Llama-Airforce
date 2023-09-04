@@ -209,9 +209,6 @@ const createSeries = (newSoftLiq: HistoricalSoftLiquidations[]): void => {
   chart.timeScale().fitContent();
 };
 
-const formatter = (y: number): string => {
-  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
-};
 </script>
 
 <style lang="scss" scoped>
