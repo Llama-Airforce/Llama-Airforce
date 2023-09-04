@@ -34,7 +34,6 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
-import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
