@@ -12,7 +12,7 @@
 
       <TabItem header="Liquidations">
         <KeepAlive>
-          <Liquidations v-if="tabActive === 1  && market" :market="market"></Liquidations>
+          <Liquidations v-if="tabActive === 1 && market" :market="market"></Liquidations>
         </KeepAlive>
       </TabItem>
     </TabView>

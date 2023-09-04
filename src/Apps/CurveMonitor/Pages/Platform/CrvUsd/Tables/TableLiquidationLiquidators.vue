@@ -9,11 +9,9 @@
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
-
     </template>
 
     <template #row="props: { item: Liquidators }">
-
       <div class="address">
         <a
           :href="`https://etherscan.io/address/${props.item.address}`"
@@ -37,9 +35,7 @@
           type="dollar"
         />
       </div>
-
     </template>
-
   </DataTable>
 </template>
 
@@ -75,15 +71,6 @@ interface Props {
 
 const { market = null } = defineProps<Props>();
 
-
-// Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  const liqStats = await curveService.getTopLiquidators(market.address);
-  rowsRaw.value = liqStats.liquidations;
-  loading.value = false;
-});
 
 // Watches
 watch(

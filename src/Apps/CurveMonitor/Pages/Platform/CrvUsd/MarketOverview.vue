@@ -10,23 +10,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
 import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
 import ChartMarketDeciles from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketDeciles.vue";
 export default defineComponent({
-  props: {
-    market: {
-      type: Object,
-      required: true
-    }
-  },
   components: {
     ChartMarketVolume,
     ChartMarketRates,
     ChartMarketLoans,
     ChartMarketDeciles
+  },
+  props: {
+    market: {
+      type: Object as () => Market | null,
+      required: true
+    }
   }
 });
 </script>
