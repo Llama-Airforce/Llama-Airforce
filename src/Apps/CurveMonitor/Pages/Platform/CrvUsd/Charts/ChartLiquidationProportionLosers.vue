@@ -32,7 +32,6 @@ import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type HistoricalLosers,
-  type HistoricalMedianLoss,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 

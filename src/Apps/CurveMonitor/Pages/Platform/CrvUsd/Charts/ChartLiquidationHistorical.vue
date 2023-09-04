@@ -39,14 +39,13 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle } from "@/Framework";
-import Legend from "@CM/Components/Legend.vue";
 import CurveService, {
   type HistoricalLiquidations,
   type Market,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartLiquidationHistoricalValue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalValue.vue";
 import ChartLiquidationHistoricalCount from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalCount.vue";
-import {onMounted, watch} from "vue";
+import {watch} from "vue";
 import {getHost} from "@/Services/Host";
 
 type ChartType = "count" | "value";
