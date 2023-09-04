@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { addressShort } from "@/Wallet";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable } from "@/Framework";
