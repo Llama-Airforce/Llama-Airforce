@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import {ref, watch, onMounted, nextTick} from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -67,8 +67,9 @@ const health = ref<HistoricalAverageHealth[]>([]);
 const loading = ref(false);
 
 // Hooks
-onMounted((): void => {
+onMounted(async (): Promise<void> => {
   if (!chartRef.value) return;
+  await nextTick();
 
   chart = createChartFunc(
     chartRef.value,
