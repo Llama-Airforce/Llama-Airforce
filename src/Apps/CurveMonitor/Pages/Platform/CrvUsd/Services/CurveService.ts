@@ -5,6 +5,7 @@ const API_URL = "https://api-py.llama.airforce/curve/v1";
 export type Market = {
   name: string;
   address: string;
+  llamma: string;
   rate: number;
   rateAbsDelta: number;
   borrowed: number;

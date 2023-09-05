@@ -1,59 +1,37 @@
-export type WebSocketEventListener = (data: string) => void;
+export class WebSocketConnectionManager {
+  private static instance: WebSocketConnectionManager;
+  private ws: WebSocket | null = null;
+  private shouldReconnect = true;
 
-export class WebSocketService {
-  private readonly ws: WebSocket;
-  private readonly events: { [type: string]: WebSocketEventListener[] } = {};
 
-  constructor(url: string) {
+  public static getInstance(): WebSocketConnectionManager {
+    if (!WebSocketConnectionManager.instance) {
+      WebSocketConnectionManager.instance = new WebSocketConnectionManager();
+    }
+    return WebSocketConnectionManager.instance;
+  }
+
+  public connect(url: string): void {
+    if (this.ws) {
+      return;
+    }
     this.ws = new WebSocket(url);
-    this.ws.onmessage = this.handleMessageEvent.bind(this);
-    this.ws.onopen = this.handleOpenEvent.bind(this);
-    this.ws.onerror = this.handleErrorEvent.bind(this);
-    this.ws.onclose = this.handleCloseEvent.bind(this);
+
+    this.ws.onclose = () => {
+      if (this.shouldReconnect) {
+        setTimeout(() => this.connect(url), 1000);
+      }
+    };
   }
 
-  private handleOpenEvent(event: Event) {
-    this.dispatch('open', event);
-  }
-
-  private handleErrorEvent(event: Event) {
-    this.dispatch('error', event);
-  }
-
-  private handleCloseEvent(event: CloseEvent) {
-    this.dispatch('close', event);
-  }
-
-  private handleMessageEvent(event: MessageEvent) {
-    const listeners = this.events.message || [];
-    for (const listener of listeners) {
-      listener(event.data);  // provide raw data to listeners
+  public closeConnection(): void {
+    this.shouldReconnect = false;
+    if (this.ws) {
+      this.ws.close();
     }
   }
 
-  private dispatch(type: string, event: Event) {
-    const listeners = this.events[type] || [];
-    for (const listener of listeners) {
-      listener(event);
-    }
-  }
-
-  public on(type: string, listener: WebSocketEventListener) {
-    if (!this.events[type]) {
-      this.events[type] = [];
-    }
-    this.events[type].push(listener);
-  }
-
-  public off(type: string, listener: WebSocketEventListener) {
-    const listeners = this.events[type] || [];
-    const index = listeners.indexOf(listener);
-    if (index !== -1) {
-      listeners.splice(index, 1);
-    }
-  }
-
-  public send(data: string) {
-    this.ws.send(data);
+  public getConnection(): WebSocket | null {
+    return this.ws;
   }
 }
