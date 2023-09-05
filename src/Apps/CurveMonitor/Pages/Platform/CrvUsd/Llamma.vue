@@ -1,9 +1,6 @@
 <template>
   <div class="market">
-    <ChartMarketVolume :market="market"></ChartMarketVolume>
-    <ChartMarketRates :market="market"></ChartMarketRates>
-    <ChartMarketLoans :market="market"></ChartMarketLoans>
-    <ChartMarketDeciles :market="market"></ChartMarketDeciles>
+    <ChartLlammaCandles :market="market"></ChartLlammaCandles>
   </div>
 </template>
 
@@ -11,17 +8,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-
-import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
-import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
-import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
-import ChartMarketDeciles from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketDeciles.vue";
+import ChartLlammaCandles from "@CM/Pages/Platform/CrvUsd/Charts/ChartLlammaCandles.vue";
 export default defineComponent({
   components: {
-    ChartMarketVolume,
-    ChartMarketRates,
-    ChartMarketLoans,
-    ChartMarketDeciles
+    ChartLlammaCandles,
   },
   props: {
     market: {

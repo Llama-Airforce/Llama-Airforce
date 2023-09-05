@@ -1,12 +1,14 @@
-import { WebSocketService } from '@CM/Services/Sockets/CurvePrices/WebSocketService';
-import {type Action, type PayloadType} from "@CM/Services/Sockets/CurvePrices/types";
+import { WebSocketConnectionManager } from '@CM/Services/Sockets/CurvePrices/WebSocketService';
+import { Action, PayloadType} from "@CM/Services/Sockets/CurvePrices/types";
+import { type Observable, Subject } from 'rxjs';
+import { scan } from 'rxjs/operators';
 
 export interface OhlcModel {
   time: number;
-  open?: number;
-  close?: number;
-  high?: number;
-  low?: number;
+  open: number;
+  close: number;
+  high: number;
+  low: number;
 }
 
 export interface LlammaOhlcPayload {
@@ -33,26 +35,86 @@ export interface LlammaOhlcSettings {
 export interface LlammaOhlcRequest {
   action: Action;
   channel: "crvusd_llamma_ohlc";
-  settings: LlammaOhlcSettings;
+  settings: LlammaOhlcSettings[];
 }
 
 export class OHLCService {
-  private wsService: WebSocketService;
+  private wsManager: WebSocketConnectionManager;
+  private dataSubject: Subject<LlammaOhlcPayload>;
+  public data$: Observable<OhlcModel[]>;
+  private currentOHLCData: OhlcModel[] = [];
 
-  constructor(url: string) {
-    this.wsService = new WebSocketService(url);
+  constructor(private url: string, private llamma: string, private chain: string, private interval: Interval, private start: number, private end: number) {
+    this.wsManager = WebSocketConnectionManager.getInstance();
+    this.wsManager.connect(url);
 
-    this.wsService.on('message', (rawData: string) => {
-      try {
-        const parsedData = JSON.parse(rawData) as LlammaOhlcPayload;
-      } catch (error) {
-        console.error("Failed to parse OHLC data:", error);
-      }});
+    this.dataSubject = new Subject<LlammaOhlcPayload>();
+    this.data$ = this.dataSubject.pipe(
+      scan((currentData, newPayload) => this.reconcileData(currentData, newPayload), this.currentOHLCData)
+    );
+
+    const connection = this.wsManager.getConnection();
+    if (connection) {
+      connection.onmessage = (event: MessageEvent<string>) => {
+        const payload = JSON.parse(event.data) as LlammaOhlcPayload;
+        this.dataSubject.next(payload);
+      };
+    }
+    this.requestSnapshots();
+    this.subscribeToUpdates();
   }
 
-  public subscribeToOHLC(data: LlammaOhlcRequest) {
-    const formattedData = JSON.stringify(data);
-    this.wsService.send(formattedData);
+  private requestSnapshots(): void {
+    const request: LlammaOhlcRequest = {
+      action: Action.snapshots,
+      channel: "crvusd_llamma_ohlc",
+      settings: [{
+        llamma: this.llamma,
+        chain: this.chain,
+        start: this.start,
+        end: this.end,
+        interval: this.interval
+      }]
+    };
+
+    this.send(request);
   }
 
+  private subscribeToUpdates(): void {
+    const request: LlammaOhlcRequest = {
+      action: Action.subscribe,
+      channel: "crvusd_llamma_ohlc",
+      settings: [{
+        llamma: this.llamma,
+        chain: this.chain,
+        interval: this.interval
+      }]
+    };
+
+    this.send(request);
+  }
+
+  private reconcileData(currentData: OhlcModel[], newPayload: LlammaOhlcPayload): OhlcModel[] {
+    if (newPayload.type === PayloadType.snapshot) {
+      return newPayload.payload;
+    } else if (newPayload.type === PayloadType.update) {
+      newPayload.payload.forEach((update) => {
+        const index = currentData.findIndex(item => item.time === update.time);
+        if (index !== -1) {
+          currentData[index] = update;
+        } else {
+          currentData.push(update);
+        }
+      });
+      return [...currentData];
+    }
+    return currentData;
+  }
+
+  private send(request: LlammaOhlcRequest): void {
+    const connection = this.wsManager.getConnection();
+    if (connection && connection.readyState === WebSocket.OPEN) {
+      connection.send(JSON.stringify(request));
+    }
+  }
 }
