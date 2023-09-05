@@ -15,6 +15,12 @@
           <Liquidations v-if="tabActive === 1 && market" :market="market"></Liquidations>
         </KeepAlive>
       </TabItem>
+
+      <TabItem header="Llamma">
+        <KeepAlive>
+          <Llamma v-if="tabActive === 2 && market" :market="market"></Llamma>
+        </KeepAlive>
+      </TabItem>
     </TabView>
   </div>
 </template>
@@ -29,6 +35,7 @@ import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
+import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
 const curveService = new CurveService(getHost());
 
 // Refs
@@ -49,6 +56,9 @@ onMounted(async () => {
   if (tabParam && typeof tabParam === "string") {
     if (tabParam === "liquidations") {
       tabActive.value = 1;
+    }
+    else if (tabParam === "llamma") {
+      tabActive.value = 2;
     }
   }
 
@@ -84,6 +94,8 @@ watch(tabActive, async (newTab) => {
     await router.push({ name: "crvusdmarket", params: { tab: "", marketAddr: marketAddr.value } });
   } else if (newTab === 1) {
     await router.push({ name: "crvusdmarket", params: { tab: "liquidations", marketAddr: marketAddr.value } });
+  }else if (newTab === 2) {
+    await router.push({ name: "crvusdmarket", params: { tab: "llamma", marketAddr: marketAddr.value } });
   }
 });
 </script>
