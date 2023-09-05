@@ -8,9 +8,9 @@
       <div><span class="text">Users in soft liquidation: </span> {{ content.softLiqUsers }} ({{ (content.softLiqRatio * 100).toFixed(2) }}%)</div>
       <div><span class="text">Median health:</span> {{ content.medianHealth.toFixed(6) }} </div>
       <div><span class="text">Collaterization ratio:</span> {{ (content.collatRatio * 100).toFixed(2) }}%</div>
-      <div><span class="text">Liquidable positions:</span> {{ content.liqablePositions }}</div>
-      <div><span class="text">Liquidable positions' debt:</span> ${{ formatter(content.liqableDebt) }}</div>
-      <div><span class="text">Liquidable assets:</span> ${{ formatter(content.liqableCollatUsd + content.liqableStable) }} (C: ${{ formatter(content.liqableCollatUsd) }}, S: ${{ formatter(content.liqableStable) }})</div>
+      <div><span class="text">Liquidatable positions:</span> {{ content.liqablePositions }}</div>
+      <div><span class="text">Liquidatable positions' debt:</span> ${{ formatter(content.liqableDebt) }}</div>
+      <div><span class="text">Liquidatable assets:</span> ${{ formatter(content.liqableCollatUsd + content.liqableStable) }} (C: ${{ formatter(content.liqableCollatUsd) }}, S: ${{ formatter(content.liqableStable) }})</div>
     </div>
   </Card>
 </template>
