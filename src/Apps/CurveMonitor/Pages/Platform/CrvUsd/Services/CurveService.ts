@@ -40,10 +40,6 @@ export type MarketDecile = {
   stableCoin: number;
 };
 
-export type MarketDeciles = {
-  [decile: string]: MarketDecile;
-};
-
 export type MarketState = MarketDecile & {
   index: number;
   user: string;
@@ -197,14 +193,6 @@ export default class CurveService extends ServiceBase {
   ): Promise<{ states: MarketState[] }> {
     return this.fetch(
       `${API_URL}/crvusd/markets/${marketAddr}/users/states?offset=${offset}&limit=${limit}`
-    );
-  }
-
-  public async getMarketUserDeciles(
-    marketAddr: string
-  ): Promise<{ deciles: MarketDeciles }> {
-    return this.fetch(
-      `${API_URL}/crvusd/markets/${marketAddr}/users/health/deciles`
     );
   }
 
