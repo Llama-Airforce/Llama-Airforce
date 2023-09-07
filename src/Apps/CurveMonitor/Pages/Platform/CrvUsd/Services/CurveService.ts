@@ -161,6 +161,12 @@ export type MarketHealthState = {
   collatRatio: number;
 };
 
+export type AvailableCap = {
+  timestamp: number;
+  borrowable: number;
+  ceiling: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -287,5 +293,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ health: MarketHealthState }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/state`);
+  }
+
+  public async getMarketAvailableCap(
+    marketAddr: string
+  ): Promise<{ available: AvailableCap[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/available`);
   }
 }
