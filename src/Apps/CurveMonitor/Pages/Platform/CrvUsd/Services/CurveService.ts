@@ -163,6 +163,12 @@ export type AvailableCap = {
   ceiling: number;
 };
 
+export type LiquidatorRevenue = {
+  timestamp: number;
+  amount: number;
+  discount: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -287,5 +293,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ available: AvailableCap[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/available`);
+  }
+
+  public async getLiquidatorRevenue(
+    marketAddr: string
+  ): Promise<{ revenue: LiquidatorRevenue[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`);
   }
 }
