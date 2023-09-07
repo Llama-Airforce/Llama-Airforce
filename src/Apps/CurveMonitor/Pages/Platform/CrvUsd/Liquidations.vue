@@ -8,6 +8,7 @@
     <ChartLiquidationHealthDeciles :market="market"></ChartLiquidationHealthDeciles>
     <ChartLiquidationHistorical :market="market"></ChartLiquidationHistorical>
     <TableLiquidationLiquidators :market="market"></TableLiquidationLiquidators>
+    <ChartLiquidationLiquidatorRevenue :market="market"></ChartLiquidationLiquidatorRevenue>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import ChartLiquidationHealthDeciles from "@CM/Pages/Platform/CrvUsd/Charts/Char
 import ChartLiquidationProportionLosers from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationProportionLosers.vue";
 import ChartLiquidationHistorical from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistorical.vue";
 import TableLiquidationLiquidators from "@CM/Pages/Platform/CrvUsd/Tables/TableLiquidationLiquidators.vue";
+import ChartLiquidationLiquidatorRevenue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationLiquidatorRevenue.vue";
 export default defineComponent({
   components: {
     CardLiquidationOverview,
@@ -34,6 +36,7 @@ export default defineComponent({
     ChartLiquidationProportionLosers,
     ChartLiquidationHistorical,
     TableLiquidationLiquidators,
+    ChartLiquidationLiquidatorRevenue,
   },
   props: {
     market: {
