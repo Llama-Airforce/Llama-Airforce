@@ -53,13 +53,15 @@ export class OHLCService {
       scan((currentData, newPayload) => this.reconcileData(currentData, newPayload), this.currentOHLCData)
     );
 
-    const connection = this.wsManager.getConnection();
-    if (connection) {
-      connection.onmessage = (event: MessageEvent<string>) => {
-        const payload = JSON.parse(event.data) as LlammaOhlcPayload;
+    this.wsManager.registerListener("crvusd_llamma_ohlc", (message) => {
+      try {
+        const payload = JSON.parse(message) as LlammaOhlcPayload;
         this.dataSubject.next(payload);
-      };
-    }
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error, "Raw data:", message);
+      }
+    });
+
     this.requestSnapshots();
     this.subscribeToUpdates();
   }
@@ -112,9 +114,6 @@ export class OHLCService {
   }
 
   private send(request: LlammaOhlcRequest): void {
-    const connection = this.wsManager.getConnection();
-    if (connection && connection.readyState === WebSocket.OPEN) {
-      connection.send(JSON.stringify(request));
-    }
+    this.wsManager.send(JSON.stringify(request));
   }
 }
