@@ -33,8 +33,8 @@ import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import { OHLCService, OhlcModel } from "@CM/Services/Sockets/CurvePrices/LlammaOhlcService";
-import { Subscription } from "rxjs";
+import { OHLCService, type OhlcModel } from "@CM/Services/Sockets/CurvePrices/LlammaOhlcService";
+import type { Subscription } from "rxjs";
 import { getAddress } from "ethers/lib/utils";
 
 const { t } = useI18n();
@@ -68,7 +68,6 @@ const dynamicTitle = computed(() => {
 });
 
 onMounted(async (): Promise<void> => {
-  console.log(market);
   if (!chartRef.value || !market) return;
   await nextTick();
   const llamma = getAddress(market.llamma);
@@ -77,13 +76,11 @@ onMounted(async (): Promise<void> => {
   const end = Math.floor(now / 1000);
   const start = Math.floor((now - fifteenDays) / 1000);
   ohlcService = new OHLCService(url, llamma, chainName, interval, start, end);
-
   const colors = getColors(storeSettings.theme);
   subscription = ohlcService.data$.subscribe(data => {
     ohlcData.value = data;
     createChart(data, invert.value);
   });
-
 
   chart = createChartFunc(chartRef.value, {
     width: chartRef.value.clientWidth,
@@ -142,7 +139,6 @@ onMounted(async (): Promise<void> => {
       minMove: 0.000001,
     },
   });
-
 });
 
 onUnmounted(() => {
@@ -159,6 +155,7 @@ watch(invert, (newInvert) => {
 });
 
 watch(() => market, (newMarket: Market | null | undefined, oldMarket: Market | null | undefined) => {
+
   if (newMarket && newMarket !== oldMarket) {
 
     subscription.unsubscribe();
@@ -186,7 +183,6 @@ const createChart = (newCandles: OhlcModel[], newInvert: boolean): void => {
 
   const invertMultiplier = newInvert ? -1 : 1;
 
-
   const newCandleSeries: CandlestickData[] = chain(newCandles)
     .map((c) => ({
       time: c.time as UTCTimestamp,
@@ -198,7 +194,7 @@ const createChart = (newCandles: OhlcModel[], newInvert: boolean): void => {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
-  
+
   if (newCandleSeries.length > 0) {
     candleSeries.setData(newCandleSeries);
     chart.timeScale().fitContent();
