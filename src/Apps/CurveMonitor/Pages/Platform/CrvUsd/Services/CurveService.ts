@@ -169,6 +169,11 @@ export type LiquidatorRevenue = {
   discount: number;
 };
 
+export type CollateralRatios = {
+  timestamp: number;
+  ratio: number;
+};
+
 export default class CurveService extends ServiceBase {
   public async getMarkets(): Promise<{ markets: Market[] }> {
     return this.fetch(`${API_URL}/crvusd/markets`);
@@ -299,5 +304,11 @@ export default class CurveService extends ServiceBase {
     marketAddr: string
   ): Promise<{ revenue: LiquidatorRevenue[] }> {
     return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`);
+  }
+
+  public async getHistoricalCollateralRatio(
+    marketAddr: string
+  ): Promise<{ ratios: CollateralRatios[] }> {
+    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/collateral_ratio`);
   }
 }
