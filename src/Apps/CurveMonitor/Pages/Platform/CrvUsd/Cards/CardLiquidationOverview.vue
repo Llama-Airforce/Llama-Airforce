@@ -5,28 +5,56 @@
     :content="content"
   >
     <div v-if="content">
-      <div><span class="text">Users in soft liquidation: </span> {{ content.softLiqUsers }} ({{ (content.softLiqRatio * 100).toFixed(2) }}%)</div>
-      <div><span class="text">Median health:</span> {{ content.medianHealth.toFixed(6) }} </div>
-      <div><span class="text">Collaterization ratio:</span> {{ (content.collatRatio * 100).toFixed(2) }}%</div>
-      <div><span class="text">Liquidatable positions:</span> {{ content.liqablePositions }}</div>
-      <div><span class="text">Liquidatable positions' debt:</span> ${{ formatter(content.liqableDebt) }}</div>
-      <div><span class="text">Liquidatable assets:</span> ${{ formatter(content.liqableCollatUsd + content.liqableStable) }} (C: ${{ formatter(content.liqableCollatUsd) }}, S: ${{ formatter(content.liqableStable) }})</div>
+      <div>
+        <span class="text">Users in soft liquidation: </span>
+        {{ content.softLiqUsers }} ({{
+          (content.softLiqRatio * 100).toFixed(2)
+        }}%)
+      </div>
+
+      <div>
+        <span class="text">Median health:</span>
+        {{ content.medianHealth.toFixed(6) }}
+      </div>
+
+      <div>
+        <span class="text">Collaterization ratio:</span>
+        {{ (content.collatRatio * 100).toFixed(2) }}%
+      </div>
+
+      <div>
+        <span class="text">Liquidatable positions:</span>
+        {{ content.liqablePositions }}
+      </div>
+
+      <div>
+        <span class="text">Liquidatable positions' debt:</span> ${{
+          formatter(content.liqableDebt)
+        }}
+      </div>
+
+      <div>
+        <span class="text">Liquidatable assets:</span> ${{
+          formatter(content.liqableCollatUsd + content.liqableStable)
+        }}
+        (C: ${{ formatter(content.liqableCollatUsd) }}, S: ${{
+          formatter(content.liqableStable)
+        }})
+      </div>
     </div>
   </Card>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
 import { Card } from "@/Framework";
+import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type MarketHealthState,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import {computed} from "vue";
-import {round, unit} from "@/Util";
 
 const { t } = useI18n();
 
@@ -40,11 +68,9 @@ interface Props {
 const { market = null } = defineProps<Props>();
 const content = computed(() => marketState.value);
 
-
 // Refs
-const marketState = ref<MarketHealthState | null >(null);
+const marketState = ref<MarketHealthState | null>(null);
 const loading = ref(false);
-
 
 // Watches
 watch(
@@ -67,12 +93,10 @@ watch(
 
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
-
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-
 
 .text {
   font-size: 1.05rem;

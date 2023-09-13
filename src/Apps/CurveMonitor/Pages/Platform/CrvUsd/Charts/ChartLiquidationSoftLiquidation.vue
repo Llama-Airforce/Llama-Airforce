@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted, nextTick} from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import Legend from "@CM/Components/Legend.vue";
 import { chain } from "lodash";
@@ -75,8 +75,12 @@ onMounted(async (): Promise<void> => {
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  proportionSerie = chart.addAreaSeries(createProportionOptionsSerie(storeSettings.theme));
-  priceSerie = chart.addAreaSeries(createPriceOptionsSerie(storeSettings.theme));
+  proportionSerie = chart.addAreaSeries(
+    createProportionOptionsSerie(storeSettings.theme)
+  );
+  priceSerie = chart.addAreaSeries(
+    createPriceOptionsSerie(storeSettings.theme)
+  );
   createSeries(softLiqs.value);
 });
 
@@ -152,11 +156,12 @@ const createPriceOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createProportionOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+const createProportionOptionsSerie = (
+  theme: Theme
+): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
-
     priceFormat: {
       type: "percent",
       precision: 2,
@@ -165,7 +170,7 @@ const createProportionOptionsSerie = (theme: Theme): AreaSeriesPartialOptions =>
     lineWidth: 2,
     lineType: LineType.WithSteps,
     lineColor: colors.blue,
-    priceScaleId: 'left',
+    priceScaleId: "left",
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -196,7 +201,6 @@ const createSeries = (newSoftLiq: HistoricalSoftLiquidations[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-
   if (newPriceSerie.length > 0) {
     priceSerie.setData(newPriceSerie);
   }
@@ -207,7 +211,6 @@ const createSeries = (newSoftLiq: HistoricalSoftLiquidations[]): void => {
 
   chart.timeScale().fitContent();
 };
-
 </script>
 
 <style lang="scss" scoped>

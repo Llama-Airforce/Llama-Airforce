@@ -6,9 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['Liquidator Revenue', 'Discount']"
-        ></Legend>
+        <Legend :items="['Liquidator Revenue', 'Discount']"></Legend>
       </div>
     </template>
 
@@ -20,9 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted, nextTick} from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
-import Legend from "@CM/Components/Legend.vue";
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
@@ -36,6 +33,7 @@ import {
 import { Card } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
+import Legend from "@CM/Components/Legend.vue";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
@@ -75,8 +73,12 @@ onMounted(async (): Promise<void> => {
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  discountSerie = chart.addAreaSeries(createDiscountOptionsSerie(storeSettings.theme));
-  revenueSerie = chart.addAreaSeries(createRevenueOptionsSerie(storeSettings.theme));
+  discountSerie = chart.addAreaSeries(
+    createDiscountOptionsSerie(storeSettings.theme)
+  );
+  revenueSerie = chart.addAreaSeries(
+    createRevenueOptionsSerie(storeSettings.theme)
+  );
   createSeries(softLiqs.value);
 });
 
@@ -156,7 +158,6 @@ const createDiscountOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
-
     priceFormat: {
       type: "percent",
       precision: 6,
@@ -165,7 +166,7 @@ const createDiscountOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lineWidth: 2,
     lineType: LineType.WithSteps,
     lineColor: colors.yellow,
-    priceScaleId: 'left',
+    priceScaleId: "left",
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -174,7 +175,7 @@ const createDiscountOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
 };
 
 const createSeries = (newSoftLiq: LiquidatorRevenue[]): void => {
-  if (!chart || !discountSerie ) {
+  if (!chart || !discountSerie) {
     return;
   }
 
@@ -196,7 +197,6 @@ const createSeries = (newSoftLiq: LiquidatorRevenue[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-
   if (newRevenueSerie.length > 0) {
     revenueSerie.setData(newRevenueSerie);
   }
@@ -207,7 +207,6 @@ const createSeries = (newSoftLiq: LiquidatorRevenue[]): void => {
 
   chart.timeScale().fitContent();
 };
-
 </script>
 
 <style lang="scss" scoped>

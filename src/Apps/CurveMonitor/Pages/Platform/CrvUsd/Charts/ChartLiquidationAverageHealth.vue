@@ -6,9 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['1st Quartile', 'Median', '3rd Quartile']"
-        ></Legend>
+        <Legend :items="['1st Quartile', 'Median', '3rd Quartile']"></Legend>
       </div>
     </template>
     <div
@@ -19,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted, nextTick} from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -39,7 +37,7 @@ import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
-  type HistoricalAverageHealth
+  type HistoricalAverageHealth,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
@@ -218,7 +216,6 @@ const createSeries = (newLosses: HistoricalAverageHealth[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-
   if (newQ1Serie.length > 0) {
     areaQ1Serie.setData(newQ1Serie);
   }
@@ -233,7 +230,6 @@ const createSeries = (newLosses: HistoricalAverageHealth[]): void => {
 
   chart.timeScale().fitContent();
 };
-
 </script>
 
 <style lang="scss" scoped>

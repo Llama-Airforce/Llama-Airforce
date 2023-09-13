@@ -8,14 +8,12 @@ type GenericMessage = {
   settings: LlammaOhlcSettings; // expand to other settings type if needed
 };
 
-
 export class WebSocketConnectionManager {
   private static instance: WebSocketConnectionManager;
   private messageQueue: string[] = [];
   private ws: WebSocket | null = null;
   private shouldReconnect = true;
   private listeners: Record<string, MessageListener[]> = {};
-
 
   public static getInstance(): WebSocketConnectionManager {
     if (!WebSocketConnectionManager.instance) {
@@ -68,14 +66,16 @@ export class WebSocketConnectionManager {
     this.listeners[channel].push(callback);
 
     // Process any queued messages for this channel
-    const messagesForChannel = this.messageQueue.filter(msg => {
+    const messagesForChannel = this.messageQueue.filter((msg) => {
       const genericMessage = JSON.parse(msg) as GenericMessage;
       return genericMessage.channel === channel;
     });
     for (const msg of messagesForChannel) {
       callback(msg);
     }
-    this.messageQueue = this.messageQueue.filter(msg => !messagesForChannel.includes(msg));
+    this.messageQueue = this.messageQueue.filter(
+      (msg) => !messagesForChannel.includes(msg)
+    );
   }
 
   public send(message: string): void {

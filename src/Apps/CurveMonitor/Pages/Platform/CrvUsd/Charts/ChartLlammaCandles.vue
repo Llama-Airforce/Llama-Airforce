@@ -18,6 +18,8 @@
 import { ref, watch, onMounted, onUnmounted, nextTick, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
+import type { Subscription } from "rxjs";
+import { getAddress } from "ethers/lib/utils";
 import {
   type CandlestickData,
   ColorType,
@@ -33,9 +35,10 @@ import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import { OHLCService, type OhlcModel } from "@CM/Services/Sockets/CurvePrices/LlammaOhlcService";
-import type { Subscription } from "rxjs";
-import { getAddress } from "ethers/lib/utils";
+import {
+  OHLCService,
+  type OhlcModel,
+} from "@CM/Services/Sockets/CurvePrices/LlammaOhlcService";
 
 const { t } = useI18n();
 let ohlcService: OHLCService;
@@ -58,13 +61,16 @@ const ohlcData = ref<OhlcModel[]>([]);
 let subscription: Subscription; // assuming you're using RxJS
 const chartRef = ref<HTMLElement | null>(null);
 const invert = ref(false);
-const url = "ws://a85d6d4c6054a4f1f806c8af90dcfdeb-282892957.eu-central-1.elb.amazonaws.com/v1/stream/ws";
+const url =
+  "ws://a85d6d4c6054a4f1f806c8af90dcfdeb-282892957.eu-central-1.elb.amazonaws.com/v1/stream/ws";
 const chainName = "ethereum";
 const interval = 86400;
 
 const dynamicTitle = computed(() => {
-  if (!market) return t('title');
-  return `Daily candles ${!invert.value ? `${market.name}/crvUSD` : `crvUSD/${market.name}`}`;
+  if (!market) return t("title");
+  return `Daily candles ${
+    !invert.value ? `${market.name}/crvUSD` : `crvUSD/${market.name}`
+  }`;
 });
 
 onMounted(async (): Promise<void> => {
@@ -77,7 +83,7 @@ onMounted(async (): Promise<void> => {
   const start = Math.floor((now - fifteenDays) / 1000);
   ohlcService = new OHLCService(url, llamma, chainName, interval, start, end);
   const colors = getColors(storeSettings.theme);
-  subscription = ohlcService.data$.subscribe(data => {
+  subscription = ohlcService.data$.subscribe((data) => {
     ohlcData.value = data;
     createChart(data, invert.value);
   });
@@ -154,30 +160,40 @@ watch(invert, (newInvert) => {
   createChart(ohlcData.value, newInvert);
 });
 
-watch(() => market, (newMarket: Market | null | undefined, oldMarket: Market | null | undefined) => {
+watch(
+  () => market,
+  (
+    newMarket: Market | null | undefined,
+    oldMarket: Market | null | undefined
+  ) => {
+    if (newMarket && newMarket !== oldMarket) {
+      subscription.unsubscribe();
 
-  if (newMarket && newMarket !== oldMarket) {
+      const llamma = getAddress(newMarket.llamma);
+      const now = Date.now();
+      const fifteenDays = 15 * 24 * 60 * 60 * 1000;
+      const end = Math.floor(now / 1000);
+      const start = Math.floor((now - fifteenDays) / 1000);
+      ohlcService = new OHLCService(
+        url,
+        llamma,
+        chainName,
+        interval,
+        start,
+        end
+      );
 
-    subscription.unsubscribe();
-
-    const llamma = getAddress(newMarket.llamma);
-    const now = Date.now();
-    const fifteenDays = 15 * 24 * 60 * 60 * 1000;
-    const end = Math.floor(now / 1000);
-    const start = Math.floor((now - fifteenDays) / 1000);
-    ohlcService = new OHLCService(url, llamma, chainName, interval, start, end);
-
-    subscription = ohlcService.data$.subscribe(data => {
-      ohlcData.value = data;
-      createChart(data, invert.value);
-    });
+      subscription = ohlcService.data$.subscribe((data) => {
+        ohlcData.value = data;
+        createChart(data, invert.value);
+      });
+    }
   }
-});
+);
 
 // Methods
 const createChart = (newCandles: OhlcModel[], newInvert: boolean): void => {
-
-  if (!chart || !candleSeries || !newCandles ) {
+  if (!chart || !candleSeries || !newCandles) {
     return;
   }
 

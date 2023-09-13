@@ -6,9 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['Borrowable', 'Debt ceiling']"
-        ></Legend>
+        <Legend :items="['Borrowable', 'Debt ceiling']"></Legend>
       </div>
     </template>
     <div
@@ -74,7 +72,9 @@ onMounted((): void => {
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  availSerie = chart.addAreaSeries(createAvailOptionsSerie(storeSettings.theme));
+  availSerie = chart.addAreaSeries(
+    createAvailOptionsSerie(storeSettings.theme)
+  );
   capSerie = chart.addAreaSeries(createCapOptionsSerie(storeSettings.theme));
 
   createSeries(availableCap.value);

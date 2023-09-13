@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle } from "@/Framework";
 import CurveService, {
@@ -45,8 +45,7 @@ import CurveService, {
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartLiquidationHistoricalValue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalValue.vue";
 import ChartLiquidationHistoricalCount from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalCount.vue";
-import {watch} from "vue";
-import {getHost} from "@/Services/Host";
+import { getHost } from "@/Services/Host";
 
 type ChartType = "count" | "value";
 
@@ -63,7 +62,6 @@ interface Props {
 const { market = null } = defineProps<Props>();
 const loading = ref(true);
 const data = ref<HistoricalLiquidations[]>([]);
-
 
 // Watches
 watch(
@@ -83,7 +81,6 @@ watch(
   },
   { immediate: true }
 );
-
 
 // Events
 const onChartType = (type: ChartType) => {

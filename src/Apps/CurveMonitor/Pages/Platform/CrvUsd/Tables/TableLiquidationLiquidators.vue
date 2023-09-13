@@ -40,17 +40,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { addressShort } from "@/Wallet";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { chain } from "lodash";
+import { addressShort } from "@/Wallet";
 import { AsyncValue, DataTable } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type Market,
   type Liquidators,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import {watch, computed} from "vue";
-import {chain} from "lodash";
 
 const { t } = useI18n();
 
@@ -60,7 +59,8 @@ const curveService = new CurveService(getHost());
 const loading = ref(true);
 const rowsRaw = ref<Liquidators[]>([]);
 const rows = computed((): Liquidators[] =>
-  chain(rowsRaw.value).map((x) => x)
+  chain(rowsRaw.value)
+    .map((x) => x)
     .value()
 );
 
@@ -70,7 +70,6 @@ interface Props {
 }
 
 const { market = null } = defineProps<Props>();
-
 
 // Watches
 watch(
@@ -151,12 +150,10 @@ watch(
 
       @container (max-width: 375px) {
         grid-template-columns: 1fr repeat(2, var(--col-width));
-
       }
 
       @container (max-width: 325px) {
         grid-template-columns: 1fr repeat(1, var(--col-width));
-
       }
 
       @container (max-width: 250px) {
@@ -170,7 +167,7 @@ watch(
 
     // Right adjust number columns.
     div:nth-child(2),
-    div:nth-child(3), {
+    div:nth-child(3) {
       justify-content: end;
     }
   }

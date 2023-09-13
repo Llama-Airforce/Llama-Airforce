@@ -50,7 +50,7 @@ const options = computed(() => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       xaxis: {
@@ -59,8 +59,7 @@ const options = computed(() => {
           formatter: formatterX,
           rotate: -60,
         },
-        tickPlacement: 'on',
-
+        tickPlacement: "on",
       },
       yaxis: {
         labels: {
@@ -101,21 +100,18 @@ const options = computed(() => {
 
 const categories = computed((): string[] => data.value.map((x) => x.decile));
 
-const series = computed((): { name: string, data: number[] }[] => [
+const series = computed((): { name: string; data: number[] }[] => [
   {
     name: "Debt",
-    data: Object.values(data.value)
-      .map((x) => x.debt),
+    data: Object.values(data.value).map((x) => x.debt),
   },
   {
     name: "Collateral",
-    data: Object.values(data.value)
-      .map((x) => x.collateralUsdValue),
+    data: Object.values(data.value).map((x) => x.collateralUsdValue),
   },
   {
     name: "Stablecoin",
-    data: Object.values(data.value)
-      .map((x) => x.stablecoin),
+    data: Object.values(data.value).map((x) => x.stablecoin),
   },
 ]);
 

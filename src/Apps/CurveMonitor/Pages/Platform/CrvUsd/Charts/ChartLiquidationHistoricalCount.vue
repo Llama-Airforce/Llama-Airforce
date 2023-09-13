@@ -7,16 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from "vue";
+import { computed } from "vue";
 import { chain } from "lodash";
 import { GraphApex } from "@/Framework";
+import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
-import { round, unit } from "@/Util";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
-import {
-  type HistoricalLiquidations,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import { type HistoricalLiquidations } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
@@ -105,19 +103,17 @@ const categories = computed((): string[] =>
 const series = computed((): Serie[] => [
   {
     name: "Self liquidations",
-    data: Object.values(data)
-      .map((s) => ({
-        x: new Date(s.timestamp * 1000).toLocaleDateString(),
-        y: s.selfCount,
-      }))
+    data: Object.values(data).map((s) => ({
+      x: new Date(s.timestamp * 1000).toLocaleDateString(),
+      y: s.selfCount,
+    })),
   },
   {
     name: "Hard liquidations",
-    data: Object.values(data)
-      .map((s) => ({
-        x: new Date(s.timestamp * 1000).toLocaleDateString(),
-        y: s.hardCount
-      }))
+    data: Object.values(data).map((s) => ({
+      x: new Date(s.timestamp * 1000).toLocaleDateString(),
+      y: s.hardCount,
+    })),
   },
 ]);
 
@@ -126,11 +122,12 @@ const max = computed(
     Math.max(
       ...chain(data)
         .groupBy((x) => x.timestamp)
-        .map((supply) => supply.reduce((acc, x) => acc + x.selfCount + x.hardCount, 0))
+        .map((supply) =>
+          supply.reduce((acc, x) => acc + x.selfCount + x.hardCount, 0)
+        )
         .value()
     ) * 1.1
 );
-
 
 const formatterX = (x: string): string => x;
 

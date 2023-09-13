@@ -7,9 +7,8 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
@@ -21,14 +20,14 @@ export default defineComponent({
     ChartMarketVolume,
     ChartMarketRates,
     ChartMarketLoans,
-    ChartMarketAvailableCap
+    ChartMarketAvailableCap,
   },
   props: {
     market: {
       type: Object as () => Market | null,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 </script>
 
@@ -44,9 +43,9 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 
-@media only screen and (max-width: 1280px) {
-  display: flex;
-  flex-direction: column;
-}
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

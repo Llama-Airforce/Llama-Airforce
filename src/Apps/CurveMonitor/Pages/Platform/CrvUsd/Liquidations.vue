@@ -1,21 +1,40 @@
 <template>
   <div class="market">
     <CardLiquidationOverview :market="market"></CardLiquidationOverview>
-    <ChartLiquidationSoftLiquidation :market="market"></ChartLiquidationSoftLiquidation>
+
+    <ChartLiquidationSoftLiquidation
+      :market="market"
+    ></ChartLiquidationSoftLiquidation>
+
     <ChartLiquidationMedianLoss :market="market"></ChartLiquidationMedianLoss>
-    <ChartLiquidationProportionLosers :market="market"></ChartLiquidationProportionLosers>
-    <ChartLiquidationAverageHealth :market="market"></ChartLiquidationAverageHealth>
-    <ChartLiquidationHealthDeciles :market="market"></ChartLiquidationHealthDeciles>
-    <ChartLiquidationCollateralRatio :market="market"></ChartLiquidationCollateralRatio>
+
+    <ChartLiquidationProportionLosers
+      :market="market"
+    ></ChartLiquidationProportionLosers>
+
+    <ChartLiquidationAverageHealth
+      :market="market"
+    ></ChartLiquidationAverageHealth>
+
+    <ChartLiquidationHealthDeciles
+      :market="market"
+    ></ChartLiquidationHealthDeciles>
+
+    <ChartLiquidationCollateralRatio
+      :market="market"
+    ></ChartLiquidationCollateralRatio>
+
     <ChartLiquidationHistorical :market="market"></ChartLiquidationHistorical>
     <TableLiquidationLiquidators :market="market"></TableLiquidationLiquidators>
-    <ChartLiquidationLiquidatorRevenue :market="market"></ChartLiquidationLiquidatorRevenue>
+
+    <ChartLiquidationLiquidatorRevenue
+      :market="market"
+    ></ChartLiquidationLiquidatorRevenue>
   </div>
 </template>
 
-
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 import CardLiquidationOverview from "@CM/Pages/Platform/CrvUsd/Cards/CardLiquidationOverview.vue";
@@ -44,9 +63,9 @@ export default defineComponent({
   props: {
     market: {
       type: Object as () => Market | null,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 </script>
 
@@ -62,9 +81,9 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 
-@media only screen and (max-width: 1280px) {
-  display: flex;
-  flex-direction: column;
-}
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

@@ -249,49 +249,65 @@ export default class CurveService extends ServiceBase {
   public async getHistoricalSoftLiquidations(
     marketAddr: string
   ): Promise<{ losses: HistoricalSoftLiquidations[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/soft`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/soft`
+    );
   }
 
   public async getHistoricalMedianLoss(
     marketAddr: string
   ): Promise<{ losses: HistoricalMedianLoss[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/median`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/median`
+    );
   }
 
   public async getHistoricalAverageHealth(
     marketAddr: string
   ): Promise<{ health: HistoricalAverageHealth[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/health/historical`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/health/historical`
+    );
   }
 
   public async getHealthDeciles(
     marketAddr: string
   ): Promise<{ health: HealthDecile[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/health`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/health`
+    );
   }
 
   public async getProportionLosers(
     marketAddr: string
   ): Promise<{ losses: HistoricalLosers[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/proportions`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/losses/historical/proportions`
+    );
   }
 
   public async getHistoricalLiquidations(
     marketAddr: string
   ): Promise<{ liquidations: HistoricalLiquidations[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/historical`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/historical`
+    );
   }
 
   public async getTopLiquidators(
     marketAddr: string
   ): Promise<{ liquidations: Liquidators[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators`
+    );
   }
 
   public async getMarketStateHealth(
     marketAddr: string
   ): Promise<{ health: MarketHealthState }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/state`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/state`
+    );
   }
 
   public async getMarketAvailableCap(
@@ -303,12 +319,16 @@ export default class CurveService extends ServiceBase {
   public async getLiquidatorRevenue(
     marketAddr: string
   ): Promise<{ revenue: LiquidatorRevenue[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`
+    );
   }
 
   public async getHistoricalCollateralRatio(
     marketAddr: string
   ): Promise<{ ratios: CollateralRatios[] }> {
-    return this.fetch(`${API_URL}/crvusd/markets/${marketAddr}/collateral_ratio`);
+    return this.fetch(
+      `${API_URL}/crvusd/markets/${marketAddr}/collateral_ratio`
+    );
   }
 }
