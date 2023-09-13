@@ -51,10 +51,10 @@ import { ref, onMounted } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import DefiLlamaService from "@/Services/DefiLlamaService";
-import CurveService from "@CM/Pages/Home/Services/CurveService";
+import CurvePricesService from "@CM/Pages/Home/Services/CurvePricesService";
 
 const llamaService = new DefiLlamaService(getHost());
-const curveService = new CurveService(getHost());
+const curvePricesService = new CurvePricesService(getHost());
 
 // Refs
 const price = ref<number | null>(null);
@@ -64,8 +64,7 @@ const volume = ref<number | null>(null);
 
 // Hooks
 onMounted(async () => {
-  const curveTvl_ = curveService.getTvlBreakdownType();
-  const curveVol_ = curveService.getVolumeBreakdownType();
+  const chain_ = curvePricesService.getChain();
 
   // CRV Price + MCap
   try {
@@ -80,21 +79,14 @@ onMounted(async () => {
     [price.value, mcap.value] = [0, 0];
   }
 
-  // TVL
+  // TVL and Volume
   try {
-    tvl.value = await curveTvl_.then((resp) =>
-      resp.tvl_breakdown_type.reduce((acc, x) => acc + x.tvl, 0)
-    );
+    const chain = await chain_;
+
+    tvl.value = chain.total.total_tvl;
+    volume.value = chain.total.trading_volume_24h;
   } catch {
     tvl.value = 0;
-  }
-
-  // Volume
-  try {
-    volume.value = await curveVol_.then((resp) =>
-      resp.volume_breakdown_type.reduce((acc, x) => acc + x.volumeUSD, 0)
-    );
-  } catch {
     volume.value = 0;
   }
 });
