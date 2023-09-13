@@ -118,9 +118,10 @@ watch(tabActive, async (newTab) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboard("market-overview");
+
 .market-overview {
-  padding-top: 2rem;
   position: relative;
-  display: grid;
+  max-width: calc(1920px - 18.125rem);
 }
 </style>

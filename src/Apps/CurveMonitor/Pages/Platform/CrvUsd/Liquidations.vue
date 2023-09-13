@@ -1,5 +1,5 @@
 <template>
-  <div class="market">
+  <div class="liquidations">
     <CardLiquidationOverview :market="market"></CardLiquidationOverview>
 
     <ChartLiquidationSoftLiquidation
@@ -72,18 +72,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("market");
+.liquidations {
+  margin: var(--dashboard-gap) 0;
 
-.market {
-  max-width: calc(1920px - 18.125rem);
-
-  display: grid;
+  @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>
