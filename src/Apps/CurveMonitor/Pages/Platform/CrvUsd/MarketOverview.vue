@@ -7,28 +7,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
 import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
 import ChartMarketAvailableCap from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketAvailableCap.vue";
-export default defineComponent({
-  components: {
-    ChartMarketVolume,
-    ChartMarketRates,
-    ChartMarketLoans,
-    ChartMarketAvailableCap,
-  },
-  props: {
-    market: {
-      type: Object as () => Market | null,
-      required: true,
-    },
-  },
-});
+
+// Props
+interface Props {
+  market: Market | null;
+}
+
+const { market } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>

@@ -33,8 +33,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 import CardLiquidationOverview from "@CM/Pages/Platform/CrvUsd/Cards/CardLiquidationOverview.vue";
@@ -47,26 +46,13 @@ import ChartLiquidationHistorical from "@CM/Pages/Platform/CrvUsd/Charts/ChartLi
 import TableLiquidationLiquidators from "@CM/Pages/Platform/CrvUsd/Tables/TableLiquidationLiquidators.vue";
 import ChartLiquidationLiquidatorRevenue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationLiquidatorRevenue.vue";
 import ChartLiquidationCollateralRatio from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationCollateralRatio.vue";
-export default defineComponent({
-  components: {
-    CardLiquidationOverview,
-    ChartLiquidationMedianLoss,
-    ChartLiquidationSoftLiquidation,
-    ChartLiquidationAverageHealth,
-    ChartLiquidationHealthDeciles,
-    ChartLiquidationProportionLosers,
-    ChartLiquidationHistorical,
-    TableLiquidationLiquidators,
-    ChartLiquidationCollateralRatio,
-    ChartLiquidationLiquidatorRevenue,
-  },
-  props: {
-    market: {
-      type: Object as () => Market | null,
-      required: true,
-    },
-  },
-});
+
+// Props
+interface Props {
+  market: Market | null;
+}
+
+const { market } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
