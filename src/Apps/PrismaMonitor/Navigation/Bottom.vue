@@ -1,10 +1,5 @@
 <template>
   <div class="bottom">
-    <div class="wip">
-      <img src="@/Assets/underconstruction.gif" />
-      for real though issa WIP
-    </div>
-
     <div class="buttons">
       <Button
         class="copy"
@@ -36,19 +31,12 @@
 
     <div class="selectors">
       <SelectTheme class="themes"></SelectTheme>
-      <SelectLanguage
-        class="langs"
-        :locales="['en']"
-      ></SelectLanguage>
     </div>
-
-    <Wallet></Wallet>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Button, SelectLanguage } from "@/Framework";
-import Wallet from "@/Wallet/Wallet.vue";
+import { Button } from "@/Framework";
 import SelectTheme from "@PM/Navigation/SelectTheme.vue";
 
 // Emits
@@ -71,21 +59,6 @@ const copyUrl = async () => {
 
   gap: 1rem;
   margin: 1.125rem;
-
-  .wip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-
-    img {
-      width: 100%;
-    }
-
-    @media only screen and (max-width: 1280px) {
-      display: none;
-    }
-  }
 
   .buttons {
     display: flex;
@@ -119,7 +92,7 @@ const copyUrl = async () => {
 
   > ::v-deep(.selectors) {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1.25rem;
 
     .label {
@@ -147,13 +120,6 @@ const copyUrl = async () => {
           width: 125%;
         }
       }
-    }
-  }
-
-  > ::v-deep(.wallet) {
-    .clear,
-    .disconnect {
-      @include button-bg();
     }
   }
 }

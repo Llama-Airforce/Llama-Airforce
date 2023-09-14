@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <Card>Dark Side of the Moon</Card>
+    <TableTroveManagers></TableTroveManagers>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Card } from "@/Framework";
+import TableTroveManagers from "@PM/Pages/Home/Tables/TableTroveManagers.vue";
 </script>
 
 <style lang="scss" scoped>

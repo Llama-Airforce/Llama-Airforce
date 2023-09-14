@@ -1,7 +1,7 @@
-import { WebSocketConnectionManager } from "@CM/Services/Sockets/CurvePrices/WebSocketService";
-import { Action, PayloadType } from "@CM/Services/Sockets/CurvePrices/types";
 import { type Observable, Subject } from "rxjs";
 import { scan } from "rxjs/operators";
+import { WebSocketConnectionManager } from "@CM/Services/Sockets/CurvePrices/WebSocketService";
+import { Action, PayloadType } from "@CM/Services/Sockets/CurvePrices/types";
 
 export interface OhlcModel {
   time: number;
