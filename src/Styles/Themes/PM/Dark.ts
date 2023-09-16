@@ -1,17 +1,16 @@
 export const ColorsPMDark = {
-  blue: "#5a74f6",
-  yellow: "#f6f15a",
-  green: "#5af662",
-  red: "#f65a5a",
-  purple: "#bd5af6",
+  blue: "#2f80ed",
+  yellow: "#e7ec5b",
+  green: "#5aec99",
+  red: "#ec5b5b",
+  purple: "#ec5be7",
 
-  backgroundColor: "#292929",
-  level1: "#292929",
-  level2: "#3c3c3c",
-  level3: "#535353",
-  level4: "#6a6a6a",
-  level5: "#949494",
-  level6: "#aea8af",
+  backgroundColor: "#212121",
+  level1: "#2b2b2b",
+  level2: "#404040",
+  level3: "#545454",
+  level4: "#787878",
+  level5: "#9e9e9e",
 
   text: "#ffffff",
 };

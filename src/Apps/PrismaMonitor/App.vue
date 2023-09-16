@@ -63,14 +63,9 @@ const onCrumb = async (crumb: Crumb) => {
 </script>
 
 <style lang="scss">
-@import "@/Styles/Themes/CM/Chad.scss";
-@import "@/Styles/Themes/CM/Light.scss";
-@import "@/Styles/Themes/CM/Dark.scss";
+@import "@/Styles/Themes/PM/Light.scss";
+@import "@/Styles/Themes/PM/Dark.scss";
 @import "@/Styles/Variables.scss";
-
-[data-theme="chad"] {
-  @include themeChad();
-}
 
 [data-theme="light"] {
   @include themeLight();
