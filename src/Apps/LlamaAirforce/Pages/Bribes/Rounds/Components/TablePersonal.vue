@@ -109,9 +109,9 @@ import SnapshotService, {
 import AuraService from "@LAF/Pages/Bribes/Rounds/Services/AuraService";
 import {
   getBribedPersonal,
-  getVoteDistribution,
-  prioritizeDelegates,
+  getVoteDistributionSnapshot,
 } from "@LAF/Pages/Bribes/Util/EpochHelper";
+import { prioritizeDelegates } from "@LAF/Pages/Bribes/Util/SnapshotHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
@@ -241,7 +241,7 @@ const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
   ]);
 
   // Calculate the voting distribution of a user.
-  const distribution = getVoteDistribution(
+  const distribution = getVoteDistributionSnapshot(
     proposal,
     voter.value,
     delegate,

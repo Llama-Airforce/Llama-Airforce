@@ -1,7 +1,5 @@
-import { chain, zip } from "lodash";
-import { notEmpty } from "@/Util";
+import { zip } from "lodash";
 import {
-  type Delegation,
   type Proposal as SnapshotProposal,
   type Scores,
   type Vote,
@@ -15,6 +13,7 @@ import type {
   Proposal,
   ProposalId,
 } from "@LAF/Pages/Bribes/Models";
+import { type StateUser } from "@LAF/Pages/Bribes/Rounds/Services/L2VotingService";
 
 export function totalAmountDollars(epoch: Epoch): number {
   return epoch.bribes.reduce((acc, cur) => acc + cur.amountDollars, 0);
@@ -148,24 +147,8 @@ export function getBribedPersonal(
     .filter((x): x is BribedPersonal => x !== undefined);
 }
 
-/**
- * Of delegates and a list of voters, find the one which counts.
- * The non-global one will have priority over the global one.
- */
-export function prioritizeDelegates(
-  delegations: Delegation[], // Global and space specific.
-  voters: string[]
-): Delegation[] {
-  return chain(delegations)
-    .filter(notEmpty)
-    .filter((delegation) => voters.includes(delegation.delegate))
-    .orderBy((d) => d.space, "desc")
-    .uniqWith((x, y) => x.delegator === y.delegator)
-    .value();
-}
-
 /** Calculate a user's voting distribution. */
-export function getVoteDistribution(
+export function getVoteDistributionSnapshot(
   proposal: SnapshotProposal,
   voter: string,
   delegate: string | undefined,
@@ -208,6 +191,39 @@ export function getVoteDistribution(
         percentage: scoreNormalized * 100,
       };
     }
+  }
+
+  return distribution;
+}
+
+/** Calculate a user's voting distribution, assuming a final state where each vote is applied. */
+export function getVoteDistributionL2(
+  epoch: Epoch,
+  user: StateUser
+): VoteDistribution {
+  const distribution: VoteDistribution = {};
+
+  // Only bother with users that have either voted or whose delegator has voted.
+  if (user.gauges.length === 0) {
+    return distribution;
+  }
+
+  const voteWeight = Number(user.score) / 10 ** 18; // The vlAsset balance of the voter.
+  const voteTotal = user.weights.reduce((acc, x) => acc + Number(x), 0);
+
+  for (const [gauge, weight] of zip(user.gauges, user.weights)) {
+    const pool = epoch.bribes.find((bribe) => bribe.gauge === gauge)?.pool;
+    if (!pool) {
+      throw new Error(`Pool not found for gauge ${gauge}`);
+    }
+
+    const scoreNormalized = Number(weight) / voteTotal;
+    const scoreWeighted = voteWeight * scoreNormalized;
+
+    distribution[pool] = {
+      vlAsset: scoreWeighted,
+      percentage: scoreNormalized * 100,
+    };
   }
 
   return distribution;
