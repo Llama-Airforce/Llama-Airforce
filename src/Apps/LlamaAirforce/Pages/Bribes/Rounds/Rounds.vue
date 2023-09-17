@@ -19,7 +19,17 @@
       ></Summary>
 
       <GraphBribesRound class="graph-bribes-round"></GraphBribesRound>
-      <TablePersonal class="datatable-personal"></TablePersonal>
+
+      <TablePersonal
+        v-if="store.selectedEpoch && store.selectedEpoch.round < 53"
+        class="datatable-personal"
+      ></TablePersonal>
+
+      <TablePersonalL2
+        v-else-if="store.selectedEpoch"
+        class="datatable-personal"
+      ></TablePersonalL2>
+
       <TableBribed class="datatable-bribed"></TableBribed>
     </div>
   </div>
@@ -34,6 +44,7 @@ import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
 import TableBribed from "@LAF/Pages/Bribes/Rounds/Components/TableBribed.vue";
 import TablePersonal from "@LAF/Pages/Bribes/Rounds/Components/TablePersonal.vue";
+import TablePersonalL2 from "@LAF/Pages/Bribes/Rounds/Components/TablePersonalL2.vue";
 import GraphBribesRound from "@LAF/Pages/Bribes/Rounds/Components/GraphBribesRound.vue";
 import type {
   Epoch,
@@ -149,6 +160,7 @@ const findOrGetEpoch = async (
       platform,
       protocol,
       round,
+      l2: round >= 53,
     });
 
     if (epochResp.epoch) {
@@ -170,6 +182,7 @@ const findOrGetEpoch = async (
     const { epoch: epochLatest } = await bribesService.getEpoch({
       platform,
       protocol,
+      l2: true,
     });
 
     if (epochLatest) {

@@ -36,6 +36,10 @@ export function getDate(proposal: Proposal): string {
 }
 
 export function getLink(epoch: EpochId, proposal: ProposalId): string {
+  if (epoch.round >= 53) {
+    return `https://www.convexfinance.com/vote/weights/curve/${proposal}`;
+  }
+
   switch (epoch.protocol) {
     case "cvx-crv":
     case "cvx-prisma":

@@ -17,7 +17,7 @@ export default class BribesService extends ServiceBase {
   }
 
   public async getEpoch(
-    epochId: Omit<EpochId, "round"> & { round?: number } // Round is optional, picks latest if empty.
+    epochId: Omit<EpochId, "round"> & { round?: number; l2?: boolean } // Round is optional, picks latest if empty.
   ): Promise<{
     success: boolean;
     epoch?: Epoch;
@@ -26,6 +26,7 @@ export default class BribesService extends ServiceBase {
       platform: epochId.platform,
       protocol: epochId.protocol,
       round: epochId.round?.toString(),
+      l2: epochId.l2 ?? false,
     });
   }
 
