@@ -1,8 +1,7 @@
 <template>
-  <div class="vault">
+  <div class="vaults">
     <div class="col">
-      <TablePegkeepers></TablePegkeepers>
-      <ChartPoolPrices></ChartPoolPrices>
+      <ChartCollateralRatio></ChartCollateralRatio>
     </div>
   </div>
 </template>
@@ -10,7 +9,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
-
+import ChartCollateralRatio from "@PM/Pages/Vaults/Charts/ChartCollateralRatio.vue";
 // Refs
 
 const storeBreadcrumb = useBreadcrumbStore();
@@ -34,7 +33,7 @@ onMounted(() => {
 
 @include dashboard("vaults");
 
-.crvusd {
+.vaults {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 5fr 4fr;
