@@ -1,8 +1,7 @@
 <template>
   <div class="vaults">
-    <div class="col">
-      <ChartCollateralRatio></ChartCollateralRatio>
-    </div>
+    <ChartCollateralRatio></ChartCollateralRatio>
+    <ChartRatioDeciles></ChartRatioDeciles>
   </div>
 </template>
 
@@ -10,6 +9,7 @@
 import { onMounted } from "vue";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartCollateralRatio from "@PM/Pages/Vaults/Charts/ChartCollateralRatio.vue";
+import ChartRatioDeciles from "@PM/Pages/Vaults/Charts/ChartRatioDeciles.vue";
 // Refs
 
 const storeBreadcrumb = useBreadcrumbStore();
@@ -36,30 +36,13 @@ onMounted(() => {
 .vaults {
   max-width: calc(1920px - 18.125rem);
 
-  grid-template-columns: 5fr 4fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 
-  > .col {
+  @media only screen and (max-width: 1280px) {
     display: flex;
     flex-direction: column;
-    gap: var(--dashboard-gap);
-
-    div {
-      flex-grow: 0;
-    }
-  }
-
-  .row {
-    display: flex;
-    gap: var(--dashboard-gap);
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-    }
-
-    div {
-      flex-grow: 1;
-    }
   }
 }
 </style>

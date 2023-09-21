@@ -50,9 +50,8 @@ export default class PrismaService extends ServiceBase {
   }
 
   public async getRatioDistributionGrouped(
-    chain: string,
-    period: string
+    chain: string
   ): Promise<{ deciles: CollateralRatioDecilesData[] }> {
-    return this.fetch(`${API_URL}/managers/${chain}/ratio_distribution?period=${period}`);
+    return this.fetch(`${API_URL}/managers/${chain}/ratio_distribution`);
   }
 }
