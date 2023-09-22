@@ -1,7 +1,7 @@
 <template>
   <CardGraph
     class="chart"
-    title="Open troves"
+    title="Collateral value"
     :loading="loading"
     :options="options"
     :series="series"
@@ -18,6 +18,7 @@ import PrismaService, {
   type HistoricalTroveManagerData
 } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import {round, unit} from "@/Util";
 
 interface TooltipParams {
   series: number[][];
@@ -38,7 +39,7 @@ onMounted(async (): Promise<void> => {
   loading.value = true;
   try {
     data.value = await prismaService
-      .getHistoricalOpenTrovesOverview("ethereum", "6m")
+      .getHistoricalCollateralOverview("ethereum", "6m")
       .then((x) => x.managers);
   } catch (error) {
     console.error("An error occurred while loading data:", error);
@@ -56,7 +57,7 @@ const options = computed(() => {
     { colors, colorsArray },
     {
       chart: {
-        type: "bar",
+        type: "area",
         stacked: "true",
         animations: {
           enabled: false,
@@ -74,10 +75,21 @@ const options = computed(() => {
         tickPlacement: 'on',
 
       },
-      plotOptions: {
-        bar: {
-          columnWidth: "50%",
+      yaxis: {
+        labels: {
+          formatter: formatterY,
         },
+      },
+
+      stroke: {
+        curve: 'smooth'
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          opacityFrom: 0.6,
+          opacityTo: 0.8,
+        }
       },
       legend: {
         show: true,
@@ -88,20 +100,6 @@ const options = computed(() => {
       tooltip: {
         followCursor: false,
         enabled: true,
-        intersect: true,
-        custom: ({ series, dataPointIndex, w }: TooltipParams) => {
-          let total = 0;
-          const data = series.map((managerSeries, index) => {
-            const value = managerSeries[dataPointIndex];
-            total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>: ${formatterY(value)}</div>`;
-          });
-
-          // Add total
-          data.push(`<div><b>Total</b>: ${formatterY(total)}</div>`);
-
-          return data.join("");
-        },
       },
     }
   );
@@ -136,6 +134,8 @@ const series = computed(() => {
 
 // Methods
 const formatterX = (x: string): string => x;
+const formatterY = (y: number): string =>
+  `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 
 </script>
 
