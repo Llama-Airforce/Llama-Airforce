@@ -94,11 +94,11 @@ const options = computed(() => {
           const data = series.map((managerSeries, index) => {
             const value = managerSeries[dataPointIndex];
             total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>: ${formatterY(value)}</div>`;
+            return `<div><b>${w.globals.seriesNames[index]}</b>: ${(value)}</div>`;
           });
 
           // Add total
-          data.push(`<div><b>Total</b>: ${formatterY(total)}</div>`);
+          data.push(`<div><b>Total</b>: ${(total)}</div>`);
 
           return data.join("");
         },
