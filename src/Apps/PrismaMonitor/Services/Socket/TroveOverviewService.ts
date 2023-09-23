@@ -2,7 +2,7 @@ import { WebSocketConnectionManager } from '@PM/Services/Socket/WebSocketService
 import { Action, type PayloadType} from "@PM/Services/Socket/types";
 import { ref } from "vue";
 
-export const WS_URL = "ws://127.0.0.1:5001/v1/prisma/ws";
+export const WS_URL = "wss://api.prismamonitor.com/v1/prisma/ws";
 export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
 
 export interface TroveManagerDetails {
