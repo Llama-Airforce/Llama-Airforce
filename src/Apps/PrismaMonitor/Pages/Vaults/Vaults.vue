@@ -1,5 +1,9 @@
 <template>
   <div class="vaults">
+    <TableVaults
+      style="grid-column: 1 / -1"
+      @selected="onMarketSelect"
+    ></TableVaults>
     <ChartCollateralRatio></ChartCollateralRatio>
     <ChartRatioDeciles></ChartRatioDeciles>
     <ChartGlobalCollateral></ChartGlobalCollateral>
@@ -14,6 +18,7 @@ import ChartOpenTroves from "@PM/Pages/Vaults/Charts/ChartOpenTroves.vue";
 import ChartCollateralRatio from "@PM/Pages/Vaults/Charts/ChartCollateralRatio.vue";
 import ChartRatioDeciles from "@PM/Pages/Vaults/Charts/ChartRatioDeciles.vue";
 import ChartGlobalCollateral from "@PM/Pages/Vaults/Charts/ChartGlobalCollateral.vue";
+import TableVaults from "@PM/Pages/Vaults/Tables/TableVaults.vue";
 // Refs
 
 const storeBreadcrumb = useBreadcrumbStore();
