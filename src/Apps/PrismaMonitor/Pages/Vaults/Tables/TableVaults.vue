@@ -141,7 +141,6 @@ const filterData = (data: Row[]): Row[] => {
 
 watch(prismaService.currentData, (newData) => {
   loading.value = true;
-  console.log("NEW DATA", newData);
   rows.value = filterData(newData);
   loading.value = false;
 });
@@ -149,7 +148,6 @@ watch(prismaService.currentData, (newData) => {
 // Hooks
 onMounted(() => {
   loading.value = true;
-  console.log("MOUNT DATA", prismaService.currentData.value);
   rows.value = filterData(prismaService.currentData.value);
   loading.value = false;
 });
