@@ -67,4 +67,12 @@ export default class PrismaService extends ServiceBase {
   ): Promise<{ positions: DecimalLabelledSeries[] }> {
     return this.fetch(`${API_URL}/managers/${chain}/${manager}/large_positions?unit=${unit}`);
   }
+
+  public async getTroveDistribution(
+    chain: string,
+    manager: string,
+    unit: string,
+  ): Promise<{ distribution: DecimalLabelledSeries[] }> {
+    return this.fetch(`${API_URL}/managers/${chain}/${manager}/histograms?unit=${unit}`);
+  }
 }

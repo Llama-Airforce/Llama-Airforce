@@ -1,5 +1,6 @@
 <template>
   <div class="vault">
+    <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
     <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
   </div>
 </template>
@@ -9,9 +10,11 @@
 import { defineComponent } from 'vue';
 import {type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
+import ChartDistributionSelector from "@PM/Pages/Vaults/Charts/ChartDistributionSelector.vue";
 
 export default defineComponent({
   components: {
+    ChartDistributionSelector,
     ChartLargePositionsSelector
   },
   props: {

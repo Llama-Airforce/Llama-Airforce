@@ -10,12 +10,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
-import {type DataPoint, round, unit} from "@/Util";
+import { round, unit} from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import {type DecimalLabelledSeries} from "@PM/Services/PrismaService";
-import {addressShort} from "@/Wallet";
 
 
 // Props
@@ -37,11 +36,21 @@ const options = computed((): unknown => {
     { colors, colorsArray },
     {
       chart: {
-        id: "largePositions",
-        type: "donut",
+        id: "distribution",
+        type: "bar",
         animations: {
           enabled: false,
         },
+        toolbar: {
+          show: false
+        },
+      },
+      xaxis: {
+        categories: categories.value,
+        labels: {
+          rotate: -45,
+        },
+        tickPlacement: 'on',
       },
       legend: {
         inverseOrder: true,
@@ -49,36 +58,27 @@ const options = computed((): unknown => {
       stroke: {
         width: 0.5,
       },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
       dataLabels: {
         enabled: false,
       },
       tooltip: {
-        custom: (x: DataPoint<number>) => {
-          let label = categories.value[x.seriesIndex];
-          label = label.length > 10 ? addressShort(label) : label;
-          const value = x.series[x.seriesIndex];
-          const data = [
-            `<div><b>${label}</b>:</div><div>${formatter(value)}</div>`,
-          ];
-
-          return data.join("");
-        },
+        followCursor: false,
+        enabled: true,
+        intersect: true,
       },
-      labels: data.map((x) => x.label.length > 10 ? addressShort(x.label) : x.label),
     }
   );
 });
 
-const series = computed(() =>
-  data.map((x) => x.value)
-);
+
+const series = computed((): { name: string, data: number[] }[] => [
+  {
+    name: "# of troves",
+    data: Object.values(data)
+      .map((x) => x.value),
+  },
+]);
+
 
 const categories = computed(() =>
   data.map((x) => x.label)
