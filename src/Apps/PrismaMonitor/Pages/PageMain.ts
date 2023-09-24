@@ -28,6 +28,18 @@ export const pageMain: Page = {
           to: "/vaults",
           label: "Vaults",
         },
+        {
+          to: "/",
+          label: "mkUSD",
+        },
+        {
+          to: "/",
+          label: "Stability pool",
+        },
+        {
+          to: "/",
+          label: "DAO",
+        },
       ],
     },
   ],
