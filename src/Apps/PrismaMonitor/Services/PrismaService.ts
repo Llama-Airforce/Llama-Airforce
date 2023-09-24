@@ -8,6 +8,11 @@ export type DecimalTimeSeries = {
   value: number;
 };
 
+export type DecimalLabelledSeries = {
+  label: string;
+  value: number;
+};
+
 export type HistoricalTroveManagerData = {
   manager: string;
   data: DecimalTimeSeries[];
@@ -53,5 +58,13 @@ export default class PrismaService extends ServiceBase {
     chain: string
   ): Promise<{ deciles: CollateralRatioDecilesData[] }> {
     return this.fetch(`${API_URL}/managers/${chain}/ratio_distribution`);
+  }
+
+  public async getLargeTrovePositions(
+    chain: string,
+    manager: string,
+    unit: string,
+  ): Promise<{ positions: DecimalLabelledSeries[] }> {
+    return this.fetch(`${API_URL}/managers/${chain}/${manager}/large_positions?unit=${unit}`);
   }
 }

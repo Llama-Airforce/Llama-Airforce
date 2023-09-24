@@ -2,7 +2,7 @@ import { type Page } from "@PM/Pages/Page";
 
 import Home from "@PM/Pages/Home/Home.vue";
 import Vaults from "@PM/Pages/Vaults/Vaults.vue";
-import VaultOverview from "@PM/Pages/Vaults/VaultOverview.vue";
+import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 
 
 export const pageMain: Page = {
@@ -13,7 +13,7 @@ export const pageMain: Page = {
     {
       path: "/vault/:vaultAddr/:tab?",
       name: "prismavault",
-      component: VaultOverview,
+      component: VaultManager,
     },
   ],
   menuItems: [

@@ -1,6 +1,6 @@
 <template>
   <div class="vault">
-    <ChartMarketRates :vault="vault"></ChartMarketRates>
+    <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
   </div>
 </template>
 
@@ -8,10 +8,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
 
 export default defineComponent({
   components: {
-    //ChartMarketVolume,
+    ChartLargePositionsSelector
   },
   props: {
     vault: {
