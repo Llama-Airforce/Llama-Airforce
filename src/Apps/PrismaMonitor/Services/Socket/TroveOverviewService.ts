@@ -8,6 +8,7 @@ export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
 export interface TroveManagerDetails {
   name: string;
   address: string;
+  collateral: string;
   tvl: number;
   debt: number;
   cr: number;
