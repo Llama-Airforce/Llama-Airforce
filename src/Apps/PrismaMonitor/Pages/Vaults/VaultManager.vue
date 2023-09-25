@@ -12,7 +12,7 @@
 
       <TabItem header="Collateral">
         <KeepAlive>
-          <VaultOverview v-if="tabActive === 1 && vault" :vault="vault"></VaultOverview>
+          <Collateral v-if="tabActive === 1 && vault" :vault="vault"></Collateral>
         </KeepAlive>
       </TabItem>
 
@@ -45,6 +45,7 @@ import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import {TroveOverviewService} from "@PM/Services/Socket/TroveOverviewService";
 import VaultOverview from "@PM/Pages/Vaults/VaultOverview.vue";
+import Collateral from "@PM/Pages/Vaults/Collateral.vue";
 
 const prismaService = new TroveOverviewService("ethereum");
 

@@ -75,4 +75,12 @@ export default class PrismaService extends ServiceBase {
   ): Promise<{ distribution: DecimalLabelledSeries[] }> {
     return this.fetch(`${API_URL}/managers/${chain}/${manager}/histograms?unit=${unit}`);
   }
+
+  public async getCollateralPrices(
+    chain: string,
+    collateral: string,
+    period: string
+  ): Promise<{ oracle: DecimalTimeSeries[], market: DecimalTimeSeries[] }> {
+    return this.fetch(`${API_URL}/collateral/${chain}/${collateral}/prices?period=${period}`);
+  }
 }
