@@ -116,6 +116,10 @@ const address = (address: string): string => {
   // Hardcoded for now, Convex has no ENS by the looks of it anyway.
   if (address === "0x989aeb4d175e16225e39e87d0d97a3360524ad80") {
     return "Convex";
+  } else if (address === "0x52f541764e6e90eebc5c21ff570de0e2d63766b6") {
+    return "StakeDAO";
+  } else if (address === "0xf147b8125d2ef93fb6965db97d6746952a133934") {
+    return "Yearn";
   }
 
   return addressShort(address, 12);
