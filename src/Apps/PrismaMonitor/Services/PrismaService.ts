@@ -23,6 +23,13 @@ export type CollateralRatioDecilesData = {
   data: number;
 };
 
+export type PoolStableOperation = {
+  user: string;
+  amount: number;
+  timestamp: number;
+  hash: string;
+};
+
 export type StableFlows = {
   withdrawals: DecimalTimeSeries[];
   deposits: DecimalTimeSeries[];
@@ -116,5 +123,21 @@ export default class PrismaService extends ServiceBase {
     period: string
   ): Promise<{ withdrawals: DecimalTimeSeries[]}> {
     return this.fetch(`${API_URL}/pool/${chain}/cumulative_withdrawals?period=${period}`);
+  }
+
+  public async getTopStableDeposits(
+    chain: string,
+    top: number,
+    period: string
+  ): Promise<{ operations: PoolStableOperation[]}> {
+    return this.fetch(`${API_URL}/pool/${chain}/top/stable_deposits?top=${top}&period=${period}`);
+  }
+
+  public async getTopStableWithdrawals(
+    chain: string,
+    top: number,
+    period: string
+  ): Promise<{ operations: PoolStableOperation[]}> {
+    return this.fetch(`${API_URL}/pool/${chain}/top/stable_withdrawals?top=${top}&period=${period}`);
   }
 }
