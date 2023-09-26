@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
-import { round, unit} from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";

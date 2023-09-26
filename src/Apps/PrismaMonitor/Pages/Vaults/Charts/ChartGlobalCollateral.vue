@@ -20,12 +20,6 @@ import PrismaService, {
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import {round, unit} from "@/Util";
 
-interface TooltipParams {
-  series: number[][];
-  dataPointIndex: number;
-  w: { globals: { seriesNames: string[] } };
-}
-
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
