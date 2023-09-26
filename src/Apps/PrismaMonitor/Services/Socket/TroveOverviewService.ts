@@ -1,5 +1,5 @@
-import { WebSocketConnectionManager } from '@PM/Services/Socket/WebSocketService';
-import { Action, type PayloadType} from "@PM/Services/Socket/types";
+import { WebSocketConnectionManager } from "@PM/Services/Socket/WebSocketService";
+import { Action, type PayloadType } from "@PM/Services/Socket/types";
 import { ref } from "vue";
 
 export const WS_URL = "wss://api.prismamonitor.com/v1/prisma/ws";
@@ -44,16 +44,26 @@ export class TroveOverviewService {
 
   constructor(private chain: string) {
     this.wsManager = WebSocketConnectionManager.getInstance(WS_URL);
-    this.wsManager.registerListener(TROVE_OVERVIEW_CHANNEL, chain, this.parseSubscriptionFromMessage, (message) => {
-      try {
-        const payload = JSON.parse(message) as TroveOverviewPayload;
-        if (payload.subscription.chain === this.chain) {
-          this.currentData.value = payload.payload;  // Update the current data
+    this.wsManager.registerListener(
+      TROVE_OVERVIEW_CHANNEL,
+      chain,
+      this.parseSubscriptionFromMessage,
+      (message) => {
+        try {
+          const payload = JSON.parse(message) as TroveOverviewPayload;
+          if (payload.subscription.chain === this.chain) {
+            this.currentData.value = payload.payload; // Update the current data
+          }
+        } catch (error) {
+          console.error(
+            "Error parsing WebSocket message:",
+            error,
+            "Raw data:",
+            message
+          );
         }
-      } catch (error) {
-        console.error("Error parsing WebSocket message:", error, "Raw data:", message);
       }
-    });
+    );
 
     this.requestSnapshots();
     this.subscribeToUpdates();
@@ -67,9 +77,11 @@ export class TroveOverviewService {
     const request: TroveOverviewRequest = {
       action: Action.snapshots,
       channel: TROVE_OVERVIEW_CHANNEL,
-      settings: [{
-        chain: this.chain,
-      }]
+      settings: [
+        {
+          chain: this.chain,
+        },
+      ],
     };
 
     this.send(request);
@@ -79,9 +91,11 @@ export class TroveOverviewService {
     const request: TroveOverviewRequest = {
       action: Action.subscribe,
       channel: TROVE_OVERVIEW_CHANNEL,
-      settings: [{
-        chain: this.chain,
-      }]
+      settings: [
+        {
+          chain: this.chain,
+        },
+      ],
     };
 
     this.send(request);

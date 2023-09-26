@@ -10,13 +10,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
-import {type DataPoint, round, unit} from "@/Util";
+import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import {type DecimalLabelledSeries} from "@PM/Services/PrismaService";
-import {addressShort} from "@/Wallet";
-
+import { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
+import { addressShort } from "@/Wallet";
 
 // Props
 interface Props {
@@ -24,7 +23,6 @@ interface Props {
 }
 
 const { data = [] } = defineProps<Props>();
-
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -71,18 +69,16 @@ const options = computed((): unknown => {
           return data.join("");
         },
       },
-      labels: data.map((x) => x.label.length > 10 ? addressShort(x.label) : x.label),
+      labels: data.map((x) =>
+        x.label.length > 10 ? addressShort(x.label) : x.label
+      ),
     }
   );
 });
 
-const series = computed(() =>
-  data.map((x) => x.value)
-);
+const series = computed(() => data.map((x) => x.value));
 
-const categories = computed(() =>
-  data.map((x) => x.label)
-);
+const categories = computed(() => data.map((x) => x.label));
 
 // Methods
 const formatter = (x: number): string =>
@@ -93,7 +89,6 @@ const formatter = (x: number): string =>
 @import "@/Styles/Variables.scss";
 
 .graph {
-
   height: 300px;
 
   ::v-deep(.card-body) {

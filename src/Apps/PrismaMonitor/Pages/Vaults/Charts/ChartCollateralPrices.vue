@@ -6,9 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['Oracle', 'Market']"
-        ></Legend>
+        <Legend :items="['Oracle', 'Market']"></Legend>
       </div>
     </template>
 
@@ -20,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted, nextTick} from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import Legend from "@PM/Components/Legend.vue";
 import { chain } from "lodash";
@@ -42,7 +40,7 @@ import type { Theme } from "@PM/Models/Theme";
 import PrismaService, {
   type DecimalTimeSeries,
 } from "@PM/Services/PrismaService";
-import {type TroveManagerDetails} from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 const { t } = useI18n();
 
@@ -63,7 +61,10 @@ const { vault = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const data = ref<{ oracle: DecimalTimeSeries[], market: DecimalTimeSeries[] }>({'oracle': [], 'market': []});
+const data = ref<{ oracle: DecimalTimeSeries[]; market: DecimalTimeSeries[] }>({
+  oracle: [],
+  market: [],
+});
 const loading = ref(false);
 
 // Hooks
@@ -75,8 +76,12 @@ onMounted(async (): Promise<void> => {
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  oracleSerie = chart.addAreaSeries(createProportionOptionsSerie(storeSettings.theme));
-  marketSerie = chart.addAreaSeries(createPriceOptionsSerie(storeSettings.theme));
+  oracleSerie = chart.addAreaSeries(
+    createProportionOptionsSerie(storeSettings.theme)
+  );
+  marketSerie = chart.addAreaSeries(
+    createPriceOptionsSerie(storeSettings.theme)
+  );
   createSeries(data.value);
 });
 
@@ -90,8 +95,11 @@ watch(
       return;
     }
 
-    const rawData = await prismaService
-      .getCollateralPrices("ethereum", newMarket.collateral, "7d");
+    const rawData = await prismaService.getCollateralPrices(
+      "ethereum",
+      newMarket.collateral,
+      "7d"
+    );
     data.value = processSeries(rawData.oracle, rawData.market);
     loading.value = false;
   },
@@ -114,19 +122,37 @@ watch(data, (newData) => {
 });
 
 // Methods
-const processSeries = (oracle: DecimalTimeSeries[], market: DecimalTimeSeries[]): { oracle: DecimalTimeSeries[], market: DecimalTimeSeries[] } => {
+const processSeries = (
+  oracle: DecimalTimeSeries[],
+  market: DecimalTimeSeries[]
+): { oracle: DecimalTimeSeries[]; market: DecimalTimeSeries[] } => {
   const startTimestamp = Math.max(oracle[0].timestamp, market[0].timestamp);
-  const endTimestamp = Math.min(oracle[oracle.length - 1].timestamp, market[market.length - 1].timestamp);
+  const endTimestamp = Math.min(
+    oracle[oracle.length - 1].timestamp,
+    market[market.length - 1].timestamp
+  );
 
-  const filteredOracle = oracle.filter(point => point.timestamp >= startTimestamp && point.timestamp <= endTimestamp);
-  const filteredMarket = market.filter(point => point.timestamp >= startTimestamp && point.timestamp <= endTimestamp);
+  const filteredOracle = oracle.filter(
+    (point) =>
+      point.timestamp >= startTimestamp && point.timestamp <= endTimestamp
+  );
+  const filteredMarket = market.filter(
+    (point) =>
+      point.timestamp >= startTimestamp && point.timestamp <= endTimestamp
+  );
 
   if (filteredOracle[filteredOracle.length - 1].timestamp < endTimestamp) {
-    filteredOracle.push({ timestamp: endTimestamp, value: filteredOracle[filteredOracle.length - 1].value });
+    filteredOracle.push({
+      timestamp: endTimestamp,
+      value: filteredOracle[filteredOracle.length - 1].value,
+    });
   }
 
   if (filteredMarket[filteredMarket.length - 1].timestamp < endTimestamp) {
-    filteredMarket.push({ timestamp: endTimestamp, value: filteredMarket[filteredMarket.length - 1].value });
+    filteredMarket.push({
+      timestamp: endTimestamp,
+      value: filteredMarket[filteredMarket.length - 1].value,
+    });
   }
 
   return { oracle: filteredOracle, market: filteredMarket };
@@ -162,11 +188,12 @@ const createPriceOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createProportionOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+const createProportionOptionsSerie = (
+  theme: Theme
+): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
-
     priceFormat: {
       type: "price",
       precision: 2,
@@ -182,7 +209,10 @@ const createProportionOptionsSerie = (theme: Theme): AreaSeriesPartialOptions =>
   };
 };
 
-const createSeries = (newData: { oracle: DecimalTimeSeries[], market: DecimalTimeSeries[] }): void => {
+const createSeries = (newData: {
+  oracle: DecimalTimeSeries[];
+  market: DecimalTimeSeries[];
+}): void => {
   if (!chart || !oracleSerie) {
     return;
   }
@@ -205,7 +235,6 @@ const createSeries = (newData: { oracle: DecimalTimeSeries[], market: DecimalTim
     .orderBy((c) => c.time, "asc")
     .value();
 
-
   if (newMarketSerie.length > 0) {
     marketSerie.setData(newMarketSerie);
   }
@@ -216,7 +245,6 @@ const createSeries = (newData: { oracle: DecimalTimeSeries[], market: DecimalTim
 
   chart.timeScale().fitContent();
 };
-
 </script>
 
 <style lang="scss" scoped>

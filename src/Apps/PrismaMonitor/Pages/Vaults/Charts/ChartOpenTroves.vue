@@ -9,13 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
-  type HistoricalTroveManagerData
+  type HistoricalTroveManagerData,
 } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
@@ -31,7 +31,6 @@ const storeSettings = useSettingsStore();
 // Refs
 const loading = ref(true);
 const data = ref<HistoricalTroveManagerData[]>([]);
-
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -62,7 +61,7 @@ const options = computed(() => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       xaxis: {
@@ -71,8 +70,7 @@ const options = computed(() => {
           formatter: formatterX,
           rotate: -60,
         },
-        tickPlacement: 'on',
-
+        tickPlacement: "on",
       },
       plotOptions: {
         bar: {
@@ -94,11 +92,11 @@ const options = computed(() => {
           const data = series.map((managerSeries, index) => {
             const value = managerSeries[dataPointIndex];
             total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>: ${(value)}</div>`;
+            return `<div><b>${w.globals.seriesNames[index]}</b>: ${value}</div>`;
           });
 
           // Add total
-          data.push(`<div><b>Total</b>: ${(total)}</div>`);
+          data.push(`<div><b>Total</b>: ${total}</div>`);
 
           return data.join("");
         },
@@ -133,10 +131,8 @@ const series = computed(() => {
   });
 });
 
-
 // Methods
 const formatterX = (x: string): string => x;
-
 </script>
 
 <style lang="scss" scoped>

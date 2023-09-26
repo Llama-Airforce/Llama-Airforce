@@ -10,29 +10,30 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from "vue";
+import { computed, onMounted, ref } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, {type DecimalLabelledSeries} from "@PM/Services/PrismaService";
-import {getHost} from "@/Services/Host";
+import PrismaService, {
+  type DecimalLabelledSeries,
+} from "@PM/Services/PrismaService";
+import { getHost } from "@/Services/Host";
 
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
-
 // Refs
 const loading = ref(true);
 const data = ref<DecimalLabelledSeries[]>([]);
-
 
 // Hooks
 onMounted(async (): Promise<void> => {
   loading.value = true;
   try {
     data.value = await prismaService
-      .getStableDistribution("ethereum").then((x) => x.distribution);
+      .getStableDistribution("ethereum")
+      .then((x) => x.distribution);
   } catch (error) {
     console.error("An error occurred while loading data:", error);
   } finally {
@@ -54,7 +55,7 @@ const options = computed((): unknown => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       xaxis: {
@@ -62,7 +63,7 @@ const options = computed((): unknown => {
         labels: {
           rotate: -45,
         },
-        tickPlacement: 'on',
+        tickPlacement: "on",
       },
       legend: {
         inverseOrder: true,
@@ -82,27 +83,20 @@ const options = computed((): unknown => {
   );
 });
 
-
-const series = computed((): { name: string, data: number[] }[] => [
+const series = computed((): { name: string; data: number[] }[] => [
   {
     name: "# of positions",
-    data: Object.values(data.value)
-      .map((x) => x.value),
+    data: Object.values(data.value).map((x) => x.value),
   },
 ]);
 
-
-const categories = computed(() =>
-  data.value.map((x) => x.label)
-);
-
+const categories = computed(() => data.value.map((x) => x.label));
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .graph {
-
   height: 100%;
 
   ::v-deep(.card-body) {

@@ -19,9 +19,9 @@ import ChartCollateralRatio from "@PM/Pages/Vaults/Charts/ChartCollateralRatio.v
 import ChartRatioDeciles from "@PM/Pages/Vaults/Charts/ChartRatioDeciles.vue";
 import ChartGlobalCollateral from "@PM/Pages/Vaults/Charts/ChartGlobalCollateral.vue";
 import TableVaults from "@PM/Pages/Vaults/Tables/TableVaults.vue";
-import {type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
-import {useVaultStore} from "@PM/Pages/Vaults/Store";
-import {useRouter} from "vue-router";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { useVaultStore } from "@PM/Pages/Vaults/Store";
+import { useRouter } from "vue-router";
 // Refs
 
 const storeBreadcrumb = useBreadcrumbStore();
@@ -52,7 +52,6 @@ const onVaultSelect = async (vault: TroveManagerDetails) => {
     },
   });
 };
-
 </script>
 
 <style lang="scss" scoped>

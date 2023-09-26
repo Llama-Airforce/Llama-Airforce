@@ -5,10 +5,10 @@ import Vaults from "@PM/Pages/Vaults/Vaults.vue";
 import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 
-
 export const pageMain: Page = {
   titleRoute: "/",
-  routes: [{ path: "/", component: Home },
+  routes: [
+    { path: "/", component: Home },
 
     { path: "/pool", name: "pool", component: StabilityPool },
     { path: "/vaults", name: "vaults", component: Vaults },

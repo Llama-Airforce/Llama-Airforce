@@ -23,7 +23,8 @@ export class WebSocketConnectionManager {
 
   public static getInstance(url: string): WebSocketConnectionManager {
     if (!WebSocketConnectionManager.instances[url]) {
-      WebSocketConnectionManager.instances[url] = new WebSocketConnectionManager(url);
+      WebSocketConnectionManager.instances[url] =
+        new WebSocketConnectionManager(url);
     }
     return WebSocketConnectionManager.instances[url];
   }
@@ -58,20 +59,30 @@ export class WebSocketConnectionManager {
       const genericMessage = JSON.parse(event.data) as GenericMessage;
       const parser = this.channelSubscriptionParsers[genericMessage.channel];
       const subscription = parser ? parser(event.data) : "";
-      const listenerForSubscription = this.listeners[genericMessage.channel]?.[subscription];
+      const listenerForSubscription =
+        this.listeners[genericMessage.channel]?.[subscription];
       listenerForSubscription?.(event.data);
     };
   }
 
-  public registerListener(channel: string, subscription: string, subParser: ParsingStrategy, callback: MessageListener): void {
+  public registerListener(
+    channel: string,
+    subscription: string,
+    subParser: ParsingStrategy,
+    callback: MessageListener
+  ): void {
     if (!this.listeners[channel]) {
       this.listeners[channel] = {};
     }
     this.listeners[channel][subscription] = callback;
     this.channelSubscriptionParsers[channel] = subParser;
-    const messagesForChannel = this.messageQueue.filter(msg => (JSON.parse(msg) as GenericMessage).channel === channel);
+    const messagesForChannel = this.messageQueue.filter(
+      (msg) => (JSON.parse(msg) as GenericMessage).channel === channel
+    );
     messagesForChannel.forEach(callback);
-    this.messageQueue = this.messageQueue.filter(msg => !messagesForChannel.includes(msg));
+    this.messageQueue = this.messageQueue.filter(
+      (msg) => !messagesForChannel.includes(msg)
+    );
   }
 
   public send(message: string): void {
@@ -84,7 +95,7 @@ export class WebSocketConnectionManager {
 
   private processMessageQueue(): void {
     while (this.messageQueue.length) {
-      this.send(this.messageQueue.shift() ?? '');
+      this.send(this.messageQueue.shift() ?? "");
     }
   }
 

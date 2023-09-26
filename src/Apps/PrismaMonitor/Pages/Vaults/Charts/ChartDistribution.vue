@@ -13,8 +13,7 @@ import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import {type DecimalLabelledSeries} from "@PM/Services/PrismaService";
-
+import { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
 
 // Props
 interface Props {
@@ -22,7 +21,6 @@ interface Props {
 }
 
 const { data = [] } = defineProps<Props>();
-
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -41,7 +39,7 @@ const options = computed((): unknown => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       xaxis: {
@@ -49,7 +47,7 @@ const options = computed((): unknown => {
         labels: {
           rotate: -45,
         },
-        tickPlacement: 'on',
+        tickPlacement: "on",
       },
       legend: {
         inverseOrder: true,
@@ -69,27 +67,20 @@ const options = computed((): unknown => {
   );
 });
 
-
-const series = computed((): { name: string, data: number[] }[] => [
+const series = computed((): { name: string; data: number[] }[] => [
   {
     name: "# of troves",
-    data: Object.values(data)
-      .map((x) => x.value),
+    data: Object.values(data).map((x) => x.value),
   },
 ]);
 
-
-const categories = computed(() =>
-  data.map((x) => x.label)
-);
-
+const categories = computed(() => data.map((x) => x.label));
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .graph {
-
   height: 300px;
 
   ::v-deep(.card-body) {

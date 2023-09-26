@@ -23,9 +23,7 @@
       </div>
     </template>
 
-    <ChartDistribution
-      :data="data"
-    ></ChartDistribution>
+    <ChartDistribution :data="data"></ChartDistribution>
   </Card>
 </template>
 
@@ -36,9 +34,9 @@ import { Card, ButtonToggle } from "@/Framework";
 import PrismaService, {
   type DecimalLabelledSeries,
 } from "@PM/Services/PrismaService";
-import {watch} from "vue";
-import {getHost} from "@/Services/Host";
-import {type TroveManagerDetails} from "@PM/Services/Socket/TroveOverviewService";
+import { watch } from "vue";
+import { getHost } from "@/Services/Host";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartDistribution from "@PM/Pages/Vaults/Charts/ChartDistribution.vue";
 
 type ChartType = "collateral" | "debt";
@@ -74,7 +72,7 @@ const fetchData = async () => {
 watch(
   () => chartType.value,
   () => {
-    fetchData().catch(error => {
+    fetchData().catch((error) => {
       console.error("Error fetching data:", error);
     });
   },
@@ -91,7 +89,6 @@ watch(
   { immediate: true } // This ensures the watcher is triggered immediately upon being established.
 );
 
-
 // Events
 const onChartType = async (type: ChartType) => {
   // Don't do anything if we're not changing the type.
@@ -101,7 +98,6 @@ const onChartType = async (type: ChartType) => {
   chartType.value = type;
   await fetchData();
 };
-
 </script>
 
 <style lang="scss" scoped>

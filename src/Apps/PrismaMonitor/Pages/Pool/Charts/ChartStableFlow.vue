@@ -9,16 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { getHost } from "@/Services/Host";
-import PrismaService, {
-  type StableFlows
-} from "@PM/Services/PrismaService";
+import PrismaService, { type StableFlows } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import {round, unit} from "@/Util";
+import { round, unit } from "@/Util";
 
 interface TooltipParams {
   series: number[][];
@@ -31,15 +29,13 @@ const storeSettings = useSettingsStore();
 
 // Refs
 const loading = ref(true);
-const data = ref<StableFlows>({"deposits": [], "withdrawals": []});
-
+const data = ref<StableFlows>({ deposits: [], withdrawals: [] });
 
 // Hooks
 onMounted(async (): Promise<void> => {
   loading.value = true;
   try {
-    data.value = await prismaService
-      .getStableFlow("ethereum", "1m");
+    data.value = await prismaService.getStableFlow("ethereum", "1m");
   } catch (error) {
     console.error("An error occurred while loading data:", error);
   } finally {
@@ -62,7 +58,7 @@ const options = computed(() => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       colors: [colors.green, colors.red],
@@ -73,8 +69,7 @@ const options = computed(() => {
           formatter: formatterX,
           rotate: -60,
         },
-        tickPlacement: 'on',
-
+        tickPlacement: "on",
       },
       yaxis: {
         labels: {
@@ -101,7 +96,9 @@ const options = computed(() => {
           const data = series.map((managerSeries, index) => {
             const value = managerSeries[dataPointIndex];
             total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>: ${formatterY(value)}</div>`;
+            return `<div><b>${w.globals.seriesNames[index]}</b>: ${formatterY(
+              value
+            )}</div>`;
           });
 
           // Add total
@@ -127,26 +124,21 @@ const categories = computed((): string[] => {
   });
 });
 
-
-const series = computed((): { name: string, data: number[] }[] => [
+const series = computed((): { name: string; data: number[] }[] => [
   {
     name: "Deposits",
-    data: Object.values(data.value.deposits)
-      .map((x) => x.value),
+    data: Object.values(data.value.deposits).map((x) => x.value),
   },
   {
     name: "Withdrawals",
-    data: Object.values(data.value.withdrawals)
-      .map((x) => x.value),
+    data: Object.values(data.value.withdrawals).map((x) => x.value),
   },
 ]);
-
 
 // Methods
 const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
-
 </script>
 
 <style lang="scss" scoped>

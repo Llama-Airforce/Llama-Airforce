@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
-  type CollateralRatioDecilesData
+  type CollateralRatioDecilesData,
 } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
@@ -26,7 +26,6 @@ const storeSettings = useSettingsStore();
 // Refs
 const loading = ref(true);
 const data = ref<CollateralRatioDecilesData[]>([]);
-
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -56,7 +55,7 @@ const options = computed(() => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       xaxis: {
@@ -65,8 +64,7 @@ const options = computed(() => {
           formatter: formatterX,
           rotate: -60,
         },
-        tickPlacement: 'on',
-
+        tickPlacement: "on",
       },
       yaxis: {
         labels: {
@@ -95,14 +93,12 @@ const options = computed(() => {
 
 const categories = computed((): string[] => data.value.map((x) => x.label));
 
-const series = computed((): { name: string, data: number[] }[] => [
+const series = computed((): { name: string; data: number[] }[] => [
   {
     name: "Debt",
-    data: Object.values(data.value)
-      .map((x) => x.data),
+    data: Object.values(data.value).map((x) => x.data),
   },
 ]);
-
 
 // Methods
 const formatterX = (x: string): string => x;

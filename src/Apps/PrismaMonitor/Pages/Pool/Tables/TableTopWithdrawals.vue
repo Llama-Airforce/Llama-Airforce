@@ -45,16 +45,16 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import { addressShort } from "@/Wallet";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
-  type PoolStableOperation
+  type PoolStableOperation,
 } from "@PM/Services/PrismaService";
-import {computed} from "vue";
-import {chain} from "lodash";
+import { computed } from "vue";
+import { chain } from "lodash";
 
 const { t } = useI18n();
 
@@ -64,10 +64,10 @@ const prismaService = new PrismaService(getHost());
 const loading = ref(true);
 const rowsRaw = ref<PoolStableOperation[]>([]);
 const rows = computed((): PoolStableOperation[] =>
-  chain(rowsRaw.value).map((x) => x)
+  chain(rowsRaw.value)
+    .map((x) => x)
     .value()
 );
-
 
 // Hooks
 onMounted(async () => {
@@ -78,8 +78,7 @@ onMounted(async () => {
     .then((x) => x.operations);
 
   loading.value = false;
-}
-);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -89,7 +88,6 @@ onMounted(async () => {
   container-type: inline-size;
 
   ::v-deep(.withdrawals-columns-data) {
-
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
@@ -140,12 +138,10 @@ onMounted(async () => {
 
       @container (max-width: 375px) {
         grid-template-columns: 1fr repeat(2, var(--col-width));
-
       }
 
       @container (max-width: 325px) {
         grid-template-columns: 1fr repeat(1, var(--col-width));
-
       }
 
       @container (max-width: 250px) {
@@ -159,7 +155,7 @@ onMounted(async () => {
 
     // Right adjust number columns.
     div:nth-child(2),
-    div:nth-child(3), {
+    div:nth-child(3) {
       justify-content: end;
     }
   }

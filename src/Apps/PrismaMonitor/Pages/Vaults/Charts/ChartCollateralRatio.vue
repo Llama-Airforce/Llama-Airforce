@@ -29,8 +29,10 @@ import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import PrismaService, {type DecimalTimeSeries} from "@PM/Services/PrismaService";
-import {getHost} from "@/Services/Host";
+import PrismaService, {
+  type DecimalTimeSeries,
+} from "@PM/Services/PrismaService";
+import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
 
@@ -73,7 +75,6 @@ onMounted(async (): Promise<void> => {
   );
 
   createSeries(data.value);
-
 });
 
 // Watches
@@ -88,7 +89,8 @@ watch(
 );
 
 watch(data, (newData) => {
-  createSeries(newData);});
+  createSeries(newData);
+});
 
 // Methods
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
@@ -121,7 +123,6 @@ const createGlobalCrOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-
 const createSeries = (globalCr: DecimalTimeSeries[]): void => {
   if (!chart || !globalCrSerie) {
     return;
@@ -141,7 +142,6 @@ const createSeries = (globalCr: DecimalTimeSeries[]): void => {
 
   chart.timeScale().fitContent();
 };
-
 </script>
 
 <style lang="scss" scoped>

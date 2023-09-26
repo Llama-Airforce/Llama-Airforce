@@ -2,7 +2,6 @@ import ServiceBase from "@/Services/ServiceBase";
 
 const API_URL = "https://api.prismamonitor.com/v1";
 
-
 export type DecimalTimeSeries = {
   timestamp: number;
   value: number;
@@ -36,34 +35,41 @@ export type StableFlows = {
 };
 
 export default class PrismaService extends ServiceBase {
-
   // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
     chain: string,
     period: string
   ): Promise<{ managers: HistoricalTroveManagerData[] }> {
-    return this.fetch(`${API_URL}/managers/${chain}/open_troves?period=${period}`);
+    return this.fetch(
+      `${API_URL}/managers/${chain}/open_troves?period=${period}`
+    );
   }
 
   public async getHistoricalCollateralRatiosOverview(
     chain: string,
     period: string
   ): Promise<{ managers: HistoricalTroveManagerData[] }> {
-    return this.fetch(`${API_URL}/managers/${chain}/collateral_ratios?period=${period}`);
+    return this.fetch(
+      `${API_URL}/managers/${chain}/collateral_ratios?period=${period}`
+    );
   }
 
   public async getCollateralRatioGrouped(
     chain: string,
     period: string
   ): Promise<HistoricalTroveManagerData> {
-    return this.fetch(`${API_URL}/managers/${chain}/global_collateral_ratio?period=${period}`);
+    return this.fetch(
+      `${API_URL}/managers/${chain}/global_collateral_ratio?period=${period}`
+    );
   }
 
   public async getHistoricalCollateralOverview(
     chain: string,
     period: string
   ): Promise<{ managers: HistoricalTroveManagerData[] }> {
-    return this.fetch(`${API_URL}/managers/${chain}/collateral?period=${period}`);
+    return this.fetch(
+      `${API_URL}/managers/${chain}/collateral?period=${period}`
+    );
   }
 
   public async getRatioDistributionGrouped(
@@ -75,17 +81,21 @@ export default class PrismaService extends ServiceBase {
   public async getLargeTrovePositions(
     chain: string,
     manager: string,
-    unit: string,
+    unit: string
   ): Promise<{ positions: DecimalLabelledSeries[] }> {
-    return this.fetch(`${API_URL}/managers/${chain}/${manager}/large_positions?unit=${unit}`);
+    return this.fetch(
+      `${API_URL}/managers/${chain}/${manager}/large_positions?unit=${unit}`
+    );
   }
 
   public async getTroveDistribution(
     chain: string,
     manager: string,
-    unit: string,
+    unit: string
   ): Promise<{ distribution: DecimalLabelledSeries[] }> {
-    return this.fetch(`${API_URL}/managers/${chain}/${manager}/histograms?unit=${unit}`);
+    return this.fetch(
+      `${API_URL}/managers/${chain}/${manager}/histograms?unit=${unit}`
+    );
   }
 
   // Collateral endpoints
@@ -93,23 +103,27 @@ export default class PrismaService extends ServiceBase {
     chain: string,
     collateral: string,
     period: string
-  ): Promise<{ oracle: DecimalTimeSeries[], market: DecimalTimeSeries[] }> {
-    return this.fetch(`${API_URL}/collateral/${chain}/${collateral}/prices?period=${period}`);
+  ): Promise<{ oracle: DecimalTimeSeries[]; market: DecimalTimeSeries[] }> {
+    return this.fetch(
+      `${API_URL}/collateral/${chain}/${collateral}/prices?period=${period}`
+    );
   }
 
   // Stability pool endpoints
   public async getPoolTvl(
     chain: string,
     period: string
-  ): Promise<{ deposits: DecimalTimeSeries[]}> {
+  ): Promise<{ deposits: DecimalTimeSeries[] }> {
     return this.fetch(`${API_URL}/pool/${chain}/deposits?period=${period}`);
   }
 
   public async getStableFlow(
     chain: string,
     period: string
-  ): Promise< StableFlows > {
-    return this.fetch(`${API_URL}/pool/${chain}/stable_operations?period=${period}`);
+  ): Promise<StableFlows> {
+    return this.fetch(
+      `${API_URL}/pool/${chain}/stable_operations?period=${period}`
+    );
   }
 
   public async getStableDistribution(
@@ -121,23 +135,29 @@ export default class PrismaService extends ServiceBase {
   public async getCumulativeWithdrawals(
     chain: string,
     period: string
-  ): Promise<{ withdrawals: DecimalTimeSeries[]}> {
-    return this.fetch(`${API_URL}/pool/${chain}/cumulative_withdrawals?period=${period}`);
+  ): Promise<{ withdrawals: DecimalTimeSeries[] }> {
+    return this.fetch(
+      `${API_URL}/pool/${chain}/cumulative_withdrawals?period=${period}`
+    );
   }
 
   public async getTopStableDeposits(
     chain: string,
     top: number,
     period: string
-  ): Promise<{ operations: PoolStableOperation[]}> {
-    return this.fetch(`${API_URL}/pool/${chain}/top/stable_deposits?top=${top}&period=${period}`);
+  ): Promise<{ operations: PoolStableOperation[] }> {
+    return this.fetch(
+      `${API_URL}/pool/${chain}/top/stable_deposits?top=${top}&period=${period}`
+    );
   }
 
   public async getTopStableWithdrawals(
     chain: string,
     top: number,
     period: string
-  ): Promise<{ operations: PoolStableOperation[]}> {
-    return this.fetch(`${API_URL}/pool/${chain}/top/stable_withdrawals?top=${top}&period=${period}`);
+  ): Promise<{ operations: PoolStableOperation[] }> {
+    return this.fetch(
+      `${API_URL}/pool/${chain}/top/stable_withdrawals?top=${top}&period=${period}`
+    );
   }
 }

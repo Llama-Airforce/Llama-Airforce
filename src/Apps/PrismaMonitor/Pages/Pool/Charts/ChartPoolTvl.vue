@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted, nextTick} from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -33,7 +33,7 @@ import type { Theme } from "@PM/Models/Theme";
 import PrismaService, {
   type DecimalTimeSeries,
 } from "@PM/Services/PrismaService";
-import {round, unit} from "@/Util";
+import { round, unit } from "@/Util";
 
 const { t } = useI18n();
 
@@ -41,7 +41,6 @@ const prismaService = new PrismaService(getHost());
 
 let chart: IChartApi;
 let tvlSerie: ISeriesApi<"Area">;
-
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -67,12 +66,11 @@ onMounted(async (): Promise<void> => {
 onMounted(async () => {
   loading.value = true;
 
-
   data.value = await prismaService
-    .getPoolTvl("ethereum", "1m").then((x) => x.deposits);
+    .getPoolTvl("ethereum", "1m")
+    .then((x) => x.deposits);
   loading.value = false;
-}
-);
+});
 
 // Watches
 watch(
@@ -109,7 +107,6 @@ const createTvlOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
-
     priceFormat: {
       type: "price",
       precision: 2,

@@ -9,16 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
-  type HistoricalTroveManagerData
+  type HistoricalTroveManagerData,
 } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import {round, unit} from "@/Util";
+import { round, unit } from "@/Util";
 
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
@@ -26,7 +26,6 @@ const storeSettings = useSettingsStore();
 // Refs
 const loading = ref(true);
 const data = ref<HistoricalTroveManagerData[]>([]);
-
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -57,7 +56,7 @@ const options = computed(() => {
           enabled: false,
         },
         toolbar: {
-          show: false
+          show: false,
         },
       },
       xaxis: {
@@ -66,8 +65,7 @@ const options = computed(() => {
           formatter: formatterX,
           rotate: -60,
         },
-        tickPlacement: 'on',
-
+        tickPlacement: "on",
       },
       yaxis: {
         labels: {
@@ -76,14 +74,14 @@ const options = computed(() => {
       },
 
       stroke: {
-        curve: 'smooth'
+        curve: "smooth",
       },
       fill: {
-        type: 'gradient',
+        type: "gradient",
         gradient: {
           opacityFrom: 0.6,
           opacityTo: 0.8,
-        }
+        },
       },
       legend: {
         show: true,
@@ -125,12 +123,10 @@ const series = computed(() => {
   });
 });
 
-
 // Methods
 const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
-
 </script>
 
 <style lang="scss" scoped>

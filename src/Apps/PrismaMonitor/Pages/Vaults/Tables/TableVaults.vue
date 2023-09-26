@@ -5,15 +5,7 @@
     columns-data="troves-columns-data"
     :loading="loading"
     :rows="rows"
-    :columns="[
-      'Name',
-      'TVL',
-      'Debt',
-      'CR',
-      'MCR',
-      'Troves',
-      'Price',
-    ]"
+    :columns="['Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
@@ -38,7 +30,6 @@
           type="dollar"
         />
       </div>
-
 
       <div class="number">
         <AsyncValue
@@ -104,7 +95,6 @@
         />
       </div>
 
-
       <div></div>
     </template>
 
@@ -117,11 +107,13 @@
 import { ref, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue, DataTable, InputText } from "@/Framework";
-import {type TroveManagerDetails, TroveOverviewService} from "@PM/Services/Socket/TroveOverviewService";
+import {
+  type TroveManagerDetails,
+  TroveOverviewService,
+} from "@PM/Services/Socket/TroveOverviewService";
 const { t } = useI18n();
 
 const prismaService = new TroveOverviewService("ethereum");
-
 
 type Row = TroveManagerDetails;
 
@@ -134,7 +126,8 @@ const rows = ref<Row[]>([]);
 const filterData = (data: Row[]): Row[] => {
   return data.filter((row) => {
     const terms = search.value.toLocaleLowerCase().split(" ");
-    const includesTerm = (x: string) => terms.some((term) => x.toLocaleLowerCase().includes(term));
+    const includesTerm = (x: string) =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
     return includesTerm(row.name) || includesTerm(row.address);
   });
 };
@@ -181,7 +174,6 @@ onMounted(() => {
         grid-template-columns:
           minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
           1rem;
-
       }
 
       @container (max-width: 1100px) {
@@ -213,7 +205,6 @@ onMounted(() => {
         grid-template-columns:
           minmax(12ch, 1fr) repeat(8, minmax(var(--col-width), 0.75fr))
           2rem;
-
       }
 
       @container (max-width: 900px) {
@@ -242,14 +233,12 @@ onMounted(() => {
         grid-template-columns:
           minmax(12ch, 1fr) repeat(5, minmax(var(--col-width), 0.75fr))
           2rem;
-
       }
 
       @container (max-width: 600px) {
         grid-template-columns:
           minmax(12ch, 1fr) repeat(4, minmax(var(--col-width), 0.75fr))
           2rem;
-
       }
 
       @container (max-width: 500px) {
@@ -296,8 +285,7 @@ onMounted(() => {
     div:nth-child(4),
     div:nth-child(5),
     div:nth-child(6),
-    div:nth-child(7)
-    {
+    div:nth-child(7) {
       justify-content: end;
     }
   }

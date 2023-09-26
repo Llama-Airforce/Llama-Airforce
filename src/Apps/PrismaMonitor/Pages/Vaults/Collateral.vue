@@ -4,10 +4,9 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { defineComponent } from 'vue';
-import {type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { defineComponent } from "vue";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartCollateralPrices from "@PM/Pages/Vaults/Charts/ChartCollateralPrices.vue";
 
 export default defineComponent({
@@ -17,9 +16,9 @@ export default defineComponent({
   props: {
     vault: {
       type: Object as () => TroveManagerDetails | null,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 </script>
 
@@ -35,9 +34,9 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 
-@media only screen and (max-width: 1280px) {
-  display: flex;
-  flex-direction: column;
-}
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
