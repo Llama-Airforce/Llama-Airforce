@@ -49,8 +49,10 @@ const router = useRouter();
 // Watches
 watch(
   () => route.fullPath,
-  () => {
-    storeBreadcrumb.show = false;
+  (newRoute) => {
+    if (!newRoute.includes("pool")) {
+      storeBreadcrumb.show = false;
+    }
   }
 );
 
