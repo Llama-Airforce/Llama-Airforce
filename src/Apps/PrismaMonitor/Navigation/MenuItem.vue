@@ -37,6 +37,10 @@
                 v-if="menuItem.tag === 'beta'"
                 label="BETA"
               ></Chip>
+              <Chip
+                v-else-if="menuItem.tag === 'alpha'"
+                label="ALPHA"
+              ></Chip>
             </div>
           </div>
         </router-link>

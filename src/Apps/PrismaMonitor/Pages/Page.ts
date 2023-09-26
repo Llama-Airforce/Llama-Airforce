@@ -6,7 +6,7 @@ export type Page = {
   menuItems: (MenuNode | MenuLeaf)[];
 };
 
-export type Tag = "beta";
+export type Tag = "beta" | "alpha";
 
 export type MenuItem = {
   label: string;

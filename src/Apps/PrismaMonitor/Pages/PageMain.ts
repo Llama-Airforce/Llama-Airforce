@@ -25,6 +25,7 @@ export const pageMain: Page = {
     {
       to: "/mkusd",
       label: "mkUSD",
+      tag: "alpha",
     },
     {
       to: "/pool",
@@ -33,6 +34,7 @@ export const pageMain: Page = {
     {
       to: "/dao",
       label: "DAO",
+      tag: "alpha",
     },
   ],
 };
