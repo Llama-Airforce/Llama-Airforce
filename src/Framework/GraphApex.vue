@@ -36,7 +36,7 @@ const { options, series } = defineProps<Props>();
     gap: 0.5rem;
   }
 
-  .apexcharts-legend-marker {
+  &::v-deep(.apexcharts-legend-marker) {
     border-radius: var(--border-radius) !important;
   }
 }
