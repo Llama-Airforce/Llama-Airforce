@@ -26,6 +26,7 @@ export type CollateralRatioDecilesData = {
 
 export default class PrismaService extends ServiceBase {
 
+  // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
     chain: string,
     period: string
@@ -76,11 +77,20 @@ export default class PrismaService extends ServiceBase {
     return this.fetch(`${API_URL}/managers/${chain}/${manager}/histograms?unit=${unit}`);
   }
 
+  // Collateral endpoints
   public async getCollateralPrices(
     chain: string,
     collateral: string,
     period: string
   ): Promise<{ oracle: DecimalTimeSeries[], market: DecimalTimeSeries[] }> {
     return this.fetch(`${API_URL}/collateral/${chain}/${collateral}/prices?period=${period}`);
+  }
+
+  // Stability pool endpoints
+  public async getPoolTvl(
+    chain: string,
+    period: string
+  ): Promise<{ deposits: DecimalTimeSeries[]}> {
+    return this.fetch(`${API_URL}/pool/${chain}/deposits?period=${period}`);
   }
 }
