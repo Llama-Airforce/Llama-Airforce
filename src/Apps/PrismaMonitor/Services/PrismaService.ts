@@ -110,4 +110,11 @@ export default class PrismaService extends ServiceBase {
   ): Promise<{ distribution: DecimalLabelledSeries[] }> {
     return this.fetch(`${API_URL}/pool/${chain}/histogram/deposits`);
   }
+
+  public async getCumulativeWithdrawals(
+    chain: string,
+    period: string
+  ): Promise<{ withdrawals: DecimalTimeSeries[]}> {
+    return this.fetch(`${API_URL}/pool/${chain}/cumulative_withdrawals?period=${period}`);
+  }
 }

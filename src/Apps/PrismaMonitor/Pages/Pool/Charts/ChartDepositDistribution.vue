@@ -103,7 +103,7 @@ const categories = computed(() =>
 
 .graph {
 
-  height: 300px;
+  height: 100%;
 
   ::v-deep(.card-body) {
     .apexcharts-tooltip {

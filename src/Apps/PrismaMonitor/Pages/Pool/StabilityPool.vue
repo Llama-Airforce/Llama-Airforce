@@ -3,6 +3,7 @@
     <ChartPoolTvl></ChartPoolTvl>
     <ChartStableFlow></ChartStableFlow>
     <ChartDepositDistribution></ChartDepositDistribution>
+    <ChartCumulativeWithdrawals></ChartCumulativeWithdrawals>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartPoolTvl from "@PM/Pages/Pool/Charts/ChartPoolTvl.vue";
 import ChartStableFlow from "@PM/Pages/Pool/Charts/ChartStableFlow.vue";
 import ChartDepositDistribution from "@PM/Pages/Pool/Charts/ChartDepositDistribution.vue";
+import ChartCumulativeWithdrawals from "@PM/Pages/Pool/Charts/ChartCumulativeWithdrawals.vue";
 
 // Refs
 const storeBreadcrumb = useBreadcrumbStore();
