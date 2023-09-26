@@ -50,7 +50,7 @@ const router = useRouter();
 watch(
   () => route.fullPath,
   (newRoute) => {
-    if (!newRoute.includes("pool")) {
+    if (newRoute.includes("pool")) {
       storeBreadcrumb.show = false;
     }
   }

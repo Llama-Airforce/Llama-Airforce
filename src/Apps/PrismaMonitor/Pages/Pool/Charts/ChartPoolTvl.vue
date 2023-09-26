@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -25,6 +25,7 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
+import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
@@ -33,14 +34,13 @@ import type { Theme } from "@PM/Models/Theme";
 import PrismaService, {
   type DecimalTimeSeries,
 } from "@PM/Services/PrismaService";
-import { round, unit } from "@/Util";
 
 const { t } = useI18n();
 
 const prismaService = new PrismaService(getHost());
 
 let chart: IChartApi;
-let tvlSerie: ISeriesApi<"Area">;
+let serie: ISeriesApi<"Area">;
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -50,15 +50,16 @@ const data = ref<DecimalTimeSeries[]>([]);
 const loading = ref(false);
 
 // Hooks
-onMounted(async (): Promise<void> => {
+onMounted(() => {
   if (!chartRef.value) return;
-  await nextTick();
 
   chart = createChartFunc(
     chartRef.value,
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
-  tvlSerie = chart.addAreaSeries(createTvlOptionsSerie(storeSettings.theme));
+
+  serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+
   createSeries(data.value);
 });
 
@@ -69,6 +70,7 @@ onMounted(async () => {
   data.value = await prismaService
     .getPoolTvl("ethereum", "1m")
     .then((x) => x.deposits);
+
   loading.value = false;
 });
 
@@ -78,7 +80,7 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      tvlSerie.applyOptions(createTvlOptionsSerie(newTheme));
+      serie.applyOptions(createOptionsSerie(newTheme));
     }
   }
 );
@@ -88,7 +90,6 @@ watch(data, (newData) => {
 });
 
 // Methods
-
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   return createChartStyles(chartRef, theme, {
     leftPriceScale: {
@@ -103,7 +104,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createTvlOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
@@ -123,11 +124,11 @@ const createTvlOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
 };
 
 const createSeries = (newData: DecimalTimeSeries[]): void => {
-  if (!chart || !tvlSerie) {
+  if (!chart || !serie) {
     return;
   }
 
-  const newTvlSerie: LineData[] = chain(newData)
+  const newSerie: LineData[] = chain(newData)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -136,8 +137,8 @@ const createSeries = (newData: DecimalTimeSeries[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  if (newTvlSerie.length > 0) {
-    tvlSerie.setData(newTvlSerie);
+  if (newSerie.length > 0) {
+    serie.setData(newSerie);
   }
 
   chart.timeScale().fitContent();
@@ -158,7 +159,7 @@ const formatter = (y: number): string => {
     gap: 1rem;
 
     .chart {
-      height: 200px;
+      height: 300px;
       z-index: 0;
     }
   }

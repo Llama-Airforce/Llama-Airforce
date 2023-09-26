@@ -1,7 +1,6 @@
 <template>
   <CardGraph
-    class="chart"
-    title="mkUSD deposits and withdrawals"
+    :title="t('title')"
     :loading="loading"
     :options="options"
     :series="series"
@@ -10,19 +9,22 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { round, unit } from "@/Util";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
 import PrismaService, { type StableFlows } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { round, unit } from "@/Util";
 
-interface TooltipParams {
+const { t } = useI18n();
+
+type TooltipParams = {
   series: number[][];
   dataPointIndex: number;
   w: { globals: { seriesNames: string[] } };
-}
+};
 
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
@@ -34,13 +36,10 @@ const data = ref<StableFlows>({ deposits: [], withdrawals: [] });
 // Hooks
 onMounted(async (): Promise<void> => {
   loading.value = true;
-  try {
-    data.value = await prismaService.getStableFlow("ethereum", "1m");
-  } catch (error) {
-    console.error("An error occurred while loading data:", error);
-  } finally {
-    loading.value = false;
-  }
+
+  data.value = await prismaService.getStableFlow("ethereum", "1m");
+
+  loading.value = false;
 });
 
 // eslint-disable-next-line max-lines-per-function
@@ -96,13 +95,13 @@ const options = computed(() => {
           const data = series.map((managerSeries, index) => {
             const value = managerSeries[dataPointIndex];
             total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>: ${formatterY(
+            return `<div><b>${w.globals.seriesNames[index]}</b>:\t${formatterY(
               value
             )}</div>`;
           });
 
           // Add total
-          data.push(`<div><b>Total</b>: ${formatterY(total)}</div>`);
+          data.push(`<div><b>Total</b>:\t${formatterY(total)}</div>`);
 
           return data.join("");
         },
@@ -126,11 +125,11 @@ const categories = computed((): string[] => {
 
 const series = computed((): { name: string; data: number[] }[] => [
   {
-    name: "Deposits",
+    name: t("deposits"),
     data: Object.values(data.value.deposits).map((x) => x.value),
   },
   {
-    name: "Withdrawals",
+    name: t("withdrawals"),
     data: Object.values(data.value.withdrawals).map((x) => x.value),
   },
 ]);
@@ -146,11 +145,15 @@ const formatterY = (y: number): string =>
 
 .card-graph {
   ::v-deep(.card-body) {
-    height: 300px;
-
     @media only screen and (max-width: 1280px) {
       height: 300px;
     }
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: mkUSD deposits and withdrawals
+deposits: Deposits
+withdrawals: Withdrawals
+</i18n>

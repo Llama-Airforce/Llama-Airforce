@@ -5,7 +5,7 @@ import {
   LineStyle,
 } from "lightweight-charts";
 import { mergeWith } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
+import { getColors } from "@/Styles/Themes/PM";
 import type { Theme } from "@PM/Models/Theme";
 
 const createDefault = (

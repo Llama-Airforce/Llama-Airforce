@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-withdrawals"
-    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
+    columns-header="1fr"
     columns-data="withdrawals-columns-data"
     :loading="loading"
     :rows="rows"
@@ -11,7 +11,7 @@
       <div>{{ t("title") }}</div>
     </template>
 
-    <template #row="props: { item: Deposits }">
+    <template #row="props: { item: PoolStableOperation }">
       <div class="address">
         <a
           :href="`https://etherscan.io/address/${props.item.user}`"
@@ -90,68 +90,6 @@ onMounted(async () => {
   ::v-deep(.withdrawals-columns-data) {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-
-    // Non mobile
-    @media only screen and (min-width: 1280px) {
-      @container (max-width: 750px) {
-        --col-width: 11ch;
-      }
-
-      @container (max-width: 650px) {
-        --col-width: 10ch;
-      }
-
-      @container (max-width: 600px) {
-        --col-width: 9ch;
-      }
-
-      @container (max-width: 575px) {
-        --col-width: 8ch;
-      }
-    }
-
-    // Mobile
-    @media only screen and (max-width: 1280px) {
-      @container (max-width: 575px) {
-        --col-width: 11ch;
-      }
-
-      @container (max-width: 525px) {
-        --col-width: 10ch;
-      }
-
-      @container (max-width: 500px) {
-        --col-width: 9ch;
-      }
-
-      @container (max-width: 475px) {
-        --col-width: 8ch;
-      }
-
-      @container (max-width: 450px) {
-        --col-width: 7ch;
-      }
-
-      @container (max-width: 425px) {
-        --col-width: 6ch;
-      }
-
-      @container (max-width: 375px) {
-        grid-template-columns: 1fr repeat(2, var(--col-width));
-      }
-
-      @container (max-width: 325px) {
-        grid-template-columns: 1fr repeat(1, var(--col-width));
-      }
-
-      @container (max-width: 250px) {
-        grid-template-columns: 1fr;
-
-        div:nth-child(2) {
-          display: none;
-        }
-      }
-    }
 
     // Right adjust number columns.
     div:nth-child(2),
