@@ -23,7 +23,7 @@ export const pageMain: Page = {
       label: "Vaults",
     },
     {
-      to: "/",
+      to: "/mkusd",
       label: "mkUSD",
     },
     {
@@ -31,7 +31,7 @@ export const pageMain: Page = {
       label: "Stability pool",
     },
     {
-      to: "/",
+      to: "/dao",
       label: "DAO",
     },
   ],
