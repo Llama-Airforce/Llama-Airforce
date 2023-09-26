@@ -104,4 +104,10 @@ export default class PrismaService extends ServiceBase {
   ): Promise< StableFlows > {
     return this.fetch(`${API_URL}/pool/${chain}/stable_operations?period=${period}`);
   }
+
+  public async getStableDistribution(
+    chain: string
+  ): Promise<{ distribution: DecimalLabelledSeries[] }> {
+    return this.fetch(`${API_URL}/pool/${chain}/histogram/deposits`);
+  }
 }
