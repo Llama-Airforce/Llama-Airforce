@@ -18,10 +18,14 @@ export type HistoricalTroveManagerData = {
   data: DecimalTimeSeries[];
 };
 
-
 export type CollateralRatioDecilesData = {
   label: string;
   data: number;
+};
+
+export type StableFlows = {
+  withdrawals: DecimalTimeSeries[];
+  deposits: DecimalTimeSeries[];
 };
 
 export default class PrismaService extends ServiceBase {
@@ -92,5 +96,12 @@ export default class PrismaService extends ServiceBase {
     period: string
   ): Promise<{ deposits: DecimalTimeSeries[]}> {
     return this.fetch(`${API_URL}/pool/${chain}/deposits?period=${period}`);
+  }
+
+  public async getStableFlow(
+    chain: string,
+    period: string
+  ): Promise< StableFlows > {
+    return this.fetch(`${API_URL}/pool/${chain}/stable_operations?period=${period}`);
   }
 }

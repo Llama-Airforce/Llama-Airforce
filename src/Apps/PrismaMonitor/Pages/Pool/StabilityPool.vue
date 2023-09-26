@@ -1,6 +1,7 @@
 <template>
   <div class="pool">
     <ChartPoolTvl></ChartPoolTvl>
+    <ChartStableFlow></ChartStableFlow>
   </div>
 </template>
 
@@ -8,6 +9,7 @@
 import { onMounted } from "vue";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartPoolTvl from "@PM/Pages/Pool/Charts/ChartPoolTvl.vue";
+import ChartStableFlow from "@PM/Pages/Pool/Charts/ChartStableFlow.vue";
 
 // Refs
 const storeBreadcrumb = useBreadcrumbStore();
