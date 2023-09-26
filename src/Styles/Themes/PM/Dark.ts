@@ -1,9 +1,9 @@
 export const ColorsPMDark = {
-  blue: "#2f80ed",
-  yellow: "#e7ec5b",
-  green: "#5aec99",
-  red: "#ec5b5b",
-  purple: "#ec5be7",
+  blue: "#316eff",
+  yellow: "#f6f15a",
+  green: "#5af662",
+  red: "#f65a5a",
+  purple: "#bd5af6",
 
   backgroundColor: "#212121",
   level1: "#2b2b2b",
@@ -22,4 +22,5 @@ export const ColorsPMDarkArray = [
   ColorsPMDark.green,
   ColorsPMDark.red,
   ColorsPMDark.purple,
+  "#ff8f33",
 ];
