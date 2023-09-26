@@ -58,21 +58,20 @@
 
       <div class="number">{{ props.item.open_troves }}</div>
 
-      <div class="number">
-        <AsyncValue
-          :value="props.item.price"
-          :precision="0"
-          type="dollar"
-        />
-      </div>
+      <div class="number">${{ Math.round(props.item.price) }}</div>
     </template>
 
     <template #row-aggregation>
       <div></div>
-      <div class="number">{{ rows.reduce((acc, x) => acc + x.tvl, 0) }}</div>
-      <div></div>
-      <div></div>
-      <div></div>
+
+      <div class="number">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
+          :precision="0"
+          :show-symbol="false"
+          type="dollar"
+        />
+      </div>
 
       <div class="number">
         <AsyncValue
@@ -84,13 +83,13 @@
       </div>
 
       <div></div>
-
       <div></div>
 
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.open_troves, 0)"
           :precision="0"
+          :show-symbol="false"
           type="dollar"
         />
       </div>
@@ -104,8 +103,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText } from "@/Framework";
 import {
   type TroveManagerDetails,
@@ -121,27 +121,35 @@ type Row = TroveManagerDetails;
 const loading = ref(true);
 const search = ref("");
 
-const rows = ref<Row[]>([]);
+const rowsRaw = ref<Row[]>([]);
 
-const filterData = (data: Row[]): Row[] => {
-  return data.filter((row) => {
-    const terms = search.value.toLocaleLowerCase().split(" ");
-    const includesTerm = (x: string) =>
-      terms.some((term) => x.toLocaleLowerCase().includes(term));
-    return includesTerm(row.name) || includesTerm(row.address);
-  });
-};
+const rows = computed((): Row[] =>
+  chain(rowsRaw.value)
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string) =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(row.name) || includesTerm(row.address);
+    })
+    .value()
+);
 
 watch(prismaService.currentData, (newData) => {
   loading.value = true;
-  rows.value = filterData(newData);
+
+  rowsRaw.value = newData;
+
   loading.value = false;
 });
 
 // Hooks
 onMounted(() => {
   loading.value = true;
-  rows.value = filterData(prismaService.currentData.value);
+
+  rowsRaw.value = prismaService.currentData.value;
+
   loading.value = false;
 });
 

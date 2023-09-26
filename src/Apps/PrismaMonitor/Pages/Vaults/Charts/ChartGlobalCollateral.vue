@@ -1,7 +1,7 @@
 <template>
   <CardGraph
     class="chart"
-    title="Collateral value"
+    :title="t('title')"
     :loading="loading"
     :options="options"
     :series="series"
@@ -10,15 +10,18 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { round, unit } from "@/Util";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
   type HistoricalTroveManagerData,
 } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { round, unit } from "@/Util";
+
+const { t } = useI18n();
 
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
@@ -30,15 +33,11 @@ const data = ref<HistoricalTroveManagerData[]>([]);
 // Hooks
 onMounted(async (): Promise<void> => {
   loading.value = true;
-  try {
-    data.value = await prismaService
-      .getHistoricalCollateralOverview("ethereum", "6m")
-      .then((x) => x.managers);
-  } catch (error) {
-    console.error("An error occurred while loading data:", error);
-  } finally {
-    loading.value = false;
-  }
+  data.value = await prismaService
+    .getHistoricalCollateralOverview("ethereum", "6m")
+    .then((x) => x.managers);
+
+  loading.value = false;
 });
 
 // eslint-disable-next-line max-lines-per-function
@@ -134,11 +133,13 @@ const formatterY = (y: number): string =>
 
 .card-graph {
   ::v-deep(.card-body) {
-    height: 300px;
-
     @media only screen and (max-width: 1280px) {
       height: 300px;
     }
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Collateral value
+</i18n>

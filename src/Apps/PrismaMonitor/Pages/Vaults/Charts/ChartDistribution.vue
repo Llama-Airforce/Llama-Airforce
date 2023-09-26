@@ -11,7 +11,7 @@
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
 
@@ -81,9 +81,11 @@ const categories = computed(() => data.map((x) => x.label));
 @import "@/Styles/Variables.scss";
 
 .graph {
-  height: 300px;
-
   ::v-deep(.card-body) {
+    @media only screen and (max-width: 1280px) {
+      height: 300px;
+    }
+
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
     }

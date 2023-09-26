@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartOpenTroves from "@PM/Pages/Vaults/Charts/ChartOpenTroves.vue";
 import ChartCollateralRatio from "@PM/Pages/Vaults/Charts/ChartCollateralRatio.vue";
@@ -21,9 +22,8 @@ import ChartGlobalCollateral from "@PM/Pages/Vaults/Charts/ChartGlobalCollateral
 import TableVaults from "@PM/Pages/Vaults/Tables/TableVaults.vue";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
-import { useRouter } from "vue-router";
-// Refs
 
+// Refs
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
 const router = useRouter();
@@ -62,13 +62,7 @@ const onVaultSelect = async (vault: TroveManagerDetails) => {
 .vaults {
   max-width: calc(1920px - 18.125rem);
 
-  display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
-  }
+  grid-template-rows: auto 1fr 1fr;
 }
 </style>

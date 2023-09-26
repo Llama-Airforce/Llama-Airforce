@@ -49,15 +49,12 @@ const loading = ref(false);
 
 const loadData = async () => {
   loading.value = true;
-  try {
-    data.value = await prismaService
-      .getCollateralRatioGrouped("ethereum", "all")
-      .then((x) => x.data);
-  } catch (error) {
-    console.error("An error occurred while loading data:", error);
-  } finally {
-    loading.value = false;
-  }
+
+  data.value = await prismaService
+    .getCollateralRatioGrouped("ethereum", "all")
+    .then((x) => x.data);
+
+  loading.value = false;
 };
 
 // Hooks
@@ -154,7 +151,7 @@ const createSeries = (globalCr: DecimalTimeSeries[]): void => {
     gap: 1rem;
 
     .chart {
-      height: 200px;
+      height: 300px;
       z-index: 0;
     }
   }

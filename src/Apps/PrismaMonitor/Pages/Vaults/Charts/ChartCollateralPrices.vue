@@ -257,7 +257,7 @@ const createSeries = (newData: {
     gap: 1rem;
 
     .chart {
-      height: 200px;
+      height: 300px;
       z-index: 0;
     }
   }

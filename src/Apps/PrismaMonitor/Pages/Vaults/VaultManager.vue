@@ -1,5 +1,5 @@
 <template>
-  <div class="vault-overview">
+  <div class="vault-manager">
     <TabView
       :active="tabActive"
       @tab="tabActive = $event.index"
@@ -24,28 +24,28 @@
 
       <TabItem header="Liquidations">
         <KeepAlive>
-          <VaultOverview
+          <Liquidations
             v-if="tabActive === 2 && vault"
             :vault="vault"
-          ></VaultOverview>
+          ></Liquidations>
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Find Trove">
         <KeepAlive>
-          <VaultOverview
+          <FindTrove
             v-if="tabActive === 3 && vault"
             :vault="vault"
-          ></VaultOverview>
+          ></FindTrove>
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Simulation">
         <KeepAlive>
-          <VaultOverview
+          <Simulation
             v-if="tabActive === 4 && vault"
             :vault="vault"
-          ></VaultOverview>
+          ></Simulation>
         </KeepAlive>
       </TabItem>
     </TabView>
@@ -61,6 +61,9 @@ import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 import VaultOverview from "@PM/Pages/Vaults/VaultOverview.vue";
 import Collateral from "@PM/Pages/Vaults/Collateral.vue";
+import Liquidations from "@PM/Pages/Vaults/Liquidations.vue";
+import FindTrove from "@PM/Pages/Vaults/FindTrove.vue";
+import Simulation from "@PM/Pages/Vaults/Simulation.vue";
 
 const prismaService = new TroveOverviewService("ethereum");
 
@@ -159,9 +162,10 @@ watch(tabActive, async (newTab) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.vault-overview {
-  padding-top: 2rem;
+@include dashboard("vault-manager");
+
+.vault-manager {
   position: relative;
-  display: grid;
+  max-width: calc(1920px - 18.125rem);
 }
 </style>

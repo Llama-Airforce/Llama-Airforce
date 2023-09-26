@@ -12,7 +12,7 @@ import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
 import { addressShort } from "@/Wallet";
@@ -63,7 +63,9 @@ const options = computed((): unknown => {
           label = label.length > 10 ? addressShort(label) : label;
           const value = x.series[x.seriesIndex];
           const data = [
-            `<div><b>${label}</b>:</div><div>${formatter(value)}</div>`,
+            `<div><b>${label}</b>:</div><div>${formatter(
+              value as unknown as number
+            )}</div>`,
           ];
 
           return data.join("");
@@ -89,9 +91,11 @@ const formatter = (x: number): string =>
 @import "@/Styles/Variables.scss";
 
 .graph {
-  height: 300px;
-
   ::v-deep(.card-body) {
+    @media only screen and (max-width: 1280px) {
+      height: 300px;
+    }
+
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
     }

@@ -1,42 +1,29 @@
 <template>
-  <div class="vault">
+  <div class="collateral">
     <ChartCollateralPrices :vault="vault"></ChartCollateralPrices>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartCollateralPrices from "@PM/Pages/Vaults/Charts/ChartCollateralPrices.vue";
 
-export default defineComponent({
-  components: {
-    ChartCollateralPrices,
-  },
-  props: {
-    vault: {
-      type: Object as () => TroveManagerDetails | null,
-      required: true,
-    },
-  },
-});
+// Props
+interface Props {
+  vault: TroveManagerDetails | null;
+}
+
+const { vault } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("vault");
+.collateral {
+  margin: var(--dashboard-gap) 0;
 
-.vault {
-  max-width: calc(1920px - 18.125rem);
-
-  display: grid;
+  @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>

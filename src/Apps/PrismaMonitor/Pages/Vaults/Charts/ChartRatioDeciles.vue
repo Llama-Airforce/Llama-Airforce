@@ -1,7 +1,7 @@
 <template>
   <CardGraph
     class="chart"
-    title="Debt per Collateral Ratio Deciles"
+    :title="t('title')"
     :loading="loading"
     :options="options"
     :series="series"
@@ -10,15 +10,18 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
   type CollateralRatioDecilesData,
 } from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
+
+const { t } = useI18n();
 
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
@@ -30,15 +33,12 @@ const data = ref<CollateralRatioDecilesData[]>([]);
 // Hooks
 onMounted(async (): Promise<void> => {
   loading.value = true;
-  try {
-    data.value = await prismaService
-      .getRatioDistributionGrouped("ethereum")
-      .then((x) => x.deciles);
-  } catch (error) {
-    console.error("An error occurred while loading data:", error);
-  } finally {
-    loading.value = false;
-  }
+
+  data.value = await prismaService
+    .getRatioDistributionGrouped("ethereum")
+    .then((x) => x.deciles);
+
+  loading.value = false;
 });
 
 // eslint-disable-next-line max-lines-per-function
@@ -95,7 +95,7 @@ const categories = computed((): string[] => data.value.map((x) => x.label));
 
 const series = computed((): { name: string; data: number[] }[] => [
   {
-    name: "Debt",
+    name: t("debt"),
     data: Object.values(data.value).map((x) => x.data),
   },
 ]);
@@ -112,11 +112,14 @@ const formatterY = (y: number): string =>
 
 .card-graph {
   ::v-deep(.card-body) {
-    height: 300px;
-
     @media only screen and (max-width: 1280px) {
       height: 300px;
     }
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Debt per Collateral Ratio Deciles
+debt: Debt
+</i18n>

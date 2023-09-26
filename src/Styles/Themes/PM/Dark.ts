@@ -11,6 +11,7 @@ export const ColorsPMDark = {
   level3: "#545454",
   level4: "#787878",
   level5: "#9e9e9e",
+  level6: "#c4c4c4",
 
   text: "#ffffff",
 };

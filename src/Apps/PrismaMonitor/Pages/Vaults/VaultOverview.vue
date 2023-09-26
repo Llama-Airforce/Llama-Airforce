@@ -1,45 +1,31 @@
 <template>
-  <div class="vault">
+  <div class="vault-overview">
     <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
     <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
 import ChartDistributionSelector from "@PM/Pages/Vaults/Charts/ChartDistributionSelector.vue";
 
-export default defineComponent({
-  components: {
-    ChartDistributionSelector,
-    ChartLargePositionsSelector,
-  },
-  props: {
-    vault: {
-      type: Object as () => TroveManagerDetails | null,
-      required: true,
-    },
-  },
-});
+// Props
+interface Props {
+  vault: TroveManagerDetails | null;
+}
+
+const { vault } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("vault");
+.vault-overview {
+  margin: var(--dashboard-gap) 0;
 
-.vault {
-  max-width: calc(1920px - 18.125rem);
-
-  display: grid;
+  @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>

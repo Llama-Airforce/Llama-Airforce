@@ -114,7 +114,7 @@ const copyUrl = async () => {
       }
 
       .items {
-        width: 220%;
+        width: 100%;
 
         @media only screen and (max-width: 1280px) {
           width: 125%;

@@ -2,24 +2,23 @@
   <Card
     class="chart-container"
     :title="t('title')"
+    :loading="loading"
   >
     <template #actions>
       <div class="actions">
-        <div class="chart-types">
-          <ButtonToggle
-            value="Coll."
-            :model-value="chartType === 'collateral'"
-            @click="onChartType('collateral')"
-          >
-          </ButtonToggle>
+        <ButtonToggle
+          value="Coll."
+          :model-value="chartType === 'collateral'"
+          @click="onChartType('collateral')"
+        >
+        </ButtonToggle>
 
-          <ButtonToggle
-            value="Debt"
-            :model-value="chartType === 'debt'"
-            @click="onChartType('debt')"
-          >
-          </ButtonToggle>
-        </div>
+        <ButtonToggle
+          value="Debt"
+          :model-value="chartType === 'debt'"
+          @click="onChartType('debt')"
+        >
+        </ButtonToggle>
       </div>
     </template>
 
@@ -105,39 +104,25 @@ const onChartType = async (type: ChartType) => {
 
 .chart-container {
   ::v-deep(.card-body) {
+    height: 300px;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
   }
 
   .actions {
-    flex-grow: 1;
+    display: flex;
+    font-size: 0.875rem;
 
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
+    button {
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
 
-    .legend {
-      grid-column: 1;
-      justify-self: center;
-    }
-
-    .chart-types {
-      grid-column: 2;
-
-      display: flex;
-      font-size: 0.875rem;
-
-      button {
-        &:not(:last-child) {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-
-        &:not(:first-child) {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
     }
   }
