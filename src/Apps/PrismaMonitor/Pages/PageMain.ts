@@ -19,25 +19,20 @@ export const pageMain: Page = {
   ],
   menuItems: [
     {
-      label: "Platform",
-      children: [
-        {
-          to: "/vaults",
-          label: "Vaults",
-        },
-        {
-          to: "/",
-          label: "mkUSD",
-        },
-        {
-          to: "/pool",
-          label: "Stability pool",
-        },
-        {
-          to: "/",
-          label: "DAO",
-        },
-      ],
+      to: "/vaults",
+      label: "Vaults",
+    },
+    {
+      to: "/",
+      label: "mkUSD",
+    },
+    {
+      to: "/pool",
+      label: "Stability pool",
+    },
+    {
+      to: "/",
+      label: "DAO",
     },
   ],
 };
