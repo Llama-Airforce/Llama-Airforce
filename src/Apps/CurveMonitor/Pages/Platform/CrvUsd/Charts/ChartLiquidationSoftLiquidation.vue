@@ -8,6 +8,7 @@
       <div class="actions">
         <Legend
           :items="['% of loans in soft liquidation', 'Collateral price']"
+          :colors="getColorsArray(storeSettings.theme)"
         ></Legend>
       </div>
     </template>
@@ -22,7 +23,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
-import Legend from "@CM/Components/Legend.vue";
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
@@ -34,8 +34,9 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
-import { getColors } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";

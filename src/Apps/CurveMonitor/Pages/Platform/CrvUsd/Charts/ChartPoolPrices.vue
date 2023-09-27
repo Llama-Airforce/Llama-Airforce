@@ -8,6 +8,7 @@
       :items="coins"
       :disabled="coinsDisabled"
       :clickable="true"
+      :colors="getColorsArray(storeSettings.theme)"
       @click="onLegendClick"
     ></Legend>
 
@@ -32,13 +33,13 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
-import Legend from "@CM/Components/Legend.vue";
 import CurveService, {
   type PoolPrice,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";

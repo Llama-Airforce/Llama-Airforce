@@ -6,7 +6,10 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="['Liquidator Revenue', 'Discount']"></Legend>
+        <Legend
+          :items="['Liquidator Revenue', 'Discount']"
+          :colors="getColorsArray(storeSettings.theme)"
+        ></Legend>
       </div>
     </template>
 
@@ -31,9 +34,9 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
-import { getColors } from "@/Styles/Themes/CM";
-import Legend from "@CM/Components/Legend.vue";
+import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";

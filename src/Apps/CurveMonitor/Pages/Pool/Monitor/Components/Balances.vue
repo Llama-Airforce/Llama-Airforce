@@ -3,7 +3,10 @@
     class="balances"
     :title="t('title')"
   >
-    <Legend :items="store.coins.map((x) => x.name)"></Legend>
+    <Legend
+      :items="store.coins.map((x) => x.name)"
+      :colors="getColorsArray(storeSettings.theme)"
+    ></Legend>
 
     <div
       ref="chartRef"
@@ -26,10 +29,10 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import type { Balances } from "@CM/Pages/Pool/Monitor/Models";
-import Legend from "@CM/Components/Legend.vue";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";

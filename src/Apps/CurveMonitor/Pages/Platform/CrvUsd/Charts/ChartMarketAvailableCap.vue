@@ -6,7 +6,10 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="['Borrowable', 'Debt ceiling']"></Legend>
+        <Legend
+          :items="['Borrowable', 'Debt ceiling']"
+          :colors="getColorsArray(storeSettings.theme)"
+        ></Legend>
       </div>
     </template>
     <div
@@ -20,7 +23,6 @@
 import { ref, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import Legend from "@CM/Components/Legend.vue";
 import {
   createChart as createChartFunc,
   type IChartApi,
@@ -31,9 +33,10 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
-import { getColors } from "@/Styles/Themes/CM";
+import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";

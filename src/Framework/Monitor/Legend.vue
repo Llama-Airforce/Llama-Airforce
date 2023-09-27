@@ -22,29 +22,29 @@
 </template>
 
 <script setup lang="ts">
-import { getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-
 // Props
 interface Props {
+  colors: string[];
   items: string[];
   clickable?: boolean;
   disabled?: string[];
 }
 
-const { items, clickable = false, disabled = [] } = defineProps<Props>();
+const {
+  items,
+  colors,
+  clickable = false,
+  disabled = [],
+} = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
   click: [item: string];
 }>();
 
-// Refs
-const storeSettings = useSettingsStore();
-
 // Methods
 const color = (i: number): string => {
-  return getColorsArray(storeSettings.theme)[i];
+  return colors[i];
 };
 </script>
 
