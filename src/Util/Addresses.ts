@@ -171,7 +171,7 @@ export const CurveVotingAddress = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
 
 // Convex L2 Voting
 export const GaugeVotePlatformAddress =
-  "0x6d024fa49de64a975980cddd4c3212492d189e57";
+  "0x371b805edfdf180053a0ab5d8d6c90ddef93c14c";
 
 // Other
 export const PirexCvxAddress = "0x35a398425d9f1029021a92bc3d2557d42c8588d7";

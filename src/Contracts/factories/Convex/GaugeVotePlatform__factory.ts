@@ -14,7 +14,7 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "_guageRegistry",
+        name: "_gaugeRegistry",
         type: "address",
       },
       {
@@ -254,6 +254,51 @@ const _abi = [
     name: "createProposal",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentEpoch",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "epochDuration",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "equalizerAccounts",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -623,29 +668,6 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_proposalId",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_user",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_newWeight",
-        type: "uint256",
-      },
-    ],
-    name: "updateUserWeight",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "",
         type: "uint256",
       },
@@ -666,11 +688,6 @@ const _abi = [
         internalType: "int256",
         name: "adjustedWeight",
         type: "int256",
-      },
-      {
-        internalType: "uint256",
-        name: "pendingWeight",
-        type: "uint256",
       },
       {
         internalType: "address",
@@ -720,6 +737,25 @@ const _abi = [
     name: "vote",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "voteTotals",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

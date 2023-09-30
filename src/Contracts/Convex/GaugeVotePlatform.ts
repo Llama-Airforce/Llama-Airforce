@@ -30,6 +30,9 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
   functions: {
     "acceptOwnership()": FunctionFragment;
     "createProposal(bytes32,uint256,uint256)": FunctionFragment;
+    "currentEpoch()": FunctionFragment;
+    "epochDuration()": FunctionFragment;
+    "equalizerAccounts(address)": FunctionFragment;
     "forceEndProposal()": FunctionFragment;
     "gaugeRegistry()": FunctionFragment;
     "gaugeTotals(uint256,address)": FunctionFragment;
@@ -49,10 +52,10 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
     "supplyProofs(address,bytes32[],uint256,int256,address)": FunctionFragment;
     "surrogateRegistry()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "updateUserWeight(uint256,address,uint256)": FunctionFragment;
     "userInfo(uint256,address)": FunctionFragment;
     "userManager()": FunctionFragment;
     "vote(address,address[],uint256[])": FunctionFragment;
+    "voteTotals(uint256)": FunctionFragment;
     "voteWithProofs(address,address[],uint256[],bytes32[],uint256,int256,address)": FunctionFragment;
     "votedUsers(uint256,uint256)": FunctionFragment;
   };
@@ -61,6 +64,9 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "acceptOwnership"
       | "createProposal"
+      | "currentEpoch"
+      | "epochDuration"
+      | "equalizerAccounts"
       | "forceEndProposal"
       | "gaugeRegistry"
       | "gaugeTotals"
@@ -80,10 +86,10 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
       | "supplyProofs"
       | "surrogateRegistry"
       | "transferOwnership"
-      | "updateUserWeight"
       | "userInfo"
       | "userManager"
       | "vote"
+      | "voteTotals"
       | "voteWithProofs"
       | "votedUsers"
   ): FunctionFragment;
@@ -95,6 +101,18 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "createProposal",
     values: [BytesLike, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "currentEpoch",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "epochDuration",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "equalizerAccounts",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "forceEndProposal",
@@ -164,10 +182,6 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateUserWeight",
-    values: [BigNumberish, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "userInfo",
     values: [BigNumberish, string]
   ): string;
@@ -178,6 +192,10 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "vote",
     values: [string, string[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "voteTotals",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "voteWithProofs",
@@ -202,6 +220,18 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "createProposal",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "currentEpoch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "epochDuration",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "equalizerAccounts",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -262,16 +292,13 @@ export interface GaugeVotePlatformInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateUserWeight",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "userManager",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "vote", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "voteTotals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "voteWithProofs",
     data: BytesLike
@@ -448,6 +475,15 @@ export interface GaugeVotePlatform extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    currentEpoch(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    epochDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    equalizerAccounts(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     forceEndProposal(
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
@@ -542,22 +578,14 @@ export interface GaugeVotePlatform extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    updateUserWeight(
-      _proposalId: BigNumberish,
-      _user: string,
-      _newWeight: BigNumberish,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
     userInfo(
       arg0: BigNumberish,
       arg1: string,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, string, number] & {
+      [BigNumber, BigNumber, string, number] & {
         baseWeight: BigNumber;
         adjustedWeight: BigNumber;
-        pendingWeight: BigNumber;
         delegate: string;
         voteStatus: number;
       }
@@ -571,6 +599,11 @@ export interface GaugeVotePlatform extends BaseContract {
       _weights: BigNumberish[],
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
+
+    voteTotals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     voteWithProofs(
       _account: string,
@@ -600,6 +633,12 @@ export interface GaugeVotePlatform extends BaseContract {
     _endTime: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
+
+  currentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
+
+  epochDuration(overrides?: CallOverrides): Promise<BigNumber>;
+
+  equalizerAccounts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   forceEndProposal(
     overrides?: Overrides & { from?: string }
@@ -695,22 +734,14 @@ export interface GaugeVotePlatform extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  updateUserWeight(
-    _proposalId: BigNumberish,
-    _user: string,
-    _newWeight: BigNumberish,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
   userInfo(
     arg0: BigNumberish,
     arg1: string,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, string, number] & {
+    [BigNumber, BigNumber, string, number] & {
       baseWeight: BigNumber;
       adjustedWeight: BigNumber;
-      pendingWeight: BigNumber;
       delegate: string;
       voteStatus: number;
     }
@@ -724,6 +755,8 @@ export interface GaugeVotePlatform extends BaseContract {
     _weights: BigNumberish[],
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
+
+  voteTotals(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   voteWithProofs(
     _account: string,
@@ -751,6 +784,15 @@ export interface GaugeVotePlatform extends BaseContract {
       _endTime: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    currentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
+
+    epochDuration(overrides?: CallOverrides): Promise<BigNumber>;
+
+    equalizerAccounts(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     forceEndProposal(overrides?: CallOverrides): Promise<void>;
 
@@ -841,22 +883,14 @@ export interface GaugeVotePlatform extends BaseContract {
 
     transferOwnership(_owner: string, overrides?: CallOverrides): Promise<void>;
 
-    updateUserWeight(
-      _proposalId: BigNumberish,
-      _user: string,
-      _newWeight: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     userInfo(
       arg0: BigNumberish,
       arg1: string,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, string, number] & {
+      [BigNumber, BigNumber, string, number] & {
         baseWeight: BigNumber;
         adjustedWeight: BigNumber;
-        pendingWeight: BigNumber;
         delegate: string;
         voteStatus: number;
       }
@@ -870,6 +904,11 @@ export interface GaugeVotePlatform extends BaseContract {
       _weights: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    voteTotals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     voteWithProofs(
       _account: string,
@@ -981,6 +1020,15 @@ export interface GaugeVotePlatform extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    currentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
+
+    epochDuration(overrides?: CallOverrides): Promise<BigNumber>;
+
+    equalizerAccounts(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     forceEndProposal(
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
@@ -1061,13 +1109,6 @@ export interface GaugeVotePlatform extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    updateUserWeight(
-      _proposalId: BigNumberish,
-      _user: string,
-      _newWeight: BigNumberish,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
     userInfo(
       arg0: BigNumberish,
       arg1: string,
@@ -1081,6 +1122,11 @@ export interface GaugeVotePlatform extends BaseContract {
       _gauges: string[],
       _weights: BigNumberish[],
       overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    voteTotals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     voteWithProofs(
@@ -1111,6 +1157,15 @@ export interface GaugeVotePlatform extends BaseContract {
       _startTime: BigNumberish,
       _endTime: BigNumberish,
       overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    currentEpoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    epochDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    equalizerAccounts(
+      arg0: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     forceEndProposal(
@@ -1196,13 +1251,6 @@ export interface GaugeVotePlatform extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    updateUserWeight(
-      _proposalId: BigNumberish,
-      _user: string,
-      _newWeight: BigNumberish,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
     userInfo(
       arg0: BigNumberish,
       arg1: string,
@@ -1216,6 +1264,11 @@ export interface GaugeVotePlatform extends BaseContract {
       _gauges: string[],
       _weights: BigNumberish[],
       overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    voteTotals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     voteWithProofs(
