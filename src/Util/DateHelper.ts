@@ -1,3 +1,7 @@
+export function toUnixSeconds(date: Date): number {
+  return Math.round(date.getTime() / 1000);
+}
+
 export function addDays(date: Date, days: number): Date {
   const newDate = new Date(date.valueOf());
   newDate.setUTCDate(newDate.getUTCDate() + days);

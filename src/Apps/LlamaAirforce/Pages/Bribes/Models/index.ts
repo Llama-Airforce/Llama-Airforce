@@ -12,7 +12,10 @@ export type {
   Epoch,
 } from "@LAF/Pages/Bribes/Models/Epoch";
 
-export type { EpochId } from "@LAF/Pages/Bribes/Models/EpochId";
+export {
+  type EpochId,
+  toString as epochIdToString,
+} from "@LAF/Pages/Bribes/Models/EpochId";
 
 export type { EpochOverview } from "@LAF/Pages/Bribes/Models/EpochOverview";
 
