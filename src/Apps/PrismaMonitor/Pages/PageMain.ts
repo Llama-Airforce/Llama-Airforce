@@ -1,4 +1,4 @@
-import { type Page } from "@PM/Pages/Page";
+import { type Page } from "@/Framework/Monitor";
 
 import Vaults from "@PM/Pages/Vaults/Vaults.vue";
 import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";

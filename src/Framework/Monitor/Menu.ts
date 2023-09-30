@@ -1,11 +1,3 @@
-import { type RouteRecordRaw } from "vue-router";
-
-export type Page = {
-  titleRoute: string;
-  routes: RouteRecordRaw[];
-  menuItems: (MenuNode | MenuLeaf)[];
-};
-
 export type Tag = "beta";
 
 export type MenuItem = {

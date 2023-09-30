@@ -17,9 +17,15 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
-import MenuItem from "@CM/Navigation/MenuItem.vue";
-import type { Page } from "@CM/Pages/Page";
-import { usePageStore } from "@CM/Stores/PageStore";
+import { type Page } from "@/Framework/Monitor";
+import MenuItem from "@/Framework/Monitor/MenuItem.vue";
+
+// Props
+interface Props {
+  pages: Page[];
+}
+
+const { pages = [] } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -27,11 +33,10 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const storePage = usePageStore();
 const route = useRoute();
 
 const page = computed((): Page | undefined => {
-  return storePage.pages.find((p) => subIsActive(p.titleRoute, route));
+  return pages.find((p) => subIsActive(p.titleRoute, route));
 });
 
 const menuItems = computed(() => {

@@ -12,7 +12,11 @@
       class="menu-content"
       :expanded="expanded"
     >
-      <Menu @navigated="onNavigated"></Menu>
+      <Menu
+        :pages="storePage.pages"
+        @navigated="onNavigated"
+      ></Menu>
+
       <Bottom @navigated="onNavigated"></Bottom>
     </Collapsible>
   </div>
@@ -21,9 +25,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Collapsible } from "@/Framework";
+import { Menu } from "@/Framework/Monitor";
 import Header from "@CM/Navigation/Header.vue";
-import Menu from "@CM/Navigation/Menu.vue";
 import Bottom from "@CM/Navigation/Bottom.vue";
+import { usePageStore } from "@CM/Stores/PageStore";
 
 // Emits
 const emit = defineEmits<{
@@ -31,6 +36,8 @@ const emit = defineEmits<{
 }>();
 
 // Refs
+const storePage = usePageStore();
+
 const expanded = ref(false);
 
 // Events

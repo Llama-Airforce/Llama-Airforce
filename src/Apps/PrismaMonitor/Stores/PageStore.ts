@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Page } from "@PM/Pages/Page";
+import { type Page } from "@/Framework/Monitor";
 
 type State = {
   pages: Page[];

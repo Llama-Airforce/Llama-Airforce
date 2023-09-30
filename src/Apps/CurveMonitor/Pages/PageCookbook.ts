@@ -1,4 +1,4 @@
-import { type Page } from "@CM/Pages/Page";
+import { type Page } from "@/Framework/Monitor";
 
 import Colors from "@/Framework/Cookbook/Colors.vue";
 import Dashboard from "@/Framework/Cookbook/Dashboard.vue";
