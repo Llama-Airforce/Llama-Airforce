@@ -34,6 +34,13 @@ export type StableFlows = {
   deposits: DecimalTimeSeries[];
 };
 
+export type StableKPI = {
+  price: number;
+  supply: number;
+  volume: number;
+  depth: number;
+};
+
 export default class PrismaService extends ServiceBase {
   // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
@@ -186,6 +193,14 @@ export default class PrismaService extends ServiceBase {
   ): Promise<{ holders: DecimalLabelledSeries[] }> {
     return this.fetch(
       `${API_URL}/mkusd/${chain}/holders`
+    );
+  }
+
+  public async getStableCoinKPI(
+    chain: string
+  ): Promise<{ info: StableKPI }> {
+    return this.fetch(
+      `${API_URL}/mkusd/${chain}/general`
     );
   }
 }

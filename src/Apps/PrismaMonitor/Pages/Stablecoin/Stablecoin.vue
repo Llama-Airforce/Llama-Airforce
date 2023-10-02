@@ -1,5 +1,6 @@
 <template>
   <div class="pool">
+    <KPIs></KPIs>
     <ChartPrice></ChartPrice>
     <ChartPriceDistribution></ChartPriceDistribution>
     <ChartHolders></ChartHolders>
@@ -10,6 +11,7 @@
 import ChartPrice from "@PM/Pages/Stablecoin/Charts/ChartPrice.vue";
 import ChartPriceDistribution from "@PM/Pages/Stablecoin/Charts/ChartPriceDistribution.vue";
 import ChartHolders from "@PM/Pages/Stablecoin/Charts/ChartHolders.vue";
+import KPIs from "@PM/Pages/Stablecoin/KPIs.vue";
 </script>
 
 <style lang="scss" scoped>

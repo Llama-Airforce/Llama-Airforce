@@ -111,7 +111,7 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     priceFormat: {
       type: "price",
       precision: 6,
-      minMove: 0.00001,
+      minMove: 0.01,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
