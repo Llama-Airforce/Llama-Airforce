@@ -2,6 +2,7 @@ import { type Page } from "@/Framework/Monitor";
 
 import Vaults from "@PM/Pages/Vaults/Vaults.vue";
 import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";
+import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 
 export const pageMain: Page = {
@@ -10,6 +11,7 @@ export const pageMain: Page = {
     { path: "/", redirect: { name: "vaults" } },
 
     { path: "/pool", name: "pool", component: StabilityPool },
+    { path: "/mkusd", name: "mkusd", component: Stablecoin },
     { path: "/vaults", name: "vaults", component: Vaults },
     {
       path: "/vault/:vaultAddr/:tab?",

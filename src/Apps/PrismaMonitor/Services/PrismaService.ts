@@ -160,4 +160,32 @@ export default class PrismaService extends ServiceBase {
       `${API_URL}/pool/${chain}/top/stable_withdrawals?top=${top}&period=${period}`
     );
   }
+
+  // mkUSD endpoints
+  public async getPriceHistory(
+    chain: string,
+    period: string
+  ): Promise<{ prices: DecimalTimeSeries[] }> {
+    return this.fetch(
+      `${API_URL}/mkusd/${chain}/history?period=${period}`
+    );
+  }
+
+  public async getPriceHistogram(
+    chain: string,
+    bins: number,
+    period: string
+  ): Promise<{ histogram: DecimalLabelledSeries[] }> {
+    return this.fetch(
+      `${API_URL}/mkusd/${chain}/histogram?period=${period}&bins=${bins}`
+    );
+  }
+
+  public async getLargeStableCoinHolders(
+    chain: string
+  ): Promise<{ holders: DecimalLabelledSeries[] }> {
+    return this.fetch(
+      `${API_URL}/mkusd/${chain}/holders`
+    );
+  }
 }
