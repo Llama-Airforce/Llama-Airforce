@@ -4,6 +4,7 @@
     <ChartPrice></ChartPrice>
     <ChartPriceDistribution></ChartPriceDistribution>
     <ChartHolders></ChartHolders>
+    <ChartDepthContainer></ChartDepthContainer>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import ChartPrice from "@PM/Pages/Stablecoin/Charts/ChartPrice.vue";
 import ChartPriceDistribution from "@PM/Pages/Stablecoin/Charts/ChartPriceDistribution.vue";
 import ChartHolders from "@PM/Pages/Stablecoin/Charts/ChartHolders.vue";
 import KPIs from "@PM/Pages/Stablecoin/KPIs.vue";
+import ChartDepthContainer from "@PM/Pages/Stablecoin/Charts/ChartDepthContainer.vue";
 </script>
 
 <style lang="scss" scoped>

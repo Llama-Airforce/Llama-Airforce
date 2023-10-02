@@ -41,6 +41,19 @@ export type StableKPI = {
   depth: number;
 };
 
+export type DepthNumbers = {
+  amounts: number[];
+  prices: number[];
+};
+
+export type PoolDepth = {
+  name: string;
+  address: string;
+  tokens: string[];
+  bid: DepthNumbers;
+  ask: DepthNumbers;
+};
+
 export default class PrismaService extends ServiceBase {
   // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
@@ -201,6 +214,14 @@ export default class PrismaService extends ServiceBase {
   ): Promise<{ info: StableKPI }> {
     return this.fetch(
       `${API_URL}/mkusd/${chain}/general`
+    );
+  }
+
+  public async getCurvePoolDepth(
+    chain: string
+  ): Promise<{ depth: PoolDepth[] }> {
+    return this.fetch(
+      `${API_URL}/mkusd/${chain}/depth`
     );
   }
 }
