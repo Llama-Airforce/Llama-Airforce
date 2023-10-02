@@ -9,9 +9,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import PrismaService, {
-  type PoolDepth,
-} from "@PM/Services/PrismaService";
+import PrismaService, { type PoolDepth } from "@PM/Services/PrismaService";
 import { getHost } from "@/Services/Host";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 
@@ -29,10 +27,8 @@ onMounted(async () => {
     .then((x) => x.depth);
   loading.value = false;
 });
-
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-
 </style>

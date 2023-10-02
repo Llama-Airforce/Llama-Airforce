@@ -24,7 +24,6 @@
       ></AsyncValue>
     </KPI>
 
-
     <KPI
       label="24h Volume (Curve)"
       :has-value="!!data"
@@ -55,7 +54,7 @@
 import { ref, onMounted } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import PrismaService, {type StableKPI} from "@PM/Services/PrismaService";
+import PrismaService, { type StableKPI } from "@PM/Services/PrismaService";
 
 const prismaService = new PrismaService(getHost());
 
@@ -64,9 +63,10 @@ const data = ref<StableKPI | null>(null);
 
 // Hooks
 onMounted(async (): Promise<void> => {
-
   try {
-    data.value = await prismaService.getStableCoinKPI("ethereum").then((x) => x.info);
+    data.value = await prismaService
+      .getStableCoinKPI("ethereum")
+      .then((x) => x.info);
   } catch {
     data.value = null;
   }

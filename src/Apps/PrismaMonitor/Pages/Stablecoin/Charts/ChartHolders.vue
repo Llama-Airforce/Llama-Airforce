@@ -18,9 +18,11 @@ import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
+import PrismaService, {
+  type DecimalLabelledSeries,
+} from "@PM/Services/PrismaService";
 import { addressShort } from "@/Wallet";
-import {getHost} from "@/Services/Host";
+import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
 const prismaService = new PrismaService(getHost());
@@ -40,7 +42,6 @@ onMounted(async (): Promise<void> => {
 
   loading.value = false;
 });
-
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
@@ -76,7 +77,10 @@ const options = computed((): unknown => {
       tooltip: {
         custom: (x: DataPoint<number>) => {
           let label = categories.value[x.seriesIndex];
-          label = (label.length > 10 && label.startsWith('0x')) ? addressShort(label) : label;
+          label =
+            label.length > 10 && label.startsWith("0x")
+              ? addressShort(label)
+              : label;
           const value = x.series[x.seriesIndex];
           const data = [
             `<div><b>${label}</b>:</div><div>${formatter(
@@ -88,15 +92,15 @@ const options = computed((): unknown => {
         },
       },
       labels: data.value.map((x) =>
-        (x.label.length > 10 && x.label.startsWith('0x')) ? addressShort(x.label) : x.label
+        x.label.length > 10 && x.label.startsWith("0x")
+          ? addressShort(x.label)
+          : x.label
       ),
     }
   );
 });
 
-
 const series = computed(() => data.value.map((x) => x.value));
-
 
 const categories = computed(() => data.value.map((x) => x.label));
 

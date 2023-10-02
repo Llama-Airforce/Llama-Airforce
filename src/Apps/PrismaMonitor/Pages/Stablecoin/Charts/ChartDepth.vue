@@ -10,17 +10,17 @@
 </template>
 
 <script setup lang="ts">
-import {CardGraph} from "@/Framework";
-import {computed} from "vue";
-import {useI18n} from "vue-i18n";
+import { CardGraph } from "@/Framework";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-import {getColors, getColorsArray} from "@/Styles/Themes/PM";
-import {useSettingsStore} from "@PM/Stores/SettingsStore";
-import {type PoolDepth} from "@PM/Services/PrismaService";
-import {round, unit} from "@/Util";
-import {createChartStyles} from "@/Styles/ChartStyles";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
+import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { type PoolDepth } from "@PM/Services/PrismaService";
+import { round, unit } from "@/Util";
+import { createChartStyles } from "@/Styles/ChartStyles";
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 // Props
 interface Props {
@@ -28,18 +28,17 @@ interface Props {
   loading: boolean;
 }
 
-const {depth = null, loading} = defineProps<Props>();
+const { depth = null, loading } = defineProps<Props>();
 
 // Refs
 const storeSettings = useSettingsStore();
-
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
   const colorsArray = getColorsArray(storeSettings.theme);
 
   return createChartStyles(
-    {colors, colorsArray},
+    { colors, colorsArray },
     {
       chart: {
         type: "area",
@@ -65,9 +64,9 @@ const options = computed((): unknown => {
         show: false,
       },
       xaxis: {
-        type: 'numeric',
+        type: "numeric",
         labels: {
-          formatter: (x: number): string => formatter(x)
+          formatter: (x: number): string => formatter(x),
         },
       },
       yaxis: {
@@ -89,41 +88,44 @@ const options = computed((): unknown => {
         },
       },
       colors: [colors.green, colors.red],
-    });
-});
-
-const series = computed((): { name: string; data: { x: number, y: number }[] }[] => {
-  if (!depth) return [];
-  const bidSeries = depth.bid.prices.map((price, index) => {
-    return {
-      x: price,
-      y: depth.bid.amounts[index]
-    };
-  });
-
-  const askSeries = depth.ask.prices.map((price, index) => {
-    return {
-      x: price,
-      y: depth.ask.amounts[index]
-    };
-  });
-
-  return [
-    {
-      name: 'Bid',
-      data: bidSeries,
-    },
-    {
-      name: 'Ask',
-      data: askSeries,
     }
-  ];
+  );
 });
+
+const series = computed(
+  (): { name: string; data: { x: number; y: number }[] }[] => {
+    if (!depth) return [];
+    const bidSeries = depth.bid.prices.map((price, index) => {
+      return {
+        x: price,
+        y: depth.bid.amounts[index],
+      };
+    });
+
+    const askSeries = depth.ask.prices.map((price, index) => {
+      return {
+        x: price,
+        y: depth.ask.amounts[index],
+      };
+    });
+
+    return [
+      {
+        name: "Bid",
+        data: bidSeries,
+      },
+      {
+        name: "Ask",
+        data: askSeries,
+      },
+    ];
+  }
+);
 
 const title = computed(() => {
-  if (!depth?.tokens || depth.tokens.length === 0) return t('title');
-  const tokensString = depth.tokens.join(' / ');
-  return `${t('title')} - ${tokensString} (Curve)`;
+  if (!depth?.tokens || depth.tokens.length === 0) return t("title");
+  const tokensString = depth.tokens.join(" / ");
+  return `${t("title")} - ${tokensString} (Curve)`;
 });
 
 const formatter = (x: number): string => {

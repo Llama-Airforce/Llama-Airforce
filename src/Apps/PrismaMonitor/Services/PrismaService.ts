@@ -199,9 +199,7 @@ export default class PrismaService extends ServiceBase {
     chain: string,
     period: string
   ): Promise<{ prices: DecimalTimeSeries[] }> {
-    return this.fetch(
-      `${API_URL}/mkusd/${chain}/history?period=${period}`
-    );
+    return this.fetch(`${API_URL}/mkusd/${chain}/history?period=${period}`);
   }
 
   public async getPriceHistogram(
@@ -217,24 +215,16 @@ export default class PrismaService extends ServiceBase {
   public async getLargeStableCoinHolders(
     chain: string
   ): Promise<{ holders: DecimalLabelledSeries[] }> {
-    return this.fetch(
-      `${API_URL}/mkusd/${chain}/holders`
-    );
+    return this.fetch(`${API_URL}/mkusd/${chain}/holders`);
   }
 
-  public async getStableCoinKPI(
-    chain: string
-  ): Promise<{ info: StableKPI }> {
-    return this.fetch(
-      `${API_URL}/mkusd/${chain}/general`
-    );
+  public async getStableCoinKPI(chain: string): Promise<{ info: StableKPI }> {
+    return this.fetch(`${API_URL}/mkusd/${chain}/general`);
   }
 
   public async getCurvePoolDepth(
     chain: string
   ): Promise<{ depth: PoolDepth[] }> {
-    return this.fetch(
-      `${API_URL}/mkusd/${chain}/depth`
-    );
+    return this.fetch(`${API_URL}/mkusd/${chain}/depth`);
   }
 }
