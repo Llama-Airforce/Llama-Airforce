@@ -106,7 +106,6 @@ const {
 
   @media only screen and (max-width: 1280px) {
     padding: 0.75rem 1rem;
-    line-height: 1.25rem;
   }
 
   > .labels {

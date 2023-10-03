@@ -1,6 +1,6 @@
 <template>
   <div class="mkusd">
-    <KPIs></KPIs>
+    <KPIs style="grid-column: 1 / -1"></KPIs>
     <ChartPrice></ChartPrice>
     <ChartPriceDistribution></ChartPriceDistribution>
     <ChartHolders></ChartHolders>
@@ -25,6 +25,6 @@ import ChartDepthContainer from "@PM/Pages/Stablecoin/Charts/ChartDepthContainer
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr auto;
+  grid-template-rows: auto auto auto;
 }
 </style>

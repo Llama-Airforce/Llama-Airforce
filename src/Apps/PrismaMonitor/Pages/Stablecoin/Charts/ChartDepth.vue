@@ -13,7 +13,6 @@
 import { CardGraph } from "@/Framework";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import { type PoolDepth } from "@PM/Services/PrismaService";
@@ -82,12 +81,26 @@ const options = computed((): unknown => {
         enabled: false,
       },
       tooltip: {
-        shared: true,
         x: {
           formatter: (y: number): string => formatter(y),
         },
       },
-      colors: [colors.green, colors.red],
+      colors: [
+        (x: { value: number }) => {
+          if (x.value === 0) {
+            return colors.blue;
+          } else {
+            return colors.green;
+          }
+        },
+        (x: { value: number }) => {
+          if (x.value === 0) {
+            return colors.blue;
+          } else {
+            return colors.red;
+          }
+        },
+      ],
     }
   );
 });
@@ -95,19 +108,30 @@ const options = computed((): unknown => {
 const series = computed(
   (): { name: string; data: { x: number; y: number }[] }[] => {
     if (!depth) return [];
-    const bidSeries = depth.bid.prices.map((price, index) => {
-      return {
-        x: price,
-        y: depth.bid.amounts[index],
-      };
-    });
 
-    const askSeries = depth.ask.prices.map((price, index) => {
-      return {
-        x: price,
-        y: depth.ask.amounts[index],
-      };
-    });
+    const bidSeries = [
+      ...depth.ask.prices.map((price) => {
+        return {
+          x: price,
+          y: 0,
+        };
+      }),
+      ...depth.bid.prices.map((price, index) => {
+        return {
+          x: price,
+          y: depth.bid.amounts[index],
+        };
+      }),
+    ];
+
+    const askSeries = [
+      ...depth.ask.prices.map((price, index) => {
+        return {
+          x: price,
+          y: depth.ask.amounts[index],
+        };
+      }),
+    ];
 
     return [
       {
@@ -123,7 +147,10 @@ const series = computed(
 );
 
 const title = computed(() => {
-  if (!depth?.tokens || depth.tokens.length === 0) return t("title");
+  if (!depth?.tokens || depth.tokens.length === 0) {
+    return t("title");
+  }
+
   const tokensString = depth.tokens.join(" / ");
   return `${t("title")} - ${tokensString} (Curve)`;
 });
@@ -138,9 +165,7 @@ const formatter = (x: number): string => {
 
 .card-graph {
   ::v-deep(.card-body) {
-    @media only screen and (max-width: 1280px) {
-      height: 300px;
-    }
+    height: 300px;
   }
 }
 </style>

@@ -78,7 +78,6 @@ onMounted(async (): Promise<void> => {
 
 .kpis {
   display: flex;
-  flex-direction: column;
   gap: var(--dashboard-gap);
 
   @media only screen and (max-width: 1280px) {
