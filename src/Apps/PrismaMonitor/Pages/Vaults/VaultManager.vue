@@ -31,7 +31,7 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Find Trove">
+      <TabItem header="Troves">
         <KeepAlive>
           <FindTrove
             v-if="tabActive === 3 && vault"
