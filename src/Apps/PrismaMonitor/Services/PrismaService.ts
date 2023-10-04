@@ -59,6 +59,13 @@ export type PriceImpact = {
   impact: number;
 };
 
+export type CollateralInfo = {
+  price: number;
+  supply: number;
+  tvl: number;
+  risk: string;
+};
+
 export default class PrismaService extends ServiceBase {
   // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
@@ -133,12 +140,22 @@ export default class PrismaService extends ServiceBase {
       `${API_URL}/collateral/${chain}/${collateral}/prices?period=${period}`
     );
   }
+
   public async getCollateralPriceImpact(
     chain: string,
     collateral: string
   ): Promise<{ impact: PriceImpact[] }> {
     return this.fetch(
       `${API_URL}/collateral/${chain}/${collateral}/impact`
+    );
+  }
+
+  public async getCollateralInfo(
+    chain: string,
+    collateral: string
+  ): Promise<{ info: CollateralInfo }> {
+    return this.fetch(
+      `${API_URL}/collateral/${chain}/${collateral}/info`
     );
   }
 
