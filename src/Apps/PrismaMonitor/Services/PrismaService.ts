@@ -54,6 +54,11 @@ export type PoolDepth = {
   ask: DepthNumbers;
 };
 
+export type PriceImpact = {
+  amount: number;
+  impact: number;
+};
+
 export default class PrismaService extends ServiceBase {
   // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
@@ -126,6 +131,14 @@ export default class PrismaService extends ServiceBase {
   ): Promise<{ oracle: DecimalTimeSeries[]; market: DecimalTimeSeries[] }> {
     return this.fetch(
       `${API_URL}/collateral/${chain}/${collateral}/prices?period=${period}`
+    );
+  }
+  public async getCollateralPriceImpact(
+    chain: string,
+    collateral: string
+  ): Promise<{ impact: PriceImpact[] }> {
+    return this.fetch(
+      `${API_URL}/collateral/${chain}/${collateral}/impact`
     );
   }
 

@@ -1,12 +1,14 @@
 <template>
   <div class="collateral">
     <ChartCollateralPrices :vault="vault"></ChartCollateralPrices>
+    <ChartCollateralPriceImpact :vault="vault"></ChartCollateralPriceImpact>
   </div>
 </template>
 
 <script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartCollateralPrices from "@PM/Pages/Vaults/Charts/ChartCollateralPrices.vue";
+import ChartCollateralPriceImpact from "@PM/Pages/Vaults/Charts/ChartCollateralPriceImpact.vue";
 
 // Props
 interface Props {
