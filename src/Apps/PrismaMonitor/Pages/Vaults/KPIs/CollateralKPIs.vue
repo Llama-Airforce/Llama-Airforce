@@ -55,14 +55,15 @@
       <a
         v-if="data"
         :href="data.risk"
-        >Risk Report</a
       >
+        Risk Report
+      </a>
     </KPI>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import PrismaService, { type CollateralInfo } from "@PM/Services/PrismaService";
@@ -79,16 +80,18 @@ const { vault = null } = defineProps<Props>();
 // Refs
 const data = ref<CollateralInfo | null>(null);
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  try {
-    data.value = await prismaService
-      .getCollateralInfo("ethereum", vault.collateral)
-      .then((x) => x.info);
-  } catch {
-    data.value = null;
+// Watches
+const loadData = async () => {
+  if (!vault) {
+    return;
   }
-});
+
+  data.value = await prismaService
+    .getCollateralInfo("ethereum", vault.collateral)
+    .then((x) => x.info);
+};
+
+watch(() => vault, loadData, { immediate: true });
 </script>
 
 <style lang="scss" scoped>

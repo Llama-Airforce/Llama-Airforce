@@ -10,14 +10,13 @@
 </template>
 
 <script setup lang="ts">
-import { CardGraph } from "@/Framework";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
+import { CardGraph } from "@/Framework";
+import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import PrismaService, { type PriceImpact } from "@PM/Services/PrismaService";
-import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { getHost } from "@/Services/Host";
@@ -35,17 +34,6 @@ const { vault = null } = defineProps<Props>();
 // Refs
 const data = ref<PriceImpact[]>([]);
 const loading = ref(false);
-
-// Hooks
-onMounted(async (): Promise<void> => {
-  loading.value = true;
-
-  data.value = await prismaService
-    .getCollateralPriceImpact("ethereum", vault.collateral)
-    .then((x) => x.impact);
-
-  loading.value = false;
-});
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
@@ -98,12 +86,15 @@ const options = computed((): unknown => {
       tooltip: {
         shared: true,
         custom: (x: DataPoint<number>) => {
+          if (!vault) {
+            return "";
+          }
+
           const amount = categories.value[x.dataPointIndex];
+          const dollars = formatter(amount * vault.price);
           const tooltip = `
           <div><b>Collateral sold:</b>:</div>
-          <div>${formatter(amount)} ${vault.name} ($${formatter(
-            amount * vault.price
-          )})</div>
+          <div>${formatter(amount)} ${vault.name} ($${dollars})</div>
 
           <div><b>Price impact:</b>:</div>
           <div>${pctFormatter(x.series[0][x.dataPointIndex])}</div>
@@ -121,10 +112,12 @@ const series = computed((): { name: string; data: number[] }[] => [
     data: Object.values(data.value).map((x) => x.impact),
   },
 ]);
+
 const categories = computed(() =>
-  data.value.map((x) => x.amount / vault.price)
+  data.value.map((x) => (vault ? x.amount / vault.price : 0))
 );
 
+// Methods
 const formatter = (x: number): string => {
   return `${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
@@ -132,6 +125,23 @@ const formatter = (x: number): string => {
 const pctFormatter = (y: number): string => {
   return `${round(y, 2, "percentage")}${unit(y, "percentage")}`;
 };
+
+// Watches
+const loadData = async () => {
+  if (!vault) {
+    return;
+  }
+
+  loading.value = true;
+
+  data.value = await prismaService
+    .getCollateralPriceImpact("ethereum", vault.collateral)
+    .then((x) => x.impact);
+
+  loading.value = false;
+};
+
+watch(() => vault, loadData, { immediate: true });
 </script>
 
 <style lang="scss" scoped>
