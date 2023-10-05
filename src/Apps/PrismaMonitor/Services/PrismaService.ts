@@ -63,6 +63,7 @@ export type CollateralInfo = {
   price: number;
   supply: number;
   tvl: number;
+  share: number;
   risk: string;
 };
 

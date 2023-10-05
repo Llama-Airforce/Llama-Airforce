@@ -37,6 +37,18 @@
     </KPI>
 
     <KPI
+      label="Share of the ETH LSD market"
+      :has-value="!!data"
+    >
+      <AsyncValue
+        v-if="data"
+        :value="data.share"
+        :precision="1"
+        type="percentage"
+      ></AsyncValue>
+    </KPI>
+
+    <KPI
       label="Full risk analysis by Prisma Risk team"
       :has-value="!!data"
     >
