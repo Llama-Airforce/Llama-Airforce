@@ -121,6 +121,26 @@ export default class PrismaService extends ServiceBase {
     );
   }
 
+  public async getVaultCollateralRatio(
+    chain: string,
+    manager: string,
+    period: string
+  ): Promise<{ ratio: DecimalTimeSeries[] }> {
+    return this.fetch(
+      `${API_URL}/managers/${chain}/${manager}/collateral_ratio?period=${period}`
+    );
+  }
+
+  public async getVaultTroveCount(
+    chain: string,
+    manager: string,
+    period: string
+  ): Promise<{ count: DecimalTimeSeries[] }> {
+    return this.fetch(
+      `${API_URL}/managers/${chain}/${manager}/open_trove_count?period=${period}`
+    );
+  }
+
   public async getTroveDistribution(
     chain: string,
     manager: string,

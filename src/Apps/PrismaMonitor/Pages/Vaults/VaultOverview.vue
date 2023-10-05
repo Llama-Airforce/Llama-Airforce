@@ -3,6 +3,8 @@
     <VaultKPIs style="grid-column: 1 / -1" :vault="vault"></VaultKPIs>
     <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
     <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
+    <ChartSingleVaultCollateralRatio :vault="vault"></ChartSingleVaultCollateralRatio>
+    <ChartSingleVaultOpenTroves :vault="vault"></ChartSingleVaultOpenTroves>
   </div>
 </template>
 
@@ -11,6 +13,8 @@ import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewServi
 import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
 import ChartDistributionSelector from "@PM/Pages/Vaults/Charts/ChartDistributionSelector.vue";
 import VaultKPIs from "@PM/Pages/Vaults/KPIs/VaultKPIs.vue";
+import ChartSingleVaultCollateralRatio from "@PM/Pages/Vaults/Charts/ChartSingleVaultCollateralRatio.vue";
+import ChartSingleVaultOpenTroves from "@PM/Pages/Vaults/Charts/ChartSingleVaultOpenTroves.vue";
 
 // Props
 interface Props {
