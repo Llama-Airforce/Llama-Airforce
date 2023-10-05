@@ -32,9 +32,5 @@ export const pageMain: Page = {
       to: "/pool",
       label: "Stability pool",
     },
-    {
-      to: "/dao",
-      label: "DAO",
-    },
   ],
 };
