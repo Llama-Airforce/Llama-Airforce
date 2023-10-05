@@ -1,9 +1,14 @@
 <template>
   <div class="vault-overview">
-    <VaultKPIs style="grid-column: 1 / -1" :vault="vault"></VaultKPIs>
+    <VaultKPIs
+      style="grid-column: 1 / -1"
+      :vault="vault"
+    ></VaultKPIs>
     <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
     <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
-    <ChartSingleVaultCollateralRatio :vault="vault"></ChartSingleVaultCollateralRatio>
+    <ChartSingleVaultCollateralRatio
+      :vault="vault"
+    ></ChartSingleVaultCollateralRatio>
     <ChartSingleVaultOpenTroves :vault="vault"></ChartSingleVaultOpenTroves>
   </div>
 </template>

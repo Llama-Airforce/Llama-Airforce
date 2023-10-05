@@ -125,14 +125,13 @@
 
 <script setup lang="ts">
 import { AsyncValue, KPI } from "@/Framework";
-import {type TroveManagerDetails} from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 // Props
 interface Props {
   vault?: TroveManagerDetails | null;
 }
 const { vault = null } = defineProps<Props>();
-
 </script>
 
 <style lang="scss" scoped>

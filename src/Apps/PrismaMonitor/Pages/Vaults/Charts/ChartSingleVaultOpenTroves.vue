@@ -33,7 +33,7 @@ import PrismaService, {
   type DecimalTimeSeries,
 } from "@PM/Services/PrismaService";
 import { getHost } from "@/Services/Host";
-import {type TroveManagerDetails} from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 const { t } = useI18n();
 
@@ -95,12 +95,15 @@ watch(
   }
 );
 
-watch(() => vault, async (newVal, oldVal) => {
-  if (newVal !== null && newVal !== oldVal) {
-    await loadData();
-  }
-},
-{immediate: true});
+watch(
+  () => vault,
+  async (newVal, oldVal) => {
+    if (newVal !== null && newVal !== oldVal) {
+      await loadData();
+    }
+  },
+  { immediate: true }
+);
 
 watch(data, (newData) => {
   createSeries(newData);

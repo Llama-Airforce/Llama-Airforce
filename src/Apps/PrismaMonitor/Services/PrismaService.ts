@@ -166,18 +166,14 @@ export default class PrismaService extends ServiceBase {
     chain: string,
     collateral: string
   ): Promise<{ impact: PriceImpact[] }> {
-    return this.fetch(
-      `${API_URL}/collateral/${chain}/${collateral}/impact`
-    );
+    return this.fetch(`${API_URL}/collateral/${chain}/${collateral}/impact`);
   }
 
   public async getCollateralInfo(
     chain: string,
     collateral: string
   ): Promise<{ info: CollateralInfo }> {
-    return this.fetch(
-      `${API_URL}/collateral/${chain}/${collateral}/info`
-    );
+    return this.fetch(`${API_URL}/collateral/${chain}/${collateral}/info`);
   }
 
   // Stability pool endpoints

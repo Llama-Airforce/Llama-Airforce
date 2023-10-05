@@ -55,7 +55,8 @@
       <a
         v-if="data"
         :href="data.risk"
-      >Risk Report</a>
+        >Risk Report</a
+      >
     </KPI>
   </div>
 </template>
@@ -64,8 +65,8 @@
 import { ref, onMounted } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import PrismaService, {type CollateralInfo} from "@PM/Services/PrismaService";
-import {type TroveManagerDetails} from "@PM/Services/Socket/TroveOverviewService";
+import PrismaService, { type CollateralInfo } from "@PM/Services/PrismaService";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 const prismaService = new PrismaService(getHost());
 

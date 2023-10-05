@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, onMounted} from "vue";
-import {useI18n} from "vue-i18n";
-import {chain} from "lodash";
+import { ref, watch, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { chain } from "lodash";
 import {
   createChart as createChartFunc,
   type IChartApi,
@@ -24,18 +24,18 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import {Card} from "@/Framework";
-import {getColors} from "@/Styles/Themes/PM";
-import {useSettingsStore} from "@PM/Stores/SettingsStore";
+import { Card } from "@/Framework";
+import { getColors } from "@/Styles/Themes/PM";
+import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type {Theme} from "@PM/Models/Theme";
+import type { Theme } from "@PM/Models/Theme";
 import PrismaService, {
   type DecimalTimeSeries,
 } from "@PM/Services/PrismaService";
-import {getHost} from "@/Services/Host";
-import {type TroveManagerDetails} from "@PM/Services/Socket/TroveOverviewService";
+import { getHost } from "@/Services/Host";
+import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 const prismaService = new PrismaService(getHost());
 
@@ -48,14 +48,15 @@ interface Props {
   vault?: TroveManagerDetails | null;
 }
 
-const {vault = null} = defineProps<Props>();
+const { vault = null } = defineProps<Props>();
 
 // Refs
 const chartRef = ref<HTMLElement | null>(null);
 const data = ref<DecimalTimeSeries[]>([]);
 const loading = ref(false);
 
-const loadData = async () => {  if (!chartRef.value || !vault) return;
+const loadData = async () => {
+  if (!chartRef.value || !vault) return;
 
   loading.value = true;
 
@@ -94,12 +95,15 @@ watch(
   }
 );
 
-watch(() => vault, async (newVal, oldVal) => {
-  if (newVal !== null && newVal !== oldVal) {
-    await loadData();
-  }
-},
-{immediate: true});
+watch(
+  () => vault,
+  async (newVal, oldVal) => {
+    if (newVal !== null && newVal !== oldVal) {
+      await loadData();
+    }
+  },
+  { immediate: true }
+);
 
 watch(data, (newData) => {
   createSeries(newData);
@@ -153,8 +157,7 @@ const createSeries = (globalCr: DecimalTimeSeries[]): void => {
     globalCrSerie.setData(newGlobalCrSerie);
   }
 
-  chart.timeScale()
-    .fitContent();
+  chart.timeScale().fitContent();
 };
 </script>
 

@@ -1,6 +1,9 @@
 <template>
   <div class="collateral">
-    <CollateralKPIs style="grid-column: 1 / -1" :vault="vault"></CollateralKPIs>
+    <CollateralKPIs
+      style="grid-column: 1 / -1"
+      :vault="vault"
+    ></CollateralKPIs>
     <ChartCollateralPrices :vault="vault"></ChartCollateralPrices>
     <ChartCollateralPriceImpact :vault="vault"></ChartCollateralPriceImpact>
   </div>
