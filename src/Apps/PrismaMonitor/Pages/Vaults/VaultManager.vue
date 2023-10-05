@@ -22,28 +22,37 @@
         </KeepAlive>
       </TabItem>
 
+      <TabItem header="Troves">
+        <KeepAlive>
+          <FindTrove
+            v-if="tabActive === 2 && vault"
+            :vault="vault"
+          ></FindTrove>
+        </KeepAlive>
+      </TabItem>
+
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
-            v-if="tabActive === 2 && vault"
+            v-if="tabActive === 3 && vault"
             :vault="vault"
           ></Liquidations>
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Troves">
+      <TabItem header="Redemptions">
         <KeepAlive>
-          <FindTrove
-            v-if="tabActive === 3 && vault"
+          <Liquidations
+            v-if="tabActive === 4 && vault"
             :vault="vault"
-          ></FindTrove>
+          ></Liquidations>
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Simulation">
         <KeepAlive>
           <Simulation
-            v-if="tabActive === 4 && vault"
+            v-if="tabActive === 5 && vault"
             :vault="vault"
           ></Simulation>
         </KeepAlive>
@@ -84,12 +93,14 @@ onMounted(() => {
   if (tabParam && typeof tabParam === "string") {
     if (tabParam === "collateral") {
       tabActive.value = 1;
-    } else if (tabParam === "liquidations") {
-      tabActive.value = 2;
     } else if (tabParam === "trove") {
+      tabActive.value = 2;
+    } else if (tabParam === "liquidations") {
       tabActive.value = 3;
-    } else if (tabParam === "simulation") {
+    } else if (tabParam === "redemptions") {
       tabActive.value = 4;
+    } else if (tabParam === "simulation") {
+      tabActive.value = 5;
     }
   }
 
@@ -143,14 +154,19 @@ watch(tabActive, async (newTab) => {
   } else if (newTab === 2) {
     await router.push({
       name: "prismavault",
-      params: { tab: "liquidations", vaultAddr: vaultAddr.value },
+      params: { tab: "trove", vaultAddr: vaultAddr.value },
     });
   } else if (newTab === 3) {
     await router.push({
       name: "prismavault",
-      params: { tab: "trove", vaultAddr: vaultAddr.value },
+      params: { tab: "liquidations", vaultAddr: vaultAddr.value },
     });
   } else if (newTab === 4) {
+    await router.push({
+      name: "prismavault",
+      params: { tab: "redemptions", vaultAddr: vaultAddr.value },
+    });
+  } else if (newTab === 5) {
     await router.push({
       name: "prismavault",
       params: { tab: "simulation", vaultAddr: vaultAddr.value },

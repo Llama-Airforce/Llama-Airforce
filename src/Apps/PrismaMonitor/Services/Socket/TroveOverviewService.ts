@@ -11,6 +11,7 @@ export interface TroveManagerDetails {
   collateral: string;
   tvl: number;
   debt: number;
+  debt_cap: number;
   cr: number;
   mcr: number;
   rate: number;

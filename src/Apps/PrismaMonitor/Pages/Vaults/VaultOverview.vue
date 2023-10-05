@@ -1,5 +1,6 @@
 <template>
   <div class="vault-overview">
+    <VaultKPIs style="grid-column: 1 / -1" :vault="vault"></VaultKPIs>
     <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
     <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
   </div>
@@ -9,6 +10,7 @@
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
 import ChartDistributionSelector from "@PM/Pages/Vaults/Charts/ChartDistributionSelector.vue";
+import VaultKPIs from "@PM/Pages/Vaults/KPIs/VaultKPIs.vue";
 
 // Props
 interface Props {
@@ -26,6 +28,6 @@ const { vault } = defineProps<Props>();
 
   @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto auto;
 }
 </style>
