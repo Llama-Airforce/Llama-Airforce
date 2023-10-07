@@ -22,7 +22,10 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Troves">
+      <TabItem
+        header="Troves"
+        :disabled="true"
+      >
         <KeepAlive>
           <FindTrove
             v-if="tabActive === 2 && vault"
@@ -31,7 +34,10 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Liquidations">
+      <TabItem
+        header="Liquidations"
+        :disabled="true"
+      >
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 3 && vault"
@@ -40,16 +46,22 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Redemptions">
+      <TabItem
+        header="Redemptions"
+        :disabled="true"
+      >
         <KeepAlive>
-          <Liquidations
+          <Redemptions
             v-if="tabActive === 4 && vault"
             :vault="vault"
-          ></Liquidations>
+          ></Redemptions>
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Simulation">
+      <TabItem
+        header="Simulation"
+        :disabled="true"
+      >
         <KeepAlive>
           <Simulation
             v-if="tabActive === 5 && vault"
@@ -71,6 +83,7 @@ import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 import VaultOverview from "@PM/Pages/Vaults/VaultOverview.vue";
 import Collateral from "@PM/Pages/Vaults/Collateral.vue";
 import Liquidations from "@PM/Pages/Vaults/Liquidations.vue";
+import Redemptions from "@PM/Pages/Vaults/Redemptions.vue";
 import FindTrove from "@PM/Pages/Vaults/FindTrove.vue";
 import Simulation from "@PM/Pages/Vaults/Simulation.vue";
 

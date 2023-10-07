@@ -6,8 +6,9 @@
 // Props
 interface Props {
   header?: string;
+  disabled?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { header = "" } = defineProps<Props>();
+const { header = "", disabled = false } = defineProps<Props>();
 </script>

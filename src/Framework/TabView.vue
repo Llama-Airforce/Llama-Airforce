@@ -6,7 +6,7 @@
         v-for="(tab, i) in tabs"
         :key="i"
         class="tab-header"
-        :class="{ active: tabActive === i }"
+        :class="{ active: tabActive === i, disabled: (tab as any).props.disabled }"
         @click="onTabClick(tab, i)"
       >
         {{ (tab as any).props.header }}
@@ -67,6 +67,11 @@ watch(
 
 // Events
 const onTabClick = (_tab: typeof TabItem, index: number): void => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+  if ((_tab as any).props.disabled) {
+    return;
+  }
+
   tabActive.value = index;
   emit("tab", { tab: tabs.value[index], index: tabActive.value });
 };
@@ -100,17 +105,21 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
         cursor: pointer;
       }
 
-      &:hover {
+      &:hover:not(.disabled) {
         border-bottom: 2px solid var(--c-primary-active);
         margin: 0 0 -2px 0;
         color: var(--tab-text-color-hover);
       }
 
-      &:active,
-      &.active {
+      &:active:not(.disabled),
+      &.active:not(.disabled) {
         border-bottom: 2px solid var(--c-primary);
         margin: 0 0 -2px 0;
         color: var(--tab-text-color-active);
+      }
+
+      &.disabled {
+        cursor: not-allowed;
       }
     }
   }
