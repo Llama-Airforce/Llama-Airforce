@@ -13,7 +13,7 @@
     </KPI>
 
     <KPI
-      label="Debt"
+      label="Debt / Debt Cap"
       :has-value="!!vault"
     >
       <AsyncValue
@@ -22,12 +22,7 @@
         :precision="1"
         type="dollar"
       ></AsyncValue>
-    </KPI>
-
-    <KPI
-      label="Debt cap"
-      :has-value="!!vault"
-    >
+      /
       <AsyncValue
         v-if="vault"
         :value="vault.debt_cap"
@@ -37,7 +32,7 @@
     </KPI>
 
     <KPI
-      label="Collateral Ratio"
+      label="Collat Ratio / Min Ratio"
       :has-value="!!vault"
     >
       <AsyncValue
@@ -46,12 +41,9 @@
         :precision="0"
         type="percentage"
       ></AsyncValue>
-    </KPI>
 
-    <KPI
-      label="Minimum Collateral Ratio (MCR)"
-      :has-value="!!vault"
-    >
+      /
+
       <AsyncValue
         v-if="vault"
         :value="vault.mcr * 100"
@@ -74,7 +66,7 @@
     </KPI>
 
     <KPI
-      label="Open troves"
+      label="Troves open / total"
       :has-value="!!vault"
     >
       <AsyncValue
@@ -83,12 +75,9 @@
         :show-zero="true"
         :precision="0"
       ></AsyncValue>
-    </KPI>
 
-    <KPI
-      label="Total troves"
-      :has-value="!!vault"
-    >
+      /
+
       <AsyncValue
         v-if="vault"
         :value="vault.open_troves + vault.closed_troves"
@@ -98,7 +87,7 @@
     </KPI>
 
     <KPI
-      label="Total liquidations"
+      label="Liquidations / Redemptions"
       :has-value="!!vault"
     >
       <AsyncValue
@@ -107,12 +96,9 @@
         :show-zero="true"
         :precision="0"
       ></AsyncValue>
-    </KPI>
 
-    <KPI
-      label="Total redemptions"
-      :has-value="!!vault"
-    >
+      /
+
       <AsyncValue
         v-if="vault"
         :value="vault.red_troves"
