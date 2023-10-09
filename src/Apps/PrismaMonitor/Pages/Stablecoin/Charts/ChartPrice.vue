@@ -4,6 +4,9 @@
     :title="t('title')"
     :loading="loading"
   >
+    <Tooltip>
+      <div>Price data is sourced from Coingecko via Defi Llama.<br> Due to a bug in the way Coingecko aggregates mkUSD price data, <br>the chart may erroneously report large price variations. A fix is on its way.</div>
+    </Tooltip>
     <div
       ref="chartRef"
       class="chart"
@@ -13,6 +16,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from "vue";
+import { Tooltip } from "@/Framework";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
