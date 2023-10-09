@@ -4,9 +4,17 @@
     :title="t('title')"
     :loading="loading"
   >
-    <Tooltip>
-      <div>Price data is sourced from Coingecko via Defi Llama.<br> Due to a bug in the way Coingecko aggregates mkUSD price data, <br>the chart may erroneously report large price variations. A fix is on its way.</div>
-    </Tooltip>
+    <template #actions>
+      <Tooltip>
+        <div>
+          Price data is sourced from Coingecko via Defi Llama.<br />
+          Due to a bug in the way Coingecko aggregates mkUSD price data,
+          <br />the chart may erroneously report large price variations. A fix
+          is on its way.
+        </div>
+      </Tooltip>
+    </template>
+
     <div
       ref="chartRef"
       class="chart"
