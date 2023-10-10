@@ -45,10 +45,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { addressShort } from "@/Wallet";
+import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { AsyncValue, DataTable } from "@/Framework";
+import { addressShort } from "@/Wallet";
+import { AsyncValue, DataTable, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import PrismaService, {
   type PoolStableOperation,
@@ -61,24 +61,23 @@ const { t } = useI18n();
 const prismaService = new PrismaService(getHost());
 
 // Refs
-const loading = ref(true);
-const rowsRaw = ref<PoolStableOperation[]>([]);
 const rows = computed((): PoolStableOperation[] =>
-  chain(rowsRaw.value)
+  chain(data.value)
     .map((x) => x)
     .value()
 );
 
+// Data
+const { loading, data, loadData } = useData(
+  () =>
+    prismaService
+      .getTopStableDeposits("ethereum", 5, "7d")
+      .then((x) => x.operations),
+  []
+);
+
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  rowsRaw.value = await prismaService
-    .getTopStableWithdrawals("ethereum", 5, "7d")
-    .then((x) => x.operations);
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

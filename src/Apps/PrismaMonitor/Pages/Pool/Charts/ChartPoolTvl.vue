@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/PM";
@@ -46,8 +46,12 @@ let serie: ISeriesApi<"Area">;
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const data = ref<DecimalTimeSeries[]>([]);
-const loading = ref(false);
+
+// Data
+const { loading, data, loadData } = useData(
+  () => prismaService.getPoolTvl("ethereum", "1m").then((x) => x.deposits),
+  []
+);
 
 // Hooks
 onMounted(() => {
@@ -61,17 +65,8 @@ onMounted(() => {
   serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(data.value);
-});
 
-// Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await prismaService
-    .getPoolTvl("ethereum", "1m")
-    .then((x) => x.deposits);
-
-  loading.value = false;
+  void loadData();
 });
 
 // Watches

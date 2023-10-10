@@ -9,14 +9,14 @@
         <ButtonToggle
           value="Coll."
           :model-value="chartType === 'collateral'"
-          @click="onChartType('collateral')"
+          @click="chartType = 'collateral'"
         >
         </ButtonToggle>
 
         <ButtonToggle
           value="Debt"
           :model-value="chartType === 'debt'"
-          @click="onChartType('debt')"
+          @click="chartType = 'debt'"
         >
         </ButtonToggle>
       </div>
@@ -29,10 +29,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle } from "@/Framework";
-import PrismaService, {
-  type DecimalLabelledSeries,
-} from "@PM/Services/PrismaService";
+import { Card, ButtonToggle, useData } from "@/Framework";
+import PrismaService from "@PM/Services/PrismaService";
 import { watch } from "vue";
 import { getHost } from "@/Services/Host";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
@@ -43,61 +41,37 @@ type ChartType = "collateral" | "debt";
 const { t } = useI18n();
 const prismaService = new PrismaService(getHost());
 
-// Refs
-const chartType = ref<ChartType>("collateral");
-
 // Props
 interface Props {
   vault?: TroveManagerDetails | null;
 }
 const { vault = null } = defineProps<Props>();
-const loading = ref(true);
-const data = ref<DecimalLabelledSeries[]>([]);
 
-const fetchData = async () => {
-  loading.value = true;
-  if (!vault) {
-    return;
+// Refs
+const chartType = ref<ChartType>("collateral");
+
+// Data
+const { loading, data, loadData } = useData(() => {
+  if (vault) {
+    return prismaService
+      .getLargeTrovePositions("ethereum", vault.address, chartType.value)
+      .then((x) => x.positions);
+  } else {
+    return Promise.resolve([]);
   }
-
-  data.value = await prismaService
-    .getLargeTrovePositions("ethereum", vault.address, chartType.value)
-    .then((x) => x.positions);
-
-  loading.value = false;
-};
+}, []);
 
 // Watches
-watch(
-  () => chartType.value,
-  () => {
-    fetchData().catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-  },
-  { immediate: true }
-);
-
+watch(chartType, loadData, { immediate: true });
 watch(
   () => vault,
   async (newVault, oldVault) => {
     if (newVault !== oldVault) {
-      await fetchData();
+      await loadData();
     }
   },
-  { immediate: true } // This ensures the watcher is triggered immediately upon being established.
+  { immediate: true }
 );
-
-// Events
-const onChartType = async (type: ChartType) => {
-  // Don't do anything if we're not changing the type.
-  if (chartType.value === type) {
-    return;
-  }
-
-  chartType.value = type;
-  await fetchData();
-};
 </script>
 
 <style lang="scss" scoped>

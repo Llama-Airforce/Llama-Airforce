@@ -63,10 +63,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { AsyncValue, KPI } from "@/Framework";
+import { watch } from "vue";
+import { AsyncValue, KPI, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import PrismaService, { type CollateralInfo } from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 const prismaService = new PrismaService(getHost());
@@ -77,20 +77,18 @@ interface Props {
 }
 const { vault = null } = defineProps<Props>();
 
-// Refs
-const data = ref<CollateralInfo | null>(null);
+// Data
+const { data, loadData } = useData(() => {
+  if (vault) {
+    return prismaService
+      .getCollateralInfo("ethereum", vault.collateral)
+      .then((x) => x.info);
+  } else {
+    return Promise.resolve(null);
+  }
+}, null);
 
 // Watches
-const loadData = async () => {
-  if (!vault) {
-    return;
-  }
-
-  data.value = await prismaService
-    .getCollateralInfo("ethereum", vault.collateral)
-    .then((x) => x.info);
-};
-
 watch(() => vault, loadData, { immediate: true });
 </script>
 

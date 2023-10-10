@@ -8,14 +8,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { round, unit } from "@/Util";
-import { CardGraph } from "@/Framework";
+import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
-import PrismaService, { type StableFlows } from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
 const { t } = useI18n();
@@ -29,18 +29,14 @@ type TooltipParams = {
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
-// Refs
-const loading = ref(true);
-const data = ref<StableFlows>({ deposits: [], withdrawals: [] });
+// Data
+const { loading, data, loadData } = useData(
+  () => prismaService.getStableFlow("ethereum", "1m"),
+  { deposits: [], withdrawals: [] }
+);
 
 // Hooks
-onMounted(async (): Promise<void> => {
-  loading.value = true;
-
-  data.value = await prismaService.getStableFlow("ethereum", "1m");
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {

@@ -10,13 +10,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
+import { CardGraph, useData } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, { type PriceImpact } from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { getHost } from "@/Services/Host";
@@ -31,10 +31,18 @@ interface Props {
 }
 const { vault = null } = defineProps<Props>();
 
-// Refs
-const data = ref<PriceImpact[]>([]);
-const loading = ref(false);
+// Data
+const { loading, data, loadData } = useData(() => {
+  if (vault) {
+    return prismaService
+      .getCollateralPriceImpact("ethereum", vault.collateral)
+      .then((x) => x.impact);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
+// Refs
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
   const colorsArray = getColorsArray(storeSettings.theme);
@@ -127,20 +135,6 @@ const pctFormatter = (y: number): string => {
 };
 
 // Watches
-const loadData = async () => {
-  if (!vault) {
-    return;
-  }
-
-  loading.value = true;
-
-  data.value = await prismaService
-    .getCollateralPriceImpact("ethereum", vault.collateral)
-    .then((x) => x.impact);
-
-  loading.value = false;
-};
-
 watch(() => vault, loadData, { immediate: true });
 </script>
 

@@ -9,36 +9,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
+import { CardGraph, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, {
-  type DecimalLabelledSeries,
-} from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 
 const { t } = useI18n();
 
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
-// Refs
-const loading = ref(true);
-const data = ref<DecimalLabelledSeries[]>([]);
+// Data
+const { loading, data, loadData } = useData(
+  () =>
+    prismaService.getStableDistribution("ethereum").then((x) => x.distribution),
+  []
+);
 
 // Hooks
-onMounted(async (): Promise<void> => {
-  loading.value = true;
-
-  data.value = await prismaService
-    .getStableDistribution("ethereum")
-    .then((x) => x.distribution);
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);

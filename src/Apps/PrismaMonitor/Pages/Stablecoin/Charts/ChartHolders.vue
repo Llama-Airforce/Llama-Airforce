@@ -10,16 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
+import { CardGraph, useData } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, {
-  type DecimalLabelledSeries,
-} from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 
@@ -27,20 +25,15 @@ const { t } = useI18n();
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
-// Refs
-const loading = ref(true);
-const data = ref<DecimalLabelledSeries[]>([]);
+// Data
+const { loading, data, loadData } = useData(
+  () =>
+    prismaService.getLargeStableCoinHolders("ethereum").then((x) => x.holders),
+  []
+);
 
 // Hooks
-onMounted(async (): Promise<void> => {
-  loading.value = true;
-
-  data.value = await prismaService
-    .getLargeStableCoinHolders("ethereum")
-    .then((x) => x.holders);
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);

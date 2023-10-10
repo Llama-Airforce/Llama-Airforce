@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -52,25 +52,20 @@ const { vault = null } = defineProps<Props>();
 
 // Refs
 const chartRef = ref<HTMLElement | null>(null);
-const data = ref<DecimalTimeSeries[]>([]);
-const loading = ref(false);
 
-const loadData = async () => {
-  if (!chartRef.value || !vault) return;
-
-  loading.value = true;
-
-  data.value = await prismaService
-    .getVaultCollateralRatio("ethereum", vault.address, "1m")
-    .then((x) => x.ratio);
-
-  loading.value = false;
-};
+// Data
+const { loading, data, loadData } = useData(() => {
+  if (vault) {
+    return prismaService
+      .getVaultCollateralRatio("ethereum", vault.address, "1m")
+      .then((x) => x.ratio);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Hooks
-onMounted(async (): Promise<void> => {
-  await loadData();
-
+onMounted(() => {
   if (!chartRef.value) return;
 
   chart = createChartFunc(
@@ -82,6 +77,8 @@ onMounted(async (): Promise<void> => {
   );
 
   createSeries(data.value);
+
+  void loadData();
 });
 
 // Watches

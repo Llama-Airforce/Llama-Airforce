@@ -33,7 +33,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
@@ -64,11 +64,28 @@ const { vault = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const data = ref<{ oracle: DecimalTimeSeries[]; market: DecimalTimeSeries[] }>({
+
+// Data
+const init = {
   oracle: [],
   market: [],
-});
-const loading = ref(false);
+};
+const { loading, data, loadData } = useData<{
+  oracle: DecimalTimeSeries[];
+  market: DecimalTimeSeries[];
+}>(async () => {
+  if (vault) {
+    const xs = await prismaService.getCollateralPrices(
+      "ethereum",
+      vault.collateral,
+      "7d"
+    );
+
+    return processSeries(xs.oracle, xs.market);
+  } else {
+    return Promise.resolve(init);
+  }
+}, init);
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -89,25 +106,7 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-watch(
-  () => vault,
-  async (newMarket) => {
-    loading.value = true;
-
-    if (!newMarket) {
-      return;
-    }
-
-    const rawData = await prismaService.getCollateralPrices(
-      "ethereum",
-      newMarket.collateral,
-      "7d"
-    );
-    data.value = processSeries(rawData.oracle, rawData.market);
-    loading.value = false;
-  },
-  { immediate: true }
-);
+watch(() => vault, loadData, { immediate: true });
 
 watch(
   () => storeSettings.theme,

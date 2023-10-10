@@ -8,25 +8,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import PrismaService, { type PoolDepth } from "@PM/Services/PrismaService";
+import { onMounted } from "vue";
+import { useData } from "@/Framework";
+import PrismaService from "@PM/Services/PrismaService";
 import { getHost } from "@/Services/Host";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 
 const prismaService = new PrismaService(getHost());
 
-// Refs
-const loading = ref(true);
-const data = ref<PoolDepth[]>([]);
+// Data
+const { loading, data, loadData } = useData(
+  () => prismaService.getCurvePoolDepth("ethereum").then((x) => x.depth),
+  []
+);
 
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await prismaService
-    .getCurvePoolDepth("ethereum")
-    .then((x) => x.depth);
-  loading.value = false;
-});
+onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

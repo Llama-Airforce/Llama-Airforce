@@ -51,26 +51,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { AsyncValue, KPI } from "@/Framework";
+import { onMounted } from "vue";
+import { AsyncValue, KPI, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import PrismaService, { type StableKPI } from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 
 const prismaService = new PrismaService(getHost());
 
-// Refs
-const data = ref<StableKPI | null>(null);
+// Data
+const { data, loadData } = useData(
+  () => prismaService.getStableCoinKPI("ethereum").then((x) => x.info),
+  null
+);
 
 // Hooks
-onMounted(async (): Promise<void> => {
-  try {
-    data.value = await prismaService
-      .getStableCoinKPI("ethereum")
-      .then((x) => x.info);
-  } catch {
-    data.value = null;
-  }
-});
+onMounted(() => void loadData);
 </script>
 
 <style lang="scss" scoped>

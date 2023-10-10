@@ -9,15 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph } from "@/Framework";
+import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
-import PrismaService, {
-  type HistoricalTroveManagerData,
-} from "@PM/Services/PrismaService";
+import PrismaService from "@PM/Services/PrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
 const { t } = useI18n();
@@ -31,20 +29,17 @@ type TooltipParams = {
 const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
-// Refs
-const loading = ref(true);
-const data = ref<HistoricalTroveManagerData[]>([]);
+// Data
+const { loading, data, loadData } = useData(
+  () =>
+    prismaService
+      .getHistoricalOpenTrovesOverview("ethereum", "6m")
+      .then((x) => x.managers),
+  []
+);
 
 // Hooks
-onMounted(async (): Promise<void> => {
-  loading.value = true;
-
-  data.value = await prismaService
-    .getHistoricalOpenTrovesOverview("ethereum", "6m")
-    .then((x) => x.managers);
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
