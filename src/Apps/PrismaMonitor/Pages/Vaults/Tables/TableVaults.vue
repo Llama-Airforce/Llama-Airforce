@@ -161,7 +161,6 @@ onMounted(() => {
 
 .datatable-vaults {
   container-type: inline-size;
-  z-index: 9999; // Needed for Popper tooltips in the datatable;
 
   .search {
     font-size: 0.875rem;
