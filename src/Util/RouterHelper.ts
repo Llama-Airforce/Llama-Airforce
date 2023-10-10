@@ -8,6 +8,6 @@ export function subIsActive(
 
   return paths.some((path) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return route.path.indexOf(path) === 0; // current path starts with this path string
+    return route.path.startsWith(path); // current path starts with this path string
   });
 }
