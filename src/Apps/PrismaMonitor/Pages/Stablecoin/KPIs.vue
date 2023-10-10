@@ -65,7 +65,7 @@ const { data, loadData } = useData(
 );
 
 // Hooks
-onMounted(() => void loadData);
+onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

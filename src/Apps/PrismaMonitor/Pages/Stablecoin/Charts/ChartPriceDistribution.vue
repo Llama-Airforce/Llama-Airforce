@@ -33,7 +33,7 @@ const { loading, data, loadData } = useData(
 );
 
 // Hooks
-onMounted(() => void loadData);
+onMounted(() => void loadData());
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
