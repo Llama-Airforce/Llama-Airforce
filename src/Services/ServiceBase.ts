@@ -16,6 +16,13 @@ async function fetchWork(
     },
     body: JSON.stringify(body),
     signal,
+  }).then((resp) => {
+    if (!resp.ok) {
+      // make the promise be rejected if we didn't get a 2xx response
+      throw new Error(`Fetch error ${resp.status} for URL: ${url}`);
+    } else {
+      return resp;
+    }
   });
 }
 
