@@ -2,6 +2,7 @@
   <Card
     class="chart-container"
     :title="t('title')"
+    :loading="loading"
   >
     <template #actions>
       <div class="actions">
@@ -61,7 +62,7 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Data
-const { data, loadData } = useData(() => {
+const { loading, data, loadData } = useData(() => {
   if (market) {
     return curveService
       .getHistoricalLiquidations(market.address)
