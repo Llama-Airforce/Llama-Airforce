@@ -37,7 +37,7 @@ import {
   type UTCTimestamp,
   type LineSeriesPartialOptions,
 } from "lightweight-charts";
-import { Card, InputNumber } from "@/Framework";
+import { Card, InputNumber, useData } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -69,9 +69,20 @@ let ratesEMASerie: ISeriesApi<"Line">;
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const rates = ref<MarketRates[]>([]);
-const loading = ref(false);
 const avgLength = ref<number | null>(null);
+
+// Data
+const {
+  loading,
+  data: rates,
+  loadData,
+} = useData(() => {
+  if (market) {
+    return curveService.getMarketRates(market.address).then((x) => x.rates);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Hooks
 onMounted((): void => {
@@ -95,17 +106,11 @@ onMounted((): void => {
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    rates.value = await curveService
-      .getMarketRates(newMarket.address)
-      .then((x) => x.rates);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

@@ -32,7 +32,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -64,8 +64,21 @@ const { market = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const availableCap = ref<AvailableCap[]>([]);
-const loading = ref(false);
+
+// Data
+const {
+  loading,
+  data: availableCap,
+  loadData,
+} = useData(() => {
+  if (market) {
+    return curveService
+      .getMarketAvailableCap(market.address)
+      .then((x) => x.available);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Hooks
 onMounted((): void => {
@@ -87,17 +100,11 @@ onMounted((): void => {
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    availableCap.value = await curveService
-      .getMarketAvailableCap(newMarket.address)
-      .then((x) => x.available);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

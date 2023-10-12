@@ -23,7 +23,7 @@ import {
   type ISeriesApi,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
@@ -53,8 +53,19 @@ let loansSerie: ISeriesApi<"Histogram">;
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const loans = ref<MarketLoans[]>([]);
-const loading = ref(false);
+
+// Data
+const {
+  loading,
+  data: loans,
+  loadData,
+} = useData(() => {
+  if (market) {
+    return curveService.getMarketLoans(market.address).then((x) => x.loans);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Hooks
 onMounted((): void => {
@@ -75,17 +86,11 @@ onMounted((): void => {
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    loans.value = await curveService
-      .getMarketLoans(newMarket.address)
-      .then((x) => x.loans);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

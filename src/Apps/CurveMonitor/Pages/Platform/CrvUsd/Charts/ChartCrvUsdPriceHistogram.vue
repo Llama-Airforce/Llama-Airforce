@@ -9,15 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { CardGraph } from "@/Framework";
+import { computed, onMounted } from "vue";
+import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
-import CurveService, {
-  type PriceHistogram,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 
 const curveService = new CurveService(getHost());
@@ -25,8 +23,11 @@ const curveService = new CurveService(getHost());
 // Refs
 const storeSettings = useSettingsStore();
 
-const loading = ref(true);
-const data = ref<PriceHistogram>({ x: [], y: [] });
+// Data
+const { loading, data, loadData } = useData(
+  () => curveService.getCrvUsdPriceHistogram(),
+  { x: [], y: [] }
+);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
@@ -99,13 +100,7 @@ const series = computed((): { data: number[] }[] => [
 ]);
 
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await curveService.getCrvUsdPriceHistogram();
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 // Methods
 const formatterX = (x: number): string => {

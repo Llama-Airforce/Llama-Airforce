@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { CardGraph } from "@/Framework";
+import { computed, onMounted } from "vue";
+import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
@@ -23,8 +23,16 @@ const curveService = new CurveService(getHost());
 // Refs
 const storeSettings = useSettingsStore();
 
-const loading = ref(true);
-const data = ref<{ name: string; chain: string; tvl_growth: number }[]>([]);
+// Data
+const { loading, data, loadData } = useData(async () => {
+  const gainers_ = curveService.getTvlGainers();
+  const losers_ = curveService.getTvlLosers();
+  const [gainers, losers] = [await gainers_, await losers_];
+
+  return [...gainers.tvl_gainers, ...losers.tvl_losers].sort(
+    (a, b) => b.tvl_growth - a.tvl_growth
+  );
+}, []);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
@@ -95,19 +103,7 @@ const series = computed((): { data: number[] }[] => [
 ]);
 
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  const gainers_ = curveService.getTvlGainers();
-  const losers_ = curveService.getTvlLosers();
-  const [gainers, losers] = [await gainers_, await losers_];
-
-  data.value = [...gainers.tvl_gainers, ...losers.tvl_losers].sort(
-    (a, b) => b.tvl_growth - a.tvl_growth
-  );
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 // Methods
 const formatterX = (x: string): string => x.toString().substring(0, 12);

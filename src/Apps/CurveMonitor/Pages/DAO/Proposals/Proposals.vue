@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { TabView, TabItem, Spinner } from "@/Framework";
+import { TabView, TabItem, Spinner, useData } from "@/Framework";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import ProposalsTab from "@CM/Pages/DAO/Proposals/ProposalsTab.vue";
@@ -63,9 +63,23 @@ const { t } = useI18n();
 const proposalService = new ProposalService(getHost());
 
 // Refs
-const loading = ref(false);
-const proposals = ref<Proposal[]>([]);
 const tabActive = ref(0);
+
+// Data
+const {
+  loading,
+  data: proposals,
+  loadData,
+} = useData(
+  () =>
+    minDelay(
+      proposalService
+        .getProposals()
+        .then((ps) => ps.sort((a, b) => b.start - a.start)),
+      1000
+    ),
+  []
+);
 
 const proposalsActive = computed((): Proposal[] => {
   return proposals.value.filter((p) => getStatus(p) === "active");
@@ -84,20 +98,7 @@ const proposalsExecuted = computed((): Proposal[] => {
 });
 
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  try {
-    proposals.value = await minDelay(
-      proposalService
-        .getProposals()
-        .then((ps) => ps.sort((a, b) => b.start - a.start)),
-      1000
-    );
-  } finally {
-    loading.value = false;
-  }
-});
+onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

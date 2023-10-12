@@ -38,9 +38,8 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle } from "@/Framework";
+import { Card, ButtonToggle, useData } from "@/Framework";
 import CurveService, {
-  type HistoricalLiquidations,
   type Market,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartLiquidationHistoricalValue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalValue.vue";
@@ -60,24 +59,27 @@ interface Props {
   market?: Market | null;
 }
 const { market = null } = defineProps<Props>();
-const loading = ref(true);
-const data = ref<HistoricalLiquidations[]>([]);
+
+// Data
+const { data, loadData } = useData(() => {
+  if (market) {
+    return curveService
+      .getHistoricalLiquidations(market.address)
+      .then((x) => x.liquidations);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Watches
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    data.value = await curveService
-      .getHistoricalLiquidations(newMarket.address)
-      .then((x) => x.liquidations);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

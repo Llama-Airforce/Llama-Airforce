@@ -9,15 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { CardGraph } from "@/Framework";
+import { computed, watch } from "vue";
+import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
-import CurveService, {
-  type HealthDecile,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
@@ -33,8 +31,14 @@ const { market = null } = defineProps<Props>();
 // Refs
 const storeSettings = useSettingsStore();
 
-const loading = ref(true);
-const data = ref<HealthDecile[]>([]);
+// Data
+const { loading, data, loadData } = useData(() => {
+  if (market) {
+    return curveService.getHealthDeciles(market.address).then((x) => x.health);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
@@ -119,17 +123,11 @@ const series = computed((): { name: string; data: number[] }[] => [
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    data.value = await curveService
-      .getHealthDeciles(newMarket.address)
-      .then((x) => x.health);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { CardGraph } from "@/Framework";
+import { computed, onMounted } from "vue";
+import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
@@ -23,8 +23,14 @@ const curveService = new CurveService(getHost());
 // Refs
 const storeSettings = useSettingsStore();
 
-const loading = ref(true);
-const data = ref<{ chain: string; tvl: number }[]>([]);
+// Data
+const { loading, data, loadData } = useData(
+  () =>
+    curveService
+      .getTvlBreakdownChain()
+      .then((x) => x.tvl_breakdown_chain.sort((a, b) => b.tvl - a.tvl)),
+  []
+);
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
@@ -86,15 +92,7 @@ const series = computed((): { name: string; data: number[] }[] => {
 });
 
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await curveService
-    .getTvlBreakdownChain()
-    .then((x) => x.tvl_breakdown_chain.sort((a, b) => b.tvl - a.tvl));
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 // Methods
 const formatter = (x: number): string => {

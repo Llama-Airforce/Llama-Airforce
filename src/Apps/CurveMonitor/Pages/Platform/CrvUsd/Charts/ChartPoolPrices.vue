@@ -32,7 +32,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -55,8 +55,6 @@ let lineSeries: ISeriesApi<"Line">[] = [];
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const prices = ref<PoolPrice[]>([{ timestamp: 0 }]);
-const loading = ref(false);
 const coinsDisabled = ref<string[]>([]);
 
 const whitelist = ["USDC", "USDT", "TUSD", "USDP"];
@@ -64,6 +62,16 @@ const coins = computed((): string[] =>
   Object.keys(prices.value[0]).filter(
     (key) => key !== "timestamp" && key !== "USD" && whitelist.includes(key)
   )
+);
+
+// Data
+const {
+  loading,
+  data: prices,
+  loadData,
+} = useData(
+  () => curveService.getPoolPrices().then((x) => x.prices),
+  [{ timestamp: 0 }]
 );
 
 // Hooks
@@ -75,9 +83,7 @@ onMounted(async () => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
-  loading.value = true;
-  prices.value = await curveService.getPoolPrices().then((x) => x.prices);
-  loading.value = false;
+  await loadData();
 
   addSeries();
   createSeries(prices.value);

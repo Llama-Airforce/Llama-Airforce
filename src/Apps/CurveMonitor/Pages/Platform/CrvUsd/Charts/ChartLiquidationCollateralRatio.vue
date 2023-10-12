@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
@@ -53,8 +53,21 @@ const { market = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
-const ratios = ref<CollateralRatios[]>([]);
-const loading = ref(false);
+
+// Data
+const {
+  loading,
+  data: ratios,
+  loadData,
+} = useData(() => {
+  if (market) {
+    return curveService
+      .getHistoricalCollateralRatio(market.address)
+      .then((x) => x.ratios);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -74,17 +87,11 @@ onMounted(async (): Promise<void> => {
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    ratios.value = await curveService
-      .getHistoricalCollateralRatio(newMarket.address)
-      .then((x) => x.ratios);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

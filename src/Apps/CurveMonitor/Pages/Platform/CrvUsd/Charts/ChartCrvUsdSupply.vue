@@ -45,14 +45,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle } from "@/Framework";
+import { Card, ButtonToggle, useData } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
-import CurveService, {
-  type CrvUsdSupply,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartCrvUsdSupplyLine from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyLine.vue";
 import ChartCrvUsdSupplyBreakdown from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyBreakdown.vue";
 
@@ -66,17 +64,15 @@ const curveService = new CurveService(getHost());
 const storeSettings = useSettingsStore();
 
 const chartType = ref<ChartType>("line");
-const data = ref<CrvUsdSupply[]>([]);
-const loading = ref(false);
+
+// Data
+const { loading, data, loadData } = useData(
+  () => curveService.getCrvUsdSupply().then((x) => x.supply),
+  []
+);
 
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  data.value = await curveService.getCrvUsdSupply().then((x) => x.supply);
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 
 // Events
 const onChartType = (type: ChartType) => {

@@ -35,8 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { AsyncValue, DataTable } from "@/Framework";
+import { onMounted } from "vue";
+import { AsyncValue, DataTable, useData } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
@@ -52,21 +52,18 @@ type Trade = {
 
 const curveService = new CurveService(getHost());
 
-// Refs
-const loading = ref(true);
-const trades = ref<Trade[]>([]);
+// Data
+const { data: trades, loadData } = useData(
+  () =>
+    curveService
+      .getTradesLarge()
+      .then((x) => x.large_trades.sort((a, b) => b.value - a.value))
+      .then((x) => x.slice(0, 10)),
+  []
+);
 
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  trades.value = await curveService
-    .getTradesLarge()
-    .then((x) => x.large_trades.sort((a, b) => b.value - a.value))
-    .then((x) => x.slice(0, 10));
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

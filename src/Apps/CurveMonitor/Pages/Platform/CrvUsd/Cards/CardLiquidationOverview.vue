@@ -46,14 +46,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card } from "@/Framework";
+import { Card, useData } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
-import CurveService, {
-  type MarketHealthState,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const { t } = useI18n();
@@ -66,27 +64,34 @@ interface Props {
 }
 
 const { market = null } = defineProps<Props>();
-const content = computed(() => marketState.value);
 
 // Refs
-const marketState = ref<MarketHealthState | null>(null);
-const loading = ref(false);
+const content = computed(() => marketState.value);
+
+// Data
+const {
+  loading,
+  data: marketState,
+  loadData,
+} = useData(() => {
+  if (market) {
+    return curveService
+      .getMarketStateHealth(market.address)
+      .then((x) => x.health);
+  } else {
+    return Promise.resolve(null);
+  }
+}, null);
 
 // Watches
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    marketState.value = await curveService
-      .getMarketStateHealth(newMarket.address)
-      .then((x) => x.health);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );

@@ -66,7 +66,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText } from "@/Framework";
+import { AsyncValue, DataTable, InputText, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain, icon } from "@CM/Models/Chain";
@@ -81,8 +81,6 @@ const curveService = new CushionService(getHost());
 type Row = Cushion;
 
 // Refs
-const loading = ref(true);
-const rowsRaw = ref<Row[]>([]);
 const search = ref("");
 const networkChain = ref<Chain | "all">("all");
 
@@ -109,16 +107,21 @@ const rows = computed((): Row[] =>
     .value()
 );
 
+// Data
+const {
+  loading,
+  data: rowsRaw,
+  loadData,
+} = useData(
+  () =>
+    curveService
+      .getCushions()
+      .then((x) => x.cushions.sort((a, b) => b.totalUSD - a.totalUSD)),
+  []
+);
+
 // Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  rowsRaw.value = await curveService
-    .getCushions()
-    .then((x) => x.cushions.sort((a, b) => b.totalUSD - a.totalUSD));
-
-  loading.value = false;
-});
+onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

@@ -40,11 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import { AsyncValue, DataTable } from "@/Framework";
+import { AsyncValue, DataTable, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type Market,
@@ -56,13 +56,26 @@ const { t } = useI18n();
 const curveService = new CurveService(getHost());
 
 // Refs
-const loading = ref(true);
-const rowsRaw = ref<Liquidators[]>([]);
 const rows = computed((): Liquidators[] =>
   chain(rowsRaw.value)
     .map((x) => x)
     .value()
 );
+
+// Data
+const {
+  loading,
+  data: rowsRaw,
+  loadData,
+} = useData(() => {
+  if (market) {
+    return curveService
+      .getTopLiquidators(market.address)
+      .then((x) => x.liquidations);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
 
 // Props
 interface Props {
@@ -75,17 +88,11 @@ const { market = null } = defineProps<Props>();
 watch(
   () => market,
   async (newMarket) => {
-    loading.value = true;
-
     if (!newMarket) {
       return;
     }
 
-    rowsRaw.value = await curveService
-      .getTopLiquidators(newMarket.address)
-      .then((x) => x.liquidations);
-
-    loading.value = false;
+    await loadData();
   },
   { immediate: true }
 );
