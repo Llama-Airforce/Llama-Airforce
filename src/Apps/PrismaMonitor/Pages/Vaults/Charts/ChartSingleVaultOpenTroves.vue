@@ -76,8 +76,6 @@ onMounted(() => {
   );
 
   createSeries(data.value);
-
-  void loadData();
 });
 
 // Watches
