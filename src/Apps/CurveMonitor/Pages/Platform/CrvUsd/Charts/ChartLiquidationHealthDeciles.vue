@@ -120,17 +120,7 @@ const series = computed((): { name: string; data: number[] }[] => [
 ]);
 
 // Watches
-watch(
-  () => market,
-  async (newMarket) => {
-    if (!newMarket) {
-      return;
-    }
-
-    await loadData();
-  },
-  { immediate: true }
-);
+watch(() => market, loadData, { immediate: true });
 
 // Methods
 const formatterX = (x: string): string => x;

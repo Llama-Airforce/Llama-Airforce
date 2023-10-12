@@ -91,15 +91,7 @@ watch(
   }
 );
 
-watch(
-  () => vault,
-  async (newVal, oldVal) => {
-    if (newVal !== null && newVal !== oldVal) {
-      await loadData();
-    }
-  },
-  { immediate: true }
-);
+watch(() => vault, loadData, { immediate: true });
 
 watch(data, (newData) => {
   createSeries(newData);

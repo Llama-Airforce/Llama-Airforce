@@ -63,15 +63,7 @@ const { loading, data, loadData } = useData(() => {
 
 // Watches
 watch(chartType, loadData, { immediate: true });
-watch(
-  () => vault,
-  async (newVault, oldVault) => {
-    if (newVault !== oldVault) {
-      await loadData();
-    }
-  },
-  { immediate: true }
-);
+watch(() => vault, loadData, { immediate: true });
 </script>
 
 <style lang="scss" scoped>

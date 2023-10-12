@@ -72,17 +72,7 @@ const { data, loadData } = useData(() => {
 }, []);
 
 // Watches
-watch(
-  () => market,
-  async (newMarket) => {
-    if (!newMarket) {
-      return;
-    }
-
-    await loadData();
-  },
-  { immediate: true }
-);
+watch(() => market, loadData, { immediate: true });
 
 // Events
 const onChartType = (type: ChartType) => {
