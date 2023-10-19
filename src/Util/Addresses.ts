@@ -21,7 +21,7 @@ export const UnionAddresses = [
   "0x7a7f79c5706716bae853c1b96e36538c7eaa4925",
   "0x853dcbf4dd00dbc6a70002ff87be3671ac966067",
   "0xce45e2e9a1ca8ba9a311bf862606b890c1f5d988",
-  "0xd52ca71aafa4d2590aac1e35e3005242dd31e5ed"
+  "0xd52ca71aafa4d2590aac1e35e3005242dd31e5ed",
 ];
 export const AssetRegistryAddress =
   "0xcfa23b8f9062369b21049b9f4a4ce79d640d1873";
@@ -161,6 +161,9 @@ export const veFunderGaugeFactoryAddress =
   "0x696B5D296a8AeF7482B726FCf0616E32fe72A53d";
 export const veFunderGaugeController =
   "0x2f50d538606fa9edd2b11e2446beb18c9d5846bb";
+
+// Curve
+export const CurveVotingAddress = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
 
 // Other
 export const PirexCvxAddress = "0x35a398425d9f1029021a92bc3d2557d42c8588d7";

@@ -15,6 +15,7 @@ type GetProposalsResponse = {
     voteType: "PARAMETER" | "OWNERSHIP";
     creator: string;
     startDate: string;
+    snapshotBlock: number;
     metadata: string;
     minAcceptQuorum: string;
     supportRequired: string;
@@ -38,10 +39,11 @@ type GetProposalDetailsResponse = GetProposalsResponse["proposals"][number] & {
 const parseProposal = (
   x: GetProposalsResponse["proposals"][number]
 ): Proposal => {
-  const id = x.voteId;
+  const id = parseInt(x.voteId, 10);
   const type = x.voteType === "PARAMETER" ? "parameter" : "gauge";
   const metadata = x.metadata;
   const proposer = x.creator;
+  const block = x.snapshotBlock;
   const start = parseInt(x.startDate, 10);
   const end = start + 604800;
   const quorum = bigNumToNumber(BigInt(x.minAcceptQuorum), 18n);
@@ -57,6 +59,7 @@ const parseProposal = (
     type,
     metadata,
     proposer,
+    block,
     start,
     end,
     quorum,

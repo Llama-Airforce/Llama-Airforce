@@ -29,6 +29,7 @@
 
   $colors: (
     "text": $text,
+    "text-invert": invert($text),
     "lvl0": $lvl0,
     "lvl0-hint": lighten($lvl0, 1.5%),
     "lvl0-hover": lighten($lvl0, 6%),

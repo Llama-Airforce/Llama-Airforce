@@ -1,8 +1,8 @@
 <template>
   <div class="voting">
-    <VotingButtons v-show="false"></VotingButtons>
     <VotingQuorum :proposal="proposal"></VotingQuorum>
     <VotingResults :proposal="proposal"></VotingResults>
+    <VotingButtons :proposal="proposal"></VotingButtons>
   </div>
 </template>
 

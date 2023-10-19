@@ -10,10 +10,11 @@ export const proposalStatusses = [
 export type ProposalStatus = typeof proposalStatusses[number];
 
 export type Proposal = {
-  id: string;
+  id: number;
   type: ProposalType;
   metadata: string;
   proposer: string;
+  block: number;
   start: number;
   end: number;
   quorum: number; // Voting power in veCRV.

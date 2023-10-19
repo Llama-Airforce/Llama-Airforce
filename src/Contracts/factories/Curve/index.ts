@@ -4,3 +4,5 @@
 export { CurveV1FactoryPool__factory } from "./CurveV1FactoryPool__factory";
 export { CurveV2FactoryPool__factory } from "./CurveV2FactoryPool__factory";
 export { CvxCrvFactoryPool__factory } from "./CvxCrvFactoryPool__factory";
+export { VeCRV__factory } from "./VeCRV__factory";
+export { Voting__factory } from "./Voting__factory";
