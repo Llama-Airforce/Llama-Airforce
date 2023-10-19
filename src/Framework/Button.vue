@@ -68,6 +68,7 @@ button {
   all: unset;
   display: flex;
   align-items: center;
+  line-height: 1;
   padding: 0.5rem 1rem;
   color: var(--c-text);
   user-select: none;
