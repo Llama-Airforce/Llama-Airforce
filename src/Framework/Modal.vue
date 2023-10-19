@@ -41,6 +41,24 @@ watch(
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@keyframes fadeOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+
+@keyframes fadeBlur {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(10px);
+  }
+}
+
 .modal {
   display: flex;
   justify-content: center;
@@ -58,13 +76,17 @@ watch(
   font-weight: var(--font-weight);
   line-height: 1.5;
 
+  backdrop-filter: blur(0px);
+  animation: fadeBlur 0.5s forwards; /* Apply the animation */
+
   .modal-mask {
     position: fixed;
     width: 100%;
     height: 100%;
     background-color: black;
-    opacity: 0.6;
     z-index: 1;
+
+    animation: fadeOpacity 0.5s forwards; /* Apply the animation */
   }
 
   .modal-popup {
