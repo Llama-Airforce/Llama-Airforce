@@ -42,16 +42,6 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <div
-        class="type"
-        :class="{
-          open: props.item.status === 'Open',
-          closed: props.item.status === 'Closed',
-        }"
-      >
-        {{ props.item.status }}
-      </div>
-
       <div @click.stop>
         <a
           style="font-family: monospace"
@@ -62,10 +52,24 @@
         </a>
       </div>
 
-      <div class="number">${{ Math.round(props.item.debt) }}</div>
-      <div class="number">${{ Math.round(props.item.collateral_usd) }}</div>
+      <div
+        class="number"
+        :class="{ hide: type === 'Closed' }"
+      >
+        ${{ Math.round(props.item.debt) }}
+      </div>
 
-      <div class="number">
+      <div
+        class="number"
+        :class="{ hide: type === 'Closed' }"
+      >
+        ${{ Math.round(props.item.collateral_usd) }}
+      </div>
+
+      <div
+        class="number"
+        :class="{ hide: type === 'Closed' }"
+      >
         <AsyncValue
           :value="props.item.collateral_ratio * 100"
           :precision="2"
@@ -132,7 +136,6 @@ const sortOrder = ref(SortOrder.Descending);
 const columns = computed((): string[] => {
   if (type.value === "Open") {
     return [
-      "Status",
       "Owner",
       "Debt",
       "Collateral",
@@ -141,15 +144,15 @@ const columns = computed((): string[] => {
       "Last Updated",
     ];
   } else {
-    return ["Status", "Owner", "Created At", "Last Updated"];
+    return ["Owner", "", "", "", "Created At", "Last Updated"];
   }
 });
 
 const columnsSorting = computed((): string[] => {
   if (type.value === "Open") {
-    return ["", "owner", "debt", "coll", "ratio", "created", "updated"];
+    return ["owner", "debt", "coll", "ratio", "created", "updated"];
   } else {
-    return ["", "owner", "created", "updated"];
+    return ["owner", "", "", "", "created", "updated"];
   }
 });
 
@@ -286,29 +289,23 @@ watch(rowsPage, (ps) => {
     width: auto;
   }
 
-  .type {
-    &.open {
-      color: var(--c-green);
-    }
-
-    &.closed {
-      color: var(--c-red);
-    }
-  }
-
   ::v-deep(.troves-columns-data) {
     --col-width: 11ch;
 
     display: grid;
     grid-template-columns:
-      12ch minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+      minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
       minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
+
+    .hide {
+      visibility: hidden;
+    }
 
     // Non mobile
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1100px) {
         grid-template-columns:
-          12ch minmax(12ch, 0.5fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 0.5fr) repeat(3, minmax(var(--col-width), 0.75fr))
           minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
       }
     }
@@ -319,37 +316,37 @@ watch(rowsPage, (ps) => {
 
       @container (max-width: 1000px) {
         grid-template-columns:
-          12ch minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
           minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
       }
 
       @container (max-width: 900px) {
         grid-template-columns:
-          12ch minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
           minmax(12ch, 1fr) 1rem;
 
-        div:nth-child(7) {
+        div:nth-child(6) {
           display: none;
         }
       }
 
       @container (max-width: 600px) {
         grid-template-columns:
-          12ch minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
           1rem;
 
-        div:nth-child(6) {
+        div:nth-child(5) {
           display: none;
         }
       }
     }
 
     // Right adjust number columns.
+    div:nth-child(2),
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7) {
+    div:nth-child(6) {
       justify-content: end;
     }
   }
