@@ -22,15 +22,12 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem
-        header="Troves"
-        :disabled="true"
-      >
+      <TabItem header="Troves">
         <KeepAlive>
-          <FindTrove
+          <Troves
             v-if="tabActive === 2 && vault"
             :vault="vault"
-          ></FindTrove>
+          ></Troves>
         </KeepAlive>
       </TabItem>
 
@@ -84,7 +81,7 @@ import VaultOverview from "@PM/Pages/Vaults/VaultOverview.vue";
 import Collateral from "@PM/Pages/Vaults/Collateral.vue";
 import Liquidations from "@PM/Pages/Vaults/Liquidations.vue";
 import Redemptions from "@PM/Pages/Vaults/Redemptions.vue";
-import FindTrove from "@PM/Pages/Vaults/FindTrove.vue";
+import Troves from "@PM/Pages/Vaults/Troves.vue";
 import Simulation from "@PM/Pages/Vaults/Simulation.vue";
 
 const prismaService = new TroveOverviewService("ethereum");

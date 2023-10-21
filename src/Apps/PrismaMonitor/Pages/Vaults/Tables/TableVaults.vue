@@ -2,7 +2,7 @@
   <DataTable
     class="datatable-vaults"
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
-    columns-data="troves-columns-data"
+    columns-data="vaults-columns-data"
     :loading="loading"
     :rows="rows"
     :columns="['Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
@@ -167,7 +167,7 @@ onMounted(() => {
     margin-left: 1rem;
   }
 
-  ::v-deep(.troves-columns-data) {
+  ::v-deep(.vaults-columns-data) {
     --col-width: 11ch;
 
     display: grid;

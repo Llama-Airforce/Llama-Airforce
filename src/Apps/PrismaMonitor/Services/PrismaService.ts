@@ -1,3 +1,4 @@
+import { paginate } from "@/Util";
 import ServiceBase from "@/Services/ServiceBase";
 
 const API_URL = "https://api.prismamonitor.com/v1";
@@ -65,6 +66,17 @@ export type CollateralInfo = {
   tvl: number;
   share: number;
   risk: string;
+};
+
+export type TroveStatus = "Open" | "Closed";
+export type Trove = {
+  owner: string;
+  status: TroveStatus;
+  collateral_usd: number;
+  debt: number;
+  collateral_ratio: number;
+  created_at: number;
+  last_update: number;
 };
 
 export default class PrismaService extends ServiceBase {
@@ -260,5 +272,29 @@ export default class PrismaService extends ServiceBase {
     chain: string
   ): Promise<{ depth: PoolDepth[] }> {
     return this.fetch(`${API_URL}/mkusd/${chain}/depth`);
+  }
+
+  public async getTroves(
+    chain: string,
+    manager: string,
+    orderBy:
+      | "last_update"
+      | "created_at"
+      | "collateral_ratio"
+      | "collateral_usd"
+      | "debt"
+      | "owner"
+  ): Promise<Trove[]> {
+    const fs = (page: number) => {
+      return this.fetch<{
+        page: number;
+        total_entries: number;
+        troves: Trove[];
+      }>(
+        `${API_URL}/trove/${chain}/${manager}/troves?items=100&page=${page}&order_by=${orderBy}&desc=true`
+      ).then((resp) => resp.troves);
+    };
+
+    return paginate(fs, 1, 100);
   }
 }
