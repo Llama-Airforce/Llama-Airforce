@@ -87,7 +87,7 @@ const emit = defineEmits<{
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-  transition: background $hover-duration;
+  transition: background-color 125ms ease;
 
   background: var(--c-lvl1-hover);
   border-radius: var(--border-radius);

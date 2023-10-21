@@ -78,6 +78,8 @@ button {
 
   border-radius: var(--border-radius);
 
+  transition: background-color 125ms ease;
+
   .icon {
     display: flex;
     align-items: center;

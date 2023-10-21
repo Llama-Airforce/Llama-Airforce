@@ -155,6 +155,8 @@ ul {
       border: none;
       border-radius: var(--border-radius);
 
+      transition: background-color 125ms ease;
+
       &:hover {
         background-color: var(--c-primary-hover);
       }

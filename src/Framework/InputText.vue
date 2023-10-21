@@ -104,6 +104,8 @@ const onInput = (evt: Event): void => {
     border-radius: var(--border-radius);
     box-shadow: var(--input-box-shadow);
 
+    transition: background-color 125ms ease;
+
     padding: 0rem 0.875rem;
     text-align: start;
     height: 2.5rem;

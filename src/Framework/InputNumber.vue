@@ -44,6 +44,8 @@ input {
   height: 2.5rem;
   cursor: text;
 
+  transition: background-color 125ms ease;
+
   &::placeholder {
     color: var(--c-lvl5);
   }
