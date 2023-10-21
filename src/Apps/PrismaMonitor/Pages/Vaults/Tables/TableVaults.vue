@@ -5,7 +5,7 @@
     columns-data="vaults-columns-data"
     :loading="loading"
     :rows="rows"
-    :columns="['Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
+    :columns="['', 'Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
@@ -20,6 +20,7 @@
     </template>
 
     <template #row="props: { item: Row }">
+      <img :src="icon(props.item.address)" />
       <div>{{ props.item.name }}</div>
 
       <div class="number">
@@ -62,6 +63,7 @@
     </template>
 
     <template #row-aggregation>
+      <div></div>
       <div></div>
 
       <div class="number">
@@ -154,6 +156,24 @@ onMounted(() => {
 });
 
 // Methods
+const icon = (address: string) => {
+  const getLogo = (address: string) => {
+    switch (address) {
+      case "0x63cc74334f4b1119276667cf0079ac0c8a96cfb2":
+        return "cbeth.webp";
+      case "0xbf6883a03fd2fcfa1b9fc588ad6193b3c3178f8f":
+        return "steth.webp";
+      case "0xe0e255fd5281bec3bb8fa1569a20097d9064e445":
+        return "reth.webp";
+      case "0xf69282a7e7ba5428f92f610e7afa1c0cedc4e483":
+        return "frxeth.webp";
+      default:
+        return "";
+    }
+  };
+
+  return `icons/tokens/${getLogo(address)}`;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -170,129 +190,59 @@ onMounted(() => {
   ::v-deep(.vaults-columns-data) {
     --col-width: 11ch;
 
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
+    }
+
     display: grid;
     grid-template-columns:
-      minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
+      20px minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
       1rem;
-
-    // Non mobile
-    @media only screen and (min-width: 1280px) {
-      @container (max-width: 1200px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
-          1rem;
-      }
-
-      @container (max-width: 1100px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
-          1rem;
-
-        div:nth-child(7) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 1000px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
-          1rem;
-
-        div:nth-child(4) {
-          display: none;
-        }
-      }
-    }
 
     // Mobile
     @media only screen and (max-width: 1280px) {
-      gap: 0.25rem;
-
-      @container (max-width: 1000px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(8, minmax(var(--col-width), 0.75fr))
-          2rem;
-      }
-
-      @container (max-width: 900px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
-          2rem;
-
-        div:nth-child(7) {
-          display: none;
-        }
-      }
-
       @container (max-width: 800px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
-          2rem;
+          20px minmax(12ch, 1fr) repeat(5, minmax(var(--col-width), 0.75fr))
+          1rem;
 
-        div:nth-child(4) {
+        div:nth-child(8) {
           display: none;
         }
       }
 
-      @container (max-width: 700px) {
-        --col-width: 11ch;
-
+      @container (max-width: 650px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(5, minmax(var(--col-width), 0.75fr))
-          2rem;
-      }
+          20px minmax(12ch, 1fr) repeat(4, minmax(var(--col-width), 0.75fr))
+          1rem;
 
-      @container (max-width: 600px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(4, minmax(var(--col-width), 0.75fr))
-          2rem;
-      }
-
-      @container (max-width: 500px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, var(--col-width))
-          2rem;
-
-        div:nth-child(5) {
+        div:nth-child(6) {
           display: none;
         }
       }
 
-      @container (max-width: 400px) {
-        --col-width: 9ch;
-      }
+      @container (max-width: 550px) {
+        --col-width: 10ch;
 
-      @container (max-width: 350px) {
-        --col-width: 8ch;
-      }
-
-      @container (max-width: 325px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(2, var(--col-width))
-          2rem;
+          20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          1rem;
 
-        div:nth-child(3) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 275px) {
-        grid-template-columns: minmax(12ch, 1fr) 2rem;
-
-        div:nth-child(3),
-        div:nth-child(4) {
+        div:nth-child(7) {
           display: none;
         }
       }
     }
 
     // Right adjust number columns.
-    div:nth-child(2),
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
     div:nth-child(6),
-    div:nth-child(7) {
+    div:nth-child(7),
+    div:nth-child(8) {
       justify-content: end;
     }
   }
