@@ -7,10 +7,7 @@
     <template #actions>
       <Tooltip>
         <div>
-          Price data is sourced from Coingecko via Defi Llama.<br />
-          Due to a bug in the way Coingecko aggregates mkUSD price data,
-          <br />the chart may erroneously report large price variations. A fix
-          is on its way.
+          Price data is sourced from Curve pools only.
         </div>
       </Tooltip>
     </template>
