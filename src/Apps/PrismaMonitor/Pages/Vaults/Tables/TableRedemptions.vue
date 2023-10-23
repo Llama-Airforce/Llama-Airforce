@@ -12,6 +12,7 @@
     sorting-default-column="timestamp"
     sorting-default-dir="Descending"
     @sort-column="onSort"
+    @selected="onSelect"
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
@@ -36,13 +37,25 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <div @click.stop>
+      <div>
         <a
           style="font-family: monospace"
           :href="`https://etherscan.io/address/${props.item.redeemer}`"
           target="_blank"
+          @click.stop
         >
           {{ addressShort(props.item.redeemer) }}
+        </a>
+      </div>
+
+      <div>
+        <a
+          style="font-family: monospace"
+          :href="`https://etherscan.io/tx/${props.item.transaction}`"
+          target="_blank"
+          @click.stop
+        >
+          {{ addressShort(props.item.transaction) }}
         </a>
       </div>
 
@@ -57,6 +70,17 @@
     <!-- Empty for expander arrow and pointer on hover -->
     <template #row-details> &nbsp; </template>
   </DataTable>
+
+  <Modal
+    :show="!!showDetails"
+    @close="showDetails = null"
+  >
+    <RedemptionDetails
+      v-if="!!showDetails"
+      :redemption="showDetails"
+      :vault-addr="vault?.address ?? ''"
+    ></RedemptionDetails>
+  </Modal>
 </template>
 
 <script setup lang="ts">
@@ -67,14 +91,16 @@ import {
   DataTable,
   InputText,
   Pagination,
-  useData,
   SortOrder,
+  Modal,
+  useData,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import RedemptionDetails from "@PM/Pages/Vaults/RedemptionDetails.vue";
 
 type Row = Redemption;
 
@@ -93,16 +119,17 @@ const { vault = null } = defineProps<Props>();
 const search = ref("");
 const page = ref(1);
 const now = ref(Date.now());
+const showDetails = ref<Redemption | null>(null);
 
 const sortColumn = ref<string>("timestamp");
 const sortOrder = ref(SortOrder.Descending);
 
 const columns = computed((): string[] => {
-  return ["Redeemer", "Debt", "# Troves", "Time"];
+  return ["Redeemer", "Transaction", "Debt", "# Troves", "Time"];
 });
 
 const columnsSorting = computed((): string[] => {
-  return ["redeemer", "debt", "numtroves", "timestamp"];
+  return ["redeemer", "tx", "debt", "numtroves", "timestamp"];
 });
 
 const rows = computed((): Row[] =>
@@ -120,6 +147,8 @@ const rows = computed((): Row[] =>
         switch (sortColumn.value) {
           case "redeemer":
             return row.redeemer;
+          case "tx":
+            return row.transaction;
           case "debt":
             return row.actual_debt_amount;
           case "numtroves":
@@ -175,6 +204,10 @@ const onSort = (columnName: string, order: SortOrder): void => {
   sortOrder.value = order;
 };
 
+const onSelect = (row: unknown) => {
+  showDetails.value = row as Redemption;
+};
+
 // Watches
 watch(() => vault, loadData, { immediate: true });
 
@@ -206,7 +239,10 @@ watch(rowsPage, (ps) => {
 
     display: grid;
     grid-template-columns:
-      minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+      minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(
+        3,
+        minmax(var(--col-width), 0.75fr)
+      )
       1rem;
 
     // Mobile
@@ -215,9 +251,9 @@ watch(rowsPage, (ps) => {
     }
 
     // Right adjust number columns.
-    div:nth-child(2),
     div:nth-child(3),
-    div:nth-child(4) {
+    div:nth-child(4),
+    div:nth-child(5) {
       justify-content: end;
     }
   }
