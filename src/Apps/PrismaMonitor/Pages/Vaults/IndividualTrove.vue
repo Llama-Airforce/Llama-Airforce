@@ -18,6 +18,7 @@ import {useBreadcrumbStore} from "@PM/Stores/BreadcrumbStore";
 import ChartIndividualTroveRank from "@PM/Pages/Vaults/Charts/ChartIndividualTroveRank.vue";
 import PrismaService, {type Trove} from "@PM/Services/PrismaService";
 import {getHost} from "@/Services/Host";
+import {TroveOverviewService} from "@PM/Services/Socket/TroveOverviewService";
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
@@ -29,6 +30,7 @@ const vault = computed(() => storeVault.vault);
 const troveAddr = computed(() => route.params.troveAddr as string);
 const trove = computed(() => storeVault.trove);
 const prismaService = new PrismaService(getHost());
+const prismaVaultService = new TroveOverviewService("ethereum");
 
 
 // Hooks
@@ -57,6 +59,15 @@ onMounted(async (): Promise<void> => {
     },
   ];
 });
+
+// Watches
+watch(prismaVaultService.currentData, (newData) => {
+  const vault = newData.find((v) => v.address === vaultAddr.value);
+  if (vault) {
+    storeVault.vault = vault;
+  }
+});
+
 
 watch(vault, (newVault) => {
   storeBreadcrumb.crumbs = [
