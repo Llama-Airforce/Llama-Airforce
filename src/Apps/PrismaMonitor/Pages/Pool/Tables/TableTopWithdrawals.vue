@@ -71,7 +71,7 @@ const rows = computed((): PoolStableOperation[] =>
 const { loading, data, loadData } = useData(
   () =>
     prismaService
-      .getTopStableDeposits("ethereum", 5, "7d")
+      .getTopStableWithdrawals("ethereum", 5, "7d")
       .then((x) => x.operations),
   []
 );
