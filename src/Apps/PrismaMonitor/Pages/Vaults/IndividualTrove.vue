@@ -1,15 +1,21 @@
 <template>
-  <div class="trove">TODO</div>
+  <div class="trove-overview">
+    <ChartIndividualTroveRank
+      :vault="vault"
+      :trove="trove"
+    >
+    </ChartIndividualTroveRank>
+  </div>
 </template>
 
 <script setup lang="ts">
-
 
 // Refs
 import {useRoute, useRouter} from "vue-router";
 import {computed, onMounted, watch} from "vue";
 import {useVaultStore} from "@PM/Pages/Vaults/Store";
 import {useBreadcrumbStore} from "@PM/Stores/BreadcrumbStore";
+import ChartIndividualTroveRank from "@PM/Pages/Vaults/Charts/ChartIndividualTroveRank.vue";
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
@@ -83,7 +89,7 @@ watch(trove, (newTrove) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.trove {
+.trove-overview {
   margin: var(--dashboard-gap) 0;
 
   @include dashboard-grid;
