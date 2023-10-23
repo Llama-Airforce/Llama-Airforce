@@ -54,18 +54,6 @@
           ></Redemptions>
         </KeepAlive>
       </TabItem>
-
-      <TabItem
-        header="Simulation"
-        :disabled="true"
-      >
-        <KeepAlive>
-          <Simulation
-            v-if="tabActive === 5 && vault"
-            :vault="vault"
-          ></Simulation>
-        </KeepAlive>
-      </TabItem>
     </TabView>
   </div>
 </template>
@@ -82,7 +70,6 @@ import Collateral from "@PM/Pages/Vaults/Collateral.vue";
 import Liquidations from "@PM/Pages/Vaults/Liquidations.vue";
 import Redemptions from "@PM/Pages/Vaults/Redemptions.vue";
 import Troves from "@PM/Pages/Vaults/Troves.vue";
-import Simulation from "@PM/Pages/Vaults/Simulation.vue";
 
 const prismaService = new TroveOverviewService("ethereum");
 
@@ -109,8 +96,6 @@ onMounted(() => {
       tabActive.value = 3;
     } else if (tabParam === "redemptions") {
       tabActive.value = 4;
-    } else if (tabParam === "simulation") {
-      tabActive.value = 5;
     }
   }
 
@@ -175,11 +160,6 @@ watch(tabActive, async (newTab) => {
     await router.push({
       name: "prismavault",
       params: { tab: "redemptions", vaultAddr: vaultAddr.value },
-    });
-  } else if (newTab === 5) {
-    await router.push({
-      name: "prismavault",
-      params: { tab: "simulation", vaultAddr: vaultAddr.value },
     });
   }
 });
