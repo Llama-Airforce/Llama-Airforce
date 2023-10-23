@@ -9,7 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router";
+// Refs
+import { useRoute } from "vue-router";
 import { computed, onMounted, watch } from "vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
@@ -18,17 +19,18 @@ import PrismaService, { type Trove } from "@PM/Services/PrismaService";
 import { getHost } from "@/Services/Host";
 import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 
+const prismaService = new PrismaService(getHost());
+const prismaVaultService = new TroveOverviewService("ethereum");
+
+// Refs
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
 
 const route = useRoute();
-const router = useRouter();
+
 const vaultAddr = computed(() => route.params.vaultAddr as string);
 const vault = computed(() => storeVault.vault);
-const troveAddr = computed(() => route.params.troveAddr as string);
 const trove = computed(() => storeVault.trove);
-const prismaService = new PrismaService(getHost());
-const prismaVaultService = new TroveOverviewService("ethereum");
 
 // Hooks
 onMounted(async (): Promise<void> => {

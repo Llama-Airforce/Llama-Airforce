@@ -50,11 +50,8 @@ import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewServi
 import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
-const prismaService = new PrismaService(getHost());
-const storeSettings = useSettingsStore();
 
-// Refs
-const dynamicTitle = ref("Trove Relative Position");
+const prismaService = new PrismaService(getHost());
 
 // Props
 interface Props {
@@ -62,6 +59,11 @@ interface Props {
   trove?: Trove | null;
 }
 const { vault = null, trove = null } = defineProps<Props>();
+
+// Refs
+const storeSettings = useSettingsStore();
+
+const dynamicTitle = ref("Trove Relative Position");
 
 const init: RatioPosition = {
   rank: null,
@@ -72,8 +74,6 @@ const init: RatioPosition = {
 
 // Data
 const { loading, data, loadData } = useData<RatioPosition>(async () => {
-  console.log("VAULT", vault);
-  console.log("TROVE", trove);
   if (vault && trove) {
     const rank = await prismaService.getTroveRank(
       "ethereum",
@@ -87,9 +87,26 @@ const { loading, data, loadData } = useData<RatioPosition>(async () => {
 }, init);
 
 // Refs
+// eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
   const colorsArray = getColorsArray(storeSettings.theme);
+
+  const xaxis = {
+    x: data.value?.ratio ?? 0,
+    borderColor: colors.yellow,
+    strokeDashArray: 2,
+    label: {
+      borderColor: colors.yellow,
+      style: {
+        background: colors.yellow,
+        color: "rgb(34, 34, 34)",
+      },
+      position: "top",
+      offsetX: 15,
+      text: `This trove: ${pctFormatter(data.value?.ratio ?? 0, 1)}`,
+    },
+  };
 
   return createChartStyles(
     { colors, colorsArray },
@@ -115,25 +132,7 @@ const options = computed((): unknown => {
         },
       },
       annotations: {
-        xaxis: data.value.ratio
-          ? [
-              {
-                x: data.value.ratio,
-                borderColor: colors.yellow,
-                strokeDashArray: 2,
-                label: {
-                  borderColor: colors.yellow,
-                  style: {
-                    background: colors.yellow,
-                    color: "rgb(34, 34, 34)",
-                  },
-                  position: "top",
-                  offsetX: 15,
-                  text: `This trove: ${pctFormatter(data.value.ratio, 1)}`,
-                },
-              },
-            ]
-          : [],
+        xaxis: data.value.ratio ? [xaxis] : [],
       },
       toolbar: {
         show: false,
@@ -165,13 +164,14 @@ const options = computed((): unknown => {
           }
 
           const amount = categories.value[x.dataPointIndex];
-          const tooltip = `
-          <div><b>Collateral ratio:</b>:</div>
-          <div>${
+          const pct =
             x.dataPointIndex === categories.value.length - 1
               ? "Over 250%"
-              : pctFormatter(amount)
-          }</div>
+              : pctFormatter(amount);
+
+          const tooltip = `
+          <div><b>Collateral ratio:</b>:</div>
+          <div>${pct}</div>
 
           <div><b>Troves with lower or equal ratio:</b>:</div>
           <div>${data.value.positions[x.dataPointIndex].trove_count}</div>
