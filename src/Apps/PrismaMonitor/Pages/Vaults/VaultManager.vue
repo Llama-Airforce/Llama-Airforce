@@ -43,10 +43,7 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem
-        header="Redemptions"
-        :disabled="true"
-      >
+      <TabItem header="Redemptions">
         <KeepAlive>
           <Redemptions
             v-if="tabActive === 4 && vault"
