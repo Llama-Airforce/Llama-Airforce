@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useExpansion } from "@/Framework";
 import { shorten, longen, minDelay } from "@/Util";
 import TablePools from "@LAF/Pages/Convex/Pools/Components/TablePools.vue";
 import { type Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
@@ -30,8 +31,7 @@ const poolSnapshotsService = new PoolSnapshotsService(getHost());
 const store = useConvexStore();
 const route = useRoute();
 const router = useRouter();
-
-const expanded = ref<Pool[]>([]);
+const { expanded, toggleExpansion } = useExpansion<Pool>();
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -88,18 +88,10 @@ const routeExpandPool = (poolRoute: string): void => {
   const poolName = longen(poolRoute);
   const poolFound = store.pools.find((pool) => pool.name === poolName);
   if (poolFound) {
-    toggleExpansion(poolFound);
-  }
-};
-
-const toggleExpansion = (pool: Pool): boolean => {
-  if (!expanded.value.includes(pool)) {
-    void getSnapshots(pool);
-    expanded.value.push(pool);
-    return true;
-  } else {
-    expanded.value = expanded.value.filter((x) => x !== pool);
-    return false;
+    const expanded = toggleExpansion(poolFound);
+    if (expanded) {
+      void getSnapshots(poolFound);
+    }
   }
 };
 
@@ -108,6 +100,7 @@ const onSelected = async (pool: Pool): Promise<void> => {
   const expanded = toggleExpansion(pool);
 
   if (expanded) {
+    void getSnapshots(pool);
     await router.push({
       name: "convexpools",
       params: { pool: shorten(pool.name) },

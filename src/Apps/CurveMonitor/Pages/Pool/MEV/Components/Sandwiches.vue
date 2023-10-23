@@ -6,7 +6,7 @@
     :rows="sandwiches"
     :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
     :expanded="expanded"
-    @selected="onSelected"
+    @selected="toggleExpansion($event as SandwichDetail)"
   >
     <template #header-title>
       <div class="title">{{ t("title") }}</div>
@@ -103,7 +103,7 @@ import { useI18n } from "vue-i18n";
 import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
-import { DataTable, InputText, Pagination } from "@/Framework";
+import { DataTable, InputText, Pagination, useExpansion } from "@/Framework";
 import { MEVService } from "@CM/Pages/Pool/MEV/Services";
 import Transactions from "@CM/Pages/Pool/MEV/Components/Transactions.vue";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
@@ -120,9 +120,9 @@ const swsPerPage = 10;
 
 // Refs
 const store = useMEVStore();
+const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
 
 const search = ref("");
-const expanded = ref<SandwichDetail[]>([]);
 const now = ref(Date.now());
 
 const page = computed((): number => store.sandwichesPage.cur);
@@ -163,16 +163,6 @@ const relativeTime = (unixtime: number): string => {
   return relativeTimeFunc(now, unixtime);
 };
 
-const toggleExpansion = (sw: SandwichDetail): boolean => {
-  if (!expanded.value.includes(sw)) {
-    expanded.value.push(sw);
-    return true;
-  } else {
-    expanded.value = expanded.value.filter((x) => x !== sw);
-    return false;
-  }
-};
-
 const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
   orderBy(
     [sw.frontrun, ...sw.center, sw.backrun],
@@ -190,11 +180,6 @@ const onPage = async (pageNew: number) => {
   const { sandwiches, totalPages } = await mevService.getSandwiches(pageNew);
   store.sandwiches = sandwiches;
   store.sandwichesPage = { cur: pageNew, total: totalPages };
-};
-
-const onSelected = (data: unknown): void => {
-  const sw = data as SandwichDetail;
-  toggleExpansion(sw);
 };
 </script>
 

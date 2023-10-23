@@ -28,3 +28,4 @@ export { default as TabView } from "@/Framework/TabView.vue";
 export { default as Tooltip } from "@/Framework/Tooltip.vue";
 
 export { useData } from "@/Framework/Composables/UseData";
+export { useExpansion } from "@/Framework/Composables/UseExpansion";

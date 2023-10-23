@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useExpansion } from "@/Framework";
 import { shorten, longen, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import TableGauges from "@CM/Pages/Platform/Gauges/Components/TableGauges.vue";
@@ -29,7 +30,7 @@ const store = useCurveStore();
 const route = useRoute();
 const router = useRouter();
 
-const expanded = ref<Gauge[]>([]);
+const { expanded, toggleExpansion } = useExpansion<Gauge>();
 
 onMounted(async (): Promise<void> => {
   isMounted = true;
@@ -88,18 +89,10 @@ const routeExpandGauge = (gaugeRoute: string): void => {
   const gaugeName = longen(gaugeRoute);
   const gaugeFound = store.gauges.find((gauge) => gauge.name === gaugeName);
   if (gaugeFound) {
-    toggleExpansion(gaugeFound);
-  }
-};
-
-const toggleExpansion = (gauge: Gauge): boolean => {
-  if (!expanded.value.includes(gauge)) {
-    void getSnapshots(gauge);
-    expanded.value.push(gauge);
-    return true;
-  } else {
-    expanded.value = expanded.value.filter((x) => x !== gauge);
-    return false;
+    const expanded = toggleExpansion(gaugeFound);
+    if (expanded) {
+      void getSnapshots(gaugeFound);
+    }
   }
 };
 
@@ -108,6 +101,7 @@ const onSelected = async (gauge: Gauge): Promise<void> => {
   const expanded = toggleExpansion(gauge);
 
   if (expanded) {
+    void getSnapshots(gauge);
     await router.push({
       name: "curvegauges",
       params: { gauge: shorten(gauge.name) },
