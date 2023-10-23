@@ -29,7 +29,7 @@ const { vault } = defineProps<Props>();
 
 // Events
 const onTroveSelect = async (trove: Trove) => {
-  storeVault.setTrove(trove);
+  storeVault.trove = trove;
 
   if (vault) {
     await router.push({

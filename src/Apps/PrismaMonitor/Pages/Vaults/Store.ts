@@ -15,14 +15,4 @@ export const useVaultStore = defineStore({
     vault: null,
     trove: null,
   }),
-  actions: {
-    setTrove(trove: Trove) {
-      this.trove = trove;
-    },
-  },
-  getters: {
-    getTrove() {
-      return this.trove;
-    },
-  }
 });
