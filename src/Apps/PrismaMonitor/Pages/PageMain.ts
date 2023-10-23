@@ -18,9 +18,9 @@ export const pageMain: Page = {
       path: "/vault/:vaultAddr/:tab?",
       name: "prismavault",
       component: VaultManager,
-    },,
+    },
     {
-      path: "/vault/:vaultAddr/trove/:ownerAddr",
+      path: "/vault/:vaultAddr/trove/:troveAddr",
       name: "prismatrove",
       component: IndividualTrove,
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="trove-overview">
+  <div class="trove">
     <ChartIndividualTroveRank
       :vault="vault"
       :trove="trove"
@@ -16,6 +16,8 @@ import {computed, onMounted, watch} from "vue";
 import {useVaultStore} from "@PM/Pages/Vaults/Store";
 import {useBreadcrumbStore} from "@PM/Stores/BreadcrumbStore";
 import ChartIndividualTroveRank from "@PM/Pages/Vaults/Charts/ChartIndividualTroveRank.vue";
+import PrismaService, {type Trove} from "@PM/Services/PrismaService";
+import {getHost} from "@/Services/Host";
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
@@ -26,10 +28,16 @@ const vaultAddr = computed(() => route.params.vaultAddr as string);
 const vault = computed(() => storeVault.vault);
 const troveAddr = computed(() => route.params.troveAddr as string);
 const trove = computed(() => storeVault.trove);
+const prismaService = new PrismaService(getHost());
+
 
 // Hooks
-onMounted(() => {
-
+onMounted(async (): Promise<void> => {
+  // Fetch trove data here and update the store
+  const fetchedTrove: Trove = await prismaService.getTroveDetail("ethereum", route.params.vaultAddr as string, route.params.troveAddr as string);
+  if (fetchedTrove) {
+    storeVault.trove = fetchedTrove;
+  }
 
   storeBreadcrumb.show = true;
   storeBreadcrumb.crumbs = [
@@ -41,6 +49,7 @@ onMounted(() => {
     {
       id: "vault",
       label: `Vault: ${vault.value?.name ?? "?"}`,
+      pathName: "prismavault"
     },
     {
       id: "trove",
@@ -59,6 +68,7 @@ watch(vault, (newVault) => {
     {
       id: "vault",
       label: `Vault: ${newVault?.name ?? "?"}`,
+      pathName: "prismavault"
     },
     {
       id: "trove",
@@ -68,6 +78,7 @@ watch(vault, (newVault) => {
 });
 
 watch(trove, (newTrove) => {
+
   storeBreadcrumb.crumbs = [
     {
       id: "vaults",
@@ -77,6 +88,7 @@ watch(trove, (newTrove) => {
     {
       id: "vault",
       label: `Vault: ${vault.value?.name ?? "?"}`,
+      pathName: "prismavault"
     },
     {
       id: "trove",
@@ -89,10 +101,11 @@ watch(trove, (newTrove) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.trove-overview {
-  margin: var(--dashboard-gap) 0;
+@include dashboard("trove");
 
-  @include dashboard-grid;
+.trove- {
+  max-width: calc(1920px - 18.125rem);
+
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }

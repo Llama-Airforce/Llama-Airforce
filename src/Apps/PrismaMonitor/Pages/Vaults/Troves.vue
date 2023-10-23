@@ -35,7 +35,7 @@ const onTroveSelect = async (trove: Trove) => {
     await router.push({
       name: "prismatrove",
       params: {
-        ownerAddr: trove.owner,
+        troveAddr: trove.owner,
         vaultAddr: vault.address,
       },
     });

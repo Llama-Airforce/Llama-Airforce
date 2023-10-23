@@ -337,6 +337,11 @@ export default class PrismaService extends ServiceBase {
     return this.fetch(`${API_URL}/trove/${chain}/${manager}/snapshots/${owner}`);
   }
 
+
+  public async getTroveDetail(chain: string, manager: string, owner: string): Promise<Trove> {
+    return this.fetch(`${API_URL}/trove/${chain}/${manager}/${owner}`);
+  }
+
   public async getTroveHistory(chain: string, manager: string, owner: string): Promise<{ snapshots: TroveHistoryData[] }> {
     return this.fetch(`${API_URL}/trove/${chain}/${manager}/history/${owner}`);
   }
