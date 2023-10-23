@@ -85,6 +85,8 @@
         {{ relativeTime(props.item.last_update) }}
       </div>
     </template>
+    <!-- Empty for expander arrow and pointer on hover -->
+    <template #row-details> &nbsp; </template>
   </DataTable>
 </template>
 

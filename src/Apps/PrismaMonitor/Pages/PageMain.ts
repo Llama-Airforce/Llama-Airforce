@@ -4,6 +4,7 @@ import Vaults from "@PM/Pages/Vaults/Vaults.vue";
 import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";
 import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
+import IndividualTrove from "@PM/Pages/Vaults/IndividualTrove.vue";
 
 export const pageMain: Page = {
   titleRoute: "/",
@@ -17,6 +18,11 @@ export const pageMain: Page = {
       path: "/vault/:vaultAddr/:tab?",
       name: "prismavault",
       component: VaultManager,
+    },,
+    {
+      path: "/vault/:vaultAddr/trove/:ownerAddr",
+      name: "prismatrove",
+      component: IndividualTrove,
     },
   ],
   menuItems: [

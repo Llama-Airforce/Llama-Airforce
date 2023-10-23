@@ -1,19 +1,46 @@
 <template>
   <div class="troves">
-    <TableTroves :vault="vault"></TableTroves>
+    <TableTroves
+      :vault="vault"
+      @selected="onTroveSelect"
+    ></TableTroves>
   </div>
 </template>
 
 <script setup lang="ts">
+import {
+  type Trove,
+} from "@PM/Services/PrismaService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import TableTroves from "@PM/Pages/Vaults/Tables/TableTroves.vue";
+import {useRouter} from "vue-router";
+import { useVaultStore } from "@PM/Pages/Vaults/Store";
 
 // Props
 interface Props {
   vault: TroveManagerDetails | null;
 }
 
+// Refs
+const storeVault = useVaultStore();
+const router = useRouter();
+
 const { vault } = defineProps<Props>();
+
+// Events
+const onTroveSelect = async (trove: Trove) => {
+  storeVault.setTrove(trove);
+
+  if (vault) {
+    await router.push({
+      name: "prismatrove",
+      params: {
+        ownerAddr: trove.owner,
+        vaultAddr: vault.address,
+      },
+    });
+  }
+};
 </script>
 
 <style lang="scss" scoped>
