@@ -8,12 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type Trove,
-} from "@PM/Services/PrismaService";
+import { useRouter } from "vue-router";
+import { type Trove } from "@PM/Services/PrismaService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import TableTroves from "@PM/Pages/Vaults/Tables/TableTroves.vue";
-import {useRouter} from "vue-router";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 
 // Props

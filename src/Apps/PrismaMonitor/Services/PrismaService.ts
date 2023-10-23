@@ -332,22 +332,37 @@ export default class PrismaService extends ServiceBase {
     return paginate(fs, 1, 100);
   }
 
-
-  public async getTroveSnapshots(chain: string, manager: string, owner: string): Promise<{ snapshots: TroveSnapshotData[] }> {
-    return this.fetch(`${API_URL}/trove/${chain}/${manager}/snapshots/${owner}`);
+  public async getTroveSnapshots(
+    chain: string,
+    manager: string,
+    owner: string
+  ): Promise<{ snapshots: TroveSnapshotData[] }> {
+    return this.fetch(
+      `${API_URL}/trove/${chain}/${manager}/snapshots/${owner}`
+    );
   }
 
-
-  public async getTroveDetail(chain: string, manager: string, owner: string): Promise<Trove> {
+  public async getTroveDetail(
+    chain: string,
+    manager: string,
+    owner: string
+  ): Promise<Trove> {
     return this.fetch(`${API_URL}/trove/${chain}/${manager}/${owner}`);
   }
 
-  public async getTroveHistory(chain: string, manager: string, owner: string): Promise<{ snapshots: TroveHistoryData[] }> {
+  public async getTroveHistory(
+    chain: string,
+    manager: string,
+    owner: string
+  ): Promise<{ snapshots: TroveHistoryData[] }> {
     return this.fetch(`${API_URL}/trove/${chain}/${manager}/history/${owner}`);
   }
 
-  public async getTroveRank(chain: string, manager: string, owner: string): Promise<RatioPosition> {
+  public async getTroveRank(
+    chain: string,
+    manager: string,
+    owner: string
+  ): Promise<RatioPosition> {
     return this.fetch(`${API_URL}/trove/${chain}/${manager}/rank/${owner}`);
   }
-
 }

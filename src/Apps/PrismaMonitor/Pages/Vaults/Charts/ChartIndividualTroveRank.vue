@@ -7,12 +7,20 @@
     <template #actions>
       <Tooltip>
         <div>
-          This chart displays that amount of collateral available below different collateral ratios.
-          <br> It also displays the position of the trove relative to other troves in this vault. <br>
-          <br> This information is useful to estimate a trove's risk of redemption.
-          <br> Even if the trove's collateral ratio is high in the absolute, a lower ratio relative
-          <br> to other troves means a higher risk of redemption.<br>
-          <br> As such, the lower the "risk rank" displayed, the higher the trove's risk of being redeemed.
+          This chart displays that amount of collateral available below
+          different collateral ratios.
+          <br />
+          It also displays the position of the trove relative to other troves in
+          this vault. <br />
+          <br />
+          This information is useful to estimate a trove's risk of redemption.
+          <br />
+          Even if the trove's collateral ratio is high in the absolute, a lower
+          ratio relative <br />
+          to other troves means a higher risk of redemption.<br />
+          <br />
+          As such, the lower the "risk rank" displayed, the higher the trove's
+          risk of being redeemed.
         </div>
       </Tooltip>
     </template>
@@ -33,7 +41,10 @@ import { Card, GraphApex, useData } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, {type RatioPosition, type Trove} from "@PM/Services/PrismaService";
+import PrismaService, {
+  type RatioPosition,
+  type Trove,
+} from "@PM/Services/PrismaService";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { getHost } from "@/Services/Host";
@@ -43,7 +54,7 @@ const prismaService = new PrismaService(getHost());
 const storeSettings = useSettingsStore();
 
 // Refs
-const dynamicTitle = ref('Trove Relative Position');
+const dynamicTitle = ref("Trove Relative Position");
 
 // Props
 interface Props {
@@ -52,7 +63,8 @@ interface Props {
 }
 const { vault = null, trove = null } = defineProps<Props>();
 
-const init: RatioPosition = {rank: null,
+const init: RatioPosition = {
+  rank: null,
   total_positions: 0,
   ratio: null,
   positions: [],
@@ -63,8 +75,11 @@ const { loading, data, loadData } = useData<RatioPosition>(async () => {
   console.log("VAULT", vault);
   console.log("TROVE", trove);
   if (vault && trove) {
-    const rank = await prismaService
-      .getTroveRank("ethereum", vault.address, trove.owner);
+    const rank = await prismaService.getTroveRank(
+      "ethereum",
+      vault.address,
+      trove.owner
+    );
     return rank;
   } else {
     return Promise.resolve(init);
@@ -100,29 +115,31 @@ const options = computed((): unknown => {
         },
       },
       annotations: {
-        xaxis: data.value.ratio ? [
-          {
-            x: data.value.ratio,
-            borderColor: colors.yellow,
-            strokeDashArray: 2,
-            label: {
-              borderColor: colors.yellow,
-              style: {
-                background: colors.yellow,
-                color: "rgb(34, 34, 34)",
+        xaxis: data.value.ratio
+          ? [
+              {
+                x: data.value.ratio,
+                borderColor: colors.yellow,
+                strokeDashArray: 2,
+                label: {
+                  borderColor: colors.yellow,
+                  style: {
+                    background: colors.yellow,
+                    color: "rgb(34, 34, 34)",
+                  },
+                  position: "top",
+                  offsetX: 15,
+                  text: `This trove: ${pctFormatter(data.value.ratio, 1)}`,
+                },
               },
-              position: 'top',
-              offsetX: 15,
-              text: `This trove: ${pctFormatter(data.value.ratio, 1)}`,
-            },
-          },
-        ] : [],
+            ]
+          : [],
       },
       toolbar: {
         show: false,
       },
       xaxis: {
-        type: 'numeric',
+        type: "numeric",
         categories: categories.value,
         labels: {
           formatter: (x: number): string => pctFormatter(x),
@@ -150,7 +167,11 @@ const options = computed((): unknown => {
           const amount = categories.value[x.dataPointIndex];
           const tooltip = `
           <div><b>Collateral ratio:</b>:</div>
-          <div>${(x.dataPointIndex === categories.value.length - 1) ? "Over 250%" : pctFormatter(amount)}</div>
+          <div>${
+            x.dataPointIndex === categories.value.length - 1
+              ? "Over 250%"
+              : pctFormatter(amount)
+          }</div>
 
           <div><b>Troves with lower or equal ratio:</b>:</div>
           <div>${data.value.positions[x.dataPointIndex].trove_count}</div>
@@ -172,28 +193,32 @@ const series = computed((): { name: string; data: number[] }[] => [
   },
 ]);
 
-const categories = computed(() =>
-  data.value.positions.map((x) => (x.ratio))
-);
+const categories = computed(() => data.value.positions.map((x) => x.ratio));
 
 // Methods
 const formatter = (x: number): string => {
   return `${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 };
 
-const pctFormatter = (y: number, decimals=0): string => {
+const pctFormatter = (y: number, decimals = 0): string => {
   return `${round(y, decimals, "percentage")}${unit(y, "percentage")}`;
 };
 
 // Watches
 watch(() => vault, loadData, { immediate: true });
 watch(() => trove, loadData, { immediate: true });
-watch(data, (newData) => {
-  if (newData && typeof newData.rank === 'number') {
-    dynamicTitle.value = t('title', { rank: newData.rank, total_positions: newData.total_positions });
-  }
-}, { immediate: true });
-
+watch(
+  data,
+  (newData) => {
+    if (newData && typeof newData.rank === "number") {
+      dynamicTitle.value = t("title", {
+        rank: newData.rank,
+        total_positions: newData.total_positions,
+      });
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -205,7 +230,6 @@ watch(data, (newData) => {
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
-
   }
 
   .chart {
@@ -216,5 +240,5 @@ watch(data, (newData) => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: 'Trove Relative Position (Risk rank: {rank} / {total_positions})'
+title: "Trove Relative Position (Risk rank: {rank} / {total_positions})"
 </i18n>

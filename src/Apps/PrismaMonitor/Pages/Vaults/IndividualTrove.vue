@@ -9,16 +9,14 @@
 </template>
 
 <script setup lang="ts">
-
-// Refs
-import {useRoute, useRouter} from "vue-router";
-import {computed, onMounted, watch} from "vue";
-import {useVaultStore} from "@PM/Pages/Vaults/Store";
-import {useBreadcrumbStore} from "@PM/Stores/BreadcrumbStore";
+import { useRoute, useRouter } from "vue-router";
+import { computed, onMounted, watch } from "vue";
+import { useVaultStore } from "@PM/Pages/Vaults/Store";
+import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartIndividualTroveRank from "@PM/Pages/Vaults/Charts/ChartIndividualTroveRank.vue";
-import PrismaService, {type Trove} from "@PM/Services/PrismaService";
-import {getHost} from "@/Services/Host";
-import {TroveOverviewService} from "@PM/Services/Socket/TroveOverviewService";
+import PrismaService, { type Trove } from "@PM/Services/PrismaService";
+import { getHost } from "@/Services/Host";
+import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
@@ -32,11 +30,14 @@ const trove = computed(() => storeVault.trove);
 const prismaService = new PrismaService(getHost());
 const prismaVaultService = new TroveOverviewService("ethereum");
 
-
 // Hooks
 onMounted(async (): Promise<void> => {
   // Fetch trove data here and update the store
-  const fetchedTrove: Trove = await prismaService.getTroveDetail("ethereum", route.params.vaultAddr as string, route.params.troveAddr as string);
+  const fetchedTrove: Trove = await prismaService.getTroveDetail(
+    "ethereum",
+    route.params.vaultAddr as string,
+    route.params.troveAddr as string
+  );
   if (fetchedTrove) {
     storeVault.trove = fetchedTrove;
   }
@@ -51,7 +52,7 @@ onMounted(async (): Promise<void> => {
     {
       id: "vault",
       label: `Vault: ${vault.value?.name ?? "?"}`,
-      pathName: "prismavault"
+      pathName: "prismavault",
     },
     {
       id: "trove",
@@ -68,7 +69,6 @@ watch(prismaVaultService.currentData, (newData) => {
   }
 });
 
-
 watch(vault, (newVault) => {
   storeBreadcrumb.crumbs = [
     {
@@ -79,7 +79,7 @@ watch(vault, (newVault) => {
     {
       id: "vault",
       label: `Vault: ${newVault?.name ?? "?"}`,
-      pathName: "prismavault"
+      pathName: "prismavault",
     },
     {
       id: "trove",
@@ -89,7 +89,6 @@ watch(vault, (newVault) => {
 });
 
 watch(trove, (newTrove) => {
-
   storeBreadcrumb.crumbs = [
     {
       id: "vaults",
@@ -99,7 +98,7 @@ watch(trove, (newTrove) => {
     {
       id: "vault",
       label: `Vault: ${vault.value?.name ?? "?"}`,
-      pathName: "prismavault"
+      pathName: "prismavault",
     },
     {
       id: "trove",

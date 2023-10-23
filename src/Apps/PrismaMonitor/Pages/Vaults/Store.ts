@@ -1,8 +1,6 @@
 import { defineStore } from "pinia";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
-import {
-  type Trove,
-} from "@PM/Services/PrismaService";
+import { type Trove } from "@PM/Services/PrismaService";
 
 type State = {
   vault: TroveManagerDetails | null;
