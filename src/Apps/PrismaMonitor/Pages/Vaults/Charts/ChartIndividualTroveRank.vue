@@ -73,7 +73,7 @@ const init: RatioPosition = {
 };
 
 // Data
-const { loading, data, loadData } = useData<RatioPosition>(async () => {
+const { loading, data, loadData } = useData(async () => {
   if (vault && trove) {
     const rank = await prismaService.getTroveRank(
       "ethereum",
