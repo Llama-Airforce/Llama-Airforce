@@ -206,7 +206,6 @@ const pctFormatter = (y: number, decimals = 0): string => {
 
 // Watches
 watch(() => vault, loadData, { immediate: true });
-watch(() => trove, loadData, { immediate: true });
 watch(
   data,
   (newData) => {
