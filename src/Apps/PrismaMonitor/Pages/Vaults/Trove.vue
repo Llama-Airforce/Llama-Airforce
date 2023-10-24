@@ -1,10 +1,10 @@
 <template>
   <div class="trove">
-    <ChartIndividualTroveRank
+    <ChartTroveRank
       :vault="vault"
       :trove="trove"
     >
-    </ChartIndividualTroveRank>
+    </ChartTroveRank>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import { useRoute } from "vue-router";
 import { computed, onMounted, watch } from "vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
-import ChartIndividualTroveRank from "@PM/Pages/Vaults/Charts/ChartIndividualTroveRank.vue";
+import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";
 import PrismaService, { type Trove } from "@PM/Services/PrismaService";
 import { getHost } from "@/Services/Host";
 import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
