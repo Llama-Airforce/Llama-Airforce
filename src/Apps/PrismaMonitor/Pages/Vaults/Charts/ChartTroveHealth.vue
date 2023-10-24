@@ -166,8 +166,6 @@ watch(() => vault, loadData, { immediate: true });
 
 .health {
   ::v-deep(.card-body) {
-    height: 300px;
-
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
       grid-template-columns: auto auto;

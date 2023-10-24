@@ -135,7 +135,7 @@ watch(trove, (newTrove) => {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 400px auto;
 
   .graph-rank {
     grid-row: 1;

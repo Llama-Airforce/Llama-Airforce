@@ -230,11 +230,6 @@ watch(
     justify-content: center;
     gap: 1rem;
   }
-
-  .chart {
-    height: 300px;
-    z-index: 0;
-  }
 }
 </style>
 
