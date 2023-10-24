@@ -44,10 +44,10 @@ const storeSettings = useSettingsStore();
 // Data
 const { loading, data, loadData } = useData(async () => {
   if (vault && trove) {
-    const rank = await prismaService
+    const health = await prismaService
       .getTroveSnapshots("ethereum", vault.address, trove.owner)
       .then((x) => x.snapshots);
-    return rank;
+    return health;
   } else {
     return Promise.resolve([]);
   }
@@ -98,6 +98,9 @@ const options = computed((): unknown => {
       ],
       dataLabels: {
         enabled: false,
+      },
+      stroke: {
+        curve: "straight",
       },
       tooltip: {
         followCursor: false,
