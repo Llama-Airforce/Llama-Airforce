@@ -211,5 +211,5 @@ watch(() => vault, loadData, { immediate: true });
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Trove Operations
+title: Operations
 </i18n>

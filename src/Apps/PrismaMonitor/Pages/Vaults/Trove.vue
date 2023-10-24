@@ -1,12 +1,21 @@
 <template>
   <div class="trove">
     <ChartTroveRank
+      class="graph-rank"
       :vault="vault"
       :trove="trove"
     >
     </ChartTroveRank>
 
+    <ChartTroveHealth
+      class="graph-health"
+      :vault="vault"
+      :trove="trove"
+    >
+    </ChartTroveHealth>
+
     <TableTroveOps
+      class="table-ops"
       :vault="vault"
       :trove="trove"
     ></TableTroveOps>
@@ -20,6 +29,7 @@ import { computed, onMounted, watch } from "vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";
+import ChartTroveHealth from "@PM/Pages/Vaults/Charts/ChartTroveHealth.vue";
 import TableTroveOps from "@PM/Pages/Vaults/Tables/TableTroveOps.vue";
 import PrismaService, { type Trove } from "@PM/Services/PrismaService";
 import { getHost } from "@/Services/Host";
@@ -121,10 +131,25 @@ watch(trove, (newTrove) => {
 
 @include dashboard("trove");
 
-.trove- {
+.trove {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+
+  .graph-rank {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .graph-health {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .table-ops {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
 }
 </style>
