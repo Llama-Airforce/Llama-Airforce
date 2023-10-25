@@ -195,6 +195,12 @@ const shadeColor = (hex: string, percent: number) => {
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
       line-height: 0.25rem;
+
+      .apexcharts-tooltip-title {
+        color: var(--c-text);
+        background: transparent;
+        border-bottom: 0;
+      }
     }
   }
 }
