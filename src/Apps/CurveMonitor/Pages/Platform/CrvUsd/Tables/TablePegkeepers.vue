@@ -25,7 +25,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.debt"
-          :precision="0"
+          :precision="decimals"
           :show-zero="true"
           type="dollar"
         />
@@ -34,7 +34,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.tvl"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -42,7 +42,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.volumeUSD"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -50,7 +50,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.profit"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -62,7 +62,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.debt, 0)"
-          :precision="0"
+          :precision="decimals"
           :show-zero="true"
           type="dollar"
         />
@@ -71,7 +71,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -79,7 +79,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.volumeUSD, 0)"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -87,7 +87,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.profit, 0)"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -165,6 +165,9 @@ onMounted(async () => {
 
   loading.value = false;
 });
+
+// Methods
+const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 </script>
 
 <style lang="scss" scoped>

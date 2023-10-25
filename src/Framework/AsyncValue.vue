@@ -16,7 +16,7 @@ let rodTimer = 0;
 interface Props {
   value?: number | null;
   type?: "dollar" | "percentage";
-  precision?: number;
+  precision?: number | ((x: number) => number);
   showUnit?: boolean;
   showSymbol?: boolean;
   showZero?: boolean;
@@ -48,7 +48,11 @@ const presentation = computed((): string => {
     return "?";
   }
 
-  return round(value, precision, type ?? "");
+  return round(
+    value,
+    typeof precision === "function" ? precision(value) : precision,
+    type ?? ""
+  );
 });
 
 const unit = computed((): string => {

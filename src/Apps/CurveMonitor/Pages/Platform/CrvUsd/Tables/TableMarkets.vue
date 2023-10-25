@@ -122,7 +122,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.borrowed"
-          :precision="0"
+          :precision="decimals"
           :show-symbol="false"
           type="dollar"
         />
@@ -144,7 +144,7 @@
       <div class="number">
         <AsyncValue
           :value="props.item.totalCollateral"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -152,7 +152,7 @@
       <div class="number">
         <AsyncValue
           :value="totalFees(props.item.fees.pending)"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -160,7 +160,7 @@
       <div class="number">
         <AsyncValue
           :value="totalFees(props.item.fees.collected)"
-          :precision="0"
+          :precision="decimals"
           :show-zero="true"
           type="dollar"
         />
@@ -177,7 +177,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
-          :precision="0"
+          :precision="decimals"
           :show-symbol="false"
           type="dollar"
         />
@@ -188,7 +188,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.totalCollateral, 0)"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -196,7 +196,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + totalFees(x.fees.pending), 0)"
-          :precision="0"
+          :precision="decimals"
           type="dollar"
         />
       </div>
@@ -204,7 +204,7 @@
       <div class="number">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + totalFees(x.fees.collected), 0)"
-          :precision="0"
+          :precision="decimals"
           :show-zero="true"
           type="dollar"
         />
@@ -310,6 +310,8 @@ const totalFees = (fees?: FeesBreakdown): number =>
       fees.collateralAdminFeesUsd +
       fees.crvUsdAdminFees
     : 0;
+
+const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 </script>
 
 <style lang="scss" scoped>
