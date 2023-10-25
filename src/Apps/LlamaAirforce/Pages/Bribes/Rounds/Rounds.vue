@@ -202,7 +202,7 @@ const updateRouter = async (product: Product, epoch: Epoch): Promise<void> => {
   const { platform, protocol } = product;
 
   await router.push({
-    name: "rounds",
+    name: "rounds-incentives",
     params: { platform, protocol, round: epoch.round },
   });
 };

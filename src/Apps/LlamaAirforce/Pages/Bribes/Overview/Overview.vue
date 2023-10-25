@@ -137,7 +137,7 @@ const updateRouter = async (product: Product): Promise<void> => {
   const { platform, protocol } = product;
 
   await router.push({
-    name: "overview",
+    name: "overview-incentives",
     params: { platform, protocol },
   });
 };

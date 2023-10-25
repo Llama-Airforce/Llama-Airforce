@@ -10,14 +10,13 @@ export const pageBribes: Page = {
   visible: true,
   planeX: 420,
   routes: [
-    { path: "/votium", redirect: { name: "rounds" } },
-    { path: "/votium/bribes/:round?", redirect: { name: "rounds" } },
-    { path: "/bribes", redirect: { name: "rounds" } },
+    { path: "/votium", redirect: { name: "rounds-incentives" } },
+    { path: "/votium/bribes/:round?", redirect: { name: "rounds-incentives" } },
+    { path: "/bribes", redirect: { name: "rounds-incentives" } },
     {
       path: "/bribes/rounds/:platform?/:protocol?/:round?",
       name: "rounds",
       component: BribesRounds,
-      alias: ["/incentives/"],
     },
     {
       path: "/bribes/overview/:platform?/:protocol?",
@@ -35,7 +34,6 @@ export const pageBribes: Page = {
       path: "/incentives/rounds/:platform?/:protocol?/:round?",
       name: "rounds-incentives",
       component: BribesRounds,
-      alias: ["/incentives/"],
     },
     {
       path: "/incentives/overview/:platform?/:protocol?",

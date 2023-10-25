@@ -148,7 +148,7 @@ const onSelected = async (data: unknown): Promise<void> => {
   const epoch = data as EpochOverview;
 
   await router.push({
-    name: "rounds",
+    name: "rounds-incentives",
     params: { round: epoch.round },
   });
 };
