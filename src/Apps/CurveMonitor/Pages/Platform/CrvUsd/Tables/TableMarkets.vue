@@ -9,10 +9,10 @@
       'Name',
       'Loans',
       'Rate',
-      'Change (24h)',
+      '&Delta; 24h',
       'Premia',
       'Borrowed',
-      'Change (24h)',
+      '&Delta; 24h',
       'Collateral',
       'Fees Pending',
       'Fees Collected',
@@ -46,7 +46,6 @@
         class="number delta"
         :class="{ negative: props.item.rateAbsDelta < 0 }"
       >
-        {{ props.item.rateAbsDelta > 0 ? "+" : "" }}
         <AsyncValue
           v-if="props.item.rateAbsDelta"
           :value="props.item.rateAbsDelta * 100"
@@ -132,7 +131,6 @@
         class="number delta"
         :class="{ negative: props.item.borrowedDelta < 0 }"
       >
-        {{ props.item.borrowedDelta > 0 ? "+" : "" }}
         <AsyncValue
           v-if="props.item.borrowedDelta"
           :value="props.item.borrowedDelta * 100"
@@ -354,14 +352,31 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
     display: grid;
     grid-template-columns:
-      minmax(12ch, 1fr) repeat(9, minmax(var(--col-width), 0.75fr))
+      minmax(12ch, 1fr)
+      minmax(var(--col-width), 0.75fr)
+      minmax(var(--col-width), 0.75fr)
+      7ch
+      minmax(var(--col-width), 0.75fr)
+      minmax(var(--col-width), 0.75fr)
+      7ch
+      minmax(var(--col-width), 0.75fr)
+      minmax(var(--col-width), 0.75fr)
+      minmax(var(--col-width), 0.75fr)
       1rem;
 
     // Non mobile
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1200px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(8, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 1fr)
+          minmax(var(--col-width), 0.75fr)
+          7ch
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          7ch
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
           1rem;
 
         div:nth-child(2) {
@@ -371,7 +386,14 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
       @container (max-width: 1100px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 1fr)
+          minmax(var(--col-width), 0.75fr)
+          7ch
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
           1rem;
 
         div:nth-child(7) {
@@ -381,7 +403,13 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
       @container (max-width: 1000px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
+          minmax(12ch, 1fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
+          minmax(var(--col-width), 0.75fr)
           1rem;
 
         div:nth-child(4) {
