@@ -66,7 +66,7 @@
 
       <Card class="topic">
         <router-link
-          to="/bribes"
+          to="/incentives"
           class="logo"
         >
           <img
@@ -86,7 +86,7 @@
         </div>
 
         <router-link
-          to="/bribes"
+          to="/incentives"
           class="visit"
         >
           <Button

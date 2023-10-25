@@ -1,7 +1,7 @@
 import { type RouteLocationNormalizedLoaded } from "vue-router";
 
 export function subIsActive(
-  input: string,
+  input: string | string[],
   route: RouteLocationNormalizedLoaded
 ): boolean {
   const paths = Array.isArray(input) ? input : [input];

@@ -2,7 +2,7 @@ import { type RouteRecordRaw } from "vue-router";
 
 export type Page = {
   title: string;
-  titleRoute: string;
+  titleRoute: string | string[];
   visible: boolean;
   planeX: number;
   routes: RouteRecordRaw[];

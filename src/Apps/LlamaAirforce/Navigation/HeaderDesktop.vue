@@ -29,7 +29,11 @@
           >
             <li>
               <router-link
-                :to="page.titleRoute"
+                :to="
+                  Array.isArray(page.titleRoute)
+                    ? page.titleRoute[0]
+                    : page.titleRoute
+                "
                 class="nav-link"
                 :class="{
                   'router-link-active': subIsActive(page.titleRoute, route),
