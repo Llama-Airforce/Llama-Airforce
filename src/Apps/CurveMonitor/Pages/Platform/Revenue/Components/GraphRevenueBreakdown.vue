@@ -34,7 +34,14 @@ const breakdown = computed((): BreakdownRevenue[] => {
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  let colorsArray = getColorsArray(storeSettings.theme);
+  colorsArray = [
+    colorsArray[0],
+    shadeColor(colorsArray[0], 10),
+    shadeColor(colorsArray[0], 20),
+    colorsArray[1],
+    shadeColor(colorsArray[1], 10),
+  ];
 
   return createChartStyles(
     { colors, colorsArray },
@@ -151,10 +158,33 @@ const max = computed(() => {
   return max * 1.1;
 });
 
+// Methods
 const formatterX = (x: string): string => x;
 
 const formatterY = (y: number): string =>
   `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
+
+const shadeColor = (hex: string, percent: number) => {
+  // Parse the hex into RGB values
+  let [r, g, b] = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map(
+    (hex) => parseInt(hex, 16)
+  );
+
+  // Calculate the adjustment value
+  const adjust = (amount: number, color: number) => {
+    return Math.min(255, Math.max(0, color + Math.round(2.55 * amount)));
+  };
+
+  // Adjust each color component
+  r = adjust(percent, r);
+  g = adjust(percent, g);
+  b = adjust(percent, b);
+
+  // Convert the RGB values back to hex
+  return `#${r.toString(16).padStart(2, "0")}${g
+    .toString(16)
+    .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+};
 </script>
 
 <style lang="scss" scoped>
