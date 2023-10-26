@@ -20,7 +20,7 @@
         <div class="amount">
           <AsyncValue
             :value="vote.stake"
-            :precision="0"
+            :precision="2"
             :show-symbol="false"
             type="dollar"
           />
@@ -53,7 +53,7 @@
         <div class="amount">
           <AsyncValue
             :value="vote.stake"
-            :precision="0"
+            :precision="2"
             :show-symbol="false"
             type="dollar"
           />
