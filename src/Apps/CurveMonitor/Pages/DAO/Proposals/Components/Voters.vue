@@ -10,8 +10,9 @@
       >
         <div class="address">
           <a
-            :href="`https://etherscan.io/address/${vote.voter}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${vote.voter}`"
+            :class="{ you: you(vote.voter) }"
           >
             {{ address(vote.voter) }}
           </a>
@@ -59,8 +60,9 @@
         </div>
         <div class="address">
           <a
-            :href="`https://etherscan.io/address/${vote.voter}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${vote.voter}`"
+            :class="{ you: you(vote.voter) }"
           >
             {{ address(vote.voter) }}
           </a>
@@ -75,7 +77,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue } from "@/Framework";
-import { addressShort } from "@/Wallet";
+import { addressShort, useWalletStore } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
 
@@ -88,6 +90,9 @@ interface Props {
 }
 
 const { proposal, proposalDetails } = defineProps<Props>();
+
+// Refs
+const wallet = useWalletStore();
 
 const votesFor = computed(() => {
   if (!proposalDetails) {
@@ -128,6 +133,8 @@ const address = (address: string): string => {
 const percentage = (voteWeight: number): number => {
   return (voteWeight / (proposal.votesFor + proposal.votesAgainst)) * 100;
 };
+
+const you = (address: string): boolean => address === wallet.address;
 </script>
 
 <style lang="scss" scoped>
@@ -147,6 +154,14 @@ const percentage = (voteWeight: number): number => {
 
   .vote {
     font-family: monospace;
+
+    .address {
+      a {
+        &.you {
+          color: var(--c-purple);
+        }
+      }
+    }
   }
 
   > .for,
