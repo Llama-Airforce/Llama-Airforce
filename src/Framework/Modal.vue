@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
+import { watch, onMounted, onUnmounted } from "vue";
 
 // Props
 interface Props {
@@ -28,6 +28,21 @@ const { show = false } = defineProps<Props>();
 const emit = defineEmits<{
   close: [];
 }>();
+
+const onEscape = (e: KeyboardEvent) => {
+  if (e.code === "Escape") {
+    emit("close");
+  }
+};
+
+// Hooks
+onMounted(() => {
+  document.addEventListener("keydown", onEscape);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", onEscape);
+});
 
 // Watches
 watch(
