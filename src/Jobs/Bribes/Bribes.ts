@@ -15,34 +15,14 @@ import {
   type Epoch as EpochVotium,
 } from "@/Jobs/Bribes/Votium";
 import { getPrice as getPriceF, getNetwork } from "@/Jobs/Bribes/Price";
-
-type BribeDb = {
-  pool: string;
-  token: string;
-  gauge: string;
-  amount: number;
-  amountDollars: number;
-  maxPerVote: number;
-  excluded: string[];
-};
-
-type EpochDb = {
-  id: string;
-  platform: string;
-  protocol: string;
-  round: number;
-  proposal: string;
-  end: number;
-  scoresTotal: number;
-  bribed: Record<string, number>;
-  bribes: BribeDb[];
-};
+import { type BribeDb, type EpochDb } from "@/Jobs/Bribes/Database";
 
 type UpdateBribesOptions = {
   provider: JsonRpcProvider;
   votingService: L2VotingService;
   getEpochs: () => TE.TaskEither<Error, EpochVotium[]>;
   getGauges: () => TE.TaskEither<Error, Record<string, Gauge>>;
+  uploadEpoch: (epoch: EpochDb) => TE.TaskEither<Error, EpochDb>;
 };
 
 export function updateBribes(options: UpdateBribesOptions) {
@@ -70,12 +50,15 @@ export function updateBribes(options: UpdateBribesOptions) {
   // Publish new bribe data to database on success.
   return pipe(
     bribes,
+    TE.chain(options.uploadEpoch),
     TE.match(
       (l) => {
         console.log(`Failed to update bribes: ${l.stack}`);
       },
       (r) => {
-        console.log(r);
+        console.log(
+          `Succesfully uploaded bribes for ${r.id}, scores total: ${r.scoresTotal}`
+        );
       }
     )
   )();
@@ -201,9 +184,9 @@ async function processEpoch(
     round: epochId.round,
     end: proposalEnd,
     proposal: proposalId.toString(),
+    scoresTotal,
     bribed,
     bribes,
-    scoresTotal,
   };
 }
 

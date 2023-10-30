@@ -8,8 +8,12 @@ import { taskToTE } from "@/Jobs/Bribes/fp";
 import { updateBribes } from "@/Jobs/Bribes/Bribes";
 import { getEpochs } from "@/Jobs/Bribes/Votium";
 import { getGauges } from "@/Jobs/Bribes/Curve";
+import { fromEnvironment } from "@/Jobs/Bribes/Variables";
+import { type EpochDb, upload } from "@/Jobs/Bribes/Database";
 
 dotenv.config({ path: "./.env" });
+
+const vars = fromEnvironment();
 
 const providerZKEVM = new JsonRpcProvider("https://zkevm-rpc.com");
 
@@ -26,6 +30,7 @@ const providerETH = new ethers.providers.AlchemyProvider(
 );
 
 const options = {
+  uploadEpoch: (epoch: EpochDb) => upload(vars.dbEndpoint, vars.dbKey, epoch),
   provider: providerETH,
   votingService,
   getEpochs: () => taskToTE(() => getEpochs()),
