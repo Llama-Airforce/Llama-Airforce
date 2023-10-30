@@ -20,7 +20,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(props.item.address)" />
+      <img :src="icon(props.item.name)" />
       <div>{{ props.item.name }}</div>
 
       <div class="number">
@@ -109,10 +109,12 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText } from "@/Framework";
+import { icon } from "@PM/Models/Collateral";
 import {
   type TroveManagerDetails,
   TroveOverviewService,
 } from "@PM/Services/Socket/TroveOverviewService";
+
 const { t } = useI18n();
 
 const prismaService = new TroveOverviewService("ethereum");
@@ -154,26 +156,6 @@ onMounted(() => {
 
   loading.value = false;
 });
-
-// Methods
-const icon = (address: string) => {
-  const getLogo = (address: string) => {
-    switch (address) {
-      case "0x63cc74334f4b1119276667cf0079ac0c8a96cfb2":
-        return "cbeth.webp";
-      case "0xbf6883a03fd2fcfa1b9fc588ad6193b3c3178f8f":
-        return "steth.webp";
-      case "0xe0e255fd5281bec3bb8fa1569a20097d9064e445":
-        return "reth.webp";
-      case "0xf69282a7e7ba5428f92f610e7afa1c0cedc4e483":
-        return "frxeth.webp";
-      default:
-        return "";
-    }
-  };
-
-  return `icons/tokens/${getLogo(address)}`;
-};
 </script>
 
 <style lang="scss" scoped>

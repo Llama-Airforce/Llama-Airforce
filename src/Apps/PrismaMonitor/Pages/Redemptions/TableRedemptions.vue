@@ -1,14 +1,14 @@
 <template>
   <DataTable
     class="datatable-redemptions"
-    columns-header="1fr 1fr auto"
+    columns-header="1fr 12rem minmax(auto, 25rem) auto"
     columns-data="redemptions-columns-data"
     :loading="loading"
     :rows="rowsPage"
     :columns="columns"
     :sorting="true"
     :sorting-columns="columnsSorting"
-    :sorting-columns-enabled="columnsSorting"
+    :sorting-columns-enabled="columnsSortingEnabled"
     sorting-default-column="timestamp"
     sorting-default-dir="Descending"
     @sort-column="onSort"
@@ -16,6 +16,13 @@
   >
     <template #header-title>
       <div>{{ t("title") }}</div>
+
+      <SelectCollateral
+        class="select-collateral"
+        :collateral="collateral"
+        :all="true"
+        @select-collateral="collateral = $event"
+      ></SelectCollateral>
 
       <InputText
         v-model="search"
@@ -37,6 +44,8 @@
     </template>
 
     <template #row="props: { item: Row }">
+      <img :src="icon(props.item.vault.name)" />
+
       <div>
         <a
           style="font-family: monospace"
@@ -78,7 +87,7 @@
     <RedemptionDetails
       v-if="!!showDetails"
       :redemption="showDetails"
-      :vault-addr="vault?.address ?? ''"
+      :vault-addr="showDetails.vault.address"
     ></RedemptionDetails>
   </Modal>
 </template>
@@ -98,37 +107,45 @@ import {
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
+import { type Collateral, icon } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
+import SelectCollateral from "@PM/Components/SelectCollateral.vue";
 import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
-type Row = Redemption;
+const prismaService = new PrismaService(getHost());
+
+type Row = Redemption & { vault: { name: Collateral; address: string } };
 
 const { t } = useI18n();
 
 const rowsPerPage = 15;
-const prismaService = new PrismaService(getHost());
 
 // Props
 interface Props {
-  vault?: TroveManagerDetails | null;
+  vaults: TroveManagerDetails[];
 }
-const { vault = null } = defineProps<Props>();
+const { vaults = [] } = defineProps<Props>();
 
 // Refs
 const search = ref("");
+const collateral = ref<Collateral | "all">("all");
 const page = ref(1);
 const now = ref(Date.now());
-const showDetails = ref<Redemption | null>(null);
+const showDetails = ref<Row | null>(null);
 
 const sortColumn = ref<string>("timestamp");
 const sortOrder = ref(SortOrder.Descending);
 
 const columns = computed((): string[] => {
-  return ["Redeemer", "Transaction", "Debt", "# Troves", "Time"];
+  return ["", "Redeemer", "Transaction", "Debt", "# Troves", "Time"];
 });
 
 const columnsSorting = computed((): string[] => {
+  return ["icon", "redeemer", "tx", "debt", "numtroves", "timestamp"];
+});
+
+const columnsSortingEnabled = computed((): string[] => {
   return ["redeemer", "tx", "debt", "numtroves", "timestamp"];
 });
 
@@ -140,7 +157,10 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(row.redeemer);
+      const isCollateralFilter =
+        collateral.value === "all" ? true : collateral.value === row.vault.name;
+
+      return includesTerm(row.redeemer) && isCollateralFilter;
     })
     .orderBy(
       (row) => {
@@ -173,8 +193,18 @@ const rowsPage = computed((): Row[] =>
 
 // Data
 const { loading, data, loadData } = useData(() => {
-  if (vault) {
-    return prismaService.getRedemptions("ethereum", vault.address);
+  if (vaults.length > 0) {
+    // For all vaults, get redemption and add vault info to redemption.
+    return Promise.all(
+      vaults.map((vault) =>
+        prismaService.getRedemptions("ethereum", vault.address).then((rs) =>
+          rs.map((r) => ({
+            ...r,
+            vault: { name: vault.name, address: vault.address },
+          }))
+        )
+      )
+    ).then((rs) => rs.flat());
   } else {
     return Promise.resolve([]);
   }
@@ -205,11 +235,11 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 
 const onSelect = (row: unknown) => {
-  showDetails.value = row as Redemption;
+  showDetails.value = row as Row;
 };
 
 // Watches
-watch(() => vault, loadData, { immediate: true });
+watch(() => vaults, loadData, { immediate: true });
 
 watch(rowsPage, (ps) => {
   if (ps.length === 0) {
@@ -234,12 +264,22 @@ watch(rowsPage, (ps) => {
     width: auto;
   }
 
+  .select-collateral {
+    margin-right: 2rem;
+  }
+
   ::v-deep(.redemptions-columns-data) {
     --col-width: 11ch;
 
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
+    }
+
     display: grid;
     grid-template-columns:
-      minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(
+      20px minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(
         3,
         minmax(var(--col-width), 0.75fr)
       )
@@ -251,9 +291,9 @@ watch(rowsPage, (ps) => {
     }
 
     // Right adjust number columns.
-    div:nth-child(3),
     div:nth-child(4),
-    div:nth-child(5) {
+    div:nth-child(5),
+    div:nth-child(6) {
       justify-content: end;
     }
   }
