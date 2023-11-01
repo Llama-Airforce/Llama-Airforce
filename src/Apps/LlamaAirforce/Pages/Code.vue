@@ -104,6 +104,7 @@ import {
   DistributorUCvxAddress,
   TreasuryAddress,
   TreasuryArbitrumAddress,
+  TreasuryBaseAddress,
   UnionBalVaultAddress,
   UBalStrategyAddress,
   ZapsUBalAddress,
@@ -120,7 +121,7 @@ import {
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
-type Network = "ethereum" | "arbitrum";
+type Network = "ethereum" | "arbitrum" | "base";
 
 interface Contract {
   contract: string;
@@ -163,6 +164,12 @@ const union: Bundle = {
       contract: TreasuryArbitrumAddress,
       description: "treasury-arbitrum",
       network: "arbitrum",
+      gnosis: true,
+    },
+    {
+      contract: TreasuryBaseAddress,
+      description: "treasury-base",
+      network: "base",
       gnosis: true,
     },
     {
@@ -382,6 +389,10 @@ const linkContract = (contract: Contract): string => {
       return contract.gnosis
         ? `https://app.safe.global/arb1:${contract.contract}`
         : `https://arbiscan.io/address/${contract.contract}`;
+    case "base":
+      return contract.gnosis
+        ? `https://app.safe.global/base:${contract.contract}`
+        : `https://basescan.org/address/${contract.contract}`;
     case "ethereum":
     default:
       return contract.gnosis
@@ -456,6 +467,7 @@ registries: Registries
 multisig: Multisig
 treasury: Treasury
 treasury-arbitrum: Treasury Arbitrum
+treasury-base: Treasury Base
 union-zap: Zap V9
 union-forward: Forwarding Address
 

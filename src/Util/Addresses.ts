@@ -12,6 +12,7 @@ export const MultisigAddress = "0x9bc7c6ad7e7cf3a6fcb58fb21e27752ac1e53f99";
 export const TreasuryAddress = "0xaef6ea60f6443bad046e825c1d2b0c0b5ebc1f16";
 export const TreasuryArbitrumAddress =
   "0x657ce046d98d163ef4f846210f25919fa7b31944";
+export const TreasuryBaseAddress = "0x375b28a603be144a646a506fb6673cc3182fc8df";
 
 export const UnionAddresses = [
   "0xcc2a0f5e95c88aabd7b8e0db5c5252820cd47f91",
