@@ -6,6 +6,7 @@ import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
 import Redemptions from "@PM/Pages/Redemptions/Redemptions.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 import Trove from "@PM/Pages/Vaults/Trove.vue";
+import Profile from "@PM/Pages/Profile/Profile.vue";
 
 export const pageMain: Page = {
   titleRoute: "/",
@@ -16,6 +17,7 @@ export const pageMain: Page = {
     { path: "/mkusd", name: "mkusd", component: Stablecoin },
     { path: "/redemptions", name: "redemptions", component: Redemptions },
     { path: "/vaults", name: "vaults", component: Vaults },
+    { path: "/profile/:addr?", name: "profile", component: Profile },
     {
       path: "/vault/:vaultAddr/:tab?",
       name: "prismavault",
@@ -43,6 +45,10 @@ export const pageMain: Page = {
     {
       to: "/redemptions",
       label: "Redemptions",
+    },
+    {
+      to: "/profile",
+      label: "Profile",
     },
   ],
 };

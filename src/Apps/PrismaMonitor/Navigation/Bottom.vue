@@ -32,11 +32,14 @@
     <div class="selectors">
       <SelectTheme class="themes"></SelectTheme>
     </div>
+
+    <Wallet></Wallet>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Button } from "@/Framework";
+import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@PM/Navigation/SelectTheme.vue";
 
 // Emits
@@ -120,6 +123,13 @@ const copyUrl = async () => {
           width: 125%;
         }
       }
+    }
+  }
+
+  > ::v-deep(.wallet) {
+    .clear,
+    .disconnect {
+      @include button-bg();
     }
   }
 }
