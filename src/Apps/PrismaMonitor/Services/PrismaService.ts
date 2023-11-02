@@ -339,24 +339,14 @@ export default class PrismaService extends ServiceBase {
   }
 
   // Individual trove endpoints
-  public async getTroves(
-    chain: string,
-    manager: string,
-    orderBy:
-      | "last_update"
-      | "created_at"
-      | "collateral_ratio"
-      | "collateral_usd"
-      | "debt"
-      | "owner"
-  ): Promise<Trove[]> {
+  public async getTroves(chain: string, manager: string): Promise<Trove[]> {
     const fs = (page: number) => {
       return this.fetch<{
         page: number;
         total_entries: number;
         troves: Trove[];
       }>(
-        `${API_URL}/trove/${chain}/${manager}/troves?items=100&page=${page}&order_by=${orderBy}&desc=true`
+        `${API_URL}/trove/${chain}/${manager}/troves?items=100&page=${page}&order_by=last_update&desc=true`
       ).then((resp) => resp.troves);
     };
 

@@ -211,7 +211,7 @@ const rowsPage = computed((): Row[] =>
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService.getTroves("ethereum", vault.address, "last_update");
+    return prismaService.getTroves("ethereum", vault.address);
   } else {
     return Promise.resolve([]);
   }

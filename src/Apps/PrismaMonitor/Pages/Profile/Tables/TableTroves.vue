@@ -226,14 +226,12 @@ const { loading, data, loadData } = useData(async () => {
     // For all vaults, get redemption and add vault info to redemption.
     const troves = await Promise.all(
       vaults.map((vault) =>
-        prismaService
-          .getTroves("ethereum", vault.address, "last_update")
-          .then((rs) =>
-            rs.map((r) => ({
-              ...r,
-              vault: { name: vault.name, address: vault.address },
-            }))
-          )
+        prismaService.getTroves("ethereum", vault.address).then((rs) =>
+          rs.map((r) => ({
+            ...r,
+            vault: { name: vault.name, address: vault.address },
+          }))
+        )
       )
     ).then((rs) => rs.flat());
 
