@@ -44,6 +44,8 @@
     </template>
 
     <template #row="props: { item: Row }">
+      <img :src="icon(props.item.vault.name)" />
+
       <div @click.stop>
         <a
           style="font-family: monospace"
@@ -109,13 +111,14 @@ import {
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
+import { type Collateral, icon } from "@PM/Models/Collateral";
 import PrismaService, {
   type Trove,
   type TroveStatus,
 } from "@PM/Services/PrismaService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
-type Row = Trove;
+type Row = Trove & { vault: { name: Collateral; address: string } };
 
 const { t } = useI18n();
 
@@ -146,6 +149,7 @@ const sortOrder = ref(SortOrder.Descending);
 const columns = computed((): string[] => {
   if (type.value === "Open") {
     return [
+      "",
       "Owner",
       "Debt",
       "Collateral",
@@ -154,15 +158,15 @@ const columns = computed((): string[] => {
       "Last Updated",
     ];
   } else {
-    return ["Owner", "", "", "", "Created At", "Last Updated"];
+    return ["", "Owner", "", "", "", "Created At", "Last Updated"];
   }
 });
 
 const columnsSorting = computed((): string[] => {
   if (type.value === "Open") {
-    return ["owner", "debt", "coll", "ratio", "created", "updated"];
+    return ["", "owner", "debt", "coll", "ratio", "created", "updated"];
   } else {
-    return ["owner", "", "", "", "created", "updated"];
+    return ["", "owner", "", "", "", "created", "updated"];
   }
 });
 
@@ -320,9 +324,15 @@ watch(rowsPage, (ps) => {
   ::v-deep(.troves-columns-data) {
     --col-width: 11ch;
 
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
+    }
+
     display: grid;
     grid-template-columns:
-      minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+      20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
       minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
 
     .hide {
@@ -333,7 +343,7 @@ watch(rowsPage, (ps) => {
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1100px) {
         grid-template-columns:
-          minmax(12ch, 0.5fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          20px minmax(12ch, 0.5fr) repeat(3, minmax(var(--col-width), 0.75fr))
           minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
       }
     }
@@ -344,37 +354,37 @@ watch(rowsPage, (ps) => {
 
       @container (max-width: 1000px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
           minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
       }
 
       @container (max-width: 900px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
           minmax(12ch, 1fr) 1rem;
 
-        div:nth-child(6) {
+        div:nth-child(7) {
           display: none;
         }
       }
 
       @container (max-width: 600px) {
         grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+          20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
           1rem;
 
-        div:nth-child(5) {
+        div:nth-child(6) {
           display: none;
         }
       }
     }
 
     // Right adjust number columns.
-    div:nth-child(2),
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
-    div:nth-child(6) {
+    div:nth-child(6),
+    div:nth-child(7) {
       justify-content: end;
     }
   }
