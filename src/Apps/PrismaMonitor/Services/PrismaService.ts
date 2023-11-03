@@ -70,6 +70,7 @@ export type CollateralInfo = {
 
 export type Redemption = {
   redeemer: string;
+  vault: string;
   attempted_debt_amount: number;
   actual_debt_amount: number;
   collateral_sent: number;
@@ -332,6 +333,21 @@ export default class PrismaService extends ServiceBase {
         redemptions: Redemption[];
       }>(
         `${API_URL}/redemptions/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
+      ).then((resp) => resp.redemptions);
+    };
+
+    return paginate(fs, 1, 100);
+  }
+
+  public async getRedemptionsForTrove(
+    chain: string,
+    trove: string
+  ): Promise<Redemption[]> {
+    const fs = (page: number) => {
+      return this.fetch<{
+        redemptions: Redemption[];
+      }>(
+        `${API_URL}/redemptions/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
       ).then((resp) => resp.redemptions);
     };
 

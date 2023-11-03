@@ -44,7 +44,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(props.item.vault.name)" />
+      <img :src="icon(fromAddress(props.item.vault))" />
 
       <div>
         <a
@@ -87,7 +87,7 @@
     <RedemptionDetails
       v-if="!!showDetails"
       :redemption="showDetails"
-      :vault-addr="showDetails.vault.address"
+      :vault-addr="showDetails.vault"
     ></RedemptionDetails>
   </Modal>
 </template>
@@ -107,15 +107,14 @@ import {
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
-import { type Collateral, icon } from "@PM/Models/Collateral";
+import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
 import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 const prismaService = new PrismaService(getHost());
 
-type Row = Redemption & { vault: { name: Collateral; address: string } };
+type Row = Redemption;
 
 const { t } = useI18n();
 
@@ -123,10 +122,9 @@ const rowsPerPage = 15;
 
 // Props
 interface Props {
-  vaults: TroveManagerDetails[];
   troves: string[];
 }
-const { vaults = [], troves = [] } = defineProps<Props>();
+const { troves = [] } = defineProps<Props>();
 
 // Refs
 const search = ref("");
@@ -158,14 +156,12 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
+      const row_collateral = fromAddress(row.vault);
+
       const isCollateralFilter =
-        collateral.value === "all" ? true : collateral.value === row.vault.name;
+        collateral.value === "all" ? true : collateral.value === row_collateral;
 
-      const hasUserTrove = row.troves_affected.some((x) =>
-        troves.includes(x.toLocaleLowerCase())
-      );
-
-      return includesTerm(row.redeemer) && isCollateralFilter && hasUserTrove;
+      return includesTerm(row.redeemer) && isCollateralFilter;
     })
     .orderBy(
       (row) => {
@@ -198,21 +194,11 @@ const rowsPage = computed((): Row[] =>
 
 // Data
 const { loading, data, loadData } = useData(() => {
-  if (vaults.length > 0) {
-    // For all vaults, get redemption and add vault info to redemption.
-    return Promise.all(
-      vaults.map((vault) =>
-        prismaService.getRedemptions("ethereum", vault.address).then((rs) =>
-          rs.map((r) => ({
-            ...r,
-            vault: { name: vault.name, address: vault.address },
-          }))
-        )
-      )
-    ).then((rs) => rs.flat());
-  } else {
-    return Promise.resolve([]);
-  }
+  return Promise.all(
+    troves.map((trove) =>
+      prismaService.getRedemptionsForTrove("ethereum", trove)
+    )
+  ).then((rs) => rs.flat());
 }, []);
 
 // Hooks
@@ -244,7 +230,7 @@ const onSelect = (row: unknown) => {
 };
 
 // Watches
-watch(() => vaults, loadData, { immediate: true });
+watch(() => troves, loadData, { immediate: true });
 
 watch(rowsPage, (ps) => {
   if (ps.length === 0) {

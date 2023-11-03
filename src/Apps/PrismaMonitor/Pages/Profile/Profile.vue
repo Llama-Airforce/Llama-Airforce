@@ -10,10 +10,7 @@
       @troves="onTroves"
     ></TableTroves>
 
-    <TableRedemptions
-      :vaults="vaults"
-      :troves="trovesUser"
-    ></TableRedemptions>
+    <TableRedemptions :troves="trovesUser"></TableRedemptions>
   </div>
 </template>
 
