@@ -222,11 +222,11 @@ const rowsPage = computed((): Row[] =>
 
 // Data
 const { loading, data, loadData } = useData(async () => {
-  if (vaults.length > 0) {
-    // For all vaults, get redemption and add vault info to redemption.
+  if (vaults.length > 0 && user) {
+    // For all vaults, get troves and add vault info to trove.
     const troves = await Promise.all(
       vaults.map((vault) =>
-        prismaService.getTroves("ethereum", vault.address).then((rs) =>
+        prismaService.getTroves("ethereum", vault.address, user).then((rs) =>
           rs.map((r) => ({
             ...r,
             vault: { name: vault.name, address: vault.address },
