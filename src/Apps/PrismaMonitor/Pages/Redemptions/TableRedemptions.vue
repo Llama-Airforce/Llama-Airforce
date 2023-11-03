@@ -44,7 +44,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(props.item.vault.name)" />
+      <img :src="icon(fromAddress(props.item.vault))" />
 
       <div>
         <a
@@ -87,7 +87,7 @@
     <RedemptionDetails
       v-if="!!showDetails"
       :redemption="showDetails"
-      :vault-addr="showDetails.vault.address"
+      :vault-addr="showDetails.vault"
     ></RedemptionDetails>
   </Modal>
 </template>
@@ -107,7 +107,7 @@ import {
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
-import { type Collateral, icon } from "@PM/Models/Collateral";
+import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
 import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
@@ -115,7 +115,7 @@ import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewServi
 
 const prismaService = new PrismaService(getHost());
 
-type Row = Redemption & { vault: { name: Collateral; address: string } };
+type Row = Redemption;
 
 const { t } = useI18n();
 
@@ -157,8 +157,9 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
+      const row_collateral = fromAddress(row.vault);
       const isCollateralFilter =
-        collateral.value === "all" ? true : collateral.value === row.vault.name;
+        collateral.value === "all" ? true : collateral.value === row_collateral;
 
       return includesTerm(row.redeemer) && isCollateralFilter;
     })
@@ -197,12 +198,7 @@ const { loading, data, loadData } = useData(() => {
     // For all vaults, get redemption and add vault info to redemption.
     return Promise.all(
       vaults.map((vault) =>
-        prismaService.getRedemptions("ethereum", vault.address).then((rs) =>
-          rs.map((r) => ({
-            ...r,
-            vault: { name: vault.name, address: vault.address },
-          }))
-        )
+        prismaService.getRedemptions("ethereum", vault.address)
       )
     ).then((rs) => rs.flat());
   } else {

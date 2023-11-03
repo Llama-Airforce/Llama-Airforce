@@ -157,7 +157,6 @@ const rows = computed((): Row[] =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
       const row_collateral = fromAddress(row.vault);
-
       const isCollateralFilter =
         collateral.value === "all" ? true : collateral.value === row_collateral;
 
