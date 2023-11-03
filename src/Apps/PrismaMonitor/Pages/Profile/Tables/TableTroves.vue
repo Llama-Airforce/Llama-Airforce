@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-troves"
-    columns-header="auto 1fr minmax(auto, 25rem)"
+    columns-header="auto 1fr 12rem minmax(auto, 25rem)"
     columns-data="troves-columns-data"
     :loading="loading"
     :rows="rowsPage"
@@ -23,6 +23,13 @@
         <TabItem header="Open"></TabItem>
         <TabItem header="Closed"></TabItem>
       </TabView>
+
+      <SelectCollateral
+        class="select-collateral"
+        :collateral="collateral"
+        :all="true"
+        @select-collateral="collateral = $event"
+      ></SelectCollateral>
 
       <InputText
         v-model="search"
@@ -111,11 +118,12 @@ import {
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
-import { type Collateral, icon } from "@PM/Models/Collateral";
+import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import PrismaService, {
   type Trove,
   type TroveStatus,
 } from "@PM/Services/PrismaService";
+import SelectCollateral from "@PM/Components/SelectCollateral.vue";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 type Row = Trove & { vault: { name: Collateral; address: string } };
@@ -139,6 +147,7 @@ const emit = defineEmits<{
 
 // Refs
 const search = ref("");
+const collateral = ref<Collateral | "all">("all");
 const type = ref<TroveStatus>("Open");
 const page = ref(1);
 const now = ref(Date.now());
@@ -187,7 +196,12 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(row.owner);
+      const row_collateral = fromAddress(row.vault.address);
+
+      const isCollateralFilter =
+        collateral.value === "all" ? true : collateral.value === row_collateral;
+
+      return includesTerm(row.owner) && isCollateralFilter;
     })
     .orderBy(
       (row) => {
@@ -315,6 +329,10 @@ watch(rowsPage, (ps) => {
     margin-right: 2rem;
     font-size: 0.875rem;
     width: auto;
+  }
+
+  .select-collateral {
+    margin-right: 2rem;
   }
 
   ::v-deep(.troves-columns-data) {

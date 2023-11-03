@@ -5,6 +5,7 @@
     </h2>
 
     <TableTroves
+      style="z-index: 2"
       :vaults="vaults"
       :user="user"
       @troves="onTroves"
