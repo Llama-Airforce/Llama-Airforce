@@ -187,11 +187,7 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      const isUser = user
-        ? row.owner.toLocaleLowerCase() === user.toLocaleLowerCase()
-        : true;
-
-      return includesTerm(row.owner) && isUser;
+      return includesTerm(row.owner);
     })
     .orderBy(
       (row) => {
