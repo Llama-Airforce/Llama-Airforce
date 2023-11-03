@@ -31,10 +31,7 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem
-        header="Liquidations"
-        :disabled="true"
-      >
+      <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 3 && vault"
