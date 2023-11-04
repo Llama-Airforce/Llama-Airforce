@@ -144,6 +144,27 @@ export type RatioPosition = {
   positions: Position[];
 };
 
+type CvxPrismaFlow = {
+  amount: number;
+  amount_usd: number;
+  count: number;
+  timestamp: number;
+};
+
+export type CvxPrismaFlows = {
+  withdrawals: CvxPrismaFlow[];
+  deposits: CvxPrismaFlow[];
+};
+
+export type CvxPrismaSnapshot = {
+  token_balance: number;
+  token_supply: number;
+  tvl: number;
+  total_apr: number;
+  apr_breakdown: { apr: number; token: string }[];
+  timestamp: number;
+};
+
 export default class PrismaService extends ServiceBase {
   // Vault / Trove manager endpoints
   public async getHistoricalOpenTrovesOverview(
@@ -452,5 +473,28 @@ export default class PrismaService extends ServiceBase {
     owner: string
   ): Promise<RatioPosition> {
     return this.fetch(`${API_URL}/trove/${chain}/${manager}/rank/${owner}`);
+  }
+
+  // Convex
+  public async getCvxPrismaTVL(): Promise<{
+    tvl: DecimalTimeSeries[];
+  }> {
+    return this.fetch(`${API_URL}/staking/tvl?period=all&groupby=day`);
+  }
+
+  public async getCvxPrismaFlow(): Promise<CvxPrismaFlows> {
+    return this.fetch(`${API_URL}/staking/flow?period=all&groupby=day`);
+  }
+
+  public async getCvxPrismaDistribution(): Promise<{
+    distribution: DecimalLabelledSeries[];
+  }> {
+    return this.fetch(`${API_URL}/staking/distribution`);
+  }
+
+  public async getCvxPrismaSnapshots(): Promise<{
+    Snapshots: CvxPrismaSnapshot[];
+  }> {
+    return this.fetch(`${API_URL}/staking/snapshots?period=7d`);
   }
 }
