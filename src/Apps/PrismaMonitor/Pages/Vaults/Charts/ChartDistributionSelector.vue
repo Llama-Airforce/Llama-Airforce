@@ -27,19 +27,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle, useData } from "@/Framework";
-import PrismaService from "@PM/Services/PrismaService";
-import { watch } from "vue";
 import { getHost } from "@/Services/Host";
+import ManagerService from "@PM/Services/ManagerService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import ChartDistribution from "@PM/Pages/Vaults/Charts/ChartDistribution.vue";
 
 type ChartType = "collateral" | "debt";
 
 const { t } = useI18n();
-const prismaService = new PrismaService(getHost());
+const managerService = new ManagerService(getHost());
 
 // Props
 interface Props {
@@ -50,7 +49,7 @@ const { vault = null } = defineProps<Props>();
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService
+    return managerService
       .getTroveDistribution("ethereum", vault.address, chartType.value)
       .then((x) => x.distribution);
   } else {

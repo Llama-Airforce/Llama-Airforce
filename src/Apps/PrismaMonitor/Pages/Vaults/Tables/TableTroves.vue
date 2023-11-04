@@ -107,10 +107,10 @@ import {
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
-import PrismaService, {
+import TroveService, {
   type Trove,
   type TroveStatus,
-} from "@PM/Services/PrismaService";
+} from "@PM/Services/TroveService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 type Row = Trove;
@@ -118,7 +118,7 @@ type Row = Trove;
 const { t } = useI18n();
 
 const rowsPerPage = 15;
-const prismaService = new PrismaService(getHost());
+const troveService = new TroveService(getHost());
 
 // Props
 interface Props {
@@ -211,7 +211,7 @@ const rowsPage = computed((): Row[] =>
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService.getTroves("ethereum", vault.address);
+    return troveService.getTroves("ethereum", vault.address);
   } else {
     return Promise.resolve([]);
   }

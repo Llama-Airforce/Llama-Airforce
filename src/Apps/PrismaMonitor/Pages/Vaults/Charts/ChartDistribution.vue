@@ -13,7 +13,7 @@ import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
+import { type DecimalLabelledSeries } from "@PM/Services/Series";
 
 // Props
 interface Props {

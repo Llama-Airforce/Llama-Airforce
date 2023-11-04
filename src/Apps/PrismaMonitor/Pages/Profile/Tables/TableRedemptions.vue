@@ -110,9 +110,11 @@ import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
-import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
+import RedemptionService, {
+  type Redemption,
+} from "@PM/Services/RedemptionService";
 
-const prismaService = new PrismaService(getHost());
+const redemptionService = new RedemptionService(getHost());
 
 type Row = Redemption;
 
@@ -195,7 +197,7 @@ const rowsPage = computed((): Row[] =>
 const { loading, data, loadData } = useData(() => {
   return Promise.all(
     troves.map((trove) =>
-      prismaService.getRedemptionsForTrove("ethereum", trove)
+      redemptionService.getRedemptionsForTrove("ethereum", trove)
     )
   ).then((rs) => rs.flat());
 }, []);

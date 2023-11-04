@@ -40,14 +40,13 @@ import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import PrismaService, {
-  type DecimalTimeSeries,
-} from "@PM/Services/PrismaService";
+import CollateralService from "@PM/Services/CollateralService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { type DecimalTimeSeries } from "@PM/Services/Series";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const collateralService = new CollateralService(getHost());
 
 let chart: IChartApi;
 let oracleSerie: ISeriesApi<"Area">;
@@ -75,7 +74,7 @@ const { loading, data, loadData } = useData<{
   market: DecimalTimeSeries[];
 }>(async () => {
   if (vault) {
-    const xs = await prismaService.getCollateralPrices(
+    const xs = await collateralService.getCollateralPrices(
       "ethereum",
       vault.collateral,
       "7d"

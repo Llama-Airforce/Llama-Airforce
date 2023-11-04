@@ -16,7 +16,7 @@ import { CardGraph, useData } from "@/Framework";
 import { type DataPoint, round, unit, formatNumber } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, { type Trove } from "@PM/Services/PrismaService";
+import TroveService, { type Trove } from "@PM/Services/TroveService";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { getHost } from "@/Services/Host";
@@ -29,7 +29,7 @@ type Serie = {
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const troveService = new TroveService(getHost());
 
 // Props
 interface Props {
@@ -44,7 +44,7 @@ const storeSettings = useSettingsStore();
 // Data
 const { loading, data, loadData } = useData(async () => {
   if (vault && trove) {
-    const health = await prismaService
+    const health = await troveService
       .getTroveSnapshots("ethereum", vault.address, trove.owner)
       .then((x) => x.snapshots);
     return health;

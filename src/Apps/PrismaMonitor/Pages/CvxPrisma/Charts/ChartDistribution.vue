@@ -16,17 +16,17 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
-import PrismaService from "@PM/Services/PrismaService";
+import CvxPrismaService from "@PM/Services/CvxPrismaService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const prismaService = new CvxPrismaService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
 const { loading, data, loadData } = useData(
-  () => prismaService.getCvxPrismaDistribution().then((x) => x.distribution),
+  () => prismaService.getDistribution().then((x) => x.distribution),
   []
 );
 

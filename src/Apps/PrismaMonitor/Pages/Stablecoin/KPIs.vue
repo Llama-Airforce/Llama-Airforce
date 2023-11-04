@@ -54,13 +54,13 @@
 import { onMounted } from "vue";
 import { AsyncValue, KPI, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import PrismaService from "@PM/Services/PrismaService";
+import MkUsdService from "@PM/Services/MkUsdService";
 
-const prismaService = new PrismaService(getHost());
+const mkUsdService = new MkUsdService(getHost());
 
 // Data
 const { data, loadData } = useData(
-  () => prismaService.getStableCoinKPI("ethereum").then((x) => x.info),
+  () => mkUsdService.getStableCoinKPI("ethereum").then((x) => x.info),
   null
 );
 

@@ -41,17 +41,17 @@ import { Card, GraphApex, useData } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService, {
+import TroveService, {
   type RatioPosition,
   type Trove,
-} from "@PM/Services/PrismaService";
+} from "@PM/Services/TroveService";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const troveService = new TroveService(getHost());
 
 // Props
 interface Props {
@@ -75,7 +75,7 @@ const init: RatioPosition = {
 // Data
 const { loading, data, loadData } = useData(async () => {
   if (vault && trove) {
-    const rank = await prismaService.getTroveRank(
+    const rank = await troveService.getTroveRank(
       "ethereum",
       vault.address,
       trove.owner

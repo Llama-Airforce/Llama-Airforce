@@ -110,10 +110,12 @@ import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
-import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
+import RedemptionService, {
+  type Redemption,
+} from "@PM/Services/RedemptionService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
-const prismaService = new PrismaService(getHost());
+const redemptionService = new RedemptionService(getHost());
 
 type Row = Redemption;
 
@@ -198,7 +200,7 @@ const { loading, data, loadData } = useData(() => {
     // For all vaults, get redemption and add vault info to redemption.
     return Promise.all(
       vaults.map((vault) =>
-        prismaService.getRedemptions("ethereum", vault.address)
+        redemptionService.getRedemptions("ethereum", vault.address)
       )
     ).then((rs) => rs.flat());
   } else {

@@ -66,10 +66,10 @@
 import { watch } from "vue";
 import { AsyncValue, KPI, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
-import PrismaService from "@PM/Services/PrismaService";
+import CollateralService from "@PM/Services/CollateralService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
-const prismaService = new PrismaService(getHost());
+const collateralService = new CollateralService(getHost());
 
 // Props
 interface Props {
@@ -80,7 +80,7 @@ const { vault = null } = defineProps<Props>();
 // Data
 const { data, loadData } = useData(() => {
   if (vault) {
-    return prismaService
+    return collateralService
       .getCollateralInfo("ethereum", vault.collateral)
       .then((x) => x.info);
   } else {

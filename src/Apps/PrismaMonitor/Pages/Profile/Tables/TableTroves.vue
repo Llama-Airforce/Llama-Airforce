@@ -122,7 +122,7 @@ import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import PrismaService, {
   type Trove,
   type TroveStatus,
-} from "@PM/Services/PrismaService";
+} from "@PM/Services/TroveService";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 

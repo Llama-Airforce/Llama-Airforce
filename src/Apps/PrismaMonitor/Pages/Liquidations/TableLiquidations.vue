@@ -110,10 +110,12 @@ import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
-import PrismaService, { type Liquidation } from "@PM/Services/PrismaService";
+import LiquidationService, {
+  type Liquidation,
+} from "@PM/Services/LiquidationService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
-const prismaService = new PrismaService(getHost());
+const liquidationService = new LiquidationService(getHost());
 
 type Row = Liquidation;
 
@@ -197,7 +199,7 @@ const { loading, data, loadData } = useData(() => {
   if (vaults.length > 0) {
     return Promise.all(
       vaults.map((vault) =>
-        prismaService.getLiquidations("ethereum", vault.address)
+        liquidationService.getLiquidations("ethereum", vault.address)
       )
     ).then((rs) => rs.flat());
   } else {

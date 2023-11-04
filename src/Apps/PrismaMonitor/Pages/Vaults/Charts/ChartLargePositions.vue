@@ -10,12 +10,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CardGraph } from "@/Framework";
+import { addressShort } from "@/Wallet";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { type DecimalLabelledSeries } from "@PM/Services/PrismaService";
-import { addressShort } from "@/Wallet";
+import { type DecimalLabelledSeries } from "@PM/Services/Series";
 
 // Props
 interface Props {

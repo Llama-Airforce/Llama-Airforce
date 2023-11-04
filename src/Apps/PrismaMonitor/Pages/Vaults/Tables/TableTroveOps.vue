@@ -83,17 +83,17 @@ import { AsyncValue, DataTable, useData } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
-import PrismaService, {
+import TroveService, {
   type Trove,
   type TroveSnapshotData,
-} from "@PM/Services/PrismaService";
+} from "@PM/Services/TroveService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 type Row = TroveSnapshotData;
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const troveService = new TroveService(getHost());
 
 // Props
 interface Props {
@@ -112,7 +112,7 @@ const rows = computed((): Row[] => {
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault && trove) {
-    return prismaService
+    return troveService
       .getTroveSnapshots("ethereum", vault.address, trove.owner)
       .then((x) => x.snapshots);
   } else {

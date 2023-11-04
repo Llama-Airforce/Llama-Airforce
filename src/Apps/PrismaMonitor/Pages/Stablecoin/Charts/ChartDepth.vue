@@ -15,7 +15,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { type PoolDepth } from "@PM/Services/PrismaService";
+import { type PoolDepth } from "@PM/Services/MkUsdService";
 import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 

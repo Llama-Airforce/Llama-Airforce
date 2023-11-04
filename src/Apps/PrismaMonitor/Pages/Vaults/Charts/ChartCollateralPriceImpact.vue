@@ -16,13 +16,13 @@ import { CardGraph, useData } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService from "@PM/Services/PrismaService";
+import CollateralService from "@PM/Services/CollateralService";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
-const prismaService = new PrismaService(getHost());
+const collateralService = new CollateralService(getHost());
 const storeSettings = useSettingsStore();
 
 // Props
@@ -34,7 +34,7 @@ const { vault = null } = defineProps<Props>();
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService
+    return collateralService
       .getCollateralPriceImpact("ethereum", vault.collateral)
       .then((x) => x.impact);
   } else {

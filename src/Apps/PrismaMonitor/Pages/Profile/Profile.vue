@@ -28,7 +28,7 @@ import {
   TroveOverviewService,
   type TroveManagerDetails,
 } from "@PM/Services/Socket/TroveOverviewService";
-import { type Trove } from "@PM/Services/PrismaService";
+import { type Trove } from "@PM/Services/TroveService";
 
 const prismaService = new TroveOverviewService("ethereum");
 

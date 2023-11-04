@@ -30,7 +30,7 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle, useData } from "@/Framework";
-import PrismaService from "@PM/Services/PrismaService";
+import ManagerService from "@PM/Services/ManagerService";
 import { watch } from "vue";
 import { getHost } from "@/Services/Host";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
@@ -39,7 +39,7 @@ import ChartLargePositions from "@PM/Pages/Vaults/Charts/ChartLargePositions.vue
 type ChartType = "collateral" | "debt";
 
 const { t } = useI18n();
-const prismaService = new PrismaService(getHost());
+const managerService = new ManagerService(getHost());
 
 // Props
 interface Props {
@@ -53,7 +53,7 @@ const chartType = ref<ChartType>("collateral");
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService
+    return managerService
       .getLargeTrovePositions("ethereum", vault.address, chartType.value)
       .then((x) => x.positions);
   } else {

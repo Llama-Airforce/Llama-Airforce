@@ -10,15 +10,15 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useData } from "@/Framework";
-import PrismaService from "@PM/Services/PrismaService";
+import MkUsdService from "@PM/Services/MkUsdService";
 import { getHost } from "@/Services/Host";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 
-const prismaService = new PrismaService(getHost());
+const mkUsdService = new MkUsdService(getHost());
 
 // Data
 const { loading, data, loadData } = useData(
-  () => prismaService.getCurvePoolDepth("ethereum").then((x) => x.depth),
+  () => mkUsdService.getCurvePoolDepth("ethereum").then((x) => x.depth),
   []
 );
 

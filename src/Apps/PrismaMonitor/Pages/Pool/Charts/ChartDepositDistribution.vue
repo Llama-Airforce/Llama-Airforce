@@ -16,17 +16,16 @@ import { getHost } from "@/Services/Host";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService from "@PM/Services/PrismaService";
+import StabilityPoolService from "@PM/Services/StabilityPoolService";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const sbService = new StabilityPoolService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
 const { loading, data, loadData } = useData(
-  () =>
-    prismaService.getStableDistribution("ethereum").then((x) => x.distribution),
+  () => sbService.getStableDistribution("ethereum").then((x) => x.distribution),
   []
 );
 

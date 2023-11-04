@@ -99,7 +99,9 @@ import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
-import PrismaService, { type Redemption } from "@PM/Services/PrismaService";
+import RedemptionService, {
+  type Redemption,
+} from "@PM/Services/RedemptionService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 type Row = Redemption;
@@ -107,7 +109,7 @@ type Row = Redemption;
 const { t } = useI18n();
 
 const rowsPerPage = 15;
-const prismaService = new PrismaService(getHost());
+const redemptionService = new RedemptionService(getHost());
 
 // Props
 interface Props {
@@ -174,7 +176,7 @@ const rowsPage = computed((): Row[] =>
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService.getRedemptions("ethereum", vault.address);
+    return redemptionService.getRedemptions("ethereum", vault.address);
   } else {
     return Promise.resolve([]);
   }

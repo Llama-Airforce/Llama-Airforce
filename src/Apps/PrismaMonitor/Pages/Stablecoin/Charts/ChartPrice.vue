@@ -6,9 +6,7 @@
   >
     <template #actions>
       <Tooltip>
-        <div>
-          Price data is sourced from Curve pools only.
-        </div>
+        <div>Price data is sourced from Curve pools only.</div>
       </Tooltip>
     </template>
 
@@ -40,13 +38,12 @@ import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import PrismaService, {
-  type DecimalTimeSeries,
-} from "@PM/Services/PrismaService";
+import MkUsdService from "@PM/Services/MkUsdService";
+import { type DecimalTimeSeries } from "@PM/Services/Series";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const mkUsdService = new MkUsdService(getHost());
 
 let chart: IChartApi;
 let serie: ISeriesApi<"Area">;
@@ -58,7 +55,7 @@ const chartRef = ref<HTMLElement | null>(null);
 
 // Data
 const { loading, data, loadData } = useData(
-  () => prismaService.getPriceHistory("ethereum", "1m").then((x) => x.prices),
+  () => mkUsdService.getPriceHistory("ethereum", "1m").then((x) => x.prices),
   []
 );
 

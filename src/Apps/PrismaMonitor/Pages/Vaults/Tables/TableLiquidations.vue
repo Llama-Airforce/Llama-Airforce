@@ -99,7 +99,9 @@ import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
-import PrismaService, { type Liquidation } from "@PM/Services/PrismaService";
+import LiquidationService, {
+  type Liquidation,
+} from "@PM/Services/LiquidationService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 type Row = Liquidation;
@@ -107,7 +109,7 @@ type Row = Liquidation;
 const { t } = useI18n();
 
 const rowsPerPage = 15;
-const prismaService = new PrismaService(getHost());
+const liquidationService = new LiquidationService(getHost());
 
 // Props
 interface Props {
@@ -174,7 +176,7 @@ const rowsPage = computed((): Row[] =>
 // Data
 const { loading, data, loadData } = useData(() => {
   if (vault) {
-    return prismaService.getLiquidations("ethereum", vault.address);
+    return liquidationService.getLiquidations("ethereum", vault.address);
   } else {
     return Promise.resolve([]);
   }

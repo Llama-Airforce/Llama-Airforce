@@ -17,18 +17,18 @@ import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import PrismaService from "@PM/Services/PrismaService";
+import MkUsdService from "@PM/Services/MkUsdService";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
-const prismaService = new PrismaService(getHost());
+const mkUsdService = new MkUsdService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
 const { loading, data, loadData } = useData(
   () =>
-    prismaService.getLargeStableCoinHolders("ethereum").then((x) => x.holders),
+    mkUsdService.getLargeStableCoinHolders("ethereum").then((x) => x.holders),
   []
 );
 

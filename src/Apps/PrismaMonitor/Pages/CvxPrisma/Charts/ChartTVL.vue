@@ -31,13 +31,12 @@ import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import PrismaService, {
-  type DecimalTimeSeries,
-} from "@PM/Services/PrismaService";
+import CvxPrismaService from "@PM/Services/CvxPrismaService";
+import { type DecimalTimeSeries } from "@/Apps/PrismaMonitor/Services/Series";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const prismaService = new CvxPrismaService(getHost());
 
 let chart: IChartApi;
 let serie: ISeriesApi<"Area">;
@@ -49,7 +48,7 @@ const chartRef = ref<HTMLElement | null>(null);
 
 // Data
 const { loading, data, loadData } = useData(
-  () => prismaService.getCvxPrismaTVL().then((x) => x.tvl),
+  () => prismaService.getTVL().then((x) => x.tvl),
   []
 );
 

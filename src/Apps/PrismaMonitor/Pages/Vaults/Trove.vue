@@ -31,11 +31,11 @@ import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";
 import ChartTroveHealth from "@PM/Pages/Vaults/Charts/ChartTroveHealth.vue";
 import TableTroveOps from "@PM/Pages/Vaults/Tables/TableTroveOps.vue";
-import PrismaService, { type Trove } from "@PM/Services/PrismaService";
+import TroveService, { type Trove } from "@PM/Services/TroveService";
 import { getHost } from "@/Services/Host";
 import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 
-const prismaService = new PrismaService(getHost());
+const troveService = new TroveService(getHost());
 const prismaVaultService = new TroveOverviewService("ethereum");
 
 // Refs
@@ -51,7 +51,7 @@ const trove = computed(() => storeVault.trove);
 // Hooks
 onMounted(async (): Promise<void> => {
   // Fetch trove data here and update the store
-  const fetchedTrove: Trove = await prismaService.getTroveDetail(
+  const fetchedTrove: Trove = await troveService.getTroveDetail(
     "ethereum",
     route.params.vaultAddr as string,
     route.params.troveAddr as string

@@ -16,18 +16,18 @@ import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
-import PrismaService from "@PM/Services/PrismaService";
+import ManagerService from "@PM/Services/ManagerService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const managerService = new ManagerService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
 const { loading, data, loadData } = useData(
   () =>
-    prismaService
+    managerService
       .getHistoricalCollateralOverview("ethereum", "6m")
       .then((x) => x.managers),
   []
