@@ -384,6 +384,21 @@ export default class PrismaService extends ServiceBase {
     return paginate(fs, 1, 100);
   }
 
+  public async getLiquidationsForTrove(
+    chain: string,
+    trove: string
+  ): Promise<Liquidation[]> {
+    const fs = (page: number) => {
+      return this.fetch<{
+        liquidations: Liquidation[];
+      }>(
+        `${API_URL}/liquidations/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
+      ).then((resp) => resp.liquidations);
+    };
+
+    return paginate(fs, 1, 100);
+  }
+
   // Individual trove endpoints
   public async getTroves(
     chain: string,

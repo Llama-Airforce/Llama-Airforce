@@ -12,6 +12,8 @@
     ></TableTroves>
 
     <TableRedemptions :troves="trovesUser"></TableRedemptions>
+
+    <TableLiquidations :troves="trovesUser"></TableLiquidations>
   </div>
 </template>
 
@@ -20,6 +22,7 @@ import { ref, watch, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useWalletStore } from "@/Wallet";
 import TableRedemptions from "@PM/Pages/Profile/Tables/TableRedemptions.vue";
+import TableLiquidations from "@PM/Pages/Profile/Tables/TableLiquidations.vue";
 import TableTroves from "@PM/Pages/Profile/Tables/TableTroves.vue";
 import {
   TroveOverviewService,
