@@ -4,6 +4,7 @@ import Vaults from "@PM/Pages/Vaults/Vaults.vue";
 import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";
 import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
 import Redemptions from "@PM/Pages/Redemptions/Redemptions.vue";
+import Liquidations from "@PM/Pages/Liquidations/Liquidations.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 import Trove from "@PM/Pages/Vaults/Trove.vue";
 import Profile from "@PM/Pages/Profile/Profile.vue";
@@ -16,6 +17,7 @@ export const pageMain: Page = {
     { path: "/pool", name: "pool", component: StabilityPool },
     { path: "/mkusd", name: "mkusd", component: Stablecoin },
     { path: "/redemptions", name: "redemptions", component: Redemptions },
+    { path: "/liquidations", name: "liquidations", component: Liquidations },
     { path: "/vaults", name: "vaults", component: Vaults },
     { path: "/profile/:addr?", name: "profile", component: Profile },
     {
@@ -45,6 +47,10 @@ export const pageMain: Page = {
     {
       to: "/redemptions",
       label: "Redemptions",
+    },
+    {
+      to: "/liquidations",
+      label: "Liquidations",
     },
     {
       to: "/profile",
