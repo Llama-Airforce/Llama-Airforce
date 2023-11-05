@@ -30,15 +30,6 @@
           :show-symbol="false"
           type="dollar"
         />
-
-        <span v-if="props.item.debt">
-          (<AsyncValue
-            type="dollar"
-            :value="Math.round(props.item.debt)"
-            :precision="Infinity"
-          ></AsyncValue
-          >)
-        </span>
       </div>
 
       <div class="number">
