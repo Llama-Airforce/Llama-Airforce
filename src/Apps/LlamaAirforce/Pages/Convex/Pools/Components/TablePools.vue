@@ -61,10 +61,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder } from "@/Framework";
+import { AsyncValue, DataTable, SortOrder, useSort } from "@/Framework";
 import { shorten, icon, disabled } from "@/Util";
 import GraphTvl from "@LAF/Pages/Convex/Pools/Components/GraphTvl.vue";
 import GraphApr from "@LAF/Pages/Convex/Pools/Components/GraphApr.vue";
@@ -84,8 +84,8 @@ const { expanded = [] } = defineProps<Props>();
 // Refs
 const store = useConvexStore();
 
-const sortColumn = ref<"name" | "apr" | "tvl">("tvl");
-const sortOrder = ref(SortOrder.Descending);
+type SortColumns = "name" | "apr" | "tvl";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("tvl");
 
 const pools = computed((): Pool[] => {
   return orderBy(
@@ -105,12 +105,6 @@ const pools = computed((): Pool[] => {
     sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
-
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "name" | "apr" | "tvl";
-  sortOrder.value = order;
-};
 </script>
 
 <style lang="scss" scoped>

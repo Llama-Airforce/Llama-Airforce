@@ -59,11 +59,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
+import {
+  AsyncValue,
+  DataTable,
+  Tooltip,
+  SortOrder,
+  useSort,
+} from "@/Framework";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
   getDate,
@@ -83,8 +89,8 @@ const { t } = useI18n();
 const store = useBribesStore();
 const router = useRouter();
 
-const sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
-const sortOrder = ref(SortOrder.Descending);
+type SortColumns = "deadline" | "vlasset" | "total";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("deadline");
 
 const overview = computed((): Overview | null => {
   return store.selectedOverview;
@@ -139,11 +145,6 @@ const isFinished = (epoch: EpochOverview): boolean => {
 };
 
 // Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "deadline" | "vlasset" | "total";
-  sortOrder.value = order;
-};
-
 const onSelected = async (data: unknown): Promise<void> => {
   const epoch = data as EpochOverview;
 

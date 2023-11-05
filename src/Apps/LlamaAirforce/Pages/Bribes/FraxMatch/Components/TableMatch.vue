@@ -89,9 +89,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
+import {
+  AsyncValue,
+  DataTable,
+  Tooltip,
+  SortOrder,
+  useSort,
+} from "@/Framework";
 import { orderBy } from "lodash";
 import {
   getDate,
@@ -111,8 +117,8 @@ interface Props {
 const { epochs = [] } = defineProps<Props>();
 
 // Refs
-const sortColumn = ref<"deadline" | "native" | "frax" | "total">("deadline");
-const sortOrder = ref(SortOrder.Descending);
+type SortColumns = "deadline" | "native" | "frax" | "total";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("deadline");
 
 const epochsSorted = computed((): EpochFrax[] => {
   return orderBy(
@@ -178,12 +184,6 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
       amountDollars: 10,
     },
   ];
-};
-
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "deadline" | "native" | "frax" | "total";
-  sortOrder.value = order;
 };
 </script>
 

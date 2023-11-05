@@ -95,6 +95,7 @@ import {
   Modal,
   useData,
   useRelativeTime,
+  useSort,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
@@ -120,12 +121,12 @@ const { vault = null } = defineProps<Props>();
 // Refs
 const { relativeTime } = useRelativeTime();
 
+type SortColumns = "liquidator" | "tx" | "debt" | "numtroves" | "timestamp";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("timestamp");
+
 const search = ref("");
 const page = ref(1);
 const showDetails = ref<Liquidation | null>(null);
-
-const sortColumn = ref<string>("timestamp");
-const sortOrder = ref(SortOrder.Descending);
 
 const columns = computed((): string[] => {
   return ["Liquidator", "Transaction", "Debt", "# Troves", "Time"];
@@ -186,11 +187,6 @@ const { loading, data, loadData } = useData(() => {
 // Events
 const onPage = (pageNew: number) => {
   page.value = pageNew;
-};
-
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName;
-  sortOrder.value = order;
 };
 
 const onSelect = (row: unknown) => {

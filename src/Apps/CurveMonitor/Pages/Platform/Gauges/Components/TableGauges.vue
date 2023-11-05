@@ -51,10 +51,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder } from "@/Framework";
+import { AsyncValue, DataTable, SortOrder, useSort } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import GraphEmissions from "@CM/Pages/Platform/Gauges/Components/GraphEmissions.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
@@ -72,8 +72,8 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-const sortColumn = ref<"name" | "tvl">("tvl");
-const sortOrder = ref(SortOrder.Descending);
+type SortColumns = "name" | "tvl";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("tvl");
 
 const gauges = computed((): Gauge[] => {
   return orderBy(
@@ -91,12 +91,6 @@ const gauges = computed((): Gauge[] => {
     sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
 });
-
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "name" | "tvl";
-  sortOrder.value = order;
-};
 </script>
 
 <style lang="scss" scoped>

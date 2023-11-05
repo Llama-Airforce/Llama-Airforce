@@ -78,9 +78,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
+import {
+  AsyncValue,
+  DataTable,
+  Tooltip,
+  SortOrder,
+  useSort,
+} from "@/Framework";
 import { icon } from "@/Util";
 import type { Bribe, Bribed, Epoch, Protocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
@@ -93,8 +99,8 @@ const { t } = useI18n();
 // Refs
 const store = useBribesStore();
 
-const sortColumn = ref<"pool" | "vlasset" | "total">("vlasset");
-const sortOrder = ref(SortOrder.Descending);
+type SortColumns = "pool" | "vlasset" | "total";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("vlasset");
 
 const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;
@@ -152,12 +158,6 @@ const bribes = (bribed: Bribed): Bribe[] => {
   );
 
   return orderBy(bribes, (bribe) => bribe.amountDollars, "desc");
-};
-
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "pool" | "vlasset" | "total";
-  sortOrder.value = order;
 };
 </script>
 

@@ -94,7 +94,13 @@
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder, Tooltip } from "@/Framework";
+import {
+  AsyncValue,
+  DataTable,
+  SortOrder,
+  Tooltip,
+  useSort,
+} from "@/Framework";
 import { icon } from "@/Util";
 import { useWalletStore, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
@@ -121,8 +127,8 @@ const { t } = useI18n();
 const store = useBribesStore();
 const wallet = useWalletStore();
 
-const sortColumn = ref<"pool" | "vlasset" | "total">("total");
-const sortOrder = ref(SortOrder.Descending);
+type SortColumns = "pool" | "vlasset" | "total";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("total");
 
 const bribed = ref<BribedPersonal[]>([]);
 const voter = ref("");
@@ -200,11 +206,6 @@ const percentage = (bribed: BribedPersonal): number => {
 };
 
 // Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "pool" | "vlasset" | "total";
-  sortOrder.value = order;
-};
-
 const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
   bribed.value = [];
 

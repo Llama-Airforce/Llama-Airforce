@@ -104,6 +104,7 @@ import {
   useData,
   SortOrder,
   useRelativeTime,
+  useSort,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
@@ -129,12 +130,12 @@ const { vault = null } = defineProps<Props>();
 // Refs
 const { relativeTime } = useRelativeTime();
 
+type SortColumns = "owner" | "debt" | "coll" | "ratio" | "created" | "updated";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("updated");
+
 const search = ref("");
 const type = ref<TroveStatus>("Open");
 const page = ref(1);
-
-const sortColumn = ref<string>("updated");
-const sortOrder = ref(SortOrder.Descending);
 
 const columns = computed((): string[] => {
   if (type.value === "Open") {
@@ -231,11 +232,6 @@ const onType = (tabIndex: number) => {
   } else {
     type.value = "Open";
   }
-};
-
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName;
-  sortOrder.value = order;
 };
 
 // Watches
