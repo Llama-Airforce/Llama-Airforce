@@ -29,3 +29,4 @@ export { default as Tooltip } from "@/Framework/Tooltip.vue";
 
 export { useData } from "@/Framework/Composables/UseData";
 export { useExpansion } from "@/Framework/Composables/UseExpansion";
+export { useRelativeTime } from "@/Framework/Composables/UseRelativeTime";

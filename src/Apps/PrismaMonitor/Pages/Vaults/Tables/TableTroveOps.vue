@@ -76,13 +76,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, useData } from "@/Framework";
+import { AsyncValue, DataTable, useData, useRelativeTime } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
-import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import TroveService, {
   type Trove,
   type TroveSnapshotData,
@@ -103,7 +102,7 @@ interface Props {
 const { vault = null, trove = null } = defineProps<Props>();
 
 // Refs
-const now = ref(Date.now());
+const { relativeTime } = useRelativeTime();
 
 const rows = computed((): Row[] => {
   return orderBy(data.value, (row) => row.timestamp, "desc");
@@ -119,18 +118,6 @@ const { loading, data, loadData } = useData(() => {
     return Promise.resolve([]);
   }
 }, []);
-
-// Hooks
-onMounted(() => {
-  setInterval(() => {
-    now.value = Date.now();
-  });
-});
-
-// Methods
-const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc(now, unixtime);
-};
 
 const titleCase = (s: string): string =>
   s.replace(/^_*(.)|_+(.)/g, (_, c: string, d: string) =>

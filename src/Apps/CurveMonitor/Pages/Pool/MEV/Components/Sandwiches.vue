@@ -98,16 +98,21 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
-import { DataTable, InputText, Pagination, useExpansion } from "@/Framework";
+import {
+  DataTable,
+  InputText,
+  Pagination,
+  useExpansion,
+  useRelativeTime,
+} from "@/Framework";
 import { MEVService } from "@CM/Pages/Pool/MEV/Services";
 import Transactions from "@CM/Pages/Pool/MEV/Components/Transactions.vue";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
-import { relativeTime as relativeTimeFunc } from "@CM/Util";
 import {
   type TransactionDetail,
   type SandwichDetail,
@@ -121,9 +126,9 @@ const swsPerPage = 10;
 // Refs
 const store = useMEVStore();
 const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
+const { relativeTime } = useRelativeTime();
 
 const search = ref("");
-const now = ref(Date.now());
 
 const page = computed((): number => store.sandwichesPage.cur);
 const numSandwiches = computed(
@@ -150,18 +155,6 @@ const sandwiches = computed((): SandwichDetail[] =>
     )
     .value()
 );
-
-// Hooks
-onMounted(() => {
-  setInterval(() => {
-    now.value = Date.now();
-  });
-});
-
-// Methods
-const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc(now, unixtime);
-};
 
 const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
   orderBy(

@@ -130,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain, round } from "lodash";
 import {
@@ -139,6 +139,7 @@ import {
   Pagination,
   TabView,
   TabItem,
+  useRelativeTime,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
@@ -150,7 +151,6 @@ import {
   type Swap,
   type TransactionType,
 } from "@CM/Pages/Pool/Monitor/Models/Transaction";
-import { relativeTime as relativeTimeFunc } from "@CM/Util";
 
 const { t } = useI18n();
 
@@ -173,11 +173,11 @@ const {
 
 // Refs
 const store = useMonitorStore();
+const { relativeTime } = useRelativeTime();
 
 const search = ref("");
 const types = ref<TransactionType[]>(["swap", "deposit", "withdraw"]);
 const page = ref(1);
-const now = ref(Date.now());
 
 const columns = computed((): string[] => {
   return time
@@ -210,18 +210,6 @@ const transactionsPage = computed((): Transaction[] =>
     .take(txsPerPage)
     .value()
 );
-
-// Hooks
-onMounted(() => {
-  setInterval(() => {
-    now.value = Date.now();
-  });
-});
-
-// Methods
-const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc(now, unixtime);
-};
 
 const getAssetsString = (tx: Transaction): string => {
   if (isSwap(tx)) {

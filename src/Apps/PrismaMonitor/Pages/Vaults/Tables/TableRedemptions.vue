@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -94,10 +94,10 @@ import {
   SortOrder,
   Modal,
   useData,
+  useRelativeTime,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
-import { relativeTime as relativeTimeFunc } from "@PM/Util";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import RedemptionService, {
   type Redemption,
@@ -118,9 +118,10 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
+const { relativeTime } = useRelativeTime();
+
 const search = ref("");
 const page = ref(1);
-const now = ref(Date.now());
 const showDetails = ref<Redemption | null>(null);
 
 const sortColumn = ref<string>("timestamp");
@@ -181,18 +182,6 @@ const { loading, data, loadData } = useData(() => {
     return Promise.resolve([]);
   }
 }, []);
-
-// Hooks
-onMounted(() => {
-  setInterval(() => {
-    now.value = Date.now();
-  });
-});
-
-// Methods
-const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc(now, unixtime);
-};
 
 // Events
 const onPage = (pageNew: number) => {

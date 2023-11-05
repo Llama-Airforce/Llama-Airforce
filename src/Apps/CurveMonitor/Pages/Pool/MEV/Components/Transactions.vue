@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -134,10 +134,10 @@ import {
   Pagination,
   TabView,
   TabItem,
+  useRelativeTime,
 } from "@/Framework";
 import { roundPhil } from "@/Util";
 import { addressShort } from "@/Wallet";
-import { relativeTime as relativeTimeFunc } from "@CM/Util";
 import {
   type TransactionDetail,
   type TransactionType,
@@ -163,10 +163,11 @@ const {
 } = defineProps<Props>();
 
 // Refs
+const { relativeTime } = useRelativeTime();
+
 const search = ref("");
 const types = ref<TransactionType[]>(["swap", "deposit", "remove"]);
 const page = ref(1);
-const now = ref(Date.now());
 
 const columns = computed((): string[] => {
   return time
@@ -198,18 +199,6 @@ const transactionsPage = computed((): TransactionDetail[] =>
     .take(txsPerPage)
     .value()
 );
-
-// Hooks
-onMounted(() => {
-  setInterval(() => {
-    now.value = Date.now();
-  });
-});
-
-// Methods
-const relativeTime = (unixtime: number): string => {
-  return relativeTimeFunc(now, unixtime);
-};
 
 const getAssetsString = (tx: TransactionDetail): string => {
   if (tx.transaction_type === "swap") {
