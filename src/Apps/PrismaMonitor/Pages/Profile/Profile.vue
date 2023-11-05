@@ -101,10 +101,10 @@ watch(
 
 @include dashboard("profile");
 
-.mkusd {
+.profile {
   max-width: calc(1920px - 18.125rem);
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
 }
 </style>

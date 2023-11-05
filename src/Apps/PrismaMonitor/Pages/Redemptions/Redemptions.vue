@@ -33,7 +33,7 @@ onMounted(() => {
 
 @include dashboard("redemptions");
 
-.mkusd {
+.redemptions {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr;
