@@ -146,6 +146,29 @@ const emit = defineEmits<{
   troves: [troves: Row[]];
 }>();
 
+// Data
+const { loading, data, loadData } = useData(async () => {
+  if (vaults.length > 0 && user) {
+    // For all vaults, get troves and add vault info to trove.
+    const troves = await Promise.all(
+      vaults.map((vault) =>
+        prismaService.getTroves("ethereum", vault.address, user).then((rs) =>
+          rs.map((r) => ({
+            ...r,
+            vault: { name: vault.name, address: vault.address },
+          }))
+        )
+      )
+    ).then((rs) => rs.flat());
+
+    emit("troves", troves);
+
+    return troves;
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
+
 // Refs
 const { relativeTime } = useRelativeTime();
 
@@ -230,29 +253,6 @@ const rows = computed((): Row[] =>
 
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-// Data
-const { loading, data, loadData } = useData(async () => {
-  if (vaults.length > 0 && user) {
-    // For all vaults, get troves and add vault info to trove.
-    const troves = await Promise.all(
-      vaults.map((vault) =>
-        prismaService.getTroves("ethereum", vault.address, user).then((rs) =>
-          rs.map((r) => ({
-            ...r,
-            vault: { name: vault.name, address: vault.address },
-          }))
-        )
-      )
-    ).then((rs) => rs.flat());
-
-    emit("troves", troves);
-
-    return troves;
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
 
 // Events
 const onType = (tabIndex: number) => {

@@ -59,13 +59,6 @@ const { t } = useI18n();
 
 const sbService = new StabilityPoolService(getHost());
 
-// Refs
-const rows = computed((): PoolStableOperation[] =>
-  chain(data.value)
-    .map((x) => x)
-    .value()
-);
-
 // Data
 const { loading, data } = useData(
   () =>
@@ -73,6 +66,13 @@ const { loading, data } = useData(
       .getTopStableDeposits("ethereum", 5, "7d")
       .then((x) => x.operations),
   []
+);
+
+// Refs
+const rows = computed((): PoolStableOperation[] =>
+  chain(data.value)
+    .map((x) => x)
+    .value()
 );
 </script>
 

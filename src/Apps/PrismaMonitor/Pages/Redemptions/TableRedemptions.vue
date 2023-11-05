@@ -129,6 +129,20 @@ interface Props {
 }
 const { vaults = [] } = defineProps<Props>();
 
+// Data
+const { loading, data, loadData } = useData(() => {
+  if (vaults.length > 0) {
+    // For all vaults, get redemption and add vault info to redemption.
+    return Promise.all(
+      vaults.map((vault) =>
+        redemptionService.getRedemptions("ethereum", vault.address)
+      )
+    ).then((rs) => rs.flat());
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
+
 // Refs
 const { relativeTime } = useRelativeTime();
 
@@ -189,20 +203,6 @@ const rows = computed((): Row[] =>
 
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-// Data
-const { loading, data, loadData } = useData(() => {
-  if (vaults.length > 0) {
-    // For all vaults, get redemption and add vault info to redemption.
-    return Promise.all(
-      vaults.map((vault) =>
-        redemptionService.getRedemptions("ethereum", vault.address)
-      )
-    ).then((rs) => rs.flat());
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
 
 // Events
 const onSelect = (row: unknown) => {

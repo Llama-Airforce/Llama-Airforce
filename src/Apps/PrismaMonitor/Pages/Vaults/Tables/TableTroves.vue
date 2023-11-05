@@ -127,6 +127,15 @@ interface Props {
 }
 const { vault = null } = defineProps<Props>();
 
+// Data
+const { loading, data, loadData } = useData(() => {
+  if (vault) {
+    return troveService.getTroves("ethereum", vault.address);
+  } else {
+    return Promise.resolve([]);
+  }
+}, []);
+
 // Refs
 const { relativeTime } = useRelativeTime();
 
@@ -204,15 +213,6 @@ const rows = computed((): Row[] =>
 
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-// Data
-const { loading, data, loadData } = useData(() => {
-  if (vault) {
-    return troveService.getTroves("ethereum", vault.address);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
 
 // Events
 const onType = (tabIndex: number) => {

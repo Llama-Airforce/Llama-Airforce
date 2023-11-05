@@ -128,6 +128,15 @@ interface Props {
 }
 const { troves = [] } = defineProps<Props>();
 
+// Data
+const { loading, data, loadData } = useData(() => {
+  return Promise.all(
+    troves.map((trove) =>
+      redemptionService.getRedemptionsForTrove("ethereum", trove)
+    )
+  ).then((rs) => rs.flat());
+}, []);
+
 // Refs
 const { relativeTime } = useRelativeTime();
 
@@ -188,15 +197,6 @@ const rows = computed((): Row[] =>
 
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-// Data
-const { loading, data, loadData } = useData(() => {
-  return Promise.all(
-    troves.map((trove) =>
-      redemptionService.getRedemptionsForTrove("ethereum", trove)
-    )
-  ).then((rs) => rs.flat());
-}, []);
 
 // Events
 const onSelect = (row: unknown) => {

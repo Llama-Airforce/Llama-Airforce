@@ -55,12 +55,10 @@ const { t } = useI18n();
 
 const curveService = new CurveService(getHost());
 
-// Refs
-const rows = computed((): Liquidators[] =>
-  chain(rowsRaw.value)
-    .map((x) => x)
-    .value()
-);
+// Props
+interface Props {
+  market?: Market | null;
+}
 
 // Data
 const {
@@ -77,10 +75,12 @@ const {
   }
 }, []);
 
-// Props
-interface Props {
-  market?: Market | null;
-}
+// Refs
+const rows = computed((): Liquidators[] =>
+  chain(rowsRaw.value)
+    .map((x) => x)
+    .value()
+);
 
 const { market = null } = defineProps<Props>();
 
