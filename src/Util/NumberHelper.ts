@@ -108,6 +108,10 @@ export function round(
 ): string {
   const valueAbs = Math.abs(value);
 
+  if (precision === Infinity) {
+    return value.toLocaleString();
+  }
+
   if (type === "percentage") {
     return formatNumber(value, precision);
   } else if (type === "dollar") {

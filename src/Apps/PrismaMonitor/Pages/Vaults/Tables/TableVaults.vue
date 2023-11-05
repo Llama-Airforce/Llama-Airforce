@@ -59,7 +59,13 @@
 
       <div class="number">{{ props.item.open_troves }}</div>
 
-      <div class="number">${{ Math.round(props.item.price) }}</div>
+      <div class="number">
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.price)"
+          :precision="Infinity"
+        ></AsyncValue>
+      </div>
     </template>
 
     <template #row-aggregation>

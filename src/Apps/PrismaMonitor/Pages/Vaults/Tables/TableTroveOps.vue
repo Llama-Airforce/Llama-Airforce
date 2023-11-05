@@ -32,11 +32,22 @@
         />
 
         <span v-if="props.item.debt">
-          (${{ Math.round(props.item.debt) }})
+          (<AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.debt)"
+            :precision="Infinity"
+          ></AsyncValue
+          >)
         </span>
       </div>
 
-      <div class="number">${{ Math.round(props.item.debt) }}</div>
+      <div class="number">
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.debt)"
+          :precision="Infinity"
+        ></AsyncValue>
+      </div>
 
       <div class="number">
         <AsyncValue

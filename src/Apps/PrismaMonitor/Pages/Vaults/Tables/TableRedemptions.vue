@@ -59,7 +59,14 @@
         </a>
       </div>
 
-      <div class="number">${{ Math.round(props.item.actual_debt_amount) }}</div>
+      <div class="number">
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.actual_debt_amount)"
+          :precision="Infinity"
+        ></AsyncValue>
+      </div>
+
       <div class="number">{{ props.item.troves_affected_count }}</div>
 
       <div class="number">
@@ -88,6 +95,7 @@ import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
+  AsyncValue,
   DataTable,
   InputText,
   Pagination,

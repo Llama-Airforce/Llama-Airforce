@@ -56,6 +56,10 @@ const presentation = computed((): string => {
 });
 
 const unit = computed((): string => {
+  if (!isFinite(precision)) {
+    return "";
+  }
+
   if (!value || !type || !isFinite(value)) {
     return showUnit && type ? unitF(0, type) : "";
   }

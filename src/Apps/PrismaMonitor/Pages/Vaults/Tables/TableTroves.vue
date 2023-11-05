@@ -56,14 +56,22 @@
         class="number"
         :class="{ hide: type === 'Closed' }"
       >
-        ${{ Math.round(props.item.debt) }}
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.debt)"
+          :precision="Infinity"
+        ></AsyncValue>
       </div>
 
       <div
         class="number"
         :class="{ hide: type === 'Closed' }"
       >
-        ${{ Math.round(props.item.collateral_usd) }}
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.collateral_usd)"
+          :precision="Infinity"
+        ></AsyncValue>
       </div>
 
       <div
