@@ -12,39 +12,39 @@
       <ProposalTypeSelect @select="onTypeSelect"></ProposalTypeSelect>
 
       <Pagination
-        v-if="proposalsFiltered.length > 0"
+        v-if="rows.length > 0"
         class="pagination"
-        :items-count="proposalsFiltered.length"
-        :items-per-page="proposalsPerPage"
+        :items-count="rows.length"
+        :items-per-page="rowsPerPage"
         :page="page"
         @page="onPage"
       ></Pagination>
     </div>
 
     <ProposalComponent
-      v-for="proposal in proposalsPage"
+      v-for="proposal in rowsPage"
       :key="proposal.id"
       :proposal="proposal"
     ></ProposalComponent>
 
     <Pagination
-      v-if="proposalsFiltered.length > 0"
+      v-if="rows.length > 0"
       class="pagination"
-      :items-count="proposalsFiltered.length"
-      :items-per-page="proposalsPerPage"
+      :items-count="rows.length"
+      :items-per-page="rowsPerPage"
       :page="page"
       @page="onPage"
     ></Pagination>
 
-    <div v-if="proposalsFiltered.length === 0">{{ t("no-proposals") }}</div>
+    <div v-if="rows.length === 0">{{ t("no-proposals") }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref, computed, watch } from "vue";
+import { type Ref, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { InputText, Pagination } from "@/Framework";
+import { InputText, Pagination, usePagination } from "@/Framework";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 import type {
@@ -54,7 +54,7 @@ import type {
 
 const { t } = useI18n();
 
-const proposalsPerPage = 10;
+type Row = Proposal;
 
 // Props
 interface Props {
@@ -64,14 +64,13 @@ interface Props {
 const { proposals } = defineProps<Props>();
 
 // Refs
-const page = ref(1);
 const proposalSearch = ref("");
 const placeholder = ref(t("search-placeholder"));
 const proposalType: Ref<"all" & ProposalType> = ref<"all" & ProposalType>(
   "all" as "all" & ProposalType
 );
 
-const proposalsFiltered = computed((): Proposal[] => {
+const rows = computed((): Row[] => {
   const search = proposalSearch.value.toLocaleLowerCase();
 
   const proposalTypeFilter =
@@ -85,31 +84,13 @@ const proposalsFiltered = computed((): Proposal[] => {
     .value();
 });
 
-const proposalsPage = computed((): Proposal[] => {
-  return chain(proposalsFiltered.value)
-    .drop((page.value - 1) * proposalsPerPage)
-    .take(proposalsPerPage)
-    .value();
-});
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 // Events
 const onTypeSelect = (type: ProposalType): void => {
   proposalType.value = type as "all" & ProposalType;
 };
-
-const onPage = (pageNew: number): void => {
-  page.value = pageNew;
-};
-
-// Watches
-watch(proposalsPage, (ps) => {
-  if (ps.length === 0) {
-    page.value = Math.max(
-      1,
-      Math.ceil(proposalsFiltered.value.length / proposalsPerPage)
-    );
-  }
-});
 </script>
 
 <style lang="scss" scoped>

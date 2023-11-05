@@ -96,6 +96,7 @@ import {
   useData,
   useRelativeTime,
   useSort,
+  usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
@@ -109,7 +110,6 @@ type Row = Redemption;
 
 const { t } = useI18n();
 
-const rowsPerPage = 15;
 const redemptionService = new RedemptionService(getHost());
 
 // Props
@@ -125,7 +125,6 @@ type SortColumns = "redeemer" | "tx" | "debt" | "numtroves" | "timestamp";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("timestamp");
 
 const search = ref("");
-const page = ref(1);
 const showDetails = ref<Redemption | null>(null);
 
 const columns = computed((): string[] => {
@@ -168,12 +167,8 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-const rowsPage = computed((): Row[] =>
-  chain(rows.value)
-    .drop((page.value - 1) * rowsPerPage)
-    .take(rowsPerPage)
-    .value()
-);
+const rowsPerPage = 15;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 // Data
 const { loading, data, loadData } = useData(() => {
@@ -185,22 +180,12 @@ const { loading, data, loadData } = useData(() => {
 }, []);
 
 // Events
-const onPage = (pageNew: number) => {
-  page.value = pageNew;
-};
-
 const onSelect = (row: unknown) => {
   showDetails.value = row as Redemption;
 };
 
 // Watches
 watch(() => vault, loadData);
-
-watch(rowsPage, (ps) => {
-  if (ps.length === 0) {
-    page.value = Math.max(1, Math.ceil(rows.value.length / rowsPerPage));
-  }
-});
 </script>
 
 <style lang="scss" scoped>

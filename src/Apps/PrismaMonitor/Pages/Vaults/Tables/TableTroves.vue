@@ -105,6 +105,7 @@ import {
   SortOrder,
   useRelativeTime,
   useSort,
+  usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
@@ -118,7 +119,6 @@ type Row = Trove;
 
 const { t } = useI18n();
 
-const rowsPerPage = 15;
 const troveService = new TroveService(getHost());
 
 // Props
@@ -135,7 +135,6 @@ const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("updated");
 
 const search = ref("");
 const type = ref<TroveStatus>("Open");
-const page = ref(1);
 
 const columns = computed((): string[] => {
   if (type.value === "Open") {
@@ -203,12 +202,8 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-const rowsPage = computed((): Row[] =>
-  chain(rows.value)
-    .drop((page.value - 1) * rowsPerPage)
-    .take(rowsPerPage)
-    .value()
-);
+const rowsPerPage = 15;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 // Data
 const { loading, data, loadData } = useData(() => {
@@ -220,10 +215,6 @@ const { loading, data, loadData } = useData(() => {
 }, []);
 
 // Events
-const onPage = (pageNew: number) => {
-  page.value = pageNew;
-};
-
 const onType = (tabIndex: number) => {
   if (tabIndex === 0) {
     type.value = "Open";
@@ -236,12 +227,6 @@ const onType = (tabIndex: number) => {
 
 // Watches
 watch(() => vault, loadData);
-
-watch(rowsPage, (ps) => {
-  if (ps.length === 0) {
-    page.value = Math.max(1, Math.ceil(rows.value.length / rowsPerPage));
-  }
-});
 </script>
 
 <style lang="scss" scoped>

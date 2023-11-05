@@ -105,6 +105,7 @@ import {
   useData,
   useRelativeTime,
   useSort,
+  usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
@@ -121,8 +122,6 @@ type Row = Liquidation;
 
 const { t } = useI18n();
 
-const rowsPerPage = 15;
-
 // Props
 interface Props {
   troves: string[];
@@ -137,7 +136,6 @@ const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("timestamp");
 
 const search = ref("");
 const collateral = ref<Collateral | "all">("all");
-const page = ref(1);
 const showDetails = ref<Row | null>(null);
 
 const columns = computed((): string[] => {
@@ -188,12 +186,8 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-const rowsPage = computed((): Row[] =>
-  chain(rows.value)
-    .drop((page.value - 1) * rowsPerPage)
-    .take(rowsPerPage)
-    .value()
-);
+const rowsPerPage = 15;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 // Data
 const { loading, data, loadData } = useData(() => {
@@ -205,22 +199,12 @@ const { loading, data, loadData } = useData(() => {
 }, []);
 
 // Events
-const onPage = (pageNew: number) => {
-  page.value = pageNew;
-};
-
 const onSelect = (row: unknown) => {
   showDetails.value = row as Row;
 };
 
 // Watches
 watch(() => troves, loadData);
-
-watch(rowsPage, (ps) => {
-  if (ps.length === 0) {
-    page.value = Math.max(1, Math.ceil(rows.value.length / rowsPerPage));
-  }
-});
 </script>
 
 <style lang="scss" scoped>

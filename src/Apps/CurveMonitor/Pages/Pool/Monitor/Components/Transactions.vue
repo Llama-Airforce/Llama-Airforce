@@ -4,7 +4,7 @@
     :class="{ compact, time }"
     columns-header="auto auto 1fr"
     columns-data="trades-columns-data"
-    :rows="transactionsPage"
+    :rows="rowsPage"
     :columns="columns"
   >
     <template
@@ -38,8 +38,8 @@
     >
       <Pagination
         class="pagination"
-        :items-count="transactions.length"
-        :items-per-page="txsPerPage"
+        :items-count="rows.length"
+        :items-per-page="rowsPerPage"
         :page="page"
         @page="onPage"
       ></Pagination>
@@ -130,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain, round } from "lodash";
 import {
@@ -140,6 +140,7 @@ import {
   TabView,
   TabItem,
   useRelativeTime,
+  usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
@@ -153,8 +154,6 @@ import {
 } from "@CM/Pages/Pool/Monitor/Models/Transaction";
 
 const { t } = useI18n();
-
-const txsPerPage = 10;
 
 // Props
 interface Props {
@@ -177,7 +176,6 @@ const { relativeTime } = useRelativeTime();
 
 const search = ref("");
 const types = ref<TransactionType[]>(["swap", "deposit", "withdraw"]);
-const page = ref(1);
 
 const columns = computed((): string[] => {
   return time
@@ -185,7 +183,7 @@ const columns = computed((): string[] => {
     : ["Type", "Tx", "Trader", "Assets", "Fees"];
 });
 
-const transactions = computed((): Transaction[] =>
+const rows = computed((): Transaction[] =>
   chain(txs ? txs : store.transactions)
     .filter((tx) => types.value.includes(tx.type))
     .filter((tx) => {
@@ -204,12 +202,8 @@ const transactions = computed((): Transaction[] =>
     .value()
 );
 
-const transactionsPage = computed((): Transaction[] =>
-  chain(transactions.value)
-    .drop((page.value - 1) * txsPerPage)
-    .take(txsPerPage)
-    .value()
-);
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 const getAssetsString = (tx: Transaction): string => {
   if (isSwap(tx)) {
@@ -235,10 +229,6 @@ const getAssetsString = (tx: Transaction): string => {
 };
 
 // Events
-const onPage = (pageNew: number) => {
-  page.value = pageNew;
-};
-
 const onType = (tabIndex: number) => {
   if (tabIndex === 0) {
     types.value = ["swap", "deposit", "withdraw"];
@@ -252,13 +242,6 @@ const onType = (tabIndex: number) => {
     types.value = [];
   }
 };
-
-// Watches
-watch(transactionsPage, (ps) => {
-  if (ps.length === 0) {
-    page.value = Math.max(1, Math.ceil(transactions.value.length / txsPerPage));
-  }
-});
 </script>
 
 <style lang="scss" scoped>
