@@ -105,7 +105,7 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-watch(() => vault, loadData, { immediate: true });
+watch(() => vault, loadData);
 
 watch(
   () => storeSettings.theme,

@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
@@ -67,16 +67,13 @@ const rows = computed((): PoolStableOperation[] =>
 );
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () =>
     sbService
       .getTopStableDeposits("ethereum", 5, "7d")
       .then((x) => x.operations),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

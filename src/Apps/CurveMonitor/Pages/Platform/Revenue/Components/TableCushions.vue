@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText, useData } from "@/Framework";
@@ -108,20 +108,13 @@ const rows = computed((): Row[] =>
 );
 
 // Data
-const {
-  loading,
-  data: rowsRaw,
-  loadData,
-} = useData(
+const { loading, data: rowsRaw } = useData(
   () =>
     curveService
       .getCushions()
       .then((x) => x.cushions.sort((a, b) => b.totalUSD - a.totalUSD)),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

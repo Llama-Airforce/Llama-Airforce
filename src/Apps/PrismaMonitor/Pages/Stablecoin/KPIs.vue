@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { AsyncValue, KPI, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import MkUsdService from "@PM/Services/MkUsdService";
@@ -59,13 +58,10 @@ import MkUsdService from "@PM/Services/MkUsdService";
 const mkUsdService = new MkUsdService(getHost());
 
 // Data
-const { data, loadData } = useData(
+const { data } = useData(
   () => mkUsdService.getStableCoinKPI("ethereum").then((x) => x.info),
   null
 );
-
-// Hooks
-onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

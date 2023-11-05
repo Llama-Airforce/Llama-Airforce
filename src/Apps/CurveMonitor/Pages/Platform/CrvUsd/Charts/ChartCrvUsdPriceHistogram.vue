@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -24,7 +24,7 @@ const curveService = new CurveService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => curveService.getCrvUsdPriceHistogram(),
   { x: [], y: [] }
 );
@@ -98,9 +98,6 @@ const series = computed((): { data: number[] }[] => [
     data: data.value.y,
   },
 ]);
-
-// Hooks
-onMounted(() => void loadData());
 
 // Methods
 const formatterX = (x: number): string => {

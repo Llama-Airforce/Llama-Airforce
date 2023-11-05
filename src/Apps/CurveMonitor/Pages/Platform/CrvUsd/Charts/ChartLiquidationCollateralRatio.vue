@@ -84,7 +84,7 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-watch(() => market, loadData, { immediate: true });
+watch(() => market, loadData);
 
 watch(
   () => storeSettings.theme,

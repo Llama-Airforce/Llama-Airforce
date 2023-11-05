@@ -54,7 +54,7 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => mkUsdService.getPriceHistory("ethereum", "1m").then((x) => x.prices),
   []
 );
@@ -71,8 +71,6 @@ onMounted(() => {
   serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(data.value);
-
-  void loadData();
 });
 
 // Watches

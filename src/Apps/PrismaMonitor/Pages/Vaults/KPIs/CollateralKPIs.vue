@@ -89,7 +89,7 @@ const { data, loadData } = useData(() => {
 }, null);
 
 // Watches
-watch(() => vault, loadData, { immediate: true });
+watch(() => vault, loadData);
 </script>
 
 <style lang="scss" scoped>

@@ -73,7 +73,7 @@ const { loading, data, loadData } = useData(() => {
 }, []);
 
 // Watches
-watch(() => market, loadData, { immediate: true });
+watch(() => market, loadData);
 
 // Events
 const onChartType = (type: ChartType) => {

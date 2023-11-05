@@ -120,7 +120,7 @@ const series = computed((): { name: string; data: number[] }[] => [
 ]);
 
 // Watches
-watch(() => market, loadData, { immediate: true });
+watch(() => market, loadData);
 
 // Methods
 const formatterX = (x: string): string => x;

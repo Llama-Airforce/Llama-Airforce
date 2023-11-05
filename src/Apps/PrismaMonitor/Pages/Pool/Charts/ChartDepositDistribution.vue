@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph, useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
@@ -24,13 +24,10 @@ const sbService = new StabilityPoolService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => sbService.getStableDistribution("ethereum").then((x) => x.distribution),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);

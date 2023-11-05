@@ -85,7 +85,7 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Watches
-watch(() => market, loadData, { immediate: true });
+watch(() => market, loadData);
 </script>
 
 <style lang="scss" scoped>

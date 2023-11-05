@@ -89,7 +89,7 @@ watch(
   }
 );
 
-watch(() => vault, loadData, { immediate: true });
+watch(() => vault, loadData);
 
 watch(data, (newData) => {
   createSeries(newData);

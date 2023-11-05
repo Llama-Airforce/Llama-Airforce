@@ -204,8 +204,6 @@ const { loading, data, loadData } = useData(() => {
 
 // Hooks
 onMounted(() => {
-  void loadData();
-
   setInterval(() => {
     now.value = Date.now();
   });
@@ -231,7 +229,7 @@ const onSelect = (row: unknown) => {
 };
 
 // Watches
-watch(() => troves, loadData, { immediate: true });
+watch(() => troves, loadData);
 
 watch(rowsPage, (ps) => {
   if (ps.length === 0) {

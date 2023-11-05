@@ -219,8 +219,6 @@ const { loading, data, loadData } = useData(() => {
 
 // Hooks
 onMounted(() => {
-  void loadData();
-
   setInterval(() => {
     now.value = Date.now();
   });
@@ -252,7 +250,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 
 // Watches
-watch(() => vault, loadData, { immediate: true });
+watch(() => vault, loadData);
 
 watch(rowsPage, (ps) => {
   if (ps.length === 0) {

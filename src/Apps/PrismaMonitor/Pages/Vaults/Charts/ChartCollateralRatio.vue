@@ -45,7 +45,7 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () =>
     managerService
       .getCollateralRatioGrouped("ethereum", "all")
@@ -66,8 +66,6 @@ onMounted(() => {
   );
 
   createSeries(data.value);
-
-  void loadData();
 });
 
 // Watches

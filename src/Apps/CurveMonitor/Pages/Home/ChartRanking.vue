@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -24,7 +24,7 @@ const curveService = new CurveService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(async () => {
+const { loading, data } = useData(async () => {
   const gainers_ = curveService.getTvlGainers();
   const losers_ = curveService.getTvlLosers();
   const [gainers, losers] = [await gainers_, await losers_];
@@ -101,9 +101,6 @@ const series = computed((): { data: number[] }[] => [
     data: data.value.map((x) => x.tvl_growth),
   },
 ]);
-
-// Hooks
-onMounted(() => void loadData());
 
 // Methods
 const formatterX = (x: string): string => x.toString().substring(0, 12);

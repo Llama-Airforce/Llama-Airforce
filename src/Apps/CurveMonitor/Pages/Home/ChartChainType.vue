@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -24,7 +24,7 @@ const curveService = new CurveService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () =>
     curveService
       .getTvlBreakdownChain()
@@ -90,9 +90,6 @@ const options = computed((): unknown => {
 const series = computed((): { name: string; data: number[] }[] => {
   return [...data.value.map((x) => ({ name: x.chain, data: [x.tvl, x.tvl] }))];
 });
-
-// Hooks
-onMounted(() => void loadData());
 
 // Methods
 const formatter = (x: number): string => {

@@ -161,7 +161,7 @@ const formatterRatio = (x: number): string => {
 };
 
 // Watches
-watch(() => vault, loadData, { immediate: true });
+watch(() => vault, loadData);
 </script>
 
 <style lang="scss" scoped>

@@ -62,8 +62,7 @@ const { loading, data, loadData } = useData(() => {
 }, []);
 
 // Watches
-watch(chartType, loadData, { immediate: true });
-watch(() => vault, loadData, { immediate: true });
+watch([chartType, () => vault], loadData);
 </script>
 
 <style lang="scss" scoped>

@@ -47,7 +47,7 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => prismaService.getTVL().then((x) => x.tvl),
   []
 );
@@ -64,8 +64,6 @@ onMounted(() => {
   serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(data.value);
-
-  void loadData();
 });
 
 // Watches

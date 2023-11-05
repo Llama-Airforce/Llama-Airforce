@@ -84,7 +84,7 @@ const {
 }, null);
 
 // Watches
-watch(() => market, loadData, { immediate: true });
+watch(() => market, loadData);
 
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;

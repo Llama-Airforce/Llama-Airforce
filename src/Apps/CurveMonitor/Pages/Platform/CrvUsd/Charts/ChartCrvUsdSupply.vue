@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle, useData } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
@@ -66,13 +66,10 @@ const storeSettings = useSettingsStore();
 const chartType = ref<ChartType>("line");
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => curveService.getCrvUsdSupply().then((x) => x.supply),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 
 // Events
 const onChartType = (type: ChartType) => {

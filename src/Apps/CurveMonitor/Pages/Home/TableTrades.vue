@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { AsyncValue, DataTable, useData } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
@@ -53,7 +52,7 @@ type Trade = {
 const curveService = new CurveService(getHost());
 
 // Data
-const { data: trades, loadData } = useData(
+const { data: trades } = useData(
   () =>
     curveService
       .getTradesLarge()
@@ -61,9 +60,6 @@ const { data: trades, loadData } = useData(
       .then((x) => x.slice(0, 10)),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

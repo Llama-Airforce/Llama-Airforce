@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph, useData } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
@@ -26,14 +26,11 @@ const mkUsdService = new MkUsdService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () =>
     mkUsdService.getLargeStableCoinHolders("ethereum").then((x) => x.holders),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 
 const options = computed((): unknown => {
   const colors = getColors(storeSettings.theme);

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { round, unit } from "@/Util";
 import { CardGraph, useData } from "@/Framework";
@@ -30,13 +30,10 @@ const sbService = new StabilityPoolService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => sbService.getStableFlow("ethereum", "1m"),
   { deposits: [], withdrawals: [] }
 );
-
-// Hooks
-onMounted(() => void loadData());
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {

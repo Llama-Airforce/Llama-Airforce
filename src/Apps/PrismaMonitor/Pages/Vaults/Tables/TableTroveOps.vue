@@ -122,8 +122,6 @@ const { loading, data, loadData } = useData(() => {
 
 // Hooks
 onMounted(() => {
-  void loadData();
-
   setInterval(() => {
     now.value = Date.now();
   });
@@ -140,7 +138,7 @@ const titleCase = (s: string): string =>
   );
 
 // Watches
-watch(() => vault, loadData, { immediate: true });
+watch(() => vault, loadData);
 </script>
 
 <style lang="scss" scoped>

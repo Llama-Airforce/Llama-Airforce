@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { useData } from "@/Framework";
 import MkUsdService from "@PM/Services/MkUsdService";
 import { getHost } from "@/Services/Host";
@@ -17,12 +16,10 @@ import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 const mkUsdService = new MkUsdService(getHost());
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () => mkUsdService.getCurvePoolDepth("ethereum").then((x) => x.depth),
   []
 );
-
-onMounted(() => void loadData());
 </script>
 
 <style lang="scss" scoped>

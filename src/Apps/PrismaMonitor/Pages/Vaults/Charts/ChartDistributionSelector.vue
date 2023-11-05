@@ -61,8 +61,7 @@ const { loading, data, loadData } = useData(() => {
 const chartType = ref<ChartType>("collateral");
 
 // Watches
-watch(chartType, loadData, { immediate: true });
-watch(() => vault, loadData, { immediate: true });
+watch([chartType, () => vault], loadData);
 </script>
 
 <style lang="scss" scoped>

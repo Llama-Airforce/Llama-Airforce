@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph, useData } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
@@ -30,16 +30,13 @@ const managerService = new ManagerService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(
+const { loading, data } = useData(
   () =>
     managerService
       .getHistoricalOpenTrovesOverview("ethereum", "6m")
       .then((x) => x.managers),
   []
 );
-
-// Hooks
-onMounted(() => void loadData());
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
