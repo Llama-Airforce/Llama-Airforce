@@ -1,5 +1,8 @@
 <template>
-  <div class="card">
+  <div
+    class="card"
+    :inert="loading"
+  >
     <Spinner
       v-if="loading"
       class="loader"

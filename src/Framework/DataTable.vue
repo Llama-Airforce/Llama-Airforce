@@ -2,6 +2,7 @@
   <div
     class="datatable"
     :class="{ loading }"
+    :inert="loading"
   >
     <Spinner
       v-if="loading"
