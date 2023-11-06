@@ -27,10 +27,7 @@
       </div>
     </div>
 
-    <div
-      v-if="rowsMin || (rows && rows.length > 0) || loading"
-      class="list"
-    >
+    <div class="list">
       <!-- DataTable column headers -->
       <div
         class="row-data"
@@ -111,6 +108,14 @@
         >
         </DataTableRow>
 
+        <!-- No data to show. -->
+        <div
+          v-if="!rowsMin && (!rows || rows.length === 0) && !loading"
+          class="no-data"
+        >
+          <slot name="no-data">{{ t("no-data") }}</slot>
+        </div>
+
         <!-- Aggregation -->
         <DataTableRow
           v-if="!!$slots['row-aggregation']"
@@ -122,14 +127,6 @@
           </template>
         </DataTableRow>
       </div>
-    </div>
-
-    <!-- No data to show. -->
-    <div
-      v-else-if="!rowsMin && !loading"
-      class="no-data"
-    >
-      <slot name="no-data">{{ t("no-data") }}</slot>
     </div>
   </div>
 </template>
@@ -383,6 +380,14 @@ const sortColumn = (index: number): void => {
         margin: auto auto;
         z-index: 1;
       }
+
+      > .no-data {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+      }
     }
   }
 
@@ -492,14 +497,6 @@ const sortColumn = (index: number): void => {
         }
       }
     }
-  }
-
-  > .no-data {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0 auto;
   }
 }
 </style>
