@@ -4,11 +4,6 @@
     :class="{ loading }"
     :inert="loading"
   >
-    <Spinner
-      v-if="loading"
-      class="loader"
-    ></Spinner>
-
     <div
       v-if="header"
       class="header"
@@ -33,7 +28,7 @@
     </div>
 
     <div
-      v-if="rowsMin || (rows && rows.length > 0)"
+      v-if="rowsMin || (rows && rows.length > 0) || loading"
       class="list"
     >
       <!-- DataTable column headers -->
@@ -78,6 +73,11 @@
       </div>
 
       <div class="rows">
+        <Spinner
+          v-if="loading"
+          class="loader"
+        ></Spinner>
+
         <!-- DataTable rows -->
         <DataTableRow
           v-for="(row, i) in rows"
@@ -330,13 +330,6 @@ const sortColumn = (index: number): void => {
     opacity: 0.33;
   }
 
-  > .loader {
-    position: absolute;
-    inset: 0;
-    margin: auto auto;
-    z-index: 1;
-  }
-
   > .header {
     padding: 0 0 0.875rem 0rem;
     display: grid;
@@ -380,6 +373,16 @@ const sortColumn = (index: number): void => {
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+
+      min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
+      position: relative;
+
+      > .loader {
+        position: absolute;
+        inset: 0;
+        margin: auto auto;
+        z-index: 1;
+      }
     }
   }
 
