@@ -50,7 +50,14 @@ const router = useRouter();
 watch(
   () => route.fullPath,
   (newRoute) => {
-    const noCrumbs = ["/pool", "/mkusd", "/redemptions", "/profile"];
+    const noCrumbs = [
+      "/pool",
+      "/mkusd",
+      "/redemptions",
+      "/liquidation",
+      "/profile",
+      "/cvxprisma",
+    ];
 
     if (noCrumbs.some((x) => newRoute.startsWith(x))) {
       storeBreadcrumb.show = false;
