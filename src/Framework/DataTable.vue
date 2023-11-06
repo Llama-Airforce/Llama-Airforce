@@ -150,7 +150,7 @@ interface Props {
   /** The minimum number of rows in case you don't want to show the 'no data' message. */
   rowsMin?: number | null;
   /** The row that should be highlighted as being selected. */
-  selectedRow?: unknown | null;
+  selectedRow?: unknown;
 
   /** All currently expanded rows */
   expanded?: unknown[];
@@ -223,6 +223,7 @@ onBeforeMount(() => {
 
   if (sortingDefaultDir) {
     currentSortDir.value =
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       sortingDefaultDir === SortOrder.Ascending
         ? SortOrder.Ascending
         : SortOrder.Descending;
@@ -269,14 +270,14 @@ const sortingEnabled = (index: number): boolean => {
 const sortAscending = (index: number): boolean => {
   return (
     currentSort.value === sortingColumns[index] &&
-    currentSortDir.value === "Ascending"
+    currentSortDir.value === SortOrder.Ascending
   );
 };
 
 const sortDescending = (index: number): boolean => {
   return (
     currentSort.value === sortingColumns[index] &&
-    currentSortDir.value === "Descending"
+    currentSortDir.value === SortOrder.Descending
   );
 };
 
