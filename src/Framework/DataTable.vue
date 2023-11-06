@@ -118,7 +118,7 @@
 
         <!-- Aggregation -->
         <DataTableRow
-          v-if="!!$slots['row-aggregation']"
+          v-if="!!$slots['row-aggregation'] && rows.length > 0"
           class="aggregation"
           :columns="columnsData"
         >
