@@ -324,6 +324,11 @@ const sortColumn = (index: number): void => {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
+  transition: opacity $hover-duration ease-in-out;
+  &:not(&.loading) {
+    opacity: 1;
+  }
+
   &.loading {
     opacity: 0.33;
   }
