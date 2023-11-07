@@ -6,6 +6,7 @@ import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
 import Redemptions from "@PM/Pages/Redemptions/Redemptions.vue";
 import Liquidations from "@PM/Pages/Liquidations/Liquidations.vue";
 import CvxPrisma from "@PM/Pages/CvxPrisma/CvxPrisma.vue";
+import VePrisma from "@PM/Pages/VePrisma/VePrisma.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 import Trove from "@PM/Pages/Vaults/Trove.vue";
 import Profile from "@PM/Pages/Profile/Profile.vue";
@@ -21,6 +22,7 @@ export const pageMain: Page = {
     { path: "/liquidations", name: "liquidations", component: Liquidations },
     { path: "/vaults", name: "vaults", component: Vaults },
     { path: "/cvxprisma", name: "cvxprisma", component: CvxPrisma },
+    { path: "/veprisma", name: "veprisma", component: VePrisma },
     { path: "/profile/:addr?", name: "profile", component: Profile },
     {
       path: "/vault/:vaultAddr/:tab?",
@@ -57,6 +59,10 @@ export const pageMain: Page = {
     {
       to: "/cvxprisma",
       label: "cvxPRISMA",
+    },
+    {
+      to: "/veprisma",
+      label: "vePRISMA",
     },
     {
       to: "/profile",

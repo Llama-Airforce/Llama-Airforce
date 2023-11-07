@@ -1,0 +1,225 @@
+<template>
+  <DataTable
+    class="datatable-lockers"
+    columns-header="1fr minmax(auto, 25rem)"
+    columns-data="lockers-columns-data"
+    :rows="rowsPage"
+    :columns="columns"
+    :sorting="true"
+    :sorting-columns="columnsSorting"
+    :sorting-columns-enabled="columnsSortingEnabled"
+    sorting-default-column="weight"
+    sorting-default-dir="Descending"
+    @sort-column="onSort"
+  >
+    <template #header-title>
+      <div>{{ t("title") }}</div>
+
+      <InputText
+        v-model="search"
+        class="search"
+        :search="true"
+        :placeholder="t('search-placeholder')"
+      >
+      </InputText>
+    </template>
+
+    <template #header-actions>
+      <Pagination
+        class="pagination"
+        :items-count="rows.length"
+        :items-per-page="rowsPerPage"
+        :page="page"
+        @page="onPage"
+      ></Pagination>
+    </template>
+
+    <template #row="props: { item: Row }">
+      <div>
+        <a
+          style="font-family: monospace"
+          :href="`https://etherscan.io/address/${props.item.id}`"
+          target="_blank"
+          @click.stop
+        >
+          {{ props.item.id }}
+        </a>
+      </div>
+
+      <div
+        class="number"
+        :class="{ zero: props.item.weight === 0 }"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.weight)"
+          :precision="2"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </div>
+
+      <div
+        class="number"
+        :class="{ zero: props.item.locked === 0 }"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.locked)"
+          :precision="2"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </div>
+
+      <div
+        class="number"
+        :class="{ zero: props.item.unlocked === 0 }"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.unlocked)"
+          :precision="2"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </div>
+
+      <div
+        class="number"
+        :class="{ zero: props.item.frozen === 0 }"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="Math.round(props.item.frozen)"
+          :precision="2"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </div>
+    </template>
+  </DataTable>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { chain } from "lodash";
+import {
+  AsyncValue,
+  DataTable,
+  InputText,
+  Pagination,
+  SortOrder,
+  useSort,
+  usePagination,
+} from "@/Framework";
+import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
+
+type Row = AccountData;
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  lockers: AccountData[];
+}
+const { lockers = [] } = defineProps<Props>();
+
+type SortColumns = "locker" | "weight" | "locked" | "unlocked" | "frozen";
+const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("weight");
+
+const search = ref("");
+
+const columns = computed((): string[] => {
+  return ["Locker", "Weight", "Locked", "Unlocked", "Frozen"];
+});
+
+const columnsSorting = computed((): string[] => {
+  return ["locker", "weight", "locked", "unlocked", "frozen"];
+});
+
+const columnsSortingEnabled = computed((): string[] => {
+  return ["weight", "locked", "unlocked", "frozen"];
+});
+
+const rows = computed((): Row[] =>
+  chain(lockers)
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string) =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(row.id);
+    })
+    .orderBy(
+      (row) => {
+        switch (sortColumn.value) {
+          case "weight":
+            return row.weight;
+          case "locked":
+            return row.locked;
+          case "unlocked":
+            return row.unlocked;
+          case "frozen":
+            return row.frozen;
+          default:
+            return row.weight;
+        }
+      },
+      sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    )
+    .value()
+);
+
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+</script>
+
+<style lang="scss" scoped>
+@import "@/Styles/Variables.scss";
+
+.datatable-lockers {
+  container-type: inline-size;
+
+  .title {
+    margin-right: 1rem;
+  }
+
+  .search {
+    margin-right: 2rem;
+    font-size: 0.875rem;
+    width: auto;
+  }
+
+  ::v-deep(.lockers-columns-data) {
+    --col-width: 11ch;
+
+    display: grid;
+    grid-template-columns: 1fr repeat(4, minmax(12ch, 0.33fr));
+
+    // Mobile
+    @media only screen and (max-width: 1280px) {
+      gap: 0.25rem;
+    }
+
+    // Right adjust number columns.
+    div:nth-child(2),
+    div:nth-child(3),
+    div:nth-child(4),
+    div:nth-child(5) {
+      justify-content: end;
+    }
+
+    .zero {
+      opacity: 0.5;
+    }
+  }
+}
+</style>
+
+<i18n lang="yaml" locale="en">
+title: Lockers
+search-placeholder: Search for...
+</i18n>

@@ -57,6 +57,7 @@ watch(
       "/liquidation",
       "/profile",
       "/cvxprisma",
+      "/veprisma",
     ];
 
     if (noCrumbs.some((x) => newRoute.startsWith(x))) {
