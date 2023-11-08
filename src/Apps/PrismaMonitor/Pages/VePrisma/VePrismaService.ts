@@ -12,6 +12,15 @@ export type AccountData = {
   frozen: number;
 };
 
+export type VoteIncentive = {
+  voter: string;
+  recipient: string;
+  weight: number;
+  isClearance: boolean;
+  transaction: string;
+  timestamp: number;
+};
+
 type GetTopLockersResponse = {
   data: {
     lockers: {
@@ -27,12 +36,29 @@ type GetTopLockersResponse = {
   };
 };
 
+type GetVotesIncentivesResponse = {
+  data: {
+    incentiveVotes: {
+      voter: {
+        id: string;
+      };
+      votes: {
+        recipient: {
+          id: string;
+          address: string;
+        };
+        weight: string;
+      }[];
+      isClearance: boolean;
+      transactionHash: string;
+      blockTimestamp: string;
+    }[];
+  };
+};
+
 export default class VePrismaService extends ServiceBase {
   public async getTopLockers(): Promise<AccountData[]> {
     const query = `{
-      lockers {
-        totalWeight
-      }
       accountDatas(first: 100 orderBy: weight orderDirection: desc) {
         id
         weight
@@ -53,5 +79,42 @@ export default class VePrismaService extends ServiceBase {
       unlocked: parseInt(x.unlocked, 10),
       frozen: parseInt(x.frozen, 10),
     }));
+  }
+
+  public async getVotesIncentives(): Promise<VoteIncentive[]> {
+    const query = `{
+      incentiveVotes(first:100, orderBy:blockNumber, orderDirection:desc) {
+        voter {
+          id
+        }
+        votes(first: 100, orderBy:weight, orderDirection:desc) {
+          recipient {
+            id
+            address
+          }
+          weight
+        }
+        isClearance
+        transactionHash
+        blockTimestamp
+      }
+    }`;
+
+    const resp = await this.fetch<GetVotesIncentivesResponse>(THEGRAPH_URL, {
+      query,
+    });
+
+    return resp.data.incentiveVotes
+      .map((iv) =>
+        iv.votes.map((vote) => ({
+          voter: iv.voter.id,
+          recipient: vote.recipient.address,
+          weight: parseInt(vote.weight, 10),
+          isClearance: iv.isClearance,
+          transaction: iv.transactionHash,
+          timestamp: parseInt(iv.blockTimestamp, 10),
+        }))
+      )
+      .flat();
   }
 }

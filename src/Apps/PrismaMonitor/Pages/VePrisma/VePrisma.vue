@@ -1,16 +1,20 @@
 <template>
   <div class="veprisma">
     <TableLockers
-      style="grid-column: 1"
+      style="grid-row: 1; grid-column: 1"
       :loading="loading"
       :lockers="lockers"
     ></TableLockers>
 
     <ChartTopLockers
-      style="grid-column: 2"
+      style="grid-row: 1; grid-column: 2"
       :loading="loading"
       :lockers="lockers"
     ></ChartTopLockers>
+
+    <TableVotesIncentives
+      style="grid-row: 2; grid-column: 1 / -1"
+    ></TableVotesIncentives>
   </div>
 </template>
 
@@ -18,6 +22,7 @@
 import { useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import TableLockers from "@PM/Pages/VePrisma/Tables/TableLockers.vue";
+import TableVotesIncentives from "@PM/Pages/VePrisma/Tables/TableVotesIncentives.vue";
 import ChartTopLockers from "@PM/Pages/VePrisma/Charts/ChartTopLockers.vue";
 import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
@@ -38,6 +43,6 @@ const { loading, data: lockers } = useData(
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto auto;
 }
 </style>
