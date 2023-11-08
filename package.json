@@ -25,7 +25,7 @@
     "@web3-onboard/core": "^2.21.2",
     "@web3-onboard/gnosis": "^2.2.0",
     "@web3-onboard/injected-wallets": "^2.10.8",
-    "@web3-onboard/walletconnect": "^2.5.0",
+    "@web3-onboard/walletconnect": "^2.4.4",
     "apexcharts": "^3.44.0",
     "cross-fetch": "^4.0.0",
     "ethereum-multicall": "^2.21.0",
