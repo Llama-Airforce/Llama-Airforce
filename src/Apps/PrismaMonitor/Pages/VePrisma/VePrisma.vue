@@ -10,6 +10,7 @@
       style="grid-row: 1; grid-column: 2"
       :loading="loading"
       :lockers="lockers"
+      :total-weight="totalWeight"
     ></ChartTopLockers>
 
     <TableVotesIncentives
@@ -19,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useData } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import TableLockers from "@PM/Pages/VePrisma/Tables/TableLockers.vue";
@@ -28,10 +30,13 @@ import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
 const vePrismaService = new VePrismaService(getHost());
 
-const { loading, data: lockers } = useData(
-  () => vePrismaService.getTopLockers(),
-  []
-);
+const { loading, data } = useData(() => vePrismaService.getTopLockers(), {
+  totalWeight: 0,
+  accounts: [],
+});
+
+const lockers = computed(() => data.value.accounts);
+const totalWeight = computed(() => data.value.totalWeight);
 </script>
 
 <style lang="scss" scoped>

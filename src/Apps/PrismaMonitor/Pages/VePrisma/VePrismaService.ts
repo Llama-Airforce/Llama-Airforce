@@ -25,7 +25,7 @@ type GetTopLockersResponse = {
   data: {
     lockers: {
       totalWeight: string;
-    };
+    }[];
     accountDatas: {
       id: string; // Address
       weight: string;
@@ -57,8 +57,14 @@ type GetVotesIncentivesResponse = {
 };
 
 export default class VePrismaService extends ServiceBase {
-  public async getTopLockers(): Promise<AccountData[]> {
+  public async getTopLockers(): Promise<{
+    totalWeight: number;
+    accounts: AccountData[];
+  }> {
     const query = `{
+      lockers {
+        totalWeight
+      }
       accountDatas(first: 100 orderBy: weight orderDirection: desc) {
         id
         weight
@@ -72,13 +78,17 @@ export default class VePrismaService extends ServiceBase {
       query,
     });
 
-    return resp.data.accountDatas.map((x) => ({
+    const accounts = resp.data.accountDatas.map((x) => ({
       id: x.id,
       weight: parseInt(x.weight, 10),
       locked: parseInt(x.locked, 10),
       unlocked: parseInt(x.unlocked, 10),
       frozen: parseInt(x.frozen, 10),
     }));
+
+    const totalWeight = parseInt(resp.data.lockers[0].totalWeight, 10);
+
+    return { totalWeight, accounts };
   }
 
   public async getVotesIncentives(): Promise<VoteIncentive[]> {

@@ -23,9 +23,10 @@ const storeSettings = useSettingsStore();
 
 // Props
 interface Props {
+  totalWeight: number;
   lockers: AccountData[];
 }
-const { lockers = [] } = defineProps<Props>();
+const { totalWeight = 0, lockers = [] } = defineProps<Props>();
 
 const data = computed(() => lockers.slice(0, 10));
 
@@ -64,27 +65,42 @@ const options = computed((): unknown => {
       tooltip: {
         custom: (x: DataPoint<number>) => {
           const address = categories.value[x.seriesIndex];
-          const value = x.series[x.seriesIndex];
+          const value = x.series[x.seriesIndex] as unknown as number;
+          const percentage = value / (totalWeight / 100);
           const data = [
-            `<div><b>${address}</b>:</div><div>${formatter(
-              value as unknown as number
-            )}</div>`,
+            `<div><b>${address}</b>:</div><div>${formatterPct(
+              percentage
+            )} - ${formatter(value)}</div>`,
           ];
 
           return data.join("");
         },
       },
-      labels: data.value.map((x) => x.id),
+      // Empty unicode char for quick formatting hack as whitespace gets trimmed.
+      labels: data.value
+        .map((x) => x.id)
+        .concat(["Other⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"]),
     }
   );
 });
 
-const series = computed(() => data.value.map((x) => x.weight));
-const categories = computed(() => data.value.map((x) => x.id));
+const series = computed(() => {
+  const top10 = data.value.map((x) => x.weight);
+  const top10Sum = top10.reduce((acc, x) => acc + x, 0);
+  const other = totalWeight - top10Sum;
+
+  return [...top10, other];
+});
+const categories = computed(() =>
+  data.value.map((x) => x.id).concat(["Other"])
+);
 
 // Methods
 const formatter = (x: number): string =>
   `${round(x, 2, "dollar")}${unit(x, "dollar")}`;
+
+const formatterPct = (x: number): string =>
+  `${round(x, 2, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>
