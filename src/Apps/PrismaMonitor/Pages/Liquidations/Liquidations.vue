@@ -5,27 +5,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { useObservable } from "@/Framework";
 import TableLiquidations from "@PM/Pages/Liquidations/TableLiquidations.vue";
-import {
-  TroveOverviewService,
-  type TroveManagerDetails,
-} from "@PM/Services/Socket/TroveOverviewService";
+import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 
 const prismaService = new TroveOverviewService("ethereum");
 
 // Refs
-const vaults = ref<TroveManagerDetails[]>([]);
-
-// Watches
-watch(prismaService.currentData, (newData) => {
-  vaults.value = newData;
-});
-
-// Hooks
-onMounted(() => {
-  vaults.value = prismaService.currentData.value;
-});
+const vaults = useObservable(prismaService.overview$, []);
 </script>
 
 <style lang="scss" scoped>

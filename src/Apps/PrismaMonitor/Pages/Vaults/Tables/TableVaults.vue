@@ -111,10 +111,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText } from "@/Framework";
+import { AsyncValue, DataTable, InputText, useObservable } from "@/Framework";
 import { icon } from "@PM/Models/Collateral";
 import {
   type TroveManagerDetails,
@@ -128,10 +128,9 @@ const prismaService = new TroveOverviewService("ethereum");
 type Row = TroveManagerDetails;
 
 // Refs
-const loading = ref(true);
 const search = ref("");
 
-const rowsRaw = ref<Row[]>([]);
+const rowsRaw = useObservable(prismaService.overview$, []);
 
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)
@@ -146,22 +145,7 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-watch(prismaService.currentData, (newData) => {
-  loading.value = true;
-
-  rowsRaw.value = newData;
-
-  loading.value = false;
-});
-
-// Hooks
-onMounted(() => {
-  loading.value = true;
-
-  rowsRaw.value = prismaService.currentData.value;
-
-  loading.value = false;
-});
+const loading = computed(() => rowsRaw.value.length === 0);
 </script>
 
 <style lang="scss" scoped>

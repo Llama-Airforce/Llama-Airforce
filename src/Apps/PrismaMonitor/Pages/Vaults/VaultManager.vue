@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { TabView, TabItem } from "@/Framework";
+import { TabView, TabItem, useObservable } from "@/Framework";
 import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
@@ -73,6 +73,9 @@ const router = useRouter();
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
+
+const vaults = useObservable(prismaService.overview$, []);
+
 const tabActive = ref(0);
 
 const vaultAddr = computed(() => route.params.vaultAddr as string);
@@ -108,8 +111,8 @@ onMounted(() => {
 });
 
 // Watches
-watch(prismaService.currentData, (newData) => {
-  const vault = newData.find((v) => v.address === vaultAddr.value);
+watch(vaults, (newVaults) => {
+  const vault = newVaults.find((v) => v.address === vaultAddr.value);
   if (vault) {
     storeVault.vault = vault;
   }

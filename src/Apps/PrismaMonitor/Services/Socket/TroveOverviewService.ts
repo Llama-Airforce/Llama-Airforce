@@ -1,12 +1,19 @@
-import { ref } from "vue";
+import { type Observable, filter, map, shareReplay } from "rxjs";
+import { type WebSocketSubject, webSocket } from "rxjs/webSocket";
 import { type Collateral } from "@PM/Models/Collateral";
-import { WebSocketConnectionManager } from "@PM/Services/Socket/WebSocketService";
-import { Action, type PayloadType } from "@PM/Services/Socket/types";
 
 export const WS_URL = "wss://api.prismamonitor.com/v1/prisma/ws";
 export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
 
-export interface TroveManagerDetails {
+type GenericMessage = {
+  channel: string;
+  action: Action;
+};
+
+type Action = "subscribe" | "unsubscribe" | "snapshots";
+type PayloadType = "update" | "snapshot";
+
+export type TroveManagerDetails = {
   name: Collateral;
   address: string;
   collateral: string;
@@ -21,63 +28,58 @@ export interface TroveManagerDetails {
   closed_troves: number;
   liq_troves: number;
   red_troves: number;
-}
+};
 
-export interface TroveOverviewSettings {
+type TroveOverviewSettings = {
   chain: string;
-}
+};
 
-export interface TroveOverviewPayload {
+type TroveOverviewPayload = {
   channel: string;
   subscription: TroveOverviewSettings;
   type: PayloadType;
   payload: TroveManagerDetails[];
-}
+};
 
-export interface TroveOverviewRequest {
-  action: Action;
+type TroveOverviewRequest = GenericMessage & {
   channel: typeof TROVE_OVERVIEW_CHANNEL;
   settings: TroveOverviewSettings[];
-}
+};
+
+let subject: WebSocketSubject<unknown> | null = null;
+let overview$: Observable<TroveManagerDetails[]> | null = null;
 
 export class TroveOverviewService {
-  private wsManager: WebSocketConnectionManager;
-  public currentData = ref<TroveManagerDetails[]>([]);
-
   constructor(private chain: string) {
-    this.wsManager = WebSocketConnectionManager.getInstance(WS_URL);
-    this.wsManager.registerListener(
-      TROVE_OVERVIEW_CHANNEL,
-      chain,
-      this.parseSubscriptionFromMessage,
-      (message) => {
-        try {
-          const payload = JSON.parse(message) as TroveOverviewPayload;
-          if (payload.subscription.chain === this.chain) {
-            this.currentData.value = payload.payload; // Update the current data
-          }
-        } catch (error) {
-          console.error(
-            "Error parsing WebSocket message:",
-            error,
-            "Raw data:",
-            message
-          );
-        }
-      }
+    if (subject) {
+      this.send("snapshots");
+      return;
+    }
+
+    subject = subject ?? webSocket(WS_URL);
+
+    overview$ = subject.pipe(
+      map((x) => x as TroveOverviewPayload),
+      filter(
+        (x) =>
+          x.subscription.chain === this.chain &&
+          x.channel === TROVE_OVERVIEW_CHANNEL
+      ),
+      map((x) => x.payload),
+      shareReplay(1)
     );
 
-    this.requestSnapshots();
-    this.subscribeToUpdates();
+    this.send("subscribe");
+    this.send("snapshots");
   }
 
-  public getCurrentData(): TroveManagerDetails[] {
-    return this.currentData.value;
+  get overview$() {
+    return overview$!;
   }
 
-  private requestSnapshots(): void {
-    const request: TroveOverviewRequest = {
-      action: Action.snapshots,
+  private send(action: Action): void {
+    const req: TroveOverviewRequest = {
+      action,
       channel: TROVE_OVERVIEW_CHANNEL,
       settings: [
         {
@@ -86,29 +88,6 @@ export class TroveOverviewService {
       ],
     };
 
-    this.send(request);
-  }
-
-  private subscribeToUpdates(): void {
-    const request: TroveOverviewRequest = {
-      action: Action.subscribe,
-      channel: TROVE_OVERVIEW_CHANNEL,
-      settings: [
-        {
-          chain: this.chain,
-        },
-      ],
-    };
-
-    this.send(request);
-  }
-
-  private parseSubscriptionFromMessage = (message: string): string => {
-    const parsed = JSON.parse(message) as TroveOverviewPayload;
-    return parsed.subscription.chain;
-  };
-
-  private send(request: TroveOverviewRequest): void {
-    this.wsManager.send(JSON.stringify(request));
+    subject!.next(req);
   }
 }

@@ -20,14 +20,12 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useObservable } from "@/Framework";
 import { useWalletStore } from "@/Wallet";
 import TableRedemptions from "@PM/Pages/Profile/Tables/TableRedemptions.vue";
 import TableLiquidations from "@PM/Pages/Profile/Tables/TableLiquidations.vue";
 import TableTroves from "@PM/Pages/Profile/Tables/TableTroves.vue";
-import {
-  TroveOverviewService,
-  type TroveManagerDetails,
-} from "@PM/Services/Socket/TroveOverviewService";
+import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
 import { type Trove } from "@PM/Services/TroveService";
 
 const prismaService = new TroveOverviewService("ethereum");
@@ -37,8 +35,9 @@ const route = useRoute();
 const router = useRouter();
 const wallet = useWalletStore();
 
+const vaults = useObservable(prismaService.overview$, []);
+
 const user = ref<string | undefined>(undefined);
-const vaults = ref<TroveManagerDetails[]>([]);
 const troves = ref<Trove[]>([]);
 
 const trovesUser = computed(() =>
@@ -51,15 +50,8 @@ const trovesUser = computed(() =>
     .map((x) => x.owner)
 );
 
-// Watches
-watch(prismaService.currentData, (newData) => {
-  vaults.value = newData;
-});
-
 // Hooks
 onMounted(() => {
-  vaults.value = prismaService.currentData.value;
-
   const addrParam = route.params.addr;
   if (addrParam && typeof addrParam === "string") {
     user.value = addrParam;
