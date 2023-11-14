@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle, useData } from "@/Framework";
+import { Card, ButtonToggle, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColorsArray } from "@/Styles/Themes/CM";
@@ -66,7 +66,7 @@ const storeSettings = useSettingsStore();
 const chartType = ref<ChartType>("line");
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () => curveService.getCrvUsdSupply().then((x) => x.supply),
   []
 );

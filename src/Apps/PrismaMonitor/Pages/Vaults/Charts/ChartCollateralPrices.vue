@@ -33,7 +33,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
@@ -69,7 +69,7 @@ const init = {
   oracle: [],
   market: [],
 };
-const { loading, data, loadData } = useData<{
+const { loading, data, load } = usePromise<{
   oracle: DecimalTimeSeries[];
   market: DecimalTimeSeries[];
 }>(async () => {
@@ -105,7 +105,7 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 
 watch(
   () => storeSettings.theme,

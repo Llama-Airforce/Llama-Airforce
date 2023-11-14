@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useData } from "@/Framework";
+import { usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import TableLockers from "@PM/Pages/VePrisma/Tables/TableLockers.vue";
 import TableVotesIncentives from "@PM/Pages/VePrisma/Tables/TableVotesIncentives.vue";
@@ -30,7 +30,7 @@ import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
 const vePrismaService = new VePrismaService(getHost());
 
-const { loading, data } = useData(() => vePrismaService.getTopLockers(), {
+const { loading, data } = usePromise(() => vePrismaService.getTopLockers(), {
   totalWeight: 0,
   accounts: [],
 });

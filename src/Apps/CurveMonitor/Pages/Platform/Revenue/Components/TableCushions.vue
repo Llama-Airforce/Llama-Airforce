@@ -66,7 +66,7 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText, useData } from "@/Framework";
+import { AsyncValue, DataTable, InputText, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain, icon } from "@CM/Models/Chain";
@@ -108,7 +108,7 @@ const rows = computed((): Row[] =>
 );
 
 // Data
-const { loading, data: rowsRaw } = useData(
+const { loading, data: rowsRaw } = usePromise(
   () =>
     curveService
       .getCushions()

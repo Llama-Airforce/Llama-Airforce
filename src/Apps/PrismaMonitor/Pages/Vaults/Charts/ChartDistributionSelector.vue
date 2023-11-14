@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle, useData } from "@/Framework";
+import { Card, ButtonToggle, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import ManagerService from "@PM/Services/ManagerService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
@@ -47,7 +47,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault) {
     return managerService
       .getTroveDistribution("ethereum", vault.address, chartType.value)
@@ -61,7 +61,7 @@ const { loading, data, loadData } = useData(() => {
 const chartType = ref<ChartType>("collateral");
 
 // Watches
-watch([chartType, () => vault], loadData);
+watch([chartType, () => vault], load);
 </script>
 
 <style lang="scss" scoped>

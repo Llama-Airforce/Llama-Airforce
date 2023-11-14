@@ -6,14 +6,14 @@ import { tryNotify } from "@/Util";
  * @param f The async factory function that retrieves data.
  * @param init The default / init value of the data before loading is complete.
  */
-export function useData<T>(f: () => Promise<T>, init: T) {
+export function usePromise<T>(f: () => Promise<T>, init: T) {
   const loading = ref(false);
   const data = ref<T>(init) as Ref<T>;
 
-  // Loading as long as multiple loadData calls are active.
+  // Loading as long as multiple load calls are active.
   let loaders = 0;
 
-  const loadData = () => {
+  const load = () => {
     loaders++;
     loading.value = true;
 
@@ -24,7 +24,7 @@ export function useData<T>(f: () => Promise<T>, init: T) {
     }) as Promise<void>;
   };
 
-  onMounted(() => void loadData());
+  onMounted(() => void load());
 
-  return { loading, data, loadData };
+  return { loading, data, load };
 }

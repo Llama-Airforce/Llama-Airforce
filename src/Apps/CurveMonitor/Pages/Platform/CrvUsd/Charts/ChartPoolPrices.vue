@@ -32,7 +32,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -68,8 +68,8 @@ const coins = computed((): string[] =>
 const {
   loading,
   data: prices,
-  loadData,
-} = useData(
+  load,
+} = usePromise(
   () => curveService.getPoolPrices().then((x) => x.prices),
   [{ timestamp: 0 }]
 );
@@ -83,7 +83,7 @@ onMounted(async () => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
-  await loadData();
+  await load();
 
   addSeries();
   createSeries(prices.value);

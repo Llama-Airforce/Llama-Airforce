@@ -110,7 +110,7 @@ import {
   Pagination,
   SortOrder,
   Modal,
-  useData,
+  usePromise,
   useRelativeTime,
   useSort,
   usePagination,
@@ -137,7 +137,7 @@ interface Props {
 const { troves = [] } = defineProps<Props>();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   return Promise.all(
     troves.map((trove) =>
       liquidationService.getLiquidationsForTrove("ethereum", trove)
@@ -212,7 +212,7 @@ const onSelect = (row: unknown) => {
 };
 
 // Watches
-watch(() => troves, loadData);
+watch(() => troves, load);
 </script>
 
 <style lang="scss" scoped>

@@ -81,7 +81,12 @@
 import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, useData, useRelativeTime } from "@/Framework";
+import {
+  AsyncValue,
+  DataTable,
+  usePromise,
+  useRelativeTime,
+} from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import TroveService, {
@@ -111,7 +116,7 @@ const rows = computed((): Row[] => {
 });
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault && trove) {
     return troveService
       .getTroveSnapshots("ethereum", vault.address, trove.owner)
@@ -127,7 +132,7 @@ const titleCase = (s: string): string =>
   );
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

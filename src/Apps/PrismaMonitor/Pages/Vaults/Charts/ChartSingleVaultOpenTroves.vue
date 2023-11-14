@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -52,7 +52,7 @@ const { vault = null } = defineProps<Props>();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault) {
     return managerService
       .getVaultTroveCount("ethereum", vault.address, "1m")
@@ -88,7 +88,7 @@ watch(
   }
 );
 
-watch(() => vault, loadData);
+watch(() => vault, load);
 
 watch(data, (newData) => {
   createSeries(newData);

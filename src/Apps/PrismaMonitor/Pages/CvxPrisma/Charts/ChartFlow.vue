@@ -11,7 +11,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { round, unit } from "@/Util";
-import { CardGraph, useData } from "@/Framework";
+import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
@@ -30,7 +30,7 @@ const prismaService = new CvxPrismaService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data } = useData(() => prismaService.getFlow(), {
+const { loading, data } = usePromise(() => prismaService.getFlow(), {
   deposits: [],
   withdrawals: [],
 });

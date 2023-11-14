@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { watch } from "vue";
-import { AsyncValue, KPI, useData } from "@/Framework";
+import { AsyncValue, KPI, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import CollateralService from "@PM/Services/CollateralService";
 import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
@@ -78,7 +78,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { data, loadData } = useData(() => {
+const { data, load } = usePromise(() => {
   if (vault) {
     return collateralService
       .getCollateralInfo("ethereum", vault.collateral)
@@ -89,7 +89,7 @@ const { data, loadData } = useData(() => {
 }, null);
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

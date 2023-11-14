@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/PM";
@@ -47,7 +47,7 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () => sbService.getPoolTvl("ethereum", "1m").then((x) => x.deposits),
   []
 );

@@ -101,7 +101,7 @@ import {
   Pagination,
   SortOrder,
   Modal,
-  useData,
+  usePromise,
   useRelativeTime,
   useSort,
   usePagination,
@@ -127,7 +127,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault) {
     return liquidationService.getLiquidations("ethereum", vault.address);
   } else {
@@ -193,7 +193,7 @@ const onSelect = (row: unknown) => {
 };
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

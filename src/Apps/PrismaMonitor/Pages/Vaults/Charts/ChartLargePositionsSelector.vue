@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, ButtonToggle, useData } from "@/Framework";
+import { Card, ButtonToggle, usePromise } from "@/Framework";
 import ManagerService from "@PM/Services/ManagerService";
 import { watch } from "vue";
 import { getHost } from "@/Services/Host";
@@ -51,7 +51,7 @@ const { vault = null } = defineProps<Props>();
 const chartType = ref<ChartType>("collateral");
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault) {
     return managerService
       .getLargeTrovePositions("ethereum", vault.address, chartType.value)
@@ -62,7 +62,7 @@ const { loading, data, loadData } = useData(() => {
 }, []);
 
 // Watches
-watch([chartType, () => vault], loadData);
+watch([chartType, () => vault], load);
 </script>
 
 <style lang="scss" scoped>

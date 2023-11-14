@@ -110,7 +110,7 @@ import {
   Pagination,
   SortOrder,
   Modal,
-  useData,
+  usePromise,
   useRelativeTime,
   useSort,
   usePagination,
@@ -138,7 +138,7 @@ interface Props {
 const { vaults = [] } = defineProps<Props>();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vaults.length > 0) {
     // For all vaults, get redemption and add vault info to redemption.
     return Promise.all(
@@ -218,7 +218,7 @@ const onSelect = (row: unknown) => {
 };
 
 // Watches
-watch(() => vaults, loadData);
+watch(() => vaults, load);
 </script>
 
 <style lang="scss" scoped>

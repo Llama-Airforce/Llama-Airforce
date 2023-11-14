@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph, useData } from "@/Framework";
+import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { round, unit } from "@/Util";
@@ -25,7 +25,7 @@ const prismaService = new CvxPrismaService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () => prismaService.getDistribution().then((x) => x.distribution),
   []
 );

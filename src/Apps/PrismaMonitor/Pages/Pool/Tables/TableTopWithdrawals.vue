@@ -49,7 +49,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import { AsyncValue, DataTable, useData } from "@/Framework";
+import { AsyncValue, DataTable, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import StabilityPoolService, {
   type PoolStableOperation,
@@ -67,7 +67,7 @@ const rows = computed((): PoolStableOperation[] =>
 );
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () =>
     sbService
       .getTopStableWithdrawals("ethereum", 5, "7d")

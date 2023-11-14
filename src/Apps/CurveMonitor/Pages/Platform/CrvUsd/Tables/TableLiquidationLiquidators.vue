@@ -44,7 +44,7 @@ import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import { AsyncValue, DataTable, useData } from "@/Framework";
+import { AsyncValue, DataTable, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type Market,
@@ -64,8 +64,8 @@ interface Props {
 const {
   loading,
   data: rowsRaw,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService
       .getTopLiquidators(market.address)
@@ -85,7 +85,7 @@ const rows = computed((): Liquidators[] =>
 const { market = null } = defineProps<Props>();
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 </script>
 
 <style lang="scss" scoped>

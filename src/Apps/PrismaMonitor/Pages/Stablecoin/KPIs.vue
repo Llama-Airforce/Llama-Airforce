@@ -51,14 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI, useData } from "@/Framework";
+import { AsyncValue, KPI, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import MkUsdService from "@PM/Services/MkUsdService";
 
 const mkUsdService = new MkUsdService(getHost());
 
 // Data
-const { data } = useData(
+const { data } = usePromise(
   () => mkUsdService.getStableCoinKPI("ethereum").then((x) => x.info),
   null
 );

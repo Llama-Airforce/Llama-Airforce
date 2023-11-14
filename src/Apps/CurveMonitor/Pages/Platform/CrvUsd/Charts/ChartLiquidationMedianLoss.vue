@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores/SettingsStore";
@@ -58,8 +58,8 @@ const chartRef = ref<HTMLElement | null>(null);
 const {
   loading,
   data: losses,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService
       .getHistoricalMedianLoss(market.address)
@@ -84,7 +84,7 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 watch(
   () => storeSettings.theme,

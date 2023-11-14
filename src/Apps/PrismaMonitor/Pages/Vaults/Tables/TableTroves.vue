@@ -109,7 +109,7 @@ import {
   Pagination,
   TabView,
   TabItem,
-  useData,
+  usePromise,
   SortOrder,
   useRelativeTime,
   useSort,
@@ -136,7 +136,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault) {
     return troveService.getTroves("ethereum", vault.address);
   } else {
@@ -234,7 +234,7 @@ const onType = (tabIndex: number) => {
 };
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

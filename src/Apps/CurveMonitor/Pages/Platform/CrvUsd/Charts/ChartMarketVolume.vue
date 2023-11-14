@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -59,8 +59,8 @@ const chartRef = ref<HTMLElement | null>(null);
 const {
   loading,
   data: volumes,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService.getMarketVolume(market.address).then((x) => x.volumes);
   } else {
@@ -82,7 +82,7 @@ onMounted((): void => {
 });
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 watch(
   () => storeSettings.theme,

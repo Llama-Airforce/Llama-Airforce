@@ -32,7 +32,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -69,8 +69,8 @@ const chartRef = ref<HTMLElement | null>(null);
 const {
   loading,
   data: health,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService
       .getHistoricalAverageHealth(market.address)
@@ -97,7 +97,7 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 watch(
   () => storeSettings.theme,

@@ -80,7 +80,7 @@ import {
   DataTable,
   Pagination,
   usePagination,
-  useData,
+  usePromise,
   useRelativeTime,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
@@ -96,7 +96,7 @@ const { t } = useI18n();
 const vePrismaService = new VePrismaService(getHost());
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () => vePrismaService.getVotesIncentives(),
   []
 );

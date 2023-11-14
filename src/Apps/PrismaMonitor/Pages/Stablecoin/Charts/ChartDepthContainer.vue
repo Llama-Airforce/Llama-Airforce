@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { useData } from "@/Framework";
+import { usePromise } from "@/Framework";
 import MkUsdService from "@PM/Services/MkUsdService";
 import { getHost } from "@/Services/Host";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
@@ -16,7 +16,7 @@ import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 const mkUsdService = new MkUsdService(getHost());
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () => mkUsdService.getCurvePoolDepth("ethereum").then((x) => x.depth),
   []
 );

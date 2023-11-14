@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, DataTable, useData } from "@/Framework";
+import { AsyncValue, DataTable, usePromise } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
@@ -52,7 +52,7 @@ type Trade = {
 const curveService = new CurveService(getHost());
 
 // Data
-const { data: trades } = useData(
+const { data: trades } = usePromise(
   () =>
     curveService
       .getTradesLarge()

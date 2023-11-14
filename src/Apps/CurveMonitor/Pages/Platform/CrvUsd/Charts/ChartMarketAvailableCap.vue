@@ -32,7 +32,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -69,8 +69,8 @@ const chartRef = ref<HTMLElement | null>(null);
 const {
   loading,
   data: availableCap,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService
       .getMarketAvailableCap(market.address)
@@ -97,7 +97,7 @@ onMounted((): void => {
 });
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 watch(
   () => storeSettings.theme,

@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph, useData } from "@/Framework";
+import { CardGraph, usePromise } from "@/Framework";
 import { type DataPoint, round, unit, formatNumber } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
@@ -42,7 +42,7 @@ const { vault = null, trove = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(async () => {
+const { loading, data, load } = usePromise(async () => {
   if (vault && trove) {
     const health = await troveService
       .getTroveSnapshots("ethereum", vault.address, trove.owner)
@@ -161,7 +161,7 @@ const formatterRatio = (x: number): string => {
 };
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

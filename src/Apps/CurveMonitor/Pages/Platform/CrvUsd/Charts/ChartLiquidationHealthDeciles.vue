@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { computed, watch } from "vue";
-import { CardGraph, useData } from "@/Framework";
+import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
@@ -32,7 +32,7 @@ const { market = null } = defineProps<Props>();
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (market) {
     return curveService.getHealthDeciles(market.address).then((x) => x.health);
   } else {
@@ -120,7 +120,7 @@ const series = computed((): { name: string; data: number[] }[] => [
 ]);
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 // Methods
 const formatterX = (x: string): string => x;

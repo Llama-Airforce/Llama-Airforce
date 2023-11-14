@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { CardGraph, useData } from "@/Framework";
+import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round, unit } from "@/Util";
@@ -24,7 +24,7 @@ const curveService = new CurveService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () => curveService.getCrvUsdPriceHistogram(),
   { x: [], y: [] }
 );

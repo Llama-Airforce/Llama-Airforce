@@ -24,7 +24,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -45,7 +45,7 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data } = useData(
+const { loading, data } = usePromise(
   () =>
     managerService
       .getCollateralRatioGrouped("ethereum", "all")

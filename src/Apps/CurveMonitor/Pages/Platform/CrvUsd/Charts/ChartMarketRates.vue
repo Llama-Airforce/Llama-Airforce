@@ -37,7 +37,7 @@ import {
   type UTCTimestamp,
   type LineSeriesPartialOptions,
 } from "lightweight-charts";
-import { Card, InputNumber, useData } from "@/Framework";
+import { Card, InputNumber, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -75,8 +75,8 @@ const avgLength = ref<number | null>(null);
 const {
   loading,
   data: rates,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService.getMarketRates(market.address).then((x) => x.rates);
   } else {
@@ -103,7 +103,7 @@ onMounted((): void => {
 });
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 watch(
   () => storeSettings.theme,

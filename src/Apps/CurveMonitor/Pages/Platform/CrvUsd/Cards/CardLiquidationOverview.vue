@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { Card, useData } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -72,8 +72,8 @@ const content = computed(() => marketState.value);
 const {
   loading,
   data: marketState,
-  loadData,
-} = useData(() => {
+  load,
+} = usePromise(() => {
   if (market) {
     return curveService
       .getMarketStateHealth(market.address)
@@ -84,7 +84,7 @@ const {
 }, null);
 
 // Watches
-watch(() => market, loadData);
+watch(() => market, load);
 
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;

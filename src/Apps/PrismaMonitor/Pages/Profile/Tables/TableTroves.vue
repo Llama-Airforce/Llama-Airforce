@@ -120,7 +120,7 @@ import {
   Pagination,
   TabView,
   TabItem,
-  useData,
+  usePromise,
   SortOrder,
   useRelativeTime,
   useSort,
@@ -155,7 +155,7 @@ const emit = defineEmits<{
 }>();
 
 // Data
-const { loading, data, loadData } = useData(async () => {
+const { loading, data, load } = usePromise(async () => {
   if (vaults.length > 0 && user) {
     // For all vaults, get troves and add vault info to trove.
     const troves = await Promise.all(
@@ -274,7 +274,7 @@ const onType = (tabIndex: number) => {
 };
 
 // Watches
-watch(() => vaults, loadData);
+watch(() => vaults, load);
 </script>
 
 <style lang="scss" scoped>

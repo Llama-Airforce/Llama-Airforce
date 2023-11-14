@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph, useData } from "@/Framework";
+import { CardGraph, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
@@ -32,7 +32,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, loadData } = useData(() => {
+const { loading, data, load } = usePromise(() => {
   if (vault) {
     return collateralService
       .getCollateralPriceImpact("ethereum", vault.collateral)
@@ -135,7 +135,7 @@ const pctFormatter = (y: number): string => {
 };
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

@@ -37,7 +37,7 @@
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Tooltip } from "@/Framework";
-import { Card, GraphApex, useData } from "@/Framework";
+import { Card, GraphApex, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
@@ -73,7 +73,7 @@ const init: RatioPosition = {
 };
 
 // Data
-const { loading, data, loadData } = useData(async () => {
+const { loading, data, load } = usePromise(async () => {
   if (vault && trove) {
     const rank = await troveService.getTroveRank(
       "ethereum",
@@ -205,7 +205,7 @@ const pctFormatter = (y: number, decimals = 0): string => {
 };
 
 // Watches
-watch(() => vault, loadData);
+watch(() => vault, load);
 watch(
   data,
   (newData) => {
