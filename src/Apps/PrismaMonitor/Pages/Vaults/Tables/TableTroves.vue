@@ -42,11 +42,12 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <div @click.stop>
+      <div>
         <a
           style="font-family: monospace"
           :href="`https://etherscan.io/address/${props.item.owner}`"
           target="_blank"
+          @click.stop
         >
           {{ addressShort(props.item.owner) }}
         </a>

@@ -53,11 +53,12 @@
     <template #row="props: { item: Row }">
       <img :src="icon(props.item.vault.name)" />
 
-      <div @click.stop>
+      <div>
         <a
           style="font-family: monospace"
           :href="`https://etherscan.io/address/${props.item.owner}`"
           target="_blank"
+          @click.stop
         >
           {{ addressShort(props.item.owner) }}
         </a>

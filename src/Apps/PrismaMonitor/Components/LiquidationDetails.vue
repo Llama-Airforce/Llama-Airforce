@@ -48,11 +48,12 @@
         </template>
 
         <template #row="props: { item: Row }">
-          <div @click.stop>
+          <div>
             <a
               style="font-family: monospace"
               target="_blank"
               :href="`#/vault/${vaultAddr}/trove/${props.item}`"
+              @click.stop
             >
               {{ props.item }}
             </a>

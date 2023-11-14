@@ -11,11 +11,12 @@
     </template>
 
     <template #row="props: { item: Trade }">
-      <div @click.stop>
+      <div>
         <a
           class="vote-link"
           :href="`https://etherscan.io/tx/${props.item.tx}`"
           target="_blank"
+          @click.stop
         >
           {{ addressShort(props.item.tx) }}
         </a>

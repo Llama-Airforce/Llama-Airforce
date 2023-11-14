@@ -86,21 +86,23 @@
         </a>
       </div>
 
-      <div @click.stop>
+      <div>
         <a
           class="vote-link"
           :href="`https://etherscan.io/tx/${props.item.tx_hash}`"
           target="_blank"
+          @click.stop
         >
           {{ addressShort(props.item.tx_hash) }}
         </a>
       </div>
 
-      <div @click.stop>
+      <div>
         <a
           class="vote-link"
           :href="`https://etherscan.io/address/${props.item.trader}`"
           target="_blank"
+          @click.stop
         >
           {{ addressShort(props.item.trader) }}
         </a>
