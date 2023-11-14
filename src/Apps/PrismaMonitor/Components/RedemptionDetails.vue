@@ -34,7 +34,7 @@
         :rows="rows"
         :columns="['Trove']"
       >
-        <template #header-title>
+        <template #header-content>
           <div class="title">{{ t("troves-affected") }}</div>
 
           <InputText

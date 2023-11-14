@@ -1,14 +1,14 @@
 <template>
   <DataTable
     class="datatable-sandwiches"
-    columns-header="auto 1fr auto"
+    columns-header="auto 1fr auto auto"
     columns-data="sandwiches-columns-data"
     :rows="sandwiches"
     :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
     :expanded="expanded"
     @selected="toggleExpansion($event as SandwichDetail)"
   >
-    <template #header-title>
+    <template #header-content>
       <div class="title">{{ t("title") }}</div>
 
       <InputText
@@ -18,13 +18,9 @@
         :placeholder="t('search-placeholder')"
       >
       </InputText>
-    </template>
 
-    <template
-      v-if="numSandwiches > swsPerPage"
-      #header-actions
-    >
       <Pagination
+        v-if="numSandwiches > swsPerPage"
         class="pagination"
         :items-count="numSandwiches"
         :items-per-page="swsPerPage"

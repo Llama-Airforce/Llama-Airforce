@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-troves"
-    columns-header="1fr 1fr"
+    columns-header="1fr 1fr auto"
     columns-data="troves-columns-data"
     :loading="loading"
     :rows="rowsPage"
@@ -13,7 +13,7 @@
     sorting-default-dir="Descending"
     @sort-column="onSort"
   >
-    <template #header-title>
+    <template #header-content>
       <TabView
         class="types"
         @tab="onType($event.index)"
@@ -29,9 +29,7 @@
         :placeholder="t('search-placeholder')"
       >
       </InputText>
-    </template>
 
-    <template #header-actions>
       <Pagination
         class="pagination"
         :items-count="rows.length"

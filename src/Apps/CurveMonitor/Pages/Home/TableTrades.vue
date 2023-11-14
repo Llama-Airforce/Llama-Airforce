@@ -6,8 +6,8 @@
     :rows="trades"
     :columns="['Tx', 'Name', 'Value']"
   >
-    <template #header-title>
-      <div>Largest Trades</div>
+    <template #header-content>
+      <div class="title">Largest Trades</div>
     </template>
 
     <template #row="props: { item: Trade }">

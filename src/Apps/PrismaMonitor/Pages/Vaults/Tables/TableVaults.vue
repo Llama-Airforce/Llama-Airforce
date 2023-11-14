@@ -7,8 +7,8 @@
     :rows="rows"
     :columns="['', 'Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
   >
-    <template #header-title>
-      <div>{{ t("title") }}</div>
+    <template #header-content>
+      <div class="title">{{ t("title") }}</div>
 
       <InputText
         v-model="search"

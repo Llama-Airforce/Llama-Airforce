@@ -13,8 +13,8 @@
     sorting-default-dir="Descending"
     @sort-column="onSort"
   >
-    <template #header-title>
-      <div>
+    <template #header-content>
+      <div class="title">
         {{ t("title") }}
         <span v-if="bribedAmount">
           -
@@ -303,7 +303,7 @@ watch(epoch, async (newEpoch): Promise<void> => {
     object-fit: scale-down;
   }
 
-  ::v-deep(.header-title) {
+  ::v-deep(.header-content) {
     .personalDollarPerVlAsset {
       color: #a1a1aa;
       font-size: 0.75rem;

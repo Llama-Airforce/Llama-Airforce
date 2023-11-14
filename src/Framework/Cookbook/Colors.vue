@@ -8,8 +8,8 @@
         :rows="colors"
         :columns="['Variable', 'Value', 'Preview']"
       >
-        <template #header-title>
-          <div>Colors</div>
+        <template #header-content>
+          <div class="title">Colors</div>
         </template>
 
         <template #row="props: { item: Color }">

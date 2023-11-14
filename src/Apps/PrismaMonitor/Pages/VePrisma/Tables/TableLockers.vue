@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-lockers"
-    columns-header="1fr minmax(auto, 25rem)"
+    columns-header="1fr minmax(auto, 25rem) auto"
     columns-data="lockers-columns-data"
     :rows="rowsPage"
     :columns="columns"
@@ -12,8 +12,8 @@
     sorting-default-dir="Descending"
     @sort-column="onSort"
   >
-    <template #header-title>
-      <div>{{ t("title") }}</div>
+    <template #header-content>
+      <div class="title">{{ t("title") }}</div>
 
       <InputText
         v-model="search"
@@ -22,9 +22,7 @@
         :placeholder="t('search-placeholder')"
       >
       </InputText>
-    </template>
 
-    <template #header-actions>
       <Pagination
         class="pagination"
         :items-count="rows.length"

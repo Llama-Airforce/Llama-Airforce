@@ -7,8 +7,8 @@
     :rows="rows"
     :columns="['Address', 'Amount', 'Date', 'Tx']"
   >
-    <template #header-title>
-      <div>{{ t("title") }}</div>
+    <template #header-content>
+      <div class="title">{{ t("title") }}</div>
     </template>
 
     <template #row="props: { item: PoolStableOperation }">

@@ -8,7 +8,7 @@
         <template #example>
           <DataTable
             class="datatable-example"
-            columns-header="1fr"
+            columns-header="1fr auto"
             columns-data="example-columns-data"
             :rows="rows"
             :columns="['', 'Deadline', '$/vlCVX', 'Total']"
@@ -20,11 +20,8 @@
             @sort-column="onSort"
             @selected="onSelected"
           >
-            <template #header-title>
-              <div>All Rounds</div>
-            </template>
-
-            <template #header-actions>
+            <template #header-content>
+              <div class="title">All Rounds</div>
               <Tooltip>Tooltip data goes here</Tooltip>
             </template>
 
@@ -147,7 +144,7 @@ const onSelected = (data: unknown): void => {
 
 const dataTable1 = `<DataTable
   class="datatable-example"
-  columns-header="1fr"
+  columns-header="1fr auto"
   columns-data="example-columns-data"
   :rows="rows"
   :columns="['', 'Deadline', '$/vlCVX', 'Total']"
@@ -159,11 +156,8 @@ const dataTable1 = `<DataTable
   @sort-column="onSort"
   @selected="onSelected"
 >
-  <template #header-title>
-    <div>All Rounds</div>
-  </template>
-
-  <template #header-actions>
+  <template #header-content>
+    <div class="title">All Rounds</div>
     <Tooltip>Tooltip data goes here</Tooltip>
   </template>
 

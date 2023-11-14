@@ -16,14 +16,10 @@
       </div>
 
       <div
-        class="header-title"
+        class="header-content"
         :style="columnsHeaderCss"
       >
-        <slot name="header-title"></slot>
-      </div>
-
-      <div class="header-actions">
-        <slot name="header-actions"></slot>
+        <slot name="header-content"></slot>
       </div>
     </div>
 
@@ -341,21 +337,20 @@ const sortColumn = (index: number): void => {
       color: var(--c-primary);
     }
 
-    > .header-title {
+    > .header-content {
       grid-column: 2;
       display: grid;
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--c-text);
-      align-items: center;
-    }
-
-    > .header-actions {
-      grid-column: 3;
       align-items: center;
 
       button {
         border: 0;
+      }
+
+      ::v-deep(.title) {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--c-text);
+        align-items: center;
       }
     }
   }

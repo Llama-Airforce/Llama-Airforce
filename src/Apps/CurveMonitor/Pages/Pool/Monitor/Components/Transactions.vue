@@ -2,14 +2,14 @@
   <DataTable
     class="datatable-trades"
     :class="{ compact, time }"
-    columns-header="auto auto 1fr"
+    columns-header="auto auto 1fr auto"
     columns-data="trades-columns-data"
     :rows="rowsPage"
     :columns="columns"
   >
     <template
       v-if="header"
-      #header-title
+      #header-content
     >
       <div class="title">{{ t("title") }}</div>
 
@@ -30,12 +30,7 @@
         :placeholder="t('search-placeholder')"
       >
       </InputText>
-    </template>
 
-    <template
-      v-if="header"
-      #header-actions
-    >
       <Pagination
         class="pagination"
         :items-count="rows.length"
@@ -339,7 +334,7 @@ const onType = (tabIndex: number) => {
 
   @media only screen and (max-width: 1280px) {
     ::v-deep(.header),
-    ::v-deep(.header .header-title) {
+    ::v-deep(.header .header-content) {
       display: flex;
       flex-direction: column;
       align-items: stretch;

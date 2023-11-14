@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-redemptions"
-    columns-header="1fr 1fr auto"
+    columns-header="1fr 1fr auto auto"
     columns-data="redemptions-columns-data"
     :loading="loading"
     :rows="rowsPage"
@@ -14,8 +14,8 @@
     @sort-column="onSort"
     @selected="onSelect"
   >
-    <template #header-title>
-      <div>{{ t("title") }}</div>
+    <template #header-content>
+      <div class="title">{{ t("title") }}</div>
 
       <InputText
         v-model="search"
@@ -24,9 +24,7 @@
         :placeholder="t('search-placeholder')"
       >
       </InputText>
-    </template>
 
-    <template #header-actions>
       <Pagination
         class="pagination"
         :items-count="rows.length"

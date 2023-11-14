@@ -1,17 +1,15 @@
 <template>
   <DataTable
     class="datatable-votes-incentives"
-    columns-header="1fr minmax(auto, 25rem)"
+    columns-header="1fr minmax(auto, 25rem) auto"
     columns-data="votes-incentives-columns-data"
     :loading="loading"
     :rows="rowsPage"
     :columns="columns"
   >
-    <template #header-title>
-      <div>{{ t("title") }}</div>
-    </template>
+    <template #header-content>
+      <div class="title">{{ t("title") }}</div>
 
-    <template #header-actions>
       <Pagination
         class="pagination"
         :items-count="rows.length"

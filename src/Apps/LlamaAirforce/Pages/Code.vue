@@ -7,8 +7,8 @@
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
       >
-        <template #header-title>
-          <div>{{ t("repositories") }}</div>
+        <template #header-content>
+          <div class="title">{{ t("repositories") }}</div>
         </template>
 
         <template #row="props: { item: Repository }">
@@ -31,8 +31,8 @@
         :rows="other"
         :columns="[t('other'), t('description')]"
       >
-        <template #header-title>
-          <div>{{ t("other") }}</div>
+        <template #header-content>
+          <div class="title">{{ t("other") }}</div>
         </template>
 
         <template #row="props: { item: Other }">
@@ -59,8 +59,8 @@
       :rows="bundle.contracts"
       :columns="[t('contract'), t('description')]"
     >
-      <template #header-title>
-        <div>{{ t(bundle.name) }}</div>
+      <template #header-content>
+        <div class="title">{{ t(bundle.name) }}</div>
       </template>
 
       <template #row="props: { item: Contract }">

@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-bribe-rounds"
-    columns-header="1fr"
+    columns-header="1fr auto"
     columns-data="bribes-columns-data"
     :rows="epochs"
     :columns="['', t('deadline'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
@@ -13,11 +13,8 @@
     @sort-column="onSort"
     @selected="onSelected"
   >
-    <template #header-title>
-      <div>{{ t("all-rounds") }}</div>
-    </template>
-
-    <template #header-actions>
+    <template #header-content>
+      <div class="title">{{ t("all-rounds") }}</div>
       <Tooltip>{{ t("tooltip") }}</Tooltip>
     </template>
 
