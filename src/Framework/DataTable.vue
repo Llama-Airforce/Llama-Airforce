@@ -71,8 +71,8 @@
 
       <div class="rows">
         <Spinner
-          v-if="loading"
           class="loader"
+          :class="{ loading }"
         ></Spinner>
 
         <!-- DataTable rows -->
@@ -324,14 +324,7 @@ const sortColumn = (index: number): void => {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
-  transition: opacity $hover-duration ease-in-out;
-  &:not(&.loading) {
-    opacity: 1;
-  }
-
-  &.loading {
-    opacity: 0.33;
-  }
+  @include loading-backdrop();
 
   > .header {
     padding: 0 0 0.875rem 0rem;
@@ -385,6 +378,8 @@ const sortColumn = (index: number): void => {
         inset: 0;
         margin: auto auto;
         z-index: 1;
+
+        @include loading-spinner();
       }
 
       > .no-data {

@@ -4,8 +4,8 @@
     :inert="loading"
   >
     <Spinner
-      v-if="loading"
       class="loader"
+      :class="{ loading }"
     ></Spinner>
 
     <div
@@ -87,6 +87,8 @@ const {
     position: absolute;
     inset: 0;
     margin: auto auto;
+
+    @include loading-spinner();
   }
 
   > .card-container {
@@ -99,14 +101,7 @@ const {
     border-radius: var(--border-radius);
     box-shadow: var(--container-box-shadow);
 
-    transition: opacity $hover-duration ease-in-out;
-    &:not(&.loading) {
-      opacity: 1;
-    }
-
-    &.loading {
-      opacity: 0.33;
-    }
+    @include loading-backdrop();
 
     > .card-header {
       display: flex;
