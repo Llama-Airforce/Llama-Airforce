@@ -16,17 +16,24 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
-import CvxPrismaService from "@PM/Services/CvxPrismaService";
+import WrapperService, { type Contract } from "@PM/Services/WrapperService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
 const { t } = useI18n();
 
-const prismaService = new CvxPrismaService(getHost());
+const prismaService = new WrapperService(getHost());
 const storeSettings = useSettingsStore();
+
+// Props
+interface Props {
+  contract: Contract;
+}
+
+const { contract } = defineProps<Props>();
 
 // Data
 const { loading, data } = usePromise(
-  () => prismaService.getDistribution().then((x) => x.distribution),
+  () => prismaService.getDistribution(contract).then((x) => x.distribution),
   []
 );
 
@@ -109,6 +116,6 @@ const formatterY = (y: number): string =>
 </style>
 
 <i18n lang="yaml" locale="en">
-title: cvxPRISMA position size
+title: Position size
 size: Size
 </i18n>

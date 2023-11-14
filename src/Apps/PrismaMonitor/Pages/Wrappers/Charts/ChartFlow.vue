@@ -15,7 +15,7 @@ import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost } from "@/Services/Host";
-import CvxPrismaService from "@PM/Services/CvxPrismaService";
+import WrapperService, { type Contract } from "@PM/Services/WrapperService";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 
 const { t } = useI18n();
@@ -26,11 +26,18 @@ type TooltipParams = {
   w: { globals: { seriesNames: string[] } };
 };
 
-const prismaService = new CvxPrismaService(getHost());
+const prismaService = new WrapperService(getHost());
 const storeSettings = useSettingsStore();
 
+// Props
+interface Props {
+  contract: Contract;
+}
+
+const { contract } = defineProps<Props>();
+
 // Data
-const { loading, data } = usePromise(() => prismaService.getFlow(), {
+const { loading, data } = usePromise(() => prismaService.getFlow(contract), {
   deposits: [],
   withdrawals: [],
 });
@@ -146,7 +153,7 @@ const formatterY = (y: number): string =>
 </style>
 
 <i18n lang="yaml" locale="en">
-title: cvxPRISMA staking and unstaking
+title: Staking and unstaking
 deposits: Deposits
 withdrawals: Withdrawals
 </i18n>

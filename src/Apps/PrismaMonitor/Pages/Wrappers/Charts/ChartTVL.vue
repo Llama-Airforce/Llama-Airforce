@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -31,15 +31,22 @@ import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import CvxPrismaService from "@PM/Services/CvxPrismaService";
+import WrapperService, { type Contract } from "@PM/Services/WrapperService";
 import { type DecimalTimeSeries } from "@/Apps/PrismaMonitor/Services/Series";
 
 const { t } = useI18n();
 
-const prismaService = new CvxPrismaService(getHost());
+const prismaService = new WrapperService(getHost());
 
 let chart: IChartApi;
 let serie: ISeriesApi<"Area">;
+
+// Props
+interface Props {
+  contract: Contract;
+}
+
+const { contract } = defineProps<Props>();
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -48,13 +55,14 @@ const chartRef = ref<HTMLElement | null>(null);
 
 // Data
 const { loading, data } = usePromise(
-  () => prismaService.getTVL().then((x) => x.tvl),
+  () => prismaService.getTVL(contract).then((x) => x.tvl),
   []
 );
 
 // Hooks
-onMounted(() => {
+onMounted(async () => {
   if (!chartRef.value) return;
+  await nextTick();
 
   chart = createChartFunc(
     chartRef.value,
@@ -121,6 +129,7 @@ const createSeries = (newData: DecimalTimeSeries[]): void => {
   }
 
   const newSerie: LineData[] = chain(newData)
+    .filter((x) => x.value > 0)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -159,5 +168,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Convex Prisma TVL
+title: TVL
 </i18n>

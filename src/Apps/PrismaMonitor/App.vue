@@ -56,7 +56,7 @@ watch(
       "/redemptions",
       "/liquidation",
       "/profile",
-      "/cvxprisma",
+      "/wrappers",
       "/veprisma",
     ];
 

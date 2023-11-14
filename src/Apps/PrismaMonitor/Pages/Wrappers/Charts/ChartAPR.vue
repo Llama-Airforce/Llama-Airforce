@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -31,16 +31,24 @@ import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores/SettingsStore";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import CvxPrismaService, {
-  type CvxPrismaSnapshot,
-} from "@PM/Services/CvxPrismaService";
+import WrapperService, {
+  type Contract,
+  type Snapshot,
+} from "@PM/Services/WrapperService";
 
 const { t } = useI18n();
 
-const prismaService = new CvxPrismaService(getHost());
+const prismaService = new WrapperService(getHost());
 
 let chart: IChartApi;
 let serie: ISeriesApi<"Area">;
+
+// Props
+interface Props {
+  contract: Contract;
+}
+
+const { contract } = defineProps<Props>();
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -49,13 +57,14 @@ const chartRef = ref<HTMLElement | null>(null);
 
 // Data
 const { loading, data } = usePromise(
-  () => prismaService.getSnapshots().then((x) => x.Snapshots),
+  () => prismaService.getSnapshots(contract).then((x) => x.Snapshots),
   []
 );
 
 // Hooks
-onMounted(() => {
+onMounted(async () => {
   if (!chartRef.value) return;
+  await nextTick();
 
   chart = createChartFunc(
     chartRef.value,
@@ -116,14 +125,14 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createSeries = (newData: CvxPrismaSnapshot[]): void => {
+const createSeries = (newData: Snapshot[]): void => {
   if (!chart || !serie) {
     return;
   }
 
   const newSerie: LineData[] = chain(newData)
     // Filter super high APR at the start.
-    .filter((x) => x.timestamp >= 1698943010)
+    .filter((x) => x.timestamp >= 1699630610)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.total_apr * 100,
@@ -162,5 +171,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: cvxPRISMA APR
+title: APR
 </i18n>
