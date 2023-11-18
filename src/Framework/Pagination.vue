@@ -17,8 +17,8 @@
     </li>
 
     <li
-      v-for="p in pageButtons"
-      :key="p"
+      v-for="(p, i) in pageButtons"
+      :key="i"
       :class="{ active: p === page }"
       @click="onPage(p)"
     >
