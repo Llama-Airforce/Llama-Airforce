@@ -9,16 +9,21 @@
       >
       </InputText>
 
-      <ProposalTypeSelect @select="onTypeSelect"></ProposalTypeSelect>
+      <div style="display: flex; gap: 1rem">
+        <ProposalTypeSelect
+          style="flex-grow: 1"
+          @select="onTypeSelect"
+        ></ProposalTypeSelect>
 
-      <Pagination
-        v-if="rows.length > 0"
-        class="pagination"
-        :items-count="rows.length"
-        :items-per-page="rowsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          v-if="rows.length > 0"
+          class="pagination"
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </div>
 
     <ProposalComponent
@@ -107,7 +112,7 @@ const onTypeSelect = (type: ProposalType): void => {
 
   > .filters {
     display: grid;
-    grid-template-columns: 0.75fr 0.25fr auto;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
 
     @media only screen and (max-width: 1280px) {

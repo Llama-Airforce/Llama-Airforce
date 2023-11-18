@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-sandwiches"
-    columns-header="auto 1fr auto auto"
+    columns-header="1fr 2fr"
     columns-data="sandwiches-columns-data"
     :rows="sandwiches"
     :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
@@ -11,22 +11,24 @@
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
 
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <Pagination
-        v-if="numSandwiches > swsPerPage"
-        class="pagination"
-        :items-count="numSandwiches"
-        :items-per-page="swsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          v-if="numSandwiches > swsPerPage"
+          class="pagination"
+          :items-count="numSandwiches"
+          :items-per-page="swsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </template>
 
     <template #row="props: { item: SandwichDetail }">
@@ -190,6 +192,7 @@ const onPage = async (pageNew: number) => {
   }
 
   .search {
+    flex-grow: 1;
     font-size: 0.875rem;
     width: 600px;
     justify-self: end;

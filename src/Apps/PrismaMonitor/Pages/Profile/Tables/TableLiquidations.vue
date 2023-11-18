@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-liquidations"
-    columns-header="1fr 12rem minmax(auto, 25rem) auto auto"
+    columns-header="1fr 12rem 2fr"
     columns-data="liquidations-columns-data"
     :loading="loading || troves.length === 0"
     :rows="rowsPage"
@@ -24,21 +24,23 @@
         @select-collateral="collateral = $event"
       ></SelectCollateral>
 
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <Pagination
-        class="pagination"
-        :items-count="rows.length"
-        :items-per-page="rowsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          class="pagination"
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </template>
 
     <template #row="props: { item: Row }">
@@ -224,13 +226,11 @@ watch(() => troves, load);
   }
 
   .search {
-    margin-right: 2rem;
-    font-size: 0.875rem;
-    width: auto;
+    flex-grow: 1;
   }
 
   .select-collateral {
-    margin-right: 2rem;
+    margin-right: 1rem;
   }
 
   ::v-deep(.liquidations-columns-data) {

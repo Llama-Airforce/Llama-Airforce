@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-troves"
-    columns-header="auto 1fr 12rem minmax(auto, 25rem) auto"
+    columns-header="1fr 12rem 2fr"
     columns-data="troves-columns-data"
     :loading="loading"
     :rows="rowsPage"
@@ -14,15 +14,17 @@
     @sort-column="onSort"
   >
     <template #header-content>
-      <div class="title">{{ t("title") }}</div>
+      <div style="display: grid; grid-template-columns: auto 1fr">
+        <div class="title">{{ t("title") }}</div>
 
-      <TabView
-        class="types"
-        @tab="onType($event.index)"
-      >
-        <TabItem header="Open"></TabItem>
-        <TabItem header="Closed"></TabItem>
-      </TabView>
+        <TabView
+          class="types"
+          @tab="onType($event.index)"
+        >
+          <TabItem header="Open"></TabItem>
+          <TabItem header="Closed"></TabItem>
+        </TabView>
+      </div>
 
       <SelectCollateral
         class="select-collateral"
@@ -31,21 +33,23 @@
         @select-collateral="collateral = $event"
       ></SelectCollateral>
 
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <Pagination
-        class="pagination"
-        :items-count="rows.length"
-        :items-per-page="rowsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          class="pagination"
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </template>
 
     <template #row="props: { item: Row }">
@@ -301,13 +305,11 @@ watch(() => vaults, load);
   }
 
   .search {
-    margin-right: 2rem;
-    font-size: 0.875rem;
-    width: auto;
+    flex-grow: 1;
   }
 
   .select-collateral {
-    margin-right: 2rem;
+    margin-right: 1rem;
   }
 
   ::v-deep(.troves-columns-data) {

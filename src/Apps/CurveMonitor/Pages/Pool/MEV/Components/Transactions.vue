@@ -2,7 +2,7 @@
   <DataTable
     class="datatable-trades"
     :class="{ compact, time }"
-    columns-header="auto auto 1fr auto"
+    columns-header="1fr 2fr"
     columns-data="trades-columns-data"
     :rows="rowsPage"
     :columns="columns"
@@ -12,33 +12,37 @@
       v-if="header"
       #header-content
     >
-      <div class="title">{{ t("title") }}</div>
+      <div style="display: grid; grid-template-columns: auto auto">
+        <div class="title">{{ t("title") }}</div>
 
-      <TabView
-        class="types"
-        @tab="onType($event.index)"
-      >
-        <TabItem header="All"></TabItem>
-        <TabItem header="Swaps"></TabItem>
-        <TabItem header="Deposits"></TabItem>
-        <TabItem header="Removals"></TabItem>
-      </TabView>
+        <TabView
+          class="types"
+          @tab="onType($event.index)"
+        >
+          <TabItem header="All"></TabItem>
+          <TabItem header="Swaps"></TabItem>
+          <TabItem header="Deposits"></TabItem>
+          <TabItem header="Removals"></TabItem>
+        </TabView>
+      </div>
 
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <Pagination
-        class="pagination"
-        :items-count="rows.length"
-        :items-per-page="rowsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          class="pagination"
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </template>
 
     <template #row="props: { item: TransactionDetail }">
@@ -260,9 +264,7 @@ const onType = (tabIndex: number) => {
   }
 
   .search {
-    margin-right: 2rem;
-    font-size: 0.875rem;
-    width: auto;
+    flex-grow: 1;
   }
 
   .type {

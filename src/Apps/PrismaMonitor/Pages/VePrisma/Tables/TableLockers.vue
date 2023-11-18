@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-lockers"
-    columns-header="1fr minmax(auto, 25rem) auto"
+    columns-header="1fr 3fr"
     columns-data="lockers-columns-data"
     :rows="rowsPage"
     :columns="columns"
@@ -15,21 +15,23 @@
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
 
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <Pagination
-        class="pagination"
-        :items-count="rows.length"
-        :items-per-page="rowsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          class="pagination"
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </template>
 
     <template #row="props: { item: Row }">
@@ -186,9 +188,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   }
 
   .search {
-    margin-right: 2rem;
-    font-size: 0.875rem;
-    width: auto;
+    flex-grow: 1;
   }
 
   ::v-deep(.lockers-columns-data) {

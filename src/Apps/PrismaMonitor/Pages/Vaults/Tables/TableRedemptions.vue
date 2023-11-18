@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-redemptions"
-    columns-header="1fr 1fr auto auto"
+    columns-header="1fr 2fr"
     columns-data="redemptions-columns-data"
     :loading="loading"
     :rows="rowsPage"
@@ -17,21 +17,23 @@
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
 
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <Pagination
-        class="pagination"
-        :items-count="rows.length"
-        :items-per-page="rowsPerPage"
-        :page="page"
-        @page="onPage"
-      ></Pagination>
+        <Pagination
+          class="pagination"
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
     </template>
 
     <template #row="props: { item: Row }">
@@ -205,9 +207,7 @@ watch(() => vault, load);
   }
 
   .search {
-    margin-right: 2rem;
-    font-size: 0.875rem;
-    width: auto;
+    flex-grow: 1;
   }
 
   ::v-deep(.redemptions-columns-data) {
