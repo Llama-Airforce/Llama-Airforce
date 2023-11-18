@@ -5,6 +5,7 @@ import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";
 import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
 import Redemptions from "@PM/Pages/Redemptions/Redemptions.vue";
 import Liquidations from "@PM/Pages/Liquidations/Liquidations.vue";
+import Revenue from "@PM/Pages/Revenue/Revenue.vue";
 import Wrappers from "@PM/Pages/Wrappers/Wrappers.vue";
 import VePrisma from "@PM/Pages/VePrisma/VePrisma.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
@@ -20,6 +21,7 @@ export const pageMain: Page = {
     { path: "/mkusd", name: "mkusd", component: Stablecoin },
     { path: "/redemptions", name: "redemptions", component: Redemptions },
     { path: "/liquidations", name: "liquidations", component: Liquidations },
+    { path: "/revenue", name: "revenue", component: Revenue },
     { path: "/vaults", name: "vaults", component: Vaults },
     { path: "/wrappers/:tab?", name: "wrappers", component: Wrappers },
     { path: "/veprisma", name: "veprisma", component: VePrisma },
