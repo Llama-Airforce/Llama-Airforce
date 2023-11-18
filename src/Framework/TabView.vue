@@ -101,6 +101,8 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       color: var(--tab-text-color);
       font-weight: 500;
 
+      transition: border, color 125ms ease;
+
       &:not(.active) {
         cursor: pointer;
       }
