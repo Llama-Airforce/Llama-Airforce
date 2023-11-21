@@ -16,7 +16,7 @@ import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type DataPoint, round } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 
 const curveService = new CurveService(getHost());
 

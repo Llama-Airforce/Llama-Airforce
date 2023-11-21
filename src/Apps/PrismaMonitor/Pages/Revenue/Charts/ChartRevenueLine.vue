@@ -19,16 +19,16 @@ import {
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import { type Snapshot } from "@PM/Services/RevenueService";
+import { type SnapshotRevenue } from "@PM/Services";
 
 let chart: IChartApi;
 let revenueSerie: ISeriesApi<"Area">;
 
 interface Props {
-  data: Snapshot[];
+  data: SnapshotRevenue[];
 }
 
 const { data = [] } = defineProps<Props>();
@@ -105,7 +105,7 @@ const createRevenueOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createSeries = (newRevenue: Snapshot[]): void => {
+const createSeries = (newRevenue: SnapshotRevenue[]): void => {
   if (!chart || !newRevenue) {
     return;
   }
@@ -132,7 +132,7 @@ const createSeries = (newRevenue: Snapshot[]): void => {
 const formatter = (y: number): string =>
   `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 
-const totalRevenue = (s: Snapshot) =>
+const totalRevenue = (s: SnapshotRevenue) =>
   s.unlock_penalty_revenue_usd +
   s.borrowing_fees_revenue_usd +
   s.redemption_fees_revenue_usd;

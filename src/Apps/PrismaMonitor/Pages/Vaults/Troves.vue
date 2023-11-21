@@ -9,8 +9,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { type Trove } from "@PM/Services/TroveService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { type Trove, type TroveManagerDetails } from "@PM/Services";
 import TableTroves from "@PM/Pages/Vaults/Tables/TableTroves.vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 

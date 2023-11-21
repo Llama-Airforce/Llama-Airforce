@@ -1,10 +1,10 @@
+import { ServiceBase } from "@/Services";
 import type {
   Epoch,
   EpochId,
   EpochOverview,
   Product,
 } from "@LAF/Pages/Bribes/Models";
-import ServiceBase from "@/Services/ServiceBase";
 
 export default class BribesService extends ServiceBase {
   public async rounds(product: Partial<Product>): Promise<{

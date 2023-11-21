@@ -1,6 +1,6 @@
+import { ServiceBase } from "@/Services";
 import type { EpochFrax } from "@LAF/Pages/Bribes/FraxMatch/Models/EpochFrax";
 import type { PoolId, Pool } from "@LAF/Pages/Bribes/FraxMatch/Models/Pool";
-import ServiceBase from "@/Services/ServiceBase";
 
 export default class FraxMatchService extends ServiceBase {
   public async getPools(): Promise<{ pools: Pool[] }> {

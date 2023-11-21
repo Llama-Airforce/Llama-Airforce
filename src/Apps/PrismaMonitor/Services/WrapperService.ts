@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import {
   type DecimalLabelledSeries,
   type DecimalTimeSeries,
@@ -18,7 +18,7 @@ export type Flows = {
   deposits: Flow[];
 };
 
-export type Snapshot = {
+export type SnapshotWrapper = {
   token_balance: number;
   token_supply: number;
   tvl: number;
@@ -29,23 +29,23 @@ export type Snapshot = {
 
 export type Contract = "convex" | "yearn";
 
-export default class WrapperService extends ServiceBase {
-  getContractAddress(contract: Contract) {
-    switch (contract) {
-      case "convex":
-        return "0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108";
-      case "yearn":
-        return "0x774a55c3eeb79929fd445ae97191228ab39c4d0f";
-      default:
-        throw new Error("Unknown contract");
-    }
+export function getContractAddress(contract: Contract) {
+  switch (contract) {
+    case "convex":
+      return "0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108";
+    case "yearn":
+      return "0x774a55c3eeb79929fd445ae97191228ab39c4d0f";
+    default:
+      throw new Error("Unknown contract");
   }
+}
 
+export default class WrapperService extends ServiceBase {
   public async getTVL(contract: Contract): Promise<{
     tvl: DecimalTimeSeries[];
   }> {
     return this.fetch(
-      `${API_URL}/staking/${this.getContractAddress(
+      `${API_URL}/staking/${getContractAddress(
         contract
       )}/tvl?period=all&groupby=day`
     );
@@ -53,7 +53,7 @@ export default class WrapperService extends ServiceBase {
 
   public async getFlow(contract: Contract): Promise<Flows> {
     return this.fetch(
-      `${API_URL}/staking/${this.getContractAddress(
+      `${API_URL}/staking/${getContractAddress(
         contract
       )}/flow?period=all&groupby=day`
     );
@@ -63,17 +63,15 @@ export default class WrapperService extends ServiceBase {
     distribution: DecimalLabelledSeries[];
   }> {
     return this.fetch(
-      `${API_URL}/staking/${this.getContractAddress(contract)}/distribution`
+      `${API_URL}/staking/${getContractAddress(contract)}/distribution`
     );
   }
 
   public async getSnapshots(contract: Contract): Promise<{
-    Snapshots: Snapshot[];
+    Snapshots: SnapshotWrapper[];
   }> {
     return this.fetch(
-      `${API_URL}/staking/${this.getContractAddress(
-        contract
-      )}/snapshots?period=7d`
+      `${API_URL}/staking/${getContractAddress(contract)}/snapshots?period=7d`
     );
   }
 }

@@ -102,6 +102,7 @@ import {
   useSort,
 } from "@/Framework";
 import { icon } from "@/Util";
+import { getHost } from "@/Services/Host";
 import { useWalletStore, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, Protocol, BribedPersonal } from "@LAF/Pages/Bribes/Models";
@@ -116,7 +117,6 @@ import {
 } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import { getHost } from "@/Services/Host";
 
 const snapshotService = new SnapshotService(getHost());
 const auraService = new AuraService(getHost());

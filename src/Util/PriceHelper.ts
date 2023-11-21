@@ -19,8 +19,8 @@ import {
   FxsAddress,
 } from "@/Util/Addresses";
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
+import { type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
-import type DefiLlamaService from "@/Services/DefiLlamaService";
 
 export async function getDiscount(
   pool: CurveV1FactoryPool | CurveV2FactoryPool

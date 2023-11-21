@@ -39,7 +39,7 @@ import { watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Breadcrumb, type Crumb } from "@/Framework";
 import Navigation from "@PM/Navigation/Navigation.vue";
-import { useBreadcrumbStore } from "@PM/Stores/BreadcrumbStore";
+import { useBreadcrumbStore } from "@PM/Stores";
 
 // Refs
 const storeBreadcrumb = useBreadcrumbStore();

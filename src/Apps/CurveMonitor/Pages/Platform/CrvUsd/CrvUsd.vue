@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
+import { useBreadcrumbStore } from "@CM/Stores";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";
 import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vue";

@@ -65,9 +65,11 @@
 <script setup lang="ts">
 import { watch } from "vue";
 import { AsyncValue, KPI, usePromise } from "@/Framework";
-import { getHost } from "@/Services/Host";
-import CollateralService from "@PM/Services/CollateralService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import {
+  getHost,
+  CollateralService,
+  type TroveManagerDetails,
+} from "@PM/Services";
 
 const collateralService = new CollateralService(getHost());
 

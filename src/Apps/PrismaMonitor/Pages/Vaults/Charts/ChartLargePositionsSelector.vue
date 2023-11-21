@@ -27,13 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle, usePromise } from "@/Framework";
-import ManagerService from "@PM/Services/ManagerService";
-import { watch } from "vue";
-import { getHost } from "@/Services/Host";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import {
+  ManagerService,
+  type TroveManagerDetails,
+  getHost,
+} from "@PM/Services";
 import ChartLargePositions from "@PM/Pages/Vaults/Charts/ChartLargePositions.vue";
 
 type ChartType = "collateral" | "debt";

@@ -39,12 +39,13 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getHost } from "@/Services/Host";
 import { TabView, TabItem } from "@/Framework";
-import { useBreadcrumbStore } from "@CM/Stores/BreadcrumbStore";
+import { useBreadcrumbStore } from "@CM/Stores";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
 import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
+
 const curveService = new CurveService(getHost());
 
 // Refs

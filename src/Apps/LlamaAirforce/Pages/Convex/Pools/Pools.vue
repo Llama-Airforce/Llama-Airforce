@@ -15,12 +15,12 @@ import { onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useExpansion } from "@/Framework";
 import { shorten, longen, minDelay } from "@/Util";
+import { getHost } from "@/Services/Host";
 import TablePools from "@LAF/Pages/Convex/Pools/Components/TablePools.vue";
 import { type Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
 import PoolService from "@LAF/Pages/Convex/Pools/Services/PoolService";
 import PoolSnapshotsService from "@LAF/Pages/Convex/Pools/Services/PoolSnapshotsService";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
-import { getHost } from "@/Services/Host";
 
 let isMounted = false;
 

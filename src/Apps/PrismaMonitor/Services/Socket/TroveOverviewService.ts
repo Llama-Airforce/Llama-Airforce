@@ -1,17 +1,10 @@
 import { type Observable, filter, map, shareReplay } from "rxjs";
-import { type WebSocketSubject, webSocket } from "rxjs/webSocket";
+import { type WebSocketSubject } from "rxjs/webSocket";
+import { type Payload, type Action, type Request } from "@/Services";
 import { type Collateral } from "@PM/Models/Collateral";
 
 export const WS_URL = "wss://api.prismamonitor.com/v1/prisma/ws";
 export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
-
-type GenericMessage = {
-  channel: string;
-  action: Action;
-};
-
-type Action = "subscribe" | "unsubscribe" | "snapshots";
-type PayloadType = "update" | "snapshot";
 
 export type TroveManagerDetails = {
   name: Collateral;
@@ -30,36 +23,27 @@ export type TroveManagerDetails = {
   red_troves: number;
 };
 
-type TroveOverviewSettings = {
+type TroveOverviewRequestSettings = {
   chain: string;
 };
 
-type TroveOverviewPayload = {
-  channel: string;
-  subscription: TroveOverviewSettings;
-  type: PayloadType;
-  payload: TroveManagerDetails[];
-};
-
-type TroveOverviewRequest = GenericMessage & {
-  channel: typeof TROVE_OVERVIEW_CHANNEL;
-  settings: TroveOverviewSettings[];
-};
-
-let subject: WebSocketSubject<unknown> | null = null;
 let overview$: Observable<TroveManagerDetails[]> | null = null;
 
-export class TroveOverviewService {
-  constructor(private chain: string) {
-    if (subject) {
+export default class TroveOverviewService {
+  private socket: WebSocketSubject<unknown>;
+
+  constructor(socket: unknown, private chain: string) {
+    this.socket = socket as WebSocketSubject<unknown>;
+
+    if (overview$) {
       this.send("snapshots");
       return;
     }
 
-    subject = subject ?? webSocket(WS_URL);
-
-    overview$ = subject.pipe(
-      map((x) => x as TroveOverviewPayload),
+    overview$ = this.socket.pipe(
+      map(
+        (x) => x as Payload<TroveManagerDetails, TroveOverviewRequestSettings>
+      ),
       filter(
         (x) =>
           x.subscription.chain === this.chain &&
@@ -78,7 +62,10 @@ export class TroveOverviewService {
   }
 
   private send(action: Action): void {
-    const req: TroveOverviewRequest = {
+    const req: Request<
+      TroveOverviewRequestSettings,
+      typeof TROVE_OVERVIEW_CHANNEL
+    > = {
       action,
       channel: TROVE_OVERVIEW_CHANNEL,
       settings: [
@@ -88,6 +75,6 @@ export class TroveOverviewService {
       ],
     };
 
-    subject!.next(req);
+    this.socket.next(req);
   }
 }

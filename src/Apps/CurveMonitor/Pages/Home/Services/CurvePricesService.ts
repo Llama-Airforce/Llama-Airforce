@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 
 const API_URL = "https://prices.curve.fi/v1";
 

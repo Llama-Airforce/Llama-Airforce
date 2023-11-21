@@ -26,15 +26,16 @@ import {
 } from "lightweight-charts";
 import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
-import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import WrapperService, {
+import {
+  getHost,
+  WrapperService,
   type Contract,
-  type Snapshot,
-} from "@PM/Services/WrapperService";
+  type SnapshotWrapper,
+} from "@PM/Services";
 
 const { t } = useI18n();
 
@@ -125,7 +126,7 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createSeries = (newData: Snapshot[]): void => {
+const createSeries = (newData: SnapshotWrapper[]): void => {
   if (!chart || !serie) {
     return;
   }

@@ -1,5 +1,5 @@
 import { bigNumToNumber } from "@/Util";
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
 

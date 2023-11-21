@@ -13,7 +13,7 @@ import { GraphApex } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { round, unit } from "@/Util";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 type Serie = { name: string; data: { x: string; y: number }[] };

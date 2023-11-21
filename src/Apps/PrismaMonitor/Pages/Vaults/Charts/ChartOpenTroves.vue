@@ -14,9 +14,8 @@ import { useI18n } from "vue-i18n";
 import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { getHost } from "@/Services/Host";
-import ManagerService from "@PM/Services/ManagerService";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { getHost, ManagerService } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 

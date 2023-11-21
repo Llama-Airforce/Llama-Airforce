@@ -17,7 +17,7 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import type { Pool, Reserves } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 
 type Serie = { name: string; data: { x: number; y: number }[] };
 

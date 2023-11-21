@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 
 // https://thegraph.com/hosted-service/subgraph/benber86/prisma-test
 const THEGRAPH_URL =

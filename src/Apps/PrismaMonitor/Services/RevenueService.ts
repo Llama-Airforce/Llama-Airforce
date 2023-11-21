@@ -1,8 +1,8 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 
 const API_URL = "https://api.prismamonitor.com/v1";
 
-export type Snapshot = {
+export type SnapshotRevenue = {
   unlock_penalty_revenue_usd: number;
   borrowing_fees_revenue_usd: number;
   redemption_fees_revenue_usd: number;
@@ -17,7 +17,7 @@ export type Breakdown = {
 
 export default class RevenueService extends ServiceBase {
   public async getSnapshots(): Promise<{
-    snapshots: Snapshot[];
+    snapshots: SnapshotRevenue[];
   }> {
     return this.fetch(`${API_URL}/revenue/ethereum/snapshots?period=3m`);
   }

@@ -88,12 +88,13 @@ import {
   useRelativeTime,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
-import TroveService, {
+import {
+  getHost,
+  TroveService,
   type Trove,
   type TroveSnapshotData,
-} from "@PM/Services/TroveService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+  type TroveManagerDetails,
+} from "@PM/Services";
 
 type Row = TroveSnapshotData;
 

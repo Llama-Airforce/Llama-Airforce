@@ -19,7 +19,7 @@ hljs.registerLanguage('typescript', typescript);
 
 import { pageCookbook } from "@CM/Pages/PageCookbook";
 import { pageMain } from "@CM/Pages/PageMain";
-import { usePageStore } from "@CM/Stores/PageStore";
+import { usePageStore } from "@CM/Stores";
 
 const app = createApp(App);
 

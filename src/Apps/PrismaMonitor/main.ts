@@ -7,7 +7,7 @@ import VueApexCharts from "vue3-apexcharts";
 import Notifications from "@kyvg/vue3-notification";
 
 import { pageMain } from "@PM/Pages/PageMain";
-import { usePageStore } from "@PM/Stores/PageStore";
+import { usePageStore } from "@PM/Stores";
 
 const app = createApp(App);
 

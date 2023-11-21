@@ -19,7 +19,7 @@ import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import { type Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
 import { type Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import { aggregateDataPoints } from "@CM/Pages/Platform/Gauges/Util/SnapshotHelper";
 
 type Serie = {

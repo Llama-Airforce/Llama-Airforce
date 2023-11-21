@@ -1,7 +1,7 @@
+import { ServiceBase } from "@/Services";
 import type { FlyerId } from "@LAF/Pages/Convex/Flyer/Models/FlyerId";
 import type { FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 import type { FlyerAura } from "@LAF/Pages/Convex/Flyer/Models/FlyerAura";
-import ServiceBase from "@/Services/ServiceBase";
 
 export default class FlyerService extends ServiceBase {
   public async getConvex(): Promise<{

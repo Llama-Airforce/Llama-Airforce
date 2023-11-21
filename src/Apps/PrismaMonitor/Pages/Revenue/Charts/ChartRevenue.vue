@@ -68,10 +68,9 @@ import {
   Tooltip,
   usePromise,
 } from "@/Framework";
-import { getHost } from "@/Services/Host";
 import ChartRevenueLine from "@PM/Pages/Revenue/Charts/ChartRevenueLine.vue";
 import ChartRevenueBreakdown from "@PM/Pages/Revenue/Charts/ChartRevenueBreakdown.vue";
-import RevenueService from "@PM/Services/RevenueService";
+import { getHost, RevenueService } from "@PM/Services";
 
 type ChartType = "line" | "breakdown";
 

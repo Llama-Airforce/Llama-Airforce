@@ -33,7 +33,7 @@ import {
 import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import {
   OHLCService,

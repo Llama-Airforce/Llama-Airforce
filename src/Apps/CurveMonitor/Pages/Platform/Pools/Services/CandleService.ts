@@ -1,5 +1,5 @@
 import { paginate } from "@/Util";
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import type { Candle, Pool } from "@CM/Pages/Platform/Pools/Models";
 
 const THEGRAPH_URL =

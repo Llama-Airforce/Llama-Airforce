@@ -6,12 +6,13 @@
 
 <script setup lang="ts">
 import { useObservable } from "@/Framework";
+import { useSocketStore } from "@PM/Stores";
+import { TroveOverviewService } from "@PM/Services";
 import TableRedemptions from "@PM/Pages/Redemptions/TableRedemptions.vue";
-import { TroveOverviewService } from "@PM/Services/Socket/TroveOverviewService";
-
-const prismaService = new TroveOverviewService("ethereum");
 
 // Refs
+const socket = useSocketStore().getSocket("api");
+const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 </script>
 

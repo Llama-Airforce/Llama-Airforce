@@ -66,7 +66,7 @@ import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import { getCvxCrvAprs } from "@/Util";
 import { getProvider, useWalletStore } from "@/Wallet";
-import DefiLlamaService from "@/Services/DefiLlamaService";
+import { DefiLlamaService } from "@/Services";
 import { getHost } from "@/Services/Host";
 import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 

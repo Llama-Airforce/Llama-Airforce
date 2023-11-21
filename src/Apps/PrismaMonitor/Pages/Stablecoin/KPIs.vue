@@ -52,8 +52,7 @@
 
 <script setup lang="ts">
 import { AsyncValue, KPI, usePromise } from "@/Framework";
-import { getHost } from "@/Services/Host";
-import MkUsdService from "@PM/Services/MkUsdService";
+import { getHost, MkUsdService } from "@PM/Services";
 
 const mkUsdService = new MkUsdService(getHost());
 

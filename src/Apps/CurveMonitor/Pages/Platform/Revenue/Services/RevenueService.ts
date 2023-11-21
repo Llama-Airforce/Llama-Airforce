@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 
 const BREAKDOWN_V2_ENDPOINT =
   "https://api-py.llama.airforce/curve/v1/protocol/revenue/historical/breakdown?from=1686750777";

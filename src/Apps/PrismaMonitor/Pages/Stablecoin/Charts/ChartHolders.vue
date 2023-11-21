@@ -16,10 +16,9 @@ import { CardGraph, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import MkUsdService from "@PM/Services/MkUsdService";
+import { useSettingsStore } from "@PM/Stores";
+import { getHost, MkUsdService } from "@PM/Services";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
 const mkUsdService = new MkUsdService(getHost());

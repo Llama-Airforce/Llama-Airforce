@@ -117,12 +117,13 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
-import TroveService, {
+import {
+  getHost,
+  TroveService,
   type Trove,
   type TroveStatus,
-} from "@PM/Services/TroveService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+  type TroveManagerDetails,
+} from "@PM/Services";
 
 type Row = Trove;
 

@@ -40,14 +40,15 @@ import { Tooltip } from "@/Framework";
 import { Card, GraphApex, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import TroveService, {
+import { useSettingsStore } from "@PM/Stores";
+import {
+  getHost,
+  TroveService,
   type RatioPosition,
   type Trove,
-} from "@PM/Services/TroveService";
+  type TroveManagerDetails,
+} from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
-import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
 

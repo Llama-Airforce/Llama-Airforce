@@ -130,20 +130,21 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
-import PrismaService, {
+import {
+  getHost,
   type Trove,
   type TroveStatus,
-} from "@PM/Services/TroveService";
+  type TroveManagerDetails,
+  TroveService,
+} from "@PM/Services";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
 
 type Row = Trove & { vault: { name: Collateral; address: string } };
 
 const { t } = useI18n();
 
-const prismaService = new PrismaService(getHost());
+const troveService = new TroveService(getHost());
 
 // Props
 interface Props {
@@ -163,7 +164,7 @@ const { loading, data, load } = usePromise(async () => {
     // For all vaults, get troves and add vault info to trove.
     const troves = await Promise.all(
       vaults.map((vault) =>
-        prismaService.getTroves("ethereum", vault.address, user).then((rs) =>
+        troveService.getTroves("ethereum", vault.address, user).then((rs) =>
           rs.map((r) => ({
             ...r,
             vault: { name: vault.name, address: vault.address },

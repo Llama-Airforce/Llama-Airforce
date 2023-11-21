@@ -49,8 +49,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
+import { DefiLlamaService } from "@/Services";
 import { getHost } from "@/Services/Host";
-import DefiLlamaService from "@/Services/DefiLlamaService";
 import CurvePricesService from "@CM/Pages/Home/Services/CurvePricesService";
 
 const llamaService = new DefiLlamaService(getHost());

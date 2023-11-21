@@ -14,7 +14,7 @@ import { CardGraph } from "@/Framework";
 import { type DataPoint } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 

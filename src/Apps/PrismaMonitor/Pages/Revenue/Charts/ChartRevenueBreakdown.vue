@@ -13,14 +13,14 @@ import { GraphApex } from "@/Framework";
 import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { type Snapshot } from "@PM/Services/RevenueService";
+import { useSettingsStore } from "@PM/Stores";
+import { type SnapshotRevenue } from "@PM/Services";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
 // Props
 interface Props {
-  data: Snapshot[];
+  data: SnapshotRevenue[];
 }
 
 const { data = [] } = defineProps<Props>();
@@ -134,7 +134,7 @@ const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 
-const totalRevenue = (s: Snapshot) =>
+const totalRevenue = (s: SnapshotRevenue) =>
   s.unlock_penalty_revenue_usd +
   s.borrowing_fees_revenue_usd +
   s.redemption_fees_revenue_usd;

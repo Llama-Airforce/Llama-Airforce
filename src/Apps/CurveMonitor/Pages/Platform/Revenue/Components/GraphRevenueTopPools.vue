@@ -28,7 +28,7 @@ import { getHost } from "@/Services/Host";
 import { type ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import type { Chain } from "@CM/Models/Chain";
 import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 

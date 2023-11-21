@@ -28,6 +28,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { getHost } from "@/Services/Host";
 import Holiday from "@LAF/Pages/Bribes/Rounds/Components/Holiday.vue";
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
@@ -43,7 +44,6 @@ import type {
 import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import { getHost } from "@/Services/Host";
 
 const bribesService = new BribesService(getHost());
 

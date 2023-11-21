@@ -26,12 +26,10 @@ import {
 } from "lightweight-charts";
 import { Card, usePromise } from "@/Framework";
 import { getColors } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import ManagerService from "@PM/Services/ManagerService";
-import { getHost } from "@/Services/Host";
-import { type DecimalTimeSeries } from "@PM/Services/Series";
+import { getHost, ManagerService, type DecimalTimeSeries } from "@PM/Services";
 
 const { t } = useI18n();
 

@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import { AsyncValue, KPI } from "@/Framework";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services";
 
 // Props
 interface Props {

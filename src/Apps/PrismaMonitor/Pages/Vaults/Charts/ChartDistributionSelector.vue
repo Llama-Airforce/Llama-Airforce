@@ -30,9 +30,11 @@
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Card, ButtonToggle, usePromise } from "@/Framework";
-import { getHost } from "@/Services/Host";
-import ManagerService from "@PM/Services/ManagerService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import {
+  getHost,
+  ManagerService,
+  type TroveManagerDetails,
+} from "@PM/Services";
 import ChartDistribution from "@PM/Pages/Vaults/Charts/ChartDistribution.vue";
 
 type ChartType = "collateral" | "debt";

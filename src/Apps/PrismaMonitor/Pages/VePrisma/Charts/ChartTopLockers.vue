@@ -15,7 +15,7 @@ import { CardGraph } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();

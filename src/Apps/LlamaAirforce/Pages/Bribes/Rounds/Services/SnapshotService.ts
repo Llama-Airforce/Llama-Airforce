@@ -1,7 +1,7 @@
 import { mapKeys } from "lodash";
 import { paginate } from "@/Util";
+import { ServiceBase } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
-import ServiceBase from "@/Services/ServiceBase";
 
 const SNAPSHOT_URL = "https://hub.snapshot.org/graphql";
 const SNAPSHOT_SCORE_URL = "https://score.snapshot.org/api/scores";

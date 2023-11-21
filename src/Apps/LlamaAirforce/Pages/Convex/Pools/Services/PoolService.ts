@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import { type Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
 
 export default class PoolService extends ServiceBase {

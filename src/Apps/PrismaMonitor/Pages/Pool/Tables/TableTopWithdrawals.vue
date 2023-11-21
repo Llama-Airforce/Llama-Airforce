@@ -50,10 +50,11 @@ import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { AsyncValue, DataTable, usePromise } from "@/Framework";
-import { getHost } from "@/Services/Host";
-import StabilityPoolService, {
+import {
+  getHost,
   type PoolStableOperation,
-} from "@PM/Services/StabilityPoolService";
+  StabilityPoolService,
+} from "@PM/Services";
 
 const { t } = useI18n();
 

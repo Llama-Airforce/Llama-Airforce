@@ -35,14 +35,16 @@ import {
 } from "lightweight-charts";
 import { Card, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
-import { getHost } from "@/Services/Host";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import CollateralService from "@PM/Services/CollateralService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
-import { type DecimalTimeSeries } from "@PM/Services/Series";
+import {
+  getHost,
+  CollateralService,
+  type TroveManagerDetails,
+  type DecimalTimeSeries,
+} from "@PM/Services";
 
 const { t } = useI18n();
 

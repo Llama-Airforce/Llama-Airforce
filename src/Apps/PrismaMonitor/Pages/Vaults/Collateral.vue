@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services";
 import ChartCollateralPrices from "@PM/Pages/Vaults/Charts/ChartCollateralPrices.vue";
 import ChartCollateralPriceImpact from "@PM/Pages/Vaults/Charts/ChartCollateralPriceImpact.vue";
 import CollateralKPIs from "@PM/Pages/Vaults/KPIs/CollateralKPIs.vue";

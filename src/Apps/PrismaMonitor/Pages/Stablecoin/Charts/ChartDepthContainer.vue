@@ -9,8 +9,7 @@
 
 <script setup lang="ts">
 import { usePromise } from "@/Framework";
-import MkUsdService from "@PM/Services/MkUsdService";
-import { getHost } from "@/Services/Host";
+import { getHost, MkUsdService } from "@PM/Services";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 
 const mkUsdService = new MkUsdService(getHost());

@@ -26,12 +26,11 @@ import {
 } from "lightweight-charts";
 import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
-import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import WrapperService, { type Contract } from "@PM/Services/WrapperService";
+import { getHost, WrapperService, type Contract } from "@PM/Services";
 import { type DecimalTimeSeries } from "@/Apps/PrismaMonitor/Services/Series";
 
 const { t } = useI18n();

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services";
 import TableRedemptions from "@PM/Pages/Vaults/Tables/TableRedemptions.vue";
 
 // Props

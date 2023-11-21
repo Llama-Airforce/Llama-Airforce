@@ -14,8 +14,8 @@ import { addressShort } from "@/Wallet";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import { type DecimalLabelledSeries } from "@PM/Services/Series";
+import { useSettingsStore } from "@PM/Stores";
+import { type DecimalLabelledSeries } from "@PM/Services";
 
 // Props
 interface Props {

@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import { type DecimalTimeSeries } from "@PM/Services/Series";
 
 const API_URL = "https://api.prismamonitor.com/v1";

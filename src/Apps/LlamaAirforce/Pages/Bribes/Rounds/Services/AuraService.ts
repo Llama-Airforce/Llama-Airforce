@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 
 const THEGRAPH_URL = "https://api.thegraph.com/subgraphs/name/aurafinance/aura";
 

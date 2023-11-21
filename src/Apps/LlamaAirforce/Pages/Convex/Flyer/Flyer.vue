@@ -12,13 +12,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { minDelay } from "@/Util";
+import { getHost } from "@/Services/Host";
 import Header from "@LAF/Pages/Convex/Flyer/Components/Header.vue";
 import General from "@LAF/Pages/Convex/Flyer/Components/General.vue";
 import Bribes from "@LAF/Pages/Convex/Flyer/Components/Bribes.vue";
 import Farm from "@LAF/Pages/Convex/Flyer/Components/Farm.vue";
 import FlyerService from "@LAF/Pages/Convex/Flyer/Services/FlyerService";
 import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
-import { getHost } from "@/Services/Host";
 
 const flyerService = new FlyerService(getHost());
 

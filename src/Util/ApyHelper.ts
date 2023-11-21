@@ -23,8 +23,7 @@ import {
   UCrvStrategyAddress,
   UCrvStrategyAddressV2,
 } from "@/Util/Addresses";
-import { fetchType } from "@/Services/ServiceBase";
-import type DefiLlamaService from "@/Services/DefiLlamaService";
+import { fetchType, type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
 
 /**

@@ -30,7 +30,7 @@ import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Price, Volume } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 

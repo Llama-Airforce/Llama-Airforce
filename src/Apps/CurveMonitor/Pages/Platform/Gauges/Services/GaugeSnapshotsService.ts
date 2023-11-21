@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import { type GaugeSnapshots } from "@CM/Pages/Platform/Gauges/Models/GaugeSnapshots";
 

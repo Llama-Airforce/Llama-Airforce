@@ -14,9 +14,8 @@ import { round, unit } from "@/Util";
 import { CardGraph, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { getHost } from "@/Services/Host";
-import StabilityPoolService from "@PM/Services/StabilityPoolService";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
+import { useSettingsStore } from "@PM/Stores";
+import { getHost, StabilityPoolService } from "@PM/Services";
 
 const { t } = useI18n();
 

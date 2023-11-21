@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+import { type TroveManagerDetails } from "@PM/Services";
 import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
 import ChartDistributionSelector from "@PM/Pages/Vaults/Charts/ChartDistributionSelector.vue";
 import VaultKPIs from "@PM/Pages/Vaults/KPIs/VaultKPIs.vue";

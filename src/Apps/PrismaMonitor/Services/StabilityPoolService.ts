@@ -1,4 +1,4 @@
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services";
 import {
   type DecimalLabelledSeries,
   type DecimalTimeSeries,

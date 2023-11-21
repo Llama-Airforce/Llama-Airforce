@@ -33,7 +33,7 @@ import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import { getColors } from "@/Styles/Themes/CM";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import type { Pool, Candle } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 

@@ -20,7 +20,7 @@ import {
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
-import { useSettingsStore } from "@CM/Stores/SettingsStore";
+import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";

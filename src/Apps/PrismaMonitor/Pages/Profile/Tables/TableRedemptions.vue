@@ -116,13 +116,10 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
-import RedemptionService, {
-  type Redemption,
-} from "@PM/Services/RedemptionService";
+import { getHost, type Redemption, RedemptionService } from "@PM/Services";
 
 const redemptionService = new RedemptionService(getHost());
 

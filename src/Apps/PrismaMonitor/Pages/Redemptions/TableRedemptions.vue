@@ -116,14 +116,15 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectCollateral from "@PM/Components/SelectCollateral.vue";
-import RedemptionService, {
+import {
+  getHost,
   type Redemption,
-} from "@PM/Services/RedemptionService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+  type TroveManagerDetails,
+  RedemptionService,
+} from "@PM/Services";
 
 const redemptionService = new RedemptionService(getHost());
 

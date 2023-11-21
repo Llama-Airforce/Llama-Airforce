@@ -13,12 +13,11 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { CardGraph, usePromise } from "@/Framework";
-import { getHost } from "@/Services/Host";
 import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import RevenueService from "@PM/Services/RevenueService";
+import { useSettingsStore } from "@PM/Stores";
+import { getHost, RevenueService } from "@PM/Services";
 
 const { t } = useI18n();
 const storeSettings = useSettingsStore();

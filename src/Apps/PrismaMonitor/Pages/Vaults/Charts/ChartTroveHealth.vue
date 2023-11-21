@@ -15,11 +15,14 @@ import { useI18n } from "vue-i18n";
 import { CardGraph, usePromise } from "@/Framework";
 import { type DataPoint, round, unit, formatNumber } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import TroveService, { type Trove } from "@PM/Services/TroveService";
+import { useSettingsStore } from "@PM/Stores";
+import {
+  getHost,
+  TroveService,
+  type Trove,
+  type TroveManagerDetails,
+} from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
-import { getHost } from "@/Services/Host";
 
 type Serie = {
   name: string;

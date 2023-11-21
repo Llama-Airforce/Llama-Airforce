@@ -15,11 +15,13 @@ import { useI18n } from "vue-i18n";
 import { CardGraph, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { useSettingsStore } from "@PM/Stores/SettingsStore";
-import CollateralService from "@PM/Services/CollateralService";
+import { useSettingsStore } from "@PM/Stores";
+import {
+  getHost,
+  CollateralService,
+  type TroveManagerDetails,
+} from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
-import { getHost } from "@/Services/Host";
 
 const { t } = useI18n();
 const collateralService = new CollateralService(getHost());

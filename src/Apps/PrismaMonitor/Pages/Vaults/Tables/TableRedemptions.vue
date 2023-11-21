@@ -107,12 +107,13 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
-import RedemptionService, {
+import {
+  getHost,
+  RedemptionService,
   type Redemption,
-} from "@PM/Services/RedemptionService";
-import { type TroveManagerDetails } from "@PM/Services/Socket/TroveOverviewService";
+  type TroveManagerDetails,
+} from "@PM/Services";
 
 type Row = Redemption;
 
