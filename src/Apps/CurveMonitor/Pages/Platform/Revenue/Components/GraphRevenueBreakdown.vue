@@ -139,6 +139,7 @@ const series = computed((): Serie[] =>
         }))
         .value(),
     }))
+    .orderBy((x) => x.name)
     .value()
 );
 
