@@ -40,7 +40,7 @@ import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
 import { CurvePriceService, type OHLC } from "@/Services";
-import { getPriceSettings } from "@PM/Pages/Wrappers/PriceSettings";
+import { getPriceSettings } from "@PM/Pages/Wrappers/Settings";
 import { type Contract } from "@PM/Services";
 
 const { t } = useI18n();

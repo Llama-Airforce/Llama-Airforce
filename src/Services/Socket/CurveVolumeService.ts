@@ -6,42 +6,36 @@ import {
   type Request,
 } from "@/Services/Socket/Models";
 
-export const WS_URL = "wss://prices.curve.fi/v1/stream/ws";
-const OHLC_CHANNEL = "pool_ohlc" as const;
+const OHLC_CHANNEL = "pool_volume" as const;
 
-export type OHLC = {
-  time: number;
-  open: number;
-  close: number;
-  high: number;
-  low: number;
+export type Volume = {
+  timestamp: number;
+  volume: number;
 };
 
-export type OHLCRequestSettings = {
+export type VolumeRequestSettings = {
   pool: string;
   chain: string;
-  main_token: string;
-  reference_token: string;
-  interval: number;
+  interval: "hour" | "day";
   start?: number;
   end?: number;
 };
 
 /** Docs: https://curve-prices.gitbook.io/curve-prices-websocket-documentation/ */
-export class CurvePriceService {
+export class CurveVolumeService {
   private socket: WebSocketSubject<unknown>;
 
-  public readonly ohlc$: Observable<OHLC[]>;
+  public readonly volume$: Observable<Volume[]>;
 
   constructor(
     socket: unknown,
     private chain: string,
-    private settings: OHLCRequestSettings
+    private settings: VolumeRequestSettings
   ) {
     this.socket = socket as WebSocketSubject<unknown>;
 
-    this.ohlc$ = this.socket.pipe(
-      map((x) => x as Payload<OHLC, OHLCRequestSettings>),
+    this.volume$ = this.socket.pipe(
+      map((x) => x as Payload<Volume, VolumeRequestSettings>),
       filter(
         (x) =>
           x.subscription.chain === this.chain &&
@@ -56,7 +50,7 @@ export class CurvePriceService {
   }
 
   private send(action: Action): void {
-    const req: Request<OHLCRequestSettings, typeof OHLC_CHANNEL> = {
+    const req: Request<VolumeRequestSettings, typeof OHLC_CHANNEL> = {
       action,
       channel: OHLC_CHANNEL,
       settings: [this.settings],

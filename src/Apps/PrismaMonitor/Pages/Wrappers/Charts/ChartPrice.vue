@@ -22,6 +22,8 @@ import {
   type UTCTimestamp,
   type CandlestickSeriesPartialOptions,
   type CandlestickData,
+  type HistogramSeriesPartialOptions,
+  type HistogramData,
 } from "lightweight-charts";
 import { Card, useObservable } from "@/Framework";
 import { round, unit } from "@/Util";
@@ -30,13 +32,24 @@ import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
 import { type Contract } from "@PM/Services";
-import { CurvePriceService, type OHLC } from "@/Services";
-import { getPriceSettings } from "@PM/Pages/Wrappers/PriceSettings";
+import {
+  CurvePriceService,
+  CurveVolumeService,
+  type OHLC,
+  type Volume,
+} from "@/Services";
+import {
+  getPriceSettings,
+  getVolumeSettings,
+} from "@PM/Pages/Wrappers/Settings";
 
 const { t } = useI18n();
 
 let chart: IChartApi;
-let serie: ISeriesApi<"Candlestick">;
+let seriePrice: ISeriesApi<"Candlestick">;
+let serieVolume: ISeriesApi<"Histogram">;
+let max = 1;
+let min = 0;
 
 // Props
 interface Props {
@@ -52,13 +65,20 @@ const chartRef = ref<HTMLElement | null>(null);
 
 // Data
 const priceSettings = getPriceSettings(contract);
+const volumeSettings = getVolumeSettings(contract);
 const socket = useSocketStore().getSocket("prices");
 const priceService = new CurvePriceService(socket, "ethereum", priceSettings);
-const data = useObservable(priceService.ohlc$, []);
-const loading = computed(() => data.value.length === 0);
+const volumeService = new CurveVolumeService(
+  socket,
+  "ethereum",
+  volumeSettings
+);
 
-let max = 1;
-let min = 0;
+const dataPrice = useObservable(priceService.ohlc$, []);
+const dataVolume = useObservable(volumeService.volume$, []);
+const loading = computed(
+  () => dataPrice.value.length + dataVolume.value.length === 0
+);
 
 // Hooks
 onMounted(async () => {
@@ -70,9 +90,15 @@ onMounted(async () => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
-  serie = chart.addCandlestickSeries(createOptionsSerie(storeSettings.theme));
+  seriePrice = chart.addCandlestickSeries(
+    createOptionsSeriePrice(storeSettings.theme)
+  );
+  serieVolume = chart.addHistogramSeries(
+    createOptionsSerieVolume(storeSettings.theme)
+  );
 
-  createSeries(data.value);
+  createSeriesPrice(dataPrice.value);
+  createSeriesVolume(dataVolume.value);
 });
 
 // Watches
@@ -81,13 +107,18 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      serie.applyOptions(createOptionsSerie(newTheme));
+      seriePrice.applyOptions(createOptionsSeriePrice(newTheme));
+      serieVolume.applyOptions(createOptionsSerieVolume(newTheme));
     }
   }
 );
 
-watch(data, (newData) => {
-  createSeries(newData);
+watch(dataPrice, (newPrices) => {
+  createSeriesPrice(newPrices);
+});
+
+watch(dataVolume, (newVolumes) => {
+  createSeriesVolume(newVolumes);
 });
 
 // Methods
@@ -95,8 +126,8 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   return createChartStyles(chartRef, theme, {
     leftPriceScale: {
       scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
+        top: 0.75,
+        bottom: 0,
       },
     },
     localization: {
@@ -105,7 +136,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
+const createOptionsSeriePrice = (
+  theme: Theme
+): CandlestickSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
@@ -127,8 +160,24 @@ const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
   };
 };
 
-const createSeries = (newData: OHLC[]): void => {
-  if (!chart || !serie) {
+const createOptionsSerieVolume = (
+  theme: Theme
+): HistogramSeriesPartialOptions => {
+  const colors = getColors(theme);
+
+  return {
+    color: colors.blue,
+    lastValueVisible: false,
+    priceFormat: {
+      type: "volume",
+    },
+    priceScaleId: "left",
+    priceLineVisible: false,
+  };
+};
+
+const createSeriesPrice = (newData: OHLC[]): void => {
+  if (!chart || !seriePrice) {
     return;
   }
 
@@ -147,7 +196,7 @@ const createSeries = (newData: OHLC[]): void => {
     .value();
 
   if (newSerie.length > 0) {
-    serie.setData(newSerie);
+    seriePrice.setData(newSerie);
     chart.timeScale().fitContent();
 
     min = Math.min(...newSerie.map((c) => c.low));
@@ -155,6 +204,25 @@ const createSeries = (newData: OHLC[]): void => {
   }
 
   chart.timeScale().fitContent();
+};
+
+const createSeriesVolume = (newVolumes: Volume[]): void => {
+  if (!chart || !serieVolume) {
+    return;
+  }
+
+  const newVolumeSeries: HistogramData[] = chain(newVolumes)
+    .map((v) => ({
+      time: v.timestamp as UTCTimestamp,
+      value: v.volume,
+    }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
+    .value();
+
+  if (newVolumeSeries.length > 0) {
+    serieVolume.setData(newVolumeSeries);
+  }
 };
 
 const formatterPrice = (x: number): string => {
