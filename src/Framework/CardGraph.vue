@@ -10,6 +10,10 @@
       :series="series"
     ></GraphApex>
 
+    <template #actions>
+      <slot name="actions"></slot>
+    </template>
+
     <slot></slot>
   </Card>
 </template>

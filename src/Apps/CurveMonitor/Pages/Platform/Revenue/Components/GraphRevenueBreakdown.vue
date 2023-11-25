@@ -4,13 +4,27 @@
     :options="options"
     :series="series"
   >
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items="['DAO', 'Liquidity Providers']"
+          :colors="getColorsArray(storeSettings.theme)"
+        ></Legend>
+
+        <Tooltip placement="left">
+          <div>{{ t("legend-explanation") }}</div>
+        </Tooltip>
+      </div>
+    </template>
   </CardGraph>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { CardGraph } from "@/Framework";
+import { CardGraph, Tooltip } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -22,6 +36,8 @@ type Serie = {
   name: string;
   data: { x: string; y: number }[];
 };
+
+const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
@@ -204,5 +220,16 @@ const shadeColor = (hex: string, percent: number) => {
       }
     }
   }
+
+  .actions {
+    display: flex;
+    gap: 2rem;
+  }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+legend-explanation:
+  DAO revenue goes to veCRV lockers, Liquidity Provider revenue goes
+  to people that LP
+</i18n>
