@@ -5,8 +5,8 @@
     :loading="loading"
   >
     <template #actions>
-      <Tooltip>
-        <div>Price data is sourced from Curve pools only.</div>
+      <Tooltip placement="left">
+        <div>Price is in USDC from Curve mkUSD/FRAX/USDC pool</div>
       </Tooltip>
     </template>
 
