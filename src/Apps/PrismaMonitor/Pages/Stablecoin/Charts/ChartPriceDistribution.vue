@@ -80,7 +80,22 @@ const series = computed((): { name: string; data: number[] }[] => [
   },
 ]);
 
-const categories = computed(() => data.value.map((x) => x.label));
+const categories = computed(() => data.value.map((x) => formatLabel(x.label)));
+
+// Reduce insane number of decimal digits in labels from API.
+const formatLabel = (label: string): string => {
+  // Regular expression to match numbers in the string
+  const numberRegex = /-?\d+(\.\d+)?/g;
+
+  // Function to round a number to 4 decimal places
+  const roundToFourDigits = (numString: string): string => {
+    const num = parseFloat(numString);
+    return num.toFixed(4);
+  };
+
+  // Replace each number in the string with its rounded version
+  return label.replace(numberRegex, (match) => roundToFourDigits(match));
+};
 </script>
 
 <style lang="scss" scoped>
