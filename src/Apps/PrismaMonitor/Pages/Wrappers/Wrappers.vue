@@ -4,12 +4,16 @@
       :active="tabActive"
       @tab="tabActive = $event.index"
     >
+      <TabItem header="Overview">
+        <Overview v-if="tabActive === 0"></Overview>
+      </TabItem>
+
       <TabItem header="cvxPRISMA">
-        <CvxPrisma v-if="tabActive === 0"></CvxPrisma>
+        <CvxPrisma v-if="tabActive === 1"></CvxPrisma>
       </TabItem>
 
       <TabItem header="yPRISMA">
-        <YPrisma v-if="tabActive === 1"></YPrisma>
+        <YPrisma v-if="tabActive === 2"></YPrisma>
       </TabItem>
     </TabView>
   </div>
@@ -19,6 +23,7 @@
 import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { TabView, TabItem } from "@/Framework";
+import Overview from "@PM/Pages/Wrappers/Overview.vue";
 import CvxPrisma from "@PM/Pages/Wrappers/CvxPrisma.vue";
 import YPrisma from "@PM/Pages/Wrappers/YPrisma.vue";
 
@@ -32,10 +37,12 @@ const tabActive = ref(0);
 onMounted(() => {
   const tabParam = route.params.tab;
   if (tabParam && typeof tabParam === "string") {
-    if (tabParam === "cvxprisma") {
+    if (tabParam === "overview") {
       tabActive.value = 0;
-    } else if (tabParam === "yprisma") {
+    } else if (tabParam === "cvxprisma") {
       tabActive.value = 1;
+    } else if (tabParam === "yprisma") {
+      tabActive.value = 2;
     }
   }
 });
@@ -44,9 +51,14 @@ watch(tabActive, async (newTab) => {
   if (newTab === 0) {
     await router.push({
       name: "wrappers",
-      params: { tab: "cvxprisma" },
+      params: { tab: "overview" },
     });
   } else if (newTab === 1) {
+    await router.push({
+      name: "wrappers",
+      params: { tab: "cvxprisma" },
+    });
+  } else if (newTab === 2) {
     await router.push({
       name: "wrappers",
       params: { tab: "yprisma" },

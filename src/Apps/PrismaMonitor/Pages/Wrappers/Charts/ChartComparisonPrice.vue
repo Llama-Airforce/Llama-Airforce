@@ -4,6 +4,14 @@
     :title="t('title')"
     :loading="loading"
   >
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items="['cvxPRISMA', 'yPRISMA']"
+          :colors="getColorsArray(storeSettings.theme)"
+        ></Legend>
+      </div>
+    </template>
     <div
       ref="chartRef"
       class="chart"
@@ -19,31 +27,27 @@ import {
   createChart as createChartFunc,
   type IChartApi,
   type ISeriesApi,
+  type LineData,
+  type LineSeriesPartialOptions,
+  LineType,
   type UTCTimestamp,
-  type CandlestickSeriesPartialOptions,
-  type CandlestickData,
 } from "lightweight-charts";
 import { Card, useObservable } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
-import { getColors } from "@/Styles/Themes/PM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import { type Contract } from "@PM/Services";
 import { CurvePriceService, type OHLC } from "@/Services";
 import { getPriceSettings } from "@PM/Pages/Wrappers/PriceSettings";
+import { type Contract } from "@PM/Services";
 
 const { t } = useI18n();
 
 let chart: IChartApi;
-let serie: ISeriesApi<"Candlestick">;
-
-// Props
-interface Props {
-  contract: Contract;
-}
-
-const { contract } = defineProps<Props>();
+let serieConvex: ISeriesApi<"Line">;
+let serieYearn: ISeriesApi<"Line">;
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -51,13 +55,24 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const priceSettings = getPriceSettings(contract);
 const socket = useSocketStore().getSocket("prices");
-const priceService = new CurvePriceService(socket, "ethereum", priceSettings);
-const data = useObservable(priceService.ohlc$, []);
-const loading = computed(() => data.value.length === 0);
+const priceServiceConvex = new CurvePriceService(
+  socket,
+  "ethereum",
+  getPriceSettings("convex")
+);
+const priceServiceYearn = new CurvePriceService(
+  socket,
+  "ethereum",
+  getPriceSettings("yearn")
+);
+const dataConvex = useObservable(priceServiceConvex.ohlc$, []);
+const dataYearn = useObservable(priceServiceYearn.ohlc$, []);
+const loading = computed(
+  () => dataConvex.value.length + dataYearn.value.length === 0
+);
 
-let max = 1;
+let max = 1.1;
 let min = 0;
 
 // Hooks
@@ -70,9 +85,15 @@ onMounted(async () => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
-  serie = chart.addCandlestickSeries(createOptionsSerie(storeSettings.theme));
+  serieConvex = chart.addLineSeries(
+    createOptionsSerie(storeSettings.theme, "convex")
+  );
+  serieYearn = chart.addLineSeries(
+    createOptionsSerie(storeSettings.theme, "yearn")
+  );
 
-  createSeries(data.value);
+  createSeries(dataConvex.value, "convex");
+  createSeries(dataYearn.value, "yearn");
 });
 
 // Watches
@@ -81,13 +102,18 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      serie.applyOptions(createOptionsSerie(newTheme));
+      serieConvex.applyOptions(createOptionsSerie(newTheme, "convex"));
+      serieYearn.applyOptions(createOptionsSerie(newTheme, "yearn"));
     }
   }
 );
 
-watch(data, (newData) => {
-  createSeries(newData);
+watch(dataConvex, (newData) => {
+  createSeries(newData, "convex");
+});
+
+watch(dataYearn, (newData) => {
+  createSeries(newData, "yearn");
 });
 
 // Methods
@@ -105,56 +131,57 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
+const createOptionsSerie = (
+  theme: Theme,
+  contract: Contract
+): LineSeriesPartialOptions => {
   const colors = getColors(theme);
+  const color = contract === "convex" ? colors.blue : colors.yellow;
 
   return {
     priceFormat: {
       type: "price",
       precision: 6,
-      minMove: 0.01,
+      minMove: 0.000001,
     },
-
-    upColor: colors.green,
-    borderUpColor: colors.green,
-    wickUpColor: colors.green,
-    downColor: colors.red,
-    borderDownColor: colors.red,
-    wickDownColor: colors.red,
-
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    color,
     lastValueVisible: false,
     priceLineVisible: false,
   };
 };
 
-const createSeries = (newData: OHLC[]): void => {
-  if (!chart || !serie) {
+const createSeries = (newData: OHLC[], contract: Contract): void => {
+  if (!chart || !serieConvex || !serieYearn) {
     return;
   }
 
-  const invertMultiplier = 1;
-
-  const newSerie: CandlestickData[] = chain(newData)
-    .map((c) => ({
-      time: c.time as UTCTimestamp,
-      open: Math.pow(c.open, invertMultiplier),
-      high: Math.pow(c.high, invertMultiplier),
-      low: Math.pow(c.low, invertMultiplier),
-      close: Math.pow(c.close, invertMultiplier),
+  const newSerie: LineData[] = chain(newData)
+    .map((x) => ({
+      time: x.time as UTCTimestamp,
+      value: x.close,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
   if (newSerie.length > 0) {
-    serie.setData(newSerie);
+    if (contract === "convex") {
+      serieConvex.setData(newSerie);
+    } else if (contract === "yearn") {
+      serieYearn.setData(newSerie);
+    }
+
+    const allValues = [
+      ...dataConvex.value.map((x) => x.close),
+      ...dataYearn.value.map((x) => x.close),
+    ];
+    min = Math.min(...allValues);
+    max = Math.max(...allValues);
+
     chart.timeScale().fitContent();
-
-    min = Math.min(...newSerie.map((c) => c.low));
-    max = Math.max(...newSerie.map((c) => c.high));
   }
-
-  chart.timeScale().fitContent();
 };
 
 const formatterPrice = (x: number): string => {
@@ -185,5 +212,5 @@ const formatterPrice = (x: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Price
+title: Prices
 </i18n>

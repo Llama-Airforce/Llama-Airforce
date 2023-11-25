@@ -43,7 +43,10 @@ export class CurvePriceService {
     this.ohlc$ = this.socket.pipe(
       map((x) => x as Payload<OHLC, OHLCRequestSettings>),
       filter(
-        (x) => x.subscription.chain === this.chain && x.channel === OHLC_CHANNEL
+        (x) =>
+          x.subscription.chain === this.chain &&
+          x.channel === OHLC_CHANNEL &&
+          JSON.stringify(x.subscription) === JSON.stringify(settings)
       ),
       map((x) => x.payload),
       shareReplay(1)
