@@ -212,5 +212,5 @@ const formatterPrice = (x: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Prices
+title: Price (peg)
 </i18n>

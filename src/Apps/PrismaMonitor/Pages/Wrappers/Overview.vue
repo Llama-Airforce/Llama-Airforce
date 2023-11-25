@@ -1,11 +1,13 @@
 <template>
   <div class="overview">
     <ChartComparisonPrice></ChartComparisonPrice>
+    <ChartComparisonTVL></ChartComparisonTVL>
   </div>
 </template>
 
 <script setup lang="ts">
 import ChartComparisonPrice from "@PM/Pages/Wrappers/Charts/ChartComparisonPrice.vue";
+import ChartComparisonTVL from "@PM/Pages/Wrappers/Charts/ChartComparisonTVL.vue";
 </script>
 
 <style lang="scss" scoped>

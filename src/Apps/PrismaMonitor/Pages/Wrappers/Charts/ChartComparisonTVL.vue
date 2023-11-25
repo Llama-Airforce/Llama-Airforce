@@ -4,6 +4,14 @@
     :title="t('title')"
     :loading="loading"
   >
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items="['cvxPRISMA', 'yPRISMA']"
+          :colors="getColorsArray(storeSettings.theme)"
+        ></Legend>
+      </div>
+    </template>
     <div
       ref="chartRef"
       class="chart"
@@ -12,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick } from "vue";
+import { ref, computed, watch, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
@@ -20,13 +28,14 @@ import {
   type IChartApi,
   type ISeriesApi,
   type LineData,
-  type AreaSeriesPartialOptions,
+  type LineSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
 import { Card, usePromise } from "@/Framework";
+import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
-import { getColors } from "@/Styles/Themes/PM";
+import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
@@ -42,14 +51,8 @@ const { t } = useI18n();
 const prismaService = new WrapperService(getHost());
 
 let chart: IChartApi;
-let serie: ISeriesApi<"Area">;
-
-// Props
-interface Props {
-  contract: Contract;
-}
-
-const { contract } = defineProps<Props>();
+let serieConvex: ISeriesApi<"Line">;
+let serieYearn: ISeriesApi<"Line">;
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -57,10 +60,16 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const { loading, data } = usePromise(
-  () => prismaService.getTVL(contract).then((x) => x.tvl),
+const { loading: loadingConvex, data: dataConvex } = usePromise(
+  () => prismaService.getTVL("convex").then((x) => x.tvl),
   []
 );
+const { loading: loadingYearn, data: dataYearn } = usePromise(
+  () => prismaService.getTVL("yearn").then((x) => x.tvl),
+  []
+);
+
+const loading = computed(() => loadingConvex.value || loadingYearn.value);
 
 // Hooks
 onMounted(async () => {
@@ -72,9 +81,15 @@ onMounted(async () => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
-  serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+  serieConvex = chart.addLineSeries(
+    createOptionsSerie(storeSettings.theme, "convex")
+  );
+  serieYearn = chart.addLineSeries(
+    createOptionsSerie(storeSettings.theme, "yearn")
+  );
 
-  createSeries(data.value);
+  createSeries(dataConvex.value, "convex");
+  createSeries(dataYearn.value, "yearn");
 });
 
 // Watches
@@ -83,13 +98,18 @@ watch(
   (newTheme) => {
     if (chartRef.value) {
       chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      serie.applyOptions(createOptionsSerie(newTheme));
+      serieConvex.applyOptions(createOptionsSerie(newTheme, "convex"));
+      serieYearn.applyOptions(createOptionsSerie(newTheme, "yearn"));
     }
   }
 );
 
-watch(data, (newData) => {
-  createSeries(newData);
+watch(dataConvex, (newData) => {
+  createSeries(newData, "convex");
+});
+
+watch(dataYearn, (newData) => {
+  createSeries(newData, "yearn");
 });
 
 // Methods
@@ -107,32 +127,36 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+const createOptionsSerie = (
+  theme: Theme,
+  contract: Contract
+): LineSeriesPartialOptions => {
   const colors = getColors(theme);
+  const color = contract === "convex" ? colors.blue : colors.yellow;
 
   return {
     priceFormat: {
       type: "price",
       precision: 6,
-      minMove: 0.01,
+      minMove: 0.000001,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
+    color,
     lastValueVisible: false,
     priceLineVisible: false,
   };
 };
 
-const createSeries = (newData: DecimalTimeSeries[]): void => {
-  if (!chart || !serie) {
+const createSeries = (
+  newData: DecimalTimeSeries[],
+  contract: Contract
+): void => {
+  if (!chart || !serieConvex || !serieYearn) {
     return;
   }
 
   const newSerie: LineData[] = chain(newData)
-    .filter((x) => x.value > 0)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -142,10 +166,14 @@ const createSeries = (newData: DecimalTimeSeries[]): void => {
     .value();
 
   if (newSerie.length > 0) {
-    serie.setData(newSerie);
-  }
+    if (contract === "convex") {
+      serieConvex.setData(newSerie);
+    } else if (contract === "yearn") {
+      serieYearn.setData(newSerie);
+    }
 
-  chart.timeScale().fitContent();
+    chart.timeScale().fitContent();
+  }
 };
 
 const formatter = (y: number): string => {
