@@ -39,6 +39,7 @@ export function getDate(proposal: Proposal): string {
 export function getLink(epoch: EpochId, proposal: ProposalId): string {
   switch (epoch.protocol) {
     case "cvx-crv":
+    case "cvx-prisma":
       return `https://vote.convexfinance.com/#/proposal/${proposal}`;
     case "aura-bal":
       return `https://snapshot.org/#/aurafinance.eth/proposal/${proposal}`;

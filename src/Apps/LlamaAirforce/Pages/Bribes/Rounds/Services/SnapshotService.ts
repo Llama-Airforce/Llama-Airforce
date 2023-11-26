@@ -11,7 +11,7 @@ const SNAPSHOT_THEGRAPH_URL =
 export type Proposal = {
   id: ProposalId;
   snapshot: string;
-  choices: Record<string, number>;
+  choices: string[];
   end: number;
 };
 
@@ -195,6 +195,8 @@ export default class SnapshotService extends ServiceBase {
     switch (protocol) {
       case "cvx-crv":
         return await this.getScoresCvx(snapshot, voters);
+      case "cvx-prisma":
+        return await this.getScoresCvx(snapshot, voters); // Re-uses existing CVX infra?
       case "aura-bal":
         return await this.getScoresAura(snapshot, voters);
       default:

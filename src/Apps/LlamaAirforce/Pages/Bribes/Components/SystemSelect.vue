@@ -108,6 +108,7 @@ const protocol = computed((): ProtocolInfo | null => {
 const protocols = computed((): ProtocolInfo[] => {
   const protocols: ProtocolInfo[] = [
     { protocol: "cvx-crv", label: "CRV", logo: "crv.svg" },
+    { protocol: "cvx-prisma", label: "PRISMA", logo: "prisma.svg" },
     { protocol: "aura-bal", label: "AURA", logo: "aura.png" },
   ];
 
