@@ -58,10 +58,12 @@ export const pageBribes: Page = {
       icon: "far fa-chart-bar",
       label: "Rounds",
     },
-    {
-      to: "/incentives/fraxmatch",
-      icon: "fas fa-gift",
-      label: "Frax Match",
-    },
+    /*
+     * {
+     *   to: "/incentives/fraxmatch",
+     *   icon: "fas fa-gift",
+     *   label: "Frax Match",
+     * },
+     */
   ],
 };
