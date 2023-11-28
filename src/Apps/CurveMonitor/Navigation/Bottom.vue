@@ -20,7 +20,7 @@
       </a>
 
       <a
-        href="https://github.com/Llama-Airforce/Llama-Airforce"
+        href="https://github.com/Llama-Airforce/Curve-Monitor-Web"
         target="_blank"
       >
         <Button icon="fab fa-github"></Button>
