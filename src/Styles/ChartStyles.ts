@@ -27,7 +27,8 @@ const createDefault = (theme: Theme): object => ({
     id: "chart",
     background: "transparant",
     foreColor: theme.colors.level5,
-    fontFamily: "SF Mono, Consolas, monospace",
+    fontFamily:
+      "ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace",
     toolbar: {
       autoSelected: "zoom",
       tools: {

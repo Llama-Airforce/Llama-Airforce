@@ -153,7 +153,7 @@ const you = (address: string): boolean => address === wallet.address;
   }
 
   .vote {
-    font-family: monospace;
+    font-family: var(--font-mono);
 
     .address {
       a {

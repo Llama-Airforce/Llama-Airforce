@@ -22,7 +22,7 @@
     <template #row="props: { item: Row }">
       <div>
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/address/${props.item.voter}`"
           target="_blank"
           @click.stop
@@ -33,7 +33,7 @@
 
       <div>
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/tx/${props.item.recipient}`"
           target="_blank"
           @click.stop
@@ -54,7 +54,7 @@
 
       <div class="number">
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/tx/${props.item.transaction}`"
           target="_blank"
           @click.stop

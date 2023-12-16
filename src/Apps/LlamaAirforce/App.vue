@@ -30,6 +30,7 @@ import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 <style lang="scss">
 @import "@/Styles/Themes/LAF/Dark.scss";
 @import "@/Styles/Variables.scss";
+@import "@/Styles/Classes.scss";
 
 :root {
   @include themeDark();

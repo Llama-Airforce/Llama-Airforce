@@ -47,8 +47,7 @@
           style="display: grid; gap: 1ch; grid-template-columns: auto 16ch 1fr"
         >
           <a
-            class="vote-link"
-            style="font-family: monospace"
+            class="vote-link font-mono"
             target="_blank"
             :href="`https://etherscan.io/address/${props.item.center[0].trader}`"
           >

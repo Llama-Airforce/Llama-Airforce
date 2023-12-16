@@ -50,7 +50,7 @@
         <template #row="props: { item: Row }">
           <div>
             <a
-              style="font-family: monospace"
+              class="font-mono"
               target="_blank"
               :href="`#/vault/${vaultAddr}/trove/${props.item}`"
               @click.stop

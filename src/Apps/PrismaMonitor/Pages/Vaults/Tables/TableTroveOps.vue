@@ -61,7 +61,7 @@
 
       <div class="number">
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/tx/${props.item.hash}`"
           target="_blank"
           @click.stop

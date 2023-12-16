@@ -48,7 +48,7 @@
 
       <div>
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/address/${props.item.liquidator}`"
           target="_blank"
           @click.stop
@@ -59,7 +59,7 @@
 
       <div>
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/tx/${props.item.transaction}`"
           target="_blank"
           @click.stop

@@ -15,7 +15,8 @@ function createPoolParties(dates: Date[]): Object {
         style: {
           color: "rgb(34, 34, 34)",
           background: ColorsLAFDark.yellow,
-          fontFamily: "SF Mono, Consolas, monospace",
+          fontFamily:
+            "ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace",
         },
       },
     }));

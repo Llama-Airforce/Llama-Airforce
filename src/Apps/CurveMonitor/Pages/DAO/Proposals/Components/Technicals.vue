@@ -153,7 +153,7 @@ watch(
     }
 
     .calldata {
-      font-family: monospace;
+      font-family: var(--font-mono);
     }
 
     .calldata,

@@ -37,7 +37,7 @@
     <template #row="props: { item: Row }">
       <div>
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/address/${props.item.id}`"
           target="_blank"
           @click.stop

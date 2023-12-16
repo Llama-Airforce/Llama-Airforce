@@ -23,7 +23,8 @@ const createDefault = (
         color: colors.backgroundColor,
       },
       textColor: colors.level5,
-      fontFamily: "SF Mono, Consolas, monospace",
+      fontFamily:
+        "ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace",
     },
     grid: {
       vertLines: {

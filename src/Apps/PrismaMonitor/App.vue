@@ -78,6 +78,7 @@ const onCrumb = async (crumb: Crumb) => {
 @import "@/Styles/Themes/PM/Light.scss";
 @import "@/Styles/Themes/PM/Dark.scss";
 @import "@/Styles/Variables.scss";
+@import "@/Styles/Classes.scss";
 
 [data-theme="light"] {
   @include themeLight();

@@ -69,6 +69,7 @@ const onCrumb = async (crumb: Crumb) => {
 @import "@/Styles/Themes/CM/Light.scss";
 @import "@/Styles/Themes/CM/Dark.scss";
 @import "@/Styles/Variables.scss";
+@import "@/Styles/Classes.scss";
 
 [data-theme="chad"] {
   @include themeChad();

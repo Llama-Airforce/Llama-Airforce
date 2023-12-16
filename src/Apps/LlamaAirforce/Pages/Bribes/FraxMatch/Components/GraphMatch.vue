@@ -102,7 +102,8 @@ const options = computed((): unknown => {
       offsetY: -25,
       style: {
         fontSize: "12px",
-        fontFamily: "SF Mono, Consolas, monospace",
+        fontFamily:
+          "ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace",
       },
     },
     csv: {

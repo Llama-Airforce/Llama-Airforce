@@ -72,7 +72,7 @@ const { data: trades } = usePromise(
     grid-template-columns: 6rem 1fr auto;
 
     div:nth-child(1) {
-      font-family: monospace;
+      font-family: var(--font-mono);
     }
 
     // Right adjust number columns.

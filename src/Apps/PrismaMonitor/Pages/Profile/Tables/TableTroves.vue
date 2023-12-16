@@ -57,7 +57,7 @@
 
       <div>
         <a
-          style="font-family: monospace"
+          class="font-mono"
           :href="`https://etherscan.io/address/${props.item.owner}`"
           target="_blank"
           @click.stop
