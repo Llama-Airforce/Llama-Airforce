@@ -1,8 +1,8 @@
 import { ServiceBase } from "@/Services";
 
-// https://thegraph.com/hosted-service/subgraph/benber86/prisma-test
+// https://thegraph.com/hosted-service/subgraph/benber86/prisma
 const THEGRAPH_URL =
-  "https://api.thegraph.com/subgraphs/name/benber86/prisma-test";
+  "https://api.thegraph.com/subgraphs/name/benber86/prisma";
 
 export type AccountData = {
   id: string; // Address
