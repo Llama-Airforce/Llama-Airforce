@@ -77,7 +77,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue } from "@/Framework";
-import { addressShort, useWalletStore } from "@/Wallet";
+import { addressShort, useWallet } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
 
@@ -92,7 +92,7 @@ interface Props {
 const { proposal, proposalDetails } = defineProps<Props>();
 
 // Refs
-const wallet = useWalletStore();
+const { address: walletAddress } = useWallet();
 
 const votesFor = computed(() => {
   if (!proposalDetails) {
@@ -134,7 +134,7 @@ const percentage = (voteWeight: number): number => {
   return (voteWeight / (proposal.votesFor + proposal.votesAgainst)) * 100;
 };
 
-const you = (address: string): boolean => address === wallet.address;
+const you = (address: string): boolean => address === walletAddress.value;
 </script>
 
 <style lang="scss" scoped>

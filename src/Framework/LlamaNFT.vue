@@ -7,12 +7,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { useWalletStore, getProvider } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 import { TheLlamas__factory } from "@/Contracts";
 import { TheLlamas } from "@/Util/Addresses";
 
 // Refs
-const wallet = useWalletStore();
+const { address, withProvider } = useWallet();
 
 const uri = ref("");
 
@@ -22,15 +22,9 @@ onMounted(async (): Promise<void> => {
 });
 
 // Methods
-const getNFT = async () => {
-  const provider = getProvider();
-
-  if (!provider || !wallet.address) {
-    return;
-  }
-
+const getNFT = withProvider(async (provider, address) => {
   const llamas = TheLlamas__factory.connect(TheLlamas, provider);
-  const tokens = await llamas.tokensForOwner(wallet.address);
+  const tokens = await llamas.tokensForOwner(address);
   if (tokens.length === 0) {
     return;
   }
@@ -38,13 +32,13 @@ const getNFT = async () => {
   const tokenUri = await llamas.tokenURI(tokens[0]);
   const tokenResp = await fetch(tokenUri);
   const token = (await tokenResp.json()) as { image: string };
-  if (token && token.image) {
+  if (token?.image) {
     uri.value = token.image;
   }
-};
+});
 
 // Watches
-watch(() => wallet.address, getNFT);
+watch(address, getNFT);
 </script>
 
 <style lang="scss" scoped>

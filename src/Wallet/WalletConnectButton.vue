@@ -3,7 +3,7 @@
     <Button
       class="button"
       :primary="true"
-      @click="onConnect"
+      @click="connectWallet(true)"
     >
       {{ t("connect-your-wallet") }}
     </Button>
@@ -28,37 +28,15 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import {
-  useWalletStore,
-  connectWallet,
-  getProvider,
-  isConnected,
-} from "@/Wallet";
 import { Button, Tooltip } from "@/Framework";
+import { useWallet } from "@/Wallet";
 
 const { t } = useI18n();
 
-// Emits
-const emit = defineEmits<{
-  connected: [];
-}>();
-
 // Refs
-const store = useWalletStore();
+const { connectWallet } = useWallet();
 
 // Methods
-const onConnect = async (): Promise<void> => {
-  await connectWallet(true);
-  const provider = getProvider();
-  const connected = await isConnected(provider);
-
-  store.connected = connected;
-
-  if (connected) {
-    emit("connected");
-  }
-};
-
 const onClearCache = (): void => {
   window.localStorage.removeItem("connectedWallet");
 };

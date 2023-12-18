@@ -21,7 +21,7 @@
 import { ref, watch, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useObservable } from "@/Framework";
-import { useWalletStore } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 import { useSocketStore } from "@PM/Stores";
 import TableRedemptions from "@PM/Pages/Profile/Tables/TableRedemptions.vue";
 import TableLiquidations from "@PM/Pages/Profile/Tables/TableLiquidations.vue";
@@ -31,7 +31,7 @@ import { TroveOverviewService, type Trove } from "@PM/Services";
 // Refs
 const route = useRoute();
 const router = useRouter();
-const wallet = useWalletStore();
+const { address } = useWallet();
 
 const socket = useSocketStore().getSocket("api");
 const prismaService = new TroveOverviewService(socket, "ethereum");
@@ -65,12 +65,12 @@ const onTroves = (newTroves: Trove[]) => {
 
 // Watches
 watch(
-  () => wallet.address,
+  address,
   async () => {
-    if (!route.params.addr && !user.value && wallet.address) {
+    if (!route.params.addr && !user.value && address.value) {
       await router.push({
         name: "profile",
-        params: { addr: wallet.address },
+        params: { addr: address.value },
       });
     }
   },

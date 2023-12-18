@@ -45,7 +45,7 @@ import { utils } from "ethers";
 import { Card, Button, InputNumber, InputText } from "@/Framework";
 import { numToBigNumber } from "@/Util";
 import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
-import { getProvider } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 import { GaugeFactory__factory } from "@/Contracts";
 
 const { t } = useI18n();
@@ -54,6 +54,9 @@ const { t } = useI18n();
 const emit = defineEmits<{
   gauge: [gauge: string];
 }>();
+
+// Refs
+const { withSigner } = useWallet();
 
 const deploying = ref(false);
 const receiver = ref("");
@@ -70,13 +73,11 @@ const isValid = computed(() => {
 });
 
 // Methods
-const execute = async (): Promise<void> => {
-  const provider = getProvider();
-  if (!provider || !receiver.value || !amount.value) {
+const execute = withSigner(async (signer) => {
+  if (!receiver.value || !amount.value) {
     return;
   }
 
-  const signer = provider.getSigner();
   const gaugeFactory = GaugeFactory__factory.connect(
     veFunderGaugeFactoryAddress,
     signer
@@ -102,7 +103,7 @@ const execute = async (): Promise<void> => {
   } finally {
     deploying.value = false;
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

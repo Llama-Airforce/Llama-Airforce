@@ -39,7 +39,7 @@ import { useI18n } from "vue-i18n";
 import { type Signer, utils } from "ethers";
 import { notify } from "@kyvg/vue3-notification";
 import { Card, Button, InputText } from "@/Framework";
-import { getProvider } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 import {
   AragonAgent__factory,
   AragonVoting__factory,
@@ -54,12 +54,15 @@ interface Props {
   gauge?: string;
 }
 
+const { gauge = "" } = defineProps<Props>();
+
 // Emits
 const emit = defineEmits<{
   request: [];
 }>();
 
-const { gauge = "" } = defineProps<Props>();
+// Refs
+const { withSigner } = useWallet();
 
 const creating = ref(false);
 const gauge_ = ref("");
@@ -86,13 +89,10 @@ watch(
 );
 
 // Methods
-const execute = async (): Promise<void> => {
-  const provider = getProvider();
-  if (!provider || !gauge_.value) {
+const execute = withSigner(async (signer) => {
+  if (!gauge_.value) {
     return;
   }
-
-  const signer = provider.getSigner();
 
   creating.value = true;
 
@@ -106,7 +106,7 @@ const execute = async (): Promise<void> => {
   } finally {
     creating.value = false;
   }
-};
+});
 
 const createVote = async (signer: Signer): Promise<void> => {
   const ARAGON_OWNERSHIP_VOTING = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";

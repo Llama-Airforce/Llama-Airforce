@@ -19,7 +19,7 @@ const gnosis = gnosisModule();
 
 let onboard: OnboardAPI | null = null;
 
-export function getOnboard(): OnboardAPI {
+function getOnboard(): OnboardAPI {
   const onboard = Onboard({
     wallets: [injected, walletConnect, coinbaseWallet, gnosis],
     chains: [
@@ -73,13 +73,7 @@ export async function connectWallet(showModal = false) {
   walletConnected = wallet ? wallet : null;
 }
 
-export function getProvider(): JsonRpcProvider | undefined {
-  return walletConnected
-    ? new Web3Provider(walletConnected.provider as ExternalProvider)
-    : undefined;
-}
-
-export async function clearProvider(): Promise<void> {
+export async function disconnectWallet(): Promise<void> {
   if (!onboard) {
     return;
   }
@@ -87,4 +81,10 @@ export async function clearProvider(): Promise<void> {
   const [primaryWallet] = onboard.state.get().wallets;
   await onboard.disconnectWallet({ label: primaryWallet.label });
   window.localStorage.removeItem("connectedWallet");
+}
+
+export function getProvider(): JsonRpcProvider | undefined {
+  return walletConnected
+    ? new Web3Provider(walletConnected.provider as ExternalProvider)
+    : undefined;
 }

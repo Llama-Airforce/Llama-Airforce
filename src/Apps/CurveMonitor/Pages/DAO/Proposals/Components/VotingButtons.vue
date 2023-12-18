@@ -132,7 +132,7 @@ import { VeCRV__factory, Voting__factory } from "@/Contracts";
 import { AsyncValue, KPI, Button, Card, Modal, Slider } from "@/Framework";
 import { bigNumToNumber, numToBigNumber } from "@/Util";
 import { CurveVotingAddress } from "@/Util/Addresses";
-import { getProvider, useWalletStore } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import { getStatus } from "@CM/Pages/DAO/Proposals/Util/ProposalHelper";
 
@@ -146,7 +146,7 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Refs
-const wallet = useWalletStore();
+const { address, withProvider, withSigner } = useWallet();
 
 const showVote = ref(false);
 const executing = ref(false);
@@ -295,18 +295,12 @@ const onYeaPct = (newVal: string) => {
   yeaPct.value = parseFloat(newVal);
 };
 
-const vote = async () => {
-  const provider = getProvider();
-  if (!provider || !wallet.address) {
-    return;
-  }
-
-  const signer = provider.getSigner();
-
+const vote = withSigner(async (signer, address) => {
   voting.value = true;
+
   try {
     const voting = Voting__factory.connect(CurveVotingAddress, signer);
-    voterState.value = await voting.getVoterState(proposal.id, wallet.address);
+    voterState.value = await voting.getVoterState(proposal.id, address);
     const pctBase = await voting.PCT_BASE().then((x) => x.toBigInt());
 
     // PCT_BASE = 10 ** 18; // 0% = 0; 1% = 10^16; 100% = 10^18
@@ -331,17 +325,11 @@ const vote = async () => {
   } finally {
     voting.value = false;
   }
-};
+});
 
-const execute = async () => {
-  const provider = getProvider();
-  if (!provider || !wallet.address) {
-    return;
-  }
-
-  const signer = provider.getSigner();
-
+const execute = withSigner(async (signer) => {
   executing.value = true;
+
   try {
     const voting = Voting__factory.connect(CurveVotingAddress, signer);
 
@@ -362,24 +350,19 @@ const execute = async () => {
   } finally {
     executing.value = false;
   }
-};
+});
 
 // Watches
-const getWeb3Data = async () => {
-  const provider = getProvider();
-  if (!provider || !wallet.address) {
-    return;
-  }
-
+const getWeb3Data = withProvider(async (provider, address) => {
   const voting = Voting__factory.connect(CurveVotingAddress, provider);
   const veCrvAddress = await voting.token();
-  voterState.value = await voting.getVoterState(proposal.id, wallet.address);
+  voterState.value = await voting.getVoterState(proposal.id, address);
 
   const veCrv = VeCRV__factory.connect(veCrvAddress, provider);
   votingPower.value = await veCrv
-    .balanceOfAt(wallet.address, proposal.block)
+    .balanceOfAt(address, proposal.block)
     .then((x) => x.toBigInt());
-};
+});
 
 watch(showVote, async (show) => {
   if (!show) {
@@ -397,21 +380,16 @@ watch(showVote, async (show) => {
 
 // Check if proposal can be executed.
 watch(
-  () => wallet.address,
-  async (): Promise<void> => {
+  address,
+  withProvider(async (provider) => {
     // Don't bother with non-executable votes.
     if (!executable.value) {
       return;
     }
 
-    const provider = getProvider();
-    if (!provider || !wallet.address) {
-      return;
-    }
-
     const voting = Voting__factory.connect(CurveVotingAddress, provider);
     canExecute.value = await voting.canExecute(proposal.id);
-  },
+  }),
   { immediate: true }
 );
 </script>

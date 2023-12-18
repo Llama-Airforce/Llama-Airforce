@@ -81,11 +81,8 @@
     </template>
 
     <template #no-data>
-      <div v-if="loading">{{ t("loading") }} {{ voterShort }}</div>
-      <WalletConnectButton
-        v-if="!connected"
-        @connected="onConnected"
-      ></WalletConnectButton>
+      <div v-if="loading">{{ t("loading") }} {{ addressShort(voter) }}</div>
+      <WalletConnectButton v-if="!connected"></WalletConnectButton>
     </template>
   </DataTable>
 </template>
@@ -103,7 +100,7 @@ import {
 } from "@/Framework";
 import { icon } from "@/Util";
 import { getHost } from "@/Services/Host";
-import { useWalletStore, addressShort } from "@/Wallet";
+import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, Protocol, BribedPersonal } from "@LAF/Pages/Bribes/Models";
 import SnapshotService, {
@@ -125,7 +122,7 @@ const { t } = useI18n();
 
 // Refs
 const store = useBribesStore();
-const wallet = useWalletStore();
+const { connected, address } = useWallet();
 
 type SortColumns = "pool" | "vlasset" | "total";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("total");
@@ -158,14 +155,6 @@ const bribedOrdered = computed((): BribedPersonal[] => {
     },
     sortOrder.value === SortOrder.Descending ? "desc" : "asc"
   );
-});
-
-const voterShort = computed((): string => {
-  return addressShort(voter.value);
-});
-
-const connected = computed((): boolean => {
-  return wallet.connected;
 });
 
 const bribedAmount = computed((): number => {
@@ -209,8 +198,8 @@ const percentage = (bribed: BribedPersonal): number => {
 const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
   bribed.value = [];
 
-  if (!wallet.address) return;
-  voter.value = wallet.address;
+  if (!address.value) return;
+  voter.value = address.value;
 
   if (!newEpoch || !protocol.value) {
     return;
@@ -267,14 +256,13 @@ const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
 };
 
 // Watches
-watch(
-  () => wallet.address,
-  async (): Promise<void> => {
-    if (epoch.value) {
-      await onEpoch(epoch.value);
-    }
+watch(connected, onConnected);
+
+watch(address, async (): Promise<void> => {
+  if (epoch.value) {
+    await onEpoch(epoch.value);
   }
-);
+});
 
 watch(epoch, async (newEpoch): Promise<void> => {
   await onEpoch(newEpoch ?? undefined);

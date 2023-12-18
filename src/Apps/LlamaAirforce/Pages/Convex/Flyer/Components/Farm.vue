@@ -65,7 +65,7 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import { getCvxCrvAprs } from "@/Util";
-import { getProvider, useWalletStore } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getHost } from "@/Services/Host";
 import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
@@ -82,7 +82,7 @@ interface Props {
 const { model } = defineProps<Props>();
 
 // Refs
-const wallet = useWalletStore();
+const { address, withProvider } = useWallet();
 
 const cvxCrvApr = ref<number | undefined>(undefined);
 
@@ -96,20 +96,16 @@ onMounted(async (): Promise<void> => {
 });
 
 // Watches
-const update = async (): Promise<void> => {
-  const provider = getProvider();
+const update = withProvider(async (provider) => {
+  const aprs = await getCvxCrvAprs(provider, llamaService);
 
-  if (provider) {
-    const aprs = await getCvxCrvAprs(provider, llamaService);
+  // Take the average APR of gov rewards and stable
+  const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
 
-    // Take the average APR of gov rewards and stable
-    const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
+  cvxCrvApr.value = apr * 100;
+});
 
-    cvxCrvApr.value = apr * 100;
-  }
-};
-
-watch(() => wallet.address, update);
+watch(address, update);
 
 // Hooks
 onMounted(async () => {

@@ -22,8 +22,8 @@
       <Button
         class="disconnect"
         icon="fas fa-check"
-        :value="address"
-        @click="onDisconnect"
+        :value="addressShort(address)"
+        @click="disconnectWallet"
       ></Button>
     </div>
 
@@ -43,20 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, onMounted } from "vue";
+import { watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Button } from "@/Framework";
-import {
-  useWalletStore,
-  getProvider,
-  clearProvider,
-  connectWallet,
-  isConnected,
-  getAddress,
-  addressShort,
-  isMainnet,
-} from "@/Wallet";
+import { addressShort, getAddress, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
+import { useWalletStore } from "@/Wallet/Store";
 
 const { t } = useI18n();
 
@@ -69,34 +61,23 @@ const { labelPleaseConnect } = defineProps<Props>();
 
 // Refs
 const store = useWalletStore();
+const {
+  connected,
+  correctNetwork,
+  address,
+  connectWallet,
+  disconnectWallet,
+  getProvider,
+  withProvider,
+} = useWallet();
 
-const connected = computed((): boolean => {
-  return store.connected;
-});
-
-const correctNetwork = computed((): boolean => {
-  return store.correctNetwork;
-});
-
-const address = computed((): string => {
-  return addressShort(store.address);
-});
-
-onMounted(async (): Promise<void> => {
-  await connectWallet();
-  const provider = getProvider();
-
-  const connected = await isConnected(provider);
-  store.connected = connected;
-
-  const correctNetwork = await isMainnet(provider);
-  store.correctNetwork = correctNetwork;
-});
+onMounted(connectWallet);
 
 // Watches
 watch(
-  () => store.connected,
+  connected,
   async (connected): Promise<void> => {
+    // Don't use withProvider because there might no address, so it won't execute.
     const provider = getProvider();
     const address =
       provider && connected ? await getAddress(provider) : undefined;
@@ -107,21 +88,10 @@ watch(
 );
 
 // Events
-const changeNetwork = async (): Promise<void> => {
-  const provider = getProvider();
-  if (!provider) {
-    return;
-  }
-
+const changeNetwork = withProvider(async (provider) => {
   await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
   window.location.reload();
-};
-
-const onDisconnect = async (): Promise<void> => {
-  await clearProvider();
-
-  store.connected = false;
-};
+});
 </script>
 
 <style lang="scss" scoped>

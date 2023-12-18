@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { isDevelopment } from "@/Util/DevHelper";
-import { getProvider, isMainnet } from "@/Wallet";
+import { useWallet, isMainnet } from "@/Wallet";
 
 // Props
 interface Props {
@@ -39,22 +39,22 @@ const emit = defineEmits<{
   click: [];
 }>();
 
+// Refs
+const { withProvider } = useWallet();
+
 // Events
 const onClick = async (evt: Event): Promise<void> => {
   evt.stopImmediatePropagation();
 
   if (web3 && isDevelopment()) {
-    const provider = getProvider();
-    if (!provider) {
-      return;
-    }
+    await withProvider(async (provider) => {
+      const isCorrectNetwork = await isMainnet(provider);
 
-    const isCorrectNetwork = await isMainnet(provider);
-
-    if (!isCorrectNetwork) {
-      await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
-      window.location.reload();
-    }
+      if (!isCorrectNetwork) {
+        await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
+        window.location.reload();
+      }
+    })();
   }
 
   emit("click");
