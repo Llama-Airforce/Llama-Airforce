@@ -1,7 +1,7 @@
 export async function minDelay<T>(x: Promise<T>, delay = 250): Promise<T> {
-  const _minDelay = new Promise(res =>
+  const _minDelay = new Promise((resolve) =>
     setTimeout(() => {
-      res(null);
+      resolve(null);
     }, delay)
   );
 
