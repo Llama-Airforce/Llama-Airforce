@@ -127,10 +127,14 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { notify } from "@kyvg/vue3-notification";
 import { VeCRV__factory, Voting__factory } from "@/Contracts";
 import { AsyncValue, KPI, Button, Card, Modal, Slider } from "@/Framework";
-import { bigNumToNumber, numToBigNumber } from "@/Util";
+import {
+  tryNotify,
+  tryNotifyLoading,
+  bigNumToNumber,
+  numToBigNumber,
+} from "@/Util";
 import { CurveVotingAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
@@ -295,10 +299,8 @@ const onYeaPct = (newVal: string) => {
   yeaPct.value = parseFloat(newVal);
 };
 
-const vote = withSigner(async (signer, address) => {
-  voting.value = true;
-
-  try {
+const vote = withSigner((signer, address) =>
+  tryNotifyLoading(voting, async () => {
     const voting = Voting__factory.connect(CurveVotingAddress, signer);
     voterState.value = await voting.getVoterState(proposal.id, address);
     const pctBase = await voting.PCT_BASE().then((x) => x.toBigInt());
@@ -318,19 +320,11 @@ const vote = withSigner(async (signer, address) => {
       .then((x) => x.wait());
 
     showVote.value = false;
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      notify({ text: err.message, type: "error" });
-    }
-  } finally {
-    voting.value = false;
-  }
-});
+  })
+);
 
-const execute = withSigner(async (signer) => {
-  executing.value = true;
-
-  try {
+const execute = withSigner((signer) =>
+  tryNotifyLoading(executing, async () => {
     const voting = Voting__factory.connect(CurveVotingAddress, signer);
 
     const ps = [proposal.id] as const;
@@ -343,14 +337,8 @@ const execute = withSigner(async (signer) => {
       .then((x) => x.wait());
 
     canExecute.value = await voting.canExecute(proposal.id);
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      notify({ text: err.message, type: "error" });
-    }
-  } finally {
-    executing.value = false;
-  }
-});
+  })
+);
 
 // Watches
 const getWeb3Data = withProvider(async (provider, address) => {
@@ -369,13 +357,7 @@ watch(showVote, async (show) => {
     return;
   }
 
-  try {
-    await getWeb3Data();
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      notify({ text: err.message, type: "error" });
-    }
-  }
+  await tryNotify(getWeb3Data);
 });
 
 // Check if proposal can be executed.

@@ -40,10 +40,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { notify } from "@kyvg/vue3-notification";
 import { utils } from "ethers";
 import { Card, Button, InputNumber, InputText } from "@/Framework";
-import { numToBigNumber } from "@/Util";
+import { numToBigNumber, tryNotifyLoading } from "@/Util";
 import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";
 import { GaugeFactory__factory } from "@/Contracts";
@@ -73,9 +72,9 @@ const isValid = computed(() => {
 });
 
 // Methods
-const execute = withSigner(async (signer) => {
+const execute = withSigner((signer) => {
   if (!receiver.value || !amount.value) {
-    return;
+    return new Promise((resolve) => resolve());
   }
 
   const gaugeFactory = GaugeFactory__factory.connect(
@@ -83,26 +82,18 @@ const execute = withSigner(async (signer) => {
     signer
   );
 
-  deploying.value = true;
-
   if (typeof amount.value === "string") {
     amount.value = parseFloat(amount.value);
   }
   const amountFinal = numToBigNumber(amount.value, 18n);
 
-  try {
+  return tryNotifyLoading(deploying, async () => {
     const gauge = await gaugeFactory.deploy_gauge(
       receiver.value.toLocaleLowerCase(),
       amountFinal
     );
     emit("gauge", gauge as unknown as string);
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      notify({ text: err.message, type: "error" });
-    }
-  } finally {
-    deploying.value = false;
-  }
+  });
 });
 </script>
 

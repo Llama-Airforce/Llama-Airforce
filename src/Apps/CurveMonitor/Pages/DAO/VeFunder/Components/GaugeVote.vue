@@ -37,7 +37,6 @@
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { type Signer, utils } from "ethers";
-import { notify } from "@kyvg/vue3-notification";
 import { Card, Button, InputText } from "@/Framework";
 import { useWallet } from "@/Wallet";
 import {
@@ -45,6 +44,7 @@ import {
   AragonVoting__factory,
   GaugeController__factory,
 } from "@/Contracts";
+import { tryNotifyLoading } from "@/Util";
 import { MultisigAddress, veFunderGaugeController } from "@/Util/Addresses";
 
 const { t } = useI18n();
@@ -89,23 +89,15 @@ watch(
 );
 
 // Methods
-const execute = withSigner(async (signer) => {
+const execute = withSigner((signer) => {
   if (!gauge_.value) {
-    return;
+    return new Promise((resolve) => resolve());
   }
 
-  creating.value = true;
-
-  try {
+  return tryNotifyLoading(creating, async () => {
     await createVote(signer);
     emit("request");
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      notify({ text: err.message, type: "error" });
-    }
-  } finally {
-    creating.value = false;
-  }
+  });
 });
 
 const createVote = async (signer: Signer): Promise<void> => {
