@@ -64,6 +64,11 @@ export async function approve(
     .then((x) => x.toBigInt());
 
   if (allowance < input) {
+    // Any previous previous allowance has to be cleared first.
+    if (allowance > 0n) {
+      await erc20.approve(spender, 0).then((x) => x.wait());
+    }
+
     await erc20.approve(spender, input).then((x) => x.wait());
   }
 }
@@ -79,6 +84,11 @@ export async function maxApprove(
     .then((x) => x.toBigInt());
 
   if (allowance < input) {
+    // Any previous previous allowance has to be cleared first.
+    if (allowance > 0n) {
+      await erc20.approve(spender, 0).then((x) => x.wait());
+    }
+
     await erc20.approve(spender, constants.MaxUint256).then((x) => x.wait());
   }
 }
