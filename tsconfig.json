@@ -41,6 +41,9 @@
       "@/*": [
         "src/*"
       ],
+      "@CB/*": [
+        "src/Apps/Cookbook/*"
+      ],
       "@CM/*": [
         "src/Apps/CurveMonitor/*"
       ],

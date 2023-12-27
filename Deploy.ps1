@@ -6,7 +6,7 @@ param (
     [string]$Env
 )
 
-If (@("laf", "cm", "pm") -notcontains $App) {
+If (@("cb", "laf", "cm", "pm") -notcontains $App) {
     throw ("App '$App' is not a valid app")
 }
 
@@ -15,6 +15,10 @@ If (@("prod", "next") -notcontains $Env) {
 }
 
 switch ($App) {
+    "CB" {
+        $dirDist = "Llama-Airforce\src\Apps\Cookbook\dist"
+        $dirOutput = "Cookbook-Web"
+    }
     "LAF" {
         $dirDist = "Llama-Airforce\src\Apps\LlamaAirforce\dist"
         switch ($Env) {
