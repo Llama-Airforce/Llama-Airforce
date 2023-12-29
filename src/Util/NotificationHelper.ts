@@ -22,10 +22,8 @@ export async function tryNotify<T>(
   try {
     return await f();
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      const text = prettyError(err);
-      notify({ text, type: "error" });
-    }
+    const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
+    notify({ text, type: "error" });
 
     return undefined;
   }
@@ -45,10 +43,8 @@ export async function tryNotifyLoading<T>(
   try {
     return await f();
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      const text = prettyError(err);
-      notify({ text, type: "error" });
-    }
+    const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
+    notify({ text, type: "error" });
 
     return undefined;
   } finally {
