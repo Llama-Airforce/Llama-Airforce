@@ -1,9 +1,10 @@
 <template>
   <div
     class="card"
-    :inert="loading"
+    :inert="!!loading"
   >
     <Spinner
+      v-if="loading !== null"
       class="loader"
       :class="{ loading }"
     ></Spinner>
@@ -66,7 +67,7 @@ const {
   compact = false,
   collapsible = false,
   collapsed = false,
-  loading = false,
+  loading = null,
 } = defineProps<Props>();
 </script>
 

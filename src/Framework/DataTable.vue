@@ -2,7 +2,7 @@
   <div
     class="datatable"
     :class="{ loading }"
-    :inert="loading"
+    :inert="!!loading"
   >
     <div
       v-if="header"
@@ -67,6 +67,7 @@
 
       <div class="rows">
         <Spinner
+          v-if="loading !== null"
           class="loader"
           :class="{ loading }"
         ></Spinner>
@@ -185,7 +186,7 @@ const {
 
   icon = "",
   header = true,
-  loading = false,
+  loading = null,
 } = defineProps<Props>();
 
 // Emits
