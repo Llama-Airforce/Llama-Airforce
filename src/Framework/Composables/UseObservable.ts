@@ -1,6 +1,7 @@
 import { ref, type Ref, onUnmounted } from "vue";
 import { type Observable } from "rxjs";
 import { notify } from "@kyvg/vue3-notification";
+import { prettyError } from "@/Util";
 
 /**
  * Vue composable that transforms an observale into a Vue 3 ref.
@@ -18,7 +19,9 @@ export function useObservable<T>(obs: Observable<T>, init: T): Ref<T> {
       obsRef.value = x;
     },
     error: (err) => {
-      const text = err instanceof Error ? err.message : JSON.stringify(err);
+      const text =
+        err instanceof Error ? prettyError(err) : JSON.stringify(err);
+
       notify({ text, type: "error" });
     },
   });
