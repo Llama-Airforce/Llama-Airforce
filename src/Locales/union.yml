@@ -3,7 +3,7 @@ en:
   tvl: TVL
   submit: Submit
   submitting: Submitting...
-  docs: Read our documentation <a href="https://docs.llama.airforce" target="_blank">here</a>.
+  docs: Read our docs <a href="https://docs.llama.airforce" target="_blank">here</a>.
 
   # Member.vue
   allocation: Allocation
