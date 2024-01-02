@@ -1,6 +1,6 @@
 import {
   EpochOverview,
-  Overview,
+  OverviewResponse,
 } from "@/Apps/LlamaAirforce/Pages/Bribes/Models";
 import ServiceBase from "@/Services/ServiceBase";
 
@@ -46,7 +46,7 @@ export default class HiddenHandService extends ServiceBase {
     );
   }
 
-  public async getOverview(): Promise<Overview> {
+  public async getOverview(): Promise<OverviewResponse> {
     const roundOverviewPromise = this.getRounds().then((data) =>
       data.map((votes, index) => {
         const totalAmountDollars = votes.reduce(
@@ -72,9 +72,12 @@ export default class HiddenHandService extends ServiceBase {
     );
 
     return roundOverviewPromise.then((epochs) => ({
-      id: "bribes-overview-aura",
-      rewardPerDollarBribe: 122, // TODO: - fix
-      epochs,
+      success: !!epochs.length,
+      dashboard: {
+        id: "bribes-overview-aura",
+        rewardPerDollarBribe: 122, // TODO: - fix
+        epochs,
+      },
     }));
   }
 }

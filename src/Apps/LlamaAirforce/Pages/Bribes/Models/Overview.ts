@@ -7,3 +7,8 @@ export type Overview = {
   rewardPerDollarBribe: number;
   epochs: EpochOverview[];
 };
+
+export type OverviewResponse = {
+  success: boolean;
+  dashboard?: Overview;
+};
