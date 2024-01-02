@@ -16,7 +16,11 @@ export type { EpochId } from "@LAF/Pages/Bribes/Models/EpochId";
 
 export type { EpochOverview } from "@LAF/Pages/Bribes/Models/EpochOverview";
 
-export type { OverviewId, Overview } from "@LAF/Pages/Bribes/Models/Overview";
+export type {
+  OverviewId,
+  Overview,
+  OverviewResponse,
+} from "@LAF/Pages/Bribes/Models/Overview";
 
 export type { Platform } from "@LAF/Pages/Bribes/Models/Platform";
 export { isPlatform } from "@LAF/Pages/Bribes/Models/Platform";
