@@ -42,10 +42,9 @@ import type {
   Product,
 } from "@LAF/Pages/Bribes/Models";
 import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
-import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-
-const bribesService = new BribesService(getHost());
+import AuraBribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/AuraBribesService";
+import BribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/BribesService";
 
 let isInitializing = false;
 
@@ -65,6 +64,12 @@ const product = computed((): Product | null => {
     protocol,
   };
 });
+
+const bribesService = computed((): BribesService =>
+  product.value?.protocol === "aura-bal"
+    ? new AuraBribesService(getHost())
+    : new BribesService(getHost())
+);
 
 const holiday = computed((): boolean => product.value?.platform === "hh");
 
@@ -87,7 +92,7 @@ const getRounds = async (product: Product): Promise<number[]> => {
     return rounds;
   }
 
-  rounds = await bribesService
+  rounds = await bribesService.value
     .rounds({ platform, protocol })
     .then((x) => x.rounds);
 
@@ -142,10 +147,11 @@ const findOrGetEpoch = async (
     );
 
     if (epochState) {
+      console.log("TEST ALERT");
       return epochState;
     }
 
-    const epochResp = await bribesService.getEpoch({
+    const epochResp = await bribesService.value.getEpoch({
       platform,
       protocol,
       round,
@@ -167,7 +173,7 @@ const findOrGetEpoch = async (
 
   // If finally no epoch was returned, fetch the latest one instead.
   if (!epochFound) {
-    const { epoch: epochLatest } = await bribesService.getEpoch({
+    const { epoch: epochLatest } = await bribesService.value.getEpoch({
       platform,
       protocol,
     });
