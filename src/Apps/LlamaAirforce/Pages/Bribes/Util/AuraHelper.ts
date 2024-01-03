@@ -1,5 +1,12 @@
 import type { OverviewResponse } from "@/Apps/LlamaAirforce/Pages/Bribes/Models";
 
+export const AuraConstants = {
+  API_URL: "https://api.hiddenhand.finance/proposal/aura",
+  START_ROUND: 28,
+  START_DATE: 1689019200,
+  BIWEEKLY: 60 * 60 * 24 * 14,
+};
+
 // Helper to merge HH data
 export function getMergeWithHiddenHands(
   baseRequest: Promise<OverviewResponse>,
@@ -7,8 +14,9 @@ export function getMergeWithHiddenHands(
 ) {
   return Promise.all([baseRequest, newRequest]).then(
     ([baseResponse, newResponse]) => {
-      if (!baseResponse.dashboard || !newResponse.dashboard)
+      if (!baseResponse.dashboard || !newResponse.dashboard) {
         return { success: false };
+      }
       const epochs = [
         ...baseResponse.dashboard.epochs,
         ...newResponse.dashboard.epochs,
@@ -22,4 +30,11 @@ export function getMergeWithHiddenHands(
       };
     }
   );
+}
+
+export function getLatestAuraRound(): number {
+  const { START_DATE, BIWEEKLY, START_ROUND } = AuraConstants;
+  const today = Math.floor(Date.now() / 1000);
+  const len = Math.ceil((today - START_DATE) / BIWEEKLY);
+  return START_ROUND + len;
 }
