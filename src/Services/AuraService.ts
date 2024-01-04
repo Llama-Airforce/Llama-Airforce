@@ -7,7 +7,7 @@ import {
   getLatestAuraRound,
 } from "@/Apps/LlamaAirforce/Pages/Bribes/Util/AuraHelper";
 import ServiceBase from "@/Services/ServiceBase";
-import { flattenDeep } from "lodash";
+import { flatten, flattenDeep } from "lodash";
 
 type GaugeVote = {
   proposal: string;
@@ -62,12 +62,17 @@ export default class AuraService extends ServiceBase {
     const epochId = _epochId || this.latestRound;
 
     const round = await this.fetchRound(
-      START_DATE + (START_ROUND - epochId) * BIWEEKLY
+      START_DATE + (epochId - START_ROUND) * BIWEEKLY
     );
+
+    const end = round[0].proposalDeadline;
 
     const bribed = Object.fromEntries(
       round
-        .map((vote) => [vote.title, vote.totalValue])
+        .map(({ title, voteCount, totalValue }) => [
+          title,
+          totalValue > 0 ? voteCount : 0,
+        ])
         .filter(([_, value]) => !!value)
     );
 
@@ -75,9 +80,9 @@ export default class AuraService extends ServiceBase {
       round.map((vote) =>
         vote.bribes.map((bribe) => ({
           pool: vote.title,
-          token: bribe.symbol,
+          token: bribe.symbol.toUpperCase(),
           amount: bribe.amount,
-          amountDollars: bribe.value,
+          amountDollars: bribe.value, //
         }))
       )
     );
@@ -85,33 +90,38 @@ export default class AuraService extends ServiceBase {
     return Promise.resolve({
       success: true,
       epoch: {
-        round: 27,
+        round: epochId,
         platform: "hh",
         protocol: "aura-bal",
-        proposal:
-          "0x8329fa2ddeaca8cfd6652adbb855bce8424730bcc7407950408893e1a0eaf1e6",
-        end: 1687831200,
-        bribed,
+        proposal: "",
+        end,
+        bribed, //
         bribes,
       },
     });
   }
 
   public async getOverview(): Promise<OverviewResponse> {
-    const roundOverviewPromise = this.fetchRounds().then((data) =>
-      data.map((votes, index) => {
-        const totalAmountDollars = votes.reduce(
-          (acc, { totalValue }) => acc + totalValue,
+    const roundOverviewPromise = this.fetchRounds().then((incentives) => {
+      return incentives.map((item, index) => {
+        const mapped = item.map(({ totalValue, voteCount }) => [
+          totalValue,
+          totalValue > 0 ? voteCount : 0,
+        ]);
+
+        const totalAmountDollars = mapped.reduce(
+          (acc, [totalValue]) => acc + totalValue,
           0
         );
-        const totalVotes = votes.reduce(
-          (acc, { voteCount }) => acc + voteCount,
+        const totalVotes = mapped.reduce(
+          (acc, [_, voteCount]) => acc + voteCount,
           0
         );
+
         const dollarPerVlAsset =
           totalVotes > 0 ? totalAmountDollars / totalVotes : 0;
         const round = START_ROUND + index;
-        const end = votes[votes.length - 1].proposalDeadline;
+        const end = item[item.length - 1].proposalDeadline;
 
         return {
           proposal: "", // TODO: - fix
@@ -120,14 +130,14 @@ export default class AuraService extends ServiceBase {
           dollarPerVlAsset,
           round,
         } as EpochOverview;
-      })
-    );
+      });
+    });
 
     return roundOverviewPromise.then((epochs) => ({
       success: !!epochs.length,
       dashboard: {
         id: "bribes-overview-aura",
-        rewardPerDollarBribe: 122, // TODO: - fix
+        rewardPerDollarBribe: 200, // TODO: - fix
         epochs,
       },
     }));

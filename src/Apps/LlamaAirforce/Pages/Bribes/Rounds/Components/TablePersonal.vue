@@ -82,7 +82,7 @@
 
     <template #no-data>
       <div v-if="loading">{{ t("loading") }} {{ addressShort(voter) }}</div>
-      <WalletConnectButton v-if="!connected"></WalletConnectButton>
+      <WalletConnectButton v-if="!connected && isSupported"></WalletConnectButton>
     </template>
   </DataTable>
 </template>
@@ -130,6 +130,8 @@ const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("total");
 const bribed = ref<BribedPersonal[]>([]);
 const voter = ref("");
 const loading = ref(false);
+
+const isSupported = computed((): boolean => store.selectedEpoch?.platform !== "hh");
 
 const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;

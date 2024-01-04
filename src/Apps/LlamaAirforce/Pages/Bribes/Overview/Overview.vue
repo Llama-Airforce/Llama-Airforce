@@ -2,10 +2,7 @@
   <div class="overview">
     <div
       class="dashboard"
-      :class="{ holiday }"
     >
-      <Holiday v-if="holiday"></Holiday>
-
       <SystemSelect
         class="system-select"
         @select-platform="onSelectPlatform"
@@ -24,7 +21,6 @@
 import { computed, onBeforeMount, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getHost } from "@/Services/Host";
-import Holiday from "@LAF/Pages/Bribes/Rounds/Components/Holiday.vue";
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import GraphBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/GraphBribesRevenue.vue";
 import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
@@ -60,8 +56,6 @@ const product = computed((): Product | null => {
     protocol,
   };
 });
-
-const holiday = computed((): boolean => product.value?.platform === "hh");
 
 const overviewId = computed((): OverviewId | null => {
   switch (product.value?.platform) {
@@ -183,16 +177,6 @@ const initFromRouter = async (): Promise<void> => {
     grid-template-rows: 64px 64px auto 1fr;
 
     --offset: 0;
-
-    &.holiday {
-      grid-template-rows: auto 64px 64px auto 1fr;
-      --offset: 1;
-    }
-
-    .holiday {
-      grid-column: 1 / -1;
-      grid-row: 1;
-    }
 
     .system-select {
       grid-column: 1;
