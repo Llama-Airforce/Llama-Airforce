@@ -25,6 +25,7 @@ export function getMergeWithHiddenHands(
         ...baseResponse,
         dashboard: {
           ...baseResponse.dashboard,
+          rewardPerDollarBribe: newResponse.dashboard?.rewardPerDollarBribe,
           epochs,
         },
       };

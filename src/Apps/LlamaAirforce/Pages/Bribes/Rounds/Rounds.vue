@@ -2,10 +2,7 @@
   <div class="bribes">
     <div
       class="dashboard"
-      :class="{ holiday }"
     >
-      <Holiday v-if="holiday"></Holiday>
-
       <SystemSelect
         class="system-select"
         @select-platform="onSelectPlatform"
@@ -29,7 +26,6 @@
 import { computed, onBeforeMount, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getHost } from "@/Services/Host";
-import Holiday from "@LAF/Pages/Bribes/Rounds/Components/Holiday.vue";
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
 import TableBribed from "@LAF/Pages/Bribes/Rounds/Components/TableBribed.vue";
@@ -70,8 +66,6 @@ const bribesService = computed((): BribesService =>
     ? new AuraBribesService(getHost())
     : new BribesService(getHost())
 );
-
-const holiday = computed((): boolean => product.value?.platform === "hh");
 
 // Hooks.
 onBeforeMount(async (): Promise<void> => {
@@ -142,12 +136,12 @@ const findOrGetEpoch = async (
 
   // Given a round, check if it's already loaded, otherwise try to fetch it.
   if (round) {
+
     const epochState = store.epochs[platform][protocol].find(
       (epoch) => epoch.round === round
     );
 
     if (epochState) {
-      console.log("TEST ALERT");
       return epochState;
     }
 
@@ -196,6 +190,7 @@ const onSelectRound = async (round?: number, init = false): Promise<void> => {
   }
 
   const epoch = await findOrGetEpoch(product.value, round);
+
   if (epoch) {
     store.selectedEpoch = epoch;
 
@@ -266,16 +261,6 @@ const initFromRouter = async (): Promise<void> => {
 
     --offset: 0;
 
-    &.holiday {
-      grid-template-rows: auto 64px 64px auto 1fr;
-      --offset: 1;
-    }
-
-    .holiday {
-      grid-column: 1 / -1;
-      grid-row: 1;
-    }
-
     .system-select {
       grid-column: 1 / span 2;
       grid-row: calc(var(--offset) + 1);
@@ -294,13 +279,16 @@ const initFromRouter = async (): Promise<void> => {
 
     .datatable-bribed {
       grid-column: 1;
-      grid-row: calc(var(--offset) + 4);
     }
 
     .datatable-personal {
       grid-column: 2;
       grid-row: calc(var(--offset) + 4);
     }
+
+    .holiday {
+        grid-row: 1;
+      }
   }
 }
 </style>
