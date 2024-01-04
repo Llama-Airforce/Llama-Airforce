@@ -25,7 +25,7 @@ export default class AuraBribesService extends BribesService {
     if ((epochId?.round ?? Number.MAX_VALUE) >= AuraConstants.START_ROUND) {
       return auraService.getRound(epochId.round);
     }
-    // Else, fallback
+    // Else, fallback to Llama
     return this.fetch(`${this.host}/bribes`, {
       platform: epochId.platform,
       protocol: epochId.protocol,

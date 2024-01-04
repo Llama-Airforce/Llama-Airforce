@@ -1,4 +1,5 @@
 import {
+  Epoch,
   EpochOverview,
   OverviewResponse,
 } from "@/Apps/LlamaAirforce/Pages/Bribes/Models";
@@ -7,7 +8,11 @@ import {
   getLatestAuraRound,
 } from "@/Apps/LlamaAirforce/Pages/Bribes/Util/AuraHelper";
 import ServiceBase from "@/Services/ServiceBase";
-import { flatten, flattenDeep } from "lodash";
+import { flattenDeep } from "lodash";
+
+type GaugeResponse = {
+  data: GaugeVote[];
+};
 
 type GaugeVote = {
   proposal: string;
@@ -19,12 +24,21 @@ type GaugeVote = {
   voteCount: number;
   valuePerVote: number;
   maxValuePerVote: number;
-  bribes: any[];
+  bribes: Bribe[];
   index: number;
 };
 
-type GaugeResponse = {
-  data: GaugeVote[];
+type Bribe = {
+  token: string;
+  symbol: string;
+  decimals: number;
+  value: number;
+  maxValue: number;
+  amount: number;
+  maxTokensPerVote: number;
+  briber: string;
+  periodIndex: number;
+  chainId: number;
 };
 
 const { API_URL, START_ROUND, START_DATE, BIWEEKLY } = AuraConstants;
@@ -54,9 +68,12 @@ export default class AuraService extends ServiceBase {
     );
   }
 
-  public async getRound(_epochId?: number): Promise<any> {
+  public async getRound(_epochId?: number): Promise<{
+    success: boolean;
+    epoch?: Epoch;
+  }> {
     if ((_epochId ?? Number.MAX_VALUE) < START_ROUND - 1) {
-      return Promise.resolve(null);
+      return Promise.resolve({ success: false });
     }
 
     const epochId = _epochId || this.latestRound;
@@ -65,7 +82,7 @@ export default class AuraService extends ServiceBase {
       START_DATE + (epochId - START_ROUND) * BIWEEKLY
     );
 
-    const end = round[0].proposalDeadline;
+    const end = round[round.length - 1].proposalDeadline;
 
     const bribed = Object.fromEntries(
       round
@@ -82,7 +99,7 @@ export default class AuraService extends ServiceBase {
           pool: vote.title,
           token: bribe.symbol.toUpperCase(),
           amount: bribe.amount,
-          amountDollars: bribe.value, //
+          amountDollars: bribe.value,
         }))
       )
     );
@@ -93,9 +110,9 @@ export default class AuraService extends ServiceBase {
         round: epochId,
         platform: "hh",
         protocol: "aura-bal",
-        proposal: "",
+        proposal: "", // TODO: - fix
         end,
-        bribed, //
+        bribed,
         bribes,
       },
     });
