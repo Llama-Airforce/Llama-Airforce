@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul v-if="pages > 1">
     <li
       :class="{ active: page === 1 }"
       @click="onPage(1)"
