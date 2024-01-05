@@ -1,7 +1,8 @@
 import type { OverviewResponse } from "@/Apps/LlamaAirforce/Pages/Bribes/Models";
 
 export const AuraConstants = {
-  API_URL: "https://api.hiddenhand.finance/proposal/aura",
+  HH_API_URL: "https://api.hiddenhand.finance/proposal/aura",
+  LA_API_URL: "https://llama-airforce-api.aura.finance/dollar-per-vlasset",
   START_ROUND: 28,
   START_DATE: 1689019200,
   BIWEEKLY: 60 * 60 * 24 * 14,
