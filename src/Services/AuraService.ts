@@ -117,7 +117,7 @@ export default class AuraService extends ServiceBase {
         round: epochId,
         platform: "hh",
         protocol: "aura-bal",
-        proposal: "", // TODO: - fix
+        proposal: "",
         end,
         bribed,
         bribes,
@@ -148,11 +148,12 @@ export default class AuraService extends ServiceBase {
         const end = item[item.length - 1].proposalDeadline;
 
         return {
-          proposal: "", // TODO: - fix
+          protocol: "aura-bal",
           totalAmountDollars,
           end,
           dollarPerVlAsset,
           round,
+          proposal: "",
         } as EpochOverview;
       });
     });
