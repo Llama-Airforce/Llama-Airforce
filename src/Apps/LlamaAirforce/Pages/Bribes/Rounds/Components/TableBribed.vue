@@ -231,6 +231,10 @@ const bribes = (bribed: Bribed): Bribe[] => {
         align-items: start;
         gap: 1rem;
 
+        > span {
+          font-weight: bold;
+        }
+
         > ul {
           display: flex;
           flex-direction: column;
