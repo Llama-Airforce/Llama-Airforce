@@ -232,6 +232,7 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
           display: grid;
           grid-template-columns: 1.5rem 1fr 1fr 1fr 1fr;
           grid-column-gap: 1rem;
+          align-items: center;
 
           // Right adjust number columns.
           div:nth-child(3),

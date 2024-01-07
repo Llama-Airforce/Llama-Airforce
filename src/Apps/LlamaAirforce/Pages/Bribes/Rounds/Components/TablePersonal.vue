@@ -332,6 +332,7 @@ watch(epoch, async (newEpoch): Promise<void> => {
           flex-grow: 1;
           display: grid;
           grid-template-columns: 20px 1fr 3fr 2fr 2fr;
+          align-items: center;
 
           // Right adjust number columns.
           div:nth-child(4),

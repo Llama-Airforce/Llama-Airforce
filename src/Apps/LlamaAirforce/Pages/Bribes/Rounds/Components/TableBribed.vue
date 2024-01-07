@@ -211,6 +211,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
           display: grid;
           grid-template-columns: 20px 1.5fr 0.6fr 0.6fr;
           grid-column-gap: 1rem;
+          align-items: center;
 
           // Right adjust number columns.
           div:nth-child(3),
