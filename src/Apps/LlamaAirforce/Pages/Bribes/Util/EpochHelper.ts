@@ -42,7 +42,9 @@ export function getLink(epoch: EpochId, proposal: ProposalId): string {
     case "cvx-prisma":
       return `https://vote.convexfinance.com/#/proposal/${proposal}`;
     case "aura-bal":
-      return `https://snapshot.org/#/aurafinance.eth/proposal/${proposal}`;
+      return `https://snapshot.org/#/aurafinance.eth/${
+        proposal ? `proposal/${proposal}` : ``
+      }`;
     default:
       return "";
   }
