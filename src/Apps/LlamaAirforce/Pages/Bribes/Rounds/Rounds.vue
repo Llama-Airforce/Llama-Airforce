@@ -112,20 +112,25 @@ const onSelectProtocol = async (
     return;
   }
 
-  const protocols = getProtocols(store.selectedPlatform!)
-  if (protocols.includes(protocol)) {
-    // platform includes current protocol
-    // don't switch platform
-    store.selectedProtocol = protocol;
-  } else {
-    if (protocol === store.selectedProtocol) {
-      // no protocol change, let platform change
-      // & override selected protocol to first of arr
-      store.selectedProtocol = protocols[0];
-    } else {
+  if (store.selectedPlatform) {
+    const protocols = getProtocols(store.selectedPlatform)
+    if (protocols.includes(protocol)) {
+      // platform includes current protocol
+      // keep platform, update protocol
       store.selectedProtocol = protocol;
-      store.selectedPlatform = store.selectedPlatform === 'hh' ? 'votium' : 'hh';
+    } else {
+      if (protocol === store.selectedProtocol) {
+        // no protocol change, change platform
+        // override selected protocol to first of arr
+        store.selectedProtocol = protocols[0];
+      } else {
+        // update protocol, flip platform
+        store.selectedProtocol = protocol;
+        store.selectedPlatform = store.selectedPlatform === 'hh' ? 'votium' : 'hh';
+      }
     }
+  } else {
+    store.selectedProtocol = protocol;
   }
 
   // Check if rounds are loaded for this protocol.
