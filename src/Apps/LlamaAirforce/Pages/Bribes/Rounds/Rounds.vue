@@ -37,7 +37,7 @@ import type {
   Protocol,
   Product,
 } from "@LAF/Pages/Bribes/Models";
-import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
+import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import AuraBribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/AuraBribesService";
 import BribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/BribesService";
@@ -112,7 +112,21 @@ const onSelectProtocol = async (
     return;
   }
 
-  store.selectedProtocol = protocol;
+  const protocols = getProtocols(store.selectedPlatform!)
+  if (protocols.includes(protocol)) {
+    // platform includes current protocol
+    // don't switch platform
+    store.selectedProtocol = protocol;
+  } else {
+    if (protocol === store.selectedProtocol) {
+      // no protocol change, let platform change
+      // & override selected protocol to first of arr
+      store.selectedProtocol = protocols[0];
+    } else {
+      store.selectedProtocol = protocol;
+      store.selectedPlatform = store.selectedPlatform === 'hh' ? 'votium' : 'hh';
+    }
+  }
 
   // Check if rounds are loaded for this protocol.
   const platform = product.value?.platform;

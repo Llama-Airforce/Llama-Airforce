@@ -106,15 +106,11 @@ const protocol = computed((): ProtocolInfo | null => {
 });
 
 const protocols = computed((): ProtocolInfo[] => {
-  const protocols: ProtocolInfo[] = [
+  return [
     { protocol: "cvx-crv", label: "CRV", logo: "crv.svg" },
     { protocol: "cvx-prisma", label: "PRISMA", logo: "prisma.svg" },
     { protocol: "aura-bal", label: "AURA", logo: "aura.png" },
   ];
-
-  return getProtocols(platform.value?.platform)
-    .map((protocol) => protocols.find((p) => p.protocol === protocol))
-    .filter(notEmpty);
 });
 
 // Hooks
