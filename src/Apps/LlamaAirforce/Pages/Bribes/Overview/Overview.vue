@@ -25,7 +25,7 @@ import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import GraphBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/GraphBribesRevenue.vue";
 import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
 import Summary from "@LAF/Pages/Bribes/Overview/Components/Summary.vue";
-import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
+import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import type {
   Overview,
   OverviewId,
@@ -111,7 +111,21 @@ const onSelectProtocol = async (
     return;
   }
 
-  store.selectedProtocol = protocol;
+  const protocols = getProtocols(store.selectedPlatform!)
+  if (protocols.includes(protocol)) {
+    // platform includes current protocol
+    // don't switch platform
+    store.selectedProtocol = protocol;
+  } else {
+    if (protocol === store.selectedProtocol) {
+      // no protocol change, let platform change
+      // & override selected protocol to first of arr
+      store.selectedProtocol = protocols[0];
+    } else {
+      store.selectedProtocol = protocol;
+      store.selectedPlatform = store.selectedPlatform === 'hh' ? 'votium' : 'hh';
+    }
+  }
 
   // Check if dashboard is loaded for this protocol.
   const platform = product.value?.platform;
