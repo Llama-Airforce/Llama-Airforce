@@ -48,13 +48,8 @@
 import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
-import { notEmpty } from "@/Util";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import {
-  getProtocols,
-  type Protocol,
-  type Platform,
-} from "@LAF/Pages/Bribes/Models";
+import { type Protocol, type Platform } from "@LAF/Pages/Bribes/Models";
 
 const { t } = useI18n();
 
