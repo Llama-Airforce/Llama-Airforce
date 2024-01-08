@@ -11,7 +11,9 @@ export default class AuraBribesService extends BribesService {
     rounds: number[];
   }> {
     return Promise.resolve({
-      rounds: [...new Array(auraService.latestRound)].map((_, i) => i + 1),
+      rounds: [...new Array<number>(auraService.latestRound)].map(
+        (_, i) => i + 1
+      ),
     });
   }
 
