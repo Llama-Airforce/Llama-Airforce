@@ -1,8 +1,6 @@
 <template>
   <div class="bribes">
-    <div
-      class="dashboard"
-    >
+    <div class="dashboard">
       <SystemSelect
         class="system-select"
         @select-platform="onSelectPlatform"
@@ -61,10 +59,11 @@ const product = computed((): Product | null => {
   };
 });
 
-const bribesService = computed((): BribesService =>
-  product.value?.protocol === "aura-bal"
-    ? new AuraBribesService(getHost())
-    : new BribesService(getHost())
+const bribesService = computed(
+  (): BribesService =>
+    product.value?.protocol === "aura-bal"
+      ? new AuraBribesService(getHost())
+      : new BribesService(getHost())
 );
 
 // Hooks.
@@ -113,20 +112,19 @@ const onSelectProtocol = async (
   }
 
   if (store.selectedPlatform) {
-    const protocols = getProtocols(store.selectedPlatform)
+    const protocols = getProtocols(store.selectedPlatform);
     if (protocols.includes(protocol)) {
-      // platform includes current protocol
-      // keep platform, update protocol
+      // platform includes current protocol, keep platform, update protocol
       store.selectedProtocol = protocol;
     } else {
       if (protocol === store.selectedProtocol) {
-        // no protocol change, change platform
-        // override selected protocol to first of arr
+        // no protocol change, change platform, override selected protocol to first of arr
         store.selectedProtocol = protocols[0];
       } else {
         // update protocol, flip platform
         store.selectedProtocol = protocol;
-        store.selectedPlatform = store.selectedPlatform === 'hh' ? 'votium' : 'hh';
+        store.selectedPlatform =
+          store.selectedPlatform === "hh" ? "votium" : "hh";
       }
     }
   } else {
@@ -155,7 +153,6 @@ const findOrGetEpoch = async (
 
   // Given a round, check if it's already loaded, otherwise try to fetch it.
   if (round) {
-
     const epochState = store.epochs[platform][protocol].find(
       (epoch) => epoch.round === round
     );
@@ -306,8 +303,8 @@ const initFromRouter = async (): Promise<void> => {
     }
 
     .holiday {
-        grid-row: 1;
-      }
+      grid-row: 1;
+    }
   }
 }
 </style>

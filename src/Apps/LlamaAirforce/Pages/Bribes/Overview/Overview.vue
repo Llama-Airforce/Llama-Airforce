@@ -1,8 +1,6 @@
 <template>
   <div class="overview">
-    <div
-      class="dashboard"
-    >
+    <div class="dashboard">
       <SystemSelect
         class="system-select"
         @select-platform="onSelectPlatform"
@@ -112,20 +110,19 @@ const onSelectProtocol = async (
   }
 
   if (store.selectedPlatform) {
-    const protocols = getProtocols(store.selectedPlatform)
+    const protocols = getProtocols(store.selectedPlatform);
     if (protocols.includes(protocol)) {
-      // platform includes current protocol
-      // keep platform, update protocol
+      // platform includes current protocol, keep platform, update protocol
       store.selectedProtocol = protocol;
     } else {
       if (protocol === store.selectedProtocol) {
-        // no protocol change, change platform
-        // override selected protocol to first of arr
+        // no protocol change, change platform, override selected protocol to first of arr
         store.selectedProtocol = protocols[0];
       } else {
         // update protocol, flip platform
         store.selectedProtocol = protocol;
-        store.selectedPlatform = store.selectedPlatform === 'hh' ? 'votium' : 'hh';
+        store.selectedPlatform =
+          store.selectedPlatform === "hh" ? "votium" : "hh";
       }
     }
   } else {
