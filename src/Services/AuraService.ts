@@ -57,7 +57,7 @@ export default class AuraService extends ServiceBase {
   private async fetchIncentivePerVote(): Promise<number> {
     return this.fetch<{ result: number }>(`${LA_API_URL}/${this.today}`)
       ?.then(({ result }) => result)
-      .catch(() => Promise.resolve(0));
+      .catch(() => 0);
   }
 
   private async fetchRound(timestamp: number): Promise<GaugeVote[]> {
@@ -69,7 +69,7 @@ export default class AuraService extends ServiceBase {
   private async fetchRounds(): Promise<GaugeVote[][]> {
     const len = Math.ceil((this.today - START_DATE) / BIWEEKLY);
     return Promise.all(
-      [...new Array(len)].map((_, i) =>
+      [...new Array<number>(len)].map((_, i) =>
         this.fetchRound(START_DATE + i * BIWEEKLY)
       )
     );
@@ -83,7 +83,7 @@ export default class AuraService extends ServiceBase {
       return Promise.resolve({ success: false });
     }
 
-    const epochId = _epochId || this.latestRound;
+    const epochId = _epochId ?? this.latestRound;
 
     const round = await this.fetchRound(
       START_DATE + (epochId - START_ROUND) * BIWEEKLY
@@ -93,11 +93,11 @@ export default class AuraService extends ServiceBase {
 
     const bribed = Object.fromEntries(
       round
-        .map(({ title, voteCount, totalValue }) => [
-          title,
-          totalValue > 0 ? voteCount : 0,
-        ])
-        .filter(([_, value]) => !!value)
+        .map(
+          ({ title, voteCount, totalValue }) =>
+            [title, totalValue > 0 ? voteCount : 0] as const
+        )
+        .filter(([, value]) => !!value)
     );
 
     const bribes = flattenDeep(
@@ -138,7 +138,7 @@ export default class AuraService extends ServiceBase {
           0
         );
         const totalVotes = mapped.reduce(
-          (acc, [_, voteCount]) => acc + voteCount,
+          (acc, [, voteCount]) => acc + voteCount,
           0
         );
 
