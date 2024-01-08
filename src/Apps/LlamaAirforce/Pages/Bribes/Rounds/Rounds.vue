@@ -37,8 +37,8 @@ import type {
 } from "@LAF/Pages/Bribes/Models";
 import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import AuraBribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/AuraBribesService";
-import BribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/BribesService";
+import AuraBribesService from "@LAF/Pages/Bribes/Services/AuraBribesService";
+import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 
 let isInitializing = false;
 

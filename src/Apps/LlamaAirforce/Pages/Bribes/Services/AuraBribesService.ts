@@ -1,8 +1,8 @@
-import BribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/BribesService";
-import { AuraConstants } from "@/Apps/LlamaAirforce/Pages/Bribes/Util/AuraHelper";
 import AuraService from "@/Services/AuraService";
 import { getHost } from "@/Services/Host";
 import type { Epoch, EpochId } from "@LAF/Pages/Bribes/Models";
+import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
+import { AuraConstants } from "@LAF/Pages/Bribes/Util/AuraHelper";
 
 const auraService = new AuraService(getHost());
 

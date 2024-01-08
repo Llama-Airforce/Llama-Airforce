@@ -1,7 +1,7 @@
-import { getMergeWithHiddenHands } from "@/Apps/LlamaAirforce/Pages/Bribes/Util/AuraHelper";
 import { ServiceBase } from "@/Services";
 import AuraService from "@/Services/AuraService";
 import { getHost } from "@/Services/Host";
+import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import type { OverviewId, OverviewResponse } from "@LAF/Pages/Bribes/Models";
 
 const auraService = new AuraService(getHost());

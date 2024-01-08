@@ -1,14 +1,14 @@
+import { flattenDeep } from "lodash";
+import ServiceBase from "@/Services/ServiceBase";
 import {
-  Epoch,
-  EpochOverview,
-  OverviewResponse,
-} from "@/Apps/LlamaAirforce/Pages/Bribes/Models";
+  type Epoch,
+  type EpochOverview,
+  type OverviewResponse,
+} from "@LAF/Pages/Bribes/Models";
 import {
   AuraConstants,
   getLatestAuraRound,
-} from "@/Apps/LlamaAirforce/Pages/Bribes/Util/AuraHelper";
-import ServiceBase from "@/Services/ServiceBase";
-import { flattenDeep } from "lodash";
+} from "@LAF/Pages/Bribes/Util/AuraHelper";
 
 type GaugeResponse = {
   data: GaugeVote[];

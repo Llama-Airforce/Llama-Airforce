@@ -1,4 +1,4 @@
-import type { OverviewResponse } from "@/Apps/LlamaAirforce/Pages/Bribes/Models";
+import type { OverviewResponse } from "@LAF/Pages/Bribes/Models";
 
 export const AuraConstants = {
   HH_API_URL: "https://api.hiddenhand.finance/proposal/aura",
