@@ -1,6 +1,6 @@
 import { ServiceBase } from "@/Services";
-import AuraService from "@/Services/AuraService";
 import { getHost } from "@/Services/Host";
+import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import type { OverviewId, OverviewResponse } from "@LAF/Pages/Bribes/Models";
 

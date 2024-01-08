@@ -1,7 +1,7 @@
-import AuraService from "@/Services/AuraService";
 import { getHost } from "@/Services/Host";
 import type { Epoch, EpochId } from "@LAF/Pages/Bribes/Models";
 import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
+import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { AuraConstants } from "@LAF/Pages/Bribes/Util/AuraHelper";
 
 const auraService = new AuraService(getHost());
