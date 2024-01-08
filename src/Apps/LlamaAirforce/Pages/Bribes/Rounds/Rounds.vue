@@ -301,10 +301,6 @@ const initFromRouter = async (): Promise<void> => {
       grid-column: 2;
       grid-row: calc(var(--offset) + 4);
     }
-
-    .holiday {
-      grid-row: 1;
-    }
   }
 }
 </style>
