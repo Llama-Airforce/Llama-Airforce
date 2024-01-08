@@ -2,12 +2,12 @@ import BribesService from "@/Apps/LlamaAirforce/Pages/Bribes/Services/BribesServ
 import { AuraConstants } from "@/Apps/LlamaAirforce/Pages/Bribes/Util/AuraHelper";
 import AuraService from "@/Services/AuraService";
 import { getHost } from "@/Services/Host";
-import type { Epoch, EpochId, Product } from "@LAF/Pages/Bribes/Models";
+import type { Epoch, EpochId } from "@LAF/Pages/Bribes/Models";
 
 const auraService = new AuraService(getHost());
 
 export default class AuraBribesService extends BribesService {
-  override async rounds(_: Partial<Product>): Promise<{
+  override async rounds(): Promise<{
     rounds: number[];
   }> {
     return Promise.resolve({
