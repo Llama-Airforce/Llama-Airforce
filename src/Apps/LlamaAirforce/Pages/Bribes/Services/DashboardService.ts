@@ -11,9 +11,16 @@ export default class DashboardService extends ServiceBase {
     const request = this.fetch<OverviewResponse>(`${this.host}/dashboard`, {
       id: overviewId,
     });
+
     if (overviewId === "bribes-overview-aura") {
-      return getMergeWithHiddenHands(request, auraService.getOverview());
+      const [baseResponse, newResponse] = await Promise.all([
+        request,
+        auraService.getOverview(),
+      ]);
+
+      return getMergeWithHiddenHands(baseResponse, newResponse);
     }
+
     return request;
   }
 }
