@@ -75,6 +75,7 @@ const categories = computed((): string[] => {
     )
     .orderBy((x: Pool) => x.amountDollars, "desc")
     .map((x) => x.pool)
+    .slice(0, 20)
     .value();
 });
 
