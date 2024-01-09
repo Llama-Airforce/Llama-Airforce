@@ -50,8 +50,9 @@ export default class AuraService extends ServiceBase {
 
   constructor(host: string) {
     super(host);
-    this.latestRound = getLatestAuraRound();
-    this.today = Math.floor(Date.now() / 1000);
+    const today = Math.floor(Date.now() / 1000);
+    this.latestRound = getLatestAuraRound(today);
+    this.today = today;
   }
 
   private async fetchIncentivePerVote(): Promise<number> {
