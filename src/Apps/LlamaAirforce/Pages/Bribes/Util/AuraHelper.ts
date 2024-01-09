@@ -5,7 +5,8 @@ export const AuraConstants = {
   LA_API_URL: "https://llama-airforce-api.aura.finance/dollar-per-vlasset",
   START_ROUND: 28,
   START_DATE: 1689019200,
-  BIWEEKLY: 60 * 60 * 24 * 14,
+  BIWEEKLY: 86_400 * 14,
+  OFFSET: 86_400 * (14 - 5), // 5 day vote period within 14
 };
 
 // Helper to merge HH data
@@ -30,9 +31,8 @@ export function getMergeWithHiddenHands(
   };
 }
 
-export function getLatestAuraRound(): number {
-  const { START_DATE, BIWEEKLY, START_ROUND } = AuraConstants;
-  const today = Math.floor(Date.now() / 1000);
-  const len = Math.ceil((today - START_DATE) / BIWEEKLY);
+export function getLatestAuraRound(today: number): number {
+  const { START_DATE, BIWEEKLY, START_ROUND, OFFSET } = AuraConstants;
+  const len = Math.ceil((today - START_DATE - OFFSET) / BIWEEKLY);
   return START_ROUND + len;
 }
