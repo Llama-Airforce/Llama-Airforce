@@ -30,6 +30,7 @@ en:
   description-ucrv: This pounder stakes cvxCRV single-sidedly on Convex.
     Llama Airforce devs actively choose the highest yielding reward weight option for the staked cvxCRV.
   description-ufxs: This pounder stakes cvxFXS single-sidedly on Convex.
+  description-uprisma: This pounder stakes cvxPRISMA single-sidedly on Convex.
   description-ucvx: This pounder stakes pxCVX and compounds the earned bribe rewards for more pxCVX.
   description-ubal: This pounder stakes auraBAL on Aura.
   description-ufxslp: This pounder stakes cvxFXS/FXS LP tokens on Convex.
@@ -305,6 +306,7 @@ fr:
   description-ucrv: Ce pounder stake du cvxCRV en unilatéral sur Convex.
     Les développeurs de Llama Airforce sélectionnent activement l'option de récompense offrant le rendement le plus élevé pour le cvxCRV staké.
   description-ufxs: Ce pounder stake du cvxFXS en unilatéral sur Convex.
+  description-uprisma: Ce pounder stake du cvxPRISMA en unilatéral sur Convex.
   description-ucvx: Ce pounder stake du pxCVX et compounde les récompenses de pots-de-vin gagnées pour plus de pxCVX.
   description-ubal: Ce pounder stake de l'auraBAL sur Aura.
   description-ufxslp: Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.

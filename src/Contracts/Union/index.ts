@@ -17,3 +17,6 @@ export type { ZapsUFxs } from "./ZapsUFxs";
 export type { ZapsUFxsClaim } from "./ZapsUFxsClaim";
 export type { ZapsUFxsLp } from "./ZapsUFxsLp";
 export type { ZapsUFxsLpClaim } from "./ZapsUFxsLpClaim";
+export type { ZapsUPrisma } from "./ZapsUPrisma";
+export type { ZapsUPrismaClaim } from "./ZapsUPrismaClaim";
+export type { ZapsUPrismaConvexMigration } from "./ZapsUPrismaConvexMigration";
