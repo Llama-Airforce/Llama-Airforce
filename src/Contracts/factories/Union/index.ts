@@ -17,3 +17,6 @@ export { ZapsUFxs__factory } from "./ZapsUFxs__factory";
 export { ZapsUFxsClaim__factory } from "./ZapsUFxsClaim__factory";
 export { ZapsUFxsLp__factory } from "./ZapsUFxsLp__factory";
 export { ZapsUFxsLpClaim__factory } from "./ZapsUFxsLpClaim__factory";
+export { ZapsUPrisma__factory } from "./ZapsUPrisma__factory";
+export { ZapsUPrismaClaim__factory } from "./ZapsUPrismaClaim__factory";
+export { ZapsUPrismaConvexMigration__factory } from "./ZapsUPrismaConvexMigration__factory";

@@ -118,6 +118,12 @@ import {
   ZapsUCrvClaimAddress,
   PirexMultisigAddress,
   ZapsUCvxPirexClaimsAddress,
+  DistributorUPrismaAddress,
+  UPrismaHarvester,
+  UPrismaStrategyAddress,
+  UnionPrismaVaultAddress,
+  ZapsUPrismaAddress,
+  ZapsUPrismaClaimAddress,
 } from "@/Util/Addresses";
 import { last } from "lodash";
 
@@ -197,6 +203,10 @@ const distributors: Bundle = {
     {
       contract: DistributorUCvxAddress,
       description: "distributor-ucvx",
+    },
+    {
+      contract: DistributorUPrismaAddress,
+      description: "distributor-uprisma",
     },
   ],
 };
@@ -284,6 +294,32 @@ const ufxs: Bundle = {
   ],
 };
 
+const uprisma: Bundle = {
+  name: "uPRISMA",
+  contracts: [
+    {
+      contract: UnionPrismaVaultAddress,
+      description: "vault",
+    },
+    {
+      contract: UPrismaStrategyAddress,
+      description: "strategy",
+    },
+    {
+      contract: UPrismaHarvester,
+      description: "zap-harvester",
+    },
+    {
+      contract: ZapsUPrismaAddress,
+      description: "zaps",
+    },
+    {
+      contract: ZapsUPrismaClaimAddress,
+      description: "zaps-claim",
+    },
+  ],
+};
+
 const ubal: Bundle = {
   name: "uBAL",
   contracts: [
@@ -352,6 +388,7 @@ const bundles: Bundle[] = [
   ucvx,
   ucrv,
   ufxs,
+  uprisma,
   ubal,
   registries,
   pirex,
@@ -474,6 +511,7 @@ union-forward: Forwarding Address
 distributor-ucrv: Merkle Distributor - uCRV
 distributor-ufxs: Merkle Distributor - uFXS
 distributor-ucvx: Merkle Distributor - uCVX
+distributor-uprisma: Merkle Distributor - uPRISMA
 
 vault: Vault
 strategy: Strategy

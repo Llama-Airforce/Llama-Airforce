@@ -30,6 +30,7 @@ en:
   description-ucrv: This pounder stakes cvxCRV single-sidedly on Convex.
     Llama Airforce devs actively choose the highest yielding reward weight option for the staked cvxCRV.
   description-ufxs: This pounder stakes cvxFXS single-sidedly on Convex.
+  description-uprisma: This pounder stakes cvxPRISMA single-sidedly on Convex.
   description-ucvx: This pounder stakes pxCVX and compounds the earned bribe rewards for more pxCVX.
   description-ubal: This pounder stakes auraBAL on Aura.
   description-ufxslp: This pounder stakes cvxFXS/FXS LP tokens on Convex.
@@ -136,6 +137,8 @@ en:
     <br />The old one will still work, but the new one has a few internal improvements!
   migrateUCrvV2: Hello ser, you have {0} uCRV you need to migrate!
     <br />It might still earn yield, but it will be subpar!
+  migrateStkCvxCrv: Hello ser, it seems you have {0} cvxPRISMA staked in Convex.
+    <br />Do you wish to move those cheaply into the pounder?
 
   # Prisma Airdrop
   prisma-warning:
@@ -261,6 +264,8 @@ zh:
     <br />旧的仍然可以工作，但新的有一些内部改进!
   migrateUCrvV2: 您好，您好 {0} uCRV 需要迁移到新金库!
     <br />您在旧金库中可以继续获得收益，但会逐步减少!
+  migrateStkCvxCrv: 您好，先生，您似乎在 Convex 下注了 {0} cvxPRISMA。
+    <br />你想廉价地把钱存入金库吗？
 
   # Prisma Airdrop
   prisma-warning: 谨防网络钓鱼欺诈和冒名顶替者！在与智能合约互动之前，请务必仔细检查超链接。始终尽职尽责。不值得因为走捷径或疏忽而吃亏。
@@ -305,6 +310,7 @@ fr:
   description-ucrv: Ce pounder stake du cvxCRV en unilatéral sur Convex.
     Les développeurs de Llama Airforce sélectionnent activement l'option de récompense offrant le rendement le plus élevé pour le cvxCRV staké.
   description-ufxs: Ce pounder stake du cvxFXS en unilatéral sur Convex.
+  description-uprisma: Ce pounder stake du cvxPRISMA en unilatéral sur Convex.
   description-ucvx: Ce pounder stake du pxCVX et compounde les récompenses de pots-de-vin gagnées pour plus de pxCVX.
   description-ubal: Ce pounder stake de l'auraBAL sur Aura.
   description-ufxslp: Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.
@@ -411,6 +417,8 @@ fr:
     <br />L'ancien fonctionnera toujours, mais le nouveau a quelques améliorations internes!
   migrateUCrvV2: Bonjour, vous avez {0} uCRV que vous devez migrer!
     <br />Il pourrait toujours générer du rendement, mais il serait inférieur!
+  migrateStkCvxCrv: Bonjour, il semble que vous ayez {0} cvxPRISMA mis en jeu dans Convex.
+    <br />Souhaitez-vous les transférer à bas prix dans le pounder?
 
   # Prisma Airdrop
   prisma-warning: Attention aux escroqueries par hameçonnage et aux imposteurs ! Vérifiez toujours l'URL avant d'interagir avec les contrats intelligents. Faites toujours preuve de diligence raisonnable. Cela ne vaut pas la peine de se faire reprendre pour des raccourcis ou de la négligence.

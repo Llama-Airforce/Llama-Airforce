@@ -3,14 +3,17 @@ import { type Provider } from "@ethersproject/providers";
 import { chain, zip } from "lodash";
 import {
   CurveV2FactoryPool__factory,
+  CurveV6FactoryPool__factory,
   CvxCrvUtilities__factory,
   CvxFxsRewards__factory,
+  CvxPrismaRewards__factory,
 } from "@/Contracts";
 import {
   bigNumToNumber,
   numToBigNumber,
   toRecord,
   getCvxFxsPrice,
+  getCvxPrismaPrice,
   getDefiLlamaPrice,
 } from "@/Util";
 import {
@@ -19,7 +22,11 @@ import {
   CvxCrvUtilities,
   CvxFxsFactoryAddress,
   CvxFxsStaking,
+  CvxPrismaFactoryAddress,
+  CvxPrismaStaking,
   FxsAddress,
+  PrismaAddress,
+  MkUsdAddress,
   UCrvStrategyAddress,
   UCrvStrategyAddressV2,
 } from "@/Util/Addresses";
@@ -239,6 +246,59 @@ export async function getCvxFxsApy(
   const aprFxs = fxsPerYear * priceFxs;
   const aprCvx = cvxPerYear * priceCvx;
   const apr = aprFxs + aprCvx;
+
+  return aprToApy(apr * 100, 52);
+}
+
+export async function getCvxPrismaApy(
+  provider: Provider | Signer,
+  llamaService: DefiLlamaService
+): Promise<number> {
+  const rewardsContract = CvxPrismaRewards__factory.connect(
+    CvxPrismaStaking,
+    provider
+  );
+
+  const getRewardRate = async (address: string): Promise<number> => {
+    const rewardData = await rewardsContract.rewardData(address);
+    const periodFinish = rewardData.periodFinish.toBigInt();
+
+    if (Date.now() / 1000 >= bigNumToNumber(periodFinish, 0n)) {
+      return 0;
+    }
+
+    return bigNumToNumber(rewardData.rewardRate.toBigInt(), 18n);
+  };
+
+  const ratePrisma = await getRewardRate(PrismaAddress);
+  const rateCvx = await getRewardRate(CvxAddress);
+  const rateMkUsd = await getRewardRate(MkUsdAddress);
+  const supply = bigNumToNumber(
+    await rewardsContract.totalSupply().then((x) => x.toBigInt()),
+    18n
+  );
+
+  const curvePool = CurveV6FactoryPool__factory.connect(
+    CvxPrismaFactoryAddress,
+    provider
+  );
+
+  const priceCvxPrisma = await getCvxPrismaPrice(llamaService, curvePool);
+  const pricePrisma = await getDefiLlamaPrice(llamaService, PrismaAddress);
+  const priceCvx = await getDefiLlamaPrice(llamaService, CvxAddress);
+  const priceMkUsd = await getDefiLlamaPrice(llamaService, MkUsdAddress);
+
+  const supplyDollars = supply * priceCvxPrisma;
+
+  const SecondsPerYear = 31556952;
+  const prismaPerYear = (ratePrisma / supplyDollars) * SecondsPerYear;
+  const cvxPerYear = (rateCvx / supplyDollars) * SecondsPerYear;
+  const mkUsdPerYear = (rateMkUsd / supplyDollars) * SecondsPerYear;
+
+  const aprPrisma = prismaPerYear * pricePrisma;
+  const aprCvx = cvxPerYear * priceCvx;
+  const aprMkUsd = mkUsdPerYear * priceMkUsd;
+  const apr = aprPrisma + aprCvx + aprMkUsd;
 
   return aprToApy(apr * 100, 52);
 }

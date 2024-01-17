@@ -9,6 +9,7 @@ import ERC20ABI from "@/ABI/Standards/ERC20.json";
 import {
   type CurveV1FactoryPool,
   type CurveV2FactoryPool,
+  type CurveV6FactoryPool,
   type CvxCrvFactoryPool,
 } from "@/Contracts";
 import {
@@ -17,13 +18,14 @@ import {
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
   FxsAddress,
+  PrismaAddress,
 } from "@/Util/Addresses";
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import { type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
 
 export async function getDiscount(
-  pool: CurveV1FactoryPool | CurveV2FactoryPool
+  pool: CurveV1FactoryPool | CurveV2FactoryPool | CurveV6FactoryPool
 ): Promise<number> {
   const dec = 10n ** 18n;
   const tkn_in = 10n ** 22n;
@@ -70,6 +72,18 @@ export async function getCvxCrvPrice(
     .price_oracle()
     .then((x) => x.toBigInt())
     .then((price) => bigNumToNumber(price, 18n) * crvPrice);
+}
+
+export async function getCvxPrismaPrice(
+  llamaService: DefiLlamaService,
+  cvxPrismaFactoryPool: CurveV6FactoryPool
+): Promise<number> {
+  const prismaPrice = await getDefiLlamaPrice(llamaService, PrismaAddress);
+
+  return cvxPrismaFactoryPool
+    .price_oracle()
+    .then((x) => x.toBigInt())
+    .then((price) => bigNumToNumber(price, 18n) * prismaPrice);
 }
 
 export async function getCvxCrvPriceV2(

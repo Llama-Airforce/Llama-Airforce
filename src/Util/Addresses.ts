@@ -44,6 +44,10 @@ export const DistributorUCvxAddressV1 =
 export const DistributorUCvxAddress =
   "0x6788234f40931ca615b0d221c1afbf0ec07afcc5";
 
+export const DistributorUPrismaAddress =
+  "0xf09320ed7db384cab7fce9ea9947436a806754d3";
+
+/** This one was for the Pirex airdrop. */
 export const DistributorCvxPrismaAddress =
   "0x8e6d5cf9b9659d4f8e68ee040bf26e728ef1baa4";
 
@@ -54,6 +58,7 @@ export const UnionCrvVaultAddressV2 =
   "0x4ebad8dbd4edbd74db0278714fbd67ebc76b89b7";
 export const UnionCrvVaultAddress =
   "0xde2bef0a01845257b4aef2a2eaa48f6eaeafa8b7";
+
 export const UnionFxsVaultAddressV1 =
   "0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e";
 export const UnionFxsVaultAddress =
@@ -63,6 +68,9 @@ export const UnionCvxVaultAddress =
   "0x8659fc767cad6005de79af65dafe4249c57927af";
 export const PirexMultisigAddress =
   "0x6ed9c171e02de08aaedf0fc1d589923d807061d6";
+
+export const UnionPrismaVaultAddress =
+  "0x9bfd08d7b3cc40129132a17b4d5b9ea3351464bd";
 
 export const UnionBalVaultAddressV1 =
   "0xd6fc1ecd9965ba9cac895654979564a291c74c29";
@@ -79,6 +87,9 @@ export const UFxsStrategyAddressV1 =
 export const UFxsStrategyAddress = "0x110a888f88b65a2c34a6922f518128eda4fb70de";
 
 export const UCvxStrategyAddress = "0x45f97d07dab04b21f36fa3b1149c35e316b35d03";
+
+export const UPrismaStrategyAddress =
+  "0x88011c72623777f6452a7d6d8bab10ec67e89e01";
 
 export const UBalStrategyAddressV1 =
   "0xca7b5b6a9b135fc7e29ba7bc5d4cca936395025c";
@@ -126,16 +137,26 @@ export const ZapsUCvxClaimAddress =
 export const ZapsUCvxPirexClaimsAddress =
   "0xed41c3402c4b62777939b7334b4d3d2407517ff9";
 
+export const ZapsUPrismaAddress = "0x5beef400f378df4f353fb42e58498f9779002624";
+export const ZapsUPrismaClaimAddress =
+  "0x0cb569209d5d9eeb40b24c5bb79d3184e75528c3";
+export const ZapsUPrismaConvexMigrationAddress =
+  "0x06c3b252c01225fdf3017551f39668c9b6599ac5";
+
 // Tokens
 export const CvxAddress = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
 export const CrvAddress = "0xd533a949740bb3306d119cc777fa900ba034cd52";
 export const FxsAddress = "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0";
 export const BalAddress = "0xba100000625a3754423978a60c9317c58a424e3d";
+export const PrismaAddress = "0xda47862a83dac0c112ba89c6abc2159b95afd71c";
+export const MkUsdAddress = "0x4591dbff62656e7859afe5e45f6f47d3669fbb28";
 
 export const PxCvxAddress = "0xbce0cf87f513102f22232436cca2ca49e815c3ac";
 export const VlCvxAddress = "0x72a19342e8f1838460ebfccef09f6585e32db86e";
 export const CvxCrvAddress = "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7";
 export const CvxFxsAddress = "0xfeef77d3f69374f66429c91d732a244f074bdf74";
+export const CvxPrismaAddress = "0x34635280737b5bfe6c7dc2fc3065d60d66e78185";
+export const StkCvxPrismaAddress = "0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108";
 export const AuraBalAddress = "0x616e8bfa43f920657b3497dbf40d6b1a02d4608d";
 
 // Harvesters
@@ -144,6 +165,7 @@ export const UCrvHarvesterV2 = "0xf14d2128e4d36aa81b3a46ce57bf427629b5dc9f";
 export const UCrvHarvester = "0x3e2cad773e36e29a53eaab56726043ac04fe83d7";
 export const UFxsHarvester = "0x35d28d77369e825298de76060e96e5ada7f5e906";
 export const UBalHarvester = "0x2251af9804d0a1a04e8e0e7a1fbb83f4d7423f9e";
+export const UPrismaHarvester = "0x1f9409933aa273dab349ceba255f5ad8f854defb";
 
 // Factory pools
 export const CvxCrvFactoryAddressV1 =
@@ -160,6 +182,9 @@ export const PxCvxFactoryAddress = "0xf3456e8061461e144b3f252e69dcd5b6070fdee0";
 export const LPxCvxFactoryAddress =
   "0x72725c0c879489986d213a9a6d2116de45624c1c";
 
+export const CvxPrismaFactoryAddress =
+  "0x3b21c2868b6028cfb38ff86127ef22e68d16d53b";
+
 // veFunder
 export const veFunderGaugeFactoryAddress =
   "0x696B5D296a8AeF7482B726FCf0616E32fe72A53d";
@@ -175,4 +200,5 @@ export const WEthAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 export const EmptyAddress = "0x0000000000000000000000000000000000000000";
 export const CvxCrvUtilities = "0xadd2f542f9ff06405fabf8cae4a74bd0fe29c673";
 export const CvxFxsStaking = "0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a";
+export const CvxPrismaStaking = "0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108";
 export const TheLlamas = "0xe127ce638293fa123be79c25782a5652581db234";
