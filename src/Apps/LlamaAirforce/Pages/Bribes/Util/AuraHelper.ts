@@ -34,16 +34,16 @@ function getOffset(days?: number, hours?: number) {
   return 86_400 * (days ?? 0) + 3600 * (hours ?? 0);
 }
 
-export function getStartDateForRound(round: number) { 
+export function getStartDateForRound(round: number) {
   const { START_DATE, BIWEEKLY, START_ROUND } = AuraConstants;
   const offset = getOffset(5, -4);
   const roundsSinceStart = round - START_ROUND;
-  return START_DATE - offset + (roundsSinceStart * BIWEEKLY)
+  return START_DATE - offset + roundsSinceStart * BIWEEKLY;
 }
 
 export function getEndDateForRound(round: number) {
   const offset = getOffset(5); // 5 day period
-  return getStartDateForRound(round) + offset; 
+  return getStartDateForRound(round) + offset;
 }
 
 export function getLatestAuraRound(today: number): number {
