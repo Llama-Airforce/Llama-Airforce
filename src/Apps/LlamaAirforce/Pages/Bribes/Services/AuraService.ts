@@ -7,6 +7,7 @@ import {
 } from "@LAF/Pages/Bribes/Models";
 import {
   AuraConstants,
+  getEndDateForRound,
   getLatestAuraRound,
 } from "@LAF/Pages/Bribes/Util/AuraHelper";
 
@@ -50,13 +51,13 @@ export default class AuraService extends ServiceBase {
 
   constructor(host: string) {
     super(host);
-    const today = Math.floor(Date.now() / 1000);
+    const today = Date.now() / 1000;
     this.latestRound = getLatestAuraRound(today);
     this.today = today;
   }
 
   private async fetchIncentivePerVote(): Promise<number> {
-    return this.fetch<{ result: number }>(`${LA_API_URL}/${this.today}`)
+    return this.fetch<{ result: number }>(`${LA_API_URL}/${Math.floor(this.today)}`)
       ?.then(({ result }) => result)
       .catch(() => 0);
   }
@@ -68,7 +69,7 @@ export default class AuraService extends ServiceBase {
   }
 
   private async fetchRounds(): Promise<GaugeVote[][]> {
-    const len = Math.ceil((this.today - START_DATE) / BIWEEKLY);
+    const len = getLatestAuraRound(this.today) - START_ROUND + 1;
     return Promise.all(
       [...new Array<number>(len)].map((_, i) =>
         this.fetchRound(START_DATE + i * BIWEEKLY)
@@ -90,7 +91,8 @@ export default class AuraService extends ServiceBase {
       START_DATE + (epochId - START_ROUND) * BIWEEKLY
     );
 
-    const end = round[round.length - 1].proposalDeadline;
+    const end =
+      round[round.length - 1]?.proposalDeadline ?? getEndDateForRound(epochId);
 
     const bribed = Object.fromEntries(
       round
@@ -146,7 +148,8 @@ export default class AuraService extends ServiceBase {
         const dollarPerVlAsset =
           totalVotes > 0 ? totalAmountDollars / totalVotes : 0;
         const round = START_ROUND + index;
-        const end = item[item.length - 1].proposalDeadline;
+        const end =
+          item[item.length - 1]?.proposalDeadline ?? getEndDateForRound(round);
 
         return {
           protocol: "aura-bal",
