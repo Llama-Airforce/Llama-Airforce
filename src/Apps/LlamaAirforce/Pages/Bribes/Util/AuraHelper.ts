@@ -6,7 +6,6 @@ export const AuraConstants = {
   START_ROUND: 28,
   START_DATE: 1689019200,
   BIWEEKLY: 86_400 * 14,
-  OFFSET: 86_400 * (14 - 5), // 5 day vote period within 14
 };
 
 // Helper to merge HH data
@@ -31,8 +30,25 @@ export function getMergeWithHiddenHands(
   };
 }
 
+function getOffset(days?: number, hours?: number) {
+  return 86_400 * (days ?? 0) + 3600 * (hours ?? 0);
+}
+
+export function getStartDateForRound(round: number) { 
+  const { START_DATE, BIWEEKLY, START_ROUND } = AuraConstants;
+  const offset = getOffset(5, -4);
+  const roundsSinceStart = round - START_ROUND;
+  return START_DATE - offset + (roundsSinceStart * BIWEEKLY)
+}
+
+export function getEndDateForRound(round: number) {
+  const offset = getOffset(5); // 5 day period
+  return getStartDateForRound(round) + offset; 
+}
+
 export function getLatestAuraRound(today: number): number {
-  const { START_DATE, BIWEEKLY, START_ROUND, OFFSET } = AuraConstants;
-  const len = Math.ceil((today - START_DATE - OFFSET) / BIWEEKLY);
+  const { START_DATE, BIWEEKLY, START_ROUND } = AuraConstants;
+  const offset = getOffset(9, 4);
+  const len = Math.ceil((today - START_DATE - offset) / BIWEEKLY);
   return START_ROUND + len;
 }
