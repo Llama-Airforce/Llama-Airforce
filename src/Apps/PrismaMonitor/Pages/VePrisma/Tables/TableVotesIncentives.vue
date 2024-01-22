@@ -45,7 +45,7 @@
       <div class="number">
         <AsyncValue
           type="dollar"
-          :value="Math.round(props.item.weight)"
+          :value="Math.round(props.item.points)"
           :precision="2"
           :show-symbol="false"
           :show-zero="true"
@@ -103,7 +103,7 @@ const { loading, data } = usePromise(
 const { relativeTime } = useRelativeTime();
 
 const columns = computed((): string[] => {
-  return ["Voter", "Recipient", "Weight", "Tx", "Time"];
+  return ["Voter", "Recipient", "Points", "Tx", "Time"];
 });
 
 const rows = computed((): Row[] => data.value);

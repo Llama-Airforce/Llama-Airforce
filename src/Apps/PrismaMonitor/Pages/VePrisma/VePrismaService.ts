@@ -15,7 +15,7 @@ export type AccountData = {
 export type VoteIncentive = {
   voter: string;
   recipient: string;
-  weight: number;
+  points: number;
   isClearance: boolean;
   transaction: string;
   timestamp: number;
@@ -47,7 +47,7 @@ type GetVotesIncentivesResponse = {
           id: string;
           address: string;
         };
-        weight: string;
+        points: string;
       }[];
       isClearance: boolean;
       transactionHash: string;
@@ -97,12 +97,12 @@ export default class VePrismaService extends ServiceBase {
         voter {
           id
         }
-        votes(first: 100, orderBy:weight, orderDirection:desc) {
+        votes(first: 100, orderBy:points, orderDirection:desc) {
           recipient {
             id
             address
           }
-          weight
+          points
         }
         isClearance
         transactionHash
@@ -119,7 +119,7 @@ export default class VePrismaService extends ServiceBase {
         iv.votes.map((vote) => ({
           voter: iv.voter.id,
           recipient: vote.recipient.address,
-          weight: parseInt(vote.weight, 10),
+          points: parseInt(vote.points, 10),
           isClearance: iv.isClearance,
           transaction: iv.transactionHash,
           timestamp: parseInt(iv.blockTimestamp, 10),
