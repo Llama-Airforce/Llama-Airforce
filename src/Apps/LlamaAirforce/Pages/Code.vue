@@ -517,7 +517,7 @@ vault: Vault
 strategy: Strategy
 zaps: Zaps
 zaps-claim: Distributor Claim Zaps
-zap-harvester: Bot Harvester Zap
+zap-harvester: Harvester
 
 handler-aura: Aura Handler
 handler-bbusd: BBUSD Handler
