@@ -57,6 +57,7 @@ watch(
       "/liquidation",
       "/profile",
       "/wrappers",
+      "/proposals",
       "/veprisma",
     ];
 

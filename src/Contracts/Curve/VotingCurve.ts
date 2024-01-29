@@ -26,7 +26,7 @@ import type {
   OnEvent,
 } from "../common";
 
-export interface VotingInterface extends utils.Interface {
+export interface VotingCurveInterface extends utils.Interface {
   functions: {
     "hasInitialized()": FunctionFragment;
     "minTime()": FunctionFragment;
@@ -621,12 +621,12 @@ export type RecoverToVaultEvent = TypedEvent<
 
 export type RecoverToVaultEventFilter = TypedEventFilter<RecoverToVaultEvent>;
 
-export interface Voting extends BaseContract {
+export interface VotingCurve extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VotingInterface;
+  interface: VotingCurveInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

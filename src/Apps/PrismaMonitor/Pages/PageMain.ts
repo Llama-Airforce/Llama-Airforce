@@ -8,6 +8,7 @@ import Liquidations from "@PM/Pages/Liquidations/Liquidations.vue";
 import Revenue from "@PM/Pages/Revenue/Revenue.vue";
 import Wrappers from "@PM/Pages/Wrappers/Wrappers.vue";
 import VePrisma from "@PM/Pages/VePrisma/VePrisma.vue";
+import Proposals from "@PM/Pages/Proposals/Proposals.vue";
 import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 import Trove from "@PM/Pages/Vaults/Trove.vue";
 import Profile from "@PM/Pages/Profile/Profile.vue";
@@ -25,6 +26,7 @@ export const pageMain: Page = {
     { path: "/vaults", name: "vaults", component: Vaults },
     { path: "/wrappers/:tab?", name: "wrappers", component: Wrappers },
     { path: "/veprisma", name: "veprisma", component: VePrisma },
+    { path: "/proposals", name: "proposals", component: Proposals },
     { path: "/profile/:addr?", name: "profile", component: Profile },
     {
       path: "/vault/:vaultAddr/:tab?",
@@ -61,6 +63,10 @@ export const pageMain: Page = {
     {
       to: "/veprisma",
       label: "vePRISMA",
+    },
+    {
+      to: "/proposals",
+      label: "Proposals",
     },
     {
       to: "/wrappers",

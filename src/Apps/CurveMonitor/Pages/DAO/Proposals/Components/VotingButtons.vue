@@ -127,7 +127,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { VeCRV__factory, Voting__factory } from "@/Contracts";
+import { VeCRV__factory, VotingCurve__factory } from "@/Contracts";
 import { AsyncValue, KPI, Button, Card, Modal, Slider } from "@/Framework";
 import {
   tryNotify,
@@ -301,7 +301,7 @@ const onYeaPct = (newVal: string) => {
 
 const vote = withSigner((signer, address) =>
   tryNotifyLoading(voting, async () => {
-    const voting = Voting__factory.connect(CurveVotingAddress, signer);
+    const voting = VotingCurve__factory.connect(CurveVotingAddress, signer);
     voterState.value = await voting.getVoterState(proposal.id, address);
     const pctBase = await voting.PCT_BASE().then((x) => x.toBigInt());
 
@@ -325,7 +325,7 @@ const vote = withSigner((signer, address) =>
 
 const execute = withSigner((signer) =>
   tryNotifyLoading(executing, async () => {
-    const voting = Voting__factory.connect(CurveVotingAddress, signer);
+    const voting = VotingCurve__factory.connect(CurveVotingAddress, signer);
 
     const ps = [proposal.id] as const;
     const estimate = await voting.estimateGas.executeVote(...ps);
@@ -342,7 +342,7 @@ const execute = withSigner((signer) =>
 
 // Watches
 const getWeb3Data = withProvider(async (provider, address) => {
-  const voting = Voting__factory.connect(CurveVotingAddress, provider);
+  const voting = VotingCurve__factory.connect(CurveVotingAddress, provider);
   const veCrvAddress = await voting.token();
   voterState.value = await voting.getVoterState(proposal.id, address);
 
@@ -369,7 +369,7 @@ watch(
       return;
     }
 
-    const voting = Voting__factory.connect(CurveVotingAddress, provider);
+    const voting = VotingCurve__factory.connect(CurveVotingAddress, provider);
     canExecute.value = await voting.canExecute(proposal.id);
   }),
   { immediate: true }

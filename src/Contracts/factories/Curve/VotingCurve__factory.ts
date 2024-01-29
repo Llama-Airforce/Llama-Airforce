@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type { Voting, VotingInterface } from "../../Curve/Voting";
+import type {
+  VotingCurve,
+  VotingCurveInterface,
+} from "../../Curve/VotingCurve";
 
 const _abi = [
   {
@@ -1093,12 +1096,15 @@ const _abi = [
   },
 ] as const;
 
-export class Voting__factory {
+export class VotingCurve__factory {
   static readonly abi = _abi;
-  static createInterface(): VotingInterface {
-    return new utils.Interface(_abi) as VotingInterface;
+  static createInterface(): VotingCurveInterface {
+    return new utils.Interface(_abi) as VotingCurveInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Voting {
-    return new Contract(address, _abi, signerOrProvider) as Voting;
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): VotingCurve {
+    return new Contract(address, _abi, signerOrProvider) as VotingCurve;
   }
 }

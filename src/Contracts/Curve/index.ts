@@ -6,4 +6,4 @@ export type { CurveV2FactoryPool } from "./CurveV2FactoryPool";
 export type { CurveV6FactoryPool } from "./CurveV6FactoryPool";
 export type { CvxCrvFactoryPool } from "./CvxCrvFactoryPool";
 export type { VeCRV } from "./VeCRV";
-export type { Voting } from "./Voting";
+export type { VotingCurve } from "./VotingCurve";
