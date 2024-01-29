@@ -136,9 +136,12 @@ const { troves = [] } = defineProps<Props>();
 // Data
 const { loading, data, load } = usePromise(() => {
   return Promise.all(
-    troves.map((trove) =>
-      liquidationService.getLiquidationsForTrove("ethereum", trove)
-    )
+    chain(troves)
+      .uniq()
+      .map((trove) =>
+        liquidationService.getLiquidationsForTrove("ethereum", trove)
+      )
+      .value()
   ).then((rs) => rs.flat());
 }, []);
 
