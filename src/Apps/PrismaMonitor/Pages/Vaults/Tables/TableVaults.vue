@@ -20,7 +20,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(props.item.name)" />
+      <img :src="vaultIcon(props.item)" />
       <div>{{ props.item.name }}</div>
 
       <div class="number">
@@ -115,7 +115,7 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText, useObservable } from "@/Framework";
-import { icon } from "@PM/Models/Collateral";
+import { icon, fromCollateralAddress } from "@PM/Models/Collateral";
 import { useSocketStore } from "@PM/Stores";
 import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 
@@ -145,6 +145,16 @@ const rows = computed((): Row[] =>
 );
 
 const loading = computed(() => rowsRaw.value.length === 0);
+
+// Methods
+const vaultIcon = (vault: Row): string => {
+  try {
+    const collateral = fromCollateralAddress(vault.collateral);
+    return icon(collateral);
+  } catch {
+    return "";
+  }
+};
 </script>
 
 <style lang="scss" scoped>
