@@ -3,6 +3,7 @@ export type Tag = "beta";
 export type MenuItem = {
   label: string;
   tag?: Tag;
+  icon?: string;
 };
 
 export type MenuNode = MenuItem & {

@@ -43,38 +43,47 @@ export const pageMain: Page = {
     {
       to: "/vaults",
       label: "Vaults",
+      icon: "fas fa-piggy-bank",
     },
     {
       to: "/mkusd",
       label: "mkUSD",
+      icon: "fas fa-dollar-sign",
     },
     {
       to: "/pool",
       label: "Stability pool",
+      icon: "fas fa-balance-scale",
     },
     {
       to: "/redemptions",
       label: "Redemptions",
+      icon: "fas fa-bible",
     },
     {
       to: "/liquidations",
       label: "Liquidations",
+      icon: "fas fa-book-dead",
     },
     {
       to: "/veprisma",
       label: "vePRISMA",
+      icon: "fas fa-lock",
     },
     {
       to: "/proposals",
       label: "Proposals",
+      icon: "fas fa-landmark",
     },
     {
       to: "/wrappers",
       label: "ve Wrappers",
+      icon: "fas fa-tint",
     },
     {
       to: "/profile",
       label: "Profile",
+      icon: "fas fa-user",
     },
   ],
 };
