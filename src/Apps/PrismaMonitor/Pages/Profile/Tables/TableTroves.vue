@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-troves"
-    columns-header="1fr 12rem 2fr"
+    columns-header="1fr 14rem 2fr"
     columns-data="troves-columns-data"
     :loading="loading"
     :rows="rowsPage"
@@ -46,7 +46,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(fromCollateralAddress(props.item.collateralAddr))" />
+      <img :src="icon(props.item.vault)" />
 
       <div>
         <a
@@ -123,7 +123,7 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { icon, fromCollateralAddress } from "@PM/Models/Collateral";
+import { type Vault, icon } from "@PM/Models/Vault";
 import {
   getHost,
   type Trove,
@@ -132,7 +132,7 @@ import {
   TroveService,
 } from "@PM/Services";
 
-type Row = Trove & { collateralAddr: string };
+type Row = Trove & { vault: Vault };
 
 const { t } = useI18n();
 
@@ -159,7 +159,7 @@ const { loading, data, load } = usePromise(async () => {
         troveService.getTroves("ethereum", vault.address, user).then((rs) =>
           rs.map((r) => ({
             ...r,
-            collateralAddr: vault.collateral,
+            vault: vault.address,
           }))
         )
       )
@@ -293,10 +293,6 @@ watch(() => vaults, load);
 
   .search {
     flex-grow: 1;
-  }
-
-  .select-collateral {
-    margin-right: 1rem;
   }
 
   ::v-deep(.troves-columns-data) {
