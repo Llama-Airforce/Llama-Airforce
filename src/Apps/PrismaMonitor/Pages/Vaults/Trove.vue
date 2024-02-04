@@ -29,6 +29,7 @@ import { computed, onMounted, watch } from "vue";
 import { useObservable } from "@/Framework";
 import { useSocketStore, useBreadcrumbStore } from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
+import { label } from "@PM/Models/Vault";
 import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";
 import ChartTroveHealth from "@PM/Pages/Vaults/Charts/ChartTroveHealth.vue";
 import TableTroveOps from "@PM/Pages/Vaults/Tables/TableTroveOps.vue";
@@ -63,9 +64,13 @@ onMounted(async (): Promise<void> => {
     route.params.vaultAddr as string,
     route.params.troveAddr as string
   );
+
   if (fetchedTrove) {
     storeVault.trove = fetchedTrove;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
 
   storeBreadcrumb.show = true;
   storeBreadcrumb.crumbs = [
@@ -76,7 +81,7 @@ onMounted(async (): Promise<void> => {
     },
     {
       id: "vault",
-      label: `Vault: ${vault.value?.name ?? "?"}`,
+      label: `Vault: ${vaultLabel}`,
       pathName: "prismavault",
     },
     {
@@ -95,6 +100,9 @@ watch(vaults, (newVaults) => {
 });
 
 watch(vault, (newVault) => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const vaultLabel = label(newVault?.address!) ?? newVault?.name ?? "?";
+
   storeBreadcrumb.crumbs = [
     {
       id: "vaults",
@@ -103,7 +111,7 @@ watch(vault, (newVault) => {
     },
     {
       id: "vault",
-      label: `Vault: ${newVault?.name ?? "?"}`,
+      label: `Vault: ${vaultLabel}`,
       pathName: "prismavault",
     },
     {
@@ -114,6 +122,9 @@ watch(vault, (newVault) => {
 });
 
 watch(trove, (newTrove) => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
+
   storeBreadcrumb.crumbs = [
     {
       id: "vaults",
@@ -122,7 +133,7 @@ watch(trove, (newTrove) => {
     },
     {
       id: "vault",
-      label: `Vault: ${vault.value?.name ?? "?"}`,
+      label: `Vault: ${vaultLabel}`,
       pathName: "prismavault",
     },
     {

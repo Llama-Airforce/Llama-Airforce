@@ -59,6 +59,7 @@ import { TabView, TabItem, useObservable } from "@/Framework";
 import { useBreadcrumbStore, useSocketStore } from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { TroveOverviewService } from "@PM/Services";
+import { label } from "@PM/Models/Vault";
 import VaultOverview from "@PM/Pages/Vaults/VaultOverview.vue";
 import Collateral from "@PM/Pages/Vaults/Collateral.vue";
 import Liquidations from "@PM/Pages/Vaults/Liquidations.vue";
@@ -96,6 +97,9 @@ onMounted(() => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
+
   storeBreadcrumb.show = true;
   storeBreadcrumb.crumbs = [
     {
@@ -105,7 +109,7 @@ onMounted(() => {
     },
     {
       id: "vault",
-      label: `Vault: ${vault.value?.name ?? "?"}`,
+      label: `Vault: ${vaultLabel}`,
     },
   ];
 });
@@ -119,6 +123,9 @@ watch(vaults, (newVaults) => {
 });
 
 watch(vault, (newVault) => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const vaultLabel = label(newVault?.address!) ?? newVault?.name ?? "?";
+
   storeBreadcrumb.crumbs = [
     {
       id: "vaults",
@@ -127,7 +134,7 @@ watch(vault, (newVault) => {
     },
     {
       id: "vault",
-      label: `Vault: ${newVault?.name ?? "?"}`,
+      label: `Vault: ${vaultLabel}`,
     },
   ];
 });
