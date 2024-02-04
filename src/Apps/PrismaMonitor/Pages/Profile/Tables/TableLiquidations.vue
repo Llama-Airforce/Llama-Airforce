@@ -218,8 +218,6 @@ watch(() => troves, load);
 @import "@/Styles/Variables.scss";
 
 .datatable-liquidations {
-  container-type: inline-size;
-
   .title {
     margin-right: 1rem;
   }
