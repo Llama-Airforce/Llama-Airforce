@@ -26,14 +26,7 @@
         </TabView>
       </div>
 
-      <SelectCollateral
-        class="select-collateral"
-        :collateral="collateral"
-        :all="true"
-        @select-collateral="collateral = $event"
-      ></SelectCollateral>
-
-      <div style="display: flex; gap: 1rem">
+      <div style="display: flex; gap: 1rem; grid-column: 3">
         <InputText
           v-model="search"
           class="search"
@@ -53,7 +46,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(props.item.vault.name)" />
+      <img :src="icon(fromCollateralAddress(props.item.collateralAddr))" />
 
       <div>
         <a
@@ -130,7 +123,7 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
+import { icon, fromCollateralAddress } from "@PM/Models/Collateral";
 import {
   getHost,
   type Trove,
@@ -138,9 +131,8 @@ import {
   type TroveManagerDetails,
   TroveService,
 } from "@PM/Services";
-import SelectCollateral from "@PM/Components/SelectCollateral.vue";
 
-type Row = Trove & { vault: { name: Collateral; address: string } };
+type Row = Trove & { collateralAddr: string };
 
 const { t } = useI18n();
 
@@ -167,7 +159,7 @@ const { loading, data, load } = usePromise(async () => {
         troveService.getTroves("ethereum", vault.address, user).then((rs) =>
           rs.map((r) => ({
             ...r,
-            vault: { name: vault.name, address: vault.address },
+            collateralAddr: vault.collateral,
           }))
         )
       )
@@ -188,7 +180,6 @@ type SortColumns = "owner" | "debt" | "coll" | "ratio" | "created" | "updated";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("updated");
 
 const search = ref("");
-const collateral = ref<Collateral | "all">("all");
 const type = ref<TroveStatus>("Open");
 
 const columns = computed((): string[] => {
@@ -232,12 +223,7 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      const row_collateral = fromAddress(row.vault.address);
-
-      const isCollateralFilter =
-        collateral.value === "all" ? true : collateral.value === row_collateral;
-
-      return includesTerm(row.owner) && isCollateralFilter;
+      return includesTerm(row.owner);
     })
     .orderBy(
       (row) => {
