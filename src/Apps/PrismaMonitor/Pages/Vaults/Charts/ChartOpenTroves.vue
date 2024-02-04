@@ -32,7 +32,7 @@ const storeSettings = useSettingsStore();
 const { loading, data } = usePromise(
   () =>
     managerService
-      .getHistoricalOpenTrovesOverview("ethereum", "6m")
+      .getHistoricalOpenTrovesOverview("ethereum", "1m")
       .then((x) => x.managers),
   []
 );

@@ -27,7 +27,7 @@ const storeSettings = useSettingsStore();
 const { loading, data } = usePromise(
   () =>
     managerService
-      .getHistoricalCollateralOverview("ethereum", "6m")
+      .getHistoricalCollateralOverview("ethereum", "1m")
       .then((x) => x.managers),
   []
 );
