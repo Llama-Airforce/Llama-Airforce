@@ -31,7 +31,16 @@
           @click="emit('navigated')"
         >
           <div class="nav-link-container">
-            <div class="left">{{ menuItem.label }}</div>
+            <div class="left">
+              <div
+                v-if="menuItem.icon"
+                class="icon"
+              >
+                <i :class="menuItem.icon"></i>
+              </div>
+              {{ menuItem.label }}
+            </div>
+
             <div class="right">
               <Chip
                 v-if="menuItem.tag === 'beta'"
@@ -123,6 +132,17 @@ const onClickNode = (): void => {
   .nav-link-container {
     justify-content: space-between;
     margin-right: 1rem;
+
+    > .left {
+      display: flex;
+      gap: 0.5rem;
+
+      > .icon {
+        width: 3ch;
+        text-align: center;
+        color: var(--c-primary);
+      }
+    }
   }
 
   &.node {
