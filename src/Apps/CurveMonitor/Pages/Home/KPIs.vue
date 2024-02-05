@@ -6,7 +6,7 @@
     >
       <AsyncValue
         :value="price"
-        :precision="2"
+        :precision="3"
         type="dollar"
       ></AsyncValue>
     </KPI>
