@@ -1,7 +1,7 @@
 <template>
   <div class="kpis">
     <KPI
-      label="CRV price"
+      label="CRV Price"
       :has-value="!!price"
     >
       <AsyncValue
@@ -12,11 +12,11 @@
     </KPI>
 
     <KPI
-      label="CRV market cap"
-      :has-value="!!mcap"
+      label="crvUSD Borrowed"
+      :has-value="!!borrowed"
     >
       <AsyncValue
-        :value="mcap"
+        :value="borrowed"
         :precision="2"
         type="dollar"
       ></AsyncValue>
@@ -52,13 +52,15 @@ import { AsyncValue, KPI } from "@/Framework";
 import { DefiLlamaService } from "@/Services";
 import { getHost } from "@/Services/Host";
 import CurvePricesService from "@CM/Pages/Home/Services/CurvePricesService";
+import CrvUsdService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const llamaService = new DefiLlamaService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 const curvePricesService = new CurvePricesService(getHost());
 
 // Refs
 const price = ref<number | null>(null);
-const mcap = ref<number | null>(null);
+const borrowed = ref<number | null>(null);
 const tvl = ref<number | null>(null);
 const volume = ref<number | null>(null);
 
@@ -68,15 +70,15 @@ onMounted(async () => {
 
   // CRV Price + MCap
   try {
-    mcap.value = await llamaService
-      .getData("curve-finance")
-      .then((x) => x.mcap);
+    borrowed.value = await crvUsdService
+      .getMarkets()
+      .then((x) => x.markets.reduce((acc, x) => acc + x.borrowed, 0));
 
     price.value = await llamaService
       .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
       .then((x) => x.price);
   } catch {
-    [price.value, mcap.value] = [0, 0];
+    [price.value, borrowed.value] = [0, 0];
   }
 
   // TVL and Volume
