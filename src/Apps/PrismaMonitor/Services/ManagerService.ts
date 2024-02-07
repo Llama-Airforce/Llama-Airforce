@@ -16,10 +16,12 @@ export type CollateralRatioDecilesData = {
   data: number;
 };
 
+export type Period = "1m" | "3m" | "6m";
+
 export default class ManagerService extends ServiceBase {
   public async getHistoricalOpenTrovesOverview(
     chain: string,
-    period: string
+    period: Period
   ): Promise<{ managers: HistoricalTroveManagerData[] }> {
     return this.fetch(
       `${API_URL}/managers/${chain}/open_troves?period=${period}`
@@ -46,7 +48,7 @@ export default class ManagerService extends ServiceBase {
 
   public async getHistoricalCollateralOverview(
     chain: string,
-    period: string
+    period: Period
   ): Promise<{ managers: HistoricalTroveManagerData[] }> {
     return this.fetch(
       `${API_URL}/managers/${chain}/collateral?period=${period}`

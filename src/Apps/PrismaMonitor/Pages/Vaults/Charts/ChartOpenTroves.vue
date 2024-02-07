@@ -5,16 +5,43 @@
     :loading="loading"
     :options="options"
     :series="series"
-  ></CardGraph>
+  >
+    <template #actions>
+      <div class="actions">
+        <div class="periods">
+          <ButtonToggle
+            value="1m"
+            :model-value="period === '1m'"
+            @click="onPeriod('1m')"
+          >
+          </ButtonToggle>
+
+          <ButtonToggle
+            value="3m"
+            :model-value="period === '3m'"
+            @click="onPeriod('3m')"
+          >
+          </ButtonToggle>
+
+          <ButtonToggle
+            value="6m"
+            :model-value="period === '6m'"
+            @click="onPeriod('6m')"
+          >
+          </ButtonToggle>
+        </div>
+      </div>
+    </template>
+  </CardGraph>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { CardGraph, usePromise } from "@/Framework";
+import { CardGraph, ButtonToggle, usePromise } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
-import { getHost, ManagerService } from "@PM/Services";
+import { getHost, ManagerService, type Period } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
@@ -29,13 +56,16 @@ const managerService = new ManagerService(getHost());
 const storeSettings = useSettingsStore();
 
 // Data
-const { loading, data } = usePromise(
+const { loading, data, load } = usePromise(
   () =>
     managerService
-      .getHistoricalOpenTrovesOverview("ethereum", "1m")
+      .getHistoricalOpenTrovesOverview("ethereum", period.value)
       .then((x) => x.managers),
   []
 );
+
+// Refs
+const period = ref<Period>("1m");
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
@@ -124,6 +154,19 @@ const series = computed(() => {
 
 // Methods
 const formatterX = (x: string): string => x;
+
+// Events
+const onPeriod = (newPeriod: Period) => {
+  // Don't do anything if we're not changing the period.
+  if (period.value === newPeriod) {
+    return;
+  }
+
+  period.value = newPeriod;
+};
+
+// Watches
+watch(period, load);
 </script>
 
 <style lang="scss" scoped>
@@ -133,6 +176,25 @@ const formatterX = (x: string): string => x;
   ::v-deep(.card-body) {
     @media only screen and (max-width: 1280px) {
       height: 300px;
+    }
+  }
+}
+
+.actions {
+  .periods {
+    display: flex;
+    font-size: 0.875rem;
+
+    button {
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
     }
   }
 }
