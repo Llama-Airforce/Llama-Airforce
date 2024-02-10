@@ -1,15 +1,15 @@
 import { type Observable, filter, map, shareReplay } from "rxjs";
 import { type WebSocketSubject } from "rxjs/webSocket";
 import { type Payload, type Action, type Request } from "@/Services";
-import { type Collateral } from "@PM/Models/Collateral";
+import { type Vault } from "@PM/Models/Vault";
 
 export const WS_URL = "wss://api.prismamonitor.com/v1/prisma/ws";
 export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
 
 export type TroveManagerDetails = {
-  name: Collateral;
-  address: string;
-  collateral: string;
+  name: string;
+  address: Vault;
+  collateral: string; // Address
   tvl: number;
   debt: number;
   debt_cap: number;

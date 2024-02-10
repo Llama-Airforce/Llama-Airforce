@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-redemptions"
-    columns-header="1fr 12rem 2fr"
+    columns-header="1fr 14rem 2fr"
     columns-data="redemptions-columns-data"
     :loading="loading || troves.length === 0"
     :rows="rowsPage"
@@ -17,12 +17,12 @@
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
 
-      <SelectCollateral
-        class="select-collateral"
-        :collateral="collateral"
+      <SelectVault
+        class="select-vault"
+        :vault="vault"
         :all="true"
-        @select-collateral="collateral = $event"
-      ></SelectCollateral>
+        @select-vault="vault = $event"
+      ></SelectVault>
 
       <div style="display: flex; gap: 1rem">
         <InputText
@@ -44,7 +44,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <img :src="icon(fromAddress(props.item.vault))" />
+      <img :src="icon(props.item.vault)" />
 
       <div>
         <a
@@ -116,9 +116,9 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
-import { type Collateral, icon, fromAddress } from "@PM/Models/Collateral";
+import { type Vault, icon } from "@PM/Models/Vault";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
-import SelectCollateral from "@PM/Components/SelectCollateral.vue";
+import SelectVault from "@PM/Components/SelectVault.vue";
 import { getHost, type Redemption, RedemptionService } from "@PM/Services";
 
 const redemptionService = new RedemptionService(getHost());
@@ -152,7 +152,7 @@ type SortColumns = "redeemer" | "tx" | "debt" | "numtroves" | "timestamp";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("timestamp");
 
 const search = ref("");
-const collateral = ref<Collateral | "all">("all");
+const vault = ref<Vault | "all">("all");
 const showDetails = ref<Row | null>(null);
 
 const columns = computed((): string[] => {
@@ -175,11 +175,10 @@ const rows = computed((): Row[] =>
       const includesTerm = (x: string) =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      const row_collateral = fromAddress(row.vault);
-      const isCollateralFilter =
-        collateral.value === "all" ? true : collateral.value === row_collateral;
+      const isVaultFilter =
+        vault.value === "all" ? true : row.vault === vault.value;
 
-      return includesTerm(row.redeemer) && isCollateralFilter;
+      return includesTerm(row.redeemer) && isVaultFilter;
     })
     .orderBy(
       (row) => {
@@ -219,8 +218,6 @@ watch(() => troves, load);
 @import "@/Styles/Variables.scss";
 
 .datatable-redemptions {
-  container-type: inline-size;
-
   .title {
     margin-right: 1rem;
   }
@@ -229,7 +226,7 @@ watch(() => troves, load);
     flex-grow: 1;
   }
 
-  .select-collateral {
+  .select-vault {
     margin-right: 1rem;
   }
 

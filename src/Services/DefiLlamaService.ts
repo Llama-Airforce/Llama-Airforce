@@ -11,10 +11,6 @@ type PriceResponse = {
   coins: Record<string, Price>;
 };
 
-type DataResponse = {
-  mcap: number;
-};
-
 export default class DefiLlamaService extends ServiceBase {
   public async getPrice(address: string): Promise<Price> {
     const query = `ethereum:${address}`;
@@ -30,11 +26,5 @@ export default class DefiLlamaService extends ServiceBase {
     return this.fetch<PriceResponse>(
       `https://coins.llama.fi/prices/current/${query}`
     ).then((resp) => resp.coins);
-  }
-
-  public async getData(protocol: string): Promise<DataResponse> {
-    return this.fetch<DataResponse>(
-      `https://api.llama.fi/updatedProtocol/${protocol}`
-    );
   }
 }

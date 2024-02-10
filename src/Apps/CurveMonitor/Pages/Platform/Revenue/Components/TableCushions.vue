@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-cushions"
-    columns-header="1fr 12rem minmax(auto, 25rem)"
+    columns-header="1fr 14rem minmax(auto, 25rem)"
     columns-data="cushions-columns-data"
     :loading="loading"
     :rows="rows"

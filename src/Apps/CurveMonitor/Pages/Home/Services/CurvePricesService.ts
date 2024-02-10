@@ -12,6 +12,6 @@ type Chain = {
 
 export default class CurvePricesService extends ServiceBase {
   public async getChain(): Promise<Chain> {
-    return this.fetch(`${API_URL}/chains/ethereum?page=1&per_page=0`);
+    return this.fetch(`${API_URL}/chains/ethereum?page=1&per_page=1`);
   }
 }

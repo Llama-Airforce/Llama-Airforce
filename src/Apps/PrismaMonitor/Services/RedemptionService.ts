@@ -1,11 +1,12 @@
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
+import { type Vault } from "@PM/Models/Vault";
 
 const API_URL = "https://api.prismamonitor.com/v1";
 
 export type Redemption = {
   redeemer: string;
-  vault: string;
+  vault: Vault;
   attempted_debt_amount: number;
   actual_debt_amount: number;
   collateral_sent: number;
@@ -30,7 +31,13 @@ export default class RedemptionService extends ServiceBase {
         redemptions: Redemption[];
       }>(
         `${API_URL}/redemptions/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
-      ).then((resp) => resp.redemptions);
+      ).then((resp) =>
+        resp.redemptions.map((r) => ({
+          ...r,
+          redeemer: r.redeemer.toLocaleLowerCase(),
+          vault: r.vault.toLocaleLowerCase() as Vault,
+        }))
+      );
     };
 
     return paginate(fs, 1, 100);
@@ -45,7 +52,13 @@ export default class RedemptionService extends ServiceBase {
         redemptions: Redemption[];
       }>(
         `${API_URL}/redemptions/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
-      ).then((resp) => resp.redemptions);
+      ).then((resp) =>
+        resp.redemptions.map((r) => ({
+          ...r,
+          redeemer: r.redeemer.toLocaleLowerCase(),
+          vault: r.vault.toLocaleLowerCase() as Vault,
+        }))
+      );
     };
 
     return paginate(fs, 1, 100);

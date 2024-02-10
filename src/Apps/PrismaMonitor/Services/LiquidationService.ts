@@ -1,11 +1,12 @@
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
+import { type Vault } from "@PM/Models/Vault";
 
 const API_URL = "https://api.prismamonitor.com/v1";
 
 export type Liquidation = {
   liquidator: string;
-  vault: string;
+  vault: Vault;
   liquidated_debt: number;
   liquidated_collateral: number;
   liquidated_collateral_usd: number;
@@ -28,7 +29,13 @@ export default class LiquidationService extends ServiceBase {
         liquidations: Liquidation[];
       }>(
         `${API_URL}/liquidations/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
-      ).then((resp) => resp.liquidations);
+      ).then((resp) =>
+        resp.liquidations.map((l) => ({
+          ...l,
+          liquidator: l.liquidator.toLocaleLowerCase(),
+          vault: l.vault.toLocaleLowerCase() as Vault,
+        }))
+      );
     };
 
     return paginate(fs, 1, 100);
@@ -43,7 +50,13 @@ export default class LiquidationService extends ServiceBase {
         liquidations: Liquidation[];
       }>(
         `${API_URL}/liquidations/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
-      ).then((resp) => resp.liquidations);
+      ).then((resp) =>
+        resp.liquidations.map((l) => ({
+          ...l,
+          liquidator: l.liquidator.toLocaleLowerCase(),
+          vault: l.vault.toLocaleLowerCase() as Vault,
+        }))
+      );
     };
 
     return paginate(fs, 1, 100);
