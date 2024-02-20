@@ -89,7 +89,7 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
 
   switch (protocol.value) {
     case "cvx-crv":
-      tokens = "CRV + CVX";
+      tokens = "CRV";
       break;
     case "aura-bal":
       tokens = "BAL + AURA";
