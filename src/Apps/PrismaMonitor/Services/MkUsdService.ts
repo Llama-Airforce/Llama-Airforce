@@ -34,6 +34,12 @@ export default class MkUsdService extends ServiceBase {
     return this.fetch(`${API_URL}/mkusd/${chain}/history?period=${period}`);
   }
 
+  public async getSupplyHistory(
+    chain: string
+  ): Promise<{ supply: DecimalTimeSeries[] }> {
+    return this.fetch(`${API_URL}/mkusd/${chain}/supply`);
+  }
+
   public async getPriceHistogram(
     chain: string,
     bins: number,
