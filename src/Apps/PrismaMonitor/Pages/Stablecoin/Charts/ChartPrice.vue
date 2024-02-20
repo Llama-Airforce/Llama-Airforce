@@ -6,7 +6,7 @@
   >
     <template #actions>
       <Tooltip placement="left">
-        <div>Price is in USDC from Curve mkUSD/FRAX/USDC pool</div>
+        <div>Price is in USDC from Curve mkUSD/USDC pool</div>
       </Tooltip>
     </template>
 
@@ -56,7 +56,7 @@ const getPriceSettings = () => {
   const start = end - interval * 200;
 
   return {
-    pool: "0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5",
+    pool: "0xF980B4A4194694913Af231De69AB4593f5E0fCDc",
     chain: "ethereum",
     main_token: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     reference_token: "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
@@ -135,7 +135,7 @@ const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
     borderDownColor: colors.red,
     wickDownColor: colors.red,
 
-    lastValueVisible: false,
+    lastValueVisible: true,
     priceLineVisible: false,
   };
 };
