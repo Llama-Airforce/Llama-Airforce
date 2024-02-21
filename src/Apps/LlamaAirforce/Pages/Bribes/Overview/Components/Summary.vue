@@ -91,6 +91,9 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
     case "cvx-crv":
       tokens = "CRV";
       break;
+    case "cvx-prisma":
+      tokens = "PRISMA";
+      break;
     case "aura-bal":
       tokens = "BAL + AURA";
       break;

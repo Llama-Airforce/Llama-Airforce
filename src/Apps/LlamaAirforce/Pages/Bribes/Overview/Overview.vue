@@ -58,7 +58,14 @@ const product = computed((): Product | null => {
 const overviewId = computed((): OverviewId | null => {
   switch (product.value?.platform) {
     case "votium":
-      return "bribes-overview-votium";
+      switch (product.value?.protocol) {
+        case "cvx-crv":
+          return "bribes-overview-votium";
+        case "cvx-prisma":
+          return "bribes-overview-prisma";
+        default:
+          throw new Error("Unknown protocol for dashboard");
+      }
     case "hh":
       return "bribes-overview-aura";
     default:
