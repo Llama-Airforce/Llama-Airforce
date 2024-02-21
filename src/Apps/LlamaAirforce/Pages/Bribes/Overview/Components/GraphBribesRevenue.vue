@@ -69,7 +69,11 @@ const options = computed((): unknown => {
         tickAmount: 4,
         labels: {
           formatter: (y: number): string =>
-            `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
+            `$${round(
+              y,
+              protocol.value === "cvx-prisma" ? 5 : 2,
+              "dollar"
+            )}${unit(y, "dollar")}`,
           style: { colors: [ColorsLAFDark.yellow] },
         },
       },
