@@ -4,12 +4,6 @@
     :title="t('title')"
     :loading="loading"
   >
-    <template #actions>
-      <Tooltip placement="left">
-        <div>Price is in USDC from Curve mkUSD/USDC pool</div>
-      </Tooltip>
-    </template>
-
     <div
       ref="chartRef"
       class="chart"
@@ -18,30 +12,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
-import { Tooltip } from "@/Framework";
+import { ref, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
   type IChartApi,
   type ISeriesApi,
-  type CandlestickSeriesPartialOptions,
-  type CandlestickData,
+  type LineData,
+  type AreaSeriesPartialOptions,
+  LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useObservable } from "@/Framework";
+import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/PM";
-import { useSettingsStore, useSocketStore } from "@PM/Stores";
+import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
-import { CurvePriceService, type OHLC } from "@/Services";
+import { getHost, type DecimalTimeSeries, MkUsdService } from "@PM/Services";
 
 const { t } = useI18n();
 
+const mkUsdService = new MkUsdService(getHost());
+
 let chart: IChartApi;
-let serie: ISeriesApi<"Candlestick">;
+let serie: ISeriesApi<"Area">;
 
 // Refs
 const storeSettings = useSettingsStore();
@@ -49,30 +45,10 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
-const getPriceSettings = () => {
-  const end = Math.floor(new Date().getTime() / 1000);
-  const interval = 14400;
-  // Max is 300, but using less for thicker candles, also looks to be exactly 1 month.
-  const start = end - interval * 200;
-
-  return {
-    pool: "0xF980B4A4194694913Af231De69AB4593f5E0fCDc",
-    chain: "ethereum",
-    main_token: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    reference_token: "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
-    interval,
-    start,
-    end,
-  };
-};
-const socket = useSocketStore().getSocket("prices");
-const priceService = new CurvePriceService(
-  socket,
-  "ethereum",
-  getPriceSettings()
+const { loading, data } = usePromise(
+  () => mkUsdService.getSupplyHistory("ethereum").then((x) => x.supply),
+  []
 );
-const data = useObservable(priceService.ohlc$, []);
-const loading = computed(() => data.value.length === 0);
 
 // Hooks
 onMounted(() => {
@@ -83,7 +59,7 @@ onMounted(() => {
     createOptionsChart(chartRef.value, storeSettings.theme)
   );
 
-  serie = chart.addCandlestickSeries(createOptionsSerie(storeSettings.theme));
+  serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
 
   createSeries(data.value);
 });
@@ -118,40 +94,34 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
+const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
   const colors = getColors(theme);
 
   return {
     priceFormat: {
       type: "price",
-      precision: 6,
-      minMove: 0.01,
+      precision: 2,
+      minMove: 0.001,
     },
-
-    upColor: colors.green,
-    borderUpColor: colors.green,
-    wickUpColor: colors.green,
-    downColor: colors.red,
-    borderDownColor: colors.red,
-    wickDownColor: colors.red,
-
-    lastValueVisible: true,
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    lineColor: colors.blue,
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
+    lastValueVisible: false,
     priceLineVisible: false,
   };
 };
 
-const createSeries = (newData: OHLC[]): void => {
+const createSeries = (newData: DecimalTimeSeries[]): void => {
   if (!chart || !serie) {
     return;
   }
 
-  const newSerie: CandlestickData[] = chain(newData)
-    .map((c) => ({
-      time: c.time as UTCTimestamp,
-      open: c.open,
-      high: c.high,
-      low: c.low,
-      close: c.close,
+  const newSerie: LineData[] = chain(newData)
+    .map((x) => ({
+      time: x.timestamp as UTCTimestamp,
+      value: x.value,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
@@ -165,7 +135,7 @@ const createSeries = (newData: OHLC[]): void => {
 };
 
 const formatter = (y: number): string => {
-  return `$${round(y, 4, "dollar")}${unit(y, "dollar")}`;
+  return `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 };
 </script>
 
@@ -187,5 +157,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: mkUSD price (last 30 days)
+title: Supply
 </i18n>

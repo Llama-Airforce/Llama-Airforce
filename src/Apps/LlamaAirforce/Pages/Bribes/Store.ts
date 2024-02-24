@@ -36,6 +36,7 @@ const state: State = {
   },
   overviews: {
     "bribes-overview-votium": null,
+    "bribes-overview-prisma": null,
     "bribes-overview-aura": null,
   },
 

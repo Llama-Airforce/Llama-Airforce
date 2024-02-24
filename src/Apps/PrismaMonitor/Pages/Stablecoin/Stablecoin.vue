@@ -3,6 +3,7 @@
     <KPIs style="grid-column: 1 / -1"></KPIs>
     <ChartPrice></ChartPrice>
     <ChartPriceDistribution></ChartPriceDistribution>
+    <ChartSupply></ChartSupply>
     <ChartHolders></ChartHolders>
     <ChartDepthContainer></ChartDepthContainer>
   </div>
@@ -11,6 +12,7 @@
 <script setup lang="ts">
 import ChartPrice from "@PM/Pages/Stablecoin/Charts/ChartPrice.vue";
 import ChartPriceDistribution from "@PM/Pages/Stablecoin/Charts/ChartPriceDistribution.vue";
+import ChartSupply from "@PM/Pages/Stablecoin/Charts/ChartSupply.vue";
 import ChartHolders from "@PM/Pages/Stablecoin/Charts/ChartHolders.vue";
 import KPIs from "@PM/Pages/Stablecoin/KPIs.vue";
 import ChartDepthContainer from "@PM/Pages/Stablecoin/Charts/ChartDepthContainer.vue";
