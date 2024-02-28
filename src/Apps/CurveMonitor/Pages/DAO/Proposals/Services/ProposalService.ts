@@ -41,9 +41,9 @@ const parseProposal = (
 ): Proposal => {
   const id = parseInt(x.voteId, 10);
   const type = x.voteType === "PARAMETER" ? "parameter" : "gauge";
-  const metadata = x.metadata.startsWith('"') // Remove weird starting quote, if present.
+  const metadata = x.metadata?.startsWith('"') // Remove weird starting quote, if present.
     ? x.metadata.substring(1)
-    : x.metadata;
+    : x.metadata ?? "";
   const proposer = x.creator;
   const block = x.snapshotBlock;
   const start = parseInt(x.startDate, 10);
