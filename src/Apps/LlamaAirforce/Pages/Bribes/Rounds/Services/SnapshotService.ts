@@ -197,6 +197,8 @@ export default class SnapshotService extends ServiceBase {
         return await this.getScoresCvx(snapshot, voters);
       case "cvx-prisma":
         return await this.getScoresCvx(snapshot, voters); // Re-uses existing CVX infra?
+      case "cvx-fxn":
+        return await this.getScoresCvx(snapshot, voters); // Re-uses existing CVX infra?
       case "aura-bal":
         return await this.getScoresAura(snapshot, voters);
       default:
