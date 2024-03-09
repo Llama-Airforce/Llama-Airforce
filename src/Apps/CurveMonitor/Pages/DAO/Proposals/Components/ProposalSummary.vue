@@ -7,7 +7,14 @@
       class="title"
       :class="{ 'no-title': !proposal.metadata }"
     >
-      <div class="id">{{ proposal.id }}</div>
+      <router-link
+        :to="proposalLink(proposal.id)"
+        class="id"
+        @click="proposalToClipboard(proposal.id)"
+      >
+        <i class="fas fa-link"></i> {{ proposal.id }}
+      </router-link>
+
       <div class="metadata">
         {{ proposal.metadata || t("no-title") }}
       </div>
@@ -73,6 +80,17 @@ const { proposal } = defineProps<Props>();
 const emit = defineEmits<{
   toggleExpand: [];
 }>();
+
+// Methods
+const proposalLink = (proposalId: number): string => {
+  return `/dao/proposal/${proposalId}`;
+};
+
+const proposalToClipboard = async (proposalId: number) => {
+  await navigator.clipboard.writeText(
+    `${window.location.origin}/#/dao/proposal/${proposalId}`
+  );
+};
 </script>
 
 <style lang="scss" scoped>
@@ -106,8 +124,17 @@ const emit = defineEmits<{
     > .id {
       display: flex;
       align-items: center;
+      gap: 1ch;
 
       color: var(--c-lvl6);
+
+      &:hover {
+        background: unset;
+      }
+
+      i {
+        font-size: 0.75rem;
+      }
     }
   }
 

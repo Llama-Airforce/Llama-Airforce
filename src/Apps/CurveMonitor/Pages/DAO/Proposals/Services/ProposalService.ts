@@ -3,31 +3,33 @@ import { ServiceBase } from "@/Services";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
 
-const PROPOSAL_URL = "https://api-py.llama.airforce/curve/v1/dao/proposals";
+const PROPOSALS_URL = "https://api-py.llama.airforce/curve/v1/dao/proposals";
 const PROPOSAL_OWNERSHIP_URL =
   "https://api-py.llama.airforce/curve/v1/dao/proposals/ownership/";
 const PROPOSAL_PARAMETER_URL =
   "https://api-py.llama.airforce/curve/v1/dao/proposals/parameter/";
 
-type GetProposalsResponse = {
-  proposals: {
-    voteId: string;
-    voteType: "PARAMETER" | "OWNERSHIP";
-    creator: string;
-    startDate: string;
-    snapshotBlock: number;
-    metadata: string;
-    minAcceptQuorum: string;
-    supportRequired: string;
-    voteCount: string;
-    votesFor: string;
-    votesAgainst: string;
-    executed: boolean;
-    totalSupply: string;
-  }[];
+type ProposalResponse = {
+  voteId: string;
+  voteType: "PARAMETER" | "OWNERSHIP";
+  creator: string;
+  startDate: string;
+  snapshotBlock: number;
+  metadata: string;
+  minAcceptQuorum: string;
+  supportRequired: string;
+  voteCount: string;
+  votesFor: string;
+  votesAgainst: string;
+  executed: boolean;
+  totalSupply: string;
 };
 
-type GetProposalDetailsResponse = GetProposalsResponse["proposals"][number] & {
+type GetProposalsResponse = {
+  proposals: ProposalResponse[];
+};
+
+type GetProposalDetailsResponse = ProposalResponse & {
   script: string;
   votes: {
     voter: string;
@@ -92,9 +94,29 @@ const parseProposalDetails = (
 
 export default class ProposalService extends ServiceBase {
   public async getProposals(): Promise<Proposal[]> {
-    const resp = await this.fetch<GetProposalsResponse>(PROPOSAL_URL);
+    const resp = await this.fetch<GetProposalsResponse>(PROPOSALS_URL);
 
     return resp.proposals.map(parseProposal);
+  }
+
+  public async getProposal(proposalId: number): Promise<Proposal | null> {
+    // We don't know the type and what URL to query, so we try ownership ones first (highest hit rate).
+    let resp = await this.fetch<
+      GetProposalDetailsResponse & { message?: string }
+    >(`${PROPOSAL_OWNERSHIP_URL}${proposalId}`);
+
+    // If there's a message it means there was an error fetching.
+    if (resp.message) {
+      resp = await this.fetch<
+        GetProposalDetailsResponse & { message?: string }
+      >(`${PROPOSAL_PARAMETER_URL}${proposalId}`);
+    }
+
+    if (resp.message) {
+      return null;
+    }
+
+    return parseProposal(resp);
   }
 
   public async getProposalDetails(

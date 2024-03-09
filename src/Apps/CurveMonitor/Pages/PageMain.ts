@@ -13,6 +13,7 @@ import Monitor from "@CM/Pages/Pool/Monitor/Monitor.vue";
 import MEV from "@CM/Pages/Pool/MEV/MEV.vue";
 
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.vue";
+import Proposal from "@CM/Pages/DAO/Proposals/Proposal.vue";
 import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.vue";
 
 export const pageMain: Page = {
@@ -52,6 +53,10 @@ export const pageMain: Page = {
       path: "/dao/proposals",
       name: "proposals",
       component: Proposals,
+    },
+    {
+      path: "/dao/proposal/:proposalId",
+      component: Proposal,
     },
     { path: "/dao/vefunder", component: VeFunder },
   ],

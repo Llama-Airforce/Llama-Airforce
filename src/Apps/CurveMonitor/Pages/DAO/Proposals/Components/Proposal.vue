@@ -31,11 +31,13 @@ import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 // Props
 interface Props {
   proposal: Proposal;
+  initExpanded?: boolean;
 }
 
-const { proposal } = defineProps<Props>();
+const { proposal, initExpanded = false } = defineProps<Props>();
 
-const expanded = ref(false);
+// Refs
+const expanded = ref(initExpanded);
 </script>
 
 <style lang="scss" scoped>
