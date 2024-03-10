@@ -1,5 +1,5 @@
 <template>
-  <div class="mkusd">
+  <div class="stable">
     <KPIs style="grid-column: 1 / -1"></KPIs>
     <ChartPrice></ChartPrice>
     <ChartPriceDistribution></ChartPriceDistribution>
@@ -21,9 +21,9 @@ import ChartDepthContainer from "@PM/Pages/Stablecoin/Charts/ChartDepthContainer
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("mkusd");
+@include dashboard("stable");
 
-.mkusd {
+.stable {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;

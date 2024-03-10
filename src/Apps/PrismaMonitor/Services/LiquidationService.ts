@@ -1,8 +1,7 @@
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
 import { type Vault } from "@PM/Models/Vault";
-
-const API_URL = "https://api.prismamonitor.com/v1";
+import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type Liquidation = {
   liquidator: string;
@@ -20,6 +19,13 @@ export type Liquidation = {
 };
 
 export default class LiquidationService extends ServiceBase {
+  private readonly API_URL: string;
+
+  constructor(host: string, flavor: Flavor) {
+    super(host);
+    this.API_URL = apiUrl(flavor);
+  }
+
   public async getLiquidations(
     chain: string,
     manager: string
@@ -28,7 +34,7 @@ export default class LiquidationService extends ServiceBase {
       return this.fetch<{
         liquidations: Liquidation[];
       }>(
-        `${API_URL}/liquidations/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
+        `${this.API_URL}/liquidations/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
       ).then((resp) =>
         resp.liquidations.map((l) => ({
           ...l,
@@ -49,7 +55,7 @@ export default class LiquidationService extends ServiceBase {
       return this.fetch<{
         liquidations: Liquidation[];
       }>(
-        `${API_URL}/liquidations/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
+        `${this.API_URL}/liquidations/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
       ).then((resp) =>
         resp.liquidations.map((l) => ({
           ...l,

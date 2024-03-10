@@ -150,6 +150,7 @@ export const FxsAddress = "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0";
 export const BalAddress = "0xba100000625a3754423978a60c9317c58a424e3d";
 export const PrismaAddress = "0xda47862a83dac0c112ba89c6abc2159b95afd71c";
 export const MkUsdAddress = "0x4591dbff62656e7859afe5e45f6f47d3669fbb28";
+export const UltraAddress = "0x35282d87011f87508d457f08252bc5bfa52e10a0";
 
 export const PxCvxAddress = "0xbce0cf87f513102f22232436cca2ca49e815c3ac";
 export const VlCvxAddress = "0x72a19342e8f1838460ebfccef09f6585e32db86e";

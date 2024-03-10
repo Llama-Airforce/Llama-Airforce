@@ -1,7 +1,6 @@
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
-
-const API_URL = "https://api.prismamonitor.com/v1";
+import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type TroveStatus = "Open" | "Closed";
 export type Trove = {
@@ -48,6 +47,13 @@ export type RatioPosition = {
 };
 
 export default class TroveService extends ServiceBase {
+  private readonly API_URL: string;
+
+  constructor(host: string, flavor: Flavor) {
+    super(host);
+    this.API_URL = apiUrl(flavor);
+  }
+
   public async getTroves(
     chain: string,
     manager: string,
@@ -59,7 +65,9 @@ export default class TroveService extends ServiceBase {
         total_entries: number;
         troves: Trove[];
       }>(
-        `${API_URL}/trove/${chain}/${manager}/troves?items=100&page=${page}&order_by=last_update&desc=true${
+        `${
+          this.API_URL
+        }/trove/${chain}/${manager}/troves?items=100&page=${page}&order_by=last_update&desc=true${
           owner ? "&owner_filter=" + owner : ""
         }`
       ).then((resp) => resp.troves);
@@ -74,7 +82,7 @@ export default class TroveService extends ServiceBase {
     owner: string
   ): Promise<{ snapshots: TroveSnapshotData[] }> {
     return this.fetch(
-      `${API_URL}/trove/${chain}/${manager}/snapshots/${owner}`
+      `${this.API_URL}/trove/${chain}/${manager}/snapshots/${owner}`
     );
   }
 
@@ -83,7 +91,7 @@ export default class TroveService extends ServiceBase {
     manager: string,
     owner: string
   ): Promise<Trove> {
-    return this.fetch(`${API_URL}/trove/${chain}/${manager}/${owner}`);
+    return this.fetch(`${this.API_URL}/trove/${chain}/${manager}/${owner}`);
   }
 
   public async getTroveHistory(
@@ -91,7 +99,9 @@ export default class TroveService extends ServiceBase {
     manager: string,
     owner: string
   ): Promise<{ snapshots: TroveHistoryData[] }> {
-    return this.fetch(`${API_URL}/trove/${chain}/${manager}/history/${owner}`);
+    return this.fetch(
+      `${this.API_URL}/trove/${chain}/${manager}/history/${owner}`
+    );
   }
 
   public async getTroveRank(
@@ -99,6 +109,8 @@ export default class TroveService extends ServiceBase {
     manager: string,
     owner: string
   ): Promise<RatioPosition> {
-    return this.fetch(`${API_URL}/trove/${chain}/${manager}/rank/${owner}`);
+    return this.fetch(
+      `${this.API_URL}/trove/${chain}/${manager}/rank/${owner}`
+    );
   }
 }

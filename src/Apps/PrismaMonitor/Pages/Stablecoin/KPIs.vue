@@ -1,7 +1,7 @@
 <template>
   <div class="kpis">
     <KPI
-      label="mkUSD price"
+      :label="`${stableSymbol(storeSettings.flavor)} price`"
       :has-value="!!data"
     >
       <AsyncValue
@@ -52,13 +52,19 @@
 
 <script setup lang="ts">
 import { AsyncValue, KPI, usePromise } from "@/Framework";
-import { getHost, MkUsdService } from "@PM/Services";
+import { getHost, StableService } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
+import { stableSymbol } from "@PM/Models/Flavor";
 
-const mkUsdService = new MkUsdService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const stableService = new StableService(getHost(), storeSettings.flavor);
 
 // Data
 const { data } = usePromise(
-  () => mkUsdService.getStableCoinKPI("ethereum").then((x) => x.info),
+  () => stableService.getStableCoinKPI("ethereum").then((x) => x.info),
   null
 );
 </script>

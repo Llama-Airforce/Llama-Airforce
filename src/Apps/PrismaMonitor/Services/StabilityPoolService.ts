@@ -3,8 +3,7 @@ import {
   type DecimalLabelledSeries,
   type DecimalTimeSeries,
 } from "@PM/Services/Series";
-
-const API_URL = "https://api.prismamonitor.com/v1";
+import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type PoolStableOperation = {
   user: string;
@@ -19,11 +18,20 @@ export type StableFlows = {
 };
 
 export default class StabilityPoolService extends ServiceBase {
+  private readonly API_URL: string;
+
+  constructor(host: string, flavor: Flavor) {
+    super(host);
+    this.API_URL = apiUrl(flavor);
+  }
+
   public async getPoolTvl(
     chain: string,
     period: string
   ): Promise<{ deposits: DecimalTimeSeries[] }> {
-    return this.fetch(`${API_URL}/pool/${chain}/deposits?period=${period}`);
+    return this.fetch(
+      `${this.API_URL}/pool/${chain}/deposits?period=${period}`
+    );
   }
 
   public async getStableFlow(
@@ -31,14 +39,14 @@ export default class StabilityPoolService extends ServiceBase {
     period: string
   ): Promise<StableFlows> {
     return this.fetch(
-      `${API_URL}/pool/${chain}/stable_operations?period=${period}`
+      `${this.API_URL}/pool/${chain}/stable_operations?period=${period}`
     );
   }
 
   public async getStableDistribution(
     chain: string
   ): Promise<{ distribution: DecimalLabelledSeries[] }> {
-    return this.fetch(`${API_URL}/pool/${chain}/histogram/deposits`);
+    return this.fetch(`${this.API_URL}/pool/${chain}/histogram/deposits`);
   }
 
   public async getCumulativeWithdrawals(
@@ -46,7 +54,7 @@ export default class StabilityPoolService extends ServiceBase {
     period: string
   ): Promise<{ withdrawals: DecimalTimeSeries[] }> {
     return this.fetch(
-      `${API_URL}/pool/${chain}/cumulative_withdrawals?period=${period}`
+      `${this.API_URL}/pool/${chain}/cumulative_withdrawals?period=${period}`
     );
   }
 
@@ -56,7 +64,7 @@ export default class StabilityPoolService extends ServiceBase {
     period: string
   ): Promise<{ operations: PoolStableOperation[] }> {
     return this.fetch(
-      `${API_URL}/pool/${chain}/top/stable_deposits?top=${top}&period=${period}`
+      `${this.API_URL}/pool/${chain}/top/stable_deposits?top=${top}&period=${period}`
     );
   }
 
@@ -66,7 +74,7 @@ export default class StabilityPoolService extends ServiceBase {
     period: string
   ): Promise<{ operations: PoolStableOperation[] }> {
     return this.fetch(
-      `${API_URL}/pool/${chain}/top/stable_withdrawals?top=${top}&period=${period}`
+      `${this.API_URL}/pool/${chain}/top/stable_withdrawals?top=${top}&period=${period}`
     );
   }
 }

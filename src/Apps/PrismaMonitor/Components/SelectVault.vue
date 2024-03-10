@@ -33,9 +33,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Select } from "@/Framework";
+import { useSettingsStore } from "@PM/Stores";
 import {
   type Vault,
-  vaults as vaultsList,
+  vaultsLsd,
+  vaultsLrt,
   icon,
   label,
 } from "@PM/Models/Vault";
@@ -53,12 +55,15 @@ const emit = defineEmits<{
   "select-vault": [vault: Vault | "all"];
 }>();
 
+// Stores
+const storeSettings = useSettingsStore();
+
 // Refs
 const vaultOpen = ref(false);
 
 const vaults: (Vault | "all")[] = [
   ...(all ? ["all" as const] : []),
-  ...vaultsList,
+  ...(storeSettings.flavor === "lsd" ? vaultsLsd : vaultsLrt),
 ];
 
 // Hooks

@@ -1,12 +1,12 @@
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    :title="t('title', { stable: stableSymbol(storeSettings.flavor) })"
     :loading="loading"
   >
     <template #actions>
       <Tooltip placement="left">
-        <div>Price is in USDC from Curve mkUSD/USDC pool</div>
+        <div>{{ tooltip }}</div>
       </Tooltip>
     </template>
 
@@ -37,9 +37,9 @@ import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
 import { CurvePriceService, type OHLC } from "@/Services";
+import { stableSymbol } from "@PM/Models/Flavor";
 
 const { t } = useI18n();
-
 let chart: IChartApi;
 let serie: ISeriesApi<"Candlestick">;
 
@@ -48,6 +48,29 @@ const storeSettings = useSettingsStore();
 
 const chartRef = ref<HTMLElement | null>(null);
 
+// Price settings specifics.
+const getPool = () => {
+  switch (storeSettings.flavor) {
+    case "lsd":
+      return "0xF980B4A4194694913Af231De69AB4593f5E0fCDc";
+    case "lrt":
+      return "0xC03FEF1c425956A3Cd5762022E511e0d4148B3D6";
+    default:
+      return "";
+  }
+};
+
+const getReferenceToken = () => {
+  switch (storeSettings.flavor) {
+    case "lsd":
+      return "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28"; // mkUSD
+    case "lrt":
+      return "0x35282d87011f87508D457F08252Bc5bFa52E10A0"; // ULTRA
+    default:
+      return "";
+  }
+};
+
 // Data
 const getPriceSettings = () => {
   const end = Math.floor(new Date().getTime() / 1000);
@@ -55,11 +78,15 @@ const getPriceSettings = () => {
   // Max is 300, but using less for thicker candles, also looks to be exactly 1 month.
   const start = end - interval * 200;
 
+  const usdc = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
+  const pool = getPool();
+  const reference_token = getReferenceToken();
+
   return {
-    pool: "0xF980B4A4194694913Af231De69AB4593f5E0fCDc",
+    pool,
     chain: "ethereum",
-    main_token: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    reference_token: "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
+    main_token: usdc,
+    reference_token,
     interval,
     start,
     end,
@@ -71,8 +98,20 @@ const priceService = new CurvePriceService(
   "ethereum",
   getPriceSettings()
 );
+
+// Refs
 const data = useObservable(priceService.ohlc$, []);
 const loading = computed(() => data.value.length === 0);
+const tooltip = computed(() => {
+  switch (storeSettings.flavor) {
+    case "lsd":
+      return "Price is in USDC from Curve mkUSD/USDC pool";
+    case "lrt":
+      return "Price is in USDC from Curve ULTRA/USDC pool";
+    default:
+      return "???";
+  }
+});
 
 // Hooks
 onMounted(() => {
@@ -105,7 +144,7 @@ watch(data, (newData) => {
 
 // Methods
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+  return createChartStyles(chartRef, theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -119,7 +158,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
 };
 
 const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
-  const colors = getColors(theme);
+  const colors = getColors(theme, storeSettings.flavor);
 
   return {
     priceFormat: {
@@ -187,5 +226,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: mkUSD price (last 30 days)
+title: "{stable} price (last 30 days)"
 </i18n>

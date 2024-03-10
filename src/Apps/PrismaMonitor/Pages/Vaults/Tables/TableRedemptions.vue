@@ -107,6 +107,7 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import {
   getHost,
@@ -119,7 +120,14 @@ type Row = Redemption;
 
 const { t } = useI18n();
 
-const redemptionService = new RedemptionService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const redemptionService = new RedemptionService(
+  getHost(),
+  storeSettings.flavor
+);
 
 // Props
 interface Props {

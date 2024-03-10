@@ -16,6 +16,7 @@
     "build laf": "eslint src/Apps/LlamaAirforce/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/LlamaAirforce",
     "build cm": "eslint src/Apps/CurveMonitor/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/CurveMonitor",
     "build pm": "eslint src/Apps/PrismaMonitor/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/PrismaMonitor",
+    "build pm-lrt": "eslint src/Apps/PrismaMonitor/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/PrismaMonitor",
     "build cb": "eslint src/Apps/Cookbook/**/*.{ts,vue} && vue-tsc --noEmit && vite build src/Apps/Cookbook",
     "test": "vitest --silent --config src/Apps/LlamaAirforce/vitest.config.ts",
     "union": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./src/Apps/LlamaAirforce/Pages/Union/Scripts/Union.ts\"",

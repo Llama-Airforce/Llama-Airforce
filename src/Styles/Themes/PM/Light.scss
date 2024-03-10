@@ -128,6 +128,23 @@
   }
 }
 
+@mixin themeLightLrt() {
+  $purple: rgb(121, 77, 236);
+  $primary: $purple;
+
+  $colors: (
+    primary: lighten($primary, 13%),
+    "primary-hover": lighten($primary, 20%),
+    "primary-active": lighten($primary, 30%),
+    "primary-disabled": lighten($primary, 30%),
+  );
+
+  // CSS Variables
+  @each $colorName, $colorValue in $colors {
+    @include register($colorName, $colorValue);
+  }
+}
+
 @mixin themeLightFont() {
   @font-face {
     font-family: "TT Hoves Pro Trial Variable Regular";

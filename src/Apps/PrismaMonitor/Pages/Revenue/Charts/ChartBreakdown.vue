@@ -20,20 +20,24 @@ import { useSettingsStore } from "@PM/Stores";
 import { getHost, RevenueService } from "@PM/Services";
 
 const { t } = useI18n();
+
+// Stores
 const storeSettings = useSettingsStore();
 
-// Props
-const revenueService = new RevenueService(getHost());
+// Services
+const revenueService = new RevenueService(getHost(), storeSettings.flavor);
 
+// Data
 const { loading, data } = usePromise(() => revenueService.getBreakdown(), {
   unlock_penalty: 0,
   borrowing_fees: 0,
   redemption_fees: 0,
 });
 
+// Refs
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },

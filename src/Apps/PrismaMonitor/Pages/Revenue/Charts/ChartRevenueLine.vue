@@ -18,7 +18,7 @@ import {
   type UTCTimestamp,
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
-import { getColors } from "@/Styles/Themes/PM";
+import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
@@ -73,7 +73,7 @@ watch(
 
 // Methods
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+  return createChartStyles(chartRef, theme, storeSettings.flavor, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -87,8 +87,6 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
 };
 
 const createRevenueOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
-  const colors = getColors(theme);
-
   return {
     priceFormat: {
       type: "price",
@@ -97,11 +95,9 @@ const createRevenueOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
     priceLineVisible: false,
+    ...getLineChartColors(theme, storeSettings.flavor),
   };
 };
 

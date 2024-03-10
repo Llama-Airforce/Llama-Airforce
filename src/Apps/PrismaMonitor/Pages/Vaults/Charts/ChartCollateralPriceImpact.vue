@@ -24,8 +24,15 @@ import {
 import { createChartStyles } from "@/Styles/ChartStyles";
 
 const { t } = useI18n();
-const collateralService = new CollateralService(getHost());
+
+// Stores
 const storeSettings = useSettingsStore();
+
+// Services
+const collateralService = new CollateralService(
+  getHost(),
+  storeSettings.flavor
+);
 
 // Props
 interface Props {
@@ -46,8 +53,8 @@ const { loading, data, load } = usePromise(() => {
 
 // Refs
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },

@@ -116,12 +116,20 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
 import SelectVault from "@PM/Components/SelectVault.vue";
 import { getHost, type Liquidation, LiquidationService } from "@PM/Services";
 
-const liquidationService = new LiquidationService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const liquidationService = new LiquidationService(
+  getHost(),
+  storeSettings.flavor
+);
 
 type Row = Liquidation;
 

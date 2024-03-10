@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Select } from "@/Framework";
-import { getColors } from "@/Styles/Themes/CM";
+import { getColors } from "@/Styles/Themes/PM";
 import { type Theme } from "@PM/Models/Theme";
 import { useSettingsStore } from "@PM/Stores";
 
@@ -69,14 +69,15 @@ type ThemeDescription = {
   colors: ReturnType<typeof getColors>;
 };
 
+// Stores
+const storeSettings = useSettingsStore();
+
 const themes: ThemeDescription[] = [
-  { id: "dark", colors: getColors("dark") },
-  { id: "light", colors: getColors("light") },
+  { id: "dark", colors: getColors("dark", storeSettings.flavor) },
+  { id: "light", colors: getColors("light", storeSettings.flavor) },
 ];
 
 // Refs
-const storeSettings = useSettingsStore();
-
 const theme = ref<ThemeDescription>(themes[0]);
 const selectThemeOpen = ref(false);
 

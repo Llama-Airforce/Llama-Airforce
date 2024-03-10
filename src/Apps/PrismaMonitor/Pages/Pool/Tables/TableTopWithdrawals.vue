@@ -55,10 +55,15 @@ import {
   type PoolStableOperation,
   StabilityPoolService,
 } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 
-const sbService = new StabilityPoolService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
 
 // Refs
 const rows = computed((): PoolStableOperation[] =>

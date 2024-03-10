@@ -35,12 +35,18 @@ import {
   ManagerService,
   type TroveManagerDetails,
 } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
 import ChartDistribution from "@PM/Pages/Vaults/Charts/ChartDistribution.vue";
 
 type ChartType = "collateral" | "debt";
 
 const { t } = useI18n();
-const managerService = new ManagerService(getHost());
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const managerService = new ManagerService(getHost(), storeSettings.flavor);
 
 // Props
 interface Props {

@@ -88,6 +88,7 @@ import {
   useRelativeTime,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
 import {
   getHost,
   TroveService,
@@ -100,7 +101,11 @@ type Row = TroveSnapshotData;
 
 const { t } = useI18n();
 
-const troveService = new TroveService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const troveService = new TroveService(getHost(), storeSettings.flavor);
 
 // Props
 interface Props {

@@ -1,7 +1,7 @@
 export type Tag = "beta";
 
 export type MenuItem = {
-  label: string;
+  label: string | (() => string);
   tag?: Tag;
   icon?: string;
 };

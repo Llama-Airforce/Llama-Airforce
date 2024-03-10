@@ -13,13 +13,16 @@ import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
 import Trove from "@PM/Pages/Vaults/Trove.vue";
 import Profile from "@PM/Pages/Profile/Profile.vue";
 
+import { useSettingsStore } from "@PM/Stores";
+import { stableSymbol } from "@/Apps/PrismaMonitor/Models/Flavor";
+
 export const pageMain: Page = {
   titleRoute: "/",
   routes: [
     { path: "/", redirect: { name: "vaults" } },
 
     { path: "/pool", name: "pool", component: StabilityPool },
-    { path: "/mkusd", name: "mkusd", component: Stablecoin },
+    { path: "/stable", name: "stable", component: Stablecoin },
     { path: "/redemptions", name: "redemptions", component: Redemptions },
     { path: "/liquidations", name: "liquidations", component: Liquidations },
     { path: "/revenue", name: "revenue", component: Revenue },
@@ -46,8 +49,11 @@ export const pageMain: Page = {
       icon: "fas fa-piggy-bank",
     },
     {
-      to: "/mkusd",
-      label: "mkUSD",
+      to: "/stable",
+      label: () => {
+        const storeSettings = useSettingsStore();
+        return stableSymbol(storeSettings.flavor);
+      },
       icon: "fas fa-dollar-sign",
     },
     {

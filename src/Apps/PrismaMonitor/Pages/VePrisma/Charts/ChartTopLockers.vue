@@ -31,8 +31,8 @@ const { totalWeight = 0, lockers = [] } = defineProps<Props>();
 const data = computed(() => lockers.slice(0, 10));
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },
@@ -121,5 +121,4 @@ const formatterPct = (x: number): string =>
 
 <i18n lang="yaml" locale="en">
 title: Top 10 largest lockers
-numPos: "mkUSD balance:"
 </i18n>

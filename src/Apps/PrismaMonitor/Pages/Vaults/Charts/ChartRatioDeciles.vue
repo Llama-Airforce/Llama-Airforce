@@ -20,8 +20,11 @@ import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 
-const managerService = new ManagerService(getHost());
+// Stores
 const storeSettings = useSettingsStore();
+
+// Services
+const managerService = new ManagerService(getHost(), storeSettings.flavor);
 
 // Data
 const { loading, data } = usePromise(
@@ -34,8 +37,8 @@ const { loading, data } = usePromise(
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },

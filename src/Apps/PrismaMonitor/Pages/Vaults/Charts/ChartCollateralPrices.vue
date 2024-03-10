@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['Oracle', 'Market']"
-          :colors="getColorsArray(storeSettings.theme)"
+          :colors="getColorsArray(storeSettings.theme, storeSettings.flavor)"
         ></Legend>
       </div>
     </template>
@@ -35,7 +35,11 @@ import {
 } from "lightweight-charts";
 import { Card, usePromise } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
+import {
+  getColors,
+  getColorsArray,
+  getLineChartColors,
+} from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
@@ -48,7 +52,14 @@ import {
 
 const { t } = useI18n();
 
-const collateralService = new CollateralService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const collateralService = new CollateralService(
+  getHost(),
+  storeSettings.flavor
+);
 
 let chart: IChartApi;
 let oracleSerie: ISeriesApi<"Area">;
@@ -62,8 +73,6 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
-
 const chartRef = ref<HTMLElement | null>(null);
 
 // Data
@@ -162,7 +171,7 @@ const processSeries = (
 };
 
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+  return createChartStyles(chartRef, theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -173,7 +182,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
 };
 
 const createPriceOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
-  const colors = getColors(theme);
+  const colors = getColors(theme, storeSettings.flavor);
 
   return {
     priceFormat: {
@@ -194,8 +203,6 @@ const createPriceOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
 const createProportionOptionsSerie = (
   theme: Theme
 ): AreaSeriesPartialOptions => {
-  const colors = getColors(theme);
-
   return {
     priceFormat: {
       type: "price",
@@ -204,11 +211,9 @@ const createProportionOptionsSerie = (
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
     priceLineVisible: false,
+    ...getLineChartColors(theme, storeSettings.flavor),
   };
 };
 

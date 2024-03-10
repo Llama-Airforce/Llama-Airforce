@@ -30,8 +30,8 @@ const storeSettings = useSettingsStore();
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },

@@ -9,14 +9,19 @@
 
 <script setup lang="ts">
 import { usePromise } from "@/Framework";
-import { getHost, MkUsdService } from "@PM/Services";
+import { getHost, StableService } from "@PM/Services";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
+import { useSettingsStore } from "@PM/Stores";
 
-const mkUsdService = new MkUsdService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const stableService = new StableService(getHost(), storeSettings.flavor);
 
 // Data
 const { loading, data } = usePromise(
-  () => mkUsdService.getCurvePoolDepth("ethereum").then((x) => x.depth),
+  () => stableService.getCurvePoolDepth("ethereum").then((x) => x.depth),
   []
 );
 </script>
