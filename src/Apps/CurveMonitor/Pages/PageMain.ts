@@ -55,7 +55,7 @@ export const pageMain: Page = {
       component: Proposals,
     },
     {
-      path: "/dao/proposal/:proposalId",
+      path: "/dao/proposal/:proposalType/:proposalId",
       component: Proposal,
     },
     { path: "/dao/vefunder", component: VeFunder },

@@ -1,6 +1,9 @@
 import { bigNumToNumber } from "@/Util";
 import { ServiceBase } from "@/Services";
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
+import type {
+  Proposal,
+  ProposalType,
+} from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
 
 const PROPOSALS_URL = "https://api-py.llama.airforce/curve/v1/dao/proposals";
@@ -99,18 +102,18 @@ export default class ProposalService extends ServiceBase {
     return resp.proposals.map(parseProposal);
   }
 
-  public async getProposal(proposalId: number): Promise<Proposal | null> {
-    // We don't know the type and what URL to query, so we try ownership ones first (highest hit rate).
-    let resp = await this.fetch<
-      GetProposalDetailsResponse & { message?: string }
-    >(`${PROPOSAL_OWNERSHIP_URL}${proposalId}`);
+  public async getProposal(
+    proposalId: number,
+    proposalType: ProposalType
+  ): Promise<Proposal | null> {
+    const url =
+      proposalType === "gauge"
+        ? PROPOSAL_OWNERSHIP_URL
+        : PROPOSAL_PARAMETER_URL;
 
-    // If there's a message it means there was an error fetching.
-    if (resp.message) {
-      resp = await this.fetch<
-        GetProposalDetailsResponse & { message?: string }
-      >(`${PROPOSAL_PARAMETER_URL}${proposalId}`);
-    }
+    const resp = await this.fetch<
+      GetProposalDetailsResponse & { message?: string }
+    >(`${url}${proposalId}`);
 
     if (resp.message) {
       return null;

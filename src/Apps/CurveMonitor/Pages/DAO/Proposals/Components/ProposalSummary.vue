@@ -8,9 +8,9 @@
       :class="{ 'no-title': !proposal.metadata }"
     >
       <router-link
-        :to="proposalLink(proposal.id)"
+        :to="proposalLink"
         class="id"
-        @click="proposalToClipboard(proposal.id)"
+        @click="proposalToClipboard"
       >
         <i class="fas fa-link"></i> {{ proposal.id }}
       </router-link>
@@ -59,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import Status from "@CM/Pages/DAO/Proposals/Components/Status.vue";
@@ -81,14 +82,15 @@ const emit = defineEmits<{
   toggleExpand: [];
 }>();
 
-// Methods
-const proposalLink = (proposalId: number): string => {
-  return `/dao/proposal/${proposalId}`;
-};
+// Refs
+const proposalLink = computed(
+  () => `/dao/proposal/${proposal.type}/${proposal.id}`
+);
 
-const proposalToClipboard = async (proposalId: number) => {
+// Methods
+const proposalToClipboard = async () => {
   await navigator.clipboard.writeText(
-    `${window.location.origin}/#/dao/proposal/${proposalId}`
+    `${window.location.origin}/#/dao/proposal/${proposal.type}/${proposal.id}`
   );
 };
 </script>

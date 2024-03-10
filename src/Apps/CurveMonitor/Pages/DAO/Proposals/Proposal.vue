@@ -20,6 +20,7 @@ import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalService from "@CM/Pages/DAO/Proposals/Services/ProposalService";
+import { type ProposalType, proposalTypes } from "./Models/Proposal";
 
 const proposalService = new ProposalService(getHost());
 
@@ -28,11 +29,26 @@ const route = useRoute();
 
 // Data
 const { loading, data: proposal } = usePromise(() => {
+  const proposalTypeParam = route.params.proposalType;
   const proposalIdParam = route.params.proposalId;
-  if (proposalIdParam && typeof proposalIdParam === "string") {
+
+  if (
+    proposalTypeParam &&
+    typeof proposalTypeParam === "string" &&
+    proposalIdParam &&
+    typeof proposalIdParam === "string"
+  ) {
+    if (!proposalTypes.includes(proposalTypeParam as ProposalType)) {
+      return Promise.resolve(null);
+    }
+
+    const proposalType = proposalTypeParam as ProposalType;
     const proposalId = parseInt(proposalIdParam, 10);
 
-    return minDelay(proposalService.getProposal(proposalId), 1000);
+    return minDelay(
+      proposalService.getProposal(proposalId, proposalType),
+      1000
+    );
   }
 
   return Promise.resolve(null);
