@@ -87,7 +87,6 @@ const options = computed((): unknown => {
           formatter: formatterY,
         },
         min: 0,
-        max: max.value,
       },
       plotOptions: {
         bar: {
@@ -158,22 +157,6 @@ const series = computed((): Serie[] =>
     .orderBy((x) => x.name)
     .value()
 );
-
-const max = computed(() => {
-  let max = 0;
-
-  // For each week, sum all serie data.
-  for (let i = 0; i < weeks.value.length; i++) {
-    max = Math.max(
-      max,
-      series.value
-        .map((serie) => serie.data[i].y)
-        .reduce((acc, y) => acc + y, 0)
-    );
-  }
-
-  return max * 1.1;
-});
 
 // Methods
 const formatterX = (x: string): string => x;
