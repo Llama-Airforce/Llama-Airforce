@@ -32,7 +32,11 @@ type Serie = {
 
 const { t } = useI18n();
 
-const troveService = new TroveService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const troveService = new TroveService(getHost(), storeSettings.flavor);
 
 // Props
 interface Props {
@@ -40,9 +44,6 @@ interface Props {
   trove?: Trove | null;
 }
 const { vault = null, trove = null } = defineProps<Props>();
-
-// Refs
-const storeSettings = useSettingsStore();
 
 // Data
 const { loading, data, load } = usePromise(async () => {
@@ -59,8 +60,8 @@ const { loading, data, load } = usePromise(async () => {
 // Refs
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },

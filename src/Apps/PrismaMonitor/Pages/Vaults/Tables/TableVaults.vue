@@ -116,17 +116,21 @@ import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText, useObservable } from "@/Framework";
 import { icon, label } from "@PM/Models/Vault";
-import { useSocketStore } from "@PM/Stores";
+import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 
 const { t } = useI18n();
 
 type Row = TroveManagerDetails;
 
-// Refs
-const socket = useSocketStore().getSocket("api");
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 
+// Refs
 const search = ref("");
 
 const rowsRaw = useObservable(prismaService.overview$, []);

@@ -3,8 +3,7 @@ import {
   type DecimalLabelledSeries,
   type DecimalTimeSeries,
 } from "@PM/Services/Series";
-
-const API_URL = "https://api.prismamonitor.com/v1";
+import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type StableKPI = {
   price: number;
@@ -26,18 +25,27 @@ export type PoolDepth = {
   ask: DepthNumbers;
 };
 
-export default class MkUsdService extends ServiceBase {
+export default class StableService extends ServiceBase {
+  private readonly API_URL: string;
+
+  constructor(host: string, flavor: Flavor) {
+    super(host);
+    this.API_URL = apiUrl(flavor);
+  }
+
   public async getPriceHistory(
     chain: string,
     period: string
   ): Promise<{ prices: DecimalTimeSeries[] }> {
-    return this.fetch(`${API_URL}/mkusd/${chain}/history?period=${period}`);
+    return this.fetch(
+      `${this.API_URL}/mkusd/${chain}/history?period=${period}`
+    );
   }
 
   public async getSupplyHistory(
     chain: string
   ): Promise<{ supply: DecimalTimeSeries[] }> {
-    return this.fetch(`${API_URL}/mkusd/${chain}/supply`);
+    return this.fetch(`${this.API_URL}/mkusd/${chain}/supply`);
   }
 
   public async getPriceHistogram(
@@ -46,23 +54,23 @@ export default class MkUsdService extends ServiceBase {
     period: string
   ): Promise<{ histogram: DecimalLabelledSeries[] }> {
     return this.fetch(
-      `${API_URL}/mkusd/${chain}/histogram?period=${period}&bins=${bins}`
+      `${this.API_URL}/mkusd/${chain}/histogram?period=${period}&bins=${bins}`
     );
   }
 
   public async getLargeStableCoinHolders(
     chain: string
   ): Promise<{ holders: DecimalLabelledSeries[] }> {
-    return this.fetch(`${API_URL}/mkusd/${chain}/holders`);
+    return this.fetch(`${this.API_URL}/mkusd/${chain}/holders`);
   }
 
   public async getStableCoinKPI(chain: string): Promise<{ info: StableKPI }> {
-    return this.fetch(`${API_URL}/mkusd/${chain}/general`);
+    return this.fetch(`${this.API_URL}/mkusd/${chain}/general`);
   }
 
   public async getCurvePoolDepth(
     chain: string
   ): Promise<{ depth: PoolDepth[] }> {
-    return this.fetch(`${API_URL}/mkusd/${chain}/depth`);
+    return this.fetch(`${this.API_URL}/mkusd/${chain}/depth`);
   }
 }

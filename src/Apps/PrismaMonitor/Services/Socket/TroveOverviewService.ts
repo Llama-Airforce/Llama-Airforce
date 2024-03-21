@@ -3,7 +3,6 @@ import { type WebSocketSubject } from "rxjs/webSocket";
 import { type Payload, type Action, type Request } from "@/Services";
 import { type Vault } from "@PM/Models/Vault";
 
-export const WS_URL = "wss://api.prismamonitor.com/v1/prisma/ws";
 export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
 
 export type TroveManagerDetails = {

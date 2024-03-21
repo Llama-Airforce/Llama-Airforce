@@ -1,6 +1,5 @@
 import { ServiceBase } from "@/Services";
-
-const API_URL = "https://api.prismamonitor.com/v1";
+import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type SnapshotRevenue = {
   unlock_penalty_revenue_usd: number;
@@ -16,13 +15,20 @@ export type Breakdown = {
 };
 
 export default class RevenueService extends ServiceBase {
+  private readonly API_URL: string;
+
+  constructor(host: string, flavor: Flavor) {
+    super(host);
+    this.API_URL = apiUrl(flavor);
+  }
+
   public async getSnapshots(): Promise<{
     snapshots: SnapshotRevenue[];
   }> {
-    return this.fetch(`${API_URL}/revenue/ethereum/snapshots?period=3m`);
+    return this.fetch(`${this.API_URL}/revenue/ethereum/snapshots?period=3m`);
   }
 
   public async getBreakdown(): Promise<Breakdown> {
-    return this.fetch(`${API_URL}/revenue/ethereum/breakdown`);
+    return this.fetch(`${this.API_URL}/revenue/ethereum/breakdown`);
   }
 }

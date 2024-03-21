@@ -71,12 +71,17 @@ import {
 import ChartRevenueLine from "@PM/Pages/Revenue/Charts/ChartRevenueLine.vue";
 import ChartRevenueBreakdown from "@PM/Pages/Revenue/Charts/ChartRevenueBreakdown.vue";
 import { getHost, RevenueService } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
 
 type ChartType = "line" | "breakdown";
 
 const { t } = useI18n();
 
-const revenueService = new RevenueService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const revenueService = new RevenueService(getHost(), storeSettings.flavor);
 
 // Refs
 const chartType = ref<ChartType>("line");

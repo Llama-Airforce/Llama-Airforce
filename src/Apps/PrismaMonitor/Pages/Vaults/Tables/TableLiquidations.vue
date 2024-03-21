@@ -114,12 +114,20 @@ import {
   type Liquidation,
   type TroveManagerDetails,
 } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
 
 type Row = Liquidation;
 
 const { t } = useI18n();
 
-const liquidationService = new LiquidationService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const liquidationService = new LiquidationService(
+  getHost(),
+  storeSettings.flavor
+);
 
 // Props
 interface Props {

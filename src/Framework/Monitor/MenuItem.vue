@@ -21,7 +21,7 @@
     <ul>
       <li
         v-for="menuItem in items"
-        :key="menuItem.label"
+        :key="menuLabel(menuItem)"
       >
         <router-link
           v-if="isLeaf(menuItem)"
@@ -38,7 +38,7 @@
               >
                 <i :class="menuItem.icon"></i>
               </div>
-              {{ menuItem.label }}
+              {{ menuLabel(menuItem) }}
             </div>
 
             <div class="right">
@@ -97,6 +97,11 @@ const expandIfChildActive = () => {
       expanded.value = true;
     }
   }
+};
+
+// Methods
+const menuLabel = (item: MenuItem): string => {
+  return typeof item.label === "string" ? item.label : item.label();
 };
 
 // Watches

@@ -17,23 +17,27 @@ import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
-import { getHost, MkUsdService } from "@PM/Services";
+import { getHost, StableService } from "@PM/Services";
 import { addressShort } from "@/Wallet";
 
 const { t } = useI18n();
-const mkUsdService = new MkUsdService(getHost());
+
+// Stores
 const storeSettings = useSettingsStore();
+
+// Services
+const stableService = new StableService(getHost(), storeSettings.flavor);
 
 // Data
 const { loading, data } = usePromise(
   () =>
-    mkUsdService.getLargeStableCoinHolders("ethereum").then((x) => x.holders),
+    stableService.getLargeStableCoinHolders("ethereum").then((x) => x.holders),
   []
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },
@@ -115,5 +119,4 @@ const formatter = (x: number): string =>
 
 <i18n lang="yaml" locale="en">
 title: Largest holders
-numPos: "mkUSD balance:"
 </i18n>

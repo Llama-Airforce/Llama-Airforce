@@ -116,12 +116,20 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectVault from "@PM/Components/SelectVault.vue";
 import { getHost, type Redemption, RedemptionService } from "@PM/Services";
 
-const redemptionService = new RedemptionService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const redemptionService = new RedemptionService(
+  getHost(),
+  storeSettings.flavor
+);
 
 type Row = Redemption;
 

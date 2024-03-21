@@ -1,6 +1,6 @@
 <template>
   <CardGraph
-    :title="t('title')"
+    :title="t('title', { stable: stableSymbol(storeSettings.flavor) })"
     :loading="loading"
     :options="options"
     :series="series"
@@ -16,6 +16,7 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { getHost, StabilityPoolService } from "@PM/Services";
+import { stableSymbol } from "@PM/Models/Flavor";
 
 const { t } = useI18n();
 
@@ -25,8 +26,11 @@ type TooltipParams = {
   w: { globals: { seriesNames: string[] } };
 };
 
-const sbService = new StabilityPoolService(getHost());
+// Stores
 const storeSettings = useSettingsStore();
+
+// Services
+const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
 
 // Data
 const { loading, data } = usePromise(
@@ -36,8 +40,8 @@ const { loading, data } = usePromise(
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },
@@ -145,7 +149,7 @@ const formatterY = (y: number): string =>
 </style>
 
 <i18n lang="yaml" locale="en">
-title: mkUSD deposits and withdrawals
+title: "{stable} deposits and withdrawals"
 deposits: Deposits
 withdrawals: Withdrawals
 </i18n>

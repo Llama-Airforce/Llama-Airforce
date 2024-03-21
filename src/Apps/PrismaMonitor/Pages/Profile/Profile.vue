@@ -22,18 +22,21 @@ import { ref, watch, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useObservable } from "@/Framework";
 import { useWallet } from "@/Wallet";
-import { useSocketStore } from "@PM/Stores";
+import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import TableRedemptions from "@PM/Pages/Profile/Tables/TableRedemptions.vue";
 import TableLiquidations from "@PM/Pages/Profile/Tables/TableLiquidations.vue";
 import TableTroves from "@PM/Pages/Profile/Tables/TableTroves.vue";
 import { TroveOverviewService, type Trove } from "@PM/Services";
+
+// Stores
+const storeSettings = useSettingsStore();
 
 // Refs
 const route = useRoute();
 const router = useRouter();
 const { address } = useWallet();
 
-const socket = useSocketStore().getSocket("api");
+const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 

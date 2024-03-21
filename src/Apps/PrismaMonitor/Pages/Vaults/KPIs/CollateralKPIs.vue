@@ -37,7 +37,7 @@
     </KPI>
 
     <KPI
-      label="Share of the ETH LSD market"
+      label="Share of the collateral market"
       :has-value="!!data"
     >
       <AsyncValue
@@ -70,8 +70,16 @@ import {
   CollateralService,
   type TroveManagerDetails,
 } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
 
-const collateralService = new CollateralService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const collateralService = new CollateralService(
+  getHost(),
+  storeSettings.flavor
+);
 
 // Props
 interface Props {

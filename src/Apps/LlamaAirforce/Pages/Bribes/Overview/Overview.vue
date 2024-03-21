@@ -63,6 +63,8 @@ const overviewId = computed((): OverviewId | null => {
           return "bribes-overview-votium";
         case "cvx-prisma":
           return "bribes-overview-prisma";
+        case "cvx-fxn":
+          return "bribes-overview-fxn";
         default:
           throw new Error("Unknown protocol for dashboard");
       }

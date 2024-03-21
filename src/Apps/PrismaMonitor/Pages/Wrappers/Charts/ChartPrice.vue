@@ -123,7 +123,7 @@ watch(dataVolume, (newVolumes) => {
 
 // Methods
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+  return createChartStyles(chartRef, theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.75,
@@ -139,7 +139,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
 const createOptionsSeriePrice = (
   theme: Theme
 ): CandlestickSeriesPartialOptions => {
-  const colors = getColors(theme);
+  const colors = getColors(theme, storeSettings.flavor);
 
   return {
     priceFormat: {
@@ -163,10 +163,10 @@ const createOptionsSeriePrice = (
 const createOptionsSerieVolume = (
   theme: Theme
 ): HistogramSeriesPartialOptions => {
-  const colors = getColors(theme);
+  const colors = getColors(theme, storeSettings.flavor);
 
   return {
-    color: colors.blue,
+    color: storeSettings.flavor === "lsd" ? colors.blue : colors.purple,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",

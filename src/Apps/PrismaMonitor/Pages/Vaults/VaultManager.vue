@@ -56,7 +56,12 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { TabView, TabItem, useObservable } from "@/Framework";
-import { useBreadcrumbStore, useSocketStore } from "@PM/Stores";
+import {
+  useBreadcrumbStore,
+  useSocketStore,
+  useSettingsStore,
+  getApiSocket,
+} from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { TroveOverviewService } from "@PM/Services";
 import { label } from "@PM/Models/Vault";
@@ -66,14 +71,16 @@ import Liquidations from "@PM/Pages/Vaults/Liquidations.vue";
 import Redemptions from "@PM/Pages/Vaults/Redemptions.vue";
 import Troves from "@PM/Pages/Vaults/Troves.vue";
 
+// Stores
+const storeSettings = useSettingsStore();
+const storeBreadcrumb = useBreadcrumbStore();
+const storeVault = useVaultStore();
+
 // Refs
 const route = useRoute();
 const router = useRouter();
 
-const storeBreadcrumb = useBreadcrumbStore();
-const storeVault = useVaultStore();
-
-const socket = useSocketStore().getSocket("api");
+const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 

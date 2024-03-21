@@ -1,8 +1,7 @@
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
 import { type Vault } from "@PM/Models/Vault";
-
-const API_URL = "https://api.prismamonitor.com/v1";
+import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type Redemption = {
   redeemer: string;
@@ -22,6 +21,13 @@ export type Redemption = {
 };
 
 export default class RedemptionService extends ServiceBase {
+  private readonly API_URL: string;
+
+  constructor(host: string, flavor: Flavor) {
+    super(host);
+    this.API_URL = apiUrl(flavor);
+  }
+
   public async getRedemptions(
     chain: string,
     manager: string
@@ -30,7 +36,7 @@ export default class RedemptionService extends ServiceBase {
       return this.fetch<{
         redemptions: Redemption[];
       }>(
-        `${API_URL}/redemptions/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
+        `${this.API_URL}/redemptions/${chain}/${manager}?items=100&page=${page}&order_by=block_timestamp&desc=true`
       ).then((resp) =>
         resp.redemptions.map((r) => ({
           ...r,
@@ -51,7 +57,7 @@ export default class RedemptionService extends ServiceBase {
       return this.fetch<{
         redemptions: Redemption[];
       }>(
-        `${API_URL}/redemptions/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
+        `${this.API_URL}/redemptions/${chain}?items=100&page=${page}&order_by=block_timestamp&desc=true&trove_filter=${trove}`
       ).then((resp) =>
         resp.redemptions.map((r) => ({
           ...r,

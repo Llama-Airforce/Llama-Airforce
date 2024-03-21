@@ -35,16 +35,26 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
+import { watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Breadcrumb, type Crumb } from "@/Framework";
 import Navigation from "@PM/Navigation/Navigation.vue";
-import { useBreadcrumbStore } from "@PM/Stores";
+import { useSettingsStore, useBreadcrumbStore } from "@PM/Stores";
+
+// Stores
+const settingStore = useSettingsStore();
+const storeBreadcrumb = useBreadcrumbStore();
 
 // Refs
-const storeBreadcrumb = useBreadcrumbStore();
 const route = useRoute();
 const router = useRouter();
+
+// Hooks
+onMounted(() => {
+  if (settingStore.flavor === "lrt") {
+    window.document.documentElement.setAttribute("data-flavor", "lrt");
+  }
+});
 
 // Watches
 watch(
@@ -52,7 +62,7 @@ watch(
   (newRoute) => {
     const noCrumbs = [
       "/pool",
-      "/mkusd",
+      "/stable",
       "/redemptions",
       "/liquidation",
       "/profile",
@@ -87,6 +97,14 @@ const onCrumb = async (crumb: Crumb) => {
 
 [data-theme="dark"] {
   @include themeDark();
+}
+
+[data-theme="light"][data-flavor="lrt"] {
+  @include themeLightLrt();
+}
+
+[data-theme="dark"][data-flavor="lrt"] {
+  @include themeDarkLrt();
 }
 
 html {

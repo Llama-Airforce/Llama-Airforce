@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['cvxPRISMA', 'yPRISMA']"
-          :colors="getColorsArray(storeSettings.theme)"
+          :colors="getColorsArray(storeSettings.theme, storeSettings.flavor)"
         ></Legend>
       </div>
     </template>
@@ -118,7 +118,7 @@ watch(dataYearn, (newData) => {
 
 // Methods
 const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+  return createChartStyles(chartRef, theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -135,7 +135,7 @@ const createOptionsSerie = (
   theme: Theme,
   contract: Contract
 ): LineSeriesPartialOptions => {
-  const colors = getColors(theme);
+  const colors = getColors(theme, storeSettings.flavor);
   const color = contract === "convex" ? colors.blue : colors.yellow;
 
   return {

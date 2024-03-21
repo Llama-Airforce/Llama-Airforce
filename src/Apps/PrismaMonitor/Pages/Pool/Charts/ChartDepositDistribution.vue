@@ -19,8 +19,11 @@ import { getHost, StabilityPoolService } from "@PM/Services";
 
 const { t } = useI18n();
 
-const sbService = new StabilityPoolService(getHost());
+// Stores
 const storeSettings = useSettingsStore();
+
+// Services
+const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
 
 // Data
 const { loading, data } = usePromise(
@@ -29,8 +32,8 @@ const { loading, data } = usePromise(
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const colors = getColors(storeSettings.theme, storeSettings.flavor);
+  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
 
   return createChartStyles(
     { colors, colorsArray },

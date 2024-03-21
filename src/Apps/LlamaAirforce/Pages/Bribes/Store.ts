@@ -27,16 +27,17 @@ type State = {
 
 const state: State = {
   rounds: {
-    votium: { "cvx-crv": [], "cvx-prisma": [], "aura-bal": [] },
-    hh: { "cvx-crv": [], "cvx-prisma": [], "aura-bal": [] },
+    votium: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
+    hh: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
   },
   epochs: {
-    votium: { "cvx-crv": [], "cvx-prisma": [], "aura-bal": [] },
-    hh: { "cvx-crv": [], "cvx-prisma": [], "aura-bal": [] },
+    votium: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
+    hh: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
   },
   overviews: {
     "bribes-overview-votium": null,
     "bribes-overview-prisma": null,
+    "bribes-overview-fxn": null,
     "bribes-overview-aura": null,
   },
 

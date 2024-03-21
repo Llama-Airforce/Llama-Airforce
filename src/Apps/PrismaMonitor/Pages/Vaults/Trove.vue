@@ -27,7 +27,12 @@
 import { useRoute } from "vue-router";
 import { computed, onMounted, watch } from "vue";
 import { useObservable } from "@/Framework";
-import { useSocketStore, useBreadcrumbStore } from "@PM/Stores";
+import {
+  useSocketStore,
+  useBreadcrumbStore,
+  useSettingsStore,
+  getApiSocket,
+} from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { label } from "@PM/Models/Vault";
 import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";
@@ -40,15 +45,18 @@ import {
   type Trove,
 } from "@PM/Services";
 
-const troveService = new TroveService(getHost());
-
-// Refs
+// Stores
+const storeSettings = useSettingsStore();
 const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
 
+// Services
+const troveService = new TroveService(getHost(), storeSettings.flavor);
+
+// Refs
 const route = useRoute();
 
-const socket = useSocketStore().getSocket("api");
+const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 

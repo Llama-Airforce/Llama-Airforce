@@ -7,7 +7,14 @@
       class="title"
       :class="{ 'no-title': !proposal.metadata }"
     >
-      <div class="id">{{ proposal.id }}</div>
+      <router-link
+        :to="proposalLink"
+        class="id"
+        @click="proposalToClipboard"
+      >
+        <i class="fas fa-link"></i> {{ proposal.id }}
+      </router-link>
+
       <div class="metadata">
         {{ proposal.metadata || t("no-title") }}
       </div>
@@ -52,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import Status from "@CM/Pages/DAO/Proposals/Components/Status.vue";
@@ -73,6 +81,18 @@ const { proposal } = defineProps<Props>();
 const emit = defineEmits<{
   toggleExpand: [];
 }>();
+
+// Refs
+const proposalLink = computed(
+  () => `/dao/proposal/${proposal.type}/${proposal.id}`
+);
+
+// Methods
+const proposalToClipboard = async () => {
+  await navigator.clipboard.writeText(
+    `${window.location.origin}/#/dao/proposal/${proposal.type}/${proposal.id}`
+  );
+};
 </script>
 
 <style lang="scss" scoped>
@@ -106,8 +126,17 @@ const emit = defineEmits<{
     > .id {
       display: flex;
       align-items: center;
+      gap: 1ch;
 
       color: var(--c-lvl6);
+
+      &:hover {
+        background: unset;
+      }
+
+      i {
+        font-size: 0.75rem;
+      }
     }
   }
 

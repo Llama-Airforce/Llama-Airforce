@@ -123,6 +123,7 @@ import {
   usePagination,
 } from "@/Framework";
 import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
 import {
   getHost,
@@ -136,7 +137,11 @@ type Row = Trove & { vault: Vault };
 
 const { t } = useI18n();
 
-const troveService = new TroveService(getHost());
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const troveService = new TroveService(getHost(), storeSettings.flavor);
 
 // Props
 interface Props {
