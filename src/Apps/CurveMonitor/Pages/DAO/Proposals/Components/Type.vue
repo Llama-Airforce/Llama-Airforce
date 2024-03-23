@@ -26,7 +26,7 @@ const { proposal } = defineProps<Props>();
 const type = computed((): string => {
   switch (proposal.type) {
     case "gauge":
-      return t("gauge");
+      return t("ownership");
     case "parameter":
       return t("parameter");
     case "other":
@@ -39,7 +39,7 @@ const type = computed((): string => {
 
 <i18n lang="yaml" locale="en">
 type: Type
-gauge: Gauge
+ownership: Ownership
 parameter: Parameter
 other: Other
 </i18n>
