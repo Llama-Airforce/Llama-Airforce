@@ -43,6 +43,8 @@ const expanded = ref(initExpanded);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .proposal {
+  overflow: hidden;
+
   ::v-deep(.card-body) {
     flex-direction: column;
   }
