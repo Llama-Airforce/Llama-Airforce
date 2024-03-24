@@ -5,8 +5,8 @@
       class="connected"
     >
       <div
-        v-if="!correctNetwork"
-        class="incorrectNetwork"
+        v-if="!supportedNetwork"
+        class="unsupportedNetwork"
       >
         <Button
           class="changeNetwork"
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted } from "vue";
+import { computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Button } from "@/Framework";
 import { addressShort, getAddress, useWallet } from "@/Wallet";
@@ -63,7 +63,7 @@ const { labelPleaseConnect } = defineProps<Props>();
 const store = useWalletStore();
 const {
   connected,
-  correctNetwork,
+  network,
   address,
   connectWallet,
   disconnectWallet,
@@ -71,6 +71,9 @@ const {
   withProvider,
 } = useWallet();
 
+const supportedNetwork = computed(() => network.value === "mainnet");
+
+// Hooks
 onMounted(connectWallet);
 
 // Watches
@@ -110,7 +113,7 @@ const changeNetwork = withProvider(async (provider) => {
     width: 100%;
   }
 
-  .incorrectNetwork {
+  .unsupportedNetwork {
     @media only screen and (max-width: 1280px) {
       display: none !important;
     }
@@ -119,7 +122,7 @@ const changeNetwork = withProvider(async (provider) => {
   }
 
   .notConnected,
-  .incorrectNetwork {
+  .unsupportedNetwork {
     width: 100%;
     display: flex;
     flex-direction: column;

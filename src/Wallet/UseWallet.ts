@@ -5,14 +5,14 @@ import {
   disconnectWallet as disconnectWalletFunc,
   getProvider,
 } from "@/Wallet/ProviderFactory";
-import { isConnected, isMainnet } from "@/Wallet/WalletHelper";
+import { isConnected, getNetwork } from "@/Wallet/WalletHelper";
 
 // eslint-disable-next-line max-lines-per-function
 export function useWallet() {
   const store = useWalletStore();
 
   const connected = computed(() => store.connected);
-  const correctNetwork = computed(() => store.correctNetwork);
+  const network = computed(() => store.network);
   const address = computed(() => store.address);
 
   const connectWallet = async (showModal = false) => {
@@ -22,8 +22,8 @@ export function useWallet() {
     const connected = await isConnected(provider);
     store.connected = connected;
 
-    const correctNetwork = await isMainnet(provider);
-    store.correctNetwork = correctNetwork;
+    const network = await getNetwork(provider);
+    store.network = network;
   };
 
   const disconnectWallet = async () => {
@@ -130,7 +130,7 @@ export function useWallet() {
 
   return {
     connected,
-    correctNetwork,
+    network,
     address,
     getProvider,
     getSigner,

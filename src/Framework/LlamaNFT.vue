@@ -12,7 +12,7 @@ import { TheLlamas__factory } from "@/Contracts";
 import { TheLlamas } from "@/Util/Addresses";
 
 // Refs
-const { address, withProvider } = useWallet();
+const { address, network, withProvider } = useWallet();
 
 const uri = ref("");
 
@@ -23,6 +23,10 @@ onMounted(async (): Promise<void> => {
 
 // Methods
 const getNFT = withProvider(async (provider, address) => {
+  if (network.value !== "mainnet") {
+    return;
+  }
+
   const llamas = TheLlamas__factory.connect(TheLlamas, provider);
   const tokens = await llamas.tokensForOwner(address);
   if (tokens.length === 0) {

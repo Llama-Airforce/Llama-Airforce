@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
+import { type Network } from "@/Wallet/Network";
 
 type State = {
   connected: boolean;
-  correctNetwork: boolean;
+  network?: Network;
   address?: string;
 };
 
@@ -11,7 +12,7 @@ export const useWalletStore = defineStore({
   state: (): State => ({
     address: undefined,
     connected: false,
-    correctNetwork: false,
+    network: undefined,
   }),
   actions: {
     setAddress(address?: string) {

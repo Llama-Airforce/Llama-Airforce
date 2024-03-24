@@ -1,6 +1,7 @@
 import { constants } from "ethers";
 import { type JsonRpcProvider } from "@ethersproject/providers";
 import { type ERC20 } from "@/Contracts";
+import { type Network } from "@/Wallet/Network";
 
 export async function isConnected(
   provider?: JsonRpcProvider
@@ -21,17 +22,25 @@ export async function isConnected(
   }
 }
 
-export async function isMainnet(provider?: JsonRpcProvider): Promise<boolean> {
+export async function getNetwork(
+  provider?: JsonRpcProvider
+): Promise<Network | undefined> {
   if (!provider) {
-    return false;
+    return undefined;
   }
 
   try {
     const { name, chainId } = await provider.getNetwork();
 
-    return name === "homestead" && chainId === 1;
+    if (name === "homestead" && chainId === 1) {
+      return "mainnet";
+    } else if (chainId === 8453) {
+      return "base";
+    }
+
+    return undefined;
   } catch {
-    return false;
+    return undefined;
   }
 }
 
