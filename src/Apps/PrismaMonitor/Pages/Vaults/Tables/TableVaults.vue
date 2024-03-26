@@ -21,9 +21,14 @@
 
     <template #row="props: { item: Row }">
       <img :src="icon(props.item.address)" />
-      <div>{{ label(props.item.address) ?? props.item.name }}</div>
+      <div :class="{ deprecated: isDeprecated(props.item.address) }">
+        {{ label(props.item.address) ?? props.item.name }}
+      </div>
 
-      <div class="number">
+      <div
+        class="number"
+        :class="{ deprecated: isDeprecated(props.item.address) }"
+      >
         <AsyncValue
           :value="props.item.tvl"
           :precision="0"
@@ -32,7 +37,10 @@
         />
       </div>
 
-      <div class="number">
+      <div
+        class="number"
+        :class="{ deprecated: isDeprecated(props.item.address) }"
+      >
         <AsyncValue
           :value="props.item.debt"
           :precision="0"
@@ -41,7 +49,10 @@
         />
       </div>
 
-      <div class="number">
+      <div
+        class="number"
+        :class="{ deprecated: isDeprecated(props.item.address) }"
+      >
         <AsyncValue
           :value="props.item.cr * 100"
           :precision="2"
@@ -49,7 +60,10 @@
         />
       </div>
 
-      <div class="number">
+      <div
+        class="number"
+        :class="{ deprecated: isDeprecated(props.item.address) }"
+      >
         <AsyncValue
           :value="props.item.mcr * 100"
           :precision="2"
@@ -57,9 +71,17 @@
         />
       </div>
 
-      <div class="number">{{ props.item.open_troves }}</div>
+      <div
+        class="number"
+        :class="{ deprecated: isDeprecated(props.item.address) }"
+      >
+        {{ props.item.open_troves }}
+      </div>
 
-      <div class="number">
+      <div
+        class="number"
+        :class="{ deprecated: isDeprecated(props.item.address) }"
+      >
         <AsyncValue
           type="dollar"
           :value="Math.round(props.item.price)"
@@ -115,7 +137,7 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText, useObservable } from "@/Framework";
-import { icon, label } from "@PM/Models/Vault";
+import { icon, label, isDeprecated } from "@PM/Models/Vault";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 
@@ -160,6 +182,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
+  }
+
+  .deprecated {
+    opacity: 0.5;
   }
 
   ::v-deep(.vaults-columns-data) {
