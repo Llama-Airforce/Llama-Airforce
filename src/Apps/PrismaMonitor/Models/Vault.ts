@@ -59,13 +59,13 @@ export function label(vault: Vault): string | null {
     case "0xbf6883a03fd2fcfa1b9fc588ad6193b3c3178f8f":
       return "wstETH (long term)";
     case "0x1cc79f3f47bfc060b6f761fcd1afc6d399a968b6":
-      return "wstETH (short term)";
+      return "wstETH (deprecated)";
     case "0xe0e255fd5281bec3bb8fa1569a20097d9064e445":
       return "rETH";
     case "0xf69282a7e7ba5428f92f610e7afa1c0cedc4e483":
       return "sfrxETH (long term)";
     case "0xc2545c68a71f6803264bde885870fd72d361fb9e":
-      return "sfrxETH (short term)";
+      return "sfrxETH (deprecated)";
 
     // LRT
     case "0xf1c45c7b1f798302d29390d90d4dac38137352b1":
