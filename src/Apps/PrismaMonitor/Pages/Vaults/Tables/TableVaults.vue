@@ -167,6 +167,7 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.name) || includesTerm(row.address);
     })
+    .orderBy((row) => row.debt, "desc")
     .value()
 );
 
