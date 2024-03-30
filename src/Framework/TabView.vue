@@ -52,7 +52,7 @@ const tabs = computed(() => {
     ? (slots.default() as unknown as (typeof TabItem)[])
     : [];
 
-  return tabs;
+  return tabs.filter((tab) => (tab as unknown as typeof TabItem).props);
 });
 
 // Watches
