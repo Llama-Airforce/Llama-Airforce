@@ -82,6 +82,10 @@ a {
   display: flex;
   justify-content: center;
 }
+
+.kpi {
+  line-height: 1.5rem !important;
+}
 </style>
 
 <style lang="scss" scoped>
