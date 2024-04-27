@@ -169,6 +169,7 @@
 
     <template #row-aggregation>
       <div></div>
+      <div></div>
       <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
       <div></div>
       <div></div>
