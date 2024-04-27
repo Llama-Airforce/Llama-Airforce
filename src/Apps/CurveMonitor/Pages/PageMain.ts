@@ -9,6 +9,8 @@ import Revenue from "@CM/Pages/Platform/Revenue/Revenue.vue";
 import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
 import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.vue";
 
+import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.vue";
+
 import Monitor from "@CM/Pages/Pool/Monitor/Monitor.vue";
 import MEV from "@CM/Pages/Pool/MEV/MEV.vue";
 
@@ -36,6 +38,7 @@ export const pageMain: Page = {
       name: "crvusdmarket",
       component: CrvUsdMarket,
     },
+    { path: "/platform/llamalend", name: "llamalend", component: LlamaLend },
 
     { path: "/pool", redirect: { name: "monitor" } },
     {
@@ -79,6 +82,10 @@ export const pageMain: Page = {
         {
           to: "/platform/crvusd",
           label: "crvUSD",
+        },
+        {
+          to: "/platform/llamalend",
+          label: "Llama Lend",
         },
       ],
     },
