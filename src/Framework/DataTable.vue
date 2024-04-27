@@ -81,6 +81,7 @@
           :columns="columnsData"
           :selected="selectedRow === row"
           :expanded="isExpanded(row as never)"
+          :expand-side="expandSide"
           @click="onSelect"
         >
           <template #row>
@@ -151,6 +152,8 @@ interface Props {
 
   /** All currently expanded rows */
   expanded?: unknown[];
+  expandSide?: "left" | "right";
+
   /** Whether columns can be sorted or not. */
   sorting?: boolean;
 
@@ -177,6 +180,7 @@ const {
   selectedRow = null,
 
   expanded = [],
+  expandSide = "right",
   sorting = false,
 
   sortingColumns = [],

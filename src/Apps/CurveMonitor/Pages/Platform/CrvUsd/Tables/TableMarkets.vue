@@ -3,9 +3,11 @@
     class="datatable-markets"
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="markets-columns-data"
+    expand-side="left"
     :loading="loading"
     :rows="rows"
     :columns="[
+      '',
       'Name',
       'Loans',
       'Rate',
@@ -352,6 +354,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
     display: grid;
     grid-template-columns:
+      1rem
       minmax(12ch, 1fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
@@ -361,13 +364,13 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       7ch
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      1rem;
+      minmax(var(--col-width), 0.75fr);
 
     // Non mobile
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1200px) {
         grid-template-columns:
+          1rem
           minmax(12ch, 1fr)
           minmax(var(--col-width), 0.75fr)
           7ch
@@ -376,16 +379,16 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
           7ch
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          1rem;
+          minmax(var(--col-width), 0.75fr);
 
-        div:nth-child(2) {
+        div:nth-child(3) {
           display: none;
         }
       }
 
       @container (max-width: 1100px) {
         grid-template-columns:
+          1rem
           minmax(12ch, 1fr)
           minmax(var(--col-width), 0.75fr)
           7ch
@@ -393,26 +396,25 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          1rem;
+          minmax(var(--col-width), 0.75fr);
 
-        div:nth-child(7) {
+        div:nth-child(8) {
           display: none;
         }
       }
 
       @container (max-width: 1000px) {
         grid-template-columns:
+          1rem
           minmax(12ch, 1fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          1rem;
+          minmax(var(--col-width), 0.75fr);
 
-        div:nth-child(4) {
+        div:nth-child(5) {
           display: none;
         }
       }
@@ -423,31 +425,34 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       gap: 0.25rem;
 
       @container (max-width: 1000px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(8, minmax(var(--col-width), 0.75fr))
-          2rem;
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            8,
+            minmax(var(--col-width), 0.75fr)
+          );
 
-        div:nth-child(2) {
+        div:nth-child(3) {
           display: none;
         }
       }
 
       @container (max-width: 900px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(7, minmax(var(--col-width), 0.75fr))
-          2rem;
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            7,
+            minmax(var(--col-width), 0.75fr)
+          );
 
-        div:nth-child(7) {
+        div:nth-child(8) {
           display: none;
         }
       }
 
       @container (max-width: 800px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
-          2rem;
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            6,
+            minmax(var(--col-width), 0.75fr)
+          );
 
-        div:nth-child(4) {
+        div:nth-child(5) {
           display: none;
         }
       }
@@ -455,31 +460,34 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       @container (max-width: 700px) {
         --col-width: 11ch;
 
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(5, minmax(var(--col-width), 0.75fr))
-          2rem;
-
-        div:nth-child(9) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 600px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(4, minmax(var(--col-width), 0.75fr))
-          2rem;
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            5,
+            minmax(var(--col-width), 0.75fr)
+          );
 
         div:nth-child(10) {
           display: none;
         }
       }
 
-      @container (max-width: 500px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, var(--col-width))
-          2rem;
+      @container (max-width: 600px) {
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            4,
+            minmax(var(--col-width), 0.75fr)
+          );
 
-        div:nth-child(5) {
+        div:nth-child(11) {
+          display: none;
+        }
+      }
+
+      @container (max-width: 500px) {
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            3,
+            var(--col-width)
+          );
+
+        div:nth-child(6) {
           display: none;
         }
       }
@@ -493,27 +501,27 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       }
 
       @container (max-width: 325px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(2, var(--col-width))
-          2rem;
+        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
+            2,
+            var(--col-width)
+          );
 
-        div:nth-child(8) {
+        div:nth-child(9) {
           display: none;
         }
       }
 
       @container (max-width: 275px) {
-        grid-template-columns: minmax(12ch, 1fr) 2rem;
+        grid-template-columns: 2rem minmax(12ch, 1fr);
 
-        div:nth-child(3),
-        div:nth-child(6) {
+        div:nth-child(4),
+        div:nth-child(7) {
           display: none;
         }
       }
     }
 
     // Right adjust number columns.
-    div:nth-child(2),
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
@@ -521,7 +529,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     div:nth-child(7),
     div:nth-child(8),
     div:nth-child(9),
-    div:nth-child(10) {
+    div:nth-child(10),
+    div:nth-child(11) {
       justify-content: end;
     }
 

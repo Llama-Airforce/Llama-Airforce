@@ -8,9 +8,18 @@
       :class="[columns, { active: selected, expandable }]"
       @click="onClick"
     >
-      <slot name="row"></slot>
       <div
-        v-if="expandable"
+        v-if="expandable && expandSide === 'left'"
+        class="expander"
+        :class="{ expanded }"
+      >
+        <i class="fas fa-chevron-up"></i>
+      </div>
+
+      <slot name="row"></slot>
+
+      <div
+        v-if="expandable && expandSide !== 'left'"
         class="expander"
         :class="{ expanded }"
       >
@@ -41,6 +50,7 @@ interface Props {
   columns?: string;
   selected?: boolean;
   expanded?: boolean;
+  expandSide?: "left" | "right";
 }
 
 const {
@@ -48,6 +58,7 @@ const {
   columns = "auto",
   selected = false,
   expanded = false,
+  expandSide = "right",
 } = defineProps<Props>();
 
 // Emits
