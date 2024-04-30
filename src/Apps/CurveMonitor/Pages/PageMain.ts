@@ -10,6 +10,7 @@ import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
 import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.vue";
 
 import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.vue";
+import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.vue";
 
 import Monitor from "@CM/Pages/Pool/Monitor/Monitor.vue";
 import MEV from "@CM/Pages/Pool/MEV/MEV.vue";
@@ -38,7 +39,13 @@ export const pageMain: Page = {
       name: "crvusdmarket",
       component: CrvUsdMarket,
     },
+
     { path: "/platform/llamalend", name: "llamalend", component: LlamaLend },
+    {
+      path: "/platform/llamalend/market/:marketAddr/:tab?",
+      name: "llamalendmarket",
+      component: LlamaLendMarket,
+    },
 
     { path: "/pool", redirect: { name: "monitor" } },
     {

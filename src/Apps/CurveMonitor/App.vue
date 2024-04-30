@@ -50,7 +50,7 @@ const router = useRouter();
 watch(
   () => route.fullPath,
   (newRoute) => {
-    if (!newRoute.includes("crvusd")) {
+    if (!(newRoute.includes("crvusd") || newRoute.includes("llamalend"))) {
       storeBreadcrumb.show = false;
     }
   }

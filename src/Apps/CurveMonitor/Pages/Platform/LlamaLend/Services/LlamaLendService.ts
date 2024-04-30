@@ -1,5 +1,6 @@
 import { ServiceBase } from "@/Services";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
+import { type Snapshot } from "@CM/Pages/Platform/LlamaLend/Models/Snapshot";
 
 const API_URL = "https://prices.curve.fi";
 
@@ -58,6 +59,58 @@ const parseMarket = (x: GetMarketsResponse["data"][number]): Market => {
   };
 };
 
+type GetSnapshotsResponse = {
+  data: [
+    {
+      rate: string;
+      borrow_apy: string;
+      lend_apy: string;
+      n_loans: number;
+      price_oracle: string;
+      amm_price: string;
+      total_debt: string;
+      total_assets: string;
+      minted: string;
+      redeemed: string;
+      collateral_balance: string;
+      borrowed_balance: string;
+      timestamp: string;
+    }
+  ];
+};
+
+const parseSnapshot = (x: GetSnapshotsResponse["data"][number]): Snapshot => {
+  const rate = parseFloat(x.rate);
+  const borrowApy = parseFloat(x.borrow_apy) / 100;
+  const lendApy = parseFloat(x.lend_apy) / 100;
+  const numLoans = x.n_loans;
+  const priceOracle = parseFloat(x.price_oracle);
+  const ammPrice = parseFloat(x.amm_price);
+  const totalDebt = parseFloat(x.total_debt);
+  const totalAssets = parseFloat(x.total_assets);
+  const minted = parseFloat(x.minted);
+  const redeemed = parseFloat(x.redeemed);
+  const collateralBalance = parseFloat(x.collateral_balance);
+  const borrowedBalance = parseFloat(x.borrowed_balance);
+  const timestamp = new Date(x.timestamp).getTime() / 1000;
+
+  return {
+    rate,
+    borrowApy,
+    lendApy,
+    numLoans,
+    priceOracle,
+    ammPrice,
+    totalDebt,
+    totalAssets,
+    minted,
+    redeemed,
+    collateralBalance,
+    borrowedBalance,
+    timestamp,
+  };
+};
+
 export default class LlamaLendService extends ServiceBase {
   public async getMarkets(): Promise<Market[]> {
     const resp = await this.fetch<GetMarketsResponse>(
@@ -65,5 +118,13 @@ export default class LlamaLendService extends ServiceBase {
     );
 
     return resp.data.map(parseMarket);
+  }
+
+  public async getSnapshots(marketController: string): Promise<Snapshot[]> {
+    const resp = await this.fetch<GetSnapshotsResponse>(
+      `${API_URL}/v1/lending/markets/ethereum/${marketController}/snapshots?agg=day`
+    );
+
+    return resp.data.map(parseSnapshot);
   }
 }
