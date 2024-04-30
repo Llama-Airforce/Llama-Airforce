@@ -57,10 +57,14 @@ export default class AuraService extends ServiceBase {
   }
 
   private async fetchIncentivePerVote(): Promise<number> {
-    return this.fetch<{ result: number }>(
-      `${LA_API_URL}/${Math.floor(this.today)}`
-    )
-      ?.then(({ result }) => result)
+    return this.fetch<{
+      result: {
+        emissionValuePerVote: number;
+        emissionsPerDollarSpent: number;
+        totalEmission: number;
+      };
+    }>(`${LA_API_URL}/${Math.floor(this.today)}`)
+      ?.then(({ result }) => result.emissionValuePerVote)
       .catch(() => 0);
   }
 
