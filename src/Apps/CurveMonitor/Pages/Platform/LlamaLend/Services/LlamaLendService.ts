@@ -1,4 +1,5 @@
 import { ServiceBase } from "@/Services";
+import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
 import { type Snapshot } from "@CM/Pages/Platform/LlamaLend/Models/Snapshot";
 
@@ -112,9 +113,11 @@ const parseSnapshot = (x: GetSnapshotsResponse["data"][number]): Snapshot => {
 };
 
 export default class LlamaLendService extends ServiceBase {
-  public async getMarkets(): Promise<Market[]> {
+  public async getMarkets(chain: Chain): Promise<Market[]> {
     const resp = await this.fetch<GetMarketsResponse>(
-      `${API_URL}/v1/lending/markets/ethereum?page=1&per_page=100`
+      `${API_URL}/v1/lending/markets/${
+        chain === "mainnet" ? "ethereum" : chain
+      }?page=1&per_page=100`
     );
 
     return resp.data.map(parseMarket);

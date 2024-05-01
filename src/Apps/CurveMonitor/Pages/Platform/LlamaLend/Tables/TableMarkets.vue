@@ -1,7 +1,7 @@
 <template>
   <DataTable
     class="datatable-markets"
-    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
+    columns-header="1fr 14rem minmax(auto, 25rem)"
     columns-data="markets-columns-data"
     expand-side="left"
     :loading="loading"
@@ -10,6 +10,13 @@
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
+
+      <SelectChain
+        class="chain-select"
+        :chain="networkChain"
+        :all="true"
+        @select-chain="networkChain = $event === 'all' ? 'mainnet' : $event"
+      ></SelectChain>
 
       <InputText
         v-model="search"
@@ -75,11 +82,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText } from "@/Framework";
+import { AsyncValue, DataTable, InputText, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
+import SelectChain from "@CM/Components/SelectChain.vue";
+import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 
@@ -90,9 +99,8 @@ const curveService = new LlamaLendService(getHost());
 type Row = Market;
 
 // Refs
-const loading = ref(true);
-const rowsRaw = ref<Row[]>([]);
 const search = ref("");
+const networkChain = ref<Chain>("mainnet");
 
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)
@@ -107,16 +115,21 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-// Hooks
-onMounted(async () => {
-  loading.value = true;
+// Data
+const {
+  load,
+  loading,
+  data: rowsRaw,
+} = usePromise(
+  () =>
+    curveService
+      .getMarkets(networkChain.value)
+      .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
+  []
+);
 
-  const markets = await curveService.getMarkets();
-
-  rowsRaw.value = markets.sort((a, b) => tvl(b) - tvl(a));
-
-  loading.value = false;
-});
+// Watches
+watch(networkChain, load);
 
 // Methods
 const tvl = (x: Market) => x.totalAssets + x.collateralBalance * x.priceOracle;
@@ -131,6 +144,10 @@ const tvl = (x: Market) => x.totalAssets + x.collateralBalance * x.priceOracle;
 
   .search {
     font-size: 0.875rem;
+    margin-left: 1rem;
+  }
+
+  .chain-select {
     margin-left: 1rem;
   }
 
