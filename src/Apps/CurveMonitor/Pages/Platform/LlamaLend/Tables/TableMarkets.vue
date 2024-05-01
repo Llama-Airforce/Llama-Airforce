@@ -14,7 +14,7 @@
       <SelectChain
         class="chain-select"
         :chain="networkChain"
-        :all="true"
+        :chains="['mainnet', 'arbitrum']"
         @select-chain="networkChain = $event === 'all' ? 'mainnet' : $event"
       ></SelectChain>
 

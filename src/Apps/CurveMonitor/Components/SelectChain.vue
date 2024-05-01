@@ -1,7 +1,7 @@
 <template>
   <Select
     class="select"
-    :options="chains"
+    :options="chainInfos"
     :selected="chainSelected"
     :open="chainOpen"
     @open="onChainOpen"
@@ -44,10 +44,11 @@ type ChainInfo = SelectItem & {
 // Props
 interface Props {
   chain: Chain | "all" | null;
+  chains?: Chain[];
   all?: boolean;
 }
 
-const { chain = null, all = false } = defineProps<Props>();
+const { chain = null, chains = null, all = false } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -57,26 +58,26 @@ const emit = defineEmits<{
 // Refs
 const chainOpen = ref(false);
 
-const chains: ChainInfo[] = [
+const chainInfos: ChainInfo[] = [
   ...(all ? [{ chain: "all" as const, label: "All" }] : []),
-  { chain: "mainnet", label: "Ethereum" },
-  { chain: "avalanche", label: "Avalanche" },
-  { chain: "arbitrum", label: "Arbitrum" },
-  { chain: "fantom", label: "Fantom" },
-  { chain: "xdai", label: "Gnosis (xDai)" },
-  { chain: "harmony", label: "Harmony" },
-  { chain: "moonbeam", label: "Moonbeam" },
-  { chain: "matic", label: "Polygon" },
-  { chain: "optimism", label: "Optimism" },
-];
+  { chain: "mainnet" as const, label: "Ethereum" },
+  { chain: "avalanche" as const, label: "Avalanche" },
+  { chain: "arbitrum" as const, label: "Arbitrum" },
+  { chain: "fantom" as const, label: "Fantom" },
+  { chain: "xdai" as const, label: "Gnosis (xDai)" },
+  { chain: "harmony" as const, label: "Harmony" },
+  { chain: "moonbeam" as const, label: "Moonbeam" },
+  { chain: "matic" as const, label: "Polygon" },
+  { chain: "optimism" as const, label: "Optimism" },
+].filter((chainInfo) => !chains || chains.includes(chainInfo.chain as Chain));
 
 const chainSelected = computed(
-  (): ChainInfo | null => chains.find((p) => p.chain === chain) ?? null
+  (): ChainInfo | null => chainInfos.find((p) => p.chain === chain) ?? null
 );
 
 // Hooks
 onMounted((): void => {
-  onChainSelect(chains[0]);
+  onChainSelect(chainInfos[0]);
 });
 
 // Methods
