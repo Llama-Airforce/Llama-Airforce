@@ -42,6 +42,14 @@ type Bribe = {
   chainId: number;
 };
 
+type FetchIncentivePerVoteResponse = {
+  result: {
+    emissionValuePerVote: number;
+    emissionsPerDollarSpent: number;
+    totalEmission: number;
+  };
+};
+
 const { HH_API_URL, LA_API_URL, START_ROUND, START_DATE, BIWEEKLY } =
   AuraConstants;
 
@@ -56,16 +64,16 @@ export default class AuraService extends ServiceBase {
     this.today = today;
   }
 
-  private async fetchIncentivePerVote(): Promise<number> {
-    return this.fetch<{
+  private async fetchIncentivePerVote(): Promise<FetchIncentivePerVoteResponse> {
+    return this.fetch<FetchIncentivePerVoteResponse>(
+      `${LA_API_URL}/${Math.floor(this.today)}`
+    ).catch(() => ({
       result: {
-        emissionValuePerVote: number;
-        emissionsPerDollarSpent: number;
-        totalEmission: number;
-      };
-    }>(`${LA_API_URL}/${Math.floor(this.today)}`)
-      ?.then(({ result }) => result.emissionValuePerVote)
-      .catch(() => 0);
+        emissionValuePerVote: 0,
+        emissionsPerDollarSpent: 0,
+        totalEmission: 0,
+      },
+    }));
   }
 
   private async fetchRound(timestamp: number): Promise<GaugeVote[]> {
@@ -168,7 +176,9 @@ export default class AuraService extends ServiceBase {
       });
     });
 
-    const rewardPerDollarBribe = await this.fetchIncentivePerVote();
+    const rewardPerDollarBribe = await this.fetchIncentivePerVote().then(
+      ({ result }) => result.emissionsPerDollarSpent
+    );
 
     return roundOverviewPromise.then((epochs) => ({
       success: !!epochs.length,
