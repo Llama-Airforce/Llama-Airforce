@@ -27,11 +27,11 @@
       </InputText>
     </template>
 
-    <template #row="props: { item: Row }">
-      <div>{{ props.item.name }}</div>
+    <template #row="{ item: { market } }: { item: Row }">
+      <div>{{ market.name }}</div>
       <div class="number">
         <AsyncValue
-          :value="props.item.borrowRate"
+          :value="market.borrowRate"
           :precision="2"
           type="percentage"
         />
@@ -39,13 +39,13 @@
 
       <div class="number">
         <AsyncValue
-          :value="props.item.lendRate"
+          :value="market.lendRate"
           :precision="2"
           type="percentage"
         />
       </div>
 
-      <div class="number">{{ props.item.numLoans }}</div>
+      <div class="number">{{ market.numLoans }}</div>
 
       <!--
         <div class="number">
@@ -64,7 +64,7 @@
       <div></div>
       <div></div>
       <div class="number">
-        {{ rows.reduce((acc, x) => acc + x.numLoans, 0) }}
+        {{ rows.reduce((acc, x) => acc + x.market.numLoans, 0) }}
       </div>
       <!--       <div class="number">
         <AsyncValue
@@ -96,7 +96,7 @@ const { t } = useI18n();
 
 const curveService = new LlamaLendService(getHost());
 
-type Row = Market;
+type Row = { chain: Chain; market: Market };
 
 // Refs
 const search = ref("");
@@ -112,6 +112,7 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.name);
     })
+    .map((market) => ({ chain: networkChain.value, market }))
     .value()
 );
 

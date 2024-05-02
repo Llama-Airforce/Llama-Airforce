@@ -113,19 +113,28 @@ const parseSnapshot = (x: GetSnapshotsResponse["data"][number]): Snapshot => {
 };
 
 export default class LlamaLendService extends ServiceBase {
+  private getChainName(chain: Chain): string {
+    return chain === "mainnet" ? "ethereum" : chain;
+  }
+
   public async getMarkets(chain: Chain): Promise<Market[]> {
     const resp = await this.fetch<GetMarketsResponse>(
-      `${API_URL}/v1/lending/markets/${
-        chain === "mainnet" ? "ethereum" : chain
-      }?page=1&per_page=100`
+      `${API_URL}/v1/lending/markets/${this.getChainName(
+        chain
+      )}?page=1&per_page=100`
     );
 
     return resp.data.map(parseMarket);
   }
 
-  public async getSnapshots(marketController: string): Promise<Snapshot[]> {
+  public async getSnapshots(
+    chain: Chain,
+    marketController: string
+  ): Promise<Snapshot[]> {
     const resp = await this.fetch<GetSnapshotsResponse>(
-      `${API_URL}/v1/lending/markets/ethereum/${marketController}/snapshots?agg=day`
+      `${API_URL}/v1/lending/markets/${this.getChainName(
+        chain
+      )}/${marketController}/snapshots?agg=day`
     );
 
     return resp.data.map(parseSnapshot);

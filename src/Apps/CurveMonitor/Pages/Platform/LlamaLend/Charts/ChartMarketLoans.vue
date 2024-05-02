@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { chain } from "lodash";
+import { chain as chain_ } from "lodash";
 import {
   createChart as createChartFunc,
   type HistogramData,
@@ -27,6 +27,7 @@ import { Card, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
+import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
@@ -39,9 +40,10 @@ const llameLendService = new LlamaLendService(getHost());
 // Props
 interface Props {
   market?: Market | null;
+  chain?: Chain | null;
 }
 
-const { market = null } = defineProps<Props>();
+const { market = null, chain = null } = defineProps<Props>();
 
 // Refs
 let chart: IChartApi;
@@ -58,8 +60,8 @@ const {
   data: snapshots,
   load,
 } = usePromise(() => {
-  if (market) {
-    return llameLendService.getSnapshots(market.controller);
+  if (market && chain) {
+    return llameLendService.getSnapshots(chain, market.controller);
   } else {
     return Promise.resolve([]);
   }
@@ -133,7 +135,7 @@ const createSeriesLoans = (newSnapshots: Snapshot[]): void => {
     return;
   }
 
-  const newLoansSeries: HistogramData[] = chain(newSnapshots)
+  const newLoansSeries: HistogramData[] = chain_(newSnapshots)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.numLoans,

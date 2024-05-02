@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { chain } from "lodash";
+import { chain as chain_ } from "lodash";
 import {
   createChart as createChartFunc,
   type IChartApi,
@@ -37,6 +37,7 @@ import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
+import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
@@ -50,9 +51,10 @@ const llamaLendService = new LlamaLendService(getHost());
 // Props
 interface Props {
   market?: Market | null;
+  chain?: Chain | null;
 }
 
-const { market = null } = defineProps<Props>();
+const { market = null, chain = null } = defineProps<Props>();
 
 // Refs
 let chart: IChartApi;
@@ -75,8 +77,8 @@ const {
   data: snapshots,
   load,
 } = usePromise(() => {
-  if (market) {
-    return llamaLendService.getSnapshots(market.controller);
+  if (market && chain) {
+    return llamaLendService.getSnapshots(chain, market.controller);
   } else {
     return Promise.resolve([]);
   }
@@ -171,7 +173,7 @@ const createSeries = (newSnapshots: Snapshot[]): void => {
     return;
   }
 
-  const newBorrowApySerie: LineData[] = chain(newSnapshots)
+  const newBorrowApySerie: LineData[] = chain_(newSnapshots)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.borrowApy,
@@ -180,7 +182,7 @@ const createSeries = (newSnapshots: Snapshot[]): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newLendApySerie: LineData[] = chain(newSnapshots)
+  const newLendApySerie: LineData[] = chain_(newSnapshots)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.lendApy,

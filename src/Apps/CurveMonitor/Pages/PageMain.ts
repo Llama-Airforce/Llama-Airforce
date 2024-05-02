@@ -42,7 +42,7 @@ export const pageMain: Page = {
 
     { path: "/platform/llamalend", name: "llamalend", component: LlamaLend },
     {
-      path: "/platform/llamalend/market/:marketAddr/:tab?",
+      path: "/platform/llamalend/:chain/:marketAddr/:tab?",
       name: "llamalendmarket",
       component: LlamaLendMarket,
     },

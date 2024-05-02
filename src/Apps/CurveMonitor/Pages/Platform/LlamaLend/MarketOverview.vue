@@ -1,11 +1,19 @@
 <template>
   <div class="market">
-    <ChartMarketRates :market="market"></ChartMarketRates>
-    <ChartMarketLoans :market="market"></ChartMarketLoans>
+    <ChartMarketRates
+      :market="market"
+      :chain="chain"
+    ></ChartMarketRates>
+
+    <ChartMarketLoans
+      :market="market"
+      :chain="chain"
+    ></ChartMarketLoans>
   </div>
 </template>
 
 <script setup lang="ts">
+import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
 
 import ChartMarketLoans from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketLoans.vue";
@@ -14,9 +22,10 @@ import ChartMarketRates from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketRat
 // Props
 interface Props {
   market: Market | null;
+  chain: Chain | null;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>

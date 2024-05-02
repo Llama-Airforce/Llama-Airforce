@@ -9,6 +9,7 @@
           <MarketOverview
             v-if="tabActive === 0"
             :market="market"
+            :chain="chain"
           ></MarketOverview>
         </KeepAlive>
       </TabItem>
@@ -21,6 +22,7 @@
           <Liquidations
             v-if="tabActive === 1 && market"
             :market="market"
+            :chain="chain"
           ></Liquidations>
         </KeepAlive>
       </TabItem>
@@ -33,6 +35,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getHost } from "@/Services/Host";
 import { TabView, TabItem } from "@/Framework";
+import { type Chain } from "@CM/Models/Chain";
 import { useBreadcrumbStore } from "@CM/Stores";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
@@ -49,6 +52,7 @@ const storeBreadcrumb = useBreadcrumbStore();
 const storeLlamaLend = useLlamaLendStore();
 const tabActive = ref(0);
 
+const chain = computed(() => route.params.chain as Chain);
 const marketAddr = computed(() => route.params.marketAddr as string);
 const market = computed(() => storeLlamaLend.market);
 
@@ -61,8 +65,8 @@ onMounted(async () => {
     }
   }
 
-  if (storeLlamaLend.market?.controller !== marketAddr.value) {
-    const markets = await llamaLendService.getMarkets();
+  if (storeLlamaLend.market?.controller !== marketAddr.value && chain.value) {
+    const markets = await llamaLendService.getMarkets(chain.value as Chain);
     const market = markets.find(
       (market) => market.controller === marketAddr.value
     );

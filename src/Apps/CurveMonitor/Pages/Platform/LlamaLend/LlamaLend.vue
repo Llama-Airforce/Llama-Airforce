@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { type Chain } from "@CM/Models/Chain";
 import { useBreadcrumbStore } from "@CM/Stores";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
@@ -34,13 +35,20 @@ onMounted(() => {
 });
 
 // Events
-const onMarketSelect = async (market: Market) => {
+const onMarketSelect = async ({
+  chain,
+  market,
+}: {
+  chain: Chain;
+  market: Market;
+}) => {
   storeLlamaLend.market = market;
 
   await router.push({
     name: "llamalendmarket",
     params: {
       tab: "",
+      chain,
       marketAddr: market.controller,
     },
   });
