@@ -64,7 +64,6 @@ const storeSettings = useSettingsStore();
 const chartRef = ref<HTMLElement | null>(null);
 
 const colorsLegend = computed(() => {
-  console.log("yolo");
   const colors = getColors(storeSettings.theme);
 
   return [colors.red, colors.green];
