@@ -62,8 +62,10 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 }
 
 ul {
+  --crumb-gap: 0.75rem;
+
   display: flex;
-  gap: 1rem;
+  gap: var(--crumb-gap);
 
   padding: 0;
   margin: 0;
@@ -74,7 +76,7 @@ ul {
   > li {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--crumb-gap);
     overflow: hidden;
 
     > a,
@@ -102,7 +104,9 @@ ul {
     }
 
     > i {
-      font-size: 0.5rem;
+      font-size: 0.625rem;
+      padding-top: 0.125rem;
+      opacity: 50%;
     }
   }
 }
