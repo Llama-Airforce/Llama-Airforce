@@ -1,5 +1,5 @@
 export const chains = [
-  "mainnet",
+  "ethereum",
   "arbitrum",
   "optimism",
   "fantom",
@@ -19,8 +19,8 @@ export function icon(chain: Chain | "all"): string {
 
   const getLogo = (chain: Chain | "all") => {
     switch (chain) {
-      case "mainnet":
-        return "mainnet.svg";
+      case "ethereum":
+        return "ethereum.svg";
       case "avalanche":
         return "avalanche.svg";
       case "arbitrum":

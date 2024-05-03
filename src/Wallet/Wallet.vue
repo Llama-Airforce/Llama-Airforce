@@ -71,7 +71,7 @@ const {
   withProvider,
 } = useWallet();
 
-const supportedNetwork = computed(() => network.value === "mainnet");
+const supportedNetwork = computed(() => network.value === "ethereum");
 
 // Hooks
 onMounted(connectWallet);

@@ -14,8 +14,8 @@
       <SelectChain
         class="chain-select"
         :chain="networkChain"
-        :chains="['mainnet', 'arbitrum']"
-        @select-chain="networkChain = $event === 'all' ? 'mainnet' : $event"
+        :chains="['ethereum', 'arbitrum']"
+        @select-chain="networkChain = $event === 'all' ? 'ethereum' : $event"
       ></SelectChain>
 
       <InputText
@@ -100,7 +100,7 @@ type Row = { chain: Chain; market: Market };
 
 // Refs
 const search = ref("");
-const networkChain = ref<Chain>("mainnet");
+const networkChain = ref<Chain>("ethereum");
 
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)

@@ -50,7 +50,7 @@ const onClick = async (evt: Event): Promise<void> => {
     await withProvider(async (provider) => {
       const network = await getNetwork(provider);
 
-      if (network !== "mainnet") {
+      if (network !== "ethereum") {
         await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
         window.location.reload();
       }

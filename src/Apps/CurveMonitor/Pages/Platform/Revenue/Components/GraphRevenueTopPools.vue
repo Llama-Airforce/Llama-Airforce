@@ -99,7 +99,7 @@ const options = computed((): unknown => {
 
 // Hooks
 onMounted(() => {
-  onSelectChain("mainnet");
+  onSelectChain("ethereum");
 });
 
 const series = computed((): { data: number[] }[] => [

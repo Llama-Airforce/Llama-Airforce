@@ -23,7 +23,7 @@ onMounted(async (): Promise<void> => {
 
 // Methods
 const getNFT = withProvider(async (provider, address) => {
-  if (network.value !== "mainnet") {
+  if (network.value !== "ethereum") {
     return;
   }
 

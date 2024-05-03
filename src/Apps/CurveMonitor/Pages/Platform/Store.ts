@@ -30,7 +30,7 @@ export const useCurveStore = defineStore({
     fees: {},
     breakdown: [],
     chainRevenues: [],
-    selectedChain: "mainnet",
+    selectedChain: "ethereum",
     topPools: {},
   }),
   actions: {

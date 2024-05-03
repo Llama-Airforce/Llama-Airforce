@@ -33,7 +33,7 @@ export async function getNetwork(
     const { name, chainId } = await provider.getNetwork();
 
     if (name === "homestead" && chainId === 1) {
-      return "mainnet";
+      return "ethereum";
     } else if (chainId === 8453) {
       return "base";
     }

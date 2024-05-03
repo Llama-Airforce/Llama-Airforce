@@ -60,7 +60,7 @@ const chainOpen = ref(false);
 
 const chainInfos: ChainInfo[] = [
   ...(all ? [{ chain: "all" as const, label: "All" }] : []),
-  { chain: "mainnet" as const, label: "Ethereum" },
+  { chain: "ethereum" as const, label: "Ethereum" },
   { chain: "avalanche" as const, label: "Avalanche" },
   { chain: "arbitrum" as const, label: "Arbitrum" },
   { chain: "fantom" as const, label: "Fantom" },

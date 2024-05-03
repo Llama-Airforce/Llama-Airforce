@@ -1,3 +1,3 @@
-const networks = ["mainnet", "base"] as const;
+const networks = ["ethereum", "base"] as const;
 
 export type Network = (typeof networks)[number];
