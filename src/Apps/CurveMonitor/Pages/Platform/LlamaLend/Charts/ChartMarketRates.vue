@@ -21,18 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain as chain_ } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type LineSeriesPartialOptions,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -57,13 +55,24 @@ interface Props {
 const { market = null, chain = null } = defineProps<Props>();
 
 // Refs
-let chart: IChartApi;
 let borrowApySerie: ISeriesApi<"Line">;
 let lendApySerie: ISeriesApi<"Line">;
 
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    borrowApySerie = chart.addLineSeries(
+      createOptionsSerieBorrowApy(storeSettings.theme)
+    );
+    lendApySerie = chart.addLineSeries(
+      createOptionsLendApy(storeSettings.theme)
+    );
+  }
+);
 
 const colorsLegend = computed(() => {
   const colors = getColors(storeSettings.theme);
@@ -84,43 +93,17 @@ const {
   }
 }, []);
 
-// Hooks
-onMounted((): void => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  borrowApySerie = chart.addLineSeries(
-    createOptionsSerieBorrowApy(storeSettings.theme)
-  );
-  lendApySerie = chart.addLineSeries(createOptionsLendApy(storeSettings.theme));
-
-  createSeries(snapshots.value);
-});
-
 // Watches
 watch(() => market, load);
-
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      borrowApySerie.applyOptions(createOptionsSerieBorrowApy(newTheme));
-      lendApySerie.applyOptions(createOptionsLendApy(newTheme));
-    }
-  }
-);
-
-watch(snapshots, (newSnapshots) => {
-  createSeries(newSnapshots);
+watch(snapshots, createSeries);
+watch(theme, (newTheme) => {
+  borrowApySerie.applyOptions(createOptionsSerieBorrowApy(newTheme));
+  lendApySerie.applyOptions(createOptionsLendApy(newTheme));
 });
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -132,11 +115,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (apy: number) => formatterApy(apy),
     },
   });
-};
+}
 
-const createOptionsSerieBorrowApy = (
-  theme: Theme
-): LineSeriesPartialOptions => {
+function createOptionsSerieBorrowApy(theme: Theme): LineSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -150,9 +131,9 @@ const createOptionsSerieBorrowApy = (
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createOptionsLendApy = (theme: Theme): LineSeriesPartialOptions => {
+function createOptionsLendApy(theme: Theme): LineSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -166,10 +147,10 @@ const createOptionsLendApy = (theme: Theme): LineSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (newSnapshots: Snapshot[]): void => {
-  if (!chart || !borrowApySerie || !lendApySerie) {
+function createSeries(newSnapshots: Snapshot[]): void {
+  if (!chart.value || !borrowApySerie || !lendApySerie) {
     return;
   }
 
@@ -214,13 +195,12 @@ const createSeries = (newSnapshots: Snapshot[]): void => {
         -Infinity
     ) as UTCTimestamp;
 
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
-};
+}
 
-const formatterApy = (x: number): string => {
-  return `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
-};
+const formatterApy = (x: number): string =>
+  `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>
