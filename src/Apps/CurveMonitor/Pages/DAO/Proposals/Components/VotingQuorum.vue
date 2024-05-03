@@ -60,7 +60,7 @@ const { proposal } = defineProps<Props>();
 
 // Methods
 const votesSupport = computed((): number => {
-  return proposal.votesFor + proposal.votesAgainst;
+  return proposal.votesFor;
 });
 
 const votesQuorum = computed((): number => {

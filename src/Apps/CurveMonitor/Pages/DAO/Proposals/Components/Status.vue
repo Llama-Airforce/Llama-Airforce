@@ -112,7 +112,7 @@ denied: Denied
 passed: Passed
 executed: Executed
 
-no-quorum: Quorum was not reached
+no-quorum: Quorum was not reached (yes votes need to pass this number)
 no-support: Quorum was reached and 'for' won, but not enough for support
 no-win: More 'against' votes than 'for' votes
 </i18n>

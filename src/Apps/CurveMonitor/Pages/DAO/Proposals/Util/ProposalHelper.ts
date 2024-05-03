@@ -31,10 +31,7 @@ export function hasReachedSupport(proposal: Proposal): boolean {
 }
 
 export function hasReachedQuorum(proposal: Proposal): boolean {
-  return (
-    proposal.votesFor + proposal.votesAgainst >
-    proposal.quorum * proposal.totalSupply
-  );
+  return proposal.votesFor > proposal.quorum * proposal.totalSupply;
 }
 
 export function hasWon(proposal: Proposal): boolean {
