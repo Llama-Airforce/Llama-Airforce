@@ -58,26 +58,29 @@ const emit = defineEmits<{
 // Refs
 const chainOpen = ref(false);
 
-const chainInfos: ChainInfo[] = [
-  ...(all ? [{ chain: "all" as const, label: "All" }] : []),
-  { chain: "ethereum" as const, label: "Ethereum" },
-  { chain: "avalanche" as const, label: "Avalanche" },
-  { chain: "arbitrum" as const, label: "Arbitrum" },
-  { chain: "fantom" as const, label: "Fantom" },
-  { chain: "xdai" as const, label: "Gnosis (xDai)" },
-  { chain: "harmony" as const, label: "Harmony" },
-  { chain: "moonbeam" as const, label: "Moonbeam" },
-  { chain: "matic" as const, label: "Polygon" },
-  { chain: "optimism" as const, label: "Optimism" },
-].filter((chainInfo) => !chains || chains.includes(chainInfo.chain as Chain));
+const chainInfos = computed(() =>
+  [
+    ...(all ? [{ chain: "all" as const, label: "All" }] : []),
+    { chain: "ethereum" as const, label: "Ethereum" },
+    { chain: "avalanche" as const, label: "Avalanche" },
+    { chain: "arbitrum" as const, label: "Arbitrum" },
+    { chain: "fantom" as const, label: "Fantom" },
+    { chain: "xdai" as const, label: "Gnosis (xDai)" },
+    { chain: "harmony" as const, label: "Harmony" },
+    { chain: "moonbeam" as const, label: "Moonbeam" },
+    { chain: "matic" as const, label: "Polygon" },
+    { chain: "optimism" as const, label: "Optimism" },
+  ].filter((chainInfo) => !chains || chains.includes(chainInfo.chain as Chain))
+);
 
 const chainSelected = computed(
-  (): ChainInfo | null => chainInfos.find((p) => p.chain === chain) ?? null
+  (): ChainInfo | null =>
+    chainInfos.value.find((p) => p.chain === chain) ?? null
 );
 
 // Hooks
 onMounted((): void => {
-  onChainSelect(chainInfos[0]);
+  onChainSelect(chainInfos.value[0]);
 });
 
 // Methods
