@@ -2,6 +2,7 @@ import { ServiceBase } from "@/Services";
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
 import { type Snapshot } from "@CM/Pages/Platform/LlamaLend/Models/Snapshot";
+import { type SoftLiqRatio } from "@CM/Pages/Platform/LlamaLend/Models/SoftLiqRatio";
 
 const API_URL = "https://prices.curve.fi";
 
@@ -116,6 +117,22 @@ const parseSnapshot = (x: GetSnapshotsResponse["data"][number]): Snapshot => {
   };
 };
 
+type GetSoftLiqRatiosResponse = {
+  data: {
+    timestamp: string;
+    proportion: string;
+  }[];
+};
+
+const parseSoftLiqRatio = (
+  x: GetSoftLiqRatiosResponse["data"][number]
+): SoftLiqRatio => {
+  return {
+    timestamp: new Date(x.timestamp).getTime() / 1000,
+    proportion: parseFloat(x.proportion.replace("%", "")) / 100,
+  };
+};
+
 export default class LlamaLendService extends ServiceBase {
   public async getChains(): Promise<Chain[]> {
     return this.fetch<GetChainsResponse>(`${API_URL}/v1/lending/chains`).then(
@@ -140,5 +157,16 @@ export default class LlamaLendService extends ServiceBase {
     );
 
     return resp.data.map(parseSnapshot);
+  }
+
+  public async getSoftLiqRatios(
+    chain: Chain,
+    marketController: string
+  ): Promise<SoftLiqRatio[]> {
+    const resp = await this.fetch<GetSoftLiqRatiosResponse>(
+      `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/soft_liquidation_ratio`
+    );
+
+    return resp.data.map(parseSoftLiqRatio);
   }
 }

@@ -14,10 +14,7 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem
-        header="Liquidations"
-        :disabled="true"
-      >
+      <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 1 && market"

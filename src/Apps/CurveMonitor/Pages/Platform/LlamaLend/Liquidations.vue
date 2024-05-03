@@ -1,17 +1,26 @@
 <template>
-  <div class="liquidations"></div>
+  <div class="liquidations">
+    <div class="soft-liq-ratio">
+      <ChartSoftLiqRatios
+        :market="market"
+        :chain="chain"
+      ></ChartSoftLiqRatios>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
+import ChartSoftLiqRatios from "@CM/Pages/Platform/LlamaLend/Charts/ChartSoftLiqRatios.vue";
 
 // Props
 interface Props {
   market: Market | null;
+  chain: Chain | null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
