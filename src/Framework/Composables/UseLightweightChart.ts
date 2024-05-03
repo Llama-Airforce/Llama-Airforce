@@ -1,4 +1,4 @@
-import { ref, onMounted, watch, type Ref } from "vue";
+import { ref, onMounted, watch, type Ref, nextTick } from "vue";
 import {
   createChart as createChartFunc,
   type IChartApi,
@@ -17,8 +17,15 @@ export function useLightweightChart(
   const chartRef = ref<HTMLElement | null>(null);
   const chart = ref<IChartApi | null>(null);
 
-  onMounted(() => {
+  onMounted(async () => {
     if (!chartRef.value) return;
+
+    /*
+     * There were some cases in the past where graphs
+     * wouldn't load until a next tick happened
+     * for some reason. Added just to be sure.
+     */
+    await nextTick();
 
     chart.value = createChartFunc(
       chartRef.value,
