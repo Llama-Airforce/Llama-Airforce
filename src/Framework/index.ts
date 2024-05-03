@@ -33,3 +33,4 @@ export { useRelativeTime } from "@/Framework/Composables/UseRelativeTime";
 export { useSort } from "@/Framework/Composables/UseSort";
 export { usePagination } from "@/Framework/Composables/UsePagination";
 export { useObservable } from "@/Framework/Composables/UseObservable";
+export { useLightweightChart } from "@/Framework/Composables/UseLightweightChart";

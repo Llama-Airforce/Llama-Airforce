@@ -12,19 +12,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain as chain_ } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -48,12 +46,20 @@ interface Props {
 const { market = null, chain = null } = defineProps<Props>();
 
 // Refs
-let chart: IChartApi;
 let softLiqSerie: ISeriesApi<"Area">;
 
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    softLiqSerie = chart.addAreaSeries(
+      createSoftLiqOptionsSerie(storeSettings.theme)
+    );
+  }
+);
 
 // Data
 const {
@@ -68,41 +74,16 @@ const {
   }
 }, []);
 
-// Hooks
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  softLiqSerie = chart.addAreaSeries(
-    createSoftLiqOptionsSerie(storeSettings.theme)
-  );
-
-  createSeries(softLiqRatios.value);
-});
-
 // Watches
 watch(() => market, load);
-
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      softLiqSerie.applyOptions(createSoftLiqOptionsSerie(newTheme));
-    }
-  }
+watch(softLiqRatios, createSeries);
+watch(theme, (newTheme) =>
+  softLiqSerie.applyOptions(createSoftLiqOptionsSerie(newTheme))
 );
 
-watch(softLiqRatios, (newSoftLiqRatios) => {
-  createSeries(newSoftLiqRatios);
-});
-
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -114,9 +95,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
-};
+}
 
-const createSoftLiqOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createSoftLiqOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -133,10 +114,10 @@ const createSoftLiqOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (newSoftLiq: SoftLiqRatio[]): void => {
-  if (!chart || !softLiqSerie) {
+function createSeries(newSoftLiq: SoftLiqRatio[]): void {
+  if (!chart.value || !softLiqSerie) {
     return;
   }
 
@@ -156,9 +137,10 @@ const createSeries = (newSoftLiq: SoftLiqRatio[]): void => {
     softLiqSerie.setData(newSoftLiqSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
+// Methods
 const formatter = (x: number): string =>
   `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
 </script>
