@@ -44,6 +44,11 @@ onMounted(() => {
       label: "crvUSD",
       pathName: "crvusd",
     },
+    {
+      id: "market",
+      label: "Select market for details",
+      hint: true,
+    },
   ];
 });
 

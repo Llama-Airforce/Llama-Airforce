@@ -31,6 +31,11 @@ onMounted(() => {
       label: "Llama Lend",
       pathName: "llamalend",
     },
+    {
+      id: "market",
+      label: "Select market for details",
+      hint: true,
+    },
   ];
 });
 

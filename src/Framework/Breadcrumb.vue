@@ -10,7 +10,7 @@
       >
         <component
           :is="isActive(crumb) ? 'span' : 'a'"
-          :class="{ active: isActive(crumb) }"
+          :class="{ active: isActive(crumb), hint: crumb.hint }"
           @click="emit('crumb', crumb)"
         >
           {{ crumb.label }}
@@ -42,8 +42,13 @@ const emit = defineEmits<{
 }>();
 
 // Methods
-const isActive = (crumb: Crumb): boolean =>
-  active ? active.id === crumb.id : crumbs.at(-1)?.id === crumb.id;
+const isActive = (crumb: Crumb): boolean => {
+  const idMatch = active
+    ? active.id === crumb.id
+    : crumbs.filter((crumb) => !crumb.hint).at(-1)?.id === crumb.id;
+
+  return crumb.hint ?? idMatch;
+};
 
 const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 </script>
@@ -94,6 +99,11 @@ ul {
 
       &.active {
         opacity: 1;
+      }
+
+      &.hint {
+        opacity: 0.5;
+        font-style: italic;
       }
     }
 
