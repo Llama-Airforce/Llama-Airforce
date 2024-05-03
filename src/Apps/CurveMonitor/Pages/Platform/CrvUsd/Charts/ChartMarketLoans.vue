@@ -12,18 +12,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
   type HistogramData,
   type HistogramSeriesPartialOptions,
-  type IChartApi,
   type ISeriesApi,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
@@ -46,13 +44,20 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Refs
-let chart: IChartApi;
 let loansSerie: ISeriesApi<"Histogram">;
 
-// Refs
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    loansSerie = chart.addHistogramSeries(
+      createOptionsSerieLoans(storeSettings.theme)
+    );
+  }
+);
 
 // Data
 const {
@@ -67,41 +72,16 @@ const {
   }
 }, []);
 
-// Hooks
-onMounted((): void => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  loansSerie = chart.addHistogramSeries(
-    createOptionsSerieLoans(storeSettings.theme)
-  );
-
-  createSeriesLoans(loans.value);
-});
-
 // Watches
 watch(() => market, load);
-
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      loansSerie.applyOptions(createOptionsSerieLoans(newTheme));
-    }
-  }
-);
-
-watch(loans, (newLoans) => {
-  createSeriesLoans(newLoans);
+watch(loans, createSeriesLoans);
+watch(theme, (newTheme) => {
+  loansSerie.applyOptions(createOptionsSerieLoans(newTheme));
 });
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -113,11 +93,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: formatter,
     },
   });
-};
+}
 
-const createOptionsSerieLoans = (
-  theme: Theme
-): HistogramSeriesPartialOptions => {
+function createOptionsSerieLoans(theme: Theme): HistogramSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -128,10 +106,10 @@ const createOptionsSerieLoans = (
     },
     priceLineVisible: false,
   };
-};
+}
 
-const createSeriesLoans = (newLoans: MarketLoans[]): void => {
-  if (!chart || !loansSerie) {
+function createSeriesLoans(newLoans: MarketLoans[]): void {
+  if (!chart.value || !loansSerie) {
     return;
   }
 
@@ -149,9 +127,9 @@ const createSeriesLoans = (newLoans: MarketLoans[]): void => {
 
     const from = newLoansSeries[0].time;
     const to = newLoansSeries[newLoansSeries.length - 1].time;
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
-};
+}
 
 // Needed to fix weird right margin wtf.
 const formatter = (y: number): string => Math.round(y).toString();

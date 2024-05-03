@@ -20,19 +20,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
@@ -48,11 +46,6 @@ const { t } = useI18n();
 
 const curveService = new CurveService(getHost());
 
-let chart: IChartApi;
-let areaSerie: ISeriesApi<"Area">;
-let areaQ1Serie: ISeriesApi<"Area">;
-let areaQ3Serie: ISeriesApi<"Area">;
-
 // Props
 interface Props {
   market?: Market | null;
@@ -61,9 +54,26 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+let areaSerie: ISeriesApi<"Area">;
+let areaQ1Serie: ISeriesApi<"Area">;
+let areaQ3Serie: ISeriesApi<"Area">;
 
-const chartRef = ref<HTMLElement | null>(null);
+const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
+
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+    areaQ1Serie = chart.addAreaSeries(
+      createQ1OptionsSerie(storeSettings.theme)
+    );
+    areaQ3Serie = chart.addAreaSeries(
+      createQ3OptionsSerie(storeSettings.theme)
+    );
+  }
+);
 
 // Data
 const {
@@ -80,44 +90,21 @@ const {
   }
 }, []);
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  if (!chartRef.value) return;
-  await nextTick();
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
-  areaQ1Serie = chart.addAreaSeries(createQ1OptionsSerie(storeSettings.theme));
-  areaQ3Serie = chart.addAreaSeries(createQ3OptionsSerie(storeSettings.theme));
-
-  createSeries(health.value);
-});
-
 // Watches
 watch(() => market, load);
-
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      areaQ1Serie.applyOptions(createOptionsSerie(newTheme));
-      areaSerie.applyOptions(createOptionsSerie(newTheme));
-      areaQ3Serie.applyOptions(createOptionsSerie(newTheme));
-    }
-  }
-);
+watch(theme, (newTheme) => {
+  areaQ1Serie.applyOptions(createOptionsSerie(newTheme));
+  areaSerie.applyOptions(createOptionsSerie(newTheme));
+  areaQ3Serie.applyOptions(createOptionsSerie(newTheme));
+});
 
 watch(health, (newHealth) => {
   createSeries(newHealth);
 });
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -125,9 +112,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       },
     },
   });
-};
+}
 
-const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -144,9 +131,9 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createQ1OptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createQ1OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -163,9 +150,9 @@ const createQ1OptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createQ3OptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createQ3OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -182,10 +169,10 @@ const createQ3OptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (newLosses: HistoricalAverageHealth[]): void => {
-  if (!chart || !areaSerie || !areaQ1Serie || !areaQ3Serie) {
+function createSeries(newLosses: HistoricalAverageHealth[]): void {
+  if (!chart.value || !areaSerie || !areaQ1Serie || !areaQ3Serie) {
     return;
   }
 
@@ -228,8 +215,8 @@ const createSeries = (newLosses: HistoricalAverageHealth[]): void => {
     areaQ3Serie.setData(newQ3Serie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 </script>
 
 <style lang="scss" scoped>

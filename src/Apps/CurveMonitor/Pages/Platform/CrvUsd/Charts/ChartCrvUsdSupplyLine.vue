@@ -6,11 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
@@ -18,6 +16,7 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
+import { useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
@@ -25,10 +24,7 @@ import createChartStyles from "@CM/Util/ChartStyles";
 import type { Theme } from "@CM/Models/Theme";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
-let chart: IChartApi;
-let supplySerie: ISeriesApi<"Area">;
-let debtSerie: ISeriesApi<"Line">;
-
+// Props
 interface Props {
   data: CrvUsdSupply[];
 }
@@ -36,48 +32,35 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
+let supplySerie: ISeriesApi<"Area">;
+let debtSerie: ISeriesApi<"Line">;
+
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
-
-// Hooks
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  supplySerie = chart.addAreaSeries(
-    createSupplyOptionsSerie(storeSettings.theme)
-  );
-  debtSerie = chart.addLineSeries(createDebtOptionsSerie(storeSettings.theme));
-
-  createSeries(data);
-});
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    supplySerie = chart.addAreaSeries(
+      createSupplyOptionsSerie(storeSettings.theme)
+    );
+    debtSerie = chart.addLineSeries(
+      createDebtOptionsSerie(storeSettings.theme)
+    );
+  }
+);
 
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      supplySerie.applyOptions(createSupplyOptionsSerie(newTheme));
-      debtSerie.applyOptions(createDebtOptionsSerie(newTheme));
-    }
-  }
-);
+watch(() => data, createSeries);
+watch(theme, (newTheme) => {
+  supplySerie.applyOptions(createSupplyOptionsSerie(newTheme));
+  debtSerie.applyOptions(createDebtOptionsSerie(newTheme));
+});
 
-watch(
-  () => data,
-  (newData) => {
-    createSeries(newData);
-  }
-);
-
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -88,9 +71,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
-};
+}
 
-const createSupplyOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createSupplyOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -107,9 +90,9 @@ const createSupplyOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createDebtOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
+function createDebtOptionsSerie(theme: Theme): LineSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -124,10 +107,10 @@ const createDebtOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (newSupply: CrvUsdSupply[]): void => {
-  if (!chart || !supplySerie) {
+function createSeries(newSupply: CrvUsdSupply[]): void {
+  if (!chart.value || !supplySerie) {
     return;
   }
 
@@ -157,8 +140,8 @@ const createSeries = (newSupply: CrvUsdSupply[]): void => {
     debtSerie.setData(newDebtSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;

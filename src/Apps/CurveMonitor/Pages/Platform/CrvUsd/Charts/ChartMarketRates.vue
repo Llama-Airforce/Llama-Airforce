@@ -24,20 +24,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   type AreaSeriesPartialOptions,
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   LineType,
   type UTCTimestamp,
   type LineSeriesPartialOptions,
 } from "lightweight-charts";
-import { Card, InputNumber, usePromise } from "@/Framework";
+import {
+  Card,
+  InputNumber,
+  usePromise,
+  useLightweightChart,
+} from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -61,14 +64,25 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Refs
-let chart: IChartApi;
 let ratesSerie: ISeriesApi<"Area">;
 let ratesEMASerie: ISeriesApi<"Line">;
 
-// Refs
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    ratesSerie = chart.addAreaSeries(
+      createOptionsSerieRates(storeSettings.theme)
+    );
+    ratesEMASerie = chart.addLineSeries(
+      createOptionsSerieRatesEMA(storeSettings.theme)
+    );
+  }
+);
+
 const avgLength = ref<number | null>(null);
 
 // Data
@@ -84,49 +98,20 @@ const {
   }
 }, []);
 
-// Hooks
-onMounted((): void => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  ratesSerie = chart.addAreaSeries(
-    createOptionsSerieRates(storeSettings.theme)
-  );
-  ratesEMASerie = chart.addLineSeries(
-    createOptionsSerieRatesEMA(storeSettings.theme)
-  );
-
-  createSeries(rates.value);
-});
-
 // Watches
 watch(() => market, load);
-
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      ratesSerie.applyOptions(createOptionsSerieRates(newTheme));
-      ratesEMASerie.applyOptions(createOptionsSerieRatesEMA(newTheme));
-    }
-  }
-);
-
-watch(rates, (newRates) => {
-  createSeries(newRates);
-});
-
+watch(rates, createSeries);
 watch(avgLength, () => {
   createSeries(rates.value);
 });
+watch(theme, (newTheme) => {
+  ratesSerie.applyOptions(createOptionsSerieRates(newTheme));
+  ratesEMASerie.applyOptions(createOptionsSerieRatesEMA(newTheme));
+});
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -138,9 +123,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (rate: number) => formatterRate(rate),
     },
   });
-};
+}
 
-const createOptionsSerieRates = (theme: Theme): AreaSeriesPartialOptions => {
+function createOptionsSerieRates(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -157,9 +142,9 @@ const createOptionsSerieRates = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createOptionsSerieRatesEMA = (theme: Theme): LineSeriesPartialOptions => {
+function createOptionsSerieRatesEMA(theme: Theme): LineSeriesPartialOptions {
   const colors = getColors(theme);
 
   return {
@@ -174,10 +159,10 @@ const createOptionsSerieRatesEMA = (theme: Theme): LineSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (newRates: MarketRates[]): void => {
-  if (!chart || !ratesSerie) {
+function createSeries(newRates: MarketRates[]): void {
+  if (!chart.value || !ratesSerie) {
     return;
   }
 
@@ -215,9 +200,9 @@ const createSeries = (newRates: MarketRates[]): void => {
     const from = newRatesSerie[0].time;
     const to = newRatesSerie[newRatesSerie.length - 1].time;
 
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
-};
+}
 
 const formatterRate = (x: number): string => {
   return `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;

@@ -24,15 +24,13 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type LineSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -48,13 +46,20 @@ const { t } = useI18n();
 
 const curveService = new CurveService(getHost());
 
-let chart: IChartApi;
+// Refs
 let lineSeries: ISeriesApi<"Line">[] = [];
 
-// Refs
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  () => {
+    addSeries();
+  }
+);
+
 const coinsDisabled = ref<string[]>([]);
 
 const whitelist = ["USDC", "USDT", "TUSD", "USDP"];
@@ -75,19 +80,7 @@ const {
 );
 
 // Hooks
-onMounted(async () => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-
-  await load();
-
-  addSeries();
-  createSeries(prices.value);
-});
+onMounted(load);
 
 // Watches
 watch(prices, (newPrices) => {
@@ -100,22 +93,15 @@ watch(coinsDisabled, () => {
   createSeries(prices.value);
 });
 
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-
-      for (const [i, serie] of lineSeries.entries()) {
-        serie.applyOptions(createOptionsSerie(i, storeSettings.theme));
-      }
-    }
+watch(theme, (newTheme) => {
+  for (const [i, serie] of lineSeries.entries()) {
+    serie.applyOptions(createOptionsSerie(i, newTheme));
   }
-);
+});
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -126,12 +112,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: formatter,
     },
   });
-};
+}
 
-const createOptionsSerie = (
-  i: number,
-  theme: Theme
-): LineSeriesPartialOptions => {
+function createOptionsSerie(i: number, theme: Theme): LineSeriesPartialOptions {
   const colorsArray = getColorsArray(theme);
 
   return {
@@ -146,30 +129,30 @@ const createOptionsSerie = (
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const addSeries = (): void => {
-  if (!chart) {
+function addSeries(): void {
+  if (!chart.value) {
     return;
   }
 
   // Clear old line series before adding new ones.
   for (const serie of lineSeries) {
-    chart.removeSeries(serie);
+    chart.value.removeSeries(serie);
   }
 
   lineSeries = [];
   for (let i = 0; i < coins.value.length; i++) {
-    const lineSerie = chart.addLineSeries(
+    const lineSerie = chart.value.addLineSeries(
       createOptionsSerie(i, storeSettings.theme)
     );
 
     lineSeries.push(lineSerie);
   }
-};
+}
 
-const createSeries = (newPrices: PoolPrice[]): void => {
-  if (!chart || lineSeries.length < 0) {
+function createSeries(newPrices: PoolPrice[]): void {
+  if (!chart.value || lineSeries.length < 0) {
     return;
   }
 
@@ -194,8 +177,8 @@ const createSeries = (newPrices: PoolPrice[]): void => {
     }
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
 const formatter = (y: number): string => {
   return `${round(y, 3, "dollar")}${unit(y, "dollar")}`;
