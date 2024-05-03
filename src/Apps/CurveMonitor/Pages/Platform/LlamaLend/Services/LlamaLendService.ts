@@ -5,7 +5,11 @@ import { type Snapshot } from "@CM/Pages/Platform/LlamaLend/Models/Snapshot";
 
 const API_URL = "https://prices.curve.fi";
 
-export type GetMarketsResponse = {
+type GetChainsResponse = {
+  data: Chain[];
+};
+
+type GetMarketsResponse = {
   data: [
     {
       name: string;
@@ -113,6 +117,12 @@ const parseSnapshot = (x: GetSnapshotsResponse["data"][number]): Snapshot => {
 };
 
 export default class LlamaLendService extends ServiceBase {
+  public async getChains(): Promise<Chain[]> {
+    return this.fetch<GetChainsResponse>(`${API_URL}/v1/lending/chains`).then(
+      (resp) => resp.data
+    );
+  }
+
   public async getMarkets(chain: Chain): Promise<Market[]> {
     const resp = await this.fetch<GetMarketsResponse>(
       `${API_URL}/v1/lending/markets/${chain}?page=1&per_page=100`

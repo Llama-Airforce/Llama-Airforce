@@ -14,7 +14,7 @@
       <SelectChain
         class="chain-select"
         :chain="networkChain"
-        :chains="['ethereum', 'arbitrum']"
+        :chains="chains"
         @select-chain="networkChain = $event === 'all' ? 'ethereum' : $event"
       ></SelectChain>
 
@@ -82,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, DataTable, InputText, usePromise } from "@/Framework";
@@ -100,6 +100,7 @@ type Row = { chain: Chain; market: Market };
 
 // Refs
 const search = ref("");
+const chains = ref<Chain[]>(["ethereum"]);
 const networkChain = ref<Chain>("ethereum");
 
 const rows = computed((): Row[] =>
@@ -128,6 +129,11 @@ const {
       .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
   []
 );
+
+// Hooks
+onMounted(async () => {
+  chains.value = await curveService.getChains();
+});
 
 // Watches
 watch(networkChain, load);
