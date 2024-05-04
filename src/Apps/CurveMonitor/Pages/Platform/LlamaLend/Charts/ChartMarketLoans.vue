@@ -16,12 +16,13 @@ import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain as chain_ } from "lodash";
 import {
+  type IChartApi,
   type HistogramData,
   type HistogramSeriesPartialOptions,
   type ISeriesApi,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise, useLightweightChart } from "@/Framework";
+import { Card, useQuery, useLightweightChart } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
@@ -60,21 +61,19 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: snapshots,
-  load,
-} = usePromise(() => {
-  if (market && chain) {
-    return llameLendService.getSnapshots(chain, market.controller);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: snapshots } = useQuery({
+  queryKey: ["llama-market-snapshots", market?.controller, chain] as const,
+  queryFn: ({ queryKey: [, controller, chain] }) => {
+    if (controller && chain) {
+      return llameLendService.getSnapshots(chain, controller);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+});
 
 // Watches
-watch(() => market, load);
-watch(snapshots, createSeriesLoans);
+watch([snapshots, chart], createSeriesLoans);
 watch(theme, (newTheme) => {
   loansSerie.applyOptions(createOptionsSerieLoans(newTheme));
 });
@@ -108,8 +107,11 @@ function createOptionsSerieLoans(theme: Theme): HistogramSeriesPartialOptions {
   };
 }
 
-function createSeriesLoans(newSnapshots: Snapshot[]): void {
-  if (!chart.value || !loansSerie) {
+function createSeriesLoans([newSnapshots, chart]: [
+  Snapshot[]?,
+  IChartApi?
+]): void {
+  if (!chart || !loansSerie) {
     return;
   }
 
@@ -127,7 +129,7 @@ function createSeriesLoans(newSnapshots: Snapshot[]): void {
 
     const from = newLoansSeries[0].time;
     const to = newLoansSeries[newLoansSeries.length - 1].time;
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.timeScale().setVisibleRange({ from, to });
   }
 }
 

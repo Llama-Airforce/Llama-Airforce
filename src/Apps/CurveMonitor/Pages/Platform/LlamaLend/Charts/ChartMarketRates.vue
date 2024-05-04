@@ -25,12 +25,13 @@ import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain as chain_ } from "lodash";
 import {
+  type IChartApi,
   type ISeriesApi,
   type LineData,
   type LineSeriesPartialOptions,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise, useLightweightChart } from "@/Framework";
+import { Card, useQuery, useLightweightChart } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
@@ -81,21 +82,19 @@ const colorsLegend = computed(() => {
 });
 
 // Data
-const {
-  loading,
-  data: snapshots,
-  load,
-} = usePromise(() => {
-  if (market && chain) {
-    return llamaLendService.getSnapshots(chain, market.controller);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: snapshots } = useQuery({
+  queryKey: ["llama-market-snapshots", market?.controller] as const,
+  queryFn: ({ queryKey: [, controller] }) => {
+    if (controller && chain) {
+      return llamaLendService.getSnapshots(chain, controller);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+});
 
 // Watches
-watch(() => market, load);
-watch(snapshots, createSeries);
+watch([snapshots, chart], createSeries);
 watch(theme, (newTheme) => {
   borrowApySerie.applyOptions(createOptionsSerieBorrowApy(newTheme));
   lendApySerie.applyOptions(createOptionsLendApy(newTheme));
@@ -149,8 +148,8 @@ function createOptionsLendApy(theme: Theme): LineSeriesPartialOptions {
   };
 }
 
-function createSeries(newSnapshots: Snapshot[]): void {
-  if (!chart.value || !borrowApySerie || !lendApySerie) {
+function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
+  if (!chart || !borrowApySerie || !lendApySerie) {
     return;
   }
 
@@ -195,7 +194,7 @@ function createSeries(newSnapshots: Snapshot[]): void {
         -Infinity
     ) as UTCTimestamp;
 
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.timeScale().setVisibleRange({ from, to });
   }
 }
 

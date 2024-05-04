@@ -21,8 +21,9 @@ import {
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
+  type IChartApi,
 } from "lightweight-charts";
-import { Card, usePromise, useLightweightChart } from "@/Framework";
+import { Card, useQuery, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
@@ -62,25 +63,24 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: softLiqRatios,
-  load,
-} = usePromise(() => {
-  if (market && chain) {
-    return llamaLendService.getSoftLiqRatios(chain, market.controller);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: softLiqRatios } = useQuery({
+  queryKey: ["llama-market-softliqs", market?.controller] as const,
+  queryFn: ({ queryKey: [, controller] }) => {
+    if (controller && chain) {
+      return llamaLendService.getSoftLiqRatios(chain, controller);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+});
 
 // Watches
-watch(() => market, load);
-watch(softLiqRatios, createSeries);
-watch(theme, (newTheme) =>
-  softLiqSerie.applyOptions(createSoftLiqOptionsSerie(newTheme))
-);
-
+watch([softLiqRatios, chart], createSeries);
+watch(theme, (newTheme) => {
+  if (softLiqSerie) {
+    softLiqSerie.applyOptions(createSoftLiqOptionsSerie(newTheme));
+  }
+});
 // Chart
 function createOptionsChart(chartRef: HTMLElement, theme: string) {
   return createChartStyles(chartRef, theme as Theme, {
@@ -116,8 +116,11 @@ function createSoftLiqOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newSoftLiq: SoftLiqRatio[]): void {
-  if (!chart.value || !softLiqSerie) {
+function createSeries([newSoftLiq, chart]: [
+  SoftLiqRatio[]?,
+  IChartApi?
+]): void {
+  if (!chart || !softLiqSerie) {
     return;
   }
 
@@ -137,7 +140,7 @@ function createSeries(newSoftLiq: SoftLiqRatio[]): void {
     softLiqSerie.setData(newSoftLiqSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 // Methods

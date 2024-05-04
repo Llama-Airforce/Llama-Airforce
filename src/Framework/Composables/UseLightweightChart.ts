@@ -14,8 +14,10 @@ export function useLightweightChart(
   ) => DeepPartial<ChartOptions>,
   onChartCreated?: (chart: IChartApi) => void
 ) {
-  const chartRef = ref<HTMLElement | null>(null);
-  const chart = ref<IChartApi | null>(null);
+  const chartRef = ref<HTMLElement | undefined>(undefined);
+  const chart = ref<IChartApi | undefined>(undefined) as Ref<
+    IChartApi | undefined
+  >;
 
   onMounted(async () => {
     if (!chartRef.value) return;
@@ -40,7 +42,7 @@ export function useLightweightChart(
   onUnmounted(() => {
     if (chart.value) {
       chart.value.remove();
-      chart.value = null;
+      chart.value = undefined;
     }
   });
 

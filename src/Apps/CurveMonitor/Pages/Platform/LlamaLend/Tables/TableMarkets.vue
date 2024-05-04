@@ -13,9 +13,9 @@
 
       <SelectChain
         class="chain-select"
-        :chain="networkChain"
+        :chain="chain"
         :chains="chains"
-        @select-chain="networkChain = $event === 'all' ? 'ethereum' : $event"
+        @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
       ></SelectChain>
 
       <InputText
@@ -82,10 +82,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText, usePromise } from "@/Framework";
+import { chain as chain_ } from "lodash";
+import { AsyncValue, DataTable, InputText, useQuery } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain } from "@CM/Models/Chain";
@@ -100,11 +100,10 @@ type Row = { chain: Chain; market: Market };
 
 // Refs
 const search = ref("");
-const chains = ref<Chain[]>(["ethereum"]);
-const networkChain = ref<Chain>("ethereum");
+const chain = ref<Chain>("ethereum");
 
 const rows = computed((): Row[] =>
-  chain(rowsRaw.value)
+  chain_(rowsRaw.value)
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -113,30 +112,25 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.name);
     })
-    .map((market) => ({ chain: networkChain.value, market }))
+    .map((market) => ({ chain: chain.value, market }))
     .value()
 );
 
 // Data
-const {
-  load,
-  loading,
-  data: rowsRaw,
-} = usePromise(
-  () =>
+const { isFetching: loading, data: rowsRaw } = useQuery({
+  queryKey: ["llama-markets", chain] as const,
+  queryFn: ({ queryKey: [, chain] }) =>
     curveService
-      .getMarkets(networkChain.value)
+      .getMarkets(chain)
       .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
-  []
-);
-
-// Hooks
-onMounted(async () => {
-  chains.value = await curveService.getChains();
 });
 
-// Watches
-watch(networkChain, load);
+const { data: chains } = useQuery({
+  queryKey: ["llama-markets-chains"] as const,
+  queryFn: () => curveService.getChains(),
+  initialData: ["ethereum"] as Chain[],
+  initialDataUpdatedAt: 0,
+});
 
 // Methods
 const tvl = (x: Market) => x.totalAssets + x.collateralBalance * x.priceOracle;
