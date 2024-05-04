@@ -12,12 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, nextTick } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type UTCTimestamp,
   type CandlestickSeriesPartialOptions,
@@ -25,7 +23,7 @@ import {
   type HistogramSeriesPartialOptions,
   type HistogramData,
 } from "lightweight-charts";
-import { Card, useObservable } from "@/Framework";
+import { Card, useObservable, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
@@ -45,12 +43,6 @@ import {
 
 const { t } = useI18n();
 
-let chart: IChartApi;
-let seriePrice: ISeriesApi<"Candlestick">;
-let serieVolume: ISeriesApi<"Histogram">;
-let max = 1;
-let min = 0;
-
 // Props
 interface Props {
   contract: Contract;
@@ -59,9 +51,26 @@ interface Props {
 const { contract } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+let seriePrice: ISeriesApi<"Candlestick">;
+let serieVolume: ISeriesApi<"Histogram">;
+let max = 1;
+let min = 0;
 
-const chartRef = ref<HTMLElement | null>(null);
+const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
+
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    seriePrice = chart.addCandlestickSeries(
+      createOptionsSeriePrice(storeSettings.theme)
+    );
+    serieVolume = chart.addHistogramSeries(
+      createOptionsSerieVolume(storeSettings.theme)
+    );
+  }
+);
 
 // Data
 const priceSettings = getPriceSettings(contract);
@@ -80,50 +89,18 @@ const loading = computed(
   () => dataPrice.value.length + dataVolume.value.length === 0
 );
 
-// Hooks
-onMounted(async () => {
-  if (!chartRef.value) return;
-  await nextTick();
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-
-  seriePrice = chart.addCandlestickSeries(
-    createOptionsSeriePrice(storeSettings.theme)
-  );
-  serieVolume = chart.addHistogramSeries(
-    createOptionsSerieVolume(storeSettings.theme)
-  );
-
-  createSeriesPrice(dataPrice.value);
-  createSeriesVolume(dataVolume.value);
-});
-
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      seriePrice.applyOptions(createOptionsSeriePrice(newTheme));
-      serieVolume.applyOptions(createOptionsSerieVolume(newTheme));
-    }
-  }
-);
-
-watch(dataPrice, (newPrices) => {
-  createSeriesPrice(newPrices);
+watch(theme, (newTheme) => {
+  seriePrice.applyOptions(createOptionsSeriePrice(newTheme));
+  serieVolume.applyOptions(createOptionsSerieVolume(newTheme));
 });
 
-watch(dataVolume, (newVolumes) => {
-  createSeriesVolume(newVolumes);
-});
+watch(dataPrice, createSeriesPrice);
+watch(dataVolume, createSeriesVolume);
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.75,
@@ -134,11 +111,11 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatterPrice(price),
     },
   });
-};
+}
 
-const createOptionsSeriePrice = (
+function createOptionsSeriePrice(
   theme: Theme
-): CandlestickSeriesPartialOptions => {
+): CandlestickSeriesPartialOptions {
   const colors = getColors(theme, storeSettings.flavor);
 
   return {
@@ -158,11 +135,9 @@ const createOptionsSeriePrice = (
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createOptionsSerieVolume = (
-  theme: Theme
-): HistogramSeriesPartialOptions => {
+function createOptionsSerieVolume(theme: Theme): HistogramSeriesPartialOptions {
   const colors = getColors(theme, storeSettings.flavor);
 
   return {
@@ -174,10 +149,10 @@ const createOptionsSerieVolume = (
     priceScaleId: "left",
     priceLineVisible: false,
   };
-};
+}
 
-const createSeriesPrice = (newData: OHLC[]): void => {
-  if (!chart || !seriePrice) {
+function createSeriesPrice(newData: OHLC[]): void {
+  if (!chart.value || !seriePrice) {
     return;
   }
 
@@ -197,17 +172,17 @@ const createSeriesPrice = (newData: OHLC[]): void => {
 
   if (newSerie.length > 0) {
     seriePrice.setData(newSerie);
-    chart.timeScale().fitContent();
+    chart.value.timeScale().fitContent();
 
     min = Math.min(...newSerie.map((c) => c.low));
     max = Math.max(...newSerie.map((c) => c.high));
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
-const createSeriesVolume = (newVolumes: Volume[]): void => {
-  if (!chart || !serieVolume) {
+function createSeriesVolume(newVolumes: Volume[]): void {
+  if (!chart.value || !serieVolume) {
     return;
   }
 
@@ -223,7 +198,7 @@ const createSeriesVolume = (newVolumes: Volume[]): void => {
   if (newVolumeSeries.length > 0) {
     serieVolume.setData(newVolumeSeries);
   }
-};
+}
 
 const formatterPrice = (x: number): string => {
   // Count number of leading zeroes after the decimal.

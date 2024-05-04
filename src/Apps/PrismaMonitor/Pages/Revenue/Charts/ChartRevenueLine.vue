@@ -6,17 +6,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
+import { useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
@@ -24,9 +23,7 @@ import createChartStyles from "@PM/Util/ChartStyles";
 import type { Theme } from "@PM/Models/Theme";
 import { type SnapshotRevenue } from "@PM/Services";
 
-let chart: IChartApi;
-let revenueSerie: ISeriesApi<"Area">;
-
+// Props
 interface Props {
   data: SnapshotRevenue[];
 }
@@ -34,46 +31,30 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
+let revenueSerie: ISeriesApi<"Area">;
+
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
-
-// Hooks
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  revenueSerie = chart.addAreaSeries(
-    createRevenueOptionsSerie(storeSettings.theme)
-  );
-
-  createSeries(data);
-});
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    revenueSerie = chart.addAreaSeries(
+      createRevenueOptionsSerie(storeSettings.theme)
+    );
+  }
+);
 
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      revenueSerie.applyOptions(createRevenueOptionsSerie(newTheme));
-    }
-  }
-);
+watch(() => data, createSeries);
+watch(theme, (newTheme) => {
+  revenueSerie.applyOptions(createRevenueOptionsSerie(newTheme));
+});
 
-watch(
-  () => data,
-  (newData) => {
-    createSeries(newData);
-  }
-);
-
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -84,9 +65,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
-};
+}
 
-const createRevenueOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createRevenueOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -99,10 +80,10 @@ const createRevenueOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     priceLineVisible: false,
     ...getLineChartColors(theme, storeSettings.flavor),
   };
-};
+}
 
-const createSeries = (newRevenue: SnapshotRevenue[]): void => {
-  if (!chart || !newRevenue) {
+function createSeries(newRevenue: SnapshotRevenue[]): void {
+  if (!chart.value || !newRevenue) {
     return;
   }
 
@@ -122,8 +103,8 @@ const createSeries = (newRevenue: SnapshotRevenue[]): void => {
     revenueSerie.setData(newRevenueSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
 const formatter = (y: number): string =>
   `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;

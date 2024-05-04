@@ -21,19 +21,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import {
   getColors,
@@ -52,19 +50,6 @@ import {
 
 const { t } = useI18n();
 
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const collateralService = new CollateralService(
-  getHost(),
-  storeSettings.flavor
-);
-
-let chart: IChartApi;
-let oracleSerie: ISeriesApi<"Area">;
-let marketSerie: ISeriesApi<"Area">;
-
 // Props
 interface Props {
   vault?: TroveManagerDetails | null;
@@ -73,7 +58,30 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
-const chartRef = ref<HTMLElement | null>(null);
+let oracleSerie: ISeriesApi<"Area">;
+let marketSerie: ISeriesApi<"Area">;
+
+const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
+
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    oracleSerie = chart.addAreaSeries(
+      createProportionOptionsSerie(storeSettings.theme)
+    );
+    marketSerie = chart.addAreaSeries(
+      createPriceOptionsSerie(storeSettings.theme)
+    );
+  }
+);
+
+// Services
+const collateralService = new CollateralService(
+  getHost(),
+  storeSettings.flavor
+);
 
 // Data
 const init = {
@@ -97,40 +105,12 @@ const { loading, data, load } = usePromise<{
   }
 }, init);
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  if (!chartRef.value) return;
-  await nextTick();
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  oracleSerie = chart.addAreaSeries(
-    createProportionOptionsSerie(storeSettings.theme)
-  );
-  marketSerie = chart.addAreaSeries(
-    createPriceOptionsSerie(storeSettings.theme)
-  );
-  createSeries(data.value);
-});
-
 // Watches
 watch(() => vault, load);
-
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      oracleSerie.applyOptions(createProportionOptionsSerie(newTheme));
-      marketSerie.applyOptions(createPriceOptionsSerie(newTheme));
-    }
-  }
-);
-
-watch(data, (newData) => {
-  createSeries(newData);
+watch(data, createSeries);
+watch(theme, (newTheme) => {
+  oracleSerie.applyOptions(createProportionOptionsSerie(newTheme));
+  marketSerie.applyOptions(createPriceOptionsSerie(newTheme));
 });
 
 // Methods
@@ -170,8 +150,9 @@ const processSeries = (
   return { oracle: filteredOracle, market: filteredMarket };
 };
 
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -179,9 +160,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       },
     },
   });
-};
+}
 
-const createPriceOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   const colors = getColors(theme, storeSettings.flavor);
 
   return {
@@ -198,11 +179,9 @@ const createPriceOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createProportionOptionsSerie = (
-  theme: Theme
-): AreaSeriesPartialOptions => {
+function createProportionOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -215,13 +194,13 @@ const createProportionOptionsSerie = (
     priceLineVisible: false,
     ...getLineChartColors(theme, storeSettings.flavor),
   };
-};
+}
 
-const createSeries = (newData: {
+function createSeries(newData: {
   oracle: DecimalTimeSeries[];
   market: DecimalTimeSeries[];
-}): void => {
-  if (!chart || !oracleSerie) {
+}): void {
+  if (!chart.value || !oracleSerie) {
     return;
   }
 
@@ -251,8 +230,8 @@ const createSeries = (newData: {
     oracleSerie.setData(newOracleSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 </script>
 
 <style lang="scss" scoped>

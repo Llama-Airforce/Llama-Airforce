@@ -12,19 +12,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
@@ -38,17 +36,21 @@ import {
 
 const { t } = useI18n();
 
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
-
-let chart: IChartApi;
+// Refs
 let serie: ISeriesApi<"Area">;
 
-// Refs
-const chartRef = ref<HTMLElement | null>(null);
+const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
+
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+  }
+);
+
+const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
 
 // Data
 const { loading, data } = usePromise(
@@ -59,38 +61,15 @@ const { loading, data } = usePromise(
   []
 );
 
-// Hooks
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-
-  serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
-
-  createSeries(data.value);
-});
-
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      serie.applyOptions(createOptionsSerie(newTheme));
-    }
-  }
-);
-
-watch(data, (newData) => {
-  createSeries(newData);
+watch(data, createSeries);
+watch(theme, (newTheme) => {
+  serie.applyOptions(createOptionsSerie(newTheme));
 });
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -101,9 +80,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
-};
+}
 
-const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -116,10 +95,10 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     priceLineVisible: false,
     ...getLineChartColors(theme, storeSettings.flavor),
   };
-};
+}
 
-const createSeries = (newData: DecimalTimeSeries[]): void => {
-  if (!chart || !serie) {
+function createSeries(newData: DecimalTimeSeries[]): void {
+  if (!chart.value || !serie) {
     return;
   }
 
@@ -136,8 +115,8 @@ const createSeries = (newData: DecimalTimeSeries[]): void => {
     serie.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
 const formatter = (y: number): string => {
   return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;

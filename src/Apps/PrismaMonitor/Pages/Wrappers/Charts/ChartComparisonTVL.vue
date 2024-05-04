@@ -20,19 +20,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, nextTick } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type LineSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
@@ -50,14 +48,25 @@ const { t } = useI18n();
 
 const prismaService = new WrapperService(getHost());
 
-let chart: IChartApi;
+// Refs
 let serieConvex: ISeriesApi<"Line">;
 let serieYearn: ISeriesApi<"Line">;
 
-// Refs
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
 
-const chartRef = ref<HTMLElement | null>(null);
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    serieConvex = chart.addLineSeries(
+      createOptionsSerie(storeSettings.theme, "convex")
+    );
+    serieYearn = chart.addLineSeries(
+      createOptionsSerie(storeSettings.theme, "yearn")
+    );
+  }
+);
 
 // Data
 const { loading: loadingConvex, data: dataConvex } = usePromise(
@@ -71,50 +80,18 @@ const { loading: loadingYearn, data: dataYearn } = usePromise(
 
 const loading = computed(() => loadingConvex.value || loadingYearn.value);
 
-// Hooks
-onMounted(async () => {
-  if (!chartRef.value) return;
-  await nextTick();
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-
-  serieConvex = chart.addLineSeries(
-    createOptionsSerie(storeSettings.theme, "convex")
-  );
-  serieYearn = chart.addLineSeries(
-    createOptionsSerie(storeSettings.theme, "yearn")
-  );
-
-  createSeries(dataConvex.value, "convex");
-  createSeries(dataYearn.value, "yearn");
-});
-
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      serieConvex.applyOptions(createOptionsSerie(newTheme, "convex"));
-      serieYearn.applyOptions(createOptionsSerie(newTheme, "yearn"));
-    }
-  }
-);
-
-watch(dataConvex, (newData) => {
-  createSeries(newData, "convex");
+watch(theme, (newTheme) => {
+  serieConvex.applyOptions(createOptionsSerie(newTheme, "convex"));
+  serieYearn.applyOptions(createOptionsSerie(newTheme, "yearn"));
 });
 
-watch(dataYearn, (newData) => {
-  createSeries(newData, "yearn");
-});
+watch(dataConvex, (newData) => createSeries(newData, "convex"));
+watch(dataYearn, (newData) => createSeries(newData, "yearn"));
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -125,12 +102,12 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
-};
+}
 
-const createOptionsSerie = (
+function createOptionsSerie(
   theme: Theme,
   contract: Contract
-): LineSeriesPartialOptions => {
+): LineSeriesPartialOptions {
   const colors = getColors(theme, storeSettings.flavor);
   const color = contract === "convex" ? colors.blue : colors.yellow;
 
@@ -146,13 +123,10 @@ const createOptionsSerie = (
     lastValueVisible: false,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (
-  newData: DecimalTimeSeries[],
-  contract: Contract
-): void => {
-  if (!chart || !serieConvex || !serieYearn) {
+function createSeries(newData: DecimalTimeSeries[], contract: Contract): void {
+  if (!chart.value || !serieConvex || !serieYearn) {
     return;
   }
 
@@ -172,9 +146,9 @@ const createSeries = (
       serieYearn.setData(newSerie);
     }
 
-    chart.timeScale().fitContent();
+    chart.value.timeScale().fitContent();
   }
-};
+}
 
 const formatter = (y: number): string => {
   return `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;

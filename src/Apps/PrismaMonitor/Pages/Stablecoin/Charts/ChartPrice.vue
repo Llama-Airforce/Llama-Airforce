@@ -18,19 +18,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { Tooltip } from "@/Framework";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type CandlestickSeriesPartialOptions,
   type CandlestickData,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useObservable } from "@/Framework";
+import { Card, useObservable, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
@@ -40,13 +38,20 @@ import { CurvePriceService, type OHLC } from "@/Services";
 import { stableSymbol } from "@PM/Models/Flavor";
 
 const { t } = useI18n();
-let chart: IChartApi;
-let serie: ISeriesApi<"Candlestick">;
 
 // Refs
-const storeSettings = useSettingsStore();
+let serie: ISeriesApi<"Candlestick">;
 
-const chartRef = ref<HTMLElement | null>(null);
+const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
+
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    serie = chart.addCandlestickSeries(createOptionsSerie(storeSettings.theme));
+  }
+);
 
 // Price settings specifics.
 const getPool = () => {
@@ -113,38 +118,15 @@ const tooltip = computed(() => {
   }
 });
 
-// Hooks
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-
-  serie = chart.addCandlestickSeries(createOptionsSerie(storeSettings.theme));
-
-  createSeries(data.value);
-});
-
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      serie.applyOptions(createOptionsSerie(newTheme));
-    }
-  }
-);
-
-watch(data, (newData) => {
-  createSeries(newData);
+watch(data, createSeries);
+watch(theme, (newTheme) => {
+  serie.applyOptions(createOptionsSerie(newTheme));
 });
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -155,9 +137,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       priceFormatter: (price: number) => formatter(price),
     },
   });
-};
+}
 
-const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
+function createOptionsSerie(theme: Theme): CandlestickSeriesPartialOptions {
   const colors = getColors(theme, storeSettings.flavor);
 
   return {
@@ -177,10 +159,10 @@ const createOptionsSerie = (theme: Theme): CandlestickSeriesPartialOptions => {
     lastValueVisible: true,
     priceLineVisible: false,
   };
-};
+}
 
-const createSeries = (newData: OHLC[]): void => {
-  if (!chart || !serie) {
+function createSeries(newData: OHLC[]): void {
+  if (!chart.value || !serie) {
     return;
   }
 
@@ -200,8 +182,8 @@ const createSeries = (newData: OHLC[]): void => {
     serie.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 
 const formatter = (y: number): string => {
   return `$${round(y, 4, "dollar")}${unit(y, "dollar")}`;

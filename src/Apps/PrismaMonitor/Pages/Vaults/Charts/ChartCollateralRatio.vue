@@ -12,19 +12,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
-  createChart as createChartFunc,
-  type IChartApi,
   type ISeriesApi,
   type LineData,
   type AreaSeriesPartialOptions,
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise } from "@/Framework";
+import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -33,17 +31,24 @@ import { getHost, ManagerService, type DecimalTimeSeries } from "@PM/Services";
 
 const { t } = useI18n();
 
-// Stores
+// Refs
+let globalCrSerie: ISeriesApi<"Area">;
+
 const storeSettings = useSettingsStore();
+const theme = computed(() => storeSettings.theme);
+
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    globalCrSerie = chart.addAreaSeries(
+      createGlobalCrOptionsSerie(storeSettings.theme)
+    );
+  }
+);
 
 // Services
 const managerService = new ManagerService(getHost(), storeSettings.flavor);
-
-let chart: IChartApi;
-let globalCrSerie: ISeriesApi<"Area">;
-
-// Refs
-const chartRef = ref<HTMLElement | null>(null);
 
 // Data
 const { loading, data } = usePromise(
@@ -54,39 +59,15 @@ const { loading, data } = usePromise(
   []
 );
 
-// Hooks
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  globalCrSerie = chart.addAreaSeries(
-    createGlobalCrOptionsSerie(storeSettings.theme)
-  );
-
-  createSeries(data.value);
-});
-
 // Watches
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      globalCrSerie.applyOptions(createGlobalCrOptionsSerie(newTheme));
-    }
-  }
-);
-
-watch(data, (newData) => {
-  createSeries(newData);
+watch(data, createSeries);
+watch(theme, (newTheme) => {
+  globalCrSerie.applyOptions(createGlobalCrOptionsSerie(newTheme));
 });
 
-// Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, storeSettings.flavor, {
+// Chart
+function createOptionsChart(chartRef: HTMLElement, theme: string) {
+  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -94,9 +75,9 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
       },
     },
   });
-};
+}
 
-const createGlobalCrOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
+function createGlobalCrOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "percent",
@@ -109,10 +90,10 @@ const createGlobalCrOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     priceLineVisible: false,
     ...getLineChartColors(theme, storeSettings.flavor),
   };
-};
+}
 
-const createSeries = (globalCr: DecimalTimeSeries[]): void => {
-  if (!chart || !globalCrSerie) {
+function createSeries(globalCr: DecimalTimeSeries[]): void {
+  if (!chart.value || !globalCrSerie) {
     return;
   }
 
@@ -128,8 +109,8 @@ const createSeries = (globalCr: DecimalTimeSeries[]): void => {
     globalCrSerie.setData(newGlobalCrSerie);
   }
 
-  chart.timeScale().fitContent();
-};
+  chart.value.timeScale().fitContent();
+}
 </script>
 
 <style lang="scss" scoped>
