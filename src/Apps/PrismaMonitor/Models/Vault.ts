@@ -58,7 +58,7 @@ export function collateral(vault: Vault): Collateral | null {
 
 export function icon(vault: Vault) {
   const coll = collateral(vault)!;
-  return iconF(coll as Collateral);
+  return iconF(coll);
 }
 
 export function label(vault: Vault): string | null {

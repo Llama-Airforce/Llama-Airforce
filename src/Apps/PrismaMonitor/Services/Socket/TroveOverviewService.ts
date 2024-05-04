@@ -3,7 +3,7 @@ import { type WebSocketSubject } from "rxjs/webSocket";
 import { type Payload, type Action, type Request } from "@/Services";
 import { type Vault } from "@PM/Models/Vault";
 
-export const TROVE_OVERVIEW_CHANNEL = "troves_overview" as const;
+export const TROVE_OVERVIEW_CHANNEL = "troves_overview";
 
 export type TroveManagerDetails = {
   name: string;

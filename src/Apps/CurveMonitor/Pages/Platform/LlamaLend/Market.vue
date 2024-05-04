@@ -63,7 +63,7 @@ onMounted(async () => {
   }
 
   if (storeLlamaLend.market?.controller !== marketAddr.value && chain.value) {
-    const markets = await llamaLendService.getMarkets(chain.value as Chain);
+    const markets = await llamaLendService.getMarkets(chain.value);
     const market = markets.find(
       (market) => market.controller === marketAddr.value
     );
