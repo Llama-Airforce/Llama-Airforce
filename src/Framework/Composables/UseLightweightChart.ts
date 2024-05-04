@@ -1,6 +1,6 @@
 import { ref, onMounted, watch, type Ref, nextTick } from "vue";
 import {
-  createChart as createChartFunc,
+  createChart,
   type IChartApi,
   type DeepPartial,
   type ChartOptions,
@@ -27,7 +27,7 @@ export function useLightweightChart(
      */
     await nextTick();
 
-    chart.value = createChartFunc(
+    chart.value = createChart(
       chartRef.value,
       createChartOptions(chartRef.value, theme.value)
     );
