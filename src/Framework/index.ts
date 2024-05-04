@@ -27,6 +27,8 @@ export { default as TabItem } from "@/Framework/TabItem.vue";
 export { default as TabView } from "@/Framework/TabView.vue";
 export { default as Tooltip } from "@/Framework/Tooltip.vue";
 
+export { useQuery } from "@tanstack/vue-query";
+
 export { usePromise } from "@/Framework/Composables/UsePromise";
 export { useExpansion } from "@/Framework/Composables/UseExpansion";
 export { useRelativeTime } from "@/Framework/Composables/UseRelativeTime";

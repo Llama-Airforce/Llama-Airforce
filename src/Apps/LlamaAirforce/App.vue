@@ -4,6 +4,9 @@
       :width="600"
       :duration="-1"
     />
+
+    <VueQueryDevtools></VueQueryDevtools>
+
     <Header class="header"></Header>
     <MenuDesktop class="menu"></MenuDesktop>
 
@@ -23,6 +26,7 @@
 </template>
 
 <script setup lang="ts">
+import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import Header from "@LAF/Navigation/Header.vue";
 import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 </script>
