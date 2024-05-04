@@ -3,6 +3,7 @@ import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
+import AutoImport from "unplugin-auto-import/vite";
 
 export default defineConfig(() => {
   return {
@@ -13,6 +14,13 @@ export default defineConfig(() => {
         escapeHtml: false,
       }),
       splitVendorChunkPlugin(),
+      AutoImport({
+        dts: true,
+        imports: ["vue", "vue-i18n", "vue-router"],
+        eslintrc: {
+          enabled: true,
+        },
+      }),
     ],
     server: {
       port: 8080,

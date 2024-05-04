@@ -80,6 +80,7 @@
     "tsconfig-paths": "^4.2.0",
     "typechain": "^8.3.2",
     "typescript": "^5.4.5",
+    "unplugin-auto-import": "^0.17.5",
     "vite": "^5.2.11",
     "vitest": "^0.34.6",
     "vue-tsc": "^2.0.16"

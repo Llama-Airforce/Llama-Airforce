@@ -9,7 +9,8 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:vue/vue3-recommended",
-    "plugin:promise/recommended"
+    "plugin:promise/recommended",
+    "./.eslintrc-auto-import.json",
   ],
   parser: "vue-eslint-parser",
   parserOptions: {
