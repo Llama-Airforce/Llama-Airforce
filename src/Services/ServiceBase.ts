@@ -8,7 +8,7 @@ async function fetchWork(
   body?: Record<string, unknown>,
   signal?: AbortSignal
 ): Promise<Response> {
-  return await fetch(url, {
+  const resp = await fetch(url, {
     method: body ? "POST" : "GET",
     headers: {
       Accept: "application/json",
@@ -16,14 +16,14 @@ async function fetchWork(
     },
     body: JSON.stringify(body),
     signal,
-  }).then((resp) => {
-    if (!resp.ok) {
-      // make the promise be rejected if we didn't get a 2xx response
-      throw new Error(`Fetch error ${resp.status} for URL: ${url}`);
-    } else {
-      return resp;
-    }
   });
+
+  if (!resp.ok) {
+    // make the promise be rejected if we didn't get a 2xx response
+    throw new Error(`Fetch error ${resp.status} for URL: ${url}`);
+  } else {
+    return resp;
+  }
 }
 
 export async function fetchType<T>(
