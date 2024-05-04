@@ -1,4 +1,4 @@
-import { ref, onMounted, watch, type Ref, nextTick } from "vue";
+import { ref, watch, type Ref, onMounted, onUnmounted, nextTick } from "vue";
 import {
   createChart,
   type IChartApi,
@@ -34,6 +34,13 @@ export function useLightweightChart(
 
     if (onChartCreated && chart.value) {
       onChartCreated(chart.value);
+    }
+  });
+
+  onUnmounted(() => {
+    if (chart.value) {
+      chart.value.remove();
+      chart.value = null;
     }
   });
 
