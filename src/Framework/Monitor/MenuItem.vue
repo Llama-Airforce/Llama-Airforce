@@ -55,8 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useRoute } from "vue-router";
 import { Chip, Collapsible } from "@/Framework";
 import { type MenuItem, isNode, isLeaf } from "@/Framework/Monitor";
 import { subIsActive } from "@/Util";

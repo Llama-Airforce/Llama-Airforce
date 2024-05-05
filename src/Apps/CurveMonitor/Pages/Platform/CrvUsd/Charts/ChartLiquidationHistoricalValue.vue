@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { chain } from "lodash";
 import { GraphApex } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";

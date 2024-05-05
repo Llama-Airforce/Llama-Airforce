@@ -82,14 +82,14 @@
 
     <template #no-data>
       <div v-if="loading">{{ t("loading") }} {{ addressShort(voter) }}</div>
-      <WalletConnectButton v-if="!connected && isSupported"></WalletConnectButton>
+      <WalletConnectButton
+        v-if="!connected && isSupported"
+      ></WalletConnectButton>
     </template>
   </DataTable>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import {
   AsyncValue,
@@ -131,7 +131,9 @@ const bribed = ref<BribedPersonal[]>([]);
 const voter = ref("");
 const loading = ref(false);
 
-const isSupported = computed((): boolean => store.selectedEpoch?.platform !== "hh");
+const isSupported = computed(
+  (): boolean => store.selectedEpoch?.platform !== "hh"
+);
 
 const epoch = computed((): Epoch | null => {
   return store.selectedEpoch;

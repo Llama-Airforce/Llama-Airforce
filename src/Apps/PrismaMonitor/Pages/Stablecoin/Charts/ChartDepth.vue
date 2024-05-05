@@ -11,8 +11,6 @@
 
 <script setup lang="ts">
 import { CardGraph } from "@/Framework";
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { type PoolDepth } from "@PM/Services";

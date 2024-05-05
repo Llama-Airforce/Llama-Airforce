@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import { getHost } from "@/Services/Host";

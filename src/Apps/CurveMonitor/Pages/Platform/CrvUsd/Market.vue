@@ -35,8 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { getHost } from "@/Services/Host";
 import { TabView, TabItem } from "@/Framework";
 import { useBreadcrumbStore } from "@CM/Stores";

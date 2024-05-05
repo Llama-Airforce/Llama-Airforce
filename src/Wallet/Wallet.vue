@@ -43,8 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
 import { Button } from "@/Framework";
 import { addressShort, getAddress, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";

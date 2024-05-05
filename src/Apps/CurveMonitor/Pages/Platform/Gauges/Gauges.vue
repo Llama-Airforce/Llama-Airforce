@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { useExpansion } from "@/Framework";
 import { shorten, longen, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";

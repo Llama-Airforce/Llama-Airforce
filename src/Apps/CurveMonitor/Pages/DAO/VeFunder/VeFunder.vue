@@ -36,8 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
 import { Card } from "@/Framework";
 import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
 import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";

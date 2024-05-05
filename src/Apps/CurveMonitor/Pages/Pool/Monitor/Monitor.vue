@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import type { Pool } from "@CM/Models";
 import { PoolService } from "@CM/Services";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";

@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { io, type Socket } from "socket.io-client";
 import { InputText, Button } from "@/Framework";
 

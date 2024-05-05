@@ -81,8 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { isAddress } from "ethers/lib/utils";
 import { uniqWith } from "lodash";
 import { Collapsible } from "@/Framework";

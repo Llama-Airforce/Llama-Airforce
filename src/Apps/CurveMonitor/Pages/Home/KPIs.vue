@@ -47,7 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { AsyncValue, KPI } from "@/Framework";
 import { DefiLlamaService } from "@/Services";
 import { getHost } from "@/Services/Host";

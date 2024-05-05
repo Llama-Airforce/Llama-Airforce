@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { createSocketMEV } from "@CM/Services/Sockets";
 import { MEVService } from "@CM/Pages/Pool/MEV/Services";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";

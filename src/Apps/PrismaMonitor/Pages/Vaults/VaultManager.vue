@@ -53,8 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { TabView, TabItem, useObservable } from "@/Framework";
 import {
   useBreadcrumbStore,

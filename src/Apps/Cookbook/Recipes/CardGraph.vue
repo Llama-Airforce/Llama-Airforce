@@ -33,7 +33,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { CardGraph, Code } from "@/Framework";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint, addDays } from "@/Util";
@@ -169,8 +168,7 @@ const cardGraphLine1 = `<CardGraph
   :series="series"
 ></CardGraph>`;
 
-const cardGraphLine2 = `import { computed } from "vue";
-import { CardGraph } from "@/Framework";
+const cardGraphLine2 = `import { CardGraph } from "@/Framework";
 import createChartStyles from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint, addDays } from "@/Util";
 

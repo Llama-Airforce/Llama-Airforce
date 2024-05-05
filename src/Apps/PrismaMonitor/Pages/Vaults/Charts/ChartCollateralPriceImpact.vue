@@ -10,8 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { CardGraph, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";

@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { InputText } from "@/Framework";
 import KPIs from "@CM/Pages/Home/KPIs.vue";
 import ChartChainType from "@CM/Pages/Home/ChartChainType.vue";

@@ -21,8 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount } from "vue";
-import { useRouter, useRoute } from "vue-router";
 import { getHost } from "@/Services/Host";
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";

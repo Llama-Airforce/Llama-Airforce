@@ -18,8 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { useBreadcrumbStore } from "@CM/Stores";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";

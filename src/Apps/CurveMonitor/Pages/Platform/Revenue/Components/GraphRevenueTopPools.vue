@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
 import { CardGraph } from "@/Framework";
 import { minDelay, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";

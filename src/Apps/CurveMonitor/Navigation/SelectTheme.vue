@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { Select } from "@/Framework";
 import { getColors } from "@/Styles/Themes/CM";
 import { type Theme } from "@CM/Models/Theme";

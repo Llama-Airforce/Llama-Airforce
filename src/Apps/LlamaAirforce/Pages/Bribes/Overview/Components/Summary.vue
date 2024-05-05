@@ -40,8 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { AsyncValue, KPI } from "@/Framework";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import type {

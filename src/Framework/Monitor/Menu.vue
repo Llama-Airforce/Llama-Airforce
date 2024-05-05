@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
 import { type Page } from "@/Framework/Monitor";
 import { type MenuItem as MenuItemT } from "@/Framework/Monitor/Menu";

@@ -45,8 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { type Protocol, type Platform } from "@LAF/Pages/Bribes/Models";

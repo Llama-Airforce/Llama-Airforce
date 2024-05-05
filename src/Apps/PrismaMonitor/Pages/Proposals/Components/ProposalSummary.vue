@@ -47,7 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import Status from "@PM/Pages/Proposals/Components/Status.vue";
 import Proposer from "@PM/Pages/Proposals/Components/Proposer.vue";

@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { ButtonToggle, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 

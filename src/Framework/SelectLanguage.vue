@@ -18,8 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
 import { Select, locales as localesAll, type Locale } from "@/Framework";
 
 const STORAGE_LOCALE = "locale";

@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
 import { useWallet } from "@/Wallet";
 import { TheLlamas__factory } from "@/Contracts";
 import { TheLlamas } from "@/Util/Addresses";

@@ -15,8 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, nextTick, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import type { Subscription } from "rxjs";
 import { getAddress } from "ethers/lib/utils";

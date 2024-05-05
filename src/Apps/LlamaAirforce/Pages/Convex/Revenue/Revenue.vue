@@ -41,8 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount, onBeforeUnmount } from "vue";
-import { useI18n } from "vue-i18n";
 import { Spinner } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import ProtocolRevenueService, {

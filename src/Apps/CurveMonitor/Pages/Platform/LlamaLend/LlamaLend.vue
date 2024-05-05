@@ -8,8 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { type Chain } from "@CM/Models/Chain";
 import { useBreadcrumbStore } from "@CM/Stores";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";

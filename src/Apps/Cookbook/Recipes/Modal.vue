@@ -39,7 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Button, ModalYesNo, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
@@ -61,9 +60,7 @@ const modalYesNo1 = `<ModalYesNo
   <div class="content">Content goes here</div>
 </ModalYesNo>`;
 
-const modalYesNo2 = `import { ref } from "vue";
-
-const openModal = ref(false);
+const modalYesNo2 = `const openModal = ref(false);
 
 const onYes = () => {
   alert("You clicked yes!");

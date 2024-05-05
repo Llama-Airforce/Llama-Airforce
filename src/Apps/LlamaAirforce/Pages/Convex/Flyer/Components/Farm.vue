@@ -61,8 +61,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import { getCvxCrvAprs } from "@/Util";
 import { useWallet } from "@/Wallet";

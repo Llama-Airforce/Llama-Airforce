@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import { KPI } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";

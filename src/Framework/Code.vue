@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from "vue";
 import hljsVuePlugin from "@highlightjs/vue-plugin";
 
 const HighlightJS = hljsVuePlugin.component;

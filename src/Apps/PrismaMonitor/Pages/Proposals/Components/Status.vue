@@ -30,8 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { KPI, Tooltip } from "@/Framework";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";

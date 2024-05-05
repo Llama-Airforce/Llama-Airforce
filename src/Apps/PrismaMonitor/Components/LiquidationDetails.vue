@@ -65,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { AsyncValue, Card, DataTable, KPI, InputText } from "@/Framework";
 import { type Liquidation } from "@PM/Services";

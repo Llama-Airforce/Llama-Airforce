@@ -61,8 +61,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, SortOrder, useSort } from "@/Framework";
 import { shorten, icon, disabled } from "@/Util";

@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { CardGraph } from "@/Framework";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { round, unit, type DataPoint } from "@/Util";

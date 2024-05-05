@@ -18,9 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
 import { Tooltip } from "@/Framework";
-import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import {
   type ISeriesApi,

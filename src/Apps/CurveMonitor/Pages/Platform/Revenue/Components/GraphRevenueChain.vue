@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { orderBy } from "lodash";
 import { CardGraph } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";

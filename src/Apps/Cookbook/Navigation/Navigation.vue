@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Collapsible } from "@/Framework";
 import { Menu } from "@/Framework/Monitor";
 import Header from "@CB/Navigation/Header.vue";

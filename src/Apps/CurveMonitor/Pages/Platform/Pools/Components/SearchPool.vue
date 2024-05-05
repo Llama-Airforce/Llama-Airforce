@@ -38,8 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { InputText, AsyncValue } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";

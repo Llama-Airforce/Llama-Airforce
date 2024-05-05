@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import { ButtonToggle } from "@/Framework";
 import { type TimeRange, timeRanges } from "@CM/Models/TimeRange";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";

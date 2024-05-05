@@ -15,8 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted } from "vue";
-
 // Props
 interface Props {
   show?: boolean;

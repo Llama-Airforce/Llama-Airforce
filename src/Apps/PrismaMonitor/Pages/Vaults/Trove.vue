@@ -24,8 +24,6 @@
 
 <script setup lang="ts">
 // Refs
-import { useRoute } from "vue-router";
-import { computed, onMounted, watch } from "vue";
 import { useObservable } from "@/Framework";
 import {
   useSocketStore,

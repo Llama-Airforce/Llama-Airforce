@@ -48,8 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { TabView, TabItem, Spinner, usePromise } from "@/Framework";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";

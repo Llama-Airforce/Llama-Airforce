@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, useSlots } from "vue";
+import { useSlots } from "vue";
 import { type TabItem } from "@/Framework";
 
 // Props

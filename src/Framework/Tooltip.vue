@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import Popper from "vue3-popper";
 
 // Props

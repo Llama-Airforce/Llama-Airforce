@@ -34,8 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { type Signer, utils } from "ethers";
 import { Card, Button, InputText } from "@/Framework";
 import { useWallet } from "@/Wallet";

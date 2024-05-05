@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import Header from "@LAF/Pages/Convex/Flyer/Components/Header.vue";

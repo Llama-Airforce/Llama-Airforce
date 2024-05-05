@@ -82,8 +82,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { chain as chain_ } from "lodash";
 import { AsyncValue, DataTable, InputText, useQuery } from "@/Framework";
 import { getHost } from "@/Services/Host";

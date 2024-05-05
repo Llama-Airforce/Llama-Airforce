@@ -53,8 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { orderBy, reverse } from "lodash";
 import { AsyncValue, KPI, Select } from "@/Framework";
 import { countdown } from "@/Util";

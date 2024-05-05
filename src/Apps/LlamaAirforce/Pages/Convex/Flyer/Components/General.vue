@@ -52,8 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { AsyncValue } from "@/Framework";
 import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 

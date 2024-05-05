@@ -90,7 +90,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import { orderBy } from "lodash";
 import { AsyncValue, DataTable, Code, Tooltip, SortOrder } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
@@ -203,8 +202,7 @@ const dataTable1 = `<DataTable
   </template>
 </DataTable>`;
 
-const dataTable2 = `import { ref, computed } from "vue";
-import { orderBy } from "lodash";
+const dataTable2 = `import { orderBy } from "lodash";
 import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 
 type Round = {

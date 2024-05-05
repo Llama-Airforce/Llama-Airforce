@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import { Spinner, usePromise } from "@/Framework";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";

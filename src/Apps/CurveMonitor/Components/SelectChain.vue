@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
 import { Select } from "@/Framework";
 import { type Chain, icon } from "@CM/Models/Chain";
 

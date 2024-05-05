@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useRoute } from "vue-router";
 import HeaderDesktop from "@LAF/Navigation/HeaderDesktop.vue";
 import HeaderMobile from "@LAF/Navigation/HeaderMobile.vue";
 

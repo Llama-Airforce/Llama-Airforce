@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onActivated, onDeactivated } from "vue";
-import { useI18n } from "vue-i18n";
 import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";

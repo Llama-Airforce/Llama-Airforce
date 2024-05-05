@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { TabView, TabItem } from "@/Framework";
 import Dashboard from "@CM/Pages/Platform/Revenue/Dashboard.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Cushions.vue";

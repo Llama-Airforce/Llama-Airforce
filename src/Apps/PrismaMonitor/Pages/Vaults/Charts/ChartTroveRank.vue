@@ -34,8 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { Tooltip } from "@/Framework";
 import { Card, GraphApex, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";

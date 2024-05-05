@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
 import { KPI } from "@/Framework";
 import { countdown } from "@/Util";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";

@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { type DataPoint } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";

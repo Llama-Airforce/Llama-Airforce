@@ -18,8 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { useObservable } from "@/Framework";
 import { useWallet } from "@/Wallet";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";

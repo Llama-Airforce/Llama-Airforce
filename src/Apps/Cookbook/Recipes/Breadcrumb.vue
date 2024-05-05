@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Breadcrumb, Code, type Crumb } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 

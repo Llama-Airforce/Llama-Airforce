@@ -95,7 +95,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Card, Code, Collapsible } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
@@ -139,9 +138,7 @@ const cardCollapsible1 = `<Card
   <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>
 </Card>`;
 
-const cardCollapsible2 = `import { ref } from "vue";
-
-const collapsed = ref(false);
+const cardCollapsible2 = `const collapsed = ref(false);
 `;
 
 const cardCollapsible3 = `::v-deep(.card-header) {

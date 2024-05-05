@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Card, Collapsible } from "@/Framework";
 import ProposalSummary from "@PM/Pages/Proposals/Components/ProposalSummary.vue";
 import ProposalDetails from "@PM/Pages/Proposals/Components/ProposalDetails.vue";

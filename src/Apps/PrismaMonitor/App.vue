@@ -37,8 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import { Breadcrumb, type Crumb } from "@/Framework";
 import Navigation from "@PM/Navigation/Navigation.vue";

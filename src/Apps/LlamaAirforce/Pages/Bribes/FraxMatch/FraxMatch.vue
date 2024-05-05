@@ -49,8 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { useI18n } from "vue-i18n";
 import { InputText, Spinner } from "@/Framework";
 import { shorten, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";

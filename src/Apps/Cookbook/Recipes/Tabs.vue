@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { TabView, TabItem, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 

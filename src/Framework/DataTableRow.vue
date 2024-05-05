@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from "vue";
 import { Collapsible } from "@/Framework";
 
 /**

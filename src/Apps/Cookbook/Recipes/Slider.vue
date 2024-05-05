@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { Slider, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
@@ -49,8 +48,7 @@ const slider1 = `<Slider
   @update:model-value="onInput"
 ></Slider>`;
 
-const slider2 = `import { ref } from "vue";
-import { Slider } from "@/Framework";
+const slider2 = `import { Slider } from "@/Framework";
 
 const value = ref(0);
 

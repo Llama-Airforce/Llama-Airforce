@@ -37,8 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useRoute } from "vue-router";
 import { subIsActive } from "@/Util";
 import { type MenuItem, isNode, isLeaf } from "@LAF/Pages/Page";
 

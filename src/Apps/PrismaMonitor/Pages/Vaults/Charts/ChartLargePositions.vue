@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { type DataPoint, round, unit } from "@/Util";

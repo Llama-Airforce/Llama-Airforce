@@ -63,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
 import { AsyncValue, KPI, usePromise } from "@/Framework";
 import {
   getHost,

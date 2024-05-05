@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { CardGraph } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";

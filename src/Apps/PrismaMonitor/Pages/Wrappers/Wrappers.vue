@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { TabView, TabItem } from "@/Framework";
 import Overview from "@PM/Pages/Wrappers/Overview.vue";
 import CvxPrisma from "@PM/Pages/Wrappers/CvxPrisma.vue";

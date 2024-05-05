@@ -17,8 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref } from "vue";
-import { useI18n } from "vue-i18n";
 import { Select } from "@/Framework";
 import {
   type ProposalType,

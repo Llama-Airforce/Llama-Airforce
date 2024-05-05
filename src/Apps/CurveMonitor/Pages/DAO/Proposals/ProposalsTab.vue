@@ -46,8 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref, computed } from "vue";
-import { useI18n } from "vue-i18n";
 import { chain } from "lodash";
 import { InputText, Pagination, usePagination } from "@/Framework";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";

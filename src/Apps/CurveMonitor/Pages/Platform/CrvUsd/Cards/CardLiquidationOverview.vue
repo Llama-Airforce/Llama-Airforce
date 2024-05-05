@@ -46,8 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
