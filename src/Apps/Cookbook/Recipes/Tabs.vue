@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { TabView, TabItem, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const tabActive = ref(0);
@@ -40,9 +39,7 @@ const tabs1 = `<TabView @tab="tabActive = $event.index">
   <TabItem header="Tab Three"> Tab 3 content goes here </TabItem>
 </TabView>`;
 
-const tabs2 = `import { TabView, TabItem } from "@/Framework";
-
-const tabActive = ref(0);
+const tabs2 = `const tabActive = ref(0);
 `;
 </script>
 

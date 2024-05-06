@@ -29,8 +29,7 @@ import {
   type LineSeriesPartialOptions,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useQuery, useLightweightChart } from "@/Framework";
-import { Legend } from "@/Framework/Monitor";
+import { useQuery } from "@tanstack/vue-query";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";

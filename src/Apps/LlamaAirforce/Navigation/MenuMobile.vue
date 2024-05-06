@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select, SelectLanguage } from "@/Framework";
 import { subIsActive } from "@/Util";
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import { usePageStore } from "@LAF/Pages/Store";

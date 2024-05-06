@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { useObservable } from "@/Framework";
 import { getApiSocket, useSocketStore } from "@PM/Stores";
 import { TroveOverviewService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";

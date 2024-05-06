@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@PM/Navigation/SelectTheme.vue";
 

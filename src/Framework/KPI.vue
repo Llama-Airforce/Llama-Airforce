@@ -65,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { Tooltip } from "@/Framework";
-
 // Props
 interface Props {
   label?: string;

@@ -47,7 +47,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { InputText, Pagination, usePagination } from "@/Framework";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 import type {

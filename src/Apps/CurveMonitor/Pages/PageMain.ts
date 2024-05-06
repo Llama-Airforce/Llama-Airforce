@@ -1,4 +1,4 @@
-import { type Page } from "@/Framework/Monitor";
+import { type Page } from "@/Framework/Monitor/Page";
 
 import Home from "@CM/Pages/Home/Home.vue";
 

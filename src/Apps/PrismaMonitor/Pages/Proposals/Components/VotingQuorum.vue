@@ -44,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue } from "@/Framework";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
 const { t } = useI18n();

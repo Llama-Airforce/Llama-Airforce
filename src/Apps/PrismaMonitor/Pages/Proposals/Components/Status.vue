@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { KPI, Tooltip } from "@/Framework";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
 

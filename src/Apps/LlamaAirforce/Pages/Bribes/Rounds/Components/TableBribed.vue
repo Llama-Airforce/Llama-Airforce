@@ -78,13 +78,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  AsyncValue,
-  DataTable,
-  Tooltip,
-  SortOrder,
-  useSort,
-} from "@/Framework";
 import { icon } from "@/Util";
 import type { Bribe, Bribed, Epoch, Protocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";

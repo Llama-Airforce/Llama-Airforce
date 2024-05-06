@@ -26,8 +26,6 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
-import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import type { Balances } from "@CM/Pages/Pool/Monitor/Models";

@@ -107,19 +107,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  AsyncValue,
-  DataTable,
-  InputText,
-  Pagination,
-  TabView,
-  TabItem,
-  usePromise,
-  SortOrder,
-  useRelativeTime,
-  useSort,
-  usePagination,
-} from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";

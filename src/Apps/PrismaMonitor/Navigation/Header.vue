@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/Framework";
 import Logo from "@PM/Navigation/Logo.vue";
 
 // Emits

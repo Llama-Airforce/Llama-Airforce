@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { CardGraph } from "@/Framework";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { type PoolDepth } from "@PM/Services";

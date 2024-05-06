@@ -70,7 +70,6 @@
 
 <script setup lang="ts">
 import { PrismaLocker__factory, VotingPrisma__factory } from "@/Contracts";
-import { AsyncValue, KPI, Button, Card, Modal } from "@/Framework";
 import { tryNotify, tryNotifyLoading } from "@/Util";
 import { PrismaVotingAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";

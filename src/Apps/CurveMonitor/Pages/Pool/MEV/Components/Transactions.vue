@@ -127,15 +127,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  DataTable,
-  InputText,
-  Pagination,
-  TabView,
-  TabItem,
-  useRelativeTime,
-  usePagination,
-} from "@/Framework";
 import { roundPhil } from "@/Util";
 import { addressShort } from "@/Wallet";
 import {

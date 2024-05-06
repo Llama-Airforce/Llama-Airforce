@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { AsyncValue } from "@/Framework";
 import { addressShort, useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 

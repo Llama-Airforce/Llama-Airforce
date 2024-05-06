@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { Breadcrumb, Code, type Crumb } from "@/Framework";
+import { type Crumb } from "@/Framework/Crumb";
 import Recipe from "@CB/Recipe.vue";
 
 const crumbs: Crumb[] = [

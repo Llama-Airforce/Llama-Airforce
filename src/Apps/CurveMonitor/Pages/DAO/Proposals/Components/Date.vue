@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { KPI } from "@/Framework";
 import { countdown } from "@/Util";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 

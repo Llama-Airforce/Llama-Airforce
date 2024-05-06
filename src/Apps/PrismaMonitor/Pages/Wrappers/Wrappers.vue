@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { TabView, TabItem } from "@/Framework";
 import Overview from "@PM/Pages/Wrappers/Overview.vue";
 import CvxPrisma from "@PM/Pages/Wrappers/CvxPrisma.vue";
 import YPrisma from "@PM/Pages/Wrappers/YPrisma.vue";

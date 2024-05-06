@@ -21,7 +21,6 @@ import {
   type HistogramSeriesPartialOptions,
   type HistogramData,
 } from "lightweight-charts";
-import { Card, useObservable, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";

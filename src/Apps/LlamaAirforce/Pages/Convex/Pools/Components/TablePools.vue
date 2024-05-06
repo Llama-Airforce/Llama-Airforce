@@ -62,7 +62,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder, useSort } from "@/Framework";
 import { shorten, icon, disabled } from "@/Util";
 import GraphTvl from "@LAF/Pages/Convex/Pools/Components/GraphTvl.vue";
 import GraphApr from "@LAF/Pages/Convex/Pools/Components/GraphApr.vue";

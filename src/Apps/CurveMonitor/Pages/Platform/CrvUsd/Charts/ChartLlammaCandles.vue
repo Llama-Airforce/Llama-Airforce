@@ -28,7 +28,6 @@ import {
   LineStyle,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, ButtonToggle } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

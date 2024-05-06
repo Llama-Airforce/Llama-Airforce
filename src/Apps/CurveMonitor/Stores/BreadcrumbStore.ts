@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { type Crumb } from "@/Framework";
+import { type Crumb } from "@/Framework/Crumb";
 
 type State = {
   crumbs: Crumb[];

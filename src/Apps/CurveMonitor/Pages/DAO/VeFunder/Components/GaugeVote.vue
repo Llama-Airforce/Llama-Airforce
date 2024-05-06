@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import { type Signer, utils } from "ethers";
-import { Card, Button, InputText } from "@/Framework";
 import { useWallet } from "@/Wallet";
 import {
   AragonAgent__factory,

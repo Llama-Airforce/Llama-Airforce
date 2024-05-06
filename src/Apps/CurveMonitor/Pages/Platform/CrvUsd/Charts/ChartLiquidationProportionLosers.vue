@@ -20,7 +20,6 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

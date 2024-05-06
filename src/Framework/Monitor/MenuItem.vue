@@ -55,8 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { Chip, Collapsible } from "@/Framework";
-import { type MenuItem, isNode, isLeaf } from "@/Framework/Monitor";
+import { isNode, isLeaf, type MenuItem } from "@/Framework/Monitor/Menu";
 import { subIsActive } from "@/Util";
 
 // Props

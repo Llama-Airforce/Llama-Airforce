@@ -74,7 +74,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue } from "@/Framework";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 
 const MIN_WIDTH = 4;

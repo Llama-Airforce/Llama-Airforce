@@ -29,7 +29,6 @@
 
 <script setup lang="ts">
 /* eslint-disable no-useless-escape */
-import { Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const html = `<template>

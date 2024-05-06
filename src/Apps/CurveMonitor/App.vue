@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
-import { Breadcrumb, type Crumb } from "@/Framework";
+import { type Crumb } from "@/Framework/Crumb";
 import Navigation from "@CM/Navigation/Navigation.vue";
 import { useBreadcrumbStore } from "@CM/Stores";
 

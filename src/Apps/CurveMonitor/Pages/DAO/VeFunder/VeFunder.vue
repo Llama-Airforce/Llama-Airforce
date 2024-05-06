@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card } from "@/Framework";
 import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
 import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";
 

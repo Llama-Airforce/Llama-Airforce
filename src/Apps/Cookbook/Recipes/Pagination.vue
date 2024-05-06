@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { Pagination, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const page = ref(1);

@@ -92,18 +92,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  AsyncValue,
-  DataTable,
-  InputText,
-  Pagination,
-  SortOrder,
-  Modal,
-  usePromise,
-  useRelativeTime,
-  useSort,
-  usePagination,
-} from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";

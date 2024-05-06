@@ -53,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { TabView, TabItem, useObservable } from "@/Framework";
 import {
   useBreadcrumbStore,
   useSocketStore,

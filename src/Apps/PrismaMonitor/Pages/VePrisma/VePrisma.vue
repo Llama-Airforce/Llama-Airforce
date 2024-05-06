@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import TableLockers from "@PM/Pages/VePrisma/Tables/TableLockers.vue";
 import TableVotesIncentives from "@PM/Pages/VePrisma/Tables/TableVotesIncentives.vue";

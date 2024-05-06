@@ -8,8 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card } from "@/Framework";
-
 const { t } = useI18n();
 </script>
 

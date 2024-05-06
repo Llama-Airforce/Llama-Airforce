@@ -15,7 +15,6 @@
 
 <script setup lang="ts">
 import { type Socket } from "socket.io-client";
-import { Tooltip } from "@/Framework";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { StatusService } from "@CM/Services";
 

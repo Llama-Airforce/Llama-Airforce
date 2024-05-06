@@ -64,7 +64,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain, icon } from "@CM/Models/Chain";

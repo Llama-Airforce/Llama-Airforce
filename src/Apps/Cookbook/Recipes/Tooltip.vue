@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { Tooltip, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const tooltip = `<Tooltip>

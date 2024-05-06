@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card, usePromise } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";

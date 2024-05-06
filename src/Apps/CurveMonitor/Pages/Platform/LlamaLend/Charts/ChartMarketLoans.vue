@@ -20,7 +20,7 @@ import {
   type ISeriesApi,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, useQuery, useLightweightChart } from "@/Framework";
+import { useQuery } from "@tanstack/vue-query";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

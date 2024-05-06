@@ -63,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI, usePromise } from "@/Framework";
 import {
   getHost,
   CollateralService,

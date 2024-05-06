@@ -37,8 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { SelectLanguage } from "@/Framework";
-import LlamaNFT from "@/Framework/LlamaNFT.vue";
 import { subIsActive } from "@/Util";
 import Wallet from "@/Wallet/Wallet.vue";
 import MenuItem from "@LAF/Navigation/MenuItem.vue";

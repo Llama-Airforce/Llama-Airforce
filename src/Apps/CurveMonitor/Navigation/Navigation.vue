@@ -23,8 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { Collapsible } from "@/Framework";
-import { Menu } from "@/Framework/Monitor";
 import Header from "@CM/Navigation/Header.vue";
 import Bottom from "@CM/Navigation/Bottom.vue";
 import { usePageStore } from "@CM/Stores";

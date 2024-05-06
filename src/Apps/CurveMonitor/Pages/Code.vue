@@ -56,7 +56,6 @@
 </template>
 
 <script setup lang="ts">
-import { DataTable } from "@/Framework";
 import {
   MultisigAddress,
   veFunderGaugeFactoryAddress,

@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { DataTable } from "@/Framework";
 import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 
 type Color = {

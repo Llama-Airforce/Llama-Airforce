@@ -48,7 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { TabView, TabItem, Spinner, usePromise } from "@/Framework";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import ProposalsTab from "@PM/Pages/Proposals/ProposalsTab.vue";

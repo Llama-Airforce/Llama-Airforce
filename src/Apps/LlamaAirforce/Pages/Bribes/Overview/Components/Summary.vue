@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI } from "@/Framework";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import type {
   EpochOverview,

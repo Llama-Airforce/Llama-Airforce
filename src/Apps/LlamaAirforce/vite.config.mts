@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -19,12 +20,15 @@ export default defineConfig(({ mode }) => {
       }),
       splitVendorChunkPlugin(),
       AutoImport({
+        include: [/\.vue?$/],
         dts: true,
         imports: ["vue", "vue-i18n", "vue-router"],
+        dirs: ["../../Framework/**"],
         eslintrc: {
           enabled: true,
         },
       }),
+      Components({ dts: true, dirs: ["../../Framework"] }),
     ],
     server: {
       port: 8080,

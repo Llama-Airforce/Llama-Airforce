@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { Spinner, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const spinner = `<Spinner></Spinner>`;

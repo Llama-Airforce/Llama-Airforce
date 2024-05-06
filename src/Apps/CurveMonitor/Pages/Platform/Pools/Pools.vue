@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { Spinner } from "@/Framework";
 import { shorten } from "@/Util";
 import { getHost } from "@/Services/Host";
 import type { Pool } from "@CM/Pages/Platform/Pools/Models";

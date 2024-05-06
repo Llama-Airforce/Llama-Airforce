@@ -79,12 +79,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import {
-  AsyncValue,
-  DataTable,
-  usePromise,
-  useRelativeTime,
-} from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import {

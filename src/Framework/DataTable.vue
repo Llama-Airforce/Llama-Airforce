@@ -130,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { DataTableRow, SortOrder, Spinner } from "@/Framework";
+import { SortOrder } from "@/Framework/SortOrder";
 
 // Props
 interface Props {

@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select } from "@/Framework";
 import {
   type ProposalType,
   proposalTypes,

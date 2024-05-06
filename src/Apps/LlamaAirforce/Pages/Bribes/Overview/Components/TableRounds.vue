@@ -57,13 +57,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import {
-  AsyncValue,
-  DataTable,
-  Tooltip,
-  SortOrder,
-  useSort,
-} from "@/Framework";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
   getDate,

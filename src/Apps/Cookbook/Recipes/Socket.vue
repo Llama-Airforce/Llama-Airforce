@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import { io, type Socket } from "socket.io-client";
-import { InputText, Button } from "@/Framework";
 
 type ClientToServerEvents = Record<string, never>;
 type ServerToClientEvents = {

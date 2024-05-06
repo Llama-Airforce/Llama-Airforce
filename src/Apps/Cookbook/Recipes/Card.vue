@@ -95,7 +95,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card, Code, Collapsible } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const collapsed = ref(false);

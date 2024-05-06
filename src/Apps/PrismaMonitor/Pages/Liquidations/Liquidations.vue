@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { useObservable } from "@/Framework";
 import { getApiSocket, useSocketStore } from "@PM/Stores";
 import TableLiquidations from "@PM/Pages/Liquidations/TableLiquidations.vue";
 import { TroveOverviewService } from "@PM/Services";

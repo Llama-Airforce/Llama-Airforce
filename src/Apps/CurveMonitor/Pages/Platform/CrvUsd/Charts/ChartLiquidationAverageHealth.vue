@@ -28,8 +28,6 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise, useLightweightChart } from "@/Framework";
-import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

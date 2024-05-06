@@ -8,7 +8,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { GraphApex } from "@/Framework";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { round, unit } from "@/Util";

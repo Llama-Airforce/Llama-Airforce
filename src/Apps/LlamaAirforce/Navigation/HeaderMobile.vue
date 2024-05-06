@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { SelectLanguage } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
 import MenuMobile from "@LAF/Navigation/MenuMobile.vue";
 

@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select } from "@/Framework";
 import { getColors } from "@/Styles/Themes/CB";
 import { type Theme } from "@CB/Models/Theme";
 import { useSettingsStore } from "@CB/Stores";

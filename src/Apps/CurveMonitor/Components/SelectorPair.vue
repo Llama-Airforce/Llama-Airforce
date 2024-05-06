@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select } from "@/Framework";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { PairService } from "@CM/Services";
 import { type SocketPool } from "@CM/Services/Sockets";

@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { type Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";

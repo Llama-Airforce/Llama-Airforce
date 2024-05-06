@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import { debounce } from "lodash";
-import { InputText } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { getPools } from "@CM/Pages/Pool/Monitor/DataLoaders";

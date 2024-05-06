@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { KPI } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 

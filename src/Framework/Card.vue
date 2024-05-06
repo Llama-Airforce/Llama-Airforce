@@ -47,8 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { Spinner } from "@/Framework";
-
 // Props
 interface Props {
   title?: string;

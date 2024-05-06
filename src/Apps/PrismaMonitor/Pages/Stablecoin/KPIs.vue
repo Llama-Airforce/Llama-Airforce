@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI, usePromise } from "@/Framework";
 import { getHost, StableService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 import { stableSymbol } from "@PM/Models/Flavor";

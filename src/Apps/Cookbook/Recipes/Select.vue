@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 type SelectItem = {
@@ -107,9 +106,7 @@ const select1 = `<Select
   </template>
 </Select>`;
 
-const select2 = `import { Select } from "@/Framework";
-
-type SelectItem = {
+const select2 = `type SelectItem = {
   label: string;
   logo: string;
 };

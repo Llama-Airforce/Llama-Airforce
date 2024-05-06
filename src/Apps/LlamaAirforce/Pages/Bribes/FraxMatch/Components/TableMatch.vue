@@ -89,13 +89,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  AsyncValue,
-  DataTable,
-  Tooltip,
-  SortOrder,
-  useSort,
-} from "@/Framework";
 import { orderBy } from "lodash";
 import {
   getDate,

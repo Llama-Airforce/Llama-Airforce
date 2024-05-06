@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { useObservable } from "@/Framework";
 import { useWallet } from "@/Wallet";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import TableRedemptions from "@PM/Pages/Profile/Tables/TableRedemptions.vue";

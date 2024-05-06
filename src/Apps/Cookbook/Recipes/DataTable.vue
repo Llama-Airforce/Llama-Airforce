@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, Code, Tooltip, SortOrder } from "@/Framework";
+import { SortOrder } from "@/Framework/SortOrder";
 import Recipe from "@CB/Recipe.vue";
 
 type Round = {
@@ -203,7 +203,6 @@ const dataTable1 = `<DataTable
 </DataTable>`;
 
 const dataTable2 = `import { orderBy } from "lodash";
-import { AsyncValue, DataTable, Tooltip, SortOrder } from "@/Framework";
 
 type Round = {
   round: number;

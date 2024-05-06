@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button, Tooltip } from "@/Framework";
 import { useWallet } from "@/Wallet";
 
 const { t } = useI18n();

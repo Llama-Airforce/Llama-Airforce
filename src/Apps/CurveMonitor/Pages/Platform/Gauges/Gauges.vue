@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { useExpansion } from "@/Framework";
 import { shorten, longen, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import TableGauges from "@CM/Pages/Platform/Gauges/Components/TableGauges.vue";

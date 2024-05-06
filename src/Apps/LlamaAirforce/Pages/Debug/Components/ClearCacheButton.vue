@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/Framework";
-
 const onClearCache = (): void => {
   window.localStorage.removeItem("connectedWallet");
 };

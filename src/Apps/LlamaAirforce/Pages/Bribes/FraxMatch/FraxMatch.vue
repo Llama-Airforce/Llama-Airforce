@@ -49,7 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import { InputText, Spinner } from "@/Framework";
 import { shorten, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import Summary from "@LAF/Pages/Bribes/FraxMatch/Components/Summary.vue";

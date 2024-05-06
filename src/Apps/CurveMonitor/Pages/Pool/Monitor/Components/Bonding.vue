@@ -22,7 +22,6 @@ import {
   type SeriesMarker,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Bonding } from "@CM/Pages/Pool/Monitor/Models";

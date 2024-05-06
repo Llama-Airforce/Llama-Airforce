@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select } from "@/Framework";
 import { type Chain, icon } from "@CM/Models/Chain";
 
 type SelectItem = {

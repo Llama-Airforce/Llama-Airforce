@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Select, locales as localesAll, type Locale } from "@/Framework";
+import { locales as localesAll, type Locale } from "@/Framework/Locale";
 
 const STORAGE_LOCALE = "locale";
 

@@ -128,7 +128,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const btnPrimary = `<Button

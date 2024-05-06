@@ -39,7 +39,6 @@
 
 <script setup lang="ts">
 import { utils } from "ethers";
-import { Card, Button, InputNumber, InputText } from "@/Framework";
 import { numToBigNumber, tryNotifyLoading } from "@/Util";
 import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";

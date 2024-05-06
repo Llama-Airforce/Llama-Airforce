@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/Framework";
 import { addressShort, getAddress, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import { useWalletStore } from "@/Wallet/Store";

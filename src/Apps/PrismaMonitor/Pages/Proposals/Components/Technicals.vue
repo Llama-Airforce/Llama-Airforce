@@ -83,7 +83,6 @@
 <script setup lang="ts">
 import { isAddress } from "ethers/lib/utils";
 import { uniqWith } from "lodash";
-import { Collapsible } from "@/Framework";
 import Voters from "@PM/Pages/Proposals/Components/Voters.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 

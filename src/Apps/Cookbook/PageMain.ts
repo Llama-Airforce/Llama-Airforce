@@ -1,4 +1,4 @@
-import { type Page } from "@/Framework/Monitor";
+import { type Page } from "@/Framework/Monitor/Page";
 
 import Colors from "@CB/Recipes/Colors.vue";
 import Dashboard from "@CB/Recipes/Dashboard.vue";

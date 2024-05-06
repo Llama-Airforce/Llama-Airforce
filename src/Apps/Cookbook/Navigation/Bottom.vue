@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button, SelectLanguage } from "@/Framework";
 import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@CB/Navigation/SelectTheme.vue";
 

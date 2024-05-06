@@ -15,7 +15,6 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

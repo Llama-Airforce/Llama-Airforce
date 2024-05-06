@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { CardGraph } from "@/Framework";
 import { round, unit, type DataPoint } from "@/Util";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import type { Epoch, Bribe, Product } from "@LAF/Pages/Bribes/Models";

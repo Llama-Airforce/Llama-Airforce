@@ -20,7 +20,6 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card, usePromise, useLightweightChart } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";

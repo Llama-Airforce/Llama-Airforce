@@ -39,7 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button, ModalYesNo, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const openModal = ref(false);

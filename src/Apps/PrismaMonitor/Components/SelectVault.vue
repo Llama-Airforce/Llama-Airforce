@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { Select } from "@/Framework";
 import { useSettingsStore } from "@PM/Stores";
 import {
   type Vault,

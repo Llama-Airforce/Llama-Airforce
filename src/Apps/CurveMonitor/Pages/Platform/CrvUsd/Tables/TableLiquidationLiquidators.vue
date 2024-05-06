@@ -42,7 +42,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import { AsyncValue, DataTable, usePromise } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import CurveService, {
   type Market,

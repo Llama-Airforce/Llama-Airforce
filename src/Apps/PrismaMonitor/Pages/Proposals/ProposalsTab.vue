@@ -42,7 +42,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { InputText, Pagination, usePagination } from "@/Framework";
 import ProposalComponent from "@PM/Pages/Proposals/Components/Proposal.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 

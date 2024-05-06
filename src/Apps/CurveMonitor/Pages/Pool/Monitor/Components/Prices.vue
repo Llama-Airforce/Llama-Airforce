@@ -23,7 +23,6 @@ import {
   LineType,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { Card } from "@/Framework";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Price, Volume } from "@CM/Pages/Pool/Monitor/Models";

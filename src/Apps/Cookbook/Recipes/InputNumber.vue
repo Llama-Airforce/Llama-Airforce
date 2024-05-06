@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { InputNumber, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const value = ref(0);

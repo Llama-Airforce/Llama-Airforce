@@ -34,8 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { Tooltip } from "@/Framework";
-import { Card, GraphApex, usePromise } from "@/Framework";
 import { type DataPoint, round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";

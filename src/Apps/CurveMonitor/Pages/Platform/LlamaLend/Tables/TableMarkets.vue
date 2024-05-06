@@ -83,7 +83,7 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { AsyncValue, DataTable, InputText, useQuery } from "@/Framework";
+import { useQuery } from "@tanstack/vue-query";
 import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain } from "@CM/Models/Chain";

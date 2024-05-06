@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { useExpansion } from "@/Framework";
 import { shorten, longen, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import TablePools from "@LAF/Pages/Convex/Pools/Components/TablePools.vue";

@@ -52,7 +52,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { AsyncValue, DataTable, SortOrder, useSort } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import GraphEmissions from "@CM/Pages/Platform/Gauges/Components/GraphEmissions.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";

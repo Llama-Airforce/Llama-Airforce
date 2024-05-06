@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue } from "@/Framework";
 import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 
 const { t } = useI18n();

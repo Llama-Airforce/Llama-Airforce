@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { CardGraph } from "@/Framework";
 import { round, unit } from "@/Util";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";

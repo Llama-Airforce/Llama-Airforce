@@ -63,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI } from "@/Framework";
 import { useConvexStore } from "@LAF/Pages/Convex/Store";
 
 const { t } = useI18n();

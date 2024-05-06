@@ -110,7 +110,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI } from "@/Framework";
 import { type TroveManagerDetails } from "@PM/Services";
 
 // Props

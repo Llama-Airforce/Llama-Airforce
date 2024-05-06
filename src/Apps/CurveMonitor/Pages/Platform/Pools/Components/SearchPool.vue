@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { InputText, AsyncValue } from "@/Framework";
 import { shorten, icon } from "@/Util";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import { match } from "@CM/Pages/Platform/Pools/Util/PoolHelper";

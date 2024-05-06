@@ -77,7 +77,6 @@
 </template>
 
 <script setup lang="ts">
-import { InputText, AsyncValue, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const text1 = ref("");
@@ -166,9 +165,7 @@ const inputTextSearch1 = `<InputText
   </template>
 </InputText>`;
 
-const inputTextSearch2 = `import { InputText, AsyncValue } from "@/Framework";
-
-const pool = ref("");
+const inputTextSearch2 = `const pool = ref("");
 const autoComplete = ref(false);
 
 type Pool = {

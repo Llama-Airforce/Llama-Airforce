@@ -132,8 +132,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button, Card } from "@/Framework";
-
 const { t } = useI18n();
 </script>
 

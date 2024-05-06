@@ -29,8 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { Button, Card, Modal } from "@/Framework";
-
 // Props
 interface Props {
   show?: boolean;

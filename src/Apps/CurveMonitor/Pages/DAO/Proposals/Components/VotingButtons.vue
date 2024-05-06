@@ -126,7 +126,6 @@
 
 <script setup lang="ts">
 import { VeCRV__factory, VotingCurve__factory } from "@/Contracts";
-import { AsyncValue, KPI, Button, Card, Modal, Slider } from "@/Framework";
 import {
   tryNotify,
   tryNotifyLoading,

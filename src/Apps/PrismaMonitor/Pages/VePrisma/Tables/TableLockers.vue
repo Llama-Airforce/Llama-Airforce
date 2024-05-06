@@ -103,15 +103,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  AsyncValue,
-  DataTable,
-  InputText,
-  Pagination,
-  SortOrder,
-  useSort,
-  usePagination,
-} from "@/Framework";
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 type Row = AccountData;

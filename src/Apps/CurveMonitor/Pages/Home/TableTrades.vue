@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, DataTable, usePromise } from "@/Framework";
 import { addressShort } from "@/Wallet";
 import { getHost } from "@/Services/Host";
 import CurveService from "@CM/Pages/Home/Services/CurveService";

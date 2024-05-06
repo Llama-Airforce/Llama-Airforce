@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { Card, type Crumb } from "@/Framework";
+import { type Crumb } from "@/Framework/Crumb";
 
 // Props
 interface Props {

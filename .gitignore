@@ -3,6 +3,7 @@ node_modules
 dist
 .env
 auto-imports.d.ts
+components.d.ts
 .eslintrc-auto-import.json
 
 # local env files

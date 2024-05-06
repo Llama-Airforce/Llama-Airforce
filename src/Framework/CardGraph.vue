@@ -19,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card, GraphApex } from "@/Framework";
-
 // Props
 interface Props {
   title?: string;

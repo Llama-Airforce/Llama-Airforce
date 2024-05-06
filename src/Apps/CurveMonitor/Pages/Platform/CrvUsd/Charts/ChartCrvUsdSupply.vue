@@ -43,8 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card, ButtonToggle, usePromise } from "@/Framework";
-import { Legend } from "@/Framework/Monitor";
 import { getHost } from "@/Services/Host";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

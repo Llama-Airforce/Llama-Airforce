@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncValue, KPI } from "@/Framework";
 import type { EpochFrax } from "@LAF/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 const { t } = useI18n();

@@ -134,7 +134,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { AsyncValue, DataTable, InputText, useObservable } from "@/Framework";
 import { icon, label, isDeprecated } from "@PM/Models/Vault";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";

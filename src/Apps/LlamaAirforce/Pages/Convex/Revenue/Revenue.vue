@@ -41,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { Spinner } from "@/Framework";
 import { getHost } from "@/Services/Host";
 import ProtocolRevenueService, {
   HistoricalRevenueService,

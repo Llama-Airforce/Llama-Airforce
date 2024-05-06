@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { Spinner, usePromise } from "@/Framework";
 import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";

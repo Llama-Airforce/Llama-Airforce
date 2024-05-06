@@ -33,12 +33,6 @@ import {
   type UTCTimestamp,
   type LineSeriesPartialOptions,
 } from "lightweight-charts";
-import {
-  Card,
-  InputNumber,
-  usePromise,
-  useLightweightChart,
-} from "@/Framework";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";

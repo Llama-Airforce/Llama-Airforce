@@ -74,7 +74,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { AsyncValue } from "@/Framework";
 import { addressShort, useWallet } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";

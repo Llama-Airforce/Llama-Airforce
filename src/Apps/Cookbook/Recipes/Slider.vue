@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { Slider, Code } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const value = ref(0);
@@ -48,9 +47,7 @@ const slider1 = `<Slider
   @update:model-value="onInput"
 ></Slider>`;
 
-const slider2 = `import { Slider } from "@/Framework";
-
-const value = ref(0);
+const slider2 = `const value = ref(0);
 
 // Events
 const onInput = (newVal: string) => {

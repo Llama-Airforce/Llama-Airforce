@@ -36,8 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { Collapsible } from "@/Framework";
-
 /**
  * A single row of data in the datatable.
  * The selected and expanded states of a single row are controlled by the datatable itself.

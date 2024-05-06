@@ -21,8 +21,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { CardGraph, Tooltip } from "@/Framework";
-import { Legend } from "@/Framework/Monitor";
 import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";

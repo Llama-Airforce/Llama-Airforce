@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 // Refs
-import { useObservable } from "@/Framework";
 import {
   useSocketStore,
   useBreadcrumbStore,

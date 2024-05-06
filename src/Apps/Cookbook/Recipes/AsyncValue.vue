@@ -143,7 +143,6 @@
 </template>
 
 <script setup lang="ts">
-import { Code, AsyncValue } from "@/Framework";
 import Recipe from "@CB/Recipe.vue";
 
 const async = `<AsyncValue

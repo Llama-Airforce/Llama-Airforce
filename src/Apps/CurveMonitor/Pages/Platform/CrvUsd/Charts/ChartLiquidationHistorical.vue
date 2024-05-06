@@ -37,7 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { Card, ButtonToggle, usePromise } from "@/Framework";
 import CurveService, {
   type Market,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
