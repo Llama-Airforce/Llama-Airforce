@@ -29,8 +29,13 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       ],
       type: true,
     },
+    {
+      from: "@/Util",
+      imports: ["DataPoint"],
+      type: true,
+    },
   ],
-  dirs: ["../../Framework/**"],
+  dirs: ["../../Framework/**", "../../Util/**"],
   eslintrc: {
     enabled: true,
   },

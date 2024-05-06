@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { minDelay, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { getHost } from "@/Services/Host";

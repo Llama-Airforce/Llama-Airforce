@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { round, unit, type DataPoint } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import type { Pool, Reserves } from "@CM/Pages/Platform/Pools/Models";

@@ -61,7 +61,6 @@
 </template>
 
 <script setup lang="ts">
-import { getCvxCrvAprs } from "@/Util";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getHost } from "@/Services/Host";

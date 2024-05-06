@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { round, unit } from "@/Util";
 import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";

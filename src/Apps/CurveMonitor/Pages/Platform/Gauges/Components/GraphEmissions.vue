@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { round, unit, formatNumber, shorten, type DataPoint } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";

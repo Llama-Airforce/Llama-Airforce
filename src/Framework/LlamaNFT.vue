@@ -8,7 +8,6 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { TheLlamas__factory } from "@/Contracts";
-import { TheLlamas } from "@/Util/Addresses";
 
 // Refs
 const { address, network, withProvider } = useWallet();

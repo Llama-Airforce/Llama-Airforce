@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type ChainRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";

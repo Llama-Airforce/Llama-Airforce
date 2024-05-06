@@ -126,13 +126,6 @@
 
 <script setup lang="ts">
 import { VeCRV__factory, VotingCurve__factory } from "@/Contracts";
-import {
-  tryNotify,
-  tryNotifyLoading,
-  bigNumToNumber,
-  numToBigNumber,
-} from "@/Util";
-import { CurveVotingAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 import { getStatus } from "@CM/Pages/DAO/Proposals/Util/ProposalHelper";

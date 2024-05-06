@@ -34,7 +34,6 @@
 
 <script setup lang="ts">
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import { round, unit, type DataPoint, addDays } from "@/Util";
 import Recipe from "@CB/Recipe.vue";
 
 type Serie = {
@@ -168,7 +167,6 @@ const cardGraphLine1 = `<CardGraph
 ></CardGraph>`;
 
 const cardGraphLine2 = `import createChartStyles from "@/Styles/ChartStyles";
-import { round, unit, type DataPoint, addDays } from "@/Util";
 
 type Serie = {
   name: string;

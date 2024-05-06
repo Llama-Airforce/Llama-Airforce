@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Tvl } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";

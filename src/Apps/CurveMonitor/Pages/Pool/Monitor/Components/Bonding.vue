@@ -16,7 +16,6 @@ import {
   createChart as createChartFunc,
   type SeriesMarker,
 } from "lightweight-charts";
-import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Bonding } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";

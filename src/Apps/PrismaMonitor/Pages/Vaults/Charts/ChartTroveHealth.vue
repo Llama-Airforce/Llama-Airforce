@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { type DataPoint, round, unit, formatNumber } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import {

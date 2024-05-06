@@ -70,8 +70,6 @@
 
 <script setup lang="ts">
 import { PrismaLocker__factory, VotingPrisma__factory } from "@/Contracts";
-import { tryNotify, tryNotifyLoading } from "@/Util";
-import { PrismaVotingAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";

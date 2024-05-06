@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost, ManagerService, type Period } from "@PM/Services";

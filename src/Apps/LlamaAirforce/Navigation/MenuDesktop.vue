@@ -37,7 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { subIsActive } from "@/Util";
 import Wallet from "@/Wallet/Wallet.vue";
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import type { Page } from "@LAF/Pages/Page";

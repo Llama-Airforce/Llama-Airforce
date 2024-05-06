@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { isFinite } from "lodash";
-import { unit as unitF, round } from "@/Util";
+import { unit as unitF } from "@/Util";
 
 const rodChars = "|/-\\";
 let rodIndex = 0;

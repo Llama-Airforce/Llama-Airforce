@@ -127,7 +127,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { roundPhil } from "@/Util";
 import { addressShort } from "@/Wallet";
 import {
   type TransactionDetail,

@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { type DataPoint, round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";

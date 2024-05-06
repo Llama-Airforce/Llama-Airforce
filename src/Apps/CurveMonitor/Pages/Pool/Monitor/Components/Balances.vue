@@ -18,7 +18,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { round, unit } from "@/Util";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import type { Balances } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";

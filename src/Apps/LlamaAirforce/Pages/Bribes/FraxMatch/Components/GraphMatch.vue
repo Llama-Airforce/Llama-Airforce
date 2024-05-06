@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import { round, unit, type DataPoint } from "@/Util";
 import type { EpochFrax } from "@LAF/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 type Serie = {

@@ -17,8 +17,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { round, unit } from "@/Util";
-import { WEthAddress } from "@/Util/Addresses";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import type { Pool, Candle } from "@CM/Pages/Platform/Pools/Models";

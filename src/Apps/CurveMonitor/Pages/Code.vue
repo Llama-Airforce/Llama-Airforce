@@ -56,14 +56,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  MultisigAddress,
-  veFunderGaugeFactoryAddress,
-  veFunderGaugeController,
-  TreasuryAddress,
-  TreasuryArbitrumAddress,
-} from "@/Util/Addresses";
-
 const { t } = useI18n();
 
 type Network = "ethereum" | "arbitrum";

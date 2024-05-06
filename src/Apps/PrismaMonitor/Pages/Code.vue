@@ -56,12 +56,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  MultisigAddress,
-  TreasuryAddress,
-  TreasuryArbitrumAddress,
-} from "@/Util/Addresses";
-
 const { t } = useI18n();
 
 type Network = "ethereum" | "arbitrum";

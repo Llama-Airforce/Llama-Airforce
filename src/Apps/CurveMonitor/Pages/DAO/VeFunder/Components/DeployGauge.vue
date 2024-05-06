@@ -39,8 +39,6 @@
 
 <script setup lang="ts">
 import { utils } from "ethers";
-import { numToBigNumber, tryNotifyLoading } from "@/Util";
-import { MultisigAddress, veFunderGaugeFactoryAddress } from "@/Util/Addresses";
 import { useWallet } from "@/Wallet";
 import { GaugeFactory__factory } from "@/Contracts";
 

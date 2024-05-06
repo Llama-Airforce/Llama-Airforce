@@ -48,7 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import ProposalsTab from "@PM/Pages/Proposals/ProposalsTab.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";

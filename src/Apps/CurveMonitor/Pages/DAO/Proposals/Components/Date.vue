@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { countdown } from "@/Util";
 import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();

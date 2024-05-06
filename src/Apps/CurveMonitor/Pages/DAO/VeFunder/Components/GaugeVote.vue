@@ -41,8 +41,6 @@ import {
   AragonVoting__factory,
   GaugeController__factory,
 } from "@/Contracts";
-import { tryNotifyLoading } from "@/Util";
-import { MultisigAddress, veFunderGaugeController } from "@/Util/Addresses";
 
 const { t } = useI18n();
 

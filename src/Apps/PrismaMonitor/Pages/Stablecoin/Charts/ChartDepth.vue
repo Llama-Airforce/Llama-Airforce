@@ -13,7 +13,6 @@
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { type PoolDepth } from "@PM/Services";
-import { round, unit } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 
 const { t } = useI18n();

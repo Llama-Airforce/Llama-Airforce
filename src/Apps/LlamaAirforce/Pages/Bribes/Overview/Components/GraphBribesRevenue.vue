@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { round, unit } from "@/Util";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";

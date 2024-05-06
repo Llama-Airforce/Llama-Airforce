@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { shorten } from "@/Util";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import type { Pool } from "@CM/Models";
 import { type PoolService } from "@CM/Services";

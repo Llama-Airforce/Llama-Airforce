@@ -49,7 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import { shorten, minDelay } from "@/Util";
 import { getHost } from "@/Services/Host";
 import Summary from "@LAF/Pages/Bribes/FraxMatch/Components/Summary.vue";
 import GraphMatch from "@LAF/Pages/Bribes/FraxMatch/Components/GraphMatch.vue";
