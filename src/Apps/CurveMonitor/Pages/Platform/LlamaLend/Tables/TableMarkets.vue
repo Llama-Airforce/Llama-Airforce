@@ -83,7 +83,6 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { getHost } from "@/Services/Host";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";

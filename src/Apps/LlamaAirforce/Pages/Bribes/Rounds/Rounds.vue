@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
 import TableBribed from "@LAF/Pages/Bribes/Rounds/Components/TableBribed.vue";

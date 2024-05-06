@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import Header from "@LAF/Pages/Convex/Flyer/Components/Header.vue";
 import General from "@LAF/Pages/Convex/Flyer/Components/General.vue";
 import Bribes from "@LAF/Pages/Convex/Flyer/Components/Bribes.vue";

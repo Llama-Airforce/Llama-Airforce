@@ -21,7 +21,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
-import { getHost } from "@/Services/Host";
 import { type ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";

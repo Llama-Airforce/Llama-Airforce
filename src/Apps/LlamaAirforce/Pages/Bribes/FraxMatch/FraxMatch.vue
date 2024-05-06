@@ -49,7 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import Summary from "@LAF/Pages/Bribes/FraxMatch/Components/Summary.vue";
 import GraphMatch from "@LAF/Pages/Bribes/FraxMatch/Components/GraphMatch.vue";
 import TableMatch from "@LAF/Pages/Bribes/FraxMatch/Components/TableMatch.vue";

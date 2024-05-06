@@ -42,7 +42,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 import CurveService, {
   type Market,
   type Liquidators,

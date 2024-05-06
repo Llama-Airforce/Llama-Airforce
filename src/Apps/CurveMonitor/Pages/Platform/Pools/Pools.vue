@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import type { Pool } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import SearchPool from "@CM/Pages/Platform/Pools/Components/SearchPool.vue";

@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import TablePools from "@LAF/Pages/Convex/Pools/Components/TablePools.vue";
 import { type Pool } from "@LAF/Pages/Convex/Pools/Models/Pool";
 import PoolService from "@LAF/Pages/Convex/Pools/Services/PoolService";

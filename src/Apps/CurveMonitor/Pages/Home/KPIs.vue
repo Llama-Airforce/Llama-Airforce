@@ -48,7 +48,6 @@
 
 <script setup lang="ts">
 import { DefiLlamaService } from "@/Services";
-import { getHost } from "@/Services/Host";
 import CurvePricesService from "@CM/Pages/Home/Services/CurvePricesService";
 import CrvUsdService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 

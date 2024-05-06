@@ -63,7 +63,6 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getHost } from "@/Services/Host";
 import { type FlyerConvex } from "@LAF/Pages/Convex/Flyer/Models/FlyerConvex";
 
 const { t } = useI18n();

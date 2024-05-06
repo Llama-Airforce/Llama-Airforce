@@ -41,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import ProtocolRevenueService, {
   HistoricalRevenueService,
 } from "@LAF/Pages/Convex/Revenue/Services/RevenueService";

@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import { getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";

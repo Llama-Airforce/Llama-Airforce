@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import GraphRevenueBreakdown from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdown.vue";

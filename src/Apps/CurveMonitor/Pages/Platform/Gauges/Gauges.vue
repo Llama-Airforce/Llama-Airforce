@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import TableGauges from "@CM/Pages/Platform/Gauges/Components/TableGauges.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import GaugeService from "@CM/Pages/Platform/Gauges/Services/GaugeService";

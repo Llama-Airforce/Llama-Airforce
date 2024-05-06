@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalService from "@CM/Pages/DAO/Proposals/Services/ProposalService";
 import { type ProposalType, proposalTypes } from "./Models/Proposal";

@@ -42,7 +42,6 @@ import CurveService, {
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartLiquidationHistoricalValue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalValue.vue";
 import ChartLiquidationHistoricalCount from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalCount.vue";
-import { getHost } from "@/Services/Host";
 
 type ChartType = "count" | "value";
 

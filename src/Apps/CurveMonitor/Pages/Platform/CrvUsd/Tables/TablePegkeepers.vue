@@ -97,7 +97,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getHost } from "@/Services/Host";
 import CurveService, {
   type PoolStats,
   type KeepersDebt,

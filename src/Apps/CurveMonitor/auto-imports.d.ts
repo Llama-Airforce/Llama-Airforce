@@ -142,6 +142,7 @@ declare global {
   const getCvxPrismaPrice: typeof import('../../Util/PriceHelper')['getCvxPrismaPrice']
   const getDefiLlamaPrice: typeof import('../../Util/PriceHelper')['getDefiLlamaPrice']
   const getDiscount: typeof import('../../Util/PriceHelper')['getDiscount']
+  const getHost: typeof import('@/Services/Host')['getHost']
   const getPxCvxPrice: typeof import('../../Util/PriceHelper')['getPxCvxPrice']
   const h: typeof import('vue')['h']
   const icon: typeof import('../../Util/PoolHelper')['icon']

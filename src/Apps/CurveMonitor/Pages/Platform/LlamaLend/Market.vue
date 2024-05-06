@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import { type Chain } from "@CM/Models/Chain";
 import { useBreadcrumbStore } from "@CM/Stores";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";

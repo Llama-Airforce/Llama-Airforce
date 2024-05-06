@@ -72,7 +72,6 @@
 
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { getHost } from "@/Services/Host";
 import VePrismaService, {
   type VoteIncentive,
 } from "@PM/Pages/VePrisma/VePrismaService";

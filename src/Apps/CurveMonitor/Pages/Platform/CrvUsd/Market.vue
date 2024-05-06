@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { getHost } from "@/Services/Host";
 import { useBreadcrumbStore } from "@CM/Stores";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
