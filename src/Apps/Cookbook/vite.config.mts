@@ -5,6 +5,7 @@ import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import { autoImport } from "../../vite.base";
 
 export default defineConfig(() => {
   return {
@@ -15,40 +16,7 @@ export default defineConfig(() => {
         escapeHtml: false,
       }),
       splitVendorChunkPlugin(),
-      AutoImport({
-        include: [/\.vue?$/],
-        dts: true,
-        imports: [
-          "vue",
-          "vue-i18n",
-          "vue-router",
-          {
-            from: "lightweight-charts",
-            imports: ["LineType", "LineStyle", "ColorType", "CrosshairMode"],
-            type: false,
-          },
-          {
-            from: "lightweight-charts",
-            imports: [
-              "IChartApi",
-              "ISeriesApi",
-              "UTCTimestamp",
-              "LineData",
-              "CandlestickData",
-              "CandlestickSeriesPartialOptions",
-              "HistogramData",
-              "HistogramSeriesPartialOptions",
-              "AreaSeriesPartialOptions",
-              "LineSeriesPartialOptions",
-            ],
-            type: true,
-          },
-        ],
-        dirs: ["../../Framework/**"],
-        eslintrc: {
-          enabled: true,
-        },
-      }),
+      AutoImport(autoImport),
       Components({ dts: true, dirs: ["../../Framework"] }),
     ],
     server: {
