@@ -22,13 +22,6 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import {
-  type IChartApi,
-  type ISeriesApi,
-  type LineData,
-  type LineSeriesPartialOptions,
-  type UTCTimestamp,
-} from "lightweight-charts";
 import { useQuery } from "@tanstack/vue-query";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";

@@ -14,13 +14,7 @@
 import { chain } from "lodash";
 import {
   createChart as createChartFunc,
-  type IChartApi,
-  type ISeriesApi,
-  type LineData,
-  type LineSeriesPartialOptions,
-  LineType,
   type SeriesMarker,
-  type UTCTimestamp,
 } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";

@@ -13,13 +13,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  type ISeriesApi,
-  type LineData,
-  type AreaSeriesPartialOptions,
-  LineType,
-  type UTCTimestamp,
-} from "lightweight-charts";
 import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";

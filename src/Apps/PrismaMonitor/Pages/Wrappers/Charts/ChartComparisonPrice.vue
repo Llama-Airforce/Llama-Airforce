@@ -21,13 +21,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  type ISeriesApi,
-  type LineData,
-  type LineSeriesPartialOptions,
-  LineType,
-  type UTCTimestamp,
-} from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";

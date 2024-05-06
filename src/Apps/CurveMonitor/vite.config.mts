@@ -18,7 +18,32 @@ export default defineConfig(() => {
       AutoImport({
         include: [/\.vue?$/],
         dts: true,
-        imports: ["vue", "vue-i18n", "vue-router"],
+        imports: [
+          "vue",
+          "vue-i18n",
+          "vue-router",
+          {
+            from: "lightweight-charts",
+            imports: ["LineType", "LineStyle", "ColorType", "CrosshairMode"],
+            type: false,
+          },
+          {
+            from: "lightweight-charts",
+            imports: [
+              "IChartApi",
+              "ISeriesApi",
+              "UTCTimestamp",
+              "LineData",
+              "CandlestickData",
+              "CandlestickSeriesPartialOptions",
+              "HistogramData",
+              "HistogramSeriesPartialOptions",
+              "AreaSeriesPartialOptions",
+              "LineSeriesPartialOptions",
+            ],
+            type: true,
+          },
+        ],
         dirs: ["../../Framework/**"],
         eslintrc: {
           enabled: true,

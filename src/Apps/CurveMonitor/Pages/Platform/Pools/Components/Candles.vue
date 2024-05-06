@@ -16,17 +16,7 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  type CandlestickData,
-  ColorType,
-  createChart as createChartFunc,
-  CrosshairMode,
-  type HistogramData,
-  type IChartApi,
-  type ISeriesApi,
-  LineStyle,
-  type UTCTimestamp,
-} from "lightweight-charts";
+import { createChart as createChartFunc } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { WEthAddress } from "@/Util/Addresses";
 import { getColors } from "@/Styles/Themes/CM";

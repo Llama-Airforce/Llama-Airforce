@@ -12,15 +12,7 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  createChart as createChartFunc,
-  type IChartApi,
-  type ISeriesApi,
-  type LineData,
-  type AreaSeriesPartialOptions,
-  LineType,
-  type UTCTimestamp,
-} from "lightweight-charts";
+import { createChart as createChartFunc } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import type { Tvl } from "@CM/Pages/Pool/Monitor/Models";

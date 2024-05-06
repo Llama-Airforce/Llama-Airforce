@@ -13,13 +13,6 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import {
-  type IChartApi,
-  type HistogramData,
-  type HistogramSeriesPartialOptions,
-  type ISeriesApi,
-  type UTCTimestamp,
-} from "lightweight-charts";
 import { useQuery } from "@tanstack/vue-query";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";

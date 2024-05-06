@@ -13,12 +13,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  type HistogramData,
-  type HistogramSeriesPartialOptions,
-  type ISeriesApi,
-  type UTCTimestamp,
-} from "lightweight-charts";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

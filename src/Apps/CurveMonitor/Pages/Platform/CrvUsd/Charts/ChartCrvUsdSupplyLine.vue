@@ -7,14 +7,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  type ISeriesApi,
-  type LineData,
-  type AreaSeriesPartialOptions,
-  type LineSeriesPartialOptions,
-  LineType,
-  type UTCTimestamp,
-} from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";

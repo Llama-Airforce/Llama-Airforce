@@ -18,16 +18,7 @@
 import { chain } from "lodash";
 import type { Subscription } from "rxjs";
 import { getAddress } from "ethers/lib/utils";
-import {
-  type CandlestickData,
-  ColorType,
-  createChart as createChartFunc,
-  CrosshairMode,
-  type IChartApi,
-  type ISeriesApi,
-  LineStyle,
-  type UTCTimestamp,
-} from "lightweight-charts";
+import { createChart as createChartFunc } from "lightweight-charts";
 import { round, unit } from "@/Util";
 import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
