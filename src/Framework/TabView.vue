@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import { useSlots } from "vue";
+import type TabItem from "@/Framework/TabItem.vue";
 
 // Props
 interface Props {
