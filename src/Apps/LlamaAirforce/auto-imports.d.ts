@@ -69,6 +69,7 @@ declare global {
   const useObservable: typeof import('../../Framework/Composables/UseObservable')['useObservable']
   const usePagination: typeof import('../../Framework/Composables/UsePagination')['usePagination']
   const usePromise: typeof import('../../Framework/Composables/UsePromise')['usePromise']
+  const useQuery: typeof import('@tanstack/vue-query')['useQuery']
   const useRelativeTime: typeof import('../../Framework/Composables/UseRelativeTime')['useRelativeTime']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']

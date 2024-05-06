@@ -7,6 +7,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     "vue",
     "vue-i18n",
     "vue-router",
+    { "@tanstack/vue-query": ["useQuery"] },
     {
       from: "lightweight-charts",
       imports: ["LineType", "LineStyle", "ColorType", "CrosshairMode"],

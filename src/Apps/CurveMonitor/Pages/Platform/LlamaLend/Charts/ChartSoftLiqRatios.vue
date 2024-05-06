@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { useQuery } from "@tanstack/vue-query";
 import { round, unit } from "@/Util";
 import { getHost } from "@/Services/Host";
 import { getColors } from "@/Styles/Themes/CM";
