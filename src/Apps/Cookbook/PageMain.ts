@@ -1,25 +1,25 @@
 import { type Page } from "@/Framework/Monitor/Page";
 
-import Colors from "@CB/Recipes/Colors.vue";
-import Dashboard from "@CB/Recipes/Dashboard.vue";
-import Socket from "@CB/Recipes/Socket.vue";
+import Colors from "@CB/Recipes/ColorsRecipe.vue";
+import Dashboard from "@CB/Recipes/DashboardRecipe.vue";
+import Socket from "@CB/Recipes/SocketRecipe.vue";
 
-import AsyncValue from "@CB/Recipes/AsyncValue.vue";
-import Breadcrumb from "@CB/Recipes/Breadcrumb.vue";
-import Button from "@CB/Recipes/Button.vue";
-import ButtonToggle from "@CB/Recipes/ButtonToggle.vue";
-import Card from "@CB/Recipes/Card.vue";
-import CardGraph from "@CB/Recipes/CardGraph.vue";
-import DataTable from "@CB/Recipes/DataTable.vue";
-import InputText from "@CB/Recipes/InputText.vue";
-import InputNumber from "@CB/Recipes/InputNumber.vue";
-import Modal from "@CB/Recipes/Modal.vue";
-import Pagination from "@CB/Recipes/Pagination.vue";
-import Select from "@CB/Recipes/Select.vue";
-import Slider from "@CB/Recipes/Slider.vue";
-import Spinner from "@CB/Recipes/Spinner.vue";
-import Tabs from "@CB/Recipes/Tabs.vue";
-import Tooltip from "@CB/Recipes/Tooltip.vue";
+import AsyncValue from "@CB/Recipes/AsyncValueRecipe.vue";
+import Breadcrumb from "@CB/Recipes/BreadcrumbRecipe.vue";
+import Button from "@CB/Recipes/ButtonRecipe.vue";
+import ButtonToggle from "@CB/Recipes/ButtonToggleRecipe.vue";
+import Card from "@CB/Recipes/CardRecipe.vue";
+import CardGraph from "@CB/Recipes/CardGraphRecipe.vue";
+import DataTable from "@CB/Recipes/DataTableRecipe.vue";
+import InputText from "@CB/Recipes/InputTextRecipe.vue";
+import InputNumber from "@CB/Recipes/InputNumberRecipe.vue";
+import Modal from "@CB/Recipes/ModalRecipe.vue";
+import Pagination from "@CB/Recipes/PaginationRecipe.vue";
+import Select from "@CB/Recipes/SelectRecipe.vue";
+import Slider from "@CB/Recipes/SliderRecipe.vue";
+import Spinner from "@CB/Recipes/SpinnerRecipe.vue";
+import Tabs from "@CB/Recipes/TabsRecipe.vue";
+import Tooltip from "@CB/Recipes/TooltipRecipe.vue";
 
 export const pageMain: Page = {
   titleRoute: "/",
