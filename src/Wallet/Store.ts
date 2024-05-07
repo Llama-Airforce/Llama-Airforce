@@ -1,22 +1,15 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import { type Network } from "@/Wallet/Network";
 
-type State = {
-  connected: boolean;
-  network?: Network;
-  address?: string;
-};
+export const useWalletStore = defineStore("walletStore", () => {
+  const address = ref<string>();
+  const connected = ref(false);
+  const network = ref<Network>();
 
-export const useWalletStore = defineStore({
-  id: "walletStore",
-  state: (): State => ({
-    address: undefined,
-    connected: false,
-    network: undefined,
-  }),
-  actions: {
-    setAddress(address?: string) {
-      this.address = address?.toLocaleLowerCase();
-    },
-  },
+  function setAddress(newAddress?: string) {
+    address.value = newAddress?.toLocaleLowerCase();
+  }
+
+  return { address, connected, network, setAddress };
 });

@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import type {
   Pool,
@@ -7,34 +8,36 @@ import type {
   PoolId,
 } from "@CM/Pages/Platform/Pools/Models";
 
-type State = {
-  pools: Pool[];
-  poolsLoading: boolean;
-  poolsLoadingError: boolean;
-  candles: { [pool: PoolId]: Candle[] };
-  reserves: { [pool: PoolId]: Reserves[] };
-  volumes: { [pool: PoolId]: Volume[] };
-};
+export const useCurvePoolsStore = defineStore("curvePoolsStore", () => {
+  const pools = ref<Pool[]>([]);
+  const poolsLoading = ref<boolean>(false);
+  const poolsLoadingError = ref<boolean>(false);
+  const candles = ref<{ [pool: PoolId]: Candle[] }>({});
+  const reserves = ref<{ [pool: PoolId]: Reserves[] }>({});
+  const volumes = ref<{ [pool: PoolId]: Volume[] }>({});
 
-export const useCurvePoolsStore = defineStore({
-  id: "curvePoolsStore",
-  state: (): State => ({
-    pools: [],
-    poolsLoading: false,
-    poolsLoadingError: false,
-    candles: {},
-    reserves: {},
-    volumes: {},
-  }),
-  actions: {
-    setCandles(pool: PoolId, candles: Candle[]) {
-      this.candles[pool] = candles;
-    },
-    setReserves(pool: PoolId, reserves: Reserves[]) {
-      this.reserves[pool] = reserves;
-    },
-    setVolumes(pool: PoolId, volumes: Volume[]) {
-      this.volumes[pool] = volumes;
-    },
-  },
+  function setCandles(pool: PoolId, newCandles: Candle[]) {
+    candles.value[pool] = newCandles;
+  }
+
+  function setReserves(pool: PoolId, newReserves: Reserves[]) {
+    reserves.value[pool] = newReserves;
+  }
+
+  function setVolumes(pool: PoolId, newVolumes: Volume[]) {
+    volumes.value[pool] = newVolumes;
+  }
+
+  return {
+    pools,
+    poolsLoading,
+    poolsLoadingError,
+    candles,
+    reserves,
+    volumes,
+
+    setCandles,
+    setReserves,
+    setVolumes,
+  };
 });

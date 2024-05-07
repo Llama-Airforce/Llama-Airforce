@@ -1,3 +1,4 @@
+import { reactive } from "vue";
 import { defineStore } from "pinia";
 import { webSocket, type WebSocketSubject } from "rxjs/webSocket";
 import { WS_URL as URL_PRICES } from "@/Services";
@@ -33,23 +34,23 @@ type State = {
   sockets: Record<Sockets, WebSocketSubject<unknown> | null>;
 };
 
-export const useSocketStore = defineStore({
-  id: "socketStore",
-  state: (): State => ({
+export const useSocketStore = defineStore("socketStore", () => {
+  const state = reactive<State>({
     sockets: {
       "api-lsd": null,
       "api-lrt": null,
       prices: null,
     },
-  }),
-  getters: {
-    getSocket: (state) => (socket: Sockets) => {
-      if (!state.sockets[socket]) {
-        const url = getUrl(socket);
-        state.sockets[socket] = webSocket(url);
-      }
+  });
 
-      return state.sockets[socket];
-    },
-  },
+  const getSocket = (socket: Sockets) => {
+    if (!state.sockets[socket]) {
+      const url = getUrl(socket);
+      state.sockets[socket] = webSocket(url);
+    }
+
+    return state.sockets[socket];
+  };
+
+  return { state, getSocket };
 });

@@ -1,15 +1,13 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import { type TroveManagerDetails, type Trove } from "@PM/Services";
 
-type State = {
-  vault: TroveManagerDetails | null;
-  trove: Trove | null;
-};
+export const useVaultStore = defineStore("vaultStore", () => {
+  const vault = ref<TroveManagerDetails | null>(null);
+  const trove = ref<Trove | null>(null);
 
-export const useVaultStore = defineStore({
-  id: "vaultStore",
-  state: (): State => ({
-    vault: null,
-    trove: null,
-  }),
+  return {
+    vault,
+    trove,
+  };
 });

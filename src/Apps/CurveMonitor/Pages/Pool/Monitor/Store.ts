@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { Pool, Coin, Pair, TimeRange } from "@CM/Models";
 import type {
@@ -10,45 +11,41 @@ import type {
 } from "@CM/Pages/Pool/Monitor/Models";
 import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
 
-type State = {
-  socket: SocketRoot | null;
-  socketPool: SocketPool | null;
+export const useMonitorStore = defineStore("monitorStore", () => {
+  const socket = ref<SocketRoot | null>(null);
+  const socketPool = ref<SocketPool | null>(null);
 
-  pool: Pool | null;
-  pools: Pool[];
-  poolsLoadingError: boolean;
-  prices: Price[];
-  balances: Balances[];
-  volumes: Volume[];
-  transactions: Transaction[];
-  tvl: Tvl[];
-  bonding: Bonding;
-  coins: Coin[];
-  pair: Pair | null;
-  timeRange: TimeRange;
-};
+  const pool = ref<Pool | null>(null);
+  const pools = ref<Pool[]>([]);
+  const poolsLoadingError = ref<boolean>(false);
+  const prices = ref<Price[]>([]);
+  const balances = ref<Balances[]>([]);
+  const volumes = ref<Volume[]>([]);
+  const transactions = ref<Transaction[]>([]);
+  const tvl = ref<Tvl[]>([]);
+  const bonding = ref<Bonding>({
+    curve: [],
+    balanceCoin0: 0,
+    balanceCoin1: 0,
+  });
+  const coins = ref<Coin[]>([]);
+  const pair = ref<Pair | null>(null);
+  const timeRange = ref<TimeRange>("month");
 
-export const useMonitorStore = defineStore({
-  id: "monitorStore",
-  state: (): State => ({
-    socket: null,
-    socketPool: null,
-
-    pool: null,
-    pools: [],
-    poolsLoadingError: false,
-    prices: [],
-    balances: [],
-    volumes: [],
-    transactions: [],
-    tvl: [],
-    bonding: {
-      curve: [],
-      balanceCoin0: 0,
-      balanceCoin1: 0,
-    },
-    coins: [],
-    pair: null,
-    timeRange: "month",
-  }),
+  return {
+    socket,
+    socketPool,
+    pool,
+    pools,
+    poolsLoadingError,
+    prices,
+    balances,
+    volumes,
+    transactions,
+    tvl,
+    bonding,
+    coins,
+    pair,
+    timeRange,
+  };
 });

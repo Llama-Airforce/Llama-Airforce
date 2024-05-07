@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { SocketMEV } from "@CM/Services/Sockets";
 import {
@@ -6,25 +7,20 @@ import {
   type LabelRankingShort,
 } from "@CM/Services/Sockets/SocketMEV";
 
-type State = {
-  socket: SocketMEV | null;
+export const useMEVStore = defineStore("mevStore", () => {
+  const socket = ref<SocketMEV | null>(null);
 
-  sandwiches: SandwichDetail[];
-  sandwichesPage: { cur: number; total: number };
+  const sandwiches = ref<SandwichDetail[]>([]);
+  const sandwichesPage = ref({ cur: 0, total: 0 });
 
-  labelRankingShort: LabelRankingShort[];
-  labelRankingExtended: LabelRankingExtended[];
-};
+  const labelRankingShort = ref<LabelRankingShort[]>([]);
+  const labelRankingExtended = ref<LabelRankingExtended[]>([]);
 
-export const useMEVStore = defineStore({
-  id: "mevStore",
-  state: (): State => ({
-    socket: null,
-
-    sandwiches: [],
-    sandwichesPage: { cur: 0, total: 0 },
-
-    labelRankingShort: [],
-    labelRankingExtended: [],
-  }),
+  return {
+    socket,
+    sandwiches,
+    sandwichesPage,
+    labelRankingShort,
+    labelRankingExtended,
+  };
 });
