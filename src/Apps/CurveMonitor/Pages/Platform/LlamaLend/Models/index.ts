@@ -1,12 +1,36 @@
 export type Market = {
   name: string;
   controller: string;
-  numLoans: number;
-  borrowRate: number;
-  lendRate: number;
-  priceOracle: number;
-  totalAssets: number;
-  collateralBalance: number;
+  vault: string;
+  llamma: string;
+  policy: string;
+  oracle: string;
+  rate: number;
+  borrow_apy: number;
+  lend_apy: number;
+  n_loans: number;
+  price_oracle: number;
+  amm_price: number;
+  total_debt: number;
+  total_assets: number;
+  total_debt_usd: number;
+  total_assets_usd: number;
+  minted: number;
+  redeemed: number;
+  minted_usd: number;
+  redeemed_usd: number;
+  collateral_balance: number;
+  borrowed_balance: number;
+  collateral_balance_usd: number;
+  borrowed_balance_usd: number;
+  collateral_token: {
+    symbol: string;
+    address: string;
+  };
+  borrowed_token: {
+    symbol: string;
+    address: string;
+  };
 };
 
 export type Snapshot = {

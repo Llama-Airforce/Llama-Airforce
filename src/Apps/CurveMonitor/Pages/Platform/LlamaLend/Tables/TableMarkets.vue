@@ -31,7 +31,7 @@
       <div>{{ market.name }}</div>
       <div class="number">
         <AsyncValue
-          :value="market.borrowRate"
+          :value="market.borrow_apy"
           :precision="2"
           type="percentage"
         />
@@ -39,13 +39,13 @@
 
       <div class="number">
         <AsyncValue
-          :value="market.lendRate"
+          :value="market.lend_apy"
           :precision="2"
           type="percentage"
         />
       </div>
 
-      <div class="number">{{ market.numLoans }}</div>
+      <div class="number">{{ market.n_loans }}</div>
 
       <!--
         <div class="number">
@@ -64,7 +64,7 @@
       <div></div>
       <div></div>
       <div class="number">
-        {{ rows.reduce((acc, x) => acc + x.market.numLoans, 0) }}
+        {{ rows.reduce((acc, x) => acc + x.market.n_loans, 0) }}
       </div>
       <!--       <div class="number">
         <AsyncValue
@@ -129,7 +129,8 @@ const { data: chains } = useQuery({
 });
 
 // Methods
-const tvl = (x: Market) => x.totalAssets + x.collateralBalance * x.priceOracle;
+const tvl = (x: Market) =>
+  x.total_assets + x.collateral_balance * x.price_oracle;
 /* const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0); */
 </script>
 
