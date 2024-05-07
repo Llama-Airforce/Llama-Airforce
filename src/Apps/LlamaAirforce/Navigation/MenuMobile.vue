@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
-import { usePageStore } from "@LAF/Pages/Store";
+import { type PageLAF } from "@LAF/Pages/Page";
 
 // Props
 interface Props {
@@ -59,7 +59,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const pageStore = usePageStore();
+const pageStore = usePageStore<PageLAF>();
 const route = useRoute();
 const page = ref("Curve");
 const pageOpen = ref(false);

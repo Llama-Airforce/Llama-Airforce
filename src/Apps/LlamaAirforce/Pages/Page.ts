@@ -1,8 +1,8 @@
 import { type RouteRecordRaw } from "vue-router";
+import { type Page } from "@/Framework/Monitor/Page";
 
-export type Page = {
+export type PageLAF = Page & {
   title: string;
-  titleRoute: string | string[];
   visible: boolean;
   planeX: number;
   routes: RouteRecordRaw[];

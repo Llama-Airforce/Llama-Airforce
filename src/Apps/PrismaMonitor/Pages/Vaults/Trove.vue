@@ -24,12 +24,7 @@
 
 <script setup lang="ts">
 // Refs
-import {
-  useSocketStore,
-  useBreadcrumbStore,
-  useSettingsStore,
-  getApiSocket,
-} from "@PM/Stores";
+import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { label } from "@PM/Models/Vault";
 import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";

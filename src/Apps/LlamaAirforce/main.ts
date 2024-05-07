@@ -11,7 +11,9 @@ import { pageCurve } from "@LAF/Pages/Curve/Page";
 import { pageConvex } from "@LAF/Pages/Convex/Page";
 import { pageBribes } from "@LAF/Pages/Bribes/Page";
 import { pageUnion } from "@LAF/Pages/Union/Page";
-import { usePageStore } from "@LAF/Pages/Store";
+
+import { usePageStore } from "@/Framework/Stores/PageStore";
+import { type PageLAF } from "@LAF/Pages/Page";
 
 const app = createApp(App);
 
@@ -28,14 +30,14 @@ const pinia = createPinia();
 app.use(pinia);
 
 // Configure pages.
-const pages = [pageCurve, pageConvex, pageBribes];
+const pages: PageLAF[] = [pageCurve, pageConvex, pageBribes];
 
 // Only add Union if specifically configured to do so.
 if (import.meta.env.VITE_UNION === "true") {
   pages.push(pageUnion);
 }
 
-const pageStore = usePageStore();
+const pageStore = usePageStore<PageLAF>();
 pageStore.pages = pages;
 
 // Configure TanStack query client.

@@ -39,8 +39,7 @@
 <script setup lang="ts">
 import Wallet from "@/Wallet/Wallet.vue";
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
-import type { Page } from "@LAF/Pages/Page";
-import { usePageStore } from "@LAF/Pages/Store";
+import { type PageLAF } from "@LAF/Pages/Page";
 
 const { t } = useI18n();
 
@@ -50,10 +49,10 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const pageStore = usePageStore();
+const pageStore = usePageStore<PageLAF>();
 const route = useRoute();
 
-const page = computed((): Page | undefined => {
+const page = computed((): PageLAF | undefined => {
   return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
 });
 

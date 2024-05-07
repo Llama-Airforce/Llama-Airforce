@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { useBreadcrumbStore } from "@CM/Stores";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
 import type { Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";

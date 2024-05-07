@@ -53,12 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  useBreadcrumbStore,
-  useSocketStore,
-  useSettingsStore,
-  getApiSocket,
-} from "@PM/Stores";
+import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 import { TroveOverviewService } from "@PM/Services";
 import { label } from "@PM/Models/Vault";

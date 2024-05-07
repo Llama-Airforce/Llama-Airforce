@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import Header from "@PM/Navigation/Header.vue";
 import Bottom from "@PM/Navigation/Bottom.vue";
-import { usePageStore } from "@PM/Stores";
 
 // Emits
 const emit = defineEmits<{

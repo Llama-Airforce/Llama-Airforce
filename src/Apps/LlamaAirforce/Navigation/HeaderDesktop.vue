@@ -92,9 +92,9 @@
 
 <script setup lang="ts">
 import { subIsActive } from "@/Util";
-import { usePageStore } from "@LAF/Pages/Store";
+import { type PageLAF } from "@LAF/Pages/Page";
 
-const pageStore = usePageStore();
+const pageStore = usePageStore<PageLAF>();
 const route = useRoute();
 
 const planeX = computed((): string => {

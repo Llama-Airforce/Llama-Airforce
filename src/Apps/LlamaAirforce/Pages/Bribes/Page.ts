@@ -1,10 +1,10 @@
-import { type Page } from "@LAF/Pages/Page";
+import { type PageLAF } from "@LAF/Pages/Page";
 
 import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.vue";
 import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.vue";
 import FraxMatch from "@LAF/Pages/Bribes/FraxMatch/FraxMatch.vue";
 
-export const pageBribes: Page = {
+export const pageBribes: PageLAF = {
   title: "Bribes",
   titleRoute: ["/incentives", "/bribes"],
   visible: true,

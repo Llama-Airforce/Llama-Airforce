@@ -2,7 +2,7 @@ import {
   createRouter as createVueRouter,
   createWebHashHistory,
 } from "vue-router";
-import { usePageStore } from "@CB/Stores";
+import { usePageStore } from "@/Framework/Stores";
 
 import NotFound from "@CB/NotFound.vue";
 

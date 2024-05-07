@@ -40,7 +40,7 @@
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import { type Crumb } from "@/Framework/Crumb";
 import Navigation from "@PM/Navigation/Navigation.vue";
-import { useSettingsStore, useBreadcrumbStore } from "@PM/Stores";
+import { useSettingsStore } from "@PM/Stores";
 
 // Stores
 const settingStore = useSettingsStore();

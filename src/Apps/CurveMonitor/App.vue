@@ -40,7 +40,6 @@
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import { type Crumb } from "@/Framework/Crumb";
 import Navigation from "@CM/Navigation/Navigation.vue";
-import { useBreadcrumbStore } from "@CM/Stores";
 
 // Refs
 const storeBreadcrumb = useBreadcrumbStore();

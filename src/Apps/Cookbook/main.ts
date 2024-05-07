@@ -19,7 +19,7 @@ hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("typescript", typescript);
 
 import { pageMain } from "@CB/PageMain";
-import { usePageStore } from "@CB/Stores";
+import { usePageStore } from "@/Framework/Stores/PageStore";
 
 const app = createApp(App);
 

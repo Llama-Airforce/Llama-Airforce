@@ -2,7 +2,7 @@ import {
   createRouter as createVueRouter,
   createWebHashHistory,
 } from "vue-router";
-import { usePageStore } from "@LAF/Pages/Store";
+import { usePageStore } from "@/Framework/Stores";
 
 import Home from "@LAF/Pages/Home.vue";
 

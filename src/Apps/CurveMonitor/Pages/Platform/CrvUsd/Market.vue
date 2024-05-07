@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { useBreadcrumbStore } from "@CM/Stores";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
