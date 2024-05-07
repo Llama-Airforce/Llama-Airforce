@@ -13,10 +13,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type MarketVolume,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -36,14 +34,13 @@ const { market = null } = defineProps<Props>();
 // Refs
 let areaSerie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+    areaSerie = chart.addAreaSeries(createOptionsSerie());
   }
 );
 
@@ -63,13 +60,11 @@ const {
 // Watches
 watch(() => market, load);
 watch(volumes, createSeries);
-watch(theme, (newTheme) => {
-  areaSerie.applyOptions(createOptionsSerie(newTheme));
-});
+watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -82,9 +77,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -93,7 +86,7 @@ function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,

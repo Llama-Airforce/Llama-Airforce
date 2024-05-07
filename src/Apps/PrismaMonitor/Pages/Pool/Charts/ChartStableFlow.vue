@@ -1,6 +1,6 @@
 <template>
   <CardGraph
-    :title="t('title', { stable: stableSymbol(storeSettings.flavor) })"
+    :title="t('title', { stable: stableSymbol(flavor) })"
     :loading="loading"
     :options="options"
     :series="series"
@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { getHost, StabilityPoolService } from "@PM/Services";
 import { stableSymbol } from "@PM/Models/Flavor";
@@ -23,10 +22,10 @@ type TooltipParams = {
 };
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
+const sbService = new StabilityPoolService(getHost(), flavor.value);
 
 // Data
 const { loading, data } = usePromise(
@@ -36,70 +35,66 @@ const { loading, data } = usePromise(
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
+  const { colors } = theme.value;
 
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        stacked: "true",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: [colors.green, colors.red],
-
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-          rotate: -60,
-        },
-        tickPlacement: "on",
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "50%",
-        },
-      },
-      legend: {
-        show: true,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      stacked: "true",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: true,
-        custom: ({ series, dataPointIndex, w }: TooltipParams) => {
-          let total = 0;
-          const data = series.map((managerSeries, index) => {
-            const value = managerSeries[dataPointIndex];
-            total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>:\t${formatterY(
-              value
-            )}</div>`;
-          });
-
-          // Add total
-          data.push(`<div><b>Total</b>:\t${formatterY(total)}</div>`);
-
-          return data.join("");
-        },
+      toolbar: {
+        show: false,
       },
-    }
-  );
+    },
+    colors: [colors.green, colors.red],
+
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+        rotate: -60,
+      },
+      tickPlacement: "on",
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+      },
+    },
+    legend: {
+      show: true,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: true,
+      custom: ({ series, dataPointIndex, w }: TooltipParams) => {
+        let total = 0;
+        const data = series.map((managerSeries, index) => {
+          const value = managerSeries[dataPointIndex];
+          total += value;
+          return `<div><b>${w.globals.seriesNames[index]}</b>:\t${formatterY(
+            value
+          )}</div>`;
+        });
+
+        // Add total
+        data.push(`<div><b>Total</b>:\t${formatterY(total)}</div>`);
+
+        return data.join("");
+      },
+    },
+  });
 });
 
 const categories = computed((): string[] => {

@@ -10,14 +10,13 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores";
 
 const curveService = new CurveService(getHost());
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { loading, data } = usePromise(
@@ -30,57 +29,51 @@ const { loading, data } = usePromise(
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        stacked: true,
-        stackType: "100%",
-        animations: {
-          enabled: false,
-        },
-      },
-      legend: {
-        position: "top",
-      },
-      xaxis: { categories: ["TVL", "Volume"] },
-      grid: {
-        yaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          barHeight: "50%",
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      stacked: true,
+      stackType: "100%",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<[number, number]>) => {
-          const chain = series.value[x.seriesIndex].name;
-          const delta = x.series[x.seriesIndex][x.dataPointIndex];
-
-          const data = [
-            `<div><b>${chain}</b>:</div><div>${formatter(delta[0])}</div>`,
-          ];
-
-          return data.join("");
+    },
+    legend: {
+      position: "top",
+    },
+    xaxis: { categories: ["TVL", "Volume"] },
+    grid: {
+      yaxis: {
+        lines: {
+          show: false,
         },
       },
-    }
-  );
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        barHeight: "50%",
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<[number, number]>) => {
+        const chain = series.value[x.seriesIndex].name;
+        const delta = x.series[x.seriesIndex][x.dataPointIndex];
+
+        const data = [
+          `<div><b>${chain}</b>:</div><div>${formatter(delta[0])}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+  });
 });
 
 const series = computed((): { name: string; data: number[] }[] => {

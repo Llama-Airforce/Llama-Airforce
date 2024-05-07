@@ -1,4 +1,6 @@
-export const ColorsCBDark = {
+import type { Colors } from "@/Styles/Colors";
+
+export const ColorsCBDark: Colors = {
   blue: "#5a74f6",
   yellow: "#f6f15a",
   green: "#5af662",

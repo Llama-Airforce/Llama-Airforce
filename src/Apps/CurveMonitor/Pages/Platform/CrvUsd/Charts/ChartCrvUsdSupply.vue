@@ -9,7 +9,7 @@
         <Legend
           v-if="chartType === 'line'"
           :items="['Supply', 'Borrowed']"
-          :colors="getColorsArray(storeSettings.theme)"
+          :colors="theme.colorsArray"
         ></Legend>
 
         <div class="chart-types">
@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import ChartCrvUsdSupplyLine from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyLine.vue";
@@ -56,7 +55,7 @@ const { t } = useI18n();
 const curveService = new CurveService(getHost());
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chartType = ref<ChartType>("line");
 

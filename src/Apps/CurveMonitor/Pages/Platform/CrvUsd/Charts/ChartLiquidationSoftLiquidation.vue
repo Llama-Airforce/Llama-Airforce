@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['% of loans in soft liquidation', 'Collateral price']"
-          :colors="getColorsArray(storeSettings.theme)"
+          :colors="theme.colorsArray"
         ></Legend>
       </div>
     </template>
@@ -22,10 +22,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type HistoricalSoftLiquidations,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -46,19 +44,14 @@ const { market = null } = defineProps<Props>();
 let proportionSerie: ISeriesApi<"Area">;
 let priceSerie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    proportionSerie = chart.addAreaSeries(
-      createProportionOptionsSerie(storeSettings.theme)
-    );
-    priceSerie = chart.addAreaSeries(
-      createPriceOptionsSerie(storeSettings.theme)
-    );
+    proportionSerie = chart.addAreaSeries(createProportionOptionsSerie());
+    priceSerie = chart.addAreaSeries(createPriceOptionsSerie());
   }
 );
 
@@ -80,14 +73,14 @@ const {
 // Watches
 watch(() => market, load);
 watch(softLiqs, createSeries);
-watch(theme, (newTheme) => {
-  proportionSerie.applyOptions(createProportionOptionsSerie(newTheme));
-  priceSerie.applyOptions(createPriceOptionsSerie(newTheme));
+watch(theme, () => {
+  proportionSerie.applyOptions(createProportionOptionsSerie());
+  priceSerie.applyOptions(createPriceOptionsSerie());
 });
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -104,9 +97,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createPriceOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -115,7 +106,7 @@ function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.yellow,
+    lineColor: theme.value.colors.yellow,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -123,9 +114,7 @@ function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createProportionOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createProportionOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "percent",
@@ -134,7 +123,7 @@ function createProportionOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     priceScaleId: "left",
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",

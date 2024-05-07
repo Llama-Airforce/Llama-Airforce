@@ -7,10 +7,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import { type SnapshotRevenue } from "@PM/Services";
 
 // Props
@@ -23,28 +21,23 @@ const { data = [] } = defineProps<Props>();
 // Refs
 let revenueSerie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    revenueSerie = chart.addAreaSeries(
-      createRevenueOptionsSerie(storeSettings.theme)
-    );
+    revenueSerie = chart.addAreaSeries(createRevenueOptionsSerie());
   }
 );
 
 // Watches
 watch(() => data, createSeries);
-watch(theme, (newTheme) => {
-  revenueSerie.applyOptions(createRevenueOptionsSerie(newTheme));
-});
+watch(theme, () => revenueSerie.applyOptions(createRevenueOptionsSerie()));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -57,7 +50,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createRevenueOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
+function createRevenueOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -68,7 +61,7 @@ function createRevenueOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     lineType: LineType.WithSteps,
     lastValueVisible: false,
     priceLineVisible: false,
-    ...getLineChartColors(theme, storeSettings.flavor),
+    ...theme.value.lineChartColors,
   };
 }
 

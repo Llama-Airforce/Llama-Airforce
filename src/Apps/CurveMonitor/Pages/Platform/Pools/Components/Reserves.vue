@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import type { Pool, Reserves } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import { useSettingsStore } from "@CM/Stores";
@@ -28,62 +27,58 @@ const { t } = useI18n();
 
 // Refs
 const store = useCurvePoolsStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const reserves = computed((): Reserves[] => {
   return poolSelected ? store.reserves[poolSelected.address] ?? [] : [];
 });
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const { colorsArray } = theme.value;
 
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "reserves",
-        type: "area",
-        animations: {
-          enabled: false,
-        },
-      },
-      colors: colorsArray,
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: {
-        labels: {
-          formatter: (y: number): string => formatter(y),
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          type: "vertical",
-          shadeIntensity: 0,
-          inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 0,
-          stops: [0, 90, 100],
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "reserves",
+      type: "area",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<Serie>) => {
-          const tvl =
-            x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
-
-          return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
-        },
+    },
+    colors: colorsArray,
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: {
+      labels: {
+        formatter: (y: number): string => formatter(y),
       },
-    }
-  );
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        type: "vertical",
+        shadeIntensity: 0,
+        inverseColors: false,
+        opacityFrom: 0.5,
+        opacityTo: 0,
+        stops: [0, 90, 100],
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<Serie>) => {
+        const tvl =
+          x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
+
+        return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
+      },
+    },
+  });
 });
 
 const series = computed((): Serie[] => {

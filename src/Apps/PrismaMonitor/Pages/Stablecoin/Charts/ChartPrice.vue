@@ -1,7 +1,7 @@
 <template>
   <Card
     class="chart-container"
-    :title="t('title', { stable: stableSymbol(storeSettings.flavor) })"
+    :title="t('title', { stable: stableSymbol(flavor) })"
     :loading="loading"
   >
     <template #actions>
@@ -19,10 +19,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import { CurvePriceService, type OHLC } from "@/Services";
 import { stableSymbol } from "@PM/Models/Flavor";
 
@@ -31,20 +29,19 @@ const { t } = useI18n();
 // Refs
 let serie: ISeriesApi<"Candlestick">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    serie = chart.addCandlestickSeries(createOptionsSerie(storeSettings.theme));
+    serie = chart.addCandlestickSeries(createOptionsSerie());
   }
 );
 
 // Price settings specifics.
 const getPool = () => {
-  switch (storeSettings.flavor) {
+  switch (flavor.value) {
     case "lsd":
       return "0xF980B4A4194694913Af231De69AB4593f5E0fCDc";
     case "lrt":
@@ -55,7 +52,7 @@ const getPool = () => {
 };
 
 const getReferenceToken = () => {
-  switch (storeSettings.flavor) {
+  switch (flavor.value) {
     case "lsd":
       return "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28"; // mkUSD
     case "lrt":
@@ -97,7 +94,7 @@ const priceService = new CurvePriceService(
 const data = useObservable(priceService.ohlc$, []);
 const loading = computed(() => data.value.length === 0);
 const tooltip = computed(() => {
-  switch (storeSettings.flavor) {
+  switch (flavor.value) {
     case "lsd":
       return "Price is in USDC from Curve mkUSD/USDC pool";
     case "lrt":
@@ -109,13 +106,11 @@ const tooltip = computed(() => {
 
 // Watches
 watch(data, createSeries);
-watch(theme, (newTheme) => {
-  serie.applyOptions(createOptionsSerie(newTheme));
-});
+watch(theme, () => serie.applyOptions(createOptionsSerie()));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -128,8 +123,8 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerie(theme: Theme): CandlestickSeriesPartialOptions {
-  const colors = getColors(theme, storeSettings.flavor);
+function createOptionsSerie(): CandlestickSeriesPartialOptions {
+  const { colors } = theme.value;
 
   return {
     priceFormat: {

@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import type { Pool, Volume } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import { useSettingsStore } from "@CM/Stores";
@@ -31,78 +30,74 @@ const { t } = useI18n();
 
 // Refs
 const store = useCurvePoolsStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const volumes = computed((): Volume[] => {
   return poolSelected ? store.volumes[poolSelected.address] ?? [] : [];
 });
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const { colorsArray } = theme.value;
 
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "volumes",
-        type: "area",
-        animations: {
-          enabled: false,
-        },
-      },
-      colors: colorsArray,
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: {
-        seriesName: "volume",
-        tickAmount: 4,
-        labels: {
-          formatter: (y: number): string => formatter(y),
-        },
-        min: Math.min(...volumes.value.map((x) => x.volumeUSD)),
-        max: Math.max(...volumes.value.map((x) => x.volumeUSD)),
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          type: "vertical",
-          shadeIntensity: 0,
-          inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 0,
-          stops: [0, 90, 100],
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "volumes",
+      type: "area",
+      animations: {
         enabled: false,
       },
-      plotOptions: {
-        bar: {
-          distributed: false,
-          dataLabels: {
-            position: "top",
-            hideOverflowingLabels: false,
-          },
+    },
+    colors: colorsArray,
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: {
+      seriesName: "volume",
+      tickAmount: 4,
+      labels: {
+        formatter: (y: number): string => formatter(y),
+      },
+      min: Math.min(...volumes.value.map((x) => x.volumeUSD)),
+      max: Math.max(...volumes.value.map((x) => x.volumeUSD)),
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        type: "vertical",
+        shadeIntensity: 0,
+        inverseColors: false,
+        opacityFrom: 0.5,
+        opacityTo: 0,
+        stops: [0, 90, 100],
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    plotOptions: {
+      bar: {
+        distributed: false,
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
         },
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<Serie>) => {
-          const volumes = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<Serie>) => {
+        const volumes = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
 
-          const data = [
-            `<div><b>${t("volume")}</b>:</div><div>${formatter(volumes)}</div>`,
-          ];
+        const data = [
+          `<div><b>${t("volume")}</b>:</div><div>${formatter(volumes)}</div>`,
+        ];
 
-          return data.join("");
-        },
+        return data.join("");
       },
-    }
-  );
+    },
+  });
 });
 
 const series = computed((): Serie[] => {

@@ -59,11 +59,11 @@
 
 <script setup lang="ts">
 import { getColors } from "@/Styles/Themes/PM";
-import { type Theme } from "@PM/Models/Theme";
+import { type ThemeId } from "@PM/Models/ThemeId";
 import { useSettingsStore } from "@PM/Stores";
 
 type ThemeDescription = {
-  id: Theme;
+  id: ThemeId;
   colors: ReturnType<typeof getColors>;
 };
 
@@ -109,7 +109,7 @@ const onThemeSelect = (option: unknown) => {
   theme.value = option as ThemeDescription;
 
   window.document.documentElement.setAttribute("data-theme", theme.value.id);
-  storeSettings.theme = theme.value.id;
+  storeSettings.themeId = theme.value.id;
   localStorage.setItem("theme", theme.value.id);
 };
 </script>

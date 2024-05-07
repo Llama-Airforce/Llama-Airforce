@@ -10,64 +10,57 @@
 <script setup lang="ts">
 import { orderBy } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type ChainRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useSettingsStore } from "@CM/Stores";
 
 // Refs
 const store = useCurveStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chainRevenues = computed((): ChainRevenue[] => {
   return orderBy(store.chainRevenues ?? [], (x) => x.totalDailyFeesUSD, "asc");
 });
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "chainRevenues",
-        type: "donut",
-        animations: {
-          enabled: false,
-        },
-      },
-      legend: {
-        inverseOrder: true,
-      },
-      stroke: {
-        width: 0.5,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "chainRevenues",
+      type: "donut",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        custom: (x: DataPoint<number>) => {
-          const chain = x.w.globals.labels[x.seriesIndex];
-          const revenue = x.series[x.seriesIndex][0];
-
-          const data = [
-            `<div><b>${chain}</b>:</div><div>${formatter(revenue)}</div>`,
-          ];
-
-          return data.join("");
+    },
+    legend: {
+      inverseOrder: true,
+    },
+    stroke: {
+      width: 0.5,
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "60%",
         },
       },
-      labels: chainRevenues.value.map((x) => x.chain),
-    }
-  );
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      custom: (x: DataPoint<number>) => {
+        const chain = x.w.globals.labels[x.seriesIndex];
+        const revenue = x.series[x.seriesIndex][0];
+
+        const data = [
+          `<div><b>${chain}</b>:</div><div>${formatter(revenue)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    labels: chainRevenues.value.map((x) => x.chain),
+  });
 });
 
 const series = computed(() =>

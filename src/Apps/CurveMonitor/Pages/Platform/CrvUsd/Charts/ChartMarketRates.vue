@@ -25,10 +25,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type MarketRates,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -49,19 +47,14 @@ const { market = null } = defineProps<Props>();
 let ratesSerie: ISeriesApi<"Area">;
 let ratesEMASerie: ISeriesApi<"Line">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    ratesSerie = chart.addAreaSeries(
-      createOptionsSerieRates(storeSettings.theme)
-    );
-    ratesEMASerie = chart.addLineSeries(
-      createOptionsSerieRatesEMA(storeSettings.theme)
-    );
+    ratesSerie = chart.addAreaSeries(createOptionsSerieRates());
+    ratesEMASerie = chart.addLineSeries(createOptionsSerieRatesEMA());
   }
 );
 
@@ -83,17 +76,15 @@ const {
 // Watches
 watch(() => market, load);
 watch(rates, createSeries);
-watch(avgLength, () => {
-  createSeries(rates.value);
-});
-watch(theme, (newTheme) => {
-  ratesSerie.applyOptions(createOptionsSerieRates(newTheme));
-  ratesEMASerie.applyOptions(createOptionsSerieRatesEMA(newTheme));
+watch(avgLength, () => createSeries(rates.value));
+watch(theme, () => {
+  ratesSerie.applyOptions(createOptionsSerieRates());
+  ratesEMASerie.applyOptions(createOptionsSerieRatesEMA());
 });
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -107,9 +98,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerieRates(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsSerieRates(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -118,7 +107,7 @@ function createOptionsSerieRates(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -126,9 +115,7 @@ function createOptionsSerieRates(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createOptionsSerieRatesEMA(theme: Theme): LineSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsSerieRatesEMA(): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -137,7 +124,7 @@ function createOptionsSerieRatesEMA(theme: Theme): LineSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: colors.yellow,
+    color: theme.value.colors.yellow,
     lastValueVisible: false,
     priceLineVisible: false,
   };

@@ -13,12 +13,10 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { getColors } from "@/Styles/Themes/CM";
 import type { Tvl } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 
 const { t } = useI18n();
 
@@ -27,7 +25,7 @@ let areaSerie: ISeriesApi<"Area">;
 
 // Refs
 const store = useMonitorStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -39,11 +37,8 @@ const tvl = computed((): Tvl[] => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+  chart = createChartFunc(chartRef.value, createOptionsChart(chartRef.value));
+  areaSerie = chart.addAreaSeries(createOptionsSerie());
 
   createSeries(tvl.value);
 });
@@ -53,19 +48,16 @@ watch(tvl, (newTvl) => {
   createSeries(newTvl);
 });
 
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      areaSerie.applyOptions(createOptionsSerie(newTheme));
-    }
+watch(theme, () => {
+  if (chartRef.value) {
+    chart.applyOptions(createOptionsChart(chartRef.value));
+    areaSerie.applyOptions(createOptionsSerie());
   }
-);
+});
 
 // Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+const createOptionsChart = (chartRef: HTMLElement) => {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -78,9 +70,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
-  const colors = getColors(theme);
-
+const createOptionsSerie = (): AreaSeriesPartialOptions => {
   return {
     priceFormat: {
       type: "price",
@@ -89,7 +79,7 @@ const createOptionsSerie = (theme: Theme): AreaSeriesPartialOptions => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,

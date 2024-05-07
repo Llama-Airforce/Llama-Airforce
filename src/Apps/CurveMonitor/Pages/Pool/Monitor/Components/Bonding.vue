@@ -16,12 +16,10 @@ import {
   createChart as createChartFunc,
   type SeriesMarker,
 } from "lightweight-charts";
-import { getColors } from "@/Styles/Themes/CM";
 import type { Bonding } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 
 const { t } = useI18n();
 
@@ -30,7 +28,7 @@ let lineSerie: ISeriesApi<"Line">;
 
 // Refs
 const store = useMonitorStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -42,11 +40,8 @@ const bonding = computed((): Bonding => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  lineSerie = chart.addLineSeries(createOptionsSerie(storeSettings.theme));
+  chart = createChartFunc(chartRef.value, createOptionsChart(chartRef.value));
+  lineSerie = chart.addLineSeries(createOptionsSerie());
 
   createSeries(bonding.value);
 });
@@ -56,20 +51,17 @@ watch(bonding, (newBonding) => {
   createSeries(newBonding);
 });
 
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      lineSerie.applyOptions(createOptionsSerie(newTheme));
-      createMarkers(newTheme);
-    }
+watch(theme.value, () => {
+  if (chartRef.value) {
+    chart.applyOptions(createOptionsChart(chartRef.value));
+    lineSerie.applyOptions(createOptionsSerie());
+    createMarkers();
   }
-);
+});
 
 // Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+const createOptionsChart = (chartRef: HTMLElement) => {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       visible: false,
     },
@@ -91,9 +83,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
-  const colors = getColors(theme);
-
+const createOptionsSerie = (): LineSeriesPartialOptions => {
   return {
     priceFormat: {
       type: "price",
@@ -102,20 +92,18 @@ const createOptionsSerie = (theme: Theme): LineSeriesPartialOptions => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: colors.blue,
+    color: theme.value.colors.blue,
     lastValueVisible: false,
     priceLineVisible: false,
   };
 };
 
-const createMarkers = (theme: Theme) => {
-  const colors = getColors(theme);
-
+const createMarkers = () => {
   const markers: SeriesMarker<UTCTimestamp>[] = [
     {
       time: bonding.value.balanceCoin1 as UTCTimestamp,
       position: "inBar",
-      color: colors.yellow,
+      color: theme.value.colors.yellow,
       shape: "circle",
     },
   ];
@@ -137,7 +125,7 @@ const createSeries = (newBonding: Bonding): void => {
 
   if (newSerie.length > 0) {
     lineSerie.setData(newSerie);
-    createMarkers(storeSettings.theme);
+    createMarkers();
   }
 
   chart.timeScale().fitContent();

@@ -20,7 +20,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { type ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
@@ -32,7 +31,7 @@ const revenueService = new RevenueService(getHost());
 
 // Refs
 const store = useCurveStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const loading = ref(false);
 
@@ -43,54 +42,48 @@ const topPools = computed((): ChainTopPoolRevenue[] =>
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "chainRevenues",
-        type: "bar",
-        animations: {
-          enabled: false,
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "chainRevenues",
+      type: "bar",
+      animations: {
+        enabled: false,
+      },
+    },
+    xaxis: {
+      categories: topPools.value.map((x) => x.name),
+      labels: {
+        formatter,
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    dataLabels: {
+      style: {
+        fontSize: "11px",
+      },
+      formatter,
+      dropShadow: false,
+    },
+    grid: {
+      yaxis: {
+        lines: {
+          show: false,
         },
       },
       xaxis: {
-        categories: topPools.value.map((x) => x.name),
-        labels: {
-          formatter,
+        lines: {
+          show: true,
         },
       },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-        },
-      },
-      dataLabels: {
-        style: {
-          fontSize: "11px",
-        },
-        formatter,
-        dropShadow: false,
-      },
-      grid: {
-        yaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-      },
-      tooltip: {
-        enabled: false,
-      },
-    }
-  );
+    },
+    tooltip: {
+      enabled: false,
+    },
+  });
 });
 
 // Hooks

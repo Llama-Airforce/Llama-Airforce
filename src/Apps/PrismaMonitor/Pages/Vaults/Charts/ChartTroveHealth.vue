@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import {
   getHost,
@@ -29,10 +28,10 @@ type Serie = {
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const troveService = new TroveService(getHost(), storeSettings.flavor);
+const troveService = new TroveService(getHost(), flavor.value);
 
 // Props
 interface Props {
@@ -56,78 +55,70 @@ const { loading, data, load } = usePromise(async () => {
 // Refs
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          tools: {
-            download: true,
-          },
-        },
-      },
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: [
-        {
-          seriesName: "collateralUsd",
-          tickAmount: 4,
-          opposite: true,
-          labels: {
-            formatter: (y: number): string => formatterCollateralUsd(y),
-          },
-          min: 0,
-          max: Math.max(...data.value.map((x) => x.collateral_usd)),
-        },
-        {
-          seriesName: "ratio",
-          tickAmount: 4,
-          labels: {
-            formatter: (y: number): string => formatterRatio(y),
-          },
-          min: 0,
-          max: Math.max(...data.value.map((x) => x.cr ?? 0)),
-        },
-      ],
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      animations: {
         enabled: false,
       },
-      stroke: {
-        curve: "straight",
-      },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<Serie>) => {
-          const collateralUsd =
-            x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
-
-          const ratio = x.w.globals.initialSeries[1].data[x.dataPointIndex]
-            ? x.w.globals.initialSeries[1].data[x.dataPointIndex].y
-            : 0;
-
-          const data = [
-            `<div><b>${t("ratio")}</b>:</div><div>${formatterRatio(
-              ratio
-            )}</div>`,
-            `<div><b>${t(
-              "collateralUsd"
-            )}</b>:</div><div>${formatterCollateralUsd(collateralUsd)}</div>`,
-          ];
-
-          return data.join("");
+      toolbar: {
+        tools: {
+          download: true,
         },
       },
-    }
-  );
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: [
+      {
+        seriesName: "collateralUsd",
+        tickAmount: 4,
+        opposite: true,
+        labels: {
+          formatter: (y: number): string => formatterCollateralUsd(y),
+        },
+        min: 0,
+        max: Math.max(...data.value.map((x) => x.collateral_usd)),
+      },
+      {
+        seriesName: "ratio",
+        tickAmount: 4,
+        labels: {
+          formatter: (y: number): string => formatterRatio(y),
+        },
+        min: 0,
+        max: Math.max(...data.value.map((x) => x.cr ?? 0)),
+      },
+    ],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "straight",
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<Serie>) => {
+        const collateralUsd =
+          x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
+
+        const ratio = x.w.globals.initialSeries[1].data[x.dataPointIndex]
+          ? x.w.globals.initialSeries[1].data[x.dataPointIndex].y
+          : 0;
+
+        const data = [
+          `<div><b>${t("ratio")}</b>:</div><div>${formatterRatio(ratio)}</div>`,
+          `<div><b>${t(
+            "collateralUsd"
+          )}</b>:</div><div>${formatterCollateralUsd(collateralUsd)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+  });
 });
 
 const series = computed((): Serie[] => {

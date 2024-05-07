@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import {
   getHost,
@@ -48,10 +47,10 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const troveService = new TroveService(getHost(), storeSettings.flavor);
+const troveService = new TroveService(getHost(), flavor.value);
 
 // Props
 interface Props {
@@ -87,8 +86,7 @@ const { loading, data, load } = usePromise(async () => {
 // Refs
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
+  const { colors } = theme.value;
 
   const xaxis = {
     x: data.value?.ratio ?? 0,
@@ -106,68 +104,66 @@ const options = computed((): unknown => {
     },
   };
 
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "area",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: true,
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          type: "vertical",
-          shadeIntensity: 0,
-          inverseColors: false,
-          opacityFrom: 0.7,
-          opacityTo: 0,
-          stops: [0, 90, 100],
-        },
-      },
-      annotations: {
-        xaxis: data.value.ratio ? [xaxis] : [],
-      },
-      toolbar: {
-        show: false,
-      },
-      xaxis: {
-        type: "numeric",
-        categories: categories.value,
-        labels: {
-          formatter: (x: number): string => pctFormatter(x),
-        },
-      },
-      yaxis: {
-        seriesName: "impact",
-        labels: {
-          formatter: (y: number): string => formatter(y),
-        },
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "area",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        shared: true,
-        custom: (x: DataPoint<number>) => {
-          if (!vault) {
-            return "";
-          }
+      toolbar: {
+        show: true,
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        type: "vertical",
+        shadeIntensity: 0,
+        inverseColors: false,
+        opacityFrom: 0.7,
+        opacityTo: 0,
+        stops: [0, 90, 100],
+      },
+    },
+    annotations: {
+      xaxis: data.value.ratio ? [xaxis] : [],
+    },
+    toolbar: {
+      show: false,
+    },
+    xaxis: {
+      type: "numeric",
+      categories: categories.value,
+      labels: {
+        formatter: (x: number): string => pctFormatter(x),
+      },
+    },
+    yaxis: {
+      seriesName: "impact",
+      labels: {
+        formatter: (y: number): string => formatter(y),
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      shared: true,
+      custom: (x: DataPoint<number>) => {
+        if (!vault) {
+          return "";
+        }
 
-          const amount = categories.value[x.dataPointIndex];
-          const pct =
-            x.dataPointIndex === categories.value.length - 1
-              ? "Over 250%"
-              : pctFormatter(amount);
+        const amount = categories.value[x.dataPointIndex];
+        const pct =
+          x.dataPointIndex === categories.value.length - 1
+            ? "Over 250%"
+            : pctFormatter(amount);
 
-          const tooltip = `
+        const tooltip = `
           <div><b>Collateral ratio:</b>:</div>
           <div>${pct}</div>
 
@@ -177,11 +173,10 @@ const options = computed((): unknown => {
           <div><b>Collateral value at lower or equal ratio:</b>:</div>
           <div>$${formatter(x.series[0][x.dataPointIndex])}</div>
           `;
-          return tooltip;
-        },
+        return tooltip;
       },
-    }
-  );
+    },
+  });
 });
 
 const series = computed((): { name: string; data: number[] }[] => [

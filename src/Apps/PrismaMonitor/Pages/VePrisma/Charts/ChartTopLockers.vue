@@ -10,12 +10,10 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();
-const storeSettings = useSettingsStore();
 
 // Props
 interface Props {
@@ -24,60 +22,57 @@ interface Props {
 }
 const { totalWeight = 0, lockers = [] } = defineProps<Props>();
 
+// Refs
+const { theme } = storeToRefs(useSettingsStore());
+
 const data = computed(() => lockers.slice(0, 10));
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "topLockers",
-        type: "donut",
-        animations: {
-          enabled: false,
-        },
-      },
-      legend: {
-        inverseOrder: false,
-        position: "bottom",
-      },
-      stroke: {
-        width: 0.5,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "topLockers",
+      type: "donut",
+      animations: {
         enabled: false,
       },
-
-      tooltip: {
-        custom: (x: DataPoint<number>) => {
-          const address = categories.value[x.seriesIndex];
-          const value = x.series[x.seriesIndex] as unknown as number;
-          const percentage = value / (totalWeight / 100);
-          const data = [
-            `<div><b>${address}</b>:</div><div>${formatterPct(
-              percentage
-            )} - ${formatter(value)}</div>`,
-          ];
-
-          return data.join("");
+    },
+    legend: {
+      inverseOrder: false,
+      position: "bottom",
+    },
+    stroke: {
+      width: 0.5,
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "60%",
         },
       },
-      // Empty unicode char for quick formatting hack as whitespace gets trimmed.
-      labels: data.value
-        .map((x) => x.id)
-        .concat(["Other⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"]),
-    }
-  );
+    },
+    dataLabels: {
+      enabled: false,
+    },
+
+    tooltip: {
+      custom: (x: DataPoint<number>) => {
+        const address = categories.value[x.seriesIndex];
+        const value = x.series[x.seriesIndex] as unknown as number;
+        const percentage = value / (totalWeight / 100);
+        const data = [
+          `<div><b>${address}</b>:</div><div>${formatterPct(
+            percentage
+          )} - ${formatter(value)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    // Empty unicode char for quick formatting hack as whitespace gets trimmed.
+    labels: data.value
+      .map((x) => x.id)
+      .concat(["Other⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"]),
+  });
 });
 
 const series = computed(() => {

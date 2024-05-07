@@ -1,13 +1,20 @@
+import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import type { Theme } from "@CB/Models/Theme";
+import { type Theme } from "@/Styles/Theme";
+import { getColors, getColorsArray } from "@/Styles/Themes/CB";
+import type { ThemeId } from "@CB/Models/ThemeId";
 
-type State = {
-  theme: Theme;
-};
+export const useSettingsStore = defineStore("settingsStore", () => {
+  const themeId = ref<ThemeId>("light");
 
-export const useSettingsStore = defineStore({
-  id: "settingsStore",
-  state: (): State => ({
-    theme: "light",
-  }),
+  const theme = computed<Theme>(() => ({
+    colors: getColors(themeId.value),
+    colorsArray: getColorsArray(themeId.value),
+  }));
+
+  return {
+    themeId,
+
+    theme,
+  };
 });

@@ -10,12 +10,11 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
+import { useSettingsStore } from "@CM/Stores";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import { type Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
 import { type Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useSettingsStore } from "@CM/Stores";
 import { aggregateDataPoints } from "@CM/Pages/Platform/Gauges/Util/SnapshotHelper";
 
 type Serie = {
@@ -35,7 +34,7 @@ const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const title = computed((): string => {
   let title = t("title");
@@ -73,95 +72,88 @@ const yMax = computed((): number => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "curve-emissions",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          tools: {
-            download: true,
-          },
-        },
-      },
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: [
-        {
-          seriesName: "emissions",
-          tickAmount: 4,
-          labels: {
-            formatter: (y: number): string => formatterEmissions(y),
-          },
-          min: yMin,
-          max: yMax,
-        },
-        {
-          seriesName: "emissions",
-          tickAmount: 4,
-          labels: {
-            formatter: (y: number): string => formatterFees(y),
-          },
-          show: false,
-          min: yMin,
-          max: yMax,
-        },
-      ],
-      plotOptions: {
-        bar: {
-          distributed: false,
-          dataLabels: {
-            position: "top",
-            hideOverflowingLabels: false,
-          },
-        },
-      },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<Serie>) => {
-          const emissions =
-            x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
-
-          const fees = x.w.globals.initialSeries[1].data[x.dataPointIndex]
-            ? x.w.globals.initialSeries[1].data[x.dataPointIndex].y
-            : 0;
-
-          const data = [
-            `<div><b>${t("emissions")}</b>:</div><div>${formatterEmissions(
-              emissions
-            )}</div>`,
-            `<div><b>${t("fees")}</b>:</div><div>${formatterFees(fees)}</div>`,
-            `<div><b>${t("ratio")}</b>:</div><div>${formatterRatio(
-              fees / emissions
-            )}</div>`,
-          ];
-
-          return data.join("");
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "curve-emissions",
+      animations: {
         enabled: false,
       },
-      csv: {
-        filename: "emissions.csv",
-        columnDelimiter: ",",
-        headerCategory: "category",
-        headerValue: "value",
-        dateFormatter(timestamp: number) {
-          return timestamp;
+      toolbar: {
+        tools: {
+          download: true,
         },
       },
-    }
-  );
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: [
+      {
+        seriesName: "emissions",
+        tickAmount: 4,
+        labels: {
+          formatter: (y: number): string => formatterEmissions(y),
+        },
+        min: yMin,
+        max: yMax,
+      },
+      {
+        seriesName: "emissions",
+        tickAmount: 4,
+        labels: {
+          formatter: (y: number): string => formatterFees(y),
+        },
+        show: false,
+        min: yMin,
+        max: yMax,
+      },
+    ],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
+        },
+      },
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<Serie>) => {
+        const emissions = x.w.globals.initialSeries[0].data[x.dataPointIndex].y;
+
+        const fees = x.w.globals.initialSeries[1].data[x.dataPointIndex]
+          ? x.w.globals.initialSeries[1].data[x.dataPointIndex].y
+          : 0;
+
+        const data = [
+          `<div><b>${t("emissions")}</b>:</div><div>${formatterEmissions(
+            emissions
+          )}</div>`,
+          `<div><b>${t("fees")}</b>:</div><div>${formatterFees(fees)}</div>`,
+          `<div><b>${t("ratio")}</b>:</div><div>${formatterRatio(
+            fees / emissions
+          )}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    csv: {
+      filename: "emissions.csv",
+      columnDelimiter: ",",
+      headerCategory: "category",
+      headerValue: "value",
+      dateFormatter(timestamp: number) {
+        return timestamp;
+      },
+    },
+  });
 });
 
 const series = computed((): Serie[] => {

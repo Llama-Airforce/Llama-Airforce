@@ -59,11 +59,11 @@
 
 <script setup lang="ts">
 import { getColors } from "@/Styles/Themes/CB";
-import { type Theme } from "@CB/Models/Theme";
+import { type ThemeId } from "@CB/Models/ThemeId";
 import { useSettingsStore } from "@CB/Stores";
 
 type ThemeDescription = {
-  id: Theme;
+  id: ThemeId;
   colors: ReturnType<typeof getColors>;
 };
 
@@ -109,7 +109,7 @@ const onThemeSelect = (option: unknown) => {
   theme.value = option as ThemeDescription;
 
   window.document.documentElement.setAttribute("data-theme", theme.value.id);
-  storeSettings.theme = theme.value.id;
+  storeSettings.themeId = theme.value.id;
   localStorage.setItem("theme", theme.value.id);
 };
 </script>
@@ -164,3 +164,4 @@ const onThemeSelect = (option: unknown) => {
   }
 }
 </style>
+@/Apps/Cookbook/Models/Themes

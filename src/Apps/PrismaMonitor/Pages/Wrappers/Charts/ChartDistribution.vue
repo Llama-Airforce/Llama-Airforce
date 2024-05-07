@@ -10,14 +10,12 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost, WrapperService, type Contract } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 
 const prismaService = new WrapperService(getHost());
-const storeSettings = useSettingsStore();
 
 // Props
 interface Props {
@@ -25,6 +23,9 @@ interface Props {
 }
 
 const { contract } = defineProps<Props>();
+
+// Refs
+const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { loading, data } = usePromise(
@@ -34,52 +35,46 @@ const { loading, data } = usePromise(
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-          rotate: -60,
-        },
-        tickPlacement: "on",
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "50%",
-        },
-      },
-      legend: {
-        show: true,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: true,
+      toolbar: {
+        show: false,
       },
-    }
-  );
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+        rotate: -60,
+      },
+      tickPlacement: "on",
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+      },
+    },
+    legend: {
+      show: true,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: true,
+    },
+  });
 });
 
 const categories = computed((): string[] => data.value.map((x) => x.label));

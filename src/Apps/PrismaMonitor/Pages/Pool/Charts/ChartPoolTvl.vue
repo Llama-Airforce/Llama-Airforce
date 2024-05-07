@@ -13,10 +13,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import {
   getHost,
   type DecimalTimeSeries,
@@ -28,18 +26,17 @@ const { t } = useI18n();
 // Refs
 let serie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    serie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
+    serie = chart.addAreaSeries(createOptionsSerie());
   }
 );
 
-const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
+const sbService = new StabilityPoolService(getHost(), flavor.value);
 
 // Data
 const { loading, data } = usePromise(
@@ -49,13 +46,11 @@ const { loading, data } = usePromise(
 
 // Watches
 watch(data, createSeries);
-watch(theme, (newTheme) => {
-  serie.applyOptions(createOptionsSerie(newTheme));
-});
+watch(theme, () => serie.applyOptions(createOptionsSerie()));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -68,7 +63,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
+function createOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -79,7 +74,7 @@ function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     lineType: LineType.WithSteps,
     lastValueVisible: false,
     priceLineVisible: false,
-    ...getLineChartColors(theme, storeSettings.flavor),
+    ...theme.value.lineChartColors,
   };
 }
 

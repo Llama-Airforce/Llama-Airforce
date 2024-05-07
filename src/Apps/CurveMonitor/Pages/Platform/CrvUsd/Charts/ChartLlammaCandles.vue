@@ -19,7 +19,6 @@ import { chain } from "lodash";
 import type { Subscription } from "rxjs";
 import { getAddress } from "ethers/lib/utils";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import {
@@ -42,7 +41,7 @@ interface Props {
 const { market } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 const ohlcData = ref<OhlcModel[]>([]);
 
 let subscription: Subscription; // assuming you're using RxJS
@@ -69,7 +68,7 @@ onMounted(async (): Promise<void> => {
   const end = Math.floor(now / 1000);
   const start = Math.floor((now - fifteenDays) / 1000);
   ohlcService = new OHLCService(url, llamma, chainName, interval, start, end);
-  const colors = getColors(storeSettings.theme);
+  const { colors } = theme.value;
   subscription = ohlcService.data$.subscribe((data) => {
     ohlcData.value = data;
     createChart(data, invert.value);

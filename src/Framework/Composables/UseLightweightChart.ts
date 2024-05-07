@@ -7,11 +7,8 @@ import {
 } from "lightweight-charts";
 
 export function useLightweightChart(
-  theme: Ref<string>,
-  createChartOptions: (
-    chartRef: HTMLElement,
-    theme: string
-  ) => DeepPartial<ChartOptions>,
+  recreateChartTrigger: Ref<unknown>,
+  createChartOptions: (chartRef: HTMLElement) => DeepPartial<ChartOptions>,
   onChartCreated?: (chart: IChartApi) => void
 ) {
   const chartRef = ref<HTMLElement | undefined>(undefined);
@@ -31,7 +28,7 @@ export function useLightweightChart(
 
     chart.value = createChart(
       chartRef.value,
-      createChartOptions(chartRef.value, theme.value)
+      createChartOptions(chartRef.value)
     );
 
     if (onChartCreated && chart.value) {
@@ -46,9 +43,9 @@ export function useLightweightChart(
     }
   });
 
-  watch(theme, (newTheme) => {
+  watch(recreateChartTrigger, () => {
     if (chartRef.value && chart.value) {
-      chart.value.applyOptions(createChartOptions(chartRef.value, newTheme));
+      chart.value.applyOptions(createChartOptions(chartRef.value));
     }
   });
 

@@ -10,14 +10,13 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 
 // Refs
 const store = useMEVStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
   labelsOccurrence
@@ -38,46 +37,38 @@ const series = computed(() =>
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "chainRevenues",
-        type: "donut",
-        animations: {
-          enabled: false,
-        },
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "chainRevenues",
+      type: "donut",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        custom: (x: DataPoint<number>) => {
-          const chain = x.w.globals.labels[x.seriesIndex];
-          const revenue = x.series[x.seriesIndex] as unknown as number;
-
-          const data = [
-            `<div><b>${chain}</b>:</div><div>Ratio: ${formatter(
-              revenue
-            )}</div>`,
-          ];
-
-          return data.join("");
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "60%",
         },
       },
-      labels: labels.value,
-    }
-  );
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      custom: (x: DataPoint<number>) => {
+        const chain = x.w.globals.labels[x.seriesIndex];
+        const revenue = x.series[x.seriesIndex] as unknown as number;
+
+        const data = [
+          `<div><b>${chain}</b>:</div><div>Ratio: ${formatter(revenue)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    labels: labels.value,
+  });
 });
 
 // Methods

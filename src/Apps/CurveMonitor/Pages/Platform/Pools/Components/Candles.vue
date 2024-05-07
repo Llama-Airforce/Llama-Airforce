@@ -17,7 +17,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import type { Pool, Candle } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
@@ -39,7 +38,7 @@ const { poolSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurvePoolsStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 const invert = ref(false);
@@ -47,7 +46,7 @@ const invert = ref(false);
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  const colors = getColors(storeSettings.theme);
+  const { colors } = theme.value;
 
   chart = createChartFunc(chartRef.value, {
     width: chartRef.value.clientWidth,
@@ -156,7 +155,7 @@ const createChart = (newCandles: Candle[], newInvert: boolean): void => {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const colors = getColors(storeSettings.theme);
+  const { colors } = theme.value;
   const newVolumeSeries: HistogramData[] = chain(newCandles)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,

@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores";
 import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -25,7 +24,7 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { loading, data, load } = usePromise(() => {
@@ -38,64 +37,58 @@ const { loading, data, load } = usePromise(() => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-          rotate: -60,
-        },
-        tickPlacement: "on",
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "50%",
-        },
-      },
-      legend: {
-        show: true,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: true,
-        custom: (x: DataPoint<number>) => {
-          const debt = x.series[0][x.dataPointIndex];
-          const collateral = x.series[1][x.dataPointIndex];
-          const stablecoin = x.series[2][x.dataPointIndex];
-          const data = [
-            `<div><b>Collat. (USD)</b>: ${formatterY(collateral)}</div>`,
-            `<div><b>Debt</b>: ${formatterY(debt)}</div>`,
-            `<div><b>Stablecoin</b>: ${formatterY(stablecoin)}</div>`,
-          ];
-
-          return data.join("");
-        },
+      toolbar: {
+        show: false,
       },
-    }
-  );
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+        rotate: -60,
+      },
+      tickPlacement: "on",
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+      },
+    },
+    legend: {
+      show: true,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: true,
+      custom: (x: DataPoint<number>) => {
+        const debt = x.series[0][x.dataPointIndex];
+        const collateral = x.series[1][x.dataPointIndex];
+        const stablecoin = x.series[2][x.dataPointIndex];
+        const data = [
+          `<div><b>Collat. (USD)</b>: ${formatterY(collateral)}</div>`,
+          `<div><b>Debt</b>: ${formatterY(debt)}</div>`,
+          `<div><b>Stablecoin</b>: ${formatterY(stablecoin)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+  });
 });
 
 const categories = computed((): string[] => data.value.map((x) => x.decile));

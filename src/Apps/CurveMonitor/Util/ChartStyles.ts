@@ -5,14 +5,13 @@ import {
   LineStyle,
 } from "lightweight-charts";
 import { mergeWith } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
-import type { Theme } from "@CM/Models/Theme";
+import type { Theme } from "@/Styles/Theme";
 
 const createDefault = (
   chartRef: HTMLElement,
   theme: Theme
 ): DeepPartial<ChartOptions> => {
-  const colors = getColors(theme);
+  const { colors } = theme;
 
   return {
     width: chartRef.clientWidth,

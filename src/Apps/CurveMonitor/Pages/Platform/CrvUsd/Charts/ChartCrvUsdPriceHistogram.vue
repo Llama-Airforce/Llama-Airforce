@@ -10,14 +10,13 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores";
 
 const curveService = new CurveService(getHost());
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { loading, data } = usePromise(
@@ -27,62 +26,56 @@ const { loading, data } = usePromise(
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        animations: {
-          enabled: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "75%",
-        },
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        custom: (x: DataPoint<number>) => {
-          const price = categories.value[x.dataPointIndex];
-          const count = x.series[0][x.dataPointIndex];
-
-          const data = [
-            `<div><b>${price}</b>:</div><div>${formatterY(count)}</div>`,
-          ];
-
-          return data.join("");
-        },
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
       },
-    }
-  );
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "75%",
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      custom: (x: DataPoint<number>) => {
+        const price = categories.value[x.dataPointIndex];
+        const count = x.series[0][x.dataPointIndex];
+
+        const data = [
+          `<div><b>${price}</b>:</div><div>${formatterY(count)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+  });
 });
 
 const categories = computed((): string[] =>

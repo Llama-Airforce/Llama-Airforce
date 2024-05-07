@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
@@ -23,64 +22,58 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        stacked: true,
-        animations: {
-          enabled: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-          rotate: 0,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-        min: 0,
-        max: max.value,
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "75%",
-          dataLabels: {
-            position: "top",
-            hideOverflowingLabels: false,
-          },
-        },
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      stacked: true,
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+        rotate: 0,
       },
-    }
-  );
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+      min: 0,
+      max: max.value,
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "75%",
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
+        },
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+    },
+  });
 });
 
 const categories = computed((): string[] =>

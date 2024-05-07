@@ -1,4 +1,6 @@
-export const ColorsPMDarkLsd = {
+import type { Colors } from "@/Styles/Colors";
+
+export const ColorsPMDarkLsd: Colors = {
   blue: "#316eff",
   yellow: "#f6f15a",
   green: "#5af662",
@@ -16,7 +18,7 @@ export const ColorsPMDarkLsd = {
   text: "#ffffff",
 };
 
-export const ColorsPMDarkLrt = {
+export const ColorsPMDarkLrt: Colors = {
   blue: "#316eff",
   yellow: "#f6f15a",
   green: "#5af662",

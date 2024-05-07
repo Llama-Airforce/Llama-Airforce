@@ -8,7 +8,7 @@
       :items="coins"
       :disabled="coinsDisabled"
       :clickable="true"
-      :colors="getColorsArray(storeSettings.theme)"
+      :colors="theme.colorsArray"
       @click="onLegendClick"
     ></Legend>
 
@@ -21,10 +21,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type PoolPrice,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -36,8 +34,7 @@ const curveService = new CurveService(getHost());
 // Refs
 let lineSeries: ISeriesApi<"Line">[] = [];
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
@@ -80,15 +77,15 @@ watch(coinsDisabled, () => {
   createSeries(prices.value);
 });
 
-watch(theme, (newTheme) => {
+watch(theme, () => {
   for (const [i, serie] of lineSeries.entries()) {
-    serie.applyOptions(createOptionsSerie(i, newTheme));
+    serie.applyOptions(createOptionsSerie(i));
   }
 });
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -101,9 +98,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerie(i: number, theme: Theme): LineSeriesPartialOptions {
-  const colorsArray = getColorsArray(theme);
-
+function createOptionsSerie(i: number): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -112,7 +107,7 @@ function createOptionsSerie(i: number, theme: Theme): LineSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: colorsArray[i],
+    color: theme.value.colorsArray[i],
     lastValueVisible: false,
     priceLineVisible: false,
   };
@@ -130,9 +125,7 @@ function addSeries(): void {
 
   lineSeries = [];
   for (let i = 0; i < coins.value.length; i++) {
-    const lineSerie = chart.value.addLineSeries(
-      createOptionsSerie(i, storeSettings.theme)
-    );
+    const lineSerie = chart.value.addLineSeries(createOptionsSerie(i));
 
     lineSeries.push(lineSerie);
   }

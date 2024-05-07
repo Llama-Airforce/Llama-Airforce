@@ -11,17 +11,16 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { getHost, RevenueService } from "@PM/Services";
 
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const revenueService = new RevenueService(getHost(), storeSettings.flavor);
+const revenueService = new RevenueService(getHost(), flavor.value);
 
 // Data
 const { loading, data } = usePromise(() => revenueService.getBreakdown(), {
@@ -32,51 +31,45 @@ const { loading, data } = usePromise(() => revenueService.getBreakdown(), {
 
 // Refs
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "breakdown",
-        type: "donut",
-        animations: {
-          enabled: false,
-        },
-      },
-      legend: {
-        inverseOrder: false,
-        position: "bottom",
-      },
-      stroke: {
-        width: 0.5,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "breakdown",
+      type: "donut",
+      animations: {
         enabled: false,
       },
-
-      tooltip: {
-        custom: (x: DataPoint<number>) => {
-          const address = categories.value[x.seriesIndex];
-          const value = x.series[x.seriesIndex] as unknown as number;
-          const data = [
-            `<div><b>${address}</b>:</div><div>${formatter(value)}</div>`,
-          ];
-
-          return data.join("");
+    },
+    legend: {
+      inverseOrder: false,
+      position: "bottom",
+    },
+    stroke: {
+      width: 0.5,
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "60%",
         },
       },
-      labels: categories.value,
-    }
-  );
+    },
+    dataLabels: {
+      enabled: false,
+    },
+
+    tooltip: {
+      custom: (x: DataPoint<number>) => {
+        const address = categories.value[x.seriesIndex];
+        const value = x.series[x.seriesIndex] as unknown as number;
+        const data = [
+          `<div><b>${address}</b>:</div><div>${formatter(value)}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    labels: categories.value,
+  });
 });
 
 const series = computed(() => [

@@ -13,10 +13,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type MarketLoans,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -36,16 +34,13 @@ const { market = null } = defineProps<Props>();
 // Refs
 let loansSerie: ISeriesApi<"Histogram">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    loansSerie = chart.addHistogramSeries(
-      createOptionsSerieLoans(storeSettings.theme)
-    );
+    loansSerie = chart.addHistogramSeries(createOptionsSerieLoans());
   }
 );
 
@@ -65,13 +60,11 @@ const {
 // Watches
 watch(() => market, load);
 watch(loans, createSeriesLoans);
-watch(theme, (newTheme) => {
-  loansSerie.applyOptions(createOptionsSerieLoans(newTheme));
-});
+watch(theme, () => loansSerie.applyOptions(createOptionsSerieLoans()));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -85,11 +78,9 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerieLoans(theme: Theme): HistogramSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsSerieLoans(): HistogramSeriesPartialOptions {
   return {
-    color: colors.yellow,
+    color: theme.value.colors.yellow,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",

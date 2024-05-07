@@ -1,24 +1,26 @@
-import type { Theme } from "@CB/Models/Theme";
 import { ColorsCBDark, ColorsCBDarkArray } from "@/Styles/Themes/CB/Dark";
 import { ColorsCBLight, ColorsCBLightArray } from "@/Styles/Themes/CB/Light";
 import { ColorsCBChad, ColorsCBChadArray } from "@/Styles/Themes/CB/Chad";
+import type { ThemeId } from "@CB/Models/ThemeId";
 
-export function getColors(theme: Theme) {
-  if (theme === "chad") {
-    return ColorsCBChad;
-  } else if (theme === "light") {
-    return ColorsCBLight;
-  } else {
-    return ColorsCBDark;
+export function getColors(themeId: ThemeId) {
+  switch (themeId) {
+    case "chad":
+      return ColorsCBChad;
+    case "light":
+      return ColorsCBLight;
+    default:
+      return ColorsCBDark;
   }
 }
 
-export function getColorsArray(theme: Theme) {
-  if (theme === "chad") {
-    return ColorsCBChadArray;
-  } else if (theme === "light") {
-    return ColorsCBLightArray;
-  } else {
-    return ColorsCBDarkArray;
+export function getColorsArray(themeId: ThemeId) {
+  switch (themeId) {
+    case "chad":
+      return ColorsCBChadArray;
+    case "light":
+      return ColorsCBLightArray;
+    default:
+      return ColorsCBDarkArray;
   }
 }

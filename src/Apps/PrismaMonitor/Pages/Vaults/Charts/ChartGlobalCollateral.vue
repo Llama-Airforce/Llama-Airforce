@@ -37,17 +37,16 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost, ManagerService, type Period } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const managerService = new ManagerService(getHost(), storeSettings.flavor);
+const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
 const { loading, data, load } = usePromise(
@@ -63,58 +62,52 @@ const period = ref<Period>("1m");
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "area",
-        stacked: "true",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-          rotate: -60,
-        },
-        tickPlacement: "on",
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-      },
-
-      stroke: {
-        curve: "smooth",
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          opacityFrom: 0.6,
-          opacityTo: 0.8,
-        },
-      },
-      legend: {
-        show: true,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "area",
+      stacked: "true",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
+      toolbar: {
+        show: false,
       },
-    }
-  );
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+        rotate: -60,
+      },
+      tickPlacement: "on",
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+    },
+
+    stroke: {
+      curve: "smooth",
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        opacityFrom: 0.6,
+        opacityTo: 0.8,
+      },
+    },
+    legend: {
+      show: true,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+    },
+  });
 });
 
 const categories = computed((): string[] => {

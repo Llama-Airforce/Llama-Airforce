@@ -13,10 +13,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import { type Contract } from "@PM/Services";
 import {
   CurvePriceService,
@@ -44,19 +42,14 @@ let serieVolume: ISeriesApi<"Histogram">;
 let max = 1;
 let min = 0;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    seriePrice = chart.addCandlestickSeries(
-      createOptionsSeriePrice(storeSettings.theme)
-    );
-    serieVolume = chart.addHistogramSeries(
-      createOptionsSerieVolume(storeSettings.theme)
-    );
+    seriePrice = chart.addCandlestickSeries(createOptionsSeriePrice());
+    serieVolume = chart.addHistogramSeries(createOptionsSerieVolume());
   }
 );
 
@@ -78,17 +71,17 @@ const loading = computed(
 );
 
 // Watches
-watch(theme, (newTheme) => {
-  seriePrice.applyOptions(createOptionsSeriePrice(newTheme));
-  serieVolume.applyOptions(createOptionsSerieVolume(newTheme));
+watch(theme, () => {
+  seriePrice.applyOptions(createOptionsSeriePrice());
+  serieVolume.applyOptions(createOptionsSerieVolume());
 });
 
 watch(dataPrice, createSeriesPrice);
 watch(dataVolume, createSeriesVolume);
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.75,
@@ -101,10 +94,8 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSeriePrice(
-  theme: Theme
-): CandlestickSeriesPartialOptions {
-  const colors = getColors(theme, storeSettings.flavor);
+function createOptionsSeriePrice(): CandlestickSeriesPartialOptions {
+  const { colors } = theme.value;
 
   return {
     priceFormat: {
@@ -125,11 +116,11 @@ function createOptionsSeriePrice(
   };
 }
 
-function createOptionsSerieVolume(theme: Theme): HistogramSeriesPartialOptions {
-  const colors = getColors(theme, storeSettings.flavor);
+function createOptionsSerieVolume(): HistogramSeriesPartialOptions {
+  const { colors } = theme.value;
 
   return {
-    color: storeSettings.flavor === "lsd" ? colors.blue : colors.purple,
+    color: flavor.value === "lsd" ? colors.blue : colors.purple,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",

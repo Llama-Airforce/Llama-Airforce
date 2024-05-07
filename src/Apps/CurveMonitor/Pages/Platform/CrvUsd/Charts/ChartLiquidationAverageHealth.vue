@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['1st Quartile', 'Median', '3rd Quartile']"
-          :colors="getColorsArray(storeSettings.theme)"
+          :colors="theme.colorsArray"
         ></Legend>
       </div>
     </template>
@@ -21,10 +21,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import CurveService, {
   type HistoricalAverageHealth,
 } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
@@ -46,20 +44,15 @@ let areaSerie: ISeriesApi<"Area">;
 let areaQ1Serie: ISeriesApi<"Area">;
 let areaQ3Serie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    areaSerie = chart.addAreaSeries(createOptionsSerie(storeSettings.theme));
-    areaQ1Serie = chart.addAreaSeries(
-      createQ1OptionsSerie(storeSettings.theme)
-    );
-    areaQ3Serie = chart.addAreaSeries(
-      createQ3OptionsSerie(storeSettings.theme)
-    );
+    areaSerie = chart.addAreaSeries(createOptionsSerie());
+    areaQ1Serie = chart.addAreaSeries(createQ1OptionsSerie());
+    areaQ3Serie = chart.addAreaSeries(createQ3OptionsSerie());
   }
 );
 
@@ -80,19 +73,16 @@ const {
 
 // Watches
 watch(() => market, load);
-watch(theme, (newTheme) => {
-  areaQ1Serie.applyOptions(createOptionsSerie(newTheme));
-  areaSerie.applyOptions(createOptionsSerie(newTheme));
-  areaQ3Serie.applyOptions(createOptionsSerie(newTheme));
-});
-
-watch(health, (newHealth) => {
-  createSeries(newHealth);
+watch(health, createSeries);
+watch(theme, () => {
+  areaQ1Serie.applyOptions(createOptionsSerie());
+  areaSerie.applyOptions(createOptionsSerie());
+  areaQ3Serie.applyOptions(createOptionsSerie());
 });
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -102,9 +92,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -113,7 +101,7 @@ function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.yellow,
+    lineColor: theme.value.colors.yellow,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -121,9 +109,7 @@ function createOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createQ1OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createQ1OptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -132,7 +118,7 @@ function createQ1OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -140,9 +126,7 @@ function createQ1OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createQ3OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createQ3OptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -151,7 +135,7 @@ function createQ3OptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.green,
+    lineColor: theme.value.colors.green,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,

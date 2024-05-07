@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { getHost, StableService } from "@PM/Services";
 import { addressShort } from "@/Wallet";
@@ -19,10 +18,10 @@ import { addressShort } from "@/Wallet";
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const stableService = new StableService(getHost(), storeSettings.flavor);
+const stableService = new StableService(getHost(), flavor.value);
 
 // Data
 const { loading, data } = usePromise(
@@ -32,60 +31,54 @@ const { loading, data } = usePromise(
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "mainHolders",
-        type: "donut",
-        animations: {
-          enabled: false,
-        },
-      },
-      legend: {
-        inverseOrder: true,
-      },
-      stroke: {
-        width: 0.5,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "mainHolders",
+      type: "donut",
+      animations: {
         enabled: false,
       },
-
-      tooltip: {
-        custom: (x: DataPoint<number>) => {
-          let label = categories.value[x.seriesIndex];
-          label =
-            label.length > 10 && label.startsWith("0x")
-              ? addressShort(label)
-              : label;
-          const value = x.series[x.seriesIndex];
-          const data = [
-            `<div><b>${label}</b>:</div><div>${formatter(
-              value as unknown as number
-            )}</div>`,
-          ];
-
-          return data.join("");
+    },
+    legend: {
+      inverseOrder: true,
+    },
+    stroke: {
+      width: 0.5,
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "60%",
         },
       },
-      labels: data.value.map((x) =>
-        x.label.length > 10 && x.label.startsWith("0x")
-          ? addressShort(x.label)
-          : x.label
-      ),
-    }
-  );
+    },
+    dataLabels: {
+      enabled: false,
+    },
+
+    tooltip: {
+      custom: (x: DataPoint<number>) => {
+        let label = categories.value[x.seriesIndex];
+        label =
+          label.length > 10 && label.startsWith("0x")
+            ? addressShort(label)
+            : label;
+        const value = x.series[x.seriesIndex];
+        const data = [
+          `<div><b>${label}</b>:</div><div>${formatter(
+            value as unknown as number
+          )}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    labels: data.value.map((x) =>
+      x.label.length > 10 && x.label.startsWith("0x")
+        ? addressShort(x.label)
+        : x.label
+    ),
+  });
 });
 
 const series = computed(() => data.value.map((x) => x.value));

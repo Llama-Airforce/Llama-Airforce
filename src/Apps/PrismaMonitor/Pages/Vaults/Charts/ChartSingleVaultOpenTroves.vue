@@ -13,10 +13,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getLineChartColors } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import {
   getHost,
   ManagerService,
@@ -35,21 +33,18 @@ const { vault = null } = defineProps<Props>();
 // Refs
 let globalCrSerie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    globalCrSerie = chart.addAreaSeries(
-      createGlobalCrOptionsSerie(storeSettings.theme)
-    );
+    globalCrSerie = chart.addAreaSeries(createGlobalCrOptionsSerie());
   }
 );
 
 // Services
-const managerService = new ManagerService(getHost(), storeSettings.flavor);
+const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
 const { loading, data, load } = usePromise(() => {
@@ -65,13 +60,11 @@ const { loading, data, load } = usePromise(() => {
 // Watches
 watch(data, createSeries);
 watch(() => vault, load);
-watch(theme, (newTheme) => {
-  globalCrSerie.applyOptions(createGlobalCrOptionsSerie(newTheme));
-});
+watch(theme, () => globalCrSerie.applyOptions(createGlobalCrOptionsSerie()));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -81,7 +74,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createGlobalCrOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
+function createGlobalCrOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -92,7 +85,7 @@ function createGlobalCrOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     lineType: LineType.WithSteps,
     lastValueVisible: false,
     priceLineVisible: false,
-    ...getLineChartColors(theme, storeSettings.flavor),
+    ...theme.value.lineChartColors,
   };
 }
 

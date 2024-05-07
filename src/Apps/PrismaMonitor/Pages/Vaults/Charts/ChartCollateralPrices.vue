@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['Oracle', 'Market']"
-          :colors="getColorsArray(storeSettings.theme, storeSettings.flavor)"
+          :colors="theme.colorsArray"
         ></Legend>
       </div>
     </template>
@@ -22,14 +22,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  getColors,
-  getColorsArray,
-  getLineChartColors,
-} from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import {
   getHost,
   CollateralService,
@@ -50,27 +44,19 @@ const { vault = null } = defineProps<Props>();
 let oracleSerie: ISeriesApi<"Area">;
 let marketSerie: ISeriesApi<"Area">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    oracleSerie = chart.addAreaSeries(
-      createProportionOptionsSerie(storeSettings.theme)
-    );
-    marketSerie = chart.addAreaSeries(
-      createPriceOptionsSerie(storeSettings.theme)
-    );
+    oracleSerie = chart.addAreaSeries(createProportionOptionsSerie());
+    marketSerie = chart.addAreaSeries(createPriceOptionsSerie());
   }
 );
 
 // Services
-const collateralService = new CollateralService(
-  getHost(),
-  storeSettings.flavor
-);
+const collateralService = new CollateralService(getHost(), flavor.value);
 
 // Data
 const init = {
@@ -97,9 +83,9 @@ const { loading, data, load } = usePromise<{
 // Watches
 watch(() => vault, load);
 watch(data, createSeries);
-watch(theme, (newTheme) => {
-  oracleSerie.applyOptions(createProportionOptionsSerie(newTheme));
-  marketSerie.applyOptions(createPriceOptionsSerie(newTheme));
+watch(theme, () => {
+  oracleSerie.applyOptions(createProportionOptionsSerie());
+  marketSerie.applyOptions(createPriceOptionsSerie());
 });
 
 // Methods
@@ -140,8 +126,8 @@ const processSeries = (
 };
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -151,9 +137,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme, storeSettings.flavor);
-
+function createPriceOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -162,7 +146,7 @@ function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.yellow,
+    lineColor: theme.value.colors.yellow,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -170,7 +154,7 @@ function createPriceOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createProportionOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
+function createProportionOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -181,7 +165,7 @@ function createProportionOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     lineType: LineType.WithSteps,
     lastValueVisible: false,
     priceLineVisible: false,
-    ...getLineChartColors(theme, storeSettings.flavor),
+    ...theme.value.lineChartColors,
   };
 }
 

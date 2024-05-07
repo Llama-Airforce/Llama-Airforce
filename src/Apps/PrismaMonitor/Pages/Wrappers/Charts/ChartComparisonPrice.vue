@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['cvxPRISMA', 'yPRISMA']"
-          :colors="getColorsArray(storeSettings.theme, storeSettings.flavor)"
+          :colors="[theme.colors.blue, theme.colors.yellow]"
         ></Legend>
       </div>
     </template>
@@ -21,10 +21,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import type { Theme } from "@PM/Models/Theme";
 import { CurvePriceService, type OHLC } from "@/Services";
 import { getPriceSettings } from "@PM/Pages/Wrappers/Settings";
 import { type Contract } from "@PM/Services";
@@ -35,19 +33,14 @@ const { t } = useI18n();
 let serieConvex: ISeriesApi<"Line">;
 let serieYearn: ISeriesApi<"Line">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    serieConvex = chart.addLineSeries(
-      createOptionsSerie(storeSettings.theme, "convex")
-    );
-    serieYearn = chart.addLineSeries(
-      createOptionsSerie(storeSettings.theme, "yearn")
-    );
+    serieConvex = chart.addLineSeries(createOptionsSerie("convex"));
+    serieYearn = chart.addLineSeries(createOptionsSerie("yearn"));
   }
 );
 
@@ -73,17 +66,17 @@ let max = 1.1;
 let min = 0;
 
 // Watches
-watch(theme, (newTheme) => {
-  serieConvex.applyOptions(createOptionsSerie(newTheme, "convex"));
-  serieYearn.applyOptions(createOptionsSerie(newTheme, "yearn"));
+watch(theme, () => {
+  serieConvex.applyOptions(createOptionsSerie("convex"));
+  serieYearn.applyOptions(createOptionsSerie("yearn"));
 });
 
 watch(dataConvex, (newData) => createSeries(newData, "convex"));
 watch(dataYearn, (newData) => createSeries(newData, "yearn"));
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, storeSettings.flavor, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -96,12 +89,9 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerie(
-  theme: Theme,
-  contract: Contract
-): LineSeriesPartialOptions {
-  const colors = getColors(theme, storeSettings.flavor);
-  const color = contract === "convex" ? colors.blue : colors.yellow;
+function createOptionsSerie(contract: Contract): LineSeriesPartialOptions {
+  const color =
+    contract === "convex" ? theme.value.colors.blue : theme.value.colors.yellow;
 
   return {
     priceFormat: {

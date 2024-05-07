@@ -5,16 +5,13 @@ import {
   LineStyle,
 } from "lightweight-charts";
 import { mergeWith } from "lodash";
-import { getColors } from "@/Styles/Themes/PM";
-import type { Theme } from "@PM/Models/Theme";
-import type { Flavor } from "@PM/Models/Flavor";
+import type { Theme } from "@/Styles/Theme";
 
 const createDefault = (
   chartRef: HTMLElement,
-  theme: Theme,
-  flavor: Flavor
+  theme: Theme
 ): DeepPartial<ChartOptions> => {
-  const colors = getColors(theme, flavor);
+  const { colors } = theme;
 
   return {
     width: chartRef.clientWidth,
@@ -53,10 +50,9 @@ const createDefault = (
 export default function createChartStyles(
   chartRef: HTMLElement,
   theme: Theme,
-  flavor: Flavor,
   options: DeepPartial<ChartOptions>
 ): DeepPartial<ChartOptions> {
-  const _default = createDefault(chartRef, theme, flavor);
+  const _default = createDefault(chartRef, theme);
 
   const mergeFunction = (objValue: unknown, srcValue: unknown) => {
     if (typeof srcValue === "object") {

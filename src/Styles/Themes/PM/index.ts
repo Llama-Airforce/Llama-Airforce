@@ -1,4 +1,4 @@
-import type { Theme } from "@PM/Models/Theme";
+import type { ThemeId } from "@PM/Models/ThemeId";
 import type { Flavor } from "@PM/Models/Flavor";
 import {
   ColorsPMDarkLsd,
@@ -13,40 +13,26 @@ import {
   ColorsPMLightArrayLrt,
 } from "@/Styles/Themes/PM/Light";
 
-export function getColors(theme: Theme, flavor: Flavor) {
-  if (theme === "light") {
-    if (flavor === "lsd") {
-      return ColorsPMLightLsd;
-    }
-
-    return ColorsPMLightLrt;
+export function getColors(themeId: ThemeId, flavor: Flavor) {
+  switch (themeId) {
+    case "light":
+      return flavor === "lsd" ? ColorsPMLightLsd : ColorsPMLightLrt;
+    default:
+      return flavor === "lsd" ? ColorsPMDarkLsd : ColorsPMDarkLrt;
   }
-
-  if (flavor === "lsd") {
-    return ColorsPMDarkLsd;
-  }
-
-  return ColorsPMDarkLrt;
 }
 
-export function getColorsArray(theme: Theme, flavor: Flavor) {
-  if (theme === "light") {
-    if (flavor === "lsd") {
-      return ColorsPMLightArrayLsd;
-    }
-
-    return ColorsPMLightArrayLrt;
+export function getColorsArray(themeId: ThemeId, flavor: Flavor) {
+  switch (themeId) {
+    case "light":
+      return flavor === "lsd" ? ColorsPMLightArrayLsd : ColorsPMLightArrayLrt;
+    default:
+      return flavor === "lsd" ? ColorsPMDarkArrayLsd : ColorsPMDarkArrayLrt;
   }
-
-  if (flavor === "lsd") {
-    return ColorsPMDarkArrayLsd;
-  }
-
-  return ColorsPMDarkArrayLrt;
 }
 
-export function getLineChartColors(theme: Theme, flavor: Flavor) {
-  const colors = getColors(theme, flavor);
+export function getLineChartColors(themeId: ThemeId, flavor: Flavor) {
+  const colors = getColors(themeId, flavor);
 
   if (flavor === "lsd") {
     return {

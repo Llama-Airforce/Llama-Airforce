@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { type DecimalLabelledSeries } from "@PM/Services";
 
@@ -22,57 +21,51 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "largePositions",
-        type: "donut",
-        animations: {
-          enabled: false,
-        },
-      },
-      legend: {
-        inverseOrder: true,
-      },
-      stroke: {
-        width: 0.5,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "60%",
-          },
-        },
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "largePositions",
+      type: "donut",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        custom: (x: DataPoint<number>) => {
-          let label = categories.value[x.seriesIndex];
-          label = label.length > 10 ? addressShort(label) : label;
-          const value = x.series[x.seriesIndex];
-          const data = [
-            `<div><b>${label}</b>:</div><div>${formatter(
-              value as unknown as number
-            )}</div>`,
-          ];
-
-          return data.join("");
+    },
+    legend: {
+      inverseOrder: true,
+    },
+    stroke: {
+      width: 0.5,
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "60%",
         },
       },
-      labels: data.map((x) =>
-        x.label.length > 10 ? addressShort(x.label) : x.label
-      ),
-    }
-  );
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      custom: (x: DataPoint<number>) => {
+        let label = categories.value[x.seriesIndex];
+        label = label.length > 10 ? addressShort(label) : label;
+        const value = x.series[x.seriesIndex];
+        const data = [
+          `<div><b>${label}</b>:</div><div>${formatter(
+            value as unknown as number
+          )}</div>`,
+        ];
+
+        return data.join("");
+      },
+    },
+    labels: data.map((x) =>
+      x.label.length > 10 ? addressShort(x.label) : x.label
+    ),
+  });
 });
 
 const series = computed(() => data.map((x) => x.value));

@@ -13,12 +13,10 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { getColors } from "@/Styles/Themes/CM";
 import type { Price, Volume } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 
 const { t } = useI18n();
 
@@ -30,7 +28,7 @@ let min = 0;
 
 // Refs
 const store = useMonitorStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -46,14 +44,9 @@ const volumes = computed((): Volume[] => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
-  areaSerie = chart.addAreaSeries(createOptionsSeriePrice(storeSettings.theme));
-  volumeSerie = chart.addHistogramSeries(
-    createOptionsSerieVolume(storeSettings.theme)
-  );
+  chart = createChartFunc(chartRef.value, createOptionsChart(chartRef.value));
+  areaSerie = chart.addAreaSeries(createOptionsSeriePrice());
+  volumeSerie = chart.addHistogramSeries(createOptionsSerieVolume());
 
   createSeriesPrice(prices.value);
   createSeriesVolume(volumes.value);
@@ -68,20 +61,17 @@ watch(volumes, (newVolumes) => {
   createSeriesVolume(newVolumes);
 });
 
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
-      areaSerie.applyOptions(createOptionsSeriePrice(newTheme));
-      volumeSerie.applyOptions(createOptionsSerieVolume(newTheme));
-    }
+watch(theme.value, () => {
+  if (chartRef.value) {
+    chart.applyOptions(createOptionsChart(chartRef.value));
+    areaSerie.applyOptions(createOptionsSeriePrice());
+    volumeSerie.applyOptions(createOptionsSerieVolume());
   }
-);
+});
 
 // Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+const createOptionsChart = (chartRef: HTMLElement) => {
+  return createChartStyles(chartRef, theme.value, {
     leftPriceScale: {
       scaleMargins: {
         top: 0.6,
@@ -94,9 +84,7 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSeriePrice = (theme: Theme): AreaSeriesPartialOptions => {
-  const colors = getColors(theme);
-
+const createOptionsSeriePrice = (): AreaSeriesPartialOptions => {
   return {
     priceFormat: {
       type: "price",
@@ -105,7 +93,7 @@ const createOptionsSeriePrice = (theme: Theme): AreaSeriesPartialOptions => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -113,13 +101,9 @@ const createOptionsSeriePrice = (theme: Theme): AreaSeriesPartialOptions => {
   };
 };
 
-const createOptionsSerieVolume = (
-  theme: Theme
-): HistogramSeriesPartialOptions => {
-  const colors = getColors(theme);
-
+const createOptionsSerieVolume = (): HistogramSeriesPartialOptions => {
   return {
-    color: colors.yellow,
+    color: theme.value.colors.yellow,
     lastValueVisible: false,
     priceFormat: {
       type: "volume",

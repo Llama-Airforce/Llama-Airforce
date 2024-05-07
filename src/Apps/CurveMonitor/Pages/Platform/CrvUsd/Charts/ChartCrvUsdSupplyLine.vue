@@ -7,10 +7,8 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 // Props
@@ -24,32 +22,27 @@ const { data = [] } = defineProps<Props>();
 let supplySerie: ISeriesApi<"Area">;
 let debtSerie: ISeriesApi<"Line">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    supplySerie = chart.addAreaSeries(
-      createSupplyOptionsSerie(storeSettings.theme)
-    );
-    debtSerie = chart.addLineSeries(
-      createDebtOptionsSerie(storeSettings.theme)
-    );
+    supplySerie = chart.addAreaSeries(createSupplyOptionsSerie());
+    debtSerie = chart.addLineSeries(createDebtOptionsSerie());
   }
 );
 
 // Watches
 watch(() => data, createSeries);
-watch(theme, (newTheme) => {
-  supplySerie.applyOptions(createSupplyOptionsSerie(newTheme));
-  debtSerie.applyOptions(createDebtOptionsSerie(newTheme));
+watch(theme, () => {
+  supplySerie.applyOptions(createSupplyOptionsSerie());
+  debtSerie.applyOptions(createDebtOptionsSerie());
 });
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -62,9 +55,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createSupplyOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createSupplyOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -73,7 +64,7 @@ function createSupplyOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    lineColor: colors.blue,
+    lineColor: theme.value.colors.blue,
     topColor: "rgb(32, 129, 240, 0.2)",
     bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
@@ -81,9 +72,7 @@ function createSupplyOptionsSerie(theme: Theme): AreaSeriesPartialOptions {
   };
 }
 
-function createDebtOptionsSerie(theme: Theme): LineSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createDebtOptionsSerie(): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -92,7 +81,7 @@ function createDebtOptionsSerie(theme: Theme): LineSeriesPartialOptions {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: colors.yellow,
+    color: theme.value.colors.yellow,
     lastValueVisible: false,
     priceLineVisible: false,
   };

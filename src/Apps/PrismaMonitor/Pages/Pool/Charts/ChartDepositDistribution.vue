@@ -10,17 +10,16 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { getHost, StabilityPoolService } from "@PM/Services";
 
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
+const sbService = new StabilityPoolService(getHost(), flavor.value);
 
 // Data
 const { loading, data } = usePromise(
@@ -29,45 +28,39 @@ const { loading, data } = usePromise(
 );
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "distribution",
-        type: "bar",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          rotate: -45,
-        },
-        tickPlacement: "on",
-      },
-      legend: {
-        inverseOrder: true,
-      },
-      stroke: {
-        width: 0.5,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "distribution",
+      type: "bar",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: true,
+      toolbar: {
+        show: false,
       },
-    }
-  );
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        rotate: -45,
+      },
+      tickPlacement: "on",
+    },
+    legend: {
+      inverseOrder: true,
+    },
+    stroke: {
+      width: 0.5,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: true,
+    },
+  });
 });
 
 const series = computed((): { name: string; data: number[] }[] => [

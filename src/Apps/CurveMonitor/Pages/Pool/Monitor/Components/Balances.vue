@@ -5,7 +5,7 @@
   >
     <Legend
       :items="store.coins.map((x) => x.name)"
-      :colors="getColorsArray(storeSettings.theme)"
+      :colors="theme.colorsArray"
     ></Legend>
 
     <div
@@ -18,12 +18,10 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import { getColorsArray } from "@/Styles/Themes/CM";
 import type { Balances } from "@CM/Pages/Pool/Monitor/Models";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 
 type Mode = "percentage" | "absolute";
 
@@ -35,7 +33,7 @@ const mode: Mode = "absolute";
 
 // Refs
 const store = useMonitorStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 
@@ -52,10 +50,7 @@ const numCoins = computed((): number => {
 onMounted((): void => {
   if (!chartRef.value) return;
 
-  chart = createChartFunc(
-    chartRef.value,
-    createOptionsChart(chartRef.value, storeSettings.theme)
-  );
+  chart = createChartFunc(chartRef.value, createOptionsChart(chartRef.value));
 
   addSeries();
   createSeries(balances.value);
@@ -67,22 +62,19 @@ watch(balances, (newBalances) => {
   createSeries(newBalances);
 });
 
-watch(
-  () => storeSettings.theme,
-  (newTheme) => {
-    if (chartRef.value) {
-      chart.applyOptions(createOptionsChart(chartRef.value, newTheme));
+watch(theme.value, () => {
+  if (chartRef.value) {
+    chart.applyOptions(createOptionsChart(chartRef.value));
 
-      for (const [i, serie] of lineSeries.entries()) {
-        serie.applyOptions(createOptionsSerie(i, storeSettings.theme));
-      }
+    for (const [i, serie] of lineSeries.entries()) {
+      serie.applyOptions(createOptionsSerie(i));
     }
   }
-);
+});
 
 // Methods
-const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
-  return createChartStyles(chartRef, theme, {
+const createOptionsChart = (chartRef: HTMLElement) => {
+  return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -98,11 +90,8 @@ const createOptionsChart = (chartRef: HTMLElement, theme: Theme) => {
   });
 };
 
-const createOptionsSerie = (
-  i: number,
-  theme: Theme
-): LineSeriesPartialOptions => {
-  const colorsArray = getColorsArray(theme);
+const createOptionsSerie = (i: number): LineSeriesPartialOptions => {
+  const { colorsArray } = theme.value;
 
   return {
     priceFormat: {
@@ -130,9 +119,7 @@ const addSeries = (): void => {
 
   lineSeries = [];
   for (let i = 0; i < numCoins.value; i++) {
-    const lineSerie = chart.addLineSeries(
-      createOptionsSerie(i, storeSettings.theme)
-    );
+    const lineSerie = chart.addLineSeries(createOptionsSerie(i));
 
     lineSeries.push(lineSerie);
   }

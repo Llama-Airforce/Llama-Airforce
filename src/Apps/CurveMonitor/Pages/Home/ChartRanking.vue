@@ -10,14 +10,13 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import CurveService from "@CM/Pages/Home/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores";
 
 const curveService = new CurveService(getHost());
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { loading, data } = usePromise(async () => {
@@ -32,62 +31,58 @@ const { loading, data } = usePromise(async () => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
+  const { colors } = theme.value;
 
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        animations: {
-          enabled: false,
-        },
-      },
-      colors: [
-        (x: { value: number }) => (x.value < 0 ? colors.red : colors.green),
-      ],
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-        },
-      },
-      yaxis: {
-        labels: {
-          formatter: formatterY,
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "75%",
-        },
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<number>) => {
-          const pool = categories.value[x.dataPointIndex];
-          const delta = x.series[0][x.dataPointIndex];
-          const chain = data.value.find((x) => x.name === pool)?.chain;
+    },
+    colors: [
+      (x: { value: number }) => (x.value < 0 ? colors.red : colors.green),
+    ],
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+      },
+    },
+    yaxis: {
+      labels: {
+        formatter: formatterY,
+      },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "75%",
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<number>) => {
+        const pool = categories.value[x.dataPointIndex];
+        const delta = x.series[0][x.dataPointIndex];
+        const chain = data.value.find((x) => x.name === pool)?.chain;
 
-          const tooltip = `
+        const tooltip = `
             <div><b>${pool}</b>:</div>
             <div>${formatterY(delta)}</div>
             <div>${chain}<div>`;
 
-          return tooltip;
-        },
+        return tooltip;
       },
-    }
-  );
+    },
+  });
 });
 
 const categories = computed((): string[] => data.value.map((x) => x.name));

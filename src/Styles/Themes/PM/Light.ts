@@ -1,4 +1,6 @@
-export const ColorsPMLightLsd = {
+import type { Colors } from "@/Styles/Colors";
+
+export const ColorsPMLightLsd: Colors = {
   blue: "#5baefb",
   yellow: "#f9ab1a",
   green: "#05c70c",
@@ -16,7 +18,7 @@ export const ColorsPMLightLsd = {
   text: "#000000",
 };
 
-export const ColorsPMLightLrt = {
+export const ColorsPMLightLrt: Colors = {
   blue: "#5baefb",
   yellow: "#f9ab1a",
   green: "#05c70c",

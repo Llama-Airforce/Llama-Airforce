@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import { type PoolDepth } from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStyles";
@@ -26,79 +25,75 @@ interface Props {
 const { depth = null, loading } = defineProps<Props>();
 
 // Refs
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
+  const { colors } = theme.value;
 
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "area",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          type: "vertical",
-          shadeIntensity: 0,
-          inverseColors: false,
-          opacityFrom: 0.8,
-          opacityTo: 0.2,
-          stops: [0, 90, 100],
-        },
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "area",
+      animations: {
+        enabled: false,
       },
       toolbar: {
         show: false,
       },
-      xaxis: {
-        type: "numeric",
-        labels: {
-          formatter: (x: number): string => formatter(x),
-        },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        type: "vertical",
+        shadeIntensity: 0,
+        inverseColors: false,
+        opacityFrom: 0.8,
+        opacityTo: 0.2,
+        stops: [0, 90, 100],
       },
-      yaxis: {
-        seriesName: "amounts",
-        labels: {
-          formatter: (y: number): string => formatter(y),
-        },
+    },
+    toolbar: {
+      show: false,
+    },
+    xaxis: {
+      type: "numeric",
+      labels: {
+        formatter: (x: number): string => formatter(x),
       },
-      legend: {
-        show: false,
+    },
+    yaxis: {
+      seriesName: "amounts",
+      labels: {
+        formatter: (y: number): string => formatter(y),
       },
-      dataLabels: {
-        enabled: false,
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      x: {
+        formatter: (y: number): string => formatter(y),
       },
-      tooltip: {
-        x: {
-          formatter: (y: number): string => formatter(y),
-        },
+    },
+    colors: [
+      (x: { value: number }) => {
+        if (x.value === 0) {
+          return colors.blue;
+        } else {
+          return colors.green;
+        }
       },
-      colors: [
-        (x: { value: number }) => {
-          if (x.value === 0) {
-            return colors.blue;
-          } else {
-            return colors.green;
-          }
-        },
-        (x: { value: number }) => {
-          if (x.value === 0) {
-            return colors.blue;
-          } else {
-            return colors.red;
-          }
-        },
-      ],
-    }
-  );
+      (x: { value: number }) => {
+        if (x.value === 0) {
+          return colors.blue;
+        } else {
+          return colors.red;
+        }
+      },
+    ],
+  });
 });
 
 const series = computed(

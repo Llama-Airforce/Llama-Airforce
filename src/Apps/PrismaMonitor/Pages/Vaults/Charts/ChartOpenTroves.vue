@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { getHost, ManagerService, type Period } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
@@ -50,10 +49,10 @@ type TooltipParams = {
 };
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const managerService = new ManagerService(getHost(), storeSettings.flavor);
+const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
 const { loading, data, load } = usePromise(
@@ -69,61 +68,55 @@ const period = ref<Period>("1m");
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "bar",
-        stacked: "true",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: formatterX,
-          rotate: -60,
-        },
-        tickPlacement: "on",
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "50%",
-        },
-      },
-      legend: {
-        show: true,
-      },
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "bar",
+      stacked: "true",
+      animations: {
         enabled: false,
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: true,
-        custom: ({ series, dataPointIndex, w }: TooltipParams) => {
-          let total = 0;
-          const data = series.map((managerSeries, index) => {
-            const value = managerSeries[dataPointIndex];
-            total += value;
-            return `<div><b>${w.globals.seriesNames[index]}</b>: ${value}</div>`;
-          });
-
-          // Add total
-          data.push(`<div><b>Total</b>: ${total}</div>`);
-
-          return data.join("");
-        },
+      toolbar: {
+        show: false,
       },
-    }
-  );
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: formatterX,
+        rotate: -60,
+      },
+      tickPlacement: "on",
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+      },
+    },
+    legend: {
+      show: true,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: true,
+      custom: ({ series, dataPointIndex, w }: TooltipParams) => {
+        let total = 0;
+        const data = series.map((managerSeries, index) => {
+          const value = managerSeries[dataPointIndex];
+          total += value;
+          return `<div><b>${w.globals.seriesNames[index]}</b>: ${value}</div>`;
+        });
+
+        // Add total
+        data.push(`<div><b>Total</b>: ${total}</div>`);
+
+        return data.join("");
+      },
+    },
+  });
 });
 
 const categories = computed((): string[] => {

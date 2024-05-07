@@ -1,4 +1,6 @@
-export const ColorsLAFDark = {
+import type { Colors } from "@/Styles/Colors";
+
+export const ColorsLAFDark: Colors = {
   blue: "rgb(32, 129, 240)",
   yellow: "rgb(255, 204, 0)",
   green: "rgb(126, 217, 87)",

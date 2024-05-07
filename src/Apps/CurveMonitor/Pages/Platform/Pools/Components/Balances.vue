@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import type { Pool, Reserves } from "@CM/Pages/Platform/Pools/Models";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import { useSettingsStore } from "@CM/Stores";
@@ -32,7 +31,7 @@ const { poolSelected } = defineProps<Props>();
 
 // Refs
 const store = useCurvePoolsStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const reserves = computed((): Reserves[] => {
   return poolSelected ? store.reserves[poolSelected.address] ?? [] : [];
@@ -45,56 +44,49 @@ const numCoins = computed((): number => {
 });
 
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  const colorsArray = getColorsArray(storeSettings.theme);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        id: "balances",
-        animations: {
-          enabled: false,
-        },
-      },
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: [...Array(numCoins.value).keys()].map((i) => createAxisY(i)),
-      dataLabels: {
+  return createChartStyles(theme.value, {
+    chart: {
+      id: "balances",
+      animations: {
         enabled: false,
       },
-      plotOptions: {
-        bar: {
-          distributed: false,
-          dataLabels: {
-            position: "top",
-            hideOverflowingLabels: false,
-          },
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: [...Array(numCoins.value).keys()].map((i) => createAxisY(i)),
+    dataLabels: {
+      enabled: false,
+    },
+    plotOptions: {
+      bar: {
+        distributed: false,
+        dataLabels: {
+          position: "top",
+          hideOverflowingLabels: false,
         },
       },
-      tooltip: {
-        followCursor: false,
-        enabled: true,
-        intersect: false,
-        custom: (x: DataPoint<Serie>) => {
-          const percentages = [...Array(numCoins.value).keys()].map(
-            (i) => x.w.globals.initialSeries[i].data[x.dataPointIndex].y
-          );
+    },
+    tooltip: {
+      followCursor: false,
+      enabled: true,
+      intersect: false,
+      custom: (x: DataPoint<Serie>) => {
+        const percentages = [...Array(numCoins.value).keys()].map(
+          (i) => x.w.globals.initialSeries[i].data[x.dataPointIndex].y
+        );
 
-          const data = percentages.map(
-            (p, i) =>
-              `<div><b>${address(i).substring(
-                0,
-                10
-              )}</b>:</div><div>${formatter(p)}</div>`
-          );
+        const data = percentages.map(
+          (p, i) =>
+            `<div><b>${address(i).substring(0, 10)}</b>:</div><div>${formatter(
+              p
+            )}</div>`
+        );
 
-          return data.join("");
-        },
+        return data.join("");
       },
-    }
-  );
+    },
+  });
 });
 
 const series = computed((): Serie[] => {

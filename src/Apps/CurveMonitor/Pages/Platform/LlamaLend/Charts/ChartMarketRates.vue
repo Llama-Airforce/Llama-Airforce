@@ -22,11 +22,9 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { getColors } from "@/Styles/Themes/CM";
 import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import type { Theme } from "@CM/Models/Theme";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 import type { Market, Snapshot } from "@CM/Pages/Platform/LlamaLend/Models";
 
@@ -46,24 +44,19 @@ const { market = null, chain = null } = defineProps<Props>();
 let borrowApySerie: ISeriesApi<"Line">;
 let lendApySerie: ISeriesApi<"Line">;
 
-const storeSettings = useSettingsStore();
-const theme = computed(() => storeSettings.theme);
+const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    borrowApySerie = chart.addLineSeries(
-      createOptionsSerieBorrowApy(storeSettings.theme)
-    );
-    lendApySerie = chart.addLineSeries(
-      createOptionsLendApy(storeSettings.theme)
-    );
+    borrowApySerie = chart.addLineSeries(createOptionsSerieBorrowApy());
+    lendApySerie = chart.addLineSeries(createOptionsLendApy());
   }
 );
 
 const colorsLegend = computed(() => {
-  const colors = getColors(storeSettings.theme);
+  const { colors } = theme.value;
 
   return [colors.red, colors.green];
 });
@@ -82,14 +75,14 @@ const { isFetching: loading, data: snapshots } = useQuery({
 
 // Watches
 watch([snapshots, chart], createSeries);
-watch(theme, (newTheme) => {
-  borrowApySerie.applyOptions(createOptionsSerieBorrowApy(newTheme));
-  lendApySerie.applyOptions(createOptionsLendApy(newTheme));
+watch(theme, () => {
+  borrowApySerie.applyOptions(createOptionsSerieBorrowApy());
+  lendApySerie.applyOptions(createOptionsLendApy());
 });
 
 // Chart
-function createOptionsChart(chartRef: HTMLElement, theme: string) {
-  return createChartStyles(chartRef, theme as Theme, {
+function createOptionsChart(chartRef: HTMLElement) {
+  return createChartStyles(chartRef, theme.value, {
     height: 200,
     rightPriceScale: {
       scaleMargins: {
@@ -103,9 +96,7 @@ function createOptionsChart(chartRef: HTMLElement, theme: string) {
   });
 }
 
-function createOptionsSerieBorrowApy(theme: Theme): LineSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsSerieBorrowApy(): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -113,15 +104,13 @@ function createOptionsSerieBorrowApy(theme: Theme): LineSeriesPartialOptions {
       minMove: 0.01,
     },
     lineWidth: 2,
-    color: colors.red,
+    color: theme.value.colors.red,
     lastValueVisible: false,
     priceLineVisible: false,
   };
 }
 
-function createOptionsLendApy(theme: Theme): LineSeriesPartialOptions {
-  const colors = getColors(theme);
-
+function createOptionsLendApy(): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -129,7 +118,7 @@ function createOptionsLendApy(theme: Theme): LineSeriesPartialOptions {
       minMove: 0.01,
     },
     lineWidth: 2,
-    color: colors.green,
+    color: theme.value.colors.green,
     lastValueVisible: false,
     priceLineVisible: false,
   };

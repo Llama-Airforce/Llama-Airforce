@@ -1,26 +1,6 @@
-import { ColorsLAFDark, ColorsLAFDarkArray } from "@/Styles/Themes/LAF/Dark";
 import { mergeWith } from "lodash";
-
-type Theme = {
-  colors: {
-    blue: string;
-    yellow: string;
-    green: string;
-    red: string;
-    purple: string;
-
-    backgroundColor: string;
-    level1: string;
-    level2: string;
-    level3: string;
-    level4: string;
-    level5: string;
-    level6: string;
-
-    text: string;
-  };
-  colorsArray: string[];
-};
+import { ColorsLAFDark, ColorsLAFDarkArray } from "@/Styles/Themes/LAF/Dark";
+import type { Theme } from "@/Styles/Theme";
 
 const createDefault = (theme: Theme): object => ({
   chart: {

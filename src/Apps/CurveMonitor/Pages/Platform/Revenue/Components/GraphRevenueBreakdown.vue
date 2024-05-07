@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           :items="['DAO', 'Liquidity Providers']"
-          :colors="getColorsArray(storeSettings.theme)"
+          :colors="theme.colorsArray"
         ></Legend>
 
         <Tooltip placement="left">
@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getColors, getColorsArray } from "@/Styles/Themes/CM";
 import { useSettingsStore } from "@CM/Stores";
 import { type BreakdownRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
@@ -36,7 +35,7 @@ const { t } = useI18n();
 
 // Refs
 const store = useCurveStore();
-const storeSettings = useSettingsStore();
+const { theme } = storeToRefs(useSettingsStore());
 
 const breakdown = computed((): BreakdownRevenue[] => {
   return store.breakdown ?? [];
@@ -44,15 +43,16 @@ const breakdown = computed((): BreakdownRevenue[] => {
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme);
-  let colorsArray = getColorsArray(storeSettings.theme);
-  colorsArray = [
-    colorsArray[0],
-    shadeColor(colorsArray[0], 10),
-    shadeColor(colorsArray[0], 20),
-    colorsArray[1],
-    shadeColor(colorsArray[1], 10),
-  ];
+  const { colors, colorsArray } = {
+    colors: theme.value.colors,
+    colorsArray: [
+      theme.value.colorsArray[0],
+      shadeColor(theme.value.colorsArray[0], 10),
+      shadeColor(theme.value.colorsArray[0], 20),
+      theme.value.colorsArray[1],
+      shadeColor(theme.value.colorsArray[1], 10),
+    ],
+  };
 
   return createChartStyles(
     { colors, colorsArray },

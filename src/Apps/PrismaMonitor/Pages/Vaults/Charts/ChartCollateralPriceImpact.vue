@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { getColors, getColorsArray } from "@/Styles/Themes/PM";
 import { useSettingsStore } from "@PM/Stores";
 import {
   getHost,
@@ -22,13 +21,10 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 const { t } = useI18n();
 
 // Stores
-const storeSettings = useSettingsStore();
+const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const collateralService = new CollateralService(
-  getHost(),
-  storeSettings.flavor
-);
+const collateralService = new CollateralService(getHost(), flavor.value);
 
 // Props
 interface Props {
@@ -49,74 +45,68 @@ const { loading, data, load } = usePromise(() => {
 
 // Refs
 const options = computed((): unknown => {
-  const colors = getColors(storeSettings.theme, storeSettings.flavor);
-  const colorsArray = getColorsArray(storeSettings.theme, storeSettings.flavor);
-
-  return createChartStyles(
-    { colors, colorsArray },
-    {
-      chart: {
-        type: "area",
-        animations: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          type: "vertical",
-          shadeIntensity: 0,
-          inverseColors: false,
-          opacityFrom: 0.7,
-          opacityTo: 0,
-          stops: [0, 90, 100],
-        },
+  return createChartStyles(theme.value, {
+    chart: {
+      type: "area",
+      animations: {
+        enabled: false,
       },
       toolbar: {
         show: false,
       },
-      xaxis: {
-        categories: categories.value,
-        labels: {
-          formatter: (x: number): string => formatter(x),
-        },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        type: "vertical",
+        shadeIntensity: 0,
+        inverseColors: false,
+        opacityFrom: 0.7,
+        opacityTo: 0,
+        stops: [0, 90, 100],
       },
-      yaxis: {
-        seriesName: "impact",
-        labels: {
-          formatter: (y: number): string => pctFormatter(y),
-        },
+    },
+    toolbar: {
+      show: false,
+    },
+    xaxis: {
+      categories: categories.value,
+      labels: {
+        formatter: (x: number): string => formatter(x),
       },
-      legend: {
-        show: false,
+    },
+    yaxis: {
+      seriesName: "impact",
+      labels: {
+        formatter: (y: number): string => pctFormatter(y),
       },
-      dataLabels: {
-        enabled: false,
-      },
-      tooltip: {
-        shared: true,
-        custom: (x: DataPoint<number>) => {
-          if (!vault) {
-            return "";
-          }
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    tooltip: {
+      shared: true,
+      custom: (x: DataPoint<number>) => {
+        if (!vault) {
+          return "";
+        }
 
-          const amount = categories.value[x.dataPointIndex];
-          const dollars = formatter(amount * vault.price);
-          const tooltip = `
+        const amount = categories.value[x.dataPointIndex];
+        const dollars = formatter(amount * vault.price);
+        const tooltip = `
           <div><b>Collateral sold:</b>:</div>
           <div>${formatter(amount)} ${vault.name} ($${dollars})</div>
 
           <div><b>Price impact:</b>:</div>
           <div>${pctFormatter(x.series[0][x.dataPointIndex])}</div>
           `;
-          return tooltip;
-        },
+        return tooltip;
       },
-    }
-  );
+    },
+  });
 });
 
 const series = computed((): { name: string; data: number[] }[] => [
