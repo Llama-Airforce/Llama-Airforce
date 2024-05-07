@@ -63,11 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getHost,
-  CollateralService,
-  type TroveManagerDetails,
-} from "@PM/Services";
+import { CollateralService, type TroveManagerDetails } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 // Stores

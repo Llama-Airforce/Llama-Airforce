@@ -96,7 +96,6 @@ import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import {
-  getHost,
   RedemptionService,
   type Redemption,
   type TroveManagerDetails,

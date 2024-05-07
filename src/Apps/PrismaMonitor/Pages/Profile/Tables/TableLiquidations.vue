@@ -106,7 +106,7 @@ import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
 import SelectVault from "@PM/Components/SelectVault.vue";
-import { getHost, type Liquidation, LiquidationService } from "@PM/Services";
+import { type Liquidation, LiquidationService } from "@PM/Services";
 
 // Stores
 const storeSettings = useSettingsStore();

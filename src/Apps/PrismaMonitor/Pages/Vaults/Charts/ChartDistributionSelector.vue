@@ -27,11 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getHost,
-  ManagerService,
-  type TroveManagerDetails,
-} from "@PM/Services";
+import { ManagerService, type TroveManagerDetails } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 import ChartDistribution from "@PM/Pages/Vaults/Charts/ChartDistribution.vue";
 

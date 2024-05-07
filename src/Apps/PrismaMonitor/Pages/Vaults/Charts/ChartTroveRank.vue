@@ -36,7 +36,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import {
-  getHost,
   TroveService,
   type RatioPosition,
   type Trove,

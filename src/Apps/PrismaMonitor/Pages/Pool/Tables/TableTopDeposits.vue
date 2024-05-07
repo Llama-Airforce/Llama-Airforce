@@ -47,11 +47,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import {
-  getHost,
-  type PoolStableOperation,
-  StabilityPoolService,
-} from "@PM/Services";
+import { type PoolStableOperation, StabilityPoolService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();

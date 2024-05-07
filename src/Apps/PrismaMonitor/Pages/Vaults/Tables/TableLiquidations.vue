@@ -95,7 +95,6 @@ import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
 import {
-  getHost,
   LiquidationService,
   type Liquidation,
   type TroveManagerDetails,

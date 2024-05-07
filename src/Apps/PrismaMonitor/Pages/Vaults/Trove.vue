@@ -30,12 +30,7 @@ import { label } from "@PM/Models/Vault";
 import ChartTroveRank from "@PM/Pages/Vaults/Charts/ChartTroveRank.vue";
 import ChartTroveHealth from "@PM/Pages/Vaults/Charts/ChartTroveHealth.vue";
 import TableTroveOps from "@PM/Pages/Vaults/Tables/TableTroveOps.vue";
-import {
-  getHost,
-  TroveService,
-  TroveOverviewService,
-  type Trove,
-} from "@PM/Services";
+import { TroveService, TroveOverviewService, type Trove } from "@PM/Services";
 
 // Stores
 const storeSettings = useSettingsStore();

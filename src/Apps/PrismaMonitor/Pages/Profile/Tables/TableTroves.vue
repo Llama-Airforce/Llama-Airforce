@@ -111,7 +111,6 @@ import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
 import {
-  getHost,
   type Trove,
   type TroveStatus,
   type TroveManagerDetails,

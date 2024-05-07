@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { getHost, ManagerService, type Period } from "@PM/Services";
+import { ManagerService, type Period } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();

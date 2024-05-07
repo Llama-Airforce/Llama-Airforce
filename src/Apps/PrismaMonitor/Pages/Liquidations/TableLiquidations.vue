@@ -108,7 +108,6 @@ import { type Vault, icon } from "@PM/Models/Vault";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
 import SelectVault from "@PM/Components/SelectVault.vue";
 import {
-  getHost,
   type TroveManagerDetails,
   LiquidationService,
   type Liquidation,

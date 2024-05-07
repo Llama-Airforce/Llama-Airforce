@@ -104,7 +104,6 @@ import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import {
-  getHost,
   TroveService,
   type Trove,
   type TroveStatus,

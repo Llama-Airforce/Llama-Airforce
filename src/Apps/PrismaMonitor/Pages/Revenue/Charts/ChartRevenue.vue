@@ -61,7 +61,7 @@
 import { cloneDeep } from "lodash";
 import ChartRevenueLine from "@PM/Pages/Revenue/Charts/ChartRevenueLine.vue";
 import ChartRevenueBreakdown from "@PM/Pages/Revenue/Charts/ChartRevenueBreakdown.vue";
-import { getHost, RevenueService } from "@PM/Services";
+import { RevenueService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 type ChartType = "line" | "breakdown";

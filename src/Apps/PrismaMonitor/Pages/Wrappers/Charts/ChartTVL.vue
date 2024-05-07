@@ -16,7 +16,6 @@ import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import {
-  getHost,
   WrapperService,
   type Contract,
   type DecimalTimeSeries,

@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
-import { getHost, StabilityPoolService } from "@PM/Services";
+import { StabilityPoolService } from "@PM/Services";
 
 const { t } = useI18n();
 

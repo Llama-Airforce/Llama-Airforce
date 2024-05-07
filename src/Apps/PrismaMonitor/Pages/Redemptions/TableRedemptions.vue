@@ -107,7 +107,6 @@ import { type Vault, icon } from "@PM/Models/Vault";
 import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
 import SelectVault from "@PM/Components/SelectVault.vue";
 import {
-  getHost,
   type Redemption,
   type TroveManagerDetails,
   RedemptionService,

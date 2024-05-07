@@ -12,7 +12,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import {
-  getHost,
   TroveService,
   type Trove,
   type TroveManagerDetails,

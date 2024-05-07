@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { getHost, StableService } from "@PM/Services";
+import { StableService } from "@PM/Services";
 import ChartDepth from "@PM/Pages/Stablecoin/Charts/ChartDepth.vue";
 import { useSettingsStore } from "@PM/Stores";
 

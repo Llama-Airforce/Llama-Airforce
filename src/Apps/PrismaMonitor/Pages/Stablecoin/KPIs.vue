@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { getHost, StableService } from "@PM/Services";
+import { StableService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 import { stableSymbol } from "@PM/Models/Flavor";
 

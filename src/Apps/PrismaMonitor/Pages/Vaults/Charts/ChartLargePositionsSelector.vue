@@ -27,11 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ManagerService,
-  type TroveManagerDetails,
-  getHost,
-} from "@PM/Services";
+import { ManagerService, type TroveManagerDetails } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 import ChartLargePositions from "@PM/Pages/Vaults/Charts/ChartLargePositions.vue";
 

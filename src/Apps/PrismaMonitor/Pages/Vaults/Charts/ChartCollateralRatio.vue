@@ -15,7 +15,7 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import { getHost, ManagerService, type DecimalTimeSeries } from "@PM/Services";
+import { ManagerService, type DecimalTimeSeries } from "@PM/Services";
 
 const { t } = useI18n();
 

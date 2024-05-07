@@ -11,11 +11,7 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
-import {
-  getHost,
-  CollateralService,
-  type TroveManagerDetails,
-} from "@PM/Services";
+import { CollateralService, type TroveManagerDetails } from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStyles";
 
 const { t } = useI18n();

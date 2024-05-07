@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
-import { getHost, RevenueService } from "@PM/Services";
+import { RevenueService } from "@PM/Services";
 
 const { t } = useI18n();
 
