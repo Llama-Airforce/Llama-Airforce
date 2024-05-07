@@ -1,172 +1,46 @@
 import { ServiceBase } from "@/Services";
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
-import { type Snapshot } from "@CM/Pages/Platform/LlamaLend/Models/Snapshot";
-import { type SoftLiqRatio } from "@CM/Pages/Platform/LlamaLend/Models/SoftLiqRatio";
+import type * as ApiTypes from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendApiTypes";
+import * as Parsers from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendParsers";
 
 const API_URL = "https://prices.curve.fi";
 
-type GetChainsResponse = {
-  data: Chain[];
-};
-
-type GetMarketsResponse = {
-  data: [
-    {
-      name: string;
-      controller: string;
-      vault: string;
-      llamma: string;
-      policy: string;
-      oracle: string;
-      rate: string;
-      borrow_apy: string;
-      lend_apy: string;
-      n_loans: number;
-      price_oracle: string;
-      amm_price: string;
-      total_debt: string;
-      total_assets: string;
-      minted: string;
-      redeemed: string;
-      collateral_balance: string;
-      borrowed_balance: string;
-      collateral_token: {
-        symbol: string;
-        address: string;
-      };
-      borrowed_token: {
-        symbol: string;
-        address: string;
-      };
-    }
-  ];
-};
-
-const parseMarket = (x: GetMarketsResponse["data"][number]): Market => {
-  const name = x.name;
-  const controller = x.controller;
-  const numLoans = x.n_loans;
-  const borrowRate = parseFloat(x.borrow_apy);
-  const lendRate = parseFloat(x.lend_apy);
-  const priceOracle = parseFloat(x.price_oracle);
-  const totalAssets = parseFloat(x.total_assets);
-  const collateralBalance = parseFloat(x.collateral_balance);
-
-  return {
-    name,
-    controller,
-    numLoans,
-    borrowRate,
-    lendRate,
-    priceOracle,
-    totalAssets,
-    collateralBalance,
-  };
-};
-
-type GetSnapshotsResponse = {
-  data: [
-    {
-      rate: string;
-      borrow_apy: string;
-      lend_apy: string;
-      n_loans: number;
-      price_oracle: string;
-      amm_price: string;
-      total_debt: string;
-      total_assets: string;
-      minted: string;
-      redeemed: string;
-      collateral_balance: string;
-      borrowed_balance: string;
-      timestamp: string;
-    }
-  ];
-};
-
-const parseSnapshot = (x: GetSnapshotsResponse["data"][number]): Snapshot => {
-  const rate = parseFloat(x.rate);
-  const borrowApy = parseFloat(x.borrow_apy) / 100;
-  const lendApy = parseFloat(x.lend_apy) / 100;
-  const numLoans = x.n_loans;
-  const priceOracle = parseFloat(x.price_oracle);
-  const ammPrice = parseFloat(x.amm_price);
-  const totalDebt = parseFloat(x.total_debt);
-  const totalAssets = parseFloat(x.total_assets);
-  const minted = parseFloat(x.minted);
-  const redeemed = parseFloat(x.redeemed);
-  const collateralBalance = parseFloat(x.collateral_balance);
-  const borrowedBalance = parseFloat(x.borrowed_balance);
-  const timestamp = new Date(x.timestamp).getTime() / 1000;
-
-  return {
-    rate,
-    borrowApy,
-    lendApy,
-    numLoans,
-    priceOracle,
-    ammPrice,
-    totalDebt,
-    totalAssets,
-    minted,
-    redeemed,
-    collateralBalance,
-    borrowedBalance,
-    timestamp,
-  };
-};
-
-type GetSoftLiqRatiosResponse = {
-  data: {
-    timestamp: string;
-    proportion: string;
-  }[];
-};
-
-const parseSoftLiqRatio = (
-  x: GetSoftLiqRatiosResponse["data"][number]
-): SoftLiqRatio => {
-  return {
-    timestamp: new Date(x.timestamp).getTime() / 1000,
-    proportion: parseFloat(x.proportion.replace("%", "")) / 100,
-  };
-};
-
 export default class LlamaLendService extends ServiceBase {
   public async getChains(): Promise<Chain[]> {
-    return this.fetch<GetChainsResponse>(`${API_URL}/v1/lending/chains`).then(
-      (resp) => resp.data
-    );
+    return this.fetch<ApiTypes.GetChainsResponse>(
+      `${API_URL}/v1/lending/chains`
+    ).then((resp) => resp.data);
   }
 
-  public async getMarkets(chain: Chain): Promise<Market[]> {
-    const resp = await this.fetch<GetMarketsResponse>(
+  public async getMarkets(chain: Chain) {
+    const resp = await this.fetch<ApiTypes.GetMarketsResponse>(
       `${API_URL}/v1/lending/markets/${chain}?page=1&per_page=100`
     );
 
-    return resp.data.map(parseMarket);
+    return resp.data.map(Parsers.parseMarket);
   }
 
-  public async getSnapshots(
-    chain: Chain,
-    marketController: string
-  ): Promise<Snapshot[]> {
-    const resp = await this.fetch<GetSnapshotsResponse>(
+  public async getSnapshots(chain: Chain, marketController: string) {
+    const resp = await this.fetch<ApiTypes.GetSnapshotsResponse>(
       `${API_URL}/v1/lending/markets/${chain}/${marketController}/snapshots?agg=day`
     );
 
-    return resp.data.map(parseSnapshot);
+    return resp.data.map(Parsers.parseSnapshot);
   }
 
-  public async getSoftLiqRatios(
-    chain: Chain,
-    marketController: string
-  ): Promise<SoftLiqRatio[]> {
-    const resp = await this.fetch<GetSoftLiqRatiosResponse>(
+  public async getSoftLiqRatios(chain: Chain, marketController: string) {
+    const resp = await this.fetch<ApiTypes.GetSoftLiqRatiosResponse>(
       `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/soft_liquidation_ratio`
     );
 
-    return resp.data.map(parseSoftLiqRatio);
+    return resp.data.map(Parsers.parseSoftLiqRatio);
+  }
+
+  public async getLiqHistory(chain: Chain, marketController: string) {
+    const resp = await this.fetch<ApiTypes.GetLiqHistoryResponse>(
+      `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/history`
+    );
+
+    return resp.data.map(Parsers.parseLiqHistory);
   }
 }

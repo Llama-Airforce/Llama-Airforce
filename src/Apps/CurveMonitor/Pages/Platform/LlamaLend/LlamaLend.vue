@@ -11,7 +11,7 @@
 import { type Chain } from "@CM/Models/Chain";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
-import type { Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
+import type { Market } from "@CM/Pages/Platform/LlamaLend/Models";
 
 // Refs
 const router = useRouter();

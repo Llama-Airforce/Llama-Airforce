@@ -85,7 +85,7 @@
 import { chain as chain_ } from "lodash";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
+import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 
 const { t } = useI18n();

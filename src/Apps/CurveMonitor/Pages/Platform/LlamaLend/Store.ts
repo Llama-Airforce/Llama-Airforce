@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models/Market";
+import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
 
 export const useLlamaLendStore = defineStore("llamaLendStore", () => {
   const market = ref<Market | null>(null);
