@@ -1,6 +1,12 @@
 <template>
   <div class="market-overview">
+    <Spinner
+      class="spinner"
+      :class="{ loading }"
+    ></Spinner>
+
     <TabView
+      v-if="!loading && market"
       :active="tabActive"
       @tab="tabActive = $event.index"
     >
@@ -17,7 +23,7 @@
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
-            v-if="tabActive === 1 && market"
+            v-if="tabActive === 1"
             :market="market"
             :chain="chain"
           ></Liquidations>
@@ -33,6 +39,7 @@ import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
+import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
 
 const llamaLendService = new LlamaLendService(getHost());
 
@@ -48,6 +55,20 @@ const chain = computed(() => route.params.chain as Chain);
 const marketAddr = computed(() => route.params.marketAddr as string);
 const market = computed(() => storeLlamaLend.market);
 
+// Data
+const {
+  isFetching: loading,
+  data: markets,
+  refetch,
+} = useQuery({
+  queryKey: ["llama-markets", chain] as const,
+  queryFn: ({ queryKey: [, chain] }) =>
+    llamaLendService
+      .getMarkets(chain)
+      .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
+  enabled: false, // Disable automatic execution
+});
+
 // Hooks
 onMounted(async () => {
   const tabParam = route.params.tab;
@@ -58,8 +79,9 @@ onMounted(async () => {
   }
 
   if (storeLlamaLend.market?.controller !== marketAddr.value && chain.value) {
-    const markets = await llamaLendService.getMarkets(chain.value);
-    const market = markets.find(
+    await refetch();
+
+    const market = markets.value?.find(
       (market) => market.controller === marketAddr.value
     );
 
@@ -96,6 +118,9 @@ watch(tabActive, async (newTab) => {
     });
   }
 });
+
+// Methods
+const tvl = (x: Market) => x.totalAssets + x.collateralBalance * x.priceOracle;
 </script>
 
 <style lang="scss" scoped>
@@ -106,5 +131,15 @@ watch(tabActive, async (newTab) => {
 .market-overview {
   position: relative;
   max-width: calc(1920px - 18.125rem);
+
+  .spinner {
+    position: absolute;
+    top: 50vh;
+    top: 50dvh;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    @include loading-spinner();
+  }
 }
 </style>

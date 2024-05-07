@@ -90,7 +90,7 @@ import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendSer
 
 const { t } = useI18n();
 
-const curveService = new LlamaLendService(getHost());
+const llamaLendService = new LlamaLendService(getHost());
 
 type Row = { chain: Chain; market: Market };
 
@@ -116,14 +116,14 @@ const rows = computed((): Row[] =>
 const { isFetching: loading, data: rowsRaw } = useQuery({
   queryKey: ["llama-markets", chain] as const,
   queryFn: ({ queryKey: [, chain] }) =>
-    curveService
+    llamaLendService
       .getMarkets(chain)
       .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
 });
 
 const { data: chains } = useQuery({
   queryKey: ["llama-markets-chains"] as const,
-  queryFn: () => curveService.getChains(),
+  queryFn: () => llamaLendService.getChains(),
   initialData: ["ethereum"] as Chain[],
   initialDataUpdatedAt: 0,
 });

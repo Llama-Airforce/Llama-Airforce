@@ -46,8 +46,8 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuery({
-  queryKey: ["llama-market-snapshots", market?.controller, chain] as const,
-  queryFn: ({ queryKey: [, controller, chain] }) => {
+  queryKey: ["llama-market-snapshots", market?.controller] as const,
+  queryFn: ({ queryKey: [, controller] }) => {
     if (controller && chain) {
       return llameLendService.getSnapshots(chain, controller);
     } else {
