@@ -1,53 +1,39 @@
 <template>
   <DataTable
     class="datatable-markets"
-    columns-header="1fr 14rem minmax(auto, 25rem)"
+    columns-header="1fr"
     columns-data="markets-columns-data"
     expand-side="left"
     :loading="loading"
-    :rows="rows"
+    :rows="markets"
     :columns="['', 'Name', 'Borrow Rate', 'Lend Rate', 'Loans']"
   >
     <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
-      <SelectChain
-        class="chain-select"
-        :chain="chain"
-        :chains="chains"
-        @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-      ></SelectChain>
-
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      <div class="title">{{ title }}</div>
     </template>
 
-    <template #row="{ item: { market } }: { item: Row }">
-      <div>{{ market.name }}</div>
-      <div class="number">
-        <AsyncValue
-          :value="market.borrow_apy"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+    <template #row="{ item: market }: { item: Row }">
+      <template v-if="market">
+        <div>{{ market.name }}</div>
+        <div class="number">
+          <AsyncValue
+            :value="market.borrow_apy"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div class="number">
-        <AsyncValue
-          :value="market.lend_apy"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div class="number">
+          <AsyncValue
+            :value="market.lend_apy"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div class="number">{{ market.n_loans }}</div>
+        <div class="number">{{ market.n_loans }}</div>
 
-      <!--
+        <!--
         <div class="number">
         <AsyncValue
           :value="tvl(props.item)"
@@ -56,6 +42,7 @@
           type="dollar"
         />
         </div> -->
+      </template>
     </template>
 
     <template #row-aggregation>
@@ -64,7 +51,12 @@
       <div></div>
       <div></div>
       <div class="number">
-        {{ rows.reduce((acc, x) => acc + x.market.n_loans, 0) }}
+        {{
+          markets
+            .filter((market) => market)
+            .map((market) => market!)
+            .reduce((acc, x) => acc + x.n_loans, 0)
+        }}
       </div>
       <!--       <div class="number">
         <AsyncValue
@@ -82,56 +74,18 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
-import SelectChain from "@CM/Components/SelectChain.vue";
-import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
-import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 
-const { t } = useI18n();
+type Row = Market;
 
-const llamaLendService = new LlamaLendService(getHost());
+// Props
+interface Props {
+  markets: (Market | undefined)[];
+  loading: boolean;
+  title: string;
+}
 
-type Row = { chain: Chain; market: Market };
-
-// Refs
-const search = ref("");
-const chain = ref<Chain>("ethereum");
-
-const rows = computed((): Row[] =>
-  chain_(rowsRaw.value)
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return includesTerm(row.name);
-    })
-    .map((market) => ({ chain: chain.value, market }))
-    .value()
-);
-
-// Data
-const { isFetching: loading, data: rowsRaw } = useQuery({
-  queryKey: ["llama-markets", chain] as const,
-  queryFn: ({ queryKey: [, chain] }) =>
-    llamaLendService
-      .getMarkets(chain)
-      .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
-});
-
-const { data: chains } = useQuery({
-  queryKey: ["llama-markets-chains"] as const,
-  queryFn: () => llamaLendService.getChains(),
-  initialData: ["ethereum"] as Chain[],
-  initialDataUpdatedAt: 0,
-});
-
-// Methods
-const tvl = (x: Market) =>
-  x.total_assets + x.collateral_balance * x.price_oracle;
-/* const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0); */
+const { markets = [], loading, title } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
@@ -139,15 +93,6 @@ const tvl = (x: Market) =>
 
 .datatable-markets {
   container-type: inline-size;
-
-  .search {
-    font-size: 0.875rem;
-    margin-left: 1rem;
-  }
-
-  .chain-select {
-    margin-left: 1rem;
-  }
 
   ::v-deep(.markets-columns-data) {
     --col-width: 11ch;
@@ -169,9 +114,3 @@ const tvl = (x: Market) =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Markets
-
-search-placeholder: Search for...
-</i18n>
