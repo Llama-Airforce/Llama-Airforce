@@ -1,24 +1,23 @@
 <template>
   <div class="llamalend">
-    <div
-      class="toolbar"
-      style="grid-column: 1 / -1"
-    >
-      <InputText
-        v-model="search"
-        class="search"
-        :search="true"
-        :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+    <Teleport to="#toolbar">
+      <div class="toolbar">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
 
-      <SelectChain
-        class="chain-select"
-        :chain="chain"
-        :chains="chains"
-        @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-      ></SelectChain>
-    </div>
+        <SelectChain
+          class="chain-select"
+          :chain="chain"
+          :chains="chains"
+          @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
+        ></SelectChain>
+      </div>
+    </Teleport>
 
     <TableMarkets
       style="grid-column: 1"
@@ -177,24 +176,27 @@ const tvl = (x: Market) => x.total_assets_usd + x.total_debt_usd;
 .llamalend {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
+}
 
-  .toolbar {
-    display: grid;
-    grid-template-columns: 1fr minmax(auto, 25rem) 14rem;
-    grid-template-rows: auto;
-    gap: 1rem;
+.toolbar {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(auto, 25rem) 14rem;
+  grid-template-rows: auto;
+  gap: var(--dashboard-gap);
 
-    .search {
-      grid-column: 2;
-      font-size: 0.875rem;
-    }
+  .search {
+    grid-column: 1;
+    font-size: 0.875rem;
+  }
 
-    .chain-select {
-      grid-column: 3;
-    }
+  .chain-select {
+    grid-column: 2;
   }
 }
 </style>
+
+<style lang="scss"></style>
 
 <i18n lang="yaml" locale="en">
 title-long: Markets - Long

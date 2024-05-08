@@ -10,17 +10,19 @@
     <Navigation class="navigation"></Navigation>
 
     <main class="main">
-      <transition
-        name="fade"
-        mode="out-in"
-      >
+      <div class="toolbar-container">
         <Breadcrumb
           v-if="storeBreadcrumb.show"
           class="breadcrumb"
           :crumbs="storeBreadcrumb.crumbs"
           @crumb="onCrumb"
         ></Breadcrumb>
-      </transition>
+
+        <div
+          id="toolbar"
+          class="toolbar-teleport"
+        ></div>
+      </div>
 
       <div class="content">
         <router-view v-slot="{ Component }">
@@ -206,20 +208,7 @@ p {
 
     overflow-y: auto;
 
-    > .breadcrumb {
-      max-width: calc(1920px - 18.125rem);
-      margin: auto;
-      margin-top: var(--page-margin);
-      margin-bottom: calc(var(--page-margin) * -1 + var(--dashboard-gap));
-      padding-left: var(--page-margin);
-      padding-right: var(--page-margin);
-
-      @media only screen and (max-width: 1280px) {
-        padding: 0 1rem;
-        margin-top: var(--dashboard-gap);
-        margin-bottom: 0;
-      }
-    }
+    @include toolbar;
   }
 }
 </style>
