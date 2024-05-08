@@ -6,7 +6,7 @@
     expand-side="left"
     :loading="loading"
     :rows="markets"
-    :columns="['', 'Name', 'Borrow Rate', 'Lend Rate', 'Loans']"
+    :columns="['', 'Name', 'Borrow Rate', 'Lend Rate', 'TVL', 'Loans']"
   >
     <template #header-content>
       <div class="title">{{ title }}</div>
@@ -18,7 +18,6 @@
         <div class="number">
           <AsyncValue
             :value="market.borrow_apy"
-            :precision="2"
             type="percentage"
           />
         </div>
@@ -26,8 +25,14 @@
         <div class="number">
           <AsyncValue
             :value="market.lend_apy"
-            :precision="2"
             type="percentage"
+          />
+        </div>
+
+        <div class="number">
+          <AsyncValue
+            :value="tvl(market)"
+            type="dollar"
           />
         </div>
 
@@ -51,6 +56,12 @@
       <div></div>
       <div></div>
       <div class="number">
+        <AsyncValue
+          :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
+          type="dollar"
+        />
+      </div>
+      <div class="number">
         {{
           markets
             .filter((market) => market)
@@ -58,14 +69,6 @@
             .reduce((acc, x) => acc + x.n_loans, 0)
         }}
       </div>
-      <!--       <div class="number">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + tvl(x), 0)"
-          :precision="decimals"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div> -->
     </template>
 
     <!-- Empty for expander arrow and pointer on hover -->
@@ -74,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
+import { type Market, tvl } from "@CM/Pages/Platform/LlamaLend/Models";
 
 type Row = Market;
 
@@ -103,12 +106,14 @@ const { markets = [], loading, title } = defineProps<Props>();
       minmax(12ch, 1fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
+      minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr);
 
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4),
-    div:nth-child(5) {
+    div:nth-child(5),
+    div:nth-child(6) {
       justify-content: end;
     }
   }

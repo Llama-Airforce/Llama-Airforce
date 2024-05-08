@@ -39,7 +39,7 @@ import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
+import { tvl } from "@CM/Pages/Platform/LlamaLend/Models";
 
 const llamaLendService = new LlamaLendService(getHost());
 
@@ -118,9 +118,6 @@ watch(tabActive, async (newTab) => {
     });
   }
 });
-
-// Methods
-const tvl = (x: Market) => x.total_assets_usd + x.total_debt_usd;
 </script>
 
 <style lang="scss" scoped>

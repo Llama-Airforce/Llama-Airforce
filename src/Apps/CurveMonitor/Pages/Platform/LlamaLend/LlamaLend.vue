@@ -44,7 +44,7 @@ import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
-import type { Market } from "@CM/Pages/Platform/LlamaLend/Models";
+import { type Market, tvl } from "@CM/Pages/Platform/LlamaLend/Models";
 
 type MarketPair = { long?: Market; short?: Market };
 
@@ -162,10 +162,6 @@ const onMarketSelect = async (market: Market) => {
     },
   });
 };
-
-// Methods
-const tvl = (x: Market) => x.total_assets_usd + x.total_debt_usd;
-/* const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0); */
 </script>
 
 <style lang="scss" scoped>

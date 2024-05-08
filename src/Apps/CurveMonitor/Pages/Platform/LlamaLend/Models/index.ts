@@ -33,6 +33,9 @@ export type Market = {
   };
 };
 
+export const tvl = (market: Market) =>
+  market.total_assets_usd + market.collateral_balance_usd;
+
 export type Snapshot = {
   rate: number;
   borrowApy: number;
