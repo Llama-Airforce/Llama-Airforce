@@ -476,13 +476,15 @@ const sortColumn = (index: number): void => {
     }
 
     &.item {
-      &:hover {
-        background: var(--container-background-hover);
-      }
+      &.has-data {
+        &:hover {
+          background: var(--container-background-hover);
+        }
 
-      &:active,
-      &.active {
-        background: var(--container-background-active);
+        &:active,
+        &.active {
+          background: var(--container-background-active);
+        }
       }
 
       // These direct divs are most likely your individual cells.

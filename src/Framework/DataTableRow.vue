@@ -5,11 +5,11 @@
   >
     <div
       class="row-data item"
-      :class="[columns, { active: selected, expandable }]"
+      :class="[columns, { active: selected, expandable, 'has-data': !!data }]"
       @click="onClick"
     >
       <div
-        v-if="expandable && expandSide === 'left'"
+        v-if="data && expandable && expandSide === 'left'"
         class="expander"
         :class="{ expanded }"
       >
@@ -19,7 +19,7 @@
       <slot name="row"></slot>
 
       <div
-        v-if="expandable && expandSide !== 'left'"
+        v-if="data && expandable && expandSide !== 'left'"
         class="expander"
         :class="{ expanded }"
       >
@@ -27,7 +27,10 @@
       </div>
     </div>
 
-    <Collapsible :expanded="expanded">
+    <Collapsible
+      v-if="data"
+      :expanded="expanded"
+    >
       <div class="row-details">
         <slot name="row-details"></slot>
       </div>
@@ -115,7 +118,7 @@ const onClick = (): void => {
   }
 
   > .row-data {
-    &.expandable:hover {
+    &.expandable.has-data:hover {
       cursor: pointer;
     }
 
