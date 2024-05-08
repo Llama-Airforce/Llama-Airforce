@@ -128,3 +128,23 @@ export const parseLlammaEvents = (
     transaction_hash: transactionHash,
   };
 };
+
+export const parseLlammaTrades = (
+  x: ApiTypes.GetLlammaTradesResponse["data"][number]
+): Models.LlammaTrade => {
+  return {
+    sold_id: x.sold_id,
+    bought_id: x.bought_id,
+    token_sold: x.token_sold,
+    token_bought: x.token_bought,
+    amount_sold: x.amount_sold,
+    amount_bought: x.amount_bought,
+    price: x.price,
+    buyer: x.buyer,
+    fee_x: x.fee_x,
+    fee_y: x.fee_y,
+    block_number: x.block_number,
+    timestamp: x.timestamp,
+    transaction_hash: x.transaction_hash,
+  };
+};

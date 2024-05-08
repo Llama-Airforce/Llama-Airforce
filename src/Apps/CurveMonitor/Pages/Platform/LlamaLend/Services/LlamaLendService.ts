@@ -51,4 +51,12 @@ export default class LlamaLendService extends ServiceBase {
 
     return resp.data.map(Parsers.parseLlammaEvents);
   }
+
+  public async getLlammaTrades(chain: Chain, marketController: string) {
+    const resp = await this.fetch<ApiTypes.GetLlammaTradesResponse>(
+      `${API_URL}/v1/lending/llamma_trades/${chain}/${marketController}`
+    );
+
+    return resp.data.map(Parsers.parseLlammaTrades);
+  }
 }
