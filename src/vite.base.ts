@@ -1,7 +1,7 @@
 import type AutoImport from "unplugin-auto-import/vite";
 
 export const autoImport: Parameters<typeof AutoImport>[0] = {
-  include: [/\.vue?$/],
+  include: [/\.vue$/, /\.ts$/],
   dts: true,
   imports: [
     "vue",
