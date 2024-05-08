@@ -40,9 +40,9 @@ export const pageMain: Page = {
       component: CrvUsdMarket,
     },
 
-    { path: "/platform/llamalend", name: "llamalend", component: LlamaLend },
+    { path: "/platform/lending", name: "llamalend", component: LlamaLend },
     {
-      path: "/platform/llamalend/:chain/:marketAddr/:tab?",
+      path: "/platform/lending/:chain/:marketAddr/:tab?",
       name: "llamalendmarket",
       component: LlamaLendMarket,
     },
@@ -91,8 +91,8 @@ export const pageMain: Page = {
           label: "crvUSD",
         },
         {
-          to: "/platform/llamalend",
-          label: "Llama Lend",
+          to: "/platform/lending",
+          label: "Lending",
         },
       ],
     },

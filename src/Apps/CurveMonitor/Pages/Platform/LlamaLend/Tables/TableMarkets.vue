@@ -31,22 +31,13 @@
 
         <div class="number">
           <AsyncValue
+            v-if="tvl(market)"
             :value="tvl(market)"
             type="dollar"
           />
         </div>
 
         <div class="number">{{ market.n_loans }}</div>
-
-        <!--
-        <div class="number">
-        <AsyncValue
-          :value="tvl(props.item)"
-          :precision="decimals"
-          :show-symbol="false"
-          type="dollar"
-        />
-        </div> -->
       </template>
     </template>
 

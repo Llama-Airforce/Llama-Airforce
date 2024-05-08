@@ -52,7 +52,7 @@ const router = useRouter();
 watch(
   () => route.fullPath,
   (newRoute) => {
-    if (!(newRoute.includes("crvusd") || newRoute.includes("llamalend"))) {
+    if (!(newRoute.includes("crvusd") || newRoute.includes("lending"))) {
       storeBreadcrumb.show = false;
     }
   }
