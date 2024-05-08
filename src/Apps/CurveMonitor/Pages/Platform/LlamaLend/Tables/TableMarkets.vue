@@ -17,6 +17,7 @@
         <div>{{ market.name }}</div>
         <div class="number">
           <AsyncValue
+            v-if="market.borrow_apy"
             :value="market.borrow_apy"
             type="percentage"
           />
@@ -24,6 +25,7 @@
 
         <div class="number">
           <AsyncValue
+            v-if="market.lend_apy"
             :value="market.lend_apy"
             type="percentage"
           />
@@ -89,7 +91,7 @@ const { markets = [], loading, title } = defineProps<Props>();
   container-type: inline-size;
 
   ::v-deep(.markets-columns-data) {
-    --col-width: 11ch;
+    --col-width: 10ch;
 
     display: grid;
     grid-template-columns:
@@ -98,7 +100,7 @@ const { markets = [], loading, title } = defineProps<Props>();
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr);
+      minmax(var(--col-width), 0.25fr);
 
     // Right adjust number columns.
     div:nth-child(3),
