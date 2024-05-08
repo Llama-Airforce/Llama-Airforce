@@ -21,17 +21,17 @@
 
     <TableMarkets
       style="grid-column: 1"
+      type="long"
       :markets="markets.map(({ long }) => long)"
       :loading="loadingMarkets"
-      :title="t('title-long')"
       @selected="onMarketSelect"
     ></TableMarkets>
 
     <TableMarkets
       style="grid-column: 2"
+      type="short"
       :markets="markets.map(({ short }) => short)"
       :loading="loadingMarkets"
-      :title="t('title-short')"
       @selected="onMarketSelect"
     ></TableMarkets>
   </div>
@@ -195,8 +195,5 @@ const onMarketSelect = async (market: Market) => {
 <style lang="scss"></style>
 
 <i18n lang="yaml" locale="en">
-title-long: Markets - Long
-title-short: Markets - Short
-
 search-placeholder: Search for...
 </i18n>

@@ -6,7 +6,7 @@
     expand-side="left"
     :loading="loading"
     :rows="markets"
-    :columns="['', 'Name', 'Borrow Rate', 'Lend Rate', 'TVL', 'Loans']"
+    :columns="['', '', 'Name', 'Borrow Rate', 'Lend Rate', 'TVL', 'Loans']"
   >
     <template #header-content>
       <div class="title">{{ title }}</div>
@@ -14,6 +14,8 @@
 
     <template #row="{ item: market }: { item: Row }">
       <template v-if="market">
+        <img :src="icon(market)" />
+
         <div>{{ market.name }}</div>
         <div class="number">
           <AsyncValue
@@ -48,6 +50,7 @@
       <div></div>
       <div></div>
       <div></div>
+      <div></div>
       <div class="number">
         <AsyncValue
           :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
@@ -74,14 +77,30 @@ import { type Market, tvl } from "@CM/Pages/Platform/LlamaLend/Models";
 
 type Row = Market;
 
+const { t } = useI18n();
+
 // Props
 interface Props {
   markets: (Market | undefined)[];
   loading: boolean;
-  title: string;
+  type: "long" | "short";
 }
 
-const { markets = [], loading, title } = defineProps<Props>();
+const { markets = [], loading, type } = defineProps<Props>();
+
+// Refs
+const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
+
+// Methods
+const icon = (market: Market) => {
+  const tokenAddress = (
+    type === "long"
+      ? market.collateral_token.address
+      : market.borrowed_token.address
+  ).toLocaleLowerCase();
+
+  return `https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets/${tokenAddress}.png`;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -96,6 +115,7 @@ const { markets = [], loading, title } = defineProps<Props>();
     display: grid;
     grid-template-columns:
       1rem
+      26px
       minmax(12ch, 1fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
@@ -103,12 +123,24 @@ const { markets = [], loading, title } = defineProps<Props>();
       minmax(var(--col-width), 0.25fr);
 
     // Right adjust number columns.
-    div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
-    div:nth-child(6) {
+    div:nth-child(6),
+    div:nth-child(7) {
       justify-content: end;
+    }
+
+    img {
+      aspect-ratio: 1;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 50%;
     }
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title-long: Markets - Long
+title-short: Markets - Short
+</i18n>
