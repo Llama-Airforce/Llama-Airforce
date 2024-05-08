@@ -19,21 +19,73 @@
       </div>
     </Teleport>
 
-    <TableMarkets
-      style="grid-column: 1"
-      type="long"
-      :markets="markets.map(({ long }) => long)"
-      :loading="loadingMarkets"
-      @selected="onMarketSelect"
-    ></TableMarkets>
+    <div class="markets">
+      <div class="kpis">
+        <KPI
+          :label="t('total-borrowed-long')"
+          :has-value="!loadingMarkets"
+        >
+          <AsyncValue
+            :value="totalBorrowed('long')"
+            type="dollar"
+          ></AsyncValue>
+        </KPI>
 
-    <TableMarkets
-      style="grid-column: 2"
-      type="short"
-      :markets="markets.map(({ short }) => short)"
-      :loading="loadingMarkets"
-      @selected="onMarketSelect"
-    ></TableMarkets>
+        <KPI
+          tooltip-type="icon"
+          :label="t('avg-util-rate')"
+          :has-value="!loadingMarkets"
+          :tooltip="t('avg-util-rate-tooltip')"
+        >
+          <AsyncValue
+            :value="totalUtilRate('long')"
+            type="percentage"
+          ></AsyncValue>
+        </KPI>
+      </div>
+
+      <TableMarkets
+        style="grid-column: 1"
+        type="long"
+        :markets="markets.map(({ long }) => long)"
+        :loading="loadingMarkets"
+        @selected="onMarketSelect"
+      ></TableMarkets>
+    </div>
+
+    <div class="markets">
+      <div class="kpis">
+        <KPI
+          :label="t('total-borrowed-short')"
+          :has-value="!loadingMarkets"
+        >
+          <AsyncValue
+            :value="totalBorrowed('short')"
+            type="dollar"
+          ></AsyncValue>
+        </KPI>
+
+        <KPI
+          tooltip-type="icon"
+          :label="t('avg-util-rate')"
+          :has-value="!loadingMarkets"
+          :tooltip="t('avg-util-rate-tooltip')"
+        >
+          <AsyncValue
+            :value="totalUtilRate('short')"
+            type="percentage"
+          ></AsyncValue>
+        </KPI>
+      </div>
+
+      <TableMarkets
+        style="grid-column: 2"
+        type="short"
+        :markets="markets.map(({ short }) => short)"
+        :loading="loadingMarkets"
+        @selected="onMarketSelect"
+      ></TableMarkets>
+    </div>
   </div>
 </template>
 
@@ -162,6 +214,31 @@ const onMarketSelect = async (market: Market) => {
     },
   });
 };
+
+// Methods
+const totalBorrowed = (type: "long" | "short"): number => {
+  return markets.value
+    .map((market) => (type === "long" ? market.long : market.short))
+    .filter((market) => !!market)
+    .map((market) => market!)
+    .reduce((acc, market) => acc + market.total_debt_usd, 0);
+};
+
+const totalUtilRate = (type: "long" | "short"): number => {
+  const totals = markets.value
+    .map((market) => (type === "long" ? market.long : market.short))
+    .filter((market) => !!market)
+    .map((market) => market!)
+    .reduce(
+      ({ debt, assets }, market) => ({
+        debt: debt + market.total_debt_usd,
+        assets: assets + market.total_assets_usd,
+      }),
+      { debt: 0, assets: 0 }
+    );
+
+  return totals.assets === 0 ? 0 : (totals.debt / totals.assets) * 100;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -172,6 +249,21 @@ const onMarketSelect = async (market: Market) => {
 .llamalend {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
+
+  .markets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dashboard-gap);
+
+    .kpis {
+      display: flex;
+      gap: var(--dashboard-gap);
+
+      @media only screen and (max-width: 1280px) {
+        flex-direction: column;
+      }
+    }
+  }
 }
 
 .toolbar {
@@ -196,4 +288,9 @@ const onMarketSelect = async (market: Market) => {
 
 <i18n lang="yaml" locale="en">
 search-placeholder: Search for...
+
+total-borrowed-long: Total borrowed (long)
+total-borrowed-short: Total borrowed (short)
+avg-util-rate: Average Utilization Rate
+avg-util-rate-tooltip: Aggregate debt divided by aggregate assets
 </i18n>
