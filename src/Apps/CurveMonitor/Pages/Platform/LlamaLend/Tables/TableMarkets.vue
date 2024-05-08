@@ -73,6 +73,7 @@
 </template>
 
 <script setup lang="ts">
+import { type Chain } from "@CM/Models/Chain";
 import { type Market, tvl } from "@CM/Pages/Platform/LlamaLend/Models";
 
 type Row = Market;
@@ -84,9 +85,10 @@ interface Props {
   markets: (Market | undefined)[];
   loading: boolean;
   type: "long" | "short";
+  chain: Chain;
 }
 
-const { markets = [], loading, type } = defineProps<Props>();
+const { markets = [], loading, type, chain } = defineProps<Props>();
 
 // Refs
 const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
@@ -99,7 +101,9 @@ const icon = (market: Market) => {
       : market.borrowed_token.address
   ).toLocaleLowerCase();
 
-  return `https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets/${tokenAddress}.png`;
+  const chainSuffix = chain !== "ethereum" ? `-${chain}` : "";
+
+  return `https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets${chainSuffix}/${tokenAddress}.png`;
 };
 </script>
 

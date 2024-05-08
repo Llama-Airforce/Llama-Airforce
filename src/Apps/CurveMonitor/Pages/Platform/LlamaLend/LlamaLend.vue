@@ -49,6 +49,7 @@
         type="long"
         :markets="markets.map(({ long }) => long)"
         :loading="loadingMarkets"
+        :chain="chain"
         @selected="onMarketSelect"
       ></TableMarkets>
     </div>
@@ -83,6 +84,7 @@
         type="short"
         :markets="markets.map(({ short }) => short)"
         :loading="loadingMarkets"
+        :chain="chain"
         @selected="onMarketSelect"
       ></TableMarkets>
     </div>
