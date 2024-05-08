@@ -41,7 +41,7 @@ input {
 
   padding: 0rem 0.875rem;
   text-align: start;
-  height: 2.5rem;
+  min-height: 2.5rem;
   cursor: text;
 
   transition: background-color 125ms ease;
