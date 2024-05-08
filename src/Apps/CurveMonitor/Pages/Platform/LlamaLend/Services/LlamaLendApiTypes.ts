@@ -78,3 +78,21 @@ export type GetLiqHistoryResponse = {
     price: number;
   }[];
 };
+
+export type GetLlammaEventsResponse = {
+  data: {
+    provider: string;
+    deposit: {
+      amount: string;
+      n1: number;
+      n2: number;
+    } | null;
+    withdrawal: {
+      amount_borrowed: string;
+      amount_collateral: string;
+    } | null;
+    block_number: number;
+    timestamp: number;
+    transaction_hash: string;
+  }[];
+};

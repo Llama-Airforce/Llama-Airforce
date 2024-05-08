@@ -67,3 +67,23 @@ export type LiqHistory = {
   hard_value: number;
   price: number;
 };
+
+type Deposit = {
+  amount: number;
+  n1: number;
+  n2: number;
+};
+
+type Withdrawal = {
+  amount_borrowed: number;
+  amount_collateral: number;
+};
+
+export type LlammaEvent = {
+  provider: string;
+  deposit?: Deposit | null;
+  withdrawal?: Withdrawal | null;
+  block_number: number;
+  timestamp: number;
+  transaction_hash: string;
+};

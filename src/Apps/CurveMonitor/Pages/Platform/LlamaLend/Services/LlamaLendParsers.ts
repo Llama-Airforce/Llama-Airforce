@@ -95,3 +95,36 @@ export const parseLiqHistory = (
     price: x.price,
   };
 };
+
+export const parseLlammaEvents = (
+  x: ApiTypes.GetLlammaEventsResponse["data"][number]
+): Models.LlammaEvent => {
+  const provider = x.provider;
+  const deposit = x.deposit
+    ? {
+        amount: parseFloat(x.deposit.amount),
+        n1: x.deposit.n1,
+        n2: x.deposit.n2,
+      }
+    : null;
+
+  const withdrawal = x.withdrawal
+    ? {
+        amount_borrowed: parseFloat(x.withdrawal.amount_borrowed),
+        amount_collateral: parseFloat(x.withdrawal.amount_collateral),
+      }
+    : null;
+
+  const blockNumber = x.block_number;
+  const timestamp = x.timestamp;
+  const transactionHash = x.transaction_hash;
+
+  return {
+    provider,
+    deposit,
+    withdrawal,
+    block_number: blockNumber,
+    timestamp,
+    transaction_hash: transactionHash,
+  };
+};
