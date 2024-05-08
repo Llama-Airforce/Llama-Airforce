@@ -136,7 +136,6 @@ const onSort = (columnName: string, order: SortOrder): void => {
 };
 
 const onSelected = (data: unknown): void => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const epoch = data as Round;
   console.log(epoch.round);
 };

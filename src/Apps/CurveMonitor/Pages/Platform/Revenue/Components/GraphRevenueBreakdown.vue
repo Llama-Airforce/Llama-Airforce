@@ -41,7 +41,6 @@ const breakdown = computed((): BreakdownRevenue[] => {
   return store.breakdown ?? [];
 });
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
   const { colors, colorsArray } = {
     colors: theme.value.colors,

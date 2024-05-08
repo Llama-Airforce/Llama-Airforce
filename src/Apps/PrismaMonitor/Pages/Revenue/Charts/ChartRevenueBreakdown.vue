@@ -24,7 +24,6 @@ const { data = [] } = defineProps<Props>();
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {

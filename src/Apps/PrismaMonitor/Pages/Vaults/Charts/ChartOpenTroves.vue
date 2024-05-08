@@ -66,7 +66,6 @@ const { loading, data, load } = usePromise(
 // Refs
 const period = ref<Period>("1m");
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {

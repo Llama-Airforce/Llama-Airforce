@@ -38,7 +38,6 @@ const { loading, data } = usePromise(() => prismaService.getFlow(contract), {
   withdrawals: [],
 });
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
   const { colors } = theme.value;
 

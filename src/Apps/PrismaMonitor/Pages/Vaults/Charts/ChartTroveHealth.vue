@@ -52,7 +52,6 @@ const { loading, data, load } = usePromise(async () => {
 }, []);
 
 // Refs
-// eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {
     chart: {

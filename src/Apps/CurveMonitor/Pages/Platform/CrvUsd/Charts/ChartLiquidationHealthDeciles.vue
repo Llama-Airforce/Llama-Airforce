@@ -35,7 +35,6 @@ const { loading, data, load } = usePromise(() => {
   }
 }, []);
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {

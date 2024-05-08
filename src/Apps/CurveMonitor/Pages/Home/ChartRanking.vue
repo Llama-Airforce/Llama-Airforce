@@ -29,7 +29,6 @@ const { loading, data } = usePromise(async () => {
   );
 }, []);
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed((): unknown => {
   const { colors } = theme.value;
 
