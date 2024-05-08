@@ -14,7 +14,10 @@
 
     <template #row="{ item: market }: { item: Row }">
       <template v-if="market">
-        <img :src="icon(market)" />
+        <img
+          :src="icons[market.controller]"
+          @error="onIconError(market)"
+        />
 
         <div>{{ market.name }}</div>
         <div class="number">
@@ -92,9 +95,32 @@ const { markets = [], loading, type, chain } = defineProps<Props>();
 
 // Refs
 const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
+const icons = reactive<Record<string, string>>({});
+
+// Watches
+watch(
+  () => markets,
+  (newMarkets) => {
+    // Generate market icon addresses. This workflow is to add 404 fallback support.
+    const newIcons = toRecord(
+      newMarkets.filter((market) => !!market).map((market) => market!),
+      (market) => market.controller,
+      (market) => icon(market)
+    );
+
+    for (const key in icons) delete icons[key];
+    Object.assign(icons, newIcons);
+  },
+  { immediate: true }
+);
+
+// Events
+const onIconError = (market: Market) => {
+  icons[market.controller] = "https://lend.curve.fi/images/default-crypto.png";
+};
 
 // Methods
-const icon = (market: Market) => {
+function icon(market: Market) {
   const tokenAddress = (
     type === "long"
       ? market.collateral_token.address
@@ -104,7 +130,7 @@ const icon = (market: Market) => {
   const chainSuffix = chain !== "ethereum" ? `-${chain}` : "";
 
   return `https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets${chainSuffix}/${tokenAddress}.png`;
-};
+}
 </script>
 
 <style lang="scss" scoped>
