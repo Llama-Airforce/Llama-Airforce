@@ -19,7 +19,8 @@
           @error="onIconError(market)"
         />
 
-        <div>{{ market.name }}</div>
+        <div>{{ name(market) }}</div>
+
         <div class="number">
           <AsyncValue
             v-if="market.borrow_apy"
@@ -120,6 +121,10 @@ const onIconError = (market: Market) => {
 };
 
 // Methods
+function name(market: Market) {
+  return market.name.replace(/(-long|-short)/i, "");
+}
+
 function icon(market: Market) {
   const tokenAddress = (
     type === "long"
