@@ -26,7 +26,7 @@ module.exports = {
     "promise"
   ],
   rules: {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "indent": ["error", 2, { "SwitchCase": 1, "offsetTernaryExpressions": true }],
     "multiline-comment-style": ["error", "starred-block"],
     "no-tabs": "error",
     //"max-len": ["error", { "code": 120 }],
