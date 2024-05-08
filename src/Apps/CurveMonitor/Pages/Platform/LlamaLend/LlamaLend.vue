@@ -22,7 +22,7 @@
     <div class="markets">
       <div class="kpis">
         <KPI
-          :label="t('total-borrowed-long')"
+          :label="t('open-interest')"
           :has-value="!loadingMarkets"
         >
           <AsyncValue
@@ -57,7 +57,7 @@
     <div class="markets">
       <div class="kpis">
         <KPI
-          :label="t('total-borrowed-short')"
+          :label="t('open-interest')"
           :has-value="!loadingMarkets"
         >
           <AsyncValue
@@ -293,8 +293,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
 <i18n lang="yaml" locale="en">
 search-placeholder: Search for...
 
-total-borrowed-long: Total borrowed (long)
-total-borrowed-short: Total borrowed (short)
+open-interest: Open Interest
 avg-util-rate: Average Utilization Rate
 avg-util-rate-tooltip: Aggregate debt divided by aggregate assets
 </i18n>
