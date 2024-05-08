@@ -12,7 +12,7 @@
       <div class="title">{{ title }}</div>
     </template>
 
-    <template #row="{ item: market }: { item: Row }">
+    <template #row="{ item: market }: { item: Market }">
       <template v-if="market">
         <img
           :src="icons[market.controller]"
@@ -77,34 +77,60 @@
 </template>
 
 <script setup lang="ts">
+import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
-import { type Market, tvl } from "@CM/Pages/Platform/LlamaLend/Models";
+import {
+  type Market,
+  type MarketPair,
+  tvl,
+} from "@CM/Pages/Platform/LlamaLend/Models";
 
-type Row = Market;
+type Row = Market | undefined;
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  markets: (Market | undefined)[];
+  pairs: MarketPair[];
   loading: boolean;
   type: "long" | "short";
   chain: Chain;
 }
 
-const { markets = [], loading, type, chain } = defineProps<Props>();
+const { pairs = [], loading, type, chain } = defineProps<Props>();
 
 // Refs
 const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
 const icons = reactive<Record<string, string>>({});
 
+const markets = computed((): Row[] =>
+  chain_(pairs)
+    .map((pair) => {
+      const count = (pair.long ? 1 : 0) + (pair.short ? 1 : 0);
+      return { count, ...pair };
+    })
+    .orderBy(
+      ["count", ({ long, short }) => tvl(long) + tvl(short)],
+      ["desc", "desc"]
+    )
+    .map(({ long, short }) => (type === "long" ? long : short))
+    .value()
+);
+
 // Watches
 watch(
-  () => markets,
-  (newMarkets) => {
+  () => pairs,
+  (newPairs) => {
     // Generate market icon addresses. This workflow is to add 404 fallback support.
+    const markets = chain_(newPairs)
+      .map(({ long, short }) => [long, short])
+      .flatten()
+      .compact()
+      .uniqBy((market) => market.controller)
+      .value();
+
     const newIcons = toRecord(
-      newMarkets.filter((market) => !!market).map((market) => market!),
+      markets,
       (market) => market.controller,
       (market) => icon(market)
     );

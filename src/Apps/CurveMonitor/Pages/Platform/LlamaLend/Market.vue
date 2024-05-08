@@ -39,7 +39,6 @@ import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
-import { tvl } from "@CM/Pages/Platform/LlamaLend/Models";
 
 const llamaLendService = new LlamaLendService(getHost());
 
@@ -62,10 +61,7 @@ const {
   refetch,
 } = useQuery({
   queryKey: ["llama-markets", chain] as const,
-  queryFn: ({ queryKey: [, chain] }) =>
-    llamaLendService
-      .getMarkets(chain)
-      .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
+  queryFn: ({ queryKey: [, chain] }) => llamaLendService.getMarkets(chain),
   enabled: false, // Disable automatic execution
 });
 

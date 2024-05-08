@@ -47,7 +47,7 @@
       <TableMarkets
         style="grid-column: 1"
         type="long"
-        :markets="markets.map(({ long }) => long)"
+        :pairs="marketPairsFiltered"
         :loading="loadingMarkets"
         :chain="chain"
         @selected="onMarketSelect"
@@ -82,7 +82,7 @@
       <TableMarkets
         style="grid-column: 2"
         type="short"
-        :markets="markets.map(({ short }) => short)"
+        :pairs="marketPairsFiltered"
         :loading="loadingMarkets"
         :chain="chain"
         @selected="onMarketSelect"
@@ -98,9 +98,10 @@ import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
-import { type Market, tvl } from "@CM/Pages/Platform/LlamaLend/Models";
-
-type MarketPair = { long?: Market; short?: Market };
+import {
+  type Market,
+  type MarketPair,
+} from "@CM/Pages/Platform/LlamaLend/Models";
 
 const { t } = useI18n();
 
@@ -115,8 +116,8 @@ const storeLlamaLend = useLlamaLendStore();
 const chain = ref<Chain>("ethereum");
 const search = ref("");
 
-const markets = computed((): MarketPair[] =>
-  chain_(marketsDivided.value)
+const marketPairsFiltered = computed((): MarketPair[] =>
+  chain_(marketPairs.value)
     .filter(({ long, short }) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -128,7 +129,7 @@ const markets = computed((): MarketPair[] =>
     .value()
 );
 
-const marketsDivided = computed((): MarketPair[] => {
+const marketPairs = computed((): MarketPair[] => {
   const stables = ["crvusd"];
 
   const markets = (marketsRaw.value ?? [])
@@ -173,10 +174,7 @@ const marketsDivided = computed((): MarketPair[] => {
 // Data
 const { isFetching: loadingMarkets, data: marketsRaw } = useQuery({
   queryKey: ["llama-markets", chain] as const,
-  queryFn: ({ queryKey: [, chain] }) =>
-    llamaLendService
-      .getMarkets(chain)
-      .then((markets) => markets.sort((a, b) => tvl(b) - tvl(a))),
+  queryFn: ({ queryKey: [, chain] }) => llamaLendService.getMarkets(chain),
 });
 
 const { data: chains } = useQuery({
@@ -219,7 +217,7 @@ const onMarketSelect = async (market: Market) => {
 
 // Methods
 const totalBorrowed = (type: "long" | "short"): number => {
-  return markets.value
+  return marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))
     .filter((market) => !!market)
     .map((market) => market!)
@@ -227,7 +225,7 @@ const totalBorrowed = (type: "long" | "short"): number => {
 };
 
 const totalUtilRate = (type: "long" | "short"): number => {
-  const totals = markets.value
+  const totals = marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))
     .filter((market) => !!market)
     .map((market) => market!)
