@@ -165,8 +165,7 @@ const onMarketSelect = async (market: Market) => {
 };
 
 // Methods
-const tvl = (x: Market) =>
-  x.total_assets + x.collateral_balance * x.price_oracle;
+const tvl = (x: Market) => x.total_assets_usd + x.total_debt_usd;
 /* const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0); */
 </script>
 

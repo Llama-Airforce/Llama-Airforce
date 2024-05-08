@@ -120,7 +120,7 @@ watch(tabActive, async (newTab) => {
 });
 
 // Methods
-const tvl = (x: Market) => x.totalAssets + x.collateralBalance * x.priceOracle;
+const tvl = (x: Market) => x.total_assets_usd + x.total_debt_usd;
 </script>
 
 <style lang="scss" scoped>
