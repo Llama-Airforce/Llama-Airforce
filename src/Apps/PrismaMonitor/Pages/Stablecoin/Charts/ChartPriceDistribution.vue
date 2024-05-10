@@ -22,13 +22,15 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 const stableService = new StableService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-price-distribution"],
+  queryFn: () =>
     stableService
       .getPriceHistogram("ethereum", 10, "all")
       .then((x) => x.histogram),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {

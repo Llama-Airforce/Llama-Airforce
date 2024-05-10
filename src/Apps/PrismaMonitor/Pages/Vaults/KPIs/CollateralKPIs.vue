@@ -82,18 +82,20 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { data, load } = usePromise(() => {
-  if (vault) {
-    return collateralService
-      .getCollateralInfo("ethereum", vault.collateral)
-      .then((x) => x.info);
-  } else {
-    return Promise.resolve(null);
-  }
-}, null);
-
-// Watches
-watch(() => vault, load);
+const { data } = useQuery({
+  queryKey: ["prisma-collateral-info", vault?.address] as const,
+  queryFn: ({ queryKey: [, collateral] }) => {
+    if (collateral) {
+      return collateralService
+        .getCollateralInfo("ethereum", collateral)
+        .then((x) => x.info);
+    } else {
+      return Promise.resolve(null);
+    }
+  },
+  initialData: null,
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

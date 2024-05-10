@@ -54,17 +54,19 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 // Services
 const managerService = new ManagerService(getHost(), flavor.value);
 
-// Data
-const { loading, data, load } = usePromise(
-  () =>
-    managerService
-      .getHistoricalOpenTrovesOverview("ethereum", period.value)
-      .then((x) => x.managers),
-  []
-);
-
 // Refs
 const period = ref<Period>("1m");
+
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-historical-open-troves", period] as const,
+  queryFn: ({ queryKey: [, period] }) =>
+    managerService
+      .getHistoricalOpenTrovesOverview("ethereum", period)
+      .then((x) => x.managers),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed(() => {
   return createChartStyles(theme.value, {
@@ -156,9 +158,6 @@ const onPeriod = (newPeriod: Period) => {
 
   period.value = newPeriod;
 };
-
-// Watches
-watch(period, load);
 </script>
 
 <style lang="scss" scoped>

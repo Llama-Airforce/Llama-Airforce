@@ -128,16 +128,21 @@ interface Props {
 const { troves = [] } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  return Promise.all(
-    chain(troves)
-      .uniq()
-      .map((trove) =>
-        redemptionService.getRedemptionsForTrove("ethereum", trove)
-      )
-      .value()
-  ).then((rs) => rs.flat());
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-redemptions", troves] as const,
+  queryFn: ({ queryKey: [, troves] }) => {
+    return Promise.all(
+      chain(troves)
+        .uniq()
+        .map((trove) =>
+          redemptionService.getRedemptionsForTrove("ethereum", trove)
+        )
+        .value()
+    ).then((rs) => rs.flat());
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();
@@ -203,9 +208,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 const onSelect = (row: unknown) => {
   showDetails.value = row as Row;
 };
-
-// Watches
-watch(() => troves, load);
 </script>
 
 <style lang="scss" scoped>

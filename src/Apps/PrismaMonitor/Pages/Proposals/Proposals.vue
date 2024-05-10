@@ -61,16 +61,15 @@ const proposalService = new ProposalService(getHost());
 const tabActive = ref(0);
 
 // Data
-const { loading, data: proposals } = usePromise(
-  () =>
-    minDelay(
-      proposalService
-        .getProposals()
-        .then((ps) => ps.sort((a, b) => b.start - a.start)),
-      1000
-    ),
-  []
-);
+const { isFetching: loading, data: proposals } = useQuery({
+  queryKey: ["prisma-proposals"],
+  queryFn: () =>
+    proposalService
+      .getProposals()
+      .then((ps) => ps.sort((a, b) => b.start - a.start)),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const proposalsActive = computed((): Proposal[] => {
   return proposals.value.filter((p) => getStatus(p) === "active");

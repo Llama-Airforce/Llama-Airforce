@@ -28,10 +28,13 @@ const { contract } = defineProps<Props>();
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { loading, data } = usePromise(
-  () => prismaService.getDistribution(contract).then((x) => x.distribution),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-wrapper-distribution", contract] as const,
+  queryFn: ({ queryKey: [, contract] }) =>
+    prismaService.getDistribution(contract).then((x) => x.distribution),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed(() => {
   return createChartStyles(theme.value, {

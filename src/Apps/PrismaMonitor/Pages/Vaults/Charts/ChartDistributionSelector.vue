@@ -47,22 +47,24 @@ interface Props {
 }
 const { vault = null } = defineProps<Props>();
 
-// Data
-const { loading, data, load } = usePromise(() => {
-  if (vault) {
-    return managerService
-      .getTroveDistribution("ethereum", vault.address, chartType.value)
-      .then((x) => x.distribution);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
-
 // Refs
 const chartType = ref<ChartType>("collateral");
 
-// Watches
-watch([chartType, () => vault], load);
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-trove-distributions", vault?.address, chartType] as const,
+  queryFn: ({ queryKey: [, vault, chartType] }) => {
+    if (vault) {
+      return managerService
+        .getTroveDistribution("ethereum", vault, chartType)
+        .then((x) => x.distribution);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

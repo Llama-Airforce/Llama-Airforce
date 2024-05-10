@@ -28,10 +28,12 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 const sbService = new StabilityPoolService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(
-  () => sbService.getStableFlow("ethereum", "1m"),
-  { deposits: [], withdrawals: [] }
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-flow"],
+  queryFn: () => sbService.getStableFlow("ethereum", "1m"),
+  initialData: { deposits: [], withdrawals: [] },
+  initialDataUpdatedAt: 0,
+});
 
 // eslint-disable-next-line max-lines-per-function
 const options = computed(() => {

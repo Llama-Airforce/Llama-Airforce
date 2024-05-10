@@ -133,17 +133,25 @@ interface Props {
 const { vaults = [] } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vaults.length > 0) {
-    return Promise.all(
-      vaults.map((vault) =>
-        liquidationService.getLiquidations("ethereum", vault.address)
-      )
-    ).then((rs) => rs.flat());
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: [
+    "prisma-liquidations",
+    vaults.map((vault) => vault.address),
+  ] as const,
+  queryFn: ({ queryKey: [, vaults] }) => {
+    if (vaults.length > 0) {
+      return Promise.all(
+        vaults.map((vault) =>
+          liquidationService.getLiquidations("ethereum", vault)
+        )
+      ).then((rs) => rs.flat());
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();
@@ -209,9 +217,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 const onSelect = (row: unknown) => {
   showDetails.value = row as Row;
 };
-
-// Watches
-watch(() => vaults, load);
 </script>
 
 <style lang="scss" scoped>

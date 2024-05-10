@@ -22,10 +22,13 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 const sbService = new StabilityPoolService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(
-  () => sbService.getStableDistribution("ethereum").then((x) => x.distribution),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-distribution"],
+  queryFn: () =>
+    sbService.getStableDistribution("ethereum").then((x) => x.distribution),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {

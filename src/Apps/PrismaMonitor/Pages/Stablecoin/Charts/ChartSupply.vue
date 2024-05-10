@@ -35,13 +35,16 @@ const { chart, chartRef } = useLightweightChart(
 const stableService = new StableService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(
-  () => stableService.getSupplyHistory("ethereum").then((x) => x.supply),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-supply"],
+  queryFn: () =>
+    stableService.getSupplyHistory("ethereum").then((x) => x.supply),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(data, createSeries);
+watch([data, chart], createSeries);
 watch(theme, () => serie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -74,8 +77,11 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newData: DecimalTimeSeries[]): void {
-  if (!chart.value || !serie) {
+function createSeries([newData, chart]: [
+  DecimalTimeSeries[]?,
+  IChartApi?
+]): void {
+  if (!chart || !serie) {
     return;
   }
 
@@ -92,7 +98,7 @@ function createSeries(newData: DecimalTimeSeries[]): void {
     serie.setData(newSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {

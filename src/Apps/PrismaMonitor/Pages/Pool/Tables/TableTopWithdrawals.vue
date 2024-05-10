@@ -66,13 +66,15 @@ const rows = computed((): PoolStableOperation[] =>
 );
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-top-withdrawals"],
+  queryFn: () =>
     sbService
       .getTopStableWithdrawals("ethereum", 5, "7d")
       .then((x) => x.operations),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

@@ -127,13 +127,18 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vault) {
-    return troveService.getTroves("ethereum", vault.address);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-vault-troves", vault?.address] as const,
+  queryFn: ({ queryKey: [, vault] }) => {
+    if (vault) {
+      return troveService.getTroves("ethereum", vault);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();
@@ -223,9 +228,6 @@ const onType = (tabIndex: number) => {
     type.value = "Open";
   }
 };
-
-// Watches
-watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

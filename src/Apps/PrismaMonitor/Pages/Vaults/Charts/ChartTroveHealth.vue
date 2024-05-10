@@ -40,16 +40,20 @@ interface Props {
 const { vault = null, trove = null } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(async () => {
-  if (vault && trove) {
-    const health = await troveService
-      .getTroveSnapshots("ethereum", vault.address, trove.owner)
-      .then((x) => x.snapshots);
-    return health;
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-trove-snapshots", vault?.address, trove?.owner] as const,
+  queryFn: ({ queryKey: [, vault, owner] }) => {
+    if (vault && owner) {
+      return troveService
+        .getTroveSnapshots("ethereum", vault, owner)
+        .then((x) => x.snapshots);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const options = computed((): unknown => {
@@ -148,9 +152,6 @@ const formatterCollateralUsd = (x: number): string => {
 const formatterRatio = (x: number): string => {
   return `${formatNumber(x * 100, 2)}%`;
 };
-
-// Watches
-watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

@@ -51,18 +51,24 @@ const { vault = null } = defineProps<Props>();
 const chartType = ref<ChartType>("collateral");
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vault) {
-    return managerService
-      .getLargeTrovePositions("ethereum", vault.address, chartType.value)
-      .then((x) => x.positions);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
-
-// Watches
-watch([chartType, () => vault], load);
+const { isFetching: loading, data } = useQuery({
+  queryKey: [
+    "prisma-large-trove-positions",
+    vault?.address,
+    chartType,
+  ] as const,
+  queryFn: ({ queryKey: [, vault, chartType] }) => {
+    if (vault) {
+      return managerService
+        .getLargeTrovePositions("ethereum", vault, chartType)
+        .then((x) => x.positions);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

@@ -23,10 +23,15 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 const revenueService = new RevenueService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(() => revenueService.getBreakdown(), {
-  unlock_penalty: 0,
-  borrowing_fees: 0,
-  redemption_fees: 0,
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-revenue-breakdown"],
+  queryFn: () => revenueService.getBreakdown(),
+  initialData: {
+    unlock_penalty: 0,
+    borrowing_fees: 0,
+    redemption_fees: 0,
+  },
+  initialDataUpdatedAt: 0,
 });
 
 // Refs

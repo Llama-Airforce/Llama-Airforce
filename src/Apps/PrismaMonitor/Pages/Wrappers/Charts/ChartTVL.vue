@@ -46,13 +46,16 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { loading, data } = usePromise(
-  () => prismaService.getTVL(contract).then((x) => x.tvl),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-wrapper-tvl", contract] as const,
+  queryFn: ({ queryKey: [, contract] }) =>
+    prismaService.getTVL(contract).then((x) => x.tvl),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(data, createSeries);
+watch([data, chart], createSeries);
 watch(theme, () => serie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -85,8 +88,11 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newData: DecimalTimeSeries[]): void {
-  if (!chart.value || !serie) {
+function createSeries([newData, chart]: [
+  DecimalTimeSeries[]?,
+  IChartApi?
+]): void {
+  if (!chart || !serie) {
     return;
   }
 
@@ -104,7 +110,7 @@ function createSeries(newData: DecimalTimeSeries[]): void {
     serie.setData(newSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {

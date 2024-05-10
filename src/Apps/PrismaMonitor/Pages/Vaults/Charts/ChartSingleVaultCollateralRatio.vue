@@ -47,19 +47,23 @@ const { chart, chartRef } = useLightweightChart(
 const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vault) {
-    return managerService
-      .getVaultCollateralRatio("ethereum", vault.address, "1m")
-      .then((x) => x.ratio);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-vault-collateral-ratio", vault?.address] as const,
+  queryFn: ({ queryKey: [, vault] }) => {
+    if (vault) {
+      return managerService
+        .getVaultCollateralRatio("ethereum", vault, "1m")
+        .then((x) => x.ratio);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(data, createSeries);
-watch(() => vault, load);
+watch([data, chart], createSeries);
 watch(theme, () => globalCrSerie.applyOptions(createGlobalCrOptionsSerie()));
 
 // Chart
@@ -89,8 +93,11 @@ function createGlobalCrOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(globalCr: DecimalTimeSeries[]): void {
-  if (!chart.value || !globalCrSerie) {
+function createSeries([globalCr, chart]: [
+  DecimalTimeSeries[]?,
+  IChartApi?
+]): void {
+  if (!chart || !globalCrSerie) {
     return;
   }
 
@@ -102,11 +109,12 @@ function createSeries(globalCr: DecimalTimeSeries[]): void {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
+
   if (newGlobalCrSerie.length > 0) {
     globalCrSerie.setData(newGlobalCrSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 

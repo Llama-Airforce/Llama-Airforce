@@ -113,23 +113,25 @@ const rows = computed((): Row[] => {
 });
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vault && trove) {
-    return troveService
-      .getTroveSnapshots("ethereum", vault.address, trove.owner)
-      .then((x) => x.snapshots);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-trove-snapshots", vault?.address, trove?.owner] as const,
+  queryFn: ({ queryKey: [, vault, owner] }) => {
+    if (vault && owner) {
+      return troveService
+        .getTroveSnapshots("ethereum", vault, owner)
+        .then((x) => x.snapshots);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const titleCase = (s: string): string =>
   s.replace(/^_*(.)|_+(.)/g, (_, c: string, d: string) =>
     c ? c.toUpperCase() : " " + d.toUpperCase()
   );
-
-// Watches
-watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

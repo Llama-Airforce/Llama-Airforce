@@ -62,26 +62,28 @@ const init = {
   oracle: [],
   market: [],
 };
-const { loading, data, load } = usePromise<{
-  oracle: DecimalTimeSeries[];
-  market: DecimalTimeSeries[];
-}>(async () => {
-  if (vault) {
-    const xs = await collateralService.getCollateralPrices(
-      "ethereum",
-      vault.collateral,
-      "7d"
-    );
 
-    return processSeries(xs.oracle, xs.market);
-  } else {
-    return Promise.resolve(init);
-  }
-}, init);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-distribution", vault?.collateral] as const,
+  queryFn: async ({ queryKey: [, collateral] }) => {
+    if (collateral) {
+      const xs = await collateralService.getCollateralPrices(
+        "ethereum",
+        collateral,
+        "7d"
+      );
+
+      return processSeries(xs.oracle, xs.market);
+    } else {
+      return Promise.resolve(init);
+    }
+  },
+  initialData: init,
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => vault, load);
-watch(data, createSeries);
+watch([data, chart], createSeries);
 watch(theme, () => {
   oracleSerie.applyOptions(createProportionOptionsSerie());
   marketSerie.applyOptions(createPriceOptionsSerie());
@@ -168,15 +170,18 @@ function createProportionOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newData: {
-  oracle: DecimalTimeSeries[];
-  market: DecimalTimeSeries[];
-}): void {
-  if (!chart.value || !oracleSerie) {
+function createSeries([newData, chart]: [
+  {
+    oracle: DecimalTimeSeries[];
+    market: DecimalTimeSeries[];
+  }?,
+  IChartApi?
+]): void {
+  if (!chart || !oracleSerie) {
     return;
   }
 
-  const newOracleSerie: LineData[] = chain(newData.oracle)
+  const newOracleSerie: LineData[] = chain(newData?.oracle)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -185,7 +190,7 @@ function createSeries(newData: {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newMarketSerie: LineData[] = chain(newData.market)
+  const newMarketSerie: LineData[] = chain(newData?.market)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -202,7 +207,7 @@ function createSeries(newData: {
     oracleSerie.setData(newOracleSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 

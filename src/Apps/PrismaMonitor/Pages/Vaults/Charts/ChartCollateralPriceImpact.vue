@@ -29,15 +29,20 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vault) {
-    return collateralService
-      .getCollateralPriceImpact("ethereum", vault.collateral)
-      .then((x) => x.impact);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-collateral-price-impact", vault?.collateral] as const,
+  queryFn: ({ queryKey: [, collateral] }) => {
+    if (collateral) {
+      return collateralService
+        .getCollateralPriceImpact("ethereum", collateral)
+        .then((x) => x.impact);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const options = computed((): unknown => {
@@ -124,9 +129,6 @@ const formatter = (x: number): string => {
 const pctFormatter = (y: number): string => {
   return `${round(y, 2, "percentage")}${unit(y, "percentage")}`;
 };
-
-// Watches
-watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

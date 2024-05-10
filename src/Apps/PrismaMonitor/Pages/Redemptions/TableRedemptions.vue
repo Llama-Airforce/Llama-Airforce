@@ -132,18 +132,26 @@ interface Props {
 const { vaults = [] } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vaults.length > 0) {
-    // For all vaults, get redemption and add vault info to redemption.
-    return Promise.all(
-      vaults.map((vault) =>
-        redemptionService.getRedemptions("ethereum", vault.address)
-      )
-    ).then((rs) => rs.flat());
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: [
+    "prisma-redemptions",
+    vaults.map((vault) => vault.address),
+  ] as const,
+  queryFn: ({ queryKey: [, vaults] }) => {
+    if (vaults.length > 0) {
+      // For all vaults, get redemption and add vault info to redemption.
+      return Promise.all(
+        vaults.map((vault) =>
+          redemptionService.getRedemptions("ethereum", vault)
+        )
+      ).then((rs) => rs.flat());
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();
@@ -209,9 +217,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 const onSelect = (row: unknown) => {
   showDetails.value = row as Row;
 };
-
-// Watches
-watch(() => vaults, load);
 </script>
 
 <style lang="scss" scoped>

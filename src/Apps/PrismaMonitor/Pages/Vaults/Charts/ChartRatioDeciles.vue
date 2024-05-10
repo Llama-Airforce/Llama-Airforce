@@ -22,13 +22,15 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-ratio-distribution"],
+  queryFn: () =>
     managerService
       .getRatioDistributionGrouped("ethereum")
       .then((x) => x.deciles),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed(() => {
   return createChartStyles(theme.value, {

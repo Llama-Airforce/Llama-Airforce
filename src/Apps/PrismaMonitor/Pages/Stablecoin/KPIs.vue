@@ -62,10 +62,10 @@ const storeSettings = useSettingsStore();
 const stableService = new StableService(getHost(), storeSettings.flavor);
 
 // Data
-const { data } = usePromise(
-  () => stableService.getStableCoinKPI("ethereum").then((x) => x.info),
-  null
-);
+const { data } = useQuery({
+  queryKey: ["prisma-stable-kpi"],
+  queryFn: () => stableService.getStableCoinKPI("ethereum").then((x) => x.info),
+});
 </script>
 
 <style lang="scss" scoped>

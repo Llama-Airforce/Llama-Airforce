@@ -140,27 +140,32 @@ const emit = defineEmits<{
 }>();
 
 // Data
-const { loading, data, load } = usePromise(async () => {
-  if (vaults.length > 0 && user) {
-    // For all vaults, get troves and add vault info to trove.
-    const troves = await Promise.all(
-      vaults.map((vault) =>
-        troveService.getTroves("ethereum", vault.address, user).then((rs) =>
-          rs.map((r) => ({
-            ...r,
-            vault: vault.address,
-          }))
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-troves", user] as const,
+  queryFn: async ({ queryKey: [, user] }) => {
+    if (vaults.length > 0 && user) {
+      // For all vaults, get troves and add vault info to trove.
+      const troves = await Promise.all(
+        vaults.map((vault) =>
+          troveService.getTroves("ethereum", vault.address, user).then((rs) =>
+            rs.map((r) => ({
+              ...r,
+              vault: vault.address,
+            }))
+          )
         )
-      )
-    ).then((rs) => rs.flat());
+      ).then((rs) => rs.flat());
 
-    emit("troves", troves);
+      emit("troves", troves);
 
-    return troves;
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+      return troves;
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();
@@ -251,9 +256,6 @@ const onType = (tabIndex: number) => {
     type.value = "Open";
   }
 };
-
-// Watches
-watch(() => vaults, load);
 </script>
 
 <style lang="scss" scoped>

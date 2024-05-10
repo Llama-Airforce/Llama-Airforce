@@ -19,10 +19,13 @@ const storeSettings = useSettingsStore();
 const stableService = new StableService(getHost(), storeSettings.flavor);
 
 // Data
-const { loading, data } = usePromise(
-  () => stableService.getCurvePoolDepth("ethereum").then((x) => x.depth),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-pool-depth"],
+  queryFn: () =>
+    stableService.getCurvePoolDepth("ethereum").then((x) => x.depth),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

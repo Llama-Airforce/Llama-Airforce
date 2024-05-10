@@ -49,16 +49,21 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { loading: loadingConvex, data: dataConvex } = usePromise(
-  () => prismaService.getTVL("convex").then((x) => x.tvl),
-  []
-);
-const { loading: loadingYearn, data: dataYearn } = usePromise(
-  () => prismaService.getTVL("yearn").then((x) => x.tvl),
-  []
-);
-
 const loading = computed(() => loadingConvex.value || loadingYearn.value);
+
+const { isFetching: loadingConvex, data: dataConvex } = useQuery({
+  queryKey: ["prisma-wrapper-tvl", "convex"] as const,
+  queryFn: () => prismaService.getTVL("convex").then((x) => x.tvl),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const { isFetching: loadingYearn, data: dataYearn } = useQuery({
+  queryKey: ["prisma-wrapper-tvl", "yearn"] as const,
+  queryFn: () => prismaService.getTVL("yearn").then((x) => x.tvl),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
 watch(theme, () => {
@@ -66,8 +71,12 @@ watch(theme, () => {
   serieYearn.applyOptions(createOptionsSerie("yearn"));
 });
 
-watch(dataConvex, (newData) => createSeries(newData, "convex"));
-watch(dataYearn, (newData) => createSeries(newData, "yearn"));
+watch([dataConvex, chart], ([newData, chart]) =>
+  createSeries("convex", newData, chart)
+);
+watch([dataYearn, chart], ([newData, chart]) =>
+  createSeries("yearn", newData, chart)
+);
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
@@ -102,8 +111,12 @@ function createOptionsSerie(contract: Contract): LineSeriesPartialOptions {
   };
 }
 
-function createSeries(newData: DecimalTimeSeries[], contract: Contract): void {
-  if (!chart.value || !serieConvex || !serieYearn) {
+function createSeries(
+  contract: Contract,
+  newData?: DecimalTimeSeries[],
+  chart?: IChartApi
+): void {
+  if (!chart || !serieConvex || !serieYearn) {
     return;
   }
 
@@ -123,7 +136,7 @@ function createSeries(newData: DecimalTimeSeries[], contract: Contract): void {
       serieYearn.setData(newSerie);
     }
 
-    chart.value.timeScale().fitContent();
+    chart.timeScale().fitContent();
   }
 }
 

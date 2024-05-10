@@ -80,10 +80,12 @@ const timestampCutoff = ref(1699723102);
 const includeUnlockPenalty = ref(true);
 
 // Data
-const { loading, data } = usePromise(
-  () => revenueService.getSnapshots().then((x) => x.snapshots),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-revenue-snapshots"],
+  queryFn: () => revenueService.getSnapshots().then((x) => x.snapshots),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const dataFiltered = computed(() =>
   data.value

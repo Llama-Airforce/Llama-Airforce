@@ -69,18 +69,19 @@ const init: RatioPosition = {
 };
 
 // Data
-const { loading, data, load } = usePromise(async () => {
-  if (vault && trove) {
-    const rank = await troveService.getTroveRank(
-      "ethereum",
-      vault.address,
-      trove.owner
-    );
-    return rank;
-  } else {
-    return Promise.resolve(init);
-  }
-}, init);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-trove-rank", vault?.address, trove?.owner] as const,
+  queryFn: async ({ queryKey: [, vault, owner] }) => {
+    if (vault && owner) {
+      const rank = await troveService.getTroveRank("ethereum", vault, owner);
+      return rank;
+    } else {
+      return Promise.resolve(init);
+    }
+  },
+  initialData: init,
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 // eslint-disable-next-line max-lines-per-function
@@ -197,7 +198,6 @@ const pctFormatter = (y: number, decimals = 0): string => {
 };
 
 // Watches
-watch(() => vault, load);
 watch(
   data,
   (newData) => {

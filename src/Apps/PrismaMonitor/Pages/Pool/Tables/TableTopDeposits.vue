@@ -59,13 +59,15 @@ const storeSettings = useSettingsStore();
 const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-top-deposits"],
+  queryFn: () =>
     sbService
       .getTopStableDeposits("ethereum", 5, "7d")
       .then((x) => x.operations),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const rows = computed((): PoolStableOperation[] =>

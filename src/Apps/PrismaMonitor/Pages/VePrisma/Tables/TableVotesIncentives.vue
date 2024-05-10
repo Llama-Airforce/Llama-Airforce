@@ -83,10 +83,12 @@ const { t } = useI18n();
 const vePrismaService = new VePrismaService(getHost());
 
 // Data
-const { loading, data } = usePromise(
-  () => vePrismaService.getVotesIncentives(),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-vote-incentives"],
+  queryFn: () => vePrismaService.getVotesIncentives(),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();

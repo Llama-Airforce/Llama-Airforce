@@ -27,9 +27,14 @@ import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
 const vePrismaService = new VePrismaService(getHost());
 
-const { loading, data } = usePromise(() => vePrismaService.getTopLockers(), {
-  totalWeight: 0,
-  accounts: [],
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-top-lockers"],
+  queryFn: () => vePrismaService.getTopLockers(),
+  initialData: {
+    totalWeight: 0,
+    accounts: [],
+  },
+  initialDataUpdatedAt: 0,
 });
 
 const lockers = computed(() => data.value.accounts);

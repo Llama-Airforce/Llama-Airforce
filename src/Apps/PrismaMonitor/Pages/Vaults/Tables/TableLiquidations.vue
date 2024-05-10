@@ -121,13 +121,18 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (vault) {
-    return liquidationService.getLiquidations("ethereum", vault.address);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-vault-liquidations", vault?.address] as const,
+  queryFn: ({ queryKey: [, vault] }) => {
+    if (vault) {
+      return liquidationService.getLiquidations("ethereum", vault);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const { relativeTime } = useRelativeTime();
@@ -185,9 +190,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 const onSelect = (row: unknown) => {
   showDetails.value = row as Liquidation;
 };
-
-// Watches
-watch(() => vault, load);
 </script>
 
 <style lang="scss" scoped>

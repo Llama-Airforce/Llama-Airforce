@@ -36,16 +36,18 @@ const { chart, chartRef } = useLightweightChart(
 const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-collateral-ratios"],
+  queryFn: () =>
     managerService
       .getCollateralRatioGrouped("ethereum", "all")
       .then((x) => x.data),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(data, createSeries);
+watch([data, chart], createSeries);
 watch(theme, () => globalCrSerie.applyOptions(createGlobalCrOptionsSerie()));
 
 // Chart
@@ -75,8 +77,11 @@ function createGlobalCrOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(globalCr: DecimalTimeSeries[]): void {
-  if (!chart.value || !globalCrSerie) {
+function createSeries([globalCr, chart]: [
+  DecimalTimeSeries[]?,
+  IChartApi?
+]): void {
+  if (!chart || !globalCrSerie) {
     return;
   }
 
@@ -88,11 +93,12 @@ function createSeries(globalCr: DecimalTimeSeries[]): void {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
+
   if (newGlobalCrSerie.length > 0) {
     globalCrSerie.setData(newGlobalCrSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 
