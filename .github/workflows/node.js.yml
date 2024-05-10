@@ -28,4 +28,5 @@ jobs:
       - run: npm ci
       - run: npm run 'build laf' --if-present
       - run: npm run 'build cm' --if-present
+      - run: npm run 'build pm' --if-present
       - run: npm test
