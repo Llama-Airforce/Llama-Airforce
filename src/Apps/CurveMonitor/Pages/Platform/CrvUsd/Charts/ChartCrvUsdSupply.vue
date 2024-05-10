@@ -60,10 +60,12 @@ const { theme } = storeToRefs(useSettingsStore());
 const chartType = ref<ChartType>("line");
 
 // Data
-const { loading, data } = usePromise(
-  () => curveService.getCrvUsdSupply().then((x) => x.supply),
-  []
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["crvusd-supply"],
+  queryFn: () => curveService.getCrvUsdSupply().then((x) => x.supply),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Events
 const onChartType = (type: ChartType) => {

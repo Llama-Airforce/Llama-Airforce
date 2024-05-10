@@ -225,6 +225,7 @@ declare global {
   const usePageStore: typeof import('../../Framework/Stores/PageStore')['usePageStore']
   const usePagination: typeof import('../../Framework/Composables/UsePagination')['usePagination']
   const usePromise: typeof import('../../Framework/Composables/UsePromise')['usePromise']
+  const useQueries: typeof import('@tanstack/vue-query')['useQueries']
   const useQuery: typeof import('@tanstack/vue-query')['useQuery']
   const useRelativeTime: typeof import('../../Framework/Composables/UseRelativeTime')['useRelativeTime']
   const useRoute: typeof import('vue-router')['useRoute']

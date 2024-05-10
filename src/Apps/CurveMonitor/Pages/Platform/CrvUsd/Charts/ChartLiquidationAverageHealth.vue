@@ -57,23 +57,23 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: health,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getHistoricalAverageHealth(market.address)
-      .then((x) => x.health);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: health } = useQuery({
+  queryKey: ["crvusd-liq-average-health", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService
+        .getHistoricalAverageHealth(market)
+        .then((x) => x.health);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(health, createSeries);
+watch([health, chart], createSeries);
 watch(theme, () => {
   areaQ1Serie.applyOptions(createOptionsSerie());
   areaSerie.applyOptions(createOptionsSerie());
@@ -143,8 +143,11 @@ function createQ3OptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newLosses: HistoricalAverageHealth[]): void {
-  if (!chart.value || !areaSerie || !areaQ1Serie || !areaQ3Serie) {
+function createSeries([newLosses, chart]: [
+  HistoricalAverageHealth[]?,
+  IChartApi?
+]): void {
+  if (!chart || !areaSerie || !areaQ1Serie || !areaQ3Serie) {
     return;
   }
 
@@ -187,7 +190,7 @@ function createSeries(newLosses: HistoricalAverageHealth[]): void {
     areaQ3Serie.setData(newQ3Serie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 

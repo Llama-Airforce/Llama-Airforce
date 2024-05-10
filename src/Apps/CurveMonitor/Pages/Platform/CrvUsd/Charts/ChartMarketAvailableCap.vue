@@ -55,23 +55,23 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: availableCap,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getMarketAvailableCap(market.address)
-      .then((x) => x.available);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: availableCap } = useQuery({
+  queryKey: ["crvusd-liq-available-cap", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService
+        .getMarketAvailableCap(market)
+        .then((x) => x.available);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(availableCap, createSeries);
+watch([availableCap, chart], createSeries);
 watch(theme, () => {
   availSerie.applyOptions(createAvailOptionsSerie());
   capSerie.applyOptions(createCapOptionsSerie());
@@ -126,8 +126,8 @@ function createCapOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newAvCap: AvailableCap[]): void {
-  if (!chart.value || !availSerie) {
+function createSeries([newAvCap, chart]: [AvailableCap[]?, IChartApi?]): void {
+  if (!chart || !availSerie) {
     return;
   }
 
@@ -157,7 +157,7 @@ function createSeries(newAvCap: AvailableCap[]): void {
     capSerie.setData(newCapSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {

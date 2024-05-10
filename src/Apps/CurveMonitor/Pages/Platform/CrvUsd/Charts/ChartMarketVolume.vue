@@ -45,21 +45,21 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: volumes,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService.getMarketVolume(market.address).then((x) => x.volumes);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: volumes } = useQuery({
+  queryKey: ["crvusd-market-volume", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getMarketVolume(market).then((x) => x.volumes);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(volumes, createSeries);
+watch([volumes, chart], createSeries);
 watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -94,8 +94,8 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newTvl: MarketVolume[]): void {
-  if (!chart.value || !areaSerie) {
+function createSeries([newTvl, chart]: [MarketVolume[]?, IChartApi?]): void {
+  if (!chart || !areaSerie) {
     return;
   }
 
@@ -112,7 +112,7 @@ function createSeries(newTvl: MarketVolume[]): void {
     areaSerie.setData(newSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {

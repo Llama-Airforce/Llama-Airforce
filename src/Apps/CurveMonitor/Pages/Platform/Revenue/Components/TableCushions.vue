@@ -104,13 +104,15 @@ const rows = computed((): Row[] =>
 );
 
 // Data
-const { loading, data: rowsRaw } = usePromise(
-  () =>
+const { isFetching: loading, data: rowsRaw } = useQuery({
+  queryKey: ["curve-cushions"],
+  queryFn: () =>
     curveService
       .getCushions()
       .then((x) => x.cushions.sort((a, b) => b.totalUSD - a.totalUSD)),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

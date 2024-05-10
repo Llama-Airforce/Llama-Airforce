@@ -64,22 +64,16 @@ const { market = null } = defineProps<Props>();
 const content = computed(() => marketState.value);
 
 // Data
-const {
-  loading,
-  data: marketState,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getMarketStateHealth(market.address)
-      .then((x) => x.health);
-  } else {
-    return Promise.resolve(null);
-  }
-}, null);
-
-// Watches
-watch(() => market, load);
+const { isFetching: loading, data: marketState } = useQuery({
+  queryKey: ["crvusd-liq-market-health", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getMarketStateHealth(market).then((x) => x.health);
+    } else {
+      return Promise.resolve(null);
+    }
+  },
+});
 
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;

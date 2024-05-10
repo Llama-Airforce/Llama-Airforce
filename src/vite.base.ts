@@ -8,7 +8,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     "vue-i18n",
     "vue-router",
     "pinia",
-    { "@tanstack/vue-query": ["useQuery"] },
+    { "@tanstack/vue-query": ["useQuery", "useQueries"] },
     {
       from: "lightweight-charts",
       imports: ["LineType", "LineStyle", "ColorType", "CrosshairMode"],

@@ -61,22 +61,22 @@ const { chart, chartRef } = useLightweightChart(
 const avgLength = ref<number | null>(null);
 
 // Data
-const {
-  loading,
-  data: rates,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService.getMarketRates(market.address).then((x) => x.rates);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: rates } = useQuery({
+  queryKey: ["crvusd-market-rates", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getMarketRates(market).then((x) => x.rates);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(rates, createSeries);
-watch(avgLength, () => createSeries(rates.value));
+watch([rates, chart], createSeries);
+watch(avgLength, () => createSeries([rates.value, chart.value]));
 watch(theme, () => {
   ratesSerie.applyOptions(createOptionsSerieRates());
   ratesEMASerie.applyOptions(createOptionsSerieRatesEMA());
@@ -130,8 +130,8 @@ function createOptionsSerieRatesEMA(): LineSeriesPartialOptions {
   };
 }
 
-function createSeries(newRates: MarketRates[]): void {
-  if (!chart.value || !ratesSerie) {
+function createSeries([newRates, chart]: [MarketRates[]?, IChartApi?]): void {
+  if (!chart || !ratesSerie) {
     return;
   }
 
@@ -169,7 +169,7 @@ function createSeries(newRates: MarketRates[]): void {
     const from = newRatesSerie[0].time;
     const to = newRatesSerie[newRatesSerie.length - 1].time;
 
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.timeScale().setVisibleRange({ from, to });
   }
 }
 

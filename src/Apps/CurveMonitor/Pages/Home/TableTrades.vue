@@ -51,14 +51,16 @@ type Trade = {
 const curveService = new CurveService(getHost());
 
 // Data
-const { data: trades } = usePromise(
-  () =>
+const { data: trades } = useQuery({
+  queryKey: ["curve-trades-large"],
+  queryFn: () =>
     curveService
       .getTradesLarge()
       .then((x) => x.large_trades.sort((a, b) => b.value - a.value))
       .then((x) => x.slice(0, 10)),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 </script>
 
 <style lang="scss" scoped>

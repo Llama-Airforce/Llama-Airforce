@@ -239,11 +239,11 @@ type Fees = {
 type Row = Market & Fees;
 
 // Refs
-const loading = ref(true);
-const rowsRaw = ref<Row[]>([]);
 const search = ref("");
 
-const yields = ref<Yield[]>([]);
+const loading = computed(
+  () => loadingYields.value || loadingMarkets.value || loadingFees.value
+);
 
 const yieldsMax = computed(
   (): Yield | null =>
@@ -256,6 +256,23 @@ const yieldsTop = computed((): Yield[] =>
   chain(yields.value)
     .orderBy((x) => x.apy, "desc")
     .take(5)
+    .value()
+);
+
+const rowsRaw = computed(() =>
+  chain(markets.value)
+    .map((market) => ({
+      ...market,
+      ...{
+        fees: {
+          pending: fees.value.pending.find((x) => x.market === market.address),
+          collected: fees.value.collected.find(
+            (x) => x.market === market.address
+          ),
+        },
+      },
+    }))
+    .sortBy((x) => x.totalCollateral, "desc")
     .value()
 );
 
@@ -272,32 +289,26 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-// Hooks
-onMounted(async () => {
-  loading.value = true;
+// Data
+const { isFetching: loadingYields, data: yields } = useQuery({
+  queryKey: ["crvusd-yields"],
+  queryFn: () => curveService.getYield().then((x) => x.yields),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
-  const { markets } = await curveService.getMarkets();
-  const { pending, collected } = await curveService.getFeesBreakdown();
+const { isFetching: loadingMarkets, data: markets } = useQuery({
+  queryKey: ["crvusd-markets"],
+  queryFn: () => curveService.getMarkets().then((x) => x.markets),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
-  yields.value = await curveService.getYield().then((x) => x.yields);
-
-  rowsRaw.value = markets
-    .map((market) => {
-      const fees: Fees = {
-        fees: {
-          pending: pending.find((x) => x.market === market.address),
-          collected: collected.find((x) => x.market === market.address),
-        },
-      };
-
-      return {
-        ...market,
-        ...fees,
-      };
-    })
-    .sort((a, b) => b.totalCollateral - a.totalCollateral);
-
-  loading.value = false;
+const { isFetching: loadingFees, data: fees } = useQuery({
+  queryKey: ["crvusd-fees"],
+  queryFn: () => curveService.getFeesBreakdown(),
+  initialData: { pending: [], collected: [] },
+  initialDataUpdatedAt: 0,
 });
 
 // Methods

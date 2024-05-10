@@ -56,23 +56,21 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: softLiqs,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getLiquidatorRevenue(market.address)
-      .then((x) => x.revenue);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: softLiqs } = useQuery({
+  queryKey: ["crvusd-liq-revenue", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getLiquidatorRevenue(market).then((x) => x.revenue);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(softLiqs, createSeries);
+watch([softLiqs, chart], createSeries);
 watch(theme, () => {
   discountSerie.applyOptions(createDiscountOptionsSerie());
   revenueSerie.applyOptions(createRevenueOptionsSerie());
@@ -132,8 +130,11 @@ function createDiscountOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newSoftLiq: LiquidatorRevenue[]): void {
-  if (!chart.value || !discountSerie) {
+function createSeries([newSoftLiq, chart]: [
+  LiquidatorRevenue[]?,
+  IChartApi?
+]): void {
+  if (!chart || !discountSerie) {
     return;
   }
 
@@ -163,7 +164,7 @@ function createSeries(newSoftLiq: LiquidatorRevenue[]): void {
     discountSerie.setData(newDiscountSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 

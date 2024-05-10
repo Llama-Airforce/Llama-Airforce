@@ -24,31 +24,31 @@ const proposalService = new ProposalService(getHost());
 const route = useRoute();
 
 // Data
-const { loading, data: proposal } = usePromise(() => {
-  const proposalTypeParam = route.params.proposalType;
-  const proposalIdParam = route.params.proposalId;
+const { isFetching: loading, data: proposal } = useQuery({
+  queryKey: ["curve-proposals", route.params.proposalId] as const,
+  queryFn: () => {
+    const proposalTypeParam = route.params.proposalType;
+    const proposalIdParam = route.params.proposalId;
 
-  if (
-    proposalTypeParam &&
-    typeof proposalTypeParam === "string" &&
-    proposalIdParam &&
-    typeof proposalIdParam === "string"
-  ) {
-    if (!proposalTypes.includes(proposalTypeParam as ProposalType)) {
-      return Promise.resolve(null);
+    if (
+      proposalTypeParam &&
+      typeof proposalTypeParam === "string" &&
+      proposalIdParam &&
+      typeof proposalIdParam === "string"
+    ) {
+      if (!proposalTypes.includes(proposalTypeParam as ProposalType)) {
+        return Promise.resolve(null);
+      }
+
+      const proposalType = proposalTypeParam as ProposalType;
+      const proposalId = parseInt(proposalIdParam, 10);
+
+      return proposalService.getProposal(proposalId, proposalType);
     }
 
-    const proposalType = proposalTypeParam as ProposalType;
-    const proposalId = parseInt(proposalIdParam, 10);
-
-    return minDelay(
-      proposalService.getProposal(proposalId, proposalType),
-      1000
-    );
-  }
-
-  return Promise.resolve(null);
-}, null);
+    return Promise.resolve(null);
+  },
+});
 </script>
 
 <style lang="scss" scoped>

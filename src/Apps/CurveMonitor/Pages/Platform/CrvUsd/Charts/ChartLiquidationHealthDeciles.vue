@@ -27,13 +27,18 @@ const { market = null } = defineProps<Props>();
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (market) {
-    return curveService.getHealthDeciles(market.address).then((x) => x.health);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["crvusd-liq-health-deciles", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getHealthDeciles(market).then((x) => x.health);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed(() => {
   return createChartStyles(theme.value, {
@@ -106,9 +111,6 @@ const series = computed((): { name: string; data: number[] }[] => [
     data: Object.values(data.value).map((x) => x.stablecoin),
   },
 ]);
-
-// Watches
-watch(() => market, load);
 
 // Methods
 const formatterX = (x: string): string => x;

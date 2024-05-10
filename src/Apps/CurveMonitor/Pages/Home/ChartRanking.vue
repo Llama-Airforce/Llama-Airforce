@@ -19,15 +19,20 @@ const curveService = new CurveService(getHost());
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { loading, data } = usePromise(async () => {
-  const gainers_ = curveService.getTvlGainers();
-  const losers_ = curveService.getTvlLosers();
-  const [gainers, losers] = [await gainers_, await losers_];
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["curve-tvl-gainers-losers"],
+  queryFn: async () => {
+    const gainers_ = curveService.getTvlGainers();
+    const losers_ = curveService.getTvlLosers();
+    const [gainers, losers] = [await gainers_, await losers_];
 
-  return [...gainers.tvl_gainers, ...losers.tvl_losers].sort(
-    (a, b) => b.tvl_growth - a.tvl_growth
-  );
-}, []);
+    return [...gainers.tvl_gainers, ...losers.tvl_losers].sort(
+      (a, b) => b.tvl_growth - a.tvl_growth
+    );
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed((): unknown => {
   const { colors } = theme.value;

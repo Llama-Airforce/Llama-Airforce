@@ -45,21 +45,21 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: loans,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService.getMarketLoans(market.address).then((x) => x.loans);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: loans } = useQuery({
+  queryKey: ["crvusd-market-loans", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getMarketLoans(market).then((x) => x.loans);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(loans, createSeriesLoans);
+watch([loans, chart], createSeriesLoans);
 watch(theme, () => loansSerie.applyOptions(createOptionsSerieLoans()));
 
 // Chart
@@ -89,8 +89,11 @@ function createOptionsSerieLoans(): HistogramSeriesPartialOptions {
   };
 }
 
-function createSeriesLoans(newLoans: MarketLoans[]): void {
-  if (!chart.value || !loansSerie) {
+function createSeriesLoans([newLoans, chart]: [
+  MarketLoans[]?,
+  IChartApi?
+]): void {
+  if (!chart || !loansSerie) {
     return;
   }
 
@@ -108,7 +111,7 @@ function createSeriesLoans(newLoans: MarketLoans[]): void {
 
     const from = newLoansSeries[0].time;
     const to = newLoansSeries[newLoansSeries.length - 1].time;
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.timeScale().setVisibleRange({ from, to });
   }
 }
 

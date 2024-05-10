@@ -56,20 +56,21 @@ interface Props {
   market?: Market | null;
 }
 
+const { market = null } = defineProps<Props>();
+
 // Data
-const {
-  loading,
-  data: rowsRaw,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getTopLiquidators(market.address)
-      .then((x) => x.liquidations);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: rowsRaw } = useQuery({
+  queryKey: ["crvusd-liq-liquidators", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getTopLiquidators(market).then((x) => x.liquidations);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Refs
 const rows = computed((): Liquidators[] =>
@@ -77,11 +78,6 @@ const rows = computed((): Liquidators[] =>
     .map((x) => x)
     .value()
 );
-
-const { market = null } = defineProps<Props>();
-
-// Watches
-watch(() => market, load);
 </script>
 
 <style lang="scss" scoped>

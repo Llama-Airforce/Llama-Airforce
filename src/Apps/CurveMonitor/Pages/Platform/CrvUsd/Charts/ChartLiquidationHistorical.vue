@@ -58,18 +58,20 @@ interface Props {
 const { market = null } = defineProps<Props>();
 
 // Data
-const { loading, data, load } = usePromise(() => {
-  if (market) {
-    return curveService
-      .getHistoricalLiquidations(market.address)
-      .then((x) => x.liquidations);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
-
-// Watches
-watch(() => market, load);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["crvusd-liq-historical", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService
+        .getHistoricalLiquidations(market)
+        .then((x) => x.liquidations);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Events
 const onChartType = (type: ChartType) => {

@@ -56,23 +56,23 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: softLiqs,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getHistoricalSoftLiquidations(market.address)
-      .then((x) => x.losses);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: softLiqs } = useQuery({
+  queryKey: ["crvusd-liq-soft-liqs", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService
+        .getHistoricalSoftLiquidations(market)
+        .then((x) => x.losses);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(softLiqs, createSeries);
+watch([softLiqs, chart], createSeries);
 watch(theme, () => {
   proportionSerie.applyOptions(createProportionOptionsSerie());
   priceSerie.applyOptions(createPriceOptionsSerie());
@@ -132,8 +132,11 @@ function createProportionOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newSoftLiq: HistoricalSoftLiquidations[]): void {
-  if (!chart.value || !proportionSerie) {
+function createSeries([newSoftLiq, chart]: [
+  HistoricalSoftLiquidations[]?,
+  IChartApi?
+]): void {
+  if (!chart || !proportionSerie) {
     return;
   }
 
@@ -163,7 +166,7 @@ function createSeries(newSoftLiq: HistoricalSoftLiquidations[]): void {
     proportionSerie.setData(newProportionSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 

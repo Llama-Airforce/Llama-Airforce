@@ -110,38 +110,23 @@ const curveService = new CurveService(getHost());
 type Row = PoolStats & KeepersDebt & KeepersProfit;
 
 // Refs
-const loading = ref(true);
-const rowsRaw = ref<Row[]>([]);
 const search = ref("");
 
-const rows = computed((): Row[] =>
-  chain(rowsRaw.value)
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return includesTerm(row.name) || includesTerm(row.address);
-    })
-    .value()
+const loading = computed(
+  () =>
+    loadingPoolStats.value ||
+    loadingKeepersDebt.value ||
+    loadingKeepersProfit.value
 );
 
-// Hooks
-onMounted(async () => {
-  loading.value = true;
-
-  const poolStats = await curveService.getPoolStats();
-  const keepersDebt = await curveService.getKeepersDebt();
-  const keepersProfit = await curveService.getKeepersProfit();
-
-  rowsRaw.value = poolStats.stats
+const rowsRaw = computed(() =>
+  chain(poolStats.value)
     .map((pool) => {
-      const debt = keepersDebt.keepers.find(
+      const debt = keepersDebt.value.find(
         (keeper) => keeper.pool === pool.address
       );
 
-      const profit = keepersProfit.profit.find(
+      const profit = keepersProfit.value.find(
         (keeper) => keeper.pool === pool.address
       );
 
@@ -156,9 +141,43 @@ onMounted(async () => {
       };
     })
     .filter(notEmpty)
-    .sort((a, b) => b.tvl - a.tvl);
+    .sortBy((x) => x.tvl)
+    .value()
+);
 
-  loading.value = false;
+const rows = computed((): Row[] =>
+  chain(rowsRaw.value)
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(row.name) || includesTerm(row.address);
+    })
+    .value()
+);
+
+// Data
+const { isFetching: loadingPoolStats, data: poolStats } = useQuery({
+  queryKey: ["crvusd-pool-stats"],
+  queryFn: () => curveService.getPoolStats().then((x) => x.stats),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const { isFetching: loadingKeepersDebt, data: keepersDebt } = useQuery({
+  queryKey: ["crvusd-keepers-debt"],
+  queryFn: () => curveService.getKeepersDebt().then((x) => x.keepers),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const { isFetching: loadingKeepersProfit, data: keepersProfit } = useQuery({
+  queryKey: ["crvusd-keepers-profit"],
+  queryFn: () => curveService.getKeepersProfit().then((x) => x.profit),
+  initialData: [],
+  initialDataUpdatedAt: 0,
 });
 
 // Methods

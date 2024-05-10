@@ -34,7 +34,7 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Watches
-watch(() => data, createSeries);
+watch([() => data, chart], createSeries);
 watch(theme, () => {
   supplySerie.applyOptions(createSupplyOptionsSerie());
   debtSerie.applyOptions(createDebtOptionsSerie());
@@ -87,8 +87,8 @@ function createDebtOptionsSerie(): LineSeriesPartialOptions {
   };
 }
 
-function createSeries(newSupply: CrvUsdSupply[]): void {
-  if (!chart.value || !supplySerie) {
+function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
+  if (!chart || !supplySerie) {
     return;
   }
 
@@ -118,7 +118,7 @@ function createSeries(newSupply: CrvUsdSupply[]): void {
     debtSerie.setData(newDebtSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 const formatter = (y: number): string =>

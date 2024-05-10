@@ -54,27 +54,22 @@ const coins = computed((): string[] =>
 );
 
 // Data
-const {
-  loading,
-  data: prices,
-  load,
-} = usePromise(
-  () => curveService.getPoolPrices().then((x) => x.prices),
-  [{ timestamp: 0 }]
-);
-
-// Hooks
-onMounted(load);
+const { isFetching: loading, data: prices } = useQuery({
+  queryKey: ["crvusd-pool-prices"],
+  queryFn: () => curveService.getPoolPrices().then((x) => x.prices),
+  initialData: [{ timestamp: 0 }],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(prices, (newPrices) => {
+watch([prices, chart], ([newPrices, chart]) => {
   addSeries();
-  createSeries(newPrices);
+  createSeries([newPrices, chart]);
 });
 
 watch(coinsDisabled, () => {
   addSeries();
-  createSeries(prices.value);
+  createSeries([prices.value, chart.value]);
 });
 
 watch(theme, () => {
@@ -131,8 +126,8 @@ function addSeries(): void {
   }
 }
 
-function createSeries(newPrices: PoolPrice[]): void {
-  if (!chart.value || lineSeries.length < 0) {
+function createSeries([newPrices, chart]: [PoolPrice[]?, IChartApi?]): void {
+  if (!chart || lineSeries.length < 0) {
     return;
   }
 
@@ -157,7 +152,7 @@ function createSeries(newPrices: PoolPrice[]): void {
     }
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {

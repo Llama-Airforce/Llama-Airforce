@@ -253,6 +253,7 @@
     "setMapStoreSuffix": true,
     "storeToRefs": true,
     "useBreadcrumbStore": true,
-    "usePageStore": true
+    "usePageStore": true,
+    "useQueries": true
   }
 }

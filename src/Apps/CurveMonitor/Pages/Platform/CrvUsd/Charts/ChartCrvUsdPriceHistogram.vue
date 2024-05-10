@@ -19,10 +19,12 @@ const curveService = new CurveService(getHost());
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { loading, data } = usePromise(
-  () => curveService.getCrvUsdPriceHistogram(),
-  { x: [], y: [] }
-);
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["crvusd-price-deviation"],
+  queryFn: () => curveService.getCrvUsdPriceHistogram(),
+  initialData: { x: [], y: [] },
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed(() => {
   return createChartStyles(theme.value, {

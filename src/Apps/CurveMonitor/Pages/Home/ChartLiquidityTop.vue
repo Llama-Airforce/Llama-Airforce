@@ -19,13 +19,15 @@ const curveService = new CurveService(getHost());
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["curve-liquidity-top"],
+  queryFn: () =>
     curveService
       .getLiquidityTop()
       .then((x) => x.liquidity_use.sort((a, b) => b.liq_use - a.liq_use)),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {

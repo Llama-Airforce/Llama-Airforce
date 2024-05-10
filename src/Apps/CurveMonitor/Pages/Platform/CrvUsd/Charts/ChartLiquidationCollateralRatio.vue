@@ -45,23 +45,23 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: ratios,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getHistoricalCollateralRatio(market.address)
-      .then((x) => x.ratios);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: ratios } = useQuery({
+  queryKey: ["crvusd-liq-collateral-ratio", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService
+        .getHistoricalCollateralRatio(market)
+        .then((x) => x.ratios);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(ratios, createSeries);
+watch([ratios, chart], createSeries);
 watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -93,8 +93,11 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newRatios: CollateralRatios[]): void {
-  if (!chart.value || !areaSerie) {
+function createSeries([newRatios, chart]: [
+  CollateralRatios[]?,
+  IChartApi?
+]): void {
+  if (!chart || !areaSerie) {
     return;
   }
 
@@ -111,7 +114,7 @@ function createSeries(newRatios: CollateralRatios[]): void {
     areaSerie.setData(newSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 

@@ -19,13 +19,15 @@ const curveService = new CurveService(getHost());
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { loading, data } = usePromise(
-  () =>
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["curve-tvl-breakdown"],
+  queryFn: () =>
     curveService
       .getTvlBreakdownChain()
       .then((x) => x.tvl_breakdown_chain.sort((a, b) => b.tvl - a.tvl)),
-  []
-);
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {

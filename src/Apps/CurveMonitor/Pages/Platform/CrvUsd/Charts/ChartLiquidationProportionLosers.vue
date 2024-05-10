@@ -45,23 +45,21 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const {
-  loading,
-  data: losses,
-  load,
-} = usePromise(() => {
-  if (market) {
-    return curveService
-      .getProportionLosers(market.address)
-      .then((x) => x.losses);
-  } else {
-    return Promise.resolve([]);
-  }
-}, []);
+const { isFetching: loading, data: losses } = useQuery({
+  queryKey: ["crvusd-liq-proportion-losers", market?.address] as const,
+  queryFn: ({ queryKey: [, market] }) => {
+    if (market) {
+      return curveService.getProportionLosers(market).then((x) => x.losses);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
 // Watches
-watch(() => market, load);
-watch(losses, createSeries);
+watch([losses, chart], createSeries);
 watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -93,8 +91,11 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries(newLosses: HistoricalLosers[]): void {
-  if (!chart.value || !areaSerie) {
+function createSeries([newLosses, chart]: [
+  HistoricalLosers[]?,
+  IChartApi?
+]): void {
+  if (!chart || !areaSerie) {
     return;
   }
 
@@ -111,7 +112,7 @@ function createSeries(newLosses: HistoricalLosers[]): void {
     areaSerie.setData(newSerie);
   }
 
-  chart.value.timeScale().fitContent();
+  chart.timeScale().fitContent();
 }
 </script>
 
