@@ -8,6 +8,7 @@ export type MenuItem = {
 
 export type MenuNode = MenuItem & {
   children: MenuLeaf[]; // We don't allow infinite nesting for now.
+  initCollapsed?: boolean;
 };
 
 export type MenuLeaf = MenuItem & {

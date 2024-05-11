@@ -133,6 +133,7 @@ export const pageMain: Page = {
     },
     {
       label: "Convex",
+      initCollapsed: true,
       children: [
         {
           to: "/convex/flyer",
