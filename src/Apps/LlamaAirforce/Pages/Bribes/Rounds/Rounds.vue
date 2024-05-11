@@ -11,12 +11,24 @@
       <Summary
         class="summary"
         :rounds="rounds"
+        :epoch="epoch"
         @select-round="onSelectRound"
       ></Summary>
 
-      <GraphBribesRound class="graph-bribes-round"></GraphBribesRound>
-      <TablePersonal class="datatable-personal"></TablePersonal>
-      <TableBribed class="datatable-bribed"></TableBribed>
+      <GraphBribesRound
+        class="graph-bribes-round"
+        :epoch="epoch"
+      ></GraphBribesRound>
+
+      <TablePersonal
+        class="datatable-personal"
+        :epoch="epoch"
+      ></TablePersonal>
+
+      <TableBribed
+        class="datatable-bribed"
+        :epoch="epoch"
+      ></TableBribed>
     </div>
   </div>
 </template>
@@ -27,12 +39,7 @@ import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
 import TableBribed from "@LAF/Pages/Bribes/Rounds/Components/TableBribed.vue";
 import TablePersonal from "@LAF/Pages/Bribes/Rounds/Components/TablePersonal.vue";
 import GraphBribesRound from "@LAF/Pages/Bribes/Rounds/Components/GraphBribesRound.vue";
-import type {
-  Epoch,
-  Platform,
-  Protocol,
-  Product,
-} from "@LAF/Pages/Bribes/Models";
+import type { Platform, Protocol, Product } from "@LAF/Pages/Bribes/Models";
 import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import AuraBribesService from "@LAF/Pages/Bribes/Services/AuraBribesService";
@@ -42,8 +49,8 @@ let isInitializing = false;
 
 // Refs
 const storeBribe = useBribesStore();
-const { epoch, epochs, platform, protocol, product } = storeToRefs(storeBribe);
-const { setEpoch } = storeBribe;
+const { platform, protocol, product } = storeToRefs(storeBribe);
+const round = ref<number | undefined>(undefined);
 
 const router = useRouter();
 const route = useRoute();
@@ -69,13 +76,47 @@ const { data: rounds } = useQuery({
   initialDataUpdatedAt: 0,
 });
 
-// Hooks.
-onBeforeMount(async (): Promise<void> => {
-  await initFromRouter();
+const { data: epoch } = useQuery({
+  queryKey: ["bribes-epoch", product, round] as const,
+  queryFn: ({ queryKey: [, product, round] }) => {
+    if (product && round && bribesService.value) {
+      return bribesService.value
+        .getEpoch({
+          platform: product.platform,
+          protocol: product.protocol,
+          round,
+        })
+        .then((x) => x.epoch);
+    }
+
+    return undefined;
+  },
+  initialData: undefined,
+  initialDataUpdatedAt: 0,
+  enabled: () => !!round.value,
 });
 
+// Hooks.
+onBeforeMount(initFromRouter);
 onBeforeUnmount((): void => {
   isInitializing = false;
+});
+
+// Watches
+watch(
+  rounds,
+  (newRounds) => {
+    if (!round.value) {
+      round.value = newRounds.at(-1);
+    }
+  },
+  { immediate: true }
+);
+
+watch(round, (newRound) => {
+  if (product.value && newRound) {
+    void updateRouter(product.value, newRound);
+  }
 });
 
 // Events
@@ -87,13 +128,12 @@ const onSelectPlatform = (newPlatform: Platform, init = false): void => {
   platform.value = newPlatform;
 };
 
-const onSelectProtocol = async (
-  newProtocol: Protocol,
-  init = false
-): Promise<void> => {
+const onSelectProtocol = (newProtocol: Protocol, init = false) => {
   if (isInitializing && !init) {
     return;
   }
+
+  const oldProtocol = protocol.value;
 
   if (platform.value) {
     const platformProtocols = getProtocols(platform.value);
@@ -119,96 +159,30 @@ const onSelectProtocol = async (
   if (platform.value) {
     // When not initializing, we want to load the latest round.
     if (!init) {
-      await onSelectRound();
+      onSelectRound(oldProtocol === newProtocol ? round.value : undefined);
     }
   }
 };
 
-/** Gets the epoch for a given platform, protocol and optional round. */
-const findOrGetEpoch = async (
-  product: Product,
-  round?: number // Find latest if null.
-): Promise<Epoch | null> => {
-  const { platform, protocol } = product;
-  let epochFound: Epoch | null = null;
-
-  // Given a round, check if it's already loaded, otherwise try to fetch it.
-  if (round) {
-    const epochState = epochs.value[platform][protocol].find(
-      (epoch) => epoch.round === round
-    );
-
-    if (epochState) {
-      return epochState;
-    }
-
-    const epochResp = await bribesService.value.getEpoch({
-      platform,
-      protocol,
-      round,
-    });
-
-    if (epochResp.epoch) {
-      epochFound = epochResp.epoch;
-    }
-  }
-
-  // If no round was given, check if there's a 'last one' loaded.
-  if (!round) {
-    const epochLast = epochs.value[platform][protocol].at(-1);
-
-    if (epochLast) {
-      return epochLast;
-    }
-  }
-
-  // If finally no epoch was returned, fetch the latest one instead.
-  if (!epochFound) {
-    const { epoch: epochLatest } = await bribesService.value.getEpoch({
-      platform,
-      protocol,
-    });
-
-    if (epochLatest) {
-      epochFound = epochLatest;
-    }
-  }
-
-  if (epochFound) {
-    setEpoch({ platform, protocol }, epochFound);
-  }
-
-  return epochFound ?? null;
-};
-
-const onSelectRound = async (round?: number, init = false): Promise<void> => {
-  if ((isInitializing && !init) || !product.value) {
-    return;
-  }
-
-  const newEpoch = await findOrGetEpoch(product.value, round);
-
-  if (newEpoch) {
-    epoch.value = newEpoch;
-
-    void updateRouter(product.value, newEpoch);
-  }
+const onSelectRound = (newRound?: number) => {
+  round.value = newRound;
 };
 
 // Methods
-const updateRouter = async (product: Product, epoch: Epoch): Promise<void> => {
+const updateRouter = async (product: Product, round: number): Promise<void> => {
   const { platform, protocol } = product;
 
   await router.push({
     name: "rounds-incentives",
-    params: { platform, protocol, round: epoch.round },
+    params: { platform, protocol, round },
   });
 };
 
-const initFromRouter = async (): Promise<void> => {
+function initFromRouter() {
   if (isInitializing) {
     return;
   }
+
   isInitializing = true;
 
   const paramRound = route.params.round;
@@ -226,24 +200,23 @@ const initFromRouter = async (): Promise<void> => {
     isProtocol(paramProtocol)
   ) {
     onSelectPlatform(paramPlatform, true);
-    await onSelectProtocol(paramProtocol, true);
+    onSelectProtocol(paramProtocol, true);
 
     const round = parseInt(paramRound, 10);
 
     if (round) {
-      await onSelectRound(round, true);
+      onSelectRound(round);
     }
   } else {
     // Default to default product.
     if (product.value) {
       onSelectPlatform(product.value.platform, true);
-      await onSelectProtocol(product.value.protocol, true);
-      await onSelectRound(undefined, true);
+      onSelectProtocol(product.value.protocol, true);
     }
   }
 
   isInitializing = false;
-};
+}
 </script>
 
 <style lang="scss" scoped>

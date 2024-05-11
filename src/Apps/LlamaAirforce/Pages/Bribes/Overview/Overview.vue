@@ -142,6 +142,7 @@ function initFromRouter() {
   if (isInitializing) {
     return;
   }
+
   isInitializing = true;
 
   const paramPlatform = route.params.platform;

@@ -112,8 +112,15 @@ const auraService = new AuraService(getHost());
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  epoch?: Epoch;
+}
+
+const { epoch } = defineProps<Props>();
+
 // Refs
-const { epoch, protocol } = storeToRefs(useBribesStore());
+const { protocol } = storeToRefs(useBribesStore());
 const { connected, address } = useWallet();
 
 type SortColumns = "pool" | "vlasset" | "total";
@@ -123,7 +130,7 @@ const bribed = ref<BribedPersonal[]>([]);
 const voter = ref("");
 const loading = ref(false);
 
-const isSupported = computed((): boolean => epoch.value?.platform !== "hh");
+const isSupported = computed((): boolean => epoch?.platform !== "hh");
 
 const bribedOrdered = computed((): BribedPersonal[] => {
   return orderBy(
@@ -158,27 +165,17 @@ const personalDollarPerVlAsset = computed((): number | null => {
 
 // Events
 const onConnected = async (): Promise<void> => {
-  if (epoch.value) {
-    await onEpoch(epoch.value);
+  if (epoch) {
+    await onEpoch(epoch);
   }
 };
 
 // Methods
-const pool = (bribed: BribedPersonal): string => {
-  return bribed.pool;
-};
-
-const amountDollars = (bribed: BribedPersonal): number => {
-  return bribed.amountDollars;
-};
-
-const dollarPerVlAsset = (bribed: BribedPersonal): number => {
-  return bribed.dollarPerVlAsset;
-};
-
-const percentage = (bribed: BribedPersonal): number => {
-  return bribed.percentage;
-};
+const pool = (bribed: BribedPersonal): string => bribed.pool;
+const amountDollars = (bribed: BribedPersonal): number => bribed.amountDollars;
+const dollarPerVlAsset = (bribed: BribedPersonal): number =>
+  bribed.dollarPerVlAsset;
+const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 
 // Events
 const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
@@ -245,14 +242,17 @@ const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
 watch(connected, onConnected);
 
 watch(address, async (): Promise<void> => {
-  if (epoch.value) {
-    await onEpoch(epoch.value);
+  if (epoch) {
+    await onEpoch(epoch);
   }
 });
 
-watch(epoch, async (newEpoch): Promise<void> => {
-  await onEpoch(newEpoch ?? undefined);
-});
+watch(
+  () => epoch,
+  async (newEpoch): Promise<void> => {
+    await onEpoch(newEpoch ?? undefined);
+  }
+);
 </script>
 
 <style lang="scss" scoped>

@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { orderBy, reverse } from "lodash";
+import { type Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
   dollarPerVlAsset as dollarPerVlAssetFunc,
@@ -73,9 +74,10 @@ let countdownTimer: ReturnType<typeof setTimeout>;
 // Props
 interface Props {
   rounds: number[];
+  epoch?: Epoch;
 }
 
-const { rounds = [] } = defineProps<Props>();
+const { rounds = [], epoch } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -83,7 +85,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { epoch, product } = storeToRefs(useBribesStore());
+const { product } = storeToRefs(useBribesStore());
 
 const roundOpen = ref(false);
 const roundSelected = ref(false);
@@ -92,33 +94,36 @@ const countdownString = ref("");
 const roundsOrdered = computed((): number[] => reverse(orderBy(rounds)));
 
 const voteLink = computed((): string =>
-  epoch.value ? getLink(epoch.value, epoch.value.proposal) : ""
+  epoch ? getLink(epoch, epoch.proposal) : ""
 );
 
 const dollarPerVlAsset = computed((): number | undefined =>
-  epoch.value ? dollarPerVlAssetFunc(epoch.value) : undefined
+  epoch ? dollarPerVlAssetFunc(epoch) : undefined
 );
 
 const totalAmountDollars = computed((): number | undefined =>
-  epoch.value ? totalAmountDollarsFunc(epoch.value) : undefined
+  epoch ? totalAmountDollarsFunc(epoch) : undefined
 );
 
-const date = computed((): string => (epoch.value ? getDate(epoch.value) : ""));
+const date = computed((): string => (epoch ? getDate(epoch) : ""));
 
 const isFinished = computed((): boolean =>
-  epoch.value ? new Date().getTime() > getDateRaw(epoch.value).getTime() : false
+  epoch ? new Date().getTime() > getDateRaw(epoch).getTime() : false
 );
 
 // Watches
-watch(epoch, (newEpoch): void => {
-  clearInterval(countdownTimer);
+watch(
+  () => epoch,
+  (newEpoch): void => {
+    clearInterval(countdownTimer);
 
-  if (newEpoch) {
-    countdownTimer = setInterval(() => {
-      countdownString.value = countdown(getDateRaw(newEpoch));
-    });
+    if (newEpoch) {
+      countdownTimer = setInterval(() => {
+        countdownString.value = countdown(getDateRaw(newEpoch));
+      });
+    }
   }
-});
+);
 
 // Events
 const onRoundOpen = (): void => {

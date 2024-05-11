@@ -11,32 +11,30 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import type { Bribe } from "@LAF/Pages/Bribes/Models";
+import type { Bribe, Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
 type Serie = { name: string; data: number[] };
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  epoch?: Epoch;
+}
+
+const { epoch } = defineProps<Props>();
+
 // Refs
-const { epoch, epochs, product } = storeToRefs(useBribesStore());
+const { protocol } = storeToRefs(useBribesStore());
 
 const bribes = computed((): Bribe[] => {
-  if (!epoch.value || !product.value) {
-    return [];
-  }
+  const stinkBid = protocol.value === "aura-bal" ? 0 : 2500;
 
-  const { platform, protocol } = product.value;
-  const stinkBid = protocol === "aura-bal" ? 0 : 2500;
-
-  return (
-    (
-      epochs.value[platform][protocol].find((e) => e === epoch.value)?.bribes ??
-      []
-    )
-      // Filter stink bids.
-      .filter((bribe) => bribe.amountDollars > stinkBid)
-  );
+  // Filter stink bids.
+  return chain(epoch?.bribes)
+    .filter((bribe) => bribe.amountDollars > stinkBid)
+    .value();
 });
 
 const categories = computed((): string[] => {

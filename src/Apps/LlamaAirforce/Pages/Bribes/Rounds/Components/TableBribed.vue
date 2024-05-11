@@ -78,8 +78,9 @@
 </template>
 
 <script setup lang="ts">
+import { chain } from "lodash";
 import { icon } from "@/Util";
-import type { Bribe, Bribed } from "@LAF/Pages/Bribes/Models";
+import type { Bribe, Bribed, Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getBribed } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
@@ -87,18 +88,25 @@ import { orderBy } from "lodash";
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  epoch?: Epoch;
+}
+
+const { epoch } = defineProps<Props>();
+
 // Refs
-const { epoch, protocol } = storeToRefs(useBribesStore());
+const { protocol } = storeToRefs(useBribesStore());
 
 type SortColumns = "pool" | "vlasset" | "total";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("vlasset");
 
 const bribed = computed((): Bribed[] => {
-  if (!epoch.value) {
+  if (!epoch) {
     return [];
   }
 
-  const bribed = getBribed(epoch.value);
+  const bribed = getBribed(epoch);
 
   return orderBy(
     bribed,
@@ -127,15 +135,10 @@ const amountDollars = (bribed: Bribed): number =>
 const dollarPerVlAsset = (bribed: Bribed): number => bribed.dollarPerVlAsset;
 
 const bribes = (bribed: Bribed): Bribe[] => {
-  if (!epoch.value) {
-    return [];
-  }
-
-  const bribes = epoch.value.bribes.filter(
-    (bribe) => bribe.pool === bribed.pool
-  );
-
-  return orderBy(bribes, (bribe) => bribe.amountDollars, "desc");
+  return chain(epoch?.bribes)
+    .filter((bribe) => bribe.pool === bribed.pool)
+    .orderBy((bribe) => bribe.amountDollars, "desc")
+    .value();
 };
 </script>
 
