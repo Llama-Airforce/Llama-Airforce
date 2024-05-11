@@ -7,7 +7,9 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     "vue",
     "vue-i18n",
     "vue-router",
+    "@vueuse/core",
     "pinia",
+    { "@vueuse/router": ["useRouteHash", "useRouteParams", "useRouteQuery"] },
     { "@tanstack/vue-query": ["useQuery", "useQueries"] },
     {
       from: "lightweight-charts",
