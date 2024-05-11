@@ -41,45 +41,38 @@
 
 <script setup lang="ts">
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import type {
-  EpochOverview,
-  Overview,
-  Protocol,
-} from "@LAF/Pages/Bribes/Models";
+import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  overview?: Overview;
+}
+
+const { overview } = defineProps<Props>();
+
 // Refs
-const store = useBribesStore();
+const { selectedProtocol: protocol } = storeToRefs(useBribesStore());
 
-const overview = computed((): Overview | null => {
-  return store.selectedOverview;
-});
+const epochs = computed((): EpochOverview[] => overview?.epochs ?? []);
 
-const epochs = computed((): EpochOverview[] => {
-  return overview.value?.epochs ?? [];
-});
+const recordEarningsLabel = computed((): string =>
+  t("record-earnings", [vlAssetSymbol(protocol.value)])
+);
 
-const protocol = computed((): Protocol | null => {
-  return store.selectedProtocol;
-});
+const totalRevenue = computed((): number =>
+  epochs.value.reduce((acc, epoch) => acc + epoch.totalAmountDollars, 0)
+);
 
-const recordEarningsLabel = computed((): string => {
-  return t("record-earnings", [vlAssetSymbol(protocol.value)]);
-});
+const rewardPerDollarBribe = computed(
+  (): number => overview?.rewardPerDollarBribe ?? 0
+);
 
-const totalRevenue = computed((): number => {
-  return epochs.value.reduce((acc, epoch) => acc + epoch.totalAmountDollars, 0);
-});
-
-const rewardPerDollarBribe = computed((): number => {
-  return overview.value?.rewardPerDollarBribe ?? 0;
-});
-
-const recordEarningPerVlAsset = computed((): number => {
-  return Math.max(...epochs.value.map((epoch) => epoch.dollarPerVlAsset));
-});
+const recordEarningPerVlAsset = computed((): number =>
+  Math.max(...epochs.value.map((epoch) => epoch.dollarPerVlAsset))
+);
 
 const rewardsPerDollarBribeTooltip = computed((): string => {
   let tokens = "???";

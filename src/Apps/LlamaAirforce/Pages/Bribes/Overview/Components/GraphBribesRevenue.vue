@@ -14,28 +14,21 @@ import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getDate } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
-import type {
-  EpochOverview,
-  Overview,
-  Protocol,
-} from "@LAF/Pages/Bribes/Models";
+import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  overview?: Overview;
+}
+
+const { overview } = defineProps<Props>();
+
 // Refs
-const store = useBribesStore();
+const { selectedProtocol: protocol } = storeToRefs(useBribesStore());
 
-const overview = computed((): Overview | null => {
-  return store.selectedOverview;
-});
-
-const epochs = computed((): EpochOverview[] => {
-  return overview.value?.epochs ?? [];
-});
-
-const protocol = computed((): Protocol | null => {
-  return store.selectedProtocol;
-});
+const epochs = computed((): EpochOverview[] => overview?.epochs ?? []);
 
 const options = computed((): unknown => {
   return createChartStylesLAF({

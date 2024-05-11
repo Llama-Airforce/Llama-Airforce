@@ -64,32 +64,28 @@ import {
   getLink,
 } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
-import type {
-  EpochOverview,
-  Overview,
-  Protocol,
-} from "@LAF/Pages/Bribes/Models";
+import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
 
 const { t } = useI18n();
 
+// Props
+interface Props {
+  overview?: Overview;
+}
+
+const { overview } = defineProps<Props>();
+
 // Refs
-const store = useBribesStore();
+const { selectedProtocol: protocol } = storeToRefs(useBribesStore());
+
 const router = useRouter();
 
 type SortColumns = "deadline" | "vlasset" | "total";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("deadline");
 
-const overview = computed((): Overview | null => {
-  return store.selectedOverview;
-});
-
-const protocol = computed((): Protocol | null => {
-  return store.selectedProtocol;
-});
-
 const epochs = computed((): EpochOverview[] => {
   return orderBy(
-    overview.value?.epochs ?? [],
+    overview?.epochs ?? [],
     (epoch: EpochOverview) => {
       switch (sortColumn.value) {
         case "deadline":
@@ -107,29 +103,21 @@ const epochs = computed((): EpochOverview[] => {
 });
 
 // Methods
-const round = (epoch: EpochOverview): number => {
-  return epoch.round;
-};
+const round = (epoch: EpochOverview): number => epoch.round;
 
-const voteLink = (epoch: EpochOverview): string => {
-  return getLink(epoch, epoch.proposal);
-};
+const voteLink = (epoch: EpochOverview): string =>
+  getLink(epoch, epoch.proposal);
 
-const dollarPerVlAsset = (epoch: EpochOverview): number => {
-  return epoch.dollarPerVlAsset;
-};
+const dollarPerVlAsset = (epoch: EpochOverview): number =>
+  epoch.dollarPerVlAsset;
 
-const totalAmountDollars = (epoch: EpochOverview): number => {
-  return epoch.totalAmountDollars;
-};
+const totalAmountDollars = (epoch: EpochOverview): number =>
+  epoch.totalAmountDollars;
 
-const date = (epoch: EpochOverview): string => {
-  return getDate(epoch);
-};
+const date = (epoch: EpochOverview): string => getDate(epoch);
 
-const isFinished = (epoch: EpochOverview): boolean => {
-  return new Date() > getDateRaw(epoch);
-};
+const isFinished = (epoch: EpochOverview): boolean =>
+  new Date() > getDateRaw(epoch);
 
 // Events
 const onSelected = async (data: unknown): Promise<void> => {

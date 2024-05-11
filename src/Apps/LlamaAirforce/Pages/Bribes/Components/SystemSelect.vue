@@ -108,9 +108,6 @@ const protocols = computed((): ProtocolInfo[] => {
 
 // Hooks
 onMounted((): void => {
-  onPlatformSelect(platforms.value[0]);
-  onProtocolSelect(protocols.value[0]);
-
   platformSelected.value = false;
   protocolSelected.value = false;
 });

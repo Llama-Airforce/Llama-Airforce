@@ -8,9 +8,20 @@
       >
       </SystemSelect>
 
-      <Summary class="summary"></Summary>
-      <GraphBribesRevenue class="graph-bribes-revenue"></GraphBribesRevenue>
-      <TableRounds class="table-rounds"></TableRounds>
+      <Summary
+        class="summary"
+        :overview="overview"
+      ></Summary>
+
+      <GraphBribesRevenue
+        class="graph-bribes-revenue"
+        :overview="overview"
+      ></GraphBribesRevenue>
+
+      <TableRounds
+        class="table-rounds"
+        :overview="overview"
+      ></TableRounds>
     </div>
   </div>
 </template>
@@ -22,7 +33,6 @@ import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
 import Summary from "@LAF/Pages/Bribes/Overview/Components/Summary.vue";
 import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import type {
-  Overview,
   OverviewId,
   Product,
   Platform,
@@ -72,11 +82,20 @@ const overviewId = computed((): OverviewId | null => {
   }
 });
 
-// Hooks.
-onBeforeMount(async (): Promise<void> => {
-  await initFromRouter();
+// Data
+const { data: overview } = useQuery({
+  queryKey: ["bribes-overview", overviewId] as const,
+  queryFn: ({ queryKey: [, overviewId] }) => {
+    if (overviewId) {
+      return dashboardService.getOverview(overviewId).then((x) => x.dashboard);
+    } else {
+      return undefined;
+    }
+  },
 });
 
+// Hooks.
+onBeforeMount(initFromRouter);
 onBeforeUnmount((): void => {
   isInitializing = false;
 });
@@ -90,33 +109,14 @@ const onSelectPlatform = (platform: Platform, init = false): void => {
   store.selectedPlatform = platform;
 };
 
-const findOrGetDashboard = async (
-  overviewId: OverviewId
-): Promise<Overview | null> => {
-  const dashboardLoaded = store.overviews[overviewId];
-  if (dashboardLoaded) {
-    return dashboardLoaded;
-  }
-
-  const { dashboard } = await dashboardService.getOverview(overviewId);
-
-  if (dashboard) {
-    store.setOverview(dashboard);
-  }
-
-  return dashboard ?? null;
-};
-
-const onSelectProtocol = async (
-  protocol: Protocol,
-  init = false
-): Promise<void> => {
+const onSelectProtocol = (protocol: Protocol, init = false): void => {
   if (isInitializing && !init) {
     return;
   }
 
   if (store.selectedPlatform) {
     const protocols = getProtocols(store.selectedPlatform);
+
     if (protocols.includes(protocol)) {
       // platform includes current protocol, keep platform, update protocol
       store.selectedProtocol = protocol;
@@ -138,13 +138,7 @@ const onSelectProtocol = async (
   // Check if dashboard is loaded for this protocol.
   const platform = product.value?.platform;
   if (platform && overviewId.value) {
-    const dashboard = await findOrGetDashboard(overviewId.value);
-
-    if (dashboard) {
-      store.selectedOverview = dashboard;
-
-      if (product.value) void updateRouter(product.value);
-    }
+    if (product.value) void updateRouter(product.value);
   }
 };
 
@@ -158,7 +152,7 @@ const updateRouter = async (product: Product): Promise<void> => {
   });
 };
 
-const initFromRouter = async (): Promise<void> => {
+function initFromRouter() {
   if (isInitializing) {
     return;
   }
@@ -176,17 +170,17 @@ const initFromRouter = async (): Promise<void> => {
     isProtocol(paramProtocol)
   ) {
     onSelectPlatform(paramPlatform, true);
-    await onSelectProtocol(paramProtocol, true);
+    onSelectProtocol(paramProtocol, true);
   } else {
     // Default to default product.
     if (product.value) {
       onSelectPlatform(product.value.platform, true);
-      await onSelectProtocol(product.value.protocol, true);
+      onSelectProtocol(product.value.protocol, true);
     }
   }
 
   isInitializing = false;
-};
+}
 </script>
 
 <style lang="scss" scoped>
