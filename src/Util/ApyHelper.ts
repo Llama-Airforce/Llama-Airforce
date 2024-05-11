@@ -31,7 +31,7 @@ import {
   UCrvStrategyAddressV2,
 } from "@/Util/Addresses";
 import { fetchType, type DefiLlamaService } from "@/Services";
-import type FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
+import type FlyerService from "@/Services/FlyerService";
 
 /**
  * Assumes weekly compounding. Apr is a [0, 100] percentage.

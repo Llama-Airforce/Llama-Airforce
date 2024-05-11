@@ -22,7 +22,7 @@ import {
 } from "@/Util/Addresses";
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import { type DefiLlamaService } from "@/Services";
-import type FlyerService from "@/Apps/LlamaAirforce/Pages/Convex/Flyer/Services/FlyerService";
+import type FlyerService from "@/Services/FlyerService";
 
 export async function getDiscount(
   pool: CurveV1FactoryPool | CurveV2FactoryPool | CurveV6FactoryPool

@@ -8,7 +8,6 @@ import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 
 import { pageCurve } from "@LAF/Pages/Curve/Page";
-import { pageConvex } from "@LAF/Pages/Convex/Page";
 import { pageBribes } from "@LAF/Pages/Bribes/Page";
 import { pageUnion } from "@LAF/Pages/Union/Page";
 
@@ -30,7 +29,7 @@ const pinia = createPinia();
 app.use(pinia);
 
 // Configure pages.
-const pages: PageLAF[] = [pageCurve, pageConvex, pageBribes];
+const pages: PageLAF[] = [pageCurve, pageBribes];
 
 // Only add Union if specifically configured to do so.
 if (import.meta.env.VITE_UNION === "true") {

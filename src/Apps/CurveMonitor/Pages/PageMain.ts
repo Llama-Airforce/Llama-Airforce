@@ -19,6 +19,10 @@ import Proposals from "@CM/Pages/DAO/Proposals/Proposals.vue";
 import Proposal from "@CM/Pages/DAO/Proposals/Proposal.vue";
 import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.vue";
 
+import ConvexFlyer from "@CM/Pages/Convex/Flyer/Flyer.vue";
+import ConvexPools from "@CM/Pages/Convex/Pools/Pools.vue";
+import ConvexRevenue from "@CM/Pages/Convex/Revenue/Revenue.vue";
+
 export const pageMain: Page = {
   titleRoute: "/",
   routes: [
@@ -69,6 +73,19 @@ export const pageMain: Page = {
       component: Proposal,
     },
     { path: "/dao/vefunder", component: VeFunder },
+
+    { path: "/convex", redirect: { name: "flyer" } },
+    { path: "/convex/flyer", name: "flyer", component: ConvexFlyer },
+    {
+      path: "/convex/pools/:pool?",
+      name: "convexpools",
+      component: ConvexPools,
+    },
+    {
+      path: "/convex/revenue",
+      name: "convexrevenue",
+      component: ConvexRevenue,
+    },
   ],
   menuItems: [
     {
@@ -121,6 +138,23 @@ export const pageMain: Page = {
         {
           to: "/dao/vefunder",
           label: "VeFunder",
+        },
+      ],
+    },
+    {
+      label: "Convex",
+      children: [
+        {
+          to: "/convex/flyer",
+          label: "Flyer",
+        },
+        {
+          to: "/convex/pools",
+          label: "Pools",
+        },
+        {
+          to: "/convex/revenue",
+          label: "Revenue",
         },
       ],
     },

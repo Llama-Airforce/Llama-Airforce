@@ -8,7 +8,7 @@ export const pageBribes: PageLAF = {
   title: "Bribes",
   titleRoute: ["/incentives", "/bribes"],
   visible: true,
-  planeX: 420,
+  planeX: 255,
   routes: [
     { path: "/votium", redirect: { name: "rounds-incentives" } },
     { path: "/votium/bribes/:round?", redirect: { name: "rounds-incentives" } },
