@@ -31,7 +31,7 @@ import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import GraphBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/GraphBribesRevenue.vue";
 import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
 import Summary from "@LAF/Pages/Bribes/Overview/Components/Summary.vue";
-import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
+import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import type {
   OverviewId,
   Product,
@@ -46,7 +46,10 @@ const dashboardService = new DashboardService(getHost());
 let isInitializing = false;
 
 // Refs
-const { platform, protocol, product } = storeToRefs(useBribesStore());
+const storeBribe = useBribesStore();
+const { platform, product } = storeToRefs(storeBribe);
+const { setProtocol } = storeBribe;
+
 const router = useRouter();
 const route = useRoute();
 
@@ -102,29 +105,11 @@ const onSelectProtocol = (newProtocol: Protocol, init = false): void => {
     return;
   }
 
-  if (platform.value) {
-    const platformProtocols = getProtocols(platform.value);
-
-    if (platformProtocols.includes(newProtocol)) {
-      // platform includes current protocol, keep platform, update protocol
-      protocol.value = newProtocol;
-    } else {
-      if (protocol.value === newProtocol) {
-        // no protocol change, change platform, override selected protocol to first of arr
-        protocol.value = platformProtocols[0];
-      } else {
-        // update protocol, flip platform
-        protocol.value = newProtocol;
-        platform.value = platform.value === "hh" ? "votium" : "hh";
-      }
-    }
-  } else {
-    protocol.value = newProtocol;
-  }
+  setProtocol(newProtocol);
 
   // Check if dashboard is loaded for this protocol.
   if (product.value?.platform && overviewId.value) {
-    if (product.value) void updateRouter(product.value);
+    void updateRouter(product.value);
   }
 };
 

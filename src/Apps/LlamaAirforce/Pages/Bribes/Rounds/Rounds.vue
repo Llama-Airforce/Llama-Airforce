@@ -40,7 +40,7 @@ import TableBribed from "@LAF/Pages/Bribes/Rounds/Components/TableBribed.vue";
 import TablePersonal from "@LAF/Pages/Bribes/Rounds/Components/TablePersonal.vue";
 import GraphBribesRound from "@LAF/Pages/Bribes/Rounds/Components/GraphBribesRound.vue";
 import type { Platform, Protocol, Product } from "@LAF/Pages/Bribes/Models";
-import { getProtocols, isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
+import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import AuraBribesService from "@LAF/Pages/Bribes/Services/AuraBribesService";
 import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
@@ -49,7 +49,9 @@ let isInitializing = false;
 
 // Refs
 const storeBribe = useBribesStore();
-const { platform, protocol, product } = storeToRefs(storeBribe);
+const { platform, product } = storeToRefs(storeBribe);
+const { setProtocol } = storeBribe;
+
 const round = ref<number | undefined>(undefined);
 
 const router = useRouter();
@@ -133,34 +135,14 @@ const onSelectProtocol = (newProtocol: Protocol, init = false) => {
     return;
   }
 
-  const oldProtocol = protocol.value;
+  const changed = setProtocol(newProtocol);
 
-  if (platform.value) {
-    const platformProtocols = getProtocols(platform.value);
-
-    if (platformProtocols.includes(newProtocol)) {
-      // platform includes current protocol, keep platform, update protocol
-      protocol.value = newProtocol;
-    } else {
-      if (protocol.value === newProtocol) {
-        // no protocol change, change platform, override selected protocol to first of arr
-        protocol.value = platformProtocols[0];
-      } else {
-        // update protocol, flip platform
-        protocol.value = newProtocol;
-        platform.value = platform.value === "hh" ? "votium" : "hh";
-      }
-    }
-  } else {
-    protocol.value = newProtocol;
-  }
-
-  // Check if rounds are loaded for this protocol.
-  if (platform.value) {
-    // When not initializing, we want to load the latest round.
-    if (!init) {
-      onSelectRound(oldProtocol === newProtocol ? round.value : undefined);
-    }
+  /*
+   * Check if rounds are loaded for this protocol.
+   * When not initializing, we want to load the latest round.
+   */
+  if (platform.value && !init) {
+    onSelectRound(changed ? round.value : undefined);
   }
 };
 
