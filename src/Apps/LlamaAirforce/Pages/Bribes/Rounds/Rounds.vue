@@ -10,6 +10,7 @@
 
       <Summary
         class="summary"
+        :rounds="rounds"
         @select-round="onSelectRound"
       ></Summary>
 
@@ -41,15 +42,8 @@ let isInitializing = false;
 
 // Refs
 const storeBribe = useBribesStore();
-const {
-  epoch,
-  epochs,
-  rounds: roundsCache,
-  platform,
-  protocol,
-  product,
-} = storeToRefs(storeBribe);
-const { setEpoch, setRounds } = storeBribe;
+const { epoch, epochs, platform, protocol, product } = storeToRefs(storeBribe);
+const { setEpoch } = storeBribe;
 
 const router = useRouter();
 const route = useRoute();
@@ -61,6 +55,20 @@ const bribesService = computed(
       : new BribesService(getHost())
 );
 
+// Data
+const { data: rounds } = useQuery({
+  queryKey: ["bribes-rounds", product] as const,
+  queryFn: ({ queryKey: [, product] }) => {
+    if (product && bribesService.value) {
+      return bribesService.value.rounds(product).then((x) => x.rounds);
+    }
+
+    return [] as number[];
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
 // Hooks.
 onBeforeMount(async (): Promise<void> => {
   await initFromRouter();
@@ -69,25 +77,6 @@ onBeforeMount(async (): Promise<void> => {
 onBeforeUnmount((): void => {
   isInitializing = false;
 });
-
-// Events
-/** Gets all rounds for a given product and fetches if necessary. */
-const getRounds = async (product: Product): Promise<number[]> => {
-  const { platform, protocol } = product;
-
-  let rounds = roundsCache.value[platform][protocol];
-  if (rounds && rounds.length > 0) {
-    return rounds;
-  }
-
-  rounds = await bribesService.value
-    .rounds({ platform, protocol })
-    .then((x) => x.rounds);
-
-  setRounds({ platform, protocol }, rounds);
-
-  return rounds;
-};
 
 // Events
 const onSelectPlatform = (newPlatform: Platform, init = false): void => {
@@ -128,8 +117,6 @@ const onSelectProtocol = async (
 
   // Check if rounds are loaded for this protocol.
   if (platform.value) {
-    await getRounds({ platform: platform.value, protocol: protocol.value });
-
     // When not initializing, we want to load the latest round.
     if (!init) {
       await onSelectRound();

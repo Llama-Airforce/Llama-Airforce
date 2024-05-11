@@ -9,15 +9,9 @@ import type {
 } from "@LAF/Pages/Bribes/Models";
 
 type ProductState<T> = Record<Platform, Record<Protocol, T>>;
-type Rounds = ProductState<number[]>;
 type Epochs = ProductState<Epoch[]>;
 
 export const useBribesStore = defineStore("bribesStore", () => {
-  const rounds = ref<Rounds>({
-    votium: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
-    hh: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
-  });
-
   const epochs = ref<Epochs>({
     votium: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
     hh: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
@@ -36,10 +30,6 @@ export const useBribesStore = defineStore("bribesStore", () => {
     };
   });
 
-  function setRounds(product: Product, newRounds: number[]) {
-    rounds.value[product.platform][product.protocol] = newRounds;
-  }
-
   function setEpoch(product: Product, epoch: Epoch) {
     const { platform, protocol } = product;
     epochs.value[platform][protocol] = orderBy(
@@ -56,14 +46,12 @@ export const useBribesStore = defineStore("bribesStore", () => {
   }
 
   return {
-    rounds,
     epochs,
     platform,
     protocol,
     product,
     epoch,
 
-    setRounds,
     setEpoch,
   };
 });

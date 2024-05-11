@@ -3,7 +3,7 @@
     <Select
       class="select-summary"
       :label="t('round-number')"
-      :options="rounds"
+      :options="roundsOrdered"
       :selected="epoch?.round"
       :open="roundOpen"
       @open="onRoundOpen"
@@ -70,29 +70,26 @@ const { t } = useI18n();
 
 let countdownTimer: ReturnType<typeof setTimeout>;
 
+// Props
+interface Props {
+  rounds: number[];
+}
+
+const { rounds = [] } = defineProps<Props>();
+
 // Emits
 const emit = defineEmits<{
   "select-round": [round: number];
 }>();
 
 // Refs
-const { epoch, rounds: roundsCache, product } = storeToRefs(useBribesStore());
+const { epoch, product } = storeToRefs(useBribesStore());
 
 const roundOpen = ref(false);
 const roundSelected = ref(false);
 const countdownString = ref("");
 
-const rounds = computed((): number[] => {
-  if (!product.value) {
-    return [];
-  }
-
-  const { platform, protocol } = product.value;
-
-  return platform && protocol
-    ? reverse(orderBy(roundsCache.value[platform][protocol]))
-    : [];
-});
+const roundsOrdered = computed((): number[] => reverse(orderBy(rounds)));
 
 const voteLink = computed((): string =>
   epoch.value ? getLink(epoch.value, epoch.value.proposal) : ""
