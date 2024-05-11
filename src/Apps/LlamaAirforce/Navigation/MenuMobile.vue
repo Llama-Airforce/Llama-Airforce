@@ -61,8 +61,19 @@ const emit = defineEmits<{
 // Refs
 const pageStore = usePageStore<PageLAF>();
 const route = useRoute();
+const router = useRouter();
 const page = ref("Curve");
 const pageOpen = ref(false);
+
+const titleRoute = computed(() => {
+  const titleRoute = pageStore.pages.find(
+    (p) => p.title === page.value
+  )?.titleRoute;
+
+  if (typeof titleRoute === "string") return titleRoute;
+  else if (Array.isArray(titleRoute)) return titleRoute[0];
+  else return null;
+});
 
 const menuItems = computed(() => {
   return pageStore.pages.find((p) => p.title === page.value)?.menuItems ?? [];
@@ -77,8 +88,16 @@ const onPageOpen = (): void => {
   pageOpen.value = !pageOpen.value;
 };
 
-const onPageSelect = (option: unknown): void => {
+const onPageSelect = async (option: unknown) => {
   page.value = option as string;
+
+  if (menuItems.value.length === 0) {
+    const route = titleRoute.value;
+    if (route) {
+      await router.push(route);
+      emit("navigated");
+    }
+  }
 };
 
 // Watches
