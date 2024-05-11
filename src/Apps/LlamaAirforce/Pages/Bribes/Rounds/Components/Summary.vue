@@ -54,7 +54,6 @@
 
 <script setup lang="ts">
 import { orderBy, reverse } from "lodash";
-import type { Epoch, Product } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
   dollarPerVlAsset as dollarPerVlAssetFunc,
@@ -77,27 +76,11 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const store = useBribesStore();
+const { epoch, rounds: roundsCache, product } = storeToRefs(useBribesStore());
 
 const roundOpen = ref(false);
 const roundSelected = ref(false);
 const countdownString = ref("");
-
-const epoch = computed((): Epoch | null => {
-  return store.selectedEpoch;
-});
-
-const product = computed((): Product | null => {
-  const platform = store.selectedPlatform;
-  const protocol = store.selectedProtocol;
-
-  if (!platform || !protocol) return null;
-
-  return {
-    platform,
-    protocol,
-  };
-});
 
 const rounds = computed((): number[] => {
   if (!product.value) {
@@ -107,31 +90,27 @@ const rounds = computed((): number[] => {
   const { platform, protocol } = product.value;
 
   return platform && protocol
-    ? reverse(orderBy(store.rounds[platform][protocol]))
+    ? reverse(orderBy(roundsCache.value[platform][protocol]))
     : [];
 });
 
-const voteLink = computed((): string => {
-  return epoch.value ? getLink(epoch.value, epoch.value.proposal) : "";
-});
+const voteLink = computed((): string =>
+  epoch.value ? getLink(epoch.value, epoch.value.proposal) : ""
+);
 
-const dollarPerVlAsset = computed((): number | undefined => {
-  return epoch.value ? dollarPerVlAssetFunc(epoch.value) : undefined;
-});
+const dollarPerVlAsset = computed((): number | undefined =>
+  epoch.value ? dollarPerVlAssetFunc(epoch.value) : undefined
+);
 
-const totalAmountDollars = computed((): number | undefined => {
-  return epoch.value ? totalAmountDollarsFunc(epoch.value) : undefined;
-});
+const totalAmountDollars = computed((): number | undefined =>
+  epoch.value ? totalAmountDollarsFunc(epoch.value) : undefined
+);
 
-const date = computed((): string => {
-  return epoch.value ? getDate(epoch.value) : "";
-});
+const date = computed((): string => (epoch.value ? getDate(epoch.value) : ""));
 
-const isFinished = computed((): boolean => {
-  return epoch.value
-    ? new Date().getTime() > getDateRaw(epoch.value).getTime()
-    : false;
-});
+const isFinished = computed((): boolean =>
+  epoch.value ? new Date().getTime() > getDateRaw(epoch.value).getTime() : false
+);
 
 // Watches
 watch(epoch, (newEpoch): void => {

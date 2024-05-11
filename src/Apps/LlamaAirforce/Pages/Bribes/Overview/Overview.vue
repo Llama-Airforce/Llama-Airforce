@@ -46,21 +46,9 @@ const dashboardService = new DashboardService(getHost());
 let isInitializing = false;
 
 // Refs
-const store = useBribesStore();
+const { platform, protocol, product } = storeToRefs(useBribesStore());
 const router = useRouter();
 const route = useRoute();
-
-const product = computed((): Product | null => {
-  const platform = store.selectedPlatform;
-  const protocol = store.selectedProtocol;
-
-  if (!platform || !protocol) return null;
-
-  return {
-    platform,
-    protocol,
-  };
-});
 
 const overviewId = computed((): OverviewId | null => {
   switch (product.value?.platform) {
@@ -101,43 +89,41 @@ onBeforeUnmount((): void => {
 });
 
 // Events
-const onSelectPlatform = (platform: Platform, init = false): void => {
+const onSelectPlatform = (newPlatform: Platform, init = false): void => {
   if (isInitializing && !init) {
     return;
   }
 
-  store.selectedPlatform = platform;
+  platform.value = newPlatform;
 };
 
-const onSelectProtocol = (protocol: Protocol, init = false): void => {
+const onSelectProtocol = (newProtocol: Protocol, init = false): void => {
   if (isInitializing && !init) {
     return;
   }
 
-  if (store.selectedPlatform) {
-    const protocols = getProtocols(store.selectedPlatform);
+  if (platform.value) {
+    const platformProtocols = getProtocols(platform.value);
 
-    if (protocols.includes(protocol)) {
+    if (platformProtocols.includes(newProtocol)) {
       // platform includes current protocol, keep platform, update protocol
-      store.selectedProtocol = protocol;
+      protocol.value = newProtocol;
     } else {
-      if (protocol === store.selectedProtocol) {
+      if (protocol.value === newProtocol) {
         // no protocol change, change platform, override selected protocol to first of arr
-        store.selectedProtocol = protocols[0];
+        protocol.value = platformProtocols[0];
       } else {
         // update protocol, flip platform
-        store.selectedProtocol = protocol;
-        store.selectedPlatform =
-          store.selectedPlatform === "hh" ? "votium" : "hh";
+        protocol.value = newProtocol;
+        platform.value = platform.value === "hh" ? "votium" : "hh";
       }
     }
   } else {
-    store.selectedProtocol = protocol;
+    protocol.value = newProtocol;
   }
 
   // Check if dashboard is loaded for this protocol.
-  const platform = product.value?.platform;
-  if (platform && overviewId.value) {
+  if (product.value?.platform && overviewId.value) {
     if (product.value) void updateRouter(product.value);
   }
 };

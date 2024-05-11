@@ -94,7 +94,7 @@ import { orderBy } from "lodash";
 import { icon } from "@/Util";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
-import type { Epoch, Protocol, BribedPersonal } from "@LAF/Pages/Bribes/Models";
+import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";
 import SnapshotService, {
   type Delegation,
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
@@ -113,7 +113,7 @@ const auraService = new AuraService(getHost());
 const { t } = useI18n();
 
 // Refs
-const store = useBribesStore();
+const { epoch, protocol } = storeToRefs(useBribesStore());
 const { connected, address } = useWallet();
 
 type SortColumns = "pool" | "vlasset" | "total";
@@ -123,17 +123,7 @@ const bribed = ref<BribedPersonal[]>([]);
 const voter = ref("");
 const loading = ref(false);
 
-const isSupported = computed(
-  (): boolean => store.selectedEpoch?.platform !== "hh"
-);
-
-const epoch = computed((): Epoch | null => {
-  return store.selectedEpoch;
-});
-
-const protocol = computed((): Protocol | null => {
-  return store.selectedProtocol;
-});
+const isSupported = computed((): boolean => epoch.value?.platform !== "hh");
 
 const bribedOrdered = computed((): BribedPersonal[] => {
   return orderBy(

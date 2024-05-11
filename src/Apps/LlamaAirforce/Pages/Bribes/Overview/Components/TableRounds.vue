@@ -76,7 +76,7 @@ interface Props {
 const { overview } = defineProps<Props>();
 
 // Refs
-const { selectedProtocol: protocol } = storeToRefs(useBribesStore());
+const { protocol } = storeToRefs(useBribesStore());
 
 const router = useRouter();
 

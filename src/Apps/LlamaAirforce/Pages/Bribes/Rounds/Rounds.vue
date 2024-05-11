@@ -40,21 +40,19 @@ import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 let isInitializing = false;
 
 // Refs
-const store = useBribesStore();
+const storeBribe = useBribesStore();
+const {
+  epoch,
+  epochs,
+  rounds: roundsCache,
+  platform,
+  protocol,
+  product,
+} = storeToRefs(storeBribe);
+const { setEpoch, setRounds } = storeBribe;
+
 const router = useRouter();
 const route = useRoute();
-
-const product = computed((): Product | null => {
-  const platform = store.selectedPlatform;
-  const protocol = store.selectedProtocol;
-
-  if (!platform || !protocol) return null;
-
-  return {
-    platform,
-    protocol,
-  };
-});
 
 const bribesService = computed(
   (): BribesService =>
@@ -77,7 +75,7 @@ onBeforeUnmount((): void => {
 const getRounds = async (product: Product): Promise<number[]> => {
   const { platform, protocol } = product;
 
-  let rounds = store.rounds[platform][protocol];
+  let rounds = roundsCache.value[platform][protocol];
   if (rounds && rounds.length > 0) {
     return rounds;
   }
@@ -86,52 +84,51 @@ const getRounds = async (product: Product): Promise<number[]> => {
     .rounds({ platform, protocol })
     .then((x) => x.rounds);
 
-  store.setRounds({ platform, protocol }, rounds);
+  setRounds({ platform, protocol }, rounds);
 
   return rounds;
 };
 
 // Events
-const onSelectPlatform = (platform: Platform, init = false): void => {
+const onSelectPlatform = (newPlatform: Platform, init = false): void => {
   if (isInitializing && !init) {
     return;
   }
 
-  store.selectedPlatform = platform;
+  platform.value = newPlatform;
 };
 
 const onSelectProtocol = async (
-  protocol: Protocol,
+  newProtocol: Protocol,
   init = false
 ): Promise<void> => {
   if (isInitializing && !init) {
     return;
   }
 
-  if (store.selectedPlatform) {
-    const protocols = getProtocols(store.selectedPlatform);
-    if (protocols.includes(protocol)) {
+  if (platform.value) {
+    const platformProtocols = getProtocols(platform.value);
+
+    if (platformProtocols.includes(newProtocol)) {
       // platform includes current protocol, keep platform, update protocol
-      store.selectedProtocol = protocol;
+      protocol.value = newProtocol;
     } else {
-      if (protocol === store.selectedProtocol) {
+      if (protocol.value === newProtocol) {
         // no protocol change, change platform, override selected protocol to first of arr
-        store.selectedProtocol = protocols[0];
+        protocol.value = platformProtocols[0];
       } else {
         // update protocol, flip platform
-        store.selectedProtocol = protocol;
-        store.selectedPlatform =
-          store.selectedPlatform === "hh" ? "votium" : "hh";
+        protocol.value = newProtocol;
+        platform.value = platform.value === "hh" ? "votium" : "hh";
       }
     }
   } else {
-    store.selectedProtocol = protocol;
+    protocol.value = newProtocol;
   }
 
   // Check if rounds are loaded for this protocol.
-  const platform = product.value?.platform;
-  if (platform) {
-    await getRounds({ platform, protocol });
+  if (platform.value) {
+    await getRounds({ platform: platform.value, protocol: protocol.value });
 
     // When not initializing, we want to load the latest round.
     if (!init) {
@@ -150,7 +147,7 @@ const findOrGetEpoch = async (
 
   // Given a round, check if it's already loaded, otherwise try to fetch it.
   if (round) {
-    const epochState = store.epochs[platform][protocol].find(
+    const epochState = epochs.value[platform][protocol].find(
       (epoch) => epoch.round === round
     );
 
@@ -171,7 +168,7 @@ const findOrGetEpoch = async (
 
   // If no round was given, check if there's a 'last one' loaded.
   if (!round) {
-    const epochLast = store.epochs[platform][protocol].at(-1);
+    const epochLast = epochs.value[platform][protocol].at(-1);
 
     if (epochLast) {
       return epochLast;
@@ -191,7 +188,7 @@ const findOrGetEpoch = async (
   }
 
   if (epochFound) {
-    store.setEpoch({ platform, protocol }, epochFound);
+    setEpoch({ platform, protocol }, epochFound);
   }
 
   return epochFound ?? null;
@@ -202,12 +199,12 @@ const onSelectRound = async (round?: number, init = false): Promise<void> => {
     return;
   }
 
-  const epoch = await findOrGetEpoch(product.value, round);
+  const newEpoch = await findOrGetEpoch(product.value, round);
 
-  if (epoch) {
-    store.selectedEpoch = epoch;
+  if (newEpoch) {
+    epoch.value = newEpoch;
 
-    void updateRouter(product.value, epoch);
+    void updateRouter(product.value, newEpoch);
   }
 };
 

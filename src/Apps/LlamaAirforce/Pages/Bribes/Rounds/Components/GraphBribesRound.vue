@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import type { Epoch, Bribe, Product } from "@LAF/Pages/Bribes/Models";
+import type { Bribe } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
 type Serie = { name: string; data: number[] };
@@ -19,23 +19,7 @@ type Serie = { name: string; data: number[] };
 const { t } = useI18n();
 
 // Refs
-const store = useBribesStore();
-
-const epoch = computed((): Epoch | null => {
-  return store.selectedEpoch;
-});
-
-const product = computed((): Product | null => {
-  const platform = store.selectedPlatform;
-  const protocol = store.selectedProtocol;
-
-  if (!platform || !protocol) return null;
-
-  return {
-    platform,
-    protocol,
-  };
-});
+const { epoch, epochs, product } = storeToRefs(useBribesStore());
 
 const bribes = computed((): Bribe[] => {
   if (!epoch.value || !product.value) {
@@ -47,7 +31,7 @@ const bribes = computed((): Bribe[] => {
 
   return (
     (
-      store.epochs[platform][protocol].find((e) => e === epoch.value)?.bribes ??
+      epochs.value[platform][protocol].find((e) => e === epoch.value)?.bribes ??
       []
     )
       // Filter stink bids.

@@ -23,9 +23,18 @@ export const useBribesStore = defineStore("bribesStore", () => {
     hh: { "cvx-crv": [], "cvx-prisma": [], "cvx-fxn": [], "aura-bal": [] },
   });
 
-  const selectedPlatform = ref<Platform | null>("votium");
-  const selectedProtocol = ref<Protocol | null>("cvx-crv");
-  const selectedEpoch = ref<Epoch | null>(null);
+  const platform = ref<Platform | null>("votium");
+  const protocol = ref<Protocol | null>("cvx-crv");
+  const epoch = ref<Epoch | null>(null);
+
+  const product = computed((): Product | null => {
+    if (!platform.value || !protocol.value) return null;
+
+    return {
+      platform: platform.value,
+      protocol: protocol.value,
+    };
+  });
 
   function setRounds(product: Product, newRounds: number[]) {
     rounds.value[product.platform][product.protocol] = newRounds;
@@ -49,9 +58,10 @@ export const useBribesStore = defineStore("bribesStore", () => {
   return {
     rounds,
     epochs,
-    selectedPlatform,
-    selectedProtocol,
-    selectedEpoch,
+    platform,
+    protocol,
+    product,
+    epoch,
 
     setRounds,
     setEpoch,

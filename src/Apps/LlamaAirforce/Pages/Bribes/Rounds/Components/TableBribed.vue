@@ -79,7 +79,7 @@
 
 <script setup lang="ts">
 import { icon } from "@/Util";
-import type { Bribe, Bribed, Epoch, Protocol } from "@LAF/Pages/Bribes/Models";
+import type { Bribe, Bribed } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getBribed } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
@@ -88,18 +88,10 @@ import { orderBy } from "lodash";
 const { t } = useI18n();
 
 // Refs
-const store = useBribesStore();
+const { epoch, protocol } = storeToRefs(useBribesStore());
 
 type SortColumns = "pool" | "vlasset" | "total";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("vlasset");
-
-const epoch = computed((): Epoch | null => {
-  return store.selectedEpoch;
-});
-
-const protocol = computed((): Protocol | null => {
-  return store.selectedProtocol;
-});
 
 const bribed = computed((): Bribed[] => {
   if (!epoch.value) {
@@ -127,17 +119,12 @@ const bribed = computed((): Bribed[] => {
 });
 
 // Methods
-const pool = (bribed: Bribed): string => {
-  return bribed.pool;
-};
+const pool = (bribed: Bribed): string => bribed.pool;
 
-const amountDollars = (bribed: Bribed): number => {
-  return bribed.amountDollars.reduce((acc, cur) => acc + cur, 0);
-};
+const amountDollars = (bribed: Bribed): number =>
+  bribed.amountDollars.reduce((acc, cur) => acc + cur, 0);
 
-const dollarPerVlAsset = (bribed: Bribed): number => {
-  return bribed.dollarPerVlAsset;
-};
+const dollarPerVlAsset = (bribed: Bribed): number => bribed.dollarPerVlAsset;
 
 const bribes = (bribed: Bribed): Bribe[] => {
   if (!epoch.value) {

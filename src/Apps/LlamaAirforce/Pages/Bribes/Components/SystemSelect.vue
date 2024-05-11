@@ -86,15 +86,11 @@ const platforms = computed((): PlatformInfo[] => {
 });
 
 const platform = computed((): PlatformInfo | null => {
-  return (
-    platforms.value.find((p) => p.platform === store.selectedPlatform) ?? null
-  );
+  return platforms.value.find((p) => p.platform === store.platform) ?? null;
 });
 
 const protocol = computed((): ProtocolInfo | null => {
-  return (
-    protocols.value.find((p) => p.protocol === store.selectedProtocol) ?? null
-  );
+  return protocols.value.find((p) => p.protocol === store.protocol) ?? null;
 });
 
 const protocols = computed((): ProtocolInfo[] => {
@@ -113,13 +109,8 @@ onMounted((): void => {
 });
 
 // Methods
-const label = (item: SelectItem): string => {
-  return item.label;
-};
-
-const icon = (item: SelectItem): string => {
-  return `icons/${item.logo}`;
-};
+const label = (item: SelectItem): string => item.label;
+const icon = (item: SelectItem): string => `icons/${item.logo}`;
 
 // Events
 const onPlatformOpen = (): void => {
