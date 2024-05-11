@@ -4,8 +4,6 @@ import {
 } from "vue-router";
 import { usePageStore } from "@/Framework/Stores";
 
-import Home from "@LAF/Pages/Home.vue";
-
 import NotFound from "@LAF/Pages/NotFound.vue";
 import Code from "@LAF/Pages/Code.vue";
 import Debug from "@LAF/Pages/Debug/Debug.vue";
@@ -14,9 +12,12 @@ export default function createRouter() {
   // Load in configured pages.
   const pageStore = usePageStore();
 
+  const homePage =
+    import.meta.env.VITE_UNION === "true" ? "union" : "rounds-incentives";
+
   // Configure all routes, including all pages.
   const routes = [
-    { path: "/", component: Home },
+    { path: "/", redirect: { name: homePage } },
 
     { path: "/code", component: Code },
     { path: "/debug", component: Debug },
