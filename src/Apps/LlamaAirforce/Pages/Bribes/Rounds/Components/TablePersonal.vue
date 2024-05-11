@@ -81,7 +81,7 @@
     </template>
 
     <template #no-data>
-      <div v-if="loading">{{ t("loading") }} {{ addressShort(voter) }}</div>
+      <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
       <WalletConnectButton
         v-if="!connected && isSupported"
       ></WalletConnectButton>
@@ -96,6 +96,7 @@ import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";
 import SnapshotService, {
+  type Scores,
   type Delegation,
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
 import AuraService from "@LAF/Pages/Bribes/Rounds/Services/AuraService";
@@ -125,10 +126,6 @@ const { connected, address } = useWallet();
 
 type SortColumns = "pool" | "vlasset" | "total";
 const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("total");
-
-const bribed = ref<BribedPersonal[]>([]);
-const voter = ref("");
-const loading = ref(false);
 
 const isSupported = computed((): boolean => epoch?.platform !== "hh");
 
@@ -163,12 +160,125 @@ const personalDollarPerVlAsset = computed((): number | null => {
   return bribedAmount.value / vlAsset;
 });
 
-// Events
-const onConnected = async (): Promise<void> => {
-  if (epoch) {
-    await onEpoch(epoch);
+const bribed = computed(() => {
+  if (
+    !epoch ||
+    !proposal.value ||
+    !address.value ||
+    delegations.value.length === 0 ||
+    votes.value.length === 0
+  ) {
+    return [];
   }
-};
+
+  // Find the correct delegate by given priority to the space delegate (eg cvx.eth).
+  let delegate: string;
+  if (protocol.value === "aura-bal") delegate = delegations.value[0].delegate;
+  else {
+    delegate = prioritizeDelegates(
+      [delegations.value[0], delegations.value[1]],
+      votes.value.map((v) => v.voter)
+    )[0]?.delegate;
+  }
+
+  // Calculate the voting distribution of a user.
+  const distribution = getVoteDistribution(
+    proposal.value,
+    address.value,
+    delegate,
+    votes.value,
+    scores.value
+  );
+
+  // Turn that voting distribution into personal pools bribed for dollars.
+  return getBribedPersonal(epoch, distribution);
+});
+
+const loading = computed(
+  () =>
+    loadingProposal.value ||
+    loadingDelegations.value ||
+    loadingVotes.value ||
+    loadingScores.value
+);
+
+// Data
+const { isFetching: loadingProposal, data: proposal } = useQuery({
+  queryKey: [
+    "bribes-personal-proposal",
+    computed(() => epoch?.proposal),
+  ] as const,
+  queryFn: ({ queryKey: [, proposal] }) => {
+    if (proposal) {
+      return snapshotService.getProposal(proposal);
+    }
+
+    return null;
+  },
+});
+
+const { isFetching: loadingDelegations, data: delegations } = useQuery({
+  queryKey: [
+    "bribes-personal-delegations",
+    computed(() => proposal.value?.snapshot),
+    address,
+  ] as const,
+  queryFn: ({ queryKey: [, snapshot, voter] }) => {
+    if (!snapshot || !voter) {
+      return [];
+    }
+
+    const block = parseInt(snapshot, 10);
+
+    if (protocol.value === "aura-bal")
+      return auraService.getDelegation(voter, block).then((x) => [x]);
+    else {
+      return snapshotService.getDelegations(block, {
+        delegators: [voter],
+        space: "cvx.eth",
+      });
+    }
+  },
+  initialData: [] as Delegation[],
+  initialDataUpdatedAt: 0,
+});
+
+const { isFetching: loadingVotes, data: votes } = useQuery({
+  queryKey: [
+    "bribes-personal-votes",
+    computed(() => epoch?.proposal),
+    address,
+    computed(() => delegations.value.map((x) => x.delegate)),
+  ] as const,
+  queryFn: ({ queryKey: [, proposal, voter, delegates] }) => {
+    if (!proposal || !voter) {
+      return [];
+    }
+
+    return snapshotService.getVotes(proposal, [voter, ...delegates]);
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const { isFetching: loadingScores, data: scores } = useQuery({
+  queryKey: [
+    "bribes-personal-scores",
+    computed(() => proposal.value?.snapshot),
+    address,
+  ] as const,
+  queryFn: ({ queryKey: [, snapshot, voter] }) => {
+    if (!snapshot || !voter || !protocol.value) {
+      return [];
+    }
+
+    const block = parseInt(snapshot, 10);
+
+    return snapshotService.getScores(protocol.value, block, [voter]);
+  },
+  initialData: {} as Scores,
+  initialDataUpdatedAt: 0,
+});
 
 // Methods
 const pool = (bribed: BribedPersonal): string => bribed.pool;
@@ -176,83 +286,6 @@ const amountDollars = (bribed: BribedPersonal): number => bribed.amountDollars;
 const dollarPerVlAsset = (bribed: BribedPersonal): number =>
   bribed.dollarPerVlAsset;
 const percentage = (bribed: BribedPersonal): number => bribed.percentage;
-
-// Events
-const onEpoch = async (newEpoch?: Epoch): Promise<void> => {
-  bribed.value = [];
-
-  if (!address.value) return;
-  voter.value = address.value;
-
-  if (!newEpoch || !protocol.value) {
-    return;
-  }
-
-  loading.value = true;
-
-  const proposal = await snapshotService.getProposal(newEpoch.proposal);
-  const block = parseInt(proposal.snapshot, 10);
-
-  let delegations: Delegation[];
-
-  if (protocol.value === "aura-bal")
-    delegations = [await auraService.getDelegation(voter.value, block)];
-  else {
-    delegations = await snapshotService.getDelegations(block, {
-      delegators: [voter.value],
-      space: "cvx.eth",
-    });
-  }
-
-  const votes = await snapshotService.getVotes(newEpoch.proposal, [
-    voter.value,
-    ...delegations.map((d) => d.delegate),
-  ]);
-
-  // Find the correct delegate by given priority to the space delegate (eg cvx.eth).
-  let delegate: string;
-  if (protocol.value === "aura-bal") delegate = delegations[0].delegate;
-  else {
-    delegate = prioritizeDelegates(
-      [delegations[0], delegations[1]],
-      votes.map((v) => v.voter)
-    )[0]?.delegate;
-  }
-
-  const scores = await snapshotService.getScores(protocol.value, block, [
-    voter.value,
-  ]);
-
-  // Calculate the voting distribution of a user.
-  const distribution = getVoteDistribution(
-    proposal,
-    voter.value,
-    delegate,
-    votes,
-    scores
-  );
-
-  // Turn that voting distribution into personal pools bribed for dollars.
-  bribed.value = getBribedPersonal(newEpoch, distribution);
-
-  loading.value = false;
-};
-
-// Watches
-watch(connected, onConnected);
-
-watch(address, async (): Promise<void> => {
-  if (epoch) {
-    await onEpoch(epoch);
-  }
-});
-
-watch(
-  () => epoch,
-  async (newEpoch): Promise<void> => {
-    await onEpoch(newEpoch ?? undefined);
-  }
-);
 </script>
 
 <style lang="scss" scoped>

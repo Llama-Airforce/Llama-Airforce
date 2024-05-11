@@ -79,9 +79,9 @@ const { data: overview } = useQuery({
   queryFn: ({ queryKey: [, overviewId] }) => {
     if (overviewId) {
       return dashboardService.getOverview(overviewId).then((x) => x.dashboard);
-    } else {
-      return undefined;
     }
+
+    return undefined;
   },
 });
 
