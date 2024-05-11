@@ -20,5 +20,6 @@ declare module "*.json" {
 declare module "@LAF/Pages/Union/Page" {
   import type { PageLAF } from "@LAF/Pages/Page";
   const pageUnion: PageLAF;
-  export { pageUnion };
+  const pagePounders: PageLAF;
+  export { pageUnion, pagePounders };
 }

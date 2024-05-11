@@ -8,7 +8,7 @@ export const pageBribes: PageLAF = {
   title: "Bribes",
   titleRoute: ["/incentives", "/bribes"],
   visible: true,
-  planeX: 255,
+  planeX: 445,
   routes: [
     { path: "/votium", redirect: { name: "rounds-incentives" } },
     { path: "/votium/bribes/:round?", redirect: { name: "rounds-incentives" } },
@@ -49,14 +49,14 @@ export const pageBribes: PageLAF = {
   menuHeader: "headers/votium.png",
   menuItems: [
     {
-      to: "/incentives/overview",
-      icon: "fas fa-file-alt",
-      label: "Overview",
-    },
-    {
       to: "/incentives/rounds",
       icon: "far fa-chart-bar",
       label: "Rounds",
+    },
+    {
+      to: "/incentives/overview",
+      icon: "fas fa-file-alt",
+      label: "Overview",
     },
     /*
      * {
@@ -66,4 +66,5 @@ export const pageBribes: PageLAF = {
      * },
      */
   ],
+  forceShowMenu: false,
 };

@@ -65,7 +65,7 @@ const menuItems = computed(() => {
 });
 
 const hasMenu = computed((): boolean => {
-  return menuItems.value.length > 0;
+  return menuItems.value.length > 0 || !!page.value?.forceShowMenu;
 });
 </script>
 

@@ -7,9 +7,8 @@ import createRouter from "@LAF/Router";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 
-import { pageCurve } from "@LAF/Pages/Curve/Page";
 import { pageBribes } from "@LAF/Pages/Bribes/Page";
-import { pageUnion } from "@LAF/Pages/Union/Page";
+import { pageUnion, pagePounders } from "@LAF/Pages/Union/Page";
 
 import { usePageStore } from "@/Framework/Stores/PageStore";
 import { type PageLAF } from "@LAF/Pages/Page";
@@ -29,12 +28,15 @@ const pinia = createPinia();
 app.use(pinia);
 
 // Configure pages.
-const pages: PageLAF[] = [pageCurve, pageBribes];
+const pages: PageLAF[] = [];
 
 // Only add Union if specifically configured to do so.
 if (import.meta.env.VITE_UNION === "true") {
   pages.push(pageUnion);
+  pages.push(pagePounders);
 }
+
+pages.push(pageBribes);
 
 const pageStore = usePageStore<PageLAF>();
 pageStore.pages = pages;

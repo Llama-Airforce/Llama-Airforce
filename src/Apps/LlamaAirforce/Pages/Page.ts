@@ -8,6 +8,7 @@ export type PageLAF = Page & {
   routes: RouteRecordRaw[];
   menuHeader: string;
   menuItems: (MenuNode | MenuLeaf)[];
+  forceShowMenu: boolean;
 };
 
 export type MenuItem = {
