@@ -4,10 +4,10 @@
     columns-header="1fr auto"
     columns-data="personal-columns-data"
     :rows="bribedOrdered"
-    :columns="['', '%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
+    :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :selected-row="epoch"
     :sorting="true"
-    :sorting-columns="['', 'percentage', 'pool', 'vlasset', 'total']"
+    :sorting-columns="['percentage', 'pool', 'vlasset', 'total']"
     :sorting-columns-enabled="['percentage', 'pool', 'vlasset', 'total']"
     sorting-default-column="total"
     sorting-default-dir="Descending"
@@ -41,12 +41,6 @@
       <Tooltip>
         <template #item>
           <div class="tooltip-personal-columns-data">
-            <div class="logo">
-              <img
-                class="logo-img"
-                :src="icon(props.item.pool, false)"
-              />
-            </div>
             <div>
               <AsyncValue
                 :value="percentage(props.item)"
@@ -91,7 +85,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { icon } from "@/Util";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";
@@ -298,18 +291,6 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     align-items: center;
   }
 
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-img {
-    width: 20px;
-    height: 20px;
-    object-fit: scale-down;
-  }
-
   ::v-deep(.header-content) {
     .personalDollarPerVlAsset {
       color: #a1a1aa;
@@ -320,11 +301,11 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 
   ::v-deep(.personal-columns-data) {
     display: grid;
-    grid-template-columns: 20px 1fr 3fr 2fr 2fr;
+    grid-template-columns: 1fr 3fr 2fr 2fr;
 
     // Right adjust number columns.
-    div:nth-child(4),
-    div:nth-child(5) {
+    div:nth-child(3),
+    div:nth-child(4) {
       justify-content: end;
     }
   }
@@ -350,12 +331,12 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
         > .tooltip-personal-columns-data {
           flex-grow: 1;
           display: grid;
-          grid-template-columns: 20px 1fr 3fr 2fr 2fr;
+          grid-template-columns: 1fr 3fr 2fr 2fr;
           align-items: center;
 
           // Right adjust number columns.
-          div:nth-child(4),
-          div:nth-child(5) {
+          div:nth-child(3),
+          div:nth-child(4) {
             justify-content: end;
           }
         }

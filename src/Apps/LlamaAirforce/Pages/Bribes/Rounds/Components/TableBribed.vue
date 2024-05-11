@@ -4,9 +4,9 @@
     columns-header="1fr"
     columns-data="bribed-columns-data"
     :rows="bribed"
-    :columns="['', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
+    :columns="[t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
-    :sorting-columns="['', 'pool', 'vlasset', 'total']"
+    :sorting-columns="['pool', 'vlasset', 'total']"
     :sorting-columns-enabled="['pool', 'vlasset', 'total']"
     sorting-default-column="vlasset"
     sorting-default-dir="Descending"
@@ -20,12 +20,6 @@
       <Tooltip>
         <template #item>
           <div class="tooltip-bribed-columns-data">
-            <div class="logo">
-              <img
-                class="logo-img"
-                :src="icon(props.item.pool, false)"
-              />
-            </div>
             <div>
               {{ pool(props.item) }}
             </div>
@@ -79,7 +73,6 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { icon } from "@/Util";
 import type { Bribe, Bribed, Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getBribed } from "@LAF/Pages/Bribes/Util/EpochHelper";
@@ -160,11 +153,11 @@ const bribes = (bribed: Bribed): Bribe[] => {
 
   ::v-deep(.bribed-columns-data) {
     display: grid;
-    grid-template-columns: 20px 1.5fr 0.6fr 0.6fr;
+    grid-template-columns: 1.5fr 0.6fr 0.6fr;
 
     // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
+    div:nth-child(2),
+    div:nth-child(3) {
       justify-content: end;
     }
   }
@@ -190,13 +183,13 @@ const bribes = (bribed: Bribed): Bribe[] => {
         > .tooltip-bribed-columns-data {
           flex-grow: 1;
           display: grid;
-          grid-template-columns: 20px 1.5fr 0.6fr 0.6fr;
+          grid-template-columns: 1.5fr 0.6fr 0.6fr;
           grid-column-gap: 1rem;
           align-items: center;
 
           // Right adjust number columns.
-          div:nth-child(3),
-          div:nth-child(4) {
+          div:nth-child(2),
+          div:nth-child(3) {
             justify-self: flex-end;
           }
         }
