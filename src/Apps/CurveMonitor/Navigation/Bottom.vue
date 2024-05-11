@@ -1,10 +1,5 @@
 <template>
   <div class="bottom">
-    <div class="wip">
-      <img src="@/Assets/underconstruction.gif" />
-      for real though issa WIP
-    </div>
-
     <div class="buttons">
       <Button
         class="copy"
@@ -70,21 +65,6 @@ const copyUrl = async () => {
 
   gap: 1rem;
   margin: 1.125rem;
-
-  .wip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-
-    img {
-      width: 100%;
-    }
-
-    @media only screen and (max-width: 1280px) {
-      display: none;
-    }
-  }
 
   .buttons {
     display: flex;
