@@ -111,16 +111,6 @@ export const pageMain: Page = {
           to: "/platform/lending",
           label: "Lending",
         },
-      ],
-    },
-    {
-      label: "Pool",
-      children: [
-        {
-          to: "/pool/monitor",
-          label: "Live Monitor",
-          tag: "beta",
-        },
         {
           to: "/pool/mev",
           label: "MEV",
