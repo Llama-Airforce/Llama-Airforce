@@ -9,4 +9,5 @@ export const pageUnion: PageLAF = {
   routes: [],
   menuHeader: "",
   menuItems: [],
+  forceShowMenu: false,
 };
