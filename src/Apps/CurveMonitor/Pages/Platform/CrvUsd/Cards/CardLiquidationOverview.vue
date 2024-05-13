@@ -65,7 +65,10 @@ const content = computed(() => marketState.value);
 
 // Data
 const { isFetching: loading, data: marketState } = useQuery({
-  queryKey: ["crvusd-liq-market-health", market?.address] as const,
+  queryKey: [
+    "crvusd-liq-market-health",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getMarketStateHealth(market).then((x) => x.health);

@@ -70,7 +70,11 @@ const init: RatioPosition = {
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-trove-rank", vault?.address, trove?.owner] as const,
+  queryKey: [
+    "prisma-trove-rank",
+    computed(() => vault?.address),
+    computed(() => trove?.owner),
+  ] as const,
   queryFn: async ({ queryKey: [, vault, owner] }) => {
     if (vault && owner) {
       const rank = await troveService.getTroveRank("ethereum", vault, owner);

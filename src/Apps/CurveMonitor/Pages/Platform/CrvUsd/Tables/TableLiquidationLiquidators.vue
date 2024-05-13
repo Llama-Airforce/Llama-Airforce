@@ -60,7 +60,10 @@ const { market = null } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data: rowsRaw } = useQuery({
-  queryKey: ["crvusd-liq-liquidators", market?.address] as const,
+  queryKey: [
+    "crvusd-liq-liquidators",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getTopLiquidators(market).then((x) => x.liquidations);

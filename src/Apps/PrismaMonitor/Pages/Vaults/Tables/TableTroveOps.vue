@@ -114,7 +114,11 @@ const rows = computed((): Row[] => {
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-trove-snapshots", vault?.address, trove?.owner] as const,
+  queryKey: [
+    "prisma-trove-snapshots",
+    computed(() => vault?.address),
+    computed(() => trove?.owner),
+  ] as const,
   queryFn: ({ queryKey: [, vault, owner] }) => {
     if (vault && owner) {
       return troveService

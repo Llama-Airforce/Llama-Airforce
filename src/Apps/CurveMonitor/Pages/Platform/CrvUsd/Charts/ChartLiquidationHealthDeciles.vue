@@ -28,7 +28,10 @@ const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["crvusd-liq-health-deciles", market?.address] as const,
+  queryKey: [
+    "crvusd-liq-health-deciles",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getHealthDeciles(market).then((x) => x.health);

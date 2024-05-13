@@ -57,7 +57,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: softLiqs } = useQuery({
-  queryKey: ["crvusd-liq-soft-liqs", market?.address] as const,
+  queryKey: ["crvusd-liq-soft-liqs", computed(() => market?.address)] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService

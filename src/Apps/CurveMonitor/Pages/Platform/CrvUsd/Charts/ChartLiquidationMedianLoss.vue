@@ -46,7 +46,10 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: losses } = useQuery({
-  queryKey: ["crvusd-liq-median-losses", market?.address] as const,
+  queryKey: [
+    "crvusd-liq-median-losses",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getHistoricalMedianLoss(market).then((x) => x.losses);

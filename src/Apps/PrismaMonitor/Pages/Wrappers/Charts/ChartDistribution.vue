@@ -29,7 +29,7 @@ const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-wrapper-distribution", contract] as const,
+  queryKey: ["prisma-wrapper-distribution", computed(() => contract)] as const,
   queryFn: ({ queryKey: [, contract] }) =>
     prismaService.getDistribution(contract).then((x) => x.distribution),
   initialData: [],

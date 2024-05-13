@@ -122,7 +122,10 @@ const { vault = null } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-vault-liquidations", vault?.address] as const,
+  queryKey: [
+    "prisma-vault-liquidations",
+    computed(() => vault?.address),
+  ] as const,
   queryFn: ({ queryKey: [, vault] }) => {
     if (vault) {
       return liquidationService.getLiquidations("ethereum", vault);

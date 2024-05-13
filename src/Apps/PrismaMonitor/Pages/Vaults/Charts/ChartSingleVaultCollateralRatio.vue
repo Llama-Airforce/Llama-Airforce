@@ -48,7 +48,10 @@ const managerService = new ManagerService(getHost(), flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-vault-collateral-ratio", vault?.address] as const,
+  queryKey: [
+    "prisma-vault-collateral-ratio",
+    computed(() => vault?.address),
+  ] as const,
   queryFn: ({ queryKey: [, vault] }) => {
     if (vault) {
       return managerService

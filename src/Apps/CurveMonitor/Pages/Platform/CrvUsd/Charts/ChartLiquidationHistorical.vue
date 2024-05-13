@@ -59,7 +59,7 @@ const { market = null } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["crvusd-liq-historical", market?.address] as const,
+  queryKey: ["crvusd-liq-historical", computed(() => market?.address)] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService

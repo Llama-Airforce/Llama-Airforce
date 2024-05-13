@@ -30,7 +30,10 @@ const { vault = null } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-collateral-price-impact", vault?.collateral] as const,
+  queryKey: [
+    "prisma-collateral-price-impact",
+    computed(() => vault?.collateral),
+  ] as const,
   queryFn: ({ queryKey: [, collateral] }) => {
     if (collateral) {
       return collateralService

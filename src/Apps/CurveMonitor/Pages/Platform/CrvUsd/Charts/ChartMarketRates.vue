@@ -62,7 +62,7 @@ const avgLength = ref<number | null>(null);
 
 // Data
 const { isFetching: loading, data: rates } = useQuery({
-  queryKey: ["crvusd-market-rates", market?.address] as const,
+  queryKey: ["crvusd-market-rates", computed(() => market?.address)] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getMarketRates(market).then((x) => x.rates);

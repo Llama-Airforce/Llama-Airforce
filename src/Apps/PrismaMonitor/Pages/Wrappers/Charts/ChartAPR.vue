@@ -47,7 +47,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-wrapper-snapshots", contract] as const,
+  queryKey: ["prisma-wrapper-snapshots", computed(() => contract)] as const,
   queryFn: ({ queryKey: [, contract] }) =>
     prismaService.getSnapshots(contract).then((x) => x.Snapshots),
   initialData: [],

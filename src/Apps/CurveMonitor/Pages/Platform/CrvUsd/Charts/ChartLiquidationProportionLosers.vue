@@ -46,7 +46,10 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: losses } = useQuery({
-  queryKey: ["crvusd-liq-proportion-losers", market?.address] as const,
+  queryKey: [
+    "crvusd-liq-proportion-losers",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getProportionLosers(market).then((x) => x.losses);

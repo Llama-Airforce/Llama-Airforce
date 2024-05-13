@@ -52,7 +52,11 @@ const chartType = ref<ChartType>("collateral");
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-trove-distributions", vault?.address, chartType] as const,
+  queryKey: [
+    "prisma-trove-distributions",
+    computed(() => vault?.address),
+    chartType,
+  ] as const,
   queryFn: ({ queryKey: [, vault, chartType] }) => {
     if (vault) {
       return managerService

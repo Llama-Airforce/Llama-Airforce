@@ -46,7 +46,10 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: softLiqRatios } = useQuery({
-  queryKey: ["llama-market-softliqs", market?.controller] as const,
+  queryKey: [
+    "llama-market-softliqs",
+    computed(() => market?.controller),
+  ] as const,
   queryFn: ({ queryKey: [, controller] }) => {
     if (controller && chain) {
       return llamaLendService.getSoftLiqRatios(chain, controller);

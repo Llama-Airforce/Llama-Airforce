@@ -54,7 +54,7 @@ const chartType = ref<ChartType>("collateral");
 const { isFetching: loading, data } = useQuery({
   queryKey: [
     "prisma-large-trove-positions",
-    vault?.address,
+    computed(() => vault?.address),
     chartType,
   ] as const,
   queryFn: ({ queryKey: [, vault, chartType] }) => {

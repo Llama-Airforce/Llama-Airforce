@@ -135,7 +135,7 @@ const { vaults = [] } = defineProps<Props>();
 const { isFetching: loading, data } = useQuery({
   queryKey: [
     "prisma-redemptions",
-    vaults.map((vault) => vault.address),
+    computed(() => vaults.map((vault) => vault.address)),
   ] as const,
   queryFn: ({ queryKey: [, vaults] }) => {
     if (vaults.length > 0) {

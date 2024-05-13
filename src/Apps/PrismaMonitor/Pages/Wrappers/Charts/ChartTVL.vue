@@ -47,7 +47,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-wrapper-tvl", contract] as const,
+  queryKey: ["prisma-wrapper-tvl", computed(() => contract)] as const,
   queryFn: ({ queryKey: [, contract] }) =>
     prismaService.getTVL(contract).then((x) => x.tvl),
   initialData: [],

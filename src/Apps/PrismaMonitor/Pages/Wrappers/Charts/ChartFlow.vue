@@ -34,7 +34,7 @@ const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-wrapper-flow", contract] as const,
+  queryKey: ["prisma-wrapper-flow", computed(() => contract)] as const,
   queryFn: ({ queryKey: [, contract] }) => prismaService.getFlow(contract),
   initialData: {
     deposits: [],

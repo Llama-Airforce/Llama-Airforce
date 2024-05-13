@@ -83,7 +83,7 @@ const { vault = null } = defineProps<Props>();
 
 // Data
 const { data } = useQuery({
-  queryKey: ["prisma-collateral-info", vault?.address] as const,
+  queryKey: ["prisma-collateral-info", computed(() => vault?.address)] as const,
   queryFn: ({ queryKey: [, collateral] }) => {
     if (collateral) {
       return collateralService

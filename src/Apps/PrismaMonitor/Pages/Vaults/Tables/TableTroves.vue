@@ -128,7 +128,7 @@ const { vault = null } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-vault-troves", vault?.address] as const,
+  queryKey: ["prisma-vault-troves", computed(() => vault?.address)] as const,
   queryFn: ({ queryKey: [, vault] }) => {
     if (vault) {
       return troveService.getTroves("ethereum", vault);

@@ -64,7 +64,10 @@ const init = {
 };
 
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-stable-distribution", vault?.collateral] as const,
+  queryKey: [
+    "prisma-stable-distribution",
+    computed(() => vault?.collateral),
+  ] as const,
   queryFn: async ({ queryKey: [, collateral] }) => {
     if (collateral) {
       const xs = await collateralService.getCollateralPrices(

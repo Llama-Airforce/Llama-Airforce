@@ -63,7 +63,10 @@ const colorsLegend = computed(() => {
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuery({
-  queryKey: ["llama-market-snapshots", market?.controller] as const,
+  queryKey: [
+    "llama-market-snapshots",
+    computed(() => market?.controller),
+  ] as const,
   queryFn: ({ queryKey: [, controller] }) => {
     if (controller && chain) {
       return llamaLendService.getSnapshots(chain, controller);

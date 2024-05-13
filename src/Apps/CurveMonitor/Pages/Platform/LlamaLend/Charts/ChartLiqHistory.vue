@@ -48,7 +48,10 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: history } = useQuery({
-  queryKey: ["llama-market-liq-history", market?.controller] as const,
+  queryKey: [
+    "llama-market-liq-history",
+    computed(() => market?.controller),
+  ] as const,
   queryFn: ({ queryKey: [, controller] }) => {
     if (controller && chain) {
       return llameLendService.getLiqHistory(chain, controller);

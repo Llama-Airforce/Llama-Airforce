@@ -46,7 +46,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: volumes } = useQuery({
-  queryKey: ["crvusd-market-volume", market?.address] as const,
+  queryKey: ["crvusd-market-volume", computed(() => market?.address)] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
       return curveService.getMarketVolume(market).then((x) => x.volumes);

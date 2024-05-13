@@ -129,7 +129,7 @@ const { troves = [] } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-liquidations-troves", troves] as const,
+  queryKey: ["prisma-liquidations-troves", computed(() => troves)] as const,
   queryFn: ({ queryKey: [, troves] }) => {
     return Promise.all(
       chain(troves)
