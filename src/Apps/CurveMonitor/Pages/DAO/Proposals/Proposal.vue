@@ -21,32 +21,18 @@ import { type ProposalType, proposalTypes } from "./Models/Proposal";
 const proposalService = new ProposalService(getHost());
 
 // Refs
-const route = useRoute();
+const proposalId = useRouteParams("proposalId", 0, { transform: Number });
+const proposalType = useRouteParams<ProposalType>("proposalType");
 
 // Data
 const { isFetching: loading, data: proposal } = useQuery({
-  queryKey: ["curve-proposals", route.params.proposalId] as const,
+  queryKey: ["curve-proposals", proposalId] as const,
   queryFn: () => {
-    const proposalTypeParam = route.params.proposalType;
-    const proposalIdParam = route.params.proposalId;
-
-    if (
-      proposalTypeParam &&
-      typeof proposalTypeParam === "string" &&
-      proposalIdParam &&
-      typeof proposalIdParam === "string"
-    ) {
-      if (!proposalTypes.includes(proposalTypeParam as ProposalType)) {
-        return Promise.resolve(null);
-      }
-
-      const proposalType = proposalTypeParam as ProposalType;
-      const proposalId = parseInt(proposalIdParam, 10);
-
-      return proposalService.getProposal(proposalId, proposalType);
+    if (!proposalTypes.includes(proposalType.value)) {
+      return Promise.resolve(null);
     }
 
-    return Promise.resolve(null);
+    return proposalService.getProposal(proposalId.value, proposalType.value);
   },
 });
 </script>

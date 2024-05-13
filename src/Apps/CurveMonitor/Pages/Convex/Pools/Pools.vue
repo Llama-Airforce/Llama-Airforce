@@ -24,7 +24,7 @@ const poolSnapshotsService = new PoolSnapshotsService(getHost());
 
 // Refs
 const store = useConvexStore();
-const route = useRoute();
+const pool = useRouteParams<string>("pool");
 const router = useRouter();
 const { expanded, toggleExpansion } = useExpansion<Pool>();
 
@@ -48,9 +48,8 @@ onMounted(async (): Promise<void> => {
       return;
     }
 
-    const poolParam = route.params.pool;
-    if (poolParam && typeof poolParam === "string") {
-      routeExpandPool(poolParam);
+    if (pool.value) {
+      routeExpandPool(pool.value);
     }
   }
 });

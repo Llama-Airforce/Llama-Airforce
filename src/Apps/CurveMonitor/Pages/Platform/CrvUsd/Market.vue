@@ -44,25 +44,25 @@ import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
 const curveService = new CurveService(getHost());
 
 // Refs
-const route = useRoute();
 const router = useRouter();
+
+type Tabs = "" | "liquidations" | "llamma";
+const tab = useRouteParams<Tabs>("tab", "");
+const tabActive = ref(0);
+
+const marketAddr = useRouteParams<string>("marketAddr");
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeCrvUsd = useCrvUsdStore();
-const tabActive = ref(0);
 
-const marketAddr = computed(() => route.params.marketAddr as string);
 const market = computed(() => storeCrvUsd.market);
 
 // Hooks
 onMounted(async () => {
-  const tabParam = route.params.tab;
-  if (tabParam && typeof tabParam === "string") {
-    if (tabParam === "liquidations") {
-      tabActive.value = 1;
-    } else if (tabParam === "llamma") {
-      tabActive.value = 2;
-    }
+  if (tab.value === "liquidations") {
+    tabActive.value = 1;
+  } else if (tab.value === "llamma") {
+    tabActive.value = 2;
   }
 
   if (storeCrvUsd.market?.address !== marketAddr.value) {
