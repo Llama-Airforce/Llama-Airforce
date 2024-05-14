@@ -85,7 +85,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "Deploy.ts"
   ],
   "exclude": [
     "node_modules"
@@ -93,6 +94,7 @@
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",
+      "types": ["node"]
     }
   }
 }
