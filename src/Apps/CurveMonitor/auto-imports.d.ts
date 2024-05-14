@@ -370,6 +370,7 @@ declare global {
   const usePageLeave: typeof import('@vueuse/core')['usePageLeave']
   const usePageStore: typeof import('../../Framework/Stores/PageStore')['usePageStore']
   const usePagination: typeof import('../../Framework/Composables/UsePagination')['usePagination']
+  const usePaginationAsync: typeof import('../../Framework/Composables/UsePagination')['usePaginationAsync']
   const useParallax: typeof import('@vueuse/core')['useParallax']
   const useParentElement: typeof import('@vueuse/core')['useParentElement']
   const usePerformanceObserver: typeof import('@vueuse/core')['usePerformanceObserver']

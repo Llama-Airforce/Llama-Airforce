@@ -3,6 +3,6 @@ export type ProposalDetails = {
   votes: {
     voter: string;
     supports: boolean;
-    stake: number;
+    votingPower: number;
   }[];
 };

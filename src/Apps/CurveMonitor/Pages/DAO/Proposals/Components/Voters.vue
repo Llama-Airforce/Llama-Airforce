@@ -19,7 +19,7 @@
         </div>
         <div class="amount">
           <AsyncValue
-            :value="vote.stake"
+            :value="vote.votingPower"
             :precision="2"
             :show-symbol="false"
             type="dollar"
@@ -27,7 +27,7 @@
         </div>
         <div class="percentage">
           <AsyncValue
-            :value="percentage(vote.stake)"
+            :value="percentage(vote.votingPower)"
             :precision="0"
             type="percentage"
           />
@@ -45,14 +45,14 @@
       >
         <div class="percentage">
           <AsyncValue
-            :value="percentage(vote.stake)"
+            :value="percentage(vote.votingPower)"
             :precision="0"
             type="percentage"
           />
         </div>
         <div class="amount">
           <AsyncValue
-            :value="vote.stake"
+            :value="vote.votingPower"
             :precision="2"
             :show-symbol="false"
             type="dollar"
@@ -98,7 +98,7 @@ const votesFor = computed(() => {
 
   return chain(proposalDetails.votes)
     .filter((vote) => vote.supports)
-    .orderBy((vote) => vote.stake, "desc")
+    .orderBy((vote) => vote.votingPower, "desc")
     .value();
 });
 
@@ -109,7 +109,7 @@ const votesAgainst = computed(() => {
 
   return chain(proposalDetails.votes)
     .filter((vote) => !vote.supports)
-    .orderBy((vote) => vote.stake, "desc")
+    .orderBy((vote) => vote.votingPower, "desc")
     .value();
 });
 

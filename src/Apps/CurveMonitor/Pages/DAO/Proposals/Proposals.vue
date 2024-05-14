@@ -1,57 +1,76 @@
 <template>
   <div class="proposals">
-    <TabView
-      v-if="!loading"
-      @tab="tabActive = $event.index"
-    >
-      <TabItem :header="t('all')">
-        <ProposalsTab
-          v-if="tabActive === 0"
-          :proposals="proposals"
-        ></ProposalsTab>
-      </TabItem>
-
-      <TabItem :header="t('active')">
-        <ProposalsTab
-          v-if="tabActive === 1"
-          :proposals="proposalsActive"
-        ></ProposalsTab>
-      </TabItem>
-
-      <TabItem :header="t('passed')">
-        <ProposalsTab
-          v-if="tabActive === 2"
-          :proposals="proposalsPassed"
-        ></ProposalsTab>
-      </TabItem>
-
-      <TabItem :header="t('denied')">
-        <ProposalsTab
-          v-if="tabActive === 3"
-          :proposals="proposalsDenied"
-        ></ProposalsTab>
-      </TabItem>
-
-      <TabItem :header="t('executed')">
-        <ProposalsTab
-          v-if="tabActive === 4"
-          :proposals="proposalsExecuted"
-        ></ProposalsTab>
-      </TabItem>
+    <TabView @tab="tabActive = $event.index">
+      <TabItem :header="t('all')"></TabItem>
+      <TabItem :header="t('active')"></TabItem>
+      <TabItem :header="t('passed')"></TabItem>
+      <TabItem :header="t('denied')"></TabItem>
+      <TabItem :header="t('executed')"></TabItem>
     </TabView>
 
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
+    <div class="filters">
+      <InputText
+        v-model="proposalSearch"
+        class="search"
+        :placeholder="placeholder"
+        :search="true"
+      >
+      </InputText>
+
+      <div style="display: flex; gap: 1rem">
+        <ProposalTypeSelect
+          style="flex-grow: 1"
+          @select="onTypeSelect"
+        ></ProposalTypeSelect>
+
+        <Pagination
+          v-if="proposals.length > 0"
+          class="pagination"
+          :items-count="count"
+          :items-per-page="10"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
+    </div>
+
+    <div class="proposals-content">
+      <ProposalComponent
+        v-for="proposal in proposals"
+        :key="proposal.id"
+        :proposal="proposal"
+        :class="{ loading }"
+      ></ProposalComponent>
+
+      <Pagination
+        v-if="proposals.length > 0"
+        class="pagination"
+        :items-count="count"
+        :items-per-page="10"
+        :page="page"
+        @page="onPage"
+      ></Pagination>
+
+      <div v-if="proposals.length === 0">{{ t("no-proposals") }}</div>
+
+      <Spinner
+        class="spinner"
+        :class="{ loading }"
+      ></Spinner>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ProposalsTab from "@CM/Pages/DAO/Proposals/ProposalsTab.vue";
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
+import { orderBy } from "lodash";
+import { keepPreviousData } from "@tanstack/vue-query";
+import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
+import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 import ProposalService from "@CM/Pages/DAO/Proposals/Services/ProposalService";
-import { getStatus } from "@CM/Pages/DAO/Proposals/Util/ProposalHelper";
+import type {
+  ProposalStatus,
+  ProposalType,
+} from "@CM/Pages/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 
@@ -60,56 +79,111 @@ const proposalService = new ProposalService(getHost());
 // Refs
 const tabActive = ref(0);
 
+const { page, onPage } = usePaginationAsync();
+const pageDebounced = refDebounced(page, 200);
+
+const placeholder = ref(t("search-placeholder"));
+const proposalSearch = ref("");
+const proposalSearchDebounced = refDebounced(proposalSearch, 300);
+
+const proposalType = ref<ProposalType>("all");
+
+const proposalStatus = computed((): ProposalStatus => {
+  switch (tabActive.value) {
+    case 0:
+      return "all";
+    case 1:
+      return "active";
+    case 2:
+      return "passed";
+    case 3:
+      return "denied";
+    case 4:
+      return "executed";
+    default:
+      return "all";
+  }
+});
+
+const search = computed(() =>
+  proposalSearchDebounced.value.toLocaleLowerCase()
+);
+
+const count = computed(() => data.value?.count ?? 0);
+const proposals = computed(() =>
+  orderBy(data.value?.proposals ?? [], (x) => x.start, "desc")
+);
+
 // Data
-const { isFetching: loading, data: proposals } = useQuery({
-  queryKey: ["curve-proposals"],
-  queryFn: () =>
-    proposalService
-      .getProposals()
-      .then((ps) => ps.sort((a, b) => b.start - a.start)),
-  initialData: [],
-  initialDataUpdatedAt: 0,
+const { isFetching: loading, data } = useQuery({
+  queryKey: [
+    "curve-proposals",
+    pageDebounced,
+    search,
+    proposalType,
+    proposalStatus,
+  ] as const,
+  queryFn: ({ queryKey: [, page, search, type, status] }) =>
+    proposalService.getProposals(page, search, type, status),
+  placeholderData: keepPreviousData,
 });
 
-const proposalsActive = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "active");
-});
-
-const proposalsPassed = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "passed");
-});
-
-const proposalsDenied = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "denied");
-});
-
-const proposalsExecuted = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "executed");
-});
+// Events
+const onTypeSelect = (type: ProposalType): void => {
+  proposalType.value = type;
+};
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 // For some reason this fucks up the width.
-// @include dashboard("proposals");
+@include dashboard("proposals");
 
 .proposals {
-  position: relative;
   max-width: calc(1920px - 18.125rem);
-  margin: auto;
-  padding: var(--page-margin);
+
+  display: flex;
+  flex-direction: column;
 
   @media only screen and (max-width: 1280px) {
     padding: 1.5rem 1rem;
   }
 
+  > .filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media only screen and (max-width: 1280px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .pagination {
+    justify-content: end;
+  }
+
+  .proposals-content {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--dashboard-gap);
+
+    > .proposal {
+      &.loading {
+        @include loading-backdrop();
+      }
+    }
+  }
+
   .spinner {
     position: absolute;
-    top: 50vh;
-    top: 50dvh;
+    top: 3.5rem;
     left: 50%;
-    transform: translateY(-50%) translateX(-50%);
+    transform: translateX(-50%) translateY(-50%);
 
     @include loading-spinner();
   }
@@ -117,6 +191,9 @@ const proposalsExecuted = computed((): Proposal[] => {
 </style>
 
 <i18n lang="yaml" locale="en">
+search-placeholder: Search for Curve proposals
+no-proposals: No proposals could be found.
+
 all: All
 active: Active
 passed: Passed

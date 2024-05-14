@@ -22,7 +22,7 @@ const { proposal } = defineProps<Props>();
 
 const type = computed((): string => {
   switch (proposal.type) {
-    case "gauge":
+    case "ownership":
       return t("ownership");
     case "parameter":
       return t("parameter");

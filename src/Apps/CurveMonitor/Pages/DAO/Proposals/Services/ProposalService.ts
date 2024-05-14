@@ -1,139 +1,35 @@
-import { bigNumToNumber } from "@/Util";
 import { ServiceBase } from "@/Services";
 import type {
-  Proposal,
+  ProposalStatus,
   ProposalType,
-} from "@CM/Pages/DAO/Proposals/Models/Proposal";
-import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
+} from "@CM/Pages/DAO/Proposals/Models";
+import type * as ApiTypes from "@CM/Pages/DAO/Proposals/Services/ProposalApiTypes";
+import * as Parsers from "@CM/Pages/DAO/Proposals/Services/ProposalParsers";
 
-const PROPOSALS_URL = "https://api-py.llama.airforce/curve/v1/dao/proposals";
-const PROPOSAL_OWNERSHIP_URL =
-  "https://api-py.llama.airforce/curve/v1/dao/proposals/ownership/";
-const PROPOSAL_PARAMETER_URL =
-  "https://api-py.llama.airforce/curve/v1/dao/proposals/parameter/";
-
-type ProposalResponse = {
-  voteId: string;
-  voteType: "PARAMETER" | "OWNERSHIP";
-  creator: string;
-  startDate: string;
-  snapshotBlock: number;
-  metadata: string;
-  minAcceptQuorum: string;
-  supportRequired: string;
-  voteCount: string;
-  votesFor: string;
-  votesAgainst: string;
-  executed: boolean;
-  totalSupply: string;
-};
-
-type GetProposalsResponse = {
-  proposals: ProposalResponse[];
-};
-
-type GetProposalDetailsResponse = ProposalResponse & {
-  script: string;
-  votes: {
-    voter: string;
-    supports: boolean;
-    stake: number;
-  }[];
-};
-
-const parseProposal = (
-  x: GetProposalsResponse["proposals"][number]
-): Proposal => {
-  const id = parseInt(x.voteId, 10);
-  const type = x.voteType === "PARAMETER" ? "parameter" : "gauge";
-  const metadata = x.metadata?.startsWith('"') // Remove weird starting quote, if present.
-    ? x.metadata.substring(1)
-    : x.metadata ?? "";
-  const proposer = x.creator;
-  const block = x.snapshotBlock;
-  const start = parseInt(x.startDate, 10);
-  const end = start + 604800;
-  const quorum = bigNumToNumber(BigInt(x.minAcceptQuorum), 18n);
-  const support = bigNumToNumber(BigInt(x.supportRequired), 18n);
-  const votes = parseInt(x.voteCount, 10);
-  const votesFor = bigNumToNumber(BigInt(x.votesFor), 18n);
-  const votesAgainst = bigNumToNumber(BigInt(x.votesAgainst), 18n);
-  const executed = x.executed;
-  const totalSupply = bigNumToNumber(BigInt(x.totalSupply), 18n);
-
-  return {
-    id,
-    type,
-    metadata,
-    proposer,
-    block,
-    start,
-    end,
-    quorum,
-    support,
-    votes,
-    votesFor,
-    votesAgainst,
-    executed,
-    totalSupply,
-  };
-};
-
-const parseProposalDetails = (
-  x: GetProposalDetailsResponse
-): ProposalDetails => {
-  const script = x.script;
-  const votes = x.votes.map((vote) => ({
-    voter: vote.voter,
-    supports: vote.supports,
-    stake: vote.stake / Math.pow(10, 18),
-  }));
-
-  return {
-    script,
-    votes,
-  };
-};
+const API_URL = "https://prices.curve.fi";
 
 export default class ProposalService extends ServiceBase {
-  public async getProposals(): Promise<Proposal[]> {
-    const resp = await this.fetch<GetProposalsResponse>(PROPOSALS_URL);
-
-    return resp.proposals.map(parseProposal);
-  }
-
-  public async getProposal(
-    proposalId: number,
-    proposalType: ProposalType
-  ): Promise<Proposal | null> {
-    const url =
-      proposalType === "gauge"
-        ? PROPOSAL_OWNERSHIP_URL
-        : PROPOSAL_PARAMETER_URL;
-
-    const resp = await this.fetch<
-      GetProposalDetailsResponse & { message?: string }
-    >(`${url}${proposalId}`);
-
-    if (resp.message) {
-      return null;
-    }
-
-    return parseProposal(resp);
-  }
-
-  public async getProposalDetails(
-    proposal: Proposal
-  ): Promise<ProposalDetails> {
-    const url =
-      proposal.type === "gauge"
-        ? PROPOSAL_OWNERSHIP_URL
-        : PROPOSAL_PARAMETER_URL;
-
-    const resp = await this.fetch<GetProposalDetailsResponse>(
-      `${url}${proposal.id}`
+  public async getProposals(
+    page: number,
+    search: string,
+    type: ProposalType,
+    status: ProposalStatus
+  ) {
+    const resp = await this.fetch<ApiTypes.GetProposalsResponse>(
+      `${API_URL}/v1/dao/proposals?pagination=10&page=${page}&search_string=${search}&type_filter=${type}&status_filter=${status}`
     );
 
-    return parseProposalDetails(resp);
+    return {
+      proposals: resp.proposals.map(Parsers.parseProposal),
+      count: resp.count,
+    };
+  }
+
+  public async getProposal(proposalId: number, proposalType: ProposalType) {
+    const resp = await this.fetch<ApiTypes.GetProposalDetailsResponse>(
+      `${API_URL}/v1/dao/proposals/details/${proposalType}/${proposalId}`
+    );
+
+    return Parsers.parseProposalDetails(resp);
   }
 }

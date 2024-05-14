@@ -24,3 +24,14 @@ export function usePagination<Row>(rows: Ref<Row[]>, rowsPerPage: number) {
 
   return { page, rowsPage, onPage };
 }
+
+/** Same method as above, except you don't have all the rows up up-front. */
+export function usePaginationAsync() {
+  const page = ref(1);
+
+  const onPage = (pageNew: number) => {
+    page.value = pageNew;
+  };
+
+  return { page, onPage };
+}

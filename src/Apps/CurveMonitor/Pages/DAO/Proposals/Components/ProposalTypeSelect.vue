@@ -8,7 +8,7 @@
     @close="selectTypeOpen = false"
     @input="onTypeSelect"
   >
-    <template #item="props: { item: ProposalTypeAll }">
+    <template #item="props: { item: ProposalType }">
       <div class="item">
         <div class="label">{{ t(props.item) }}</div>
       </div>
@@ -22,22 +22,18 @@ import {
   proposalTypes,
 } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 
-type ProposalTypeAll = "all" & ProposalType;
-
 const { t } = useI18n();
 
-const types = ["all", ...proposalTypes];
+const types = [...proposalTypes].filter((x) => x !== "other");
 
 // Emits
 const emit = defineEmits<{
-  select: [type: ProposalTypeAll];
+  select: [type: ProposalType];
 }>();
 
 // Refs
 const selectTypeOpen = ref(false);
-const type: Ref<ProposalTypeAll> = ref<ProposalTypeAll>(
-  "all" as ProposalTypeAll
-);
+const type = ref<ProposalType>("all");
 
 // Events
 const onTypeOpen = (): void => {
@@ -45,7 +41,7 @@ const onTypeOpen = (): void => {
 };
 
 const onTypeSelect = (option: unknown): void => {
-  type.value = option as ProposalTypeAll;
+  type.value = option as ProposalType;
   emit("select", type.value);
 };
 </script>
@@ -67,7 +63,7 @@ const onTypeSelect = (option: unknown): void => {
 
 <i18n lang="yaml" locale="en">
 all: All
-gauge: Gauge
+ownership: Ownership
 parameter: Parameter
 other: Other
 </i18n>

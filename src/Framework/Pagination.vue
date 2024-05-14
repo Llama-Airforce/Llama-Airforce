@@ -107,6 +107,18 @@ const pageButtons = computed(() => {
   return [...left, ...middle, ...right];
 });
 
+// Watches
+watch(pageButtons, () => {
+  /*
+   * When page buttons change and the currently active page has to changes
+   * because of the change in boundaries, we want to emit an event for that.
+   */
+  const pageClamped = clamp(page, 1, pages.value);
+  if (page !== pageClamped) {
+    emit("page", pageClamped);
+  }
+});
+
 // Methods
 const clamp = (x: number, min: number, max: number): number => {
   return Math.min(Math.max(x, min), max);

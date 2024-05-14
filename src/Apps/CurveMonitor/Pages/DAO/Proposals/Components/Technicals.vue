@@ -73,7 +73,7 @@ const { proposal, expanded = false } = defineProps<Props>();
 // Refs
 const proposalDetails = ref<ProposalDetails | null>(null);
 const expandedCallData = ref(true);
-const expandedVoters = ref(proposal.votes > 0);
+const expandedVoters = ref(proposal.voteCount > 0);
 
 const numVoters = computed(() => {
   if (proposalDetails.value) {
@@ -105,8 +105,9 @@ watch(
   () => expanded,
   async (expandedNew) => {
     if (expandedNew && proposalDetails.value === null) {
-      proposalDetails.value = await proposalService.getProposalDetails(
-        proposal
+      proposalDetails.value = await proposalService.getProposal(
+        proposal.id,
+        proposal.type
       );
     }
   },
