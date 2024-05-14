@@ -69,7 +69,6 @@
     "@vue/compiler-sfc": "^3.4.26",
     "@vue/eslint-config-standard": "^8.0.1",
     "@vue/eslint-config-typescript": "^13.0.0",
-    "barrelsby": "^2.8.1",
     "consola": "^3.2.3",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
