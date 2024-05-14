@@ -43,15 +43,17 @@ import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
 const llamaLendService = new LlamaLendService(getHost());
 
 // Refs
-const route = useRoute();
 const router = useRouter();
 
 const storeBreadcrumb = useBreadcrumbStore();
 const storeLlamaLend = useLlamaLendStore();
 const tabActive = ref(0);
 
-const chain = computed(() => route.params.chain as Chain);
-const marketAddr = computed(() => route.params.marketAddr as string);
+type Tabs = "overview" | "liquidations";
+const tab = useRouteParams<Tabs>("tab", "overview");
+const chain = useRouteParams<Chain>("chain");
+const marketAddr = useRouteParams<string>("marketAddr");
+
 const market = computed(() => storeLlamaLend.market);
 
 // Data
@@ -67,11 +69,8 @@ const {
 
 // Hooks
 onMounted(async () => {
-  const tabParam = route.params.tab;
-  if (tabParam && typeof tabParam === "string") {
-    if (tabParam === "liquidations") {
-      tabActive.value = 1;
-    }
+  if (tab.value === "liquidations") {
+    tabActive.value = 1;
   }
 
   if (storeLlamaLend.market?.controller !== marketAddr.value && chain.value) {

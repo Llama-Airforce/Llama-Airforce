@@ -25,22 +25,21 @@ import CvxPrisma from "@PM/Pages/Wrappers/CvxPrisma.vue";
 import YPrisma from "@PM/Pages/Wrappers/YPrisma.vue";
 
 // Refs
-const route = useRoute();
+type Tabs = "overview" | "cvxprisma" | "yprisma";
+const tab = useRouteParams<Tabs>("tab", "overview");
+
 const router = useRouter();
 
 const tabActive = ref(0);
 
 // Hooks
 onMounted(() => {
-  const tabParam = route.params.tab;
-  if (tabParam && typeof tabParam === "string") {
-    if (tabParam === "overview") {
-      tabActive.value = 0;
-    } else if (tabParam === "cvxprisma") {
-      tabActive.value = 1;
-    } else if (tabParam === "yprisma") {
-      tabActive.value = 2;
-    }
+  if (tab.value === "overview") {
+    tabActive.value = 0;
+  } else if (tab.value === "cvxprisma") {
+    tabActive.value = 1;
+  } else if (tab.value === "yprisma") {
+    tabActive.value = 2;
   }
 });
 
@@ -48,7 +47,7 @@ watch(tabActive, async (newTab) => {
   if (newTab === 0) {
     await router.push({
       name: "wrappers",
-      params: { tab: "overview" },
+      params: { tab: "" },
     });
   } else if (newTab === 1) {
     await router.push({

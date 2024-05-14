@@ -39,10 +39,11 @@ const socket = createSocketRoot(host);
 const poolService = new PoolService(socket);
 
 // Refs.
-const route = useRoute();
 const router = useRouter();
 const store = useMonitorStore();
 store.socket = socket;
+
+const pool = useRouteParams<string>("pool");
 
 const hasPool = computed((): boolean => store.pool !== null);
 
@@ -51,8 +52,7 @@ let poolConnected = "";
 // Hooks
 onMounted(async () => {
   // Navigate to pool from URL address if set.
-  const routePool = route.params.pool;
-  await onNewPoolRoute(routePool);
+  await onNewPoolRoute(pool.value);
 
   socket.connect();
 });
@@ -104,13 +104,9 @@ watch(
   }
 );
 
-watch(
-  () => route.params,
-  async (newPool) => {
-    const routePool = newPool.pool;
-    await onNewPoolRoute(routePool);
-  }
-);
+watch(pool, async (newPool) => {
+  await onNewPoolRoute(newPool);
+});
 </script>
 
 <style lang="scss" scoped>

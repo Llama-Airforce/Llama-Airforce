@@ -51,7 +51,9 @@ const { platform, product } = storeToRefs(storeBribe);
 const { setProtocol } = storeBribe;
 
 const router = useRouter();
-const route = useRoute();
+
+const paramPlatform = useRouteParams<string>("platform");
+const paramProtocol = useRouteParams<string>("protocol");
 
 const overviewId = computed((): OverviewId | null => {
   switch (product.value?.platform) {
@@ -130,19 +132,9 @@ function initFromRouter() {
 
   isInitializing = true;
 
-  const paramPlatform = route.params.platform;
-  const paramProtocol = route.params.protocol;
-
-  if (
-    paramPlatform &&
-    typeof paramPlatform === "string" &&
-    isPlatform(paramPlatform) &&
-    paramProtocol &&
-    typeof paramProtocol === "string" &&
-    isProtocol(paramProtocol)
-  ) {
-    onSelectPlatform(paramPlatform, true);
-    onSelectProtocol(paramProtocol, true);
+  if (isPlatform(paramPlatform.value) && isProtocol(paramProtocol.value)) {
+    onSelectPlatform(paramPlatform.value, true);
+    onSelectProtocol(paramProtocol.value, true);
   } else {
     // Default to default product.
     if (product.value) {

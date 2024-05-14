@@ -41,13 +41,13 @@ const storeVault = useVaultStore();
 const troveService = new TroveService(getHost(), storeSettings.flavor);
 
 // Refs
-const route = useRoute();
-
 const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 
-const vaultAddr = computed(() => route.params.vaultAddr as string);
+const vaultAddr = useRouteParams<string>("vaultAddr");
+const troveAddr = useRouteParams<string>("troveAddr");
+
 const vault = computed(() => storeVault.vault);
 const trove = computed(() => storeVault.trove);
 
@@ -56,8 +56,8 @@ onMounted(async (): Promise<void> => {
   // Fetch trove data here and update the store
   const fetchedTrove: Trove = await troveService.getTroveDetail(
     "ethereum",
-    route.params.vaultAddr as string,
-    route.params.troveAddr as string
+    vaultAddr.value,
+    troveAddr.value
   );
 
   if (fetchedTrove) {

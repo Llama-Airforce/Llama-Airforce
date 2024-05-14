@@ -69,31 +69,34 @@ const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
 
 // Refs
-const route = useRoute();
 const router = useRouter();
 
 const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 
+type Tabs =
+  | "overview"
+  | "collateral"
+  | "trove"
+  | "liquidations"
+  | "redemptions";
+const tab = useRouteParams<Tabs>("tab", "overview");
 const tabActive = ref(0);
 
-const vaultAddr = computed(() => route.params.vaultAddr as string);
+const vaultAddr = useRouteParams<string>("vaultAddr");
 const vault = computed(() => storeVault.vault);
 
 // Hooks
 onMounted(() => {
-  const tabParam = route.params.tab;
-  if (tabParam && typeof tabParam === "string") {
-    if (tabParam === "collateral") {
-      tabActive.value = 1;
-    } else if (tabParam === "trove") {
-      tabActive.value = 2;
-    } else if (tabParam === "liquidations") {
-      tabActive.value = 3;
-    } else if (tabParam === "redemptions") {
-      tabActive.value = 4;
-    }
+  if (tab.value === "collateral") {
+    tabActive.value = 1;
+  } else if (tab.value === "trove") {
+    tabActive.value = 2;
+  } else if (tab.value === "liquidations") {
+    tabActive.value = 3;
+  } else if (tab.value === "redemptions") {
+    tabActive.value = 4;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain

@@ -46,8 +46,8 @@ const curveService = new CurveService(getHost());
 // Refs
 const router = useRouter();
 
-type Tabs = "" | "liquidations" | "llamma";
-const tab = useRouteParams<Tabs>("tab", "");
+type Tabs = "overview" | "liquidations" | "llamma";
+const tab = useRouteParams<Tabs>("tab", "overview");
 const tabActive = ref(0);
 
 const marketAddr = useRouteParams<string>("marketAddr");

@@ -24,18 +24,16 @@ import Dashboard from "@CM/Pages/Platform/Revenue/Dashboard.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Cushions.vue";
 
 // Refs
-const route = useRoute();
 const router = useRouter();
 
+type Tabs = "revenue" | "cushions";
+const tab = useRouteParams<Tabs>("tab", "revenue");
 const tabActive = ref(0);
 
 // Hooks
 onMounted(() => {
-  const tabParam = route.params.tab;
-  if (tabParam && typeof tabParam === "string") {
-    if (tabParam === "cushions") {
-      tabActive.value = 1;
-    }
+  if (tab.value === "cushions") {
+    tabActive.value = 1;
   }
 });
 

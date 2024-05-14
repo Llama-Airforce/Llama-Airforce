@@ -29,13 +29,14 @@ import { TroveOverviewService, type Trove } from "@PM/Services";
 const storeSettings = useSettingsStore();
 
 // Refs
-const route = useRoute();
 const router = useRouter();
 const { address } = useWallet();
 
 const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
+
+const addr = useRouteParams<string>("addr");
 
 const user = ref<string | undefined>(undefined);
 const troves = ref<Trove[]>([]);
@@ -52,9 +53,8 @@ const trovesUser = computed(() =>
 
 // Hooks
 onMounted(() => {
-  const addrParam = route.params.addr;
-  if (addrParam && typeof addrParam === "string") {
-    user.value = addrParam;
+  if (addr.value) {
+    user.value = addr.value;
   }
 });
 
@@ -67,7 +67,7 @@ const onTroves = (newTroves: Trove[]) => {
 watch(
   address,
   async () => {
-    if (!route.params.addr && !user.value && address.value) {
+    if (!addr.value && !user.value && address.value) {
       await router.push({
         name: "profile",
         params: { addr: address.value },
@@ -77,15 +77,11 @@ watch(
   { immediate: true }
 );
 
-watch(
-  () => route.params,
-  () => {
-    const addrParam = route.params.addr;
-    if (addrParam && typeof addrParam === "string") {
-      user.value = addrParam;
-    }
+watch(addr, (newAddr) => {
+  if (newAddr) {
+    user.value = newAddr;
   }
-);
+});
 </script>
 
 <style lang="scss" scoped>

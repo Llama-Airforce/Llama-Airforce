@@ -22,8 +22,9 @@ const gaugeSnapshotsService = new GaugeSnapshotsService(getHost());
 
 // Refs
 const store = useCurveStore();
-const route = useRoute();
 const router = useRouter();
+
+const gauge = useRouteParams<string>("gauge");
 
 const { expanded, toggleExpansion } = useExpansion<Gauge>();
 
@@ -46,9 +47,8 @@ onMounted(async (): Promise<void> => {
       return;
     }
 
-    const gaugeParam = route.params.gauge;
-    if (gaugeParam && typeof gaugeParam === "string") {
-      routeExpandGauge(gaugeParam);
+    if (gauge.value) {
+      routeExpandGauge(gauge.value);
     }
   }
 });

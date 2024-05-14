@@ -55,7 +55,10 @@ const { setProtocol } = storeBribe;
 const round = ref<number | undefined>(undefined);
 
 const router = useRouter();
-const route = useRoute();
+
+const paramRound = useRouteParams("round", 0, { transform: Number });
+const paramPlatform = useRouteParams<string>("platform");
+const paramProtocol = useRouteParams<string>("protocol");
 
 const bribesService = computed(
   (): BribesService =>
@@ -167,27 +170,12 @@ function initFromRouter() {
 
   isInitializing = true;
 
-  const paramRound = route.params.round;
-  const paramPlatform = route.params.platform;
-  const paramProtocol = route.params.protocol;
+  if (isPlatform(paramPlatform.value) && isProtocol(paramProtocol.value)) {
+    onSelectPlatform(paramPlatform.value, true);
+    onSelectProtocol(paramProtocol.value, true);
 
-  if (
-    paramRound &&
-    typeof paramRound === "string" &&
-    paramPlatform &&
-    typeof paramPlatform === "string" &&
-    isPlatform(paramPlatform) &&
-    paramProtocol &&
-    typeof paramProtocol === "string" &&
-    isProtocol(paramProtocol)
-  ) {
-    onSelectPlatform(paramPlatform, true);
-    onSelectProtocol(paramProtocol, true);
-
-    const round = parseInt(paramRound, 10);
-
-    if (round) {
-      onSelectRound(round);
+    if (paramRound.value) {
+      onSelectRound(paramRound.value);
     }
   } else {
     // Default to default product.
