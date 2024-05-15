@@ -31,3 +31,12 @@ export type Proposal = {
   executed: boolean;
   totalSupply: number; // Voting power in veCRV.
 };
+
+export type ProposalDetails = {
+  script: string;
+  votes: {
+    voter: string;
+    supports: boolean;
+    votingPower: number;
+  }[];
+};

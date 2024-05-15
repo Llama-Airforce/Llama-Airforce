@@ -53,10 +53,11 @@
 <script setup lang="ts">
 import { isAddress } from "ethers/lib/utils";
 import { uniqWith } from "lodash";
+import ProposalService, {
+  type Proposal,
+  type ProposalDetails,
+} from "@CM/Services/Proposal";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
-import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
-import ProposalService from "@CM/Pages/DAO/Proposals/Services/ProposalService";
 
 const { t } = useI18n();
 

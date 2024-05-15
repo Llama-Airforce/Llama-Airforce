@@ -127,8 +127,7 @@
 <script setup lang="ts">
 import { VeCRV__factory, VotingCurve__factory } from "@/Contracts";
 import { useWallet } from "@/Wallet";
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
-import { getStatus } from "@CM/Pages/DAO/Proposals/Util/ProposalHelper";
+import { type Proposal, getStatus } from "@CM/Services/Proposal";
 
 const { t } = useI18n();
 

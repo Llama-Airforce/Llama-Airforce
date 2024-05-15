@@ -75,8 +75,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort, useWallet } from "@/Wallet";
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
-import type { ProposalDetails } from "@CM/Pages/DAO/Proposals/Models/ProposalDetails";
+import { type Proposal, type ProposalDetails } from "@CM/Services/Proposal";
 
 const { t } = useI18n();
 

@@ -1,7 +1,4 @@
-import type {
-  Proposal,
-  ProposalStatus,
-} from "@CM/Pages/DAO/Proposals/Models/Proposal";
+import { type Proposal, type ProposalStatus } from "@CM/Services/Proposal";
 
 export function getStatus(proposal: Proposal): ProposalStatus {
   if (proposal.executed) {

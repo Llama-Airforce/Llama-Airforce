@@ -1,4 +1,4 @@
-import type { ProposalType } from "@CM/Pages/DAO/Proposals/Models";
+import type { ProposalType } from "@CM/Services/Proposal/ProposalModels";
 
 export type GetProposalsResponse = {
   proposals: {

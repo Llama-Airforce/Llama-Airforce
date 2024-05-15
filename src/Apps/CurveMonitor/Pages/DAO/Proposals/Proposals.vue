@@ -64,13 +64,12 @@
 <script setup lang="ts">
 import { orderBy } from "lodash";
 import { keepPreviousData } from "@tanstack/vue-query";
+import ProposalService, {
+  type ProposalType,
+  type ProposalStatus,
+} from "@CM/Services/Proposal";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
-import ProposalService from "@CM/Pages/DAO/Proposals/Services/ProposalService";
-import type {
-  ProposalStatus,
-  ProposalType,
-} from "@CM/Pages/DAO/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 

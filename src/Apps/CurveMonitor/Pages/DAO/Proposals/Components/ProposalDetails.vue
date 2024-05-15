@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import { type Proposal } from "@CM/Services/Proposal";
 import Voting from "@CM/Pages/DAO/Proposals/Components/Voting.vue";
 import Technicals from "@CM/Pages/DAO/Proposals/Components/Technicals.vue";
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
 
 // Props
 interface Props {

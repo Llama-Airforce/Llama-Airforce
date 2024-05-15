@@ -17,10 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type ProposalType,
-  proposalTypes,
-} from "@CM/Pages/DAO/Proposals/Models/Proposal";
+import { type ProposalType, proposalTypes } from "@CM/Services/Proposal";
 
 const { t } = useI18n();
 

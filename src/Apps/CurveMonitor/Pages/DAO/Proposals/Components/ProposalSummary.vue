@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Proposal } from "@CM/Pages/DAO/Proposals/Models/Proposal";
+import { type Proposal } from "@CM/Services/Proposal";
 import Status from "@CM/Pages/DAO/Proposals/Components/Status.vue";
 import Type from "@CM/Pages/DAO/Proposals/Components/Type.vue";
 import Proposer from "@CM/Pages/DAO/Proposals/Components/Proposer.vue";

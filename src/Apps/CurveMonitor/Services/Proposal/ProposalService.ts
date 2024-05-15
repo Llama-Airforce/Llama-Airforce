@@ -1,10 +1,7 @@
 import { ServiceBase } from "@/Services";
-import type {
-  ProposalStatus,
-  ProposalType,
-} from "@CM/Pages/DAO/Proposals/Models";
-import type * as ApiTypes from "@CM/Pages/DAO/Proposals/Services/ProposalApiTypes";
-import * as Parsers from "@CM/Pages/DAO/Proposals/Services/ProposalParsers";
+import type * as ApiTypes from "@CM/Services/Proposal/ProposalApiTypes";
+import type * as Models from "@CM/Services/Proposal/ProposalModels";
+import * as Parsers from "@CM/Services/Proposal/ProposalParsers";
 
 const API_URL = "https://prices.curve.fi";
 
@@ -12,8 +9,8 @@ export default class ProposalService extends ServiceBase {
   public async getProposals(
     page: number,
     search: string,
-    type: ProposalType,
-    status: ProposalStatus
+    type: Models.ProposalType,
+    status: Models.ProposalStatus
   ) {
     const resp = await this.fetch<ApiTypes.GetProposalsResponse>(
       `${API_URL}/v1/dao/proposals?pagination=10&page=${page}&search_string=${search}&type_filter=${type}&status_filter=${status}`
@@ -25,7 +22,10 @@ export default class ProposalService extends ServiceBase {
     };
   }
 
-  public async getProposal(proposalId: number, proposalType: ProposalType) {
+  public async getProposal(
+    proposalId: number,
+    proposalType: Models.ProposalType
+  ) {
     const resp = await this.fetch<ApiTypes.GetProposalDetailsResponse>(
       `${API_URL}/v1/dao/proposals/details/${proposalType}/${proposalId}`
     );
