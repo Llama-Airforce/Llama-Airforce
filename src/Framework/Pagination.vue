@@ -121,6 +121,11 @@ watch(pageButtons, () => {
 
 // Methods
 const clamp = (x: number, min: number, max: number): number => {
+  // When there's no pages then max = 0 and clamping breaks when min = 1.
+  if (max < min) {
+    max = min;
+  }
+
   return Math.min(Math.max(x, min), max);
 };
 

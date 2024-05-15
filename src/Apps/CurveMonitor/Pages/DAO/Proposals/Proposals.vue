@@ -24,7 +24,6 @@
         ></ProposalTypeSelect>
 
         <Pagination
-          v-if="proposals.length > 0"
           class="pagination"
           :items-count="count"
           :items-per-page="10"
@@ -43,7 +42,6 @@
       ></ProposalComponent>
 
       <Pagination
-        v-if="proposals.length > 0"
         class="pagination"
         :items-count="count"
         :items-per-page="10"
