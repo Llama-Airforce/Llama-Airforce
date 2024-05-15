@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { DefiLlamaService } from "@/Services";
-import CurvePricesService from "@CM/Pages/Home/Services/CurvePricesService";
+import CurvePricesService from "@CM/Services/CurvePricesService";
 import CrvUsdService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 
 const llamaService = new DefiLlamaService(getHost());

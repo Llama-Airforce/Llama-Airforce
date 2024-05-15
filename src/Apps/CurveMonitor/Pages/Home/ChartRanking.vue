@@ -10,10 +10,10 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import CurveService from "@CM/Pages/Home/Services/CurveService";
+import ProtocolService from "@CM/Services/Protocol";
 import { useSettingsStore } from "@CM/Stores";
 
-const curveService = new CurveService(getHost());
+const protocolService = new ProtocolService(getHost());
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
@@ -22,13 +22,11 @@ const { theme } = storeToRefs(useSettingsStore());
 const { isFetching: loading, data } = useQuery({
   queryKey: ["curve-tvl-gainers-losers"],
   queryFn: async () => {
-    const gainers_ = curveService.getTvlGainers();
-    const losers_ = curveService.getTvlLosers();
+    const gainers_ = protocolService.getTvlGainers();
+    const losers_ = protocolService.getTvlLosers();
     const [gainers, losers] = [await gainers_, await losers_];
 
-    return [...gainers.tvl_gainers, ...losers.tvl_losers].sort(
-      (a, b) => b.tvl_growth - a.tvl_growth
-    );
+    return [...gainers, ...losers].sort((a, b) => b.tvl_growth - a.tvl_growth);
   },
   initialData: [],
   initialDataUpdatedAt: 0,

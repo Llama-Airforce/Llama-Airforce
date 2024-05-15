@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import CurveService from "@CM/Pages/Home/Services/CurveService";
+import ProtocolService from "@CM/Services/Protocol";
 import type { Chain } from "@CM/Models/Chain";
 
 type Trade = {
@@ -48,15 +48,15 @@ type Trade = {
   value: number;
 };
 
-const curveService = new CurveService(getHost());
+const protocolService = new ProtocolService(getHost());
 
 // Data
 const { data: trades } = useQuery({
   queryKey: ["curve-trades-large"],
   queryFn: () =>
-    curveService
+    protocolService
       .getTradesLarge()
-      .then((x) => x.large_trades.sort((a, b) => b.value - a.value))
+      .then((x) => x.sort((a, b) => b.value - a.value))
       .then((x) => x.slice(0, 10)),
   initialData: [],
   initialDataUpdatedAt: 0,

@@ -10,10 +10,10 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import CurveService from "@CM/Pages/Home/Services/CurveService";
+import ProtocolService from "@CM/Services/Protocol";
 import { useSettingsStore } from "@CM/Stores";
 
-const curveService = new CurveService(getHost());
+const protocolService = new ProtocolService(getHost());
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
@@ -22,9 +22,9 @@ const { theme } = storeToRefs(useSettingsStore());
 const { isFetching: loading, data } = useQuery({
   queryKey: ["curve-liquidity-top"],
   queryFn: () =>
-    curveService
+    protocolService
       .getLiquidityTop()
-      .then((x) => x.liquidity_use.sort((a, b) => b.liq_use - a.liq_use)),
+      .then((x) => x.sort((a, b) => b.liq_use - a.liq_use)),
   initialData: [],
   initialDataUpdatedAt: 0,
 });

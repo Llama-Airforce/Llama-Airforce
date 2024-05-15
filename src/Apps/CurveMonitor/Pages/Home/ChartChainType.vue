@@ -10,10 +10,10 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import CurveService from "@CM/Pages/Home/Services/CurveService";
+import ProtocolService from "@CM/Services/Protocol";
 import { useSettingsStore } from "@CM/Stores";
 
-const curveService = new CurveService(getHost());
+const protocolService = new ProtocolService(getHost());
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
@@ -22,9 +22,9 @@ const { theme } = storeToRefs(useSettingsStore());
 const { isFetching: loading, data } = useQuery({
   queryKey: ["curve-tvl-breakdown"],
   queryFn: () =>
-    curveService
+    protocolService
       .getTvlBreakdownChain()
-      .then((x) => x.tvl_breakdown_chain.sort((a, b) => b.tvl - a.tvl)),
+      .then((x) => x.sort((a, b) => b.tvl - a.tvl)),
   initialData: [],
   initialDataUpdatedAt: 0,
 });
