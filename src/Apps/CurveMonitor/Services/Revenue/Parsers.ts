@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Services/Revenue/RevenueApiTypes";
-import type * as Models from "@CM/Services/Revenue/RevenueModels";
+import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
+import type * as Models from "@CM/Services/Revenue/Models";
 
 export const parseBreakdown = (
   x: ApiTypes.GetBreakdownResponse["revenue"][number]

@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Services/Protocol/ProtocolApiTypes";
-import type * as Models from "@CM/Services/Protocol/ProtocolModels";
+import type * as ApiTypes from "@CM/Services/Protocol/ApiTypes";
+import type * as Models from "@CM/Services/Protocol/Models";
 
 export const parseLiquidityTop = (
   x: ApiTypes.GetLiquidityTopResponse["liquidity_use"][number]

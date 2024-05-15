@@ -1,2 +1,2 @@
-export * from "@CM/Services/Revenue/RevenueModels";
+export * from "@CM/Services/Revenue/Models";
 export { default } from "@CM/Services/Revenue/RevenueService";

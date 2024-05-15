@@ -1,6 +1,6 @@
 import { ServiceBase } from "@/Services";
-import type * as ApiTypes from "@CM/Services/Protocol/ProtocolApiTypes";
-import * as Parsers from "@CM/Services/Protocol/ProtocolParsers";
+import type * as ApiTypes from "@CM/Services/Protocol/ApiTypes";
+import * as Parsers from "@CM/Services/Protocol/Parsers";
 
 const API_URL = "https://api-py.llama.airforce/curve/v1";
 

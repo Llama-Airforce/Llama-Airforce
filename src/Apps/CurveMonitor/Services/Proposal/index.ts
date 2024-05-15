@@ -1,3 +1,3 @@
-export * from "@CM/Services/Proposal/ProposalModels";
-export * from "@CM/Services/Proposal/ProposalHelper";
+export * from "@CM/Services/Proposal/Models";
+export * from "@CM/Services/Proposal/Helper";
 export { default } from "@CM/Services/Proposal/ProposalService";
