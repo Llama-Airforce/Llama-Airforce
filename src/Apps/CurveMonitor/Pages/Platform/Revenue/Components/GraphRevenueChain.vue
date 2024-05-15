@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { orderBy } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type ChainRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import { type ChainRevenue } from "@CM/Services/Revenue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useSettingsStore } from "@CM/Stores";
 

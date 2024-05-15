@@ -20,12 +20,11 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type ChainTopPoolRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import type { Chain } from "@CM/Models/Chain";
+import { useSettingsStore } from "@CM/Stores";
+import RevenueService, { type ChainTopPoolRevenue } from "@CM/Services/Revenue";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import { useSettingsStore } from "@CM/Stores";
-import type { Chain } from "@CM/Models/Chain";
-import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
 
 const revenueService = new RevenueService(getHost());
 

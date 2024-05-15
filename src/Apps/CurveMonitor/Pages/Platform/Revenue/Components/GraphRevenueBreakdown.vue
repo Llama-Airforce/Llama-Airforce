@@ -23,7 +23,7 @@
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { type BreakdownRevenue } from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import { type BreakdownRevenue } from "@CM/Services/Revenue";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 
 type Serie = {

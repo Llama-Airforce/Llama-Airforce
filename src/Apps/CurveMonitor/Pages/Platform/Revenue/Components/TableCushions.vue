@@ -66,13 +66,11 @@
 import { chain } from "lodash";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain, icon } from "@CM/Models/Chain";
-import CushionService, {
-  type Cushion,
-} from "@CM/Pages/Platform/Revenue/Services/CushionService";
+import RevenueService, { type Cushion } from "@CM/Services/Revenue";
 
 const { t } = useI18n();
 
-const curveService = new CushionService(getHost());
+const revenueService = new RevenueService(getHost());
 
 type Row = Cushion;
 
@@ -107,9 +105,9 @@ const rows = computed((): Row[] =>
 const { isFetching: loading, data: rowsRaw } = useQuery({
   queryKey: ["curve-cushions"],
   queryFn: () =>
-    curveService
+    revenueService
       .getCushions()
-      .then((x) => x.cushions.sort((a, b) => b.totalUSD - a.totalUSD)),
+      .then((x) => x.sort((a, b) => b.totalUSD - a.totalUSD)),
   initialData: [],
   initialDataUpdatedAt: 0,
 });

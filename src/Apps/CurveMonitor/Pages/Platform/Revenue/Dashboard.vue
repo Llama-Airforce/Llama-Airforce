@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { useCurveStore } from "@CM/Pages/Platform/Store";
-import RevenueService from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+import RevenueService from "@CM/Services/Revenue";
 import GraphRevenueBreakdown from "@CM/Pages/Platform/Revenue/Components/GraphRevenueBreakdown.vue";
 import GraphRevenueChain from "@CM/Pages/Platform/Revenue/Components/GraphRevenueChain.vue";
 import GraphRevenueTopPools from "@CM/Pages/Platform/Revenue/Components/GraphRevenueTopPools.vue";

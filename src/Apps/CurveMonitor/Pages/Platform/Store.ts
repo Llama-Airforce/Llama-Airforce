@@ -11,7 +11,7 @@ import {
   type BreakdownRevenue,
   type ChainRevenue,
   type ChainTopPoolRevenue,
-} from "@CM/Pages/Platform/Revenue/Services/RevenueService";
+} from "@CM/Services/Revenue";
 
 export const useCurveStore = defineStore("curveStore", () => {
   const gauges = ref<Gauge[]>([]);
