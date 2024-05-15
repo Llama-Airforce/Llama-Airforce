@@ -110,7 +110,8 @@ const getTopPools = async (chain: string): Promise<void> => {
   loading.value = true;
 
   try {
-    const topPools = await minDelay(revenueService.getTopPools(chain), 500);
+    const chainStr = chain === "ethereum" ? "mainnet" : "ethereum";
+    const topPools = await minDelay(revenueService.getTopPools(chainStr), 500);
 
     if (topPools) {
       store.setTopPools(chain, topPools);
