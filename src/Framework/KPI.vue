@@ -120,6 +120,8 @@ const {
 
   .value-container,
   .value {
+    position: relative;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -129,7 +131,18 @@ const {
     font-weight: bold;
 
     &.underline {
-      border-bottom: dotted 2px var(--c-lvl3-active);
+      ::after {
+        content: "";
+        position: absolute;
+        margin: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: transparent;
+        border-bottom: 2px dotted var(--c-lvl3-active);
+      }
     }
 
     .tooltip {
