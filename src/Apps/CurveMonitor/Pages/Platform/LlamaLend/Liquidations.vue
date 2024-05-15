@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
+import { type Market } from "@CM/Services/LlamaLend";
 import ChartSoftLiqRatios from "@CM/Pages/Platform/LlamaLend/Charts/ChartSoftLiqRatios.vue";
 import ChartLiqHistory from "@CM/Pages/Platform/LlamaLend/Charts/ChartLiqHistory.vue";
 

@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Pages/Platform/LlamaLend/Models";
+import { type Market } from "@CM/Services/LlamaLend";
 
 import ChartMarketLoans from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketRates.vue";

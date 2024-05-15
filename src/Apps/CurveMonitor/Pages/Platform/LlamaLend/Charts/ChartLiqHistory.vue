@@ -16,8 +16,10 @@ import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
-import type { Market, LiqHistory } from "@CM/Pages/Platform/LlamaLend/Models";
+import LlamaLendService, {
+  type Market,
+  type LiqHistory,
+} from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 

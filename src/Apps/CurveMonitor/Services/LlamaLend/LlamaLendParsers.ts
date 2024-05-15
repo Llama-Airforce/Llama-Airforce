@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendApiTypes";
-import type * as Models from "@CM/Pages/Platform/LlamaLend/Models";
+import type * as ApiTypes from "@CM/Services/LlamaLend/LlamaLendApiTypes";
+import type * as Models from "@CM/Services/LlamaLend/LlamaLendModels";
 
 export const parseMarket = (
   x: ApiTypes.GetMarketsResponse["data"][number]

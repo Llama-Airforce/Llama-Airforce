@@ -94,14 +94,13 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
-import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
-import SelectChain from "@CM/Components/SelectChain.vue";
-import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
-import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
-import {
+import LlamaLendService, {
   type Market,
   type MarketPair,
-} from "@CM/Pages/Platform/LlamaLend/Models";
+} from "@CM/Services/LlamaLend";
+import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
+import SelectChain from "@CM/Components/SelectChain.vue";
+import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
 
 const { t } = useI18n();
 

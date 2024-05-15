@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
-import LlamaLendService from "@CM/Pages/Platform/LlamaLend/Services/LlamaLendService";
+import LlamaLendService from "@CM/Services/LlamaLend/LlamaLendService";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
 
