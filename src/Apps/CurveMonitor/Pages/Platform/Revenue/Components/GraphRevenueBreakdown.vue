@@ -1,8 +1,10 @@
 <template>
   <CardGraph
     class="graph"
-    :options="options"
-    :series="series"
+    :options
+    :series
+    :loading
+    :title="t('title')"
   >
     <template #actions>
       <div class="actions">
@@ -23,8 +25,7 @@
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { type BreakdownRevenue } from "@CM/Services/Revenue";
-import { useCurveStore } from "@CM/Pages/Platform/Store";
+import RevenueService from "@CM/Services/Revenue";
 
 type Serie = {
   name: string;
@@ -33,14 +34,20 @@ type Serie = {
 
 const { t } = useI18n();
 
+const revenueService = new RevenueService(getHost());
+
 // Refs
-const store = useCurveStore();
 const { theme } = storeToRefs(useSettingsStore());
 
-const breakdown = computed((): BreakdownRevenue[] => {
-  return store.breakdown ?? [];
+// Data
+const { isFetching: loading, data: breakdown } = useQuery({
+  queryKey: ["curve-revenue-breakdown"],
+  queryFn: () => revenueService.getBreakdown(),
+  initialData: [],
+  initialDataUpdatedAt: 0,
 });
 
+// Chart
 const options = computed((): unknown => {
   const { colors, colorsArray } = {
     colors: theme.value.colors,
@@ -206,6 +213,7 @@ const shadeColor = (hex: string, percent: number) => {
 </style>
 
 <i18n lang="yaml" locale="en">
+title: Revenue breakdown by source
 legend-explanation:
   DAO revenue goes to veCRV lockers, Liquidity Provider revenue goes
   to people that LP

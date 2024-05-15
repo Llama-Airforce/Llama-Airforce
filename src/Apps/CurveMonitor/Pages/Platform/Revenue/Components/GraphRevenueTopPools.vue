@@ -1,16 +1,17 @@
 <template>
   <CardGraph
     class="graph"
-    :options="options"
-    :series="series"
-    :loading="loading"
+    :options
+    :series
+    :loading
+    :title="t('title')"
   >
     <div
       class="selector"
       :class="{ loading }"
     >
       <SelectChain
-        :chain="store.selectedChain"
+        :chain="chain"
         @select-chain="onSelectChain"
       >
       </SelectChain>
@@ -20,26 +21,29 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import type { Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
-import RevenueService, { type ChainTopPoolRevenue } from "@CM/Services/Revenue";
+import type { Chain } from "@CM/Models/Chain";
+import RevenueService from "@CM/Services/Revenue";
 import SelectChain from "@CM/Components/SelectChain.vue";
-import { useCurveStore } from "@CM/Pages/Platform/Store";
+
+const { t } = useI18n();
 
 const revenueService = new RevenueService(getHost());
 
 // Refs
-const store = useCurveStore();
 const { theme } = storeToRefs(useSettingsStore());
 
-const loading = ref(false);
+const chain = ref<Chain>("ethereum");
 
-const selectedChain = computed((): Chain | null => store.selectedChain);
+// Data
+const { isFetching: loading, data: topPools } = useQuery({
+  queryKey: ["curve-revenue-top-pools", chain] as const,
+  queryFn: ({ queryKey: [, chain] }) => revenueService.getTopPools(chain),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
 
-const topPools = computed((): ChainTopPoolRevenue[] =>
-  selectedChain.value ? store.topPools[selectedChain.value] ?? [] : []
-);
-
+// Chart
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {
     chart: {
@@ -98,34 +102,10 @@ const series = computed((): { data: number[] }[] => [
 const formatter = (x: number): string =>
   `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 
-const getTopPools = async (chain: string): Promise<void> => {
-  if (!chain) {
-    return;
-  }
-
-  if (store.topPools[chain]) {
-    return;
-  }
-
-  loading.value = true;
-
-  try {
-    const chainStr = chain === "ethereum" ? "mainnet" : "ethereum";
-    const topPools = await minDelay(revenueService.getTopPools(chainStr), 500);
-
-    if (topPools) {
-      store.setTopPools(chain, topPools);
-    }
-  } finally {
-    loading.value = false;
-  }
-};
-
 // Events
-const onSelectChain = (chain: Chain | "all"): void => {
-  if (chain !== "all") {
-    store.selectedChain = chain;
-    void getTopPools(chain);
+const onSelectChain = (newChain: Chain | "all"): void => {
+  if (newChain !== "all") {
+    chain.value = newChain;
   }
 };
 </script>
@@ -142,3 +122,7 @@ const onSelectChain = (chain: Chain | "all"): void => {
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Top 10 pools by revenue (last 7 days)
+</i18n>

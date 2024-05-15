@@ -1,27 +1,38 @@
 <template>
   <CardGraph
     class="graph"
-    :options="options"
-    :series="series"
+    :options
+    :series
+    :loading
+    :title="t('title')"
   >
   </CardGraph>
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type ChainRevenue } from "@CM/Services/Revenue";
-import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { useSettingsStore } from "@CM/Stores";
+import RevenueService from "@CM/Services/Revenue";
+
+const { t } = useI18n();
+
+const revenueService = new RevenueService(getHost());
 
 // Refs
-const store = useCurveStore();
 const { theme } = storeToRefs(useSettingsStore());
 
-const chainRevenues = computed((): ChainRevenue[] => {
-  return orderBy(store.chainRevenues ?? [], (x) => x.totalDailyFeesUSD, "asc");
+// Data
+const { isFetching: loading, data: chainRevenues } = useQuery({
+  queryKey: ["curve-revenue-chain"],
+  queryFn: () =>
+    revenueService
+      .getByChain()
+      .then((x) => x.sort((a, b) => b.totalDailyFeesUSD - a.totalDailyFeesUSD)),
+  initialData: [],
+  initialDataUpdatedAt: 0,
 });
 
+// Chart
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {
     chart: {
@@ -83,3 +94,7 @@ const formatter = (x: number): string =>
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+title: Total revenue by chain
+</i18n>

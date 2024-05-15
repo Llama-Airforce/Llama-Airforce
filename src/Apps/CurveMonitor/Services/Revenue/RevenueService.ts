@@ -26,8 +26,10 @@ export default class RevenueService extends ServiceBase {
   }
 
   public async getTopPools(chain: string, numPools = 10) {
+    const chainStr = chain === "ethereum" ? "mainnet" : chain;
+
     const resp = await this.fetch<ApiTypes.GetTopPoolsResponse>(
-      `${API_URL}/protocol/revenue/${chain}/toppools/${numPools}`
+      `${API_URL}/protocol/revenue/${chainStr}/toppools/${numPools}`
     );
 
     return resp.revenue.map(Parsers.parseTopPools);
