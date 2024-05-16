@@ -35,13 +35,11 @@
 </template>
 
 <script setup lang="ts">
+import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
-import CrvUsdService from "@CM/Services/CrvUsd";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
 import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
-
-const crvUsdService = new CrvUsdService(getHost());
 
 // Refs
 const router = useRouter();
@@ -55,28 +53,23 @@ const marketAddr = useRouteParams<string>("marketAddr");
 const storeBreadcrumb = useBreadcrumbStore();
 const storeCrvUsd = useCrvUsdStore();
 
-const market = computed(() => storeCrvUsd.market);
+// Market
+const { data: markets } = useQueryMarkets();
+const market = computed(() =>
+  markets.value.find((market) => market.address === marketAddr.value)
+);
+watch(market, (newMarket) => {
+  if (newMarket) {
+    storeCrvUsd.market = newMarket;
+  }
+});
 
 // Hooks
-onMounted(async () => {
+onMounted(() => {
   if (tab.value === "liquidations") {
     tabActive.value = 1;
   } else if (tab.value === "llamma") {
     tabActive.value = 2;
-  }
-
-  if (storeCrvUsd.market?.address !== marketAddr.value) {
-    await crvUsdService.getMarkets("ethereum", 1).then((markets) => {
-      const market = markets.find(
-        (market) => market.address === marketAddr.value
-      );
-
-      if (market) {
-        storeCrvUsd.market = market;
-      }
-
-      return market;
-    });
   }
 
   storeBreadcrumb.show = true;

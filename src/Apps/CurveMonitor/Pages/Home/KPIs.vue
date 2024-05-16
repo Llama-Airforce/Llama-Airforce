@@ -49,17 +49,21 @@
 <script setup lang="ts">
 import { DefiLlamaService } from "@/Services";
 import CurvePricesService from "@CM/Services/CurvePricesService";
-import CrvUsdService from "@CM/Services/CrvUsd";
+import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
 const llamaService = new DefiLlamaService(getHost());
-const crvUsdService = new CrvUsdService(getHost());
 const curvePricesService = new CurvePricesService(getHost());
 
 // Refs
 const price = ref<number | null>(null);
-const borrowed = ref<number | null>(null);
 const tvl = ref<number | null>(null);
 const volume = ref<number | null>(null);
+
+// Borrowed
+const { data: markets } = useQueryMarkets();
+const borrowed = computed(
+  () => markets.value?.reduce((acc, x) => acc + x.borrowed, 0) ?? 0
+);
 
 // Hooks
 onMounted(async () => {
@@ -67,15 +71,11 @@ onMounted(async () => {
 
   // CRV Price + MCap
   try {
-    borrowed.value = await crvUsdService
-      .getMarkets("ethereum", 1)
-      .then((x) => x.reduce((acc, x) => acc + x.borrowed, 0));
-
     price.value = await llamaService
       .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
       .then((x) => x.price);
   } catch {
-    [price.value, borrowed.value] = [0, 0];
+    price.value = 0;
   }
 
   // TVL and Volume
