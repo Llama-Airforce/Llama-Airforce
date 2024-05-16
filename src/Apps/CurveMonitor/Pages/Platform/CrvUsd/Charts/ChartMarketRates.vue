@@ -27,14 +27,11 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
-  type MarketRates,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CrvUsdService, { type Market, type Snapshot } from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -61,11 +58,14 @@ const { chart, chartRef } = useLightweightChart(
 const avgLength = ref<number | null>(null);
 
 // Data
-const { isFetching: loading, data: rates } = useQuery({
-  queryKey: ["crvusd-market-rates", computed(() => market?.address)] as const,
+const { isFetching: loading, data: snapshots } = useQuery({
+  queryKey: [
+    "crvusd-market-snapshots",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService.getMarketRates(market).then((x) => x.rates);
+      return crvUsdService.getSnapshots("ethereum", market);
     } else {
       return Promise.resolve([]);
     }
@@ -75,8 +75,8 @@ const { isFetching: loading, data: rates } = useQuery({
 });
 
 // Watches
-watch([rates, chart], createSeries);
-watch(avgLength, () => createSeries([rates.value, chart.value]));
+watch([snapshots, chart], createSeries);
+watch(avgLength, () => createSeries([snapshots.value, chart.value]));
 watch(theme, () => {
   ratesSerie.applyOptions(createOptionsSerieRates());
   ratesEMASerie.applyOptions(createOptionsSerieRatesEMA());
@@ -130,7 +130,7 @@ function createOptionsSerieRatesEMA(): LineSeriesPartialOptions {
   };
 }
 
-function createSeries([newRates, chart]: [MarketRates[]?, IChartApi?]): void {
+function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
   if (!chart || !ratesSerie) {
     return;
   }

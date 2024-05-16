@@ -9,7 +9,7 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type CrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
 // Props
 interface Props {

@@ -15,14 +15,11 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
-  type MarketLoans,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CrvUsdService, { type Market, type Snapshot } from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -45,11 +42,14 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: loans } = useQuery({
-  queryKey: ["crvusd-market-loans", computed(() => market?.address)] as const,
+const { isFetching: loading, data: snapshots } = useQuery({
+  queryKey: [
+    "crvusd-market-snapshots",
+    computed(() => market?.address),
+  ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService.getMarketLoans(market).then((x) => x.loans);
+      return crvUsdService.getSnapshots("ethereum", market);
     } else {
       return Promise.resolve([]);
     }
@@ -59,7 +59,7 @@ const { isFetching: loading, data: loans } = useQuery({
 });
 
 // Watches
-watch([loans, chart], createSeriesLoans);
+watch([snapshots, chart], createSeriesLoans);
 watch(theme, () => loansSerie.applyOptions(createOptionsSerieLoans()));
 
 // Chart
@@ -89,10 +89,7 @@ function createOptionsSerieLoans(): HistogramSeriesPartialOptions {
   };
 }
 
-function createSeriesLoans([newLoans, chart]: [
-  MarketLoans[]?,
-  IChartApi?
-]): void {
+function createSeriesLoans([newLoans, chart]: [Snapshot[]?, IChartApi?]): void {
   if (!chart || !loansSerie) {
     return;
   }

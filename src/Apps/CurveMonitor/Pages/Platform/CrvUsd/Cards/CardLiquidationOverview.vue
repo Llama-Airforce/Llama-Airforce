@@ -46,12 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -71,7 +70,7 @@ const { isFetching: loading, data: marketState } = useQuery({
   ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService.getMarketStateHealth(market).then((x) => x.health);
+      return crvUsdService.getMarketStateHealth(market);
     } else {
       return Promise.resolve(null);
     }

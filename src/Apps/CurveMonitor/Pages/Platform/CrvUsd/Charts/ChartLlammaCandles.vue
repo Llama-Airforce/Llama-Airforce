@@ -20,7 +20,7 @@ import type { Subscription } from "rxjs";
 import { getAddress } from "ethers/lib/utils";
 import { createChart as createChartFunc } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import type { Market } from "@CM/Services/CrvUsd";
 import {
   OHLCService,
   type OhlcModel,

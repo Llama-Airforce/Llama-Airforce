@@ -23,13 +23,11 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
-  type PoolPrice,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CrvUsdService, { type PoolPrice } from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Refs
 let lineSeries: ISeriesApi<"Line">[] = [];
@@ -56,7 +54,7 @@ const coins = computed((): string[] =>
 // Data
 const { isFetching: loading, data: prices } = useQuery({
   queryKey: ["crvusd-pool-prices"],
-  queryFn: () => curveService.getPoolPrices().then((x) => x.prices),
+  queryFn: () => crvUsdService.getPoolPrices(),
   initialData: [{ timestamp: 0 }],
   initialDataUpdatedAt: 0,
 });

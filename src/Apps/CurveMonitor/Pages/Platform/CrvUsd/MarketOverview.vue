@@ -8,8 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-
+import type { Market } from "@CM/Services/CrvUsd";
 import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
 import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";

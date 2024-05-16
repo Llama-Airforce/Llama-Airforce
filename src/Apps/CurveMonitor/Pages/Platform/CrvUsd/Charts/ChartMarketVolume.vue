@@ -15,14 +15,14 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
+import CrvUsdService, {
+  type Market,
   type MarketVolume,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -49,7 +49,7 @@ const { isFetching: loading, data: volumes } = useQuery({
   queryKey: ["crvusd-market-volume", computed(() => market?.address)] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService.getMarketVolume(market).then((x) => x.volumes);
+      return crvUsdService.getVolume(market);
     } else {
       return Promise.resolve([]);
     }

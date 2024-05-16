@@ -23,14 +23,14 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
+import CrvUsdService, {
+  type Market,
   type AvailableCap,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -62,9 +62,7 @@ const { isFetching: loading, data: availableCap } = useQuery({
   ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService
-        .getMarketAvailableCap(market)
-        .then((x) => x.available);
+      return crvUsdService.getMarketAvailableCap(market);
     } else {
       return Promise.resolve([]);
     }

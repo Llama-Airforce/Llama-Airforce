@@ -24,7 +24,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="props.item.debt"
+          :value="props.item.total_debt"
           :precision="decimals"
           :show-zero="true"
           type="dollar"
@@ -49,7 +49,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="props.item.profit"
+          :value="props.item.total_profit"
           :precision="decimals"
           type="dollar"
         />
@@ -61,7 +61,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.debt, 0)"
+          :value="rows.reduce((acc, x) => acc + x.total_debt, 0)"
           :precision="decimals"
           :show-zero="true"
           type="dollar"
@@ -86,7 +86,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.profit, 0)"
+          :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
           :precision="decimals"
           type="dollar"
         />
@@ -97,47 +97,36 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import CurveService, {
+import CrvUsdService, {
   type PoolStats,
-  type KeepersDebt,
-  type KeepersProfit,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+  type Keeper,
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
-type Row = PoolStats & KeepersDebt & KeepersProfit;
+type Row = PoolStats & Keeper;
 
 // Refs
 const search = ref("");
 
-const loading = computed(
-  () =>
-    loadingPoolStats.value ||
-    loadingKeepersDebt.value ||
-    loadingKeepersProfit.value
-);
+const loading = computed(() => loadingPoolStats.value || loadingKeepers.value);
 
 const rowsRaw = computed(() =>
   chain(poolStats.value)
     .map((pool) => {
-      const debt = keepersDebt.value.find(
-        (keeper) => keeper.pool === pool.address
+      const keeper = keepers.value.find(
+        (keeper) => keeper.pool_address === pool.address
       );
 
-      const profit = keepersProfit.value.find(
-        (keeper) => keeper.pool === pool.address
-      );
-
-      if (!debt || !profit) {
+      if (!keeper) {
         return undefined;
       }
 
       return {
         ...pool,
-        ...debt,
-        ...profit,
+        ...keeper,
       };
     })
     .filter(notEmpty)
@@ -161,21 +150,14 @@ const rows = computed((): Row[] =>
 // Data
 const { isFetching: loadingPoolStats, data: poolStats } = useQuery({
   queryKey: ["crvusd-pool-stats"],
-  queryFn: () => curveService.getPoolStats().then((x) => x.stats),
+  queryFn: () => crvUsdService.getPoolStats(),
   initialData: [],
   initialDataUpdatedAt: 0,
 });
 
-const { isFetching: loadingKeepersDebt, data: keepersDebt } = useQuery({
-  queryKey: ["crvusd-keepers-debt"],
-  queryFn: () => curveService.getKeepersDebt().then((x) => x.keepers),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const { isFetching: loadingKeepersProfit, data: keepersProfit } = useQuery({
-  queryKey: ["crvusd-keepers-profit"],
-  queryFn: () => curveService.getKeepersProfit().then((x) => x.profit),
+const { isFetching: loadingKeepers, data: keepers } = useQuery({
+  queryKey: ["crvusd-keepers"],
+  queryFn: () => crvUsdService.getKeepers("ethereum"),
   initialData: [],
   initialDataUpdatedAt: 0,
 });

@@ -24,7 +24,7 @@ import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vu
 import ChartPoolPrices from "@CM/Pages/Platform/CrvUsd/Charts/ChartPoolPrices.vue";
 import ChartCrvUsdSupply from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupply.vue";
 import ChartCrvUsdPriceHistogram from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdPriceHistogram.vue";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import type { Market } from "@CM/Services/CrvUsd";
 
 // Refs
 const router = useRouter();

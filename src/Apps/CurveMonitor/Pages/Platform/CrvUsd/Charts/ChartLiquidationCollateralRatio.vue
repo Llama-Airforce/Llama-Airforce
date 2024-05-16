@@ -15,14 +15,14 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
+import CrvUsdService, {
   type CollateralRatios,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+  type Market,
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -52,9 +52,7 @@ const { isFetching: loading, data: ratios } = useQuery({
   ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService
-        .getHistoricalCollateralRatio(market)
-        .then((x) => x.ratios);
+      return crvUsdService.getHistoricalCollateralRatio(market);
     } else {
       return Promise.resolve([]);
     }

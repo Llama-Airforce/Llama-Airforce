@@ -10,10 +10,10 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores";
+import CrvUsdService from "@CM/Services/CrvUsd";
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
@@ -21,7 +21,7 @@ const { theme } = storeToRefs(useSettingsStore());
 // Data
 const { isFetching: loading, data } = useQuery({
   queryKey: ["crvusd-price-deviation"],
-  queryFn: () => curveService.getCrvUsdPriceHistogram(),
+  queryFn: () => crvUsdService.getCrvUsdPriceHistogram(),
   initialData: { x: [], y: [] },
   initialDataUpdatedAt: 0,
 });

@@ -42,14 +42,14 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import CurveService, {
+import CrvUsdService, {
   type Market,
   type Liquidators,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -66,7 +66,7 @@ const { isFetching: loading, data: rowsRaw } = useQuery({
   ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService.getTopLiquidators(market).then((x) => x.liquidations);
+      return crvUsdService.getTopLiquidators(market);
     } else {
       return Promise.resolve([]);
     }

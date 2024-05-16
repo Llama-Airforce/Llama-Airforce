@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import type { Market } from "@CM/Services/CrvUsd";
 import ChartLlammaCandles from "@CM/Pages/Platform/CrvUsd/Charts/ChartLlammaCandles.vue";
 
 // Props

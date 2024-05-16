@@ -11,10 +11,8 @@
       'Name',
       'Loans',
       'Rate',
-      '&Delta; 24h',
       'Premia',
       'Borrowed',
-      '&Delta; 24h',
       'Collateral',
       'Fees Pending',
       'Fees Collected',
@@ -40,19 +38,6 @@
         <AsyncValue
           :value="props.item.rate * 100"
           :precision="2"
-          type="percentage"
-        />
-      </div>
-
-      <div
-        class="number delta"
-        :class="{ negative: props.item.rateAbsDelta < 0 }"
-      >
-        <AsyncValue
-          v-if="props.item.rateAbsDelta"
-          :value="props.item.rateAbsDelta * 100"
-          :precision="2"
-          :show-unit="false"
           type="percentage"
         />
       </div>
@@ -129,21 +114,9 @@
         />
       </div>
 
-      <div
-        class="number delta"
-        :class="{ negative: props.item.borrowedDelta < 0 }"
-      >
-        <AsyncValue
-          v-if="props.item.borrowedDelta"
-          :value="props.item.borrowedDelta * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
-
       <div class="number">
         <AsyncValue
-          :value="props.item.totalCollateral"
+          :value="props.item.collateralUsd"
           :precision="decimals"
           type="dollar"
         />
@@ -173,7 +146,6 @@
       <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
       <div></div>
       <div></div>
-      <div></div>
 
       <div class="number">
         <AsyncValue
@@ -184,11 +156,9 @@
         />
       </div>
 
-      <div></div>
-
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.totalCollateral, 0)"
+          :value="rows.reduce((acc, x) => acc + x.collateralUsd, 0)"
           :precision="decimals"
           type="dollar"
         />
@@ -219,15 +189,15 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import CurveService, {
+import CrvUsdService, {
   type Market,
   type FeesBreakdown,
   type Yield,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 type Fees = {
   fees: {
@@ -272,7 +242,7 @@ const rowsRaw = computed(() =>
         },
       },
     }))
-    .sortBy((x) => x.totalCollateral, "desc")
+    .sortBy((x) => x.collateralUsd, "desc")
     .value()
 );
 
@@ -292,21 +262,21 @@ const rows = computed((): Row[] =>
 // Data
 const { isFetching: loadingYields, data: yields } = useQuery({
   queryKey: ["crvusd-yields"],
-  queryFn: () => curveService.getYield().then((x) => x.yields),
+  queryFn: () => crvUsdService.getYield(),
   initialData: [],
   initialDataUpdatedAt: 0,
 });
 
 const { isFetching: loadingMarkets, data: markets } = useQuery({
   queryKey: ["crvusd-markets"],
-  queryFn: () => curveService.getMarkets().then((x) => x.markets),
+  queryFn: () => crvUsdService.getMarkets("ethereum", 1),
   initialData: [],
   initialDataUpdatedAt: 0,
 });
 
 const { isFetching: loadingFees, data: fees } = useQuery({
   queryKey: ["crvusd-fees"],
-  queryFn: () => curveService.getFeesBreakdown(),
+  queryFn: () => crvUsdService.getFeesBreakdown(),
   initialData: { pending: [], collected: [] },
   initialDataUpdatedAt: 0,
 });
@@ -366,10 +336,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       minmax(12ch, 1fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
-      7ch
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
-      7ch
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr);
@@ -381,10 +349,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
           1rem
           minmax(12ch, 1fr)
           minmax(var(--col-width), 0.75fr)
-          7ch
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
-          7ch
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr);
@@ -399,32 +365,11 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
           1rem
           minmax(12ch, 1fr)
           minmax(var(--col-width), 0.75fr)
-          7ch
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr)
           minmax(var(--col-width), 0.75fr);
-
-        div:nth-child(8) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 1000px) {
-        grid-template-columns:
-          1rem
-          minmax(12ch, 1fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr);
-
-        div:nth-child(5) {
-          display: none;
-        }
       }
     }
 
@@ -536,9 +481,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     div:nth-child(6),
     div:nth-child(7),
     div:nth-child(8),
-    div:nth-child(9),
-    div:nth-child(10),
-    div:nth-child(11) {
+    div:nth-child(9) {
       justify-content: end;
     }
 

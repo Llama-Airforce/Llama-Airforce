@@ -34,8 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-
+import type { Market } from "@CM/Services/CrvUsd";
 import CardLiquidationOverview from "@CM/Pages/Platform/CrvUsd/Cards/CardLiquidationOverview.vue";
 import ChartLiquidationSoftLiquidation from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationSoftLiquidation.vue";
 import ChartLiquidationMedianLoss from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationMedianLoss.vue";

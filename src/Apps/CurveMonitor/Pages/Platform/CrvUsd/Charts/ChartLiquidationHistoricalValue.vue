@@ -10,7 +10,7 @@
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { type HistoricalLiquidations } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import { type HistoricalLiquidations } from "@CM/Services/CrvUsd";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 

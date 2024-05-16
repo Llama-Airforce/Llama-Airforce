@@ -10,11 +10,10 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
 import { useSettingsStore } from "@CM/Stores";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -34,7 +33,7 @@ const { isFetching: loading, data } = useQuery({
   ] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService.getHealthDeciles(market).then((x) => x.health);
+      return crvUsdService.getHealthDeciles(market);
     } else {
       return Promise.resolve([]);
     }

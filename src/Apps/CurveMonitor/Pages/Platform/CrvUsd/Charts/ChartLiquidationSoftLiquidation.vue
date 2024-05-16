@@ -24,14 +24,14 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CurveService, {
+import CrvUsdService, {
+  type Market,
   type HistoricalSoftLiquidations,
-} from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
-import type { Market } from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+} from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Props
 interface Props {
@@ -60,9 +60,7 @@ const { isFetching: loading, data: softLiqs } = useQuery({
   queryKey: ["crvusd-liq-soft-liqs", computed(() => market?.address)] as const,
   queryFn: ({ queryKey: [, market] }) => {
     if (market) {
-      return curveService
-        .getHistoricalSoftLiquidations(market)
-        .then((x) => x.losses);
+      return crvUsdService.getHistoricalSoftLiquidations(market);
     } else {
       return Promise.resolve([]);
     }

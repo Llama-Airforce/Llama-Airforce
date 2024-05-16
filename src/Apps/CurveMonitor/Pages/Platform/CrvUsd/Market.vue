@@ -36,12 +36,12 @@
 
 <script setup lang="ts">
 import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
-import CurveService from "@CM/Pages/Platform/CrvUsd/Services/CurveService";
+import CrvUsdService from "@CM/Services/CrvUsd";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
 import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
 
-const curveService = new CurveService(getHost());
+const crvUsdService = new CrvUsdService(getHost());
 
 // Refs
 const router = useRouter();
@@ -66,14 +66,17 @@ onMounted(async () => {
   }
 
   if (storeCrvUsd.market?.address !== marketAddr.value) {
-    const { markets } = await curveService.getMarkets();
-    const market = markets.find(
-      (market) => market.address === marketAddr.value
-    );
+    await crvUsdService.getMarkets("ethereum", 1).then((markets) => {
+      const market = markets.find(
+        (market) => market.address === marketAddr.value
+      );
 
-    if (market) {
-      storeCrvUsd.market = market;
-    }
+      if (market) {
+        storeCrvUsd.market = market;
+      }
+
+      return market;
+    });
   }
 
   storeBreadcrumb.show = true;
