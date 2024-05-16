@@ -11,36 +11,23 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
-
-const crvUsdService = new CrvUsdService(getHost());
+import { type Market } from "@CM/Services/CrvUsd";
+import { useQueryLiqHealthDeciles } from "@CM/Services/CrvUsd/Queries";
 
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: [
-    "crvusd-liq-health-deciles",
-    computed(() => market?.address),
-  ] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getHealthDeciles(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data } = useQueryLiqHealthDeciles(
+  computed(() => market)
+);
 
 const options = computed(() => {
   return createChartStyles(theme.value, {

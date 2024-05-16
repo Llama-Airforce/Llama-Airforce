@@ -15,21 +15,17 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CrvUsdService, {
-  type Market,
-  type MarketVolume,
-} from "@CM/Services/CrvUsd";
+import { type Market, type MarketVolume } from "@CM/Services/CrvUsd";
+import { useQueryVolume } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 let areaSerie: ISeriesApi<"Area">;
@@ -45,18 +41,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: volumes } = useQuery({
-  queryKey: ["crvusd-market-volume", computed(() => market?.address)] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getVolume(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: volumes } = useQueryVolume(
+  computed(() => market)
+);
 
 // Watches
 watch([volumes, chart], createSeries);

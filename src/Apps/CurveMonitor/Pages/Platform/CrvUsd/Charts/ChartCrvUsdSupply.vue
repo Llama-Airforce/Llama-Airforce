@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import CrvUsdService from "@CM/Services/CrvUsd";
+import { useQueryCrvUsdSupply } from "@CM/Services/CrvUsd/Queries";
 import ChartCrvUsdSupplyLine from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyLine.vue";
 import ChartCrvUsdSupplyBreakdown from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyBreakdown.vue";
 
@@ -52,20 +52,13 @@ type ChartType = "line" | "breakdown";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 const chartType = ref<ChartType>("line");
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["crvusd-supply"],
-  queryFn: () => crvUsdService.getCrvUsdSupply(),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data } = useQueryCrvUsdSupply();
 
 // Events
 const onChartType = (type: ChartType) => {

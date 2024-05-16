@@ -37,37 +37,28 @@
 </template>
 
 <script setup lang="ts">
-import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
+import { type Market } from "@CM/Services/CrvUsd";
+import { useQueryLiquidations } from "@CM/Services/CrvUsd/Queries";
 import ChartLiquidationHistoricalValue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalValue.vue";
 import ChartLiquidationHistoricalCount from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalCount.vue";
 
 type ChartType = "count" | "value";
 
 const { t } = useI18n();
-const crvUsdService = new CrvUsdService(getHost());
 
 // Refs
 const chartType = ref<ChartType>("count");
 
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["crvusd-liq-historical", computed(() => market?.address)] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getHistoricalLiquidations(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data } = useQueryLiquidations(
+  computed(() => market)
+);
 
 // Events
 const onChartType = (type: ChartType) => {

@@ -46,36 +46,25 @@
 </template>
 
 <script setup lang="ts">
-import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
+import { type Market } from "@CM/Services/CrvUsd";
+import { useQueryMarketHealth } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 const content = computed(() => marketState.value);
 
 // Data
-const { isFetching: loading, data: marketState } = useQuery({
-  queryKey: [
-    "crvusd-liq-market-health",
-    computed(() => market?.address),
-  ] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getMarketStateHealth(market);
-    } else {
-      return Promise.resolve(null);
-    }
-  },
-});
+const { isFetching: loading, data: marketState } = useQueryMarketHealth(
+  computed(() => market)
+);
 
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;

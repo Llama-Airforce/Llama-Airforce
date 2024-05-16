@@ -48,7 +48,7 @@ import ChartLiquidationCollateralRatio from "@CM/Pages/Platform/CrvUsd/Charts/Ch
 
 // Props
 interface Props {
-  market: Market | null;
+  market?: Market;
 }
 
 const { market } = defineProps<Props>();

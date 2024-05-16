@@ -16,7 +16,7 @@ import ChartMarketAvailableCap from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarke
 
 // Props
 interface Props {
-  market: Market | null;
+  market?: Market;
 }
 
 const { market } = defineProps<Props>();

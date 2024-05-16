@@ -189,15 +189,18 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import CrvUsdService, {
+import {
   type Market,
   type FeesBreakdown,
   type Yield,
 } from "@CM/Services/CrvUsd";
+import {
+  useQueryMarkets,
+  useQueryFees,
+  useQueryYields,
+} from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
-
-const crvUsdService = new CrvUsdService(getHost());
 
 type Fees = {
   fees: {
@@ -260,26 +263,9 @@ const rows = computed((): Row[] =>
 );
 
 // Data
-const { isFetching: loadingYields, data: yields } = useQuery({
-  queryKey: ["crvusd-yields"],
-  queryFn: () => crvUsdService.getYield(),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const { isFetching: loadingMarkets, data: markets } = useQuery({
-  queryKey: ["crvusd-markets"],
-  queryFn: () => crvUsdService.getMarkets("ethereum", 1),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const { isFetching: loadingFees, data: fees } = useQuery({
-  queryKey: ["crvusd-fees"],
-  queryFn: () => crvUsdService.getFeesBreakdown(),
-  initialData: { pending: [], collected: [] },
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loadingMarkets, data: markets } = useQueryMarkets();
+const { isFetching: loadingYields, data: yields } = useQueryYields();
+const { isFetching: loadingFees, data: fees } = useQueryFees();
 
 // Methods
 const totalFees = (fees?: FeesBreakdown): number =>

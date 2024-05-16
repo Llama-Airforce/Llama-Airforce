@@ -23,21 +23,17 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CrvUsdService, {
-  type HistoricalAverageHealth,
-  type Market,
-} from "@CM/Services/CrvUsd";
+import { type HistoricalAverageHealth, type Market } from "@CM/Services/CrvUsd";
+import { useQueryLiqAvgHealth } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 let areaSerie: ISeriesApi<"Area">;
@@ -57,21 +53,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: health } = useQuery({
-  queryKey: [
-    "crvusd-liq-average-health",
-    computed(() => market?.address),
-  ] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getHistoricalAverageHealth(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: health } = useQueryLiqAvgHealth(
+  computed(() => market)
+);
 
 // Watches
 watch([health, chart], createSeries);

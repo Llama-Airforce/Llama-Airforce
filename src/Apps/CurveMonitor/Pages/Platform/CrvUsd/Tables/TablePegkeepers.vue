@@ -97,14 +97,13 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import CrvUsdService, {
-  type PoolStats,
-  type Keeper,
-} from "@CM/Services/CrvUsd";
+import { type PoolStats, type Keeper } from "@CM/Services/CrvUsd";
+import {
+  useQueryPoolStats,
+  useQueryKeepers,
+} from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
-
-const crvUsdService = new CrvUsdService(getHost());
 
 type Row = PoolStats & Keeper;
 
@@ -148,19 +147,8 @@ const rows = computed((): Row[] =>
 );
 
 // Data
-const { isFetching: loadingPoolStats, data: poolStats } = useQuery({
-  queryKey: ["crvusd-pool-stats"],
-  queryFn: () => crvUsdService.getPoolStats(),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const { isFetching: loadingKeepers, data: keepers } = useQuery({
-  queryKey: ["crvusd-keepers"],
-  queryFn: () => crvUsdService.getKeepers("ethereum"),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loadingPoolStats, data: poolStats } = useQueryPoolStats();
+const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
 
 // Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);

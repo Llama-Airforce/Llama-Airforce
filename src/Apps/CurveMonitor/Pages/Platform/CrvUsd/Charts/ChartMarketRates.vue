@@ -27,18 +27,17 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CrvUsdService, { type Market, type Snapshot } from "@CM/Services/CrvUsd";
+import { type Market, type Snapshot } from "@CM/Services/CrvUsd";
+import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 let ratesSerie: ISeriesApi<"Area">;
@@ -58,21 +57,9 @@ const { chart, chartRef } = useLightweightChart(
 const avgLength = ref<number | null>(null);
 
 // Data
-const { isFetching: loading, data: snapshots } = useQuery({
-  queryKey: [
-    "crvusd-market-snapshots",
-    computed(() => market?.address),
-  ] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getSnapshots("ethereum", market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: snapshots } = useQuerySnapshots(
+  computed(() => market)
+);
 
 // Watches
 watch([snapshots, chart], createSeries);

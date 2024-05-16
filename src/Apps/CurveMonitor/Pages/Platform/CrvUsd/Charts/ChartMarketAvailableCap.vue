@@ -23,21 +23,17 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CrvUsdService, {
-  type Market,
-  type AvailableCap,
-} from "@CM/Services/CrvUsd";
+import { type Market, type AvailableCap } from "@CM/Services/CrvUsd";
+import { useQueryAvailableCap } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 let availSerie: ISeriesApi<"Area">;
@@ -55,21 +51,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: availableCap } = useQuery({
-  queryKey: [
-    "crvusd-liq-available-cap",
-    computed(() => market?.address),
-  ] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getMarketAvailableCap(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: availableCap } = useQueryAvailableCap(
+  computed(() => market)
+);
 
 // Watches
 watch([availableCap, chart], createSeries);

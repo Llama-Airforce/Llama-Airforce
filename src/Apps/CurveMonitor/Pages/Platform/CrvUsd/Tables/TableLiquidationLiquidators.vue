@@ -42,38 +42,22 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import CrvUsdService, {
-  type Market,
-  type Liquidators,
-} from "@CM/Services/CrvUsd";
+import { type Market, type Liquidators } from "@CM/Services/CrvUsd";
+import { useQueryLiquidators } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Data
-const { isFetching: loading, data: rowsRaw } = useQuery({
-  queryKey: [
-    "crvusd-liq-liquidators",
-    computed(() => market?.address),
-  ] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getTopLiquidators(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: rowsRaw } = useQueryLiquidators(
+  computed(() => market)
+);
 
 // Refs
 const rows = computed((): Liquidators[] =>

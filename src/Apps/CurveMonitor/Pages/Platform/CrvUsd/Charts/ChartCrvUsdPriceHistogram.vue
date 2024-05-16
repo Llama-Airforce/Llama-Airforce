@@ -11,20 +11,13 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import CrvUsdService from "@CM/Services/CrvUsd";
-
-const crvUsdService = new CrvUsdService(getHost());
+import { useQueryPriceDeviation } from "@CM/Services/CrvUsd/Queries";
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["crvusd-price-deviation"],
-  queryFn: () => crvUsdService.getCrvUsdPriceHistogram(),
-  initialData: { x: [], y: [] },
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data } = useQueryPriceDeviation();
 
 const options = computed(() => {
   return createChartStyles(theme.value, {

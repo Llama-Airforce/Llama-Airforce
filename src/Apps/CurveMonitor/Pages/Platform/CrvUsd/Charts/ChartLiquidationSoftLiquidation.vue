@@ -24,21 +24,20 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import CrvUsdService, {
+import {
   type Market,
   type HistoricalSoftLiquidations,
 } from "@CM/Services/CrvUsd";
+import { useQueryLiqsSoft } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-const crvUsdService = new CrvUsdService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
+  market?: Market;
 }
 
-const { market = null } = defineProps<Props>();
+const { market } = defineProps<Props>();
 
 // Refs
 let proportionSerie: ISeriesApi<"Area">;
@@ -56,18 +55,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: softLiqs } = useQuery({
-  queryKey: ["crvusd-liq-soft-liqs", computed(() => market?.address)] as const,
-  queryFn: ({ queryKey: [, market] }) => {
-    if (market) {
-      return crvUsdService.getHistoricalSoftLiquidations(market);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: softLiqs } = useQueryLiqsSoft(
+  computed(() => market)
+);
 
 // Watches
 watch([softLiqs, chart], createSeries);
