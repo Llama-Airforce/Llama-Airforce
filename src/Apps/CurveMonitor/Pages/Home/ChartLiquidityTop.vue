@@ -10,24 +10,14 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import ProtocolService from "@CM/Services/Protocol";
 import { useSettingsStore } from "@CM/Stores";
-
-const protocolService = new ProtocolService(getHost());
+import { useQueryLiquidityTop } from "@CM/Services/Protocol/Queries";
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["curve-liquidity-top"],
-  queryFn: () =>
-    protocolService
-      .getLiquidityTop()
-      .then((x) => x.sort((a, b) => b.liq_use - a.liq_use)),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data } = useQueryLiquidityTop();
 
 const options = computed((): unknown => {
   return createChartStyles(theme.value, {

@@ -10,27 +10,14 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import ProtocolService from "@CM/Services/Protocol";
 import { useSettingsStore } from "@CM/Stores";
-
-const protocolService = new ProtocolService(getHost());
+import { useQueryTvlGainersLosers } from "@CM/Services/Protocol/Queries";
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["curve-tvl-gainers-losers"],
-  queryFn: async () => {
-    const gainers_ = protocolService.getTvlGainers();
-    const losers_ = protocolService.getTvlLosers();
-    const [gainers, losers] = [await gainers_, await losers_];
-
-    return [...gainers, ...losers].sort((a, b) => b.tvl_growth - a.tvl_growth);
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data } = useQueryTvlGainersLosers();
 
 const options = computed((): unknown => {
   const { colors } = theme.value;
