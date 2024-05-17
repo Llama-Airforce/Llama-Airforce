@@ -48,16 +48,10 @@
 
 <script setup lang="ts">
 import { DefiLlamaService } from "@/Services";
-import CurvePricesService from "@CM/Services/CurvePricesService";
+import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
 const llamaService = new DefiLlamaService(getHost());
-const curvePricesService = new CurvePricesService(getHost());
-
-// Refs
-const price = ref<number | null>(null);
-const tvl = ref<number | null>(null);
-const volume = ref<number | null>(null);
 
 // Borrowed
 const { data: markets } = useQueryMarkets();
@@ -65,29 +59,20 @@ const borrowed = computed(
   () => markets.value?.reduce((acc, x) => acc + x.borrowed, 0) ?? 0
 );
 
-// Hooks
-onMounted(async () => {
-  const chain_ = curvePricesService.getChain();
+// ChainInfo
+const { data: chainInfo } = useQueryChainInfo("ethereum");
+const tvl = computed(() => chainInfo?.value?.total.total_tvl ?? 0);
+const volume = computed(() => chainInfo?.value?.total.trading_volume_24h ?? 0);
 
-  // CRV Price + MCap
-  try {
-    price.value = await llamaService
+// CRV Price
+const { data: price } = useQuery({
+  queryKey: ["crv-price"],
+  queryFn: () =>
+    llamaService
       .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
-      .then((x) => x.price);
-  } catch {
-    price.value = 0;
-  }
-
-  // TVL and Volume
-  try {
-    const chain = await chain_;
-
-    tvl.value = chain.total.total_tvl;
-    volume.value = chain.total.trading_volume_24h;
-  } catch {
-    tvl.value = 0;
-    volume.value = 0;
-  }
+      .then((x) => x.price),
+  initialData: 0,
+  initialDataUpdatedAt: 0,
 });
 </script>
 
