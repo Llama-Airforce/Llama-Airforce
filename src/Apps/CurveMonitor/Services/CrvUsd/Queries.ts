@@ -1,6 +1,6 @@
 import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
 
-const crvUsdService = new CrvUsdService(getHost());
+const service = new CrvUsdService(getHost());
 
 function useMarketAddress(market: Ref<Market | undefined>) {
   return computed(() => market.value?.address);
@@ -20,7 +20,7 @@ function hasMarket(market: Ref<Market | undefined>) {
 export function useQueryCrvUsdSupply() {
   return useQuery({
     queryKey: ["crvusd-supply"],
-    queryFn: () => crvUsdService.getCrvUsdSupply(),
+    queryFn: () => service.getCrvUsdSupply(),
     ...initEmptyArray(),
   });
 }
@@ -29,7 +29,7 @@ export function useQueryLiqAvgHealth(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-average-health", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getHistoricalAverageHealth(market!),
+      service.getHistoricalAverageHealth(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -38,7 +38,7 @@ export function useQueryLiqAvgHealth(market: Ref<Market | undefined>) {
 export function useQueryPriceDeviation() {
   return useQuery({
     queryKey: ["crvusd-price-deviation"],
-    queryFn: () => crvUsdService.getCrvUsdPriceHistogram(),
+    queryFn: () => service.getCrvUsdPriceHistogram(),
     initialData: { x: [], y: [] },
     initialDataUpdatedAt: 0,
   });
@@ -48,7 +48,7 @@ export function useQueryMarketHealth(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-market-health", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getMarketStateHealth(market!),
+      service.getMarketStateHealth(market!),
     ...hasMarket(market),
   });
 }
@@ -60,7 +60,7 @@ export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
       useMarketAddress(market),
     ] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getHistoricalCollateralRatio(market!),
+      service.getHistoricalCollateralRatio(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -69,8 +69,7 @@ export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
 export function useQueryLiqHealthDeciles(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-health-deciles", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getHealthDeciles(market!),
+    queryFn: ({ queryKey: [, market] }) => service.getHealthDeciles(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -80,7 +79,7 @@ export function useQueryLiquidations(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-historical", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getHistoricalLiquidations(market!),
+      service.getHistoricalLiquidations(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -90,7 +89,7 @@ export function useQueryLiquidatorRevenue(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-revenue", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getLiquidatorRevenue(market!),
+      service.getLiquidatorRevenue(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -100,7 +99,7 @@ export function useQueryMedianLoss(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-median-losses", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getHistoricalMedianLoss(market!),
+      service.getHistoricalMedianLoss(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -112,8 +111,7 @@ export function useQueryProportionLosers(market: Ref<Market | undefined>) {
       "crvusd-liq-proportion-losers",
       useMarketAddress(market),
     ] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getProportionLosers(market!),
+    queryFn: ({ queryKey: [, market] }) => service.getProportionLosers(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -123,7 +121,7 @@ export function useQueryLiqsSoft(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-soft-liqs", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getHistoricalSoftLiquidations(market!),
+      service.getHistoricalSoftLiquidations(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -133,7 +131,7 @@ export function useQueryAvailableCap(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-available-cap", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getMarketAvailableCap(market!),
+      service.getMarketAvailableCap(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -143,7 +141,7 @@ export function useQuerySnapshots(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-market-snapshots", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getSnapshots("ethereum", market!),
+      service.getSnapshots("ethereum", market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -152,7 +150,7 @@ export function useQuerySnapshots(market: Ref<Market | undefined>) {
 export function useQueryVolume(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-market-volume", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) => crvUsdService.getVolume(market!),
+    queryFn: ({ queryKey: [, market] }) => service.getVolume(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -161,7 +159,7 @@ export function useQueryVolume(market: Ref<Market | undefined>) {
 export function useQueryPoolPrices() {
   return useQuery({
     queryKey: ["crvusd-pool-prices"],
-    queryFn: () => crvUsdService.getPoolPrices(),
+    queryFn: () => service.getPoolPrices(),
     initialData: [{ timestamp: 0 }],
     initialDataUpdatedAt: 0,
   });
@@ -170,8 +168,7 @@ export function useQueryPoolPrices() {
 export function useQueryLiquidators(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-liquidators", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      crvUsdService.getTopLiquidators(market!),
+    queryFn: ({ queryKey: [, market] }) => service.getTopLiquidators(market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });
@@ -180,7 +177,7 @@ export function useQueryLiquidators(market: Ref<Market | undefined>) {
 export function useQueryMarkets() {
   return useQuery({
     queryKey: ["crvusd-markets"],
-    queryFn: () => crvUsdService.getMarkets("ethereum", 1),
+    queryFn: () => service.getMarkets("ethereum", 1),
     ...initEmptyArray(),
   });
 }
@@ -188,7 +185,7 @@ export function useQueryMarkets() {
 export function useQueryFees() {
   return useQuery({
     queryKey: ["crvusd-fees"],
-    queryFn: () => crvUsdService.getFeesBreakdown(),
+    queryFn: () => service.getFeesBreakdown(),
     initialData: { pending: [], collected: [] },
     initialDataUpdatedAt: 0,
   });
@@ -197,7 +194,7 @@ export function useQueryFees() {
 export function useQueryYields() {
   return useQuery({
     queryKey: ["crvusd-yields"],
-    queryFn: () => crvUsdService.getYield(),
+    queryFn: () => service.getYield(),
     ...initEmptyArray(),
   });
 }
@@ -205,7 +202,7 @@ export function useQueryYields() {
 export function useQueryPoolStats() {
   return useQuery({
     queryKey: ["crvusd-pool-stats"],
-    queryFn: () => crvUsdService.getPoolStats(),
+    queryFn: () => service.getPoolStats(),
     ...initEmptyArray(),
   });
 }
@@ -213,7 +210,7 @@ export function useQueryPoolStats() {
 export function useQueryKeepers() {
   return useQuery({
     queryKey: ["crvusd-keepers"],
-    queryFn: () => crvUsdService.getKeepers("ethereum"),
+    queryFn: () => service.getKeepers("ethereum"),
     ...initEmptyArray(),
   });
 }
