@@ -53,7 +53,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: softLiqs } = useQueryLiquidatorRevenue(
-  computed(() => market)
+  toRef(() => market)
 );
 
 // Watches

@@ -56,7 +56,7 @@ const { market } = defineProps<Props>();
 
 // Data
 const { isFetching: loading, data: rowsRaw } = useQueryLiquidators(
-  computed(() => market)
+  toRef(() => market)
 );
 
 // Refs

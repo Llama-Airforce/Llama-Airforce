@@ -52,7 +52,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: availableCap } = useQueryAvailableCap(
-  computed(() => market)
+  toRef(() => market)
 );
 
 // Watches

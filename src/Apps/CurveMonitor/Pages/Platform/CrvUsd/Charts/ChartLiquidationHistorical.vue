@@ -56,9 +56,7 @@ interface Props {
 const { market } = defineProps<Props>();
 
 // Data
-const { isFetching: loading, data } = useQueryLiquidations(
-  computed(() => market)
-);
+const { isFetching: loading, data } = useQueryLiquidations(toRef(() => market));
 
 // Events
 const onChartType = (type: ChartType) => {

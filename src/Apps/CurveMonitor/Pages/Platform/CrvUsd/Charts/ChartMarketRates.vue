@@ -58,7 +58,7 @@ const avgLength = ref<number | null>(null);
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(
-  computed(() => market)
+  toRef(() => market)
 );
 
 // Watches

@@ -26,7 +26,7 @@ const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { isFetching: loading, data } = useQueryLiqHealthDeciles(
-  computed(() => market)
+  toRef(() => market)
 );
 
 const options = computed(() => {

@@ -42,7 +42,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: losses } = useQueryMedianLoss(
-  computed(() => market)
+  toRef(() => market)
 );
 
 // Watches

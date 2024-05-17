@@ -56,7 +56,7 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: softLiqs } = useQueryLiqsSoft(
-  computed(() => market)
+  toRef(() => market)
 );
 
 // Watches

@@ -63,7 +63,7 @@ const content = computed(() => marketState.value);
 
 // Data
 const { isFetching: loading, data: marketState } = useQueryMarketHealth(
-  computed(() => market)
+  toRef(() => market)
 );
 
 const formatter = (y: number): string =>

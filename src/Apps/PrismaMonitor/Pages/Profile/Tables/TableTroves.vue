@@ -141,11 +141,7 @@ const emit = defineEmits<{
 
 // Data
 const { isFetching: loading, data } = useQuery({
-  queryKey: [
-    "prisma-troves",
-    computed(() => vaults),
-    computed(() => user),
-  ] as const,
+  queryKey: ["prisma-troves", toRef(() => vaults), toRef(() => user)] as const,
   queryFn: async ({ queryKey: [, vaults, user] }) => {
     if (vaults.length > 0 && user) {
       // For all vaults, get troves and add vault info to trove.
