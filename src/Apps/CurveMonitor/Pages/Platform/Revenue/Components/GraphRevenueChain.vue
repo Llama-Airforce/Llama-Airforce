@@ -12,25 +12,15 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import RevenueService from "@CM/Services/Revenue";
+import { useQueryRevenueChains } from "@CM/Services/Revenue/Queries";
 
 const { t } = useI18n();
-
-const revenueService = new RevenueService(getHost());
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { isFetching: loading, data: chainRevenues } = useQuery({
-  queryKey: ["curve-revenue-chain"],
-  queryFn: () =>
-    revenueService
-      .getByChain()
-      .then((x) => x.sort((a, b) => b.totalDailyFeesUSD - a.totalDailyFeesUSD)),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: chainRevenues } = useQueryRevenueChains();
 
 // Chart
 const options = computed((): unknown => {

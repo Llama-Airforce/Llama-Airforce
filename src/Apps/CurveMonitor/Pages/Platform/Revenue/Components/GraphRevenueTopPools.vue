@@ -23,12 +23,10 @@
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import type { Chain } from "@CM/Models/Chain";
-import RevenueService from "@CM/Services/Revenue";
 import SelectChain from "@CM/Components/SelectChain.vue";
+import { useQueryTopPools } from "@CM/Services/Revenue/Queries";
 
 const { t } = useI18n();
-
-const revenueService = new RevenueService(getHost());
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
@@ -36,12 +34,7 @@ const { theme } = storeToRefs(useSettingsStore());
 const chain = ref<Chain>("ethereum");
 
 // Data
-const { isFetching: loading, data: topPools } = useQuery({
-  queryKey: ["curve-revenue-top-pools", chain] as const,
-  queryFn: ({ queryKey: [, chain] }) => revenueService.getTopPools(chain),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: topPools } = useQueryTopPools(chain);
 
 // Chart
 const options = computed((): unknown => {

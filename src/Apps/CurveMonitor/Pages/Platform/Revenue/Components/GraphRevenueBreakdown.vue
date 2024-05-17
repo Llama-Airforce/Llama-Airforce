@@ -25,7 +25,7 @@
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import RevenueService from "@CM/Services/Revenue";
+import { useQueryRevenueBreakdown } from "@CM/Services/Revenue/Queries";
 
 type Serie = {
   name: string;
@@ -34,18 +34,11 @@ type Serie = {
 
 const { t } = useI18n();
 
-const revenueService = new RevenueService(getHost());
-
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
-const { isFetching: loading, data: breakdown } = useQuery({
-  queryKey: ["curve-revenue-breakdown"],
-  queryFn: () => revenueService.getBreakdown(),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loading, data: breakdown } = useQueryRevenueBreakdown();
 
 // Chart
 const options = computed((): unknown => {
