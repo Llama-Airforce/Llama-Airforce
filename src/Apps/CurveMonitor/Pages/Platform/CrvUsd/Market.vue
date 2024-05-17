@@ -58,11 +58,26 @@ const { data: markets } = useQueryMarkets();
 const market = computed(() =>
   markets.value.find((market) => market.address === marketAddr.value)
 );
-watch(market, (newMarket) => {
-  if (newMarket) {
-    storeCrvUsd.market = newMarket;
-  }
-});
+watch(
+  market,
+  (newMarket) => {
+    if (newMarket) {
+      storeCrvUsd.market = newMarket;
+      storeBreadcrumb.crumbs = [
+        {
+          id: "crvusd",
+          label: "crvUSD",
+          pathName: "crvusd",
+        },
+        {
+          id: "market",
+          label: `Market: ${market.value?.name ?? "?"}`,
+        },
+      ];
+    }
+  },
+  { immediate: true }
+);
 
 // Hooks
 onMounted(() => {
@@ -73,17 +88,6 @@ onMounted(() => {
   }
 
   storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
-    {
-      id: "crvusd",
-      label: "crvUSD",
-      pathName: "crvusd",
-    },
-    {
-      id: "market",
-      label: `Market: ${market.value?.name ?? "?"}`,
-    },
-  ];
 });
 
 // Watches
