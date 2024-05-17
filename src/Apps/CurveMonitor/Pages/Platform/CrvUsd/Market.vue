@@ -1,6 +1,12 @@
 <template>
   <div class="market-overview">
+    <Spinner
+      class="spinner"
+      :class="{ loading }"
+    ></Spinner>
+
     <TabView
+      v-if="!loading && market"
       :active="tabActive"
       @tab="tabActive = $event.index"
     >
@@ -54,7 +60,7 @@ const storeBreadcrumb = useBreadcrumbStore();
 const storeCrvUsd = useCrvUsdStore();
 
 // Market
-const { data: markets } = useQueryMarkets();
+const { isFetching: loading, data: markets } = useQueryMarkets();
 const market = computed(() =>
   markets.value.find((market) => market.address === marketAddr.value)
 );
@@ -119,5 +125,15 @@ watch(tabActive, async (newTab) => {
 .market-overview {
   position: relative;
   max-width: calc(1920px - 18.125rem);
+
+  .spinner {
+    position: absolute;
+    top: 50vh;
+    top: 50dvh;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    @include loading-spinner();
+  }
 }
 </style>
