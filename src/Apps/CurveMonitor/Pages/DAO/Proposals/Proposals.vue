@@ -61,17 +61,12 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { keepPreviousData } from "@tanstack/vue-query";
-import ProposalService, {
-  type ProposalType,
-  type ProposalStatus,
-} from "@CM/Services/Proposal";
+import { type ProposalType, type ProposalStatus } from "@CM/Services/Proposal";
+import { useQueryProposals } from "@CM/Services/Proposal/Queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 
 const { t } = useI18n();
-
-const proposalService = new ProposalService(getHost());
 
 // Refs
 const tabActive = ref(0);
@@ -112,18 +107,12 @@ const proposals = computed(() =>
 );
 
 // Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: [
-    "curve-proposals",
-    pageDebounced,
-    search,
-    proposalType,
-    proposalStatus,
-  ] as const,
-  queryFn: ({ queryKey: [, page, search, type, status] }) =>
-    proposalService.getProposals(page, search, type, status),
-  placeholderData: keepPreviousData,
-});
+const { isFetching: loading, data } = useQueryProposals(
+  pageDebounced,
+  proposalType,
+  proposalStatus,
+  search
+);
 
 // Events
 const onTypeSelect = (type: ProposalType): void => {

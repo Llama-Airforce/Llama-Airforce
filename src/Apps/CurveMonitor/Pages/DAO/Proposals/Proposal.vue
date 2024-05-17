@@ -14,29 +14,19 @@
 </template>
 
 <script setup lang="ts">
-import ProposalService, {
-  type ProposalType,
-  proposalTypes,
-} from "@CM/Services/Proposal";
+import { type ProposalType } from "@CM/Services/Proposal";
+import { useQueryProposal } from "@CM/Services/Proposal/Queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
-
-const proposalService = new ProposalService(getHost());
 
 // Refs
 const proposalId = useRouteParams("proposalId", 0, { transform: Number });
 const proposalType = useRouteParams<ProposalType>("proposalType");
 
 // Data
-const { isFetching: loading, data: proposal } = useQuery({
-  queryKey: ["curve-proposals", proposalId] as const,
-  queryFn: () => {
-    if (!proposalTypes.includes(proposalType.value)) {
-      return Promise.resolve(null);
-    }
-
-    return proposalService.getProposal(proposalId.value, proposalType.value);
-  },
-});
+const { isFetching: loading, data: proposal } = useQueryProposal(
+  proposalId,
+  proposalType
+);
 </script>
 
 <style lang="scss" scoped>

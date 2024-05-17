@@ -53,15 +53,11 @@
 <script setup lang="ts">
 import { isAddress } from "ethers/lib/utils";
 import { uniqWith } from "lodash";
-import ProposalService, {
-  type Proposal,
-  type ProposalDetails,
-} from "@CM/Services/Proposal";
+import { type Proposal } from "@CM/Services/Proposal";
+import { useQueryProposal } from "@CM/Services/Proposal/Queries";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
 
 const { t } = useI18n();
-
-const proposalService = new ProposalService(getHost());
 
 // Props
 interface Props {
@@ -72,9 +68,15 @@ interface Props {
 const { proposal, expanded = false } = defineProps<Props>();
 
 // Refs
-const proposalDetails = ref<ProposalDetails | null>(null);
 const expandedCallData = ref(true);
 const expandedVoters = ref(proposal.voteCount > 0);
+
+// Data
+const { data: proposalDetails } = useQueryProposal(
+  toRef(() => proposal.id),
+  toRef(() => proposal.type),
+  toRef(() => expanded)
+);
 
 const numVoters = computed(() => {
   if (proposalDetails.value) {
@@ -100,20 +102,6 @@ const callData = computed(() => {
         : match
     );
 });
-
-// Watches
-watch(
-  () => expanded,
-  async (expandedNew) => {
-    if (expandedNew && proposalDetails.value === null) {
-      proposalDetails.value = await proposalService.getProposal(
-        proposal.id,
-        proposal.type
-      );
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <style lang="scss" scoped>
