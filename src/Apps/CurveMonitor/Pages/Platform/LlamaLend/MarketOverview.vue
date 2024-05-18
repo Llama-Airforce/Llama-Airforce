@@ -61,6 +61,7 @@
     <Properties
       style="grid-area: properties"
       :market
+      :chain
     ></Properties>
 
     <KPIUsage
