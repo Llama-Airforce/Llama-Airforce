@@ -1,13 +1,13 @@
 <template>
   <div class="vault-manager">
     <TabView
-      :active="tabActive"
-      @tab="tabActive = $event.index"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
     >
       <TabItem header="Overview">
         <KeepAlive>
           <VaultOverview
-            v-if="tabActive === 0"
+            v-if="tabActive === 'overview'"
             :vault="vault"
           ></VaultOverview>
         </KeepAlive>
@@ -16,7 +16,7 @@
       <TabItem header="Collateral">
         <KeepAlive>
           <Collateral
-            v-if="tabActive === 1 && vault"
+            v-if="tabActive === 'collateral' && vault"
             :vault="vault"
           ></Collateral>
         </KeepAlive>
@@ -25,7 +25,7 @@
       <TabItem header="Troves">
         <KeepAlive>
           <Troves
-            v-if="tabActive === 2 && vault"
+            v-if="tabActive === 'trove' && vault"
             :vault="vault"
           ></Troves>
         </KeepAlive>
@@ -34,7 +34,7 @@
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
-            v-if="tabActive === 3 && vault"
+            v-if="tabActive === 'liquidations' && vault"
             :vault="vault"
           ></Liquidations>
         </KeepAlive>
@@ -43,7 +43,7 @@
       <TabItem header="Redemptions">
         <KeepAlive>
           <Redemptions
-            v-if="tabActive === 4 && vault"
+            v-if="tabActive === 'redemptions' && vault"
             :vault="vault"
           ></Redemptions>
         </KeepAlive>
@@ -69,36 +69,15 @@ const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
 
 // Refs
-const router = useRouter();
-
 const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
-
-type Tabs =
-  | "overview"
-  | "collateral"
-  | "trove"
-  | "liquidations"
-  | "redemptions";
-const tab = useRouteParams<Tabs>("tab", "overview");
-const tabActive = ref(0);
 
 const vaultAddr = useRouteParams<string>("vaultAddr");
 const vault = computed(() => storeVault.vault);
 
 // Hooks
 onMounted(() => {
-  if (tab.value === "collateral") {
-    tabActive.value = 1;
-  } else if (tab.value === "trove") {
-    tabActive.value = 2;
-  } else if (tab.value === "liquidations") {
-    tabActive.value = 3;
-  } else if (tab.value === "redemptions") {
-    tabActive.value = 4;
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
   const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
 
@@ -141,34 +120,14 @@ watch(vault, (newVault) => {
   ];
 });
 
-watch(tabActive, async (newTab) => {
-  if (newTab === 0) {
-    await router.push({
-      name: "prismavault",
-      params: { tab: "", vaultAddr: vaultAddr.value },
-    });
-  } else if (newTab === 1) {
-    await router.push({
-      name: "prismavault",
-      params: { tab: "collateral", vaultAddr: vaultAddr.value },
-    });
-  } else if (newTab === 2) {
-    await router.push({
-      name: "prismavault",
-      params: { tab: "trove", vaultAddr: vaultAddr.value },
-    });
-  } else if (newTab === 3) {
-    await router.push({
-      name: "prismavault",
-      params: { tab: "liquidations", vaultAddr: vaultAddr.value },
-    });
-  } else if (newTab === 4) {
-    await router.push({
-      name: "prismavault",
-      params: { tab: "redemptions", vaultAddr: vaultAddr.value },
-    });
-  }
-});
+// Tabs
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["overview", "collateral", "trove", "liquidations", "redemptions"],
+  "prismavault",
+  () => ({
+    vaultAddr: vaultAddr.value,
+  })
+);
 </script>
 
 <style lang="scss" scoped>

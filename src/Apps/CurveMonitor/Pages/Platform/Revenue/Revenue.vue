@@ -1,18 +1,18 @@
 <template>
   <div class="revenue">
     <TabView
-      :active="tabActive"
-      @tab="tabActive = $event.index"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
     >
       <TabItem header="Revenue">
         <KeepAlive>
-          <Dashboard v-if="tabActive === 0"></Dashboard>
+          <Dashboard v-if="tabActive === 'overview'"></Dashboard>
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Cushions">
         <KeepAlive>
-          <Cushions v-if="tabActive === 1"></Cushions>
+          <Cushions v-if="tabActive === 'cushions'"></Cushions>
         </KeepAlive>
       </TabItem>
     </TabView>
@@ -23,28 +23,10 @@
 import Dashboard from "@CM/Pages/Platform/Revenue/Dashboard.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Cushions.vue";
 
-// Refs
-const router = useRouter();
-
-type Tabs = "revenue" | "cushions";
-const tab = useRouteParams<Tabs>("tab", "revenue");
-const tabActive = ref(0);
-
-// Hooks
-onMounted(() => {
-  if (tab.value === "cushions") {
-    tabActive.value = 1;
-  }
-});
-
-// Watches
-watch(tabActive, async (newTab) => {
-  if (newTab === 0) {
-    await router.push({ name: "revenue", params: { tab: "" } });
-  } else if (newTab === 1) {
-    await router.push({ name: "revenue", params: { tab: "cushions" } });
-  }
-});
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["overview", "cushions"],
+  "revenue"
+);
 </script>
 
 <style lang="scss" scoped>
