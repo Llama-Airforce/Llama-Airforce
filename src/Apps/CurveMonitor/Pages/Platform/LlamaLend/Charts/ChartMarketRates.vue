@@ -7,7 +7,7 @@
     <template #actions>
       <div class="actions">
         <Legend
-          :items="['Borrow APY', 'Lend APY']"
+          :items="[t('borrow-apy'), t('lend-apy')]"
           :colors="colorsLegend"
         ></Legend>
       </div>
@@ -184,4 +184,6 @@ const formatterApy = (x: number): string =>
 
 <i18n lang="yaml" locale="en">
 title: Market rates
+borrow-apy: Borrow APY
+lend-apy: Lend APY
 </i18n>

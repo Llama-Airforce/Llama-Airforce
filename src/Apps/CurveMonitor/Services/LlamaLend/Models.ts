@@ -33,9 +33,6 @@ export type Market = {
   };
 };
 
-export const tvl = (market?: Market) =>
-  market ? market.total_assets_usd + market.collateral_balance_usd : 0;
-
 export type MarketPair = { long?: Market; short?: Market };
 
 export type Snapshot = {
