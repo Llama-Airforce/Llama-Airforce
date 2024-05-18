@@ -7,13 +7,13 @@
 
     <TabView
       v-if="!loading && market"
-      :active="tabActive"
-      @tab="tabActive = $event.index"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
     >
       <TabItem header="Overview">
         <KeepAlive>
           <MarketOverview
-            v-if="tabActive === 0"
+            v-if="tabActive === 'overview'"
             :market="market"
           ></MarketOverview>
         </KeepAlive>
@@ -22,7 +22,7 @@
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
-            v-if="tabActive === 1 && market"
+            v-if="tabActive === 'liquidations' && market"
             :market="market"
           ></Liquidations>
         </KeepAlive>
@@ -31,7 +31,7 @@
       <TabItem header="Llamma">
         <KeepAlive>
           <Llamma
-            v-if="tabActive === 2 && market"
+            v-if="tabActive === 'llamma' && market"
             :market="market"
           ></Llamma>
         </KeepAlive>
@@ -47,74 +47,49 @@ import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
 import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
 
-// Refs
-const router = useRouter();
-
-type Tabs = "overview" | "liquidations" | "llamma";
-const tab = useRouteParams<Tabs>("tab", "overview");
-const tabActive = ref(0);
-
-const marketAddr = useRouteParams<string>("marketAddr");
-
-const storeBreadcrumb = useBreadcrumbStore();
-const storeCrvUsd = useCrvUsdStore();
+const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 
 // Market
+const marketAddr = useRouteParams<string>("marketAddr");
+const { market } = storeToRefs(useCrvUsdStore());
 const { isFetching: loading, data: markets } = useQueryMarkets();
-const market = computed(() =>
+
+const marketFromRoute = computed(() =>
   markets.value.find((market) => market.address === marketAddr.value)
 );
+
 watch(
-  market,
+  marketFromRoute,
   (newMarket) => {
-    if (newMarket) {
-      storeCrvUsd.market = newMarket;
-      storeBreadcrumb.crumbs = [
-        {
-          id: "crvusd",
-          label: "crvUSD",
-          pathName: "crvusd",
-        },
-        {
-          id: "market",
-          label: `Market: ${market.value?.name ?? "?"}`,
-        },
-      ];
-    }
+    market.value = newMarket;
+    crumbs.value = [
+      {
+        id: "crvusd",
+        label: "crvUSD",
+        pathName: "crvusd",
+      },
+      {
+        id: "market",
+        label: `Market: ${newMarket?.name ?? "?"}`,
+      },
+    ];
   },
   { immediate: true }
 );
 
 // Hooks
 onMounted(() => {
-  if (tab.value === "liquidations") {
-    tabActive.value = 1;
-  } else if (tab.value === "llamma") {
-    tabActive.value = 2;
-  }
-
-  storeBreadcrumb.show = true;
+  showCrumbs.value = true;
 });
 
-// Watches
-watch(tabActive, async (newTab) => {
-  if (newTab === 0) {
-    await router.push({
-      name: "crvusdmarket",
-      params: { tab: "", marketAddr: marketAddr.value },
-    });
-  } else if (newTab === 1) {
-    await router.push({
-      name: "crvusdmarket",
-      params: { tab: "liquidations", marketAddr: marketAddr.value },
-    });
-  } else if (newTab === 2) {
-    await router.push({
-      name: "crvusdmarket",
-      params: { tab: "llamma", marketAddr: marketAddr.value },
-    });
-  }
-});
+// Tabs
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["overview", "liquidations", "llamma"],
+  "crvusdmarket",
+  () => ({
+    marketAddr: marketAddr.value,
+  })
+);
 </script>
 
 <style lang="scss" scoped>
