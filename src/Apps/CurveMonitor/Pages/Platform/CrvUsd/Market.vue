@@ -42,7 +42,6 @@
 
 <script setup lang="ts">
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
-import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Liquidations.vue";
 import Llamma from "@CM/Pages/Platform/CrvUsd/Llamma.vue";
@@ -51,17 +50,15 @@ const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 
 // Market
 const marketAddr = useRouteParams<string>("marketAddr");
-const { market } = storeToRefs(useCrvUsdStore());
 const { isFetching: loading, data: markets } = useQueryMarkets();
 
-const marketFromRoute = computed(() =>
+const market = computed(() =>
   markets.value.find((market) => market.address === marketAddr.value)
 );
 
 watch(
-  marketFromRoute,
+  market,
   (newMarket) => {
-    market.value = newMarket;
     crumbs.value = [
       {
         id: "crvusd",

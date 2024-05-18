@@ -36,7 +36,6 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { useQueryMarkets } from "@CM/Services/LlamaLend/Queries";
-import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
 
@@ -45,17 +44,15 @@ const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 // Markets
 const chain = useRouteParams<Chain>("chain");
 const marketAddr = useRouteParams<string>("marketAddr");
-const { market } = storeToRefs(useLlamaLendStore());
 const { isFetching: loading, data: markets } = useQueryMarkets(chain);
 
-const marketFromRoute = computed(() =>
+const market = computed(() =>
   markets.value?.find((market) => market.controller === marketAddr.value)
 );
 
 watch(
-  marketFromRoute,
+  market,
   (newMarket) => {
-    market.value = newMarket;
     crumbs.value = [
       {
         id: "llamalend",
@@ -64,7 +61,7 @@ watch(
       },
       {
         id: "market",
-        label: `Market: ${market.value?.name ?? "?"}`,
+        label: `Market: ${newMarket?.name ?? "?"}`,
       },
     ];
   },

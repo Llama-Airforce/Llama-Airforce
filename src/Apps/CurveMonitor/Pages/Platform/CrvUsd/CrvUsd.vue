@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { useCrvUsdStore } from "@CM/Pages/Platform/CrvUsd/Store";
 import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";
 import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vue";
 import ChartPoolPrices from "@CM/Pages/Platform/CrvUsd/Charts/ChartPoolPrices.vue";
@@ -46,11 +45,8 @@ onMounted(() => {
 
 // Market selection
 const router = useRouter();
-const { market } = storeToRefs(useCrvUsdStore());
 
 const onMarketSelect = async (newMarket: Market) => {
-  market.value = newMarket;
-
   await router.push({
     name: "crvusdmarket",
     params: {

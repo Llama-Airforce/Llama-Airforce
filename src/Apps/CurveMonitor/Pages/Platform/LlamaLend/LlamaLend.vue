@@ -99,7 +99,6 @@ import {
   useQueryChains,
 } from "@CM/Services/LlamaLend/Queries";
 import { type Market, type MarketPair } from "@CM/Services/LlamaLend";
-import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
 
@@ -187,11 +186,8 @@ onMounted(() => {
 
 // Market selection
 const router = useRouter();
-const { market } = storeToRefs(useLlamaLendStore());
 
 const onMarketSelect = async (newMarket: Market) => {
-  market.value = newMarket;
-
   await router.push({
     name: "llamalendmarket",
     params: {
