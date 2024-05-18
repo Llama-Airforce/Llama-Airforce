@@ -57,6 +57,16 @@
       style="grid-area: addresses"
       :market
     ></Addresses>
+
+    <Properties
+      style="grid-area: properties"
+      :market
+    ></Properties>
+
+    <KPIUsage
+      style="grid-area: usage"
+      :market
+    ></KPIUsage>
   </div>
 </template>
 
@@ -66,7 +76,9 @@ import { type Market, tvl } from "@CM/Services/LlamaLend";
 
 import ChartMarketLoans from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketRates.vue";
+import KPIUsage from "@CM/Pages/Platform/LlamaLend/KPIUsage.vue";
 import Addresses from "@CM/Pages/Platform/LlamaLend/Addresses.vue";
+import Properties from "@CM/Pages/Platform/LlamaLend/Properties.vue";
 
 const { t } = useI18n();
 
@@ -88,12 +100,13 @@ const { market, chain } = defineProps<Props>();
   @include dashboard-grid;
 
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: auto auto 1fr 1fr;
 
   grid-template-areas:
+    "usage usage usage usage"
     "kpi1 kpi2 kpi3 kpi4"
     "rates rates loans loans"
-    "addresses addresses . .";
+    "properties properties addresses addresses";
 }
 </style>
 

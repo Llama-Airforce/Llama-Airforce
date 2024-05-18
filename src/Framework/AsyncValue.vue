@@ -1,6 +1,16 @@
 <template>
-  {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
-  }}{{ showUnit ? unit : "" }}
+  <div
+    v-if="!inline"
+    class="async-value"
+  >
+    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
+    }}{{ showUnit ? unit : "" }}
+  </div>
+
+  <template v-else>
+    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
+    }}{{ showUnit ? unit : "" }}
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -19,6 +29,7 @@ interface Props {
   showUnit?: boolean;
   showSymbol?: boolean;
   showZero?: boolean;
+  inline?: boolean;
 }
 
 const {
@@ -28,6 +39,7 @@ const {
   showUnit = true,
   showSymbol = true,
   showZero = false,
+  inline = true,
 } = defineProps<Props>();
 
 // Refs

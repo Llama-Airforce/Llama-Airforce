@@ -83,6 +83,8 @@ const clipboard = async (addr: string) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-addresses {
+  height: 100%;
+
   ::v-deep(.addresses-columns-data) {
     display: grid;
     grid-template-columns: 2fr 6fr auto;
