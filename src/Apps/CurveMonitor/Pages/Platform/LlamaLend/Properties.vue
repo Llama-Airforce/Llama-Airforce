@@ -35,6 +35,7 @@
 
             <div>
               <a
+                class="font-mono"
                 :href="linkAddress(value.address)"
                 target="_blank"
               >

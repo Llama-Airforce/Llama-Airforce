@@ -15,6 +15,7 @@
         <div>
           <a
             v-if="address"
+            class="font-mono"
             :href="linkAddress(address)"
             target="_blank"
           >
