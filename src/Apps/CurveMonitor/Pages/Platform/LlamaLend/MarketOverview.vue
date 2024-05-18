@@ -9,6 +9,8 @@
       :market
       :chain
     ></ChartMarketLoans>
+
+    <Addresses :market></Addresses>
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import { type Market } from "@CM/Services/LlamaLend";
 
 import ChartMarketLoans from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketLoans.vue";
 import ChartMarketRates from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketRates.vue";
+import Addresses from "@CM/Pages/Platform/LlamaLend/Addresses.vue";
 
 // Props
 interface Props {

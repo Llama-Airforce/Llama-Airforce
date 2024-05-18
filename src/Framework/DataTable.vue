@@ -26,6 +26,7 @@
     <div class="list">
       <!-- DataTable column headers -->
       <div
+        v-if="showColumnHeaders"
         class="row-data"
         :class="[columnsData, { 'selected-below': selectedBelow(-1) }]"
       >
@@ -134,6 +135,8 @@ import { SortOrder } from "@/Framework/SortOrder";
 
 // Props
 interface Props {
+  /** Do we show the column headers at all? */
+  showColumnHeaders?: boolean;
   /** CSS column templates of the header.. */
   columnsHeader?: string;
   /** CSS column templates of the underlying data rows. */
@@ -169,6 +172,8 @@ interface Props {
 }
 
 const {
+  showColumnHeaders = true,
+
   columnsHeader = "auto",
   columnsData = "auto",
   columns = [],
