@@ -31,19 +31,23 @@ export function useTabNavigation<T extends string>(
 
   watch(
     tabActive,
-    (newTab) => {
-      const tabIndex = tabs.findIndex((tab) => tab === newTab);
-      tabActiveIndex.value = tabIndex !== -1 ? tabIndex : 0;
-    },
+    (newTab) =>
+      (tabActiveIndex.value = tabs.findIndex((tab) => tab === newTab)),
     { immediate: true }
   );
 
   watch(
     tabActiveIndex,
     async (newTabIndex) => {
+      // When tab couldn't be found, default to the first avilable tab.
+      if (newTabIndex === -1) {
+        newTabIndex = 0;
+      }
+
       await router.push({
         name: routeName,
         params: { tab: tabs[newTabIndex], ...(routeParams?.() ?? {}) },
+        replace: tabActive.value === "", // If empty, we get rerouted.
       });
     },
     { immediate: true }
