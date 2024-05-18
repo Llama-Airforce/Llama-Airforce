@@ -14,10 +14,10 @@
 
     <template #row="{ item: market }: { item: Market }">
       <template v-if="market">
-        <img
-          :src="icons[market.controller]"
-          @error="onIconError(market)"
-        />
+        <TokenIcon
+          :chain
+          :address="tokenIcon(market)"
+        ></TokenIcon>
 
         <div>{{ name(market) }}</div>
 
@@ -97,7 +97,6 @@ const { pairs = [], loading, type, chain } = defineProps<Props>();
 
 // Refs
 const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
-const icons = reactive<Record<string, string>>({});
 
 const markets = computed((): Row[] =>
   chain_(pairs)
@@ -113,51 +112,16 @@ const markets = computed((): Row[] =>
     .value()
 );
 
-// Watches
-watch(
-  () => pairs,
-  (newPairs) => {
-    // Generate market icon addresses. This workflow is to add 404 fallback support.
-    const markets = chain_(newPairs)
-      .map(({ long, short }) => [long, short])
-      .flatten()
-      .compact()
-      .uniqBy((market) => market.controller)
-      .value();
-
-    const newIcons = toRecord(
-      markets,
-      (market) => market.controller,
-      (market) => icon(market)
-    );
-
-    for (const key in icons) delete icons[key];
-    Object.assign(icons, newIcons);
-  },
-  { immediate: true }
-);
-
-// Events
-const onIconError = (market: Market) => {
-  icons[market.controller] = "https://lend.curve.fi/images/default-crypto.png";
-};
-
 // Methods
 function name(market: Market) {
   return market.name.replace(/(-long|-short)/i, "");
 }
 
-function icon(market: Market) {
-  const tokenAddress = (
-    type === "long"
-      ? market.collateral_token.address
-      : market.borrowed_token.address
-  ).toLocaleLowerCase();
-
-  const chainSuffix = chain !== "ethereum" ? `-${chain}` : "";
-
-  return `https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets${chainSuffix}/${tokenAddress}.png`;
-}
+const tokenIcon = (market: Market) => {
+  return type === "long"
+    ? market.collateral_token.address
+    : market.borrowed_token.address;
+};
 </script>
 
 <style lang="scss" scoped>

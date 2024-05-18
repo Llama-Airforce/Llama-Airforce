@@ -37,6 +37,7 @@ declare module 'vue' {
     Spinner: typeof import('./../../Framework/Spinner.vue')['default']
     TabItem: typeof import('./../../Framework/TabItem.vue')['default']
     TabView: typeof import('./../../Framework/TabView.vue')['default']
+    TokenIcon: typeof import('./../../Framework/TokenIcon.vue')['default']
     Tooltip: typeof import('./../../Framework/Tooltip.vue')['default']
   }
 }

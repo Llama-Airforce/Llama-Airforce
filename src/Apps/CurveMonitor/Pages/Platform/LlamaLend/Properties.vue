@@ -15,10 +15,10 @@
 
         <div v-if="isTokenInfo(value)">
           <div class="token-info">
-            <img
-              :src="icons[value.address]"
-              @error="onIconError(value.address)"
-            />
+            <TokenIcon
+              :chain
+              :address="value.address"
+            ></TokenIcon>
 
             <div>{{ value.symbol }}</div>
 
@@ -109,45 +109,6 @@ const linkAddress = (addr: string): string => {
 const clipboard = async (addr: string) => {
   await navigator.clipboard.writeText(addr);
 };
-
-// Icons
-const icons = reactive<Record<string, string>>({});
-const onIconError = (controller: string) => {
-  icons[controller] = "https://lend.curve.fi/images/default-crypto.png";
-};
-function icon(tokenAddress: string) {
-  const chainSuffix = chain !== "ethereum" ? `-${chain}` : "";
-
-  return `https://cdn.jsdelivr.net/gh/curvefi/curve-assets/images/assets${chainSuffix}/${tokenAddress}.png`;
-}
-watch(
-  () => market,
-  (newMarket) => {
-    if (!newMarket) {
-      return;
-    }
-
-    const collateral = getTokenInfo(
-      "collateral",
-      newMarket
-    ).address.toLocaleLowerCase();
-
-    const borrowed = getTokenInfo(
-      "borrowed",
-      newMarket
-    ).address.toLocaleLowerCase();
-
-    // Generate market icon addresses. This workflow is to add 404 fallback support.
-    const newIcons = {
-      [collateral]: icon(collateral),
-      [borrowed]: icon(borrowed),
-    };
-
-    for (const key in icons) delete icons[key];
-    Object.assign(icons, newIcons);
-  },
-  { immediate: true }
-);
 </script>
 
 <style lang="scss" scoped>
