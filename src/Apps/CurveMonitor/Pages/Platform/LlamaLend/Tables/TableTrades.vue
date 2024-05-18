@@ -5,7 +5,18 @@
     columns-data="trades-columns-data"
     :loading
     :rows="trades"
-    :columns="['Trade', 'Buyer', 'Tx', 'Block', 'Time']"
+    :columns="[
+      'Bought',
+      '',
+      '',
+      'Sold',
+      '',
+      '',
+      'Market Maker',
+      'Tx',
+      'Block',
+      'Time',
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -20,25 +31,33 @@
     </template>
 
     <template #row="{ item: trade }: { item: LlammaTrade }">
-      <div class="trade">
-        <span>{{ Math.round(trade.amount_sold) }}</span>
-        <a
-          class="font-mono"
-          target="_blank"
-          :href="`https://etherscan.io/address/${trade.token_sold.address}`"
-        >
-          {{ trade.token_sold.symbol }}
-        </a>
-
-        <span>to</span>
-
-        <span>{{ Math.round(trade.amount_bought) }}</span>
+      <div class="number">{{ Math.round(trade.amount_bought) }}</div>
+      <TokenIcon
+        :chain="chain"
+        :address="trade.token_bought.address"
+      ></TokenIcon>
+      <div>
         <a
           class="font-mono"
           target="_blank"
           :href="`https://etherscan.io/address/${trade.token_bought.address}`"
         >
           {{ trade.token_bought.symbol }}
+        </a>
+      </div>
+
+      <div class="number">{{ Math.round(trade.amount_sold) }}</div>
+      <TokenIcon
+        :chain="chain"
+        :address="trade.token_sold.address"
+      ></TokenIcon>
+      <div>
+        <a
+          class="font-mono"
+          target="_blank"
+          :href="`https://etherscan.io/address/${trade.token_sold.address}`"
+        >
+          {{ trade.token_sold.symbol }}
         </a>
       </div>
 
@@ -130,15 +149,22 @@ const { relativeTime } = useRelativeTime();
 
     display: grid;
     grid-template-columns:
-      1fr
+      5rem
+      26px
+      5rem
+      5rem
+      26px
+      10rem
       10rem
       10rem
       5rem
-      10rem;
+      minmax(8rem, 1fr);
 
     // Right adjust number columns.
+    div:nth-child(1),
     div:nth-child(4),
-    div:nth-child(5) {
+    div:nth-child(9),
+    div:nth-child(10) {
       justify-content: end;
     }
   }
