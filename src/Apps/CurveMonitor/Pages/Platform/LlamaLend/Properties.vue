@@ -13,23 +13,7 @@
       <template #row="{ item: { description, value } }: { item: Row }">
         <div>{{ t(description) }}</div>
 
-        <div v-if="isPrices(value)">
-          <AsyncValue
-            :value="value.oracle"
-            :show-zero="false"
-            type="dollar"
-          ></AsyncValue>
-
-          /
-
-          <AsyncValue
-            :value="value.amm"
-            :show-zero="false"
-            type="dollar"
-          ></AsyncValue>
-        </div>
-
-        <div v-else-if="isTokenInfo(value)">
+        <div v-if="isTokenInfo(value)">
           <div class="token-info">
             <img
               :src="icons[value.address]"
@@ -77,23 +61,6 @@ interface Props {
 
 const { market, chain } = defineProps<Props>();
 
-// Prices
-type Prices = {
-  type: "prices";
-  oracle: number;
-  amm: number;
-};
-function isPrices(value: unknown): value is Prices {
-  return typeof value === "object" && (value as Prices)?.type === "prices";
-}
-function getPrices(market?: Market): Prices {
-  return {
-    type: "prices",
-    oracle: market?.price_oracle ?? 0,
-    amm: market?.amm_price ?? 0,
-  };
-}
-
 // TokenInfo
 type TokenInfo = {
   type: "token";
@@ -125,10 +92,6 @@ function getTokenInfo(
 // Rows
 type Row = { description: string; value: unknown };
 const properties = computed(() => [
-  {
-    description: "oracleamm",
-    value: getPrices(market),
-  },
   {
     description: "collateral",
     value: getTokenInfo("collateral", market),

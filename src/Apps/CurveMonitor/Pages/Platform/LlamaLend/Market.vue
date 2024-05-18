@@ -20,6 +20,16 @@
         </KeepAlive>
       </TabItem>
 
+      <TabItem header="Trading">
+        <KeepAlive>
+          <Trading
+            v-if="tabActive === 'trading'"
+            :market
+            :chain
+          ></Trading>
+        </KeepAlive>
+      </TabItem>
+
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
@@ -37,6 +47,7 @@
 import { type Chain } from "@CM/Models/Chain";
 import { useQueryMarkets } from "@CM/Services/LlamaLend/Queries";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
+import Trading from "@CM/Pages/Platform/LlamaLend/Trading.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
 
 const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
@@ -75,7 +86,7 @@ onMounted(() => {
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "liquidations"],
+  ["overview", "trading", "liquidations"],
   "llamalendmarket",
   () => ({
     chain: chain.value,

@@ -98,6 +98,7 @@ export type GetLlammaEventsResponse = {
 };
 
 export type GetLlammaTradesResponse = {
+  count: number;
   data: {
     sold_id: number;
     bought_id: number;
