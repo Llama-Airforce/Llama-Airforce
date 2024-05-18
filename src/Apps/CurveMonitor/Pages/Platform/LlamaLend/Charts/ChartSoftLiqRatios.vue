@@ -2,7 +2,7 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <div
       ref="chartRef"
@@ -15,23 +15,19 @@
 import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
+import { useQuerySoftLiqRatios } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
-import LlamaLendService, {
-  type Market,
-  type SoftLiqRatio,
-} from "@CM/Services/LlamaLend";
+import { type Market, type SoftLiqRatio } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
-const llamaLendService = new LlamaLendService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
-  chain?: Chain | null;
+  market?: Market;
+  chain?: Chain;
 }
 
-const { market = null, chain = null } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 let softLiqSerie: ISeriesApi<"Area">;
@@ -47,19 +43,10 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: softLiqRatios } = useQuery({
-  queryKey: [
-    "llama-market-softliqs",
-    computed(() => market?.controller),
-  ] as const,
-  queryFn: ({ queryKey: [, controller] }) => {
-    if (controller && chain) {
-      return llamaLendService.getSoftLiqRatios(chain, controller);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-});
+const { isFetching: loading, data: softLiqRatios } = useQuerySoftLiqRatios(
+  toRef(() => market),
+  toRef(() => chain)
+);
 
 // Watches
 watch([softLiqRatios, chart], createSeries);

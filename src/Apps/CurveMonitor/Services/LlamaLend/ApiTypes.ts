@@ -64,7 +64,7 @@ export type GetSnapshotsResponse = {
 export type GetSoftLiqRatiosResponse = {
   data: {
     timestamp: string;
-    proportion: string;
+    proportion: number;
   }[];
 };
 

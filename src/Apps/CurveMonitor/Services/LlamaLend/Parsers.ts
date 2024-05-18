@@ -79,7 +79,7 @@ export const parseSoftLiqRatio = (
 ): Models.SoftLiqRatio => {
   return {
     timestamp: new Date(x.timestamp).getTime() / 1000,
-    proportion: parseFloat(x.proportion.replace("%", "")) / 100,
+    proportion: x.proportion / 100,
   };
 };
 

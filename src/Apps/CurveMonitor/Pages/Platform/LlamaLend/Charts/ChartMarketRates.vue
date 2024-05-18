@@ -2,7 +2,7 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <template #actions>
       <div class="actions">
@@ -24,23 +24,19 @@
 import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
+import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
-import LlamaLendService, {
-  type Market,
-  type Snapshot,
-} from "@CM/Services/LlamaLend";
+import { type Market, type Snapshot } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
-const llamaLendService = new LlamaLendService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
-  chain?: Chain | null;
+  market?: Market;
+  chain?: Chain;
 }
 
-const { market = null, chain = null } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 let borrowApySerie: ISeriesApi<"Line">;
@@ -64,19 +60,10 @@ const colorsLegend = computed(() => {
 });
 
 // Data
-const { isFetching: loading, data: snapshots } = useQuery({
-  queryKey: [
-    "llama-market-snapshots",
-    computed(() => market?.controller),
-  ] as const,
-  queryFn: ({ queryKey: [, controller] }) => {
-    if (controller && chain) {
-      return llamaLendService.getSnapshots(chain, controller);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-});
+const { isFetching: loading, data: snapshots } = useQuerySnapshots(
+  toRef(() => market),
+  toRef(() => chain)
+);
 
 // Watches
 watch([snapshots, chart], createSeries);

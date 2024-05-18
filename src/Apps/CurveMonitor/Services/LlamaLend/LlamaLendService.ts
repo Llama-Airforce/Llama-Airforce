@@ -38,7 +38,7 @@ export default class LlamaLendService extends ServiceBase {
 
   public async getLiqHistory(chain: Chain, marketController: string) {
     const resp = await this.fetch<ApiTypes.GetLiqHistoryResponse>(
-      `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/history`
+      `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/history/aggregated`
     );
 
     return resp.data.map(Parsers.parseLiqHistory);

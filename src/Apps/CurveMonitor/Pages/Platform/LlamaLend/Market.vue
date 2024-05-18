@@ -7,15 +7,15 @@
 
     <TabView
       v-if="!loading && market"
-      :active="tabActive"
-      @tab="tabActive = $event.index"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
     >
       <TabItem header="Overview">
         <KeepAlive>
           <MarketOverview
-            v-if="tabActive === 0"
-            :market="market"
-            :chain="chain"
+            v-if="tabActive === 'overview'"
+            :market
+            :chain
           ></MarketOverview>
         </KeepAlive>
       </TabItem>
@@ -23,9 +23,9 @@
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
-            v-if="tabActive === 1"
-            :market="market"
-            :chain="chain"
+            v-if="tabActive === 'liquidations'"
+            :market
+            :chain
           ></Liquidations>
         </KeepAlive>
       </TabItem>
@@ -35,84 +35,56 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
+import { useQueryMarkets } from "@CM/Services/LlamaLend/Queries";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
-import LlamaLendService from "@CM/Services/LlamaLend/LlamaLendService";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Liquidations.vue";
 
-const llamaLendService = new LlamaLendService(getHost());
+const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 
-// Refs
-const router = useRouter();
-
-const storeBreadcrumb = useBreadcrumbStore();
-const storeLlamaLend = useLlamaLendStore();
-const tabActive = ref(0);
-
-type Tabs = "overview" | "liquidations";
-const tab = useRouteParams<Tabs>("tab", "overview");
+// Markets
 const chain = useRouteParams<Chain>("chain");
 const marketAddr = useRouteParams<string>("marketAddr");
+const { market } = storeToRefs(useLlamaLendStore());
+const { isFetching: loading, data: markets } = useQueryMarkets(chain);
 
-const market = computed(() => storeLlamaLend.market);
+const marketFromRoute = computed(() =>
+  markets.value?.find((market) => market.controller === marketAddr.value)
+);
 
-// Data
-const {
-  isFetching: loading,
-  data: markets,
-  refetch,
-} = useQuery({
-  queryKey: ["llama-markets", chain] as const,
-  queryFn: ({ queryKey: [, chain] }) => llamaLendService.getMarkets(chain),
-  enabled: false, // Disable automatic execution
-});
+watch(
+  marketFromRoute,
+  (newMarket) => {
+    market.value = newMarket;
+    crumbs.value = [
+      {
+        id: "llamalend",
+        label: "Llama Lend",
+        pathName: "llamalend",
+      },
+      {
+        id: "market",
+        label: `Market: ${market.value?.name ?? "?"}`,
+      },
+    ];
+  },
+  { immediate: true }
+);
 
 // Hooks
-onMounted(async () => {
-  if (tab.value === "liquidations") {
-    tabActive.value = 1;
-  }
-
-  if (storeLlamaLend.market?.controller !== marketAddr.value && chain.value) {
-    await refetch();
-
-    const market = markets.value?.find(
-      (market) => market.controller === marketAddr.value
-    );
-
-    if (market) {
-      storeLlamaLend.market = market;
-    }
-  }
-
-  storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
-    {
-      id: "llamalend",
-      label: "Llama Lend",
-      pathName: "llamalend",
-    },
-    {
-      id: "market",
-      label: `Market: ${market.value?.name ?? "?"}`,
-    },
-  ];
+onMounted(() => {
+  showCrumbs.value = true;
 });
 
-// Watches
-watch(tabActive, async (newTab) => {
-  if (newTab === 0) {
-    await router.push({
-      name: "llamalendmarket",
-      params: { tab: "", marketAddr: marketAddr.value },
-    });
-  } else if (newTab === 1) {
-    await router.push({
-      name: "llamalendmarket",
-      params: { tab: "liquidations", marketAddr: marketAddr.value },
-    });
-  }
-});
+// Tabs
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["overview", "liquidations"],
+  "llamalendmarket",
+  () => ({
+    chain: chain.value,
+    marketAddr: marketAddr.value,
+  })
+);
 </script>
 
 <style lang="scss" scoped>

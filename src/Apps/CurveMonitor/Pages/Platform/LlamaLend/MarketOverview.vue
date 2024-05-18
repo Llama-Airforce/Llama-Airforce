@@ -1,13 +1,13 @@
 <template>
   <div class="market">
     <ChartMarketRates
-      :market="market"
-      :chain="chain"
+      :market
+      :chain
     ></ChartMarketRates>
 
     <ChartMarketLoans
-      :market="market"
-      :chain="chain"
+      :market
+      :chain
     ></ChartMarketLoans>
   </div>
 </template>
@@ -21,8 +21,8 @@ import ChartMarketRates from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketRat
 
 // Props
 interface Props {
-  market: Market | null;
-  chain: Chain | null;
+  market?: Market;
+  chain?: Chain;
 }
 
 const { market, chain } = defineProps<Props>();

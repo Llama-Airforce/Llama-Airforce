@@ -12,8 +12,8 @@
 
         <SelectChain
           class="chain-select"
-          :chain="chain"
-          :chains="chains"
+          :chain
+          :chains
           @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
         ></SelectChain>
       </div>
@@ -84,7 +84,7 @@
         type="short"
         :pairs="marketPairsFiltered"
         :loading="loadingMarkets"
-        :chain="chain"
+        :chain
         @selected="onMarketSelect"
       ></TableMarkets>
     </div>
@@ -94,23 +94,16 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
-import LlamaLendService, {
-  type Market,
-  type MarketPair,
-} from "@CM/Services/LlamaLend";
+import {
+  useQueryMarkets,
+  useQueryChains,
+} from "@CM/Services/LlamaLend/Queries";
+import { type Market, type MarketPair } from "@CM/Services/LlamaLend";
 import { useLlamaLendStore } from "@CM/Pages/Platform/LlamaLend/Store";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
 
 const { t } = useI18n();
-
-const llamaLendService = new LlamaLendService(getHost());
-
-// Refs
-const router = useRouter();
-
-const storeBreadcrumb = useBreadcrumbStore();
-const storeLlamaLend = useLlamaLendStore();
 
 const chain = ref<Chain>("ethereum");
 const search = ref("");
@@ -171,22 +164,14 @@ const marketPairs = computed((): MarketPair[] => {
 });
 
 // Data
-const { isFetching: loadingMarkets, data: marketsRaw } = useQuery({
-  queryKey: ["llama-markets", chain] as const,
-  queryFn: ({ queryKey: [, chain] }) => llamaLendService.getMarkets(chain),
-});
-
-const { data: chains } = useQuery({
-  queryKey: ["llama-markets-chains"] as const,
-  queryFn: () => llamaLendService.getChains(),
-  initialData: ["ethereum"] as Chain[],
-  initialDataUpdatedAt: 0,
-});
+const { isFetching: loadingMarkets, data: marketsRaw } = useQueryMarkets(chain);
+const { data: chains } = useQueryChains();
 
 // Hooks
+const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 onMounted(() => {
-  storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
+  showCrumbs.value = true;
+  crumbs.value = [
     {
       id: "llamalend",
       label: "Llama Lend",
@@ -200,21 +185,24 @@ onMounted(() => {
   ];
 });
 
-// Events
-const onMarketSelect = async (market: Market) => {
-  storeLlamaLend.market = market;
+// Market selection
+const router = useRouter();
+const { market } = storeToRefs(useLlamaLendStore());
+
+const onMarketSelect = async (newMarket: Market) => {
+  market.value = newMarket;
 
   await router.push({
     name: "llamalendmarket",
     params: {
       tab: "",
       chain: chain.value,
-      marketAddr: market.controller,
+      marketAddr: newMarket.controller,
     },
   });
 };
 
-// Methods
+// KPIs
 const totalBorrowed = (type: "long" | "short"): number => {
   return marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))

@@ -2,7 +2,7 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <div
       ref="chartRef"
@@ -14,24 +14,20 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
+import { useQueryLiqHistory } from "@CM/Services/LlamaLend/Queries";
 import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import LlamaLendService, {
-  type Market,
-  type LiqHistory,
-} from "@CM/Services/LlamaLend";
+import { type Market, type LiqHistory } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
-const llameLendService = new LlamaLendService(getHost());
-
 // Props
 interface Props {
-  market?: Market | null;
-  chain?: Chain | null;
+  market?: Market;
+  chain?: Chain;
 }
 
-const { market = null, chain = null } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 let serieCount: ISeriesApi<"Histogram">;
@@ -49,19 +45,10 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: history } = useQuery({
-  queryKey: [
-    "llama-market-liq-history",
-    computed(() => market?.controller),
-  ] as const,
-  queryFn: ({ queryKey: [, controller] }) => {
-    if (controller && chain) {
-      return llameLendService.getLiqHistory(chain, controller);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-});
+const { isFetching: loading, data: history } = useQueryLiqHistory(
+  toRef(() => market),
+  toRef(() => chain)
+);
 
 // Watches
 watch([history, chart], createSeries);

@@ -4,7 +4,7 @@
     columns-header="1fr"
     columns-data="markets-columns-data"
     expand-side="left"
-    :loading="loading"
+    :loading
     :rows="markets"
     :columns="['', '', 'Name', 'Borrow Rate', 'Lend Rate', 'TVL', 'Loans']"
   >

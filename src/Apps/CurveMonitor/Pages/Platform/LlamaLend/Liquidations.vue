@@ -2,14 +2,14 @@
   <div class="liquidations">
     <div class="soft-liq-ratio">
       <ChartSoftLiqRatios
-        :market="market"
-        :chain="chain"
+        :market
+        :chain
       ></ChartSoftLiqRatios>
     </div>
 
     <ChartLiqHistory
-      :market="market"
-      :chain="chain"
+      :market
+      :chain
     ></ChartLiqHistory>
   </div>
 </template>
@@ -22,8 +22,8 @@ import ChartLiqHistory from "@CM/Pages/Platform/LlamaLend/Charts/ChartLiqHistory
 
 // Props
 interface Props {
-  market: Market | null;
-  chain: Chain | null;
+  market?: Market;
+  chain?: Chain;
 }
 
 const { market, chain } = defineProps<Props>();
