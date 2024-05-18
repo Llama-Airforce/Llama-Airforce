@@ -83,13 +83,13 @@ export type GetLlammaEventsResponse = {
   data: {
     provider: string;
     deposit: {
-      amount: string;
+      amount: number;
       n1: number;
       n2: number;
     } | null;
-    withdrawal: {
-      amount_borrowed: string;
-      amount_collateral: string;
+    withdrawal?: {
+      amount_borrowed: number;
+      amount_collateral: number;
     } | null;
     block_number: number;
     timestamp: number;

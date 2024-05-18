@@ -99,10 +99,10 @@ export const parseLiqHistory = (
 export const parseLlammaEvents = (
   x: ApiTypes.GetLlammaEventsResponse["data"][number]
 ): Models.LlammaEvent => {
-  const provider = x.provider;
+  const provider = x.provider.toLocaleLowerCase();
   const deposit = x.deposit
     ? {
-        amount: parseFloat(x.deposit.amount),
+        amount: x.deposit.amount,
         n1: x.deposit.n1,
         n2: x.deposit.n2,
       }
@@ -110,14 +110,14 @@ export const parseLlammaEvents = (
 
   const withdrawal = x.withdrawal
     ? {
-        amount_borrowed: parseFloat(x.withdrawal.amount_borrowed),
-        amount_collateral: parseFloat(x.withdrawal.amount_collateral),
+        amount_borrowed: x.withdrawal.amount_borrowed,
+        amount_collateral: x.withdrawal.amount_collateral,
       }
     : null;
 
   const blockNumber = x.block_number;
   const timestamp = x.timestamp;
-  const transactionHash = x.transaction_hash;
+  const transactionHash = x.transaction_hash.toLocaleLowerCase();
 
   return {
     provider,
@@ -135,12 +135,18 @@ export const parseLlammaTrades = (
   return {
     sold_id: x.sold_id,
     bought_id: x.bought_id,
-    token_sold: x.token_sold,
-    token_bought: x.token_bought,
+    token_sold: {
+      symbol: x.token_sold.symbol,
+      address: x.token_sold.address.toLocaleLowerCase(),
+    },
+    token_bought: {
+      symbol: x.token_bought.symbol,
+      address: x.token_bought.address.toLocaleLowerCase(),
+    },
     amount_sold: x.amount_sold,
     amount_bought: x.amount_bought,
     price: x.price,
-    buyer: x.buyer,
+    buyer: x.buyer.toLocaleLowerCase(),
     fee_x: x.fee_x,
     fee_y: x.fee_y,
     block_number: x.block_number,
