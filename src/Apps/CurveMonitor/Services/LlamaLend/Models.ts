@@ -106,3 +106,14 @@ export type LlammaTrade = {
   timestamp: number;
   transaction_hash: string;
 };
+
+export type LlammaOHLC = {
+  time: number;
+  open: number;
+  close: number;
+  high: number;
+  low: number;
+  base_price: number;
+  oracle_price: number;
+  volume: number;
+};

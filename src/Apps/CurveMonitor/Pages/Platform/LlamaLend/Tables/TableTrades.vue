@@ -5,18 +5,7 @@
     columns-data="trades-columns-data"
     :loading
     :rows="trades"
-    :columns="[
-      'Bought',
-      '',
-      '',
-      'Sold',
-      '',
-      '',
-      'Market Maker',
-      'Tx',
-      'Block',
-      'Time',
-    ]"
+    :columns="['Bought', '', '', 'Sold', '', '', 'Market Maker', 'Time']"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -31,7 +20,7 @@
     </template>
 
     <template #row="{ item: trade }: { item: LlammaTrade }">
-      <div class="number">{{ Math.round(trade.amount_bought) }}</div>
+      <div class="number">{{ round(trade.amount_bought) }}</div>
       <TokenIcon
         :chain="chain"
         :address="trade.token_bought.address"
@@ -46,7 +35,7 @@
         </a>
       </div>
 
-      <div class="number">{{ Math.round(trade.amount_sold) }}</div>
+      <div class="number">{{ round(trade.amount_sold) }}</div>
       <TokenIcon
         :chain="chain"
         :address="trade.token_sold.address"
@@ -71,29 +60,14 @@
         </a>
       </div>
 
-      <div>
+      <div class="number">
         <a
           :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
           target="_blank"
-          class="font-mono"
           @click.stop
         >
-          {{ addressShort(trade.transaction_hash) }}
+          {{ relativeTime(trade.timestamp) }}
         </a>
-      </div>
-
-      <div class="number">
-        <a
-          :href="`https://etherscan.io/block/${trade.block_number}`"
-          class="font-mono"
-          target="_blank"
-        >
-          {{ trade.block_number }}
-        </a>
-      </div>
-
-      <div class="number">
-        {{ relativeTime(trade.timestamp) }}
       </div>
     </template>
   </DataTable>
@@ -129,6 +103,8 @@ const count = computed(() => data.value?.count ?? 0);
 const trades = computed(() => data.value?.trades ?? []);
 
 const { relativeTime } = useRelativeTime();
+const round = (x: number) =>
+  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
 </script>
 
 <style lang="scss" scoped>
@@ -145,26 +121,21 @@ const { relativeTime } = useRelativeTime();
   }
 
   ::v-deep(.trades-columns-data) {
-    --col-width: 10ch;
-
     display: grid;
     grid-template-columns:
-      5rem
+      minmax(5rem, 1fr)
       26px
-      5rem
-      5rem
+      minmax(5rem, 1fr)
+      minmax(5rem, 1fr)
       26px
-      10rem
-      10rem
-      10rem
-      5rem
-      minmax(8rem, 1fr);
+      minmax(5rem, 1fr)
+      6rem
+      6rem;
 
     // Right adjust number columns.
     div:nth-child(1),
     div:nth-child(4),
-    div:nth-child(9),
-    div:nth-child(10) {
+    div:nth-child(8) {
       justify-content: end;
     }
   }

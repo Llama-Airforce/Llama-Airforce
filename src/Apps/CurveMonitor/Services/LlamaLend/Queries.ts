@@ -81,9 +81,21 @@ export function useQueryTrades(
 ) {
   return useQuery({
     queryKey: ["llama-market-trades", useLlamma(market), page] as const,
-    queryFn: ({ queryKey: [, controller, page] }) =>
-      service.getLlammaTrades(chain.value!, controller!, page),
+    queryFn: ({ queryKey: [, llamma, page] }) =>
+      service.getLlammaTrades(chain.value!, llamma!, page),
     placeholderData: keepPreviousData,
+    enabled: computed(() => !!market.value && !!chain.value),
+  });
+}
+
+export function useQueryOHLC(
+  market: Ref<Market | undefined>,
+  chain: Ref<Chain | undefined>
+) {
+  return useQuery({
+    queryKey: ["llama-market-ohlc", useLlamma(market)] as const,
+    queryFn: ({ queryKey: [, llamma] }) =>
+      service.getLlammaOHLC(chain.value!, llamma!),
     enabled: computed(() => !!market.value && !!chain.value),
   });
 }

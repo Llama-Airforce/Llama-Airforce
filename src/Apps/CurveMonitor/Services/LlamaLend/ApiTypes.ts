@@ -121,3 +121,16 @@ export type GetLlammaTradesResponse = {
     transaction_hash: string;
   }[];
 };
+
+export type GetLlammaOHLCResponse = {
+  data: {
+    time: number;
+    open: number;
+    close: number;
+    high: number;
+    low: number;
+    base_price: number;
+    oracle_price: number;
+    volume: number;
+  }[];
+};

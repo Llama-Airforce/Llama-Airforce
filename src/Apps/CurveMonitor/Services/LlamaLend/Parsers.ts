@@ -154,3 +154,18 @@ export const parseLlammaTrades = (
     transaction_hash: x.transaction_hash,
   };
 };
+
+export const parseLlammaOHLC = (
+  x: ApiTypes.GetLlammaOHLCResponse["data"][number]
+): Models.LlammaOHLC => {
+  return {
+    time: x.time,
+    open: x.open,
+    close: x.close,
+    high: x.high,
+    low: x.low,
+    base_price: x.base_price,
+    oracle_price: x.oracle_price,
+    volume: x.volume,
+  };
+};

@@ -22,6 +22,12 @@
       ></AsyncValue>
     </KPI>
 
+    <ChartOHLC
+      style="grid-area: ohlc"
+      :market
+      :chain
+    ></ChartOHLC>
+
     <TableTrades
       style="grid-area: table"
       :market
@@ -34,6 +40,7 @@
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Services/LlamaLend";
 
+import ChartOHLC from "@CM/Pages/Platform/LlamaLend/Charts/ChartOHLC.vue";
 import TableTrades from "@CM/Pages/Platform/LlamaLend/Tables/TableTrades.vue";
 
 const { t } = useI18n();
@@ -56,11 +63,11 @@ const { market, chain } = defineProps<Props>();
   @include dashboard-grid;
 
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: auto auto;
 
   grid-template-areas:
     "oracle amm"
-    "table table";
+    "ohlc table";
 }
 </style>
 
