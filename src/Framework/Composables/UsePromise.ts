@@ -1,9 +1,14 @@
 import { ref, type Ref, onMounted } from "vue";
 
 /**
- * Vue composable to async load data and handle errors through notifications.
- * @param f The async factory function that retrieves data.
- * @param init The default / init value of the data before loading is complete.
+ * Vue composable to asynchronously load data and handle errors through notifications.
+ *
+ * @param f - The async factory function that retrieves data.
+ * @param init - The default / initial value of the data before loading is complete.
+ * @returns An object containing:
+ *   - loading: A ref indicating whether data is currently being loaded.
+ *   - data: A ref holding the loaded data or the initial value.
+ *   - load: A function to manually trigger data loading.
  */
 export function usePromise<T>(f: () => Promise<T>, init: T) {
   const loading = ref(false);

@@ -1,6 +1,15 @@
 import { chain } from "lodash";
 
-/** Vue composable that returns functionality for datatable pagination where all data is loaded. */
+/**
+ * Vue composable that provides functionality for datatable pagination where all data is loaded.
+ *
+ * @param rows - A ref containing an array of rows to be paginated.
+ * @param rowsPerPage - The number of rows to display per page.
+ * @returns An object containing:
+ *   - page: A ref holding the current page number.
+ *   - rowsPage: A computed ref containing the rows for the current page.
+ *   - onPage: A function to update the current page number.
+ */
 export function usePagination<Row>(rows: Ref<Row[]>, rowsPerPage: number) {
   const page = ref(1);
 
@@ -24,7 +33,13 @@ export function usePagination<Row>(rows: Ref<Row[]>, rowsPerPage: number) {
   return { page, rowsPage, onPage };
 }
 
-/** Same method as above, except you don't have all the rows up up-front. */
+/**
+ * Vue composable that provides functionality for asynchronous datatable pagination.
+ *
+ * @returns An object containing:
+ *   - page: A ref holding the current page number.
+ *   - onPage: A function to update the current page number.
+ */
 export function usePaginationAsync() {
   const page = ref(1);
 

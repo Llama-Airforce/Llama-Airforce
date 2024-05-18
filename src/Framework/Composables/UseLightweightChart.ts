@@ -4,6 +4,16 @@ import {
   type ChartOptions,
 } from "lightweight-charts";
 
+/**
+ * Vue composable that creates and manages a lightweight chart using the 'lightweight-charts' library.
+ *
+ * @param recreateChartTrigger - A ref that triggers the recreation of the chart when its value changes.
+ * @param createChartOptions - A function that takes the chart's HTML element and returns the chart options.
+ * @param onChartCreated - (Optional) A callback function that is invoked when the chart is created, receiving the chart instance as a parameter.
+ * @returns An object containing:
+ *   - chartRef: A ref to the HTML element that will contain the chart.
+ *   - chart: A ref to the created chart instance.
+ */
 export function useLightweightChart(
   recreateChartTrigger: Ref<unknown>,
   createChartOptions: (chartRef: HTMLElement) => DeepPartial<ChartOptions>,
