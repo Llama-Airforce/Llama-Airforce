@@ -1,7 +1,5 @@
-import { ref, watch, type Ref, onMounted, onUnmounted, nextTick } from "vue";
 import {
   createChart,
-  type IChartApi,
   type DeepPartial,
   type ChartOptions,
 } from "lightweight-charts";

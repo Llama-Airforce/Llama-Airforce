@@ -1,5 +1,4 @@
 import { ref, type Ref, onMounted } from "vue";
-import { tryNotify } from "@/Util";
 
 /**
  * Vue composable to async load data and handle errors through notifications.

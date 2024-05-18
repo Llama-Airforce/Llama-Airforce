@@ -1,4 +1,3 @@
-import { ref, type Ref } from "vue";
 import { SortOrder } from "@/Framework/SortOrder";
 
 /** Vue composable that returns functionality for datatable sorting. */

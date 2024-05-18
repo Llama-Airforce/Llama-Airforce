@@ -1,5 +1,3 @@
-import { ref, type Ref } from "vue";
-
 /**
  * Vue composable primarily for datatables to keep track of a list of expanded rows.
  */

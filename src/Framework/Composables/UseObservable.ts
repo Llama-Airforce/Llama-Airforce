@@ -1,7 +1,5 @@
-import { ref, type Ref, onUnmounted } from "vue";
 import { type Observable } from "rxjs";
 import { notify } from "@kyvg/vue3-notification";
-import { prettyError } from "@/Util";
 
 /**
  * Vue composable that transforms an observale into a Vue 3 ref.

@@ -1,4 +1,3 @@
-import { ref, type Ref, computed, watch } from "vue";
 import { chain } from "lodash";
 
 /** Vue composable that returns functionality for datatable pagination where all data is loaded. */
