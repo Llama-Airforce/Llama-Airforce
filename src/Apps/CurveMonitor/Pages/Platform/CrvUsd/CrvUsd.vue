@@ -26,16 +26,11 @@ import ChartCrvUsdSupply from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSuppl
 import ChartCrvUsdPriceHistogram from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdPriceHistogram.vue";
 import type { Market } from "@CM/Services/CrvUsd";
 
-// Refs
-const router = useRouter();
+const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 
-const storeBreadcrumb = useBreadcrumbStore();
-const storeCrvUsd = useCrvUsdStore();
-
-// Hooks
 onMounted(() => {
-  storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
+  showCrumbs.value = true;
+  crumbs.value = [
     {
       id: "crvusd",
       label: "crvUSD",
@@ -49,15 +44,18 @@ onMounted(() => {
   ];
 });
 
-// Events
-const onMarketSelect = async (market: Market) => {
-  storeCrvUsd.market = market;
+// Market selection
+const router = useRouter();
+const { market } = storeToRefs(useCrvUsdStore());
+
+const onMarketSelect = async (newMarket: Market) => {
+  market.value = newMarket;
 
   await router.push({
     name: "crvusdmarket",
     params: {
       tab: "",
-      marketAddr: market.address,
+      marketAddr: newMarket.address,
     },
   });
 };
