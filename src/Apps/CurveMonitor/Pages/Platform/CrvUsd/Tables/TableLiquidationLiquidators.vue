@@ -3,8 +3,8 @@
     class="datatable-liquidators"
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="liquidators-columns-data"
-    :loading="loading"
-    :rows="rows"
+    :loading
+    :rows
     :columns="['Address', 'Count', 'Value']"
   >
     <template #header-content>

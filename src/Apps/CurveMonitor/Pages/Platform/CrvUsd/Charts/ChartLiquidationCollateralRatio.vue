@@ -2,7 +2,7 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <div
       ref="chartRef"

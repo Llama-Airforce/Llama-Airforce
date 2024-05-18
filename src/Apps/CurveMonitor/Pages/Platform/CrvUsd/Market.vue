@@ -14,7 +14,7 @@
         <KeepAlive>
           <MarketOverview
             v-if="tabActive === 'overview'"
-            :market="market"
+            :market
           ></MarketOverview>
         </KeepAlive>
       </TabItem>
@@ -23,7 +23,7 @@
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 'liquidations' && market"
-            :market="market"
+            :market
           ></Liquidations>
         </KeepAlive>
       </TabItem>
@@ -32,7 +32,7 @@
         <KeepAlive>
           <Llamma
             v-if="tabActive === 'llamma' && market"
-            :market="market"
+            :market
           ></Llamma>
         </KeepAlive>
       </TabItem>

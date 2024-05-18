@@ -2,9 +2,9 @@
   <CardGraph
     class="chart"
     title="crvUSD Price Deviation from $1 Histogram"
-    :loading="loading"
-    :options="options"
-    :series="series"
+    :loading
+    :options
+    :series
   ></CardGraph>
 </template>
 

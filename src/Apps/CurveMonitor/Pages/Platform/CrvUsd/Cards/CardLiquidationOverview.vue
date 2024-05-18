@@ -1,8 +1,8 @@
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
-    :content="content"
+    :loading
+    :content
   >
     <div v-if="content">
       <div>

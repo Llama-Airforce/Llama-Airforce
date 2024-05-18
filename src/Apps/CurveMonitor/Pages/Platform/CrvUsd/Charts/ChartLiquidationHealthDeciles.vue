@@ -2,9 +2,9 @@
   <CardGraph
     class="chart"
     title="Debt & Assets per Health Deciles"
-    :loading="loading"
-    :options="options"
-    :series="series"
+    :loading
+    :options
+    :series
   ></CardGraph>
 </template>
 

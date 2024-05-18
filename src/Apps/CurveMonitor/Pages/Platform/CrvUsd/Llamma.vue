@@ -1,6 +1,6 @@
 <template>
   <div class="llamma">
-    <ChartLlammaCandles :market="market"></ChartLlammaCandles>
+    <ChartLlammaCandles :market></ChartLlammaCandles>
   </div>
 </template>
 

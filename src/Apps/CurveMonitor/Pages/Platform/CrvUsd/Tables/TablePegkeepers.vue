@@ -3,8 +3,8 @@
     class="datatable-pegkeepers"
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="pegkeepers-columns-data"
-    :loading="loading"
-    :rows="rows"
+    :loading
+    :rows
     :columns="['Name', 'Debt', 'TVL', 'Volume', 'Fees']"
   >
     <template #header-content>

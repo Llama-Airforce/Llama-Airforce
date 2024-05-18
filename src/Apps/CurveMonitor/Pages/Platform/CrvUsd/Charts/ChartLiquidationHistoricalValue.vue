@@ -1,8 +1,8 @@
 <template>
   <GraphApex
     class="chart"
-    :options="options"
-    :series="series"
+    :options
+    :series
   ></GraphApex>
 </template>
 

@@ -1,34 +1,22 @@
 <template>
   <div class="liquidations">
-    <CardLiquidationOverview :market="market"></CardLiquidationOverview>
-
-    <ChartLiquidationSoftLiquidation
-      :market="market"
-    ></ChartLiquidationSoftLiquidation>
-
-    <ChartLiquidationMedianLoss :market="market"></ChartLiquidationMedianLoss>
+    <CardLiquidationOverview :market></CardLiquidationOverview>
+    <ChartLiquidationSoftLiquidation :market></ChartLiquidationSoftLiquidation>
+    <ChartLiquidationMedianLoss :market></ChartLiquidationMedianLoss>
 
     <ChartLiquidationProportionLosers
-      :market="market"
+      :market
     ></ChartLiquidationProportionLosers>
 
-    <ChartLiquidationAverageHealth
-      :market="market"
-    ></ChartLiquidationAverageHealth>
+    <ChartLiquidationAverageHealth :market></ChartLiquidationAverageHealth>
+    <ChartLiquidationHealthDeciles :market></ChartLiquidationHealthDeciles>
+    <ChartLiquidationCollateralRatio :market></ChartLiquidationCollateralRatio>
 
-    <ChartLiquidationHealthDeciles
-      :market="market"
-    ></ChartLiquidationHealthDeciles>
-
-    <ChartLiquidationCollateralRatio
-      :market="market"
-    ></ChartLiquidationCollateralRatio>
-
-    <ChartLiquidationHistorical :market="market"></ChartLiquidationHistorical>
-    <TableLiquidationLiquidators :market="market"></TableLiquidationLiquidators>
+    <ChartLiquidationHistorical :market></ChartLiquidationHistorical>
+    <TableLiquidationLiquidators :market></TableLiquidationLiquidators>
 
     <ChartLiquidationLiquidatorRevenue
-      :market="market"
+      :market
     ></ChartLiquidationLiquidatorRevenue>
   </div>
 </template>

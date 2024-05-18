@@ -1,9 +1,9 @@
 <template>
   <div class="market">
-    <ChartMarketRates :market="market"></ChartMarketRates>
-    <ChartMarketAvailableCap :market="market"></ChartMarketAvailableCap>
-    <ChartMarketLoans :market="market"></ChartMarketLoans>
-    <ChartMarketVolume :market="market"></ChartMarketVolume>
+    <ChartMarketRates :market></ChartMarketRates>
+    <ChartMarketAvailableCap :market></ChartMarketAvailableCap>
+    <ChartMarketLoans :market></ChartMarketLoans>
+    <ChartMarketVolume :market></ChartMarketVolume>
   </div>
 </template>
 

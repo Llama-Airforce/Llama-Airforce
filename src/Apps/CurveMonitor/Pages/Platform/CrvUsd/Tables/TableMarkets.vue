@@ -4,8 +4,8 @@
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="markets-columns-data"
     expand-side="left"
-    :loading="loading"
-    :rows="rows"
+    :loading
+    :rows
     :columns="[
       '',
       'Name',
