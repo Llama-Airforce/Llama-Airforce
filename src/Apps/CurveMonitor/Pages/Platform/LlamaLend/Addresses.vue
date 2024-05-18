@@ -3,9 +3,7 @@
     <DataTable
       class="datatable-addresses"
       columns-data="addresses-columns-data"
-      :show-column-headers="false"
       :rows="addresses"
-      :columns="[t('description'), t('address')]"
     >
       <template #header-content>
         <div class="title">{{ t("addresses") }}</div>
