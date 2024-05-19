@@ -1,6 +1,14 @@
 import type * as ApiTypes from "@CM/Services/LlamaLend/ApiTypes";
 import type * as Models from "@CM/Services/LlamaLend/Models";
 
+function toUTC(timestamp: string): number {
+  const [date, time] = timestamp.split("T");
+  const [year, month, day] = date.split("-").map(Number);
+  const [hour, minute, second] = time.split(":").map(Number);
+
+  return Date.UTC(year, month - 1, day, hour, minute, second) / 1000;
+}
+
 export const parseMarket = (
   x: ApiTypes.GetMarketsResponse["data"][number]
 ): Models.Market => {
@@ -55,7 +63,7 @@ export const parseSnapshot = (
   const redeemed = parseFloat(x.redeemed);
   const collateralBalance = parseFloat(x.collateral_balance);
   const borrowedBalance = parseFloat(x.borrowed_balance);
-  const timestamp = new Date(x.timestamp).getTime() / 1000;
+  const timestamp = toUTC(x.timestamp);
 
   return {
     rate,
@@ -78,7 +86,7 @@ export const parseSoftLiqRatio = (
   x: ApiTypes.GetSoftLiqRatiosResponse["data"][number]
 ): Models.SoftLiqRatio => {
   return {
-    timestamp: new Date(x.timestamp).getTime() / 1000,
+    timestamp: toUTC(x.timestamp),
     proportion: x.proportion / 100,
   };
 };
@@ -87,7 +95,7 @@ export const parseLiqHistory = (
   x: ApiTypes.GetLiqHistoryResponse["data"][number]
 ): Models.LiqHistory => {
   return {
-    timestamp: new Date(x.timestamp).getTime() / 1000,
+    timestamp: toUTC(x.timestamp),
     self_count: x.self_count,
     hard_count: x.hard_count,
     self_value: x.self_value,
