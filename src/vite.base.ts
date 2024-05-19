@@ -1,4 +1,5 @@
 import type AutoImport from "unplugin-auto-import/vite";
+import { VueRouterAutoImports } from "unplugin-vue-router";
 
 export const autoImport: Parameters<typeof AutoImport>[0] = {
   include: [/\.vue$/, /\.ts$/],
@@ -6,7 +7,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
   imports: [
     "vue",
     "vue-i18n",
-    "vue-router",
+    VueRouterAutoImports,
     "@vueuse/core",
     "pinia",
     { "@vueuse/router": ["useRouteHash", "useRouteParams", "useRouteQuery"] },

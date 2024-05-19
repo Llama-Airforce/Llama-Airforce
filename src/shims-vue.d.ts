@@ -27,3 +27,27 @@ declare module "@LAF/Pages/Union/Page" {
   const pagePoundersRoutes: RouteRecordRaw[];
   export { pageUnion, pageUnionRoutes, pagePounders, pagePoundersRoutes };
 }
+
+declare module "vue3-apexcharts" {
+  import { Component } from "vue";
+  const VueApexCharts: any;
+  export default VueApexCharts;
+}
+
+declare module "highlight.js/lib/languages/xml" {
+  import { Component } from "vue";
+  const xml: any;
+  export default xml;
+}
+
+declare module "highlight.js/lib/languages/scss" {
+  import { Component } from "vue";
+  const scss: any;
+  export default scss;
+}
+
+declare module "highlight.js/lib/languages/typescript" {
+  import { Component } from "vue";
+  const typescript: any;
+  export default typescript;
+}

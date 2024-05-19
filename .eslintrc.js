@@ -94,5 +94,8 @@ module.exports = {
         jest: true
       }
     }
-  ]
+  ],
+  settings: {
+    'import/core-modules': ['vue-router/auto'],
+  },
 };

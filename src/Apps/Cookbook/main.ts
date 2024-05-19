@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
-import { type RouteRecordRaw } from "vue-router";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import App from "@CB/App.vue";
 import createRouter from "@CB/Router";
@@ -15,11 +14,14 @@ import scss from "highlight.js/lib/languages/scss";
 import typescript from "highlight.js/lib/languages/typescript";
 import hljsVuePlugin from "@highlightjs/vue-plugin";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 hljs.registerLanguage("xml", xml);
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 hljs.registerLanguage("scss", scss);
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 hljs.registerLanguage("typescript", typescript);
 
-import { pageMain, pageMainRoutes } from "@CB/PageMain";
+import { pageMain } from "@CB/PageMain";
 import { usePageStore } from "@/Framework/Stores/PageStore";
 
 const app = createApp(App);
@@ -38,11 +40,9 @@ app.use(pinia);
 
 // Configure pages.
 const pages = [pageMain];
-const routes: RouteRecordRaw[][] = [pageMainRoutes];
 
 const pageStore = usePageStore();
 pageStore.pages = pages;
-pageStore.routes = routes;
 
 // Configure TanStack query client.
 const queryClient = new QueryClient({
@@ -65,6 +65,7 @@ const queryClient = new QueryClient({
 const router = createRouter();
 app
   .use(router)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   .use(VueApexCharts)
   .use(VueQueryPlugin, { queryClient })
   .use(Notifications)

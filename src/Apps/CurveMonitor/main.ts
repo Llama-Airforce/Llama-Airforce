@@ -54,6 +54,7 @@ const queryClient = new QueryClient({
 const router = createRouter();
 app
   .use(router)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   .use(VueApexCharts)
   .use(VueQueryPlugin, { queryClient })
   .use(Notifications)

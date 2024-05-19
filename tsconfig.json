@@ -77,7 +77,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "types": [
-      "vite/client"
+      "vite/client",
+      "unplugin-vue-router/client"
     ],
   },
   "include": [
@@ -89,7 +90,8 @@
     "Deploy.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/typed-router.d.ts"
   ],
   "ts-node": {
     "compilerOptions": {

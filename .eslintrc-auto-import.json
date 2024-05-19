@@ -480,6 +480,7 @@
     "useRouteParams": true,
     "useRouteQuery": true,
     "usePaginationAsync": true,
-    "useTabNavigation": true
+    "useTabNavigation": true,
+    "definePage": true
   }
 }

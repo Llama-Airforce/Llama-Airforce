@@ -20,13 +20,6 @@
       >
         <Button icon="fab fa-github"></Button>
       </a>
-
-      <router-link to="/code">
-        <Button
-          icon="fas fa-code"
-          @click="emit('navigated')"
-        ></Button>
-      </router-link>
     </div>
 
     <div class="selectors">
