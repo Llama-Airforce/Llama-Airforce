@@ -18,12 +18,6 @@
     </template>
 
     <template #row="props: { item: Gauge }">
-      <div class="logo">
-        <img
-          class="logo-img"
-          :src="icon(props.item.name, false)"
-        />
-      </div>
       <div>{{ shorten(props.item.name) }}</div>
 
       <div class="number">
@@ -52,7 +46,7 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { shorten, icon } from "@/Util";
+import { shorten } from "@/Util";
 import GraphEmissions from "@CM/Pages/Platform/Gauges/Components/GraphEmissions.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
@@ -94,25 +88,13 @@ const gauges = computed((): Gauge[] => {
 @import "@/Styles/Variables.scss";
 
 .datatable-gauges {
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-img {
-    width: 20px;
-    height: 20px;
-    object-fit: scale-down;
-  }
-
   ::v-deep(.gauges-columns-data) {
     display: grid;
-    grid-template-columns: 20px 4fr 1fr 1rem;
+    grid-template-columns: 4fr 1fr 1rem;
 
     // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
+    div:nth-child(2),
+    div:nth-child(3) {
       justify-content: end;
     }
   }

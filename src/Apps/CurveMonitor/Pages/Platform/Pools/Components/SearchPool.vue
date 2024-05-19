@@ -17,7 +17,6 @@
         v-if="props.item"
         class="item"
       >
-        <img :src="icon(props.item.name, false)" />
         <div class="label">{{ name(props.item) }}</div>
         <div
           v-if="props.idx === 0"
@@ -38,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { shorten, icon } from "@/Util";
+import { shorten } from "@/Util";
 import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
 import { match } from "@CM/Pages/Platform/Pools/Util/PoolHelper";
 import type { Pool } from "@CM/Pages/Platform/Pools/Models";

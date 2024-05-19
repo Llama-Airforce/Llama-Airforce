@@ -18,12 +18,6 @@
     </template>
 
     <template #row="props: { item: Pool }">
-      <div class="logo">
-        <img
-          class="logo-img"
-          :src="icon(props.item.name, false)"
-        />
-      </div>
       <div>{{ shorten(props.item.name) }}</div>
       <div class="number">
         <AsyncValue
@@ -62,7 +56,7 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { shorten, icon, disabled } from "@/Util";
+import { shorten, disabled } from "@/Util";
 import GraphTvl from "@CM/Pages/Convex/Pools/Components/GraphTvl.vue";
 import GraphApr from "@CM/Pages/Convex/Pools/Components/GraphApr.vue";
 import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
@@ -110,25 +104,13 @@ const pools = computed((): Pool[] => {
 .datatable-pools {
   background: var(--c-lvl0);
 
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-img {
-    width: 20px;
-    height: 20px;
-    object-fit: scale-down;
-  }
-
   ::v-deep(.pools-columns-data) {
     display: grid;
-    grid-template-columns: 20px 3fr 2fr 2fr 1rem;
+    grid-template-columns: 3fr 2fr 2fr 1rem;
 
     // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
+    div:nth-child(2),
+    div:nth-child(3) {
       justify-content: end;
     }
   }

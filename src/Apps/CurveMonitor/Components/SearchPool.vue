@@ -15,7 +15,6 @@
         v-if="props.item"
         class="item"
       >
-        <img :src="icon(props.item.name, false)" />
         <div class="label">{{ name(props.item) }}</div>
       </div>
     </template>
@@ -24,7 +23,6 @@
 
 <script setup lang="ts">
 import { debounce } from "lodash";
-import { icon } from "@/Util";
 import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
 import { getPools } from "@CM/Pages/Pool/Monitor/DataLoaders";
 import { type Pool } from "@CM/Models";

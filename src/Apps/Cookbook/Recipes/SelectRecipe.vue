@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
+import why from "@/Assets/Icons/why.png";
 
 type SelectItem = {
   label: string;
@@ -56,15 +57,15 @@ type SelectItem = {
 const options: SelectItem[] = [
   {
     label: "Option 1",
-    logo: "/why.png",
+    logo: why,
   },
   {
     label: "Option 2",
-    logo: "/why.png",
+    logo: why,
   },
   {
     label: "Option 3",
-    logo: "/why.png",
+    logo: why,
   },
 ];
 
@@ -114,15 +115,15 @@ const select2 = `type SelectItem = {
 const options: SelectItem[] = [
   {
     label: "Option 1",
-    logo: "/why.png",
+    logo: why,
   },
   {
     label: "Option 2",
-    logo: "/why.png",
+    logo: why,
   },
   {
     label: "Option 3",
-    logo: "/why.png",
+    logo: why,
   },
 ];
 

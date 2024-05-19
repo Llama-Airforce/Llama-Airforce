@@ -35,7 +35,7 @@
                 v-if="props.item"
                 class="search-item"
               >
-                <img src="/why.png" />
+                <img src="@/Assets/Icons/why.png" />
                 <div class="label">{{ props.item.name }}</div>
                 <div
                   v-if="props.idx === 0"
@@ -146,7 +146,7 @@ const inputTextSearch1 = `<InputText
       v-if="props.item"
       class="search-item"
     >
-      <img src="/why.png" />
+      <img src="@/Asset/Icons/why.png" />
       <div class="label">{{ props.item.name }}</div>
       <div
         v-if="props.idx === 0"
