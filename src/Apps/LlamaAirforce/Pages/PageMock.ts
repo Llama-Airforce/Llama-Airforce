@@ -12,4 +12,6 @@ const mockPage: PageLAF = {
 };
 
 export const pageUnion = mockPage;
+export const pageUnionRoutes = [];
 export const pagePounders = mockPage;
+export const pagePoundersRoutes = [];
