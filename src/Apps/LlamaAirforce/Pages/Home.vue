@@ -8,7 +8,7 @@
         >
           <img
             class="logo-img"
-            src="/headers/curve.png"
+            src="@/Assets/Menu/curve.png"
           />
         </router-link>
 
@@ -40,7 +40,7 @@
         >
           <img
             class="logo-img"
-            src="/headers/convex.png"
+            src="@/Assets/Menu/convex.png"
           />
         </router-link>
 
@@ -71,7 +71,7 @@
         >
           <img
             class="logo-img"
-            src="/headers/votium.png"
+            src="@/Assets/Menu/votium.png"
           />
         </router-link>
 
@@ -103,7 +103,7 @@
         >
           <img
             class="logo-img"
-            src="/headers/union.png"
+            src="@/Assets/Menu/union.png"
           />
         </router-link>
 

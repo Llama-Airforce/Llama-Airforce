@@ -5,7 +5,7 @@
         to="/"
         class="title"
       >
-        <img src="@/Assets/logo.svg" />
+        <img src="@/Assets/Menu/logo.svg" />
       </router-link>
 
       <nav class="navigation">
@@ -19,9 +19,9 @@
             </i>
           </span>
 
-          <img src="@/Assets/header-edge.png" />
+          <img src="@/Assets/Menu/header-edge.png" />
 
-          <img src="@/Assets/header-separator.png" />
+          <img src="@/Assets/Menu/header-separator.png" />
 
           <template
             v-for="page in pageStore.pages.filter((p) => p.visible)"
@@ -43,10 +43,10 @@
               </router-link>
             </li>
 
-            <img src="@/Assets/header-separator.png" />
+            <img src="@/Assets/Menu/header-separator.png" />
           </template>
 
-          <img src="@/Assets/header-edge.png" />
+          <img src="@/Assets/Menu/header-edge.png" />
         </ul>
       </nav>
 

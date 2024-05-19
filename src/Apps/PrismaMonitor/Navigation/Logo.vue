@@ -1,8 +1,8 @@
 <template>
   <div class="logo">
     <div class="visual">
-      <img src="@/Assets/prisma.png" />
-      <img src="@/Assets/hat.png" />
+      <img src="@/Assets/Menu/prisma.png" />
+      <img src="@/Assets/Menu/hat.png" />
     </div>
     <span>prisma.monitor</span>
   </div>

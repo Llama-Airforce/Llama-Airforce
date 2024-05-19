@@ -4,6 +4,8 @@ import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.vue";
 import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.vue";
 import FraxMatch from "@LAF/Pages/Bribes/FraxMatch/FraxMatch.vue";
 
+import menuHeader from "@/Assets/Menu/votium.png";
+
 export const pageBribes: PageLAF = {
   title: "Bribes",
   titleRoute: ["/incentives", "/bribes"],
@@ -46,7 +48,7 @@ export const pageBribes: PageLAF = {
       component: FraxMatch,
     },
   ],
-  menuHeader: "headers/votium.png",
+  menuHeader,
   menuItems: [
     {
       to: "/incentives/rounds",

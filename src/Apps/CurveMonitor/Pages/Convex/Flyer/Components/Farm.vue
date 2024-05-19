@@ -26,14 +26,14 @@
 
         <img
           class="logo"
-          src="@/Assets/cvx.png"
+          src="@/Assets/Flyer/cvx.png"
         />
       </div>
 
       <div class="crv">
         <img
           class="logo"
-          src="@/Assets/cvxcrv.png"
+          src="@/Assets/Icons/Tokens/cvxcrv.png"
         />
 
         <div class="content">

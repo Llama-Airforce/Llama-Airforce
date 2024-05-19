@@ -2,7 +2,7 @@
   <div class="header">
     <img
       class="header-image"
-      src="@/Assets/header.png"
+      src="@/Assets/Flyer/header.png"
     />
   </div>
 </template>

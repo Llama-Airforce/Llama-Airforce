@@ -15,7 +15,7 @@
 
         <img
           v-else
-          src="@/Assets/question.png"
+          src="@/Assets/Icons/question.png"
         />
       </slot>
     </div>

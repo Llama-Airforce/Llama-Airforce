@@ -1,8 +1,8 @@
 <template>
   <div class="logo">
     <div class="visual">
-      <img src="@/Assets/crv.png" />
-      <img src="@/Assets/hat.png" />
+      <img src="@/Assets/Menu/crv.png" />
+      <img src="@/Assets/Menu/hat.png" />
     </div>
     <span>curve.monitor</span>
   </div>

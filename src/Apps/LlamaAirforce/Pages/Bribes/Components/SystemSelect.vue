@@ -15,8 +15,8 @@
           v-if="props.item"
           class="item"
         >
-          <img :src="icon(props.item)" />
-          <div class="label">{{ label(props.item) }}</div>
+          <img :src="props.item.logo" />
+          <div class="label">{{ props.item.label }}</div>
         </div>
       </template>
     </Select>
@@ -36,8 +36,8 @@
           v-if="props.item"
           class="item"
         >
-          <img :src="icon(props.item)" />
-          <div class="label">{{ label(props.item) }}</div>
+          <img :src="props.item.logo" />
+          <div class="label">{{ props.item.label }}</div>
         </div>
       </template>
     </Select>
@@ -78,10 +78,13 @@ const protocolOpen = ref(false);
 const platformSelected = ref(false);
 const protocolSelected = ref(false);
 
+import votium from "@/Assets/Icons/Tokens/votium.png";
+import redacted from "@/Assets/Icons/Tokens/redacted.png";
+
 const platforms = computed((): PlatformInfo[] => {
   return [
-    { platform: "votium", label: "Votium", logo: "votium.png" },
-    { platform: "hh", label: "Hidden Hand", logo: "redacted.png" },
+    { platform: "votium", label: "Votium", logo: votium },
+    { platform: "hh", label: "Hidden Hand", logo: redacted },
   ];
 });
 
@@ -93,12 +96,17 @@ const protocol = computed((): ProtocolInfo | null => {
   return protocols.value.find((p) => p.protocol === store.protocol) ?? null;
 });
 
+import crv from "@/Assets/Icons/Tokens/crv.svg";
+import prisma from "@/Assets/Icons/Tokens/prisma.svg";
+import fxn from "@/Assets/Icons/Tokens/fxn.svg";
+import aura from "@/Assets/Icons/Tokens/aura.png";
+
 const protocols = computed((): ProtocolInfo[] => {
   return [
-    { protocol: "cvx-crv", label: "Curve", logo: "crv.svg" },
-    { protocol: "cvx-prisma", label: "Prisma", logo: "prisma.svg" },
-    { protocol: "cvx-fxn", label: "f(x) Protocol", logo: "fxn.svg" },
-    { protocol: "aura-bal", label: "Aura", logo: "aura.png" },
+    { protocol: "cvx-crv", label: "Curve", logo: crv },
+    { protocol: "cvx-prisma", label: "Prisma", logo: prisma },
+    { protocol: "cvx-fxn", label: "f(x) Protocol", logo: fxn },
+    { protocol: "aura-bal", label: "Aura", logo: aura },
   ];
 });
 
@@ -107,10 +115,6 @@ onMounted((): void => {
   platformSelected.value = false;
   protocolSelected.value = false;
 });
-
-// Methods
-const label = (item: SelectItem): string => item.label;
-const icon = (item: SelectItem): string => `icons/${item.logo}`;
 
 // Events
 const onPlatformOpen = (): void => {

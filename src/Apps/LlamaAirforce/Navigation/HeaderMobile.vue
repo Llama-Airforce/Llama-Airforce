@@ -2,7 +2,7 @@
   <header>
     <div class="header-mobile">
       <div class="title">
-        <img src="@/Assets/logo.svg" />
+        <img src="@/Assets/Menu/logo.svg" />
       </div>
 
       <Wallet class="wallet"></Wallet>

@@ -56,7 +56,7 @@ const bribesIncomeBiWeekly = computed((): number | undefined => {
 
   ul {
     li {
-      background: url("@/Assets/triangle.png") no-repeat left center;
+      background: url("@/Assets/Flyer/triangle.png") no-repeat left center;
       padding-left: 3rem;
       margin: 1rem 0;
       min-height: 1.75rem;

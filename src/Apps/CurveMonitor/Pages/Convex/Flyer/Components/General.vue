@@ -98,7 +98,7 @@ const cvxMarketCapFullyDiluted = computed((): number | undefined => {
 
   ul {
     li {
-      background: url("@/Assets/star.png") no-repeat left center;
+      background: url("@/Assets/Flyer/star.png") no-repeat left center;
       padding-left: 3rem;
       margin: 1rem 0;
       min-height: 1.75rem;
