@@ -23,7 +23,7 @@ export default function createRouter() {
     { path: "/debug", component: Debug },
 
     // Add all page routes.
-    ...pageStore.pages.flatMap((page) => page.routes),
+    ...pageStore.routes.flatMap((routes) => routes),
 
     { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ];

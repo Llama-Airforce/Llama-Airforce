@@ -18,8 +18,12 @@ declare module "*.json" {
 
 // Shim exists so the app still compiles in case the Union git submodule is not loaded.
 declare module "@LAF/Pages/Union/Page" {
+  import { type RouteRecordRaw } from "vue-router";
   import type { PageLAF } from "@LAF/Pages/Page";
   const pageUnion: PageLAF;
+  const pageUnionRoutes: RouteRecordRaw[];
+
   const pagePounders: PageLAF;
-  export { pageUnion, pagePounders };
+  const pagePoundersRoutes: RouteRecordRaw[];
+  export { pageUnion, pageUnionRoutes, pagePounders, pagePoundersRoutes };
 }

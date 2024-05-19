@@ -16,32 +16,33 @@ import Profile from "@PM/Pages/Profile/Profile.vue";
 import { useSettingsStore } from "@PM/Stores";
 import { stableSymbol } from "@/Apps/PrismaMonitor/Models/Flavor";
 
+export const pageMainRoutes = [
+  { path: "/", redirect: { name: "vaults" } },
+
+  { path: "/pool", name: "pool", component: StabilityPool },
+  { path: "/stable", name: "stable", component: Stablecoin },
+  { path: "/redemptions", name: "redemptions", component: Redemptions },
+  { path: "/liquidations", name: "liquidations", component: Liquidations },
+  { path: "/revenue", name: "revenue", component: Revenue },
+  { path: "/vaults", name: "vaults", component: Vaults },
+  { path: "/wrappers/:tab?", name: "wrappers", component: Wrappers },
+  { path: "/veprisma", name: "veprisma", component: VePrisma },
+  { path: "/proposals", name: "proposals", component: Proposals },
+  { path: "/profile/:addr?", name: "profile", component: Profile },
+  {
+    path: "/vault/:vaultAddr/:tab?",
+    name: "prismavault",
+    component: VaultManager,
+  },
+  {
+    path: "/vault/:vaultAddr/trove/:troveAddr",
+    name: "prismatrove",
+    component: Trove,
+  },
+];
+
 export const pageMain: Page = {
   titleRoute: "/",
-  routes: [
-    { path: "/", redirect: { name: "vaults" } },
-
-    { path: "/pool", name: "pool", component: StabilityPool },
-    { path: "/stable", name: "stable", component: Stablecoin },
-    { path: "/redemptions", name: "redemptions", component: Redemptions },
-    { path: "/liquidations", name: "liquidations", component: Liquidations },
-    { path: "/revenue", name: "revenue", component: Revenue },
-    { path: "/vaults", name: "vaults", component: Vaults },
-    { path: "/wrappers/:tab?", name: "wrappers", component: Wrappers },
-    { path: "/veprisma", name: "veprisma", component: VePrisma },
-    { path: "/proposals", name: "proposals", component: Proposals },
-    { path: "/profile/:addr?", name: "profile", component: Profile },
-    {
-      path: "/vault/:vaultAddr/:tab?",
-      name: "prismavault",
-      component: VaultManager,
-    },
-    {
-      path: "/vault/:vaultAddr/trove/:troveAddr",
-      name: "prismatrove",
-      component: Trove,
-    },
-  ],
   menuItems: [
     {
       to: "/vaults",

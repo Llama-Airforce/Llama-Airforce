@@ -1,14 +1,20 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
+import { type RouteRecordRaw } from "vue-router";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import App from "@LAF/App.vue";
 import createRouter from "@LAF/Router";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 
-import { pageBribes } from "@LAF/Pages/Bribes/Page";
-import { pageUnion, pagePounders } from "@LAF/Pages/Union/Page";
+import { pageBribes, pageBribesRoutes } from "@LAF/Pages/Bribes/Page";
+import {
+  pageUnion,
+  pageUnionRoutes,
+  pagePounders,
+  pagePoundersRoutes,
+} from "@LAF/Pages/Union/Page";
 
 import { usePageStore } from "@/Framework/Stores/PageStore";
 import { type PageLAF } from "@LAF/Pages/Page";
@@ -29,17 +35,22 @@ app.use(pinia);
 
 // Configure pages.
 const pages: PageLAF[] = [];
+const routes: RouteRecordRaw[][] = [];
 
 // Only add Union if specifically configured to do so.
 if (import.meta.env.VITE_UNION === "true") {
   pages.push(pageUnion);
   pages.push(pagePounders);
+  routes.push(pageUnionRoutes);
+  routes.push(pagePoundersRoutes);
 }
 
 pages.push(pageBribes);
+routes.push(pageBribesRoutes);
 
 const pageStore = usePageStore<PageLAF>();
 pageStore.pages = pages;
+pageStore.routes = routes;
 
 // Configure TanStack query client.
 const queryClient = new QueryClient({

@@ -6,7 +6,6 @@ const mockPage: PageLAF = {
   titleRoute: "",
   visible: false,
   planeX: 0,
-  routes: [],
   menuHeader: "",
   menuItems: [],
   forceShowMenu: false,

@@ -23,74 +23,75 @@ import ConvexFlyer from "@CM/Pages/Convex/Flyer/Flyer.vue";
 import ConvexPools from "@CM/Pages/Convex/Pools/Pools.vue";
 import ConvexRevenue from "@CM/Pages/Convex/Revenue/Revenue.vue";
 
+export const pageMainRoutes = [
+  { path: "/", component: Home },
+
+  { path: "/platform", redirect: { name: "revenue" } },
+  { path: "/platform/pools", component: Pools },
+  { path: "/platform/gauges", component: Gauges },
+  {
+    path: "/platform/revenue/:tab?",
+    name: "revenue",
+    component: Revenue,
+  },
+
+  { path: "/platform/crvusd", name: "crvusd", component: CrvUsd },
+  {
+    path: "/platform/crvusd/market/:marketAddr/:tab?",
+    name: "crvusdmarket",
+    component: CrvUsdMarket,
+  },
+
+  {
+    path: "/platform/lending/:chain?",
+    name: "llamalend",
+    component: LlamaLend,
+  },
+  {
+    path: "/platform/lending/:chain/:marketAddr/:tab?",
+    name: "llamalendmarket",
+    component: LlamaLendMarket,
+  },
+
+  { path: "/pool", redirect: { name: "monitor" } },
+  {
+    path: "/pool/monitor/:pool?",
+    name: "curvemonitor",
+    component: Monitor,
+  },
+  {
+    path: "/pool/mev",
+    component: MEV,
+  },
+
+  { path: "/dao", redirect: { name: "proposals" } },
+  {
+    path: "/dao/proposals",
+    name: "proposals",
+    component: Proposals,
+  },
+  {
+    path: "/dao/proposal/:proposalType/:proposalId",
+    component: Proposal,
+  },
+  { path: "/dao/vefunder", component: VeFunder },
+
+  { path: "/convex", redirect: { name: "flyer" } },
+  { path: "/convex/flyer", name: "flyer", component: ConvexFlyer },
+  {
+    path: "/convex/pools/:pool?",
+    name: "convexpools",
+    component: ConvexPools,
+  },
+  {
+    path: "/convex/revenue",
+    name: "convexrevenue",
+    component: ConvexRevenue,
+  },
+];
+
 export const pageMain: Page = {
   titleRoute: "/",
-  routes: [
-    { path: "/", component: Home },
-
-    { path: "/platform", redirect: { name: "revenue" } },
-    { path: "/platform/pools", component: Pools },
-    { path: "/platform/gauges", component: Gauges },
-    {
-      path: "/platform/revenue/:tab?",
-      name: "revenue",
-      component: Revenue,
-    },
-
-    { path: "/platform/crvusd", name: "crvusd", component: CrvUsd },
-    {
-      path: "/platform/crvusd/market/:marketAddr/:tab?",
-      name: "crvusdmarket",
-      component: CrvUsdMarket,
-    },
-
-    {
-      path: "/platform/lending/:chain?",
-      name: "llamalend",
-      component: LlamaLend,
-    },
-    {
-      path: "/platform/lending/:chain/:marketAddr/:tab?",
-      name: "llamalendmarket",
-      component: LlamaLendMarket,
-    },
-
-    { path: "/pool", redirect: { name: "monitor" } },
-    {
-      path: "/pool/monitor/:pool?",
-      name: "curvemonitor",
-      component: Monitor,
-    },
-    {
-      path: "/pool/mev",
-      component: MEV,
-    },
-
-    { path: "/dao", redirect: { name: "proposals" } },
-    {
-      path: "/dao/proposals",
-      name: "proposals",
-      component: Proposals,
-    },
-    {
-      path: "/dao/proposal/:proposalType/:proposalId",
-      component: Proposal,
-    },
-    { path: "/dao/vefunder", component: VeFunder },
-
-    { path: "/convex", redirect: { name: "flyer" } },
-    { path: "/convex/flyer", name: "flyer", component: ConvexFlyer },
-    {
-      path: "/convex/pools/:pool?",
-      name: "convexpools",
-      component: ConvexPools,
-    },
-    {
-      path: "/convex/revenue",
-      name: "convexrevenue",
-      component: ConvexRevenue,
-    },
-  ],
   menuItems: [
     {
       label: "Platform",

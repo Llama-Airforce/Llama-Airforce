@@ -1,13 +1,14 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
+import { type RouteRecordRaw } from "vue-router";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import App from "@PM/App.vue";
 import createRouter from "@PM/Router";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 
-import { pageMain } from "@PM/Pages/PageMain";
+import { pageMain, pageMainRoutes } from "@PM/Pages/PageMain";
 import { usePageStore } from "@/Framework/Stores/PageStore";
 
 const app = createApp(App);
@@ -26,9 +27,11 @@ app.use(pinia);
 
 // Configure pages.
 const pages = [pageMain];
+const routes: RouteRecordRaw[][] = [pageMainRoutes];
 
 const pageStore = usePageStore();
 pageStore.pages = pages;
+pageStore.routes = routes;
 
 // Configure TanStack query client.
 const queryClient = new QueryClient({

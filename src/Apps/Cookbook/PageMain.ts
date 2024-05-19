@@ -21,106 +21,107 @@ import Spinner from "@CB/Recipes/SpinnerRecipe.vue";
 import Tabs from "@CB/Recipes/TabsRecipe.vue";
 import Tooltip from "@CB/Recipes/TooltipRecipe.vue";
 
+export const pageMainRoutes = [
+  { path: "/", redirect: { name: "button" } },
+  {
+    path: "/colors",
+    name: "colors",
+    component: Colors,
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
+  },
+  {
+    path: "/socket",
+    name: "socket",
+    component: Socket,
+  },
+  {
+    path: "/async-value",
+    name: "async-value",
+    component: AsyncValue,
+  },
+  {
+    path: "/breadcrumb",
+    name: "breadcrumb",
+    component: Breadcrumb,
+  },
+  {
+    path: "/button",
+    name: "button",
+    component: Button,
+  },
+  {
+    path: "/toggle-button",
+    name: "toggle-button",
+    component: ButtonToggle,
+  },
+  {
+    path: "/card",
+    name: "card",
+    component: Card,
+  },
+  {
+    path: "/graph-card",
+    name: "graph-card",
+    component: CardGraph,
+  },
+  {
+    path: "/data-table",
+    name: "data-table",
+    component: DataTable,
+  },
+  {
+    path: "/input-text",
+    name: "input-text",
+    component: InputText,
+  },
+  {
+    path: "/input-number",
+    name: "input-number",
+    component: InputNumber,
+  },
+  {
+    path: "/modal",
+    name: "modal",
+    component: Modal,
+  },
+  {
+    path: "/pagination",
+    name: "pagination",
+    component: Pagination,
+  },
+  {
+    path: "/select",
+    name: "select",
+    component: Select,
+  },
+  {
+    path: "/slider",
+    name: "slider",
+    component: Slider,
+  },
+  {
+    path: "/spinner",
+    name: "spinner",
+    component: Spinner,
+  },
+  {
+    path: "/tabs",
+    name: "tabs",
+    component: Tabs,
+  },
+  {
+    path: "/tooltip",
+    name: "tooltip",
+    component: Tooltip,
+  },
+];
+
 export const pageMain: Page = {
   titleRoute: "/",
-  routes: [
-    { path: "/", redirect: { name: "button" } },
-    {
-      path: "/colors",
-      name: "colors",
-      component: Colors,
-    },
-    {
-      path: "/dashboard",
-      name: "dashboard",
-      component: Dashboard,
-    },
-    {
-      path: "/socket",
-      name: "socket",
-      component: Socket,
-    },
-    {
-      path: "/async-value",
-      name: "async-value",
-      component: AsyncValue,
-    },
-    {
-      path: "/breadcrumb",
-      name: "breadcrumb",
-      component: Breadcrumb,
-    },
-    {
-      path: "/button",
-      name: "button",
-      component: Button,
-    },
-    {
-      path: "/toggle-button",
-      name: "toggle-button",
-      component: ButtonToggle,
-    },
-    {
-      path: "/card",
-      name: "card",
-      component: Card,
-    },
-    {
-      path: "/graph-card",
-      name: "graph-card",
-      component: CardGraph,
-    },
-    {
-      path: "/data-table",
-      name: "data-table",
-      component: DataTable,
-    },
-    {
-      path: "/input-text",
-      name: "input-text",
-      component: InputText,
-    },
-    {
-      path: "/input-number",
-      name: "input-number",
-      component: InputNumber,
-    },
-    {
-      path: "/modal",
-      name: "modal",
-      component: Modal,
-    },
-    {
-      path: "/pagination",
-      name: "pagination",
-      component: Pagination,
-    },
-    {
-      path: "/select",
-      name: "select",
-      component: Select,
-    },
-    {
-      path: "/slider",
-      name: "slider",
-      component: Slider,
-    },
-    {
-      path: "/spinner",
-      name: "spinner",
-      component: Spinner,
-    },
-    {
-      path: "/tabs",
-      name: "tabs",
-      component: Tabs,
-    },
-    {
-      path: "/tooltip",
-      name: "tooltip",
-      component: Tooltip,
-    },
-  ],
   menuItems: [
     {
       to: "/colors",

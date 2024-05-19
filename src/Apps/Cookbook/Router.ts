@@ -13,7 +13,7 @@ export default function createRouter() {
   // Configure all routes, including all pages.
   const routes = [
     // Add all page routes.
-    ...pageStore.pages.flatMap((page) => page.routes),
+    ...pageStore.routes.flatMap((routes) => routes),
 
     { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ];

@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
+import { type RouteRecordRaw } from "vue-router";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import App from "@CB/App.vue";
 import createRouter from "@CB/Router";
@@ -18,7 +19,7 @@ hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("typescript", typescript);
 
-import { pageMain } from "@CB/PageMain";
+import { pageMain, pageMainRoutes } from "@CB/PageMain";
 import { usePageStore } from "@/Framework/Stores/PageStore";
 
 const app = createApp(App);
@@ -37,9 +38,11 @@ app.use(pinia);
 
 // Configure pages.
 const pages = [pageMain];
+const routes: RouteRecordRaw[][] = [pageMainRoutes];
 
 const pageStore = usePageStore();
 pageStore.pages = pages;
+pageStore.routes = routes;
 
 // Configure TanStack query client.
 const queryClient = new QueryClient({

@@ -1,11 +1,9 @@
-import { type RouteRecordRaw } from "vue-router";
 import { type Page } from "@/Framework/Monitor/Page";
 
 export type PageLAF = Page & {
   title: string;
   visible: boolean;
   planeX: number;
-  routes: RouteRecordRaw[];
   menuHeader: string;
   menuItems: (MenuNode | MenuLeaf)[];
   forceShowMenu: boolean;
