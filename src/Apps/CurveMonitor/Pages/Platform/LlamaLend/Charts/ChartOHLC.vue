@@ -68,7 +68,7 @@ watch(theme, () => priceSerie?.applyOptions(createPriceOptionsSerie()));
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
-    height: 528,
+    height: 400,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,

@@ -139,11 +139,6 @@ const round = (x: number) =>
       justify-content: end;
     }
   }
-
-  .trade {
-    display: flex;
-    gap: 1ch;
-  }
 }
 </style>
 

@@ -74,6 +74,20 @@ export function useQuerySoftLiqRatios(
   });
 }
 
+export function useQueryEvents(
+  market: Ref<Market | undefined>,
+  chain: Ref<Chain | undefined>,
+  page: Ref<number>
+) {
+  return useQuery({
+    queryKey: ["llama-market-events", useLlamma(market), page] as const,
+    queryFn: ({ queryKey: [, llamma, page] }) =>
+      service.getLlammaEvents(chain.value!, llamma!, page),
+    placeholderData: keepPreviousData,
+    enabled: computed(() => !!market.value && !!chain.value),
+  });
+}
+
 export function useQueryTrades(
   market: Ref<Market | undefined>,
   chain: Ref<Chain | undefined>,

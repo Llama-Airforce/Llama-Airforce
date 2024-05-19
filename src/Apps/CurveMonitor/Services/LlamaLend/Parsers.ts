@@ -123,17 +123,17 @@ export const parseLlammaEvents = (
       }
     : null;
 
-  const blockNumber = x.block_number;
+  const block_number = x.block_number;
   const timestamp = x.timestamp;
-  const transactionHash = x.transaction_hash.toLocaleLowerCase();
+  const transaction_hash = x.transaction_hash.toLocaleLowerCase();
 
   return {
     provider,
     deposit,
     withdrawal,
-    block_number: blockNumber,
+    block_number,
     timestamp,
-    transaction_hash: transactionHash,
+    transaction_hash,
   };
 };
 

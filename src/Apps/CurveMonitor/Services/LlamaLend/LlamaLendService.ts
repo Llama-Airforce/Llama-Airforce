@@ -44,12 +44,19 @@ export default class LlamaLendService extends ServiceBase {
     return resp.data.map(Parsers.parseLiqHistory);
   }
 
-  public async getLlammaEvents(chain: Chain, marketController: string) {
+  public async getLlammaEvents(
+    chain: Chain,
+    marketLlamma: string,
+    page: number
+  ) {
     const resp = await this.fetch<ApiTypes.GetLlammaEventsResponse>(
-      `${API_URL}/v1/lending/llamma_events/${chain}/${marketController}`
+      `${API_URL}/v1/lending/llamma_events/${chain}/${marketLlamma}?page=${page}&per_page=10`
     );
 
-    return resp.data.map(Parsers.parseLlammaEvents);
+    return {
+      trades: resp.data.map(Parsers.parseLlammaEvents),
+      count: resp.count,
+    };
   }
 
   public async getLlammaTrades(

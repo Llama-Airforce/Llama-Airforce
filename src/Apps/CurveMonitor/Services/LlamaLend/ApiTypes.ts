@@ -80,6 +80,7 @@ export type GetLiqHistoryResponse = {
 };
 
 export type GetLlammaEventsResponse = {
+  count: number;
   data: {
     provider: string;
     deposit: {
