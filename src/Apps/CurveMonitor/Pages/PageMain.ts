@@ -44,7 +44,11 @@ export const pageMain: Page = {
       component: CrvUsdMarket,
     },
 
-    { path: "/platform/lending", name: "llamalend", component: LlamaLend },
+    {
+      path: "/platform/lending/:chain?",
+      name: "llamalend",
+      component: LlamaLend,
+    },
     {
       path: "/platform/lending/:chain/:marketAddr/:tab?",
       name: "llamalendmarket",

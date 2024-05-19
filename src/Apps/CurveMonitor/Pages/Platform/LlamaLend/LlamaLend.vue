@@ -104,7 +104,16 @@ import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
 
 const { t } = useI18n();
 
-const chain = ref<Chain>("ethereum");
+const chainParam = useRouteParams<Chain | "">("chain");
+const chain = computed({
+  get() {
+    return chainParam.value === "" ? "ethereum" : chainParam.value;
+  },
+  set(newChain) {
+    chainParam.value = newChain;
+  },
+});
+
 const search = ref("");
 
 const marketPairsFiltered = computed((): MarketPair[] =>
@@ -184,9 +193,9 @@ onMounted(() => {
   ];
 });
 
-// Market selection
 const router = useRouter();
 
+// Market selection
 const onMarketSelect = async (newMarket: Market) => {
   await router.push({
     name: "llamalendmarket",

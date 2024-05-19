@@ -76,11 +76,6 @@ const chainSelected = computed(
     chainInfos.value.find((p) => p.chain === chain) ?? null
 );
 
-// Hooks
-onMounted((): void => {
-  onChainSelect(chainInfos.value[0]);
-});
-
 // Methods
 const label = (item: SelectItem): string => item.label;
 
