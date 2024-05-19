@@ -119,28 +119,28 @@
     font-family: "SF Mono";
     font-style: normal;
     font-weight: 300;
-    src: url("/SF-Mono-Light.otf") format("opentype");
+    src: url("@/Assets/Fonts/SF-Mono-Light.otf") format("opentype");
   }
 
   @font-face {
     font-family: "SF Mono";
     font-style: normal;
     font-weight: 500;
-    src: url("/SF-Mono-Medium.otf") format("opentype");
+    src: url("@/Assets/Fonts/SF-Mono-Medium.otf") format("opentype");
   }
 
   @font-face {
     font-family: "SF Mono";
     font-style: normal;
     font-weight: normal;
-    src: url("/SF-Mono-Regular.otf") format("opentype");
+    src: url("@/Assets/Fonts/SF-Mono-Regular.otf") format("opentype");
   }
 
   @font-face {
     font-family: "SF Mono";
     font-style: normal;
     font-weight: bold;
-    src: url("/SF-Mono-Bold.otf") format("opentype");
+    src: url("@/Assets/Fonts/SF-Mono-Bold.otf") format("opentype");
   }
 
   font-family: SF Mono, Consolas, monospace;
