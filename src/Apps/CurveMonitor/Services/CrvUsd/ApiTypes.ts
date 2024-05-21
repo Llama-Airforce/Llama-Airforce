@@ -67,3 +67,12 @@ export type GetKeepersResponse = {
     volume: number;
   }[];
 };
+
+export type GetSupplyResponse = {
+  data: {
+    market: string;
+    supply: number;
+    borrowable: number;
+    timestamp: string;
+  }[];
+};

@@ -61,8 +61,9 @@ export type PriceHistogram = {
 
 export type CrvUsdSupply = {
   timestamp: number;
-  name: string;
-  totalSupply: number;
+  market: string;
+  supply: number;
+  borrowable: number;
 };
 
 export type MarketVolume = {

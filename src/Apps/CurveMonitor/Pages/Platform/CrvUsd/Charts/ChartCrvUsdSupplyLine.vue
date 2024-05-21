@@ -96,8 +96,8 @@ function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
     .groupBy((x) => x.timestamp)
     .mapValues((x) => ({
       time: x[0].timestamp as UTCTimestamp,
-      value: x.reduce((acc, y) => acc + y.totalSupply, 0),
-      debt: x[0].totalSupply,
+      value: x.reduce((acc, y) => acc + y.supply, 0),
+      debt: x.find((y) => y.market === "Keepers debt")?.supply ?? 0,
     }))
     .entries()
     .map((x) => x[1])

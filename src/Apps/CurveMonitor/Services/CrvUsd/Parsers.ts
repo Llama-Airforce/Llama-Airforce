@@ -1,3 +1,4 @@
+import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/CrvUsd/ApiTypes";
 import type * as Models from "@CM/Services/CrvUsd/Models";
 
@@ -53,5 +54,16 @@ export const parseKeeper = (
     total_profit: x.total_profit,
     tvl: x.tvl,
     volume: x.volume,
+  };
+};
+
+export const parseSupply = (
+  x: ApiTypes.GetSupplyResponse["data"][number]
+): Models.CrvUsdSupply => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    market: x.market,
+    supply: x.supply,
+    borrowable: x.borrowable,
   };
 };

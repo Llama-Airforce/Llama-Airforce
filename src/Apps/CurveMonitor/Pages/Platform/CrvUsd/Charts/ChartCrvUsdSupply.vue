@@ -30,15 +30,19 @@
       </div>
     </template>
 
-    <ChartCrvUsdSupplyLine
-      v-if="chartType === 'line'"
-      :data="data"
-    ></ChartCrvUsdSupplyLine>
+    <KeepAlive>
+      <ChartCrvUsdSupplyLine
+        v-if="chartType === 'line'"
+        :data="data"
+      ></ChartCrvUsdSupplyLine>
+    </KeepAlive>
 
-    <ChartCrvUsdSupplyBreakdown
-      v-else
-      :data="data"
-    ></ChartCrvUsdSupplyBreakdown>
+    <KeepAlive>
+      <ChartCrvUsdSupplyBreakdown
+        v-if="chartType === 'breakdown'"
+        :data="data"
+      ></ChartCrvUsdSupplyBreakdown>
+    </KeepAlive>
   </Card>
 </template>
 

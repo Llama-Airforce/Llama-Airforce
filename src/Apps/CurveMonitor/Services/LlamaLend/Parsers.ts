@@ -1,13 +1,6 @@
+import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/LlamaLend/ApiTypes";
 import type * as Models from "@CM/Services/LlamaLend/Models";
-
-function toUTC(timestamp: string): number {
-  const [date, time] = timestamp.split("T");
-  const [year, month, day] = date.split("-").map(Number);
-  const [hour, minute, second] = time.split(":").map(Number);
-
-  return Date.UTC(year, month - 1, day, hour, minute, second) / 1000;
-}
 
 export const parseMarket = (
   x: ApiTypes.GetMarketsResponse["data"][number]

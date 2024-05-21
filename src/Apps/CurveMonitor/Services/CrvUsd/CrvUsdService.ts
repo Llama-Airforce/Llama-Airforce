@@ -60,10 +60,12 @@ export default class CrvUsdService extends ServiceBase {
     );
   }
 
-  public async getCrvUsdSupply() {
-    return this.fetch<{ supply: Models.CrvUsdSupply[] }>(
-      `${API_URL_OLD}/v1/crvusd/supply`
-    ).then((resp) => resp.supply);
+  public async getCrvUsdSupply(chain: Chain) {
+    const resp = await this.fetch<ApiTypes.GetSupplyResponse>(
+      `${API_URL}/v1/crvusd/markets/${chain}/supply`
+    );
+
+    return resp.data.map(Parsers.parseSupply);
   }
 
   public async getVolume(marketAddr: string) {

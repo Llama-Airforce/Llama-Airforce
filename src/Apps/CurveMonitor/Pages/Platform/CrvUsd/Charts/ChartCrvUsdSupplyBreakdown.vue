@@ -91,15 +91,16 @@ const categories = computed((): string[] =>
 
 const series = computed((): Serie[] =>
   chain(data)
-    .groupBy((x) => x.name)
-    .map((supply, market) => ({
+    .groupBy((x) => x.market)
+    .map((supplyData, market) => ({
       name: market,
-      data: chain(supply)
-        .orderBy((s) => s.timestamp, "asc")
-        .map((s) => ({
-          x: new Date(s.timestamp * 1000).toLocaleDateString(),
-          y: s.totalSupply,
+      data: chain(supplyData)
+        .groupBy((s) => s.timestamp)
+        .map((supplyByTimestamp, timestamp) => ({
+          x: new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(),
+          y: supplyByTimestamp.reduce((acc, s) => acc + s.supply, 0),
         }))
+        .orderBy((s) => s.x, "asc")
         .value(),
     }))
     .value()
@@ -110,7 +111,7 @@ const max = computed(
     Math.max(
       ...chain(data)
         .groupBy((x) => x.timestamp)
-        .map((supply) => supply.reduce((acc, x) => acc + x.totalSupply, 0))
+        .map((supply) => supply.reduce((acc, x) => acc + x.supply, 0))
         .value()
     ) * 1.1
 );

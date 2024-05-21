@@ -20,7 +20,7 @@ function hasMarket(market: Ref<Market | undefined>) {
 export function useQueryCrvUsdSupply() {
   return useQuery({
     queryKey: ["crvusd-supply"],
-    queryFn: () => service.getCrvUsdSupply(),
+    queryFn: () => service.getCrvUsdSupply("ethereum"),
     ...initEmptyArray(),
   });
 }
