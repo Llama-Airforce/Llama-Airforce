@@ -11,7 +11,6 @@
       'Name',
       'Loans',
       'Rate',
-      'Premia',
       'Borrowed',
       'Collateral',
       'Fees Pending',
@@ -40,13 +39,6 @@
           :precision="2"
           type="percentage"
         />
-      </div>
-
-      <div class="number">
-        <Premia
-          :market="props.item"
-          :yields
-        ></Premia>
       </div>
 
       <div class="number">
@@ -88,7 +80,6 @@
       <div></div>
       <div></div>
       <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
-      <div></div>
       <div></div>
 
       <div class="number">
@@ -134,12 +125,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { type Market, type FeesBreakdown } from "@CM/Services/CrvUsd";
-import {
-  useQueryMarkets,
-  useQueryFees,
-  useQueryYields,
-} from "@CM/Services/CrvUsd/Queries";
-import Premia from "@CM/Pages/Platform/CrvUsd/Components/Premia.vue";
+import { useQueryMarkets, useQueryFees } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
@@ -155,9 +141,7 @@ type Row = Market & Fees;
 // Refs
 const search = ref("");
 
-const loading = computed(
-  () => loadingYields.value || loadingMarkets.value || loadingFees.value
-);
+const loading = computed(() => loadingMarkets.value || loadingFees.value);
 
 const rowsRaw = computed(() =>
   chain(markets.value)
@@ -191,7 +175,6 @@ const rows = computed((): Row[] =>
 
 // Data
 const { isFetching: loadingMarkets, data: markets } = useQueryMarkets();
-const { isFetching: loadingYields, data: yields } = useQueryYields();
 const { isFetching: loadingFees, data: fees } = useQueryFees();
 
 // Methods
@@ -210,7 +193,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
 .datatable-markets {
   container-type: inline-size;
-  z-index: 9999; // Needed for Popper tooltips in the datatable;
 
   .search {
     font-size: 0.875rem;
@@ -229,140 +211,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
       minmax(var(--col-width), 0.75fr);
-
-    // Non mobile
-    @media only screen and (min-width: 1280px) {
-      @container (max-width: 1200px) {
-        grid-template-columns:
-          1rem
-          minmax(12ch, 1fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr);
-
-        div:nth-child(3) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 1100px) {
-        grid-template-columns:
-          1rem
-          minmax(12ch, 1fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr)
-          minmax(var(--col-width), 0.75fr);
-      }
-    }
-
-    // Mobile
-    @media only screen and (max-width: 1280px) {
-      gap: 0.25rem;
-
-      @container (max-width: 1000px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            8,
-            minmax(var(--col-width), 0.75fr)
-          );
-
-        div:nth-child(3) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 900px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            7,
-            minmax(var(--col-width), 0.75fr)
-          );
-
-        div:nth-child(8) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 800px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            6,
-            minmax(var(--col-width), 0.75fr)
-          );
-
-        div:nth-child(5) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 700px) {
-        --col-width: 11ch;
-
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            5,
-            minmax(var(--col-width), 0.75fr)
-          );
-
-        div:nth-child(10) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 600px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            4,
-            minmax(var(--col-width), 0.75fr)
-          );
-
-        div:nth-child(11) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 500px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            3,
-            var(--col-width)
-          );
-
-        div:nth-child(6) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 400px) {
-        --col-width: 9ch;
-      }
-
-      @container (max-width: 350px) {
-        --col-width: 8ch;
-      }
-
-      @container (max-width: 325px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr) repeat(
-            2,
-            var(--col-width)
-          );
-
-        div:nth-child(9) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 275px) {
-        grid-template-columns: 2rem minmax(12ch, 1fr);
-
-        div:nth-child(4),
-        div:nth-child(7) {
-          display: none;
-        }
-      }
-    }
 
     // Right adjust number columns.
     div:nth-child(3),
@@ -370,17 +219,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     div:nth-child(5),
     div:nth-child(6),
     div:nth-child(7),
-    div:nth-child(8),
-    div:nth-child(9) {
+    div:nth-child(8) {
       justify-content: end;
-    }
-
-    .delta {
-      color: var(--c-green);
-
-      &.negative {
-        color: var(--c-red);
-      }
     }
   }
 }
