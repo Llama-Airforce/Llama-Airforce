@@ -10,13 +10,13 @@
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { type HistoricalLiquidations } from "@CM/Services/CrvUsd";
+import { type LiquidationAggregate } from "@CM/Services/CrvUsd";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
 // Props
 interface Props {
-  data: HistoricalLiquidations[];
+  data: LiquidationAggregate[];
 }
 
 const { data = [] } = defineProps<Props>();
@@ -94,14 +94,14 @@ const series = computed((): Serie[] => [
     name: "Self liquidations",
     data: Object.values(data).map((s) => ({
       x: new Date(s.timestamp * 1000).toLocaleDateString(),
-      y: s.selfValue,
+      y: s.selfCount,
     })),
   },
   {
     name: "Hard liquidations",
     data: Object.values(data).map((s) => ({
       x: new Date(s.timestamp * 1000).toLocaleDateString(),
-      y: s.hardValue,
+      y: s.hardCount,
     })),
   },
 ]);
@@ -112,7 +112,7 @@ const max = computed(
       ...chain(data)
         .groupBy((x) => x.timestamp)
         .map((supply) =>
-          supply.reduce((acc, x) => acc + x.selfValue + x.hardValue, 0)
+          supply.reduce((acc, x) => acc + x.selfCount + x.hardCount, 0)
         )
         .value()
     ) * 1.1

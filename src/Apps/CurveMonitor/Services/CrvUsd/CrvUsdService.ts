@@ -89,6 +89,22 @@ export default class CrvUsdService extends ServiceBase {
     return resp.data.map(Parsers.parseSoftLiqRatio);
   }
 
+  public async getLiqsDetailed(chain: Chain, marketAddr: string) {
+    const resp = await this.fetch<ApiTypes.GetLiqsDetailedResponse>(
+      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/history/detailed`
+    );
+
+    return resp.data.map(Parsers.parseLiqsDetailed);
+  }
+
+  public async getLiqsAggregate(chain: Chain, marketAddr: string) {
+    const resp = await this.fetch<ApiTypes.GetLiqsAggregateResponse>(
+      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/history/aggregated`
+    );
+
+    return resp.data.map(Parsers.parseLiqsAggregate);
+  }
+
   public async getHistoricalMedianLoss(marketAddr: string) {
     return this.fetch<{ losses: Models.HistoricalMedianLoss[] }>(
       `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/losses/historical/median`
@@ -111,18 +127,6 @@ export default class CrvUsdService extends ServiceBase {
     return this.fetch<{ losses: Models.HistoricalLosers[] }>(
       `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/losses/historical/proportions`
     ).then((resp) => resp.losses);
-  }
-
-  public async getHistoricalLiquidations(marketAddr: string) {
-    return this.fetch<{ liquidations: Models.HistoricalLiquidations[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/historical`
-    ).then((resp) => resp.liquidations);
-  }
-
-  public async getTopLiquidators(marketAddr: string) {
-    return this.fetch<{ liquidations: Models.Liquidators[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/liquidators`
-    ).then((resp) => resp.liquidations);
   }
 
   public async getMarketStateHealth(marketAddr: string) {

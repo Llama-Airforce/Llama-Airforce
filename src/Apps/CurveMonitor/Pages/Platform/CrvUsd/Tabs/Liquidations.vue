@@ -17,8 +17,15 @@
     <ChartLiquidationHealthDeciles :market></ChartLiquidationHealthDeciles>
     <ChartLiquidationCollateralRatio :market></ChartLiquidationCollateralRatio>
 
-    <ChartLiquidationHistorical :market></ChartLiquidationHistorical>
-    <TableLiquidationLiquidators :market></TableLiquidationLiquidators>
+    <ChartLiqs
+      :market
+      :chain
+    ></ChartLiqs>
+
+    <TableTopLiquidators
+      :market
+      :chain
+    ></TableTopLiquidators>
 
     <ChartLiquidationLiquidatorRevenue
       :market
@@ -36,11 +43,11 @@ import {
   ChartLiquidationAverageHealth,
   ChartLiquidationHealthDeciles,
   ChartLiquidationProportionLosers,
-  ChartLiquidationHistorical,
+  ChartLiqs,
   ChartLiquidationLiquidatorRevenue,
   ChartLiquidationCollateralRatio,
 } from "@CM/Pages/Platform/CrvUsd/Charts";
-import { TableLiquidationLiquidators } from "@CM/Pages/Platform/CrvUsd/Tables";
+import { TableTopLiquidators } from "@CM/Pages/Platform/CrvUsd/Tables";
 
 // Props
 interface Props {

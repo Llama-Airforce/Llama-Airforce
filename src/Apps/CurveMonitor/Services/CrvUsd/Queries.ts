@@ -17,8 +17,13 @@ function initEmptyArray() {
   };
 }
 
-function hasMarket(market: Ref<Market | undefined>) {
-  return { enabled: computed(() => !!market.value) };
+function hasMarket(
+  market: Ref<Market | undefined>,
+  chain?: Ref<Chain | undefined>
+) {
+  return {
+    enabled: computed(() => !!market.value && (chain ? !!chain.value : true)),
+  };
 }
 
 export function useQueryCrvUsdSupply() {
@@ -79,12 +84,28 @@ export function useQueryLiqHealthDeciles(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryLiquidations(market: Ref<Market | undefined>) {
+export function useQueryLiqsDetailed(
+  chain: Ref<Chain | undefined>,
+  market: Ref<Market | undefined>
+) {
   return useQuery({
-    queryKey: ["crvusd-liq-historical", useMarketAddress(market)] as const,
+    queryKey: ["crvusd-liqs-detailed", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getHistoricalLiquidations(market!),
-    ...hasMarket(market),
+      service.getLiqsDetailed(chain.value!, market!),
+    ...hasMarket(market, chain),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryLiqsAggregate(
+  chain: Ref<Chain | undefined>,
+  market: Ref<Market | undefined>
+) {
+  return useQuery({
+    queryKey: ["crvusd-liqs-aggregate", useMarketAddress(market)] as const,
+    queryFn: ({ queryKey: [, market] }) =>
+      service.getLiqsAggregate(chain.value!, market!),
+    ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
 }
@@ -122,14 +143,14 @@ export function useQueryProportionLosers(market: Ref<Market | undefined>) {
 }
 
 export function useQuerySoftLiqRatios(
-  market: Ref<Market | undefined>,
-  chain: Ref<Chain | undefined>
+  chain: Ref<Chain | undefined>,
+  market: Ref<Market | undefined>
 ) {
   return useQuery({
     queryKey: ["crvusd-liq-soft-liqs", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
       service.getSoftLiqRatios(chain.value!, market!),
-    ...hasMarket(market),
+    ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
 }
@@ -187,15 +208,6 @@ export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
     },
     initialData: [{ timestamp: 0 }],
     initialDataUpdatedAt: 0,
-  });
-}
-
-export function useQueryLiquidators(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: ["crvusd-liq-liquidators", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) => service.getTopLiquidators(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
   });
 }
 

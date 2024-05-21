@@ -74,3 +74,32 @@ export type GetSoftLiqRatiosResponse = {
     proportion: number;
   }[];
 };
+
+export type GetLiqsDetailedResponse = {
+  data: {
+    user: string;
+    liquidator: string;
+    self: boolean;
+    collateral_received: number;
+    collateral_received_usd: number;
+    stablecoin_received: number;
+    oracle_price: number;
+    debt: number;
+    n1: number;
+    n2: number;
+    dt: string;
+    tx: string;
+    block: number;
+  }[];
+};
+
+export type GetLiqsAggregateResponse = {
+  data: {
+    timestamp: string;
+    self_count: number;
+    hard_count: number;
+    self_value: number;
+    hard_value: number;
+    price: number;
+  }[];
+};

@@ -74,3 +74,36 @@ export const parseSoftLiqRatio = (
     proportion: x.proportion / 100,
   };
 };
+
+export const parseLiqsDetailed = (
+  x: ApiTypes.GetLiqsDetailedResponse["data"][number]
+): Models.LiquidationDetails => {
+  return {
+    timestamp: toUTC(x.dt),
+    user: x.user.toLocaleLowerCase(),
+    liquidator: x.liquidator.toLocaleLowerCase(),
+    self: x.self,
+    collateralReceived: x.collateral_received,
+    collateralReceivedUsd: x.collateral_received_usd,
+    stablecoinReceived: x.stablecoin_received,
+    priceOracle: x.oracle_price,
+    debt: x.debt,
+    n1: x.n1,
+    n2: x.n2,
+    tx: x.tx.toLocaleLowerCase(),
+    block: x.block,
+  };
+};
+
+export const parseLiqsAggregate = (
+  x: ApiTypes.GetLiqsAggregateResponse["data"][number]
+): Models.LiquidationAggregate => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    selfCount: x.self_count,
+    hardCount: x.hard_count,
+    selfValue: x.self_value,
+    hardValue: x.hard_value,
+    price: x.price,
+  };
+};

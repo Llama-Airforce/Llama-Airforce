@@ -102,6 +102,31 @@ export type SoftLiqRatio = {
   proportion: number;
 };
 
+export type LiquidationDetails = {
+  timestamp: number;
+  user: string;
+  liquidator: string;
+  self: boolean;
+  collateralReceived: number;
+  collateralReceivedUsd: number;
+  stablecoinReceived: number;
+  priceOracle: number;
+  debt: number;
+  n1: number;
+  n2: number;
+  tx: string;
+  block: number;
+};
+
+export type LiquidationAggregate = {
+  timestamp: number;
+  selfCount: number;
+  hardCount: number;
+  selfValue: number;
+  hardValue: number;
+  price: number;
+};
+
 export type HistoricalMedianLoss = {
   timestamp: number;
   lossPct: number;
@@ -122,20 +147,6 @@ export type HealthDecile = {
 export type HistoricalLosers = {
   timestamp: number;
   losers: number;
-};
-
-export type HistoricalLiquidations = {
-  timestamp: number;
-  selfCount: number;
-  hardCount: number;
-  selfValue: number;
-  hardValue: number;
-};
-
-export type Liquidators = {
-  address: string;
-  count: number;
-  value: number;
 };
 
 export type MarketHealthState = {

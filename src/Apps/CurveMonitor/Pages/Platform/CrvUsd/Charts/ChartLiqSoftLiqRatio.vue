@@ -64,8 +64,8 @@ const { chart, chartRef } = useLightweightChart(
 const loading = computed(() => loadingSoftLiqs.value || loadingSnapshots.value);
 const { isFetching: loadingSoftLiqs, data: softLiqRatios } =
   useQuerySoftLiqRatios(
-    toRef(() => market),
-    toRef(() => chain)
+    toRef(() => chain),
+    toRef(() => market)
   );
 const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
   toRef(() => market)

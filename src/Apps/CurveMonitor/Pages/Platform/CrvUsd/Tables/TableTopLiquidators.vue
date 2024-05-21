@@ -11,13 +11,13 @@
       <div class="title">{{ t("title") }}</div>
     </template>
 
-    <template #row="props: { item: Liquidators }">
+    <template #row="props: { item: Liquidator }">
       <div class="address">
         <a
-          :href="`https://etherscan.io/address/${props.item.address}`"
+          :href="`https://etherscan.io/address/${props.item.liquidator}`"
           target="_blank"
         >
-          {{ addressShort(props.item.address, 8) }}
+          {{ addressShort(props.item.liquidator, 8) }}
         </a>
       </div>
       <div class="number">
@@ -40,29 +40,44 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
+import { chain as chain_ } from "lodash";
 import { addressShort } from "@/Wallet";
-import { type Market, type Liquidators } from "@CM/Services/CrvUsd";
-import { useQueryLiquidators } from "@CM/Services/CrvUsd/Queries";
+import { type Chain } from "@CM/Models/Chain";
+import { type Market } from "@CM/Services/CrvUsd";
+import { useQueryLiqsDetailed } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
   market: Market | undefined;
+  chain: Chain | undefined;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Data
-const { isFetching: loading, data: rowsRaw } = useQueryLiquidators(
+const { isFetching: loading, data: rowsRaw } = useQueryLiqsDetailed(
+  toRef(() => chain),
   toRef(() => market)
 );
 
-// Refs
-const rows = computed((): Liquidators[] =>
-  chain(rowsRaw.value)
-    .map((x) => x)
+type Liquidator = {
+  liquidator: string;
+  count: number;
+  value: number;
+};
+
+const rows = computed((): Liquidator[] =>
+  chain_(rowsRaw.value)
+    .groupBy((x) => x.liquidator)
+    .map((xs, liquidator) => ({
+      liquidator,
+      count: xs.length,
+      value: xs.reduce((acc, x) => acc + x.collateralReceivedUsd, 0),
+    }))
+    .orderBy((x) => x.value, "desc")
+    .take(5)
     .value()
 );
 </script>
