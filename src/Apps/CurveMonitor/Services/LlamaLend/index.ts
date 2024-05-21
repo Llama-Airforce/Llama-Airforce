@@ -1,3 +1,3 @@
-export * from "@CM/Services/LlamaLend/Models";
-export * from "@CM/Services/LlamaLend/Helper";
-export { default } from "@CM/Services/LlamaLend/LlamaLendService";
+export * from "./Models";
+export * from "./Helper";
+export { default } from "./LlamaLendService";

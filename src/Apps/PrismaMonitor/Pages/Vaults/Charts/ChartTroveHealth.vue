@@ -1,12 +1,12 @@
 <template>
-  <CardGraph
+  <CardChart
     class="health"
     :title="t('title')"
     :options="options"
     :series="series"
     :loading="loading"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">

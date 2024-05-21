@@ -1,14 +1,3 @@
-export {
-  type SocketRoot,
-  createSocketRoot,
-} from "@CM/Services/Sockets/SocketRoot";
-
-export {
-  type SocketPool,
-  createSocketPool,
-} from "@CM/Services/Sockets/SocketPool";
-
-export {
-  type SocketMEV,
-  createSocketMEV,
-} from "@CM/Services/Sockets/SocketMEV";
+export { type SocketRoot, createSocketRoot } from "./SocketRoot";
+export { type SocketPool, createSocketPool } from "./SocketPool";
+export { type SocketMEV, createSocketMEV } from "./SocketMEV";

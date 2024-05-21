@@ -3,12 +3,12 @@
  * which uses meta.import stuff that doesn't work well with the Union.
  */
 
-export * from "@/Services/DefiLlamaService";
-export { default as DefiLlamaService } from "@/Services/DefiLlamaService";
+export * from "./DefiLlamaService";
+export { default as DefiLlamaService } from "./DefiLlamaService";
 
-export * from "@/Services/ServiceBase";
-export { default as ServiceBase } from "@/Services/ServiceBase";
+export * from "./ServiceBase";
+export { default as ServiceBase } from "./ServiceBase";
 
-export * from "@/Services/Socket/Models";
-export * from "@/Services/Socket/CurvePriceService";
-export * from "@/Services/Socket/CurveVolumeService";
+export * from "./Socket/Models";
+export * from "./Socket/CurvePriceService";
+export * from "./Socket/CurveVolumeService";

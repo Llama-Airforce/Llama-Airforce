@@ -4,8 +4,8 @@ import {
 } from "vue-router";
 import { usePageStore } from "@/Framework/Stores";
 
-import NotFound from "@CM/Pages/NotFound.vue";
-import Code from "@CM/Pages/Code.vue";
+import NotFound from "@CM/Pages/NotFound.page.vue";
+import Code from "@CM/Pages/Code.page.vue";
 
 export default function createRouter() {
   // Load in configured pages.

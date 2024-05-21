@@ -1,8 +1,8 @@
 import { type PageLAF } from "@LAF/Pages/Page";
 
-import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.vue";
-import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.vue";
-import FraxMatch from "@LAF/Pages/Bribes/FraxMatch/FraxMatch.vue";
+import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.page.vue";
+import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.page.vue";
+import FraxMatch from "@LAF/Pages/Bribes/FraxMatch/FraxMatch.page.vue";
 
 import menuHeader from "@/Assets/Menu/votium.png";
 

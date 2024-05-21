@@ -1,10 +1,10 @@
 <template>
-  <CardGraph
+  <CardChart
     class="lp-revenue"
     :options="options"
     :series="lpRevenueBreakdown"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">

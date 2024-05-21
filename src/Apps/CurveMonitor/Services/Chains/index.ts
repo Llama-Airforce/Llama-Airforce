@@ -1,2 +1,2 @@
-export * from "@CM/Services/Chains/Models";
-export { default } from "@CM/Services/Chains/ChainsService";
+export * from "./Models";
+export { default } from "./ChainsService";

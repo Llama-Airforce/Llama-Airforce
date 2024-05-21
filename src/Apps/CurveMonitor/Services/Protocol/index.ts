@@ -1,2 +1,2 @@
-export * from "@CM/Services/Protocol/Models";
-export { default } from "@CM/Services/Protocol/ProtocolService";
+export * from "./Models";
+export { default } from "./ProtocolService";

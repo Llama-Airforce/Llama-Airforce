@@ -1,10 +1,10 @@
 <template>
-  <CardGraph
+  <CardChart
     class="historical-revenue"
     :options="options"
     :series="historicalRevenueBreakdown"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">

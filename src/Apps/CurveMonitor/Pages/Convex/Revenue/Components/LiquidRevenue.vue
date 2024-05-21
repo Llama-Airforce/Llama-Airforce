@@ -1,10 +1,10 @@
 <template>
-  <CardGraph
+  <CardChart
     class="liquid-revenue"
     :options="options"
     :series="liquidRevenueBreakdown"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">

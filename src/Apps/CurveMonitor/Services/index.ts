@@ -1,7 +1,7 @@
 export { getHost } from "@/Services/Host";
 
-export { default as StatusService } from "@CM/Services/StatusService";
-export { default as PoolService } from "@CM/Services/PoolService";
-export { default as CoinService } from "@CM/Services/CoinService";
-export { default as PairService } from "@CM/Services/PairService";
-export { default as TimeRangeService } from "@CM/Services/TimeRangeService";
+export { default as StatusService } from "./StatusService";
+export { default as PoolService } from "./PoolService";
+export { default as CoinService } from "./CoinService";
+export { default as PairService } from "./PairService";
+export { default as TimeRangeService } from "./TimeRangeService";

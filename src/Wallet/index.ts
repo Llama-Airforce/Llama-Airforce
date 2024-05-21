@@ -1,2 +1,2 @@
-export { useWallet } from "@/Wallet/UseWallet";
-export * from "@/Wallet/WalletHelper";
+export { useWallet } from "./UseWallet";
+export * from "./WalletHelper";

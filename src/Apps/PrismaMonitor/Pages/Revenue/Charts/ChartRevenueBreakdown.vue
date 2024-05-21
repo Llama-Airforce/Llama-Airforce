@@ -1,9 +1,9 @@
 <template>
-  <GraphApex
+  <ChartApex
     class="chart"
     :options="options"
     :series="series"
-  ></GraphApex>
+  ></ChartApex>
 </template>
 
 <script setup lang="ts">

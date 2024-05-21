@@ -1,1 +1,1 @@
-export * from "@CM/Stores/SettingsStore";
+export * from "./SettingsStore";

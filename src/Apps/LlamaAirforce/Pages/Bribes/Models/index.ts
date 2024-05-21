@@ -1,31 +1,14 @@
-export type { Bribe } from "@LAF/Pages/Bribes/Models/Bribe";
+export type { Bribe } from "./Bribe";
+export type { Bribed, BribedPersonal, VoteDistribution } from "./Bribed";
+export type { ProposalId, Proposal, Epoch } from "./Epoch";
+export type { EpochId } from "./EpochId";
+export type { EpochOverview } from "./EpochOverview";
+export type { OverviewId, Overview, OverviewResponse } from "./Overview";
 
-export type {
-  Bribed,
-  BribedPersonal,
-  VoteDistribution,
-} from "@LAF/Pages/Bribes/Models/Bribed";
+export type { Platform } from "./Platform";
+export { isPlatform } from "./Platform";
 
-export type {
-  ProposalId,
-  Proposal,
-  Epoch,
-} from "@LAF/Pages/Bribes/Models/Epoch";
+export type { Product } from "./Product";
 
-export type { EpochId } from "@LAF/Pages/Bribes/Models/EpochId";
-
-export type { EpochOverview } from "@LAF/Pages/Bribes/Models/EpochOverview";
-
-export type {
-  OverviewId,
-  Overview,
-  OverviewResponse,
-} from "@LAF/Pages/Bribes/Models/Overview";
-
-export type { Platform } from "@LAF/Pages/Bribes/Models/Platform";
-export { isPlatform } from "@LAF/Pages/Bribes/Models/Platform";
-
-export type { Product } from "@LAF/Pages/Bribes/Models/Product";
-
-export type { Protocol } from "@LAF/Pages/Bribes/Models/Protocol";
-export { isProtocol, getProtocols } from "@LAF/Pages/Bribes/Models/Protocol";
+export type { Protocol } from "./Protocol";
+export { isProtocol, getProtocols } from "./Protocol";

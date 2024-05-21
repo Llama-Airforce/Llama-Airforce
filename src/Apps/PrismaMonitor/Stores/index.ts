@@ -1,2 +1,2 @@
-export * from "@PM/Stores/SettingsStore";
-export * from "@PM/Stores/SocketStore";
+export * from "./SettingsStore";
+export * from "./SocketStore";

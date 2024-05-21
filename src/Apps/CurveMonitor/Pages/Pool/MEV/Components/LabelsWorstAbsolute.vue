@@ -1,11 +1,11 @@
 <template>
-  <CardGraph
+  <CardChart
     class="mevLabels"
     title="Worst absolute offenders"
     :options="options"
     :series="series"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">

@@ -1,4 +1,4 @@
-export type { Candle } from "@CM/Pages/Platform/Pools/Models/Candle";
-export type { PoolId, Pool } from "@CM/Pages/Platform/Pools/Models/Pool";
-export type { Reserves } from "@CM/Pages/Platform/Pools/Models/Reserves";
-export type { Volume } from "@CM/Pages/Platform/Pools/Models/Volume";
+export type { Candle } from "./Candle";
+export type { PoolId, Pool } from "./Pool";
+export type { Reserves } from "./Reserves";
+export type { Volume } from "./Volume";

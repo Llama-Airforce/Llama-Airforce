@@ -1,17 +1,17 @@
 import { type Page } from "@/Framework/Monitor/Page";
 
-import Vaults from "@PM/Pages/Vaults/Vaults.vue";
-import StabilityPool from "@PM/Pages/Pool/StabilityPool.vue";
-import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.vue";
-import Redemptions from "@PM/Pages/Redemptions/Redemptions.vue";
-import Liquidations from "@PM/Pages/Liquidations/Liquidations.vue";
-import Revenue from "@PM/Pages/Revenue/Revenue.vue";
-import Wrappers from "@PM/Pages/Wrappers/Wrappers.vue";
-import VePrisma from "@PM/Pages/VePrisma/VePrisma.vue";
-import Proposals from "@PM/Pages/Proposals/Proposals.vue";
-import VaultManager from "@PM/Pages/Vaults/VaultManager.vue";
-import Trove from "@PM/Pages/Vaults/Trove.vue";
-import Profile from "@PM/Pages/Profile/Profile.vue";
+import Vaults from "@PM/Pages/Vaults/Vaults.page.vue";
+import StabilityPool from "@PM/Pages/Pool/StabilityPool.page.vue";
+import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.page.vue";
+import Redemptions from "@PM/Pages/Redemptions/Redemptions.page.vue";
+import Liquidations from "@PM/Pages/Liquidations/Liquidations.page.vue";
+import Revenue from "@PM/Pages/Revenue/Revenue.page.vue";
+import Wrappers from "@PM/Pages/Wrappers/Wrappers.page.vue";
+import VePrisma from "@PM/Pages/VePrisma/VePrisma.page.vue";
+import Proposals from "@PM/Pages/Proposals/Proposals.page.vue";
+import VaultManager from "@PM/Pages/Vaults/VaultManager.page.vue";
+import Trove from "@PM/Pages/Vaults/Trove.page.vue";
+import Profile from "@PM/Pages/Profile/Profile.page.vue";
 
 import { useSettingsStore } from "@PM/Stores";
 import { stableSymbol } from "@/Apps/PrismaMonitor/Models/Flavor";

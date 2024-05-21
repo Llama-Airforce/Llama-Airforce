@@ -1,11 +1,11 @@
 <template>
-  <CardGraph
+  <CardChart
     class="reserves"
     :title="t('title')"
     :options="options"
     :series="series"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">

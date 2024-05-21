@@ -25,11 +25,11 @@
       </Tooltip>
     </template>
 
-    <GraphApex
+    <ChartApex
       class="chart"
       :options="options"
       :series="series"
-    ></GraphApex>
+    ></ChartApex>
   </Card>
 </template>
 

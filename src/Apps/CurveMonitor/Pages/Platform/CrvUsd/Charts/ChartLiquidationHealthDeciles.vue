@@ -1,11 +1,11 @@
 <template>
-  <CardGraph
+  <CardChart
     class="chart"
     title="Debt & Assets per Health Deciles"
     :loading
     :options
     :series
-  ></CardGraph>
+  ></CardChart>
 </template>
 
 <script setup lang="ts">
@@ -111,7 +111,7 @@ const formatterY = (y: number): string =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.card-graph {
+.cart-chart {
   ::v-deep(.card-body) {
     height: 300px;
 

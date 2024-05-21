@@ -1,12 +1,12 @@
 <template>
-  <CardGraph
+  <CardChart
     class="chart"
     :title="title"
     :loading="loading"
     :options="options"
     :series="series"
   >
-  </CardGraph>
+  </CardChart>
 </template>
 
 <script setup lang="ts">
@@ -154,7 +154,7 @@ const formatter = (x: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.card-graph {
+.cart-chart {
   ::v-deep(.card-body) {
     height: 300px;
   }

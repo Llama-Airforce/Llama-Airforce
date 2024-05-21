@@ -1,2 +1,2 @@
-export * from "@CM/Services/CrvUsd/Models";
-export { default } from "@CM/Services/CrvUsd/CrvUsdService";
+export * from "./Models";
+export { default } from "./CrvUsdService";

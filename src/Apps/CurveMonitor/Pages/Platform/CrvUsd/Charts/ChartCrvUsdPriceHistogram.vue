@@ -1,11 +1,11 @@
 <template>
-  <CardGraph
+  <CardChart
     class="chart"
     title="crvUSD Price Deviation from $1 Histogram"
     :loading
     :options
     :series
-  ></CardGraph>
+  ></CardChart>
 </template>
 
 <script setup lang="ts">
@@ -102,7 +102,7 @@ const formatterY = (x: number): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.card-graph {
+.cart-chart {
   ::v-deep(.card-body) {
     height: 300px;
 

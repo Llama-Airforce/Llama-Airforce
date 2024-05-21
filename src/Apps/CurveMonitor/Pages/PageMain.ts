@@ -1,27 +1,27 @@
 import { type Page } from "@/Framework/Monitor/Page";
 
-import Home from "@CM/Pages/Home/Home.vue";
+import Home from "@CM/Pages/Home/Home.page.vue";
 
-import Pools from "@CM/Pages/Platform/Pools/Pools.vue";
-import Gauges from "@CM/Pages/Platform/Gauges/Gauges.vue";
-import Revenue from "@CM/Pages/Platform/Revenue/Revenue.vue";
+import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
+import Gauges from "@CM/Pages/Platform/Gauges/Gauges.page.vue";
+import Revenue from "@CM/Pages/Platform/Revenue/Revenue.page.vue";
 
-import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.vue";
-import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.vue";
+import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.page.vue";
+import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.page.vue";
 
-import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.vue";
-import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.vue";
+import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue";
+import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
 
-import Monitor from "@CM/Pages/Pool/Monitor/Monitor.vue";
-import MEV from "@CM/Pages/Pool/MEV/MEV.vue";
+import Monitor from "@CM/Pages/Pool/Monitor/Monitor.page.vue";
+import MEV from "@CM/Pages/Pool/MEV/MEV.page.vue";
 
-import Proposals from "@CM/Pages/DAO/Proposals/Proposals.vue";
-import Proposal from "@CM/Pages/DAO/Proposals/Proposal.vue";
-import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.vue";
+import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
+import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
+import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.page.vue";
 
-import ConvexFlyer from "@CM/Pages/Convex/Flyer/Flyer.vue";
-import ConvexPools from "@CM/Pages/Convex/Pools/Pools.vue";
-import ConvexRevenue from "@CM/Pages/Convex/Revenue/Revenue.vue";
+import ConvexFlyer from "@CM/Pages/Convex/Flyer/Flyer.page.vue";
+import ConvexPools from "@CM/Pages/Convex/Pools/Pools.page.vue";
+import ConvexRevenue from "@CM/Pages/Convex/Revenue/Revenue.page.vue";
 
 export const pageMainRoutes = [
   { path: "/", component: Home },

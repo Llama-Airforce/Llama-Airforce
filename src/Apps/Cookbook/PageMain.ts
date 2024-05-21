@@ -9,7 +9,7 @@ import Breadcrumb from "@CB/Recipes/BreadcrumbRecipe.vue";
 import Button from "@CB/Recipes/ButtonRecipe.vue";
 import ButtonToggle from "@CB/Recipes/ButtonToggleRecipe.vue";
 import Card from "@CB/Recipes/CardRecipe.vue";
-import CardGraph from "@CB/Recipes/CardGraphRecipe.vue";
+import CardChart from "@CB/Recipes/CardChartRecipe.vue";
 import DataTable from "@CB/Recipes/DataTableRecipe.vue";
 import InputText from "@CB/Recipes/InputTextRecipe.vue";
 import InputNumber from "@CB/Recipes/InputNumberRecipe.vue";
@@ -64,9 +64,9 @@ export const pageMainRoutes = [
     component: Card,
   },
   {
-    path: "/graph-card",
-    name: "graph-card",
-    component: CardGraph,
+    path: "/card-chart",
+    name: "card-chart",
+    component: CardChart,
   },
   {
     path: "/data-table",
@@ -159,8 +159,8 @@ export const pageMain: Page = {
           label: "Card",
         },
         {
-          to: "/graph-card",
-          label: "CardGraph",
+          to: "/card-chart",
+          label: "CardChart",
         },
         {
           to: "/data-table",
