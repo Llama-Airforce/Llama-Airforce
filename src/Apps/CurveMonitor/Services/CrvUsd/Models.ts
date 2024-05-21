@@ -24,17 +24,6 @@ export type Snapshot = {
   borrowable: number;
 };
 
-export type LlammaOHLC = {
-  time: number;
-  open: number;
-  close: number;
-  high: number;
-  low: number;
-  base_price: number;
-  oracle_price: number;
-  volume: number;
-};
-
 export type MarketDecile = {
   debt: number;
   collateral: number;

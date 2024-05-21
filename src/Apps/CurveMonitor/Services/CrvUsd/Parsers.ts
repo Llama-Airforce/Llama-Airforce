@@ -36,21 +36,6 @@ export const parseSnapshot = (
   };
 };
 
-export const parseLlammaOHLC = (
-  x: ApiTypes.GetLlammaOHLCResponse["data"][number]
-): Models.LlammaOHLC => {
-  return {
-    time: x.time,
-    open: x.open,
-    close: x.close,
-    high: x.high,
-    low: x.low,
-    base_price: x.base_price,
-    oracle_price: x.oracle_price,
-    volume: x.volume,
-  };
-};
-
 export const parseKeeper = (
   x: ApiTypes.GetKeepersResponse["keepers"][number]
 ): Models.Keeper => {

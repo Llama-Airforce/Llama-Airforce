@@ -42,19 +42,6 @@ export type GetSnapshotsResponse = {
   }[];
 };
 
-export type GetLlammaOHLCResponse = {
-  data: {
-    time: number;
-    open: number;
-    close: number;
-    high: number;
-    low: number;
-    base_price: number;
-    oracle_price: number;
-    volume: number;
-  }[];
-};
-
 export type GetKeepersResponse = {
   keepers: {
     address: string;
