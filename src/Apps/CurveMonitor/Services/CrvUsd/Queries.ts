@@ -130,16 +130,6 @@ export function useQueryLiqsSoft(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryAvailableCap(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: ["crvusd-liq-available-cap", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getMarketAvailableCap(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQuerySnapshots(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-market-snapshots", useMarketAddress(market)] as const,

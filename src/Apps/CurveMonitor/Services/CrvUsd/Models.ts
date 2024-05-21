@@ -152,12 +152,6 @@ export type MarketHealthState = {
   collatRatio: number;
 };
 
-export type AvailableCap = {
-  timestamp: number;
-  borrowable: number;
-  ceiling: number;
-};
-
 export type LiquidatorRevenue = {
   timestamp: number;
   amount: number;
