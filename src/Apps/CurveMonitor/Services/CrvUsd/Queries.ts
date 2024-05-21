@@ -1,6 +1,9 @@
-import CrvUsdService, { type Market } from "@CM/Services/CrvUsd";
+import { chain } from "lodash";
+import CrvUsdService, { type Market, type Keeper } from "@CM/Services/CrvUsd";
+import OHLCService from "@CM/Services/OHLC";
 
 const service = new CrvUsdService(getHost());
+const serviceOHLC = new OHLCService(getHost());
 
 function useMarketAddress(market: Ref<Market | undefined>) {
   return computed(() => market.value?.address);
@@ -156,10 +159,47 @@ export function useQueryVolume(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryPoolPrices() {
+export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
   return useQuery({
-    queryKey: ["crvusd-pool-prices"],
-    queryFn: () => service.getPoolPrices(),
+    queryKey: [
+      "crvusd-keepers-prices",
+      computed(() => keepers.value.map((k) => k.pool_address)),
+    ] as const,
+    queryFn: async () => {
+      const promises = keepers.value.map(async (keeper) => {
+        const tokenMain = keeper.pair.find((t) => t.symbol !== "crvUSD");
+        const tokenRef = keeper.pair.find((t) => t.symbol === "crvUSD");
+
+        if (!tokenMain || !tokenRef) {
+          return [];
+        }
+
+        const ohlc = await serviceOHLC.getOHLC(
+          "ethereum",
+          keeper.pool_address,
+          tokenMain.address,
+          tokenRef.address
+        );
+
+        return ohlc.map((x) => ({
+          time: x.time,
+          price: (x.high + x.low) / 2,
+          coin: tokenMain.symbol,
+        }));
+      });
+
+      const prices = (await Promise.all(promises)).flat();
+
+      const result = chain(prices)
+        .groupBy((x) => x.time)
+        .map((x, time) => ({
+          timestamp: Number(time),
+          ...Object.fromEntries(x.map((y) => [y.coin, y.price])),
+        }))
+        .value();
+
+      return result.length > 0 ? result : [{ timestamp: 0 }];
+    },
     initialData: [{ timestamp: 0 }],
     initialDataUpdatedAt: 0,
   });

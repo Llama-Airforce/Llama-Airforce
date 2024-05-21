@@ -60,6 +60,10 @@ export type GetKeepersResponse = {
     address: string;
     pool: string;
     pool_address: string;
+    pair: {
+      symbol: string;
+      address: string;
+    }[];
     active: boolean;
     total_debt: number;
     total_profit: number;

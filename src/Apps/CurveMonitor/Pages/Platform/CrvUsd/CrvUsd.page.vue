@@ -7,7 +7,7 @@
 
     <div class="col">
       <TablePegkeepers></TablePegkeepers>
-      <ChartPoolPrices></ChartPoolPrices>
+      <ChartKeeperPrices></ChartKeeperPrices>
     </div>
 
     <div class="col">
@@ -23,7 +23,7 @@ import {
   TablePegkeepers,
 } from "@CM/Pages/Platform/CrvUsd/Tables";
 import {
-  ChartPoolPrices,
+  ChartKeeperPrices,
   ChartCrvUsdSupply,
   ChartCrvUsdPriceHistogram,
 } from "@CM/Pages/Platform/CrvUsd/Charts";

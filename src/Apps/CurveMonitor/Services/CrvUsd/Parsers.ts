@@ -49,6 +49,10 @@ export const parseKeeper = (
     address: x.address.toLocaleLowerCase(),
     pool: x.pool,
     pool_address: x.pool_address.toLocaleLowerCase(),
+    pair: x.pair.map((p) => ({
+      symbol: p.symbol,
+      address: p.address.toLocaleLowerCase(),
+    })),
     active: x.active,
     total_debt: x.total_debt,
     total_profit: x.total_profit,

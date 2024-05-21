@@ -21,10 +21,14 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
+import { type AutoscaleInfo } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type PoolPrice } from "@CM/Services/CrvUsd";
-import { useQueryPoolPrices } from "@CM/Services/CrvUsd/Queries";
+import {
+  useQueryKeepers,
+  useQueryKeeperPrices,
+} from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
@@ -51,7 +55,12 @@ const coins = computed((): string[] =>
 );
 
 // Data
-const { isFetching: loading, data: prices } = useQueryPoolPrices();
+const loading = computed(
+  () => loadingKeepers.value || loadingKeeperPrices.value
+);
+const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
+const { isFetching: loadingKeeperPrices, data: prices } =
+  useQueryKeeperPrices(keepers);
 
 // Watches
 watch([prices, chart], ([newPrices, chart]) => {
@@ -97,6 +106,16 @@ function createOptionsSerie(i: number): LineSeriesPartialOptions {
     color: theme.value.colorsArray[i],
     lastValueVisible: false,
     priceLineVisible: false,
+    autoscaleInfoProvider: (original: () => AutoscaleInfo) => {
+      const res = original();
+
+      if (res !== null) {
+        res.priceRange.minValue = Math.max(0.98, res.priceRange.minValue);
+        res.priceRange.maxValue = Math.min(1.02, res.priceRange.maxValue);
+      }
+
+      return res;
+    },
   };
 }
 
