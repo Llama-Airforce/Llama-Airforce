@@ -65,12 +65,6 @@ export default class CrvUsdService extends ServiceBase {
     return resp.data.map(Parsers.parseSupply);
   }
 
-  public async getVolume(marketAddr: string) {
-    return this.fetch<{ volumes: Models.MarketVolume[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/volume`
-    ).then((resp) => resp.volumes);
-  }
-
   public async getFees() {
     return this.fetch<{ fees: Models.Fees }>(
       `${API_URL_OLD}/v1/crvusd/fees`

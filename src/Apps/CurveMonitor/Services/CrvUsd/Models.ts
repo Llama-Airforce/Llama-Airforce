@@ -66,11 +66,6 @@ export type CrvUsdSupply = {
   borrowable: number;
 };
 
-export type MarketVolume = {
-  timestamp: number;
-  swapVolumeUsd: number;
-};
-
 export type Fees = {
   pending: number;
   collected: number;

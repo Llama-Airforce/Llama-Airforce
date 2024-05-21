@@ -150,15 +150,6 @@ export function useQuerySnapshots(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryVolume(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: ["crvusd-market-volume", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) => service.getVolume(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
   return useQuery({
     queryKey: [

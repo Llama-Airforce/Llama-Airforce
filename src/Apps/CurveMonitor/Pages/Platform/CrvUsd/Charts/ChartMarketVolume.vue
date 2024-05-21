@@ -12,20 +12,23 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
+import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type MarketVolume } from "@CM/Services/CrvUsd";
-import { useQueryVolume } from "@CM/Services/CrvUsd/Queries";
+import { type Chain } from "@CM/Models/Chain";
+import { type Market } from "@CM/Services/CrvUsd";
+import { type Endpoint, type LlammaOHLC } from "@CM/Services/Llamma";
+import { useQueryOHLC } from "@CM/Services/Llamma/Queries";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
   market: Market | undefined;
+  chain: Chain | undefined;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 let areaSerie: ISeriesApi<"Area">;
@@ -41,12 +44,14 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: volumes } = useQueryVolume(
-  toRef(() => market)
+const { isFetching: loading, data: ohlc } = useQueryOHLC(
+  toRef<Endpoint>("crvusd"),
+  computed(() => market?.llamma),
+  toRef(() => chain)
 );
 
 // Watches
-watch([volumes, chart], createSeries);
+watch([ohlc, chart], createSeries);
 watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -81,15 +86,15 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries([newTvl, chart]: [MarketVolume[]?, IChartApi?]): void {
+function createSeries([newOHLC, chart]: [LlammaOHLC[]?, IChartApi?]): void {
   if (!chart || !areaSerie) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newTvl)
+  const newSerie: LineData[] = chain_(newOHLC)
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
-      value: x.swapVolumeUsd,
+      time: x.time as UTCTimestamp,
+      value: x.volume,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

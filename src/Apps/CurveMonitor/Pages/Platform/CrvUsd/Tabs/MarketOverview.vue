@@ -3,11 +3,16 @@
     <ChartMarketRates :market></ChartMarketRates>
     <ChartMarketAvailableCap :market></ChartMarketAvailableCap>
     <ChartMarketLoans :market></ChartMarketLoans>
-    <ChartMarketVolume :market></ChartMarketVolume>
+
+    <ChartMarketVolume
+      :market
+      :chain
+    ></ChartMarketVolume>
   </div>
 </template>
 
 <script setup lang="ts">
+import { type Chain } from "@CM/Models/Chain";
 import type { Market } from "@CM/Services/CrvUsd";
 import {
   ChartMarketVolume,
@@ -19,9 +24,10 @@ import {
 // Props
 interface Props {
   market: Market | undefined;
+  chain: Chain | undefined;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
