@@ -67,9 +67,10 @@ import { type Market, type Yield } from "@CM/Services/CrvUsd";
 
 // Props
 interface Props {
-  market?: Market;
-  yields?: Yield[];
+  market: Market | undefined;
+  yields: Yield[];
 }
+
 const { yields = [] } = defineProps<Props>();
 
 const yieldsMax = computed(

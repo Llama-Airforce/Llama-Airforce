@@ -43,45 +43,4 @@ export default class LlamaLendService extends ServiceBase {
 
     return resp.data.map(Parsers.parseLiqHistory);
   }
-
-  public async getLlammaEvents(
-    chain: Chain,
-    marketLlamma: string,
-    page: number
-  ) {
-    const resp = await this.fetch<ApiTypes.GetLlammaEventsResponse>(
-      `${API_URL}/v1/lending/llamma_events/${chain}/${marketLlamma}?page=${page}&per_page=10`
-    );
-
-    return {
-      trades: resp.data.map(Parsers.parseLlammaEvents),
-      count: resp.count,
-    };
-  }
-
-  public async getLlammaTrades(
-    chain: Chain,
-    marketLlamma: string,
-    page: number
-  ) {
-    const resp = await this.fetch<ApiTypes.GetLlammaTradesResponse>(
-      `${API_URL}/v1/lending/llamma_trades/${chain}/${marketLlamma}?page=${page}&per_page=10`
-    );
-
-    return {
-      trades: resp.data.map(Parsers.parseLlammaTrades),
-      count: resp.count,
-    };
-  }
-
-  public async getLlammaOHLC(chain: Chain, marketLlamma: string) {
-    const end = Math.floor(new Date().getTime() / 1000);
-    const start = end - 10 * 24 * 60 * 60; // Subtract 1 month worth of seconds.
-
-    const resp = await this.fetch<ApiTypes.GetLlammaOHLCResponse>(
-      `${API_URL}/v1/lending/llamma_ohlc/${chain}/${marketLlamma}?agg_number=1&agg_units=hour&start=${start}&end=${end}`
-    );
-
-    return resp.data.map(Parsers.parseLlammaOHLC);
-  }
 }

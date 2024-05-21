@@ -38,7 +38,7 @@ import { TableLiquidationLiquidators } from "@CM/Pages/Platform/CrvUsd/Tables";
 
 // Props
 interface Props {
-  market?: Market;
+  market: Market | undefined;
 }
 
 const { market } = defineProps<Props>();

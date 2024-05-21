@@ -22,21 +22,22 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
-import { useQueryOHLC } from "@CM/Services/LlamaLend/Queries";
+import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type LlammaOHLC } from "@CM/Services/LlamaLend";
+import { useQueryOHLC } from "@CM/Services/Llamma/Queries";
+import { type Endpoint, type LlammaOHLC } from "@CM/Services/Llamma";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  market?: Market;
-  chain?: Chain;
+  endpoint: Endpoint;
+  llamma: string | undefined;
+  chain: Chain | undefined;
 }
 
-const { market, chain } = defineProps<Props>();
+const { endpoint, llamma, chain } = defineProps<Props>();
 
 // Refs
 let priceSerie: ISeriesApi<"Candlestick">;
@@ -57,7 +58,8 @@ const { chart, chartRef } = useLightweightChart(
 
 // Data
 const { isFetching: loading, data: prices } = useQueryOHLC(
-  toRef(() => market),
+  toRef(() => endpoint),
+  toRef(() => llamma),
   toRef(() => chain)
 );
 

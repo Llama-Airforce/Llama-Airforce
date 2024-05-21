@@ -32,8 +32,8 @@ const { t } = useI18n();
 
 // Props
 interface Props {
-  market?: Market;
-  chain?: Chain;
+  market: Market | undefined;
+  chain: Chain | undefined;
 }
 
 const { market, chain } = defineProps<Props>();

@@ -22,7 +22,7 @@ const { t } = useI18n();
 
 // Props
 interface Props {
-  market?: Market;
+  market: Market | undefined;
 }
 
 const { market } = defineProps<Props>();

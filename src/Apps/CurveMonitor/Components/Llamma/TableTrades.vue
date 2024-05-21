@@ -76,25 +76,27 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { type Chain } from "@CM/Models/Chain";
-import { type Market, type LlammaTrade } from "@CM/Services/LlamaLend";
-import { useQueryTrades } from "@CM/Services/LlamaLend/Queries";
+import { type Endpoint, type LlammaTrade } from "@CM/Services/Llamma";
+import { useQueryTrades } from "@CM/Services/Llamma/Queries";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  market?: Market;
-  chain?: Chain;
+  endpoint: Endpoint;
+  llamma: string | undefined;
+  chain: Chain | undefined;
 }
 
-const { market, chain } = defineProps<Props>();
+const { endpoint, llamma, chain } = defineProps<Props>();
 
 // Trades
 const { page, onPage } = usePaginationAsync();
 const pageDebounced = refDebounced(page, 200);
 
 const { isFetching: loading, data } = useQueryTrades(
-  toRef(() => market),
+  toRef(() => endpoint),
+  toRef(() => llamma),
   toRef(() => chain),
   pageDebounced
 );

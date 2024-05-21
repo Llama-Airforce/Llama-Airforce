@@ -1,42 +1,23 @@
 <template>
   <div class="trading">
-    <KPI
-      style="grid-area: oracle"
-      :label="t('oracle')"
-      :has-value="!!market"
-    >
-      <AsyncValue
-        :value="market?.price_oracle"
-        type="dollar"
-      ></AsyncValue>
-    </KPI>
-
-    <KPI
-      style="grid-area: amm"
-      :label="t('amm')"
-      :has-value="!!market"
-    >
-      <AsyncValue
-        :value="market?.amm_price"
-        type="dollar"
-      ></AsyncValue>
-    </KPI>
-
     <ChartOHLC
       style="grid-area: ohlc"
-      :market
+      endpoint="crvusd"
+      :llamma
       :chain
     ></ChartOHLC>
 
     <TableTrades
       style="grid-area: trades"
-      :market
+      endpoint="crvusd"
+      :llamma
       :chain
     ></TableTrades>
 
     <TableEvents
       style="grid-area: events"
-      :market
+      endpoint="crvusd"
+      :llamma
       :chain
     ></TableEvents>
   </div>
@@ -44,19 +25,18 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Services/LlamaLend";
-import { ChartOHLC } from "@CM/Pages/Platform/LlamaLend/Charts";
-import { TableTrades, TableEvents } from "@CM/Pages/Platform/LlamaLend/Tables";
-
-const { t } = useI18n();
+import { type Market } from "@CM/Services/CrvUsd";
+import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
 
 // Props
 interface Props {
-  market?: Market;
-  chain?: Chain;
+  market: Market | undefined;
+  chain: Chain | undefined;
 }
 
 const { market, chain } = defineProps<Props>();
+
+const llamma = computed(() => market?.llamma);
 </script>
 
 <style lang="scss" scoped>
@@ -68,10 +48,9 @@ const { market, chain } = defineProps<Props>();
   @include dashboard-grid;
 
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
 
   grid-template-areas:
-    "oracle amm"
     "ohlc ohlc"
     "trades events";
 }

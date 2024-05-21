@@ -24,9 +24,12 @@ export default class CrvUsdService extends ServiceBase {
     return resp.data.map(Parsers.parseSnapshot);
   }
 
-  public async getLlammaOHLC(chain: Chain, marketAddr: string) {
+  public async getLlammaOHLC(chain: Chain, marketLlamma: string) {
+    const end = Math.floor(new Date().getTime() / 1000);
+    const start = end - 10 * 24 * 60 * 60; // Subtract 1 month worth of seconds.
+
     const resp = await this.fetch<ApiTypes.GetLlammaOHLCResponse>(
-      `${API_URL}/v1/crvusd/llamma_ohlc/${chain}/${marketAddr}?agg_number=1&agg_units=hour&start=1714561943&end=1715339543`
+      `${API_URL}/v1/crvusd/llamma_ohlc/${chain}/${marketLlamma}?agg_number=1&agg_units=hour&start=${start}&end=${end}`
     );
 
     return resp.data.map(Parsers.parseLlammaOHLC);

@@ -15,25 +15,28 @@
           <MarketOverview
             v-if="tabActive === 'overview'"
             :market
+            chain="ethereum"
           ></MarketOverview>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Trading">
+        <KeepAlive>
+          <Trading
+            v-if="tabActive === 'trading'"
+            :market
+            chain="ethereum"
+          ></Trading>
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Liquidations">
         <KeepAlive>
           <Liquidations
-            v-if="tabActive === 'liquidations' && market"
+            v-if="tabActive === 'liquidations'"
             :market
+            chain="ethereum"
           ></Liquidations>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Llamma">
-        <KeepAlive>
-          <Llamma
-            v-if="tabActive === 'llamma' && market"
-            :market
-          ></Llamma>
         </KeepAlive>
       </TabItem>
     </TabView>
@@ -44,7 +47,7 @@
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/Tabs/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Tabs/Liquidations.vue";
-import Llamma from "@CM/Pages/Platform/CrvUsd/Tabs/Llamma.vue";
+import Trading from "@CM/Pages/Platform/CrvUsd/Tabs/Trading.vue";
 
 const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 
@@ -81,7 +84,7 @@ onMounted(() => {
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "liquidations", "llamma"],
+  ["overview", "trading", "liquidations"],
   "crvusdmarket",
   () => ({
     marketAddr: marketAddr.value,
