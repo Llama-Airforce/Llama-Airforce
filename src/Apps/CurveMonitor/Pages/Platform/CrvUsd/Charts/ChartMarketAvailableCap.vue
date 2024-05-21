@@ -15,8 +15,8 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type CrvUsdSupply, type Market } from "@CM/Services/CrvUsd";
-import { useQueryCrvUsdSupply } from "@CM/Services/CrvUsd/Queries";
+import { type Snapshot, type Market } from "@CM/Services/CrvUsd";
+import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
@@ -39,10 +39,12 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data } = useQueryCrvUsdSupply();
+const { isFetching: loading, data: snapshots } = useQuerySnapshots(
+  toRef(() => market)
+);
 
 // Watches
-watch([data, () => market, chart], createSeries);
+watch([snapshots, chart], createSeries);
 watch(theme, () => availSerie.applyOptions(createAvailOptionsSerie()));
 
 // Chart
@@ -77,17 +79,12 @@ function createAvailOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries([newAvCap, newMarket, chart]: [
-  CrvUsdSupply[]?,
-  Market?,
-  IChartApi?
-]): void {
+function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
   if (!chart || !availSerie) {
     return;
   }
 
-  const newAvailSerie: LineData[] = chain(newAvCap)
-    .filter((x) => x.market === newMarket?.name)
+  const newAvailSerie: LineData[] = chain(newSnapshots)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.borrowable,
