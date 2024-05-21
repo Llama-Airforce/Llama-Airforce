@@ -156,7 +156,7 @@ const rowsRaw = computed(() =>
         },
       },
     }))
-    .sortBy((x) => x.collateralUsd, "desc")
+    .orderBy((x) => x.borrowed, "desc")
     .value()
 );
 
