@@ -43,66 +43,10 @@
       </div>
 
       <div class="number">
-        <Tooltip v-if="yieldsMax">
-          <template #item>
-            <span
-              class="number delta"
-              :class="{
-                negative: yieldsMax.apy - props.item.rate * 100 < 0,
-              }"
-            >
-              <AsyncValue
-                :value="yieldsMax.apy - props.item.rate * 100"
-                :precision="2"
-                type="percentage"
-              />
-            </span>
-          </template>
-
-          <div class="premia">
-            <span class="best">
-              <em>Premia</em> for <strong>{{ props.item.name }}</strong> is max
-              yield (<AsyncValue
-                :value="yieldsMax.apy"
-                :precision="2"
-                type="percentage"
-              />) from <strong>{{ yieldsMax.pool }}</strong> farmed on
-              <strong>{{ yieldsMax.platform }}</strong> minus the borrow rate
-              (<AsyncValue
-                :value="props.item.rate * 100"
-                :precision="2"
-                type="percentage"
-              />)
-            </span>
-
-            <div class="top">
-              <strong>Top {{ yieldsTop.length }} yields: </strong>
-
-              <div class="yields">
-                <template
-                  v-for="(y, i) in yieldsTop"
-                  :key="i"
-                >
-                  <div>{{ y.platform }}</div>
-                  <div>
-                    {{
-                      y.pool
-                        .replace("Curve.fi", "")
-                        .replace("Factory Plain Pool: ", "")
-                    }}
-                  </div>
-                  <div>
-                    <AsyncValue
-                      :value="y.apy"
-                      :precision="2"
-                      type="percentage"
-                    />
-                  </div>
-                </template>
-              </div>
-            </div>
-          </div>
-        </Tooltip>
+        <Premia
+          :market="props.item"
+          :yields
+        ></Premia>
       </div>
 
       <div class="number">
@@ -189,16 +133,13 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  type Market,
-  type FeesBreakdown,
-  type Yield,
-} from "@CM/Services/CrvUsd";
+import { type Market, type FeesBreakdown } from "@CM/Services/CrvUsd";
 import {
   useQueryMarkets,
   useQueryFees,
   useQueryYields,
 } from "@CM/Services/CrvUsd/Queries";
+import Premia from "@CM/Pages/Platform/CrvUsd/Components/Premia.vue";
 
 const { t } = useI18n();
 
@@ -216,20 +157,6 @@ const search = ref("");
 
 const loading = computed(
   () => loadingYields.value || loadingMarkets.value || loadingFees.value
-);
-
-const yieldsMax = computed(
-  (): Yield | null =>
-    chain(yields.value)
-      .maxBy((x) => x.apy)
-      .value() ?? null
-);
-
-const yieldsTop = computed((): Yield[] =>
-  chain(yields.value)
-    .orderBy((x) => x.apy, "desc")
-    .take(5)
-    .value()
 );
 
 const rowsRaw = computed(() =>
@@ -288,29 +215,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
-  }
-
-  .premia {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    > .top {
-      display: flex;
-      flex-direction: column;
-
-      > .yields {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-
-        > div {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          max-width: 20ch;
-        }
-      }
-    }
   }
 
   ::v-deep(.markets-columns-data) {
