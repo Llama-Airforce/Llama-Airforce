@@ -45,10 +45,8 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Services/LlamaLend";
-
-import ChartOHLC from "@CM/Pages/Platform/LlamaLend/Charts/ChartOHLC.vue";
-import TableTrades from "@CM/Pages/Platform/LlamaLend/Tables/TableTrades.vue";
-import TableEvents from "@CM/Pages/Platform/LlamaLend/Tables/TableEvents.vue";
+import { ChartOHLC } from "@CM/Pages/Platform/LlamaLend/Charts";
+import { TableTrades, TableEvents } from "@CM/Pages/Platform/LlamaLend/Tables";
 
 const { t } = useI18n();
 

@@ -9,10 +9,12 @@
 
 <script setup lang="ts">
 import type { Market } from "@CM/Services/CrvUsd";
-import ChartMarketVolume from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketVolume.vue";
-import ChartMarketLoans from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketLoans.vue";
-import ChartMarketRates from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketRates.vue";
-import ChartMarketAvailableCap from "@CM/Pages/Platform/CrvUsd/Charts/ChartMarketAvailableCap.vue";
+import {
+  ChartMarketVolume,
+  ChartMarketLoans,
+  ChartMarketRates,
+  ChartMarketAvailableCap,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
 
 // Props
 interface Props {

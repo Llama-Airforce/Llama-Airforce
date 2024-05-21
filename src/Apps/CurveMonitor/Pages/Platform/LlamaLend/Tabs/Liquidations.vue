@@ -17,8 +17,10 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Services/LlamaLend";
-import ChartSoftLiqRatios from "@CM/Pages/Platform/LlamaLend/Charts/ChartSoftLiqRatios.vue";
-import ChartLiqHistory from "@CM/Pages/Platform/LlamaLend/Charts/ChartLiqHistory.vue";
+import {
+  ChartSoftLiqRatios,
+  ChartLiqHistory,
+} from "@CM/Pages/Platform/LlamaLend/Charts";
 
 // Props
 interface Props {

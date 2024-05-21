@@ -24,15 +24,17 @@
 <script setup lang="ts">
 import type { Market } from "@CM/Services/CrvUsd";
 import LiquidationOverview from "@CM/Pages/Platform/CrvUsd/Components/LiquidationOverview.vue";
-import ChartLiquidationSoftLiquidation from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationSoftLiquidation.vue";
-import ChartLiquidationMedianLoss from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationMedianLoss.vue";
-import ChartLiquidationAverageHealth from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationAverageHealth.vue";
-import ChartLiquidationHealthDeciles from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHealthDeciles.vue";
-import ChartLiquidationProportionLosers from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationProportionLosers.vue";
-import ChartLiquidationHistorical from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistorical.vue";
-import TableLiquidationLiquidators from "@CM/Pages/Platform/CrvUsd/Tables/TableLiquidationLiquidators.vue";
-import ChartLiquidationLiquidatorRevenue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationLiquidatorRevenue.vue";
-import ChartLiquidationCollateralRatio from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationCollateralRatio.vue";
+import {
+  ChartLiquidationSoftLiquidation,
+  ChartLiquidationMedianLoss,
+  ChartLiquidationAverageHealth,
+  ChartLiquidationHealthDeciles,
+  ChartLiquidationProportionLosers,
+  ChartLiquidationHistorical,
+  ChartLiquidationLiquidatorRevenue,
+  ChartLiquidationCollateralRatio,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
+import { TableLiquidationLiquidators } from "@CM/Pages/Platform/CrvUsd/Tables";
 
 // Props
 interface Props {

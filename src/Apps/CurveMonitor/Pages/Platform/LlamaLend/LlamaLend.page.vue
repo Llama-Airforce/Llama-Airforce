@@ -100,7 +100,7 @@ import {
 } from "@CM/Services/LlamaLend/Queries";
 import { type Market, type MarketPair } from "@CM/Services/LlamaLend";
 import SelectChain from "@CM/Components/SelectChain.vue";
-import TableMarkets from "@CM/Pages/Platform/LlamaLend/Tables/TableMarkets.vue";
+import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 
 const { t } = useI18n();
 

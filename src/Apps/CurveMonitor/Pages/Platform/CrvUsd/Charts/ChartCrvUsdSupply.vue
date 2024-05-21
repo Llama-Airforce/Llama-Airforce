@@ -45,8 +45,10 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import { useQueryCrvUsdSupply } from "@CM/Services/CrvUsd/Queries";
-import ChartCrvUsdSupplyLine from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyLine.vue";
-import ChartCrvUsdSupplyBreakdown from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupplyBreakdown.vue";
+import {
+  ChartCrvUsdSupplyLine,
+  ChartCrvUsdSupplyBreakdown,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
 
 type ChartType = "line" | "breakdown";
 

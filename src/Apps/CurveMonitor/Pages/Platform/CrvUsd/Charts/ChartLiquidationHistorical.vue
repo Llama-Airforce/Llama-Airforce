@@ -39,8 +39,10 @@
 <script setup lang="ts">
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQueryLiquidations } from "@CM/Services/CrvUsd/Queries";
-import ChartLiquidationHistoricalValue from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalValue.vue";
-import ChartLiquidationHistoricalCount from "@CM/Pages/Platform/CrvUsd/Charts/ChartLiquidationHistoricalCount.vue";
+import {
+  ChartLiquidationHistoricalValue,
+  ChartLiquidationHistoricalCount,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
 
 type ChartType = "count" | "value";
 

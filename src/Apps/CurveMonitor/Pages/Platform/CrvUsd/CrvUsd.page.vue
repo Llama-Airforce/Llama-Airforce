@@ -18,11 +18,15 @@
 </template>
 
 <script setup lang="ts">
-import TableMarkets from "@CM/Pages/Platform/CrvUsd/Tables/TableMarkets.vue";
-import TablePegkeepers from "@CM/Pages/Platform/CrvUsd/Tables/TablePegkeepers.vue";
-import ChartPoolPrices from "@CM/Pages/Platform/CrvUsd/Charts/ChartPoolPrices.vue";
-import ChartCrvUsdSupply from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdSupply.vue";
-import ChartCrvUsdPriceHistogram from "@CM/Pages/Platform/CrvUsd/Charts/ChartCrvUsdPriceHistogram.vue";
+import {
+  TableMarkets,
+  TablePegkeepers,
+} from "@CM/Pages/Platform/CrvUsd/Tables";
+import {
+  ChartPoolPrices,
+  ChartCrvUsdSupply,
+  ChartCrvUsdPriceHistogram,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
 import type { Market } from "@CM/Services/CrvUsd";
 
 const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());

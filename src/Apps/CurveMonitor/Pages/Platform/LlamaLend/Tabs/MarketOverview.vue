@@ -74,12 +74,15 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Market, tvl } from "@CM/Services/LlamaLend";
-
-import ChartMarketLoans from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketLoans.vue";
-import ChartMarketRates from "@CM/Pages/Platform/LlamaLend/Charts/ChartMarketRates.vue";
-import KPIUsage from "@CM/Pages/Platform/LlamaLend/Components/KPIUsage.vue";
-import Addresses from "@CM/Pages/Platform/LlamaLend/Components/Addresses.vue";
-import Properties from "@CM/Pages/Platform/LlamaLend/Components/Properties.vue";
+import {
+  ChartMarketLoans,
+  ChartMarketRates,
+} from "@CM/Pages/Platform/LlamaLend/Charts";
+import {
+  KPIUsage,
+  Addresses,
+  Properties,
+} from "@CM/Pages/Platform/LlamaLend/Components";
 
 const { t } = useI18n();
 
