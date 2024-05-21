@@ -1,4 +1,5 @@
 import { chain } from "lodash";
+import { type Chain } from "@CM/Models/Chain";
 import CrvUsdService, { type Market, type Keeper } from "@CM/Services/CrvUsd";
 import OHLCService from "@CM/Services/OHLC";
 
@@ -120,11 +121,14 @@ export function useQueryProportionLosers(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryLiqsSoft(market: Ref<Market | undefined>) {
+export function useQuerySoftLiqRatios(
+  market: Ref<Market | undefined>,
+  chain: Ref<Chain | undefined>
+) {
   return useQuery({
     queryKey: ["crvusd-liq-soft-liqs", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getHistoricalSoftLiquidations(market!),
+      service.getSoftLiqRatios(chain.value!, market!),
     ...hasMarket(market),
     ...initEmptyArray(),
   });

@@ -21,23 +21,29 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
+import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
+import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
 import {
   type Market,
-  type HistoricalSoftLiquidations,
+  type SoftLiqRatio,
+  type Snapshot,
 } from "@CM/Services/CrvUsd";
-import { useQueryLiqsSoft } from "@CM/Services/CrvUsd/Queries";
+import {
+  useQuerySoftLiqRatios,
+  useQuerySnapshots,
+} from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
   market: Market | undefined;
+  chain: Chain | undefined;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 let proportionSerie: ISeriesApi<"Area">;
@@ -55,12 +61,18 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: softLiqs } = useQueryLiqsSoft(
+const loading = computed(() => loadingSoftLiqs.value || loadingSnapshots.value);
+const { isFetching: loadingSoftLiqs, data: softLiqRatios } =
+  useQuerySoftLiqRatios(
+    toRef(() => market),
+    toRef(() => chain)
+  );
+const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
   toRef(() => market)
 );
 
 // Watches
-watch([softLiqs, chart], createSeries);
+watch([softLiqRatios, snapshots, chart], createSeries);
 watch(theme, () => {
   proportionSerie.applyOptions(createProportionOptionsSerie());
   priceSerie.applyOptions(createPriceOptionsSerie());
@@ -120,15 +132,16 @@ function createProportionOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries([newSoftLiq, chart]: [
-  HistoricalSoftLiquidations[]?,
+function createSeries([newSoftLiq, newSnapshots, chart]: [
+  SoftLiqRatio[]?,
+  Snapshot[]?,
   IChartApi?
 ]): void {
   if (!chart || !proportionSerie) {
     return;
   }
 
-  const newProportionSerie: LineData[] = chain(newSoftLiq)
+  const newProportionSerie: LineData[] = chain_(newSoftLiq)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.proportion,
@@ -137,10 +150,10 @@ function createSeries([newSoftLiq, chart]: [
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newPriceSerie: LineData[] = chain(newSoftLiq)
+  const newPriceSerie: LineData[] = chain_(newSnapshots)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.collateralPrice,
+      value: x.priceOracle,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
@@ -176,5 +189,5 @@ function createSeries([newSoftLiq, chart]: [
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Soft Liquidations
+title: Soft Liquidations Ratio
 </i18n>

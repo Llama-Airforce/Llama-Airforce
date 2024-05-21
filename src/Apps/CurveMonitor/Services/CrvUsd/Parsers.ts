@@ -24,6 +24,15 @@ export const parseSnapshot = (
     timestamp: new Date(x.dt).getTime() / 1000,
     rate: x.rate,
     nLoans: x.n_loans,
+    minted: x.minted,
+    redeemed: x.redeemed,
+    totalCollateral: x.total_collateral,
+    totalCollateralUsd: x.total_collateral_usd,
+    totalStablecoin: x.total_stablecoin,
+    totalDebt: x.total_debt,
+    priceAMM: x.amm_price,
+    priceOracle: x.price_oracle,
+    borrowable: x.borrowable,
   };
 };
 
@@ -69,5 +78,14 @@ export const parseSupply = (
     market: x.market,
     supply: x.supply,
     borrowable: x.borrowable,
+  };
+};
+
+export const parseSoftLiqRatio = (
+  x: ApiTypes.GetSoftLiqRatiosResponse["data"][number]
+): Models.SoftLiqRatio => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    proportion: x.proportion / 100,
   };
 };

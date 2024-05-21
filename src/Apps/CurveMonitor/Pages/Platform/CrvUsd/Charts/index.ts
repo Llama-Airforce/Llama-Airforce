@@ -11,7 +11,7 @@ export { default as ChartLiquidationHistoricalValue } from "./ChartLiquidationHi
 export { default as ChartLiquidationLiquidatorRevenue } from "./ChartLiquidationLiquidatorRevenue.vue";
 export { default as ChartLiquidationMedianLoss } from "./ChartLiquidationMedianLoss.vue";
 export { default as ChartLiquidationProportionLosers } from "./ChartLiquidationProportionLosers.vue";
-export { default as ChartLiquidationSoftLiquidation } from "./ChartLiquidationSoftLiquidation.vue";
+export { default as ChartLiqSoftLiqRatio } from "./ChartLiqSoftLiqRatio.vue";
 export { default as ChartLlammaCandles } from "./ChartLlammaCandles.vue";
 export { default as ChartMarketAvailableCap } from "./ChartMarketAvailableCap.vue";
 export { default as ChartMarketLoans } from "./ChartMarketLoans.vue";

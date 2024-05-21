@@ -92,10 +92,12 @@ export default class CrvUsdService extends ServiceBase {
     ).then((resp) => resp.yields);
   }
 
-  public async getHistoricalSoftLiquidations(marketAddr: string) {
-    return this.fetch<{ losses: Models.HistoricalSoftLiquidations[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/losses/historical/soft`
-    ).then((resp) => resp.losses);
+  public async getSoftLiqRatios(chain: Chain, marketAddr: string) {
+    const resp = await this.fetch<ApiTypes.GetSoftLiqRatiosResponse>(
+      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/soft_liquidation_ratio`
+    );
+
+    return resp.data.map(Parsers.parseSoftLiqRatio);
   }
 
   public async getHistoricalMedianLoss(marketAddr: string) {
@@ -138,12 +140,6 @@ export default class CrvUsdService extends ServiceBase {
     return this.fetch<{ health: Models.MarketHealthState }>(
       `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/state`
     ).then((resp) => resp.health);
-  }
-
-  public async getMarketAvailableCap(marketAddr: string) {
-    return this.fetch<{ available: Models.AvailableCap[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/available`
-    ).then((resp) => resp.available);
   }
 
   public async getLiquidatorRevenue(marketAddr: string) {

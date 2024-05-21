@@ -1,7 +1,12 @@
 <template>
   <div class="liquidations">
     <LiquidationOverview :market></LiquidationOverview>
-    <ChartLiquidationSoftLiquidation :market></ChartLiquidationSoftLiquidation>
+
+    <ChartLiqSoftLiqRatio
+      :market
+      :chain
+    ></ChartLiqSoftLiqRatio>
+
     <ChartLiquidationMedianLoss :market></ChartLiquidationMedianLoss>
 
     <ChartLiquidationProportionLosers
@@ -22,10 +27,11 @@
 </template>
 
 <script setup lang="ts">
+import type { Chain } from "@CM/Models/Chain";
 import type { Market } from "@CM/Services/CrvUsd";
 import LiquidationOverview from "@CM/Pages/Platform/CrvUsd/Components/LiquidationOverview.vue";
 import {
-  ChartLiquidationSoftLiquidation,
+  ChartLiqSoftLiqRatio,
   ChartLiquidationMedianLoss,
   ChartLiquidationAverageHealth,
   ChartLiquidationHealthDeciles,
@@ -39,6 +45,7 @@ import { TableLiquidationLiquidators } from "@CM/Pages/Platform/CrvUsd/Tables";
 // Props
 interface Props {
   market: Market | undefined;
+  chain: Chain | undefined;
 }
 
 const { market } = defineProps<Props>();

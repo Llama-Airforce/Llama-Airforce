@@ -80,3 +80,10 @@ export type GetSupplyResponse = {
     timestamp: string;
   }[];
 };
+
+export type GetSoftLiqRatiosResponse = {
+  data: {
+    timestamp: string;
+    proportion: number;
+  }[];
+};

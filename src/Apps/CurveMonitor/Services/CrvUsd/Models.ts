@@ -13,6 +13,15 @@ export type Snapshot = {
   timestamp: number;
   rate: number;
   nLoans: number;
+  minted: number;
+  redeemed: number;
+  totalCollateral: number;
+  totalCollateralUsd: number;
+  totalStablecoin: number;
+  totalDebt: number;
+  priceAMM: number;
+  priceOracle: number;
+  borrowable: number;
 };
 
 export type LlammaOHLC = {
@@ -99,9 +108,8 @@ export type Yield = {
   apy: number;
 };
 
-export type HistoricalSoftLiquidations = {
+export type SoftLiqRatio = {
   timestamp: number;
-  collateralPrice: number;
   proportion: number;
 };
 
