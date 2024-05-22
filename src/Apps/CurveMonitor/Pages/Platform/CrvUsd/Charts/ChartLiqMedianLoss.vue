@@ -12,20 +12,22 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
+import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
+import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type HistoricalLosers } from "@CM/Services/CrvUsd";
-import { useQueryProportionLosers } from "@CM/Services/CrvUsd/Queries";
+import { type Market, type LiqLosses } from "@CM/Services/CrvUsd";
+import { useQueryLiqLosses } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
+  chain: Chain | undefined;
   market: Market | undefined;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 let areaSerie: ISeriesApi<"Area">;
@@ -41,7 +43,8 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Data
-const { isFetching: loading, data: losses } = useQueryProportionLosers(
+const { isFetching: loading, data: losses } = useQueryLiqLosses(
+  toRef(() => chain),
   toRef(() => market)
 );
 
@@ -78,18 +81,15 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries([newLosses, chart]: [
-  HistoricalLosers[]?,
-  IChartApi?
-]): void {
+function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
   if (!chart || !areaSerie) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newLosses)
+  const newSerie: LineData[] = chain_(newLosses)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.losers,
+      value: x.pctLossMedian * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
@@ -121,5 +121,5 @@ function createSeries([newLosses, chart]: [
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Proportion of Loans with Losses
+title: Median Loss % Among Loans with Losses
 </i18n>

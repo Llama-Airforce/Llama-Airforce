@@ -117,3 +117,16 @@ export type GetLiqOverviewResponse = {
   liquidatable_collateral_usd: number;
   liquidatable_stablecoin_usd: number;
 };
+
+export type GetLiqLossesResponse = {
+  data: {
+    timestamp: string;
+    median_pct_loss: number;
+    avg_pct_loss: number;
+    median_abs_loss: number;
+    avg_abs_loss: number;
+    total_users: number;
+    users_with_losses: number;
+    ratio: number;
+  }[];
+};

@@ -114,24 +114,15 @@ export function useQueryLiquidatorRevenue(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryMedianLoss(market: Ref<Market | undefined>) {
+export function useQueryLiqLosses(
+  chain: Ref<Chain | undefined>,
+  market: Ref<Market | undefined>
+) {
   return useQuery({
-    queryKey: ["crvusd-liq-median-losses", useMarketAddress(market)] as const,
+    queryKey: ["crvusd-liq-losses", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getHistoricalMedianLoss(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
-export function useQueryProportionLosers(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: [
-      "crvusd-liq-proportion-losers",
-      useMarketAddress(market),
-    ] as const,
-    queryFn: ({ queryKey: [, market] }) => service.getProportionLosers(market!),
-    ...hasMarket(market),
+      service.getLiqLosses(chain.value!, market!),
+    ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
 }

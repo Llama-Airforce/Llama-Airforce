@@ -138,9 +138,15 @@ export type LiqOverview = {
   collatRatio: number;
 };
 
-export type HistoricalMedianLoss = {
+export type LiqLosses = {
   timestamp: number;
-  lossPct: number;
+  pctLossMedian: number;
+  pctLossAverage: number;
+  absoluteLossMedian: number;
+  absoluteLossAverage: number;
+  numTotalUsers: number;
+  numUsersWithLosses: number;
+  ratio: number;
 };
 
 export type HistoricalAverageHealth = {
@@ -153,11 +159,6 @@ export type HealthDecile = {
   collateralUsdValue: number;
   debt: number;
   stablecoin: number;
-};
-
-export type HistoricalLosers = {
-  timestamp: number;
-  losers: number;
 };
 
 export type LiquidatorRevenue = {

@@ -122,3 +122,18 @@ export const parseLiqOverview = (
     collatRatio: x.collat_ratio,
   };
 };
+
+export const parseLiqLosses = (
+  x: ApiTypes.GetLiqLossesResponse["data"][number]
+): Models.LiqLosses => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    pctLossAverage: x.avg_pct_loss,
+    pctLossMedian: x.median_pct_loss,
+    absoluteLossAverage: x.avg_abs_loss,
+    absoluteLossMedian: x.median_abs_loss,
+    numTotalUsers: x.total_users,
+    numUsersWithLosses: x.users_with_losses,
+    ratio: x.ratio,
+  };
+};

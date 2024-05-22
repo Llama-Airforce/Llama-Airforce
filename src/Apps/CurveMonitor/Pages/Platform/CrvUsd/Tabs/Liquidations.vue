@@ -10,11 +10,15 @@
       :chain
     ></ChartLiqSoftLiqRatio>
 
-    <ChartLiquidationMedianLoss :market></ChartLiquidationMedianLoss>
-
-    <ChartLiquidationProportionLosers
+    <ChartLiqMedianLoss
       :market
-    ></ChartLiquidationProportionLosers>
+      :chain
+    ></ChartLiqMedianLoss>
+
+    <ChartLiqLosersProportion
+      :market
+      :chain
+    ></ChartLiqLosersProportion>
 
     <ChartLiquidationAverageHealth :market></ChartLiquidationAverageHealth>
     <ChartLiquidationHealthDeciles :market></ChartLiquidationHealthDeciles>
@@ -41,10 +45,10 @@ import type { Chain } from "@CM/Models/Chain";
 import type { Market } from "@CM/Services/CrvUsd";
 import {
   ChartLiqSoftLiqRatio,
-  ChartLiquidationMedianLoss,
+  ChartLiqMedianLoss,
   ChartLiquidationAverageHealth,
   ChartLiquidationHealthDeciles,
-  ChartLiquidationProportionLosers,
+  ChartLiqLosersProportion,
   ChartLiqs,
   ChartLiquidationLiquidatorRevenue,
   ChartLiquidationCollateralRatio,
