@@ -43,8 +43,8 @@
 
             <div class="right">
               <Chip
-                v-if="menuItem.tag === 'beta'"
-                label="BETA"
+                v-if="menuItem.tag"
+                :label="menuItem.tag"
               ></Chip>
             </div>
           </div>
@@ -147,6 +147,12 @@ const onClickNode = (): void => {
         width: 3ch;
         text-align: center;
         color: var(--c-primary);
+      }
+    }
+
+    > .right {
+      .chip {
+        text-transform: uppercase;
       }
     }
   }

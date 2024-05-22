@@ -38,9 +38,9 @@
 
 <script setup lang="ts">
 import { shorten } from "@/Util";
-import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
-import { match } from "@CM/Pages/Platform/Pools/Util/PoolHelper";
-import type { Pool } from "@CM/Pages/Platform/Pools/Models";
+import { useCurvePoolsStore } from "@CM/Pages/Platform/PoolsOld/Store";
+import { match } from "@CM/Pages/Platform/PoolsOld/Util/PoolHelper";
+import type { Pool } from "@CM/Pages/Platform/PoolsOld/Models";
 
 const { t } = useI18n();
 

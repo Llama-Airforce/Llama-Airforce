@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import type { Pool, Volume } from "@CM/Pages/Platform/Pools/Models";
-import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
+import type { Pool, Volume } from "@CM/Pages/Platform/PoolsOld/Models";
+import { useCurvePoolsStore } from "@CM/Pages/Platform/PoolsOld/Store";
 import { useSettingsStore } from "@CM/Stores";
 
 type Serie = {

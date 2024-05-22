@@ -18,8 +18,8 @@
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
-import type { Pool, Candle } from "@CM/Pages/Platform/Pools/Models";
-import { useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
+import type { Pool, Candle } from "@CM/Pages/Platform/PoolsOld/Models";
+import { useCurvePoolsStore } from "@CM/Pages/Platform/PoolsOld/Store";
 
 const { t } = useI18n();
 

@@ -3,6 +3,7 @@ import { type Page } from "@/Framework/Monitor/Page";
 import Home from "@CM/Pages/Home/Home.page.vue";
 
 import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
+import PoolsOld from "@CM/Pages/Platform/PoolsOld/Pools.page.vue";
 import Gauges from "@CM/Pages/Platform/Gauges/Gauges.page.vue";
 import Revenue from "@CM/Pages/Platform/Revenue/Revenue.page.vue";
 
@@ -28,7 +29,8 @@ export const pageMainRoutes = [
 
   { path: "/platform", redirect: { name: "revenue" } },
   { path: "/platform/pools", component: Pools },
-  { path: "/platform/gauges", component: Gauges },
+  { path: "/platform/pools/old", component: PoolsOld },
+  { path: "/platform/gauges/old", component: Gauges },
   {
     path: "/platform/revenue/:tab?",
     name: "revenue",
@@ -99,10 +101,7 @@ export const pageMain: Page = {
         {
           to: "/platform/pools",
           label: "Pools",
-        },
-        {
-          to: "/platform/gauges",
-          label: "Gauges",
+          tag: "alpha",
         },
         {
           to: "/platform/revenue",

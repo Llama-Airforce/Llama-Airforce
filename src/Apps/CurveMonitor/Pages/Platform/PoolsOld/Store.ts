@@ -6,7 +6,7 @@ import type {
   Volume,
   Candle,
   PoolId,
-} from "@CM/Pages/Platform/Pools/Models";
+} from "@CM/Pages/Platform/PoolsOld/Models";
 
 export const useCurvePoolsStore = defineStore("curvePoolsStore", () => {
   const pools = ref<Pool[]>([]);

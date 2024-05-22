@@ -1,4 +1,4 @@
-export type Tag = "beta";
+export type Tag = "alpha" | "beta";
 
 export type MenuItem = {
   label: string | (() => string);

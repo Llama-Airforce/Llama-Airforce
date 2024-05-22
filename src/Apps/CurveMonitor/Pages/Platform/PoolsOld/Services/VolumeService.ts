@@ -1,5 +1,5 @@
 import { ServiceBase } from "@/Services";
-import type { Volume, Pool } from "@CM/Pages/Platform/Pools/Models";
+import type { Volume, Pool } from "@CM/Pages/Platform/PoolsOld/Models";
 
 const API_URL = "https://api-py.llama.airforce/curve/v1";
 

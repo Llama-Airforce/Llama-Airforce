@@ -1,11 +1,11 @@
-import { type useCurvePoolsStore } from "@CM/Pages/Platform/Pools/Store";
-import type { Pool } from "@CM/Pages/Platform/Pools/Models";
+import { type useCurvePoolsStore } from "@CM/Pages/Platform/PoolsOld/Store";
+import type { Pool } from "@CM/Pages/Platform/PoolsOld/Models";
 import {
   type PoolService,
   type ReservesService,
   type CandleService,
   type VolumeService,
-} from "@CM/Pages/Platform/Pools/Services";
+} from "@CM/Pages/Platform/PoolsOld/Services";
 
 export async function getPools(
   store: ReturnType<typeof useCurvePoolsStore>,
