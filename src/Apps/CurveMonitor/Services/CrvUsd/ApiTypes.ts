@@ -103,3 +103,17 @@ export type GetLiqsAggregateResponse = {
     price: number;
   }[];
 };
+
+export type GetLiqOverviewResponse = {
+  soft_liquidation_users: number;
+  median_health: number;
+  average_health: number;
+  collat_ratio: number;
+  liquidatable_positions: number;
+  liquidatable_pos_debt: string;
+  liquidatable_stablecoin: string;
+  liquidatable_collateral: string;
+  liquidatable_pos_debt_usd: number;
+  liquidatable_collateral_usd: number;
+  liquidatable_stablecoin_usd: number;
+};

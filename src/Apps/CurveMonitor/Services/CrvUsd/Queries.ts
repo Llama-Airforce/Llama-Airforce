@@ -44,21 +44,15 @@ export function useQueryLiqAvgHealth(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryPriceDeviation() {
+export function useQueryMarketHealth(
+  chain: Ref<Chain | undefined>,
+  market: Ref<Market | undefined>
+) {
   return useQuery({
-    queryKey: ["crvusd-price-deviation"],
-    queryFn: () => service.getCrvUsdPriceHistogram(),
-    initialData: { x: [], y: [] },
-    initialDataUpdatedAt: 0,
-  });
-}
-
-export function useQueryMarketHealth(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: ["crvusd-liq-market-health", useMarketAddress(market)] as const,
+    queryKey: ["crvusd-liq-overview", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getMarketStateHealth(market!),
-    ...hasMarket(market),
+      service.getLiqOverview(chain.value!, market!),
+    ...hasMarket(market, chain),
   });
 }
 
@@ -152,6 +146,15 @@ export function useQuerySoftLiqRatios(
       service.getSoftLiqRatios(chain.value!, market!),
     ...hasMarket(market, chain),
     ...initEmptyArray(),
+  });
+}
+
+export function useQueryPriceDeviation() {
+  return useQuery({
+    queryKey: ["crvusd-price-deviation"],
+    queryFn: () => service.getCrvUsdPriceHistogram(),
+    initialData: { x: [], y: [] },
+    initialDataUpdatedAt: 0,
   });
 }
 

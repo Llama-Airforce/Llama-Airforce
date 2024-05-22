@@ -127,6 +127,17 @@ export type LiquidationAggregate = {
   price: number;
 };
 
+export type LiqOverview = {
+  softLiqUsers: number;
+  liqablePositions: number;
+  liqableDebtUsd: number;
+  liqableCollatUsd: number;
+  liqableStableUsd: number;
+  medianHealth: number;
+  avgHealth: number;
+  collatRatio: number;
+};
+
 export type HistoricalMedianLoss = {
   timestamp: number;
   lossPct: number;
@@ -147,17 +158,6 @@ export type HealthDecile = {
 export type HistoricalLosers = {
   timestamp: number;
   losers: number;
-};
-
-export type MarketHealthState = {
-  softLiqUsers: number;
-  softLiqRatio: number;
-  liqablePositions: number;
-  liqableDebt: number;
-  liqableCollatUsd: number;
-  liqableStable: number;
-  medianHealth: number;
-  collatRatio: number;
 };
 
 export type LiquidatorRevenue = {

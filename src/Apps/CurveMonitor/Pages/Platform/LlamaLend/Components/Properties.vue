@@ -3,7 +3,6 @@
     <DataTable
       class="datatable-properties"
       columns-data="properties-columns-data"
-      :show-column-headers="false"
       :rows="properties"
     >
       <template #header-content>

@@ -1,6 +1,9 @@
 <template>
   <div class="liquidations">
-    <LiquidationOverview :market></LiquidationOverview>
+    <TableLiqOverview
+      :market
+      :chain
+    ></TableLiqOverview>
 
     <ChartLiqSoftLiqRatio
       :market
@@ -36,7 +39,6 @@
 <script setup lang="ts">
 import type { Chain } from "@CM/Models/Chain";
 import type { Market } from "@CM/Services/CrvUsd";
-import LiquidationOverview from "@CM/Pages/Platform/CrvUsd/Components/LiquidationOverview.vue";
 import {
   ChartLiqSoftLiqRatio,
   ChartLiquidationMedianLoss,
@@ -47,7 +49,10 @@ import {
   ChartLiquidationLiquidatorRevenue,
   ChartLiquidationCollateralRatio,
 } from "@CM/Pages/Platform/CrvUsd/Charts";
-import { TableTopLiquidators } from "@CM/Pages/Platform/CrvUsd/Tables";
+import {
+  TableTopLiquidators,
+  TableLiqOverview,
+} from "@CM/Pages/Platform/CrvUsd/Tables";
 
 // Props
 interface Props {
@@ -66,6 +71,5 @@ const { market } = defineProps<Props>();
 
   @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
 }
 </style>
