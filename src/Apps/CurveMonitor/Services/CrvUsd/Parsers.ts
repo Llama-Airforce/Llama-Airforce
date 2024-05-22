@@ -12,6 +12,7 @@ export const parseMarket = (
     llamma: x.llamma.toLocaleLowerCase(),
     rate: x.rate,
     borrowed: x.total_debt,
+    borrowable: x.borrowable,
     collateral: x.collateral_amount,
     collateralUsd: x.collateral_amount_usd,
     loans: x.n_loans,

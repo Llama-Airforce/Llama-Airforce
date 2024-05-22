@@ -5,6 +5,7 @@ export type Market = {
   llamma: string;
   rate: number;
   borrowed: number;
+  borrowable: number;
   collateral: number;
   collateralUsd: number;
   loans: number;
