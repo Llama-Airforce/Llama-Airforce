@@ -7,8 +7,11 @@ export const parseChainInfo = (
   return {
     chain: x.chain,
     total: {
-      total_tvl: x.total.total_tvl,
-      trading_volume_24h: x.total.trading_volume_24h,
+      tvl: x.total.total_tvl,
+      tradingVolume24h: x.total.trading_volume_24h,
+      tradingFee24h: x.total.trading_volume_24h,
+      liquidityVolume24h: x.total.liquidity_volume_24h,
+      liquidityFee24h: x.total.liquidity_fee_24h,
     },
   };
 };

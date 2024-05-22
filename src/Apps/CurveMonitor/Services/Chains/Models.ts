@@ -1,7 +1,10 @@
 export type ChainInfo = {
   chain: string;
   total: {
-    total_tvl: number;
-    trading_volume_24h: number;
+    tvl: number;
+    tradingVolume24h: number;
+    tradingFee24h: number;
+    liquidityVolume24h: number;
+    liquidityFee24h: number;
   };
 };

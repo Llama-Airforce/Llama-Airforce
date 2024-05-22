@@ -60,9 +60,9 @@ const borrowed = computed(
 );
 
 // ChainInfo
-const { data: chainInfo } = useQueryChainInfo("ethereum");
-const tvl = computed(() => chainInfo?.value?.total.total_tvl ?? 0);
-const volume = computed(() => chainInfo?.value?.total.trading_volume_24h ?? 0);
+const { data: chainInfo } = useQueryChainInfo(ref("ethereum"));
+const tvl = computed(() => chainInfo?.value?.total.tvl ?? 0);
+const volume = computed(() => chainInfo?.value?.total.tradingVolume24h ?? 0);
 
 // CRV Price
 const { data: price } = useQuery({
