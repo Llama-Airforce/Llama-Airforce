@@ -32,11 +32,11 @@ export const parseMarket = (
     borrowed_balance_usd: parseFloat(x.borrowed_balance_usd),
     collateral_token: {
       symbol: x.collateral_token.symbol,
-      address: x.collateral_token.address,
+      address: x.collateral_token.address.toLocaleLowerCase(),
     },
     borrowed_token: {
       symbol: x.borrowed_token.symbol,
-      address: x.borrowed_token.address,
+      address: x.borrowed_token.address.toLocaleLowerCase(),
     },
   };
 };

@@ -8,12 +8,21 @@ export const parseMarket = (
   return {
     name: x.collateral_token.symbol,
     address: x.address.toLocaleLowerCase(),
+    factory: x.factory_address.toLocaleLowerCase(),
     llamma: x.llamma.toLocaleLowerCase(),
     rate: x.rate,
     borrowed: x.total_debt,
     collateral: x.collateral_amount,
     collateralUsd: x.collateral_amount_usd,
     loans: x.n_loans,
+    collateral_token: {
+      symbol: x.collateral_token.symbol,
+      address: x.collateral_token.address.toLocaleLowerCase(),
+    },
+    stablecoin_token: {
+      symbol: x.stablecoin_token.symbol,
+      address: x.stablecoin_token.address.toLocaleLowerCase(),
+    },
   };
 };
 

@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Services/LlamaLend";
+import { type Market } from "@CM/Services/CrvUsd";
 
 const { t } = useI18n();
 
@@ -82,8 +82,8 @@ function getTokenInfo(
   } else {
     return {
       type: "token",
-      symbol: market?.borrowed_token.symbol ?? "?",
-      address: market?.borrowed_token?.address ?? "",
+      symbol: market?.stablecoin_token.symbol ?? "?",
+      address: market?.stablecoin_token?.address ?? "",
     };
   }
 }

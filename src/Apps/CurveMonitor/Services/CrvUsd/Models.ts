@@ -1,12 +1,21 @@
 export type Market = {
   name: string;
   address: string;
+  factory: string;
   llamma: string;
   rate: number;
   borrowed: number;
   collateral: number;
   collateralUsd: number;
   loans: number;
+  collateral_token: {
+    symbol: string;
+    address: string;
+  };
+  stablecoin_token: {
+    symbol: string;
+    address: string;
+  };
 };
 
 export type Snapshot = {

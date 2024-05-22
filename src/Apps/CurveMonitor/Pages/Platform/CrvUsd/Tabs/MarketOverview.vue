@@ -1,13 +1,37 @@
 <template>
   <div class="market">
-    <ChartMarketRates :market></ChartMarketRates>
-    <ChartMarketAvailableCap :market></ChartMarketAvailableCap>
-    <ChartMarketLoans :market></ChartMarketLoans>
+    <ChartMarketRates
+      style="grid-area: rates"
+      :market
+    ></ChartMarketRates>
+
+    <ChartMarketAvailableCap
+      style="grid-area: cap"
+      :market
+    ></ChartMarketAvailableCap>
+
+    <ChartMarketLoans
+      style="grid-area: loans"
+      :market
+    ></ChartMarketLoans>
 
     <ChartMarketVolume
+      style="grid-area: volume"
       :market
       :chain
     ></ChartMarketVolume>
+
+    <Properties
+      style="grid-area: properties"
+      :market
+      :chain
+    ></Properties>
+
+    <Addresses
+      style="grid-area: addresses"
+      :market
+      :chain
+    ></Addresses>
   </div>
 </template>
 
@@ -20,6 +44,7 @@ import {
   ChartMarketRates,
   ChartMarketAvailableCap,
 } from "@CM/Pages/Platform/CrvUsd/Charts";
+import { Properties, Addresses } from "@CM/Pages/Platform/CrvUsd/Components";
 
 // Props
 interface Props {
@@ -37,7 +62,11 @@ const { market, chain } = defineProps<Props>();
   margin: var(--dashboard-gap) 0;
 
   @include dashboard-grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-areas:
+    "rates rates cap cap"
+    "loans loans volume volume"
+    "properties properties addresses addresses";
 }
 </style>
