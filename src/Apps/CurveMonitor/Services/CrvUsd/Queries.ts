@@ -69,11 +69,15 @@ export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryLiqHealthDeciles(market: Ref<Market | undefined>) {
+export function useQueryLiqHealthDeciles(
+  chain: Ref<Chain | undefined>,
+  market: Ref<Market | undefined>
+) {
   return useQuery({
     queryKey: ["crvusd-liq-health-deciles", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) => service.getHealthDeciles(market!),
-    ...hasMarket(market),
+    queryFn: ({ queryKey: [, market] }) =>
+      service.getLiqHealthDeciles(chain.value!, market!),
+    ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
 }

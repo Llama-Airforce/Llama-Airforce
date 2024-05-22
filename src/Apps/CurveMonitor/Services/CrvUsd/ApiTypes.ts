@@ -130,3 +130,12 @@ export type GetLiqLossesResponse = {
     ratio: number;
   }[];
 };
+
+export type GetLiqHealthDecilesResponse = {
+  data: {
+    health_decile: string;
+    collateral: number;
+    stablecoin: number;
+    debt: number;
+  }[];
+};

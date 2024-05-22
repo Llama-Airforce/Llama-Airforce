@@ -137,3 +137,14 @@ export const parseLiqLosses = (
     ratio: x.ratio,
   };
 };
+
+export const parseLiqHealthDeciles = (
+  x: ApiTypes.GetLiqHealthDecilesResponse["data"][number]
+): Models.LiqHealthDecile => {
+  return {
+    decile: x.health_decile,
+    collateralUsdValue: x.collateral,
+    debt: x.debt,
+    stablecoin: x.stablecoin,
+  };
+};

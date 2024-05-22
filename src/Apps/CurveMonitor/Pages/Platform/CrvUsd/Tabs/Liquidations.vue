@@ -21,7 +21,12 @@
     ></ChartLiqLosersProportion>
 
     <ChartLiquidationAverageHealth :market></ChartLiquidationAverageHealth>
-    <ChartLiquidationHealthDeciles :market></ChartLiquidationHealthDeciles>
+
+    <ChartLiqHealthDeciles
+      :market
+      :chain
+    ></ChartLiqHealthDeciles>
+
     <ChartLiquidationCollateralRatio :market></ChartLiquidationCollateralRatio>
 
     <ChartLiqs
@@ -47,7 +52,7 @@ import {
   ChartLiqSoftLiqRatio,
   ChartLiqMedianLoss,
   ChartLiquidationAverageHealth,
-  ChartLiquidationHealthDeciles,
+  ChartLiqHealthDeciles,
   ChartLiqLosersProportion,
   ChartLiqs,
   ChartLiquidationLiquidatorRevenue,

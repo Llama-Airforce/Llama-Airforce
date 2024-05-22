@@ -149,16 +149,16 @@ export type LiqLosses = {
   ratio: number;
 };
 
-export type HistoricalAverageHealth = {
-  timestamp: number;
-  quartiles: number[];
-};
-
-export type HealthDecile = {
+export type LiqHealthDecile = {
   decile: string;
   collateralUsdValue: number;
   debt: number;
   stablecoin: number;
+};
+
+export type HistoricalAverageHealth = {
+  timestamp: number;
+  quartiles: number[];
 };
 
 export type LiquidatorRevenue = {

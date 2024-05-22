@@ -127,10 +127,12 @@ export default class CrvUsdService extends ServiceBase {
     ).then((resp) => resp.health);
   }
 
-  public async getHealthDeciles(marketAddr: string) {
-    return this.fetch<{ health: Models.HealthDecile[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/health`
-    ).then((resp) => resp.health);
+  public async getLiqHealthDeciles(chain: Chain, marketAddr: string) {
+    const resp = await this.fetch<ApiTypes.GetLiqHealthDecilesResponse>(
+      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/health/distribution`
+    );
+
+    return resp.data.map(Parsers.parseLiqHealthDeciles);
   }
 
   public async getLiquidatorRevenue(marketAddr: string) {

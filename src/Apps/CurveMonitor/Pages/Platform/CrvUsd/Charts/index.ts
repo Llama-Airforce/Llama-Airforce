@@ -4,7 +4,7 @@ export { default as ChartCrvUsdSupplyBreakdown } from "./ChartCrvUsdSupplyBreakd
 export { default as ChartCrvUsdSupplyLine } from "./ChartCrvUsdSupplyLine.vue";
 export { default as ChartLiquidationAverageHealth } from "./ChartLiquidationAverageHealth.vue";
 export { default as ChartLiquidationCollateralRatio } from "./ChartLiquidationCollateralRatio.vue";
-export { default as ChartLiquidationHealthDeciles } from "./ChartLiquidationHealthDeciles.vue";
+export { default as ChartLiqHealthDeciles } from "./ChartLiqHealthDeciles.vue";
 export { default as ChartLiqs } from "./ChartLiqs.vue";
 export { default as ChartLiqsCount } from "./ChartLiqsCount.vue";
 export { default as ChartLiqsValue } from "./ChartLiqsValue.vue";

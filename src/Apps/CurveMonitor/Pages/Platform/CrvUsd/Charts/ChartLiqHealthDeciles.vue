@@ -9,23 +9,26 @@
 </template>
 
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
+import { type Chain } from "@CM/Models/Chain";
+import { createChartStyles } from "@/Styles/ChartStyles";
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQueryLiqHealthDeciles } from "@CM/Services/CrvUsd/Queries";
 
 // Props
 interface Props {
+  chain: Chain | undefined;
   market: Market | undefined;
 }
 
-const { market } = defineProps<Props>();
+const { market, chain } = defineProps<Props>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { isFetching: loading, data } = useQueryLiqHealthDeciles(
+  toRef(() => chain),
   toRef(() => market)
 );
 
