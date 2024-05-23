@@ -6,6 +6,7 @@ import {
 
 /**
  * Vue composable that creates and manages a lightweight chart using the 'lightweight-charts' library.
+ * The chart will automatically resize if its parent element resizes, thanks to a ResizeObserver.
  *
  * @param recreateChartTrigger - A ref that triggers the recreation of the chart when its value changes.
  * @param createChartOptions - A function that takes the chart's HTML element and returns the chart options.
@@ -23,6 +24,8 @@ export function useLightweightChart(
   const chart = ref<IChartApi | undefined>(undefined) as Ref<
     IChartApi | undefined
   >;
+
+  let resizeObserver: ResizeObserver | null = null;
 
   onMounted(async () => {
     if (!chartRef.value) return;
@@ -42,12 +45,29 @@ export function useLightweightChart(
     if (onChartCreated && chart.value) {
       onChartCreated(chart.value);
     }
+
+    // Create a ResizeObserver to observe the chart's parent element
+    resizeObserver = new ResizeObserver(() => {
+      if (chart.value) {
+        chart.value.applyOptions({ width: chartRef.value?.clientWidth });
+      }
+    });
+
+    // Start observing the chart's parent element
+    if (chartRef.value.parentElement) {
+      resizeObserver.observe(chartRef.value.parentElement);
+    }
   });
 
   onUnmounted(() => {
     if (chart.value) {
       chart.value.remove();
       chart.value = undefined;
+    }
+
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = null;
     }
   });
 
