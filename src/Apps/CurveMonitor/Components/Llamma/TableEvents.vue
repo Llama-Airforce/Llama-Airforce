@@ -3,7 +3,6 @@
     class="datatable-events"
     columns-header="1fr"
     columns-data="events-columns-data"
-    :loading
     :rows="events"
     :columns="['Type', 'Amount', '', 'Provider', 'Time']"
   >
@@ -49,34 +48,27 @@
 
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { type Chain } from "@CM/Models/Chain";
-import { type Endpoint, type LlammaEvent } from "@CM/Services/Llamma";
-import { useQueryEvents } from "@CM/Services/Llamma/Queries";
+import { type LlammaEvent } from "@CM/Services/Llamma";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  endpoint: Endpoint;
-  llamma: string | undefined;
-  chain: Chain | undefined;
+  events: LlammaEvent[];
+  count: number;
 }
 
-const { endpoint, llamma, chain } = defineProps<Props>();
+const { events, count } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  page: [page: number];
+}>();
 
 // Trades
 const { page, onPage } = usePaginationAsync();
 const pageDebounced = refDebounced(page, 200);
-
-const { isFetching: loading, data } = useQueryEvents(
-  toRef(() => endpoint),
-  toRef(() => llamma),
-  toRef(() => chain),
-  pageDebounced
-);
-
-const count = computed(() => data.value?.count ?? 0);
-const events = computed(() => data.value?.trades ?? []);
+watch(pageDebounced, (newPage) => emit("page", newPage));
 
 const { relativeTime } = useRelativeTime();
 

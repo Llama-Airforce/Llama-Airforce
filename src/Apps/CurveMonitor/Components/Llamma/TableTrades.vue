@@ -3,7 +3,6 @@
     class="datatable-trades"
     columns-header="1fr"
     columns-data="trades-columns-data"
-    :loading
     :rows="trades"
     :columns="['Bought', '', '', 'Sold', '', '', 'Market Maker', 'Time']"
   >
@@ -76,33 +75,28 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { type Chain } from "@CM/Models/Chain";
-import { type Endpoint, type LlammaTrade } from "@CM/Services/Llamma";
-import { useQueryTrades } from "@CM/Services/Llamma/Queries";
+import { type LlammaTrade } from "@CM/Services/Llamma";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  endpoint: Endpoint;
-  llamma: string | undefined;
+  trades: LlammaTrade[];
+  count: number;
   chain: Chain | undefined;
 }
 
-const { endpoint, llamma, chain } = defineProps<Props>();
+const { trades, count, chain } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  page: [page: number];
+}>();
 
 // Trades
 const { page, onPage } = usePaginationAsync();
 const pageDebounced = refDebounced(page, 200);
-
-const { isFetching: loading, data } = useQueryTrades(
-  toRef(() => endpoint),
-  toRef(() => llamma),
-  toRef(() => chain),
-  pageDebounced
-);
-
-const count = computed(() => data.value?.count ?? 0);
-const trades = computed(() => data.value?.trades ?? []);
+watch(pageDebounced, (newPage) => emit("page", newPage));
 
 const { relativeTime } = useRelativeTime();
 const round = (x: number) =>

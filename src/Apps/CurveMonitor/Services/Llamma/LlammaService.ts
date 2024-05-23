@@ -19,7 +19,7 @@ export default class LlammaService extends ServiceBase {
     );
 
     return {
-      trades: resp.data.map(Parsers.parseEvents),
+      events: resp.data.map(Parsers.parseEvents),
       count: resp.count,
     };
   }

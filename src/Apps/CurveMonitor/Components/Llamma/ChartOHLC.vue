@@ -2,7 +2,6 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading
   >
     <template #actions>
       <ButtonToggle
@@ -23,24 +22,20 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
-import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { useQueryOHLC } from "@CM/Services/Llamma/Queries";
-import { type Endpoint, type LlammaOHLC } from "@CM/Services/Llamma";
+import { type LlammaOHLC } from "@CM/Services/Llamma";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  endpoint: Endpoint;
-  llamma: string | undefined;
-  chain: Chain | undefined;
+  ohlc: LlammaOHLC[];
 }
 
-const { endpoint, llamma, chain } = defineProps<Props>();
+const { ohlc } = defineProps<Props>();
 
 // Refs
-let priceSerie: ISeriesApi<"Candlestick">;
+let ohlcSerie: ISeriesApi<"Candlestick">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -52,20 +47,13 @@ const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    priceSerie = chart.addCandlestickSeries(createPriceOptionsSerie());
+    ohlcSerie = chart.addCandlestickSeries(createPriceOptionsSerie());
   }
 );
 
-// Data
-const { isFetching: loading, data: prices } = useQueryOHLC(
-  toRef(() => endpoint),
-  toRef(() => llamma),
-  toRef(() => chain)
-);
-
 // Watches
-watch([prices, chart, invert], createSeries);
-watch(theme, () => priceSerie?.applyOptions(createPriceOptionsSerie()));
+watch([toRef(() => ohlc), chart, invert], createSeries);
+watch(theme, () => ohlcSerie?.applyOptions(createPriceOptionsSerie()));
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
@@ -101,18 +89,18 @@ function createPriceOptionsSerie(): CandlestickSeriesPartialOptions {
   };
 }
 
-function createSeries([newPrices, chart, newInvert]: [
+function createSeries([newOHLC, chart, newInvert]: [
   LlammaOHLC[]?,
   IChartApi?,
   boolean?
 ]): void {
-  if (!chart || !priceSerie) {
+  if (!chart || !ohlcSerie) {
     return;
   }
 
   const invertMultiplier = newInvert ? -1 : 1;
 
-  const newPriceSerie: CandlestickData[] = chain_(newPrices)
+  const newOHLCSerie: CandlestickData[] = chain_(newOHLC)
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -124,10 +112,10 @@ function createSeries([newPrices, chart, newInvert]: [
     .orderBy((c) => c.time, "asc")
     .value();
 
-  if (newPriceSerie.length > 0) {
-    priceSerie.setData(newPriceSerie);
-    min = Math.min(...newPriceSerie.map((c) => c.low));
-    max = Math.max(...newPriceSerie.map((c) => c.high));
+  if (newOHLCSerie.length > 0) {
+    ohlcSerie.setData(newOHLCSerie);
+    min = Math.min(...newOHLCSerie.map((c) => c.low));
+    max = Math.max(...newOHLCSerie.map((c) => c.high));
   }
 
   chart.timeScale().fitContent();

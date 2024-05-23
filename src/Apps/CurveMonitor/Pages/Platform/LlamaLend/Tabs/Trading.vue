@@ -24,23 +24,25 @@
 
     <ChartOHLC
       style="grid-area: ohlc"
-      endpoint="lending"
-      :llamma
-      :chain
+      :ohlc="ohlc ?? []"
+      :loading="loadingOHLC"
     ></ChartOHLC>
 
     <TableTrades
       style="grid-area: trades"
-      endpoint="lending"
-      :llamma
+      :trades="trades?.trades ?? []"
+      :count="trades?.count ?? 0"
       :chain
+      :loading="loadingTrades"
+      @page="pageTrades = $event"
     ></TableTrades>
 
     <TableEvents
       style="grid-area: events"
-      endpoint="lending"
-      :llamma
-      :chain
+      :events="events?.events ?? []"
+      :count="events?.count ?? 0"
+      :loading="loadingEvents"
+      @page="pageEvents = $event"
     ></TableEvents>
   </div>
 </template>
@@ -49,6 +51,11 @@
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Services/LlamaLend";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
+import {
+  useQueryOHLC,
+  useQueryEvents,
+  useQueryTrades,
+} from "@CM/Services/Llamma/Queries";
 
 const { t } = useI18n();
 
@@ -61,6 +68,29 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 const llamma = computed(() => market?.llamma);
+
+// Data
+const { isFetching: loadingOHLC, data: ohlc } = useQueryOHLC(
+  ref("lending"),
+  llamma,
+  toRef(() => chain)
+);
+
+const pageTrades = ref(1);
+const { isFetching: loadingTrades, data: trades } = useQueryTrades(
+  ref("lending"),
+  llamma,
+  toRef(() => chain),
+  pageTrades
+);
+
+const pageEvents = ref(1);
+const { isFetching: loadingEvents, data: events } = useQueryEvents(
+  ref("lending"),
+  llamma,
+  toRef(() => chain),
+  pageEvents
+);
 </script>
 
 <style lang="scss" scoped>
