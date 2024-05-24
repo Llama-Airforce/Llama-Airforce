@@ -9,6 +9,7 @@ import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 
 import { pageBribes, pageBribesRoutes } from "@LAF/Pages/Bribes/Page";
+import { pagePirexRoutes } from "@LAF/Pages/Pirex/Page";
 import {
   pageUnion,
   pageUnionRoutes,
@@ -47,6 +48,7 @@ if (import.meta.env.VITE_UNION === "true") {
 
 pages.push(pageBribes);
 routes.push(pageBribesRoutes);
+routes.push(pagePirexRoutes);
 
 const pageStore = usePageStore<PageLAF>();
 pageStore.pages = pages;

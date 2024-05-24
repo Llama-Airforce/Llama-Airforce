@@ -40,7 +40,7 @@ const getNFT = withProvider(async (provider, address) => {
 });
 
 // Watches
-watch(address, getNFT);
+watch([address, network], getNFT);
 </script>
 
 <style lang="scss" scoped>
