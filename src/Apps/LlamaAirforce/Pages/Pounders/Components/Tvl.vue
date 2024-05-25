@@ -1,0 +1,44 @@
+<template>
+  <div class="tvl">
+    <div class="value">
+      <AsyncValue
+        :value="tvl"
+        :precision="1"
+        :show-zero="true"
+        type="dollar"
+      />
+    </div>
+    <div class="label">{{ t("tvl") }}</div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { type PounderState } from "@Pounders/Models/PounderState";
+import { getTvl } from "@Pounders/Util/PounderStateHelper";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  state: PounderState;
+}
+
+const { state } = defineProps<Props>();
+
+const tvl = computed((): number | null => {
+  return getTvl(state);
+});
+</script>
+
+<style lang="scss" scoped>
+@import "@/Styles/Variables.scss";
+.tvl {
+  width: 10rem;
+
+  @media only screen and (max-width: 1280px) {
+    width: auto;
+  }
+}
+</style>
+
+<i18n lang="yaml" src="@/locales/union.yml"></i18n>

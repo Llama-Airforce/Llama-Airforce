@@ -23,7 +23,5 @@ declare module "@LAF/Pages/Union/Page" {
   const pageUnion: PageLAF;
   const pageUnionRoutes: RouteRecordRaw[];
 
-  const pagePounders: PageLAF;
-  const pagePoundersRoutes: RouteRecordRaw[];
-  export { pageUnion, pageUnionRoutes, pagePounders, pagePoundersRoutes };
+  export { pageUnion, pageUnionRoutes };
 }

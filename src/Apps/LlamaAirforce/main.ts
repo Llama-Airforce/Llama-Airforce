@@ -10,12 +10,8 @@ import Notifications, { notify } from "@kyvg/vue3-notification";
 
 import { pageBribes, pageBribesRoutes } from "@LAF/Pages/Bribes/Page";
 import { pagePirexRoutes } from "@LAF/Pages/Pirex/Page";
-import {
-  pageUnion,
-  pageUnionRoutes,
-  pagePounders,
-  pagePoundersRoutes,
-} from "@LAF/Pages/Union/Page";
+import { pagePounders, pagePoundersRoutes } from "@LAF/Pages/Pounders/Page";
+import { pageUnion, pageUnionRoutes } from "@LAF/Pages/Union/Page";
 
 import { usePageStore } from "@/Framework/Stores/PageStore";
 import { type PageLAF } from "@LAF/Pages/Page";

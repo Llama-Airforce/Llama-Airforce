@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "../../"),
         "@LAF": path.resolve(__dirname, "./"),
         "@Union": path.resolve(__dirname, "./Pages/Union/"),
+        "@Pounders": path.resolve(__dirname, "./Pages/Pounders/"),
       },
     },
     build: {
