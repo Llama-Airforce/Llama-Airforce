@@ -7,11 +7,11 @@ export const parseMarket = (
 ): Models.Market => {
   return {
     name: x.name,
-    controller: x.controller,
-    vault: x.vault,
-    llamma: x.llamma,
-    policy: x.policy,
-    oracle: x.oracle,
+    controller: x.controller.toLocaleLowerCase(),
+    vault: x.vault.toLocaleLowerCase(),
+    llamma: x.llamma.toLocaleLowerCase(),
+    policy: x.policy.toLocaleLowerCase(),
+    oracle: x.oracle.toLocaleLowerCase(),
     rate: parseFloat(x.rate),
     borrow_apy: parseFloat(x.borrow_apy),
     lend_apy: parseFloat(x.lend_apy),
