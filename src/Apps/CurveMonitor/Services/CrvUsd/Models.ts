@@ -62,13 +62,6 @@ export type CrvUsdSupply = {
   borrowable: number;
 };
 
-export type FeesBreakdown = {
-  market: string;
-  crvUsdAdminFees: number;
-  adminBorrowingFees: number;
-  collateralAdminFeesUsd: number;
-};
-
 export type Keeper = {
   address: string;
   pool: string;
@@ -82,6 +75,13 @@ export type Keeper = {
   total_profit: number;
   tvl: number;
   volume: number;
+};
+
+export type FeesBreakdown = {
+  market: string;
+  crvUsdAdminFees: number;
+  adminBorrowingFees: number;
+  collateralAdminFeesUsd: number;
 };
 
 export type Yield = {
