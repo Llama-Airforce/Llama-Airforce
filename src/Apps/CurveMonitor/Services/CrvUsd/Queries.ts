@@ -34,19 +34,6 @@ export function useQueryCrvUsdSupply() {
   });
 }
 
-export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: [
-      "crvusd-liq-collateral-ratio",
-      useMarketAddress(market),
-    ] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getHistoricalCollateralRatio(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryLiquidatorRevenue(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-revenue", useMarketAddress(market)] as const,

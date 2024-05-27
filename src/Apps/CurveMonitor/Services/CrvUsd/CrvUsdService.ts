@@ -86,10 +86,4 @@ export default class CrvUsdService extends ServiceBase {
       `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`
     ).then((resp) => resp.revenue);
   }
-
-  public async getHistoricalCollateralRatio(marketAddr: string) {
-    return this.fetch<{ ratios: Models.CollateralRatios[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/collateral_ratio`
-    ).then((resp) => resp.ratios);
-  }
 }

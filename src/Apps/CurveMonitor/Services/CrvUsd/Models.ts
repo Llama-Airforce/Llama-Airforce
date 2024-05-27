@@ -112,8 +112,3 @@ export type LiquidatorRevenue = {
   amount: number;
   discount: number;
 };
-
-export type CollateralRatios = {
-  timestamp: number;
-  ratio: number;
-};

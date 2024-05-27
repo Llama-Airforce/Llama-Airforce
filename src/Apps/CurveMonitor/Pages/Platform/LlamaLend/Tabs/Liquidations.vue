@@ -52,18 +52,18 @@ const { isFetching: loadingLiqsAggregate, data: liqsAggregate } =
     controller
   );
 
-const softLiqRatios = computed(() =>
-  softLiqRatiosRaw.value.map(({ timestamp, proportion }) => ({
-    timestamp,
-    proportion: proportion * 100,
-  }))
-);
 const { isFetching: loadingSoftLiqs, data: softLiqRatiosRaw } =
   useQuerySoftLiqRatios(
     ref("lending"),
     toRef(() => chain),
     controller
   );
+const softLiqRatios = computed(() =>
+  softLiqRatiosRaw.value.map(({ timestamp, proportion }) => ({
+    timestamp,
+    proportion: proportion * 100,
+  }))
+);
 </script>
 
 <style lang="scss" scoped>

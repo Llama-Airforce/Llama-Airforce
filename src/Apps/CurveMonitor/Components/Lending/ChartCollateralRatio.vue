@@ -2,7 +2,6 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading
   >
     <div
       ref="chartRef"
@@ -15,17 +14,20 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type CollateralRatios, type Market } from "@CM/Services/CrvUsd";
-import { useQueryLiqColRatio } from "@CM/Services/CrvUsd/Queries";
+
+type CollateralRatio = {
+  timestamp: number;
+  ratio: number;
+};
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  market: Market | undefined;
+  ratios: CollateralRatio[];
 }
 
-const { market } = defineProps<Props>();
+const { ratios } = defineProps<Props>();
 
 // Refs
 let areaSerie: ISeriesApi<"Area">;
@@ -40,13 +42,8 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-// Data
-const { isFetching: loading, data: ratios } = useQueryLiqColRatio(
-  toRef(() => market)
-);
-
 // Watches
-watch([ratios, chart], createSeries);
+watch([toRef(() => ratios), chart], createSeries);
 watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart
@@ -79,7 +76,7 @@ function createOptionsSerie(): AreaSeriesPartialOptions {
 }
 
 function createSeries([newRatios, chart]: [
-  CollateralRatios[]?,
+  CollateralRatio[]?,
   IChartApi?
 ]): void {
   if (!chart || !areaSerie) {

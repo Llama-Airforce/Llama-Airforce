@@ -26,7 +26,10 @@
       :loading="loadingDeciles"
     ></ChartLiqsHealthDeciles>
 
-    <ChartLiquidationCollateralRatio :market></ChartLiquidationCollateralRatio>
+    <ChartCollateralRatio
+      :ratios="collateralRatios"
+      :loading="loadingSnapshots"
+    ></ChartCollateralRatio>
 
     <ChartLiqs
       :liqs="liqsAggregate"
@@ -65,10 +68,8 @@ import {
   TableTopLiquidators,
   TableLiqOverview,
 } from "@CM/Components/Liquidations";
-import {
-  ChartLiquidationLiquidatorRevenue,
-  ChartLiquidationCollateralRatio,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
+import { ChartCollateralRatio } from "@CM/Components/Lending";
+import { ChartLiquidationLiquidatorRevenue } from "@CM/Pages/Platform/CrvUsd/Charts";
 
 // Props
 interface Props {
@@ -97,18 +98,27 @@ const pricesOracle = computed(() =>
   }))
 );
 
-const softLiqRatios = computed(() =>
-  softLiqRatiosRaw.value.map(({ timestamp, proportion }) => ({
-    timestamp,
-    proportion: proportion * 100,
-  }))
+const collateralRatios = computed(() =>
+  snapshots.value
+    .map(({ timestamp, totalCollateralUsd, totalDebt }) => ({
+      timestamp,
+      ratio: totalCollateralUsd / totalDebt,
+    }))
+    .filter(({ ratio }) => ratio < 1000)
 );
+
 const { isFetching: loadingSoftLiqs, data: softLiqRatiosRaw } =
   useQuerySoftLiqRatios(
     ref("crvusd"),
     toRef(() => chain),
     marketAddr
   );
+const softLiqRatios = computed(() =>
+  softLiqRatiosRaw.value.map(({ timestamp, proportion }) => ({
+    timestamp,
+    proportion: proportion * 100,
+  }))
+);
 
 const { isFetching: loadingLiqsAggregate, data: liqsAggregate } =
   useQueryLiqsAggregate(
