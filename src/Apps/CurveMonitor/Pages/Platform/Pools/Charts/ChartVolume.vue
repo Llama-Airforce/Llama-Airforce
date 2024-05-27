@@ -49,7 +49,7 @@ watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
-    height: 400,
+    height: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -112,7 +112,6 @@ const formatter = (y: number): string => {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
   }
 }
 </style>

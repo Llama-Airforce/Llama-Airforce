@@ -81,6 +81,7 @@ watch([dataYearn, chart], ([newData, chart]) =>
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
+    height: 300,
     leftPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -152,12 +153,6 @@ const formatter = (y: number): string => {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
-
-    .chart {
-      height: 300px;
-      z-index: 0;
-    }
   }
 }
 </style>

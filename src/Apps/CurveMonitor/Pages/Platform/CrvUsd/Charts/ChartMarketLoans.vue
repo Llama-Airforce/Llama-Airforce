@@ -52,7 +52,7 @@ watch(theme, () => loansSerie.applyOptions(createOptionsSerieLoans()));
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
-    height: 200,
+    height: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.15,
@@ -110,9 +110,6 @@ const formatter = (y: number): string => Math.round(y).toString();
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: stretch;
-    gap: 1rem;
-
-    overflow-x: hidden;
   }
 }
 </style>

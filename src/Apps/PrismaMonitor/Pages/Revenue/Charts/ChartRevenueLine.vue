@@ -38,6 +38,7 @@ watch(theme, () => revenueSerie.applyOptions(createRevenueOptionsSerie()));
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
+    height: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -97,12 +98,3 @@ const totalRevenue = (s: SnapshotRevenue) =>
   s.borrowing_fees_revenue_usd +
   s.redemption_fees_revenue_usd;
 </script>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart {
-  height: 300px;
-  z-index: 0;
-}
-</style>

@@ -79,7 +79,6 @@ const { isFetching: loading, data } = useQuery({
     height: 300px;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
   }
 
   .actions {

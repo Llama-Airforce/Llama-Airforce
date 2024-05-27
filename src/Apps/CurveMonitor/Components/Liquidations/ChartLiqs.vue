@@ -71,7 +71,6 @@ const onChartType = (type: ChartType) => {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
   }
 
   .actions {

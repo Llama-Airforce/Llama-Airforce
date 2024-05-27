@@ -43,6 +43,7 @@ watch(theme, () => {
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
+    height: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -124,12 +125,3 @@ function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
 const formatter = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 </script>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart {
-  height: 300px;
-  z-index: 0;
-}
-</style>

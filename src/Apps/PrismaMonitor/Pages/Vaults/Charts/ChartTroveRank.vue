@@ -224,7 +224,6 @@ watch(
     overflow-x: clip;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
   }
 }
 </style>

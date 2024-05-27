@@ -72,7 +72,7 @@ watch(theme, () => {
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
-    height: 200,
+    height: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -190,7 +190,6 @@ const average = (data: number[], n = 7): number[] =>
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
   }
 
   .actions {

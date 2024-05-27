@@ -82,6 +82,7 @@ watch(theme, () => {
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
+    height: 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -189,11 +190,6 @@ const onLegendClick = (item: string) => {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
-
-    .chart {
-      height: 300px;
-    }
 
     > .legend {
       justify-content: center;
