@@ -44,18 +44,6 @@ export function useQueryLiqAvgHealth(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryMarketHealth(
-  chain: Ref<Chain | undefined>,
-  market: Ref<Market | undefined>
-) {
-  return useQuery({
-    queryKey: ["crvusd-liq-overview", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqOverview(chain.value!, market!),
-    ...hasMarket(market, chain),
-  });
-}
-
 export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: [
@@ -69,77 +57,12 @@ export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryLiqHealthDeciles(
-  chain: Ref<Chain | undefined>,
-  market: Ref<Market | undefined>
-) {
-  return useQuery({
-    queryKey: ["crvusd-liq-health-deciles", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqHealthDeciles(chain.value!, market!),
-    ...hasMarket(market, chain),
-    ...initEmptyArray(),
-  });
-}
-
-export function useQueryLiqsDetailed(
-  chain: Ref<Chain | undefined>,
-  market: Ref<Market | undefined>
-) {
-  return useQuery({
-    queryKey: ["crvusd-liqs-detailed", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqsDetailed(chain.value!, market!),
-    ...hasMarket(market, chain),
-    ...initEmptyArray(),
-  });
-}
-
-export function useQueryLiqsAggregate(
-  chain: Ref<Chain | undefined>,
-  market: Ref<Market | undefined>
-) {
-  return useQuery({
-    queryKey: ["crvusd-liqs-aggregate", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqsAggregate(chain.value!, market!),
-    ...hasMarket(market, chain),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryLiquidatorRevenue(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-liq-revenue", useMarketAddress(market)] as const,
     queryFn: ({ queryKey: [, market] }) =>
       service.getLiquidatorRevenue(market!),
     ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
-export function useQueryLiqLosses(
-  chain: Ref<Chain | undefined>,
-  market: Ref<Market | undefined>
-) {
-  return useQuery({
-    queryKey: ["crvusd-liq-losses", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqLosses(chain.value!, market!),
-    ...hasMarket(market, chain),
-    ...initEmptyArray(),
-  });
-}
-
-export function useQuerySoftLiqRatios(
-  chain: Ref<Chain | undefined>,
-  market: Ref<Market | undefined>
-) {
-  return useQuery({
-    queryKey: ["crvusd-liq-soft-liqs", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getSoftLiqRatios(chain.value!, market!),
-    ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
 }

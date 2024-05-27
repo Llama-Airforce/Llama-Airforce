@@ -10,16 +10,16 @@
 import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { type LiquidationAggregate } from "@CM/Services/CrvUsd";
+import { type LiquidationAggregate } from "@CM/Services/Liquidations";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
 // Props
 interface Props {
-  data: LiquidationAggregate[];
+  liqs: LiquidationAggregate[];
 }
 
-const { data = [] } = defineProps<Props>();
+const { liqs = [] } = defineProps<Props>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
@@ -76,7 +76,7 @@ const options = computed(() => {
 });
 
 const categories = computed((): string[] =>
-  chain(data)
+  chain(liqs)
     .orderBy((x) => x.timestamp, "asc")
     .groupBy((x) => x.timestamp)
     .map((_, timestamp) =>
@@ -92,14 +92,14 @@ const categories = computed((): string[] =>
 const series = computed((): Serie[] => [
   {
     name: "Self liquidations",
-    data: Object.values(data).map((s) => ({
+    data: Object.values(liqs).map((s) => ({
       x: new Date(s.timestamp * 1000).toLocaleDateString(),
       y: s.selfCount,
     })),
   },
   {
     name: "Hard liquidations",
-    data: Object.values(data).map((s) => ({
+    data: Object.values(liqs).map((s) => ({
       x: new Date(s.timestamp * 1000).toLocaleDateString(),
       y: s.hardCount,
     })),
@@ -109,7 +109,7 @@ const series = computed((): Serie[] => [
 const max = computed(
   (): number =>
     Math.max(
-      ...chain(data)
+      ...chain(liqs)
         .groupBy((x) => x.timestamp)
         .map((supply) =>
           supply.reduce((acc, x) => acc + x.selfCount + x.hardCount, 0)

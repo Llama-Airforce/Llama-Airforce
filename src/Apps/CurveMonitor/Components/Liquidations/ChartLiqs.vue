@@ -2,7 +2,6 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading
   >
     <template #actions>
       <div class="actions">
@@ -26,44 +25,33 @@
 
     <ChartLiqsCount
       v-if="chartType === 'count'"
-      :data
+      :liqs
     ></ChartLiqsCount>
 
     <ChartLiqsValue
       v-else
-      :data
+      :liqs
     ></ChartLiqsValue>
   </Card>
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Services/CrvUsd";
-import { useQueryLiqsAggregate } from "@CM/Services/CrvUsd/Queries";
-import {
-  ChartLiqsValue,
-  ChartLiqsCount,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
+import { type LiquidationAggregate } from "@CM/Services/Liquidations";
+import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
 
 type ChartType = "count" | "value";
 
 const { t } = useI18n();
 
-// Refs
-const chartType = ref<ChartType>("count");
-
 // Props
 interface Props {
-  market: Market | undefined;
-  chain: Chain | undefined;
+  liqs: LiquidationAggregate[];
 }
-const { market, chain } = defineProps<Props>();
 
-// Data
-const { isFetching: loading, data } = useQueryLiqsAggregate(
-  toRef(() => chain),
-  toRef(() => market)
-);
+const { liqs = [] } = defineProps<Props>();
+
+// Refs
+const chartType = ref<ChartType>("count");
 
 // Events
 const onChartType = (type: ChartType) => {

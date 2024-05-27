@@ -81,58 +81,10 @@ export default class CrvUsdService extends ServiceBase {
     ).then((resp) => resp.yields);
   }
 
-  public async getSoftLiqRatios(chain: Chain, marketAddr: string) {
-    const resp = await this.fetch<ApiTypes.GetSoftLiqRatiosResponse>(
-      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/soft_liquidation_ratio`
-    );
-
-    return resp.data.map(Parsers.parseSoftLiqRatio);
-  }
-
-  public async getLiqsDetailed(chain: Chain, marketAddr: string) {
-    const resp = await this.fetch<ApiTypes.GetLiqsDetailedResponse>(
-      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/history/detailed`
-    );
-
-    return resp.data.map(Parsers.parseLiqsDetailed);
-  }
-
-  public async getLiqsAggregate(chain: Chain, marketAddr: string) {
-    const resp = await this.fetch<ApiTypes.GetLiqsAggregateResponse>(
-      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/history/aggregated`
-    );
-
-    return resp.data.map(Parsers.parseLiqsAggregate);
-  }
-
-  public async getLiqOverview(chain: Chain, marketAddr: string) {
-    const resp = await this.fetch<ApiTypes.GetLiqOverviewResponse>(
-      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/overview`
-    );
-
-    return Parsers.parseLiqOverview(resp);
-  }
-
-  public async getLiqLosses(chain: Chain, marketAddr: string) {
-    const resp = await this.fetch<ApiTypes.GetLiqLossesResponse>(
-      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/losses/history`
-    );
-
-    return resp.data.map(Parsers.parseLiqLosses);
-  }
-
   public async getHistoricalAverageHealth(marketAddr: string) {
     return this.fetch<{ health: Models.HistoricalAverageHealth[] }>(
       `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/health/historical`
     ).then((resp) => resp.health);
-  }
-
-  public async getLiqHealthDeciles(chain: Chain, marketAddr: string) {
-    const resp = await this.fetch<ApiTypes.GetLiqHealthDecilesResponse>(
-      `${API_URL}/v1/crvusd/liquidations/${chain}/${marketAddr}/health/distribution`
-    );
-
-    return resp.data.map(Parsers.parseLiqHealthDeciles);
   }
 
   public async getLiquidatorRevenue(marketAddr: string) {

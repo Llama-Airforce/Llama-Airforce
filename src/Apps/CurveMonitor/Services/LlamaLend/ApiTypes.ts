@@ -60,21 +60,3 @@ export type GetSnapshotsResponse = {
     }
   ];
 };
-
-export type GetSoftLiqRatiosResponse = {
-  data: {
-    timestamp: string;
-    proportion: number;
-  }[];
-};
-
-export type GetLiqHistoryResponse = {
-  data: {
-    timestamp: string;
-    self_count: number;
-    hard_count: number;
-    self_value: number;
-    hard_value: number;
-    price: number;
-  }[];
-};

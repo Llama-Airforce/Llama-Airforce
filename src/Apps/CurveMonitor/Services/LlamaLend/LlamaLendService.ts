@@ -27,20 +27,4 @@ export default class LlamaLendService extends ServiceBase {
 
     return resp.data.map(Parsers.parseSnapshot);
   }
-
-  public async getSoftLiqRatios(chain: Chain, marketController: string) {
-    const resp = await this.fetch<ApiTypes.GetSoftLiqRatiosResponse>(
-      `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/soft_liquidation_ratio`
-    );
-
-    return resp.data.map(Parsers.parseSoftLiqRatio);
-  }
-
-  public async getLiqHistory(chain: Chain, marketController: string) {
-    const resp = await this.fetch<ApiTypes.GetLiqHistoryResponse>(
-      `${API_URL}/v1/lending/liquidations/${chain}/${marketController}/history/aggregated`
-    );
-
-    return resp.data.map(Parsers.parseLiqHistory);
-  }
 }

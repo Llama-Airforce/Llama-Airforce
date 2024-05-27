@@ -2,12 +2,11 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading
   >
     <template #actions>
       <div class="actions">
         <Legend
-          :items="['% of loans in soft liquidation', 'Collateral price']"
+          :items="['% of loans in soft liquidation', 'Collateral price ($)']"
           :colors="theme.colorsArray"
         ></Legend>
       </div>
@@ -23,27 +22,23 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
-import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import {
-  type Market,
-  type SoftLiqRatio,
-  type Snapshot,
-} from "@CM/Services/CrvUsd";
-import {
-  useQuerySoftLiqRatios,
-  useQuerySnapshots,
-} from "@CM/Services/CrvUsd/Queries";
+import { type SoftLiqRatio } from "@CM/Services/Liquidations";
+
+type PriceOracle = {
+  timestamp: number;
+  priceOracle: number;
+};
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  market: Market | undefined;
-  chain: Chain | undefined;
+  ratios: SoftLiqRatio[];
+  pricesOracle: PriceOracle[];
 }
 
-const { market, chain } = defineProps<Props>();
+const { ratios, pricesOracle } = defineProps<Props>();
 
 // Refs
 let proportionSerie: ISeriesApi<"Area">;
@@ -60,19 +55,8 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-// Data
-const loading = computed(() => loadingSoftLiqs.value || loadingSnapshots.value);
-const { isFetching: loadingSoftLiqs, data: softLiqRatios } =
-  useQuerySoftLiqRatios(
-    toRef(() => chain),
-    toRef(() => market)
-  );
-const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
-  toRef(() => market)
-);
-
 // Watches
-watch([softLiqRatios, snapshots, chart], createSeries);
+watch([toRef(() => ratios), toRef(() => pricesOracle), chart], createSeries);
 watch(theme, () => {
   proportionSerie.applyOptions(createProportionOptionsSerie());
   priceSerie.applyOptions(createPriceOptionsSerie());
@@ -134,7 +118,7 @@ function createProportionOptionsSerie(): AreaSeriesPartialOptions {
 
 function createSeries([newSoftLiq, newSnapshots, chart]: [
   SoftLiqRatio[]?,
-  Snapshot[]?,
+  PriceOracle[]?,
   IChartApi?
 ]): void {
   if (!chart || !proportionSerie) {
@@ -150,7 +134,10 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
     .orderBy((c) => c.time, "asc")
     .value();
 
+  const minTime = (newProportionSerie[0]?.time as number) ?? 0;
+
   const newPriceSerie: LineData[] = chain_(newSnapshots)
+    .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.priceOracle,

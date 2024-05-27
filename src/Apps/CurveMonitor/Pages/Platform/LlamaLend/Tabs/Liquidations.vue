@@ -1,26 +1,27 @@
 <template>
   <div class="liquidations">
-    <div class="soft-liq-ratio">
-      <ChartSoftLiqRatios
-        :market
-        :chain
-      ></ChartSoftLiqRatios>
-    </div>
+    <ChartLiqsSoftLiqRatio
+      :ratios="softLiqRatios"
+      :prices-oracle="pricesOracle"
+      :loading="loadingSoftLiqs || loadingSnapshots"
+    ></ChartLiqsSoftLiqRatio>
 
-    <ChartLiqHistory
-      :market
-      :chain
-    ></ChartLiqHistory>
+    <ChartLiqs
+      :liqs="liqsAggregate"
+      :loading="loadingLiqsAggregate"
+    ></ChartLiqs>
   </div>
 </template>
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Market } from "@CM/Services/LlamaLend";
+import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import {
-  ChartSoftLiqRatios,
-  ChartLiqHistory,
-} from "@CM/Pages/Platform/LlamaLend/Charts";
+  useQuerySoftLiqRatios,
+  useQueryLiqsAggregate,
+} from "@CM/Services/Liquidations/Queries";
+import { ChartLiqs, ChartLiqsSoftLiqRatio } from "@CM/Components/Liquidations";
 
 // Props
 interface Props {
@@ -29,6 +30,40 @@ interface Props {
 }
 
 const { market, chain } = defineProps<Props>();
+
+const controller = computed(() => market?.controller);
+
+// Data
+const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
+  toRef(() => market),
+  toRef(() => chain)
+);
+const pricesOracle = computed(() =>
+  snapshots.value.map(({ timestamp, priceOracle }) => ({
+    timestamp,
+    priceOracle,
+  }))
+);
+
+const { isFetching: loadingLiqsAggregate, data: liqsAggregate } =
+  useQueryLiqsAggregate(
+    ref("lending"),
+    toRef(() => chain),
+    controller
+  );
+
+const softLiqRatios = computed(() =>
+  softLiqRatiosRaw.value.map(({ timestamp, proportion }) => ({
+    timestamp,
+    proportion: proportion * 100,
+  }))
+);
+const { isFetching: loadingSoftLiqs, data: softLiqRatiosRaw } =
+  useQuerySoftLiqRatios(
+    ref("lending"),
+    toRef(() => chain),
+    controller
+  );
 </script>
 
 <style lang="scss" scoped>
@@ -39,6 +74,5 @@ const { market, chain } = defineProps<Props>();
 
   @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
 }
 </style>

@@ -50,17 +50,3 @@ export type Snapshot = {
   borrowedBalance: number;
   timestamp: number;
 };
-
-export type SoftLiqRatio = {
-  timestamp: number;
-  proportion: number;
-};
-
-export type LiqHistory = {
-  timestamp: number;
-  self_count: number;
-  hard_count: number;
-  self_value: number;
-  hard_value: number;
-  price: number;
-};

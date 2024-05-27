@@ -2,7 +2,6 @@
   <DataTable
     class="datatable-liq-overview"
     columns-data="liq-overview-columns-data"
-    :loading
     :rows
   >
     <template #header-content>
@@ -10,7 +9,7 @@
     </template>
 
     <template #row="{ item: { description, value, type } }: { item: Row }">
-      <div>{{ t(description) }}</div>
+      <div>{{ description }}</div>
 
       <div class="number">
         <AsyncValue
@@ -26,25 +25,16 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Services/CrvUsd";
-import { useQueryMarketHealth } from "@CM/Services/CrvUsd/Queries";
+import { type LiqOverview } from "@CM/Services/Liquidations";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  chain: Chain | undefined;
-  market: Market | undefined;
+  overview: LiqOverview | undefined;
 }
 
-const { market, chain } = defineProps<Props>();
-
-// Data
-const { isFetching: loading, data: marketState } = useQueryMarketHealth(
-  toRef(() => chain),
-  toRef(() => market)
-);
+const { overview } = defineProps<Props>();
 
 type Row = {
   description: string;
@@ -55,32 +45,32 @@ type Row = {
 const rows = computed((): Row[] => [
   {
     description: "Users in soft liquidation",
-    value: marketState.value?.softLiqUsers ?? 0,
+    value: overview?.softLiqUsers ?? 0,
     type: "number",
   },
   {
     description: "Median health",
-    value: marketState.value?.medianHealth ?? 0,
+    value: overview?.medianHealth ?? 0,
     type: "percentage",
   },
   {
     description: "Collaterization ratio",
-    value: marketState.value?.collatRatio ?? 0,
+    value: overview?.collatRatio ?? 0,
     type: "percentage",
   },
   {
     description: "Liquidatable positions",
-    value: marketState.value?.liqablePositions ?? 0,
+    value: overview?.liqablePositions ?? 0,
     type: "number",
   },
   {
     description: "Liquidatable positions' debt",
-    value: marketState.value?.liqableDebtUsd ?? 0,
+    value: overview?.liqableDebtUsd ?? 0,
     type: "dollar",
   },
   {
     description: "Liquidatable collateral",
-    value: marketState.value?.liqableCollatUsd ?? 0,
+    value: overview?.liqableCollatUsd ?? 0,
     type: "dollar",
   },
 ]);

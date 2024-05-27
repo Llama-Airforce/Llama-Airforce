@@ -2,7 +2,6 @@
   <CardChart
     class="chart"
     title="Debt & Assets per Health Deciles"
-    :loading
     :options
     :series
   ></CardChart>
@@ -10,27 +9,18 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import { type Chain } from "@CM/Models/Chain";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { type Market } from "@CM/Services/CrvUsd";
-import { useQueryLiqHealthDeciles } from "@CM/Services/CrvUsd/Queries";
+import { type LiqHealthDecile } from "@CM/Services/Liquidations";
 
 // Props
 interface Props {
-  chain: Chain | undefined;
-  market: Market | undefined;
+  deciles: LiqHealthDecile[];
 }
 
-const { market, chain } = defineProps<Props>();
+const { deciles } = defineProps<Props>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
-
-// Data
-const { isFetching: loading, data } = useQueryLiqHealthDeciles(
-  toRef(() => chain),
-  toRef(() => market)
-);
 
 const options = computed(() => {
   return createChartStyles(theme.value, {
@@ -87,20 +77,20 @@ const options = computed(() => {
   });
 });
 
-const categories = computed((): string[] => data.value.map((x) => x.decile));
+const categories = computed((): string[] => deciles.map((x) => x.decile));
 
 const series = computed((): { name: string; data: number[] }[] => [
   {
     name: "Debt",
-    data: Object.values(data.value).map((x) => x.debt),
+    data: Object.values(deciles).map((x) => x.debt),
   },
   {
     name: "Collateral",
-    data: Object.values(data.value).map((x) => x.collateralUsdValue),
+    data: Object.values(deciles).map((x) => x.collateralUsdValue),
   },
   {
     name: "Stablecoin",
-    data: Object.values(data.value).map((x) => x.stablecoin),
+    data: Object.values(deciles).map((x) => x.stablecoin),
   },
 ]);
 

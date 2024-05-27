@@ -91,6 +91,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
+    .dropWhile((x) => x.value === 0)
     .value();
 
   if (newAvailSerie.length > 0) {

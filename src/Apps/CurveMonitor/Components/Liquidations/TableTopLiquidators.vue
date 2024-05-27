@@ -3,7 +3,6 @@
     class="datatable-liquidators"
     columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
     columns-data="liquidators-columns-data"
-    :loading
     :rows
     :columns="['Address', 'Count', 'Value']"
   >
@@ -42,25 +41,16 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { addressShort } from "@/Wallet";
-import { type Chain } from "@CM/Models/Chain";
-import { type Market } from "@CM/Services/CrvUsd";
-import { useQueryLiqsDetailed } from "@CM/Services/CrvUsd/Queries";
+import { type LiquidationDetails } from "@CM/Services/Liquidations";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  market: Market | undefined;
-  chain: Chain | undefined;
+  liqs: LiquidationDetails[];
 }
 
-const { market, chain } = defineProps<Props>();
-
-// Data
-const { isFetching: loading, data: rowsRaw } = useQueryLiqsDetailed(
-  toRef(() => chain),
-  toRef(() => market)
-);
+const { liqs } = defineProps<Props>();
 
 type Liquidator = {
   liquidator: string;
@@ -69,7 +59,7 @@ type Liquidator = {
 };
 
 const rows = computed((): Liquidator[] =>
-  chain_(rowsRaw.value)
+  chain_(liqs)
     .groupBy((x) => x.liquidator)
     .map((xs, liquidator) => ({
       liquidator,

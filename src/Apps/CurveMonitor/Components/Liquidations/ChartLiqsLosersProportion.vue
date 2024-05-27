@@ -2,7 +2,6 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading
   >
     <div
       ref="chartRef"
@@ -14,20 +13,17 @@
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
-import { type Chain } from "@CM/Models/Chain";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type LiqLosses } from "@CM/Services/CrvUsd";
-import { useQueryLiqLosses } from "@CM/Services/CrvUsd/Queries";
+import { type LiqLosses } from "@CM/Services/Liquidations";
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  chain: Chain | undefined;
-  market: Market | undefined;
+  losses: LiqLosses[];
 }
 
-const { market, chain } = defineProps<Props>();
+const { losses } = defineProps<Props>();
 
 // Refs
 let areaSerie: ISeriesApi<"Area">;
@@ -42,14 +38,8 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-// Data
-const { isFetching: loading, data: losses } = useQueryLiqLosses(
-  toRef(() => chain),
-  toRef(() => market)
-);
-
 // Watches
-watch([losses, chart], createSeries);
+watch([toRef(() => losses), chart], createSeries);
 watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
 
 // Chart

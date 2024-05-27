@@ -42,29 +42,3 @@ export function useQuerySnapshots(
     enabled: computed(() => !!market.value && !!chain.value),
   });
 }
-
-export function useQueryLiqHistory(
-  market: Ref<Market | undefined>,
-  chain: Ref<Chain | undefined>
-) {
-  return useQuery({
-    queryKey: ["llama-market-liq-history", useController(market)] as const,
-    queryFn: ({ queryKey: [, controller] }) =>
-      service.getLiqHistory(chain.value!, controller!),
-    ...initEmptyArray(),
-    enabled: computed(() => !!market.value && !!chain.value),
-  });
-}
-
-export function useQuerySoftLiqRatios(
-  market: Ref<Market | undefined>,
-  chain: Ref<Chain | undefined>
-) {
-  return useQuery({
-    queryKey: ["llama-market-softliqs", useController(market)] as const,
-    queryFn: ({ queryKey: [, controller] }) =>
-      service.getSoftLiqRatios(chain.value!, controller!),
-    ...initEmptyArray(),
-    enabled: computed(() => !!market.value && !!chain.value),
-  });
-}

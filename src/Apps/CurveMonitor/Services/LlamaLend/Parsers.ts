@@ -74,25 +74,3 @@ export const parseSnapshot = (
     timestamp,
   };
 };
-
-export const parseSoftLiqRatio = (
-  x: ApiTypes.GetSoftLiqRatiosResponse["data"][number]
-): Models.SoftLiqRatio => {
-  return {
-    timestamp: toUTC(x.timestamp),
-    proportion: x.proportion / 100,
-  };
-};
-
-export const parseLiqHistory = (
-  x: ApiTypes.GetLiqHistoryResponse["data"][number]
-): Models.LiqHistory => {
-  return {
-    timestamp: toUTC(x.timestamp),
-    self_count: x.self_count,
-    hard_count: x.hard_count,
-    self_value: x.self_value,
-    hard_value: x.hard_value,
-    price: x.price,
-  };
-};
