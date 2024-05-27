@@ -74,11 +74,6 @@ export type CrvUsdSupply = {
   borrowable: number;
 };
 
-export type Fees = {
-  pending: number;
-  collected: number;
-};
-
 export type FeesBreakdown = {
   market: string;
   crvUsdAdminFees: number;
