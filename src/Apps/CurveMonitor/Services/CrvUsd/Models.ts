@@ -107,11 +107,6 @@ export type Yield = {
   apy: number;
 };
 
-export type HistoricalAverageHealth = {
-  timestamp: number;
-  quartiles: number[];
-};
-
 export type LiquidatorRevenue = {
   timestamp: number;
   amount: number;

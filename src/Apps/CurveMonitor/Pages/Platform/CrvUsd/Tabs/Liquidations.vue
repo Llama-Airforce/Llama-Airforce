@@ -21,8 +21,6 @@
       :loading="loadingLosses"
     ></ChartLiqsLosersProportion>
 
-    <ChartLiquidationAverageHealth :market></ChartLiquidationAverageHealth>
-
     <ChartLiqsHealthDeciles
       :deciles
       :loading="loadingDeciles"
@@ -68,7 +66,6 @@ import {
   TableLiqOverview,
 } from "@CM/Components/Liquidations";
 import {
-  ChartLiquidationAverageHealth,
   ChartLiquidationLiquidatorRevenue,
   ChartLiquidationCollateralRatio,
 } from "@CM/Pages/Platform/CrvUsd/Charts";

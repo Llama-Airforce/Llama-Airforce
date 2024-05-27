@@ -81,12 +81,6 @@ export default class CrvUsdService extends ServiceBase {
     ).then((resp) => resp.yields);
   }
 
-  public async getHistoricalAverageHealth(marketAddr: string) {
-    return this.fetch<{ health: Models.HistoricalAverageHealth[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/health/historical`
-    ).then((resp) => resp.health);
-  }
-
   public async getLiquidatorRevenue(marketAddr: string) {
     return this.fetch<{ revenue: Models.LiquidatorRevenue[] }>(
       `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`

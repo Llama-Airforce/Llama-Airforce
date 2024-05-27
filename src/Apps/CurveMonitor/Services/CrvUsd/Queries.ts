@@ -34,16 +34,6 @@ export function useQueryCrvUsdSupply() {
   });
 }
 
-export function useQueryLiqAvgHealth(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: ["crvusd-liq-average-health", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getHistoricalAverageHealth(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryLiqColRatio(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: [
