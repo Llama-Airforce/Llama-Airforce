@@ -41,6 +41,12 @@
       ></AsyncValue>
     </KPI>
 
+    <ChartMarketSupply
+      style="grid-area: supply"
+      :market
+      :chain
+    ></ChartMarketSupply>
+
     <ChartMarketRates
       style="grid-area: rates"
       :market
@@ -75,6 +81,7 @@
 import { type Chain } from "@CM/Models/Chain";
 import { type Market, tvl } from "@CM/Services/LlamaLend";
 import {
+  ChartMarketSupply,
   ChartMarketLoans,
   ChartMarketRates,
 } from "@CM/Pages/Platform/LlamaLend/Charts";
@@ -104,11 +111,12 @@ const { market, chain } = defineProps<Props>();
   @include dashboard-grid;
 
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto 1fr 1fr;
+  grid-template-rows: auto auto 1fr 1fr 1fr;
 
   grid-template-areas:
     "usage usage usage usage"
     "kpi1 kpi2 kpi3 kpi4"
+    "supply supply . ."
     "rates rates loans loans"
     "properties properties addresses addresses";
 }

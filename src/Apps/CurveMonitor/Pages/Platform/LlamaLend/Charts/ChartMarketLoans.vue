@@ -124,5 +124,5 @@ const formatter = (y: number): string => Math.round(y).toString();
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Market Loans
+title: Loans
 </i18n>

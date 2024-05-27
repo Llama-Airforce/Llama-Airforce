@@ -7,7 +7,7 @@
     <template #actions>
       <div class="actions">
         <Legend
-          :items="[t('borrow-apy'), t('lend-apy')]"
+          :items="[t('supply'), t('debt')]"
           :colors="colorsLegend"
         ></Legend>
       </div>
@@ -39,8 +39,8 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 // Refs
-let borrowApySerie: ISeriesApi<"Line">;
-let lendApySerie: ISeriesApi<"Line">;
+let supplySerie: ISeriesApi<"Line">;
+let debtSerie: ISeriesApi<"Line">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -48,15 +48,15 @@ const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
   (chart) => {
-    borrowApySerie = chart.addLineSeries(createOptionsSerieBorrowApy());
-    lendApySerie = chart.addLineSeries(createOptionsLendApy());
+    supplySerie = chart.addLineSeries(createOptionsSerieSupply());
+    debtSerie = chart.addLineSeries(createOptionsSerieDebt());
   }
 );
 
 const colorsLegend = computed(() => {
   const { colors } = theme.value;
 
-  return [colors.red, colors.green];
+  return [colors.blue, colors.yellow];
 });
 
 // Data
@@ -68,8 +68,8 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 // Watches
 watch([snapshots, chart], createSeries);
 watch(theme, () => {
-  borrowApySerie.applyOptions(createOptionsSerieBorrowApy());
-  lendApySerie.applyOptions(createOptionsLendApy());
+  supplySerie.applyOptions(createOptionsSerieSupply());
+  debtSerie.applyOptions(createOptionsSerieDebt());
 });
 
 // Chart
@@ -88,7 +88,7 @@ function createOptionsChart(chartRef: HTMLElement) {
   });
 }
 
-function createOptionsSerieBorrowApy(): LineSeriesPartialOptions {
+function createOptionsSerieSupply(): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -96,13 +96,13 @@ function createOptionsSerieBorrowApy(): LineSeriesPartialOptions {
       minMove: 0.01,
     },
     lineWidth: 2,
-    color: theme.value.colors.red,
+    color: theme.value.colors.blue,
     lastValueVisible: false,
     priceLineVisible: false,
   };
 }
 
-function createOptionsLendApy(): LineSeriesPartialOptions {
+function createOptionsSerieDebt(): LineSeriesPartialOptions {
   return {
     priceFormat: {
       type: "price",
@@ -110,56 +110,55 @@ function createOptionsLendApy(): LineSeriesPartialOptions {
       minMove: 0.01,
     },
     lineWidth: 2,
-    color: theme.value.colors.green,
+    color: theme.value.colors.yellow,
     lastValueVisible: false,
     priceLineVisible: false,
   };
 }
 
 function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !borrowApySerie || !lendApySerie) {
+  if (!chart || !supplySerie || !debtSerie) {
     return;
   }
 
-  const newBorrowApySerie: LineData[] = chain_(newSnapshots)
+  const newSupplySerie: LineData[] = chain_(newSnapshots)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      value: c.borrowApy,
+      value: c.totalAssets,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newLendApySerie: LineData[] = chain_(newSnapshots)
+  const newDebtSerie: LineData[] = chain_(newSnapshots)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      value: c.lendApy,
+      value: c.totalDebt,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
   // Borrow APY serie
-  if (newBorrowApySerie.length > 0) {
-    borrowApySerie.setData(newBorrowApySerie);
+  if (newSupplySerie.length > 0) {
+    supplySerie.setData(newSupplySerie);
   }
 
   // Lend APY serie
-  if (newLendApySerie.length > 0) {
-    lendApySerie.setData(newLendApySerie);
+  if (newDebtSerie.length > 0) {
+    debtSerie.setData(newDebtSerie);
   }
 
-  if (newBorrowApySerie.length > 0 || newLendApySerie.length > 0) {
+  if (newSupplySerie.length > 0 || newDebtSerie.length > 0) {
     const from = Math.min(
-      (newBorrowApySerie[0]?.time as UTCTimestamp) ?? Infinity,
-      (newLendApySerie[0]?.time as UTCTimestamp) ?? Infinity
+      (newSupplySerie[0]?.time as UTCTimestamp) ?? Infinity,
+      (newDebtSerie[0]?.time as UTCTimestamp) ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newBorrowApySerie[newBorrowApySerie.length - 1]?.time as UTCTimestamp) ??
+      (newSupplySerie[newSupplySerie.length - 1]?.time as UTCTimestamp) ??
         -Infinity,
-      (newLendApySerie[newLendApySerie.length - 1]?.time as UTCTimestamp) ??
-        -Infinity
+      (newDebtSerie[newDebtSerie.length - 1]?.time as UTCTimestamp) ?? -Infinity
     ) as UTCTimestamp;
 
     chart.timeScale().setVisibleRange({ from, to });
@@ -167,7 +166,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
 }
 
 const formatterApy = (x: number): string =>
-  `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
+  `$${round(x, 2, "dollar")}${unit(x, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>
@@ -183,7 +182,7 @@ const formatterApy = (x: number): string =>
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Rates
-borrow-apy: Borrow APY
-lend-apy: Lend APY
+title: Supply & Debt
+supply: Supply
+debt: Debt
 </i18n>
