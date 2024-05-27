@@ -43,11 +43,15 @@ export type Snapshot = {
   priceOracle: number;
   ammPrice: number;
   totalDebt: number;
+  totalDebtUsd: number;
   totalAssets: number;
+  totalAssetsUsd: number;
   minted: number;
   redeemed: number;
   collateralBalance: number;
+  collateralBalanceUsd: number;
   borrowedBalance: number;
+  borrowedBalanceUsd: number;
   timestamp: number;
   discountLiquidation: number;
   discountLoan: number;

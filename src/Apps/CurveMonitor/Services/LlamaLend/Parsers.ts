@@ -51,11 +51,15 @@ export const parseSnapshot = (
   const priceOracle = parseFloat(x.price_oracle);
   const ammPrice = parseFloat(x.amm_price);
   const totalDebt = parseFloat(x.total_debt);
+  const totalDebtUsd = parseFloat(x.total_debt_usd);
   const totalAssets = parseFloat(x.total_assets);
+  const totalAssetsUsd = parseFloat(x.total_assets_usd);
   const minted = parseFloat(x.minted);
   const redeemed = parseFloat(x.redeemed);
   const collateralBalance = parseFloat(x.collateral_balance);
+  const collateralBalanceUsd = parseFloat(x.collateral_balance_usd);
   const borrowedBalance = parseFloat(x.borrowed_balance);
+  const borrowedBalanceUsd = parseFloat(x.borrowed_balance_usd);
   const timestamp = toUTC(x.timestamp);
   const discountLiquidation = x.liquidation_discount;
   const discountLoan = x.loan_discount;
@@ -68,11 +72,15 @@ export const parseSnapshot = (
     priceOracle,
     ammPrice,
     totalDebt,
+    totalDebtUsd,
     totalAssets,
+    totalAssetsUsd,
     minted,
     redeemed,
     collateralBalance,
+    collateralBalanceUsd,
     borrowedBalance,
+    borrowedBalanceUsd,
     timestamp,
     discountLiquidation,
     discountLoan,

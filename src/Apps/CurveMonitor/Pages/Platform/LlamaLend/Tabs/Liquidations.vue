@@ -1,15 +1,51 @@
 <template>
   <div class="liquidations">
+    <TableLiqOverview
+      :overview
+      :loading="loadingOverview"
+    ></TableLiqOverview>
+
     <ChartLiqsSoftLiqRatio
       :ratios="softLiqRatios"
       :prices-oracle="pricesOracle"
       :loading="loadingSoftLiqs || loadingSnapshots"
     ></ChartLiqsSoftLiqRatio>
 
+    <ChartLiqsMedianLoss
+      :losses
+      :loading="loadingLosses"
+    ></ChartLiqsMedianLoss>
+
+    <ChartLiqsLosersProportion
+      :losses
+      :loading="loadingLosses"
+    ></ChartLiqsLosersProportion>
+
+    <ChartLiqsHealthDeciles
+      :deciles
+      :loading="loadingDeciles"
+    ></ChartLiqsHealthDeciles>
+
+    <ChartCollateralRatio
+      :ratios="collateralRatios"
+      :loading="loadingSnapshots"
+    ></ChartCollateralRatio>
+
     <ChartLiqs
       :liqs="liqsAggregate"
       :loading="loadingLiqsAggregate"
     ></ChartLiqs>
+
+    <TableTopLiquidators
+      :liqs="liqsDetailed"
+      :loading="loadingLiqsDetailed"
+    ></TableTopLiquidators>
+
+    <ChartLiquidatorRevenue
+      :discounts
+      :liqs="liqsDetailed"
+      :loading="loadingSnapshots || loadingLiqsDetailed"
+    ></ChartLiquidatorRevenue>
   </div>
 </template>
 
@@ -20,8 +56,22 @@ import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import {
   useQuerySoftLiqRatios,
   useQueryLiqsAggregate,
+  useQueryLiqsDetailed,
+  useQueryLiqOverview,
+  useQueryLiqLosses,
+  useQueryLiqHealthDeciles,
 } from "@CM/Services/Liquidations/Queries";
-import { ChartLiqs, ChartLiqsSoftLiqRatio } from "@CM/Components/Liquidations";
+import {
+  ChartLiqs,
+  ChartLiqsSoftLiqRatio,
+  ChartLiqsMedianLoss,
+  ChartLiqsLosersProportion,
+  ChartLiqsHealthDeciles,
+  ChartLiquidatorRevenue,
+  TableTopLiquidators,
+  TableLiqOverview,
+} from "@CM/Components/Liquidations";
+import { ChartCollateralRatio } from "@CM/Components/Lending";
 
 // Props
 interface Props {
@@ -38,6 +88,7 @@ const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
   toRef(() => market),
   toRef(() => chain)
 );
+
 const pricesOracle = computed(() =>
   snapshots.value.map(({ timestamp, priceOracle }) => ({
     timestamp,
@@ -45,8 +96,31 @@ const pricesOracle = computed(() =>
   }))
 );
 
+const discounts = computed(() =>
+  snapshots.value.map(({ timestamp, discountLiquidation }) => ({
+    timestamp,
+    discount: discountLiquidation,
+  }))
+);
+
+const collateralRatios = computed(() =>
+  snapshots.value
+    .map(({ timestamp, collateralBalanceUsd, totalDebtUsd }) => ({
+      timestamp,
+      ratio: collateralBalanceUsd / totalDebtUsd,
+    }))
+    .filter(({ ratio }) => ratio < 1000)
+);
+
 const { isFetching: loadingLiqsAggregate, data: liqsAggregate } =
   useQueryLiqsAggregate(
+    ref("lending"),
+    toRef(() => chain),
+    controller
+  );
+
+const { isFetching: loadingLiqsDetailed, data: liqsDetailed } =
+  useQueryLiqsDetailed(
     ref("lending"),
     toRef(() => chain),
     controller
@@ -63,6 +137,24 @@ const softLiqRatios = computed(() =>
     timestamp,
     proportion: proportion * 100,
   }))
+);
+
+const { isFetching: loadingOverview, data: overview } = useQueryLiqOverview(
+  ref("lending"),
+  toRef(() => chain),
+  controller
+);
+
+const { isFetching: loadingLosses, data: losses } = useQueryLiqLosses(
+  ref("lending"),
+  toRef(() => chain),
+  controller
+);
+
+const { isFetching: loadingDeciles, data: deciles } = useQueryLiqHealthDeciles(
+  ref("lending"),
+  toRef(() => chain),
+  controller
 );
 </script>
 
