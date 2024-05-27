@@ -4,7 +4,6 @@ import Home from "@CM/Pages/Home/Home.page.vue";
 
 import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
 import Pool from "@CM/Pages/Platform/Pools/Pool.page.vue";
-import PoolsOld from "@CM/Pages/Platform/PoolsOld/Pools.page.vue";
 import Gauges from "@CM/Pages/Platform/Gauges/Gauges.page.vue";
 import Revenue from "@CM/Pages/Platform/Revenue/Revenue.page.vue";
 
@@ -36,7 +35,6 @@ export const pageMainRoutes = [
     name: "poolspool",
     component: Pool,
   },
-  { path: "/platform/pools/old", component: PoolsOld },
 
   { path: "/platform/gauges/old", component: Gauges },
   {
