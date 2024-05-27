@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { useQueryPools } from "@CM/Services/Pools/Queries";
+import { useQueryPool } from "@CM/Services/Pools/Queries";
 import PoolOverview from "@CM/Pages/Platform/Pools/Tabs/PoolOverview.vue";
 import Gauge from "@CM/Pages/Platform/Pools/Tabs/Gauge.vue";
 import MEV from "@CM/Pages/Platform/Pools/Tabs/MEV.vue";
@@ -55,11 +55,7 @@ const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
 // Markets
 const chain = useRouteParams<Chain>("chain");
 const poolAddr = useRouteParams<string>("poolAddr");
-const { isFetching: loading, data } = useQueryPools(chain, ref(1));
-
-const pool = computed(() =>
-  data.value?.pools?.find((pool) => pool.address === poolAddr.value)
-);
+const { isFetching: loading, data: pool } = useQueryPool(chain, poolAddr.value);
 
 watch(
   pool,

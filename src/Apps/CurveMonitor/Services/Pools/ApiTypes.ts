@@ -33,3 +33,11 @@ export type GetPoolsResponse = {
 };
 
 export type GetPoolResponse = Pool;
+
+export type GetVolumeResponse = {
+  data: {
+    timestamp: 0;
+    volume: 0;
+    fees: 0;
+  }[];
+};

@@ -107,12 +107,10 @@ const discounts = computed(() =>
 );
 
 const collateralRatios = computed(() =>
-  snapshots.value
-    .map(({ timestamp, totalCollateralUsd, totalDebt }) => ({
-      timestamp,
-      ratio: totalCollateralUsd / totalDebt,
-    }))
-    .filter(({ ratio }) => ratio < 1000)
+  snapshots.value.map(({ timestamp, totalCollateralUsd, totalDebt }) => ({
+    timestamp,
+    ratio: totalCollateralUsd / totalDebt,
+  }))
 );
 
 const { isFetching: loadingSoftLiqs, data: softLiqRatios } =

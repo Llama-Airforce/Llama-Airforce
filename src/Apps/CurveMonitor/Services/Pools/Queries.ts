@@ -43,3 +43,17 @@ export function useQueryPoolMultiple(
     queries,
   });
 }
+
+export function useQueryVolume(
+  chain: Ref<Chain | undefined>,
+  poolAddr: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: ["curve-volume", poolAddr] as const,
+    queryFn: async ({ queryKey: [, poolAddr] }) =>
+      service.getVolume(chain.value!, poolAddr!),
+    enabled: computed(() => !!chain.value && !!poolAddr.value),
+    initialData: [],
+    initialDataUpdatedAt: 0,
+  });
+}

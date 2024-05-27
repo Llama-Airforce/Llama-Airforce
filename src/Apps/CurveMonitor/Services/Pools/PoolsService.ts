@@ -25,4 +25,19 @@ export default class PoolService extends ServiceBase {
 
     return Parsers.parsePool(resp);
   }
+
+  public async getVolume(chain: Chain, poolAddr: string) {
+    const range = 120 * 60 * 1000;
+    const end = Math.floor(new Date().getTime() / 1000);
+    const start = Math.floor(end - range);
+
+    const resp = await this.fetch<ApiTypes.GetVolumeResponse>(
+      `${API_URL}/v1/volume/usd/${chain}/${poolAddr}?` +
+        `interval=day&` +
+        `start=${start}&` +
+        `end=${end}`
+    );
+
+    return resp.data.map(Parsers.parseVolume);
+  }
 }

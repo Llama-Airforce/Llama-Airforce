@@ -37,3 +37,13 @@ export const parsePool = (
     poolMethods: x.pool_methods?.map((x) => x) ?? [],
   };
 };
+
+export const parseVolume = (
+  x: ApiTypes.GetVolumeResponse["data"][number]
+): Models.Volume => {
+  return {
+    timestamp: x.timestamp,
+    volume: x.volume,
+    fees: x.fees,
+  };
+};

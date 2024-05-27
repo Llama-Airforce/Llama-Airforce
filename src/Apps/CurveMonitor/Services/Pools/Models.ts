@@ -27,3 +27,9 @@ export type Pool = {
   virtualPrice: number;
   poolMethods: string[];
 };
+
+export type Volume = {
+  timestamp: number;
+  volume: number;
+  fees: number;
+};
