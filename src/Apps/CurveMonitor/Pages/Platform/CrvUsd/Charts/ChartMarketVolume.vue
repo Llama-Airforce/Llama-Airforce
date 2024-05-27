@@ -130,5 +130,5 @@ const formatter = (y: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Market Volume
+title: Volume
 </i18n>

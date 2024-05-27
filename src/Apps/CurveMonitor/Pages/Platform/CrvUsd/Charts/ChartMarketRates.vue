@@ -202,5 +202,5 @@ const average = (data: number[], n = 7): number[] =>
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Market Rates
+title: Rates
 </i18n>
