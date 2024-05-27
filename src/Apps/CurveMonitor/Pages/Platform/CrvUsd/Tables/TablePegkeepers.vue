@@ -134,7 +134,7 @@ const rowsRaw = computed(() =>
       };
     })
     .filter(notEmpty)
-    .sortBy((x) => x.tvlUsd)
+    .orderBy((x) => x.tvlUsd, "desc")
     .value()
 );
 
