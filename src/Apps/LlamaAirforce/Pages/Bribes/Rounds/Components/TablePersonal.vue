@@ -158,7 +158,7 @@ const bribed = computed(() => {
     !epoch ||
     !proposal.value ||
     !address.value ||
-    delegations.value.length === 0 ||
+    Object.keys(scores.value).length === 0 ||
     votes.value.length === 0
   ) {
     return [];
