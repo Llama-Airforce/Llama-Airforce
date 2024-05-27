@@ -102,7 +102,6 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
   @include dashboard-grid;
 
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto auto;
 
   grid-template-areas:
     "oracle amm"

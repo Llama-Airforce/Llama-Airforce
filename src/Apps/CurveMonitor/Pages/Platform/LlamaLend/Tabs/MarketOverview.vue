@@ -129,7 +129,6 @@ const { isFetching: loadingDistribution, data: distribution } =
   @include dashboard-grid;
 
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto 1fr 1fr 1fr;
 
   grid-template-areas:
     "usage usage usage usage"

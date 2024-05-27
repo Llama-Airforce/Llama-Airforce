@@ -243,7 +243,6 @@ const totalUtilRate = (type: "long" | "short"): number => {
 
 .llamalend {
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr;
 
   .markets {
     display: flex;
