@@ -97,15 +97,12 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { type PoolStats, type Keeper } from "@CM/Services/CrvUsd";
-import {
-  useQueryPoolStats,
-  useQueryKeepers,
-} from "@CM/Services/CrvUsd/Queries";
+import { type Keeper } from "@CM/Services/CrvUsd";
+import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-type Row = PoolStats & Keeper;
+type Row = KeeperStats & Keeper;
 
 // Refs
 const search = ref("");

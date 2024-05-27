@@ -36,15 +36,6 @@ export type Snapshot = {
   discountLoan: number;
 };
 
-export type PoolStats = {
-  address: string;
-  name: string;
-  tvl: number;
-  normalizedReserves: [number, number];
-  reservesUSD: [number, number];
-  volumeUSD: number;
-};
-
 export type PoolPrice = {
   timestamp: number;
   [token: string]: number;

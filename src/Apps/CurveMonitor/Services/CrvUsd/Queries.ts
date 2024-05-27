@@ -124,14 +124,6 @@ export function useQueryYields() {
   });
 }
 
-export function useQueryPoolStats() {
-  return useQuery({
-    queryKey: ["crvusd-pool-stats"],
-    queryFn: () => service.getPoolStats(),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryKeepers() {
   return useQuery({
     queryKey: ["crvusd-keepers"],

@@ -24,12 +24,6 @@ export default class CrvUsdService extends ServiceBase {
     return resp.data.map(Parsers.parseSnapshot);
   }
 
-  public async getPoolStats() {
-    return this.fetch<{ stats: Models.PoolStats[] }>(
-      `${API_URL_OLD}/v1/crvusd/pools/stats`
-    ).then((resp) => resp.stats);
-  }
-
   public async getCrvUsdPriceHistogram() {
     return this.fetch<Models.PriceHistogram>(
       `${API_URL_OLD}/v1/crvusd/prices/hist`
