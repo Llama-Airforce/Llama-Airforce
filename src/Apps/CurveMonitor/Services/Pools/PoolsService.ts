@@ -17,4 +17,12 @@ export default class PoolService extends ServiceBase {
       pools: resp.data.map(Parsers.parsePool),
     };
   }
+
+  public async getPool(chain: Chain, poolAddr: string) {
+    const resp = await this.fetch<ApiTypes.GetPoolResponse>(
+      `${API_URL}/v1/pools/${chain}/${poolAddr}`
+    );
+
+    return Parsers.parsePool(resp);
+  }
 }

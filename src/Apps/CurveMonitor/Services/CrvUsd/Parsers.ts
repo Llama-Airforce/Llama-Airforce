@@ -24,6 +24,10 @@ export const parseMarket = (
       symbol: x.stablecoin_token.symbol,
       address: x.stablecoin_token.address.toLocaleLowerCase(),
     },
+    fees: {
+      pending: x.pending_fees,
+      collected: x.collected_fees,
+    },
   };
 };
 
@@ -62,8 +66,6 @@ export const parseKeeper = (
     active: x.active,
     total_debt: x.total_debt,
     total_profit: x.total_profit,
-    tvl: x.tvl,
-    volume: x.volume,
   };
 };
 

@@ -20,7 +20,7 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <div>{{ props.item.name }}</div>
+      <div>{{ name(props.item) }}</div>
 
       <div class="number">
         <AsyncValue
@@ -33,16 +33,18 @@
 
       <div class="number">
         <AsyncValue
-          :value="props.item.tvl"
+          :value="props.item.tvlUsd"
           :precision="decimals"
+          :show-zero="true"
           type="dollar"
         />
       </div>
 
       <div class="number">
         <AsyncValue
-          :value="props.item.volumeUSD"
+          :value="props.item.tradingVolume24h"
           :precision="decimals"
+          :show-zero="true"
           type="dollar"
         />
       </div>
@@ -51,6 +53,7 @@
         <AsyncValue
           :value="props.item.total_profit"
           :precision="decimals"
+          :show-zero="true"
           type="dollar"
         />
       </div>
@@ -70,16 +73,18 @@
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
+          :value="rows.reduce((acc, x) => acc + x.tvlUsd, 0)"
           :precision="decimals"
+          :show-zero="true"
           type="dollar"
         />
       </div>
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.volumeUSD, 0)"
+          :value="rows.reduce((acc, x) => acc + x.tradingVolume24h, 0)"
           :precision="decimals"
+          :show-zero="true"
           type="dollar"
         />
       </div>
@@ -88,6 +93,7 @@
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
           :precision="decimals"
+          :show-zero="true"
           type="dollar"
         />
       </div>
@@ -98,25 +104,27 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { type Keeper } from "@CM/Services/CrvUsd";
+import { type Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
+import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
 
 const { t } = useI18n();
 
-type Row = KeeperStats & Keeper;
+type Row = Pool & Keeper;
 
 // Refs
 const search = ref("");
 
-const loading = computed(() => loadingPoolStats.value || loadingKeepers.value);
+const loading = computed(() => loadingPools.value || loadingKeepers.value);
 
 const rowsRaw = computed(() =>
-  chain(poolStats.value)
-    .map((pool) => {
-      const keeper = keepers.value.find(
-        (keeper) => keeper.pool_address === pool.address
+  chain(keepers.value)
+    .map((keeper) => {
+      const pool = pools.value.find(
+        (pool) => keeper.pool_address === pool.address
       );
 
-      if (!keeper) {
+      if (!pool) {
         return undefined;
       }
 
@@ -126,7 +134,7 @@ const rowsRaw = computed(() =>
       };
     })
     .filter(notEmpty)
-    .sortBy((x) => x.tvl)
+    .sortBy((x) => x.tvlUsd)
     .value()
 );
 
@@ -143,9 +151,23 @@ const rows = computed((): Row[] =>
     .value()
 );
 
-// Data
-const { isFetching: loadingPoolStats, data: poolStats } = useQueryPoolStats();
+// Keepers
 const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
+const name = (keeper: Keeper): string =>
+  `${keeper.pair[1].symbol} / ${keeper.pair[0].symbol}`;
+
+// Pools
+const poolAddresses = computed(() =>
+  keepers.value.map((keeper) => keeper.pool_address)
+);
+
+const poolQueries = useQueryPoolMultiple(ref("ethereum"), poolAddresses);
+const loadingPools = computed(() =>
+  poolQueries.value.some((x) => x.isFetching)
+);
+const pools = computed(() =>
+  poolQueries.value.filter((x) => x.data).map((x) => x.data!)
+);
 
 // Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);

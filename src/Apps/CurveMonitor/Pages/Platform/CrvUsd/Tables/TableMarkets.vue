@@ -60,7 +60,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="totalFees(props.item.fees.pending)"
+          :value="props.item.fees.pending"
           :precision="decimals"
           type="dollar"
         />
@@ -68,7 +68,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="totalFees(props.item.fees.collected)"
+          :value="props.item.fees.collected"
           :precision="decimals"
           :show-zero="true"
           type="dollar"
@@ -101,7 +101,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + totalFees(x.fees.pending), 0)"
+          :value="rows.reduce((acc, x) => acc + x.fees.pending, 0)"
           :precision="decimals"
           type="dollar"
         />
@@ -109,7 +109,7 @@
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + totalFees(x.fees.collected), 0)"
+          :value="rows.reduce((acc, x) => acc + x.fees.collected, 0)"
           :precision="decimals"
           :show-zero="true"
           type="dollar"
@@ -124,66 +124,32 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import { type Market, type FeesBreakdown } from "@CM/Services/CrvUsd";
-import { useQueryMarkets, useQueryFees } from "@CM/Services/CrvUsd/Queries";
+import { type Market } from "@CM/Services/CrvUsd";
+import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
 
-type Fees = {
-  fees: {
-    pending?: FeesBreakdown;
-    collected?: FeesBreakdown;
-  };
-};
-
-type Row = Market & Fees;
+type Row = Market;
 
 // Refs
 const search = ref("");
 
-const loading = computed(() => loadingMarkets.value || loadingFees.value);
-
-const rowsRaw = computed(() =>
-  chain(markets.value)
-    .map((market) => ({
-      ...market,
-      ...{
-        fees: {
-          pending: fees.value.pending.find((x) => x.market === market.address),
-          collected: fees.value.collected.find(
-            (x) => x.market === market.address
-          ),
-        },
-      },
-    }))
-    .orderBy((x) => x.borrowed, "desc")
-    .value()
-);
-
 const rows = computed((): Row[] =>
-  chain(rowsRaw.value)
-    .filter((row) => {
+  chain(markets.value)
+    .filter((market) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(row.name) || includesTerm(row.address);
+      return includesTerm(market.name) || includesTerm(market.address);
     })
+    .orderBy((x) => x.borrowed, "desc")
     .value()
 );
 
 // Data
-const { isFetching: loadingMarkets, data: markets } = useQueryMarkets();
-const { isFetching: loadingFees, data: fees } = useQueryFees();
-
-// Methods
-const totalFees = (fees?: FeesBreakdown): number =>
-  fees
-    ? fees.adminBorrowingFees +
-      fees.collateralAdminFeesUsd +
-      fees.crvUsdAdminFees
-    : 0;
+const { isFetching: loading, data: markets } = useQueryMarkets();
 
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 </script>

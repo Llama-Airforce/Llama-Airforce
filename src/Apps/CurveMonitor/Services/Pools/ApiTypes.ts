@@ -31,3 +31,5 @@ export type GetPoolsResponse = {
   };
   data: Pool[];
 };
+
+export type GetPoolResponse = Pool;

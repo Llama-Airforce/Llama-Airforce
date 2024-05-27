@@ -56,8 +56,6 @@ export type GetKeepersResponse = {
     active: boolean;
     total_debt: number;
     total_profit: number;
-    tvl: number;
-    volume: number;
   }[];
 };
 

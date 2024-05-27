@@ -6,10 +6,10 @@ export const parsePoolTotals = (
 ): Models.PoolsTotals => {
   return {
     tvl: x.total_tvl,
-    tradingVolume24h: x.trading_volume_24h,
-    tradingFee24h: x.trading_volume_24h,
-    liquidityVolume24h: x.liquidity_volume_24h,
-    liquidityFee24h: x.liquidity_fee_24h,
+    tradingVolume24h: x.trading_volume_24h * 10000,
+    tradingFee24h: x.trading_volume_24h * 10000,
+    liquidityVolume24h: x.liquidity_volume_24h * 10000,
+    liquidityFee24h: x.liquidity_fee_24h * 10000,
   };
 };
 
@@ -21,10 +21,10 @@ export const parsePool = (
     address: x.address.toLocaleLowerCase(),
     numCoins: x.n_coins,
     tvlUsd: x.tvl_usd,
-    tradingVolume24h: x.trading_fee_24h,
-    tradingFee24h: x.trading_fee_24h,
-    liquidityVolume24h: x.liquidity_volume_24h,
-    liquidityFee24h: x.liquidity_fee_24h,
+    tradingVolume24h: x.trading_fee_24h * 10000,
+    tradingFee24h: x.trading_fee_24h * 10000,
+    liquidityVolume24h: x.liquidity_volume_24h * 10000,
+    liquidityFee24h: x.liquidity_fee_24h * 10000,
     coins:
       x.coins?.map((coin) => ({
         poolIndex: coin.pool_index,

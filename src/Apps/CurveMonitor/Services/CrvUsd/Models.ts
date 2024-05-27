@@ -17,6 +17,10 @@ export type Market = {
     symbol: string;
     address: string;
   };
+  fees: {
+    pending: number;
+    collected: number;
+  };
 };
 
 export type Snapshot = {
@@ -64,15 +68,6 @@ export type Keeper = {
   active: boolean;
   total_debt: number;
   total_profit: number;
-  tvl: number;
-  volume: number;
-};
-
-export type FeesBreakdown = {
-  market: string;
-  crvUsdAdminFees: number;
-  adminBorrowingFees: number;
-  collateralAdminFeesUsd: number;
 };
 
 export type Yield = {

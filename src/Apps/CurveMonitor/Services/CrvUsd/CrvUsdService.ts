@@ -46,13 +46,6 @@ export default class CrvUsdService extends ServiceBase {
     return resp.keepers.map(Parsers.parseKeeper);
   }
 
-  public async getFeesBreakdown() {
-    return this.fetch<{
-      pending: Models.FeesBreakdown[];
-      collected: Models.FeesBreakdown[];
-    }>(`${API_URL_OLD}/v1/crvusd/fees/breakdown`);
-  }
-
   public async getYield() {
     return this.fetch<{ yields: Models.Yield[] }>(
       `${API_URL_OLD}/v1/crvusd/yield`

@@ -17,3 +17,29 @@ export function useQueryPools(
     enabled: computed(() => !!chain.value),
   });
 }
+
+export function useQueryPool(chain: Ref<Chain | undefined>, poolAddr: string) {
+  return useQuery({
+    queryKey: ["curve-pool", poolAddr] as const,
+    queryFn: async ({ queryKey: [, poolAddr] }) =>
+      service.getPool(chain.value!, poolAddr),
+    enabled: computed(() => !!chain.value),
+  });
+}
+
+export function useQueryPoolMultiple(
+  chain: Ref<Chain | undefined>,
+  poolAddrs: Ref<string[]>
+) {
+  const queries = computed(() =>
+    poolAddrs.value.map((poolAddr) => ({
+      queryKey: ["curve-pool", poolAddr],
+      queryFn: () => service.getPool(chain.value!, poolAddr),
+      enabled: computed(() => !!chain.value),
+    }))
+  );
+
+  return useQueries({
+    queries,
+  });
+}

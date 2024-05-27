@@ -107,15 +107,6 @@ export function useQueryMarkets() {
   });
 }
 
-export function useQueryFees() {
-  return useQuery({
-    queryKey: ["crvusd-fees"],
-    queryFn: () => service.getFeesBreakdown(),
-    initialData: { pending: [], collected: [] },
-    initialDataUpdatedAt: 0,
-  });
-}
-
 export function useQueryYields() {
   return useQuery({
     queryKey: ["crvusd-yields"],
