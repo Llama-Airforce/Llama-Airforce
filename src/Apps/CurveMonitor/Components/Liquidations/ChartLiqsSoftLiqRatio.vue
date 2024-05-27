@@ -128,7 +128,7 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
   const newProportionSerie: LineData[] = chain_(newSoftLiq)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.proportion,
+      value: x.proportion * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

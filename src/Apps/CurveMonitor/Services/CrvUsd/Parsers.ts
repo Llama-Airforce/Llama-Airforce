@@ -43,6 +43,8 @@ export const parseSnapshot = (
     priceAMM: x.amm_price,
     priceOracle: x.price_oracle,
     borrowable: x.borrowable,
+    discountLiquidation: x.liquidation_discount,
+    discountLoan: x.loan_discount,
   };
 };
 

@@ -57,6 +57,8 @@ export const parseSnapshot = (
   const collateralBalance = parseFloat(x.collateral_balance);
   const borrowedBalance = parseFloat(x.borrowed_balance);
   const timestamp = toUTC(x.timestamp);
+  const discountLiquidation = x.liquidation_discount;
+  const discountLoan = x.loan_discount;
 
   return {
     rate,
@@ -72,5 +74,7 @@ export const parseSnapshot = (
     collateralBalance,
     borrowedBalance,
     timestamp,
+    discountLiquidation,
+    discountLoan,
   };
 };

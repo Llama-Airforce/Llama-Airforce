@@ -57,6 +57,8 @@ export type GetSnapshotsResponse = {
       collateral_balance: string;
       borrowed_balance: string;
       timestamp: string;
+      liquidation_discount: number;
+      loan_discount: number;
     }
   ];
 };

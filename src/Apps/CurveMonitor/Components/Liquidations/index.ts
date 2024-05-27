@@ -5,6 +5,7 @@ export { default as ChartLiqsMedianLoss } from "./ChartLiqsMedianLoss.vue";
 export { default as ChartLiqsLosersProportion } from "./ChartLiqsLosersProportion.vue";
 export { default as ChartLiqsHealthDeciles } from "./ChartLiqsHealthDeciles.vue";
 export { default as ChartLiqsSoftLiqRatio } from "./ChartLiqsSoftLiqRatio.vue";
+export { default as ChartLiquidatorRevenue } from "./ChartLiquidatorRevenue.vue";
 
 export { default as TableLiqOverview } from "./TableLiqOverview.vue";
 export { default as TableTopLiquidators } from "./TableTopLiquidators.vue";

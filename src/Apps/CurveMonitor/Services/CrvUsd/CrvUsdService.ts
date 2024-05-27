@@ -54,13 +54,6 @@ export default class CrvUsdService extends ServiceBase {
     return resp.data.map(Parsers.parseSupply);
   }
 
-  public async getFeesBreakdown() {
-    return this.fetch<{
-      pending: Models.FeesBreakdown[];
-      collected: Models.FeesBreakdown[];
-    }>(`${API_URL_OLD}/v1/crvusd/fees/breakdown`);
-  }
-
   public async getKeepers(chain: Chain) {
     const resp = await this.fetch<ApiTypes.GetKeepersResponse>(
       `${API_URL}/v1/crvusd/pegkeepers/${chain}`
@@ -69,15 +62,16 @@ export default class CrvUsdService extends ServiceBase {
     return resp.keepers.map(Parsers.parseKeeper);
   }
 
+  public async getFeesBreakdown() {
+    return this.fetch<{
+      pending: Models.FeesBreakdown[];
+      collected: Models.FeesBreakdown[];
+    }>(`${API_URL_OLD}/v1/crvusd/fees/breakdown`);
+  }
+
   public async getYield() {
     return this.fetch<{ yields: Models.Yield[] }>(
       `${API_URL_OLD}/v1/crvusd/yield`
     ).then((resp) => resp.yields);
-  }
-
-  public async getLiquidatorRevenue(marketAddr: string) {
-    return this.fetch<{ revenue: Models.LiquidatorRevenue[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/liquidations/liquidators/revenue`
-    ).then((resp) => resp.revenue);
   }
 }

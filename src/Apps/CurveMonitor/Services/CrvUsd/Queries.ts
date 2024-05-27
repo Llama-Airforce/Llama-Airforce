@@ -34,16 +34,6 @@ export function useQueryCrvUsdSupply() {
   });
 }
 
-export function useQueryLiquidatorRevenue(market: Ref<Market | undefined>) {
-  return useQuery({
-    queryKey: ["crvusd-liq-revenue", useMarketAddress(market)] as const,
-    queryFn: ({ queryKey: [, market] }) =>
-      service.getLiquidatorRevenue(market!),
-    ...hasMarket(market),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryPriceDeviation() {
   return useQuery({
     queryKey: ["crvusd-price-deviation"],

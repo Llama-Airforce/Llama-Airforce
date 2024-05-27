@@ -49,4 +49,6 @@ export type Snapshot = {
   collateralBalance: number;
   borrowedBalance: number;
   timestamp: number;
+  discountLiquidation: number;
+  discountLoan: number;
 };

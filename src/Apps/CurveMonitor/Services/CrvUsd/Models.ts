@@ -32,6 +32,8 @@ export type Snapshot = {
   priceAMM: number;
   priceOracle: number;
   borrowable: number;
+  discountLiquidation: number;
+  discountLoan: number;
 };
 
 export type MarketDecile = {
@@ -100,10 +102,4 @@ export type Yield = {
   platform: string;
   pool: string;
   apy: number;
-};
-
-export type LiquidatorRevenue = {
-  timestamp: number;
-  amount: number;
-  discount: number;
 };

@@ -39,6 +39,8 @@ export type GetSnapshotsResponse = {
     price_oracle: number;
     borrowable: number;
     dt: string;
+    liquidation_discount: number;
+    loan_discount: number;
   }[];
 };
 

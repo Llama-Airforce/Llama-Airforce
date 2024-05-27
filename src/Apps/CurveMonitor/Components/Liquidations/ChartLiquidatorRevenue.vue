@@ -2,7 +2,6 @@
   <Card
     class="chart-container"
     :title="t('title')"
-    :loading
   >
     <template #actions>
       <div class="actions">
@@ -24,17 +23,22 @@
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type LiquidatorRevenue } from "@CM/Services/CrvUsd";
-import { useQueryLiquidatorRevenue } from "@CM/Services/CrvUsd/Queries";
+import { type LiquidationDetails } from "@CM/Services/Liquidations";
+
+type Discount = {
+  timestamp: number;
+  discount: number;
+};
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  market: Market | undefined;
+  discounts: Discount[];
+  liqs: LiquidationDetails[];
 }
 
-const { market } = defineProps<Props>();
+const { discounts, liqs } = defineProps<Props>();
 
 // Refs
 let discountSerie: ISeriesApi<"Area">;
@@ -51,13 +55,8 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-// Data
-const { isFetching: loading, data: softLiqs } = useQueryLiquidatorRevenue(
-  toRef(() => market)
-);
-
 // Watches
-watch([softLiqs, chart], createSeries);
+watch([toRef(() => discounts), toRef(() => liqs), chart], createSeries);
 watch(theme, () => {
   discountSerie.applyOptions(createDiscountOptionsSerie());
   revenueSerie.applyOptions(createRevenueOptionsSerie());
@@ -117,27 +116,36 @@ function createDiscountOptionsSerie(): AreaSeriesPartialOptions {
   };
 }
 
-function createSeries([newSoftLiq, chart]: [
-  LiquidatorRevenue[]?,
+function createSeries([newDiscount, newLiqs, chart]: [
+  Discount[]?,
+  LiquidationDetails[]?,
   IChartApi?
 ]): void {
-  if (!chart || !discountSerie) {
+  if (!chart || !discountSerie || !revenueSerie) {
     return;
   }
 
-  const newDiscountSerie: LineData[] = chain(newSoftLiq)
+  const newRevenueSerie: LineData[] = chain(newLiqs)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.discount * 100,
+      value: x.debt,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
+    .reduce((acc, curr) => {
+      const lastAccum = acc.length > 0 ? acc[acc.length - 1].value : 0;
+      acc.push({ time: curr.time, value: curr.value + lastAccum });
+      return acc;
+    }, [] as LineData[])
     .value();
 
-  const newRevenueSerie: LineData[] = chain(newSoftLiq)
+  const minTime = (newRevenueSerie[0]?.time as number) ?? 0;
+
+  const newDiscountSerie: LineData[] = chain(newDiscount)
+    .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.amount,
+      value: x.discount * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
