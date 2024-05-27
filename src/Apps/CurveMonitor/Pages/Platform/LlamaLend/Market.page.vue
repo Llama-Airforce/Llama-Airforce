@@ -69,6 +69,9 @@ watch(
         id: "llamalend",
         label: "Llama Lend",
         pathName: "llamalend",
+        params: () => ({
+          chain: chain.value,
+        }),
       },
       {
         id: "market",

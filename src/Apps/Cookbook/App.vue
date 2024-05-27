@@ -61,7 +61,10 @@ watch(
 // Methods
 const onCrumb = async (crumb: Crumb) => {
   if (crumb.pathName) {
-    await router.push({ name: crumb.pathName });
+    await router.push({
+      name: crumb.pathName,
+      ...(crumb.params && { params: crumb.params() }),
+    });
   }
 };
 </script>

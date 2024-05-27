@@ -104,10 +104,10 @@ import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 
 const { t } = useI18n();
 
-const chainParam = useRouteParams<Chain | "">("chain");
+const chainParam = useRouteParams<Chain | undefined | "">("chain");
 const chain = computed({
   get() {
-    return chainParam.value === "" ? "ethereum" : chainParam.value;
+    return !chainParam.value ? "ethereum" : chainParam.value;
   },
   set(newChain) {
     chainParam.value = newChain;
@@ -184,6 +184,9 @@ onMounted(() => {
       id: "llamalend",
       label: "Llama Lend",
       pathName: "llamalend",
+      params: () => ({
+        chain: chain.value,
+      }),
     },
     {
       id: "market",
