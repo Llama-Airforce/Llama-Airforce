@@ -36,20 +36,6 @@ export type Snapshot = {
   discountLoan: number;
 };
 
-export type MarketDecile = {
-  debt: number;
-  collateral: number;
-  collateralUsd: number;
-  stableCoin: number;
-};
-
-export type MarketState = MarketDecile & {
-  index: number;
-  user: string;
-  N: number;
-  health: number;
-};
-
 export type PoolStats = {
   address: string;
   name: string;

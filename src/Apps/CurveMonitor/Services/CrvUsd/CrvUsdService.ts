@@ -24,16 +24,6 @@ export default class CrvUsdService extends ServiceBase {
     return resp.data.map(Parsers.parseSnapshot);
   }
 
-  public async getMarketUserStates(
-    marketAddr: string,
-    offset: number,
-    limit: number
-  ) {
-    return this.fetch<{ states: Models.MarketState[] }>(
-      `${API_URL_OLD}/v1/crvusd/markets/${marketAddr}/users/states?offset=${offset}&limit=${limit}`
-    ).then((resp) => resp.states);
-  }
-
   public async getPoolStats() {
     return this.fetch<{ stats: Models.PoolStats[] }>(
       `${API_URL_OLD}/v1/crvusd/pools/stats`
