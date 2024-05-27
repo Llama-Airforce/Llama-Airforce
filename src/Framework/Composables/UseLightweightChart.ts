@@ -50,6 +50,7 @@ export function useLightweightChart(
     resizeObserver = new ResizeObserver(() => {
       if (chart.value) {
         chart.value.applyOptions({ width: chartRef.value?.clientWidth });
+        chart.value.timeScale().fitContent();
       }
     });
 
