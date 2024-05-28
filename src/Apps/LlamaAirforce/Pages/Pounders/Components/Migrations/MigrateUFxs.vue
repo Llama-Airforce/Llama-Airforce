@@ -170,4 +170,23 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+migrate: Migrate
+migrating: Migrating...
+migrateUFxs: Hello ser, you have {0} uFXS you need to migrate!
+  <br />It's sitting in the old pounder now, not earning rewards!
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+migrate: 迁移
+migrating: 迁移中...
+migrateUFxs: 您好，您有{0} uFXS 需要迁移到新金库！
+  <br />您在旧金库中无法获得收益
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+migrate: Migrer
+migrating: Migration en cours...
+migrateUFxs: Bonjour, vous avez {0} uFXS que vous devez migrer!
+  <br />Il est actuellement dans l'ancien pounder, il n'accumule pas de récompenses!
+</i18n>

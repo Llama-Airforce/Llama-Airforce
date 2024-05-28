@@ -418,4 +418,49 @@ const onWithdrawSelect = (zap: Zap): void => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+zap-deposit: Deposit
+zap-depositing: Depositing...
+zap-withdraw: Withdraw
+zap-withdrawing: Withdrawing...
+claim-rewards-title: Claim Union rewards
+claim-first: In order to withdraw the requested amount you first need to claim
+  your Union rewards
+
+description-ucrv: This pounder stakes cvxCRV single-sidedly on Convex.
+  Llama Airforce devs actively choose the highest yielding reward weight option for the staked cvxCRV.
+description-ufxs: This pounder stakes cvxFXS single-sidedly on Convex.
+description-uprisma: This pounder stakes cvxPRISMA single-sidedly on Convex.
+description-ucvx: This pounder stakes pxCVX and compounds the earned bribe rewards for more pxCVX.
+description-ubal: This pounder stakes auraBAL on Aura.
+description-ufxslp: This pounder stakes cvxFXS/FXS LP tokens on Convex.
+  This staking method no longer actively rewarded by Convex; these rewards have been moved to single-sided cvxFXS staking.
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+zap-deposit: 订金
+zap-depositing: 订金。。。
+zap-withdraw: 提取
+zap-withdrawing: 提取。。。
+claim-rewards-title: 索取奖励
+claim-first: 在提取您要求的金额之前，请先领取您的收益
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+zap-deposit: Déposer
+zap-depositing: Déposer...
+zap-withdraw: Retirer
+zap-withdrawing: Retirer...
+claim-rewards-title: Réclamer les récompenses de l'Union
+claim-first: Pour retirer le montant demandé, vous devez d'abord réclamer
+  vos récompenses de l'Union
+
+description-ucrv: Ce pounder stake du cvxCRV en unilatéral sur Convex.
+  Les développeurs de Llama Airforce sélectionnent activement l'option de récompense offrant le rendement le plus élevé pour le cvxCRV staké.
+description-ufxs: Ce pounder stake du cvxFXS en unilatéral sur Convex.
+description-uprisma: Ce pounder stake du cvxPRISMA en unilatéral sur Convex.
+description-ucvx: Ce pounder stake du pxCVX et compounde les récompenses de pots-de-vin gagnées pour plus de pxCVX.
+description-ubal: Ce pounder stake de l'auraBAL sur Aura.
+description-ufxslp: Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.
+  Cette méthode de staking n'est plus activement récompensée par Convex; les récompenses ont été déplacées vers le staking cvxFXS unilatéral.
+</i18n>

@@ -81,4 +81,29 @@ const { apy, fees } = defineProps<Props>();
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+apy: APY
+apy-info: "APY calculation assumes weekly compounding<br />and excludes the
+  following fees:"
+fee-on-yield: "Fee on yield:"
+caller-incentive: "Caller incentive (fee on yield):"
+withdrawal-fee: "Withdrawal fee (on total deposit):"
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+apy: APY
+apy-info: "APY计算基于按周复投的计算<br />并排除了以下费用:"
+fee-on-yield: "收益费:"
+caller-incentive: "触发激励 (基于收益的费用):"
+withdrawal-fee: "提款费 (基于总存款的费用):"
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+apy: APY
+apy-info:
+  "Le calcul de l'APY suppose une capitalisation hebdomadaire<br />et exclut les
+  frais suivants :"
+fee-on-yield: "Frais sur le rendement :"
+caller-incentive: "Incitatif pour l'appelant (frais sur le rendement) :"
+withdrawal-fee: "Frais de retrait (sur le dépôt total) :"
+</i18n>

@@ -113,4 +113,14 @@ const hasUnclaimed = computed(
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+your-balance: Your Balance
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+your-balance: 你的余额
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+your-balance: Votre solde
+</i18n>

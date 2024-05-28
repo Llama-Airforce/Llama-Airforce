@@ -41,4 +41,14 @@ const tvl = computed((): number | null => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+tvl: TVL
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+tvl: TVL
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+tvl: TVL
+</i18n>

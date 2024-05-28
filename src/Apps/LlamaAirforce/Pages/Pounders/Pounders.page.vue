@@ -348,4 +348,21 @@ watch(
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+pounders-info: Union's auto-compounders streamline life for busy llamas.
+pounders-info-other: The following pounders are not part of the Union's allocation set, but they still make life easier.
+pounders-info-legacy: The following pounders are considered legacy. They still work, but we recommend migrating.
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
+pounders-info-other: 以下金库不属于Union的分配集，但它们仍然使生活更容易。
+pounders-info-legacy: 下面的保险库被认为是传统的。它们仍然有效，但我们建议迁移。
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+pounders-info: Les auto-compounders de l'Union rendent la vie un peu
+  plus facile à gérer pour les llamas qui travaillent dur.
+pounders-info-other: Les pounders suivants ne font pas partie de l'ensemble d'allocation de l'Union, mais ils rendent tout de même la vie plus facile.
+pounders-info-legacy: Les pounders suivants sont considérés comme étant obsolètes. Ils fonctionnent toujours, mais nous recommandons de migrer vers une solution plus récente.
+</i18n>

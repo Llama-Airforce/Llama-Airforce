@@ -123,4 +123,23 @@ const onMigrate = withSigner(async (signer, address) => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+migrate: Migrate
+migrating: Migrating...
+migrateUCrvV2: Hello ser, you have {0} uCRV you need to migrate!
+  <br />It might still earn yield, but it will be subpar!
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+migrate: 迁移
+migrating: 迁移中...
+migrateUCrvV2: 您好，您好 {0} uCRV 需要迁移到新金库!
+  <br />您在旧金库中可以继续获得收益，但会逐步减少!
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+migrate: Migrer
+migrating: Migration en cours...
+migrateUCrvV2: Bonjour, vous avez {0} uCRV que vous devez migrer!
+  <br />Il pourrait toujours générer du rendement, mais il serait inférieur!
+</i18n>

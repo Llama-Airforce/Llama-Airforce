@@ -166,4 +166,20 @@ const onMax = (): void => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+balance: "Balance:"
+max: Max
+dollars: "Dollars:"
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+balance: "余额:"
+max: 最大
+dollars: "美元:"
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+balance: "Solde :"
+max: Max
+dollars: "Dollars :"
+</i18n>

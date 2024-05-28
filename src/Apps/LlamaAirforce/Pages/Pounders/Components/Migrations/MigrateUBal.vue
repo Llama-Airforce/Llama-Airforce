@@ -155,4 +155,23 @@ const onDepositAuraBal = withSigner((signer, address) => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+withdraw: Withdraw from old vault
+deposit: Deposit into new vault
+migrateUBal: Hello ser, you have {0} uBAL you need to migrate!
+  <br />It's sitting in the old pounder now, not earning rewards!
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+withdraw: 从旧金库中提款
+deposit: 存款到新的金库
+migrateUBal: 您好，您有{0} uBAL 需要迁移到新金库！
+  <br />您在旧金库中无法获得收益
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+withdraw: Retirer de l'ancien coffre
+deposit: Déposer dans le nouveau coffre
+migrateUBal: Bonjour, vous avez {0} uBAL que vous devez migrer!
+  <br />Il est actuellement dans l'ancien pounder, il n'accumule pas de récompenses!
+</i18n>

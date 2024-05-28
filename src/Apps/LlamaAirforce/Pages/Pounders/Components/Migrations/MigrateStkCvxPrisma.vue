@@ -134,4 +134,24 @@ const onMigrate = withSigner((signer, address) => {
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+migrate: Migrate
+migrating: Migrating...
+migrateStkCvxCrv: Hello ser, it seems you have {0} cvxPRISMA staked in Convex.
+  <br />Do you wish to move those cheaply into the pounder?
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+migrate: 迁移
+migrating: 迁移中...
+migrateStkCvxCrv: 您好，先生，您似乎在 Convex 下注了 {0} cvxPRISMA。
+  <br />你想廉价地把钱存入金库吗？
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+migrate: Migrer
+migrating: Migration en cours...
+migrateStkCvxCrv:
+  Bonjour, il semble que vous ayez {0} cvxPRISMA mis en jeu dans Convex.
+  <br />Souhaitez-vous les transférer à bas prix dans le pounder?
+</i18n>

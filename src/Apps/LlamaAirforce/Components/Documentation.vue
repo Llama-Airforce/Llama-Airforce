@@ -64,4 +64,14 @@ const { extra = "" } = defineProps<Props>();
 }
 </style>
 
-<i18n lang="yaml" src="@/locales/union.yml"></i18n>
+<i18n lang="yaml" locale="en">
+docs: Read our docs <a href="https://docs.llama.airforce" target="_blank">here</a>.
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+docs: 阅读我们的文件<a href="https://docs.llama.airforce" target="_blank">这里</a>.
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+docs: Lisez notre documentation <a href="https://docs.llama.airforce" target="_blank">ici</a>.
+</i18n>

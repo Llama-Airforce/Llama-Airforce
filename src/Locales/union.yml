@@ -3,43 +3,9 @@ en:
   tvl: TVL
   submit: Submit
   submitting: Submitting...
-  docs: Read our docs <a href="https://docs.llama.airforce" target="_blank">here</a>.
 
   # Member.vue
   allocation: Allocation
-
-  # Apy.vue
-  apy-info: "APY calculation assumes weekly compounding<br />and excludes the
-    following fees:"
-  fee-on-yield: "Fee on yield:"
-  caller-incentive: "Caller incentive (fee on yield):"
-  withdrawal-fee: "Withdrawal fee (on total deposit):"
-
-  # Balance.vue
-  your-balance: Your Balance
-
-  # PounderDetails.vue
-  zap-deposit: Deposit
-  zap-depositing: Depositing...
-  zap-withdraw: Withdraw
-  zap-withdrawing: Withdrawing...
-  claim-rewards-title: Claim Union rewards
-  claim-first: In order to withdraw the requested amount you first need to claim
-    your Union rewards
-
-  description-ucrv: This pounder stakes cvxCRV single-sidedly on Convex.
-    Llama Airforce devs actively choose the highest yielding reward weight option for the staked cvxCRV.
-  description-ufxs: This pounder stakes cvxFXS single-sidedly on Convex.
-  description-uprisma: This pounder stakes cvxPRISMA single-sidedly on Convex.
-  description-ucvx: This pounder stakes pxCVX and compounds the earned bribe rewards for more pxCVX.
-  description-ubal: This pounder stakes auraBAL on Aura.
-  description-ufxslp: This pounder stakes cvxFXS/FXS LP tokens on Convex.
-    This staking method no longer actively rewarded by Convex; these rewards have been moved to single-sided cvxFXS staking.
-
-  # PounderInput.vue
-  balance: "Balance:"
-  max: Max
-  dollars: "Dollars:"
 
   # Balance.vue
   rewards-balance: Rewards Balance ($)
@@ -93,17 +59,6 @@ en:
   already-forwarded: Already forwarded to another address
   forwarding-in-progress: Address forwarding expiration in progress
 
-  # ModalSlippage.vue
-  price-modal-title: Price control
-  percentage: Percentage
-  min-amount: Min Amount
-  no-zero: Zero min amount not allowed
-  slippage-info:
-    Price control is a safeguard against excessive slippage or sandwich attacks.
-    By setting a minimum percentage for your input, you establish a lower limit for your returns.
-    If you encounter a slippage error, the value you set might be too low.
-    A slight increase of one or two percent could help, but don't make it too high to ensure your protection.
-
   # Locks.vue
   nothing-locked: You do not have any CVX locked for the upcoming round
 
@@ -118,27 +73,6 @@ en:
     has passed.
   rejoin: Rejoin The Union
   active-in: Membership active in {0}
-
-  # Pounders.vue
-  pounders-info: Union's auto-compounders streamline life for busy llamas.
-  pounders-info-other: The following pounders are not part of the Union's allocation set, but they still make life easier.
-  pounders-info-legacy: The following pounders are considered legacy. They still work, but we recommend migrating.
-
-  # Migrations
-  migrate: Migrate
-  migrating: Migrating...
-  withdraw: Withdraw from old vault
-  deposit: Deposit into new vault
-  migrateUBal: Hello ser, you have {0} uBAL you need to migrate!
-    <br />It's sitting in the old pounder now, not earning rewards!
-  migrateUFxs: Hello ser, you have {0} uFXS you need to migrate!
-    <br />It's sitting in the old pounder now, not earning rewards!
-  migrateUCrv: Hello ser, you have {0} uCRV you need to migrate!
-    <br />The old one will still work, but the new one has a few internal improvements!
-  migrateUCrvV2: Hello ser, you have {0} uCRV you need to migrate!
-    <br />It might still earn yield, but it will be subpar!
-  migrateStkCvxCrv: Hello ser, it seems you have {0} cvxPRISMA staked in Convex.
-    <br />Do you wish to move those cheaply into the pounder?
 
   # Prisma Airdrop
   prisma-warning:
@@ -162,32 +96,9 @@ zh:
   tvl: TVL
   submit: 递交
   submitting: 递交...
-  docs: 阅读我们的文件<a href="https://docs.llama.airforce" target="_blank">这里</a>.
 
   # Member.vue
   allocation: 分配
-
-  # Apy.vue
-  apy-info: "APY计算基于按周复投的计算<br />并排除了以下费用:"
-  fee-on-yield: "收益费:"
-  caller-incentive: "触发激励 (基于收益的费用):"
-  withdrawal-fee: "提款费 (基于总存款的费用):"
-
-  # Balance.vue
-  your-balance: 你的余额
-
-  # PounderDetails.vue
-  zap-deposit: 订金
-  zap-depositing: 订金。。。
-  zap-withdraw: 提取
-  zap-withdrawing: 提取。。。
-  claim-rewards-title: 索取奖励
-  claim-first: 在提取您要求的金额之前，请先领取您的收益
-
-  # PounderInput.vue
-  balance: "余额:"
-  max: 最大
-  dollars: "美元:"
 
   # Balance.vue
   rewards-balance: 奖励余额 ($)
@@ -226,13 +137,6 @@ zh:
   already-forwarded: 已经转发给另外一个地址
   forwarding-in-progress: 地址转发即将过期
 
-  # ModalSlippage.vue
-  price-modal-title: 价格控制
-  percentage: 百分比
-  min-amount: 最小数量
-  no-zero: 最小数量不能为0
-  slippage-info: 价格控制是防止过度滑点或夹心层攻击的一种保障措施。通过设定输入的最低百分比，可以为收益设定一个下限。如果您遇到滑点错误，您设定的值可能太低。稍微增加一到两个百分点可能会有帮助，但不要太高，以确保您的保护。
-
   # Locks.vue
   nothing-locked: 你在下一个周期中没有锁定的CVX
 
@@ -245,27 +149,6 @@ zh:
   leave-notice: 如果您注销会员，您将无法重新加入直到本周期结束.
   rejoin: 重新加入会员
   active-in: 活跃会员数量 {0}
-
-  # Pounders.vue
-  pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
-  pounders-info-other: 以下金库不属于Union的分配集，但它们仍然使生活更容易。
-  pounders-info-legacy: 下面的保险库被认为是传统的。它们仍然有效，但我们建议迁移。
-
-  # Migrations
-  migrate: 迁移
-  migrating: 迁移中...
-  withdraw: 从旧金库中提款
-  deposit: 存款到新的金库
-  migrateUBal: 您好，您有{0} uBAL 需要迁移到新金库！
-    <br />您在旧金库中无法获得收益
-  migrateUFxs: 您好，您有{0} uFXS 需要迁移到新金库！
-    <br />您在旧金库中无法获得收益
-  migrateUCrv: 您好，您好 {0} uCRV 需要迁移到新金库!
-    <br />旧的仍然可以工作，但新的有一些内部改进!
-  migrateUCrvV2: 您好，您好 {0} uCRV 需要迁移到新金库!
-    <br />您在旧金库中可以继续获得收益，但会逐步减少!
-  migrateStkCvxCrv: 您好，先生，您似乎在 Convex 下注了 {0} cvxPRISMA。
-    <br />你想廉价地把钱存入金库吗？
 
   # Prisma Airdrop
   prisma-warning: 谨防网络钓鱼欺诈和冒名顶替者！在与智能合约互动之前，请务必仔细检查超链接。始终尽职尽责。不值得因为走捷径或疏忽而吃亏。
@@ -282,44 +165,9 @@ fr:
   tvl: TVL
   submit: Valider
   submitting: Validation en cours...
-  docs: Lisez notre documentation <a href="https://docs.llama.airforce" target="_blank">ici</a>.
 
   # Member.vue
   allocation: Allocation
-
-  # Apy.vue
-  apy-info:
-    "Le calcul de l'APY suppose une capitalisation hebdomadaire<br />et exclut les
-    frais suivants :"
-  fee-on-yield: "Frais sur le rendement :"
-  caller-incentive: "Incitatif pour l'appelant (frais sur le rendement) :"
-  withdrawal-fee: "Frais de retrait (sur le dépôt total) :"
-
-  # Balance.vue
-  your-balance: Votre solde
-
-  # PounderDetails.vue
-  zap-deposit: Déposer
-  zap-depositing: Déposer...
-  zap-withdraw: Retirer
-  zap-withdrawing: Retirer...
-  claim-rewards-title: Réclamer les récompenses de l'Union
-  claim-first: Pour retirer le montant demandé, vous devez d'abord réclamer
-    vos récompenses de l'Union
-
-  description-ucrv: Ce pounder stake du cvxCRV en unilatéral sur Convex.
-    Les développeurs de Llama Airforce sélectionnent activement l'option de récompense offrant le rendement le plus élevé pour le cvxCRV staké.
-  description-ufxs: Ce pounder stake du cvxFXS en unilatéral sur Convex.
-  description-uprisma: Ce pounder stake du cvxPRISMA en unilatéral sur Convex.
-  description-ucvx: Ce pounder stake du pxCVX et compounde les récompenses de pots-de-vin gagnées pour plus de pxCVX.
-  description-ubal: Ce pounder stake de l'auraBAL sur Aura.
-  description-ufxslp: Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.
-    Cette méthode de staking n'est plus activement récompensée par Convex; les récompenses ont été déplacées vers le staking cvxFXS unilatéral.
-
-  # PounderInput.vue
-  balance: "Solde :"
-  max: Max
-  dollars: "Dollars :"
 
   # Balance.vue
   rewards-balance: Solde des récompenses ($)
@@ -373,17 +221,6 @@ fr:
   already-forwarded: Déjà transféré à une autre adresse
   forwarding-in-progress: Expiration de la redirection d'adresse en cours
 
-  # ModalSlippage.vue
-  price-modal-title: Contrôle des prix
-  percentage: Pourcentage
-  min-amount: Montant minimum
-  no-zero: Montant minimum zéro non autorisé
-  slippage-info:
-    Le contrôle des prix est une protection contre les dérapages excessifs ou les attaques en sandwich.
-    En fixant un pourcentage minimum pour vos intrants, vous établissez une limite inférieure pour vos retours.
-    Si vous rencontrez une erreur de dérapage, la valeur que vous avez fixée est peut-être trop basse.
-    Une légère augmentation d'un ou deux pour cent pourrait être utile, mais ne la fixez pas trop haut pour assurer votre protection.
-
   # Locks.vue
   nothing-locked: Vous n'avez aucun CVX verrouillé pour le tour à venir
 
@@ -398,27 +235,6 @@ fr:
     soit passé.
   rejoin: Rejoindre à nouveau L'Union
   active-in: Adhésion active dans {0}
-
-  # Pounders.vue
-  pounders-info: Les auto-compounders de l'Union rendent la vie un peu
-    plus facile à gérer pour les llamas qui travaillent dur.
-  pounders-info-other: Les pounders suivants ne font pas partie de l'ensemble d'allocation de l'Union, mais ils rendent tout de même la vie plus facile.
-  pounders-info-legacy: Les pounders suivants sont considérés comme étant obsolètes. Ils fonctionnent toujours, mais nous recommandons de migrer vers une solution plus récente.
-  # Migrations
-  migrate: Migrer
-  migrating: Migration en cours...
-  withdraw: Retirer de l'ancien coffre
-  deposit: Déposer dans le nouveau coffre
-  migrateUBal: Bonjour, vous avez {0} uBAL que vous devez migrer!
-    <br />Il est actuellement dans l'ancien pounder, il n'accumule pas de récompenses!
-  migrateUFxs: Bonjour, vous avez {0} uFXS que vous devez migrer!
-    <br />Il est actuellement dans l'ancien pounder, il n'accumule pas de récompenses!
-  migrateUCrv: Bonjour, vous avez {0} uCRV que vous devez migrer!
-    <br />L'ancien fonctionnera toujours, mais le nouveau a quelques améliorations internes!
-  migrateUCrvV2: Bonjour, vous avez {0} uCRV que vous devez migrer!
-    <br />Il pourrait toujours générer du rendement, mais il serait inférieur!
-  migrateStkCvxCrv: Bonjour, il semble que vous ayez {0} cvxPRISMA mis en jeu dans Convex.
-    <br />Souhaitez-vous les transférer à bas prix dans le pounder?
 
   # Prisma Airdrop
   prisma-warning: Attention aux escroqueries par hameçonnage et aux imposteurs ! Vérifiez toujours l'URL avant d'interagir avec les contrats intelligents. Faites toujours preuve de diligence raisonnable. Cela ne vaut pas la peine de se faire reprendre pour des raccourcis ou de la négligence.
