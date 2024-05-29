@@ -111,6 +111,10 @@ const utilRate = computed(() => {
   display: flex;
   gap: var(--dashboard-gap);
 
+  @media only screen and (max-width: 1280px) {
+    flex-direction: column;
+  }
+
   .two-values {
     flex-grow: 1;
     display: flex;
