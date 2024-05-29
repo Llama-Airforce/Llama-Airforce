@@ -1,3 +1,7 @@
+/*
+ * Note that collateral can be two tokens due to soft-liquidations.
+ * You can have a crvUSD borrow (partially) being collateralized by crvUSD.
+ */
 export type Market = {
   name: string;
   controller: string;
@@ -11,16 +15,16 @@ export type Market = {
   n_loans: number;
   price_oracle: number;
   amm_price: number;
-  total_debt: number;
-  total_assets: number;
+  total_debt: number; // Borrowed
+  total_assets: number; // Supplied
   total_debt_usd: number;
   total_assets_usd: number;
   minted: number;
   redeemed: number;
   minted_usd: number;
   redeemed_usd: number;
-  collateral_balance: number;
-  borrowed_balance: number;
+  collateral_balance: number; // Collateral (like CRV)
+  borrowed_balance: number; // Collateral (like crvUSD)
   collateral_balance_usd: number;
   borrowed_balance_usd: number;
   collateral_token: {
