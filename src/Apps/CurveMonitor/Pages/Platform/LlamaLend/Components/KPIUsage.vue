@@ -1,20 +1,30 @@
 <template>
   <div class="usage">
     <KPI
-      :label="t('collateral') + ` (${market?.collateral_token.symbol ?? '?'})`"
+      :label="collateralLabel"
       :has-value="!!market"
     >
-      <div class="two-values">
-        <AsyncValue
-          :value="market?.collateral_balance"
-          :show-symbol="false"
-          :show-zero="true"
-          :inline="false"
-          type="dollar"
-        ></AsyncValue>
+      <div class="two-sides">
+        <div class="collateral">
+          <AsyncValue
+            :value="market?.collateral_balance"
+            :show-symbol="false"
+            :show-zero="true"
+            type="dollar"
+          ></AsyncValue>
+
+          /
+
+          <AsyncValue
+            :value="market?.borrowed_balance"
+            :show-symbol="false"
+            :show-zero="true"
+            type="dollar"
+          ></AsyncValue>
+        </div>
 
         <AsyncValue
-          :value="market?.collateral_balance_usd"
+          :value="totalCollateralUsd"
           :show-zero="true"
           :inline="false"
           type="dollar"
@@ -26,7 +36,7 @@
       :label="t('borrowed') + ` (${market?.borrowed_token.symbol ?? '?'})`"
       :has-value="!!market"
     >
-      <div class="two-values">
+      <div class="two-sides">
         <AsyncValue
           :value="market?.total_debt"
           :show-symbol="false"
@@ -48,7 +58,7 @@
       :label="t('supplied') + ` (${market?.borrowed_token.symbol ?? '?'})`"
       :has-value="!!market"
     >
-      <div class="two-values">
+      <div class="two-sides">
         <AsyncValue
           :value="market?.total_assets"
           :show-symbol="false"
@@ -93,6 +103,19 @@ interface Props {
 
 const { market } = defineProps<Props>();
 
+const totalCollateralUsd = computed(
+  () =>
+    (market?.collateral_balance_usd ?? 0) + (market?.borrowed_balance_usd ?? 0)
+);
+
+const collateralLabel = computed(() => {
+  const collateral = t("collateral");
+  const symbolCollateral = market?.collateral_token.symbol ?? "?";
+  const symbolBorrowed = market?.borrowed_token.symbol ?? "?";
+
+  return `${collateral} (${symbolCollateral} / ${symbolBorrowed})`;
+});
+
 const utilRate = computed(() => {
   if (!market) {
     return 0;
@@ -115,11 +138,15 @@ const utilRate = computed(() => {
     flex-direction: column;
   }
 
-  .two-values {
+  .two-sides {
     flex-grow: 1;
     display: flex;
     gap: 1rem;
     justify-content: space-between;
+
+    .collateral {
+      display: flex;
+    }
   }
 }
 </style>
