@@ -124,7 +124,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
   const newSupplySerie: LineData[] = chain_(newSnapshots)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      value: c.totalAssets,
+      value: c.totalAssetsUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
@@ -133,7 +133,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
   const newDebtSerie: LineData[] = chain_(newSnapshots)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      value: c.totalDebt,
+      value: c.totalDebtUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")

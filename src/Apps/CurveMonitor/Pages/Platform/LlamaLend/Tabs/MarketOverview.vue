@@ -47,11 +47,11 @@
       :chain
     ></ChartMarketSupply>
 
-    <ChartLoanDistribution
-      style="grid-area: distribution"
-      :distribution
-      :loading="loadingDistribution"
-    ></ChartLoanDistribution>
+    <ChartMarketCollateral
+      style="grid-area: collateral"
+      :market
+      :chain
+    ></ChartMarketCollateral>
 
     <ChartMarketRates
       style="grid-area: rates"
@@ -86,10 +86,9 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Market, tvl } from "@CM/Services/LlamaLend";
-import { ChartLoanDistribution } from "@CM/Components/Lending";
-import { useQueryLoanDistribution } from "@CM/Services/Lending/Queries";
 import {
   ChartMarketSupply,
+  ChartMarketCollateral,
   ChartMarketLoans,
   ChartMarketRates,
 } from "@CM/Pages/Platform/LlamaLend/Charts";
@@ -108,16 +107,6 @@ interface Props {
 }
 
 const { market, chain } = defineProps<Props>();
-
-const controller = computed(() => market?.controller);
-
-// Data
-const { isFetching: loadingDistribution, data: distribution } =
-  useQueryLoanDistribution(
-    ref("lending"),
-    controller,
-    toRef(() => chain)
-  );
 </script>
 
 <style lang="scss" scoped>
@@ -133,7 +122,7 @@ const { isFetching: loadingDistribution, data: distribution } =
   grid-template-areas:
     "usage usage usage usage"
     "kpi1 kpi2 kpi3 kpi4"
-    "supply supply distribution distribution"
+    "supply supply collateral collateral"
     "rates rates loans loans"
     "properties properties addresses addresses";
 }
