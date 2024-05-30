@@ -104,12 +104,20 @@ const discounts = computed(() =>
 );
 
 const collateralRatios = computed(() =>
-  snapshots.value
-    .map(({ timestamp, collateralBalanceUsd, totalDebtUsd }) => ({
+  snapshots.value.map(
+    ({
       timestamp,
-      ratio: collateralBalanceUsd / totalDebtUsd,
-    }))
-    .filter(({ ratio }) => ratio < 1000)
+      collateralBalanceUsd,
+      borrowedBalanceUsd,
+      totalDebtUsd,
+    }) => ({
+      timestamp,
+      ratio:
+        totalDebtUsd > 0
+          ? (collateralBalanceUsd + borrowedBalanceUsd) / totalDebtUsd
+          : 0,
+    })
+  )
 );
 
 const { isFetching: loadingLiqsAggregate, data: liqsAggregate } =
