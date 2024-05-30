@@ -7,7 +7,7 @@
     <template #actions>
       <div class="actions">
         <Legend
-          :items="[t('supply'), t('debt')]"
+          :items="[t('supply'), t('debt'), t('util')]"
           :colors="colorsLegend"
         ></Legend>
       </div>
@@ -22,6 +22,7 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
+import { PriceScaleMode } from "lightweight-charts";
 import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
@@ -41,6 +42,7 @@ const { market, chain } = defineProps<Props>();
 // Refs
 let supplySerie: ISeriesApi<"Line">;
 let debtSerie: ISeriesApi<"Line">;
+let utilSerie: ISeriesApi<"Line">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -50,13 +52,14 @@ const { chart, chartRef } = useLightweightChart(
   (chart) => {
     supplySerie = chart.addLineSeries(createOptionsSerieSupply());
     debtSerie = chart.addLineSeries(createOptionsSerieDebt());
+    utilSerie = chart.addLineSeries(createOptionsSerieUtil());
   }
 );
 
 const colorsLegend = computed(() => {
   const { colors } = theme.value;
 
-  return [colors.blue, colors.yellow];
+  return [colors.blue, colors.yellow, colors.purple];
 });
 
 // Data
@@ -70,6 +73,7 @@ watch([snapshots, chart], createSeries);
 watch(theme, () => {
   supplySerie.applyOptions(createOptionsSerieSupply());
   debtSerie.applyOptions(createOptionsSerieDebt());
+  utilSerie.applyOptions(createOptionsSerieUtil());
 });
 
 // Chart
@@ -82,8 +86,8 @@ function createOptionsChart(chartRef: HTMLElement) {
         bottom: 0.1,
       },
     },
-    localization: {
-      priceFormatter: (apy: number) => formatterApy(apy),
+    leftPriceScale: {
+      visible: true,
     },
   });
 }
@@ -91,8 +95,8 @@ function createOptionsChart(chartRef: HTMLElement) {
 function createOptionsSerieSupply(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 2,
+      type: "custom",
+      formatter: (x: number) => formatterPrice(x),
       minMove: 0.01,
     },
     lineWidth: 2,
@@ -105,12 +109,27 @@ function createOptionsSerieSupply(): LineSeriesPartialOptions {
 function createOptionsSerieDebt(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 2,
+      type: "custom",
+      formatter: (x: number) => formatterPrice(x),
       minMove: 0.01,
     },
     lineWidth: 2,
     color: theme.value.colors.yellow,
+    lastValueVisible: false,
+    priceLineVisible: false,
+  };
+}
+
+function createOptionsSerieUtil(): LineSeriesPartialOptions {
+  return {
+    priceFormat: {
+      type: "custom",
+      formatter: (x: number) => formatterUtil(x),
+      minMove: 0.01,
+    },
+    priceScaleId: "left",
+    lineWidth: 2,
+    color: theme.value.colors.purple,
     lastValueVisible: false,
     priceLineVisible: false,
   };
@@ -139,14 +158,29 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  // Borrow APY serie
+  const newUtilSerie: LineData[] = chain_(newSupplySerie)
+    .zip(newDebtSerie)
+    .filter((x) => !!x[1])
+    .map(([supply, debt]) => {
+      return {
+        time: debt!.time,
+        value: supply && supply.value > 0 ? debt!.value / supply.value : 0,
+      };
+    })
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
+    .value();
+
   if (newSupplySerie.length > 0) {
     supplySerie.setData(newSupplySerie);
   }
 
-  // Lend APY serie
   if (newDebtSerie.length > 0) {
     debtSerie.setData(newDebtSerie);
+  }
+
+  if (newUtilSerie.length > 0) {
+    utilSerie.setData(newUtilSerie);
   }
 
   if (newSupplySerie.length > 0 || newDebtSerie.length > 0) {
@@ -165,8 +199,10 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
   }
 }
 
-const formatterApy = (x: number): string =>
+const formatterPrice = (x: number): string =>
   `$${round(x, 2, "dollar")}${unit(x, "dollar")}`;
+
+const formatterUtil = (x: number): string => `${Math.round(x * 100)}%`;
 </script>
 
 <style lang="scss" scoped>
@@ -184,4 +220,5 @@ const formatterApy = (x: number): string =>
 title: Supply & Debt
 supply: Supply
 debt: Debt
+util: Util (%)
 </i18n>
