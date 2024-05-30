@@ -83,7 +83,7 @@
       :tooltip="t('util-rate-tooltip')"
     >
       <AsyncValue
-        :value="utilRate"
+        :value="utilRate * 100"
         :show-zero="true"
         type="percentage"
       ></AsyncValue>
