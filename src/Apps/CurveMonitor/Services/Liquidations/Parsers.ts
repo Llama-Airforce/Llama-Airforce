@@ -52,7 +52,7 @@ export const parseLiqOverview = (
     liqablePositions: x.liquidatable_positions,
     liqableDebtUsd: x.liquidatable_pos_debt_usd,
     liqableCollatUsd: x.liquidatable_collateral_usd,
-    liqableStableUsd: x.liquidatable_stablecoin_usd,
+    liqableBorrowedUsd: x.liquidatable_borrowed_usd,
     medianHealth: x.median_health,
     avgHealth: x.average_health,
     collatRatio: x.collat_ratio,

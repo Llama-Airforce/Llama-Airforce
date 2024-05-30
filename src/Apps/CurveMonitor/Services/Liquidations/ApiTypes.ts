@@ -41,11 +41,11 @@ export type GetLiqOverviewResponse = {
   collat_ratio: number;
   liquidatable_positions: number;
   liquidatable_pos_debt: string;
-  liquidatable_stablecoin: string;
+  liquidatable_borrowed: string;
   liquidatable_collateral: string;
   liquidatable_pos_debt_usd: number;
   liquidatable_collateral_usd: number;
-  liquidatable_stablecoin_usd: number;
+  liquidatable_borrowed_usd: number;
 };
 
 export type GetLiqLossesResponse = {

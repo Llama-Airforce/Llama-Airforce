@@ -33,7 +33,7 @@ export type LiqOverview = {
   liqablePositions: number;
   liqableDebtUsd: number;
   liqableCollatUsd: number;
-  liqableStableUsd: number;
+  liqableBorrowedUsd: number;
   medianHealth: number;
   avgHealth: number;
   collatRatio: number;

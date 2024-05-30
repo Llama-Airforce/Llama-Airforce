@@ -11,9 +11,39 @@
     <template #row="{ item: { description, value, type } }: { item: Row }">
       <div>{{ description }}</div>
 
-      <div class="number">
+      <div
+        v-if="type === 'collateral'"
+        class="number"
+      >
         <AsyncValue
-          v-if="type !== 'number'"
+          :value="value[0]"
+          :show-zero="true"
+          type="dollar"
+        />
+
+        /
+
+        <AsyncValue
+          :value="value[1]"
+          :show-zero="true"
+          type="dollar"
+        />
+      </div>
+
+      <div
+        v-else
+        class="number"
+      >
+        <AsyncValue
+          v-if="type === 'bad-debt'"
+          class="red"
+          :value="value"
+          :show-zero="true"
+          :inline="false"
+          type="dollar"
+        />
+        <AsyncValue
+          v-else-if="type !== 'number'"
           :value="value"
           :show-zero="true"
           :type
@@ -36,11 +66,44 @@ interface Props {
 
 const { overview } = defineProps<Props>();
 
-type Row = {
+type RowBase = {
   description: string;
+};
+type RowBadDebt = RowBase & {
+  value: number;
+  type: "bad-debt";
+};
+type RowOther = RowBase & {
   value: number;
   type: "percentage" | "dollar" | "number";
 };
+type RowCollateral = RowBase & {
+  type: "collateral";
+  value: [number, number];
+};
+type Row = RowOther | RowCollateral | RowBadDebt;
+
+const badDebt = computed((): Row[] => {
+  if (!overview) {
+    return [];
+  }
+
+  const debt = overview.liqableDebtUsd;
+  const collateral = overview.liqableCollatUsd + overview.liqableBorrowedUsd;
+  const value = debt - collateral;
+
+  if (value <= 0) {
+    return [];
+  }
+
+  return [
+    {
+      description: "Bad debt",
+      value,
+      type: "bad-debt",
+    },
+  ];
+});
 
 const rows = computed((): Row[] => [
   {
@@ -69,10 +132,14 @@ const rows = computed((): Row[] => [
     type: "dollar",
   },
   {
-    description: "Liquidatable collateral",
-    value: overview?.liqableCollatUsd ?? 0,
-    type: "dollar",
+    description: "Liquidatable collateral (token / crvUSD)",
+    value: [
+      overview?.liqableCollatUsd ?? 0,
+      overview?.liqableBorrowedUsd ?? 0,
+    ] as const,
+    type: "collateral",
   },
+  ...badDebt.value,
 ]);
 </script>
 
@@ -82,7 +149,11 @@ const rows = computed((): Row[] => [
 .datatable-liq-overview {
   ::v-deep(.liq-overview-columns-data) {
     display: grid;
-    grid-template-columns: 2fr 6fr;
+    grid-template-columns: 1fr auto;
+  }
+
+  .red {
+    color: var(--c-red);
   }
 }
 </style>
