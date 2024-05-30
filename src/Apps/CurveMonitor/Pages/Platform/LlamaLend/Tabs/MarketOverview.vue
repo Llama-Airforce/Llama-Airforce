@@ -53,6 +53,18 @@
       :chain
     ></ChartMarketCollateral>
 
+    <ChartCollateralRatio
+      style="grid-area: colratio"
+      :ratios="collateralRatios"
+      :loading="loadingSnapshots"
+    ></ChartCollateralRatio>
+
+    <ChartEquity
+      style="grid-area: equity"
+      :equity
+      :loading="loadingSnapshots"
+    ></ChartEquity>
+
     <ChartMarketRates
       style="grid-area: rates"
       :market
@@ -86,6 +98,7 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Market, tvl } from "@CM/Services/LlamaLend";
+import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import {
   ChartMarketSupply,
   ChartMarketCollateral,
@@ -97,6 +110,7 @@ import {
   Addresses,
   Properties,
 } from "@CM/Pages/Platform/LlamaLend/Components";
+import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
 
 const { t } = useI18n();
 
@@ -107,6 +121,43 @@ interface Props {
 }
 
 const { market, chain } = defineProps<Props>();
+
+// Data
+const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
+  toRef(() => market),
+  toRef(() => chain)
+);
+
+const collateralRatios = computed(() =>
+  snapshots.value.map(
+    ({
+      timestamp,
+      collateralBalanceUsd,
+      borrowedBalanceUsd,
+      totalDebtUsd,
+    }) => ({
+      timestamp,
+      ratio:
+        totalDebtUsd > 0
+          ? (collateralBalanceUsd + borrowedBalanceUsd) / totalDebtUsd
+          : 0,
+    })
+  )
+);
+
+const equity = computed(() =>
+  snapshots.value.map(
+    ({
+      timestamp,
+      collateralBalanceUsd,
+      borrowedBalanceUsd,
+      totalDebtUsd,
+    }) => ({
+      timestamp,
+      equity: collateralBalanceUsd + borrowedBalanceUsd - totalDebtUsd,
+    })
+  )
+);
 </script>
 
 <style lang="scss" scoped>
@@ -123,6 +174,7 @@ const { market, chain } = defineProps<Props>();
     "usage usage usage usage"
     "kpi1 kpi2 kpi3 kpi4"
     "supply supply collateral collateral"
+    "colratio colratio equity equity"
     "rates rates loans loans"
     "properties properties addresses addresses";
 }

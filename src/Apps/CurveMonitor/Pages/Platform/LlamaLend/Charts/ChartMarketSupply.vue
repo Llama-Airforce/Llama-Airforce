@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { PriceScaleMode } from "lightweight-charts";
 import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
@@ -200,7 +199,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
 }
 
 const formatterPrice = (x: number): string =>
-  `$${round(x, 2, "dollar")}${unit(x, "dollar")}`;
+  `$${round(x, 0, "dollar")}${unit(x, "dollar")}`;
 
 const formatterUtil = (x: number): string => `${Math.round(x * 100)}%`;
 </script>

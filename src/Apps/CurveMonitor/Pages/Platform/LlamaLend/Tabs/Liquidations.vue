@@ -26,11 +26,6 @@
       :loading="loadingDeciles"
     ></ChartLiqsHealthDeciles>
 
-    <ChartCollateralRatio
-      :ratios="collateralRatios"
-      :loading="loadingSnapshots"
-    ></ChartCollateralRatio>
-
     <ChartLiqs
       :liqs="liqsAggregate"
       :loading="loadingLiqsAggregate"
@@ -71,7 +66,6 @@ import {
   TableTopLiquidators,
   TableLiqOverview,
 } from "@CM/Components/Liquidations";
-import { ChartCollateralRatio } from "@CM/Components/Lending";
 
 // Props
 interface Props {
@@ -101,23 +95,6 @@ const discounts = computed(() =>
     timestamp,
     discount: discountLiquidation,
   }))
-);
-
-const collateralRatios = computed(() =>
-  snapshots.value.map(
-    ({
-      timestamp,
-      collateralBalanceUsd,
-      borrowedBalanceUsd,
-      totalDebtUsd,
-    }) => ({
-      timestamp,
-      ratio:
-        totalDebtUsd > 0
-          ? (collateralBalanceUsd + borrowedBalanceUsd) / totalDebtUsd
-          : 0,
-    })
-  )
 );
 
 const { isFetching: loadingLiqsAggregate, data: liqsAggregate } =

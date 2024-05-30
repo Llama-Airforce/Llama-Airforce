@@ -69,9 +69,6 @@ function createOptionsChart(chartRef: HTMLElement) {
         bottom: 0.1,
       },
     },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
   });
 }
 
@@ -80,9 +77,8 @@ function createOHLCOptionsSerie(): CandlestickSeriesPartialOptions {
 
   return {
     priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
+      type: "custom",
+      formatter,
     },
     upColor: colors.green,
     borderUpColor: colors.green,

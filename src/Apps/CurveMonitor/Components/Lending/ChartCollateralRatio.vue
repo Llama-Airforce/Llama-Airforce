@@ -62,8 +62,8 @@ function createOptionsChart(chartRef: HTMLElement) {
 function createOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "percent",
-      precision: 2,
+      type: "custom",
+      formatter,
       minMove: 0.1,
     },
     lineWidth: 2,
@@ -99,6 +99,9 @@ function createSeries([newRatios, chart]: [
 
   chart.timeScale().fitContent();
 }
+
+const formatter = (x: number): string =>
+  `${round(x, 0, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>

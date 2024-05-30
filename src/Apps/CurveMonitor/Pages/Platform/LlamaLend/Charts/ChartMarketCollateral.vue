@@ -96,18 +96,14 @@ function createOptionsChart(chartRef: HTMLElement) {
         bottom: 0.1,
       },
     },
-    localization: {
-      priceFormatter: (apy: number) => formatterApy(apy),
-    },
   });
 }
 
 function createOptionsSerieCollateral(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.01,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     color: theme.value.colors.blue,
@@ -119,9 +115,8 @@ function createOptionsSerieCollateral(): LineSeriesPartialOptions {
 function createOptionsSerieBorrowed(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.01,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     color: theme.value.colors.yellow,
@@ -184,8 +179,8 @@ function createSeries([newSnapshots, chart, newDenomDollars]: [
   }
 }
 
-const formatterApy = (x: number): string =>
-  `${denomDollars.value ? "$" : ""}${round(x, 2, "dollar")}${unit(
+const formatter = (x: number): string =>
+  `${denomDollars.value ? "$" : ""}${round(x, 0, "dollar")}${unit(
     x,
     "dollar"
   )}`;

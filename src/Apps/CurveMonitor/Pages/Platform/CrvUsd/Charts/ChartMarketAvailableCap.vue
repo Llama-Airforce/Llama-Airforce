@@ -57,18 +57,14 @@ function createOptionsChart(chartRef: HTMLElement) {
         bottom: 0.1,
       },
     },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
   });
 }
 
 function createAvailOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
@@ -103,7 +99,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
 }
 
 const formatter = (y: number): string => {
-  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
+  return `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 };
 </script>
 

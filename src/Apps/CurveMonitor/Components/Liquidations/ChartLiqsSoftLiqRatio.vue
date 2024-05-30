@@ -85,9 +85,8 @@ function createOptionsChart(chartRef: HTMLElement) {
 function createPriceOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 0,
-      minMove: 1,
+      type: "custom",
+      formatter: formatterPrice,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
@@ -102,9 +101,8 @@ function createPriceOptionsSerie(): AreaSeriesPartialOptions {
 function createProportionOptionsSerie(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "percent",
-      precision: 2,
-      minMove: 0.000001,
+      type: "custom",
+      formatter: formatterDiscount,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
@@ -129,7 +127,7 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
   const newProportionSerie: LineData[] = chain_(newSoftLiq)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
-      value: x.proportion * 100,
+      value: x.proportion,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
@@ -157,6 +155,12 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
 
   chart.timeScale().fitContent();
 }
+
+const formatterPrice = (x: number): string =>
+  `$${round(x, 2, "dollar")}${unit(x, "dollar")}`;
+
+const formatterDiscount = (x: number): string =>
+  `${round(x, 0, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>

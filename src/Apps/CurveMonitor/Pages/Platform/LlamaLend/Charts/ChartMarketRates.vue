@@ -83,7 +83,7 @@ function createOptionsChart(chartRef: HTMLElement) {
       },
     },
     localization: {
-      priceFormatter: (apy: number) => formatterApy(apy),
+      priceFormatter: (apy: number) => formatter(apy),
     },
   });
 }
@@ -91,9 +91,8 @@ function createOptionsChart(chartRef: HTMLElement) {
 function createOptionsSerieBorrowApy(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.01,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     color: theme.value.colors.red,
@@ -105,9 +104,8 @@ function createOptionsSerieBorrowApy(): LineSeriesPartialOptions {
 function createOptionsLendApy(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.01,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     color: theme.value.colors.green,
@@ -166,8 +164,8 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
   }
 }
 
-const formatterApy = (x: number): string =>
-  `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
+const formatter = (x: number): string =>
+  `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>

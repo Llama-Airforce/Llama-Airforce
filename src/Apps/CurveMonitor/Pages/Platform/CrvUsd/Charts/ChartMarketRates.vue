@@ -79,18 +79,14 @@ function createOptionsChart(chartRef: HTMLElement) {
         bottom: 0.1,
       },
     },
-    localization: {
-      priceFormatter: (rate: number) => formatterRate(rate),
-    },
   });
 }
 
 function createOptionsSerieRates(): AreaSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
@@ -105,9 +101,8 @@ function createOptionsSerieRates(): AreaSeriesPartialOptions {
 function createOptionsSerieRatesEMA(): LineSeriesPartialOptions {
   return {
     priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
+      type: "custom",
+      formatter,
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
@@ -160,8 +155,8 @@ function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
   }
 }
 
-const formatterRate = (x: number): string => {
-  return `${round(x * 100, 2, "percentage")}${unit(x, "percentage")}`;
+const formatter = (x: number): string => {
+  return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
 };
 
 /**
