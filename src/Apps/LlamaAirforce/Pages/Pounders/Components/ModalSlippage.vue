@@ -1,6 +1,5 @@
 <template>
   <ModalYesNo
-    class="modal-slippage"
     :title="t('price-modal-title')"
     :show="show"
     :ready="minAmountOut > 0"
@@ -9,29 +8,31 @@
     @yes="emit('yes', minAmountOut)"
     @no="emit('no')"
   >
-    <div class="info">
-      {{ t("slippage-info") }}
-    </div>
+    <div class="content">
+      <div class="info">
+        {{ t("slippage-info") }}
+      </div>
 
-    <div class="slippage">
-      <span>{{ t("percentage") }}</span>
-      <Slider
-        v-model="slippage"
-        :min="0.001"
-        :max="0.2"
-        :step="0.001"
-      ></Slider>
-      <span>
-        {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
-      </span>
+      <div class="slippage">
+        <span>{{ t("percentage") }}</span>
+        <Slider
+          v-model="slippage"
+          :min="0.001"
+          :max="0.2"
+          :step="0.001"
+        ></Slider>
+        <span>
+          {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
+        </span>
 
-      <span>{{ t("min-amount") }}</span>
-      <InputNumber
-        v-model="minAmountOut"
-        :min="0"
-        :max="Infinity"
-      ></InputNumber>
-      <span>{{ symbolOutput }}</span>
+        <span>{{ t("min-amount") }}</span>
+        <InputNumber
+          v-model="minAmountOut"
+          :min="0"
+          :max="Infinity"
+        ></InputNumber>
+        <span>{{ symbolOutput }}</span>
+      </div>
     </div>
   </ModalYesNo>
 </template>
@@ -74,23 +75,27 @@ watch(
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-.modal-slippage {
-  .info {
-    width: 40rem;
-    color: #a1a1aa;
-  }
+.content {
+  min-width: 30rem;
+  width: 33vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-  .slippage {
-    width: 40rem;
-    display: grid;
-    gap: 1rem;
-    align-items: center;
+.info {
+  color: #a1a1aa;
+}
 
-    grid-template-columns: auto 1fr minmax(4rem, auto);
-    grid-template-rows: 1fr 1fr;
+.slippage {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
 
-    margin-top: 2rem;
-  }
+  grid-template-columns: auto 1fr minmax(4rem, auto);
+  grid-template-rows: 1fr 1fr;
+
+  margin-top: 2rem;
 }
 </style>
 

@@ -6,7 +6,6 @@
           <Button @click="openModal = true">Open Modal</Button>
 
           <ModalYesNo
-            class="my-modal"
             title="Modal title"
             :show="openModal"
             @close="openModal = false"
@@ -49,7 +48,6 @@ const onYes = () => {
 };
 
 const modalYesNo1 = `<ModalYesNo
-  class="my-modal"
   title="Modal title"
   :show="openModal"
   @close="openModal = false"
@@ -78,9 +76,7 @@ const modalYesNo3 = `.my-modal {
 
 @include dashboard("modal");
 
-.my-modal {
-  ::v-deep(.content) {
-    width: 40rem;
-  }
+.content {
+  width: 40rem;
 }
 </style>

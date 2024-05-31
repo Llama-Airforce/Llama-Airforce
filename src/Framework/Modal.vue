@@ -1,17 +1,19 @@
 <template>
-  <div
-    v-if="show"
-    class="modal"
-  >
+  <Teleport to="body">
     <div
-      class="modal-mask"
-      @click="emit('close')"
-    ></div>
+      v-if="show"
+      class="modal"
+    >
+      <div
+        class="modal-mask"
+        @click="emit('close')"
+      ></div>
 
-    <div class="modal-popup">
-      <slot></slot>
+      <div class="modal-popup">
+        <slot></slot>
+      </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">

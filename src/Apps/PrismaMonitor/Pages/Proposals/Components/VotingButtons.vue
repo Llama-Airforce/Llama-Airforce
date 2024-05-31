@@ -16,7 +16,6 @@
   </div>
 
   <Modal
-    class="vote-modal"
     :show="showVote"
     @close="showVote = false"
   >
@@ -224,9 +223,10 @@ watch(
 }
 
 .vote-content {
-  width: 33vw;
+  min-width: 33vw;
 
   .veprisma {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;

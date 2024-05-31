@@ -1,6 +1,9 @@
 <template>
   <Modal :show="show">
-    <Card :title="title">
+    <Card
+      class="modal-card"
+      :title="title"
+    >
       <slot></slot>
 
       <div class="buttons">
@@ -57,7 +60,7 @@ const { t } = useI18n();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.modal {
+.modal-card {
   :deep(.card-body) {
     display: flex;
     flex-direction: column;
