@@ -16,23 +16,20 @@
 </template>
 
 <script setup lang="ts">
+// Model
+const modelValue = defineModel<boolean>({ default: false });
+
 // Props
 interface Props {
-  modelValue: boolean;
   icon?: string;
   value?: string;
 }
 
-const { modelValue = false, icon = "", value = "" } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  "update:modelValue": [val: boolean];
-}>();
+const { icon = "", value = "" } = defineProps<Props>();
 
 // Events
 const onClick = (): void => {
-  emit("update:modelValue", !modelValue);
+  modelValue.value = !modelValue.value;
 };
 </script>
 

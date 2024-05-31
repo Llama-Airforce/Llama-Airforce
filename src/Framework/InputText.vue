@@ -39,9 +39,11 @@
 </template>
 
 <script setup lang="ts">
+// Model
+const modelValue = defineModel<string>({ required: true });
+
 // Props
 interface Props {
-  modelValue: string;
   placeholder?: string;
   options?: unknown[];
   search?: boolean;
@@ -51,7 +53,6 @@ interface Props {
 }
 
 const {
-  modelValue,
   placeholder = "",
   options = [],
   search = false,
@@ -62,7 +63,6 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  "update:modelValue": [val: string];
   input: [val: string];
   select: [option: unknown];
 }>();
@@ -70,7 +70,7 @@ const emit = defineEmits<{
 // Refs
 const optionsProcessed = computed((): unknown[] => {
   const optionsFiltered = options.filter((option) =>
-    filter(modelValue, option)
+    filter(modelValue.value, option)
   );
   const optionsSorted = sort
     ? [...optionsFiltered].sort(sort)
@@ -83,7 +83,7 @@ const optionsProcessed = computed((): unknown[] => {
 const onInput = (evt: Event): void => {
   const value = (evt.target as HTMLInputElement).value;
 
-  emit("update:modelValue", value);
+  modelValue.value = value;
   emit("input", value);
 };
 </script>

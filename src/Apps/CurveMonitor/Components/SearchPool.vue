@@ -6,7 +6,6 @@
     :search="true"
     :auto-complete="autoComplete"
     :options="pools"
-    @update:model-value="emit('update:modelValue', $event)"
     @input="onInput"
     @select="onSelect"
   >
@@ -30,17 +29,18 @@ import { type PoolService } from "@CM/Services";
 
 const { t } = useI18n();
 
+// Model
+const modelValue = defineModel<string>({ required: true });
+
 // Props
 interface Props {
-  modelValue: string;
   poolService: PoolService;
 }
 
-const { modelValue, poolService } = defineProps<Props>();
+const { poolService } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  "update:modelValue": [pool: string];
   select: [pool: Pool];
 }>();
 
