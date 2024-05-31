@@ -158,13 +158,6 @@ const proposalToClipboard = async () => {
         span,
         a {
           font-size: 1rem;
-          font-weight: 100;
-        }
-      }
-
-      > .labels {
-        > .label {
-          font-weight: 100;
         }
       }
     }

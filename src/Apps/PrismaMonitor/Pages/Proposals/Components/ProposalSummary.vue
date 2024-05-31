@@ -124,13 +124,6 @@ const emit = defineEmits<{
         span,
         a {
           font-size: 1rem;
-          font-weight: 100;
-        }
-      }
-
-      > .labels {
-        > .label {
-          font-weight: 100;
         }
       }
     }

@@ -71,7 +71,7 @@
   --page-margin: 2.375rem;
   --dashboard-gap: 1.5rem;
 
-  --font-weight: lighter;
+  --font-weight: normal;
   --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
@@ -134,15 +134,8 @@
 }
 
 @mixin themeDarkFont() {
-  @font-face {
-    font-family: "TT Hoves Pro Trial Variable Regular";
-    font-style: normal;
-    font-weight: normal;
-    src: local("TT Hoves Pro Trial Variable Regular"),
-      url("@/Assets/Fonts/TT Hoves Pro Trial Variable.woff") format("woff");
-  }
-
-  font-family: TT Hoves Pro Trial Variable Regular;
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
 
   @media only screen and (max-width: 1280px) {
