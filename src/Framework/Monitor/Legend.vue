@@ -63,6 +63,12 @@ const color = (i: number): string => {
     &.clickable {
       cursor: pointer;
       user-select: none;
+
+      // Make label act like a link with hover style
+      &:hover > .label {
+        color: var(--c-lvl0);
+        background: var(--c-lvl6);
+      }
     }
 
     &.disabled {
