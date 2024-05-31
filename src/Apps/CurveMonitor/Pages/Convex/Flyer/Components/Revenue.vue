@@ -60,7 +60,6 @@ const revenueAnnually = computed((): number | undefined => {
 
   .title {
     color: var(--c-red);
-    font-weight: normal;
   }
 
   .values {

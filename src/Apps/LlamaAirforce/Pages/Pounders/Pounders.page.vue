@@ -338,7 +338,6 @@ watch(
   .dashboard {
     > .information {
       font-size: 0.875rem;
-      font-weight: var(--font-weight);
 
       &:not(:nth-child(1 of .information)) {
         margin-top: 3rem;

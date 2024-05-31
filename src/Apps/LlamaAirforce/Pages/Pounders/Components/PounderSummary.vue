@@ -114,7 +114,6 @@ const state = computed(() => {
       .popper {
         display: flex;
         gap: 1rem;
-        font-weight: var(--font-weight);
         padding: 1rem;
 
         .fees,

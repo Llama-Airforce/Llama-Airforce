@@ -49,6 +49,7 @@ const onClearCache = (): void => {
 
   .button {
     font-size: 1rem;
+    justify-content: center;
   }
 
   .button:first-child {

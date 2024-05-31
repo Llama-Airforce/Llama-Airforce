@@ -63,8 +63,6 @@ const onGauge = (newGauge: string): void => {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-
-      font-weight: var(--font-weight);
     }
   }
 

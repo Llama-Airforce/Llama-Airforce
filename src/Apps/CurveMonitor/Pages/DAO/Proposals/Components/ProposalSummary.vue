@@ -118,7 +118,6 @@ const proposalToClipboard = async () => {
       text-overflow: ellipsis;
 
       font-size: 1.125rem;
-      font-weight: 400;
     }
 
     > .id {

@@ -93,7 +93,6 @@ const emit = defineEmits<{
       text-overflow: ellipsis;
 
       font-size: 1.125rem;
-      font-weight: 400;
     }
 
     > .id {

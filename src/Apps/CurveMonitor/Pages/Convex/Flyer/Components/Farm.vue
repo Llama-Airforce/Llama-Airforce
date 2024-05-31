@@ -118,7 +118,6 @@ onMounted(async () => {
 
   .title {
     color: var(--c-blue);
-    font-weight: normal;
   }
 
   .values {

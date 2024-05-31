@@ -418,7 +418,6 @@ const sortColumn = (index: number): void => {
     overflow: hidden;
     //border-bottom: var(--border-thickness) solid var(--c-lvl4);
     align-items: center;
-    font-weight: var(--font-weight);
     transition: background $datatable-hover-duration;
 
     &:last-child {

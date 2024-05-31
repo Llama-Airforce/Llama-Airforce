@@ -143,13 +143,12 @@
     src: url("@/Assets/Fonts/SF-Mono-Bold.otf") format("opentype");
   }
 
-  font-family: SF Mono, Consolas, monospace;
-  font-size: 16px;
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 17px;
 
   .card-body {
-    font-size: 0.875rem;
     line-height: 1.4rem;
-    font-weight: 100;
     color: darken(#fafafa, 15%);
   }
 

@@ -66,8 +66,9 @@
       <template #row="props: { item: Contract }">
         <div>
           <a
-            :href="linkContract(props.item)"
+            class="font-mono"
             target="_blank"
+            :href="linkContract(props.item)"
           >
             {{ props.item.contract }}
           </a>
