@@ -19,7 +19,6 @@ declare module 'vue' {
     Collapsible: typeof import('./../../Framework/Collapsible.vue')['default']
     DataTable: typeof import('./../../Framework/DataTable.vue')['default']
     DataTableRow: typeof import('./../../Framework/DataTableRow.vue')['default']
-    GraphApex: typeof import('./../../Framework/GraphApex.vue')['default']
     InputNumber: typeof import('./../../Framework/InputNumber.vue')['default']
     InputText: typeof import('./../../Framework/InputText.vue')['default']
     KPI: typeof import('./../../Framework/KPI.vue')['default']
