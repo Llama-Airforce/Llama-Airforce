@@ -2,7 +2,7 @@
   <div class="legend">
     <div
       v-for="item in items"
-      :key="String(item.id)"
+      :key="item.id"
       class="item"
       :class="{ clickable, disabled: disabled.includes(item.id) }"
       @click="
@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends string">
 export type LegendItem<T> = {
   id: T;
   label: string;
