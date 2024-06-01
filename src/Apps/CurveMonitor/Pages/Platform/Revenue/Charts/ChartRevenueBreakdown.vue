@@ -8,10 +8,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['DAO', 'Liquidity Providers']"
-          :colors="theme.colorsArray"
-        ></Legend>
+        <Legend :items="legend"></Legend>
 
         <Tooltip placement="left">
           <div>{{ t("legend-explanation") }}</div>
@@ -36,6 +33,19 @@ const { t } = useI18n();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
+
+const legend = computed(() => [
+  {
+    id: "dao",
+    label: "DAO",
+    color: theme.value.colorsArray[0],
+  },
+  {
+    id: "lps",
+    label: "Liquidity Providers",
+    color: theme.value.colorsArray[1],
+  },
+]);
 
 // Data
 const { isFetching: loading, data: breakdown } = useQueryRevenueBreakdown();

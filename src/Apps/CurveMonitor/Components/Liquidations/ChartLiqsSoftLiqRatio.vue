@@ -5,10 +5,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['% of loans in soft liquidation', 'Collateral price ($)']"
-          :colors="theme.colorsArray"
-        ></Legend>
+        <Legend :items="legend"></Legend>
       </div>
     </template>
 
@@ -45,6 +42,19 @@ let proportionSerie: ISeriesApi<"Area">;
 let priceSerie: ISeriesApi<"Area">;
 
 const { theme } = storeToRefs(useSettingsStore());
+
+const legend = computed(() => [
+  {
+    id: "percentage",
+    label: "% of loans in soft liquidation",
+    color: theme.value.colorsArray[0],
+  },
+  {
+    id: "collateral-price",
+    label: "Collateral price ($)",
+    color: theme.value.colorsArray[1],
+  },
+]);
 
 const { chart, chartRef } = useLightweightChart(
   theme,

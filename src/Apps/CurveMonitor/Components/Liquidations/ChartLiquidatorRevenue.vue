@@ -5,10 +5,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['Liquidator Revenue', 'Discount']"
-          :colors="theme.colorsArray"
-        ></Legend>
+        <Legend :items="legend"></Legend>
       </div>
     </template>
 
@@ -45,6 +42,19 @@ let discountSerie: ISeriesApi<"Area">;
 let revenueSerie: ISeriesApi<"Area">;
 
 const { theme } = storeToRefs(useSettingsStore());
+
+const legend = computed(() => [
+  {
+    id: "revenue",
+    label: "Liquidator Revenue",
+    color: theme.value.colorsArray[0],
+  },
+  {
+    id: "discount",
+    label: "Discount",
+    color: theme.value.colorsArray[1],
+  },
+]);
 
 const { chart, chartRef } = useLightweightChart(
   theme,

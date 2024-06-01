@@ -5,10 +5,9 @@
     :loading
   >
     <Legend
-      :items="coins"
+      :items="legend"
       :disabled="coinsDisabled"
       :clickable="true"
-      :colors="theme.colorsArray"
       @click="onLegendClick"
     ></Legend>
 
@@ -45,13 +44,15 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const coinsDisabled = ref<string[]>([]);
-
-const whitelist = ["USDC", "USDT", "TUSD", "USDP"];
-const coins = computed((): string[] =>
-  Object.keys(prices.value[0]).filter(
-    (key) => key !== "timestamp" && key !== "USD" && whitelist.includes(key)
-  )
+const coins = ["USDC", "USDT", "TUSD", "USDP"] as const;
+type Coin = (typeof coins)[number];
+const coinsDisabled = ref<Coin[]>([]);
+const legend = computed(() =>
+  coins.map((coin, i) => ({
+    id: coin,
+    label: coin,
+    color: theme.value.colorsArray[i],
+  }))
 );
 
 // Data
@@ -127,7 +128,7 @@ function addSeries(): void {
   }
 
   lineSeries = [];
-  for (let i = 0; i < coins.value.length; i++) {
+  for (let i = 0; i < coins.length; i++) {
     const lineSerie = chart.value.addLineSeries(createOptionsSerie(i));
 
     lineSeries.push(lineSerie);
@@ -139,7 +140,7 @@ function createSeries([newPrices, chart]: [PoolPrice[]?, IChartApi?]): void {
     return;
   }
 
-  for (const [i, coin] of coins.value.entries()) {
+  for (const [i, coin] of coins.entries()) {
     // Don't render disabled coins. But keep the serie so colors don't get mixed up.
     if (coinsDisabled.value.includes(coin)) {
       lineSeries[i].setData([]);
@@ -168,7 +169,7 @@ const formatter = (y: number): string => {
 };
 
 // Events
-const onLegendClick = (item: string) => {
+const onLegendClick = (item: Coin) => {
   if (coinsDisabled.value.includes(item)) {
     const x = new Set(coinsDisabled.value);
     x.delete(item);

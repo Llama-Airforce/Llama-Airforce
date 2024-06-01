@@ -1,51 +1,46 @@
 <template>
   <div class="legend">
     <div
-      v-for="(item, i) in items"
-      :key="item"
+      v-for="item in items"
+      :key="String(item.id)"
       class="item"
-      :class="{ clickable, disabled: disabled.includes(item) }"
+      :class="{ clickable, disabled: disabled.includes(item.id) }"
       @click="
         if (clickable) {
-          emit('click', item);
+          emit('click', item.id);
         }
       "
     >
       <div
         class="color"
-        :style="{ 'background-color': color(i) }"
+        :style="{ 'background-color': item.color }"
       ></div>
 
-      <div class="label">{{ item }}</div>
+      <div class="label">{{ item.label }}</div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
+export type LegendItem<T> = {
+  id: T;
+  label: string;
+  color: string;
+};
+
 // Props
-interface Props {
-  colors: string[];
-  items: string[];
+interface Props<T> {
+  items: LegendItem<T>[];
   clickable?: boolean;
-  disabled?: string[];
+  disabled?: T[];
 }
 
-const {
-  items,
-  colors,
-  clickable = false,
-  disabled = [],
-} = defineProps<Props>();
+const { items, clickable = false, disabled = [] } = defineProps<Props<T>>();
 
 // Emits
 const emit = defineEmits<{
-  click: [item: string];
+  click: [item: T];
 }>();
-
-// Methods
-const color = (i: number): string => {
-  return colors[i];
-};
 </script>
 
 <style lang="scss" scoped>

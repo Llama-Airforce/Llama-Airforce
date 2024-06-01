@@ -3,10 +3,7 @@
     class="balances"
     :title="t('title')"
   >
-    <Legend
-      :items="store.coins.map((x) => x.name)"
-      :colors="theme.colorsArray"
-    ></Legend>
+    <Legend :items="legend"></Legend>
 
     <div
       ref="chartRef"
@@ -45,6 +42,16 @@ const balances = computed((): Balances[] => {
 const numCoins = computed((): number => {
   return store.balances[0]?.balances?.length ?? 0;
 });
+
+const legend = computed(() =>
+  store.coins
+    .map((x) => x.name)
+    .map((coin, i) => ({
+      id: coin,
+      label: coin,
+      color: theme.value.colorsArray[i],
+    }))
+);
 
 // Hooks
 onMounted((): void => {

@@ -6,10 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="[t('supply'), t('debt'), t('util')]"
-          :colors="colorsLegend"
-        ></Legend>
+        <Legend :items="legend"></Legend>
       </div>
     </template>
 
@@ -55,11 +52,23 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const colorsLegend = computed(() => {
-  const { colors } = theme.value;
-
-  return [colors.blue, colors.yellow, colors.purple];
-});
+const legend = computed(() => [
+  {
+    id: "supply",
+    label: t("supply"),
+    color: theme.value.colors.blue,
+  },
+  {
+    id: "debt",
+    label: t("debt"),
+    color: theme.value.colors.yellow,
+  },
+  {
+    id: "util",
+    label: t("util"),
+    color: theme.value.colors.purple,
+  },
+]);
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(

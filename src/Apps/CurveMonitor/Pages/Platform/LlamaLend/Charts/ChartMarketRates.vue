@@ -6,10 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="[t('borrow-apy'), t('lend-apy')]"
-          :colors="colorsLegend"
-        ></Legend>
+        <Legend :items="legend"></Legend>
       </div>
     </template>
 
@@ -53,11 +50,18 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const colorsLegend = computed(() => {
-  const { colors } = theme.value;
-
-  return [colors.red, colors.green];
-});
+const legend = computed(() => [
+  {
+    id: "borrow",
+    label: t("borrow-apy"),
+    color: theme.value.colors.red,
+  },
+  {
+    id: "lend",
+    label: t("lend-apy"),
+    color: theme.value.colors.green,
+  },
+]);
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(

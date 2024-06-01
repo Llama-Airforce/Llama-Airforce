@@ -6,10 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="['cvxPRISMA', 'yPRISMA']"
-          :colors="[theme.colors.blue, theme.colors.yellow]"
-        ></Legend>
+        <Legend :items="legend"></Legend>
       </div>
     </template>
     <div
@@ -34,6 +31,19 @@ let serieConvex: ISeriesApi<"Line">;
 let serieYearn: ISeriesApi<"Line">;
 
 const { theme } = storeToRefs(useSettingsStore());
+
+const legend = computed(() => [
+  {
+    id: "cvxprisma",
+    label: "cvxPRISMA",
+    color: theme.value.colors.blue,
+  },
+  {
+    id: "yprisma",
+    label: "yPRISMA",
+    color: theme.value.colors.yellow,
+  },
+]);
 
 const { chart, chartRef } = useLightweightChart(
   theme,

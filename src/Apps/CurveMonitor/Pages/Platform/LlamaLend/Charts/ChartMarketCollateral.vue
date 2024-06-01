@@ -6,10 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items="[symbolCollateral, symbolBorrowed]"
-          :colors="colorsLegend"
-        ></Legend>
+        <Legend :items="legend"></Legend>
 
         <ButtonToggle
           value="Dollars"
@@ -62,16 +59,23 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const colorsLegend = computed(() => {
-  const { colors } = theme.value;
-
-  return [colors.blue, colors.yellow];
-});
-
 const symbolCollateral = computed(
   () => market?.collateral_token?.symbol ?? "?"
 );
 const symbolBorrowed = computed(() => market?.borrowed_token?.symbol ?? "?");
+
+const legend = computed(() => [
+  {
+    id: symbolCollateral.value,
+    label: symbolCollateral.value,
+    color: theme.value.colors.blue,
+  },
+  {
+    id: symbolBorrowed.value,
+    label: symbolBorrowed.value,
+    color: theme.value.colors.yellow,
+  },
+]);
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(
