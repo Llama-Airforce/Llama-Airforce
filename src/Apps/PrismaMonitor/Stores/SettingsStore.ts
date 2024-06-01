@@ -15,7 +15,7 @@ type ThemePrisma = Theme & {
 
 export const useSettingsStore = defineStore("settingsStore", () => {
   const themeId = ref<ThemeId>("light");
-  const flavor = ref<Flavor>("lrt");
+  const flavor = ref<Flavor>("lsd");
 
   const theme = computed<ThemePrisma>(() => ({
     colors: getColors(themeId.value, flavor.value),
