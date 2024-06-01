@@ -6,8 +6,8 @@
     :rows="epochs"
     :columns="['', t('deadline'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
-    :sorting-columns="['', 'deadline', 'vlasset', 'total']"
-    :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsNoEmpty"
     sorting-default-column="deadline"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -80,8 +80,8 @@ const { protocol } = storeToRefs(useBribesStore());
 
 const router = useRouter();
 
-type SortColumns = "deadline" | "vlasset" | "total";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("deadline");
+const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
+  useSort(["", "deadline", "vlasset", "total"], "total");
 
 const epochs = computed((): EpochOverview[] => {
   return orderBy(

@@ -6,8 +6,8 @@
     :rows="gauges"
     :columns="['', t('name'), t('tvl')]"
     :sorting="true"
-    :sorting-columns="['', 'name', 'tvl']"
-    :sorting-columns-enabled="['name', 'tvl']"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsNoEmpty"
     sorting-default-column="tvl"
     sorting-default-dir="desc"
     :expanded="expanded"
@@ -63,8 +63,8 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-type SortColumns = "name" | "tvl";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("tvl");
+const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
+  useSort(["", "name", "tvl"], "tvl");
 
 const gauges = computed((): Gauge[] => {
   return orderBy(

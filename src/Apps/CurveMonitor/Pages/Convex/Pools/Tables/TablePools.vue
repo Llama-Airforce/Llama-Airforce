@@ -6,8 +6,8 @@
     :rows="pools"
     :columns="['', t('name'), t('apr'), t('tvl')]"
     :sorting="true"
-    :sorting-columns="['', 'name', 'apr', 'tvl']"
-    :sorting-columns-enabled="['name', 'apr', 'tvl']"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsNoEmpty"
     sorting-default-column="tvl"
     sorting-default-dir="desc"
     :expanded="expanded"
@@ -74,8 +74,8 @@ const { expanded = [] } = defineProps<Props>();
 // Refs
 const store = useConvexStore();
 
-type SortColumns = "name" | "apr" | "tvl";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("tvl");
+const { sortColumn, sortColumns, sortColumnsNoEmpty, sortOrder, onSort } =
+  useSort(["", "name", "apr", "tvl"], "tvl");
 
 const pools = computed((): Pool[] => {
   return orderBy(

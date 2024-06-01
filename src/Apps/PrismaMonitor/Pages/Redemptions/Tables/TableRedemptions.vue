@@ -7,8 +7,8 @@
     :rows="rowsPage"
     :columns="columns"
     :sorting="true"
-    :sorting-columns="columnsSorting"
-    :sorting-columns-enabled="columnsSortingEnabled"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsEnabled"
     sorting-default-column="timestamp"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -156,22 +156,20 @@ const { isFetching: loading, data } = useQuery({
 // Refs
 const { relativeTime } = useRelativeTime();
 
-type SortColumns = "redeemer" | "tx" | "debt" | "numtroves" | "timestamp";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("timestamp");
-
 const search = ref("");
 const vault = ref<Vault | "all">("all");
 const showDetails = ref<Row | null>(null);
+
+const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
+  ["icon", "redeemer", "tx", "debt", "numtroves", "timestamp"],
+  "timestamp"
+);
 
 const columns = computed((): string[] => {
   return ["", "Redeemer", "Transaction", "Debt", "# Troves", "Time"];
 });
 
-const columnsSorting = computed((): string[] => {
-  return ["icon", "redeemer", "tx", "debt", "numtroves", "timestamp"];
-});
-
-const columnsSortingEnabled = computed((): string[] => {
+const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
   return ["redeemer", "tx", "debt", "numtroves", "timestamp"];
 });
 

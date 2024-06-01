@@ -13,8 +13,8 @@
             :rows="rows"
             :columns="['', 'Deadline', '$/vlCVX', 'Total']"
             :sorting="true"
-            :sorting-columns="['', 'deadline', 'vlasset', 'total']"
-            :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
+            :sorting-columns="sortColumns"
+            :sorting-columns-enabled="sortColumnsNoEmpty"
             sorting-default-column="deadline"
             sorting-default-dir="desc"
             @sort-column="onSort"
@@ -91,7 +91,6 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { type SortOrder } from "@/Framework/SortOrder";
 import Recipe from "@CB/Recipe.vue";
 
 type Round = {
@@ -99,8 +98,8 @@ type Round = {
   value: number;
 };
 
-const sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
-const sortOrder = ref<SortOrder>("desc");
+const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
+  useSort(["", "deadline", "vlasset", "total"], "total");
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -129,12 +128,6 @@ const rows = computed((): Round[] => {
   );
 });
 
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "deadline" | "vlasset" | "total";
-  sortOrder.value = order;
-};
-
 const onSelected = (epoch: Round): void => {
   console.log(epoch.round);
 };
@@ -146,8 +139,8 @@ const dataTable1 = `<DataTable
   :rows="rows"
   :columns="['', 'Deadline', '$/vlCVX', 'Total']"
   :sorting="true"
-  :sorting-columns="['', 'deadline', 'vlasset', 'total']"
-  :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
+  :sorting-columns="sortColumns"
+  :sorting-columns-enabled="sortColumnsNoEmpty"
   sorting-default-column="deadline"
   sorting-default-dir="desc"
   @sort-column="onSort"
@@ -207,8 +200,8 @@ type Round = {
   value: number;
 };
 
-let sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
-let sortOrder = ref<SortOrder>("desc");
+const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
+  useSort(["", "deadline", "vlasset", "total"], "total");
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -236,12 +229,6 @@ const rows = computed((): Round[] => {
     sortOrder.value
   );
 });
-
-// Events
-const onSort = (columnName: string, order: SortOrder): void => {
-  sortColumn.value = columnName as "deadline" | "vlasset" | "total";
-  sortOrder.value = order;
-};
 
 const onSelected = (round: Round): void => {
   console.log(epoch.round);

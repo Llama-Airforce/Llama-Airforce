@@ -6,8 +6,8 @@
     :rows="bribedOrdered"
     :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
-    :sorting-columns="['percentage', 'pool', 'vlasset', 'total']"
-    :sorting-columns-enabled="['percentage', 'pool', 'vlasset', 'total']"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumns"
     sorting-default-column="total"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -116,8 +116,10 @@ const { epoch } = defineProps<Props>();
 const { protocol } = storeToRefs(useBribesStore());
 const { connected, address } = useWallet();
 
-type SortColumns = "pool" | "vlasset" | "total";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("total");
+const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
+  ["percentage", "pool", "vlasset", "total"],
+  "total"
+);
 
 const isSupported = computed((): boolean => epoch?.platform !== "hh");
 

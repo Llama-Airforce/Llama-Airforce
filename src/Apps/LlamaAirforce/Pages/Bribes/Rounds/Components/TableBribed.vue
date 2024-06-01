@@ -6,8 +6,8 @@
     :rows="bribed"
     :columns="[t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
-    :sorting-columns="['pool', 'vlasset', 'total']"
-    :sorting-columns-enabled="['pool', 'vlasset', 'total']"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumns"
     sorting-default-column="vlasset"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -91,8 +91,10 @@ const { epoch } = defineProps<Props>();
 // Refs
 const { protocol } = storeToRefs(useBribesStore());
 
-type SortColumns = "pool" | "vlasset" | "total";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("vlasset");
+const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
+  ["pool", "vlasset", "total"],
+  "total"
+);
 
 const bribed = computed((): Bribed[] => {
   if (!epoch) {

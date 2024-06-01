@@ -6,8 +6,8 @@
     :rows="rowsPage"
     :columns="columns"
     :sorting="true"
-    :sorting-columns="columnsSorting"
-    :sorting-columns-enabled="columnsSortingEnabled"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsEnabled"
     sorting-default-column="weight"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -115,20 +115,18 @@ interface Props {
 }
 const { lockers = [] } = defineProps<Props>();
 
-type SortColumns = "locker" | "weight" | "locked" | "unlocked" | "frozen";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("weight");
-
 const search = ref("");
+
+const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
+  ["locker", "weight", "locked", "unlocked", "frozen"],
+  "weight"
+);
 
 const columns = computed((): string[] => {
   return ["Locker", "Weight", "Locked", "Unlocked", "Frozen"];
 });
 
-const columnsSorting = computed((): string[] => {
-  return ["locker", "weight", "locked", "unlocked", "frozen"];
-});
-
-const columnsSortingEnabled = computed((): string[] => {
+const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
   return ["weight", "locked", "unlocked", "frozen"];
 });
 

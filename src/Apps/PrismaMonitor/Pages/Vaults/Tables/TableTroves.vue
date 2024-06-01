@@ -7,8 +7,8 @@
     :rows="rowsPage"
     :columns="columns"
     :sorting="true"
-    :sorting-columns="columnsSorting"
-    :sorting-columns-enabled="columnsSortingEnabled"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsEnabled"
     sorting-default-column="updated"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -143,11 +143,13 @@ const { isFetching: loading, data } = useQuery({
 // Refs
 const { relativeTime } = useRelativeTime();
 
-type SortColumns = "owner" | "debt" | "coll" | "ratio" | "created" | "updated";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("updated");
-
 const search = ref("");
 const type = ref<TroveStatus>("Open");
+
+const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
+  ["owner", "debt", "coll", "ratio", "created", "updated"],
+  "updated"
+);
 
 const columns = computed((): string[] => {
   if (type.value === "Open") {
@@ -164,15 +166,7 @@ const columns = computed((): string[] => {
   }
 });
 
-const columnsSorting = computed((): string[] => {
-  if (type.value === "Open") {
-    return ["owner", "debt", "coll", "ratio", "created", "updated"];
-  } else {
-    return ["owner", "", "", "", "created", "updated"];
-  }
-});
-
-const columnsSortingEnabled = computed((): string[] => {
+const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
   if (type.value === "Open") {
     return ["owner", "debt", "coll", "ratio", "created", "updated"];
   } else {

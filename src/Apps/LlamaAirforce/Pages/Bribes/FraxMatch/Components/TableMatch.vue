@@ -6,8 +6,8 @@
     :rows="epochsSorted"
     :columns="['', t('deadline'), t('native'), t(`frax`), t('total')]"
     :sorting="true"
-    :sorting-columns="['', 'deadline', 'native', 'frax', 'total']"
-    :sorting-columns-enabled="['deadline', 'native', 'frax', 'total']"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsNoEmpty"
     sorting-default-column="deadline"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -108,8 +108,8 @@ interface Props {
 const { epochs = [] } = defineProps<Props>();
 
 // Refs
-type SortColumns = "deadline" | "native" | "frax" | "total";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("deadline");
+const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
+  useSort(["", "deadline", "native", "frax", "total"], "deadline");
 
 const epochsSorted = computed((): EpochFrax[] => {
   return orderBy(

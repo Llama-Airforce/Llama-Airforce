@@ -7,8 +7,8 @@
     :rows="rowsPage"
     :columns="columns"
     :sorting="true"
-    :sorting-columns="columnsSorting"
-    :sorting-columns-enabled="columnsSorting"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumns"
     sorting-default-column="timestamp"
     sorting-default-dir="desc"
     @sort-column="onSort"
@@ -140,18 +140,16 @@ const { isFetching: loading, data } = useQuery({
 // Refs
 const { relativeTime } = useRelativeTime();
 
-type SortColumns = "redeemer" | "tx" | "debt" | "numtroves" | "timestamp";
-const { sortColumn, sortOrder, onSort } = useSort<SortColumns>("timestamp");
-
 const search = ref("");
 const showDetails = ref<Redemption | null>(null);
 
+const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
+  ["redeemer", "tx", "debt", "numtroves", "timestamp"],
+  "timestamp"
+);
+
 const columns = computed((): string[] => {
   return ["Redeemer", "Transaction", "Debt", "# Troves", "Time"];
-});
-
-const columnsSorting = computed((): string[] => {
-  return ["redeemer", "tx", "debt", "numtroves", "timestamp"];
 });
 
 const rows = computed((): Row[] =>
