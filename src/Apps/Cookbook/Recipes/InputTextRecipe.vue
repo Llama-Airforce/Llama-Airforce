@@ -25,8 +25,8 @@
             :search="true"
             :auto-complete="autoComplete"
             :options="pools"
-            :filter="filter"
-            :sort="sort"
+            :filter
+            :sort
             @input="onInput"
             @select="onSelect"
           >
@@ -104,11 +104,10 @@ const pools: Pool[] = [
 ];
 
 // Methods
-const filter = (input: string, option: unknown) =>
-  (option as Pool).name.toLocaleLowerCase().includes(input.toLocaleLowerCase());
+const filter = (input: string, pool: Pool) =>
+  pool.name.toLocaleLowerCase().includes(input.toLocaleLowerCase());
 
-const sort = (a: unknown, b: unknown) =>
-  (b as Pool).volume - (a as Pool).volume;
+const sort = (a: Pool, b: Pool) => b.volume - a.volume;
 
 // Events
 const onInput = (input: string): void => {
@@ -120,8 +119,7 @@ const toggleExpansion = (newPool: Pool): void => {
   autoComplete.value = false;
 };
 
-const onSelect = (option: unknown): void => {
-  const pool = option as Pool;
+const onSelect = (pool: Pool): void => {
   toggleExpansion(pool);
 };
 
@@ -136,8 +134,8 @@ const inputTextSearch1 = `<InputText
   :search="true"
   :auto-complete="autoComplete"
   :options="pools"
-  :filter="filter"
-  :sort="sort"
+  :filter
+  :sort
   @input="onInput"
   @select="onSelect"
 >
@@ -189,11 +187,11 @@ const pools: Pool[] = [
 ];
 
 // Methods
-const filter = (input: string, option: unknown) =>
-  (option as Pool).name.toLocaleLowerCase().includes(input.toLocaleLowerCase());
+const filter = (input: string, pool: Pool) =>
+  pool.name.toLocaleLowerCase().includes(input.toLocaleLowerCase());
 
-const sort = (a: unknown, b: unknown) =>
-  (b as Pool).volume - (a as Pool).volume;
+const sort = (a: Pool, b: Pool) =>
+  b.volume - a.volume;
 
 // Events
 const onInput = (input: string): void => {
@@ -205,8 +203,7 @@ const toggleExpansion = (newPool: Pool): void => {
   autoComplete.value = false;
 };
 
-const onSelect = (option: unknown): void => {
-  const pool = option as Pool;
+const onSelect = (pool: Pool): void => {
   toggleExpansion(pool);
 };`;
 

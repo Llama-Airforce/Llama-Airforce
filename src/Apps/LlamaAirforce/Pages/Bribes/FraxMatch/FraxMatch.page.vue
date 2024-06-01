@@ -8,7 +8,7 @@
         :search="true"
         :auto-complete="autoComplete"
         :options="pools"
-        :filter="filter"
+        :filter
         @input="onInput"
         @select="onSelect"
       >
@@ -72,7 +72,7 @@ const loading = ref(false);
 const placeholder = ref(t("search-loading"));
 
 // Methods
-const filter = (input: string, option: unknown) => match(input, option as Pool);
+const filter = (input: string, pool: Pool) => match(input, pool);
 
 // Hooks
 onMounted(async (): Promise<void> => {

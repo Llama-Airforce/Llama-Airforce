@@ -38,18 +38,18 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 // Model
 const modelValue = defineModel<string>({ required: true });
 
 // Props
 interface Props {
   placeholder?: string;
-  options?: unknown[];
+  options?: T[];
   search?: boolean;
   autoComplete?: boolean;
-  filter?: (input: string, option: unknown) => boolean;
-  sort?: (a: unknown, b: unknown) => number;
+  filter?: (input: string, option: T) => boolean;
+  sort?: (a: T, b: T) => number;
 }
 
 const {
@@ -64,11 +64,11 @@ const {
 // Emits
 const emit = defineEmits<{
   input: [val: string];
-  select: [option: unknown];
+  select: [option: T];
 }>();
 
 // Refs
-const optionsProcessed = computed((): unknown[] => {
+const optionsProcessed = computed((): T[] => {
   const optionsFiltered = options.filter((option) =>
     filter(modelValue.value, option)
   );

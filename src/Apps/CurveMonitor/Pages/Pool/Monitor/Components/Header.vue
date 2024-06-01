@@ -38,9 +38,7 @@ const store = useMonitorStore();
 const pool = ref("");
 
 // Events
-const onSelect = (option: unknown): void => {
-  const poolNew = option as Pool;
-
+const onSelect = (poolNew: Pool): void => {
   pool.value = shorten(poolNew.name);
   store.pool = poolNew;
 };

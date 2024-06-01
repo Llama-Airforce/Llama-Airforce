@@ -72,8 +72,7 @@ const onInput = (input: string): void => {
   autoComplete.value = !!input;
 };
 
-const onSelect = (option: unknown): void => {
-  const pool = option as Pool;
+const onSelect = (pool: Pool): void => {
   autoComplete.value = false;
 
   emit("select", pool);
