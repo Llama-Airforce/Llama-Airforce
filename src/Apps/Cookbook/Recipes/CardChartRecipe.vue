@@ -42,7 +42,7 @@ type Serie = {
   data: { x: number; y: number }[];
 };
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStylesLAF({
     chart: {
       animations: {
@@ -174,7 +174,7 @@ type Serie = {
   data: { x: number; y: number }[];
 };
 
-const optionsLineChart = computed((): unknown => {
+const optionsLineChart = computed(() => {
   return createChartStyles({
     chart: {
       animations: {
