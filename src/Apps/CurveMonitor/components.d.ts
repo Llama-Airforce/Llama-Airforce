@@ -27,6 +27,7 @@ declare module 'vue' {
     Menu: typeof import('./../../Framework/Monitor/Menu.vue')['default']
     MenuItem: typeof import('./../../Framework/Monitor/MenuItem.vue')['default']
     Modal: typeof import('./../../Framework/Modal.vue')['default']
+    ModalFullscreen: typeof import('./../../Framework/ModalFullscreen.vue')['default']
     ModalYesNo: typeof import('./../../Framework/ModalYesNo.vue')['default']
     Pagination: typeof import('./../../Framework/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

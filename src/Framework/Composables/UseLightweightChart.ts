@@ -25,8 +25,10 @@ export function useLightweightChart(
     IChartApi | undefined
   >;
 
+  const fullscreen = ref(false);
   let resizeObserver: ResizeObserver | null = null;
 
+  // Setup.
   onMounted(async () => {
     if (!chartRef.value) return;
 
@@ -37,19 +39,24 @@ export function useLightweightChart(
      */
     await nextTick();
 
-    chart.value = createChart(
+    // Create chart and invoke creation event.
+    const newChart = createChart(
       chartRef.value,
       createChartOptions(chartRef.value)
     );
-
-    if (onChartCreated && chart.value) {
-      onChartCreated(chart.value);
-    }
+    chart.value = newChart;
+    onChartCreated?.(newChart);
 
     // Create a ResizeObserver to observe the chart's parent element
-    resizeObserver = new ResizeObserver(() => {
-      if (chart.value) {
-        chart.value.applyOptions({ width: chartRef.value?.clientWidth });
+    resizeObserver = new ResizeObserver((observers) => {
+      const parent = observers[0].target;
+
+      if (chart.value && chartRef.value) {
+        chart.value.applyOptions({
+          width: parent.clientWidth * (fullscreen.value ? 0.95 : 1),
+          height: parent.clientHeight * (fullscreen.value ? 0.8 : 1),
+        });
+
         chart.value.timeScale().fitContent();
       }
     });
@@ -72,11 +79,12 @@ export function useLightweightChart(
     }
   });
 
+  // Recreating trigger.
   watch(recreateChartTrigger, () => {
     if (chartRef.value && chart.value) {
       chart.value.applyOptions(createChartOptions(chartRef.value));
     }
   });
 
-  return { chartRef, chart };
+  return { chart, chartRef };
 }

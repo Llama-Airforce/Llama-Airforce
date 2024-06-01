@@ -156,5 +156,20 @@ const {
       }
     }
   }
+
+  /** Helpful style in conjuction with ModalFullscreen, esp for charts. */
+  &.fullscreen {
+    width: 100%;
+
+    .card-container {
+      height: 100%;
+      overflow: hidden;
+
+      .card-body {
+        height: 100%;
+        overflow: hidden;
+      }
+    }
+  }
 }
 </style>

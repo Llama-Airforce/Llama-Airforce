@@ -1,8 +1,10 @@
 <template>
   <Card
-    class="chart-container"
+    ref="chartCard"
+    class="chart-card"
     :title="t('title')"
     :loading
+    :class="{ fullscreen }"
   >
     <template #actions>
       <div class="actions">
@@ -11,6 +13,12 @@
           :disabled
           @toggle="toggles[$event].value = !toggles[$event].value"
         ></Legend>
+
+        <BtnChartLWFullscreen
+          v-model="fullscreen"
+          :chart="chart"
+          :target="chartCard?.$el"
+        />
       </div>
     </template>
 
@@ -25,6 +33,7 @@
 import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
@@ -63,6 +72,9 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 );
 
 // Chart
+const fullscreen = ref(false);
+const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
+
 const { chart, chartRef } = useLightweightChart(
   computed(() => `${themeId.value}-${toggles.util.value}`),
   createOptionsChart,
@@ -81,7 +93,7 @@ watch(theme, () => {
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
-    height: 300,
+    height: chartRef.clientHeight || 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -205,10 +217,15 @@ const formatterUtil = (x: number): string => `${Math.round(x * 100)}%`;
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-container {
+.chart-card {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
   }
 }
 </style>
