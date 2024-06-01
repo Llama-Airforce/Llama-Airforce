@@ -42,10 +42,10 @@
             </div>
 
             <div class="right">
-              <Chip
+              <Badge
                 v-if="menuItem.tag"
                 :label="menuItem.tag"
-              ></Chip>
+              ></Badge>
             </div>
           </div>
         </router-link>
@@ -151,7 +151,7 @@ const onClickNode = (): void => {
     }
 
     > .right {
-      .chip {
+      .badge {
         text-transform: uppercase;
       }
     }

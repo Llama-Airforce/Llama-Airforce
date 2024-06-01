@@ -8,13 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AsyncValue: typeof import('./../../Framework/AsyncValue.vue')['default']
+    Badge: typeof import('./../../Framework/Badge.vue')['default']
     Breadcrumb: typeof import('./../../Framework/Breadcrumb.vue')['default']
     Button: typeof import('./../../Framework/Button.vue')['default']
     ButtonToggle: typeof import('./../../Framework/ButtonToggle.vue')['default']
     Card: typeof import('./../../Framework/Card.vue')['default']
     CardChart: typeof import('./../../Framework/CardChart.vue')['default']
     ChartApex: typeof import('./../../Framework/ChartApex.vue')['default']
-    Chip: typeof import('./../../Framework/Chip.vue')['default']
     Code: typeof import('./../../Framework/Code.vue')['default']
     Collapsible: typeof import('./../../Framework/Collapsible.vue')['default']
     DataTable: typeof import('./../../Framework/DataTable.vue')['default']

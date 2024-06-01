@@ -1,5 +1,5 @@
 <template>
-  <div class="chip">
+  <div class="badge">
     <div class="label">{{ label }}</div>
   </div>
 </template>
@@ -16,7 +16,7 @@ const { label = "" } = defineProps<Props>();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chip {
+.badge {
   color: var(--c-text);
   font-size: 0.625rem;
   background: var(--c-primary);

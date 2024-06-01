@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AsyncValue: typeof import('./../../Framework/AsyncValue.vue')['default']
+    Badge: typeof import('./../../Framework/Badge.vue')['default']
     Breadcrumb: typeof import('./../../Framework/Breadcrumb.vue')['default']
     Button: typeof import('./../../Framework/Button.vue')['default']
     ButtonToggle: typeof import('./../../Framework/ButtonToggle.vue')['default']
