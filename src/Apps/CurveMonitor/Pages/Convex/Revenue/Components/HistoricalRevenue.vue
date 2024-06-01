@@ -47,7 +47,7 @@ const categories = computed((): Date[] =>
   store.historicalRevenue.map((x) => new Date(x.timestamp * 1000))
 );
 
-const options = computed((): unknown => {
+const options = computed(() => {
   const { colors } = theme.value;
 
   return createChartStyles(theme.value, {

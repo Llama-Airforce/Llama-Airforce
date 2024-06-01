@@ -33,7 +33,7 @@ const bribesNative = computed((): number[] =>
 const bribesFrax = computed((): number[] => epochs.map((epoch) => epoch.frax));
 const categories = computed(() => epochs.map((epoch) => epoch.round));
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStylesLAF({
     chart: {
       id: "frax-match",

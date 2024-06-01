@@ -71,7 +71,7 @@ const yMax = computed((): number => {
 });
 
 // eslint-disable-next-line max-lines-per-function
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "curve-emissions",

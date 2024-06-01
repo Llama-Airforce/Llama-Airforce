@@ -35,7 +35,7 @@ const revenueBreakdown = computed((): RevenueSource[] => [
   },
 ]);
 
-const options = computed((): unknown => {
+const options = computed(() => {
   const { colors } = theme.value;
 
   return createChartStyles(theme.value, {

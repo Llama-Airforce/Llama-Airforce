@@ -23,7 +23,7 @@ const { data = [] } = defineProps<Props>();
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "largePositions",

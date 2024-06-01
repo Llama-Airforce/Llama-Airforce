@@ -37,7 +37,7 @@ const chain = ref<Chain>("ethereum");
 const { isFetching: loading, data: topPools } = useQueryTopPools(chain);
 
 // Chart
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "chainRevenues",

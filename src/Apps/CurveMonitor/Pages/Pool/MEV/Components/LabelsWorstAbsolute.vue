@@ -36,7 +36,7 @@ const series = computed(() =>
   topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.occurrences)
 );
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "chainRevenues",

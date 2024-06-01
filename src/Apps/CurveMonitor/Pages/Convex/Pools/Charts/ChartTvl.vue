@@ -35,7 +35,7 @@ const snapshots = computed((): Snapshot[] => {
   return poolSelected ? store.snapshots[poolSelected.name] ?? [] : [];
 });
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "convex-tvl",

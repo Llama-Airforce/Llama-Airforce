@@ -27,7 +27,7 @@ const { depth = null, loading } = defineProps<Props>();
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
-const options = computed((): unknown => {
+const options = computed(() => {
   const { colors } = theme.value;
 
   return createChartStyles(theme.value, {

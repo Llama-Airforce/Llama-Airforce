@@ -89,7 +89,7 @@ const { isFetching: loading, data } = useQuery({
 
 // Refs
 // eslint-disable-next-line max-lines-per-function
-const options = computed((): unknown => {
+const options = computed(() => {
   const { colors } = theme.value;
 
   const xaxis = {

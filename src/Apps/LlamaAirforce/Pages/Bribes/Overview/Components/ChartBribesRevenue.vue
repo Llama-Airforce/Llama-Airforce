@@ -30,7 +30,7 @@ const { protocol } = storeToRefs(useBribesStore());
 
 const epochs = computed((): EpochOverview[] => overview?.epochs ?? []);
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStylesLAF({
     chart: {
       id: "votium-bribe-revenue",

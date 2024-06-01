@@ -51,7 +51,7 @@ const legend = computed(() => [
 const { isFetching: loading, data: breakdown } = useQueryRevenueBreakdown();
 
 // Chart
-const options = computed((): unknown => {
+const options = computed(() => {
   const { colors, colorsArray } = {
     colors: theme.value.colors,
     colorsArray: [

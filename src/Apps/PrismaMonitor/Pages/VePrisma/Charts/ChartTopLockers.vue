@@ -27,7 +27,7 @@ const { theme } = storeToRefs(useSettingsStore());
 
 const data = computed(() => lockers.slice(0, 10));
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "topLockers",

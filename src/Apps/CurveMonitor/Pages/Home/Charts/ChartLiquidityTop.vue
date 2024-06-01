@@ -19,7 +19,7 @@ const { theme } = storeToRefs(useSettingsStore());
 // Data
 const { isFetching: loading, data } = useQueryLiquidityTop();
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       type: "bar",

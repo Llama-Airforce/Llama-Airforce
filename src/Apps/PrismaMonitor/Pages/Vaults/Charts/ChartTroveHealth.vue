@@ -60,7 +60,7 @@ const { isFetching: loading, data } = useQuery({
 });
 
 // Refs
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       animations: {

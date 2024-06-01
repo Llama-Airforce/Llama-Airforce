@@ -23,7 +23,7 @@ const { theme } = storeToRefs(useSettingsStore());
 const { isFetching: loading, data: chainRevenues } = useQueryRevenueChains();
 
 // Chart
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStyles(theme.value, {
     chart: {
       id: "chainRevenues",

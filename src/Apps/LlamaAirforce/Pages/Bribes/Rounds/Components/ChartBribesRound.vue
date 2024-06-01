@@ -57,7 +57,7 @@ const categories = computed((): string[] => {
     .value();
 });
 
-const options = computed((): unknown => {
+const options = computed(() => {
   return createChartStylesLAF({
     chart: {
       id: "votium-bribe-round",
