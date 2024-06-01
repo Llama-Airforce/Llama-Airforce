@@ -1,4 +1,1 @@
-export enum SortOrder {
-  Ascending = "Ascending",
-  Descending = "Descending",
-}
+export type SortOrder = "asc" | "desc";

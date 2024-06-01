@@ -9,7 +9,7 @@
     :sorting-columns="['pool', 'vlasset', 'total']"
     :sorting-columns-enabled="['pool', 'vlasset', 'total']"
     sorting-default-column="vlasset"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
   >
     <template #header-content>
@@ -115,7 +115,7 @@ const bribed = computed((): Bribed[] => {
           return b.dollarPerVlAsset;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 

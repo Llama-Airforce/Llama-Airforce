@@ -9,7 +9,7 @@
     :sorting-columns="['', 'name', 'tvl']"
     :sorting-columns-enabled="['name', 'tvl']"
     sorting-default-column="tvl"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     :expanded="expanded"
     @sort-column="onSort"
   >
@@ -79,7 +79,7 @@ const gauges = computed((): Gauge[] => {
           return gauge.tvl;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 </script>

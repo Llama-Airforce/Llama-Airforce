@@ -10,7 +10,7 @@
     :sorting-columns="columnsSorting"
     :sorting-columns-enabled="columnsSorting"
     sorting-default-column="timestamp"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
     @selected="showDetails = $event"
   >
@@ -164,25 +164,22 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.redeemer);
     })
-    .orderBy(
-      (row) => {
-        switch (sortColumn.value) {
-          case "redeemer":
-            return row.redeemer;
-          case "tx":
-            return row.transaction;
-          case "debt":
-            return row.actual_debt_amount;
-          case "numtroves":
-            return row.troves_affected_count;
-          case "timestamp":
-            return row.timestamp;
-          default:
-            return row.timestamp;
-        }
-      },
-      sortOrder.value === SortOrder.Descending ? "desc" : "asc"
-    )
+    .orderBy((row) => {
+      switch (sortColumn.value) {
+        case "redeemer":
+          return row.redeemer;
+        case "tx":
+          return row.transaction;
+        case "debt":
+          return row.actual_debt_amount;
+        case "numtroves":
+          return row.troves_affected_count;
+        case "timestamp":
+          return row.timestamp;
+        default:
+          return row.timestamp;
+      }
+    }, sortOrder.value)
     .value()
 );
 

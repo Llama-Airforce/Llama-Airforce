@@ -10,7 +10,7 @@
     :sorting-columns="columnsSorting"
     :sorting-columns-enabled="columnsSortingEnabled"
     sorting-default-column="updated"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
   >
     <template #header-content>
@@ -219,27 +219,24 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.owner);
     })
-    .orderBy(
-      (row) => {
-        switch (sortColumn.value) {
-          case "owner":
-            return row.owner;
-          case "debt":
-            return row.debt;
-          case "coll":
-            return row.collateral_usd;
-          case "ratio":
-            return row.collateral_ratio;
-          case "created":
-            return row.created_at;
-          case "updated":
-            return row.last_update;
-          default:
-            return row.last_update;
-        }
-      },
-      sortOrder.value === SortOrder.Descending ? "desc" : "asc"
-    )
+    .orderBy((row) => {
+      switch (sortColumn.value) {
+        case "owner":
+          return row.owner;
+        case "debt":
+          return row.debt;
+        case "coll":
+          return row.collateral_usd;
+        case "ratio":
+          return row.collateral_ratio;
+        case "created":
+          return row.created_at;
+        case "updated":
+          return row.last_update;
+        default:
+          return row.last_update;
+      }
+    }, sortOrder.value)
     .value()
 );
 

@@ -9,7 +9,7 @@
     :sorting-columns="['percentage', 'pool', 'vlasset', 'total']"
     :sorting-columns-enabled="['percentage', 'pool', 'vlasset', 'total']"
     sorting-default-column="total"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
   >
     <template #header-content>
@@ -135,7 +135,7 @@ const bribedOrdered = computed((): BribedPersonal[] => {
           return bribed.amountDollars;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 

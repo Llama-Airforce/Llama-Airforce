@@ -9,7 +9,7 @@
     :sorting-columns="['', 'deadline', 'vlasset', 'total']"
     :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
     sorting-default-column="deadline"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
     @selected="onSelected"
   >
@@ -98,7 +98,7 @@ const epochs = computed((): EpochOverview[] => {
           return epoch.round;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 

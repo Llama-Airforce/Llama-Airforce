@@ -10,7 +10,7 @@
     :sorting-columns="columnsSorting"
     :sorting-columns-enabled="columnsSortingEnabled"
     sorting-default-column="timestamp"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
     @selected="showDetails = $event"
   >
@@ -188,25 +188,22 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.liquidator) && isVaultFilter;
     })
-    .orderBy(
-      (row) => {
-        switch (sortColumn.value) {
-          case "liquidator":
-            return row.liquidator;
-          case "tx":
-            return row.transaction;
-          case "debt":
-            return row.liquidated_collateral_usd;
-          case "numtroves":
-            return row.troves_affected_count;
-          case "timestamp":
-            return row.timestamp;
-          default:
-            return row.timestamp;
-        }
-      },
-      sortOrder.value === SortOrder.Descending ? "desc" : "asc"
-    )
+    .orderBy((row) => {
+      switch (sortColumn.value) {
+        case "liquidator":
+          return row.liquidator;
+        case "tx":
+          return row.transaction;
+        case "debt":
+          return row.liquidated_collateral_usd;
+        case "numtroves":
+          return row.troves_affected_count;
+        case "timestamp":
+          return row.timestamp;
+        default:
+          return row.timestamp;
+      }
+    }, sortOrder.value)
     .value()
 );
 

@@ -131,7 +131,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { SortOrder } from "@/Framework/SortOrder";
+import { type SortOrder } from "@/Framework/SortOrder";
 
 // Props
 interface Props {
@@ -160,7 +160,7 @@ interface Props {
   sortingColumns?: string[];
   sortingColumnsEnabled?: string[];
   sortingDefaultColumn?: string | null;
-  sortingDefaultDir?: string | null;
+  sortingDefaultDir?: SortOrder | null;
 
   /** Icon shown to the left of the header title. */
   icon?: string;
@@ -200,7 +200,7 @@ const emit = defineEmits<{
 
 // Refs
 const currentSort = ref("");
-const currentSortDir = ref(SortOrder.Ascending);
+const currentSortDir = ref<SortOrder>("asc");
 
 const columnsHeaderCss = computed((): string => {
   return `grid-template-columns: ${columnsHeader}`;
@@ -222,11 +222,7 @@ onBeforeMount(() => {
   }
 
   if (sortingDefaultDir) {
-    currentSortDir.value =
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-      sortingDefaultDir === SortOrder.Ascending
-        ? SortOrder.Ascending
-        : SortOrder.Descending;
+    currentSortDir.value = sortingDefaultDir;
   }
 });
 
@@ -272,14 +268,14 @@ const sortingEnabled = (index: number): boolean => {
 const sortAscending = (index: number): boolean => {
   return (
     currentSort.value === sortingColumns[index] &&
-    currentSortDir.value === SortOrder.Ascending
+    currentSortDir.value === "asc"
   );
 };
 
 const sortDescending = (index: number): boolean => {
   return (
     currentSort.value === sortingColumns[index] &&
-    currentSortDir.value === SortOrder.Descending
+    currentSortDir.value === "desc"
   );
 };
 
@@ -297,12 +293,9 @@ const sortColumn = (index: number): void => {
 
   if (columnName === currentSort.value) {
     // Reverse sort direction.
-    currentSortDir.value =
-      currentSortDir.value === SortOrder.Ascending
-        ? SortOrder.Descending
-        : SortOrder.Ascending;
+    currentSortDir.value = currentSortDir.value === "asc" ? "desc" : "asc";
   } else {
-    currentSortDir.value = SortOrder.Ascending;
+    currentSortDir.value = "asc";
   }
   currentSort.value = columnName;
 

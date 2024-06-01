@@ -9,7 +9,7 @@
     :sorting-columns="columnsSorting"
     :sorting-columns-enabled="columnsSortingEnabled"
     sorting-default-column="weight"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
   >
     <template #header-content>
@@ -142,23 +142,20 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.id);
     })
-    .orderBy(
-      (row) => {
-        switch (sortColumn.value) {
-          case "weight":
-            return row.weight;
-          case "locked":
-            return row.locked;
-          case "unlocked":
-            return row.unlocked;
-          case "frozen":
-            return row.frozen;
-          default:
-            return row.weight;
-        }
-      },
-      sortOrder.value === SortOrder.Descending ? "desc" : "asc"
-    )
+    .orderBy((row) => {
+      switch (sortColumn.value) {
+        case "weight":
+          return row.weight;
+        case "locked":
+          return row.locked;
+        case "unlocked":
+          return row.unlocked;
+        case "frozen":
+          return row.frozen;
+        default:
+          return row.weight;
+      }
+    }, sortOrder.value)
     .value()
 );
 

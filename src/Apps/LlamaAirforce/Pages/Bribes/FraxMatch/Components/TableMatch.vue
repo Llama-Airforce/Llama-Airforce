@@ -9,7 +9,7 @@
     :sorting-columns="['', 'deadline', 'native', 'frax', 'total']"
     :sorting-columns-enabled="['deadline', 'native', 'frax', 'total']"
     sorting-default-column="deadline"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     @sort-column="onSort"
   >
     <template #row="props: { item: EpochFrax }">
@@ -128,7 +128,7 @@ const epochsSorted = computed((): EpochFrax[] => {
           return epoch.round;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 

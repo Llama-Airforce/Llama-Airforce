@@ -16,7 +16,7 @@
             :sorting-columns="['', 'deadline', 'vlasset', 'total']"
             :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
             sorting-default-column="deadline"
-            sorting-default-dir="Descending"
+            sorting-default-dir="desc"
             @sort-column="onSort"
             @selected="onSelected"
           >
@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
-import { SortOrder } from "@/Framework/SortOrder";
+import { type SortOrder } from "@/Framework/SortOrder";
 import Recipe from "@CB/Recipe.vue";
 
 type Round = {
@@ -100,7 +100,7 @@ type Round = {
 };
 
 const sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
-const sortOrder = ref(SortOrder.Descending);
+const sortOrder = ref<SortOrder>("desc");
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -125,7 +125,7 @@ const rows = computed((): Round[] => {
           return row.round;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 
@@ -149,7 +149,7 @@ const dataTable1 = `<DataTable
   :sorting-columns="['', 'deadline', 'vlasset', 'total']"
   :sorting-columns-enabled="['deadline', 'vlasset', 'total']"
   sorting-default-column="deadline"
-  sorting-default-dir="Descending"
+  sorting-default-dir="desc"
   @sort-column="onSort"
   @selected="onSelected"
 >
@@ -208,7 +208,7 @@ type Round = {
 };
 
 let sortColumn = ref<"deadline" | "vlasset" | "total">("deadline");
-let sortOrder = ref(SortOrder.Descending);
+let sortOrder = ref<SortOrder>("desc");
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -233,7 +233,7 @@ const rows = computed((): Round[] => {
           return row.round;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 

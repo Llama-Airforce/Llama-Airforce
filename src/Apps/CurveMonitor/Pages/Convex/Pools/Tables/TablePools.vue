@@ -9,7 +9,7 @@
     :sorting-columns="['', 'name', 'apr', 'tvl']"
     :sorting-columns-enabled="['name', 'apr', 'tvl']"
     sorting-default-column="tvl"
-    sorting-default-dir="Descending"
+    sorting-default-dir="desc"
     :expanded="expanded"
     @sort-column="onSort"
   >
@@ -92,7 +92,7 @@ const pools = computed((): Pool[] => {
           return pool.tvl;
       }
     },
-    sortOrder.value === SortOrder.Descending ? "desc" : "asc"
+    sortOrder.value
   );
 });
 </script>
