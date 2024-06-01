@@ -93,13 +93,13 @@ const onCoinOpen = (i: 0 | 1): void => {
   selectCoinOpen.value[i] = !selectCoinOpen.value[i];
 };
 
-const onCoinSelect = (i: 0 | 1, option: unknown, update: boolean): void => {
+const onCoinSelect = (i: 0 | 1, option: Coin | null, update: boolean): void => {
   const j = i === 0 ? 1 : 0;
   const oldCoin = coin.value[i];
-  const newCoin = option as Coin;
+  const newCoin = option;
 
   // Don't update if same coin is selected.
-  if (oldCoin?.label === newCoin.label) {
+  if (oldCoin?.label === newCoin?.label) {
     return;
   }
 

@@ -135,9 +135,7 @@ const onRoundOpen = (): void => {
   roundOpen.value = !roundOpen.value;
 };
 
-const onRoundSelect = (option: unknown): void => {
-  const round = option as number;
-
+const onRoundSelect = (round: number): void => {
   roundOpen.value = false;
   roundSelected.value = true;
   emit("select-round", round);

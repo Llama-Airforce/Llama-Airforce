@@ -89,7 +89,11 @@ onMounted(() => {
   const savedTheme = localStorage.getItem("theme");
 
   if (!savedTheme && browserDark) {
-    onThemeSelect(themes.find((theme) => theme.id === "dark"));
+    const theme = themes.find((theme) => theme.id === "dark");
+
+    if (theme) {
+      onThemeSelect(theme);
+    }
   } else {
     const theme =
       themes.find((theme) => theme.id === savedTheme) ??
@@ -105,8 +109,8 @@ const onThemeOpen = (): void => {
   selectThemeOpen.value = !selectThemeOpen.value;
 };
 
-const onThemeSelect = (option: unknown) => {
-  theme.value = option as ThemeDescription;
+const onThemeSelect = (option: ThemeDescription) => {
+  theme.value = option;
 
   window.document.documentElement.setAttribute("data-theme", theme.value.id);
   storeSettings.themeId = theme.value.id;

@@ -82,9 +82,8 @@ const onSelectOpen = (): void => {
   selectOpen.value = !selectOpen.value;
 };
 
-const onSelect = (option: unknown): void => {
-  const item = option as SelectItem;
-  selected.value = item;
+const onSelect = (option: SelectItem): void => {
+  selected.value = option;
 };
 
 const select1 = `<Select
@@ -140,9 +139,8 @@ const onSelectOpen = (): void => {
   selectOpen.value = !selectOpen.value;
 };
 
-const onSelect = (option: unknown): void => {
-  const item = option as SelectItem;
-  selected.value = item;
+const onSelect = (option: SelectItem): void => {
+  selected.value = option;
 };`;
 
 const select3 = `::v-deep(.select-component) {

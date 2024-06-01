@@ -74,9 +74,8 @@ const onVaultOpen = (): void => {
   vaultOpen.value = !vaultOpen.value;
 };
 
-const onVaultSelect = (option: unknown): void => {
-  const vaultInfo = option as Vault | "all";
-  emit("select-vault", vaultInfo);
+const onVaultSelect = (option: Vault | "all"): void => {
+  emit("select-vault", option);
 };
 </script>
 

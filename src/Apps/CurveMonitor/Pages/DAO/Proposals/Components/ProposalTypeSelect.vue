@@ -37,8 +37,8 @@ const onTypeOpen = (): void => {
   selectTypeOpen.value = !selectTypeOpen.value;
 };
 
-const onTypeSelect = (option: unknown): void => {
-  type.value = option as ProposalType;
+const onTypeSelect = (option: ProposalType): void => {
+  type.value = option;
   emit("select", type.value);
 };
 </script>

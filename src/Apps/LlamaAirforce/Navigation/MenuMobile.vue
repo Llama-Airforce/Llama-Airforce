@@ -88,8 +88,8 @@ const onPageOpen = (): void => {
   pageOpen.value = !pageOpen.value;
 };
 
-const onPageSelect = async (option: unknown) => {
-  page.value = option as string;
+const onPageSelect = async (option: string) => {
+  page.value = option;
 
   if (menuItems.value.length === 0) {
     const route = titleRoute.value;

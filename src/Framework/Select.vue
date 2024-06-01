@@ -52,12 +52,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 // Props
-interface Props {
-  options?: unknown[];
+interface Props<T> {
+  options?: T[];
   open?: boolean;
-  selected?: unknown | null;
+  selected?: T | null;
   label?: string;
 }
 
@@ -66,13 +66,13 @@ const {
   open = false,
   selected = null,
   label,
-} = defineProps<Props>();
+} = defineProps<Props<T>>();
 
 // Emits
 const emit = defineEmits<{
   open: [];
   close: [];
-  input: [option: unknown];
+  input: [option: T];
 }>();
 </script>
 

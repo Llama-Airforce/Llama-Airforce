@@ -84,9 +84,8 @@ const onChainOpen = (): void => {
   chainOpen.value = !chainOpen.value;
 };
 
-const onChainSelect = (option: unknown): void => {
-  const { chain } = option as ChainInfo;
-  emit("select-chain", chain);
+const onChainSelect = (option: ChainInfo): void => {
+  emit("select-chain", option.chain);
 };
 </script>
 

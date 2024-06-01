@@ -126,8 +126,8 @@ const onPlatformOpen = (): void => {
   platformOpen.value = !platformOpen.value;
 };
 
-const onPlatformSelect = (option: unknown): void => {
-  const { platform } = option as PlatformInfo;
+const onPlatformSelect = (option: PlatformInfo): void => {
+  const { platform } = option;
 
   platformOpen.value = false;
   platformSelected.value = true;
@@ -146,8 +146,8 @@ const onProtocolOpen = (): void => {
   protocolOpen.value = !protocolOpen.value;
 };
 
-const onProtocolSelect = (option: unknown): void => {
-  const { protocol } = option as ProtocolInfo;
+const onProtocolSelect = (option: ProtocolInfo): void => {
+  const { protocol } = option;
 
   protocolOpen.value = false;
   protocolSelected.value = true;

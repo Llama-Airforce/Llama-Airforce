@@ -41,7 +41,7 @@ const selectLocaleOpen = ref(false);
 
 // Hooks
 onMounted(() => {
-  const locale = localStorage.getItem(STORAGE_LOCALE);
+  const locale = localStorage.getItem(STORAGE_LOCALE) as Locale;
   if (locale && locales.some((l) => l === locale)) {
     onLocaleSelect(locale);
   }
@@ -52,8 +52,8 @@ const onLocaleOpen = (): void => {
   selectLocaleOpen.value = !selectLocaleOpen.value;
 };
 
-const onLocaleSelect = (option: unknown): void => {
-  locale.value = option as Locale;
+const onLocaleSelect = (option: Locale): void => {
+  locale.value = option;
   loc.value = locale.value;
 
   localStorage.setItem(STORAGE_LOCALE, locale.value);

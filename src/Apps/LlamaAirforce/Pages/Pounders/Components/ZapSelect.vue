@@ -54,8 +54,8 @@ const onZapOpen = (): void => {
   selectZapOpen.value = !selectZapOpen.value;
 };
 
-const onZapSelect = (option: unknown): void => {
-  zap.value = option as Zap;
+const onZapSelect = (option: Zap): void => {
+  zap.value = option;
   emit("select", zap.value);
 };
 
