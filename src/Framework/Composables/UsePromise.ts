@@ -1,5 +1,3 @@
-import { ref, type Ref, onMounted } from "vue";
-
 /**
  * Vue composable to asynchronously load data and handle errors through notifications.
  *
