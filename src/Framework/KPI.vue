@@ -71,7 +71,7 @@ interface Props {
   labelSecond?: string;
   tooltip?: string;
   tooltipType?: "icon" | "underline";
-  value?: unknown;
+  value?: string | number;
   hasValue?: boolean;
 }
 
