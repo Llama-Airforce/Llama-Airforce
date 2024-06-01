@@ -38,15 +38,15 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 /**
  * A single row of data in the datatable.
  * The selected and expanded states of a single row are controlled by the datatable itself.
  * For this reason the toggles are simply an event emission.
  */
 // Props
-interface Props {
-  data?: unknown;
+interface Props<T> {
+  data?: T;
   columns?: string;
   selected?: boolean;
   expanded?: boolean;
@@ -59,11 +59,11 @@ const {
   selected = false,
   expanded = false,
   expandSide = "right",
-} = defineProps<Props>();
+} = defineProps<Props<T>>();
 
 // Emits
 const emit = defineEmits<{
-  click: [data: unknown];
+  click: [data?: T];
 }>();
 
 // Refs

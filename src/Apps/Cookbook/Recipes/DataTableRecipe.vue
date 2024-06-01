@@ -135,8 +135,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
   sortOrder.value = order;
 };
 
-const onSelected = (data: unknown): void => {
-  const epoch = data as Round;
+const onSelected = (epoch: Round): void => {
   console.log(epoch.round);
 };
 
@@ -244,8 +243,7 @@ const onSort = (columnName: string, order: SortOrder): void => {
   sortOrder.value = order;
 };
 
-const onSelected = (data: unknown): void => {
-  const epoch = data as Round;
+const onSelected = (round: Round): void => {
   console.log(epoch.round);
 };`;
 

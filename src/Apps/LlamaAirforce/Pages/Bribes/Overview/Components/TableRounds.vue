@@ -120,9 +120,7 @@ const isFinished = (epoch: EpochOverview): boolean =>
   new Date() > getDateRaw(epoch);
 
 // Events
-const onSelected = async (data: unknown): Promise<void> => {
-  const epoch = data as EpochOverview;
-
+const onSelected = async (epoch: EpochOverview): Promise<void> => {
   await router.push({
     name: "rounds-incentives",
     params: { round: epoch.round },

@@ -130,7 +130,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { SortOrder } from "@/Framework/SortOrder";
 
 // Props
@@ -143,14 +143,14 @@ interface Props {
   columns?: string[];
 
   /** The rows of the data table. */
-  rows?: unknown[];
+  rows?: T[];
   /** The minimum number of rows in case you don't want to show the 'no data' message. */
   rowsMin?: number | null;
   /** The row that should be highlighted as being selected. */
-  selectedRow?: unknown;
+  selectedRow?: T;
 
   /** All currently expanded rows */
-  expanded?: unknown[];
+  expanded?: T[];
   expandSide?: "left" | "right";
 
   /** Whether columns can be sorted or not. */
@@ -194,7 +194,7 @@ const {
 
 // Emits
 const emit = defineEmits<{
-  selected: [data: unknown];
+  selected: [data: T];
   sortColumn: [sort: string, sortOrder: SortOrder];
 }>();
 
@@ -231,8 +231,10 @@ onBeforeMount(() => {
 });
 
 // Events
-const onSelect = (data: unknown): void => {
-  emit("selected", data);
+const onSelect = (data?: T): void => {
+  if (data) {
+    emit("selected", data);
+  }
 };
 
 // Methods

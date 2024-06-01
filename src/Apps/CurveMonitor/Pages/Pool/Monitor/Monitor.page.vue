@@ -58,12 +58,7 @@ onMounted(async () => {
 });
 
 // Methods
-const onNewPool = async (
-  option: unknown,
-  updateUrl: boolean
-): Promise<void> => {
-  const poolNew = option as Pool;
-
+const onNewPool = async (poolNew: Pool, updateUrl: boolean): Promise<void> => {
   // Don't do anything if 'new' pool is already loaded.
   if (poolConnected === poolNew.id) {
     return;
@@ -100,7 +95,9 @@ const onNewPoolRoute = async (routePool: string | string[]) => {
 watch(
   () => store.pool,
   async (newPool) => {
-    await onNewPool(newPool, true);
+    if (newPool) {
+      await onNewPool(newPool, true);
+    }
   }
 );
 

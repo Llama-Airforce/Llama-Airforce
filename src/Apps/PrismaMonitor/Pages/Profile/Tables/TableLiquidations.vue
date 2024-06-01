@@ -12,7 +12,7 @@
     sorting-default-column="timestamp"
     sorting-default-dir="Descending"
     @sort-column="onSort"
-    @selected="onSelect"
+    @selected="showDetails = $event"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -203,11 +203,6 @@ const rows = computed((): Row[] =>
 
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-// Events
-const onSelect = (row: unknown) => {
-  showDetails.value = row as Row;
-};
 </script>
 
 <style lang="scss" scoped>

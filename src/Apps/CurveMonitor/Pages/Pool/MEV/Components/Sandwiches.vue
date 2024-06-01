@@ -6,7 +6,7 @@
     :rows="sandwiches"
     :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
     :expanded="expanded"
-    @selected="toggleExpansion($event as SandwichDetail)"
+    @selected="toggleExpansion($event)"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
