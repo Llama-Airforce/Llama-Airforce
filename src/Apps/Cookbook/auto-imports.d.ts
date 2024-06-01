@@ -346,6 +346,7 @@ declare global {
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
   const useKeyModifier: typeof import('@vueuse/core')['useKeyModifier']
   const useLastChanged: typeof import('@vueuse/core')['useLastChanged']
+  const useLegend: typeof import('../../Framework/Composables/UseLegend')['useLegend']
   const useLightweightChart: typeof import('../../Framework/Composables/UseLightweightChart')['useLightweightChart']
   const useLink: typeof import('vue-router')['useLink']
   const useLocalStorage: typeof import('@vueuse/core')['useLocalStorage']

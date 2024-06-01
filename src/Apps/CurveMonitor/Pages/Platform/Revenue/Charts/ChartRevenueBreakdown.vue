@@ -8,7 +8,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend :items></Legend>
 
         <Tooltip placement="left">
           <div>{{ t("legend-explanation") }}</div>
@@ -34,7 +34,8 @@ const { t } = useI18n();
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
-const legend = computed(() => [
+// Legend
+const { items } = useLegend(() => [
   {
     id: "dao",
     label: "DAO",

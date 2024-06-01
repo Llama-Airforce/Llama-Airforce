@@ -6,7 +6,11 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend
+          :items
+          :disabled
+          @toggle="toggles[$event].value = !toggles[$event].value"
+        ></Legend>
       </div>
     </template>
 
@@ -23,7 +27,7 @@ import { type Chain } from "@CM/Models/Chain";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type Snapshot } from "@CM/Services/LlamaLend";
+import { type Market } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
@@ -40,10 +44,27 @@ let supplySerie: ISeriesApi<"Line">;
 let debtSerie: ISeriesApi<"Line">;
 let utilSerie: ISeriesApi<"Line">;
 
-const { theme } = storeToRefs(useSettingsStore());
+const { theme, themeId } = storeToRefs(useSettingsStore());
 
+// Legend
+const { items, toggles, disabled } = useLegend(() => {
+  const { blue, yellow, purple } = theme.value.colors;
+  return [
+    { id: "supply", label: t("supply"), color: blue },
+    { id: "debt", label: t("debt"), color: yellow },
+    { id: "util", label: t("util"), color: purple, togglable: true },
+  ];
+});
+
+// Data
+const { isFetching: loading, data: snapshots } = useQuerySnapshots(
+  toRef(() => market),
+  toRef(() => chain)
+);
+
+// Chart
 const { chart, chartRef } = useLightweightChart(
-  theme,
+  computed(() => `${themeId.value}-${toggles.util.value}`),
   createOptionsChart,
   (chart) => {
     supplySerie = chart.addLineSeries(createOptionsSerieSupply());
@@ -52,39 +73,12 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const legend = computed(() => [
-  {
-    id: "supply",
-    label: t("supply"),
-    color: theme.value.colors.blue,
-  },
-  {
-    id: "debt",
-    label: t("debt"),
-    color: theme.value.colors.yellow,
-  },
-  {
-    id: "util",
-    label: t("util"),
-    color: theme.value.colors.purple,
-  },
-]);
-
-// Data
-const { isFetching: loading, data: snapshots } = useQuerySnapshots(
-  toRef(() => market),
-  toRef(() => chain)
-);
-
-// Watches
-watch([snapshots, chart], createSeries);
 watch(theme, () => {
   supplySerie.applyOptions(createOptionsSerieSupply());
   debtSerie.applyOptions(createOptionsSerieDebt());
   utilSerie.applyOptions(createOptionsSerieUtil());
 });
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,
@@ -95,7 +89,7 @@ function createOptionsChart(chartRef: HTMLElement) {
       },
     },
     leftPriceScale: {
-      visible: true,
+      visible: toggles.util.value,
     },
   });
 }
@@ -143,12 +137,13 @@ function createOptionsSerieUtil(): LineSeriesPartialOptions {
   };
 }
 
-function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !supplySerie || !debtSerie) {
+watchEffect(createSeries);
+function createSeries(): void {
+  if (!chart.value || !supplySerie || !debtSerie) {
     return;
   }
 
-  const newSupplySerie: LineData[] = chain_(newSnapshots)
+  const newSupplySerie: LineData[] = chain_(snapshots.value)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.totalAssetsUsd,
@@ -157,7 +152,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newDebtSerie: LineData[] = chain_(newSnapshots)
+  const newDebtSerie: LineData[] = chain_(snapshots.value)
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.totalDebtUsd,
@@ -166,30 +161,24 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const newUtilSerie: LineData[] = chain_(newSupplySerie)
+  const newUtilSerie: LineData[] = chain_(
+    toggles.util.value ? newSupplySerie : []
+  )
     .zip(newDebtSerie)
     .filter((x) => !!x[1])
-    .map(([supply, debt]) => {
-      return {
-        time: debt!.time,
-        value: supply && supply.value > 0 ? debt!.value / supply.value : 0,
-      };
-    })
+    .map(([supply, debt]) => ({
+      time: debt!.time,
+      value: supply && supply.value > 0 ? debt!.value / supply.value : 0,
+    }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .value();
 
-  if (newSupplySerie.length > 0) {
-    supplySerie.setData(newSupplySerie);
-  }
+  supplySerie.setData(newSupplySerie);
+  debtSerie.setData(newDebtSerie);
+  utilSerie.setData(newUtilSerie);
 
-  if (newDebtSerie.length > 0) {
-    debtSerie.setData(newDebtSerie);
-  }
-
-  if (newUtilSerie.length > 0) {
-    utilSerie.setData(newUtilSerie);
-  }
+  utilSerie.applyOptions({ visible: toggles.util.value });
 
   if (newSupplySerie.length > 0 || newDebtSerie.length > 0) {
     const from = Math.min(
@@ -203,7 +192,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
       (newDebtSerie[newDebtSerie.length - 1]?.time as UTCTimestamp) ?? -Infinity
     ) as UTCTimestamp;
 
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 

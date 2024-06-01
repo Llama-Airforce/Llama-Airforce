@@ -6,7 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend :items></Legend>
       </div>
     </template>
     <div
@@ -32,7 +32,8 @@ let serieYearn: ISeriesApi<"Line">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const legend = computed(() => [
+// Legend
+const { items } = useLegend(() => [
   {
     id: "cvxprisma",
     label: "cvxPRISMA",
@@ -44,15 +45,6 @@ const legend = computed(() => [
     color: theme.value.colors.yellow,
   },
 ]);
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    serieConvex = chart.addLineSeries(createOptionsSerie("convex"));
-    serieYearn = chart.addLineSeries(createOptionsSerie("yearn"));
-  }
-);
 
 // Data
 const socket = useSocketStore().getSocket("prices");
@@ -75,7 +67,16 @@ const loading = computed(
 let max = 1.1;
 let min = 0;
 
-// Watches
+// Chart
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    serieConvex = chart.addLineSeries(createOptionsSerie("convex"));
+    serieYearn = chart.addLineSeries(createOptionsSerie("yearn"));
+  }
+);
+
 watch(theme, () => {
   serieConvex.applyOptions(createOptionsSerie("convex"));
   serieYearn.applyOptions(createOptionsSerie("yearn"));
@@ -84,7 +85,6 @@ watch(theme, () => {
 watch(dataConvex, (newData) => createSeries(newData, "convex"));
 watch(dataYearn, (newData) => createSeries(newData, "yearn"));
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,

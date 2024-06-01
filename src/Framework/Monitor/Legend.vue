@@ -4,10 +4,13 @@
       v-for="item in items"
       :key="item.id"
       class="item"
-      :class="{ clickable, disabled: disabled.includes(item.id) }"
+      :class="{
+        togglable: item.togglable,
+        disabled: disabled.includes(item.id),
+      }"
       @click="
-        if (clickable) {
-          emit('click', item.id);
+        if (item.togglable) {
+          emit('toggle', item.id);
         }
       "
     >
@@ -22,24 +25,19 @@
 </template>
 
 <script setup lang="ts" generic="T extends string">
-export type LegendItem<T> = {
-  id: T;
-  label: string;
-  color: string;
-};
+import { type LegendItem } from "@/Framework/Monitor/LegendItem";
 
 // Props
-interface Props<T> {
+interface Props<T extends string> {
   items: LegendItem<T>[];
-  clickable?: boolean;
   disabled?: T[];
 }
 
-const { items, clickable = false, disabled = [] } = defineProps<Props<T>>();
+const { items, disabled = [] } = defineProps<Props<T>>();
 
 // Emits
 const emit = defineEmits<{
-  click: [item: T];
+  toggle: [item: T];
 }>();
 </script>
 
@@ -55,7 +53,7 @@ const emit = defineEmits<{
     align-items: center;
     gap: 0.5rem;
 
-    &.clickable {
+    &.togglable {
       cursor: pointer;
       user-select: none;
 

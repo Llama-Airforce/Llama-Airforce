@@ -8,7 +8,7 @@
       <div class="actions">
         <Legend
           v-if="chartType === 'line'"
-          :items="legend"
+          :items
         ></Legend>
 
         <div class="chart-types">
@@ -59,8 +59,10 @@ const { t } = useI18n();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
+const chartType = ref<ChartType>("line");
 
-const legend = computed(() => [
+// Legend
+const { items } = useLegend(() => [
   {
     id: "supply",
     label: "Supply",
@@ -72,8 +74,6 @@ const legend = computed(() => [
     color: theme.value.colorsArray[1],
   },
 ]);
-
-const chartType = ref<ChartType>("line");
 
 // Data
 const { isFetching: loading, data } = useQueryCrvUsdSupply();

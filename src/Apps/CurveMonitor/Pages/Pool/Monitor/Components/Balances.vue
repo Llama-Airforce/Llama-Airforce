@@ -3,7 +3,7 @@
     class="balances"
     :title="t('title')"
   >
-    <Legend :items="legend"></Legend>
+    <Legend :items></Legend>
 
     <div
       ref="chartRef"
@@ -43,7 +43,7 @@ const numCoins = computed((): number => {
   return store.balances[0]?.balances?.length ?? 0;
 });
 
-const legend = computed(() =>
+const { items } = useLegend(() =>
   store.coins
     .map((x) => x.name)
     .map((coin, i) => ({

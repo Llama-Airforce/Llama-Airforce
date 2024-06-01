@@ -5,10 +5,9 @@
     :loading
   >
     <Legend
-      :items="legend"
-      :disabled="coinsDisabled"
-      :clickable="true"
-      @click="onLegendClick"
+      :items
+      :disabled
+      @toggle="toggles[$event].value = !toggles[$event].value"
     ></Legend>
 
     <div
@@ -36,24 +35,17 @@ let lineSeries: ISeriesApi<"Line">[] = [];
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  () => {
-    addSeries();
-  }
-);
-
+// Legend
 const coins = ["USDC", "USDT", "TUSD", "USDP"] as const;
-type Coin = (typeof coins)[number];
-const coinsDisabled = ref<Coin[]>([]);
-const legend = computed(() =>
-  coins.map((coin, i) => ({
+
+const { items, toggles, disabled } = useLegend(() => {
+  return coins.map((coin, i) => ({
     id: coin,
     label: coin,
     color: theme.value.colorsArray[i],
-  }))
-);
+    togglable: true,
+  }));
+});
 
 // Data
 const loading = computed(
@@ -63,16 +55,14 @@ const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
 const { isFetching: loadingKeeperPrices, data: prices } =
   useQueryKeeperPrices(keepers);
 
-// Watches
-watch([prices, chart], ([newPrices, chart]) => {
-  addSeries();
-  createSeries([newPrices, chart]);
-});
-
-watch(coinsDisabled, () => {
-  addSeries();
-  createSeries([prices.value, chart.value]);
-});
+// Chart
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  () => {
+    addSeries();
+  }
+);
 
 watch(theme, () => {
   for (const [i, serie] of lineSeries.entries()) {
@@ -80,7 +70,6 @@ watch(theme, () => {
   }
 });
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,
@@ -117,6 +106,7 @@ function createOptionsSerie(i: number): LineSeriesPartialOptions {
   };
 }
 
+watchEffect(addSeries);
 function addSeries(): void {
   if (!chart.value) {
     return;
@@ -135,19 +125,20 @@ function addSeries(): void {
   }
 }
 
-function createSeries([newPrices, chart]: [PoolPrice[]?, IChartApi?]): void {
-  if (!chart || lineSeries.length < 0) {
+watchEffect(createSeries);
+function createSeries(): void {
+  if (!chart.value || lineSeries.length < 0) {
     return;
   }
 
   for (const [i, coin] of coins.entries()) {
     // Don't render disabled coins. But keep the serie so colors don't get mixed up.
-    if (coinsDisabled.value.includes(coin)) {
+    if (!toggles[coin].value) {
       lineSeries[i].setData([]);
       continue;
     }
 
-    const newLineSerie: LineData[] = chain(newPrices)
+    const newLineSerie: LineData[] = chain(prices.value as PoolPrice[])
       .map((x) => ({
         time: x.timestamp as UTCTimestamp,
         value: x[coin],
@@ -161,22 +152,11 @@ function createSeries([newPrices, chart]: [PoolPrice[]?, IChartApi?]): void {
     }
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {
   return `${round(y, 3, "dollar")}${unit(y, "dollar")}`;
-};
-
-// Events
-const onLegendClick = (item: Coin) => {
-  if (coinsDisabled.value.includes(item)) {
-    const x = new Set(coinsDisabled.value);
-    x.delete(item);
-    coinsDisabled.value = Array.from(x);
-  } else {
-    coinsDisabled.value = Array.from(new Set([item, ...coinsDisabled.value]));
-  }
 };
 </script>
 

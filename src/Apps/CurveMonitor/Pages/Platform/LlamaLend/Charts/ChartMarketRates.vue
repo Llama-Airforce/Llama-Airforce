@@ -6,7 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend :items></Legend>
       </div>
     </template>
 
@@ -41,16 +41,8 @@ let lendApySerie: ISeriesApi<"Line">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    borrowApySerie = chart.addLineSeries(createOptionsSerieBorrowApy());
-    lendApySerie = chart.addLineSeries(createOptionsLendApy());
-  }
-);
-
-const legend = computed(() => [
+// Legend
+const { items } = useLegend(() => [
   {
     id: "borrow",
     label: t("borrow-apy"),
@@ -69,14 +61,22 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
   toRef(() => chain)
 );
 
-// Watches
+// Chart
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    borrowApySerie = chart.addLineSeries(createOptionsSerieBorrowApy());
+    lendApySerie = chart.addLineSeries(createOptionsLendApy());
+  }
+);
+
 watch([snapshots, chart], createSeries);
 watch(theme, () => {
   borrowApySerie.applyOptions(createOptionsSerieBorrowApy());
   lendApySerie.applyOptions(createOptionsLendApy());
 });
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,

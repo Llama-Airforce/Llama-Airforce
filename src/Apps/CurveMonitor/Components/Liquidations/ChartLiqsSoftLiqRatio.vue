@@ -5,7 +5,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend :items></Legend>
       </div>
     </template>
 
@@ -43,7 +43,8 @@ let priceSerie: ISeriesApi<"Area">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const legend = computed(() => [
+// Legend
+const { items } = useLegend(() => [
   {
     id: "percentage",
     label: "% of loans in soft liquidation",
@@ -56,6 +57,7 @@ const legend = computed(() => [
   },
 ]);
 
+// Chart
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
@@ -65,14 +67,12 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-// Watches
 watch([toRef(() => ratios), toRef(() => pricesOracle), chart], createSeries);
 watch(theme, () => {
   proportionSerie.applyOptions(createProportionOptionsSerie());
   priceSerie.applyOptions(createPriceOptionsSerie());
 });
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,

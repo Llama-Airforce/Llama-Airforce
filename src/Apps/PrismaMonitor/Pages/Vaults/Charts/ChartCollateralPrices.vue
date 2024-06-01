@@ -6,7 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend :items></Legend>
       </div>
     </template>
 
@@ -42,7 +42,8 @@ let marketSerie: ISeriesApi<"Area">;
 
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
-const legend = computed(() => [
+// Legend
+const { items } = useLegend(() => [
   {
     id: "oracle",
     label: "Oracle",
@@ -54,15 +55,6 @@ const legend = computed(() => [
     color: theme.value.colorsArray[1],
   },
 ]);
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    oracleSerie = chart.addAreaSeries(createProportionOptionsSerie());
-    marketSerie = chart.addAreaSeries(createPriceOptionsSerie());
-  }
-);
 
 // Services
 const collateralService = new CollateralService(getHost(), flavor.value);
@@ -93,13 +85,6 @@ const { isFetching: loading, data } = useQuery({
   },
   initialData: init,
   initialDataUpdatedAt: 0,
-});
-
-// Watches
-watch([data, chart], createSeries);
-watch(theme, () => {
-  oracleSerie.applyOptions(createProportionOptionsSerie());
-  marketSerie.applyOptions(createPriceOptionsSerie());
 });
 
 // Methods
@@ -140,6 +125,21 @@ const processSeries = (
 };
 
 // Chart
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    oracleSerie = chart.addAreaSeries(createProportionOptionsSerie());
+    marketSerie = chart.addAreaSeries(createPriceOptionsSerie());
+  }
+);
+
+watch([data, chart], createSeries);
+watch(theme, () => {
+  oracleSerie.applyOptions(createProportionOptionsSerie());
+  marketSerie.applyOptions(createPriceOptionsSerie());
+});
+
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,

@@ -6,7 +6,7 @@
   >
     <template #actions>
       <div class="actions">
-        <Legend :items="legend"></Legend>
+        <Legend :items></Legend>
 
         <ButtonToggle
           value="Dollars"
@@ -50,21 +50,13 @@ const denomDollars = ref(true);
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    collateralSerie = chart.addLineSeries(createOptionsSerieCollateral());
-    borrowedSerie = chart.addLineSeries(createOptionsSerieBorrowed());
-  }
-);
-
+// Legend
 const symbolCollateral = computed(
   () => market?.collateral_token?.symbol ?? "?"
 );
 const symbolBorrowed = computed(() => market?.borrowed_token?.symbol ?? "?");
 
-const legend = computed(() => [
+const { items } = useLegend(() => [
   {
     id: symbolCollateral.value,
     label: symbolCollateral.value,
@@ -83,14 +75,22 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
   toRef(() => chain)
 );
 
-// Watches
+// Chart
+const { chart, chartRef } = useLightweightChart(
+  theme,
+  createOptionsChart,
+  (chart) => {
+    collateralSerie = chart.addLineSeries(createOptionsSerieCollateral());
+    borrowedSerie = chart.addLineSeries(createOptionsSerieBorrowed());
+  }
+);
+
 watch([snapshots, chart, denomDollars], createSeries);
 watch(theme, () => {
   collateralSerie.applyOptions(createOptionsSerieCollateral());
   borrowedSerie.applyOptions(createOptionsSerieBorrowed());
 });
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,
