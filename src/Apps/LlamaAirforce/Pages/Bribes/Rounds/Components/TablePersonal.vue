@@ -5,7 +5,6 @@
     columns-data="personal-columns-data"
     :rows="bribedOrdered"
     :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
-    :selected-row="epoch"
     :sorting="true"
     :sorting-columns="['percentage', 'pool', 'vlasset', 'total']"
     :sorting-columns-enabled="['percentage', 'pool', 'vlasset', 'total']"
