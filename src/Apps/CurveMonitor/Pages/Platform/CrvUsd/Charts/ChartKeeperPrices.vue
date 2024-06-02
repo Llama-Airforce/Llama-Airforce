@@ -106,7 +106,6 @@ function createOptionsSerie(i: number): LineSeriesPartialOptions {
   };
 }
 
-watchEffect(addSeries);
 function addSeries(): void {
   if (!chart.value) {
     return;
