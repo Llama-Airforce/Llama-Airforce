@@ -25,7 +25,6 @@ export function useLightweightChart(
     IChartApi | undefined
   >;
 
-  const fullscreen = ref(false);
   let resizeObserver: ResizeObserver | null = null;
 
   // Setup.
@@ -53,8 +52,8 @@ export function useLightweightChart(
 
       if (chart.value && chartRef.value) {
         chart.value.applyOptions({
-          width: parent.clientWidth * (fullscreen.value ? 0.95 : 1),
-          height: parent.clientHeight * (fullscreen.value ? 0.8 : 1),
+          width: parent.clientWidth,
+          height: parent.clientHeight,
         });
 
         chart.value.timeScale().fitContent();
