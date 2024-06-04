@@ -9,7 +9,7 @@
       :target
       :show="showFullscreen"
       @close="showFullscreen = false"
-      @enter="onEnter"
+      @enter-before="onEnterBefore"
       @exit="onExit"
     >
     </ModalFullscreen>
@@ -30,12 +30,18 @@ const showFullscreen = defineModel<boolean>({ required: true });
 
 // Fullscreen
 let originalHeight = 0;
+let originalWidth = 0;
 
-function onEnter() {
-  originalHeight = chart!.chartElement()?.parentElement?.clientHeight ?? 0;
+function onEnterBefore() {
+  const parent = chart!.chartElement()?.parentElement;
+  originalHeight = parent?.clientHeight ?? 0;
+  originalWidth = parent?.clientWidth ?? 0;
 }
 
 function onExit() {
-  chart!.applyOptions({ height: originalHeight });
+  chart!.applyOptions({
+    height: originalHeight,
+    width: originalWidth,
+  });
 }
 </script>

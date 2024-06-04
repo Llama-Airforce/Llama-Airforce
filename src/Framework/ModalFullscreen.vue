@@ -23,7 +23,9 @@ const { target } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
+  enterBefore: [modal: HTMLElement];
   enter: [modal: HTMLElement];
+  exitBefore: [modal: HTMLElement];
   exit: [modal: HTMLElement];
 }>();
 
@@ -57,6 +59,8 @@ function enterFullscreen(target: Node, modal: HTMLElement) {
 
   // Remove the target element from its original container.
   if (targetParent) {
+    emit("enterBefore", modal);
+
     targetParent.removeChild(target);
 
     // Append the target element to the fullscreen modal.
@@ -71,6 +75,8 @@ function exitFullscreen(
   targetParent: HTMLElement,
   modal: HTMLElement
 ) {
+  emit("exitBefore", modal);
+
   // Remove the target element from the modal.
   modal.removeChild(target);
 
