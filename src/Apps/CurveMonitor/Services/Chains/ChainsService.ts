@@ -13,4 +13,20 @@ export default class ChainsService extends ServiceBase {
 
     return Parsers.parseChainInfo(resp);
   }
+
+  public async getTxs() {
+    const resp = await this.fetch<ApiTypes.GetTransactionsResponse>(
+      `${API_URL}/v1/chains/activity/transactions`
+    );
+
+    return Parsers.parseTxs(resp);
+  }
+
+  public async getUsers() {
+    const resp = await this.fetch<ApiTypes.GetUsersResponse>(
+      `${API_URL}/v1/chains/activity/users`
+    );
+
+    return Parsers.parseUsers(resp);
+  }
 }

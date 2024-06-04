@@ -1,3 +1,5 @@
+import type { Chain } from "@CM/Models/Chain";
+
 export type ChainInfo = {
   chain: string;
   total: {
@@ -7,4 +9,27 @@ export type ChainInfo = {
     liquidityVolume24h: number;
     liquidityFee24h: number;
   };
+};
+
+export const activityTypes = [
+  "crvusd",
+  "lending",
+  "pools",
+  "router",
+  "dao",
+] as const;
+export type ActivityType = (typeof activityTypes)[number];
+
+export type Activity = {
+  timestamp: number;
+  chain: Chain;
+  type: ActivityType;
+};
+
+export type Transactions = Activity & {
+  transactions: number;
+};
+
+export type Users = Activity & {
+  users: number;
 };

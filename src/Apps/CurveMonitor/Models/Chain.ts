@@ -8,6 +8,9 @@ export const chains = [
   "matic",
   "harmony",
   "moonbeam",
+  "base",
+  "polygon",
+  "fraxtal",
 ] as const;
 
 export type Chain = (typeof chains)[number];
@@ -22,6 +25,10 @@ import moonbeam from "@/Assets/Icons/Chains/moonbeam.png";
 import matic from "@/Assets/Icons/Chains/matic.svg";
 import optimism from "@/Assets/Icons/Chains/optimism.png";
 
+import base from "@/Assets/Icons/Chains/base.webp";
+import polygon from "@/Assets/Icons/Chains/polygon.png";
+import fraxtal from "@/Assets/Icons/Chains/fraxtal.png";
+
 export function icon(chain: Chain | "all"): string {
   const mapping: Record<Chain | "all", string> = {
     ethereum,
@@ -33,6 +40,9 @@ export function icon(chain: Chain | "all"): string {
     matic,
     harmony,
     moonbeam,
+    base,
+    polygon,
+    fraxtal,
     all: "",
   };
 

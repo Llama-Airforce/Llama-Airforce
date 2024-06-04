@@ -42,7 +42,7 @@ type ChainInfo = SelectItem & {
 // Props
 interface Props {
   chain: Chain | "all" | null;
-  chains?: Chain[];
+  chains?: (Chain | "all")[];
   all?: boolean;
 }
 
@@ -58,7 +58,7 @@ const chainOpen = ref(false);
 
 const chainInfos = computed(() =>
   [
-    ...(all ? [{ chain: "all" as const, label: "All" }] : []),
+    ...(all ? [{ chain: "all" as const, label: "All Chains" }] : []),
     { chain: "ethereum" as const, label: "Ethereum" },
     { chain: "avalanche" as const, label: "Avalanche" },
     { chain: "arbitrum" as const, label: "Arbitrum" },
@@ -68,6 +68,9 @@ const chainInfos = computed(() =>
     { chain: "moonbeam" as const, label: "Moonbeam" },
     { chain: "matic" as const, label: "Polygon" },
     { chain: "optimism" as const, label: "Optimism" },
+    { chain: "base" as const, label: "Base" },
+    { chain: "polygon" as const, label: "Polygon" },
+    { chain: "fraxtal" as const, label: "Fraxtal" },
   ].filter((chainInfo) => !chains || chains.includes(chainInfo.chain as Chain))
 );
 

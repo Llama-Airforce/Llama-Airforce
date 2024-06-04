@@ -1,3 +1,4 @@
+import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/Chains/ApiTypes";
 import type * as Models from "@CM/Services/Chains/Models";
 
@@ -14,4 +15,28 @@ export const parseChainInfo = (
       liquidityFee24h: x.total.liquidity_fee_24h,
     },
   };
+};
+
+export const parseTxs = (
+  x: ApiTypes.GetTransactionsResponse
+): Models.Transactions[] => {
+  return x.data.flatMap((data) =>
+    data.transactions.map((tx) => ({
+      chain: data.chain,
+      timestamp: toUTC(tx.timestamp),
+      type: tx.type,
+      transactions: tx.transactions,
+    }))
+  );
+};
+
+export const parseUsers = (x: ApiTypes.GetUsersResponse): Models.Users[] => {
+  return x.data.flatMap((data) =>
+    data.users.map((tx) => ({
+      chain: data.chain,
+      timestamp: toUTC(tx.timestamp),
+      type: tx.type,
+      users: tx.users,
+    }))
+  );
 };

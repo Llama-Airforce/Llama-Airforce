@@ -2,6 +2,7 @@ import { type Page } from "@/Framework/Monitor/Page";
 
 import Home from "@CM/Pages/Home/Home.page.vue";
 
+import Chains from "@CM/Pages/Platform/Chains/Chains.page.vue";
 import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
 import Pool from "@CM/Pages/Platform/Pools/Pool.page.vue";
 import Gauges from "@CM/Pages/Platform/Gauges/Gauges.page.vue";
@@ -28,6 +29,12 @@ export const pageMainRoutes = [
   { path: "/", component: Home },
 
   { path: "/platform", redirect: { name: "revenue" } },
+
+  {
+    path: "/platform/chains/:chain?/:type?",
+    name: "chains",
+    component: Chains,
+  },
 
   { path: "/platform/pools/:chain?", name: "pools", component: Pools },
   {
@@ -104,6 +111,10 @@ export const pageMain: Page = {
     {
       label: "Platform",
       children: [
+        {
+          to: "/platform/chains",
+          label: "Chains",
+        },
         {
           to: "/platform/pools",
           label: "Pools",
