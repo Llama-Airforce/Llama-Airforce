@@ -1,14 +1,26 @@
 <template>
   <Card
+    ref="chartCard"
     class="chart-container"
     :title="t('title')"
     :loading
+    :class="{ fullscreen }"
   >
-    <Legend
-      :items
-      :disabled
-      @toggle="toggles[$event].value = !toggles[$event].value"
-    ></Legend>
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items
+          :disabled
+          @toggle="toggles[$event].value = !toggles[$event].value"
+        ></Legend>
+
+        <BtnChartLWFullscreen
+          v-model="fullscreen"
+          :chart="chart"
+          :target="chartCard?.$el"
+        />
+      </div>
+    </template>
 
     <div
       ref="chartRef"
@@ -21,6 +33,7 @@
 import { chain } from "lodash";
 import { type AutoscaleInfo } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWFullscreen } from "@CM/Components/";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type PoolPrice } from "@CM/Services/CrvUsd";
 import {
@@ -56,6 +69,9 @@ const { isFetching: loadingKeeperPrices, data: prices } =
   useQueryKeeperPrices(keepers);
 
 // Chart
+const fullscreen = ref(false);
+const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
+
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
@@ -72,7 +88,7 @@ watch(theme, () => {
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
-    height: 300,
+    height: chartRef.clientHeight || 300,
     rightPriceScale: {
       scaleMargins: {
         top: 0.1,
@@ -166,10 +182,11 @@ const formatter = (y: number): string => {
   ::v-deep(.card-body) {
     flex-direction: column;
     justify-content: center;
+  }
 
-    > .legend {
-      justify-content: center;
-    }
+  .actions {
+    display: flex;
+    gap: 1rem;
   }
 }
 </style>

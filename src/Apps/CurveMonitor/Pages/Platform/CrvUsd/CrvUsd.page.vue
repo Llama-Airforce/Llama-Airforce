@@ -12,7 +12,7 @@
 
     <div class="col">
       <ChartCrvUsdSupply></ChartCrvUsdSupply>
-      <ChartCrvUsdPriceHistogram class="price"></ChartCrvUsdPriceHistogram>
+      <ChartCrvUsdPriceHistogram></ChartCrvUsdPriceHistogram>
     </div>
   </div>
 </template>
@@ -93,6 +93,12 @@ const onMarketSelect = async (newMarket: Market) => {
     div {
       flex-grow: 1;
     }
+  }
+
+  & > * {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 }
 </style>
