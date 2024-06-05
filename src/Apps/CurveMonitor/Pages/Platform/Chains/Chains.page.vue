@@ -21,12 +21,12 @@
     <div class="activity">
       <KPI
         style="grid-area: kpi1"
-        :label="t('txs-cum')"
+        :label="t('txs-today')"
         :has-value="!!loadingTxs"
       >
         <AsyncValue
           type="dollar"
-          :value="txsCum"
+          :value="txsToday"
           :show-symbol="false"
           :show-zero="true"
         ></AsyncValue>
@@ -47,12 +47,12 @@
 
       <KPI
         style="grid-area: kpi3"
-        :label="t('users-cum')"
+        :label="t('users-today')"
         :has-value="!!loadingUsers"
       >
         <AsyncValue
           type="dollar"
-          :value="usersCum"
+          :value="usersToday"
           :show-symbol="false"
           :show-zero="true"
         ></AsyncValue>
@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
+import { chain as chain_, last } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import type { Activity, ActivityType } from "@CM/Services/Chains";
@@ -221,12 +221,10 @@ function calculateAverage(activities: { timestamp: number; count: number }[]) {
   return daysBetween > 0 ? Math.round(total / daysBetween) : 0;
 }
 
-const txsCum = computed(() => txs.value.reduce((acc, x) => acc + x.count, 0));
+const txsToday = computed(() => last(txs.value)?.count ?? 0);
 const txsAvg = computed(() => calculateAverage(txs.value));
 
-const usersCum = computed(() =>
-  users.value.reduce((acc, x) => acc + x.count, 0)
-);
+const usersToday = computed(() => last(users.value)?.count ?? 0);
 const usersAvg = computed(() => calculateAverage(users.value));
 
 // Ranking
@@ -296,9 +294,9 @@ const rankTypesUsers = computed(() =>
 <style lang="scss"></style>
 
 <i18n lang="yaml" locale="en">
-txs-cum: Cumulative Transactions
+txs-today: Transactions Today
 txs-avg: Avg Transactions / 7 Days
 
-users-cum: Cumulative Users
+users-today: Users Today
 users-avg: Avg Users / 7 Days
 </i18n>
