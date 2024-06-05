@@ -60,7 +60,7 @@
 
       <KPI
         style="grid-area: kpi4"
-        :label="t('txs-avg')"
+        :label="t('users-avg')"
         :has-value="!!loadingUsers"
       >
         <AsyncValue
