@@ -15,14 +15,12 @@ import {
   CvxFxsFactoryERC20Address,
   CvxFxsAddress,
   FxsAddress,
-  WEthAddress,
   CvxFxsFactoryAddress,
 } from "@/Util/Addresses";
 import { type ZapDeposit } from "@Pounders/Models/Zap";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
-import logoETH from "@/Assets/Icons/Tokens/eth.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpDepositZaps(
@@ -54,22 +52,6 @@ export function uFxsLpDepositZaps(
       address,
       input,
     };
-  };
-
-  const depositFromEth = async (minAmountOut: bigint) => {
-    const x = await depositFactory(null);
-    const ps = [minAmountOut, x.address] as const;
-
-    const estimate = await x.zaps.estimateGas.depositFromEth(...ps, {
-      value: x.input,
-    });
-
-    const tx = await x.zaps.depositFromEth(...ps, {
-      value: x.input,
-      gasLimit: estimate.mul(125).div(100),
-    });
-
-    return tx.wait();
   };
 
   const depositFromFxs = async (minAmountOut: bigint) => {
@@ -247,44 +229,7 @@ export function uFxsLpDepositZaps(
     },
   };
 
-  const eth: ZapDeposit = {
-    logo: logoETH,
-    label: "ETH",
-    zap: (minAmountOut?: bigint) => depositFromEth(minAmountOut ?? 0n),
-    depositSymbol: "ETH",
-    depositBalance: async () => {
-      const address = getAddress();
-      const provider = getProvider();
-
-      if (!address || !provider) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      return provider.getBalance(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: () => Promise.resolve(18n),
-    getMinAmountOut: async (
-      host: string,
-      signer: JsonRpcSigner,
-      input: bigint,
-      slippage: number
-    ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
-
-      const weth = await llamaService
-        .getPrice(WEthAddress)
-        .then((x) => x.price)
-        .catch(() => Infinity);
-
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, signer.provider)
-        .then((x) => x)
-        .catch(() => Infinity);
-
-      return calcMinAmountOut(input, weth, cvxfxslp, slippage);
-    },
-  };
-
-  const options = [fxs, cvxFXS, cvxFXSLP, eth];
+  const options = [fxs, cvxFXS, cvxFXSLP];
 
   return options;
 }

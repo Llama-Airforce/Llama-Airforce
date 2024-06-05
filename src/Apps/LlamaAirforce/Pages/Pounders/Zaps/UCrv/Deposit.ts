@@ -1,26 +1,8 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getProvider } from "@/Wallet/ProviderFactory";
-import {
-  type ERC20,
-  ERC20__factory,
-  ZapsUCrv__factory,
-  type UnionVault,
-  CvxCrvFactoryPool__factory,
-} from "@/Contracts";
-import { DefiLlamaService } from "@/Services";
-import { getCvxCrvPrice } from "@/Util";
-import {
-  CrvAddress,
-  CvxCrvFactoryAddress,
-  WEthAddress,
-  ZapsUCrvAddress,
-} from "@/Util/Addresses";
+import { type ERC20, type UnionVault } from "@/Contracts";
 import { type ZapDeposit } from "@Pounders/Models/Zap";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
-import logoETH from "@/Assets/Icons/Tokens/eth.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCrvDepositZaps(
@@ -45,60 +27,6 @@ export function uCrvDepositZaps(
 
     const estimate = await vault.estimateGas.deposit(...ps);
     const tx = await vault.deposit(...ps, {
-      gasLimit: estimate.mul(125).div(100),
-    });
-
-    return tx.wait();
-  };
-
-  const extraZapFactory = async (depositTkn: string | null) => {
-    const address = getAddress();
-    const vault = getVault();
-    const input = getInput();
-    const provider = getProvider();
-
-    if (!address || !vault || !input || !provider) {
-      throw new Error("Unable to construct extra zaps");
-    }
-
-    const signer = provider.getSigner();
-
-    if (depositTkn) {
-      const depositERC20 = ERC20__factory.connect(depositTkn, signer);
-
-      await maxApprove(depositERC20, address, ZapsUCrvAddress, input);
-    }
-
-    return {
-      extraZaps: ZapsUCrv__factory.connect(ZapsUCrvAddress, signer),
-      address,
-      input,
-    };
-  };
-
-  const depositFromCrv = async (minAmountOut: bigint) => {
-    const x = await extraZapFactory(CrvAddress);
-    const ps = [x.input, minAmountOut, x.address] as const;
-
-    const estimate = await x.extraZaps.estimateGas.depositFromCrv(...ps);
-
-    const tx = await x.extraZaps.depositFromCrv(...ps, {
-      gasLimit: estimate.mul(125).div(100),
-    });
-
-    return tx.wait();
-  };
-
-  const depositFromEth = async (minAmountOut: bigint) => {
-    const x = await extraZapFactory(null);
-    const ps = [minAmountOut, x.address] as const;
-
-    const estimate = await x.extraZaps.estimateGas.depositFromEth(...ps, {
-      value: x.input,
-    });
-
-    const tx = await x.extraZaps.depositFromEth(...ps, {
-      value: x.input,
       gasLimit: estimate.mul(125).div(100),
     });
 
@@ -132,99 +60,7 @@ export function uCrvDepositZaps(
     },
   };
 
-  const crv: ZapDeposit = {
-    logo: logoCRV,
-    label: "CRV",
-    zap: (minAmountOut?: bigint) => depositFromCrv(minAmountOut ?? 0n),
-    depositSymbol: "CRV",
-    depositBalance: () => {
-      const address = getAddress();
-      const provider = getProvider();
-
-      if (!address || !provider) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      const depositERC20 = ERC20__factory.connect(CrvAddress, provider);
-      return depositERC20.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: () => {
-      const provider = getProvider();
-
-      if (!provider) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      const depositERC20 = ERC20__factory.connect(CrvAddress, provider);
-      return depositERC20.decimals().then((x) => BigInt(x));
-    },
-    getMinAmountOut: async (
-      host: string,
-      signer: JsonRpcSigner,
-      input: bigint,
-      slippage: number
-    ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
-
-      const crv = await llamaService
-        .getPrice(CrvAddress)
-        .then((x) => x.price)
-        .catch(() => Infinity);
-
-      const factory = CvxCrvFactoryPool__factory.connect(
-        CvxCrvFactoryAddress,
-        signer
-      );
-      const cvxcrv = await getCvxCrvPrice(llamaService, factory)
-        .then((x) => x)
-        .catch(() => Infinity);
-
-      return calcMinAmountOut(input, crv, cvxcrv, slippage);
-    },
-  };
-
-  const eth: ZapDeposit = {
-    logo: logoETH,
-    label: "ETH",
-    zap: (minAmountOut?: bigint) => depositFromEth(minAmountOut ?? 0n),
-    depositSymbol: "ETH",
-    depositBalance: () => {
-      const address = getAddress();
-      const provider = getProvider();
-
-      if (!address || !provider) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      return provider.getBalance(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: () => Promise.resolve(18n),
-    getMinAmountOut: async (
-      host: string,
-      signer: JsonRpcSigner,
-      input: bigint,
-      slippage: number
-    ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
-
-      const weth = await llamaService
-        .getPrice(WEthAddress)
-        .then((x) => x.price)
-        .catch(() => Infinity);
-
-      const factory = CvxCrvFactoryPool__factory.connect(
-        CvxCrvFactoryAddress,
-        signer
-      );
-      const cvxcrv = await getCvxCrvPrice(llamaService, factory)
-        .then((x) => x)
-        .catch(() => Infinity);
-
-      return calcMinAmountOut(input, weth, cvxcrv, slippage);
-    },
-  };
-
-  const options = [cvxCRV, crv, eth];
+  const options = [cvxCRV];
 
   return options;
 }

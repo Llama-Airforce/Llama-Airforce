@@ -2,30 +2,22 @@ import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
 import { getProvider } from "@/Wallet/ProviderFactory";
 import {
-  CurveV1FactoryPool__factory,
   ERC20__factory,
   type UnionVaultPirex,
   ZapsUCvx__factory,
 } from "@/Contracts";
 import { DefiLlamaService } from "@/Services";
-import { getCvxCrvPriceV2 } from "@/Util";
 import {
-  CrvAddress,
   CvxAddress,
-  CvxCrvFactoryAddressV1,
   UnionCvxVaultAddress,
-  WEthAddress,
   ZapsUCvxAddress,
 } from "@/Util/Addresses";
 import { type ZapWithdraw } from "@Pounders/Models/Zap";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
-import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
-import logoETH from "@/Assets/Icons/Tokens/eth.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uCvxWithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
@@ -85,45 +77,6 @@ export function uCvxWithdrawZaps(
     return tx.wait();
   };
 
-  const withdrawAsCvxCrv = async (minAmountOut: bigint) => {
-    const x = await withdrawFactory();
-    const ps = [x.input, minAmountOut, x.address] as const;
-
-    const estimate = await x.zaps.estimateGas.claimFromVaultAsCvxCrv(...ps);
-
-    const tx = await x.zaps.claimFromVaultAsCvxCrv(...ps, {
-      gasLimit: estimate.mul(125).div(100),
-    });
-
-    return tx.wait();
-  };
-
-  const withdrawAsCrv = async (minAmountOut: bigint) => {
-    const x = await withdrawFactory();
-    const ps = [x.input, minAmountOut, x.address] as const;
-
-    const estimate = await x.zaps.estimateGas.claimFromVaultAsCrv(...ps);
-
-    const tx = await x.zaps.claimFromVaultAsCrv(...ps, {
-      gasLimit: estimate.mul(125).div(100),
-    });
-
-    return tx.wait();
-  };
-
-  const withdrawAsEth = async (minAmountOut: bigint) => {
-    const x = await withdrawFactory();
-    const ps = [x.input, minAmountOut, x.address] as const;
-
-    const estimate = await x.zaps.estimateGas.claimFromVaultAsEth(...ps);
-
-    const tx = await x.zaps.claimFromVaultAsEth(...ps, {
-      gasLimit: estimate.mul(125).div(100),
-    });
-
-    return tx.wait();
-  };
-
   // Zaps
   const pxCVX: ZapWithdraw = {
     logo: logoCVX,
@@ -158,86 +111,7 @@ export function uCvxWithdrawZaps(
     },
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const cvxCRV: ZapWithdraw = {
-    logo: logoCRV,
-    label: "cvxCRV",
-    withdrawSymbol: "cvxCRV",
-    withdrawDecimals: () => Promise.resolve(18n),
-    zap: (minAmountOut?: bigint) => withdrawAsCvxCrv(minAmountOut ?? 0n),
-    getMinAmountOut: async (
-      host: string,
-      signer: JsonRpcSigner,
-      input: bigint,
-      slippage: number
-    ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
-
-      const factoryCvxCrv = CurveV1FactoryPool__factory.connect(
-        CvxCrvFactoryAddressV1,
-        signer
-      );
-      let cvxcrv = await getCvxCrvPriceV2(llamaService, factoryCvxCrv);
-      cvxcrv = cvxcrv > 0 ? cvxcrv : Infinity;
-
-      const ucvx = await getUCvxPrice(llamaService, signer);
-
-      return calcMinAmountOut(input, ucvx, cvxcrv, slippage);
-    },
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const crv: ZapWithdraw = {
-    logo: logoCRV,
-    label: "CRV",
-    withdrawSymbol: "CRV",
-    withdrawDecimals: () => Promise.resolve(18n),
-    zap: (minAmountOut?: bigint) => withdrawAsCrv(minAmountOut ?? 0n),
-    getMinAmountOut: async (
-      host: string,
-      signer: JsonRpcSigner,
-      input: bigint,
-      slippage: number
-    ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
-
-      const crv = await llamaService
-        .getPrice(CrvAddress)
-        .then((x) => x.price)
-        .catch(() => Infinity);
-
-      const ucvx = await getUCvxPrice(llamaService, signer);
-
-      return calcMinAmountOut(input, ucvx, crv, slippage);
-    },
-  };
-
-  const eth: ZapWithdraw = {
-    logo: logoETH,
-    label: "ETH",
-    withdrawSymbol: "ETH",
-    withdrawDecimals: () => Promise.resolve(18n),
-    zap: (minAmountOut?: bigint) => withdrawAsEth(minAmountOut ?? 0n),
-    getMinAmountOut: async (
-      host: string,
-      signer: JsonRpcSigner,
-      input: bigint,
-      slippage: number
-    ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
-
-      const weth = await llamaService
-        .getPrice(WEthAddress)
-        .then((x) => x.price)
-        .catch(() => Infinity);
-
-      const ucvx = await getUCvxPrice(llamaService, signer);
-
-      return calcMinAmountOut(input, ucvx, weth, slippage);
-    },
-  };
-
-  const options = [cvx, pxCVX, /* cvxCRV, crv, */ eth];
+  const options = [cvx, pxCVX];
 
   return options;
 }
