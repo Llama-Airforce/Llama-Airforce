@@ -70,12 +70,12 @@
         <span>{{ t("swap-info") }}</span>
       </div>
 
-      <div class="cow-wrapper">
-        <div
-          ref="cow"
-          class="cow"
-        ></div>
-      </div>
+      <CowSwap
+        class="cow"
+        :level="1"
+        :buy="expanded ? pounderStore?.pounder?.swapSymbols?.buy : ''"
+        :sell="pounderStore?.pounder?.swapSymbols?.sell"
+      ></CowSwap>
     </div>
 
     <ModalSlippage
@@ -90,13 +90,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type CowSwapWidgetParams,
-  type CowSwapWidgetHandler,
-  TradeType,
-  createCowSwapWidget,
-} from "@cowprotocol/widget-lib";
 import { useWallet } from "@/Wallet";
+import CowSwap from "@LAF/Components/CowSwap.vue";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
 import { useUnionStore } from "@Pounders/Store";
@@ -358,69 +353,6 @@ const onDepositSelect = (zap: Zap): void => {
 const onWithdrawSelect = (zap: Zap): void => {
   zapWithdraw.value = zap as ZapWithdraw;
 };
-
-// CoWSwap
-const cow = ref<HTMLElement | undefined>(undefined);
-let cowHandler: CowSwapWidgetHandler | undefined = undefined;
-
-// Only create widget on first expansion for performance reason.
-watch([toRef(() => expanded), pounderStore], ([newExpanded, store]) => {
-  if (newExpanded && !cowHandler && state) {
-    cowHandler = createCowSwapWidgetLAF(
-      store.pounder.swapSymbols.buy,
-      store.pounder.swapSymbols.sell
-    );
-  }
-});
-function createCowSwapWidgetLAF(symbolBuy: string, symbolSell: string) {
-  if (!cow.value) {
-    return;
-  }
-
-  const params: CowSwapWidgetParams = {
-    appCode: "Llama Airforce",
-    width: "100%",
-    height: "680px",
-    chainId: 1,
-    tokenLists: [
-      "https://files.cow.fi/tokens/CoinGecko.json",
-      "https://files.cow.fi/tokens/CowSwap.json",
-    ],
-    tradeType: TradeType.SWAP,
-    sell: { asset: symbolSell, amount: "0" },
-    buy: { asset: symbolBuy, amount: "0" },
-    enabledTradeTypes: [TradeType.SWAP],
-    theme: {
-      baseTheme: "dark",
-      primary: "#18181b",
-      background: "#18181b",
-      paper: "#18181b",
-      text: "#fafafa",
-      danger: "#ff5757",
-      warning: "#ffcc00",
-      alert: "#ffcc00",
-      info: "#2081f0",
-      success: "#7ed957",
-    },
-    customTokens: [
-      {
-        chainId: 1,
-        address: "0x34635280737b5BFe6c7DC2FC3065D60d66e78185",
-        name: "Convex Prisma",
-        decimals: 18,
-        symbol: "cvxPRISMA",
-        logoURI:
-          "https://assets.coingecko.com/coins/images/32961/large/cvxprisma.png?1700026172",
-      },
-    ],
-    standaloneMode: true,
-    disableToastMessages: false,
-  };
-
-  return createCowSwapWidget(cow.value, {
-    params,
-  });
-}
 </script>
 
 <style lang="scss" scoped>
@@ -507,16 +439,8 @@ function createCowSwapWidgetLAF(symbolBuy: string, symbolSell: string) {
       flex-direction: column;
     }
 
-    > .cow-wrapper {
+    > .cow {
       grid-area: swap;
-
-      display: flex;
-      justify-content: center;
-      width: 100%;
-
-      .cow {
-        width: 90%;
-      }
     }
 
     > .description {
