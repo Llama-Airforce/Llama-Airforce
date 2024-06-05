@@ -7,7 +7,7 @@ import {
 import { getAuraBalPrice, getAuraBalApy } from "@/Util";
 import { AuraBalAddress, UnionBalVaultAddress } from "@/Util/Addresses";
 import type FlyerService from "@/Services/FlyerService";
-import { type Pounder } from "@Pounders/Models/Pounder";
+import { type Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/aurabal.png";
 

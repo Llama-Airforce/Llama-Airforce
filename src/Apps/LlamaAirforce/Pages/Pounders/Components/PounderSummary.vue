@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { useUnionStore } from "@Pounders/Store";
-import type { PounderId } from "@Pounders/Models/Pounder";
+import type { PounderId } from "@Pounders/Models";
 import Pool from "@Pounders/Components/Pool.vue";
 import Balance from "@Pounders/Components/Balance.vue";
 import Apy from "@Pounders/Components/Apy.vue";

@@ -1,5 +1,5 @@
 import { type UnionVault } from "@/Contracts";
-import { type ZapWithdraw } from "@Pounders/Models/Zap";
+import { type ZapWithdraw } from "@Pounders/Models";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 

@@ -10,7 +10,7 @@ import {
   ZapsUPrismaConvexMigrationAddress,
   StkCvxPrismaAddress,
 } from "@/Util/Addresses";
-import { type ZapDeposit } from "@Pounders/Models/Zap";
+import { type ZapDeposit } from "@Pounders/Models";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 

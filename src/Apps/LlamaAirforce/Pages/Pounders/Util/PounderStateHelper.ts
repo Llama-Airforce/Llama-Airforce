@@ -1,6 +1,6 @@
 import { reactive } from "vue";
 import { bigNumToNumber } from "@/Util";
-import { type PounderState } from "@Pounders/Models/PounderState";
+import { type PounderState } from "@Pounders/Models";
 
 export function create(): PounderState {
   return reactive({

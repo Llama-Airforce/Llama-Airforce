@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Zap } from "@Pounders/Models/Zap";
+import { type Zap } from "@Pounders/Models";
 
 // Props
 interface Props {

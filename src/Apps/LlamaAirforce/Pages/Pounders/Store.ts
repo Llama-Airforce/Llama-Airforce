@@ -1,10 +1,15 @@
 import { defineStore } from "pinia";
-import type { Pounder, PounderId, Vault } from "@Pounders/Models/Pounder";
-import type { PounderState } from "@Pounders/Models/PounderState";
-import type { ZapDeposit, ZapsFactories } from "@Pounders/Models/Zap";
+import type {
+  PounderId,
+  Pounder,
+  PounderState,
+  Vault,
+  ZapDeposit,
+  ZapsFactories,
+} from "@Pounders/Models";
+import { getFees } from "@Pounders/Models";
 import type { Claim } from "@LAF/Services/UnionService";
 import { getVirtualPrice } from "@Pounders/Util/UnionHelper";
-import { getFees } from "@Pounders/Models/Fees";
 
 type PounderStore = {
   pounder: Pounder<Vault>;

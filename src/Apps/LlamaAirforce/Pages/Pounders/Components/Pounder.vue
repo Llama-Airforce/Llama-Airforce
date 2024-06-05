@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { useUnionStore } from "@Pounders/Store";
-import type { PounderId } from "@Pounders/Models/Pounder";
+import type { PounderId } from "@Pounders/Models";
 import PounderSummary from "@Pounders/Components/PounderSummary.vue";
 import PounderDetails from "@Pounders/Components/PounderDetails.vue";
 

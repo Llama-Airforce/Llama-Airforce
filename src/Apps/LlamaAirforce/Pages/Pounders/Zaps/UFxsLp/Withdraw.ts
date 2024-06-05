@@ -16,7 +16,7 @@ import {
   UnionFxsVaultAddressV1,
   ZapsUFxsAddressV1,
 } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models/Zap";
+import { type ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";

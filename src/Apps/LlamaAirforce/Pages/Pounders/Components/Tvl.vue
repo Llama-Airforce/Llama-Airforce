@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { type PounderState } from "@Pounders/Models/PounderState";
+import { type PounderState } from "@Pounders/Models";
 import { getTvl } from "@Pounders/Util/PounderStateHelper";
 
 const { t } = useI18n();

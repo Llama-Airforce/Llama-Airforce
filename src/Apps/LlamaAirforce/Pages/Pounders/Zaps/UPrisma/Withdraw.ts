@@ -1,7 +1,7 @@
 import { getProvider } from "@/Wallet/ProviderFactory";
 import { type UnionVault, UnionVault__factory } from "@/Contracts";
 import { UnionPrismaVaultAddress } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models/Zap";
+import { type ZapWithdraw } from "@Pounders/Models";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 

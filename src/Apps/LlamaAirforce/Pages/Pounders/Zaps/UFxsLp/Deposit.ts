@@ -17,7 +17,7 @@ import {
   FxsAddress,
   CvxFxsFactoryAddress,
 } from "@/Util/Addresses";
-import { type ZapDeposit } from "@Pounders/Models/Zap";
+import { type ZapDeposit } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";

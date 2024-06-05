@@ -2,8 +2,7 @@ import { maxApprove } from "@/Wallet";
 import { getProvider } from "@/Wallet/ProviderFactory";
 import { ERC20__factory, ZapsUCrvClaim__factory } from "@/Contracts";
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
-import { type Airdrop } from "@Pounders/Models/Airdrop";
-import { type ZapClaim } from "@Pounders/Models/Zap";
+import { type Airdrop, type ZapClaim } from "@Pounders/Models";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";

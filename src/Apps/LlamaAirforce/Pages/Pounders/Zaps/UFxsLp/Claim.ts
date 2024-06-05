@@ -14,8 +14,7 @@ import {
   UnionFxsVaultAddressV1,
   ZapsUFxsClaimAddressV1,
 } from "@/Util/Addresses";
-import { type Airdrop } from "@Pounders/Models/Airdrop";
-import { type ZapClaim } from "@Pounders/Models/Zap";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUFxsPriceV1 } from "@Pounders/Zaps/UFxsLp/PriceHelper";
 

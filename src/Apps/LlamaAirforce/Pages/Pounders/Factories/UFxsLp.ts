@@ -14,7 +14,7 @@ import {
   UnionFxsVaultAddressV1,
 } from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
-import { type Pounder } from "@Pounders/Models/Pounder";
+import { type Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 

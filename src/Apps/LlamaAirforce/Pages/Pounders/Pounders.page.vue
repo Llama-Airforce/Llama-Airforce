@@ -44,7 +44,7 @@ import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
 import { useUnionStore } from "@Pounders/Store";
 import { getClaim } from "@Pounders/Util/UnionHelper";
-import type { ZapsFactories } from "@Pounders/Models/Zap";
+import type { ZapsFactories } from "@Pounders/Models";
 import FlyerService from "@/Services/FlyerService";
 import * as pounderFactories from "@Pounders/Factories";
 import * as zaps from "@Pounders/Zaps";

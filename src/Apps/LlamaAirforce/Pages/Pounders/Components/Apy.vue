@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Fees } from "@Pounders/Models/Fees";
+import { type Fees } from "@Pounders/Models";
 
 const { t } = useI18n();
 

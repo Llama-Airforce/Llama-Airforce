@@ -15,7 +15,7 @@ import {
   LPxCvxFactoryAddress,
   ZapsUCvxAddress,
 } from "@/Util/Addresses";
-import { type ZapDeposit } from "@Pounders/Models/Zap";
+import { type ZapDeposit } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";

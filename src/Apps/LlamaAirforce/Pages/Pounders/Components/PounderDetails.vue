@@ -95,10 +95,9 @@ import CowSwap from "@LAF/Components/CowSwap.vue";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
 import { useUnionStore } from "@Pounders/Store";
-import type { Zap, ZapWithdraw, ZapDeposit } from "@Pounders/Models/Zap";
+import type { PounderId, Zap, ZapWithdraw, ZapDeposit } from "@Pounders/Models";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 import { getBalance } from "@Pounders/Util/PounderStateHelper";
-import type { PounderId } from "@Pounders/Models/Pounder";
 
 const { t } = useI18n();
 

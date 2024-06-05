@@ -14,7 +14,7 @@ import {
   UnionCvxVaultAddress,
 } from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
-import { type Pounder } from "@Pounders/Models/Pounder";
+import { type Pounder } from "@Pounders/Models";
 import type FlyerService from "@/Services/FlyerService";
 
 import logo from "@/Assets/Icons/Tokens/cvx.svg";

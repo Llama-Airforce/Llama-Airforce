@@ -1,6 +1,6 @@
 import { maxApprove } from "@/Wallet";
 import { type ERC20, type UnionVault } from "@/Contracts";
-import { type ZapDeposit } from "@Pounders/Models/Zap";
+import { type ZapDeposit } from "@Pounders/Models";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 

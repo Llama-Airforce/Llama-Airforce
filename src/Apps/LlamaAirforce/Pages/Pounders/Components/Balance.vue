@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { type PounderState } from "@Pounders/Models/PounderState";
+import { type PounderState } from "@Pounders/Models";
 import {
   getBalanceUnclaimed,
   getBalanceUnderlying,

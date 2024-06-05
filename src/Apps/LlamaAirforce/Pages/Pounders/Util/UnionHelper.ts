@@ -3,8 +3,11 @@ import { MerkleDistributor2__factory, type UnionVaultUCrv } from "@/Contracts";
 import { bigNumToNumber } from "@/Util";
 import type UnionService from "@LAF/Services/UnionService";
 import type { AirdropId, Claim } from "@LAF/Services/UnionService";
-import { getTotalUnderlying, type Vault } from "@Pounders/Models/Pounder";
-import { getDistributor } from "@Pounders/Models/Distributor";
+import {
+  type Vault,
+  getTotalUnderlying,
+  getDistributor,
+} from "@Pounders/Models";
 
 export async function getClaim(
   provider: JsonRpcProvider,

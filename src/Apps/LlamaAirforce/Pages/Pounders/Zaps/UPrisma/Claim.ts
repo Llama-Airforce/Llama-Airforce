@@ -5,8 +5,7 @@ import {
   UnionPrismaVaultAddress,
   ZapsUPrismaClaimAddress,
 } from "@/Util/Addresses";
-import { type Airdrop } from "@Pounders/Models/Airdrop";
-import { type ZapClaim } from "@Pounders/Models/Zap";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";

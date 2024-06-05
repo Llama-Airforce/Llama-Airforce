@@ -12,7 +12,7 @@ import {
   UnionCvxVaultAddress,
   ZapsUCvxAddress,
 } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models/Zap";
+import { type ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 

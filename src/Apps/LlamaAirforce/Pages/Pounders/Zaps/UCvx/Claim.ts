@@ -8,8 +8,7 @@ import {
   UnionCvxVaultAddress,
   ZapsUCvxClaimAddress,
 } from "@/Util/Addresses";
-import { type Airdrop } from "@Pounders/Models/Airdrop";
-import { type ZapClaim } from "@Pounders/Models/Zap";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
