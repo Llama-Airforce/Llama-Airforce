@@ -1,7 +1,5 @@
 <template>
   <div class="details">
-    <div class="description">{{ description }}</div>
-
     <div class="deposit-and-withdraw">
       <div class="deposit">
         <PounderInput
@@ -65,6 +63,21 @@
       </div>
     </div>
 
+    <div class="swap-and-info">
+      <div class="description">
+        <span class="title">{{ t("information") }}</span>
+        <span>{{ description }}</span>
+        <span>{{ t("swap-info") }}</span>
+      </div>
+
+      <div class="cow-wrapper">
+        <div
+          ref="cow"
+          class="cow"
+        ></div>
+      </div>
+    </div>
+
     <ModalSlippage
       :show="modalSlippage"
       :symbol-output="symbolOutput"
@@ -77,6 +90,12 @@
 </template>
 
 <script setup lang="ts">
+import {
+  type CowSwapWidgetParams,
+  type CowSwapWidgetHandler,
+  TradeType,
+  createCowSwapWidget,
+} from "@cowprotocol/widget-lib";
 import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
@@ -339,6 +358,69 @@ const onDepositSelect = (zap: Zap): void => {
 const onWithdrawSelect = (zap: Zap): void => {
   zapWithdraw.value = zap as ZapWithdraw;
 };
+
+// CoWSwap
+const cow = ref<HTMLElement | undefined>(undefined);
+let cowHandler: CowSwapWidgetHandler | undefined = undefined;
+
+// Only create widget on first expansion for performance reason.
+watch([toRef(() => expanded), pounderStore], ([newExpanded, store]) => {
+  if (newExpanded && !cowHandler && state) {
+    cowHandler = createCowSwapWidgetLAF(
+      store.pounder.swapSymbols.buy,
+      store.pounder.swapSymbols.sell
+    );
+  }
+});
+function createCowSwapWidgetLAF(symbolBuy: string, symbolSell: string) {
+  if (!cow.value) {
+    return;
+  }
+
+  const params: CowSwapWidgetParams = {
+    appCode: "Llama Airforce",
+    width: "100%",
+    height: "680px",
+    chainId: 1,
+    tokenLists: [
+      "https://files.cow.fi/tokens/CoinGecko.json",
+      "https://files.cow.fi/tokens/CowSwap.json",
+    ],
+    tradeType: TradeType.SWAP,
+    sell: { asset: symbolSell, amount: "0" },
+    buy: { asset: symbolBuy, amount: "0" },
+    enabledTradeTypes: [TradeType.SWAP],
+    theme: {
+      baseTheme: "dark",
+      primary: "#18181b",
+      background: "#18181b",
+      paper: "#18181b",
+      text: "#fafafa",
+      danger: "#ff5757",
+      warning: "#ffcc00",
+      alert: "#ffcc00",
+      info: "#2081f0",
+      success: "#7ed957",
+    },
+    customTokens: [
+      {
+        chainId: 1,
+        address: "0x34635280737b5BFe6c7DC2FC3065D60d66e78185",
+        name: "Convex Prisma",
+        decimals: 18,
+        symbol: "cvxPRISMA",
+        logoURI:
+          "https://assets.coingecko.com/coins/images/32961/large/cvxprisma.png?1700026172",
+      },
+    ],
+    standaloneMode: true,
+    disableToastMessages: false,
+  };
+
+  return createCowSwapWidget(cow.value, {
+    params,
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -348,12 +430,8 @@ const onWithdrawSelect = (zap: Zap): void => {
   flex-direction: column;
 
   margin: 1rem 2rem;
-  gap: 1rem;
+  gap: var(--dashboard-gap);
   border-top: solid 1px var(--c-lvl4);
-
-  > .description {
-    margin-top: 1.5rem;
-  }
 
   > .deposit-and-withdraw {
     display: flex;
@@ -415,6 +493,47 @@ const onWithdrawSelect = (zap: Zap): void => {
       }
     }
   }
+
+  > .swap-and-info {
+    margin-top: 1rem;
+
+    display: grid;
+    gap: var(--dashboard-gap);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "swap info";
+
+    @media only screen and (max-width: 1280px) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    > .cow-wrapper {
+      grid-area: swap;
+
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      .cow {
+        width: 90%;
+      }
+    }
+
+    > .description {
+      grid-area: info;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1ch;
+      line-height: 1.5rem;
+
+      > .title {
+        font-weight: bold;
+        font-size: 1.125rem;
+        margin-bottom: -0.5ch;
+      }
+    }
+  }
 }
 </style>
 
@@ -435,6 +554,9 @@ description-ucvx: This pounder stakes pxCVX and compounds the earned bribe rewar
 description-ubal: This pounder stakes auraBAL on Aura.
 description-ufxslp: This pounder stakes cvxFXS/FXS LP tokens on Convex.
   This staking method no longer actively rewarded by Convex; these rewards have been moved to single-sided cvxFXS staking.
+
+information: Information
+swap-info: The preferred method for depositing is using the available zaps from the dropdown menu. If your preferred token is not listed, we recommend using the CoWSwap widget for MEV-protected trading with optimal routing into the native pounder token, which you can then deposit. Although this two-step process might be a bit cumbersome, it ensures your safety. The same method applies for withdrawing from the pounder.
 </i18n>
 
 <i18n lang="yaml" locale="zh">
@@ -444,6 +566,9 @@ zap-withdraw: 提取
 zap-withdrawing: 提取。。。
 claim-rewards-title: 索取奖励
 claim-first: 在提取您要求的金额之前，请先领取您的收益
+
+information: 信息
+swap-info: 存款的首选方法是使用下拉菜单中的可用 Zaps。如果您首选的代币没有列出，我们建议您使用 CoWSwap 小工具进行 MEV 保护交易，并将其优化路由到本地 pounder 代币，然后再存入。虽然这两个步骤可能有点繁琐，但可以确保您的安全。同样的方法也适用于从 pounder 取款。
 </i18n>
 
 <i18n lang="yaml" locale="fr">
@@ -463,4 +588,7 @@ description-ucvx: Ce pounder stake du pxCVX et compounde les récompenses de pot
 description-ubal: Ce pounder stake de l'auraBAL sur Aura.
 description-ufxslp: Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.
   Cette méthode de staking n'est plus activement récompensée par Convex; les récompenses ont été déplacées vers le staking cvxFXS unilatéral.
+
+information: Informations
+swap-info: La méthode préférée pour le dépôt est l'utilisation des zaps disponibles à partir du menu déroulant. Si votre jeton préféré ne figure pas dans la liste, nous vous recommandons d'utiliser le widget CoWSwap pour un échange protégé par MEV avec un acheminement optimal vers le jeton pounder natif, que vous pouvez ensuite déposer. Bien que ce processus en deux étapes puisse être un peu lourd, il garantit votre sécurité. La même méthode s'applique pour le retrait du pounder.
 </i18n>

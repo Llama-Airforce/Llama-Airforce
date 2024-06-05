@@ -24,6 +24,7 @@
     "deploy": "node --no-lazy -r ts-node/register -r tsconfig-paths/register \"./Deploy.ts\""
   },
   "dependencies": {
+    "@cowprotocol/widget-lib": "^0.11.1",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@kyvg/vue3-notification": "^3.2.1",
     "@tanstack/vue-query": "^5.34.1",

@@ -32,6 +32,10 @@ export default function createBalPounder(
     distributor: () => null,
     getPriceUnderlying,
     getApy,
+    swapSymbols: {
+      buy: "auraBAL",
+      sell: "ETH",
+    },
     lp: null,
   };
 }

@@ -47,6 +47,10 @@ export default function createFxsPounder(
     distributor: () => distributor,
     getPriceUnderlying,
     getApy,
+    swapSymbols: {
+      buy: "cvxFXS",
+      sell: "ETH",
+    },
     lp: null,
   };
 }

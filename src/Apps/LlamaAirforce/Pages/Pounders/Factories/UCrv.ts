@@ -47,6 +47,10 @@ export default function createCrvPounder(
     distributor: () => distributor,
     getPriceUnderlying,
     getApy,
+    swapSymbols: {
+      buy: "cvxCRV",
+      sell: "ETH",
+    },
     lp: null,
   };
 }
