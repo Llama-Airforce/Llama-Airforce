@@ -207,12 +207,16 @@ const users = computed(() =>
 
 // KPIs
 function calculateAverage(activities: { timestamp: number; count: number }[]) {
-  const total = activities.reduce((acc, x) => acc + x.count, 0);
-  const timestamps = activities.map((activity) => activity.timestamp);
-  const minTimestamp = Math.min(...timestamps);
-  const maxTimestamp = Math.max(...timestamps);
+  const daysBetween = 7; // Always consider 7 days
+  const now = Math.floor(Date.now() / 1000); // Get current timestamp in seconds
+  const sevenDaysAgo = now - daysBetween * 24 * 60 * 60; // Calculate timestamp 7 days ago
 
-  const daysBetween = (maxTimestamp - minTimestamp) / (24 * 60 * 60); // convert s to days
+  // Filter activities within the last 7 days
+  const lastSevenDaysActivities = activities.filter(
+    (activity) => activity.timestamp >= sevenDaysAgo
+  );
+
+  const total = lastSevenDaysActivities.reduce((acc, x) => acc + x.count, 0);
 
   return daysBetween > 0 ? Math.round(total / daysBetween) : 0;
 }
@@ -293,8 +297,8 @@ const rankTypesUsers = computed(() =>
 
 <i18n lang="yaml" locale="en">
 txs-cum: Cumulative Transactions
-txs-avg: Avg Transactions / Day
+txs-avg: Avg Transactions / 7 Days
 
 users-cum: Cumulative Users
-users-avg: Avg Users / Day
+users-avg: Avg Users / 7 Days
 </i18n>
