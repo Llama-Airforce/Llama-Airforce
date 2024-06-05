@@ -287,6 +287,10 @@ const rankTypesUsers = computed(() =>
 
   @media only screen and (max-width: 1280px) {
     display: flex;
+
+    > * {
+      flex-grow: 1;
+    }
   }
 }
 </style>
