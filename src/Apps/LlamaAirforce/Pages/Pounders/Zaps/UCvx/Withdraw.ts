@@ -12,17 +12,18 @@ import {
   UnionCvxVaultAddress,
   ZapsUCvxAddress,
 } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
+// eslint-disable-next-line max-lines-per-function
 export function uCvxWithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVaultPirex | undefined
-): ZapWithdraw[] {
+): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -111,7 +112,12 @@ export function uCvxWithdrawZaps(
     },
   };
 
-  const options = [cvx, pxCVX];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "CVX",
+  };
+
+  const options = [cvx, pxCVX, swap];
 
   return options;
 }

@@ -16,7 +16,7 @@ import {
   UnionFxsVaultAddressV1,
   ZapsUFxsAddressV1,
 } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
@@ -26,7 +26,7 @@ export function uFxsLpWithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
-): ZapWithdraw[] {
+): (ZapWithdraw | Swap)[] {
   const withdrawFactory = async () => {
     const address = getAddress();
     const vault = getVault();

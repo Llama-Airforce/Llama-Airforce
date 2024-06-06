@@ -1,6 +1,6 @@
 import { maxApprove } from "@/Wallet";
 import { type ERC20, type UnionVault } from "@/Contracts";
-import { type ZapDeposit } from "@Pounders/Models";
+import type { Swap, ZapDeposit } from "@Pounders/Models";
 
 import logoAuraBAL from "@/Assets/Icons/Tokens/aurabal.png";
 
@@ -9,7 +9,7 @@ export function uBalDepositZaps(
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
   getAssetTkn: () => ERC20 | undefined
-): ZapDeposit[] {
+): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -59,7 +59,12 @@ export function uBalDepositZaps(
     },
   };
 
-  const options = [auraBAL];
+  const swap: Swap = {
+    buy: "auraBAL",
+    sell: "ETH",
+  };
+
+  const options = [auraBAL, swap];
 
   return options;
 }

@@ -10,7 +10,7 @@ import {
   ZapsUPrismaConvexMigrationAddress,
   StkCvxPrismaAddress,
 } from "@/Util/Addresses";
-import { type ZapDeposit } from "@Pounders/Models";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
@@ -20,7 +20,7 @@ export function uPrismaDepositZaps(
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
   getAssetTkn: () => ERC20 | undefined
-): ZapDeposit[] {
+): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -138,7 +138,12 @@ export function uPrismaDepositZaps(
     },
   };
 
-  const options = [stkCvxPrisma, cvxPRISMA];
+  const swap: Swap = {
+    buy: "cvxPRISMA",
+    sell: "ETH",
+  };
+
+  const options = [stkCvxPrisma, cvxPRISMA, swap];
 
   return options;
 }

@@ -52,11 +52,6 @@ export type Pounder<V extends Vault> = {
   atkn: ERC20;
   distributor: () => MerkleDistributor2 | null;
   lp: PounderLp | null;
-  swapSymbols: {
-    buy: string;
-    sell: string;
-  };
-
   getPriceUnderlying: () => Promise<number>;
   getApy: () => Promise<number>;
 };

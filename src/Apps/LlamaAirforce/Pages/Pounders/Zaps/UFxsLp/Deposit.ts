@@ -17,7 +17,7 @@ import {
   FxsAddress,
   CvxFxsFactoryAddress,
 } from "@/Util/Addresses";
-import { type ZapDeposit } from "@Pounders/Models";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
@@ -28,7 +28,7 @@ export function uFxsLpDepositZaps(
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
   getAssetTkn: () => ERC20 | undefined
-): ZapDeposit[] {
+): (ZapDeposit | Swap)[] {
   const depositFactory = async (depositTkn: string | null) => {
     const address = getAddress();
     const vault = getVault();

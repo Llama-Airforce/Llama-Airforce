@@ -1,5 +1,5 @@
 import { type UnionVault } from "@/Contracts";
-import { type ZapWithdraw } from "@Pounders/Models";
+import type { Swap, ZapWithdraw } from "@Pounders/Models";
 
 import logoAuraBAL from "@/Assets/Icons/Tokens/aurabal.png";
 
@@ -7,7 +7,7 @@ export function uBalWithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
-): ZapWithdraw[] {
+): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -36,7 +36,12 @@ export function uBalWithdrawZaps(
     zap: () => withdraw(),
   };
 
-  const options = [auraBAL];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "auraBAL",
+  };
+
+  const options = [auraBAL, swap];
 
   return options;
 }

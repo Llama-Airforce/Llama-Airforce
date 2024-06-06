@@ -1,10 +1,8 @@
 <template>
-  <div class="cow-wrapper">
-    <div
-      ref="cow"
-      class="cow"
-    ></div>
-  </div>
+  <div
+    ref="cow"
+    class="cow"
+  ></div>
 </template>
 
 <script setup lang="ts">
@@ -57,7 +55,7 @@ function createParams(
   return {
     appCode: "Llama Airforce",
     width: "100%",
-    height: "680px",
+    height: "520px",
     chainId: 1,
     tokenLists: [
       "https://files.cow.fi/tokens/CoinGecko.json",
@@ -95,17 +93,3 @@ function createParams(
   };
 }
 </script>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.cow-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  .cow {
-    width: 100%;
-  }
-}
-</style>

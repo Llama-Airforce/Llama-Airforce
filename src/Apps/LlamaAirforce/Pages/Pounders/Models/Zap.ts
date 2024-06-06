@@ -1,5 +1,6 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type ContractReceipt } from "ethers";
+import { type Swap } from "@Pounders/Models/Swap";
 
 export type Zap = {
   logo: string;
@@ -29,6 +30,8 @@ export type ZapClaim = ZapWithdraw & {
 };
 
 export type ZapsFactories = {
-  createZapsDeposit: (getInput: () => bigint | null) => ZapDeposit[];
-  createZapsWithdrawal: (getInput: () => bigint | null) => ZapWithdraw[];
+  createZapsDeposit: (getInput: () => bigint | null) => (ZapDeposit | Swap)[];
+  createZapsWithdrawal: (
+    getInput: () => bigint | null
+  ) => (ZapWithdraw | Swap)[];
 };

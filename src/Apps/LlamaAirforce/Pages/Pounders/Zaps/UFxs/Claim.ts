@@ -13,7 +13,7 @@ import {
   UnionFxsVaultAddress,
   ZapsUFxsClaimAddress,
 } from "@/Util/Addresses";
-import type { Airdrop, ZapClaim } from "@Pounders/Models";
+import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
 
@@ -24,7 +24,7 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 export function uFxsClaimZaps(
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
-): ZapClaim[] {
+): (ZapClaim | Swap)[] {
   const extraZapFactory = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
@@ -133,7 +133,12 @@ export function uFxsClaimZaps(
     },
   };
 
-  const options = [ufxs, cvxFXS];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "cvxFXS",
+  };
+
+  const options = [ufxs, cvxFXS, swap];
 
   return options;
 }

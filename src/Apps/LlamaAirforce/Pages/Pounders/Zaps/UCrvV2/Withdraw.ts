@@ -1,5 +1,5 @@
 import { type UnionVault } from "@/Contracts";
-import { type ZapWithdraw } from "@Pounders/Models";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
@@ -7,7 +7,7 @@ export function uCrvV2WithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
-): ZapWithdraw[] {
+): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -35,7 +35,12 @@ export function uCrvV2WithdrawZaps(
     zap: () => withdraw(),
   };
 
-  const options = [cvxCRV];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "cvxCRV",
+  };
+
+  const options = [cvxCRV, swap];
 
   return options;
 }

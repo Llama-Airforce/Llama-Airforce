@@ -8,7 +8,7 @@ import {
   UnionCvxVaultAddress,
   ZapsUCvxClaimAddress,
 } from "@/Util/Addresses";
-import type { Airdrop, ZapClaim } from "@Pounders/Models";
+import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
@@ -19,7 +19,7 @@ import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 export function uCvxClaimZaps(
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
-): ZapClaim[] {
+): (ZapClaim | Swap)[] {
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
@@ -125,7 +125,12 @@ export function uCvxClaimZaps(
     zap: () => claim(),
   };
 
-  const options = [cvx, ucvx];
+  const swap: Swap = {
+    buy: "CVX",
+    sell: "ETH",
+  };
+
+  const options = [cvx, ucvx, swap];
 
   return options;
 }

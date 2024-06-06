@@ -47,10 +47,6 @@ export default function createPrismaPounder(
     distributor: () => distributor,
     getPriceUnderlying,
     getApy,
-    swapSymbols: {
-      buy: "cvxPRISMA",
-      sell: "ETH",
-    },
     lp: null,
   };
 }

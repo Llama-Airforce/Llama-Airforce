@@ -56,10 +56,6 @@ export default function createFxsLpPounder(
     distributor: () => distributor,
     getPriceUnderlying,
     getApy,
-    swapSymbols: {
-      buy: "FXS",
-      sell: "ETH",
-    },
     lp: {
       symbolPrimary: "FXS",
       getOraclePrice,

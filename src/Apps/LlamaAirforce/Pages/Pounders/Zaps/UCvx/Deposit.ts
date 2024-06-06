@@ -15,7 +15,7 @@ import {
   LPxCvxFactoryAddress,
   ZapsUCvxAddress,
 } from "@/Util/Addresses";
-import { type ZapDeposit } from "@Pounders/Models";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
@@ -44,7 +44,7 @@ export function uCvxDepositZaps(
   getInput: () => bigint | null,
   getVault: () => UnionVaultPirex | undefined,
   getAssetTkn: () => ERC20 | undefined
-): ZapDeposit[] {
+): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -183,7 +183,12 @@ export function uCvxDepositZaps(
     },
   };
 
-  const options = [cvx, pxCVX];
+  const swap: Swap = {
+    buy: "CVX",
+    sell: "ETH",
+  };
+
+  const options = [cvx, pxCVX, swap];
 
   return options;
 }

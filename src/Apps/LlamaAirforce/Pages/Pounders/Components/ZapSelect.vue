@@ -8,41 +8,47 @@
     @close="selectZapOpen = false"
     @input="onZapSelect"
   >
-    <template #item="props: { item: Zap }">
+    <template #item="props: { item: Zap | Swap }">
       <div
-        v-if="props.item"
+        v-if="props.item && isZap(props.item)"
         class="item"
       >
         <img :src="icon(props.item.logo)" />
         <div class="label">{{ props.item.label }}</div>
+      </div>
+
+      <div
+        v-else-if="props.item && isSwap(props.item)"
+        class="item"
+      >
+        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" />
+        <div class="label">{{ t("other-token") }}</div>
       </div>
     </template>
   </Select>
 </template>
 
 <script setup lang="ts">
-import { type Zap } from "@Pounders/Models";
+import type { Zap, Swap } from "@Pounders/Models";
+import { isZap, isSwap } from "@Pounders/Models";
+
+const { t } = useI18n();
 
 // Props
 interface Props {
-  zaps: Zap[];
+  zaps: (Zap | Swap)[];
 }
 
 const { zaps } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  select: [zap: Zap];
+  select: [zap: Zap | Swap];
 }>();
 
 // Refs
+const zap = defineModel<Zap | Swap | null>({ required: true, default: null });
 const selectZapOpen = ref(false);
-const zap = ref<Zap | null>(null);
-
-// Hooks
-onMounted((): void => {
-  onZapSelect(zaps[0]);
-});
 
 // Methods
 const icon = (logo: string): string => {
@@ -54,16 +60,17 @@ const onZapOpen = (): void => {
   selectZapOpen.value = !selectZapOpen.value;
 };
 
-const onZapSelect = (option: Zap): void => {
-  zap.value = option;
-  emit("select", zap.value);
+const onZapSelect = (option: Zap | Swap): void => {
+  emit("select", option);
 };
 
 // Watches
 watch(
   () => zaps,
   () => {
-    onZapSelect(zaps[0]);
+    if (zaps && zaps.length > 0) {
+      onZapSelect(zaps[0]);
+    }
   },
   { immediate: true }
 );
@@ -89,3 +96,15 @@ watch(
   }
 }
 </style>
+
+<i18n lang="yaml" locale="en">
+other-token: Other Token
+</i18n>
+
+<i18n lang="yaml" locale="zh">
+other-token: 其他代币
+</i18n>
+
+<i18n lang="yaml" locale="fr">
+other-token: Autre Token
+</i18n>

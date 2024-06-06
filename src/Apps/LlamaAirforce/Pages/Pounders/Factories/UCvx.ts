@@ -49,10 +49,6 @@ export default function createCvxPounder(
     distributor: () => distributor,
     getPriceUnderlying,
     getApy,
-    swapSymbols: {
-      buy: "CVX",
-      sell: "ETH",
-    },
     lp: null,
   };
 }

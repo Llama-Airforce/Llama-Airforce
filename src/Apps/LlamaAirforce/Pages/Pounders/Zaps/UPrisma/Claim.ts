@@ -5,15 +5,16 @@ import {
   UnionPrismaVaultAddress,
   ZapsUPrismaClaimAddress,
 } from "@/Util/Addresses";
-import type { Airdrop, ZapClaim } from "@Pounders/Models";
+import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
+// eslint-disable-next-line max-lines-per-function
 export function uPrismaClaimZaps(
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
-): ZapClaim[] {
+): (ZapClaim | Swap)[] {
   const extraZapFactory = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
@@ -103,7 +104,12 @@ export function uPrismaClaimZaps(
     zap: () => claimAsCvxPrisma(),
   };
 
-  const options = [uprisma, cvxPRISMA];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "cvxPRISMA",
+  };
+
+  const options = [uprisma, cvxPRISMA, swap];
 
   return options;
 }

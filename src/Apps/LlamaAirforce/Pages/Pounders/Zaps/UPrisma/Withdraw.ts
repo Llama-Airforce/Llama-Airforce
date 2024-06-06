@@ -1,7 +1,7 @@
 import { getProvider } from "@/Wallet/ProviderFactory";
 import { type UnionVault, UnionVault__factory } from "@/Contracts";
 import { UnionPrismaVaultAddress } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
@@ -9,7 +9,7 @@ export function uPrismaWithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
-): ZapWithdraw[] {
+): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -41,7 +41,12 @@ export function uPrismaWithdrawZaps(
     zap: () => withdraw(),
   };
 
-  const options = [cvxPRISMA];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "cvxPRISMA",
+  };
+
+  const options = [cvxPRISMA, swap];
 
   return options;
 }

@@ -1,6 +1,6 @@
 import { maxApprove } from "@/Wallet";
 import { type ERC20, type UnionVault } from "@/Contracts";
-import { type ZapDeposit } from "@Pounders/Models";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
@@ -9,7 +9,7 @@ export function uCrvV2DepositZaps(
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
   getAssetTkn: () => ERC20 | undefined
-): ZapDeposit[] {
+): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -58,7 +58,12 @@ export function uCrvV2DepositZaps(
     },
   };
 
-  const options = [cvxCRV];
+  const swap: Swap = {
+    buy: "cvxCRV",
+    sell: "ETH",
+  };
+
+  const options = [cvxCRV, swap];
 
   return options;
 }

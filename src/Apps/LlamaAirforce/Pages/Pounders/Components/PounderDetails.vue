@@ -11,6 +11,7 @@
 
         <div class="actions">
           <ZapSelect
+            v-model="zapDeposit"
             :class="{ expanded }"
             :zaps="zapsDeposit"
             @select="onDepositSelect"
@@ -37,6 +38,7 @@
 
         <div class="actions">
           <ZapSelect
+            v-model="zapWithdraw"
             :class="{ expanded }"
             :zaps="zapsWithdraw"
             @select="onWithdrawSelect"
@@ -63,20 +65,22 @@
       </div>
     </div>
 
-    <div class="swap-and-info">
-      <div class="description">
-        <span class="title">{{ t("information") }}</span>
-        <span>{{ description }}</span>
-        <span>{{ t("swap-info") }}</span>
-      </div>
-
-      <CowSwap
-        class="cow"
-        :level="1"
-        :buy="expanded ? pounderStore?.pounder?.swapSymbols?.buy : ''"
-        :sell="pounderStore?.pounder?.swapSymbols?.sell"
-      ></CowSwap>
+    <div class="description">
+      <span class="title">{{ t("information") }}</span>
+      <span>{{ description }}</span>
     </div>
+
+    <ModalCowSwap
+      :show="zapDeposit !== null && isSwap(zapDeposit)"
+      :swap="(zapDeposit as Swap)"
+      @close="zapDeposit = zapsDeposit[0]"
+    ></ModalCowSwap>
+
+    <ModalCowSwap
+      :show="zapWithdraw !== null && isSwap(zapWithdraw)"
+      :swap="(zapWithdraw as Swap)"
+      @close="zapWithdraw = zapsWithdraw[0]"
+    ></ModalCowSwap>
 
     <ModalSlippage
       :show="modalSlippage"
@@ -91,12 +95,19 @@
 
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
-import CowSwap from "@LAF/Components/CowSwap.vue";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
 import { useUnionStore } from "@Pounders/Store";
-import type { PounderId, Zap, ZapWithdraw, ZapDeposit } from "@Pounders/Models";
+import type {
+  PounderId,
+  Zap,
+  ZapWithdraw,
+  ZapDeposit,
+  Swap,
+} from "@Pounders/Models";
+import { isZap, isSwap } from "@Pounders/Models";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
+import ModalCowSwap from "@Pounders/Components/ModalCowSwap.vue";
 import { getBalance } from "@Pounders/Util/PounderStateHelper";
 
 const { t } = useI18n();
@@ -130,11 +141,11 @@ const withdraw = ref(0n);
 const depositing = ref(false);
 const withdrawing = ref(false);
 
-const zapsWithdraw = ref<ZapWithdraw[]>([]);
-const zapsDeposit = ref<ZapDeposit[]>([]);
+const zapsWithdraw = ref<(ZapWithdraw | Swap)[]>([]);
+const zapsDeposit = ref<(ZapDeposit | Swap)[]>([]);
 
-const zapWithdraw = ref<ZapWithdraw | null>(null);
-const zapDeposit = ref<ZapDeposit | null>(null);
+const zapWithdraw = ref<ZapWithdraw | Swap | null>(null);
+const zapDeposit = ref<ZapDeposit | Swap | null>(null);
 
 const minAmountOutRef = ref(0);
 const minAmountOut = ref(0);
@@ -202,7 +213,9 @@ watch(zapsFactories, updateZaps, { immediate: true });
 watch(
   [zapDeposit, address],
   async function () {
-    await store.updateZapDeposit(pounderId, zapDeposit.value);
+    if (zapDeposit.value === null || isZap(zapDeposit.value)) {
+      await store.updateZapDeposit(pounderId, zapDeposit.value);
+    }
   },
   {
     immediate: true,
@@ -211,7 +224,7 @@ watch(
 
 // Events
 const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
-  if (!zapDeposit.value || !depositInput.value) {
+  if (!zapDeposit.value || !isZap(zapDeposit.value) || !depositInput.value) {
     return;
   }
 
@@ -238,7 +251,7 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
   }
 
   await tryNotifyLoading(depositing, async () => {
-    if (!zapDeposit.value) return;
+    if (!zapDeposit.value || !isZap(zapDeposit.value)) return;
 
     const zapMinAmountOut = numToBigNumber(
       minAmountOut.value,
@@ -258,6 +271,7 @@ const onWithdraw = async (
 ): Promise<void> => {
   if (
     !zapWithdraw.value ||
+    !isZap(zapWithdraw.value) ||
     !withdrawInput.value ||
     state.value.balanceWithdraw === null
   ) {
@@ -302,7 +316,7 @@ const onWithdraw = async (
   }
 
   await tryNotifyLoading(withdrawing, async () => {
-    if (!zapWithdraw.value) return;
+    if (!zapWithdraw.value || !isZap(zapWithdraw.value)) return;
 
     const zapMinAmountOut = numToBigNumber(minAmountOut.value, decimals);
     await zapWithdraw.value.zap(zapMinAmountOut);
@@ -345,12 +359,12 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
   await modalAction?.();
 };
 
-const onDepositSelect = (zap: Zap): void => {
-  zapDeposit.value = zap as ZapDeposit;
+const onDepositSelect = (zap: Zap | Swap): void => {
+  zapDeposit.value = zap as ZapDeposit | Swap;
 };
 
-const onWithdrawSelect = (zap: Zap): void => {
-  zapWithdraw.value = zap as ZapWithdraw;
+const onWithdrawSelect = (zap: Zap | Swap): void => {
+  zapWithdraw.value = zap as ZapWithdraw | Swap;
 };
 </script>
 
@@ -425,36 +439,18 @@ const onWithdrawSelect = (zap: Zap): void => {
     }
   }
 
-  > .swap-and-info {
+  > .description {
     margin-top: 1rem;
 
-    display: grid;
-    gap: var(--dashboard-gap);
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "swap info";
+    display: flex;
+    flex-direction: column;
+    gap: 1ch;
+    line-height: 1.5rem;
 
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-    }
-
-    > .cow {
-      grid-area: swap;
-    }
-
-    > .description {
-      grid-area: info;
-
-      display: flex;
-      flex-direction: column;
-      gap: 1ch;
-      line-height: 1.5rem;
-
-      > .title {
-        font-weight: bold;
-        font-size: 1.125rem;
-        margin-bottom: -0.5ch;
-      }
+    > .title {
+      font-weight: bold;
+      font-size: 1.125rem;
+      margin-bottom: -0.5ch;
     }
   }
 }
@@ -479,7 +475,6 @@ description-ufxslp: This pounder stakes cvxFXS/FXS LP tokens on Convex.
   This staking method no longer actively rewarded by Convex; these rewards have been moved to single-sided cvxFXS staking.
 
 information: Information
-swap-info: The preferred method for depositing is using the available zaps from the dropdown menu. If your preferred token is not listed, we recommend using the CoWSwap widget for MEV-protected trading with optimal routing into the native pounder token, which you can then deposit. Although this two-step process might be a bit cumbersome, it ensures your safety. The same method applies for withdrawing from the pounder.
 </i18n>
 
 <i18n lang="yaml" locale="zh">
@@ -491,7 +486,6 @@ claim-rewards-title: 索取奖励
 claim-first: 在提取您要求的金额之前，请先领取您的收益
 
 information: 信息
-swap-info: 存款的首选方法是使用下拉菜单中的可用 Zaps。如果您首选的代币没有列出，我们建议您使用 CoWSwap 小工具进行 MEV 保护交易，并将其优化路由到本地 pounder 代币，然后再存入。虽然这两个步骤可能有点繁琐，但可以确保您的安全。同样的方法也适用于从 pounder 取款。
 </i18n>
 
 <i18n lang="yaml" locale="fr">
@@ -513,5 +507,4 @@ description-ufxslp: Ce pounder stake des tokens cvxFXS/FXS LP sur Convex.
   Cette méthode de staking n'est plus activement récompensée par Convex; les récompenses ont été déplacées vers le staking cvxFXS unilatéral.
 
 information: Informations
-swap-info: La méthode préférée pour le dépôt est l'utilisation des zaps disponibles à partir du menu déroulant. Si votre jeton préféré ne figure pas dans la liste, nous vous recommandons d'utiliser le widget CoWSwap pour un échange protégé par MEV avec un acheminement optimal vers le jeton pounder natif, que vous pouvez ensuite déposer. Bien que ce processus en deux étapes puisse être un peu lourd, il garantit votre sécurité. La même méthode s'applique pour le retrait du pounder.
 </i18n>

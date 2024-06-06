@@ -2,15 +2,16 @@ import { maxApprove } from "@/Wallet";
 import { getProvider } from "@/Wallet/ProviderFactory";
 import { ERC20__factory, ZapsUCrvClaim__factory } from "@/Contracts";
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
-import { type Airdrop, type ZapClaim } from "@Pounders/Models";
+import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
+// eslint-disable-next-line max-lines-per-function
 export function uCrvClaimZaps(
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
-): ZapClaim[] {
+): (ZapClaim | Swap)[] {
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
@@ -100,7 +101,12 @@ export function uCrvClaimZaps(
     zap: () => claimAsCvxCrv(),
   };
 
-  const options = [ucrv, cvxcrv];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "cvxCRV",
+  };
+
+  const options = [ucrv, cvxcrv, swap];
 
   return options;
 }

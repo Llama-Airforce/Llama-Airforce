@@ -1,6 +1,6 @@
 import { maxApprove } from "@/Wallet";
 import { type ERC20, type UnionVault } from "@/Contracts";
-import { type ZapDeposit } from "@Pounders/Models";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
@@ -9,7 +9,7 @@ export function uFxsDepositZaps(
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
   getAssetTkn: () => ERC20 | undefined
-): ZapDeposit[] {
+): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -58,7 +58,12 @@ export function uFxsDepositZaps(
     },
   };
 
-  const options = [cvxFXS];
+  const swap: Swap = {
+    buy: "cvxFXS",
+    sell: "ETH",
+  };
+
+  const options = [cvxFXS, swap];
 
   return options;
 }

@@ -1,7 +1,7 @@
 import { getProvider } from "@/Wallet/ProviderFactory";
 import { type UnionVault, UnionVault__factory } from "@/Contracts";
 import { UnionFxsVaultAddress } from "@/Util/Addresses";
-import { type ZapWithdraw } from "@Pounders/Models";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
@@ -10,7 +10,7 @@ export function uFxsWithdrawZaps(
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
-): ZapWithdraw[] {
+): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const address = getAddress();
     const vault = getVault();
@@ -42,7 +42,12 @@ export function uFxsWithdrawZaps(
     zap: () => withdraw(),
   };
 
-  const options = [cvxFXS];
+  const swap: Swap = {
+    buy: "ETH",
+    sell: "cvxFXS",
+  };
+
+  const options = [cvxFXS, swap];
 
   return options;
 }
