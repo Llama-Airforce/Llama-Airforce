@@ -1,5 +1,5 @@
+import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getSigner } from "@/Wallet/ProviderFactory";
 import { ERC20__factory, ZapsUPrismaClaim__factory } from "@/Contracts";
 import {
   UnionPrismaVaultAddress,
@@ -12,13 +12,14 @@ import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uPrismaClaimZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
 ): (ZapClaim | Swap)[] {
   const extraZapFactory = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !airdrop || !signer) {
       throw new Error("Unable to construct extra claim zaps");

@@ -1,6 +1,5 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getProvider, getSigner } from "@/Wallet/ProviderFactory";
 import {
   type ERC20,
   ERC20__factory,
@@ -24,6 +23,7 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpDepositZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
@@ -33,7 +33,7 @@ export function uFxsLpDepositZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra zaps");
@@ -102,9 +102,9 @@ export function uFxsLpDepositZaps(
     label: "FXS",
     zap: (minAmountOut?: bigint) => depositFromFxs(minAmountOut ?? 0n),
     depositSymbol: "FXS",
-    depositBalance: async () => {
+    depositBalance: () => {
       const address = getAddress();
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!address || !provider) {
         throw new Error("Unable to construct deposit zap balance");
@@ -114,7 +114,7 @@ export function uFxsLpDepositZaps(
       return depositERC20.balanceOf(address).then((x) => x.toBigInt());
     },
     depositDecimals: () => {
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!provider) {
         throw new Error("Unable to construct deposit zap decimals");
@@ -198,9 +198,9 @@ export function uFxsLpDepositZaps(
     label: "cvxFXS LP token",
     zap: () => depositFromLp(),
     depositSymbol: "cvxFXSFXS-f",
-    depositBalance: async () => {
+    depositBalance: () => {
       const address = getAddress();
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!address || !provider) {
         throw new Error("Unable to construct deposit zap balance");
@@ -213,7 +213,7 @@ export function uFxsLpDepositZaps(
       return depositERC20.balanceOf(address).then((x) => x.toBigInt());
     },
     depositDecimals: () => {
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!provider) {
         throw new Error("Unable to construct deposit zap decimals");

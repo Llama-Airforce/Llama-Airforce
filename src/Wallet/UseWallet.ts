@@ -1,50 +1,71 @@
-import { computed } from "vue";
-import { useWalletStore } from "@/Wallet/Store";
 import {
-  connectWallet as connectWalletFunc,
-  disconnectWallet as disconnectWalletFunc,
-  getProvider,
-  getSigner,
-} from "@/Wallet/ProviderFactory";
-import { getNetwork } from "@/Wallet/WalletHelper";
+  type JsonRpcProvider,
+  type JsonRpcSigner,
+} from "@ethersproject/providers";
+import { type Network } from "@/Wallet/Network";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useConnectors,
+  useConnectorClient,
+} from "@wagmi/vue";
+import { base, mainnet } from "viem/chains";
+import { clientToProvider, clientToSigner } from "@/Wallet/Wagmi";
 
 // eslint-disable-next-line max-lines-per-function
 export function useWallet() {
-  const store = useWalletStore();
+  // Re-export for easier access through single import
+  const { connect } = useConnect();
+  const { disconnect } = useDisconnect();
+  const connectors = useConnectors();
 
-  const connected = computed(() => store.connected);
-  const network = computed(() => store.network);
-  const address = computed(() => store.address);
+  // Account info
+  const { address, isConnected, chainId, connector } = useAccount();
 
-  const connectWallet = async (showModal = false) => {
-    await connectWalletFunc(showModal);
-    const provider = getProvider();
+  // Dependency on provider as we only want to change address when there is one.
+  const addressLower = computed(() =>
+    provider.value ? address.value?.toLocaleLowerCase() : ""
+  );
 
-    const connected = !!provider;
-    store.connected = connected;
+  const network = computed((): Network | undefined => {
+    switch (chainId.value) {
+      case mainnet.id:
+        return "ethereum";
+      case base.id:
+        return "base";
+      default:
+        return undefined;
+    }
+  });
 
-    const network = await getNetwork(provider);
-    store.network = network;
-  };
+  // Connectors and providers
+  const connectorClient = useConnectorClient();
+  const providerCowSwap = computedAsync(async () => {
+    const prov = (await connector.value?.getProvider()) as JsonRpcProvider;
+    return prov;
+  });
+  const provider = computed(() =>
+    connectorClient.data.value
+      ? clientToProvider(connectorClient.data.value)
+      : undefined
+  );
+  const signer = computed(() =>
+    connectorClient.data.value
+      ? clientToSigner(connectorClient.data.value)
+      : undefined
+  );
 
-  const disconnectWallet = async () => {
-    await disconnectWalletFunc();
-    store.connected = false;
-  };
-
-  // Call a function with provider and address if available.
   const withProvider = <T extends [...unknown[]]>(
     func: (
-      provider: NonNullable<ReturnType<typeof getProvider>>,
+      provider: JsonRpcProvider,
       address: string,
       ...args: T
     ) => Promise<void>,
     ifNot?: (...args: T) => void
   ): ((...args: T) => Promise<void>) => {
     return (...args: T) => {
-      const provider = getProvider();
-
-      if (!provider || !address.value) {
+      if (!provider.value || !address.value) {
         return new Promise<void>((resolve) => {
           if (ifNot) {
             ifNot(...args);
@@ -54,46 +75,36 @@ export function useWallet() {
         });
       }
 
-      return func(provider, address.value, ...args);
+      return func(provider.value, address.value, ...args);
     };
   };
 
   const withProviderReturn = <T extends [...unknown[]], R>(
     func: (
-      provider: NonNullable<ReturnType<typeof getProvider>>,
+      provider: JsonRpcProvider,
       address: string,
       ...args: T
     ) => Promise<R>,
     ifNot: (...args: T) => R
   ): ((...args: T) => Promise<R>) => {
     return (...args: T) => {
-      const provider = getProvider();
-
-      if (!provider || !address.value) {
+      if (!provider.value || !address.value) {
         return new Promise<R>((resolve) => {
           const x = ifNot(...args);
           resolve(x);
         });
       }
 
-      return func(provider, address.value, ...args);
+      return func(provider.value, address.value, ...args);
     };
   };
 
-  type ThenArg<T> = T extends Promise<infer U> ? U : T;
-
   const withSigner = <T extends [...unknown[]]>(
-    func: (
-      signer: NonNullable<ThenArg<ReturnType<typeof getSigner>>>,
-      address: string,
-      ...args: T
-    ) => Promise<void>,
+    func: (signer: JsonRpcSigner, address: string, ...args: T) => Promise<void>,
     ifNot?: (...args: T) => void
   ): ((...args: T) => Promise<void>) => {
-    return async (...args: T) => {
-      const signer = await getSigner();
-
-      if (!signer || !address.value) {
+    return (...args: T) => {
+      if (!signer.value || !address.value) {
         return new Promise<void>((resolve) => {
           if (ifNot) {
             ifNot(...args);
@@ -103,43 +114,39 @@ export function useWallet() {
         });
       }
 
-      return func(signer, address.value, ...args);
+      return func(signer.value, address.value, ...args);
     };
   };
 
   const withSignerReturn = <T extends [...unknown[]], R>(
-    func: (
-      provider: NonNullable<ThenArg<ReturnType<typeof getSigner>>>,
-      address: string,
-      ...args: T
-    ) => Promise<R>,
+    func: (provider: JsonRpcSigner, address: string, ...args: T) => Promise<R>,
     ifNot: (...args: unknown[]) => R
   ): ((...args: T) => Promise<R>) => {
     return async (...args: T) => {
-      const signer = await getSigner();
-
-      if (!signer || !address.value) {
+      if (!signer.value || !address.value) {
         return new Promise<R>((resolve) => {
           const x = ifNot(...args);
           resolve(x);
         });
       }
 
-      return func(signer, address.value, ...args);
+      return func(signer.value, address.value, ...args);
     };
   };
 
   return {
-    connected,
+    connect,
+    disconnect,
+    isConnected,
+    connectors,
     network,
-    address,
-    getProvider,
-    getSigner,
+    address: addressLower,
+    provider,
+    providerCowSwap,
+    signer,
     withProvider,
     withProviderReturn,
     withSigner,
     withSignerReturn,
-    connectWallet,
-    disconnectWallet,
   };
 }

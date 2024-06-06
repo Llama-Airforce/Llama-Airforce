@@ -127,7 +127,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { address, getSigner } = useWallet();
+const { address, signer } = useWallet();
 const store = useUnionStore();
 
 const modalClaim = ref(false);
@@ -234,13 +234,12 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
       modalSlippage.value = true;
       modalAction = () => onDeposit(true);
 
-      const signer = await getSigner();
-      if (!signer) {
+      if (!signer.value) {
         return;
       }
 
       minAmountOutRef.value = await zapDeposit.value
-        .getMinAmountOut(getHost(), signer, depositInput.value, 0)
+        .getMinAmountOut(getHost(), signer.value, depositInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsWithdraw));
       symbolOutput.value = pounderStore.value.pounder.symbol;
 
@@ -299,13 +298,12 @@ const onWithdraw = async (
       modalSlippage.value = true;
       modalAction = () => onWithdraw(true, true);
 
-      const signer = await getSigner();
-      if (!signer) {
+      if (!signer.value) {
         return;
       }
 
       minAmountOutRef.value = await zapWithdraw.value
-        .getMinAmountOut(getHost(), signer, withdrawInput.value, 0)
+        .getMinAmountOut(getHost(), signer.value, withdrawInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsDeposit));
       symbolOutput.value = zapWithdraw.value.withdrawSymbol;
 

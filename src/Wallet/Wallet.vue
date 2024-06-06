@@ -1,7 +1,7 @@
 <template>
   <div class="wallet">
     <div
-      v-if="connected"
+      v-if="isConnected"
       class="connected"
     >
       <div
@@ -23,7 +23,7 @@
         class="disconnect"
         icon="fas fa-check"
         :value="addressShort(address)"
-        @click="disconnectWallet"
+        @click="disconnect"
       ></Button>
     </div>
 
@@ -43,9 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import { addressShort, getAddress, useWallet } from "@/Wallet";
+import { addressShort, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
-import { useWalletStore } from "@/Wallet/Store";
 
 const { t } = useI18n();
 
@@ -57,34 +56,9 @@ interface Props {
 const { labelPleaseConnect } = defineProps<Props>();
 
 // Refs
-const store = useWalletStore();
-const {
-  connected,
-  network,
-  address,
-  connectWallet,
-  disconnectWallet,
-  getSigner,
-  withProvider,
-} = useWallet();
+const { isConnected, network, address, withProvider, disconnect } = useWallet();
 
 const supportedNetwork = computed(() => network.value === "ethereum");
-
-// Hooks
-onMounted(connectWallet);
-
-// Watches
-watch(
-  connected,
-  async (connected): Promise<void> => {
-    // Don't use withProvider because there might no address, so it won't execute.
-    const signer = await getSigner();
-    const address = signer && connected ? await getAddress(signer) : undefined;
-
-    store.setAddress(address);
-  },
-  { immediate: true }
-);
 
 // Events
 const changeNetwork = withProvider(async (provider) => {

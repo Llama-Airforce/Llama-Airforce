@@ -1,6 +1,8 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
+import {
+  type JsonRpcProvider,
+  type JsonRpcSigner,
+} from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getProvider, getSigner } from "@/Wallet/ProviderFactory";
 import {
   CurveV2FactoryPool__factory,
   type ERC20,
@@ -20,9 +22,10 @@ import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
-async function shouldLock(input: bigint): Promise<boolean> {
-  const provider = getProvider();
-
+async function shouldLock(
+  provider: JsonRpcProvider | undefined,
+  input: bigint
+): Promise<boolean> {
   if (!provider) {
     return false;
   }
@@ -40,6 +43,7 @@ async function shouldLock(input: bigint): Promise<boolean> {
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxDepositZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVaultPirex | undefined,
@@ -70,7 +74,7 @@ export function uCvxDepositZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra zaps");
@@ -91,7 +95,7 @@ export function uCvxDepositZaps(
 
   const depositFromCvx = async (minAmountOut: bigint) => {
     const x = await depositFactory(CvxAddress);
-    const lock = await shouldLock(x.input);
+    const lock = await shouldLock(getSigner()?.provider, x.input);
     const ps = [x.input, minAmountOut, x.address, lock] as const;
 
     const estimate = await x.zaps.estimateGas.depositFromCvx(...ps);
@@ -111,7 +115,7 @@ export function uCvxDepositZaps(
     depositSymbol: "CVX",
     depositBalance: () => {
       const address = getAddress();
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!address || !provider) {
         throw new Error("Unable to construct deposit zap balance");
@@ -121,7 +125,7 @@ export function uCvxDepositZaps(
       return depositERC20.balanceOf(address).then((x) => x.toBigInt());
     },
     depositDecimals: () => {
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!provider) {
         throw new Error("Unable to construct deposit zap decimals");

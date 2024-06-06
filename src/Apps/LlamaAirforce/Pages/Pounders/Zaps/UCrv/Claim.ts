@@ -1,5 +1,5 @@
+import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getSigner } from "@/Wallet/ProviderFactory";
 import { ERC20__factory, ZapsUCrvClaim__factory } from "@/Contracts";
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
 import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
@@ -9,6 +9,7 @@ import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCrvClaimZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
 ): (ZapClaim | Swap)[] {
@@ -40,7 +41,7 @@ export function uCrvClaimZaps(
   const extraZapFactory = async (zapAddress: string) => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !airdrop || !signer) {
       throw new Error("Unable to construct extra claim zaps");

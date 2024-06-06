@@ -1,4 +1,4 @@
-import { getSigner } from "@/Wallet/ProviderFactory";
+import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type UnionVault, UnionVault__factory } from "@/Contracts";
 import { UnionFxsVaultAddress } from "@/Util/Addresses";
 import type { ZapWithdraw, Swap } from "@Pounders/Models";
@@ -7,6 +7,7 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsWithdrawZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
@@ -15,7 +16,7 @@ export function uFxsWithdrawZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra withdraw zaps");

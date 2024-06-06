@@ -35,7 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { type JsonRpcSigner } from "@ethersproject/providers";
+import {
+  type JsonRpcProvider,
+  type JsonRpcSigner,
+} from "@ethersproject/providers";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import UnionService from "@LAF/Services/UnionService";
@@ -85,7 +88,7 @@ onMounted(
 
 // Methods
 const updateClaims = withSigner(async (signer, address) => {
-  const provider = signer.provider;
+  const provider = signer as unknown as JsonRpcProvider;
 
   store.pounders.ucrv!.claim = await getClaim(
     provider,
@@ -136,6 +139,7 @@ const createUCvxPounder = (signer: JsonRpcSigner) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uCvxDepositZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn,
@@ -143,6 +147,7 @@ const createUCvxPounder = (signer: JsonRpcSigner) => {
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uCvxWithdrawZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn
@@ -197,6 +202,7 @@ const createUFxsPounder = (signer: JsonRpcSigner) => {
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uFxsWithdrawZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn
@@ -217,6 +223,7 @@ const createUPrismaPounder = (signer: JsonRpcSigner) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uPrismaDepositZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn,
@@ -224,6 +231,7 @@ const createUPrismaPounder = (signer: JsonRpcSigner) => {
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uPrismaWithdrawZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn
@@ -244,6 +252,7 @@ const createUFxsLpPounder = (signer: JsonRpcSigner) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uFxsLpDepositZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn,
@@ -251,6 +260,7 @@ const createUFxsLpPounder = (signer: JsonRpcSigner) => {
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uFxsLpWithdrawZaps(
+        () => signer,
         () => address.value,
         getInput,
         () => pounder.utkn

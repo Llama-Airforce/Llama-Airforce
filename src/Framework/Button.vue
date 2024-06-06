@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useWallet, getNetwork } from "@/Wallet";
+import { useWallet } from "@/Wallet";
 
 // Props
 interface Props {
@@ -39,7 +39,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { withProvider } = useWallet();
+const { withProvider, network } = useWallet();
 
 // Events
 const onClick = async (evt: Event): Promise<void> => {
@@ -47,9 +47,7 @@ const onClick = async (evt: Event): Promise<void> => {
 
   if (web3 && isDevelopment()) {
     await withProvider(async (provider) => {
-      const network = await getNetwork(provider);
-
-      if (network !== "ethereum") {
+      if (network.value !== "ethereum") {
         await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
         window.location.reload();
       }

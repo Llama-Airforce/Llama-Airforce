@@ -3,7 +3,7 @@
     <Button
       class="button"
       :primary="true"
-      @click="connectWallet(true)"
+      @click="showConnectors = true"
     >
       {{ t("connect-your-wallet") }}
     </Button>
@@ -23,25 +23,68 @@
         v-html="t('clear-cache')"
       ></div>
     </Tooltip>
+
+    <Modal
+      :show="showConnectors"
+      @close="showConnectors = false"
+    >
+      <Card>
+        <div class="connectors-body">
+          <div
+            v-for="connector in connectors"
+            :key="connector.id"
+            class="connector"
+          >
+            {{ connector.name }}
+            <Button
+              :primary="true"
+              @click="onConnect(connector)"
+            >
+              Connect
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </Modal>
   </div>
 </template>
 
 <script setup lang="ts">
+import { type Connector } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 
 const { t } = useI18n();
 
-// Refs
-const { connectWallet } = useWallet();
+const { connectors, connect } = useWallet();
 
-// Methods
-const onClearCache = (): void => {
-  window.localStorage.removeItem("connectedWallet");
+const showConnectors = ref(false);
+
+const onConnect = (connector: Connector) => {
+  connect({ connector });
+  showConnectors.value = false;
+};
+
+const onClearCache = () => {
+  console.log("nothing to do yet");
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
+
+.connectors-body {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+
+  .connector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 
 .buttons {
   display: flex;
@@ -61,16 +104,8 @@ const onClearCache = (): void => {
 
 <i18n lang="yaml" locale="en">
 connect-your-wallet: Connect Wallet
-clear-cache: "<b>Clear Cache</b><br />
-  Press this button to possibly solve the issue of a non-working connect button.<br />
-  This problem often occurs when you switch between wallet extensions in your browser.<br />
-  Try to connect again after pressing this button."
 </i18n>
 
 <i18n lang="yaml" locale="zh">
 connect-your-wallet: 连接你的钱包
-clear-cache: "<b>清除缓存</b><br />
-  按下这个按钮，可能会解决连接按钮不工作的问题.<br />
-  这个问题经常发生在你在浏览器中切换钱包扩展时.<br />
-  按下这个按钮后，尝试再次连接."
 </i18n>

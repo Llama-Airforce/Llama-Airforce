@@ -1,4 +1,4 @@
-import { getSigner } from "@/Wallet/ProviderFactory";
+import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type UnionVault, UnionVault__factory } from "@/Contracts";
 import { UnionPrismaVaultAddress } from "@/Util/Addresses";
 import type { ZapWithdraw, Swap } from "@Pounders/Models";
@@ -6,6 +6,7 @@ import type { ZapWithdraw, Swap } from "@Pounders/Models";
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 export function uPrismaWithdrawZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined
@@ -14,7 +15,7 @@ export function uPrismaWithdrawZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra withdraw zaps");

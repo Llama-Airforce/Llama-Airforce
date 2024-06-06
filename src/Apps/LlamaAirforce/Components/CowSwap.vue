@@ -7,11 +7,13 @@
 
 <script setup lang="ts">
 import {
+  type EthereumProvider,
   type CowSwapWidgetParams,
   type CowSwapWidgetHandler,
   TradeType,
   createCowSwapWidget,
 } from "@cowprotocol/widget-lib";
+import { useWallet } from "@/Wallet";
 
 // Props
 interface Props {
@@ -23,6 +25,8 @@ interface Props {
 const { buy, sell, level } = defineProps<Props>();
 
 // Cowswap
+const { providerCowSwap: provider } = useWallet();
+
 const cow = ref<HTMLElement | undefined>(undefined);
 let cowHandler: CowSwapWidgetHandler | undefined = undefined;
 
@@ -31,7 +35,7 @@ onUnmounted(() => {
 });
 
 watchEffect(() => {
-  if (!buy || !sell || !cow.value) {
+  if (!buy || !sell || !cow.value || !provider.value) {
     return;
   }
 
@@ -40,6 +44,7 @@ watchEffect(() => {
   if (!cowHandler) {
     cowHandler = createCowSwapWidget(cow.value, {
       params,
+      provider: provider.value as unknown as EthereumProvider,
     });
     return;
   }
@@ -88,7 +93,7 @@ function createParams(
           "https://assets.coingecko.com/coins/images/32961/large/cvxprisma.png?1700026172",
       },
     ],
-    standaloneMode: true,
+    standaloneMode: false,
     disableToastMessages: false,
   };
 }

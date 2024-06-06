@@ -1,5 +1,5 @@
+import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getProvider, getSigner } from "@/Wallet/ProviderFactory";
 import {
   type ERC20,
   ERC20__factory,
@@ -16,6 +16,7 @@ import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uPrismaDepositZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVault | undefined,
@@ -45,7 +46,7 @@ export function uPrismaDepositZaps(
   const depositFromStkCvxPrisma = async () => {
     const address = getAddress();
     const input = getInput();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !input || !signer) {
       throw new Error("Unable to construct migration zap");
@@ -81,9 +82,9 @@ export function uPrismaDepositZaps(
     label: "Migrate from Convex",
     zap: () => depositFromStkCvxPrisma(),
     depositSymbol: "stkCvxPRISMA",
-    depositBalance: async () => {
+    depositBalance: () => {
       const address = getAddress();
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!address || !provider) {
         throw new Error("Unable to construct deposit zap balance");
@@ -96,7 +97,7 @@ export function uPrismaDepositZaps(
       return depositERC20.balanceOf(address).then((x) => x.toBigInt());
     },
     depositDecimals: () => {
-      const provider = getProvider();
+      const provider = getSigner()?.provider;
 
       if (!provider) {
         throw new Error("Unable to construct deposit zap decimals");

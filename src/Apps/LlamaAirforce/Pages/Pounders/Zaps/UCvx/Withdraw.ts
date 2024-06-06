@@ -1,6 +1,5 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getSigner } from "@/Wallet/ProviderFactory";
 import {
   ERC20__factory,
   type UnionVaultPirex,
@@ -20,6 +19,7 @@ import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxWithdrawZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getInput: () => bigint | null,
   getVault: () => UnionVaultPirex | undefined
@@ -46,7 +46,7 @@ export function uCvxWithdrawZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra withdraw zaps");

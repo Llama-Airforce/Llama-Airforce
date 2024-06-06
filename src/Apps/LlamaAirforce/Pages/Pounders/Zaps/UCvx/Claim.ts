@@ -1,6 +1,5 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getSigner } from "@/Wallet/ProviderFactory";
 import { DefiLlamaService } from "@/Services";
 import { ERC20__factory, ZapsUCvxClaim__factory } from "@/Contracts";
 import {
@@ -17,6 +16,7 @@ import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxClaimZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
 ): (ZapClaim | Swap)[] {
@@ -48,7 +48,7 @@ export function uCvxClaimZaps(
   const extraZapFactory = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !airdrop || !signer) {
       throw new Error("Unable to construct extra claim zaps");

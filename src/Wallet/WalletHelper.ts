@@ -1,35 +1,5 @@
 import { constants } from "ethers";
-import type { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { type ERC20 } from "@/Contracts";
-import { type Network } from "@/Wallet/Network";
-
-export async function getNetwork(
-  provider?: JsonRpcProvider
-): Promise<Network | undefined> {
-  if (!provider) {
-    return undefined;
-  }
-
-  try {
-    const { chainId } = await provider.getNetwork();
-
-    if (chainId === 1) {
-      return "ethereum";
-    } else if (chainId === 8453) {
-      return "base";
-    }
-
-    return undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-export async function getAddress(signer: JsonRpcSigner): Promise<string> {
-  const address = await signer.getAddress();
-
-  return address;
-}
 
 export function addressShort(address?: string, digits = 6): string {
   if (!address) {

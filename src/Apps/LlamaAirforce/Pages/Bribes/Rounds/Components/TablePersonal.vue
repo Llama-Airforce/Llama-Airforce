@@ -76,7 +76,7 @@
     <template #no-data>
       <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
       <WalletConnectButton
-        v-if="!connected && isSupported"
+        v-if="!isConnected && isSupported"
       ></WalletConnectButton>
     </template>
   </DataTable>
@@ -114,7 +114,7 @@ const { epoch } = defineProps<Props>();
 
 // Refs
 const { protocol } = storeToRefs(useBribesStore());
-const { connected, address } = useWallet();
+const { isConnected, address } = useWallet();
 
 const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
   ["percentage", "pool", "vlasset", "total"],

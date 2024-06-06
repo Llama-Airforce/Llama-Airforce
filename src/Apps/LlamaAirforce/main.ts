@@ -7,6 +7,8 @@ import App from "@LAF/App.vue";
 import createRouter from "@LAF/Router";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
+import { WagmiPlugin } from "@wagmi/vue";
+import { config as wagmiConfig } from "@/Wallet/Wagmi";
 
 import { pageBribes, pageBribesRoutes } from "@LAF/Pages/Bribes/Page";
 import { pagePirexRoutes } from "@LAF/Pages/Pirex/Page";
@@ -59,6 +61,14 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error, query) => {
+      // Ignore these wagmi errors for now.
+      if (
+        error.message.includes("Connector not connected") ||
+        error.message.includes("connector2.getAccounts is not a function")
+      ) {
+        return;
+      }
+
       notify({
         text: `Failed querying ${query.queryHash} >>> ${error.message}`,
         type: "error",
@@ -74,4 +84,5 @@ app
   .use(VueApexCharts)
   .use(VueQueryPlugin, { queryClient })
   .use(Notifications)
+  .use(WagmiPlugin, { config: wagmiConfig })
   .mount("#app");

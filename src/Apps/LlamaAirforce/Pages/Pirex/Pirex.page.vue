@@ -6,7 +6,7 @@
         class="col"
       >
         <VaultInfo></VaultInfo>
-        <UserInfo v-if="connected"></UserInfo>
+        <UserInfo v-if="isConnected"></UserInfo>
       </div>
 
       <div
@@ -28,7 +28,7 @@ import UserInfo from "@LAF/Pages/Pirex/Components/UserInfo.vue";
 import Redemptions from "@LAF/Pages/Pirex/Components/Redemptions.vue";
 import Swap from "@LAF/Pages/Pirex/Components/Swap.vue";
 
-const { connected } = useWallet();
+const { isConnected } = useWallet();
 </script>
 
 <style lang="scss" scoped>

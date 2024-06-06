@@ -1,6 +1,5 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getSigner } from "@/Wallet/ProviderFactory";
 import {
   CurveV2FactoryPool__factory,
   ERC20__factory,
@@ -23,13 +22,14 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpClaimZaps(
+  getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
   getAirdrop: () => Airdrop | null
 ): (ZapClaim | Swap)[] {
   const extraZapFactory = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const signer = await getSigner();
+    const signer = getSigner();
 
     if (!address || !airdrop || !signer) {
       throw new Error("Unable to construct extra claim zaps");
