@@ -1,13 +1,14 @@
-import {
-  type ExternalProvider,
-  Web3Provider,
-  type JsonRpcProvider,
-} from "@ethersproject/providers";
-import Onboard, { type OnboardAPI, type WalletState } from "@web3-onboard/core";
+import { providers } from "ethers";
+import type { Account, Client, Chain, Transport } from "viem";
+import { type Config, getConnectorClient } from "@wagmi/core";
+import { mainnet } from "@wagmi/core/chains";
+
+import Onboard, { type OnboardAPI } from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import coinbaseWalletModule from "@web3-onboard/coinbase";
 import gnosisModule from "@web3-onboard/gnosis";
+import wagmi, { getClient, disconnect } from "@web3-onboard/wagmi";
 
 const injected = injectedModule();
 const walletConnect = walletConnectModule({
@@ -19,8 +20,10 @@ const gnosis = gnosisModule();
 
 let onboard: OnboardAPI | null = null;
 
-function getOnboard(): OnboardAPI {
+// Web3-Onboard
+function getOnboard() {
   const onboard = Onboard({
+    wagmi,
     wallets: [injected, walletConnect, coinbaseWallet, gnosis],
     chains: [
       {
@@ -45,8 +48,7 @@ function getOnboard(): OnboardAPI {
   return onboard;
 }
 
-let walletConnected: WalletState | null = null;
-
+// Connecting
 export async function connectWallet(showModal = false) {
   if (!onboard) {
     onboard = getOnboard();
@@ -69,8 +71,6 @@ export async function connectWallet(showModal = false) {
       }
     }
   }
-
-  walletConnected = wallet ? wallet : null;
 }
 
 export async function disconnectWallet(): Promise<void> {
@@ -78,13 +78,76 @@ export async function disconnectWallet(): Promise<void> {
     return;
   }
 
-  const [primaryWallet] = onboard.state.get().wallets;
-  await onboard.disconnectWallet({ label: primaryWallet.label });
+  const wagmiConfig = onboard.state.get().wagmiConfig;
+  const [activeWallet] = onboard.state.get().wallets;
+  if (activeWallet) {
+    const { wagmiConnector } = activeWallet;
+    if (wagmiConfig && wagmiConnector) {
+      await disconnect(wagmiConfig, { connector: wagmiConnector });
+    }
+  }
+
   window.localStorage.removeItem("connectedWallet");
 }
 
-export function getProvider(): JsonRpcProvider | undefined {
-  return walletConnected
-    ? new Web3Provider(walletConnected.provider as ExternalProvider)
-    : undefined;
+// Providers and signers
+export function getProvider() {
+  if (!onboard) {
+    onboard = getOnboard();
+  }
+
+  const wagmiConfig = onboard.state.get().wagmiConfig;
+  if (wagmiConfig) {
+    const client = getClient(wagmiConfig, { chainId: mainnet.id });
+    if (client) {
+      return clientToProvider(client as Client<Transport, Chain>);
+    }
+  }
+
+  return undefined;
+}
+
+export async function getSigner() {
+  if (!onboard) {
+    onboard = getOnboard();
+  }
+
+  const wagmiConfig = onboard.state.get().wagmiConfig;
+  if (wagmiConfig) {
+    try {
+      const client = await getConnectorClient(wagmiConfig as Config, {
+        chainId: mainnet.id,
+      });
+
+      return clientToSigner(client);
+    } catch {
+      return undefined;
+    }
+  }
+
+  return undefined;
+}
+
+// Wagmi
+export function clientToProvider(client: Client<Transport, Chain>) {
+  const { chain, transport } = client;
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return new providers.JsonRpcProvider(transport.url, network);
+}
+
+export function clientToSigner(client: Client<Transport, Chain, Account>) {
+  const { account, chain, transport } = client;
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  };
+  const provider = new providers.Web3Provider(transport, network);
+  const signer = provider.getSigner(account.address);
+  return signer;
 }

@@ -1,5 +1,5 @@
 import { maxApprove } from "@/Wallet";
-import { getProvider } from "@/Wallet/ProviderFactory";
+import { getProvider, getSigner } from "@/Wallet/ProviderFactory";
 import {
   type ERC20,
   ERC20__factory,
@@ -45,13 +45,11 @@ export function uPrismaDepositZaps(
   const depositFromStkCvxPrisma = async () => {
     const address = getAddress();
     const input = getInput();
-    const provider = getProvider();
+    const signer = await getSigner();
 
-    if (!address || !input || !provider) {
+    if (!address || !input || !signer) {
       throw new Error("Unable to construct migration zap");
     }
-
-    const signer = provider.getSigner();
 
     const stkCvxPrisma = ERC20__factory.connect(StkCvxPrismaAddress, signer);
     await maxApprove(

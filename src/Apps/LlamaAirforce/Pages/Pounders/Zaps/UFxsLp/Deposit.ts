@@ -1,6 +1,6 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getProvider } from "@/Wallet/ProviderFactory";
+import { getProvider, getSigner } from "@/Wallet/ProviderFactory";
 import {
   type ERC20,
   ERC20__factory,
@@ -33,13 +33,11 @@ export function uFxsLpDepositZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const provider = getProvider();
+    const signer = await getSigner();
 
-    if (!address || !vault || !input || !provider) {
+    if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra zaps");
     }
-
-    const signer = provider.getSigner();
 
     if (depositTkn) {
       const depositERC20 = ERC20__factory.connect(depositTkn, signer);

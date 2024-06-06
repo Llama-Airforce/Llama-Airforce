@@ -64,7 +64,7 @@ const {
   address,
   connectWallet,
   disconnectWallet,
-  getProvider,
+  getSigner,
   withProvider,
 } = useWallet();
 
@@ -78,9 +78,8 @@ watch(
   connected,
   async (connected): Promise<void> => {
     // Don't use withProvider because there might no address, so it won't execute.
-    const provider = getProvider();
-    const address =
-      provider && connected ? await getAddress(provider) : undefined;
+    const signer = await getSigner();
+    const address = signer && connected ? await getAddress(signer) : undefined;
 
     store.setAddress(address);
   },

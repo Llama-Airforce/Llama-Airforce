@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { type Network } from "@/Wallet/Network";
 
 export const useWalletStore = defineStore("walletStore", () => {
-  const address = ref<string>();
+  const address = ref<string | undefined>();
   const connected = ref(false);
   const network = ref<Network>();
 

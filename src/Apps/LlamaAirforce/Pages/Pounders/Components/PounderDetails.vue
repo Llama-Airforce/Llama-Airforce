@@ -234,7 +234,7 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
       modalSlippage.value = true;
       modalAction = () => onDeposit(true);
 
-      const signer = getSigner();
+      const signer = await getSigner();
       if (!signer) {
         return;
       }
@@ -299,7 +299,7 @@ const onWithdraw = async (
       modalSlippage.value = true;
       modalAction = () => onWithdraw(true, true);
 
-      const signer = getSigner();
+      const signer = await getSigner();
       if (!signer) {
         return;
       }

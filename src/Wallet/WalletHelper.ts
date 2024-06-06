@@ -1,26 +1,7 @@
 import { constants } from "ethers";
-import { type JsonRpcProvider } from "@ethersproject/providers";
+import type { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { type ERC20 } from "@/Contracts";
 import { type Network } from "@/Wallet/Network";
-
-export async function isConnected(
-  provider?: JsonRpcProvider
-): Promise<boolean> {
-  if (!provider) {
-    return false;
-  }
-
-  try {
-    const signer = provider.getSigner();
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _ = await signer.getAddress();
-
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 export async function getNetwork(
   provider?: JsonRpcProvider
@@ -30,9 +11,9 @@ export async function getNetwork(
   }
 
   try {
-    const { name, chainId } = await provider.getNetwork();
+    const { chainId } = await provider.getNetwork();
 
-    if (name === "homestead" && chainId === 1) {
+    if (chainId === 1) {
       return "ethereum";
     } else if (chainId === 8453) {
       return "base";
@@ -44,8 +25,7 @@ export async function getNetwork(
   }
 }
 
-export async function getAddress(provider: JsonRpcProvider): Promise<string> {
-  const signer = provider.getSigner();
+export async function getAddress(signer: JsonRpcSigner): Promise<string> {
   const address = await signer.getAddress();
 
   return address;

@@ -1,5 +1,5 @@
 import { maxApprove } from "@/Wallet";
-import { getProvider } from "@/Wallet/ProviderFactory";
+import { getSigner } from "@/Wallet/ProviderFactory";
 import { ERC20__factory, ZapsUCrvClaim__factory } from "@/Contracts";
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
 import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
@@ -40,13 +40,11 @@ export function uCrvClaimZaps(
   const extraZapFactory = async (zapAddress: string) => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const provider = getProvider();
+    const signer = await getSigner();
 
-    if (!address || !airdrop || !provider) {
+    if (!address || !airdrop || !signer) {
       throw new Error("Unable to construct extra claim zaps");
     }
-
-    const signer = provider.getSigner();
 
     const utkn = ERC20__factory.connect(UnionCrvVaultAddress, signer);
     await maxApprove(utkn, address, zapAddress, airdrop.amount);

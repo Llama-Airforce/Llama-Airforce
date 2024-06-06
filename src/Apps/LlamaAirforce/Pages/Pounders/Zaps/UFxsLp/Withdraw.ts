@@ -1,6 +1,6 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { getProvider } from "@/Wallet/ProviderFactory";
+import { getSigner } from "@/Wallet/ProviderFactory";
 import {
   ERC20__factory,
   ZapsUFxsLp__factory,
@@ -31,13 +31,11 @@ export function uFxsLpWithdrawZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const provider = getProvider();
+    const signer = await getSigner();
 
-    if (!address || !vault || !input || !provider) {
+    if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra withdraw zaps");
     }
-
-    const signer = provider.getSigner();
 
     const utkn = ERC20__factory.connect(UnionFxsVaultAddressV1, signer);
     await maxApprove(utkn, address, ZapsUFxsAddressV1, input);
@@ -80,13 +78,12 @@ export function uFxsLpWithdrawZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const provider = getProvider();
+    const signer = await getSigner();
 
-    if (!address || !vault || !input || !provider) {
+    if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra withdraw zaps");
     }
 
-    const signer = provider.getSigner();
     const utkn = UnionVault__factory.connect(UnionFxsVaultAddressV1, signer);
 
     const ps = [address, input] as const;

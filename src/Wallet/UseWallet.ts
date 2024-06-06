@@ -4,8 +4,9 @@ import {
   connectWallet as connectWalletFunc,
   disconnectWallet as disconnectWalletFunc,
   getProvider,
+  getSigner,
 } from "@/Wallet/ProviderFactory";
-import { isConnected, getNetwork } from "@/Wallet/WalletHelper";
+import { getNetwork } from "@/Wallet/WalletHelper";
 
 // eslint-disable-next-line max-lines-per-function
 export function useWallet() {
@@ -19,7 +20,7 @@ export function useWallet() {
     await connectWalletFunc(showModal);
     const provider = getProvider();
 
-    const connected = await isConnected(provider);
+    const connected = !!provider;
     store.connected = connected;
 
     const network = await getNetwork(provider);
@@ -30,8 +31,6 @@ export function useWallet() {
     await disconnectWalletFunc();
     store.connected = false;
   };
-
-  const getSigner = () => getProvider()?.getSigner();
 
   // Call a function with provider and address if available.
   const withProvider = <T extends [...unknown[]]>(
@@ -81,16 +80,18 @@ export function useWallet() {
     };
   };
 
+  type ThenArg<T> = T extends Promise<infer U> ? U : T;
+
   const withSigner = <T extends [...unknown[]]>(
     func: (
-      provider: NonNullable<ReturnType<typeof getSigner>>,
+      signer: NonNullable<ThenArg<ReturnType<typeof getSigner>>>,
       address: string,
       ...args: T
     ) => Promise<void>,
     ifNot?: (...args: T) => void
   ): ((...args: T) => Promise<void>) => {
-    return (...args: T) => {
-      const signer = getSigner();
+    return async (...args: T) => {
+      const signer = await getSigner();
 
       if (!signer || !address.value) {
         return new Promise<void>((resolve) => {
@@ -108,14 +109,14 @@ export function useWallet() {
 
   const withSignerReturn = <T extends [...unknown[]], R>(
     func: (
-      provider: NonNullable<ReturnType<typeof getSigner>>,
+      provider: NonNullable<ThenArg<ReturnType<typeof getSigner>>>,
       address: string,
       ...args: T
     ) => Promise<R>,
     ifNot: (...args: unknown[]) => R
   ): ((...args: T) => Promise<R>) => {
-    return (...args: T) => {
-      const signer = getSigner();
+    return async (...args: T) => {
+      const signer = await getSigner();
 
       if (!signer || !address.value) {
         return new Promise<R>((resolve) => {

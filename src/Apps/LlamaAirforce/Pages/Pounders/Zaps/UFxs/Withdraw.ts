@@ -1,4 +1,4 @@
-import { getProvider } from "@/Wallet/ProviderFactory";
+import { getSigner } from "@/Wallet/ProviderFactory";
 import { type UnionVault, UnionVault__factory } from "@/Contracts";
 import { UnionFxsVaultAddress } from "@/Util/Addresses";
 import type { ZapWithdraw, Swap } from "@Pounders/Models";
@@ -15,13 +15,12 @@ export function uFxsWithdrawZaps(
     const address = getAddress();
     const vault = getVault();
     const input = getInput();
-    const provider = getProvider();
+    const signer = await getSigner();
 
-    if (!address || !vault || !input || !provider) {
+    if (!address || !vault || !input || !signer) {
       throw new Error("Unable to construct extra withdraw zaps");
     }
 
-    const signer = provider.getSigner();
     const utkn = UnionVault__factory.connect(UnionFxsVaultAddress, signer);
 
     const ps = [address, input] as const;
