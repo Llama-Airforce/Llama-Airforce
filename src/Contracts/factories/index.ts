@@ -6,6 +6,5 @@ export * as curve from "./Curve";
 export * as prisma from "./Prisma";
 export * as registries from "./Registries";
 export * as standards from "./Standards";
-export * as tokens from "./Tokens";
 export * as union from "./Union";
 export * as veFunder from "./veFunder";
