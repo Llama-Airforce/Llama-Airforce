@@ -4,6 +4,7 @@ import {
 } from "@ethersproject/providers";
 import { type Network } from "@/Wallet/Network";
 import {
+  useClient,
   useAccount,
   useConnect,
   useDisconnect,
@@ -19,6 +20,7 @@ export function useWallet() {
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
   const connectors = useConnectors();
+  const client = useClient();
 
   // Account info
   const { address, isConnected, chainId, connector } = useAccount();
@@ -134,6 +136,7 @@ export function useWallet() {
   };
 
   return {
+    client,
     connect,
     disconnect,
     isConnected,
