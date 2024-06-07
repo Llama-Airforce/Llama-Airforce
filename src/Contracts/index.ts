@@ -50,8 +50,6 @@ export type { ERC20 } from "./Standards/ERC20";
 export { ERC20__factory } from "./factories/Standards/ERC20__factory";
 export type { ERC4626 } from "./Standards/ERC4626";
 export { ERC4626__factory } from "./factories/Standards/ERC4626__factory";
-export type { TheLlamas } from "./Tokens/TheLlamas";
-export { TheLlamas__factory } from "./factories/Tokens/TheLlamas__factory";
 export type { VlCVX } from "./Tokens/VlCVX";
 export { VlCVX__factory } from "./factories/Tokens/VlCVX__factory";
 export type { MerkleDistributor2 } from "./Union/MerkleDistributor2";

@@ -6,41 +6,47 @@
 </template>
 
 <script setup lang="ts">
+import { useReadContract } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
-import { TheLlamas__factory } from "@/Contracts";
+import { abi } from "@/ABI/Tokens/TheLlamas";
 
 // Refs
-const { address, network, withProvider } = useWallet();
+const { address, network } = useWallet();
 
 const uri = ref("");
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  await getNFT();
+const { data: tokens } = useReadContract({
+  abi,
+  address: TheLlamas,
+  functionName: "tokensForOwner",
+  args: computed(() => [address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value && network.value === "ethereum"),
+  },
 });
 
-// Methods
-const getNFT = withProvider(async (provider, address) => {
-  if (network.value !== "ethereum") {
+const { data: tokenUri } = useReadContract({
+  abi,
+  address: TheLlamas,
+  functionName: "tokenURI",
+  args: computed(() => [tokens.value?.[0] ?? 0n] as const),
+  query: {
+    enabled: computed(() => (tokens.value?.length ?? 0) > 0),
+  },
+});
+
+watch(tokenUri, async (newTokenUri) => {
+  if (!newTokenUri) {
+    uri.value = "";
     return;
   }
 
-  const llamas = TheLlamas__factory.connect(TheLlamas, provider);
-  const tokens = await llamas.tokensForOwner(address);
-  if (tokens.length === 0) {
-    return;
-  }
-
-  const tokenUri = await llamas.tokenURI(tokens[0]);
-  const tokenResp = await fetch(tokenUri);
+  const tokenResp = await fetch(newTokenUri);
   const token = (await tokenResp.json()) as { image: string };
   if (token?.image) {
     uri.value = token.image;
   }
 });
-
-// Watches
-watch([address, network], getNFT);
 </script>
 
 <style lang="scss" scoped>

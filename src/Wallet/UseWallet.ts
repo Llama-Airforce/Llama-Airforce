@@ -23,9 +23,8 @@ export function useWallet() {
   // Account info
   const { address, isConnected, chainId, connector } = useAccount();
 
-  // Dependency on provider as we only want to change address when there is one.
-  const addressLower = computed(() =>
-    provider.value ? address.value?.toLocaleLowerCase() : ""
+  const addressOnProvider = computed(() =>
+    provider.value && address.value ? address.value : undefined
   );
 
   const network = computed((): Network | undefined => {
@@ -140,7 +139,7 @@ export function useWallet() {
     isConnected,
     connectors,
     network,
-    address: addressLower,
+    address: addressOnProvider,
     provider,
     providerCowSwap,
     signer,
