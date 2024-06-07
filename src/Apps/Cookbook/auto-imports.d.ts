@@ -191,6 +191,8 @@ declare global {
   const minDelay: typeof import('../../Util/PromiseHelper')['minDelay']
   const nextTick: typeof import('vue')['nextTick']
   const notEmpty: typeof import('../../Util/ArrayHelper')['notEmpty']
+  const notifyError: typeof import('../../Util/NotificationHelper')['notifyError']
+  const notifySuccess: typeof import('../../Util/NotificationHelper')['notifySuccess']
   const numToBigNumber: typeof import('../../Util/NumberHelper')['numToBigNumber']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']

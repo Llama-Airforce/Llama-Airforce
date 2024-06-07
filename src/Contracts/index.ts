@@ -40,8 +40,6 @@ export type { VotingPrisma } from "./Prisma/VotingPrisma";
 export { VotingPrisma__factory } from "./factories/Prisma/VotingPrisma__factory";
 export type { AssetRegistry } from "./Registries/AssetRegistry";
 export { AssetRegistry__factory } from "./factories/Registries/AssetRegistry__factory";
-export type { SnapshotRegistry } from "./Registries/SnapshotRegistry";
-export { SnapshotRegistry__factory } from "./factories/Registries/SnapshotRegistry__factory";
 export type { VotiumRegistry } from "./Registries/VotiumRegistry";
 export { VotiumRegistry__factory } from "./factories/Registries/VotiumRegistry__factory";
 export type { ERC20 } from "./Standards/ERC20";

@@ -2,5 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AssetRegistry__factory } from "./AssetRegistry__factory";
-export { SnapshotRegistry__factory } from "./SnapshotRegistry__factory";
 export { VotiumRegistry__factory } from "./VotiumRegistry__factory";

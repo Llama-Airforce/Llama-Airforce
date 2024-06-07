@@ -4,6 +4,9 @@ en:
   submit: Submit
   submitting: Submitting...
 
+  # Allocator.vue
+  allocation-changed: Allocation succesfully updated!
+
   # Member.vue
   allocation: Allocation
 
@@ -25,6 +28,7 @@ en:
   delegation-advice:
     Delegating to votium both automates voting and ensures you get the
     highest $/vlCVX possible.
+  delegation-changed: Delegation has been succesfully set to Votium.
 
   # Claim.vue
   claim-notice:
@@ -58,6 +62,8 @@ en:
   joining: Joining ...
   already-forwarded: Already forwarded to another address
   forwarding-in-progress: Address forwarding expiration in progress
+  joined: You've succesfully joined the Union, welcome comrade!
+  left: You're succesfully left the Union. Goodbye comrade!
 
   # Locks.vue
   nothing-locked: You do not have any CVX locked for the upcoming round
@@ -97,6 +103,9 @@ zh:
   submit: 递交
   submitting: 递交...
 
+  # Allocator.vue
+  allocation-changed: 分配成功更新！
+
   # Member.vue
   allocation: 分配
 
@@ -115,6 +124,7 @@ zh:
   delegated: 您已托管给Votium
   not-delegated: 您尚未托管给 Votium
   delegation-advice: 将投票权托管给Votium，既可以自动投票，又能确保您能获得最高的收益。
+  delegation-changed: 已成功向 Votium 授权。
 
   # Claim.vue
   claim-notice: 您尚未领取的收益已经自动复利，您可以自由选择是否领取。
@@ -136,6 +146,8 @@ zh:
   joining: 正在加入 ...
   already-forwarded: 已经转发给另外一个地址
   forwarding-in-progress: 地址转发即将过期
+  joined: 你成功加入了联盟，欢迎你，同志！
+  left: 你已成功脱离联盟。再见了，同志
 
   # Locks.vue
   nothing-locked: 你在下一个周期中没有锁定的CVX
@@ -166,6 +178,9 @@ fr:
   submit: Valider
   submitting: Validation en cours...
 
+  # Allocator.vue
+  allocation-changed: Allocation mise à jour avec succès !
+
   # Member.vue
   allocation: Allocation
 
@@ -188,6 +203,7 @@ fr:
   delegation-advice:
     Déléguer à Votium permet à la fois d'automatiser le vote et de garantir que vous obtenez le
     meilleur ratio $/vlCVX possible.
+  delegation-changed: La délégation a été établie avec succès à Votium.
 
   # Claim.vue
   claim-notice:
@@ -220,6 +236,8 @@ fr:
   joining: Adhésion en cours...
   already-forwarded: Déjà transféré à une autre adresse
   forwarding-in-progress: Expiration de la redirection d'adresse en cours
+  joined: Vous avez réussi à rejoindre l'Union, bienvenue camarade !
+  left: Vous avez réussi à quitter l'Union. Au revoir camarade !
 
   # Locks.vue
   nothing-locked: Vous n'avez aucun CVX verrouillé pour le tour à venir

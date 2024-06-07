@@ -12,6 +12,15 @@ export function prettyError(err: Error): string {
   return err.message;
 }
 
+export function notifySuccess(text: string) {
+  notify({ text, type: "success" });
+}
+
+export function notifyError(err: unknown) {
+  const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
+  notify({ text, type: "error" });
+}
+
 /**
  * Calls a function that might throw, and shows caught exceptions as notifications.
  * @param f The function to call that might throw.

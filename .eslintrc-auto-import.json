@@ -481,6 +481,8 @@
     "useRouteQuery": true,
     "usePaginationAsync": true,
     "useTabNavigation": true,
-    "useLegend": true
+    "useLegend": true,
+    "notifyError": true,
+    "notifySuccess": true
   }
 }

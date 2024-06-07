@@ -479,6 +479,8 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "notifyError": true,
+    "notifySuccess": true
   }
 }
