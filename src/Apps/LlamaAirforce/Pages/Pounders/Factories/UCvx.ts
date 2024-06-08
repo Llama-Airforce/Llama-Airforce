@@ -1,11 +1,11 @@
-import { type PublicClient } from "viem";
+import { type PublicClient, getContract } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import {
   ERC20__factory,
-  MerkleDistributor2__factory,
   type UnionVaultPirex,
   UnionVaultPirex__factory,
 } from "@/Contracts";
+import { abi } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPriceViem, getCvxApy } from "@/Util";
 import {
   DistributorUCvxAddress,
@@ -13,7 +13,7 @@ import {
   UnionCvxVaultAddress,
 } from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
-import { type Pounder } from "@Pounders/Models";
+import { type VaultPirex, type Pounder } from "@Pounders/Models";
 import type FlyerService from "@/Services/FlyerService";
 
 import logo from "@/Assets/Icons/Tokens/cvx.svg";
@@ -23,16 +23,18 @@ export default function createCvxPounder(
   client: PublicClient,
   llamaService: DefiLlamaService,
   flyerService: FlyerService
-): Pounder<UnionVaultPirex> {
+): Pounder<UnionVaultPirex, VaultPirex> {
   const utkn = UnionVaultPirex__factory.connect(UnionCvxVaultAddress, signer);
   const atkn = ERC20__factory.connect(PxCvxAddress, signer);
-  const distributor = MerkleDistributor2__factory.connect(
-    DistributorUCvxAddress,
-    signer
-  );
 
   const getPriceUnderlying = () => getPxCvxPriceViem(llamaService, client);
   const getApy = () => getCvxApy(flyerService);
+
+  const contract = getContract({
+    abi,
+    address: UnionCvxVaultAddress,
+    client,
+  });
 
   return {
     id: "ucvx",
@@ -41,8 +43,11 @@ export default function createCvxPounder(
     symbol: "pCVX",
     description: "description-ucvx",
     utkn,
+    uTknAddress: UnionCvxVaultAddress,
     atkn,
-    distributor: () => distributor,
+    aTknAddress: PxCvxAddress,
+    contract,
+    distributor: DistributorUCvxAddress,
     getPriceUnderlying,
     getApy,
     lp: null,

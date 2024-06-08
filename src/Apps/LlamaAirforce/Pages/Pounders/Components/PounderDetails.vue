@@ -94,8 +94,10 @@
 </template>
 
 <script setup lang="ts">
-import { getPublicClient } from "@wagmi/core";
+import { waitForTransactionReceipt } from "viem/actions";
+import { getPublicClient, getWalletClient } from "@wagmi/core";
 import { useConfig } from "@wagmi/vue";
+import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
@@ -332,7 +334,7 @@ const onWithdraw = async (
 };
 
 const onClaimAndWithdraw = async (): Promise<void> => {
-  const distributor = pounderStore.value.pounder.distributor();
+  const distributor = pounderStore.value.pounder.distributor;
   if (!claim.value || !distributor) {
     return;
   }
@@ -340,18 +342,32 @@ const onClaimAndWithdraw = async (): Promise<void> => {
   const amount = BigInt(claim.value.amount);
 
   await tryNotify(async () => {
-    if (!claim.value || !address.value) {
+    if (!claim.value || !address.value || !distributor) {
       return;
     }
 
-    await distributor
-      .claim(
-        claim.value.index,
-        address.value,
-        amount,
-        claim.value.proof as string[]
-      )
-      .then((x) => x.wait());
+    const wallet = await getWalletClient(config);
+    if (!wallet) {
+      return;
+    }
+
+    const args = [
+      claim.value.index,
+      address.value,
+      amount,
+      claim.value.proof,
+    ] as const;
+
+    const hash = await wallet.writeContract({
+      chain: wallet.chain,
+      account: wallet.account,
+      abi: abiMerkle,
+      address: distributor,
+      functionName: "claim",
+      args,
+    });
+
+    await waitForTransactionReceipt(wallet, { hash });
 
     await onWithdraw(true, false);
   });

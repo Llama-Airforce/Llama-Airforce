@@ -10,7 +10,7 @@ import { type PublicClient, type GetContractReturnType } from "viem";
 
 type VaultUnion = GetContractReturnType<typeof abiUnionVault, PublicClient>;
 type VaultPirex = GetContractReturnType<typeof abiUnionPirex, PublicClient>;
-type Vault = VaultUnion | VaultPirex;
+export type Vault = VaultUnion | VaultPirex;
 
 export function isPirex(vault: Vault): vault is VaultPirex {
   return vault.abi.some((x) => x.name === "totalAssets");

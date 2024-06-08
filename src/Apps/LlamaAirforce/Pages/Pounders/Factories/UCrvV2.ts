@@ -1,11 +1,11 @@
-import { type PublicClient } from "viem";
+import { type PublicClient, getContract } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import {
   ERC20__factory,
-  MerkleDistributor2__factory,
   type UnionVault,
   UnionVault__factory,
 } from "@/Contracts";
+import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxCrvPriceV2Viem, getCvxCrvApyV2 } from "@/Util";
 import {
   CvxCrvAddress,
@@ -13,7 +13,7 @@ import {
   UnionCrvVaultAddressV2,
 } from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
-import { type Pounder } from "@Pounders/Models";
+import { type VaultUnion, type Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/crv.svg";
 
@@ -21,16 +21,18 @@ export default function createCrvV2Pounder(
   signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService
-): Pounder<UnionVault> {
+): Pounder<UnionVault, VaultUnion> {
   const utkn = UnionVault__factory.connect(UnionCrvVaultAddressV2, signer);
   const atkn = ERC20__factory.connect(CvxCrvAddress, signer);
-  const distributor = MerkleDistributor2__factory.connect(
-    DistributorUCrvAddressV2,
-    signer
-  );
 
   const getPriceUnderlying = () => getCvxCrvPriceV2Viem(llamaService, client);
   const getApy = () => getCvxCrvApyV2(client, llamaService);
+
+  const contract = getContract({
+    abi,
+    address: UnionCrvVaultAddressV2,
+    client,
+  });
 
   return {
     id: "ucrv2",
@@ -39,8 +41,11 @@ export default function createCrvV2Pounder(
     symbol: "cvxCRV",
     description: "description-ucrv",
     utkn,
+    uTknAddress: UnionCrvVaultAddressV2,
     atkn,
-    distributor: () => distributor,
+    aTknAddress: CvxCrvAddress,
+    contract,
+    distributor: DistributorUCrvAddressV2,
     getPriceUnderlying,
     getApy,
     lp: null,

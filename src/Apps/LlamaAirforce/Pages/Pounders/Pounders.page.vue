@@ -118,7 +118,7 @@ const createPounders = (signer: JsonRpcSigner) => {
   createUFxsPounder(signer, client);
   createUFxsLpPounder(signer, client);
   createUPrismaPounder(signer, client);
-  createUBalPounder(signer);
+  createUBalPounder(signer, client);
 };
 
 const createUCvxPounder = (signer: JsonRpcSigner, client: PublicClient) => {
@@ -277,8 +277,12 @@ const createUFxsLpPounder = (signer: JsonRpcSigner, client: PublicClient) => {
   };
 };
 
-const createUBalPounder = (signer: JsonRpcSigner) => {
-  const pounder = pounderFactories.createBalPounder(signer, flyerService);
+const createUBalPounder = (signer: JsonRpcSigner, client: PublicClient) => {
+  const pounder = pounderFactories.createBalPounder(
+    signer,
+    client,
+    flyerService
+  );
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>

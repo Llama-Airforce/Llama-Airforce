@@ -4,6 +4,7 @@ import type {
   Pounder,
   PounderState,
   Vault,
+  VaultViem,
   ZapDeposit,
   ZapsFactories,
 } from "@Pounders/Models";
@@ -12,7 +13,7 @@ import type { Claim } from "@LAF/Services/UnionService";
 import { getVirtualPrice } from "@Pounders/Util/UnionHelper";
 
 type PounderStore = {
-  pounder: Pounder<Vault>;
+  pounder: Pounder<Vault, VaultViem>;
   state: PounderState;
   zapsFactories: ZapsFactories;
 };
@@ -55,7 +56,7 @@ export const useUnionStore = defineStore({
       };
     },
 
-    async updatePounder(pounderId: PounderId) {
+    async updatePounder(pounderId: PounderId, vault: VaultViem) {
       const { pounder, state } = this.getPounder(pounderId);
       if (!pounder || !state) {
         return;
@@ -63,7 +64,7 @@ export const useUnionStore = defineStore({
 
       state.priceUnderlying = await pounder.getPriceUnderlying();
       state.apy = await pounder.getApy();
-      state.fees = await getFees(pounder.utkn as Vault);
+      state.fees = await getFees(vault);
       state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
 
       state.decimalsWithdraw = await pounder.utkn

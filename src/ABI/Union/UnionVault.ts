@@ -1,5 +1,12 @@
 export const abi = [
   {
+    inputs: [],
+    name: "FEE_DENOMINATOR",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "owner", type: "address" },
       { internalType: "address", name: "spender", type: "address" },
@@ -30,6 +37,13 @@ export const abi = [
     inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "balanceOfUnderlying",
     outputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "platformFee",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },

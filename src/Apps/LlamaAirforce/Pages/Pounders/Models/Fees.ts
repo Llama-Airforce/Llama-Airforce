@@ -1,5 +1,5 @@
 import { bigNumToNumber } from "@/Util";
-import { isPirex, type Vault } from "@Pounders/Models/Pounder";
+import { isPirex, type Vault } from "@Pounders/Util/UnionHelper";
 
 export type Fees = {
   platform: number;
@@ -8,33 +8,19 @@ export type Fees = {
 };
 
 export async function getFees(utkn: Vault): Promise<Fees> {
-  const denominator = bigNumToNumber(
-    await utkn.FEE_DENOMINATOR().then((x) => x.toBigInt()),
-    1n
-  );
+  const denominator = bigNumToNumber(await utkn.read.FEE_DENOMINATOR(), 1n);
 
   const platform =
-    (bigNumToNumber(await utkn.platformFee().then((x) => x.toBigInt()), 1n) /
-      denominator) *
-    100;
+    (bigNumToNumber(await utkn.read.platformFee(), 1n) / denominator) * 100;
 
   const withdrawal =
-    (bigNumToNumber(
-      await utkn.withdrawalPenalty().then((x) => x.toBigInt()),
-      1n
-    ) /
-      denominator) *
+    (bigNumToNumber(await utkn.read.withdrawalPenalty(), 1n) / denominator) *
     100;
 
   let caller = 0;
   if (!isPirex(utkn)) {
     caller =
-      (bigNumToNumber(
-        await utkn.callIncentive().then((x) => x.toBigInt()),
-        1n
-      ) /
-        denominator) *
-      100;
+      (bigNumToNumber(await utkn.read.callIncentive(), 1n) / denominator) * 100;
   }
 
   return {

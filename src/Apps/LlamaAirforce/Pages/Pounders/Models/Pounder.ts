@@ -1,10 +1,20 @@
-import type {
-  ERC20,
-  MerkleDistributor2,
-  UnionVault,
-  UnionVaultPirex,
-} from "@/Contracts";
+import { type Address } from "viem";
+import type { ERC20, UnionVault, UnionVaultPirex } from "@/Contracts";
+import { type abi as abiUnionVault } from "@/ABI/Union/UnionVault";
+import { type abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
 
+import { type PublicClient, type GetContractReturnType } from "viem";
+
+export type VaultUnion = GetContractReturnType<
+  typeof abiUnionVault,
+  PublicClient
+>;
+export type VaultPirex = GetContractReturnType<
+  typeof abiUnionPirex,
+  PublicClient
+>;
+
+export type VaultViem = VaultUnion | VaultPirex;
 export type Vault = UnionVault | UnionVaultPirex;
 
 export function isPirex(vault: Vault): vault is UnionVaultPirex {
@@ -37,15 +47,18 @@ const pounderIds = [
 
 export type PounderId = (typeof pounderIds)[number];
 
-export type Pounder<V extends Vault> = {
+export type Pounder<V extends Vault, V2 extends VaultViem> = {
   id: PounderId;
   name: string;
   logo: string;
   symbol: string;
   description: string;
+  uTknAddress: Address;
+  aTknAddress: Address;
+  contract: V2;
   utkn: V;
   atkn: ERC20;
-  distributor: () => MerkleDistributor2 | null;
+  distributor?: Address;
   lp: PounderLp | null;
   getPriceUnderlying: () => Promise<number>;
   getApy: () => Promise<number>;
