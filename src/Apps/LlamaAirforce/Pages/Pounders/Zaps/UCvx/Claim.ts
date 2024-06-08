@@ -1,7 +1,11 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { ERC20__factory, ZapsUCvxClaim__factory } from "@/Contracts";
+import {
+  ERC20__factory,
+  ZapsUCvxClaim__factory,
+  MerkleDistributor2__factory,
+} from "@/Contracts";
 import {
   CvxAddress,
   UnionCvxVaultAddress,
@@ -23,12 +27,17 @@ export function uCvxClaimZaps(
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
+    const signer = getSigner();
 
-    if (!airdrop || !address) {
+    if (!airdrop || !address || !signer) {
       return;
     }
 
-    const distributor = airdrop.distributor();
+    const distributor = MerkleDistributor2__factory.connect(
+      airdrop.distributorAddress,
+      signer
+    );
+
     const ps = [
       airdrop.claim.index,
       address,

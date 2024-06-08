@@ -4,6 +4,7 @@ import {
   CurveV2FactoryPool__factory,
   ERC20__factory,
   ZapsUFxsLpClaim__factory,
+  MerkleDistributor2__factory,
 } from "@/Contracts";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsPrice } from "@/Util";
@@ -52,12 +53,17 @@ export function uFxsLpClaimZaps(
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
+    const signer = getSigner();
 
-    if (!airdrop || !address) {
+    if (!airdrop || !address || !signer) {
       return;
     }
 
-    const distributor = airdrop.distributor();
+    const distributor = MerkleDistributor2__factory.connect(
+      airdrop.distributorAddress,
+      signer
+    );
+
     const ps = [
       airdrop.claim.index,
       address,

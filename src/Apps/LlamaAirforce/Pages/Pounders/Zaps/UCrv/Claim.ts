@@ -1,6 +1,10 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
-import { ERC20__factory, ZapsUCrvClaim__factory } from "@/Contracts";
+import {
+  ERC20__factory,
+  ZapsUCrvClaim__factory,
+  MerkleDistributor2__factory,
+} from "@/Contracts";
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
 import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
 
@@ -16,12 +20,17 @@ export function uCrvClaimZaps(
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
+    const signer = getSigner();
 
-    if (!airdrop || !address) {
+    if (!airdrop || !address || !signer) {
       return;
     }
 
-    const distributor = airdrop.distributor();
+    const distributor = MerkleDistributor2__factory.connect(
+      airdrop.distributorAddress,
+      signer
+    );
+
     const ps = [
       airdrop.claim.index,
       address,

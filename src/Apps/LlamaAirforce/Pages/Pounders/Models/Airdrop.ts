@@ -7,8 +7,6 @@ import {
   CurveV6FactoryPool__factory,
   CurveV2FactoryPool__factory,
   CvxCrvFactoryPool__factory,
-  type MerkleDistributor2,
-  MerkleDistributor2__factory,
 } from "@/Contracts";
 import { type DefiLlamaService } from "@/Services";
 import {
@@ -29,7 +27,7 @@ export type Airdrop = {
   amount: bigint;
   amountAsset: number;
   amountDollar: number;
-  distributor: () => MerkleDistributor2;
+  distributorAddress: `0x${string}`;
 };
 
 export type AirdropUCrv = Airdrop & {
@@ -96,11 +94,6 @@ export async function uCrvAirdrop(
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxCrvPrice;
 
-  const distributor = MerkleDistributor2__factory.connect(
-    DistributorUCrvAddress,
-    signer
-  );
-
   return {
     id: "union",
     tkn: "cvxCRV",
@@ -109,7 +102,7 @@ export async function uCrvAirdrop(
     amount,
     amountAsset,
     amountDollar,
-    distributor: () => distributor,
+    distributorAddress: DistributorUCrvAddress,
   };
 }
 
@@ -137,11 +130,6 @@ export async function uFxsAirdrop(
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxFxsPrice;
 
-  const distributor = MerkleDistributor2__factory.connect(
-    DistributorUFxsAddress,
-    signer
-  );
-
   return {
     id: "ufxs",
     tkn: "cvxFXS",
@@ -150,7 +138,7 @@ export async function uFxsAirdrop(
     amount,
     amountAsset,
     amountDollar,
-    distributor: () => distributor,
+    distributorAddress: DistributorUFxsAddress,
   };
 }
 
@@ -178,11 +166,6 @@ export async function uPrismaAirdrop(
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxPrismaPrice;
 
-  const distributor = MerkleDistributor2__factory.connect(
-    DistributorUPrismaAddress,
-    signer
-  );
-
   return {
     id: "uprisma",
     tkn: "cvxPRISMA",
@@ -191,7 +174,7 @@ export async function uPrismaAirdrop(
     amount,
     amountAsset,
     amountDollar,
-    distributor: () => distributor,
+    distributorAddress: DistributorUPrismaAddress,
   };
 }
 
@@ -219,11 +202,6 @@ export async function uCvxAirdrop(
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * pxCvxPrice;
 
-  const distributor = MerkleDistributor2__factory.connect(
-    DistributorUCvxAddress,
-    signer
-  );
-
   return {
     id: "ucvx",
     tkn: "pxCVX",
@@ -232,6 +210,6 @@ export async function uCvxAirdrop(
     amount,
     amountAsset,
     amountDollar,
-    distributor: () => distributor,
+    distributorAddress: DistributorUCvxAddress,
   };
 }
