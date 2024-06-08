@@ -1,9 +1,14 @@
+import { type PublicClient, getContract } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
+import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { UnionVault__factory } from "@/Contracts";
 import { getCvxFxsLpPrice } from "@/Util";
 import { UnionFxsVaultAddressV1 } from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
-import { getVirtualPrice } from "@Pounders/Util/UnionHelper";
+import {
+  getVirtualPrice,
+  getVirtualPriceViem,
+} from "@Pounders/Util/UnionHelper";
 
 export async function getUFxsPriceV1(
   llamaService: DefiLlamaService,
@@ -18,4 +23,23 @@ export async function getUFxsPriceV1(
   const ufxs = cvxfxslp * vp;
 
   return ufxs;
+}
+
+export async function getUFxsPriceV1Viem(
+  llamaService: DefiLlamaService,
+  client: PublicClient
+) {
+  const pxcvx = await getPxCvxPriceViem(llamaService, client)
+    .then((x) => x)
+    .catch(() => Infinity);
+
+  const utkn = getContract({
+    abi: abiUnionVault,
+    address: UnionFxsVaultAddressV1,
+    client,
+  });
+  const vp = await getVirtualPriceViem(utkn);
+  const ucvx = pxcvx * vp;
+
+  return ucvx;
 }

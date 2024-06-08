@@ -1,3 +1,4 @@
+import { type PublicClient } from "viem";
 import {
   type JsonRpcProvider,
   type JsonRpcSigner,
@@ -136,7 +137,7 @@ export function uCvxDepositZaps(
     },
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner,
+      signer: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -149,7 +150,7 @@ export function uCvxDepositZaps(
 
       const factory = CurveV2FactoryPool__factory.connect(
         LPxCvxFactoryAddress,
-        signer
+        signer as JsonRpcSigner
       );
       const pxcvx = await getPxCvxPrice(llamaService, factory)
         .then((x) => x)

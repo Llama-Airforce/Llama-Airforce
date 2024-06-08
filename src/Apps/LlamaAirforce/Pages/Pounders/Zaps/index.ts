@@ -11,7 +11,6 @@ export { uFxsClaimZaps } from "./UFxs/Claim";
 
 export { uFxsLpDepositZaps } from "./UFxsLp/Deposit";
 export { uFxsLpWithdrawZaps } from "./UFxsLp/Withdraw";
-export { uFxsLpClaimZaps } from "./UFxsLp/Claim";
 
 export { uCvxDepositZaps } from "./UCvx/Deposit";
 export { uCvxWithdrawZaps } from "./UCvx/Withdraw";

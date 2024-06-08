@@ -1,3 +1,4 @@
+import { type PublicClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
 import {
@@ -93,7 +94,7 @@ export function uCvxWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner,
+      signer: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -104,7 +105,7 @@ export function uCvxWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, signer);
+      const ucvx = await getUCvxPrice(llamaService, signer as JsonRpcSigner);
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

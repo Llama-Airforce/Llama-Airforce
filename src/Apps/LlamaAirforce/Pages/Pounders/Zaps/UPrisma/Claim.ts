@@ -1,10 +1,8 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import { maxApprove } from "@/Wallet";
-import {
-  ERC20__factory,
-  ZapsUPrismaClaim__factory,
-  MerkleDistributor2__factory,
-} from "@/Contracts";
+import { type Address, type PublicClient, type WalletClient } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
+import { abi as abiZaps } from "@/ABI/Union/ZapsUPrismaClaim";
+import { maxApproveViem } from "@/Wallet";
 import {
   UnionPrismaVaultAddress,
   ZapsUPrismaClaimAddress,
@@ -16,81 +14,77 @@ import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uPrismaClaimZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
-  const extraZapFactory = async () => {
-    const address = getAddress();
-    const airdrop = getAirdrop();
-    const signer = getSigner();
-
-    if (!address || !airdrop || !signer) {
-      throw new Error("Unable to construct extra claim zaps");
-    }
-
-    const utkn = ERC20__factory.connect(UnionPrismaVaultAddress, signer);
-    await maxApprove(utkn, address, ZapsUPrismaClaimAddress, airdrop.amount);
-
-    return {
-      extraZaps: ZapsUPrismaClaim__factory.connect(
-        ZapsUPrismaClaimAddress,
-        signer
-      ),
-      address,
-      amount: airdrop.amount,
-      claim: airdrop.claim,
-    };
-  };
-
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const signer = getSigner();
+    const client = getClient();
+    const wallet = await getWallet();
 
-    if (!airdrop || !address || !signer) {
+    if (!airdrop || !address || !client || !wallet?.account) {
       return;
     }
 
-    const distributor = MerkleDistributor2__factory.connect(
-      airdrop.distributorAddress,
-      signer
-    );
-
-    const ps = [
+    const args = [
       airdrop.claim.index,
       address,
       airdrop.amount,
-      airdrop.claim.proof as string[],
+      airdrop.claim.proof,
     ] as const;
 
-    const estimate = await distributor.estimateGas.claim(...ps);
-
-    const tx = await distributor.claim(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const hash = await wallet.writeContract({
+      chain: client.chain,
+      account: wallet.account,
+      abi: abiMerkle,
+      address: airdrop.distributorAddress,
+      functionName: "claim",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const claimAsCvxPrisma = async () => {
-    const x = await extraZapFactory();
-    const ps = [
-      x.claim.index,
-      x.address,
-      x.amount,
-      x.claim.proof as string[],
-      x.address,
+    const address = getAddress();
+    const airdrop = getAirdrop();
+    const client = getClient();
+    const wallet = await getWallet();
+
+    if (!address || !airdrop || !client || !wallet?.account) {
+      throw new Error("Unable to construct extra claim zaps");
+    }
+
+    await maxApproveViem(
+      client,
+      wallet,
+      UnionPrismaVaultAddress,
+      address,
+      ZapsUPrismaClaimAddress,
+      airdrop.amount
+    );
+
+    const args = [
+      airdrop.claim.index,
+      address,
+      airdrop.amount,
+      airdrop.claim.proof,
+      address,
     ] as const;
 
-    const estimate =
-      await x.extraZaps.estimateGas.claimFromDistributorAsUnderlying(...ps);
-
-    const tx = await x.extraZaps.claimFromDistributorAsUnderlying(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUCvxClaimAddress,
+      functionName: "claimFromDistributorAsUnderlying",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps

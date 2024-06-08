@@ -1,3 +1,4 @@
+import { type PublicClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { maxApprove } from "@/Wallet";
 import {
@@ -104,7 +105,7 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner,
+      signer: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -115,7 +116,10 @@ export function uFxsLpWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, signer.provider)
+      const cvxfxslp = await getCvxFxsLpPrice(
+        llamaService,
+        (signer as JsonRpcSigner).provider
+      )
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -131,7 +135,7 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner,
+      signer: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -139,14 +143,17 @@ export function uFxsLpWithdrawZaps(
 
       const curvePool = CurveV2FactoryPool__factory.connect(
         CvxFxsFactoryAddress,
-        signer
+        signer as JsonRpcSigner
       );
 
       const cvxfxs = await getCvxFxsPrice(llamaService, curvePool)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, signer.provider)
+      const cvxfxslp = await getCvxFxsLpPrice(
+        llamaService,
+        (signer as JsonRpcSigner).provider
+      )
         .then((x) => x)
         .catch(() => Infinity);
 

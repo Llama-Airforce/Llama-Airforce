@@ -1,100 +1,93 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
-import { maxApprove } from "@/Wallet";
-import {
-  CurveV2FactoryPool__factory,
-  ERC20__factory,
-  ZapsUFxsClaim__factory,
-  MerkleDistributor2__factory,
-} from "@/Contracts";
+import { type Address, type PublicClient, type WalletClient } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
+import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
+import { maxApproveViem } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsPrice } from "@/Util";
-import {
-  CvxFxsFactoryAddress,
-  UnionFxsVaultAddress,
-  ZapsUFxsClaimAddress,
-} from "@/Util/Addresses";
+import { getCvxFxsPriceViem } from "@/Util";
+import { UnionFxsVaultAddress, ZapsUFxsClaimAddress } from "@/Util/Addresses";
 import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
-import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
+import { getUFxsPriceViem } from "@Pounders/Zaps/UFxs/PriceHelper";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsClaimZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
-  const extraZapFactory = async () => {
-    const address = getAddress();
-    const airdrop = getAirdrop();
-    const signer = getSigner();
-
-    if (!address || !airdrop || !signer) {
-      throw new Error("Unable to construct extra claim zaps");
-    }
-
-    const utkn = ERC20__factory.connect(UnionFxsVaultAddress, signer);
-    await maxApprove(utkn, address, ZapsUFxsClaimAddress, airdrop.amount);
-
-    return {
-      extraZaps: ZapsUFxsClaim__factory.connect(ZapsUFxsClaimAddress, signer),
-      address,
-      amount: airdrop.amount,
-      claim: airdrop.claim,
-    };
-  };
-
   const claim = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
-    const signer = getSigner();
+    const client = getClient();
+    const wallet = await getWallet();
 
-    if (!airdrop || !address || !signer) {
+    if (!airdrop || !address || !client || !wallet?.account) {
       return;
     }
 
-    const distributor = MerkleDistributor2__factory.connect(
-      airdrop.distributorAddress,
-      signer
-    );
-
-    const ps = [
+    const args = [
       airdrop.claim.index,
       address,
       airdrop.amount,
-      airdrop.claim.proof as string[],
+      airdrop.claim.proof,
     ] as const;
 
-    const estimate = await distributor.estimateGas.claim(...ps);
-
-    const tx = await distributor.claim(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const hash = await wallet.writeContract({
+      chain: client.chain,
+      account: wallet.account,
+      abi: abiMerkle,
+      address: airdrop.distributorAddress,
+      functionName: "claim",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const claimAsCvxFxs = async (minAmountOut: bigint) => {
-    const x = await extraZapFactory();
-    const ps = [
-      x.claim.index,
-      x.address,
-      x.amount,
-      x.claim.proof as string[],
+    const address = getAddress();
+    const airdrop = getAirdrop();
+    const client = getClient();
+    const wallet = await getWallet();
+
+    if (!address || !airdrop || !client || !wallet?.account) {
+      throw new Error("Unable to construct extra claim zaps");
+    }
+
+    await maxApproveViem(
+      client,
+      wallet,
+      UnionFxsVaultAddress,
+      address,
+      ZapsUFxsClaimAddress,
+      airdrop.amount
+    );
+
+    const args = [
+      airdrop.claim.index,
+      address,
+      airdrop.amount,
+      airdrop.claim.proof,
       minAmountOut,
-      x.address,
+      address,
     ] as const;
 
-    const estimate =
-      await x.extraZaps.estimateGas.claimFromDistributorAsUnderlying(...ps);
-
-    const tx = await x.extraZaps.claimFromDistributorAsUnderlying(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUCvxClaimAddress,
+      functionName: "claimFromDistributorAsUnderlying",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
@@ -116,22 +109,20 @@ export function uFxsClaimZaps(
     zap: (minAmountOut?: bigint) => claimAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner,
+      client: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const curvePool = CurveV2FactoryPool__factory.connect(
-        CvxFxsFactoryAddress,
-        signer
-      );
-
-      const cvxfxs = await getCvxFxsPrice(llamaService, curvePool)
+      const cvxfxs = await getCvxFxsPriceViem(
+        llamaService,
+        client as PublicClient
+      )
         .then((x) => x)
         .catch(() => Infinity);
 
-      const ufxs = await getUFxsPrice(llamaService, signer);
+      const ufxs = await getUFxsPriceViem(llamaService, client as PublicClient);
 
       return calcMinAmountOut(input, ufxs, cvxfxs, slippage);
     },
