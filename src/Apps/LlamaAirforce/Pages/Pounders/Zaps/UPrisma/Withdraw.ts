@@ -1,35 +1,39 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import { type UnionVault, UnionVault__factory } from "@/Contracts";
-import { UnionPrismaVaultAddress } from "@/Util/Addresses";
+import { type Address, type PublicClient, type WalletClient } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import type { ZapWithdraw, Swap } from "@Pounders/Models";
+
+import { UnionPrismaVaultAddress } from "@/Util/Addresses";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 export function uPrismaWithdrawZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVault | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
-    const signer = getSigner();
 
-    if (!address || !vault || !input || !signer) {
-      throw new Error("Unable to construct extra withdraw zaps");
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct withdraw zaps");
     }
 
-    const utkn = UnionVault__factory.connect(UnionPrismaVaultAddress, signer);
-
-    const ps = [address, input] as const;
-    const estimate = await utkn.estimateGas.withdraw(...ps);
-    const tx = await utkn.withdraw(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [address, input] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiVault,
+      address: UnionPrismaVaultAddress,
+      functionName: "withdraw",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps

@@ -12,5 +12,4 @@ export type { ZapsUCrvV2 } from "./ZapsUCrvV2";
 export type { ZapsUCvx } from "./ZapsUCvx";
 export type { ZapsUFxs } from "./ZapsUFxs";
 export type { ZapsUFxsLp } from "./ZapsUFxsLp";
-export type { ZapsUPrisma } from "./ZapsUPrisma";
 export type { ZapsUPrismaConvexMigration } from "./ZapsUPrismaConvexMigration";

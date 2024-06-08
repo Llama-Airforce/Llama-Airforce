@@ -1,99 +1,114 @@
-import { type PublicClient } from "viem";
+import { type Address, type PublicClient, type WalletClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
-import { maxApprove } from "@/Wallet";
-import {
-  ERC20__factory,
-  ZapsUFxsLp__factory,
-  type UnionVault,
-  UnionVault__factory,
-  CurveV2FactoryPool__factory,
-} from "@/Contracts";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
+import { maxApproveViem } from "@/Wallet";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
+import { getCvxFxsLpPriceViem, getCvxFxsPriceViem } from "@/Util";
+import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+
 import {
-  CvxFxsFactoryAddress,
   FxsAddress,
   UnionFxsVaultAddressV1,
   ZapsUFxsAddressV1,
 } from "@/Util/Addresses";
-import type { ZapWithdraw, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpWithdrawZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVault | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapWithdraw | Swap)[] {
-  const withdrawFactory = async () => {
+  const withdrawAsFxs = async (minAmountOut: bigint) => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
-    const signer = getSigner();
 
-    if (!address || !vault || !input || !signer) {
-      throw new Error("Unable to construct extra withdraw zaps");
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct withdraw zaps");
     }
 
-    const utkn = ERC20__factory.connect(UnionFxsVaultAddressV1, signer);
-    await maxApprove(utkn, address, ZapsUFxsAddressV1, input);
-
-    return {
-      zaps: ZapsUFxsLp__factory.connect(ZapsUFxsAddressV1, signer),
+    await maxApproveViem(
+      client,
+      wallet,
+      UnionFxsVaultAddressV1,
       address,
-      input,
-      vault,
-    };
-  };
+      ZapsUFxsAddressV1,
+      input
+    );
 
-  const withdrawAsFxs = async (minAmountOut: bigint) => {
-    const x = await withdrawFactory();
-    const ps = [x.input, 0, minAmountOut, x.address] as const;
-
-    const estimate = await x.zaps.estimateGas.claimFromVaultAsUnderlying(...ps);
-
-    const tx = await x.zaps.claimFromVaultAsUnderlying(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [input, 0n, minAmountOut, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUFxsAddressV1,
+      functionName: "claimFromVaultAsUnderlying",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const withdrawAsCvxFxs = async (minAmountOut: bigint) => {
-    const x = await withdrawFactory();
-    const ps = [x.input, 1, minAmountOut, x.address] as const;
+    const client = getClient();
+    const wallet = await getWallet();
+    const address = getAddress();
+    const input = getInput();
 
-    const estimate = await x.zaps.estimateGas.claimFromVaultAsUnderlying(...ps);
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct withdraw zaps");
+    }
 
-    const tx = await x.zaps.claimFromVaultAsUnderlying(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    await maxApproveViem(
+      client,
+      wallet,
+      UnionFxsVaultAddressV1,
+      address,
+      ZapsUFxsAddressV1,
+      input
+    );
+
+    const args = [input, 1n, minAmountOut, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUFxsAddressV1,
+      functionName: "claimFromVaultAsUnderlying",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const withdrawAsLp = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
-    const signer = getSigner();
 
-    if (!address || !vault || !input || !signer) {
-      throw new Error("Unable to construct extra withdraw zaps");
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct withdraw zaps");
     }
 
-    const utkn = UnionVault__factory.connect(UnionFxsVaultAddressV1, signer);
-
-    const ps = [address, input] as const;
-    const estimate = await utkn.estimateGas.withdraw(...ps);
-    const tx = await utkn.withdraw(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [address, input] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiVault,
+      address: UnionFxsVaultAddressV1,
+      functionName: "withdraw",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
@@ -105,7 +120,7 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner | PublicClient,
+      client: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -116,9 +131,9 @@ export function uFxsLpWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(
+      const cvxfxslp = await getCvxFxsLpPriceViem(
         llamaService,
-        (signer as JsonRpcSigner).provider
+        client as PublicClient
       )
         .then((x) => x)
         .catch(() => Infinity);
@@ -135,24 +150,22 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner | PublicClient,
+      client: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const curvePool = CurveV2FactoryPool__factory.connect(
-        CvxFxsFactoryAddress,
-        signer as JsonRpcSigner
-      );
-
-      const cvxfxs = await getCvxFxsPrice(llamaService, curvePool)
+      const cvxfxs = await getCvxFxsPriceViem(
+        llamaService,
+        client as PublicClient
+      )
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(
+      const cvxfxslp = await getCvxFxsLpPriceViem(
         llamaService,
-        (signer as JsonRpcSigner).provider
+        client as PublicClient
       )
         .then((x) => x)
         .catch(() => Infinity);

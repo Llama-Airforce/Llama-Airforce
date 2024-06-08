@@ -1,100 +1,124 @@
-import { type PublicClient } from "viem";
+import { type Address, type PublicClient, type WalletClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
-import { maxApprove } from "@/Wallet";
-import {
-  type ERC20,
-  ERC20__factory,
-  ZapsUFxsLp__factory,
-  type UnionVault,
-  CurveV2FactoryPool__factory,
-} from "@/Contracts";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
+import { maxApproveViem } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
+import { getCvxFxsLpPriceViem, getCvxFxsPriceViem } from "@/Util";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
+import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
+
 import {
   ZapsUFxsAddressV1,
   CvxFxsFactoryERC20Address,
   CvxFxsAddress,
   FxsAddress,
-  CvxFxsFactoryAddress,
 } from "@/Util/Addresses";
-import type { ZapDeposit, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpDepositZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVault | undefined,
-  getAssetTkn: () => ERC20 | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapDeposit | Swap)[] {
-  const depositFactory = async (depositTkn: string | null) => {
-    const address = getAddress();
-    const vault = getVault();
-    const input = getInput();
-    const signer = getSigner();
-
-    if (!address || !vault || !input || !signer) {
-      throw new Error("Unable to construct extra zaps");
-    }
-
-    if (depositTkn) {
-      const depositERC20 = ERC20__factory.connect(depositTkn, signer);
-
-      await maxApprove(depositERC20, address, ZapsUFxsAddressV1, input);
-    }
-
-    return {
-      zaps: ZapsUFxsLp__factory.connect(ZapsUFxsAddressV1, signer),
-      address,
-      input,
-    };
-  };
-
   const depositFromFxs = async (minAmountOut: bigint) => {
-    const x = await depositFactory(FxsAddress);
-    const ps = [minAmountOut, x.address] as const;
-    const estimate = await x.zaps.estimateGas.depositFromUnderlyingAssets(
-      [x.input, 0],
-      ...ps
+    const client = getClient();
+    const wallet = await getWallet();
+    const address = getAddress();
+    const input = getInput();
+
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct deposit zaps");
+    }
+
+    await maxApproveViem(
+      client,
+      wallet,
+      FxsAddress,
+      address,
+      ZapsUFxsAddressV1,
+      input
     );
 
-    const tx = await x.zaps.depositFromUnderlyingAssets([x.input, 0], ...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [input, 0n, minAmountOut, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUFxsAddressV1,
+      functionName: "claimFromVaultAsUnderlying",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const depositFromCvxFxs = async (minAmountOut: bigint) => {
-    const x = await depositFactory(CvxFxsAddress);
-    const ps = [minAmountOut, x.address] as const;
+    const client = getClient();
+    const wallet = await getWallet();
+    const address = getAddress();
+    const input = getInput();
 
-    const estimate = await x.zaps.estimateGas.depositFromUnderlyingAssets(
-      [0, x.input],
-      ...ps
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct deposit zaps");
+    }
+
+    await maxApproveViem(
+      client,
+      wallet,
+      CvxFxsAddress,
+      address,
+      ZapsUFxsAddressV1,
+      input
     );
 
-    const tx = await x.zaps.depositFromUnderlyingAssets([0, x.input], ...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [0n, input, minAmountOut, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUFxsAddressV1,
+      functionName: "claimFromVaultAsUnderlying",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const depositFromLp = async () => {
-    const x = await depositFactory(CvxFxsFactoryERC20Address);
-    const ps = [x.input, 0, 0, 0, x.address] as const;
+    const client = getClient();
+    const wallet = await getWallet();
+    const address = getAddress();
+    const input = getInput();
 
-    const estimate = await x.zaps.estimateGas.depositWithRewards(...ps);
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct deposit zaps");
+    }
 
-    const tx = await x.zaps.depositWithRewards(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    await maxApproveViem(
+      client,
+      wallet,
+      CvxFxsFactoryERC20Address,
+      address,
+      ZapsUFxsAddressV1,
+      input
+    );
+
+    const args = [input, 0n, 0n, 0n, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUFxsAddressV1,
+      functionName: "depositWithRewards",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
@@ -103,30 +127,11 @@ export function uFxsLpDepositZaps(
     label: "FXS",
     zap: (minAmountOut?: bigint) => depositFromFxs(minAmountOut ?? 0n),
     depositSymbol: "FXS",
-    depositBalance: () => {
-      const address = getAddress();
-      const provider = getSigner()?.provider;
-
-      if (!address || !provider) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      const depositERC20 = ERC20__factory.connect(FxsAddress, provider);
-      return depositERC20.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: () => {
-      const provider = getSigner()?.provider;
-
-      if (!provider) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      const depositERC20 = ERC20__factory.connect(FxsAddress, provider);
-      return depositERC20.decimals().then((x) => BigInt(x));
-    },
+    depositBalance: () => getBalance(getClient, getAddress, FxsAddress),
+    depositDecimals: () => getDecimals(getClient, FxsAddress),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner | PublicClient,
+      client: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -137,9 +142,9 @@ export function uFxsLpDepositZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(
+      const cvxfxslp = await getCvxFxsLpPriceViem(
         llamaService,
-        (signer as JsonRpcSigner).provider
+        client as PublicClient
       )
         .then((x) => x)
         .catch(() => Infinity);
@@ -153,25 +158,8 @@ export function uFxsLpDepositZaps(
     label: "cvxFXS",
     zap: (minAmountOut?: bigint) => depositFromCvxFxs(minAmountOut ?? 0n),
     depositSymbol: "cvxFXS",
-    depositBalance: async () => {
-      const address = getAddress();
-      const atkn = getAssetTkn();
-
-      if (!address || !atkn) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      return await atkn.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: async () => {
-      const atkn = getAssetTkn();
-
-      if (!atkn) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      return await atkn.decimals().then((x) => BigInt(x));
-    },
+    depositBalance: () => getBalance(getClient, getAddress, CvxFxsAddress),
+    depositDecimals: () => getDecimals(getClient, CvxFxsAddress),
     getMinAmountOut: async (
       host: string,
       signer: JsonRpcSigner | PublicClient,
@@ -180,18 +168,16 @@ export function uFxsLpDepositZaps(
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const curvePool = CurveV2FactoryPool__factory.connect(
-        CvxFxsFactoryAddress,
-        signer as JsonRpcSigner
-      );
-
-      const cvxfxs = await getCvxFxsPrice(llamaService, curvePool)
+      const cvxfxs = await getCvxFxsPriceViem(
+        llamaService,
+        signer as PublicClient
+      )
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(
+      const cvxfxslp = await getCvxFxsLpPriceViem(
         llamaService,
-        (signer as JsonRpcSigner).provider
+        signer as PublicClient
       )
         .then((x) => x)
         .catch(() => Infinity);
@@ -205,33 +191,9 @@ export function uFxsLpDepositZaps(
     label: "cvxFXS LP token",
     zap: () => depositFromLp(),
     depositSymbol: "cvxFXSFXS-f",
-    depositBalance: () => {
-      const address = getAddress();
-      const provider = getSigner()?.provider;
-
-      if (!address || !provider) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      const depositERC20 = ERC20__factory.connect(
-        CvxFxsFactoryERC20Address,
-        provider
-      );
-      return depositERC20.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: () => {
-      const provider = getSigner()?.provider;
-
-      if (!provider) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      const depositERC20 = ERC20__factory.connect(
-        CvxFxsFactoryERC20Address,
-        provider
-      );
-      return depositERC20.decimals().then((x) => BigInt(x));
-    },
+    depositBalance: () =>
+      getBalance(getClient, getAddress, CvxFxsFactoryERC20Address),
+    depositDecimals: () => getDecimals(getClient, CvxFxsFactoryERC20Address),
   };
 
   const options = [fxs, cvxFXS, cvxFXSLP];

@@ -2,12 +2,13 @@ import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUPrismaClaim";
 import { maxApproveViem } from "@/Wallet";
+import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
+import { claim } from "@Pounders/Zaps/Helpers";
+
 import {
   UnionPrismaVaultAddress,
   ZapsUPrismaClaimAddress,
 } from "@/Util/Addresses";
-import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
-import { claim } from "@Pounders/Zaps/Helpers";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
@@ -50,7 +51,7 @@ export function uPrismaClaimZaps(
       chain: wallet.chain!,
       account: wallet.account,
       abi: abiZaps,
-      address: ZapsUCvxClaimAddress,
+      address: ZapsUPrismaClaimAddress,
       functionName: "claimFromDistributorAsUnderlying",
       args,
     });

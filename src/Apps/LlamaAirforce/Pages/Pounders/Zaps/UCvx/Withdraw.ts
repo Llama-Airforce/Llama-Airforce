@@ -1,80 +1,82 @@
-import { type PublicClient } from "viem";
+import { type Address, type PublicClient, type WalletClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
-import { maxApprove } from "@/Wallet";
-import {
-  ERC20__factory,
-  type UnionVaultPirex,
-  ZapsUCvx__factory,
-} from "@/Contracts";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
+import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
+import { maxApproveViem } from "@/Wallet";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
 import { DefiLlamaService } from "@/Services";
+import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
+
 import {
   CvxAddress,
   UnionCvxVaultAddress,
   ZapsUCvxAddress,
 } from "@/Util/Addresses";
-import type { ZapWithdraw, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
-import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxWithdrawZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVaultPirex | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
 
-    if (!address || !vault || !input) {
+    if (!address || !input || !client || !wallet?.account) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
-    const ps = [input, address, address] as const;
-    const estimate = await vault.estimateGas.redeem(...ps);
-    const tx = await vault.redeem(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [input, address, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiVaultPirex,
+      address: UnionCvxVaultAddress,
+      functionName: "redeem",
+      args,
     });
 
-    return tx.wait();
-  };
-
-  const withdrawFactory = async () => {
-    const address = getAddress();
-    const vault = getVault();
-    const input = getInput();
-    const signer = getSigner();
-
-    if (!address || !vault || !input || !signer) {
-      throw new Error("Unable to construct extra withdraw zaps");
-    }
-
-    const utkn = ERC20__factory.connect(UnionCvxVaultAddress, signer);
-    await maxApprove(utkn, address, ZapsUCvxAddress, input);
-
-    return {
-      zaps: ZapsUCvx__factory.connect(ZapsUCvxAddress, signer),
-      address,
-      input,
-      vault,
-    };
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const withdrawAsCvx = async (minAmountOut: bigint) => {
-    const x = await withdrawFactory();
-    const ps = [x.input, minAmountOut, x.address] as const;
+    const client = getClient();
+    const wallet = await getWallet();
+    const address = getAddress();
+    const input = getInput();
 
-    const estimate = await x.zaps.estimateGas.claimFromVaultAsCvx(...ps);
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct withdraw zaps");
+    }
 
-    const tx = await x.zaps.claimFromVaultAsCvx(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    await maxApproveViem(
+      client,
+      wallet,
+      UnionCvxVaultAddress,
+      address,
+      ZapsUCvxAddress,
+      input
+    );
+
+    const args = [input, minAmountOut, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZaps,
+      address: ZapsUCvxAddress,
+      functionName: "claimFromVaultAsCvx",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
@@ -94,7 +96,7 @@ export function uCvxWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      signer: JsonRpcSigner | PublicClient,
+      client: JsonRpcSigner | PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -105,7 +107,7 @@ export function uCvxWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, signer as JsonRpcSigner);
+      const ucvx = await getUCvxPrice(llamaService, client as PublicClient);
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

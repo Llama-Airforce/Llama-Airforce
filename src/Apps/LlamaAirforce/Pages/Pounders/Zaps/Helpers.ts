@@ -1,6 +1,7 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
+import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import type { Airdrop } from "@Pounders/Models";
 
 export async function claim(
@@ -35,4 +36,43 @@ export async function claim(
   });
 
   return waitForTransactionReceipt(client, { hash });
+}
+
+export function getBalance(
+  getClient: () => PublicClient | undefined,
+  getAddress: () => Address | undefined,
+  erc20?: Address
+) {
+  const address = getAddress();
+  const client = getClient();
+
+  if (!address || !client || !erc20) {
+    throw new Error("Unable to fetch ERC20 balanceOf");
+  }
+
+  return client.readContract({
+    abi: abiERC20,
+    address: erc20,
+    functionName: "balanceOf",
+    args: [address],
+  });
+}
+
+export function getDecimals(
+  getClient: () => PublicClient | undefined,
+  erc20?: Address
+) {
+  const client = getClient();
+
+  if (!client || !erc20) {
+    throw new Error("Unable to fetch ERC20 decimals");
+  }
+
+  return client
+    .readContract({
+      abi: abiERC20,
+      address: erc20,
+      functionName: "decimals",
+    })
+    .then((x) => BigInt(x));
 }

@@ -1,79 +1,88 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import { maxApprove } from "@/Wallet";
+import { type Address, type PublicClient, type WalletClient } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import { abi as abiZapsMigrate } from "@/ABI/Union/ZapsUPrismaConvexMigration";
+import { maxApproveViem } from "@/Wallet";
+import type { ZapDeposit, Swap } from "@Pounders/Models";
+import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
+
 import {
-  type ERC20,
-  ERC20__factory,
-  ZapsUPrismaConvexMigration__factory,
-  type UnionVault,
-} from "@/Contracts";
-import {
-  ZapsUPrismaConvexMigrationAddress,
+  CvxPrismaAddress,
+  UnionPrismaVaultAddress,
   StkCvxPrismaAddress,
 } from "@/Util/Addresses";
-import type { ZapDeposit, Swap } from "@Pounders/Models";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uPrismaDepositZaps(
-  getSigner: () => JsonRpcSigner | undefined,
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVault | undefined,
-  getAssetTkn: () => ERC20 | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapDeposit | Swap)[] {
   const deposit = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
-    const atkn = getAssetTkn();
 
-    if (!address || !vault || !input || !atkn) {
+    if (!address || !input || !client || !wallet?.account) {
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApprove(atkn, address, vault.address, input);
+    await maxApproveViem(
+      client,
+      wallet,
+      CvxPrismaAddress,
+      address,
+      UnionPrismaVaultAddress,
+      input
+    );
 
-    const ps = [address, input] as const;
-    const estimate = await vault.estimateGas.deposit(...ps);
-    const tx = await vault.deposit(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [address, input] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiVault,
+      address: UnionPrismaVaultAddress,
+      functionName: "deposit",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   const depositFromStkCvxPrisma = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
     const input = getInput();
-    const signer = getSigner();
 
-    if (!address || !input || !signer) {
-      throw new Error("Unable to construct migration zap");
+    if (!address || !input || !client || !wallet?.account) {
+      throw new Error("Unable to construct deposit zaps");
     }
 
-    const stkCvxPrisma = ERC20__factory.connect(StkCvxPrismaAddress, signer);
-    await maxApprove(
-      stkCvxPrisma,
+    await maxApproveViem(
+      client,
+      wallet,
+      StkCvxPrismaAddress,
       address,
       ZapsUPrismaConvexMigrationAddress,
       input
     );
 
-    const zap = ZapsUPrismaConvexMigration__factory.connect(
-      ZapsUPrismaConvexMigrationAddress,
-      signer
-    );
-
-    const ps = [input, address] as const;
-
-    const estimate = await zap.estimateGas.migrate(...ps);
-
-    const tx = await zap.migrate(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [input, address] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiZapsMigrate,
+      address: ZapsUPrismaConvexMigrationAddress,
+      functionName: "migrate",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
@@ -82,33 +91,9 @@ export function uPrismaDepositZaps(
     label: "Migrate from Convex",
     zap: () => depositFromStkCvxPrisma(),
     depositSymbol: "stkCvxPRISMA",
-    depositBalance: () => {
-      const address = getAddress();
-      const provider = getSigner()?.provider;
-
-      if (!address || !provider) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      const depositERC20 = ERC20__factory.connect(
-        StkCvxPrismaAddress,
-        provider
-      );
-      return depositERC20.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: () => {
-      const provider = getSigner()?.provider;
-
-      if (!provider) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      const depositERC20 = ERC20__factory.connect(
-        StkCvxPrismaAddress,
-        provider
-      );
-      return depositERC20.decimals().then((x) => BigInt(x));
-    },
+    depositBalance: () =>
+      getBalance(getClient, getAddress, StkCvxPrismaAddress),
+    depositDecimals: () => getDecimals(getClient, StkCvxPrismaAddress),
   };
 
   const cvxPRISMA: ZapDeposit = {
@@ -116,25 +101,8 @@ export function uPrismaDepositZaps(
     label: "cvxPRISMA",
     zap: () => deposit(),
     depositSymbol: "cvxPRISMA",
-    depositBalance: async () => {
-      const address = getAddress();
-      const atkn = getAssetTkn();
-
-      if (!address || !atkn) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      return await atkn.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: async () => {
-      const atkn = getAssetTkn();
-
-      if (!atkn) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      return await atkn.decimals().then((x) => BigInt(x));
-    },
+    depositBalance: () => getBalance(getClient, getAddress, CvxPrismaAddress),
+    depositDecimals: () => getDecimals(getClient, CvxPrismaAddress),
   };
 
   const swap: Swap = {
@@ -142,7 +110,7 @@ export function uPrismaDepositZaps(
     sell: "ETH",
   };
 
-  const options = [stkCvxPrisma, cvxPRISMA, swap];
+  const options = [cvxPRISMA, stkCvxPrisma, swap];
 
   return options;
 }

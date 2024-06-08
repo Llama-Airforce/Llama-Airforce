@@ -5,11 +5,12 @@ import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
 import { maxApproveViem } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsPriceViem } from "@/Util";
-import { UnionFxsVaultAddress, ZapsUFxsClaimAddress } from "@/Util/Addresses";
 import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
-import { getUFxsPriceViem } from "@Pounders/Zaps/UFxs/PriceHelper";
+import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
 import { claim } from "@Pounders/Zaps/Helpers";
+
+import { UnionFxsVaultAddress, ZapsUFxsClaimAddress } from "@/Util/Addresses";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
@@ -53,7 +54,7 @@ export function uFxsClaimZaps(
       chain: wallet.chain!,
       account: wallet.account,
       abi: abiZaps,
-      address: ZapsUCvxClaimAddress,
+      address: ZapsUFxsClaimAddress,
       functionName: "claimFromDistributorAsUnderlying",
       args,
     });
@@ -93,7 +94,7 @@ export function uFxsClaimZaps(
         .then((x) => x)
         .catch(() => Infinity);
 
-      const ufxs = await getUFxsPriceViem(llamaService, client as PublicClient);
+      const ufxs = await getUFxsPrice(llamaService, client as PublicClient);
 
       return calcMinAmountOut(input, ufxs, cvxfxs, slippage);
     },

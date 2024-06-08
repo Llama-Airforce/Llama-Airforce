@@ -29,7 +29,7 @@ export async function getUFxsPriceV1Viem(
   llamaService: DefiLlamaService,
   client: PublicClient
 ) {
-  const pxcvx = await getPxCvxPriceViem(llamaService, client)
+  const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
     .then((x) => x)
     .catch(() => Infinity);
 
@@ -39,7 +39,7 @@ export async function getUFxsPriceV1Viem(
     client,
   });
   const vp = await getVirtualPriceViem(utkn);
-  const ucvx = pxcvx * vp;
+  const ufxs = cvxfxslp * vp;
 
-  return ucvx;
+  return ufxs;
 }

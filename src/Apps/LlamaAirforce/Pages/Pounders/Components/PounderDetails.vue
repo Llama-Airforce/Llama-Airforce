@@ -94,6 +94,8 @@
 </template>
 
 <script setup lang="ts">
+import { getPublicClient } from "@wagmi/core";
+import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
@@ -127,7 +129,9 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { address, signer } = useWallet();
+const { address } = useWallet();
+const config = useConfig();
+
 const store = useUnionStore();
 
 const modalClaim = ref(false);
@@ -235,12 +239,13 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
       modalSlippage.value = true;
       modalAction = () => onDeposit(true);
 
-      if (!signer.value) {
+      const client = getPublicClient(config);
+      if (!client) {
         return;
       }
 
       minAmountOutRef.value = await zapDeposit.value
-        .getMinAmountOut(getHost(), signer.value, depositInput.value, 0)
+        .getMinAmountOut(getHost(), client, depositInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsWithdraw));
       symbolOutput.value = pounderStore.value.pounder.symbol;
 
@@ -299,12 +304,13 @@ const onWithdraw = async (
       modalSlippage.value = true;
       modalAction = () => onWithdraw(true, true);
 
-      if (!signer.value) {
+      const client = getPublicClient(config);
+      if (!client) {
         return;
       }
 
       minAmountOutRef.value = await zapWithdraw.value
-        .getMinAmountOut(getHost(), signer.value, withdrawInput.value, 0)
+        .getMinAmountOut(getHost(), client, withdrawInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsDeposit));
       symbolOutput.value = zapWithdraw.value.withdrawSymbol;
 

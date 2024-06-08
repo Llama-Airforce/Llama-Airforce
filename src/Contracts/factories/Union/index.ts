@@ -12,5 +12,4 @@ export { ZapsUCrvV2__factory } from "./ZapsUCrvV2__factory";
 export { ZapsUCvx__factory } from "./ZapsUCvx__factory";
 export { ZapsUFxs__factory } from "./ZapsUFxs__factory";
 export { ZapsUFxsLp__factory } from "./ZapsUFxsLp__factory";
-export { ZapsUPrisma__factory } from "./ZapsUPrisma__factory";
 export { ZapsUPrismaConvexMigration__factory } from "./ZapsUPrismaConvexMigration__factory";

@@ -1,36 +1,51 @@
-import { maxApprove } from "@/Wallet";
-import { type ERC20, type UnionVault } from "@/Contracts";
+import { type Address, type PublicClient, type WalletClient } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import { maxApproveViem } from "@/Wallet";
 import type { ZapDeposit, Swap } from "@Pounders/Models";
+import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
+
+import { CvxCrvAddress, UnionCrvVaultAddress } from "@/Util/Addresses";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCrvDepositZaps(
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVault | undefined,
-  getAssetTkn: () => ERC20 | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapDeposit | Swap)[] {
   const deposit = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
-    const atkn = getAssetTkn();
 
-    if (!address || !vault || !input || !atkn) {
+    if (!address || !input || !client || !wallet?.account) {
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApprove(atkn, address, vault.address, input);
+    await maxApproveViem(
+      client,
+      wallet,
+      CvxCrvAddress,
+      address,
+      UnionCrvVaultAddress,
+      input
+    );
 
-    const ps = [address, input] as const;
-
-    const estimate = await vault.estimateGas.deposit(...ps);
-    const tx = await vault.deposit(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [address, input] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiVault,
+      address: UnionCrvVaultAddress,
+      functionName: "deposit",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
@@ -39,25 +54,8 @@ export function uCrvDepositZaps(
     label: "cvxCRV",
     zap: () => deposit(),
     depositSymbol: "cvxCRV",
-    depositBalance: async () => {
-      const address = getAddress();
-      const atkn = getAssetTkn();
-
-      if (!address || !atkn) {
-        throw new Error("Unable to construct deposit zap balance");
-      }
-
-      return await atkn.balanceOf(address).then((x) => x.toBigInt());
-    },
-    depositDecimals: async () => {
-      const atkn = getAssetTkn();
-
-      if (!atkn) {
-        throw new Error("Unable to construct deposit zap decimals");
-      }
-
-      return await atkn.decimals().then((x) => BigInt(x));
-    },
+    depositBalance: () => getBalance(getClient, getAddress, CvxCrvAddress),
+    depositDecimals: () => getDecimals(getClient, CvxCrvAddress),
   };
 
   const swap: Swap = {

@@ -59,7 +59,7 @@ export async function getPxCvxPriceViem(
   const cvxPrice = await getDefiLlamaPrice(llamaService, CvxAddress);
   const price_oracle = await client.readContract({
     abi: abiCurveV2,
-    address: PxCvxFactoryAddress,
+    address: LPxCvxFactoryAddress,
     functionName: "price_oracle",
   });
   const decimals = 18n;

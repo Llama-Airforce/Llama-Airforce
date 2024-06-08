@@ -3,16 +3,17 @@ import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApproveViem } from "@/Wallet";
+import { DefiLlamaService } from "@/Services";
+import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
+import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
+import { claim } from "@Pounders/Zaps/Helpers";
+
 import {
   CvxAddress,
   UnionCvxVaultAddress,
   ZapsUCvxClaimAddress,
 } from "@/Util/Addresses";
-import { DefiLlamaService } from "@/Services";
-import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
-import { getUCvxPriceViem } from "@Pounders/Zaps/UCvx/PriceHelper";
-import { claim } from "@Pounders/Zaps/Helpers";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
@@ -85,7 +86,7 @@ export function uCvxClaimZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPriceViem(llamaService, client as PublicClient);
+      const ucvx = await getUCvxPrice(llamaService, client as PublicClient);
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

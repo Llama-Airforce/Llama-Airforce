@@ -6,14 +6,8 @@ import {
 } from "ethereum-multicall";
 import CurveV2FactoryPoolABI from "@/ABI/Curve/CurveV2FactoryPool.json";
 import ERC20ABI from "@/ABI/Standards/ERC20.json";
+import { type CurveV2FactoryPool, type CurveV6FactoryPool } from "@/Contracts";
 import {
-  type CurveV1FactoryPool,
-  type CurveV2FactoryPool,
-  type CurveV6FactoryPool,
-  type CvxCrvFactoryPool,
-} from "@/Contracts";
-import {
-  CrvAddress,
   CvxAddress,
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
@@ -23,17 +17,6 @@ import {
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import { type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
-
-async function getDiscount(
-  pool: CurveV1FactoryPool | CurveV2FactoryPool | CurveV6FactoryPool
-): Promise<number> {
-  const dec = 10n ** 18n;
-  const tkn_in = 10n ** 22n;
-  const tkn_out = await pool.get_dy(0, 1, tkn_in).then((x) => x.toBigInt());
-  const discount = ((tkn_out - tkn_in) * dec) / tkn_out;
-
-  return 1 - bigNumToNumber(discount, 18n);
-}
 
 export function getDefiLlamaPrice(
   llamaService: DefiLlamaService,
@@ -49,31 +32,6 @@ export function getCvxPrice(llamaService: DefiLlamaService): Promise<number> {
   return getDefiLlamaPrice(llamaService, CvxAddress);
 }
 
-export async function getPxCvxPrice(
-  llamaService: DefiLlamaService,
-  pxCvxFactoryPool: CurveV2FactoryPool
-): Promise<number> {
-  const cvxPrice = await getDefiLlamaPrice(llamaService, CvxAddress);
-  const price_oracle = await pxCvxFactoryPool
-    .price_oracle()
-    .then((x) => x.toBigInt());
-  const decimals = 18n;
-
-  return cvxPrice * bigNumToNumber(price_oracle, decimals);
-}
-
-export async function getCvxCrvPrice(
-  llamaService: DefiLlamaService,
-  cvxCrvFactoryPool: CvxCrvFactoryPool
-): Promise<number> {
-  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
-
-  return cvxCrvFactoryPool
-    .price_oracle()
-    .then((x) => x.toBigInt())
-    .then((price) => bigNumToNumber(price, 18n) * crvPrice);
-}
-
 export async function getCvxPrismaPrice(
   llamaService: DefiLlamaService,
   cvxPrismaFactoryPool: CurveV6FactoryPool
@@ -84,18 +42,6 @@ export async function getCvxPrismaPrice(
     .price_oracle()
     .then((x) => x.toBigInt())
     .then((price) => bigNumToNumber(price, 18n) * prismaPrice);
-}
-
-export async function getCvxCrvPriceV2(
-  llamaService: DefiLlamaService,
-  cvxCrvFactoryPool: CurveV1FactoryPool
-): Promise<number> {
-  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
-
-  // Convert crv price to cvxCrv price.
-  const discount = await getDiscount(cvxCrvFactoryPool);
-
-  return crvPrice * discount;
 }
 
 export async function getCvxFxsPrice(

@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { type PublicClient } from "viem";
-import { getPublicClient } from "@wagmi/core";
+import { getPublicClient, getWalletClient } from "@wagmi/core";
 import { useConfig } from "@wagmi/vue";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { useWallet } from "@/Wallet";
@@ -132,18 +132,17 @@ const createUCvxPounder = (signer: JsonRpcSigner, client: PublicClient) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uCvxDepositZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uCvxWithdrawZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 
@@ -164,16 +163,17 @@ const createUCrvPounder = (signer: JsonRpcSigner, client: PublicClient) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uCrvDepositZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uCrvWithdrawZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 
@@ -194,17 +194,17 @@ const createUFxsPounder = (signer: JsonRpcSigner, client: PublicClient) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uFxsDepositZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uFxsWithdrawZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 
@@ -225,18 +225,17 @@ const createUPrismaPounder = (signer: JsonRpcSigner, client: PublicClient) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uPrismaDepositZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uPrismaWithdrawZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 
@@ -257,18 +256,17 @@ const createUFxsLpPounder = (signer: JsonRpcSigner, client: PublicClient) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uFxsLpDepositZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uFxsLpWithdrawZaps(
-        () => signer,
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 
@@ -285,16 +283,17 @@ const createUBalPounder = (signer: JsonRpcSigner) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uBalDepositZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uBalWithdrawZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 
@@ -315,16 +314,17 @@ const createUCrvV2Pounder = (signer: JsonRpcSigner, client: PublicClient) => {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | null) =>
       zaps.uCrvV2DepositZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn,
-        () => pounder.atkn
+        getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | null) =>
       zaps.uCrvV2WithdrawZaps(
+        () => getPublicClient(config),
+        () => getWalletClient(config),
         () => address.value,
-        getInput,
-        () => pounder.utkn
+        getInput
       ),
   };
 

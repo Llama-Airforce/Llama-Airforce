@@ -1,31 +1,39 @@
-import { type UnionVault } from "@/Contracts";
+import { type Address, type PublicClient, type WalletClient } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import type { ZapWithdraw, Swap } from "@Pounders/Models";
+
+import { UnionCrvVaultAddress } from "@/Util/Addresses";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 export function uCrvWithdrawZaps(
-  getAddress: () => string | undefined,
-  getInput: () => bigint | null,
-  getVault: () => UnionVault | undefined
+  getClient: () => PublicClient | undefined,
+  getWallet: () => Promise<WalletClient | undefined>,
+  getAddress: () => Address | undefined,
+  getInput: () => bigint | null
 ): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
+    const client = getClient();
+    const wallet = await getWallet();
     const address = getAddress();
-    const vault = getVault();
     const input = getInput();
 
-    if (!address || !vault || !input) {
+    if (!address || !input || !client || !wallet?.account) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
-    const ps = [address, input] as const;
-
-    const estimate = await vault.estimateGas.withdraw(...ps);
-
-    const tx = await vault.withdraw(...ps, {
-      gasLimit: estimate.mul(125).div(100),
+    const args = [address, input] as const;
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account,
+      abi: abiVault,
+      address: UnionCrvVaultAddress,
+      functionName: "withdraw",
+      args,
     });
 
-    return tx.wait();
+    return waitForTransactionReceipt(client, { hash });
   };
 
   // Zaps
