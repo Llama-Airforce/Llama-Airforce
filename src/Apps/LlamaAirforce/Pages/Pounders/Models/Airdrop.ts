@@ -1,21 +1,14 @@
 import { type PublicClient, getContract } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { abi as abiUnionVaultUCrv } from "@/ABI/Union/UnionVaultUCrv";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
-import {
-  CurveV6FactoryPool__factory,
-  CurveV2FactoryPool__factory,
-  CvxCrvFactoryPool__factory,
-} from "@/Contracts";
 import { type DefiLlamaService } from "@/Services";
 import {
-  bigNumToNumber,
-  getCvxCrvPrice,
-  getCvxFxsPrice,
-  getCvxPrismaPrice,
-  getPxCvxPrice,
-} from "@/Util";
+  getCvxCrvPriceViem,
+  getCvxFxsPriceViem,
+  getCvxPrismaPriceViem,
+  getPxCvxPriceViem,
+} from "@/Util/PriceHelperViem";
 import { getVirtualPriceViem } from "@Pounders/Util/UnionHelper";
 import { type AirdropId, type Claim } from "@LAF/Services/UnionService";
 
@@ -71,16 +64,11 @@ export function isAirdropUCvx(airdrop: Airdrop): airdrop is AirdropUCvx {
 }
 
 export async function uCrvAirdrop(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCrv> {
-  const factory = CvxCrvFactoryPool__factory.connect(
-    CvxCrvFactoryAddress,
-    signer
-  );
-  const cvxCrvPrice = await getCvxCrvPrice(llamaService, factory);
+  const cvxCrvPrice = await getCvxCrvPriceViem(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVaultUCrv,
@@ -107,16 +95,11 @@ export async function uCrvAirdrop(
 }
 
 export async function uFxsAirdrop(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUFxs> {
-  const factory = CurveV2FactoryPool__factory.connect(
-    CvxFxsFactoryAddress,
-    signer
-  );
-  const cvxFxsPrice = await getCvxFxsPrice(llamaService, factory);
+  const cvxFxsPrice = await getCvxFxsPriceViem(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
@@ -143,16 +126,11 @@ export async function uFxsAirdrop(
 }
 
 export async function uPrismaAirdrop(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUPrisma> {
-  const factory = CurveV6FactoryPool__factory.connect(
-    CvxPrismaFactoryAddress,
-    signer
-  );
-  const cvxPrismaPrice = await getCvxPrismaPrice(llamaService, factory);
+  const cvxPrismaPrice = await getCvxPrismaPriceViem(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
@@ -179,16 +157,11 @@ export async function uPrismaAirdrop(
 }
 
 export async function uCvxAirdrop(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCvx> {
-  const factory = CurveV2FactoryPool__factory.connect(
-    PxCvxFactoryAddress,
-    signer
-  );
-  const pxCvxPrice = await getPxCvxPrice(llamaService, factory);
+  const pxCvxPrice = await getPxCvxPriceViem(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVaultPirex,

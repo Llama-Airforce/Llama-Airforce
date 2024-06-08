@@ -24,7 +24,7 @@ import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import { type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
 
-export async function getDiscount(
+async function getDiscount(
   pool: CurveV1FactoryPool | CurveV2FactoryPool | CurveV6FactoryPool
 ): Promise<number> {
   const dec = 10n ** 18n;
