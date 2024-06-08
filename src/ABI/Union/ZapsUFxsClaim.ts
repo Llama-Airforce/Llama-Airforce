@@ -1,15 +1,6 @@
 export const abi = [
   {
     inputs: [
-      { internalType: "address", name: "_strategyZaps", type: "address" },
-      { internalType: "address", name: "_distributor", type: "address" },
-      { internalType: "address", name: "_vault", type: "address" },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    inputs: [
       { internalType: "uint256", name: "index", type: "uint256" },
       { internalType: "address", name: "account", type: "address" },
       { internalType: "uint256", name: "amount", type: "uint256" },
@@ -117,40 +108,6 @@ export const abi = [
     name: "claimFromDistributorViaUniV2EthPair",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "distributor",
-    outputs: [
-      {
-        internalType: "contract IGenericDistributor",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "setApprovals",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "vault",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "zaps",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
     type: "function",
   },
 ] as const;
