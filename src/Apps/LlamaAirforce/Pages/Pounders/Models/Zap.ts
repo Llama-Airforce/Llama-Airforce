@@ -1,11 +1,14 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type ContractReceipt } from "ethers";
 import { type Swap } from "@Pounders/Models/Swap";
+import { type TransactionReceipt } from "viem";
 
 export type Zap = {
   logo: string;
   label: string;
-  zap: (minAmountOut?: bigint) => Promise<ContractReceipt | undefined>;
+  zap: (
+    minAmountOut?: bigint
+  ) => Promise<ContractReceipt | TransactionReceipt | undefined>;
   getMinAmountOut?: (
     host: string,
     signer: JsonRpcSigner,

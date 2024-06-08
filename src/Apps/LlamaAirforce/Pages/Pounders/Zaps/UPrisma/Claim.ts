@@ -61,7 +61,7 @@ export function uPrismaClaimZaps(
       airdrop.claim.index,
       address,
       airdrop.amount,
-      airdrop.claim.proof,
+      airdrop.claim.proof as string[],
     ] as const;
 
     const estimate = await distributor.estimateGas.claim(...ps);
@@ -79,7 +79,7 @@ export function uPrismaClaimZaps(
       x.claim.index,
       x.address,
       x.amount,
-      x.claim.proof,
+      x.claim.proof as string[],
       x.address,
     ] as const;
 

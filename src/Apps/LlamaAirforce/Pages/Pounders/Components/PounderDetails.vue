@@ -339,7 +339,12 @@ const onClaimAndWithdraw = async (): Promise<void> => {
     }
 
     await distributor
-      .claim(claim.value.index, address.value, amount, claim.value.proof)
+      .claim(
+        claim.value.index,
+        address.value,
+        amount,
+        claim.value.proof as string[]
+      )
       .then((x) => x.wait());
 
     await onWithdraw(true, false);

@@ -481,6 +481,14 @@
     "watchWithFilter": true,
     "whenever": true,
     "notifyError": true,
-    "notifySuccess": true
+    "notifySuccess": true,
+    "getCurveV2LpPriceViem": true,
+    "getCvxCrvPriceV2Viem": true,
+    "getCvxCrvPriceViem": true,
+    "getCvxFxsLpPriceViem": true,
+    "getCvxFxsPriceViem": true,
+    "getCvxPriceViem": true,
+    "getCvxPrismaPriceViem": true,
+    "getPxCvxPriceViem": true
   }
 }

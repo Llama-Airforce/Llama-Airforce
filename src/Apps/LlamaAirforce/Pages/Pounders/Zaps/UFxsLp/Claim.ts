@@ -68,7 +68,7 @@ export function uFxsLpClaimZaps(
       airdrop.claim.index,
       address,
       airdrop.amount,
-      airdrop.claim.proof,
+      airdrop.claim.proof as string[],
     ] as const;
 
     const estimate = await distributor.estimateGas.claim(...ps);
@@ -86,7 +86,7 @@ export function uFxsLpClaimZaps(
       x.claim.index,
       x.address,
       x.amount,
-      x.claim.proof,
+      x.claim.proof as string[],
       0,
       minAmountOut,
       x.address,
@@ -108,7 +108,7 @@ export function uFxsLpClaimZaps(
       x.claim.index,
       x.address,
       x.amount,
-      x.claim.proof,
+      x.claim.proof as string[],
       1,
       minAmountOut,
       x.address,

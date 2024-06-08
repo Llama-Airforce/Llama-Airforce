@@ -1,9 +1,9 @@
 import { ServiceBase } from "@/Services";
 
 export type Claim = {
-  index: number;
+  index: bigint;
   amount: string; // In hex because of big numbers.
-  proof: string[];
+  proof: Readonly<`0x${string}`[]>;
 };
 
 type ClaimResponse = {
