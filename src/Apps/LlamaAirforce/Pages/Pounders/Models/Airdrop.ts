@@ -1,28 +1,15 @@
+import { type PublicClient, getContract } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
+import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
+import { abi as abiUnionVaultUCrv } from "@/ABI/Union/UnionVaultUCrv";
+import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import {
   CurveV6FactoryPool__factory,
   CurveV2FactoryPool__factory,
   CvxCrvFactoryPool__factory,
   type MerkleDistributor2,
   MerkleDistributor2__factory,
-  UnionVaultPirex__factory,
-  UnionVaultUCrv__factory,
-  UnionVault__factory,
 } from "@/Contracts";
-import {
-  CvxCrvFactoryAddress,
-  CvxFxsFactoryAddress,
-  CvxPrismaFactoryAddress,
-  DistributorUCrvAddress,
-  DistributorUCvxAddress,
-  DistributorUFxsAddress,
-  DistributorUPrismaAddress,
-  PxCvxFactoryAddress,
-  UnionCrvVaultAddress,
-  UnionCvxVaultAddress,
-  UnionFxsVaultAddress,
-  UnionPrismaVaultAddress,
-} from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
 import {
   bigNumToNumber,
@@ -31,7 +18,7 @@ import {
   getCvxPrismaPrice,
   getPxCvxPrice,
 } from "@/Util";
-import { getVirtualPrice } from "@Pounders/Util/UnionHelper";
+import { getVirtualPriceViem } from "@Pounders/Util/UnionHelper";
 import { type AirdropId, type Claim } from "@LAF/Services/UnionService";
 
 export type Airdrop = {
@@ -87,6 +74,7 @@ export function isAirdropUCvx(airdrop: Airdrop): airdrop is AirdropUCvx {
 
 export async function uCrvAirdrop(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCrv> {
@@ -96,8 +84,12 @@ export async function uCrvAirdrop(
   );
   const cvxCrvPrice = await getCvxCrvPrice(llamaService, factory);
 
-  const utkn = UnionVaultUCrv__factory.connect(UnionCrvVaultAddress, signer);
-  const virtualPrice = await getVirtualPrice(utkn);
+  const utkn = getContract({
+    abi: abiUnionVaultUCrv,
+    address: UnionCrvVaultAddress,
+    client,
+  });
+  const virtualPrice = await getVirtualPriceViem(utkn);
 
   claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim.amount);
@@ -123,6 +115,7 @@ export async function uCrvAirdrop(
 
 export async function uFxsAirdrop(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUFxs> {
@@ -132,8 +125,12 @@ export async function uFxsAirdrop(
   );
   const cvxFxsPrice = await getCvxFxsPrice(llamaService, factory);
 
-  const utkn = UnionVault__factory.connect(UnionFxsVaultAddress, signer);
-  const virtualPrice = await getVirtualPrice(utkn);
+  const utkn = getContract({
+    abi: abiUnionVault,
+    address: UnionFxsVaultAddress,
+    client,
+  });
+  const virtualPrice = await getVirtualPriceViem(utkn);
 
   claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim?.amount ?? 0);
@@ -159,6 +156,7 @@ export async function uFxsAirdrop(
 
 export async function uPrismaAirdrop(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUPrisma> {
@@ -168,8 +166,12 @@ export async function uPrismaAirdrop(
   );
   const cvxPrismaPrice = await getCvxPrismaPrice(llamaService, factory);
 
-  const utkn = UnionVault__factory.connect(UnionPrismaVaultAddress, signer);
-  const virtualPrice = await getVirtualPrice(utkn);
+  const utkn = getContract({
+    abi: abiUnionVault,
+    address: UnionPrismaVaultAddress,
+    client,
+  });
+  const virtualPrice = await getVirtualPriceViem(utkn);
 
   claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim?.amount ?? 0);
@@ -195,6 +197,7 @@ export async function uPrismaAirdrop(
 
 export async function uCvxAirdrop(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCvx> {
@@ -204,8 +207,12 @@ export async function uCvxAirdrop(
   );
   const pxCvxPrice = await getPxCvxPrice(llamaService, factory);
 
-  const utkn = UnionVaultPirex__factory.connect(UnionCvxVaultAddress, signer);
-  const virtualPrice = await getVirtualPrice(utkn);
+  const utkn = getContract({
+    abi: abiUnionVaultPirex,
+    address: UnionCvxVaultAddress,
+    client,
+  });
+  const virtualPrice = await getVirtualPriceViem(utkn);
 
   claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim.amount);
