@@ -10,6 +10,18 @@ import { abi as abiCurveV6 } from "@/ABI/Curve/CurveV6FactoryPool";
 import { abi as abiCvxCrv } from "@/ABI/Curve/CvxCrvFactoryPool";
 import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
+import {
+  CvxAddress,
+  LPxCvxFactoryAddress,
+  CrvAddress,
+  CvxCrvFactoryAddress,
+  CvxCrvFactoryAddressV1,
+  PrismaAddress,
+  CvxPrismaFactoryAddress,
+  FxsAddress,
+  CvxFxsFactoryAddress,
+  CvxFxsFactoryERC20Address,
+} from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
 
 type CurveV1FactoryPool = GetContractReturnType<
