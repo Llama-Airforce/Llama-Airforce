@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { getPublicClient } from "@wagmi/core";
-import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { useUnionStore } from "@Pounders/Store";
 import type { PounderId } from "@Pounders/Models";
@@ -37,7 +35,6 @@ const { pounderId } = defineProps<Props>();
 
 // Refs
 const { address } = useWallet();
-const config = useConfig();
 const store = useUnionStore();
 
 const expanded = ref(false);
@@ -67,13 +64,8 @@ watch(
 
 watch(
   pounder,
-  async (newPounder) => {
-    const client = getPublicClient(config);
-    if (!client) {
-      return;
-    }
-
-    await store.updatePounder(pounderId, newPounder.contract);
+  async () => {
+    await store.updatePounder(pounderId);
   },
   {
     immediate: true,

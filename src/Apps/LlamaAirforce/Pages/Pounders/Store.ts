@@ -56,7 +56,7 @@ export const useUnionStore = defineStore({
       };
     },
 
-    async updatePounder(pounderId: PounderId, vault: VaultViem) {
+    async updatePounder(pounderId: PounderId) {
       const { pounder, state } = this.getPounder(pounderId);
       if (!pounder || !state) {
         return;
@@ -64,7 +64,7 @@ export const useUnionStore = defineStore({
 
       state.priceUnderlying = await pounder.getPriceUnderlying();
       state.apy = await pounder.getApy();
-      state.fees = await getFees(vault);
+      state.fees = await getFees(pounder.contract);
       state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
 
       state.decimalsWithdraw = await pounder.utkn
