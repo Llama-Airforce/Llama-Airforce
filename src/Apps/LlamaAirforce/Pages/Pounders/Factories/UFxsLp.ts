@@ -1,3 +1,4 @@
+import { type PublicClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import {
   CurveV2FactoryPool__factory,
@@ -6,7 +7,7 @@ import {
   type UnionVault,
   UnionVault__factory,
 } from "@/Contracts";
-import { getCvxFxsLpPrice, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
+import { getCvxFxsLpPriceViem, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
 import {
   CvxFxsAddress,
   CvxFxsFactoryAddress,
@@ -20,6 +21,7 @@ import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsLpPounder(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<UnionVault> {
   const utkn = UnionVault__factory.connect(UnionFxsVaultAddressV1, signer);
@@ -29,8 +31,7 @@ export default function createFxsLpPounder(
     signer
   );
 
-  const getPriceUnderlying = () =>
-    getCvxFxsLpPrice(llamaService, signer.provider);
+  const getPriceUnderlying = () => getCvxFxsLpPriceViem(llamaService, client);
 
   const getApy = () => getCvxFxsLpApy();
 

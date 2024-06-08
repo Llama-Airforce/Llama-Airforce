@@ -1,15 +1,14 @@
+import { type PublicClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import {
-  CurveV1FactoryPool__factory,
   ERC20__factory,
   MerkleDistributor2__factory,
   type UnionVault,
   UnionVault__factory,
 } from "@/Contracts";
-import { getCvxCrvPriceV2, getCvxCrvApyV2 } from "@/Util";
+import { getCvxCrvPriceV2Viem, getCvxCrvApyV2 } from "@/Util";
 import {
   CvxCrvAddress,
-  CvxCrvFactoryAddressV1,
   DistributorUCrvAddressV2,
   UnionCrvVaultAddressV2,
 } from "@/Util/Addresses";
@@ -20,20 +19,17 @@ import logo from "@/Assets/Icons/Tokens/crv.svg";
 
 export default function createCrvV2Pounder(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<UnionVault> {
   const utkn = UnionVault__factory.connect(UnionCrvVaultAddressV2, signer);
   const atkn = ERC20__factory.connect(CvxCrvAddress, signer);
-  const factory = CurveV1FactoryPool__factory.connect(
-    CvxCrvFactoryAddressV1,
-    signer
-  );
   const distributor = MerkleDistributor2__factory.connect(
     DistributorUCrvAddressV2,
     signer
   );
 
-  const getPriceUnderlying = () => getCvxCrvPriceV2(llamaService, factory);
+  const getPriceUnderlying = () => getCvxCrvPriceV2Viem(llamaService, client);
   const getApy = () => getCvxCrvApyV2(signer, llamaService);
 
   return {

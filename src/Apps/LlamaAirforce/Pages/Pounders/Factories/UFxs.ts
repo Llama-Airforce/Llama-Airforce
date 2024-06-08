@@ -1,15 +1,14 @@
+import { type PublicClient } from "viem";
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import {
-  CurveV2FactoryPool__factory,
   ERC20__factory,
   MerkleDistributor2__factory,
   type UnionVault,
   UnionVault__factory,
 } from "@/Contracts";
-import { getCvxFxsPrice, getCvxFxsApy } from "@/Util";
+import { getCvxFxsPriceViem, getCvxFxsApy } from "@/Util";
 import {
   CvxFxsAddress,
-  CvxFxsFactoryAddress,
   DistributorUFxsAddress,
   UnionFxsVaultAddress,
 } from "@/Util/Addresses";
@@ -20,20 +19,17 @@ import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsPounder(
   signer: JsonRpcSigner,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<UnionVault> {
   const utkn = UnionVault__factory.connect(UnionFxsVaultAddress, signer);
   const atkn = ERC20__factory.connect(CvxFxsAddress, signer);
-  const factory = CurveV2FactoryPool__factory.connect(
-    CvxFxsFactoryAddress,
-    signer
-  );
   const distributor = MerkleDistributor2__factory.connect(
     DistributorUFxsAddress,
     signer
   );
 
-  const getPriceUnderlying = () => getCvxFxsPrice(llamaService, factory);
+  const getPriceUnderlying = () => getCvxFxsPriceViem(llamaService, client);
   const getApy = () => getCvxFxsApy(signer, llamaService);
 
   return {

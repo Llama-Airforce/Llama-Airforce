@@ -8,5 +8,6 @@ export * from "./PromiseHelper";
 export * from "./RouterHelper";
 export * from "./Types";
 export * from "./PriceHelper";
+export * from "./PriceHelperViem";
 export * from "./ApyHelper";
 export * from "./NotificationHelper";
