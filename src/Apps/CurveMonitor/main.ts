@@ -7,6 +7,7 @@ import App from "@CM/App.vue";
 import createRouter from "@CM/Router";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
+import { hashFn } from "@wagmi/core/query";
 import { WagmiPlugin } from "@wagmi/vue";
 import { config as wagmiConfig } from "@/Wallet/Wagmi";
 
@@ -40,6 +41,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
+      queryKeyHashFn: hashFn,
     },
   },
   queryCache: new QueryCache({
