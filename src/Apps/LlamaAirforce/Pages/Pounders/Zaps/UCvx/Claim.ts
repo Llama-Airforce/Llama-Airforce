@@ -1,7 +1,6 @@
 import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
-import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApproveViem } from "@/Wallet";
 import {
@@ -13,6 +12,7 @@ import { DefiLlamaService } from "@/Services";
 import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUCvxPriceViem } from "@Pounders/Zaps/UCvx/PriceHelper";
+import { claim } from "@Pounders/Zaps/Helpers";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
@@ -24,35 +24,6 @@ export function uCvxClaimZaps(
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
-  const claim = async () => {
-    const address = getAddress();
-    const airdrop = getAirdrop();
-    const client = getClient();
-    const wallet = await getWallet();
-
-    if (!airdrop || !address || !client || !wallet?.account) {
-      return;
-    }
-
-    const args = [
-      airdrop.claim.index,
-      address,
-      airdrop.amount,
-      airdrop.claim.proof,
-    ] as const;
-
-    const hash = await wallet.writeContract({
-      chain: client.chain,
-      account: wallet.account,
-      abi: abiMerkle,
-      address: airdrop.distributorAddress,
-      functionName: "claim",
-      args,
-    });
-
-    return waitForTransactionReceipt(client, { hash });
-  };
-
   const claimAsCvx = async (minAmountOut: bigint) => {
     const address = getAddress();
     const airdrop = getAirdrop();
@@ -126,7 +97,7 @@ export function uCvxClaimZaps(
     withdrawSymbol: "uCVX",
     withdrawDecimals: () => Promise.resolve(18n),
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
-    zap: () => claim(),
+    zap: () => claim(getClient, getWallet, getAddress, getAirdrop),
   };
 
   const swap: Swap = {

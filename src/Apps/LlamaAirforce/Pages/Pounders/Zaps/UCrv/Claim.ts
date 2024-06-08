@@ -1,10 +1,10 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
-import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
 import { maxApproveViem } from "@/Wallet";
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
 import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
+import { claim } from "@Pounders/Zaps/Helpers";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
@@ -16,35 +16,6 @@ export function uCrvClaimZaps(
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
-  const claim = async () => {
-    const address = getAddress();
-    const airdrop = getAirdrop();
-    const client = getClient();
-    const wallet = await getWallet();
-
-    if (!airdrop || !address || !client || !wallet?.account) {
-      return;
-    }
-
-    const args = [
-      airdrop.claim.index,
-      address,
-      airdrop.amount,
-      airdrop.claim.proof,
-    ] as const;
-
-    const hash = await wallet.writeContract({
-      chain: client.chain,
-      account: wallet.account,
-      abi: abiMerkle,
-      address: airdrop.distributorAddress,
-      functionName: "claim",
-      args,
-    });
-
-    return waitForTransactionReceipt(client, { hash });
-  };
-
   const claimAsCvxCrv = async () => {
     const address = getAddress();
     const airdrop = getAirdrop();
@@ -91,7 +62,7 @@ export function uCrvClaimZaps(
     withdrawSymbol: "uCRV",
     withdrawDecimals: () => Promise.resolve(18n),
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
-    zap: () => claim(),
+    zap: () => claim(getClient, getWallet, getAddress, getAirdrop),
   };
 
   const cvxcrv: ZapClaim = {
