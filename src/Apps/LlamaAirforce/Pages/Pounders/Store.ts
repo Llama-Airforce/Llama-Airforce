@@ -15,11 +15,11 @@ type PounderStore = {
   pounder: Pounder<Vault>;
   state: PounderState;
   zapsFactories: ZapsFactories;
-  claim: Claim | null;
 };
 
 type State = {
   pounders: Record<PounderId, PounderStore | null>;
+  claims: Record<PounderId, Claim | undefined>;
 };
 
 export const useUnionStore = defineStore({
@@ -34,6 +34,15 @@ export const useUnionStore = defineStore({
       ubal: null,
       ufxslp: null,
     },
+    claims: {
+      ucrv: undefined,
+      ucrv2: undefined,
+      ufxs: undefined,
+      uprisma: undefined,
+      ucvx: undefined,
+      ubal: undefined,
+      ufxslp: undefined,
+    },
   }),
   actions: {
     getPounder(pounderId: PounderId) {
@@ -43,7 +52,6 @@ export const useUnionStore = defineStore({
         pounder: pounder?.pounder,
         state: pounder?.state,
         zapsFactories: pounder?.zapsFactories,
-        claim: pounder?.claim,
       };
     },
 
@@ -95,7 +103,7 @@ export const useUnionStore = defineStore({
       }
     },
 
-    updateClaim(pounderId: PounderId, claim: Claim | null) {
+    updateClaim(pounderId: PounderId, claim?: Claim) {
       const { state } = this.getPounder(pounderId);
       if (!state) {
         return;

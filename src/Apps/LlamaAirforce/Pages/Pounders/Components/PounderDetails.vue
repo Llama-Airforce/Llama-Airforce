@@ -153,6 +153,7 @@ const minAmountOut = ref(0);
 const symbolOutput = ref("");
 
 const pounderStore = computed(() => store.pounders[pounderId]!);
+const claim = computed(() => store.claims[pounderId]);
 const description = computed(() => t(pounderStore.value.pounder.description));
 const state = computed(() => pounderStore.value.state);
 const zapsFactories = computed(() => pounderStore.value.zapsFactories);
@@ -326,20 +327,19 @@ const onWithdraw = async (
 
 const onClaimAndWithdraw = async (): Promise<void> => {
   const distributor = pounderStore.value.pounder.distributor();
-  const claim = pounderStore.value.claim;
-  if (!claim || !distributor) {
+  if (!claim.value || !distributor) {
     return;
   }
 
-  const amount = BigInt(claim.amount);
+  const amount = BigInt(claim.value.amount);
 
   await tryNotify(async () => {
-    if (!address.value) {
+    if (!claim.value || !address.value) {
       return;
     }
 
     await distributor
-      .claim(claim.index, address.value, amount, claim.proof)
+      .claim(claim.value.index, address.value, amount, claim.value.proof)
       .then((x) => x.wait());
 
     await onWithdraw(true, false);

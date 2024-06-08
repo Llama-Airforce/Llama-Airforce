@@ -41,7 +41,7 @@ const expanded = ref(false);
 
 const pounderStore = computed(() => store.pounders[pounderId]!);
 const pounder = computed(() => pounderStore.value.pounder);
-const claim = computed(() => pounderStore.value.claim);
+const claim = computed(() => store.claims[pounderId]);
 
 // Watches
 watch(

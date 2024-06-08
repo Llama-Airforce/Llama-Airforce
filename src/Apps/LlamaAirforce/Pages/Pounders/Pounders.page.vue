@@ -35,10 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type JsonRpcProvider,
-  type JsonRpcSigner,
-} from "@ethersproject/providers";
+import { type JsonRpcSigner } from "@ethersproject/providers";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import UnionService from "@LAF/Services/UnionService";
@@ -46,12 +43,12 @@ import Documentation from "@LAF/Components/Documentation.vue";
 import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
 import { useUnionStore } from "@Pounders/Store";
-import { getClaim } from "@Pounders/Util/UnionHelper";
 import type { ZapsFactories } from "@Pounders/Models";
 import FlyerService from "@/Services/FlyerService";
 import * as pounderFactories from "@Pounders/Factories";
 import * as zaps from "@Pounders/Zaps";
 import { create as createPounderState } from "@Pounders/Util/PounderStateHelper";
+import { useClaim } from "@Pounders/Composables/UseClaim";
 
 const { t } = useI18n();
 
@@ -80,45 +77,31 @@ const poundersLegacy = computed(() => [store.pounders.ucrv2].filter(notEmpty));
 
 // Hooks
 onMounted(
-  withSigner(async (signer) => {
+  withSigner((signer) => {
     createPounders(signer);
-    await updateClaims();
+    return Promise.resolve();
   })
 );
 
-// Methods
-const updateClaims = withSigner(async (signer, address) => {
-  const provider = signer as unknown as JsonRpcProvider;
-
-  store.pounders.ucrv!.claim = await getClaim(
-    provider,
-    unionService,
-    "union",
-    address
-  );
-
-  store.pounders.ufxs!.claim = await getClaim(
-    provider,
-    unionService,
-    "ufxs",
-    address
-  );
-
-  store.pounders.uprisma!.claim = await getClaim(
-    provider,
-    unionService,
-    "uprisma",
-    address
-  );
-
-  store.pounders.ucvx!.claim = await getClaim(
-    provider,
-    unionService,
-    "ucvx",
-    address
-  );
+// Claims
+const { claim: claimUCrv } = useClaim(unionService, "union", address);
+const { claim: claimUFxs } = useClaim(unionService, "ufxs", address);
+const { claim: claimUPrisma } = useClaim(unionService, "uprisma", address);
+const { claim: claimUCvx } = useClaim(unionService, "ucvx", address);
+watch(claimUCrv, (newClaim) => (store.claims.ucrv = newClaim), {
+  immediate: true,
+});
+watch(claimUFxs, (newClaim) => (store.claims.ufxs = newClaim), {
+  immediate: true,
+});
+watch(claimUPrisma, (newClaim) => (store.claims.uprisma = newClaim), {
+  immediate: true,
+});
+watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim), {
+  immediate: true,
 });
 
+// Methods
 const createPounders = (signer: JsonRpcSigner) => {
   createUCvxPounder(signer);
   createUCrvV2Pounder(signer);
@@ -158,7 +141,6 @@ const createUCvxPounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
@@ -185,7 +167,6 @@ const createUCrvPounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
@@ -213,7 +194,6 @@ const createUFxsPounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
@@ -242,7 +222,6 @@ const createUPrismaPounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
@@ -271,7 +250,6 @@ const createUFxsLpPounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
@@ -298,7 +276,6 @@ const createUBalPounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
@@ -325,16 +302,15 @@ const createUCrvV2Pounder = (signer: JsonRpcSigner) => {
     pounder,
     zapsFactories,
     state: createPounderState(),
-    claim: null,
   };
 };
 
 // Watches
 watch(
   address,
-  withSigner(async (signer) => {
+  withSigner((signer) => {
     createPounders(signer);
-    await updateClaims();
+    return Promise.resolve();
   })
 );
 </script>
