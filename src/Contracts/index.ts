@@ -32,8 +32,6 @@ export type { VotiumRegistry } from "./Registries/VotiumRegistry";
 export { VotiumRegistry__factory } from "./factories/Registries/VotiumRegistry__factory";
 export type { ERC20 } from "./Standards/ERC20";
 export { ERC20__factory } from "./factories/Standards/ERC20__factory";
-export type { ERC4626 } from "./Standards/ERC4626";
-export { ERC4626__factory } from "./factories/Standards/ERC4626__factory";
 export type { MerkleDistributor2 } from "./Union/MerkleDistributor2";
 export { MerkleDistributor2__factory } from "./factories/Union/MerkleDistributor2__factory";
 export type { PirexCvx } from "./Union/PirexCvx";
