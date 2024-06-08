@@ -11,7 +11,7 @@ import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 export function uCrvClaimZaps(
   getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
-  getAirdrop: () => Airdrop | null
+  getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const claim = async () => {
     const address = getAddress();

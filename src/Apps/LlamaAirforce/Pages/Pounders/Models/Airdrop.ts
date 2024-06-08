@@ -88,7 +88,7 @@ export function isAirdropUCvx(airdrop: Airdrop): airdrop is AirdropUCvx {
 export async function uCrvAirdrop(
   signer: JsonRpcSigner,
   llamaService: DefiLlamaService,
-  claim: Claim | null
+  claim: Claim | undefined
 ): Promise<AirdropUCrv> {
   const factory = CvxCrvFactoryPool__factory.connect(
     CvxCrvFactoryAddress,
@@ -124,7 +124,7 @@ export async function uCrvAirdrop(
 export async function uFxsAirdrop(
   signer: JsonRpcSigner,
   llamaService: DefiLlamaService,
-  claim: Claim | null
+  claim: Claim | undefined
 ): Promise<AirdropUFxs> {
   const factory = CurveV2FactoryPool__factory.connect(
     CvxFxsFactoryAddress,
@@ -160,7 +160,7 @@ export async function uFxsAirdrop(
 export async function uPrismaAirdrop(
   signer: JsonRpcSigner,
   llamaService: DefiLlamaService,
-  claim: Claim | null
+  claim: Claim | undefined
 ): Promise<AirdropUPrisma> {
   const factory = CurveV6FactoryPool__factory.connect(
     CvxPrismaFactoryAddress,
@@ -196,7 +196,7 @@ export async function uPrismaAirdrop(
 export async function uCvxAirdrop(
   signer: JsonRpcSigner,
   llamaService: DefiLlamaService,
-  claim: Claim | null
+  claim: Claim | undefined
 ): Promise<AirdropUCvx> {
   const factory = CurveV2FactoryPool__factory.connect(
     PxCvxFactoryAddress,

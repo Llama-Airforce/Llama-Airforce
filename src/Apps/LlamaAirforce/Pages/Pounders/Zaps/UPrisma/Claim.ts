@@ -14,7 +14,7 @@ import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 export function uPrismaClaimZaps(
   getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
-  getAirdrop: () => Airdrop | null
+  getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const extraZapFactory = async () => {
     const address = getAddress();

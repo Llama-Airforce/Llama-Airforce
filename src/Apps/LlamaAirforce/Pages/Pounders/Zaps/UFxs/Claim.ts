@@ -23,7 +23,7 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 export function uFxsClaimZaps(
   getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
-  getAirdrop: () => Airdrop | null
+  getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const extraZapFactory = async () => {
     const address = getAddress();

@@ -18,7 +18,7 @@ import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 export function uCvxClaimZaps(
   getSigner: () => JsonRpcSigner | undefined,
   getAddress: () => string | undefined,
-  getAirdrop: () => Airdrop | null
+  getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const claim = async () => {
     const address = getAddress();
