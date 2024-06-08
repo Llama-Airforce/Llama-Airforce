@@ -61,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+import { getPublicClient } from "@wagmi/core";
+import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { type FlyerConvex } from "@/Services/FlyerService";
@@ -77,7 +79,8 @@ interface Props {
 const { model } = defineProps<Props>();
 
 // Refs
-const { address, withProvider } = useWallet();
+const { address } = useWallet();
+const config = useConfig();
 
 const cvxCrvApr = ref<number | undefined>(undefined);
 
@@ -85,27 +88,23 @@ const cvxApr = computed((): number | undefined => {
   return model?.cvxApr;
 });
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  await update();
-});
+watch(
+  address,
+  async () => {
+    const client = getPublicClient(config);
+    if (!client) {
+      return undefined;
+    }
 
-// Watches
-const update = withProvider(async (provider) => {
-  const aprs = await getCvxCrvAprs(provider, llamaService);
+    const aprs = await getCvxCrvAprs(client, llamaService);
 
-  // Take the average APR of gov rewards and stable
-  const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
+    // Take the average APR of gov rewards and stable
+    const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
 
-  cvxCrvApr.value = apr * 100;
-});
-
-watch(address, update);
-
-// Hooks
-onMounted(async () => {
-  await update();
-});
+    cvxCrvApr.value = apr * 100;
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss" scoped>

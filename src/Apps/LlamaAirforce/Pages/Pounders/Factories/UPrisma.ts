@@ -30,7 +30,7 @@ export default function createPrismaPounder(
   );
 
   const getPriceUnderlying = () => getCvxPrismaPriceViem(llamaService, client);
-  const getApy = () => getCvxPrismaApy(signer, llamaService);
+  const getApy = () => getCvxPrismaApy(client, llamaService);
 
   return {
     id: "uprisma",

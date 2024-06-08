@@ -30,7 +30,7 @@ export default function createCrvV2Pounder(
   );
 
   const getPriceUnderlying = () => getCvxCrvPriceV2Viem(llamaService, client);
-  const getApy = () => getCvxCrvApyV2(signer, llamaService);
+  const getApy = () => getCvxCrvApyV2(client, llamaService);
 
   return {
     id: "ucrv2",

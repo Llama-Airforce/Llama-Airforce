@@ -30,7 +30,7 @@ export default function createFxsPounder(
   );
 
   const getPriceUnderlying = () => getCvxFxsPriceViem(llamaService, client);
-  const getApy = () => getCvxFxsApy(signer, llamaService);
+  const getApy = () => getCvxFxsApy(client, llamaService);
 
   return {
     id: "ufxs",
