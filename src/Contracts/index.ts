@@ -50,8 +50,6 @@ export type { UnionVault } from "./Union/UnionVault";
 export { UnionVault__factory } from "./factories/Union/UnionVault__factory";
 export type { UnionVaultPirex } from "./Union/UnionVaultPirex";
 export { UnionVaultPirex__factory } from "./factories/Union/UnionVaultPirex__factory";
-export type { UnionVaultUCrv } from "./Union/UnionVaultUCrv";
-export { UnionVaultUCrv__factory } from "./factories/Union/UnionVaultUCrv__factory";
 export type { ZapsUBal } from "./Union/ZapsUBal";
 export { ZapsUBal__factory } from "./factories/Union/ZapsUBal__factory";
 export type { ZapsUCrv } from "./Union/ZapsUCrv";

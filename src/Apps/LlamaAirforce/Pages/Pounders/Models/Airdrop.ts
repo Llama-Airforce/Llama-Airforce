@@ -1,6 +1,5 @@
 import { type PublicClient, getContract } from "viem";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
-import { abi as abiUnionVaultUCrv } from "@/ABI/Union/UnionVaultUCrv";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { type DefiLlamaService } from "@/Services";
 import {
@@ -71,7 +70,7 @@ export async function uCrvAirdrop(
   const cvxCrvPrice = await getCvxCrvPriceViem(llamaService, client);
 
   const utkn = getContract({
-    abi: abiUnionVaultUCrv,
+    abi: abiUnionVault,
     address: UnionCrvVaultAddress,
     client,
   });

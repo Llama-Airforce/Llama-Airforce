@@ -5,7 +5,6 @@ export type { MerkleDistributor2 } from "./MerkleDistributor2";
 export type { PirexCvx } from "./PirexCvx";
 export type { UnionVault } from "./UnionVault";
 export type { UnionVaultPirex } from "./UnionVaultPirex";
-export type { UnionVaultUCrv } from "./UnionVaultUCrv";
 export type { ZapsUBal } from "./ZapsUBal";
 export type { ZapsUCrv } from "./ZapsUCrv";
 export type { ZapsUCrvV2 } from "./ZapsUCrvV2";

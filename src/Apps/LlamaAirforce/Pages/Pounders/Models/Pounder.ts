@@ -3,20 +3,15 @@ import type {
   MerkleDistributor2,
   UnionVault,
   UnionVaultPirex,
-  UnionVaultUCrv,
 } from "@/Contracts";
 
 export type Vault = UnionVault | UnionVaultPirex;
 
-export function isPirex(
-  vault: Vault | UnionVaultUCrv
-): vault is UnionVaultPirex {
+export function isPirex(vault: Vault): vault is UnionVaultPirex {
   return "totalAssets()" in vault;
 }
 
-export function getTotalUnderlying(
-  vault: Vault | UnionVaultUCrv
-): Promise<bigint> {
+export function getTotalUnderlying(vault: Vault): Promise<bigint> {
   if (isPirex(vault)) {
     return vault.totalAssets().then((x) => x.toBigInt());
   } else {
