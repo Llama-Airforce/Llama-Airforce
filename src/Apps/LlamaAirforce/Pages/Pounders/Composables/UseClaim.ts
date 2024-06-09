@@ -9,7 +9,8 @@ import { getDistributor } from "@Pounders/Models";
 export function useClaim(
   unionService: UnionService,
   airdropId: AirdropId,
-  address: Ref<`0x${string}` | undefined>
+  address: Ref<`0x${string}` | undefined>,
+  checkValidity: boolean // Set to false to just get the claim to save RPC calls.
 ) {
   const { data: claimRaw } = useQuery({
     queryKey: ["union-claim", airdropId, address] as const,
@@ -27,6 +28,7 @@ export function useClaim(
     address: distributor.address as `0x${string}`,
     functionName: "frozen",
     query: {
+      enabled: checkValidity,
       initialData: false,
       initialDataUpdatedAt: 0,
     },
@@ -38,15 +40,19 @@ export function useClaim(
     functionName: "isClaimed",
     args: computed(() => [BigInt(claim.value?.index ?? 0)] as const),
     query: {
-      enabled: computed(() => !!claim.value),
+      enabled: computed(() => checkValidity && !!claim.value),
       initialData: false,
       initialDataUpdatedAt: 0,
     },
   });
 
-  const validClaim = computed(() =>
-    isFrozen.value ?? isClaimed.value ? undefined : claim.value
-  );
+  const validClaim = computed(() => {
+    if (!checkValidity) {
+      return claim.value;
+    }
+
+    return isFrozen.value ?? isClaimed.value ? undefined : claim.value;
+  });
 
   return { claim: validClaim, refetch };
 }
