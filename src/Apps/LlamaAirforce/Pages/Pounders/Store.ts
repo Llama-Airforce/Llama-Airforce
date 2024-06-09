@@ -8,7 +8,6 @@ import type {
   ZapDeposit,
   ZapsFactories,
 } from "@Pounders/Models";
-import { getFees } from "@Pounders/Models";
 import type { Claim } from "@LAF/Services/UnionService";
 import { getVirtualPriceViem } from "@Pounders/Util/UnionHelper";
 
@@ -64,7 +63,6 @@ export const useUnionStore = defineStore({
 
       state.priceUnderlying = await pounder.getPriceUnderlying();
       state.apy = await pounder.getApy();
-      state.fees = await getFees(pounder.contract);
       state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
 
       state.decimalsWithdraw = BigInt(await pounder.contract.read.decimals());

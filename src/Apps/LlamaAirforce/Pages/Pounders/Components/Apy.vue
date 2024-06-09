@@ -1,7 +1,7 @@
 <template>
   <div class="apy">
     <div class="value">
-      <Tooltip>
+      <Tooltip @show="emit('show', $event)">
         <template #item>
           <div class="value-tooltip">
             <AsyncValue
@@ -68,6 +68,11 @@ interface Props {
 }
 
 const { apy, fees } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  show: [boolean];
+}>();
 </script>
 
 <style lang="scss" scoped>

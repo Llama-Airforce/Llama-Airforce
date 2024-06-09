@@ -36,8 +36,15 @@ interface Props {
 
 const { icon = "" } = defineProps<Props>();
 
+// Emits
+const emit = defineEmits<{
+  show: [boolean];
+}>();
+
 // Refs
 const show = ref(false);
+
+watch(show, (newShow) => emit("show", newShow));
 </script>
 
 <style lang="scss" scoped>

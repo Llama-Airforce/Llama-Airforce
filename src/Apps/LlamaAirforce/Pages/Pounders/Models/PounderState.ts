@@ -1,5 +1,3 @@
-import { type Fees } from "@Pounders/Models/Fees";
-
 export type PounderState = {
   priceUnderlying: number | undefined;
   priceShare: number | undefined;
@@ -23,5 +21,4 @@ export type PounderState = {
   oraclePrice: number;
   tvl: bigint | undefined;
   apy: number | undefined;
-  fees: Fees | undefined;
 };

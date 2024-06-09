@@ -21,7 +21,8 @@
     <Apy
       class="item"
       :apy="state.apy"
-      :fees="state.fees"
+      :fees
+      @show="getFeesTrigger = true"
     ></Apy>
 
     <Tvl
@@ -40,7 +41,7 @@
 
 <script setup lang="ts">
 import { useUnionStore } from "@Pounders/Store";
-import type { PounderId } from "@Pounders/Models";
+import { type PounderId, type Fees, getFees } from "@Pounders/Models";
 import Pool from "@Pounders/Components/Pool.vue";
 import Balance from "@Pounders/Components/Balance.vue";
 import Apy from "@Pounders/Components/Apy.vue";
@@ -62,16 +63,19 @@ const emit = defineEmits<{
 // Refs
 const store = useUnionStore();
 
-const pounderStore = computed(() => {
-  return store.pounders[pounderId]!;
-});
+const pounderStore = computed(() => store.pounders[pounderId]!);
+const pounder = computed(() => pounderStore.value.pounder);
+const state = computed(() => pounderStore.value.state);
 
-const pounder = computed(() => {
-  return pounderStore.value.pounder;
-});
+// Fees
+const fees = ref<Fees | undefined>(undefined);
+const getFeesTrigger = ref(false);
+watch(getFeesTrigger, async (newGetFees) => {
+  if (!newGetFees || !pounder.value) {
+    return;
+  }
 
-const state = computed(() => {
-  return pounderStore.value.state;
+  fees.value = await getFees(pounder.value.contract);
 });
 </script>
 
