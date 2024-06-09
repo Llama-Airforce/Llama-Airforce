@@ -47,7 +47,7 @@ export function getBalance(
   const client = getClient();
 
   if (!address || !client || !erc20) {
-    throw new Error("Unable to fetch ERC20 balanceOf");
+    return Promise.resolve(undefined);
   }
 
   return client.readContract({
@@ -65,7 +65,7 @@ export function getDecimals(
   const client = getClient();
 
   if (!client || !erc20) {
-    throw new Error("Unable to fetch ERC20 decimals");
+    return Promise.resolve(undefined);
   }
 
   return client

@@ -38,7 +38,6 @@
 import { type PublicClient } from "viem";
 import { getPublicClient, getWalletClient } from "@wagmi/core";
 import { useConfig } from "@wagmi/vue";
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import UnionService from "@LAF/Services/UnionService";
@@ -60,7 +59,7 @@ const llamaService = new DefiLlamaService(getHost());
 const flyerService = new FlyerService(getHost());
 
 // Refs
-const { address, withSigner } = useWallet();
+const { address } = useWallet();
 const store = useUnionStore();
 
 const poundersUnion = computed(() =>
@@ -79,12 +78,7 @@ const poundersOther = computed(() =>
 const poundersLegacy = computed(() => [store.pounders.ucrv2].filter(notEmpty));
 
 // Hooks
-onMounted(
-  withSigner((signer) => {
-    createPounders(signer);
-    return Promise.resolve();
-  })
-);
+onMounted(createPounders);
 
 // Claims
 const { claim: claimUCrv } = useClaim(unionService, "union", address);
@@ -106,38 +100,37 @@ watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim), {
 
 // Methods
 const config = useConfig();
-const createPounders = (signer: JsonRpcSigner) => {
+function createPounders() {
   const client = getPublicClient(config);
   if (!client) {
     return;
   }
 
-  createUCvxPounder(signer, client);
-  createUCrvV2Pounder(signer, client);
-  createUCrvPounder(signer, client);
-  createUFxsPounder(signer, client);
-  createUFxsLpPounder(signer, client);
-  createUPrismaPounder(signer, client);
-  createUBalPounder(signer, client);
-};
+  createUCvxPounder(client);
+  createUCrvV2Pounder(client);
+  createUCrvPounder(client);
+  createUFxsPounder(client);
+  createUFxsLpPounder(client);
+  createUPrismaPounder(client);
+  createUBalPounder(client);
+}
 
-const createUCvxPounder = (signer: JsonRpcSigner, client: PublicClient) => {
+function createUCvxPounder(client: PublicClient) {
   const pounder = pounderFactories.createCvxPounder(
-    signer,
     client,
     llamaService,
     flyerService
   );
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uCvxDepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uCvxWithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -151,24 +144,20 @@ const createUCvxPounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
-const createUCrvPounder = (signer: JsonRpcSigner, client: PublicClient) => {
-  const pounder = pounderFactories.createCrvPounder(
-    signer,
-    client,
-    llamaService
-  );
+function createUCrvPounder(client: PublicClient) {
+  const pounder = pounderFactories.createCrvPounder(client, llamaService);
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uCrvDepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uCrvWithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -182,24 +171,20 @@ const createUCrvPounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
-const createUFxsPounder = (signer: JsonRpcSigner, client: PublicClient) => {
-  const pounder = pounderFactories.createFxsPounder(
-    signer,
-    client,
-    llamaService
-  );
+function createUFxsPounder(client: PublicClient) {
+  const pounder = pounderFactories.createFxsPounder(client, llamaService);
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uFxsDepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uFxsWithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -213,24 +198,20 @@ const createUFxsPounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
-const createUPrismaPounder = (signer: JsonRpcSigner, client: PublicClient) => {
-  const pounder = pounderFactories.createPrismaPounder(
-    signer,
-    client,
-    llamaService
-  );
+function createUPrismaPounder(client: PublicClient) {
+  const pounder = pounderFactories.createPrismaPounder(client, llamaService);
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uPrismaDepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uPrismaWithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -244,24 +225,20 @@ const createUPrismaPounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
-const createUFxsLpPounder = (signer: JsonRpcSigner, client: PublicClient) => {
-  const pounder = pounderFactories.createFxsLpPounder(
-    signer,
-    client,
-    llamaService
-  );
+function createUFxsLpPounder(client: PublicClient) {
+  const pounder = pounderFactories.createFxsLpPounder(client, llamaService);
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uFxsLpDepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uFxsLpWithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -275,24 +252,20 @@ const createUFxsLpPounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
-const createUBalPounder = (signer: JsonRpcSigner, client: PublicClient) => {
-  const pounder = pounderFactories.createBalPounder(
-    signer,
-    client,
-    flyerService
-  );
+function createUBalPounder(client: PublicClient) {
+  const pounder = pounderFactories.createBalPounder(client, flyerService);
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uBalDepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uBalWithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -306,24 +279,20 @@ const createUBalPounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
-const createUCrvV2Pounder = (signer: JsonRpcSigner, client: PublicClient) => {
-  const pounder = pounderFactories.createCrvV2Pounder(
-    signer,
-    client,
-    llamaService
-  );
+function createUCrvV2Pounder(client: PublicClient) {
+  const pounder = pounderFactories.createCrvV2Pounder(client, llamaService);
 
   const zapsFactories: ZapsFactories = {
-    createZapsDeposit: (getInput: () => bigint | null) =>
+    createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uCrvV2DepositZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
         () => address.value,
         getInput
       ),
-    createZapsWithdrawal: (getInput: () => bigint | null) =>
+    createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uCrvV2WithdrawZaps(
         () => getPublicClient(config),
         () => getWalletClient(config),
@@ -337,16 +306,10 @@ const createUCrvV2Pounder = (signer: JsonRpcSigner, client: PublicClient) => {
     zapsFactories,
     state: createPounderState(),
   };
-};
+}
 
 // Watches
-watch(
-  address,
-  withSigner((signer) => {
-    createPounders(signer);
-    return Promise.resolve();
-  })
-);
+watch(address, createPounders);
 </script>
 
 <style lang="scss" scoped>

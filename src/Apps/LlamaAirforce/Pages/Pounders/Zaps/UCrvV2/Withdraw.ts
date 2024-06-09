@@ -11,7 +11,7 @@ export function uCrvV2WithdrawZaps(
   getClient: () => PublicClient | undefined,
   getWallet: () => Promise<WalletClient | undefined>,
   getAddress: () => Address | undefined,
-  getInput: () => bigint | null
+  getInput: () => bigint | undefined
 ): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const client = getClient();

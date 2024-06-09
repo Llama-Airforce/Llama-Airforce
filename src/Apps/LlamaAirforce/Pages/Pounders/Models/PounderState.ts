@@ -1,17 +1,17 @@
 import { type Fees } from "@Pounders/Models/Fees";
 
 export type PounderState = {
-  priceUnderlying: number | null;
-  priceShare: number | null;
+  priceUnderlying: number | undefined;
+  priceShare: number | undefined;
 
   // How much of the underlying can be deposited into the pounder.
-  balanceDeposit: bigint | null;
+  balanceDeposit: bigint | undefined;
 
   // How much of the underlying is withdrawable from the pounder.
-  balanceWithdraw: bigint | null;
+  balanceWithdraw: bigint | undefined;
 
   // How much of the pounder shares can be claimed.
-  balanceUnclaimed: bigint | null;
+  balanceUnclaimed: bigint | undefined;
 
   decimalsDeposit: bigint;
   decimalsWithdraw: bigint;
@@ -21,7 +21,7 @@ export type PounderState = {
   symbolLpPrimary: string;
 
   oraclePrice: number;
-  tvl: bigint | null;
-  apy: number | null;
-  fees: Fees | null;
+  tvl: bigint | undefined;
+  apy: number | undefined;
+  fees: Fees | undefined;
 };

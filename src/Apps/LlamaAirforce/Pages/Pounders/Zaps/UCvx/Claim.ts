@@ -1,4 +1,3 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
@@ -75,7 +74,7 @@ export function uCvxClaimZaps(
     zap: (minAmountOut?: bigint) => claimAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: JsonRpcSigner | PublicClient,
+      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -86,7 +85,7 @@ export function uCvxClaimZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, client as PublicClient);
+      const ucvx = await getUCvxPrice(llamaService, client);
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

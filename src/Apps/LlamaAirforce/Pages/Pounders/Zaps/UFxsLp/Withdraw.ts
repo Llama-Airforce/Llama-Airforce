@@ -1,5 +1,4 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
@@ -22,7 +21,7 @@ export function uFxsLpWithdrawZaps(
   getClient: () => PublicClient | undefined,
   getWallet: () => Promise<WalletClient | undefined>,
   getAddress: () => Address | undefined,
-  getInput: () => bigint | null
+  getInput: () => bigint | undefined
 ): (ZapWithdraw | Swap)[] {
   const withdrawAsFxs = async (minAmountOut: bigint) => {
     const client = getClient();
@@ -120,7 +119,7 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: JsonRpcSigner | PublicClient,
+      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -131,10 +130,7 @@ export function uFxsLpWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPriceViem(
-        llamaService,
-        client as PublicClient
-      )
+      const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -150,23 +146,17 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: JsonRpcSigner | PublicClient,
+      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const cvxfxs = await getCvxFxsPriceViem(
-        llamaService,
-        client as PublicClient
-      )
+      const cvxfxs = await getCvxFxsPriceViem(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPriceViem(
-        llamaService,
-        client as PublicClient
-      )
+      const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

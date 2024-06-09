@@ -1,10 +1,4 @@
 import { type PublicClient, getContract } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import {
-  ERC20__factory,
-  type UnionVault,
-  UnionVault__factory,
-} from "@/Contracts";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxFxsPriceViem, getCvxFxsApy } from "@/Util";
 import {
@@ -18,13 +12,9 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsPounder(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService
-): Pounder<UnionVault, VaultUnion> {
-  const utkn = UnionVault__factory.connect(UnionFxsVaultAddress, signer);
-  const atkn = ERC20__factory.connect(CvxFxsAddress, signer);
-
+): Pounder<VaultUnion> {
   const getPriceUnderlying = () => getCvxFxsPriceViem(llamaService, client);
   const getApy = () => getCvxFxsApy(client, llamaService);
 
@@ -40,10 +30,7 @@ export default function createFxsPounder(
     logo,
     symbol: "cvxFXS",
     description: "description-ufxs",
-    utkn,
-    uTknAddress: UnionFxsVaultAddress,
-    atkn,
-    aTknAddress: CvxFxsAddress,
+    asset: CvxFxsAddress,
     contract,
     distributor: DistributorUFxsAddress,
     getPriceUnderlying,

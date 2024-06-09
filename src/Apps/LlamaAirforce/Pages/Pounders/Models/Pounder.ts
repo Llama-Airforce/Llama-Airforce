@@ -1,5 +1,5 @@
 import { type Address } from "viem";
-import type { ERC20, UnionVault, UnionVaultPirex } from "@/Contracts";
+import type { UnionVault, UnionVaultPirex } from "@/Contracts";
 import { type abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { type abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
 
@@ -47,17 +47,14 @@ const pounderIds = [
 
 export type PounderId = (typeof pounderIds)[number];
 
-export type Pounder<V extends Vault, V2 extends VaultViem> = {
+export type Pounder<Contract extends VaultViem> = {
   id: PounderId;
   name: string;
   logo: string;
   symbol: string;
   description: string;
-  uTknAddress: Address;
-  aTknAddress: Address;
-  contract: V2;
-  utkn: V;
-  atkn: ERC20;
+  contract: Contract;
+  asset: Address;
   distributor?: Address;
   lp: PounderLp | null;
   getPriceUnderlying: () => Promise<number>;

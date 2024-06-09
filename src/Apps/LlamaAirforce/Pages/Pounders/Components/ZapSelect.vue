@@ -47,7 +47,10 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const zap = defineModel<Zap | Swap | null>({ required: true, default: null });
+const zap = defineModel<Zap | Swap | undefined>({
+  required: true,
+  default: undefined,
+});
 const selectZapOpen = ref(false);
 
 // Methods

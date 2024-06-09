@@ -25,7 +25,7 @@ interface Props {
 
 const { state } = defineProps<Props>();
 
-const tvl = computed((): number | null => {
+const tvl = computed((): number | undefined => {
   return getTvl(state);
 });
 </script>

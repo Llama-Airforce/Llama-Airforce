@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
+import { type Address } from "viem";
 import type {
   PounderId,
   Pounder,
   PounderState,
-  Vault,
   VaultViem,
   ZapDeposit,
   ZapsFactories,
 } from "@Pounders/Models";
 import { getFees } from "@Pounders/Models";
 import type { Claim } from "@LAF/Services/UnionService";
-import { getVirtualPrice } from "@Pounders/Util/UnionHelper";
+import { getVirtualPriceViem } from "@Pounders/Util/UnionHelper";
 
 type PounderStore = {
-  pounder: Pounder<Vault, VaultViem>;
+  pounder: Pounder<VaultViem>;
   state: PounderState;
   zapsFactories: ZapsFactories;
 };
@@ -67,33 +67,31 @@ export const useUnionStore = defineStore({
       state.fees = await getFees(pounder.contract);
       state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
 
-      state.decimalsWithdraw = await pounder.utkn
-        .decimals()
-        .then((x) => BigInt(x));
-      state.symbolWithdraw = await pounder.utkn.symbol();
+      state.decimalsWithdraw = BigInt(await pounder.contract.read.decimals());
+      state.symbolWithdraw = await pounder.contract.read.symbol();
 
-      state.tvl = await pounder.utkn.totalSupply().then((x) => x.toBigInt());
-      state.priceShare = await getVirtualPrice(pounder.utkn as Vault);
+      state.tvl = await pounder.contract.read.totalSupply();
+      state.priceShare = await getVirtualPriceViem(pounder.contract);
       state.oraclePrice = (await pounder.lp?.getOraclePrice()) ?? 1;
     },
 
-    async updateBalances(pounderId: PounderId, wallet?: string) {
+    async updateBalances(pounderId: PounderId, wallet?: Address) {
       const { pounder, state } = this.getPounder(pounderId);
 
       if (state) {
         if (wallet && pounder) {
-          state.balanceWithdraw = await pounder.utkn
-            .balanceOf(wallet)
-            .then((x) => x.toBigInt());
+          state.balanceWithdraw = await pounder.contract.read.balanceOf([
+            wallet,
+          ]);
         } else {
-          state.balanceWithdraw = null;
+          state.balanceWithdraw = undefined;
         }
       }
     },
 
     async updateZapDeposit(
       pounderId: PounderId,
-      zapDeposit: ZapDeposit | null
+      zapDeposit: ZapDeposit | undefined
     ) {
       const { state } = this.getPounder(pounderId);
 

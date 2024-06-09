@@ -71,13 +71,13 @@
     </div>
 
     <ModalCowSwap
-      :show="zapDeposit !== null && isSwap(zapDeposit)"
+      :show="zapDeposit && isSwap(zapDeposit)"
       :swap="(zapDeposit as Swap)"
       @close="zapDeposit = zapsDeposit[0]"
     ></ModalCowSwap>
 
     <ModalCowSwap
-      :show="zapWithdraw !== null && isSwap(zapWithdraw)"
+      :show="zapWithdraw && isSwap(zapWithdraw)"
       :swap="(zapWithdraw as Swap)"
       @close="zapWithdraw = zapsWithdraw[0]"
     ></ModalCowSwap>
@@ -150,8 +150,8 @@ const withdrawing = ref(false);
 const zapsWithdraw = ref<(ZapWithdraw | Swap)[]>([]);
 const zapsDeposit = ref<(ZapDeposit | Swap)[]>([]);
 
-const zapWithdraw = ref<ZapWithdraw | Swap | null>(null);
-const zapDeposit = ref<ZapDeposit | Swap | null>(null);
+const zapWithdraw = ref<ZapWithdraw | Swap | undefined>(undefined);
+const zapDeposit = ref<ZapDeposit | Swap | undefined>(undefined);
 
 const minAmountOutRef = ref(0);
 const minAmountOut = ref(0);
@@ -163,11 +163,11 @@ const claim = computed(() => store.claims[pounderId]);
 const description = computed(() => t(pounderStore.value.pounder.description));
 const state = computed(() => pounderStore.value.state);
 const zapsFactories = computed(() => pounderStore.value.zapsFactories);
-const withdrawable = computed((): bigint | null => getBalance(state.value));
+const withdrawable = computed(() => getBalance(state.value));
 
-const depositInput = computed((): bigint | null => {
+const depositInput = computed(() => {
   if (!state.value.balanceDeposit) {
-    return null;
+    return undefined;
   }
 
   return deposit.value > state.value.balanceDeposit
@@ -175,9 +175,9 @@ const depositInput = computed((): bigint | null => {
     : deposit.value;
 });
 
-const withdrawInput = computed((): bigint | null => {
+const withdrawInput = computed((): bigint | undefined => {
   if (!withdrawable.value) {
-    return null;
+    return undefined;
   }
 
   return withdraw.value > withdrawable.value
@@ -187,12 +187,14 @@ const withdrawInput = computed((): bigint | null => {
 
 const canDeposit = computed((): boolean => {
   const deposit = depositInput;
-  return deposit.value !== null && deposit.value > 0n && !depositing.value;
+  return deposit.value !== undefined && deposit.value > 0n && !depositing.value;
 });
 
 const canWithdraw = computed((): boolean => {
   const withdraw = withdrawInput;
-  return withdraw.value !== null && withdraw.value > 0n && !withdrawing.value;
+  return (
+    withdraw.value !== undefined && withdraw.value > 0n && !withdrawing.value
+  );
 });
 
 const depositLabel = computed((): string =>
@@ -218,9 +220,13 @@ const updateZaps = () => {
 watch(zapsFactories, updateZaps, { immediate: true });
 
 watch(
-  [zapDeposit, address],
-  async function () {
-    if (zapDeposit.value === null || isZap(zapDeposit.value)) {
+  [zapDeposit, address, toRef(() => expanded)],
+  async ([, , newExpanded]) => {
+    // Only load when expanded to save RPC resources.
+    if (!newExpanded) {
+      return;
+    }
+    if (zapDeposit.value === undefined || isZap(zapDeposit.value)) {
       await store.updateZapDeposit(pounderId, zapDeposit.value);
     }
   },
@@ -280,7 +286,7 @@ const onWithdraw = async (
     !zapWithdraw.value ||
     !isZap(zapWithdraw.value) ||
     !withdrawInput.value ||
-    state.value.balanceWithdraw === null
+    state.value.balanceWithdraw === undefined
   ) {
     return;
   }

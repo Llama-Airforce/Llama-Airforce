@@ -14,7 +14,7 @@ export function uCrvDepositZaps(
   getClient: () => PublicClient | undefined,
   getWallet: () => Promise<WalletClient | undefined>,
   getAddress: () => Address | undefined,
-  getInput: () => bigint | null
+  getInput: () => bigint | undefined
 ): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const client = getClient();

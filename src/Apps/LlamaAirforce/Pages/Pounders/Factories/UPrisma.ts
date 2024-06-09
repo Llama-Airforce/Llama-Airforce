@@ -1,10 +1,4 @@
 import { type PublicClient, getContract } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import {
-  ERC20__factory,
-  type UnionVault,
-  UnionVault__factory,
-} from "@/Contracts";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxPrismaPriceViem, getCvxPrismaApy } from "@/Util";
 import {
@@ -18,13 +12,9 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/prisma.svg";
 
 export default function createPrismaPounder(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService
-): Pounder<UnionVault, VaultUnion> {
-  const utkn = UnionVault__factory.connect(UnionPrismaVaultAddress, signer);
-  const atkn = ERC20__factory.connect(CvxPrismaAddress, signer);
-
+): Pounder<VaultUnion> {
   const getPriceUnderlying = () => getCvxPrismaPriceViem(llamaService, client);
   const getApy = () => getCvxPrismaApy(client, llamaService);
 
@@ -40,10 +30,7 @@ export default function createPrismaPounder(
     logo,
     symbol: "cvxPRISMA",
     description: "description-uprisma",
-    utkn,
-    uTknAddress: UnionPrismaVaultAddress,
-    atkn,
-    aTknAddress: CvxPrismaAddress,
+    asset: CvxPrismaAddress,
     contract,
     distributor: DistributorUPrismaAddress,
     getPriceUnderlying,

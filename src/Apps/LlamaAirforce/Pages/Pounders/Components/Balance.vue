@@ -87,18 +87,12 @@ interface Props {
 
 const { symbol, state } = defineProps<Props>();
 
-const balance = computed((): number | null => getBalanceDollars(state));
-
-const balanceUnderlying = computed((): number | null =>
-  getBalanceUnderlying(state)
-);
-
-const balanceUnclaimed = computed((): number | null =>
-  getBalanceUnclaimed(state)
-);
+const balance = computed(() => getBalanceDollars(state));
+const balanceUnderlying = computed(() => getBalanceUnderlying(state));
+const balanceUnclaimed = computed(() => getBalanceUnclaimed(state));
 
 const hasUnclaimed = computed(
-  (): boolean => state.balanceUnclaimed !== null && state.balanceUnclaimed > 0n
+  () => state.balanceUnclaimed && state.balanceUnclaimed > 0n
 );
 </script>
 

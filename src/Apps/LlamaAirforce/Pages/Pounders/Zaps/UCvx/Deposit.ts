@@ -1,4 +1,3 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
@@ -43,7 +42,7 @@ export function uCvxDepositZaps(
   getClient: () => PublicClient | undefined,
   getWallet: () => Promise<WalletClient | undefined>,
   getAddress: () => Address | undefined,
-  getInput: () => bigint | null
+  getInput: () => bigint | undefined
 ): (ZapDeposit | Swap)[] {
   const deposit = async () => {
     const client = getClient();
@@ -120,7 +119,7 @@ export function uCvxDepositZaps(
     depositDecimals: () => getDecimals(getClient, CvxAddress),
     getMinAmountOut: async (
       host: string,
-      client: JsonRpcSigner | PublicClient,
+      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -131,10 +130,7 @@ export function uCvxDepositZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const pxcvx = await getPxCvxPriceViem(
-        llamaService,
-        client as PublicClient
-      )
+      const pxcvx = await getPxCvxPriceViem(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

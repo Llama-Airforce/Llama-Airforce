@@ -21,6 +21,7 @@ export const config = createConfig({
     safe(),
   ],
   transports: {
+    //[mainnet.id]: http("https://eth.llamarpc.com"),
     [mainnet.id]: http(),
   },
 });

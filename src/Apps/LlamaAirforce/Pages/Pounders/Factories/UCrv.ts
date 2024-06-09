@@ -1,10 +1,4 @@
 import { getContract, type PublicClient } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import {
-  ERC20__factory,
-  type UnionVault,
-  UnionVault__factory,
-} from "@/Contracts";
 import { getCvxCrvPriceViem, getCvxCrvApy } from "@/Util";
 import { abi } from "@/ABI/Union/UnionVault";
 import {
@@ -18,13 +12,9 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/crv.svg";
 
 export default function createCrvPounder(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService
-): Pounder<UnionVault, VaultUnion> {
-  const utkn = UnionVault__factory.connect(UnionCrvVaultAddress, signer);
-  const atkn = ERC20__factory.connect(CvxCrvAddress, signer);
-
+): Pounder<VaultUnion> {
   const getPriceUnderlying = () => getCvxCrvPriceViem(llamaService, client);
   const getApy = () => getCvxCrvApy(client, llamaService);
 
@@ -40,10 +30,7 @@ export default function createCrvPounder(
     logo,
     symbol: "cvxCRV",
     description: "description-ucrv",
-    utkn,
-    uTknAddress: UnionCrvVaultAddress,
-    atkn,
-    aTknAddress: CvxCrvAddress,
+    asset: CvxCrvAddress,
     contract,
     distributor: DistributorUCrvAddress,
     getPriceUnderlying,

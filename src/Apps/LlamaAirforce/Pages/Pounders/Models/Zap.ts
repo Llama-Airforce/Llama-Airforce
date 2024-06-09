@@ -1,4 +1,3 @@
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { type ContractReceipt } from "ethers";
 import { type Swap } from "@Pounders/Models/Swap";
 import { type PublicClient, type TransactionReceipt } from "viem";
@@ -11,7 +10,7 @@ export type Zap = {
   ) => Promise<ContractReceipt | TransactionReceipt | undefined>;
   getMinAmountOut?: (
     host: string,
-    signer: JsonRpcSigner | PublicClient,
+    signer: PublicClient,
     input: bigint,
     slippage: number
   ) => Promise<bigint>;
@@ -19,22 +18,24 @@ export type Zap = {
 
 export type ZapDeposit = Zap & {
   depositSymbol: string;
-  depositBalance: () => Promise<bigint | null>;
-  depositDecimals: () => Promise<bigint | null>;
+  depositBalance: () => Promise<bigint | undefined>;
+  depositDecimals: () => Promise<bigint | undefined>;
 };
 
 export type ZapWithdraw = Zap & {
   withdrawSymbol: string;
-  withdrawDecimals: () => Promise<bigint | null>;
+  withdrawDecimals: () => Promise<bigint | undefined>;
 };
 
 export type ZapClaim = ZapWithdraw & {
-  claimBalance: () => Promise<bigint | null>;
+  claimBalance: () => Promise<bigint | undefined>;
 };
 
 export type ZapsFactories = {
-  createZapsDeposit: (getInput: () => bigint | null) => (ZapDeposit | Swap)[];
+  createZapsDeposit: (
+    getInput: () => bigint | undefined
+  ) => (ZapDeposit | Swap)[];
   createZapsWithdrawal: (
-    getInput: () => bigint | null
+    getInput: () => bigint | undefined
   ) => (ZapWithdraw | Swap)[];
 };

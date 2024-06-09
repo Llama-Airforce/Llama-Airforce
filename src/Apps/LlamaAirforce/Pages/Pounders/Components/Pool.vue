@@ -31,10 +31,10 @@ interface Props {
   name: string;
   logo: string;
   symbol: string;
-  priceUnderlying: number | null;
+  priceUnderlying: number | undefined;
 }
 
-const { name, logo, symbol, priceUnderlying = null } = defineProps<Props>();
+const { name, logo, symbol, priceUnderlying } = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>

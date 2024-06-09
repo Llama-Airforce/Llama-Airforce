@@ -1,10 +1,4 @@
 import { type PublicClient, getContract } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
-import {
-  ERC20__factory,
-  type UnionVaultPirex,
-  UnionVaultPirex__factory,
-} from "@/Contracts";
 import { abi } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPriceViem, getCvxApy } from "@/Util";
 import {
@@ -19,14 +13,10 @@ import type FlyerService from "@/Services/FlyerService";
 import logo from "@/Assets/Icons/Tokens/cvx.svg";
 
 export default function createCvxPounder(
-  signer: JsonRpcSigner,
   client: PublicClient,
   llamaService: DefiLlamaService,
   flyerService: FlyerService
-): Pounder<UnionVaultPirex, VaultPirex> {
-  const utkn = UnionVaultPirex__factory.connect(UnionCvxVaultAddress, signer);
-  const atkn = ERC20__factory.connect(PxCvxAddress, signer);
-
+): Pounder<VaultPirex> {
   const getPriceUnderlying = () => getPxCvxPriceViem(llamaService, client);
   const getApy = () => getCvxApy(flyerService);
 
@@ -42,10 +32,7 @@ export default function createCvxPounder(
     logo,
     symbol: "pCVX",
     description: "description-ucvx",
-    utkn,
-    uTknAddress: UnionCvxVaultAddress,
-    atkn,
-    aTknAddress: PxCvxAddress,
+    asset: PxCvxAddress,
     contract,
     distributor: DistributorUCvxAddress,
     getPriceUnderlying,

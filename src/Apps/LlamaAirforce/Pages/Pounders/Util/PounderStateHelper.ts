@@ -4,12 +4,12 @@ import { type PounderState } from "@Pounders/Models";
 
 export function create(): PounderState {
   return reactive({
-    priceUnderlying: null,
-    priceShare: null,
+    priceUnderlying: undefined,
+    priceShare: undefined,
 
-    balanceDeposit: null,
-    balanceWithdraw: null,
-    balanceUnclaimed: null,
+    balanceDeposit: undefined,
+    balanceWithdraw: undefined,
+    balanceUnclaimed: undefined,
 
     decimalsDeposit: 18n,
     decimalsWithdraw: 18n,
@@ -19,19 +19,19 @@ export function create(): PounderState {
     symbolLpPrimary: "???",
 
     oraclePrice: 1,
-    tvl: null,
-    apy: null,
-    fees: null,
+    tvl: undefined,
+    apy: undefined,
+    fees: undefined,
   });
 }
 
-export function getTvl(state: PounderState): number | null {
+export function getTvl(state: PounderState): number | undefined {
   if (
-    state.tvl === null ||
-    state.priceUnderlying === null ||
-    state.priceShare === null
+    state.tvl === undefined ||
+    state.priceUnderlying === undefined ||
+    state.priceShare === undefined
   ) {
-    return null;
+    return undefined;
   }
 
   return (
@@ -42,23 +42,26 @@ export function getTvl(state: PounderState): number | null {
 }
 
 /** The total withdrawable balance, including unclaimed amount. */
-export function getBalance(state: PounderState): bigint | null {
-  if (state.balanceWithdraw === null || state.balanceUnclaimed === null) {
-    return null;
+export function getBalance(state: PounderState): bigint | undefined {
+  if (
+    state.balanceWithdraw === undefined ||
+    state.balanceUnclaimed === undefined
+  ) {
+    return undefined;
   }
 
   return state.balanceWithdraw + state.balanceUnclaimed;
 }
 
 /** The total withdrawable balance in dollars, including unclaimed amount. */
-export function getBalanceDollars(state: PounderState): number | null {
+export function getBalanceDollars(state: PounderState): number | undefined {
   if (
-    state.balanceWithdraw === null ||
-    state.balanceUnclaimed === null ||
-    state.priceUnderlying === null ||
-    state.priceShare === null
+    state.balanceWithdraw === undefined ||
+    state.balanceUnclaimed === undefined ||
+    state.priceUnderlying === undefined ||
+    state.priceShare === undefined
   ) {
-    return null;
+    return;
   }
 
   const balance = state.balanceWithdraw + state.balanceUnclaimed;
@@ -71,9 +74,9 @@ export function getBalanceDollars(state: PounderState): number | null {
 }
 
 /** The underlying aTkn value of the balance. */
-export function getBalanceUnderlying(state: PounderState): number | null {
-  if (state.balanceWithdraw === null || state.priceShare === null) {
-    return null;
+export function getBalanceUnderlying(state: PounderState): number | undefined {
+  if (state.balanceWithdraw === undefined || state.priceShare === undefined) {
+    return;
   }
 
   return (
@@ -83,9 +86,9 @@ export function getBalanceUnderlying(state: PounderState): number | null {
 }
 
 /** The underlying aTkn value of unclaimed value. */
-export function getBalanceUnclaimed(state: PounderState): number | null {
-  if (state.balanceUnclaimed === null || state.priceShare === null) {
-    return null;
+export function getBalanceUnclaimed(state: PounderState): number | undefined {
+  if (state.balanceUnclaimed === undefined || state.priceShare === undefined) {
+    return;
   }
 
   return (

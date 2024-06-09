@@ -1,5 +1,4 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
-import { type JsonRpcSigner } from "@ethersproject/providers";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
@@ -22,7 +21,7 @@ export function uCvxWithdrawZaps(
   getClient: () => PublicClient | undefined,
   getWallet: () => Promise<WalletClient | undefined>,
   getAddress: () => Address | undefined,
-  getInput: () => bigint | null
+  getInput: () => bigint | undefined
 ): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
     const client = getClient();
@@ -96,7 +95,7 @@ export function uCvxWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: JsonRpcSigner | PublicClient,
+      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -107,7 +106,7 @@ export function uCvxWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, client as PublicClient);
+      const ucvx = await getUCvxPrice(llamaService, client);
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

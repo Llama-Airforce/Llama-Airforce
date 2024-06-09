@@ -63,8 +63,8 @@ const { t } = useI18n();
 
 // Props
 interface Props {
-  apy: number | null;
-  fees: Fees | null;
+  apy: number | undefined;
+  fees: Fees | undefined;
 }
 
 const { apy, fees } = defineProps<Props>();
