@@ -71,11 +71,6 @@
 
 <script setup lang="ts">
 import { type PounderState } from "@Pounders/Models";
-import {
-  getBalanceUnclaimed,
-  getBalanceUnderlying,
-  getBalanceDollars,
-} from "@Pounders/Util/PounderStateHelper";
 
 const { t } = useI18n();
 
@@ -87,9 +82,52 @@ interface Props {
 
 const { symbol, state } = defineProps<Props>();
 
-const balance = computed(() => getBalanceDollars(state));
-const balanceUnderlying = computed(() => getBalanceUnderlying(state));
-const balanceUnclaimed = computed(() => getBalanceUnclaimed(state));
+/** The total withdrawable balance in dollars, including unclaimed amount. */
+const balance = computed(() => {
+  const {
+    balanceWithdraw,
+    balanceUnclaimed,
+    priceUnderlying,
+    priceShare,
+    decimalsDeposit,
+  } = state;
+
+  if (
+    priceUnderlying === undefined ||
+    priceShare === undefined ||
+    (balanceWithdraw === undefined && balanceUnclaimed === undefined)
+  ) {
+    return undefined;
+  }
+
+  const balance = (balanceWithdraw ?? 0n) + (balanceUnclaimed ?? 0n);
+
+  return (
+    bigNumToNumber(balance, decimalsDeposit) * priceUnderlying * priceShare
+  );
+});
+
+/** The underlying aTkn value of the balance. */
+const balanceUnderlying = computed(() => {
+  const { balanceWithdraw, priceShare, decimalsDeposit } = state;
+
+  if (balanceWithdraw === undefined || priceShare === undefined) {
+    return;
+  }
+
+  return bigNumToNumber(balanceWithdraw, decimalsDeposit) * priceShare;
+});
+
+/** The underlying aTkn value of unclaimed value. */
+const balanceUnclaimed = computed(() => {
+  const { balanceUnclaimed, priceShare, decimalsDeposit } = state;
+
+  if (balanceUnclaimed === undefined || priceShare === undefined) {
+    return;
+  }
+
+  return bigNumToNumber(balanceUnclaimed, decimalsDeposit) * priceShare;
+});
 
 const hasUnclaimed = computed(
   () => state.balanceUnclaimed && state.balanceUnclaimed > 0n

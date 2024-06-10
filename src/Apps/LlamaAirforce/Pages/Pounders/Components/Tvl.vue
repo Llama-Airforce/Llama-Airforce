@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { type PounderState } from "@Pounders/Models";
-import { getTvl } from "@Pounders/Util/PounderStateHelper";
 
 const { t } = useI18n();
 
@@ -25,8 +24,18 @@ interface Props {
 
 const { state } = defineProps<Props>();
 
-const tvl = computed((): number | undefined => {
-  return getTvl(state);
+const tvl = computed(() => {
+  const { tvl, priceUnderlying, priceShare, decimalsWithdraw } = state;
+
+  if (
+    tvl === undefined ||
+    priceUnderlying === undefined ||
+    priceShare === undefined
+  ) {
+    return undefined;
+  }
+
+  return bigNumToNumber(tvl, decimalsWithdraw) * priceUnderlying * priceShare;
 });
 </script>
 

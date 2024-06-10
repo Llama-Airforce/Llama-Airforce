@@ -22,3 +22,25 @@ export type PounderState = {
   tvl: bigint | undefined;
   apy: number | undefined;
 };
+
+export function create(): PounderState {
+  return {
+    priceUnderlying: undefined,
+    priceShare: undefined,
+
+    balanceDeposit: undefined,
+    balanceWithdraw: undefined,
+    balanceUnclaimed: undefined,
+
+    decimalsDeposit: 18n,
+    decimalsWithdraw: 18n,
+
+    symbolDeposit: "???",
+    symbolWithdraw: "???",
+    symbolLpPrimary: "???",
+
+    oraclePrice: 1,
+    tvl: undefined,
+    apy: undefined,
+  };
+}

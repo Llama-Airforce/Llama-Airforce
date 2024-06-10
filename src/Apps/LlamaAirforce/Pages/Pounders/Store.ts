@@ -19,7 +19,7 @@ type PounderStore = {
 
 // eslint-disable-next-line max-lines-per-function
 export const useUnionStore = defineStore("unionStore", () => {
-  const pounders: Record<PounderId, PounderStore | null> = {
+  const pounders = reactive<Record<PounderId, PounderStore | null>>({
     ucrv: null,
     ucrv2: null,
     ufxs: null,
@@ -27,9 +27,9 @@ export const useUnionStore = defineStore("unionStore", () => {
     ucvx: null,
     ubal: null,
     ufxslp: null,
-  };
+  });
 
-  const claims: Record<PounderId, Claim | undefined> = {
+  const claims = reactive<Record<PounderId, Claim | undefined>>({
     ucrv: undefined,
     ucrv2: undefined,
     ufxs: undefined,
@@ -37,7 +37,7 @@ export const useUnionStore = defineStore("unionStore", () => {
     ucvx: undefined,
     ubal: undefined,
     ufxslp: undefined,
-  };
+  });
 
   function getPounder(pounderId: PounderId) {
     const pounder = pounders[pounderId];

@@ -112,7 +112,6 @@ import type {
 import { isZap, isSwap } from "@Pounders/Models";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 import ModalCowSwap from "@Pounders/Components/ModalCowSwap.vue";
-import { getBalance } from "@Pounders/Util/PounderStateHelper";
 
 const { t } = useI18n();
 
@@ -163,7 +162,17 @@ const claim = computed(() => store.claims[pounderId]);
 const description = computed(() => t(pounderStore.value.pounder.description));
 const state = computed(() => pounderStore.value.state);
 const zapsFactories = computed(() => pounderStore.value.zapsFactories);
-const withdrawable = computed(() => getBalance(state.value));
+
+/** The total withdrawable balance, including unclaimed amount. */
+const withdrawable = computed(() => {
+  const { balanceWithdraw, balanceUnclaimed } = state.value;
+
+  if (balanceWithdraw === undefined || balanceUnclaimed === undefined) {
+    return undefined;
+  }
+
+  return balanceWithdraw + balanceUnclaimed;
+});
 
 const depositInput = computed(() => {
   if (!state.value.balanceDeposit) {

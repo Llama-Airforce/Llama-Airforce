@@ -46,10 +46,10 @@ import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
 import { useUnionStore } from "@Pounders/Store";
 import type { ZapsFactories } from "@Pounders/Models";
+import { create as createPounderState } from "@Pounders/Models/PounderState";
 import FlyerService from "@/Services/FlyerService";
 import * as pounderFactories from "@Pounders/Factories";
 import * as zaps from "@Pounders/Zaps";
-import { create as createPounderState } from "@Pounders/Util/PounderStateHelper";
 import { useClaim } from "@Pounders/Composables/UseClaim";
 
 const { t } = useI18n();
