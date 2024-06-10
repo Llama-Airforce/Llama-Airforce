@@ -22,7 +22,7 @@ export const config = createConfig({
   ],
   transports: {
     //[mainnet.id]: http("https://eth.llamarpc.com"),
-    [mainnet.id]: http(),
+    [mainnet.id]: http(undefined, { batch: { wait: 100 } }),
   },
 });
 
