@@ -61,16 +61,32 @@ export const useUnionStore = defineStore({
         return;
       }
 
-      state.priceUnderlying = await pounder.getPriceUnderlying();
-      state.apy = await pounder.getApy();
+      const [
+        priceUnderlying,
+        apy,
+        decimalsWithdraw,
+        symbolWithdraw,
+        tvl,
+        priceShare,
+        oraclePrice,
+      ] = await Promise.all([
+        pounder.getPriceUnderlying(),
+        pounder.getApy(),
+        pounder.contract.read.decimals(),
+        pounder.contract.read.symbol(),
+        pounder.contract.read.totalSupply(),
+        getVirtualPriceViem(pounder.contract),
+        pounder.lp?.getOraclePrice() ?? 1,
+      ]);
+
+      state.priceUnderlying = priceUnderlying;
+      state.apy = apy;
       state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
-
-      state.decimalsWithdraw = BigInt(await pounder.contract.read.decimals());
-      state.symbolWithdraw = await pounder.contract.read.symbol();
-
-      state.tvl = await pounder.contract.read.totalSupply();
-      state.priceShare = await getVirtualPriceViem(pounder.contract);
-      state.oraclePrice = (await pounder.lp?.getOraclePrice()) ?? 1;
+      state.decimalsWithdraw = BigInt(decimalsWithdraw);
+      state.symbolWithdraw = symbolWithdraw;
+      state.tvl = tvl;
+      state.priceShare = priceShare;
+      state.oraclePrice = oraclePrice;
     },
 
     async updateBalances(pounderId: PounderId, wallet?: Address) {
