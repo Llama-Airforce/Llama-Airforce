@@ -1,4 +1,5 @@
 import { mapKeys } from "lodash";
+import { utils } from "ethers";
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
@@ -135,8 +136,11 @@ export default class SnapshotService extends ServiceBase {
     proposal: ProposalId,
     voters: string[] = []
   ): Promise<Vote[]> {
+    const votersChecksummed = voters.map(utils.getAddress);
     const voterIn =
-      voters && voters.length > 0 ? `voter_in: ${JSON.stringify(voters)}` : "";
+      voters && voters.length > 0
+        ? `voter_in: ${JSON.stringify(votersChecksummed)}`
+        : "";
 
     const fs = (page: number, offset: number) => {
       const query = `{
