@@ -17,112 +17,113 @@ type PounderStore = {
   zapsFactories: ZapsFactories;
 };
 
-type State = {
-  pounders: Record<PounderId, PounderStore | null>;
-  claims: Record<PounderId, Claim | undefined>;
-};
+// eslint-disable-next-line max-lines-per-function
+export const useUnionStore = defineStore("unionStore", () => {
+  const pounders: Record<PounderId, PounderStore | null> = {
+    ucrv: null,
+    ucrv2: null,
+    ufxs: null,
+    uprisma: null,
+    ucvx: null,
+    ubal: null,
+    ufxslp: null,
+  };
 
-export const useUnionStore = defineStore({
-  id: "unionStore",
-  state: (): State => ({
-    pounders: {
-      ucrv: null,
-      ucrv2: null,
-      ufxs: null,
-      uprisma: null,
-      ucvx: null,
-      ubal: null,
-      ufxslp: null,
-    },
-    claims: {
-      ucrv: undefined,
-      ucrv2: undefined,
-      ufxs: undefined,
-      uprisma: undefined,
-      ucvx: undefined,
-      ubal: undefined,
-      ufxslp: undefined,
-    },
-  }),
-  actions: {
-    getPounder(pounderId: PounderId) {
-      const pounder = this.pounders[pounderId];
+  const claims: Record<PounderId, Claim | undefined> = {
+    ucrv: undefined,
+    ucrv2: undefined,
+    ufxs: undefined,
+    uprisma: undefined,
+    ucvx: undefined,
+    ubal: undefined,
+    ufxslp: undefined,
+  };
 
-      return {
-        pounder: pounder?.pounder,
-        state: pounder?.state,
-        zapsFactories: pounder?.zapsFactories,
-      };
-    },
+  function getPounder(pounderId: PounderId) {
+    const pounder = pounders[pounderId];
 
-    async updatePounder(pounderId: PounderId) {
-      const { pounder, state } = this.getPounder(pounderId);
-      if (!pounder || !state) {
-        return;
+    return {
+      pounder: pounder?.pounder,
+      state: pounder?.state,
+      zapsFactories: pounder?.zapsFactories,
+    };
+  }
+
+  async function updatePounder(pounderId: PounderId) {
+    const { pounder, state } = getPounder(pounderId);
+    if (!pounder || !state) {
+      return;
+    }
+
+    const [
+      priceUnderlying,
+      apy,
+      decimalsWithdraw,
+      symbolWithdraw,
+      tvl,
+      priceShare,
+      oraclePrice,
+    ] = await Promise.all([
+      pounder.getPriceUnderlying(),
+      pounder.getApy(),
+      pounder.contract.read.decimals(),
+      pounder.contract.read.symbol(),
+      pounder.contract.read.totalSupply(),
+      getVirtualPriceViem(pounder.contract),
+      pounder.lp?.getOraclePrice() ?? 1,
+    ]);
+
+    state.priceUnderlying = priceUnderlying;
+    state.apy = apy;
+    state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
+    state.decimalsWithdraw = BigInt(decimalsWithdraw);
+    state.symbolWithdraw = symbolWithdraw;
+    state.tvl = tvl;
+    state.priceShare = priceShare;
+    state.oraclePrice = oraclePrice;
+  }
+
+  async function updateBalances(pounderId: PounderId, wallet?: Address) {
+    const { pounder, state } = getPounder(pounderId);
+
+    if (state) {
+      if (wallet && pounder) {
+        state.balanceWithdraw = await pounder.contract.read.balanceOf([wallet]);
+      } else {
+        state.balanceWithdraw = undefined;
       }
+    }
+  }
 
-      const [
-        priceUnderlying,
-        apy,
-        decimalsWithdraw,
-        symbolWithdraw,
-        tvl,
-        priceShare,
-        oraclePrice,
-      ] = await Promise.all([
-        pounder.getPriceUnderlying(),
-        pounder.getApy(),
-        pounder.contract.read.decimals(),
-        pounder.contract.read.symbol(),
-        pounder.contract.read.totalSupply(),
-        getVirtualPriceViem(pounder.contract),
-        pounder.lp?.getOraclePrice() ?? 1,
-      ]);
+  async function updateZapDeposit(
+    pounderId: PounderId,
+    zapDeposit: ZapDeposit | undefined
+  ) {
+    const { state } = getPounder(pounderId);
 
-      state.priceUnderlying = priceUnderlying;
-      state.apy = apy;
-      state.symbolLpPrimary = pounder.lp?.symbolPrimary ?? "";
-      state.decimalsWithdraw = BigInt(decimalsWithdraw);
-      state.symbolWithdraw = symbolWithdraw;
-      state.tvl = tvl;
-      state.priceShare = priceShare;
-      state.oraclePrice = oraclePrice;
-    },
+    if (state && zapDeposit) {
+      state.symbolDeposit = zapDeposit.depositSymbol;
+      state.balanceDeposit = await zapDeposit.depositBalance();
+      state.decimalsDeposit = (await zapDeposit.depositDecimals()) ?? 18n;
+    }
+  }
 
-    async updateBalances(pounderId: PounderId, wallet?: Address) {
-      const { pounder, state } = this.getPounder(pounderId);
+  function updateClaim(pounderId: PounderId, claim?: Claim) {
+    const { state } = getPounder(pounderId);
+    if (!state) {
+      return;
+    }
 
-      if (state) {
-        if (wallet && pounder) {
-          state.balanceWithdraw = await pounder.contract.read.balanceOf([
-            wallet,
-          ]);
-        } else {
-          state.balanceWithdraw = undefined;
-        }
-      }
-    },
+    state.balanceUnclaimed = BigInt(claim ? claim.amount : 0);
+  }
 
-    async updateZapDeposit(
-      pounderId: PounderId,
-      zapDeposit: ZapDeposit | undefined
-    ) {
-      const { state } = this.getPounder(pounderId);
-
-      if (state && zapDeposit) {
-        state.symbolDeposit = zapDeposit.depositSymbol;
-        state.balanceDeposit = await zapDeposit.depositBalance();
-        state.decimalsDeposit = (await zapDeposit.depositDecimals()) ?? 18n;
-      }
-    },
-
-    updateClaim(pounderId: PounderId, claim?: Claim) {
-      const { state } = this.getPounder(pounderId);
-      if (!state) {
-        return;
-      }
-
-      state.balanceUnclaimed = BigInt(claim ? claim.amount : 0);
-    },
-  },
+  return {
+    pounders,
+    claims,
+    getPounder,
+    updatePounder,
+    updateBalances,
+    updateZapDeposit,
+    updateClaim,
+  };
 });
