@@ -1,12 +1,12 @@
 <template>
   <Card
-    v-if="showMigrate"
+    v-if="canMigrate"
     class="migration"
   >
     <h1 v-html="migrationMsg"></h1>
     <span class="actions">
       <a
-        :class="{ disabled: !canMigrate }"
+        :class="{ disabled: !canMigrate || migrating }"
         @click="onMigrate(false)"
       >
         {{ t(migrating ? "migrating" : "migrate") }}
@@ -25,10 +25,17 @@
 </template>
 
 <script setup lang="ts">
-import { useWallet, approve } from "@/Wallet";
-import { ERC20__factory, ZapsUFxs__factory } from "@/Contracts";
+import {
+  writeContract,
+  waitForTransactionReceipt,
+  getPublicClient,
+} from "@wagmi/core";
+import { useConfig, useReadContract } from "@wagmi/vue";
+import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
+import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
+import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getUFxsPriceV1 } from "@Pounders/Zaps/UFxsLp/PriceHelper";
+import { getUFxsPriceV1Viem } from "@Pounders/Zaps/UFxsLp/PriceHelper";
 import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 
@@ -37,11 +44,19 @@ const { t } = useI18n();
 const llamaService = new DefiLlamaService(getHost());
 
 // Refs
-const { address, withProviderReturn, withSigner } = useWallet();
+const { address } = useWallet();
 
-const showMigrate = ref(false);
-const migrating = ref(false);
-const balance = ref(0n);
+const { data: balance } = useReadContract({
+  abi: abiERC20,
+  address: UnionFxsVaultAddressV1,
+  functionName: "balanceOf",
+  args: computed(() => [address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value),
+    initialData: 0n,
+    initialDataUpdatedAt: 0,
+  },
+});
 
 let modalAction: (() => Promise<void>) | null = null;
 const minAmountOut = ref(0);
@@ -50,85 +65,69 @@ const modalSlippage = ref(false);
 
 const migrationMsg = computed(() =>
   t("migrateUFxs", [
-    (Math.round(bigNumToNumber(balance.value, 18n) * 1000) / 1000).toFixed(3),
+    (
+      Math.round(bigNumToNumber(balance.value ?? 0n, 18n) * 1000) / 1000
+    ).toFixed(3),
   ])
 );
 
-const canMigrate = computed(() => balance.value > 0n && !migrating.value);
-
-// Hooks
-onMounted(async (): Promise<void> => {
-  await checkCanMigrate();
+const canMigrate = computed(() => {
+  const dust = numToBigNumber(0.1, 18n);
+  return (balance.value ?? 0n) > dust;
 });
 
-// Methods
-const getBalanceERC20 = (ERC20address: string) =>
-  withProviderReturn(
-    async (provider, address) => {
-      const erc20 = ERC20__factory.connect(ERC20address, provider);
-      const balance = await erc20.balanceOf(address);
-
-      return balance.toBigInt();
-    },
-    () => 0n
-  )();
-
-const checkCanMigrate = async () => {
-  balance.value = await getBalanceERC20(UnionFxsVaultAddressV1);
-
-  const dust = numToBigNumber(0.1, 18n);
-  showMigrate.value = balance.value > dust;
-};
-
-// Watches
-watch(address, checkCanMigrate);
+const migrating = ref(false);
 
 // Events
-const onMigrate = (skipSlippageModal: boolean) =>
-  withSigner(async (signer, address) => {
-    if (!canMigrate.value) {
+const config = useConfig();
+async function onMigrate(skipSlippageModal: boolean) {
+  // Check and ask for slippage first.
+  if (!skipSlippageModal) {
+    modalSlippage.value = true;
+    modalAction = () => onMigrate(true);
+
+    const cvxfxs = await llamaService
+      .getPrice(FxsAddress)
+      .then((x) => x.price)
+      .catch(() => Infinity);
+
+    const client = getPublicClient(config);
+    if (!client) {
       return;
     }
 
-    // Check and ask for slippage first.
-    if (!skipSlippageModal) {
-      modalSlippage.value = true;
-      modalAction = () => onMigrate(true);
+    const ufxs = await getUFxsPriceV1Viem(llamaService, client);
 
-      const cvxfxs = await llamaService
-        .getPrice(FxsAddress)
-        .then((x) => x.price)
-        .catch(() => Infinity);
+    minAmountOutRef.value = bigNumToNumber(
+      calcMinAmountOut(balance.value ?? 0n, ufxs, cvxfxs, 0),
+      18n
+    );
+    return;
+  }
 
-      const ufxs = await getUFxsPriceV1(llamaService, signer);
-
-      minAmountOutRef.value = bigNumToNumber(
-        calcMinAmountOut(balance.value, ufxs, cvxfxs, 0),
-        18n
-      );
-      return;
-    }
-
-    await tryNotifyLoading(migrating, async () => {
-      const erc20 = ERC20__factory.connect(UnionFxsVaultAddressV1, signer);
-      await approve(erc20, address, ZapsUFxsAddress, balance.value);
-
-      const migrationMinAmount = numToBigNumber(minAmountOut.value, 18n);
-      const zaps = ZapsUFxs__factory.connect(ZapsUFxsAddress, signer);
-      const ps = [balance.value, migrationMinAmount, address] as const;
-
-      const estimate = await zaps.estimateGas.depositFromUFxs(...ps);
-
-      await zaps
-        .depositFromUFxs(...ps, {
-          gasLimit: estimate.mul(125).div(100),
-        })
-        .then((x) => x.wait());
-
-      balance.value = await getBalanceERC20(UnionFxsVaultAddressV1);
-      window.location.reload();
+  await tryNotifyLoading(migrating, async () => {
+    let hash = await writeContract(config, {
+      abi: abiERC20,
+      address: UnionFxsVaultAddressV1,
+      functionName: "approve",
+      args: [ZapsUFxsAddress, balance.value!] as const,
     });
-  })();
+
+    await waitForTransactionReceipt(config, { hash });
+
+    const migrationMinAmount = numToBigNumber(minAmountOut.value, 18n);
+    hash = await writeContract(config, {
+      abi: abiMigration,
+      address: ZapsUFxsAddress,
+      functionName: "depositFromUFxs",
+      args: [balance.value!, migrationMinAmount, address.value!] as const,
+    });
+
+    await waitForTransactionReceipt(config, { hash });
+
+    window.location.reload();
+  });
+}
 
 const onYesModalSlippage = async (newMinAmountOut: number) => {
   modalSlippage.value = false;
