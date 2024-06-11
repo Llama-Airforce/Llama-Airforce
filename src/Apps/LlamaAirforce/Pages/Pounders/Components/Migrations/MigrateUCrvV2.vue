@@ -1,12 +1,12 @@
 <template>
   <Card
-    v-if="showMigrate"
+    v-if="migrationMsg"
     class="migration"
   >
     <h1 v-html="migrationMsg"></h1>
     <span class="actions">
       <a
-        :class="{ disabled: !canMigrate }"
+        :class="{ disabled: !canMigrate || migrating }"
         @click="onMigrate"
       >
         {{ t(migrating ? "migrating" : "migrate") }}
@@ -16,78 +16,69 @@
 </template>
 
 <script setup lang="ts">
-import { useWallet, approve } from "@/Wallet";
-import { ERC20__factory, ZapsUCrvV2__factory } from "@/Contracts";
+import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
+import { useConfig, useReadContract } from "@wagmi/vue";
+import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
+import { abi as abiMigration } from "@/ABI/Union/ZapsUCrvV2";
+import { useWallet } from "@/Wallet";
 
 const { t } = useI18n();
 
 // Refs
-const { address, withProviderReturn, withSigner } = useWallet();
+const { address } = useWallet();
 
-const showMigrate = ref(false);
-const migrating = ref(false);
-const balance = ref(0n);
+const { data: balance } = useReadContract({
+  abi: abiERC20,
+  address: UnionCrvVaultAddressV1,
+  functionName: "balanceOf",
+  args: computed(() => [address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value),
+    initialData: 0n,
+    initialDataUpdatedAt: 0,
+  },
+});
 
 const migrationMsg = computed(() =>
   t("migrateUCrv", [
-    (Math.round(bigNumToNumber(balance.value, 18n) * 1000) / 1000).toFixed(3),
+    (
+      Math.round(bigNumToNumber(balance.value ?? 0n, 18n) * 1000) / 1000
+    ).toFixed(3),
   ])
 );
 
-const canMigrate = computed(() => balance.value > 0n && !migrating.value);
-
-// Hooks
-onMounted(async (): Promise<void> => {
-  await checkCanMigrate();
+const canMigrate = computed(() => {
+  const dust = numToBigNumber(0.1, 18n);
+  return (balance.value ?? 0n) > dust;
 });
 
-// Methods
-const getBalanceERC20 = (ERC20address: string) =>
-  withProviderReturn(
-    async (provider, address) => {
-      const erc20 = ERC20__factory.connect(ERC20address, provider);
-      const balance = await erc20.balanceOf(address);
-
-      return balance.toBigInt();
-    },
-    () => 0n
-  )();
-
-const checkCanMigrate = async () => {
-  balance.value = await getBalanceERC20(UnionCrvVaultAddressV1);
-
-  const dust = numToBigNumber(0.1, 18n);
-  showMigrate.value = balance.value > dust;
-};
-
-// Watches
-watch(address, checkCanMigrate);
+const migrating = ref(false);
 
 // Events
-const onMigrate = withSigner(async (signer, address) => {
-  if (!canMigrate.value) {
-    return new Promise((resolve) => resolve());
-  }
-
+const config = useConfig();
+function onMigrate() {
   return tryNotifyLoading(migrating, async () => {
-    const erc20 = ERC20__factory.connect(UnionCrvVaultAddressV1, signer);
-    await approve(erc20, address, ZapsUCrvAddressV2, balance.value);
+    let hash = await writeContract(config, {
+      abi: abiERC20,
+      address: UnionCrvVaultAddressV1,
+      functionName: "approve",
+      args: [ZapsUCrvAddressV2, balance.value!] as const,
+    });
 
-    const zaps = ZapsUCrvV2__factory.connect(ZapsUCrvAddressV2, signer);
-    const ps = [balance.value, 0, address] as const;
+    await waitForTransactionReceipt(config, { hash });
 
-    const estimate = await zaps.estimateGas.depositFromUCrv(...ps);
+    hash = await writeContract(config, {
+      abi: abiMigration,
+      address: ZapsUCrvAddressV2,
+      functionName: "depositFromUCrv",
+      args: [balance.value!, 0n, address.value!] as const,
+    });
 
-    await zaps
-      .depositFromUCrv(...ps, {
-        gasLimit: estimate.mul(125).div(100),
-      })
-      .then((x) => x.wait());
+    await waitForTransactionReceipt(config, { hash });
 
-    balance.value = await getBalanceERC20(UnionCrvVaultAddressV1);
     window.location.reload();
   });
-});
+}
 </script>
 
 <style lang="scss" scoped>
