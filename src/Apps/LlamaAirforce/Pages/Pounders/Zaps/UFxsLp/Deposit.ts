@@ -1,12 +1,15 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsLpPriceViem, getCvxFxsPriceViem } from "@/Util";
+import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
 import type { ZapDeposit, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
-import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
+import {
+  getBalance,
+  getDecimals,
+  calcMinAmountOut,
+} from "@Pounders/Zaps/Helpers";
 
 import {
   ZapsUFxsAddressV1,
@@ -34,7 +37,7 @@ export function uFxsLpDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       FxsAddress,
@@ -66,7 +69,7 @@ export function uFxsLpDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       CvxFxsAddress,
@@ -98,7 +101,7 @@ export function uFxsLpDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       CvxFxsFactoryERC20Address,
@@ -141,7 +144,7 @@ export function uFxsLpDepositZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -164,11 +167,11 @@ export function uFxsLpDepositZaps(
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const cvxfxs = await getCvxFxsPriceViem(llamaService, client)
+      const cvxfxs = await getCvxFxsPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

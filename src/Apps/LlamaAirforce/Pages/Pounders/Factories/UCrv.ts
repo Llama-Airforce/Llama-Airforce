@@ -1,5 +1,5 @@
 import { getContract, type PublicClient } from "viem";
-import { getCvxCrvPriceViem, getCvxCrvApy } from "@/Util";
+import { getCvxCrvPrice, getCvxCrvApy } from "@/Util";
 import { abi } from "@/ABI/Union/UnionVault";
 import {
   CvxCrvAddress,
@@ -15,7 +15,7 @@ export default function createCrvPounder(
   client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxCrvPriceViem(llamaService, client);
+  const getPriceUnderlying = () => getCvxCrvPrice(llamaService, client);
   const getApy = () => getCvxCrvApy(client, llamaService);
 
   const contract = getContract({

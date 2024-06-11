@@ -1,5 +1,11 @@
-import { constants } from "ethers";
-import { type ERC20 } from "@/Contracts";
+import {
+  type PublicClient,
+  type WalletClient,
+  type Address,
+  maxUint256,
+} from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 
 export function addressShort(address?: string, digits = 6): string {
   if (!address) {
@@ -13,41 +19,87 @@ export function addressShort(address?: string, digits = 6): string {
 }
 
 export async function approve(
-  erc20: ERC20,
-  owner: string,
-  spender: string,
+  client: PublicClient,
+  wallet: WalletClient,
+  erc20: Address,
+  owner: Address,
+  spender: Address,
   input: bigint
 ): Promise<void> {
-  const allowance = await erc20
-    .allowance(owner, spender)
-    .then((x) => x.toBigInt());
+  const allowance = await client.readContract({
+    abi: abiERC20,
+    address: erc20,
+    functionName: "allowance",
+    args: [owner, spender] as const,
+  });
 
   if (allowance < input) {
     // Any previous previous allowance has to be cleared first.
     if (allowance > 0n) {
-      await erc20.approve(spender, 0).then((x) => x.wait());
+      const hash = await wallet.writeContract({
+        chain: wallet.chain!,
+        account: wallet.account!,
+        abi: abiERC20,
+        address: erc20,
+        functionName: "approve",
+        args: [spender, 0n] as const,
+      });
+
+      await waitForTransactionReceipt(client, { hash });
     }
 
-    await erc20.approve(spender, input).then((x) => x.wait());
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account!,
+      abi: abiERC20,
+      address: erc20,
+      functionName: "approve",
+      args: [spender, input] as const,
+    });
+
+    await waitForTransactionReceipt(client, { hash });
   }
 }
 
 export async function maxApprove(
-  erc20: ERC20,
-  owner: string,
-  spender: string,
+  client: PublicClient,
+  wallet: WalletClient,
+  erc20: Address,
+  owner: Address,
+  spender: Address,
   input: bigint
 ): Promise<void> {
-  const allowance = await erc20
-    .allowance(owner, spender)
-    .then((x) => x.toBigInt());
+  const allowance = await client.readContract({
+    abi: abiERC20,
+    address: erc20,
+    functionName: "allowance",
+    args: [owner, spender] as const,
+  });
 
   if (allowance < input) {
     // Any previous previous allowance has to be cleared first.
     if (allowance > 0n) {
-      await erc20.approve(spender, 0).then((x) => x.wait());
+      const hash = await wallet.writeContract({
+        chain: wallet.chain!,
+        account: wallet.account!,
+        abi: abiERC20,
+        address: erc20,
+        functionName: "approve",
+        args: [spender, 0n] as const,
+      });
+
+      await waitForTransactionReceipt(client, { hash });
     }
 
-    await erc20.approve(spender, constants.MaxUint256).then((x) => x.wait());
+    const hash = await wallet.writeContract({
+      chain: wallet.chain!,
+      account: wallet.account!,
+      abi: abiERC20,
+      address: erc20,
+      functionName: "approve",
+      args: [spender, maxUint256] as const,
+    });
+
+    await waitForTransactionReceipt(client, { hash });
   }
 }

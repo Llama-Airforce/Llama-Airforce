@@ -1,6 +1,6 @@
 import { type PublicClient, getContract } from "viem";
 import { abi } from "@/ABI/Union/UnionVaultPirex";
-import { getPxCvxPriceViem, getCvxApy } from "@/Util";
+import { getPxCvxPrice, getCvxApy } from "@/Util";
 import {
   DistributorUCvxAddress,
   PxCvxAddress,
@@ -17,7 +17,7 @@ export default function createCvxPounder(
   llamaService: DefiLlamaService,
   flyerService: FlyerService
 ): Pounder<VaultPirex> {
-  const getPriceUnderlying = () => getPxCvxPriceViem(llamaService, client);
+  const getPriceUnderlying = () => getPxCvxPrice(llamaService, client);
   const getApy = () => getCvxApy(flyerService);
 
   const contract = getContract({

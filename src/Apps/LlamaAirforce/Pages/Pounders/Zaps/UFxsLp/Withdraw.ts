@@ -2,11 +2,11 @@ import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import type { ZapWithdraw, Swap } from "@Pounders/Models";
+import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsLpPriceViem, getCvxFxsPriceViem } from "@/Util";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
 
 import {
   FxsAddress,
@@ -33,7 +33,7 @@ export function uFxsLpWithdrawZaps(
       throw new Error("Unable to construct withdraw zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       UnionFxsVaultAddressV1,
@@ -65,7 +65,7 @@ export function uFxsLpWithdrawZaps(
       throw new Error("Unable to construct withdraw zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       UnionFxsVaultAddressV1,
@@ -130,7 +130,7 @@ export function uFxsLpWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -152,11 +152,11 @@ export function uFxsLpWithdrawZaps(
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const cvxfxs = await getCvxFxsPriceViem(llamaService, client)
+      const cvxfxs = await getCvxFxsPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPriceViem(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

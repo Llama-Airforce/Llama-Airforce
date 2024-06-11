@@ -1,9 +1,11 @@
-import { type Address } from "viem";
-import type { UnionVault, UnionVaultPirex } from "@/Contracts";
+import {
+  type Address,
+  type PublicClient,
+  type GetContractReturnType,
+} from "viem";
 import { type abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { type abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
-
-import { type PublicClient, type GetContractReturnType } from "viem";
+import { bigNumToNumber } from "@/Util";
 
 export type VaultUnion = GetContractReturnType<
   typeof abiUnionVault,
@@ -13,20 +15,22 @@ export type VaultPirex = GetContractReturnType<
   typeof abiUnionPirex,
   PublicClient
 >;
+export type Vault = VaultUnion | VaultPirex;
 
-export type VaultViem = VaultUnion | VaultPirex;
-export type Vault = UnionVault | UnionVaultPirex;
-
-export function isPirex(vault: Vault): vault is UnionVaultPirex {
-  return "totalAssets()" in vault;
+export function isPirex(vault: Vault): vault is VaultPirex {
+  return vault.abi.some((x) => x.name === "totalAssets");
 }
 
-export function getTotalUnderlying(vault: Vault): Promise<bigint> {
-  if (isPirex(vault)) {
-    return vault.totalAssets().then((x) => x.toBigInt());
-  } else {
-    return vault.totalUnderlying().then((x) => x.toBigInt());
-  }
+export function getTotalUnderlying(utkn: Vault) {
+  return isPirex(utkn) ? utkn.read.totalAssets() : utkn.read.totalUnderlying();
+}
+
+export async function getVirtualPrice(utkn: Vault): Promise<number> {
+  const dec = 10n ** 18n;
+  const totalUnderlying = await getTotalUnderlying(utkn);
+  const tvl = await utkn.read.totalSupply();
+
+  return tvl > 0n ? bigNumToNumber((totalUnderlying * dec) / tvl, 18n) : 1;
 }
 
 /** Is the pounder underlying asset an LP? Then we provide additional breakdown features. */
@@ -47,7 +51,7 @@ const pounderIds = [
 
 export type PounderId = (typeof pounderIds)[number];
 
-export type Pounder<Contract extends VaultViem> = {
+export type Pounder<Contract extends Vault> = {
   id: PounderId;
   name: string;
   logo: string;

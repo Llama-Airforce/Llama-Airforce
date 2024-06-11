@@ -3,12 +3,15 @@ import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import type { ZapDeposit, Swap } from "@Pounders/Models";
-import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
+import {
+  getBalance,
+  getDecimals,
+  calcMinAmountOut,
+} from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
-import { getPxCvxPriceViem } from "@/Util";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { getPxCvxPrice } from "@/Util";
 
 import {
   CvxAddress,
@@ -54,7 +57,7 @@ export function uCvxDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       PxCvxAddress,
@@ -86,7 +89,7 @@ export function uCvxDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       CvxAddress,
@@ -130,7 +133,7 @@ export function uCvxDepositZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const pxcvx = await getPxCvxPriceViem(llamaService, client)
+      const pxcvx = await getPxCvxPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

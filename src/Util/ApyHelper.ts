@@ -7,8 +7,8 @@ import {
   bigNumToNumber,
   numToBigNumber,
   toRecord,
-  getCvxFxsPriceViem,
-  getCvxPrismaPriceViem,
+  getCvxFxsPrice,
+  getCvxPrismaPrice,
   getDefiLlamaPrice,
 } from "@/Util";
 import {
@@ -220,7 +220,7 @@ export async function getCvxFxsApy(
   const rateCvx = await getRewardRate(CvxAddress);
   const supply = bigNumToNumber(await util.read.totalSupply(), 18n);
 
-  const priceCvxFxs = await getCvxFxsPriceViem(llamaService, client);
+  const priceCvxFxs = await getCvxFxsPrice(llamaService, client);
   const priceFxs = await getDefiLlamaPrice(llamaService, FxsAddress);
   const priceCvx = await getDefiLlamaPrice(llamaService, CvxAddress);
 
@@ -262,7 +262,7 @@ export async function getCvxPrismaApy(
   const rateMkUsd = await getRewardRate(MkUsdAddress);
   const supply = bigNumToNumber(await util.read.totalSupply(), 18n);
 
-  const priceCvxPrisma = await getCvxPrismaPriceViem(llamaService, client);
+  const priceCvxPrisma = await getCvxPrismaPrice(llamaService, client);
   const pricePrisma = await getDefiLlamaPrice(llamaService, PrismaAddress);
   const priceCvx = await getDefiLlamaPrice(llamaService, CvxAddress);
   const priceMkUsd = await getDefiLlamaPrice(llamaService, MkUsdAddress);

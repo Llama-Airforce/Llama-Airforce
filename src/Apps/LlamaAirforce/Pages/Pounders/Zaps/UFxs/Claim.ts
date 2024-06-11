@@ -1,13 +1,12 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsPriceViem } from "@/Util";
+import { getCvxFxsPrice } from "@/Util";
 import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
 import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
-import { claim } from "@Pounders/Zaps/Helpers";
+import { claim, calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 
 import { UnionFxsVaultAddress, ZapsUFxsClaimAddress } from "@/Util/Addresses";
 
@@ -31,7 +30,7 @@ export function uFxsClaimZaps(
       throw new Error("Unable to construct extra claim zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       UnionFxsVaultAddress,
@@ -86,7 +85,7 @@ export function uFxsClaimZaps(
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const cvxfxs = await getCvxFxsPriceViem(llamaService, client)
+      const cvxfxs = await getCvxFxsPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

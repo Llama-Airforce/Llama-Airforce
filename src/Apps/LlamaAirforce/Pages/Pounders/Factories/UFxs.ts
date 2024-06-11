@@ -1,6 +1,6 @@
 import { type PublicClient, getContract } from "viem";
 import { abi } from "@/ABI/Union/UnionVault";
-import { getCvxFxsPriceViem, getCvxFxsApy } from "@/Util";
+import { getCvxFxsPrice, getCvxFxsApy } from "@/Util";
 import {
   CvxFxsAddress,
   DistributorUFxsAddress,
@@ -15,7 +15,7 @@ export default function createFxsPounder(
   client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxFxsPriceViem(llamaService, client);
+  const getPriceUnderlying = () => getCvxFxsPrice(llamaService, client);
   const getApy = () => getCvxFxsApy(client, llamaService);
 
   const contract = getContract({

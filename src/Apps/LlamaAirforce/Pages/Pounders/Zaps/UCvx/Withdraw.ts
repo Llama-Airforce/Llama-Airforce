@@ -2,10 +2,10 @@ import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
-import { maxApproveViem } from "@/Wallet";
-import type { ZapWithdraw, Swap } from "@Pounders/Models";
+import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import type { ZapWithdraw, Swap } from "@Pounders/Models";
+import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
 import {
@@ -56,7 +56,7 @@ export function uCvxWithdrawZaps(
       throw new Error("Unable to construct withdraw zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       UnionCvxVaultAddress,

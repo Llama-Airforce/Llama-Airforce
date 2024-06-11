@@ -1,7 +1,7 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
 
@@ -27,7 +27,7 @@ export function uCrvClaimZaps(
       throw new Error("Unable to construct extra claim zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       UnionCrvVaultAddress,

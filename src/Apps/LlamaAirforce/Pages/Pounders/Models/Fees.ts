@@ -1,5 +1,5 @@
 import { bigNumToNumber } from "@/Util";
-import { isPirex, type Vault } from "@Pounders/Util/UnionHelper";
+import { isPirex, type Vault } from "@Pounders/Models";
 
 export type Fees = {
   platform: number;

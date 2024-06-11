@@ -1,22 +1,53 @@
-import { type JsonRpcProvider } from "@ethersproject/providers";
 import {
-  type ContractCallContext,
-  type ContractCallResults,
-  Multicall,
-} from "ethereum-multicall";
-import CurveV2FactoryPoolABI from "@/ABI/Curve/CurveV2FactoryPool.json";
-import ERC20ABI from "@/ABI/Standards/ERC20.json";
-import { type CurveV2FactoryPool, type CurveV6FactoryPool } from "@/Contracts";
+  type Address,
+  type PublicClient,
+  type GetContractReturnType,
+  getContract,
+} from "viem";
+import { abi as abiCurveV1 } from "@/ABI/Curve/CurveV1FactoryPool";
+import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
+import { abi as abiCurveV6 } from "@/ABI/Curve/CurveV6FactoryPool";
+import { abi as abiCvxCrv } from "@/ABI/Curve/CvxCrvFactoryPool";
+import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
+import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import {
   CvxAddress,
+  LPxCvxFactoryAddress,
+  CrvAddress,
+  CvxCrvFactoryAddress,
+  CvxCrvFactoryAddressV1,
+  PrismaAddress,
+  CvxPrismaFactoryAddress,
+  FxsAddress,
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
-  FxsAddress,
-  PrismaAddress,
 } from "@/Util/Addresses";
-import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import { type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
+
+type CurveV1FactoryPool = GetContractReturnType<
+  typeof abiCurveV1,
+  PublicClient
+>;
+type CurveV2FactoryPool = GetContractReturnType<
+  typeof abiCurveV2,
+  PublicClient
+>;
+type CurveV6FactoryPool = GetContractReturnType<
+  typeof abiCurveV6,
+  PublicClient
+>;
+
+async function getDiscount(
+  pool: CurveV1FactoryPool | CurveV2FactoryPool | CurveV6FactoryPool
+): Promise<number> {
+  const dec = 10n ** 18n;
+  const tkn_in = 10n ** 22n;
+  const tkn_out = await pool.read.get_dy([0n, 1n, tkn_in]);
+  const discount = ((tkn_out - tkn_in) * dec) / tkn_out;
+
+  return 1 - bigNumToNumber(discount, 18n);
+}
 
 export function getDefiLlamaPrice(
   llamaService: DefiLlamaService,
@@ -32,91 +63,125 @@ export function getCvxPrice(llamaService: DefiLlamaService): Promise<number> {
   return getDefiLlamaPrice(llamaService, CvxAddress);
 }
 
+export async function getPxCvxPrice(
+  llamaService: DefiLlamaService,
+  client: PublicClient
+): Promise<number> {
+  const cvxPrice = await getDefiLlamaPrice(llamaService, CvxAddress);
+  const price_oracle = await client.readContract({
+    abi: abiCurveV2,
+    address: LPxCvxFactoryAddress,
+    functionName: "price_oracle",
+  });
+  const decimals = 18n;
+
+  return cvxPrice * bigNumToNumber(price_oracle, decimals);
+}
+
+export async function getCvxCrvPrice(
+  llamaService: DefiLlamaService,
+  client: PublicClient
+): Promise<number> {
+  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
+  const price_oracle = await client.readContract({
+    abi: abiCvxCrv,
+    address: CvxCrvFactoryAddress,
+    functionName: "price_oracle",
+  });
+  const decimals = 18n;
+
+  return crvPrice * bigNumToNumber(price_oracle, decimals);
+}
+
 export async function getCvxPrismaPrice(
   llamaService: DefiLlamaService,
-  cvxPrismaFactoryPool: CurveV6FactoryPool
+  client: PublicClient
 ): Promise<number> {
   const prismaPrice = await getDefiLlamaPrice(llamaService, PrismaAddress);
+  const price_oracle = await client.readContract({
+    abi: abiCurveV6,
+    address: CvxPrismaFactoryAddress,
+    functionName: "price_oracle",
+  });
+  const decimals = 18n;
 
-  return cvxPrismaFactoryPool
-    .price_oracle()
-    .then((x) => x.toBigInt())
-    .then((price) => bigNumToNumber(price, 18n) * prismaPrice);
+  return prismaPrice * bigNumToNumber(price_oracle, decimals);
+}
+
+export async function getCvxCrvPriceV2(
+  llamaService: DefiLlamaService,
+  client: PublicClient
+): Promise<number> {
+  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
+
+  // Convert crv price to cvxCrv price.
+  const pool = getContract({
+    abi: abiCurveV1,
+    address: CvxCrvFactoryAddressV1,
+    client,
+  });
+  const discount = await getDiscount(pool);
+
+  return crvPrice * discount;
 }
 
 export async function getCvxFxsPrice(
   llamaService: DefiLlamaService,
-  cvxFxsFactoryPool: CurveV2FactoryPool
+  client: PublicClient
 ): Promise<number> {
   const fxsPrice = await getDefiLlamaPrice(llamaService, FxsAddress);
 
-  return cvxFxsFactoryPool
-    .price_oracle()
-    .then((x) => x.toBigInt())
-    .then((price) => bigNumToNumber(price, 18n) * fxsPrice);
+  const price_oracle = await client.readContract({
+    abi: abiCurveV2,
+    address: CvxFxsFactoryAddress,
+    functionName: "price_oracle",
+  });
+  const decimals = 18n;
+
+  return fxsPrice * bigNumToNumber(price_oracle, decimals);
 }
 
 export async function getCurveV2LpPrice(
   llamaService: DefiLlamaService,
-  provider: JsonRpcProvider,
-  tokenAddress: string,
-  factoryAddress: string,
-  factoryTokenAddress: string
+  client: PublicClient,
+  tokenAddress: Address,
+  factoryAddress: Address,
+  factoryTokenAddress: Address
 ): Promise<number> {
-  const multicall = new Multicall({
-    ethersProvider: provider,
-    tryAggregate: true,
+  const multicallResult = await client.multicall({
+    contracts: [
+      {
+        address: factoryAddress,
+        abi: abiCurveV2,
+        functionName: "balances",
+        args: [0n],
+      },
+      {
+        address: factoryAddress,
+        abi: abiCurveV2,
+        functionName: "balances",
+        args: [1n],
+      },
+      {
+        address: factoryAddress,
+        abi: abiCurveV2,
+        functionName: "price_oracle",
+        args: [],
+      },
+      {
+        address: factoryTokenAddress,
+        abi: abiERC20,
+        functionName: "totalSupply",
+        args: [],
+      },
+    ],
   });
 
-  const contractCallContext: ContractCallContext[] = [
-    {
-      reference: "factory",
-      contractAddress: factoryAddress,
-      abi: CurveV2FactoryPoolABI as unknown[],
-      calls: [
-        {
-          reference: "factory",
-          methodName: "balances",
-          methodParameters: [0],
-        },
-        {
-          reference: "factory",
-          methodName: "balances",
-          methodParameters: [1],
-        },
-        {
-          reference: "factory",
-          methodName: "price_oracle",
-          methodParameters: [],
-        },
-      ],
-    },
-    {
-      reference: "factoryerc20",
-      contractAddress: factoryTokenAddress,
-      abi: ERC20ABI as unknown[],
-      calls: [
-        {
-          reference: "factoryerc20",
-          methodName: "totalSupply",
-          methodParameters: [],
-        },
-      ],
-    },
-  ];
-
-  const results: ContractCallResults = await multicall.call(
-    contractCallContext
-  );
-  const valuesFactory = results.results.factory.callsReturnContext;
-  const valuesFactoryERC20 = results.results.factoryerc20.callsReturnContext;
-
-  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-  const tvl_tkn = BigInt(valuesFactory[0].returnValues[0].hex as string);
-  const tvl_atkn = BigInt(valuesFactory[1].returnValues[0].hex as string);
-  const oracle_price = BigInt(valuesFactory[2].returnValues[0].hex as string);
-  const supply = BigInt(valuesFactoryERC20[0].returnValues[0].hex as string);
-  /* eslint-enable */
+  // Not gonna bother check success.
+  const tvl_tkn = multicallResult[0].result!;
+  const tvl_atkn = multicallResult[1].result!;
+  const oracle_price = multicallResult[2].result!;
+  const supply = multicallResult[3].result!;
 
   const decimals = 18n;
   const fxsPrice = await llamaService
@@ -134,11 +199,11 @@ export async function getCurveV2LpPrice(
 
 export async function getCvxFxsLpPrice(
   llamaService: DefiLlamaService,
-  provider: JsonRpcProvider
+  client: PublicClient
 ): Promise<number> {
   return getCurveV2LpPrice(
     llamaService,
-    provider,
+    client,
     FxsAddress,
     CvxFxsFactoryAddress,
     CvxFxsFactoryERC20Address

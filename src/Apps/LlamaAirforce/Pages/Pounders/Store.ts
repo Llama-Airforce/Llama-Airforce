@@ -4,15 +4,15 @@ import type {
   PounderId,
   Pounder,
   PounderState,
-  VaultViem,
+  Vault,
   ZapDeposit,
   ZapsFactories,
 } from "@Pounders/Models";
+import { getVirtualPrice } from "@Pounders/Models";
 import type { Claim } from "@LAF/Services/UnionService";
-import { getVirtualPriceViem } from "@Pounders/Util/UnionHelper";
 
 type PounderStore = {
-  pounder: Pounder<VaultViem>;
+  pounder: Pounder<Vault>;
   state: PounderState;
   zapsFactories: ZapsFactories;
 };
@@ -69,7 +69,7 @@ export const useUnionStore = defineStore("unionStore", () => {
       pounder.contract.read.decimals(),
       pounder.contract.read.symbol(),
       pounder.contract.read.totalSupply(),
-      getVirtualPriceViem(pounder.contract),
+      getVirtualPrice(pounder.contract),
       pounder.lp?.getOraclePrice() ?? 1,
     ]);
 

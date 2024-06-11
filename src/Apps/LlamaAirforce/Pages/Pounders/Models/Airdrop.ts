@@ -4,11 +4,11 @@ import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { type DefiLlamaService } from "@/Services";
 import { bigNumToNumber } from "@/Util";
 import {
-  getCvxCrvPriceViem,
-  getCvxFxsPriceViem,
-  getCvxPrismaPriceViem,
-  getPxCvxPriceViem,
-} from "@/Util/PriceHelperViem";
+  getCvxCrvPrice,
+  getCvxFxsPrice,
+  getCvxPrismaPrice,
+  getPxCvxPrice,
+} from "@/Util/PriceHelper";
 import {
   UnionCrvVaultAddress,
   DistributorUCrvAddress,
@@ -19,7 +19,7 @@ import {
   UnionCvxVaultAddress,
   DistributorUCvxAddress,
 } from "@/Util/Addresses";
-import { getVirtualPriceViem } from "@Pounders/Util/UnionHelper";
+import { getVirtualPrice } from "@Pounders/Models";
 import { type AirdropId, type Claim } from "@LAF/Services/UnionService";
 
 export type Airdrop = {
@@ -78,14 +78,14 @@ export async function uCrvAirdrop(
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCrv> {
-  const cvxCrvPrice = await getCvxCrvPriceViem(llamaService, client);
+  const cvxCrvPrice = await getCvxCrvPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
     address: UnionCrvVaultAddress,
     client,
   });
-  const virtualPrice = await getVirtualPriceViem(utkn);
+  const virtualPrice = await getVirtualPrice(utkn);
 
   claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
   const amount = BigInt(claim.amount);
@@ -109,14 +109,14 @@ export async function uFxsAirdrop(
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUFxs> {
-  const cvxFxsPrice = await getCvxFxsPriceViem(llamaService, client);
+  const cvxFxsPrice = await getCvxFxsPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
     address: UnionFxsVaultAddress,
     client,
   });
-  const virtualPrice = await getVirtualPriceViem(utkn);
+  const virtualPrice = await getVirtualPrice(utkn);
 
   claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
   const amount = BigInt(claim?.amount ?? 0);
@@ -140,14 +140,14 @@ export async function uPrismaAirdrop(
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUPrisma> {
-  const cvxPrismaPrice = await getCvxPrismaPriceViem(llamaService, client);
+  const cvxPrismaPrice = await getCvxPrismaPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
     address: UnionPrismaVaultAddress,
     client,
   });
-  const virtualPrice = await getVirtualPriceViem(utkn);
+  const virtualPrice = await getVirtualPrice(utkn);
 
   claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
   const amount = BigInt(claim?.amount ?? 0);
@@ -171,14 +171,14 @@ export async function uCvxAirdrop(
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCvx> {
-  const pxCvxPrice = await getPxCvxPriceViem(llamaService, client);
+  const pxCvxPrice = await getPxCvxPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVaultPirex,
     address: UnionCvxVaultAddress,
     client,
   });
-  const virtualPrice = await getVirtualPriceViem(utkn);
+  const virtualPrice = await getVirtualPrice(utkn);
 
   claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
   const amount = BigInt(claim.amount);

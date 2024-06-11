@@ -1,7 +1,7 @@
 import { type PublicClient, getContract } from "viem";
 import { abi } from "@/ABI/Union/UnionVault";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
-import { getCvxFxsLpPriceViem, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
+import { getCvxFxsLpPrice, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
 import {
   CvxFxsAddress,
   CvxFxsFactoryAddress,
@@ -17,7 +17,7 @@ export default function createFxsLpPounder(
   client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxFxsLpPriceViem(llamaService, client);
+  const getPriceUnderlying = () => getCvxFxsLpPrice(llamaService, client);
   const getApy = () => getCvxFxsLpApy();
 
   const getOraclePrice = () =>

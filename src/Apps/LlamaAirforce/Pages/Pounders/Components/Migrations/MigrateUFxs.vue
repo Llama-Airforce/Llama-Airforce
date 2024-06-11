@@ -35,8 +35,8 @@ import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getUFxsPriceV1Viem } from "@Pounders/Zaps/UFxsLp/PriceHelper";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { getUFxsPriceV1 } from "@Pounders/Zaps/UFxsLp/PriceHelper";
+import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 
 const { t } = useI18n();
@@ -96,7 +96,7 @@ async function onMigrate(skipSlippageModal: boolean) {
       return;
     }
 
-    const ufxs = await getUFxsPriceV1Viem(llamaService, client);
+    const ufxs = await getUFxsPriceV1(llamaService, client);
 
     minAmountOutRef.value = bigNumToNumber(
       calcMinAmountOut(balance.value ?? 0n, ufxs, cvxfxs, 0),

@@ -1,10 +1,10 @@
 import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Util/MinAmountOutHelper";
+import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 import { claim } from "@Pounders/Zaps/Helpers";
 
@@ -34,7 +34,7 @@ export function uCvxClaimZaps(
       throw new Error("Unable to construct extra claim zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       UnionCvxVaultAddress,

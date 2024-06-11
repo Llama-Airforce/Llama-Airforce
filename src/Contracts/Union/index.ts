@@ -2,13 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MerkleDistributor2 } from "./MerkleDistributor2";
-export type { PirexCvx } from "./PirexCvx";
-export type { UnionVault } from "./UnionVault";
-export type { UnionVaultPirex } from "./UnionVaultPirex";
-export type { ZapsUBal } from "./ZapsUBal";
-export type { ZapsUCrv } from "./ZapsUCrv";
-export type { ZapsUCrvV2 } from "./ZapsUCrvV2";
-export type { ZapsUCvx } from "./ZapsUCvx";
-export type { ZapsUFxs } from "./ZapsUFxs";
-export type { ZapsUFxsLp } from "./ZapsUFxsLp";
-export type { ZapsUPrismaConvexMigration } from "./ZapsUPrismaConvexMigration";

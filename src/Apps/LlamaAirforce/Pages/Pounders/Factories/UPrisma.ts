@@ -1,6 +1,6 @@
 import { type PublicClient, getContract } from "viem";
 import { abi } from "@/ABI/Union/UnionVault";
-import { getCvxPrismaPriceViem, getCvxPrismaApy } from "@/Util";
+import { getCvxPrismaPrice, getCvxPrismaApy } from "@/Util";
 import {
   CvxPrismaAddress,
   DistributorUPrismaAddress,
@@ -15,7 +15,7 @@ export default function createPrismaPounder(
   client: PublicClient,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxPrismaPriceViem(llamaService, client);
+  const getPriceUnderlying = () => getCvxPrismaPrice(llamaService, client);
   const getApy = () => getCvxPrismaApy(client, llamaService);
 
   const contract = getContract({

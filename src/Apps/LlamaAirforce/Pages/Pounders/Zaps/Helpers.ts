@@ -2,6 +2,7 @@ import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
+import { numToBigNumber } from "@/Util";
 import type { Airdrop } from "@Pounders/Models";
 
 export async function claim(
@@ -75,4 +76,17 @@ export function getDecimals(
       functionName: "decimals",
     })
     .then((x) => BigInt(x));
+}
+
+export function calcMinAmountOut(
+  input: bigint,
+  priceIn: number,
+  priceOut: number,
+  slippage: number
+): bigint {
+  const ratio = numToBigNumber((priceIn / priceOut) * (1 - slippage), 24n);
+  const dec = 10n ** 24n;
+  const minAmountOut = (input * ratio) / dec;
+
+  return minAmountOut;
 }

@@ -2,7 +2,7 @@ import { type Address, type PublicClient, type WalletClient } from "viem";
 import { waitForTransactionReceipt } from "viem/actions";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZapsMigrate } from "@/ABI/Union/ZapsUPrismaConvexMigration";
-import { maxApproveViem } from "@/Wallet";
+import { maxApprove } from "@/Wallet";
 import type { ZapDeposit, Swap } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
 
@@ -31,7 +31,7 @@ export function uPrismaDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       CvxPrismaAddress,
@@ -63,7 +63,7 @@ export function uPrismaDepositZaps(
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApproveViem(
+    await maxApprove(
       client,
       wallet,
       StkCvxPrismaAddress,
