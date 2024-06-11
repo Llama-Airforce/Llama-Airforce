@@ -6,13 +6,13 @@
     <h1 v-html="migrationUBalMsg"></h1>
     <span class="actions">
       <a
-        :class="{ disabled: !canWithdraw }"
+        :class="{ disabled: !canWithdraw || migrating }"
         @click="onWithdrawUBal"
       >
         {{ t("withdraw") }}
       </a>
       <a
-        :class="{ disabled: !canDeposit }"
+        :class="{ disabled: !canDeposit || migrating }"
         @click="onDepositAuraBal"
       >
         {{ t("deposit") }}
@@ -22,104 +22,108 @@
 </template>
 
 <script setup lang="ts">
-import { useWallet, maxApprove } from "@/Wallet";
-import { ERC20__factory, UnionVault__factory } from "@/Contracts";
+import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
+import { useConfig, useReadContract } from "@wagmi/vue";
+import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
+import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import { useWallet } from "@/Wallet";
 
 const { t } = useI18n();
 
 // Refs
-const { address, withProviderReturn, withSigner } = useWallet();
-
-const canMigrate = ref(false);
-const migrating = ref(false);
-
-const balanceUBal = ref(0n);
-const balanceUBalStart = ref(0n);
-const balanceAuraBal = ref(0n);
+const { address } = useWallet();
 
 const migrationUBalMsg = computed(() => {
   return t("migrateUBal", [
     (
-      Math.round(bigNumToNumber(balanceUBalStart.value, 18n) * 1000) / 1000
+      Math.round(bigNumToNumber(balanceUBal.value ?? 0n, 18n) * 1000) / 1000
     ).toFixed(3),
   ]);
 });
 
-const canWithdraw = computed(() => balanceUBal.value > 0n && !migrating.value);
-const canDeposit = computed(
-  () =>
-    balanceUBal.value === 0n && balanceAuraBal.value > 0n && !migrating.value
+const canWithdraw = computed(
+  () => (balanceUBal.value ?? 0n) > 0n && !migrating.value
 );
 
-// Hooks
-onMounted(async (): Promise<void> => {
-  await checkCanMigrate();
+const canDeposit = computed(
+  () =>
+    balanceUBal.value === 0n &&
+    (balanceAuraBal.value ?? 0n) > 0n &&
+    !migrating.value
+);
+
+const canMigrate = computed(() => {
+  const dust = numToBigNumber(0.1, 18n);
+  return (balanceUBal.value ?? 0n) > dust;
 });
 
-// Methods
-const getBalanceERC20 = (ERC20address: string) =>
-  withProviderReturn(
-    async (provider, address) => {
-      const erc20 = ERC20__factory.connect(ERC20address, provider);
-      const balance = await erc20.balanceOf(address);
+const migrating = ref(false);
 
-      return balance.toBigInt();
+const { data: balanceUBal, refetch: refetchBalanceUBal } = useReadContract({
+  abi: abiERC20,
+  address: UnionBalVaultAddressV1,
+  functionName: "balanceOf",
+  args: computed(() => [address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value),
+    initialData: 0n,
+    initialDataUpdatedAt: 0,
+  },
+});
+
+const { data: balanceAuraBal, refetch: refetchBalanceAuraBal } =
+  useReadContract({
+    abi: abiERC20,
+    address: AuraBalAddress,
+    functionName: "balanceOf",
+    args: computed(() => [address.value!] as const),
+    query: {
+      enabled: computed(() => !!address.value),
+      initialData: 0n,
+      initialDataUpdatedAt: 0,
     },
-    () => 0n
-  )();
-
-const checkCanMigrate = async () => {
-  const ubal = await getBalanceERC20(UnionBalVaultAddressV1);
-  balanceUBal.value = ubal;
-  balanceUBalStart.value = ubal;
-
-  const dust = numToBigNumber(0.1, 18n);
-  canMigrate.value = balanceUBalStart.value > dust;
-};
-
-// Watches
-watch(address, checkCanMigrate);
+  });
 
 // Events
-const onWithdrawUBal = withSigner((signer, address) => {
-  if (!canWithdraw.value) {
-    return new Promise((resolve) => resolve());
-  }
-
+const config = useConfig();
+function onWithdrawUBal() {
   return tryNotifyLoading(migrating, async () => {
-    await UnionVault__factory.connect(UnionBalVaultAddressV1, signer)
-      .withdrawAll(address)
-      .then((x) => x.wait());
+    const hash = await writeContract(config, {
+      abi: abiVault,
+      address: UnionBalVaultAddressV1,
+      functionName: "withdrawAll",
+      args: [address.value!] as const,
+    });
 
-    balanceUBal.value = await getBalanceERC20(UnionBalVaultAddressV1);
-    balanceAuraBal.value = await getBalanceERC20(AuraBalAddress);
+    await waitForTransactionReceipt(config, { hash });
+
+    await Promise.all([refetchBalanceUBal(), refetchBalanceAuraBal()]);
   });
-});
+}
 
-const onDepositAuraBal = withSigner((signer, address) => {
-  if (!canDeposit.value) {
-    return new Promise((resolve) => resolve());
-  }
-
+function onDepositAuraBal() {
   return tryNotifyLoading(migrating, async () => {
-    const utkn = UnionVault__factory.connect(UnionBalVaultAddress, signer);
-    const atkn = ERC20__factory.connect(AuraBalAddress, signer);
+    let hash = await writeContract(config, {
+      abi: abiERC20,
+      address: AuraBalAddress,
+      functionName: "approve",
+      args: [UnionBalVaultAddress, balanceAuraBal.value!] as const,
+    });
 
-    await maxApprove(atkn, address, UnionBalVaultAddress, balanceAuraBal.value);
+    await waitForTransactionReceipt(config, { hash });
 
-    const ps = [address, balanceAuraBal.value] as const;
+    hash = await writeContract(config, {
+      abi: abiVault,
+      address: UnionBalVaultAddress,
+      functionName: "deposit",
+      args: [address.value!, balanceAuraBal.value!] as const,
+    });
 
-    const estimate = await utkn.estimateGas.deposit(...ps);
+    await waitForTransactionReceipt(config, { hash });
 
-    await utkn
-      .deposit(...ps, {
-        gasLimit: estimate.mul(125).div(100),
-      })
-      .then((x) => x.wait());
-
-    canMigrate.value = false;
+    window.location.reload();
   });
-});
+}
 </script>
 
 <style lang="scss" scoped>
