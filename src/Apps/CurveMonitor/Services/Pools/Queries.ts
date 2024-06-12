@@ -5,14 +5,10 @@ import { type Chain } from "@CM/Models/Chain";
 
 const service = new PoolsService(getHost());
 
-export function useQueryPools(
-  chain: Ref<Chain | undefined>,
-  page: Ref<number>
-) {
+export function useQueryPools(chain: Ref<Chain | undefined>) {
   return useQuery({
-    queryKey: ["curve-pools", chain, page] as const,
-    queryFn: async ({ queryKey: [, chain, page] }) =>
-      service.getPools(chain!, page),
+    queryKey: ["curve-pools", chain] as const,
+    queryFn: async ({ queryKey: [, chain] }) => service.getPools(chain!),
     placeholderData: keepPreviousData,
     enabled: computed(() => !!chain.value),
   });

@@ -4,7 +4,7 @@
     columns-header="1fr auto"
     columns-data="pools-columns-data"
     expand-side="left"
-    :rows="pools"
+    :rows="rowsPage"
     :loading
     :columns="['', '', 'Name', 'Volume', 'TVL']"
   >
@@ -14,8 +14,8 @@
       <div style="display: flex; gap: 1rem">
         <Pagination
           class="pagination"
-          :items-count="100"
-          :items-per-page="10"
+          :items-count="pools.length"
+          :items-per-page="rowsPerPage"
           :page="page"
           @page="onPage"
         ></Pagination>
@@ -74,18 +74,15 @@ const { chain } = defineProps<Props>();
 // Data
 type Row = Pool;
 
-const { page, onPage } = usePaginationAsync();
-const pageDebounced = refDebounced(page, 200);
-
-const { isFetching: loading, data } = useQueryPools(
-  toRef(() => chain),
-  pageDebounced
-);
+const { isFetching: loading, data } = useQueryPools(toRef(() => chain));
 const pools = computed(() =>
   chain_(data.value?.pools)
-    .orderBy((x) => x.tvlUsd)
+    .orderBy((x) => x.tvlUsd, "desc")
     .value()
 );
+
+const rowsPerPage = 20;
+const { page, rowsPage, onPage } = usePagination(pools, rowsPerPage);
 </script>
 
 <style lang="scss" scoped>
