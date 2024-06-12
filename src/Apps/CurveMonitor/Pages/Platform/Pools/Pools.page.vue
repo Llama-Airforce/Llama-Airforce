@@ -84,10 +84,10 @@ import { TablePools } from "@CM/Pages/Platform/Pools/Tables";
 const { t } = useI18n();
 
 const chains: Chain[] = ["ethereum", "arbitrum"];
-const chainParam = useRouteParams<Chain | "">("chain");
+const chainParam = useRouteParams<Chain | undefined | "">("chain");
 const chain = computed({
   get() {
-    return chainParam.value === "" ? "ethereum" : chainParam.value;
+    return !chainParam.value ? "ethereum" : chainParam.value;
   },
   set(newChain) {
     chainParam.value = newChain;
