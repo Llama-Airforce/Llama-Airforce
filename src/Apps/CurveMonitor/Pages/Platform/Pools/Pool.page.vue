@@ -65,6 +65,9 @@ watch(
         id: "pools",
         label: "Pools",
         pathName: "pools",
+        params: () => ({
+          chain: chain.value,
+        }),
       },
       {
         id: "pool",
