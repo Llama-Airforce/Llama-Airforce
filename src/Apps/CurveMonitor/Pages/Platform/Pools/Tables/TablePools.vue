@@ -5,7 +5,7 @@
     columns-data="pools-columns-data"
     expand-side="left"
     :rows="rowsPage"
-    :columns="['', '', 'Name', 'Volume', 'TVL']"
+    :columns="['', '', 'Name', 'Volume (24h)', 'TVL']"
     :sorting="true"
     :sorting-columns="sortColumns"
     :sorting-columns-enabled="sortColumnsNoEmpty"
