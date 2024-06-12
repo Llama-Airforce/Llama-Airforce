@@ -43,6 +43,7 @@
         <AsyncValue
           :value="pool.tradingVolume24h"
           :precision="2"
+          :show-zero="true"
           type="dollar"
         />
       </div>
@@ -51,6 +52,7 @@
         <AsyncValue
           :value="pool.tvlUsd"
           :precision="2"
+          :show-zero="true"
           type="dollar"
         />
       </div>
