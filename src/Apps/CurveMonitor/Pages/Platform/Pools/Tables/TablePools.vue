@@ -5,7 +5,6 @@
     columns-data="pools-columns-data"
     expand-side="left"
     :rows="rowsPage"
-    :loading
     :columns="['', '', 'Name', 'Volume', 'TVL']"
   >
     <template #header-content>
@@ -57,32 +56,27 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
 import { type Pool } from "@CM/Services/Pools";
-import { useQueryPools } from "@CM/Services/Pools/Queries";
+
+type Row = Pool;
 
 const { t } = useI18n();
 
 // Props
 interface Props {
-  chain: Chain | undefined;
+  chain: Chain;
+  pools: Pool[];
 }
 
-const { chain } = defineProps<Props>();
+const { pools } = defineProps<Props>();
 
 // Data
-type Row = Pool;
-
-const { isFetching: loading, data } = useQueryPools(toRef(() => chain));
-const pools = computed(() =>
-  chain_(data.value?.pools)
-    .orderBy((x) => x.tvlUsd, "desc")
-    .value()
-);
-
 const rowsPerPage = 20;
-const { page, rowsPage, onPage } = usePagination(pools, rowsPerPage);
+const { page, rowsPage, onPage } = usePagination(
+  toRef(() => pools),
+  rowsPerPage
+);
 </script>
 
 <style lang="scss" scoped>

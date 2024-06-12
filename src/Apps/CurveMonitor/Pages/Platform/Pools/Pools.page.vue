@@ -22,7 +22,7 @@
     <KPI
       style="grid-area: kpi1"
       :label="t('tvl')"
-      :has-value="!loading"
+      :has-value="!loadingChainInfo"
     >
       <AsyncValue
         :value="chainInfo?.total.tvl ?? 0"
@@ -33,7 +33,7 @@
     <KPI
       style="grid-area: kpi2"
       :label="t('volume')"
-      :has-value="!loading"
+      :has-value="!loadingChainInfo"
     >
       <AsyncValue
         :value="chainInfo?.total.tradingVolume24h ?? 0"
@@ -44,7 +44,7 @@
     <KPI
       style="grid-area: kpi3"
       :label="t('fee-trading')"
-      :has-value="!loading"
+      :has-value="!loadingChainInfo"
     >
       <AsyncValue
         :value="chainInfo?.total.tradingFee24h ?? 0"
@@ -55,7 +55,7 @@
     <KPI
       style="grid-area: kpi4"
       :label="t('fee-liquidity')"
-      :has-value="!loading"
+      :has-value="!loadingChainInfo"
     >
       <AsyncValue
         :value="chainInfo?.total.liquidityFee24h ?? 0"
@@ -66,6 +66,8 @@
     <TablePools
       style="grid-area: pools"
       :chain
+      :pools
+      :loading="loadingPools"
       @selected="onPoolSelect"
     ></TablePools>
   </div>
@@ -73,8 +75,9 @@
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
-import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { type Pool } from "@CM/Services/Pools";
+import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
+import { useQueryPools } from "@CM/Services/Pools/Queries";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { TablePools } from "@CM/Pages/Platform/Pools/Tables";
 
@@ -94,7 +97,21 @@ const chain = computed({
 const search = ref("");
 
 // Data
-const { isFetching: loading, data: chainInfo } = useQueryChainInfo(chain);
+const { isFetching: loadingChainInfo, data: chainInfo } =
+  useQueryChainInfo(chain);
+
+const { isFetching: loadingPools, data: poolsRaw } = useQueryPools(chain);
+
+const pools = computed((): Pool[] =>
+  (poolsRaw.value?.pools ?? []).filter((pool) => {
+    const terms = search.value.toLocaleLowerCase().split(" ");
+
+    const includesTerm = (x: string): boolean =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+    return includesTerm(pool.name) || includesTerm(pool.address);
+  })
+);
 
 // Hooks
 const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
