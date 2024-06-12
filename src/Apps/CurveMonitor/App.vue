@@ -52,7 +52,9 @@ const router = useRouter();
 watch(
   () => route.fullPath,
   (newRoute) => {
-    if (!(newRoute.includes("crvusd") || newRoute.includes("lending"))) {
+    const crumbs = ["/platform/crvusd", "/platform/lending", "/platform/pools"];
+
+    if (!crumbs.some((x) => newRoute.startsWith(x))) {
       storeBreadcrumb.show = false;
     }
   }
