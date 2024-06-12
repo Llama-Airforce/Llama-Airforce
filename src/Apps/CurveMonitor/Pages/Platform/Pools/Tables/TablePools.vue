@@ -5,7 +5,7 @@
     columns-data="pools-columns-data"
     expand-side="left"
     :rows="rowsPage"
-    :columns="['', '', 'Name', 'Volume (24h)', 'TVL']"
+    :columns="['', '', 'Name', 'Volume (24h)', 'TVL', 'Util Rate']"
     :sorting="true"
     :sorting-columns="sortColumns"
     :sorting-columns-enabled="sortColumnsNoEmpty"
@@ -56,6 +56,15 @@
           type="dollar"
         />
       </div>
+
+      <div class="number">
+        <AsyncValue
+          :value="utilRate(pool)"
+          :precision="2"
+          :show-zero="true"
+          type="percentage"
+        />
+      </div>
     </template>
 
     <!-- Empty for expander arrow and pointer on hover -->
@@ -82,7 +91,7 @@ const { pools } = defineProps<Props>();
 
 // Data
 const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "", "name", "volume", "tvl"], "tvl");
+  useSort(["", "", "name", "volume", "tvl", "util"], "tvl");
 
 const poolsFiltered = computed(() =>
   chain_(pools)
@@ -94,6 +103,8 @@ const poolsFiltered = computed(() =>
           return pool.tradingVolume24h;
         case "tvl":
           return pool.tvlUsd;
+        case "util":
+          return utilRate(pool);
         default:
           return pool.tvlUsd;
       }
@@ -103,6 +114,10 @@ const poolsFiltered = computed(() =>
 
 const rowsPerPage = 20;
 const { page, rowsPage, onPage } = usePagination(poolsFiltered, rowsPerPage);
+
+function utilRate(pool: Pool) {
+  return pool.tvlUsd !== 0 ? (100 * pool.tradingVolume24h) / pool.tvlUsd : 0;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -118,11 +133,12 @@ const { page, rowsPage, onPage } = usePagination(poolsFiltered, rowsPerPage);
     grid-template-columns:
       1rem calc(4 * (26px + 1ch))
       minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr);
+      minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.5fr);
 
     // Right adjust number columns.
     div:nth-child(4),
-    div:nth-child(5) {
+    div:nth-child(5),
+    div:nth-child(6) {
       justify-content: end;
     }
   }
