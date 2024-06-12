@@ -6,6 +6,12 @@
     expand-side="left"
     :rows="rowsPage"
     :columns="['', '', 'Name', 'Volume', 'TVL']"
+    :sorting="true"
+    :sorting-columns="sortColumns"
+    :sorting-columns-enabled="sortColumnsNoEmpty"
+    sorting-default-column="tvl"
+    sorting-default-dir="desc"
+    @sort-column="onSort"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -56,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models/Chain";
 import { type Pool } from "@CM/Services/Pools";
 
@@ -72,11 +79,28 @@ interface Props {
 const { pools } = defineProps<Props>();
 
 // Data
-const rowsPerPage = 20;
-const { page, rowsPage, onPage } = usePagination(
-  toRef(() => pools),
-  rowsPerPage
+const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
+  useSort(["", "", "name", "volume", "tvl"], "tvl");
+
+const poolsFiltered = computed(() =>
+  chain_(pools)
+    .orderBy((pool) => {
+      switch (sortColumn.value) {
+        case "name":
+          return pool.name;
+        case "volume":
+          return pool.tradingVolume24h;
+        case "tvl":
+          return pool.tvlUsd;
+        default:
+          return pool.tvlUsd;
+      }
+    }, sortOrder.value)
+    .value()
 );
+
+const rowsPerPage = 20;
+const { page, rowsPage, onPage } = usePagination(poolsFiltered, rowsPerPage);
 </script>
 
 <style lang="scss" scoped>
