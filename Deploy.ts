@@ -4,10 +4,13 @@ import { join } from "path";
 import consola from "consola";
 
 const apps = ["cb", "laf", "cm", "pm", "pm-lrt"] as const;
-const envs = ["prod", "next"] as const;
 
 type App = (typeof apps)[number];
-type Env = (typeof envs)[number];
+
+type Options = {
+  app: App;
+  check: boolean;
+};
 
 void (async () => {
   // Prompt user for input
@@ -16,25 +19,24 @@ void (async () => {
     options: [...apps],
   });
 
-  const env = await consola.prompt("Enter the environment (prod, next):", {
-    type: "select",
-    options: [...envs],
+  // Prompt user for input
+  const check = await consola.prompt("Lint & typecheck?", {
+    type: "confirm",
+    initial: true,
   });
 
   try {
-    deploy(app, env);
+    deploy({ app, check });
   } catch (error) {
     consola.error(error);
   }
 })();
 
-function deploy(app: App, env: Env) {
+function deploy(opts: Options) {
+  const { app, check } = opts;
+
   if (!apps.includes(app)) {
     throw new Error(`App '${app}' is not a valid app`);
-  }
-
-  if (!envs.includes(env)) {
-    throw new Error(`Environment '${env}' is not a valid environment`);
   }
 
   let dirDist: string;
@@ -48,8 +50,7 @@ function deploy(app: App, env: Env) {
       break;
     case "laf":
       dirDist = "src/Apps/LlamaAirforce/dist";
-      dirOutput =
-        env === "prod" ? "Llama-Airforce-Web" : "Llama-Airforce-Web-Next";
+      dirOutput = "Llama-Airforce-Web";
       break;
     case "cm":
       dirDist = "src/Apps/CurveMonitor/dist";
@@ -66,6 +67,10 @@ function deploy(app: App, env: Env) {
   }
 
   // Build website
+  if (check) {
+    execSync(`npm run typecheck`, { stdio: "inherit" });
+    execSync(`npm run lint:${app}`, { stdio: "inherit" });
+  }
   execSync(`npm run build:${app}`, { stdio: "inherit" });
 
   // Ensure output directory exists

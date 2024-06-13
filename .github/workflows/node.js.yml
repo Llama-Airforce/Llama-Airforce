@@ -26,6 +26,10 @@ jobs:
           cache: "npm"
       - run: git config --global url."https://".insteadOf ssh://
       - run: npm ci
+      - run: npm run 'typecheck' --if-present
+      - run: npm run 'lint:laf' --if-present
+      - run: npm run 'lint:cm' --if-present
+      - run: npm run 'lint:pm' --if-present
       - run: npm run 'build:laf' --if-present
       - run: npm run 'build:cm' --if-present
       - run: npm run 'build:pm' --if-present
