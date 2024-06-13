@@ -10,7 +10,7 @@ const API_URL = "https://prices.curve.fi";
 export default class CrvUsdService extends ServiceBase {
   public async getMarkets(chain: Chain, page: number) {
     const resp = await this.fetch<ApiTypes.GetMarketsResponse>(
-      `${API_URL}/v1/crvusd/markets/${chain}?fetch_on_chain=false&page=${page}&per_page=10`
+      `${API_URL}/v1/crvusd/markets/${chain}?fetch_on_chain=true&page=${page}&per_page=10`
     );
 
     return resp.data.map(Parsers.parseMarket);
@@ -18,7 +18,7 @@ export default class CrvUsdService extends ServiceBase {
 
   public async getSnapshots(chain: Chain, marketAddr: string) {
     const resp = await this.fetch<ApiTypes.GetSnapshotsResponse>(
-      `${API_URL}/v1/crvusd/markets/${chain}/${marketAddr}/snapshots?fetch_on_chain=false&agg=day`
+      `${API_URL}/v1/crvusd/markets/${chain}/${marketAddr}/snapshots?fetch_on_chain=true&agg=day`
     );
 
     return resp.data.map(Parsers.parseSnapshot);

@@ -50,7 +50,7 @@ export default class LiquidationsService extends ServiceBase {
     marketAddr: string
   ) {
     const resp = await this.fetch<ApiTypes.GetLiqOverviewResponse>(
-      `${API_URL}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/overview`
+      `${API_URL}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/overview?fetch_on_chain=true`
     );
 
     return Parsers.parseLiqOverview(resp);
