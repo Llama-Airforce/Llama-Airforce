@@ -57,6 +57,10 @@ const migrating = ref(false);
 // Events
 const config = useConfig();
 function onMigrate() {
+  if (!canMigrate.value || migrating.value) {
+    return;
+  }
+
   return tryNotifyLoading(migrating, async () => {
     let hash = await writeContract(config, {
       abi: abiERC20,

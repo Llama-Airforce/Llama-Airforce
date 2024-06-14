@@ -77,6 +77,10 @@ const migrating = ref(false);
 // Events
 const config = useConfig();
 async function onMigrate(skipSlippageModal: boolean) {
+  if (!canMigrate.value || migrating.value) {
+    return;
+  }
+
   // Check and ask for slippage first.
   if (!skipSlippageModal) {
     modalSlippage.value = true;

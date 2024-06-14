@@ -87,6 +87,10 @@ const { data: balanceAuraBal, refetch: refetchBalanceAuraBal } =
 // Events
 const config = useConfig();
 function onWithdrawUBal() {
+  if (!canMigrate.value || migrating.value) {
+    return;
+  }
+
   return tryNotifyLoading(migrating, async () => {
     const hash = await writeContract(config, {
       abi: abiVault,
@@ -102,6 +106,10 @@ function onWithdrawUBal() {
 }
 
 function onDepositAuraBal() {
+  if (!canMigrate.value || migrating.value) {
+    return;
+  }
+
   return tryNotifyLoading(migrating, async () => {
     let hash = await writeContract(config, {
       abi: abiERC20,
