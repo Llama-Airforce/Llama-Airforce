@@ -1,6 +1,6 @@
 <template>
   <Card
-    v-if="migrationMsg"
+    v-if="canMigrate"
     class="migration"
   >
     <h1 v-html="migrationMsg"></h1>
