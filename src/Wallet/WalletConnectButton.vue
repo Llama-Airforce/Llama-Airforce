@@ -8,7 +8,10 @@
       {{ t("connect-your-wallet") }}
     </Button>
 
-    <Tooltip class="tooltip">
+    <Tooltip
+      v-if="false"
+      class="tooltip"
+    >
       <template #item>
         <Button
           class="button clear"
