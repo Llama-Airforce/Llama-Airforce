@@ -124,7 +124,13 @@
 </template>
 
 <script setup lang="ts">
-import { VeCRV__factory, VotingCurve__factory } from "@/Contracts";
+import {
+  useReadContract,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+} from "@wagmi/vue";
+import { abi as abiVeCRV } from "@/ABI/Curve/VeCRV";
+import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
 import { useWallet } from "@/Wallet";
 import { type Proposal, getStatus } from "@CM/Services/Proposal";
 
@@ -138,14 +144,9 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Refs
-const { address, withProvider, withSigner } = useWallet();
+const { address } = useWallet();
 
 const showVote = ref(false);
-const executing = ref(false);
-const canExecute = ref(false);
-const voting = ref(false);
-const votingPower = ref(0n);
-const voterState = ref(0);
 const yeaPct = ref(50);
 
 const editor = ref<HTMLElement | null>(null);
@@ -167,7 +168,7 @@ const yeaPctStr = computed(() => {
 
 const canVote = computed(
   () =>
-    votingPower.value > 0n &&
+    (votingPower.value ?? 0n) > 0n &&
     !voting.value &&
     isVoteOpen.value &&
     voterState.value === 0
@@ -194,7 +195,7 @@ const voteButtonText = computed(() => {
 });
 
 const votingPowerNumber = computed(() =>
-  bigNumToNumber(votingPower.value, 18n)
+  bigNumToNumber(votingPower.value ?? 0n, 18n)
 );
 
 const isVoteOpen = computed(() => getStatus(proposal) === "active");
@@ -287,81 +288,158 @@ const onYeaPct = (newVal: string) => {
   yeaPct.value = parseFloat(newVal);
 };
 
-const vote = withSigner((signer, address) =>
-  tryNotifyLoading(voting, async () => {
-    const voting = VotingCurve__factory.connect(CurveVotingAddress, signer);
-    voterState.value = await voting.getVoterState(proposal.id, address);
-    const pctBase = await voting.PCT_BASE().then((x) => x.toBigInt());
-
-    // PCT_BASE = 10 ** 18; // 0% = 0; 1% = 10^16; 100% = 10^18
-    const decimals = BigInt(Math.log10(Number(pctBase)));
-    const yea = numToBigNumber(yeaPct.value / 100, decimals);
-    const nay = pctBase - yea;
-
-    const ps = [proposal.id, yea, nay, false] as const;
-    const estimate = await voting.estimateGas.votePct(...ps);
-
-    await voting
-      .votePct(...ps, {
-        gasLimit: estimate.mul(125).div(100),
-      })
-      .then((x) => x.wait());
-
-    showVote.value = false;
-  })
-);
-
-const execute = withSigner((signer) =>
-  tryNotifyLoading(executing, async () => {
-    const voting = VotingCurve__factory.connect(CurveVotingAddress, signer);
-
-    const ps = [proposal.id] as const;
-    const estimate = await voting.estimateGas.executeVote(...ps);
-
-    await voting
-      .executeVote(...ps, {
-        gasLimit: estimate.mul(125).div(100),
-      })
-      .then((x) => x.wait());
-
-    canExecute.value = await voting.canExecute(proposal.id);
-  })
-);
-
-// Watches
-const getWeb3Data = withProvider(async (provider, address) => {
-  const voting = VotingCurve__factory.connect(CurveVotingAddress, provider);
-  const veCrvAddress = await voting.token();
-  voterState.value = await voting.getVoterState(proposal.id, address);
-
-  const veCrv = VeCRV__factory.connect(veCrvAddress, provider);
-  votingPower.value = await veCrv
-    .balanceOfAt(address, proposal.block)
-    .then((x) => x.toBigInt());
+// Data
+const { data: veCrvAddress } = useReadContract({
+  abi: abiVoting,
+  address: CurveVotingAddress,
+  functionName: "token",
+  query: {
+    enabled: showVote,
+  },
 });
 
-watch(showVote, async (show) => {
-  if (!show) {
+const { data: voterState } = useReadContract({
+  abi: abiVoting,
+  address: CurveVotingAddress,
+  functionName: "getVoterState",
+  args: computed(() => [BigInt(proposal.id), address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value && showVote.value),
+    initialData: 0,
+    initialDataUpdatedAt: 0,
+  },
+});
+
+const { data: votingPower } = useReadContract({
+  abi: abiVeCRV,
+  address: veCrvAddress,
+  functionName: "balanceOfAt",
+  args: computed(() => [address.value!, BigInt(proposal.block)] as const),
+  query: {
+    enabled: computed(
+      () => !!veCrvAddress.value && !!address.value && showVote.value
+    ),
+    initialData: 0n,
+    initialDataUpdatedAt: 0,
+  },
+});
+
+const { data: canExecute, refetch: refetchCanExecute } = useReadContract({
+  abi: abiVoting,
+  address: CurveVotingAddress,
+  functionName: "canExecute",
+  args: [BigInt(proposal.id)],
+  query: {
+    enabled: computed(() => executable.value && showVote.value),
+    initialData: false,
+    initialDataUpdatedAt: 0,
+  },
+});
+
+const { data: pctBase } = useReadContract({
+  abi: abiVoting,
+  address: CurveVotingAddress,
+  functionName: "PCT_BASE",
+  query: {
+    enabled: showVote,
+  },
+});
+
+// Voting
+const {
+  data: hashVote,
+  error: errorVote,
+  isPending: isPendingVote,
+  writeContract: writeContractVote,
+} = useWriteContract();
+
+const { isLoading: isConfirmingVote, isSuccess: isConfirmedVote } =
+  useWaitForTransactionReceipt({
+    hash: hashVote,
+  });
+
+const voting = computed(() => isPendingVote.value || isConfirmingVote.value);
+
+function vote() {
+  // PCT_BASE = 10 ** 18; // 0% = 0; 1% = 10^16; 100% = 10^18
+  if (!pctBase.value) {
+    notifyError("Missing PCT_BASE");
     return;
   }
 
-  await tryNotify(getWeb3Data);
+  const decimals = BigInt(Math.log10(Number(pctBase.value)));
+  const yea = numToBigNumber(yeaPct.value / 100, decimals);
+  const nay = pctBase.value - yea;
+
+  writeContractVote({
+    abi: abiVoting,
+    address: CurveVotingAddress,
+    functionName: "votePct",
+    args: [BigInt(proposal.id), yea, nay, false] as const,
+  });
+}
+
+// Notifications
+watch(errorVote, (newError) => {
+  if (!newError) {
+    return;
+  }
+
+  notifyError(newError);
 });
 
-// Check if proposal can be executed.
-watch(
-  address,
-  withProvider(async (provider) => {
-    // Don't bother with non-executable votes.
-    if (!executable.value) {
-      return;
-    }
+watch(isConfirmedVote, (newIsConfirmed) => {
+  if (!newIsConfirmed) {
+    return;
+  }
 
-    const voting = VotingCurve__factory.connect(CurveVotingAddress, provider);
-    canExecute.value = await voting.canExecute(proposal.id);
-  }),
-  { immediate: true }
+  notifySuccess("Voted");
+});
+
+// Execute
+const {
+  data: hashExecute,
+  error: errorExecute,
+  isPending: isPendingExecute,
+  writeContract: writeContractExecute,
+} = useWriteContract();
+
+const { isLoading: isConfirmingExecute, isSuccess: isConfirmedExecute } =
+  useWaitForTransactionReceipt({
+    hash: hashExecute,
+  });
+
+const executing = computed(
+  () => isPendingExecute.value || isConfirmingExecute.value
 );
+
+function execute() {
+  writeContractExecute({
+    abi: abiVoting,
+    address: CurveVotingAddress,
+    functionName: "executeVote",
+    args: [BigInt(proposal.id)],
+  });
+
+  void refetchCanExecute();
+}
+
+// Notifications
+watch(errorExecute, (newError) => {
+  if (!newError) {
+    return;
+  }
+
+  notifyError(newError);
+});
+
+watch(isConfirmedExecute, (newIsConfirmed) => {
+  if (!newIsConfirmed) {
+    return;
+  }
+
+  notifySuccess("Executed proposal");
+});
 </script>
 
 <style lang="scss" scoped>
@@ -374,7 +452,7 @@ watch(
 }
 
 .vote-content {
-  min-width: 33vw;
+  width: 33vw;
 
   .vecrv {
     flex-grow: 1;
