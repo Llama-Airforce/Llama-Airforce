@@ -1,4 +1,5 @@
-import { type PublicClient, getContract } from "viem";
+import { getContract } from "viem";
+import { type Config, readContract } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { getCvxFxsLpPrice, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
@@ -14,25 +15,23 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsLpPounder(
-  client: PublicClient,
+  config: Config,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxFxsLpPrice(llamaService, client);
+  const getPriceUnderlying = () => getCvxFxsLpPrice(llamaService, config);
   const getApy = () => getCvxFxsLpApy();
 
   const getOraclePrice = () =>
-    client
-      .readContract({
-        abi: abiCurveV2,
-        address: CvxFxsFactoryAddress,
-        functionName: "price_oracle",
-      })
-      .then((price) => bigNumToNumber(price, 18n));
+    readContract(config, {
+      abi: abiCurveV2,
+      address: CvxFxsFactoryAddress,
+      functionName: "price_oracle",
+    }).then((price) => bigNumToNumber(price, 18n));
 
   const contract = getContract({
     abi,
     address: UnionFxsVaultAddressV1,
-    client,
+    client: config.getClient(),
   });
 
   return {

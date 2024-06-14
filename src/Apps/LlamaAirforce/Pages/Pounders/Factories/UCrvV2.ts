@@ -1,4 +1,5 @@
-import { type PublicClient, getContract } from "viem";
+import { getContract } from "viem";
+import { type Config } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxCrvPriceV2, getCvxCrvApyV2 } from "@/Util";
 import {
@@ -12,16 +13,16 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/crv.svg";
 
 export default function createCrvV2Pounder(
-  client: PublicClient,
+  config: Config,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxCrvPriceV2(llamaService, client);
-  const getApy = () => getCvxCrvApyV2(client, llamaService);
+  const getPriceUnderlying = () => getCvxCrvPriceV2(llamaService, config);
+  const getApy = () => getCvxCrvApyV2(config, llamaService);
 
   const contract = getContract({
     abi,
     address: UnionCrvVaultAddressV2,
-    client,
+    client: config.getClient(),
   });
 
   return {

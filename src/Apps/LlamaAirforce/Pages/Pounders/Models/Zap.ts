@@ -1,16 +1,12 @@
-import { type ContractReceipt } from "ethers";
 import { type Swap } from "@Pounders/Models/Swap";
-import { type PublicClient, type TransactionReceipt } from "viem";
+import { type TransactionReceipt } from "viem";
 
 export type Zap = {
   logo: string;
   label: string;
-  zap: (
-    minAmountOut?: bigint
-  ) => Promise<ContractReceipt | TransactionReceipt | undefined>;
+  zap: (minAmountOut?: bigint) => Promise<TransactionReceipt | undefined>;
   getMinAmountOut?: (
     host: string,
-    signer: PublicClient,
     input: bigint,
     slippage: number
   ) => Promise<bigint>;

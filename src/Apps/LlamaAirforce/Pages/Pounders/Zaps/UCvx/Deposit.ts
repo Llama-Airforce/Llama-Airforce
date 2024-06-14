@@ -1,5 +1,10 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
@@ -21,15 +26,8 @@ import {
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
-async function shouldLock(
-  client: PublicClient | undefined,
-  input: bigint
-): Promise<boolean> {
-  if (!client) {
-    return false;
-  }
-
-  const dy = await client.readContract({
+async function shouldLock(config: Config, input: bigint): Promise<boolean> {
+  const dy = await readContract(config, {
     abi: abiCurve2,
     address: LPxCvxFactoryAddress,
     functionName: "get_dy",
@@ -42,24 +40,21 @@ async function shouldLock(
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxDepositZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
 ): (ZapDeposit | Swap)[] {
   const deposit = async () => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct deposit zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       PxCvxAddress,
       address,
       UnionCvxVaultAddress,
@@ -67,49 +62,37 @@ export function uCvxDepositZaps(
     );
 
     const args = [input, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiVaultPirex,
       address: UnionCvxVaultAddress,
       functionName: "deposit",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   const depositFromCvx = async (minAmountOut: bigint) => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApprove(
-      client,
-      wallet,
-      CvxAddress,
-      address,
-      ZapsUCvxAddress,
-      input
-    );
+    await maxApprove(config, CvxAddress, address, ZapsUCvxAddress, input);
 
-    const lock = await shouldLock(client, input);
+    const lock = await shouldLock(config, input);
     const args = [input, minAmountOut, address, lock] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUCvxAddress,
       functionName: "depositFromCvx",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -118,11 +101,10 @@ export function uCvxDepositZaps(
     label: "CVX",
     zap: (minAmountOut?: bigint) => depositFromCvx(minAmountOut ?? 0n),
     depositSymbol: "CVX",
-    depositBalance: () => getBalance(getClient, getAddress, CvxAddress),
-    depositDecimals: () => getDecimals(getClient, CvxAddress),
+    depositBalance: () => getBalance(getConfig, getAddress, CvxAddress),
+    depositDecimals: () => getDecimals(getConfig, CvxAddress),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -133,7 +115,7 @@ export function uCvxDepositZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const pxcvx = await getPxCvxPrice(llamaService, client)
+      const pxcvx = await getPxCvxPrice(llamaService, getConfig())
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -146,8 +128,8 @@ export function uCvxDepositZaps(
     label: "pxCVX",
     zap: () => deposit(),
     depositSymbol: "pxCVX",
-    depositBalance: () => getBalance(getClient, getAddress, PxCvxAddress),
-    depositDecimals: () => getDecimals(getClient, PxCvxAddress),
+    depositBalance: () => getBalance(getConfig, getAddress, PxCvxAddress),
+    depositDecimals: () => getDecimals(getConfig, PxCvxAddress),
   };
 
   const swap: Swap = {

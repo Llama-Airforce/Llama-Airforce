@@ -94,8 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { waitForTransactionReceipt } from "viem/actions";
-import { getPublicClient, getWalletClient } from "@wagmi/core";
+import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
 import { useConfig } from "@wagmi/vue";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { useWallet } from "@/Wallet";
@@ -256,13 +255,8 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
       modalSlippage.value = true;
       modalAction = () => onDeposit(true);
 
-      const client = getPublicClient(config);
-      if (!client) {
-        return;
-      }
-
       minAmountOutRef.value = await zapDeposit.value
-        .getMinAmountOut(getHost(), client, depositInput.value, 0)
+        .getMinAmountOut(getHost(), depositInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsWithdraw));
       symbolOutput.value = pounderStore.value.pounder.symbol;
 
@@ -321,13 +315,8 @@ const onWithdraw = async (
       modalSlippage.value = true;
       modalAction = () => onWithdraw(true, true);
 
-      const client = getPublicClient(config);
-      if (!client) {
-        return;
-      }
-
       minAmountOutRef.value = await zapWithdraw.value
-        .getMinAmountOut(getHost(), client, withdrawInput.value, 0)
+        .getMinAmountOut(getHost(), withdrawInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsDeposit));
       symbolOutput.value = zapWithdraw.value.withdrawSymbol;
 
@@ -361,11 +350,6 @@ const onClaimAndWithdraw = async (): Promise<void> => {
       return;
     }
 
-    const wallet = await getWalletClient(config);
-    if (!wallet) {
-      return;
-    }
-
     const args = [
       claim.value.index,
       address.value,
@@ -373,16 +357,14 @@ const onClaimAndWithdraw = async (): Promise<void> => {
       claim.value.proof,
     ] as const;
 
-    const hash = await wallet.writeContract({
-      chain: wallet.chain,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiMerkle,
       address: distributor,
       functionName: "claim",
       args,
     });
 
-    await waitForTransactionReceipt(wallet, { hash });
+    await waitForTransactionReceipt(config, { hash });
 
     await onWithdraw(true, false);
   });

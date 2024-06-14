@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { maxApprove } from "@/Wallet";
@@ -18,47 +22,41 @@ import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxWithdrawZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
 ): (ZapWithdraw | Swap)[] {
   const withdraw = async () => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
     const args = [input, address, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiVaultPirex,
       address: UnionCvxVaultAddress,
       functionName: "redeem",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   const withdrawAsCvx = async (minAmountOut: bigint) => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       UnionCvxVaultAddress,
       address,
       ZapsUCvxAddress,
@@ -66,16 +64,14 @@ export function uCvxWithdrawZaps(
     );
 
     const args = [input, minAmountOut, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUCvxAddress,
       functionName: "claimFromVaultAsCvx",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -95,7 +91,6 @@ export function uCvxWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -106,7 +101,7 @@ export function uCvxWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, client);
+      const ucvx = await getUCvxPrice(llamaService, getConfig());
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

@@ -1,4 +1,5 @@
-import { type PublicClient, getContract } from "viem";
+import { getContract } from "viem";
+import { type Config } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxFxsPrice, getCvxFxsApy } from "@/Util";
 import {
@@ -12,16 +13,16 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsPounder(
-  client: PublicClient,
+  config: Config,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxFxsPrice(llamaService, client);
-  const getApy = () => getCvxFxsApy(client, llamaService);
+  const getPriceUnderlying = () => getCvxFxsPrice(llamaService, config);
+  const getApy = () => getCvxFxsApy(config, llamaService);
 
   const contract = getContract({
     abi,
     address: UnionFxsVaultAddress,
-    client,
+    client: config.getClient(),
   });
 
   return {

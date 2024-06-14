@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { maxApprove } from "@/Wallet";
 import type { ZapDeposit, Swap } from "@Pounders/Models";
@@ -10,24 +14,21 @@ import { CvxCrvAddress, UnionCrvVaultAddressV2 } from "@/Util/Addresses";
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 export function uCrvV2DepositZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
 ): (ZapDeposit | Swap)[] {
   const deposit = async () => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct deposit zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       CvxCrvAddress,
       address,
       UnionCrvVaultAddressV2,
@@ -35,16 +36,14 @@ export function uCrvV2DepositZaps(
     );
 
     const args = [address, input] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiVault,
       address: UnionCrvVaultAddressV2,
       functionName: "deposit",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -53,8 +52,8 @@ export function uCrvV2DepositZaps(
     label: "cvxCRV",
     zap: () => deposit(),
     depositSymbol: "cvxCRV",
-    depositBalance: () => getBalance(getClient, getAddress, CvxCrvAddress),
-    depositDecimals: () => getDecimals(getClient, CvxCrvAddress),
+    depositBalance: () => getBalance(getConfig, getAddress, CvxCrvAddress),
+    depositDecimals: () => getDecimals(getConfig, CvxCrvAddress),
   };
 
   const swap: Swap = {

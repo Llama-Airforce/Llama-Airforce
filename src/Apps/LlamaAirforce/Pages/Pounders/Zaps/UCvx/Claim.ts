@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
@@ -19,24 +23,21 @@ import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCvxClaimZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const claimAsCvx = async (minAmountOut: bigint) => {
+    const config = getConfig();
     const address = getAddress();
     const airdrop = getAirdrop();
-    const client = getClient();
-    const wallet = await getWallet();
 
-    if (!address || !airdrop || !client || !wallet?.account) {
+    if (!address || !airdrop) {
       throw new Error("Unable to construct extra claim zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       UnionCvxVaultAddress,
       address,
       ZapsUCvxClaimAddress,
@@ -52,16 +53,14 @@ export function uCvxClaimZaps(
       address,
     ] as const;
 
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUCvxClaimAddress,
       functionName: "claimFromDistributorAsCvx",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -74,7 +73,6 @@ export function uCvxClaimZaps(
     zap: (minAmountOut?: bigint) => claimAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -85,7 +83,7 @@ export function uCvxClaimZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, client);
+      const ucvx = await getUCvxPrice(llamaService, getConfig());
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },
@@ -97,7 +95,7 @@ export function uCvxClaimZaps(
     withdrawSymbol: "uCVX",
     withdrawDecimals: () => Promise.resolve(18n),
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
-    zap: () => claim(getClient, getWallet, getAddress, getAirdrop),
+    zap: () => claim(getConfig, getAddress, getAirdrop),
   };
 
   const swap: Swap = {

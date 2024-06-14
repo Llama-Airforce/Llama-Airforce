@@ -1,4 +1,5 @@
-import { type PublicClient, getContract } from "viem";
+import { getContract } from "viem";
+import { type Config } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxPrismaPrice, getCvxPrismaApy } from "@/Util";
 import {
@@ -12,16 +13,16 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/prisma.svg";
 
 export default function createPrismaPounder(
-  client: PublicClient,
+  config: Config,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxPrismaPrice(llamaService, client);
-  const getApy = () => getCvxPrismaApy(client, llamaService);
+  const getPriceUnderlying = () => getCvxPrismaPrice(llamaService, config);
+  const getApy = () => getCvxPrismaApy(config, llamaService);
 
   const contract = getContract({
     abi,
     address: UnionPrismaVaultAddress,
-    client,
+    client: config.getClient(),
   });
 
   return {

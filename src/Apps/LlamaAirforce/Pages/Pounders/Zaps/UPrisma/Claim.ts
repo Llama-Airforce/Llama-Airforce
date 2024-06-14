@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUPrismaClaim";
 import { maxApprove } from "@/Wallet";
 import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
@@ -15,24 +19,21 @@ import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uPrismaClaimZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const claimAsCvxPrisma = async () => {
+    const config = getConfig();
     const address = getAddress();
     const airdrop = getAirdrop();
-    const client = getClient();
-    const wallet = await getWallet();
 
-    if (!address || !airdrop || !client || !wallet?.account) {
+    if (!address || !airdrop) {
       throw new Error("Unable to construct extra claim zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       UnionPrismaVaultAddress,
       address,
       ZapsUPrismaClaimAddress,
@@ -47,16 +48,14 @@ export function uPrismaClaimZaps(
       address,
     ] as const;
 
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUPrismaClaimAddress,
       functionName: "claimFromDistributorAsUnderlying",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -66,7 +65,7 @@ export function uPrismaClaimZaps(
     withdrawSymbol: "uPRISMA",
     withdrawDecimals: () => Promise.resolve(18n),
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
-    zap: () => claim(getClient, getWallet, getAddress, getAirdrop),
+    zap: () => claim(getConfig, getAddress, getAirdrop),
   };
 
   const cvxPRISMA: ZapClaim = {

@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
@@ -22,88 +26,65 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpDepositZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
 ): (ZapDeposit | Swap)[] {
   const depositFromFxs = async (minAmountOut: bigint) => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApprove(
-      client,
-      wallet,
-      FxsAddress,
-      address,
-      ZapsUFxsAddressV1,
-      input
-    );
+    await maxApprove(config, FxsAddress, address, ZapsUFxsAddressV1, input);
 
     const args = [input, 0n, minAmountOut, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUFxsAddressV1,
       functionName: "claimFromVaultAsUnderlying",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   const depositFromCvxFxs = async (minAmountOut: bigint) => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct deposit zaps");
     }
 
-    await maxApprove(
-      client,
-      wallet,
-      CvxFxsAddress,
-      address,
-      ZapsUFxsAddressV1,
-      input
-    );
+    await maxApprove(config, CvxFxsAddress, address, ZapsUFxsAddressV1, input);
 
     const args = [0n, input, minAmountOut, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUFxsAddressV1,
       functionName: "claimFromVaultAsUnderlying",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   const depositFromLp = async () => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct deposit zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       CvxFxsFactoryERC20Address,
       address,
       ZapsUFxsAddressV1,
@@ -111,16 +92,14 @@ export function uFxsLpDepositZaps(
     );
 
     const args = [input, 0n, 0n, 0n, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUFxsAddressV1,
       functionName: "depositWithRewards",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -129,11 +108,10 @@ export function uFxsLpDepositZaps(
     label: "FXS",
     zap: (minAmountOut?: bigint) => depositFromFxs(minAmountOut ?? 0n),
     depositSymbol: "FXS",
-    depositBalance: () => getBalance(getClient, getAddress, FxsAddress),
-    depositDecimals: () => getDecimals(getClient, FxsAddress),
+    depositBalance: () => getBalance(getConfig, getAddress, FxsAddress),
+    depositDecimals: () => getDecimals(getConfig, FxsAddress),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -144,7 +122,7 @@ export function uFxsLpDepositZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, getConfig())
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -157,21 +135,22 @@ export function uFxsLpDepositZaps(
     label: "cvxFXS",
     zap: (minAmountOut?: bigint) => depositFromCvxFxs(minAmountOut ?? 0n),
     depositSymbol: "cvxFXS",
-    depositBalance: () => getBalance(getClient, getAddress, CvxFxsAddress),
-    depositDecimals: () => getDecimals(getClient, CvxFxsAddress),
+    depositBalance: () => getBalance(getConfig, getAddress, CvxFxsAddress),
+    depositDecimals: () => getDecimals(getConfig, CvxFxsAddress),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const cvxfxs = await getCvxFxsPrice(llamaService, client)
+      const config = getConfig();
+
+      const cvxfxs = await getCvxFxsPrice(llamaService, config)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, config)
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -185,8 +164,8 @@ export function uFxsLpDepositZaps(
     zap: () => depositFromLp(),
     depositSymbol: "cvxFXSFXS-f",
     depositBalance: () =>
-      getBalance(getClient, getAddress, CvxFxsFactoryERC20Address),
-    depositDecimals: () => getDecimals(getClient, CvxFxsFactoryERC20Address),
+      getBalance(getConfig, getAddress, CvxFxsFactoryERC20Address),
+    depositDecimals: () => getDecimals(getConfig, CvxFxsFactoryERC20Address),
   };
 
   const options = [fxs, cvxFXS, cvxFXSLP];

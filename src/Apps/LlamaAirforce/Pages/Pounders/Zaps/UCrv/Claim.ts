@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
 import { maxApprove } from "@/Wallet";
 import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
@@ -12,24 +16,21 @@ import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 // eslint-disable-next-line max-lines-per-function
 export function uCrvClaimZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ): (ZapClaim | Swap)[] {
   const claimAsCvxCrv = async () => {
+    const config = getConfig();
     const address = getAddress();
     const airdrop = getAirdrop();
-    const client = getClient();
-    const wallet = await getWallet();
 
-    if (!address || !airdrop || !client || !wallet?.account) {
+    if (!address || !airdrop) {
       throw new Error("Unable to construct extra claim zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       UnionCrvVaultAddress,
       address,
       ZapsUCrvClaimAddress,
@@ -44,16 +45,14 @@ export function uCrvClaimZaps(
       address,
     ] as const;
 
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUCrvClaimAddress,
       functionName: "claimFromDistributorAsUnderlying",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -63,7 +62,7 @@ export function uCrvClaimZaps(
     withdrawSymbol: "uCRV",
     withdrawDecimals: () => Promise.resolve(18n),
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
-    zap: () => claim(getClient, getWallet, getAddress, getAirdrop),
+    zap: () => claim(getConfig, getAddress, getAirdrop),
   };
 
   const cvxcrv: ZapClaim = {

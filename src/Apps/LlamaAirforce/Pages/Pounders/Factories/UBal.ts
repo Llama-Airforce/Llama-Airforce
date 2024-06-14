@@ -1,4 +1,5 @@
-import { type PublicClient, getContract } from "viem";
+import { getContract } from "viem";
+import { type Config } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getAuraBalPrice, getAuraBalApy } from "@/Util";
 import { UnionBalVaultAddress } from "@/Util/Addresses";
@@ -8,7 +9,7 @@ import { type VaultUnion, type Pounder } from "@Pounders/Models";
 import logo from "@/Assets/Icons/Tokens/aurabal.png";
 
 export default function createBalPounder(
-  client: PublicClient,
+  config: Config,
   flyerService: FlyerService
 ): Pounder<VaultUnion> {
   const getPriceUnderlying = () => getAuraBalPrice(flyerService);
@@ -17,7 +18,7 @@ export default function createBalPounder(
   const contract = getContract({
     abi,
     address: UnionBalVaultAddress,
-    client,
+    client: config.getClient(),
   });
 
   return {

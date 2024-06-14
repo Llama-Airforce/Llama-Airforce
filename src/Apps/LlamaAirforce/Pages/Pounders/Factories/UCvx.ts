@@ -1,4 +1,5 @@
-import { type PublicClient, getContract } from "viem";
+import { getContract } from "viem";
+import { type Config } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPrice, getCvxApy } from "@/Util";
 import {
@@ -13,17 +14,17 @@ import type FlyerService from "@/Services/FlyerService";
 import logo from "@/Assets/Icons/Tokens/cvx.svg";
 
 export default function createCvxPounder(
-  client: PublicClient,
+  config: Config,
   llamaService: DefiLlamaService,
   flyerService: FlyerService
 ): Pounder<VaultPirex> {
-  const getPriceUnderlying = () => getPxCvxPrice(llamaService, client);
+  const getPriceUnderlying = () => getPxCvxPrice(llamaService, config);
   const getApy = () => getCvxApy(flyerService);
 
   const contract = getContract({
     abi,
     address: UnionCvxVaultAddress,
-    client,
+    client: config.getClient(),
   });
 
   return {

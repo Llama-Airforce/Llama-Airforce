@@ -35,8 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { type PublicClient } from "viem";
-import { getPublicClient, getWalletClient } from "@wagmi/core";
 import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
@@ -106,23 +104,18 @@ watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim), {
 // Methods
 const config = useConfig();
 function createPounders() {
-  const client = getPublicClient(config);
-  if (!client) {
-    return;
-  }
-
-  createUCvxPounder(client);
-  createUCrvV2Pounder(client);
-  createUCrvPounder(client);
-  createUFxsPounder(client);
-  createUFxsLpPounder(client);
-  createUPrismaPounder(client);
-  createUBalPounder(client);
+  createUCvxPounder();
+  createUCrvV2Pounder();
+  createUCrvPounder();
+  createUFxsPounder();
+  createUFxsLpPounder();
+  createUPrismaPounder();
+  createUBalPounder();
 }
 
-function createUCvxPounder(client: PublicClient) {
+function createUCvxPounder() {
   const pounder = pounderFactories.createCvxPounder(
-    client,
+    config,
     llamaService,
     flyerService
   );
@@ -130,15 +123,13 @@ function createUCvxPounder(client: PublicClient) {
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uCvxDepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uCvxWithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
@@ -151,21 +142,19 @@ function createUCvxPounder(client: PublicClient) {
   };
 }
 
-function createUCrvPounder(client: PublicClient) {
-  const pounder = pounderFactories.createCrvPounder(client, llamaService);
+function createUCrvPounder() {
+  const pounder = pounderFactories.createCrvPounder(config, llamaService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uCrvDepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uCrvWithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
@@ -178,21 +167,19 @@ function createUCrvPounder(client: PublicClient) {
   };
 }
 
-function createUFxsPounder(client: PublicClient) {
-  const pounder = pounderFactories.createFxsPounder(client, llamaService);
+function createUFxsPounder() {
+  const pounder = pounderFactories.createFxsPounder(config, llamaService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uFxsDepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uFxsWithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
@@ -205,21 +192,19 @@ function createUFxsPounder(client: PublicClient) {
   };
 }
 
-function createUPrismaPounder(client: PublicClient) {
-  const pounder = pounderFactories.createPrismaPounder(client, llamaService);
+function createUPrismaPounder() {
+  const pounder = pounderFactories.createPrismaPounder(config, llamaService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uPrismaDepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uPrismaWithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
@@ -232,21 +217,19 @@ function createUPrismaPounder(client: PublicClient) {
   };
 }
 
-function createUFxsLpPounder(client: PublicClient) {
-  const pounder = pounderFactories.createFxsLpPounder(client, llamaService);
+function createUFxsLpPounder() {
+  const pounder = pounderFactories.createFxsLpPounder(config, llamaService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uFxsLpDepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uFxsLpWithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
@@ -259,21 +242,19 @@ function createUFxsLpPounder(client: PublicClient) {
   };
 }
 
-function createUBalPounder(client: PublicClient) {
-  const pounder = pounderFactories.createBalPounder(client, flyerService);
+function createUBalPounder() {
+  const pounder = pounderFactories.createBalPounder(config, flyerService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uBalDepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uBalWithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
@@ -286,21 +267,19 @@ function createUBalPounder(client: PublicClient) {
   };
 }
 
-function createUCrvV2Pounder(client: PublicClient) {
-  const pounder = pounderFactories.createCrvV2Pounder(client, llamaService);
+function createUCrvV2Pounder() {
+  const pounder = pounderFactories.createCrvV2Pounder(config, llamaService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
       zaps.uCrvV2DepositZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       zaps.uCrvV2WithdrawZaps(
-        () => getPublicClient(config),
-        () => getWalletClient(config),
+        () => config,
         () => address.value,
         getInput
       ),

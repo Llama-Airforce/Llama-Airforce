@@ -1,5 +1,9 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Wallet";
@@ -18,24 +22,21 @@ import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpWithdrawZaps(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
 ): (ZapWithdraw | Swap)[] {
   const withdrawAsFxs = async (minAmountOut: bigint) => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       UnionFxsVaultAddressV1,
       address,
       ZapsUFxsAddressV1,
@@ -43,31 +44,27 @@ export function uFxsLpWithdrawZaps(
     );
 
     const args = [input, 0n, minAmountOut, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUFxsAddressV1,
       functionName: "claimFromVaultAsUnderlying",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   const withdrawAsCvxFxs = async (minAmountOut: bigint) => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
     await maxApprove(
-      client,
-      wallet,
+      config,
       UnionFxsVaultAddressV1,
       address,
       ZapsUFxsAddressV1,
@@ -75,39 +72,34 @@ export function uFxsLpWithdrawZaps(
     );
 
     const args = [input, 1n, minAmountOut, address] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiZaps,
       address: ZapsUFxsAddressV1,
       functionName: "claimFromVaultAsUnderlying",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   const withdrawAsLp = async () => {
-    const client = getClient();
-    const wallet = await getWallet();
+    const config = getConfig();
     const address = getAddress();
     const input = getInput();
 
-    if (!address || !input || !client || !wallet?.account) {
+    if (!address || !input) {
       throw new Error("Unable to construct withdraw zaps");
     }
 
     const args = [address, input] as const;
-    const hash = await wallet.writeContract({
-      chain: wallet.chain!,
-      account: wallet.account,
+    const hash = await writeContract(config, {
       abi: abiVault,
       address: UnionFxsVaultAddressV1,
       functionName: "withdraw",
       args,
     });
 
-    return waitForTransactionReceipt(client, { hash });
+    return waitForTransactionReceipt(config, { hash });
   };
 
   // Zaps
@@ -119,7 +111,6 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
@@ -130,7 +121,7 @@ export function uFxsLpWithdrawZaps(
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, getConfig())
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -146,17 +137,18 @@ export function uFxsLpWithdrawZaps(
     zap: (minAmountOut?: bigint) => withdrawAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
       host: string,
-      client: PublicClient,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
-      const cvxfxs = await getCvxFxsPrice(llamaService, client)
+      const config = getConfig();
+
+      const cvxfxs = await getCvxFxsPrice(llamaService, config)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, config)
         .then((x) => x)
         .catch(() => Infinity);
 

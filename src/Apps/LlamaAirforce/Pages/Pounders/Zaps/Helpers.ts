@@ -1,22 +1,25 @@
-import { type Address, type PublicClient, type WalletClient } from "viem";
-import { waitForTransactionReceipt } from "viem/actions";
+import { type Address } from "viem";
+import {
+  type Config,
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { numToBigNumber } from "@/Util";
 import type { Airdrop } from "@Pounders/Models";
 
 export async function claim(
-  getClient: () => PublicClient | undefined,
-  getWallet: () => Promise<WalletClient | undefined>,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
 ) {
+  const config = getConfig();
   const address = getAddress();
   const airdrop = getAirdrop();
-  const client = getClient();
-  const wallet = await getWallet();
 
-  if (!airdrop || !address || !client || !wallet?.account) {
+  if (!airdrop || !address) {
     return;
   }
 
@@ -27,31 +30,29 @@ export async function claim(
     airdrop.claim.proof,
   ] as const;
 
-  const hash = await wallet.writeContract({
-    chain: client.chain,
-    account: wallet.account,
+  const hash = await writeContract(config, {
     abi: abiMerkle,
     address: airdrop.distributorAddress,
     functionName: "claim",
     args,
   });
 
-  return waitForTransactionReceipt(client, { hash });
+  return waitForTransactionReceipt(config, { hash });
 }
 
 export function getBalance(
-  getClient: () => PublicClient | undefined,
+  getConfig: () => Config,
   getAddress: () => Address | undefined,
   erc20?: Address
 ) {
+  const config = getConfig();
   const address = getAddress();
-  const client = getClient();
 
-  if (!address || !client || !erc20) {
+  if (!address || !erc20) {
     return Promise.resolve(undefined);
   }
 
-  return client.readContract({
+  return readContract(config, {
     abi: abiERC20,
     address: erc20,
     functionName: "balanceOf",
@@ -59,23 +60,18 @@ export function getBalance(
   });
 }
 
-export function getDecimals(
-  getClient: () => PublicClient | undefined,
-  erc20?: Address
-) {
-  const client = getClient();
+export function getDecimals(getConfig: () => Config, erc20?: Address) {
+  const config = getConfig();
 
-  if (!client || !erc20) {
+  if (!erc20) {
     return Promise.resolve(undefined);
   }
 
-  return client
-    .readContract({
-      abi: abiERC20,
-      address: erc20,
-      functionName: "decimals",
-    })
-    .then((x) => BigInt(x));
+  return readContract(config, {
+    abi: abiERC20,
+    address: erc20,
+    functionName: "decimals",
+  }).then((x) => BigInt(x));
 }
 
 export function calcMinAmountOut(

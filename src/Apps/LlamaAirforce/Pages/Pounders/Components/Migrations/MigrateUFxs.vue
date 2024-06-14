@@ -25,11 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  writeContract,
-  waitForTransactionReceipt,
-  getPublicClient,
-} from "@wagmi/core";
+import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
 import { useConfig, useReadContract } from "@wagmi/vue";
 import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
@@ -91,12 +87,7 @@ async function onMigrate(skipSlippageModal: boolean) {
       .then((x) => x.price)
       .catch(() => Infinity);
 
-    const client = getPublicClient(config);
-    if (!client) {
-      return;
-    }
-
-    const ufxs = await getUFxsPriceV1(llamaService, client);
+    const ufxs = await getUFxsPriceV1(llamaService, config);
 
     minAmountOutRef.value = bigNumToNumber(
       calcMinAmountOut(balance.value ?? 0n, ufxs, cvxfxs, 0),
