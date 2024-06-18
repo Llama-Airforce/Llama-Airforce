@@ -12,6 +12,8 @@
 
     <main class="main">
       <div class="content">
+        <Announcement></Announcement>
+
         <router-view v-slot="{ Component }">
           <transition
             name="fade"
@@ -32,6 +34,7 @@ import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import Header from "@LAF/Navigation/Header.vue";
 import FooterMobile from "@LAF/Navigation/FooterMobile.vue";
 import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
+import Announcement from "@LAF/Components/Announcement.vue";
 </script>
 
 <style lang="scss">
