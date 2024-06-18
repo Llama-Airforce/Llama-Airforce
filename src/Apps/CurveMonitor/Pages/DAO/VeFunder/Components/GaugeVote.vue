@@ -34,13 +34,12 @@
 </template>
 
 <script setup lang="ts">
-import { type Signer, utils } from "ethers";
-import { useWallet } from "@/Wallet";
-import {
-  AragonAgent__factory,
-  AragonVoting__factory,
-  GaugeController__factory,
-} from "@/Contracts";
+import { type Address, isAddress, encodeFunctionData } from "viem";
+import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
+import { useConfig } from "@wagmi/vue";
+import { abi as abiAgent } from "@/ABI/veFunder/AragonAgent";
+import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
+import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
 
 const { t } = useI18n();
 
@@ -57,8 +56,6 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { withSigner } = useWallet();
-
 const creating = ref(false);
 const gauge_ = ref("");
 const description = ref(t("placeholder"));
@@ -67,9 +64,9 @@ const gaugePlaceholder = computed((): string => {
   return MultisigAddress;
 });
 
-const isValid = computed((): boolean => {
-  return utils.isAddress(gauge_.value) && !!description.value;
-});
+const isValid = computed(
+  (): boolean => isAddress(gauge_.value) && !!description.value
+);
 
 const canRequest = computed((): boolean => {
   return isValid.value && !creating.value;
@@ -84,37 +81,37 @@ watch(
 );
 
 // Methods
-const execute = withSigner((signer) => {
+async function execute() {
   if (!gauge_.value) {
-    return new Promise((resolve) => resolve());
+    return;
   }
 
   return tryNotifyLoading(creating, async () => {
-    await createVote(signer);
+    await createVote();
     emit("request");
   });
-});
+}
 
-const createVote = async (signer: Signer): Promise<void> => {
+const config = useConfig();
+async function createVote() {
   const ARAGON_OWNERSHIP_VOTING = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
   const ARAGON_OWNERSHIP_AGENT = "0x40907540d8a6c65c637785e8f8b742ae6b0b9968";
   const zeroPad = (num: string, places: number) =>
     String(num).padStart(places, "0");
 
-  const gaugeController = GaugeController__factory.createInterface();
-  const agent = AragonAgent__factory.createInterface();
-  const gaugeType = "10";
+  const call_data = encodeFunctionData({
+    abi: abiGauge,
+    functionName: "add_gauge",
+    args: [gauge_.value as Address, 10n, 0n],
+  });
 
-  const call_data = gaugeController.encodeFunctionData("add_gauge", [
-    gauge_.value,
-    gaugeType,
-    0,
-  ]);
+  let evm_script = "0x00000001" as Address;
 
-  let evm_script = "0x00000001";
-  const agent_calldata = agent
-    .encodeFunctionData("execute", [veFunderGaugeController, 0, call_data])
-    .substring(2);
+  const agent_calldata = encodeFunctionData({
+    abi: abiAgent,
+    functionName: "execute",
+    args: [veFunderGaugeController, 0n, call_data],
+  }).substring(2);
 
   const length = zeroPad(
     (Math.floor(agent_calldata.length) / 2).toString(16),
@@ -138,12 +135,15 @@ const createVote = async (signer: Signer): Promise<void> => {
   const ipfs_data = (await response.json()) as Record<string, string>;
   const ipfs_hash = ipfs_data.Hash;
 
-  const voting = AragonVoting__factory.connect(ARAGON_OWNERSHIP_VOTING, signer);
-
-  await voting.newVote(evm_script, `ipfs:${ipfs_hash}`, false, false, {
-    gasLimit: 1000000,
+  const hash = await writeContract(config, {
+    abi: abiVoting,
+    address: ARAGON_OWNERSHIP_VOTING,
+    functionName: "newVote",
+    args: [evm_script, `ipfs:${ipfs_hash}`, false, false],
   });
-};
+
+  await waitForTransactionReceipt(config, { hash });
+}
 </script>
 
 <style lang="scss" scoped>

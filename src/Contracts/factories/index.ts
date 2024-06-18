@@ -5,4 +5,3 @@ export * as prisma from "./Prisma";
 export * as registries from "./Registries";
 export * as standards from "./Standards";
 export * as union from "./Union";
-export * as veFunder from "./veFunder";
