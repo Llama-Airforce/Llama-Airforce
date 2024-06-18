@@ -22,12 +22,15 @@
         </router-view>
       </div>
     </main>
+
+    <FooterMobile class="footer"></FooterMobile>
   </div>
 </template>
 
 <script setup lang="ts">
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import Header from "@LAF/Navigation/Header.vue";
+import FooterMobile from "@LAF/Navigation/FooterMobile.vue";
 import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 </script>
 
@@ -99,12 +102,23 @@ a {
   width: 1440px;
 
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: auto 1fr;
 
   > .header {
     grid-row: 1;
     grid-column: 1 / span 2;
+  }
+
+  > .footer {
+    display: none;
+
+    grid-row: 3;
+    grid-column: 1 / span 2;
+
+    @media only screen and (max-width: 1280px) {
+      display: flex;
+    }
   }
 
   > .menu {

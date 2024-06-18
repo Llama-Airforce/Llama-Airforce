@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="header-mobile">
+    <div class="footer-mobile">
       <div class="title">
         <img src="@/Assets/Menu/logo.svg" />
       </div>
@@ -75,7 +75,7 @@ header {
   background: $header-background;
   user-select: none;
 
-  > .header-mobile {
+  > .footer-mobile {
     display: flex;
     align-items: center;
     gap: 1rem;
