@@ -16,6 +16,8 @@
 </template>
 
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
+import { useSwitchChain } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 
 // Props
@@ -39,19 +41,17 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { withProvider, network } = useWallet();
+const { network } = useWallet();
+const { switchChain } = useSwitchChain();
 
 // Events
-const onClick = async (evt: Event): Promise<void> => {
+const onClick = (evt: Event) => {
   evt.stopImmediatePropagation();
 
   if (web3 && isDevelopment()) {
-    await withProvider(async (provider) => {
-      if (network.value !== "ethereum") {
-        await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
-        window.location.reload();
-      }
-    })();
+    if (network.value !== "ethereum") {
+      switchChain({ chainId: mainnet.id });
+    }
   }
 
   emit("click");
