@@ -1,4 +1,4 @@
-import { getAddress } from "ethers/lib/utils";
+import { getAddress } from "viem";
 import { ServiceBase } from "@/Services";
 import { type Chain } from "@CM/Models/Chain";
 import type * as ApiTypes from "@CM/Services/OHLC/ApiTypes";

@@ -1,4 +1,4 @@
-import { utils } from "ethers";
+import { formatUnits, parseUnits } from "viem";
 
 /**
  * No shame, ripped from
@@ -136,11 +136,9 @@ export function roundPhil(value: number): string {
 }
 
 export function bigNumToNumber(value: bigint, decimals: bigint): number {
-  return parseFloat(utils.formatUnits(value, decimals));
+  return parseFloat(formatUnits(value, Number(decimals)));
 }
 
 export function numToBigNumber(value: number, decimals: bigint): bigint {
-  return utils
-    .parseUnits(value.toFixed(Number(decimals)), Number(decimals))
-    .toBigInt();
+  return parseUnits(value.toFixed(Number(decimals)), Number(decimals));
 }

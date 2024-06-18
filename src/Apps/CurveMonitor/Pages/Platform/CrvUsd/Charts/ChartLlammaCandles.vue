@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import type { Subscription } from "rxjs";
-import { getAddress } from "ethers/lib/utils";
+import { getAddress } from "viem";
 import { createChart as createChartFunc } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
 import type { Market } from "@CM/Services/CrvUsd";
