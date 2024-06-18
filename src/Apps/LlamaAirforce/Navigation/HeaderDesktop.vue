@@ -55,10 +55,36 @@
           <li>
             <a
               class="nav-link"
-              href="https://etherscan.io/address/0x9Bc7c6ad7E7Cf3A6fCB58fb21e27752AC1e53f99"
+              href="https://docs.llama.airforce/"
               target="_blank"
             >
-              <div class="nav-link-container donate">Donate</div>
+              <div class="nav-link-container icon">
+                <i class="fas fa-book"></i>
+              </div>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              href="https://medium.com/@llamaairforce"
+              target="_blank"
+            >
+              <div class="nav-link-container icon">
+                <i class="fas fa-bullhorn"></i>
+              </div>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="nav-link"
+              href="https://discord.gg/E3KHXkvzPJ"
+              target="_blank"
+            >
+              <div class="nav-link-container icon">
+                <i class="fab fa-discord"></i>
+              </div>
             </a>
           </li>
 
@@ -153,12 +179,6 @@ header {
     }
 
     > .support {
-      .donate {
-        display: none !important;
-        font-weight: 500;
-        color: var(--c-primary);
-      }
-
       .icon {
         font-size: 1.25rem;
         color: var(--c-lvl5);
