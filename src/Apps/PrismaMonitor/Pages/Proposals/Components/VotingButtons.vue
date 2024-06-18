@@ -68,7 +68,14 @@
 </template>
 
 <script setup lang="ts">
-import { PrismaLocker__factory, VotingPrisma__factory } from "@/Contracts";
+import {
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
+import { useConfig } from "@wagmi/vue";
+import { abi as abiLocker } from "@/ABI/Prisma/PrismaLocker";
+import { abi as abiVoting } from "@/ABI/Prisma/VotingPrisma";
 import { useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
@@ -83,7 +90,7 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Refs
-const { address, withProvider, withProviderReturn, withSigner } = useWallet();
+const { address } = useWallet();
 
 const showVote = ref(false);
 const executing = ref(false);
@@ -122,54 +129,70 @@ const isVoteOpen = computed(() => getStatus(proposal) === "active");
 const executable = computed(() => getStatus(proposal) === "passed");
 
 // Methods
-const vote = withSigner((signer, address) =>
-  tryNotifyLoading(voting, async () => {
-    const voting = VotingPrisma__factory.connect(PrismaVotingAddress, signer);
-    const ps = [address, proposal.id, votingPower.value] as const;
-    const estimate = await voting.estimateGas.voteForProposal(...ps);
+const config = useConfig();
+async function vote() {
+  await tryNotifyLoading(voting, async () => {
+    if (!address.value) {
+      return;
+    }
 
-    await voting
-      .voteForProposal(...ps, {
-        gasLimit: estimate.mul(125).div(100),
-      })
-      .then((x) => x.wait());
+    const hash = await writeContract(config, {
+      abi: abiVoting,
+      address: PrismaVotingAddress,
+      functionName: "voteForProposal",
+      args: [address.value, BigInt(proposal.id), votingPower.value],
+    });
+
+    await waitForTransactionReceipt(config, { hash });
 
     showVote.value = false;
-  })
-);
+  });
+}
 
-const execute = withSigner((signer) =>
-  tryNotifyLoading(executing, async () => {
-    const voting = VotingPrisma__factory.connect(PrismaVotingAddress, signer);
+async function execute() {
+  await tryNotifyLoading(executing, async () => {
+    const hash = await writeContract(config, {
+      abi: abiVoting,
+      address: PrismaVotingAddress,
+      functionName: "executeProposal",
+      args: [BigInt(proposal.id)],
+    });
 
-    const ps = [proposal.id] as const;
-    const estimate = await voting.estimateGas.executeProposal(...ps);
+    await waitForTransactionReceipt(config, { hash });
 
-    await voting
-      .executeProposal(...ps, {
-        gasLimit: estimate.mul(125).div(100),
-      })
-      .then((x) => x.wait());
+    showVote.value = false;
 
     canExecute.value = await canExecuteProposal();
-  })
-);
+  });
+}
 
 // Watches
-const getWeb3Data = withProvider(async (provider, address) => {
-  const voting = VotingPrisma__factory.connect(PrismaVotingAddress, provider);
-  const lockerAddress = await voting.tokenLocker();
+async function getWeb3Data() {
+  if (!address.value) {
+    return;
+  }
 
-  voted.value = await voting
-    .accountVoteWeights(address, proposal.id)
-    .then((x) => x.gt(0));
+  const lockerAddress = await readContract(config, {
+    abi: abiVoting,
+    address: PrismaVotingAddress,
+    functionName: "tokenLocker",
+  });
 
-  const vePrisma = PrismaLocker__factory.connect(lockerAddress, provider);
+  voted.value = await readContract(config, {
+    abi: abiVoting,
+    address: PrismaVotingAddress,
+    functionName: "accountVoteWeights",
+    args: [address.value, BigInt(proposal.id)],
+  }).then((x) => x > 0n);
+
   const week = Math.floor((proposal.start - 1691625600) / 604800) - 1;
-  votingPower.value = await vePrisma
-    .getAccountWeightAt(address, week)
-    .then((x) => x.toBigInt());
-});
+  votingPower.value = await readContract(config, {
+    abi: abiLocker,
+    address: lockerAddress,
+    functionName: "getAccountWeightAt",
+    args: [address.value, BigInt(week)],
+  });
+}
 
 watch(showVote, async (show) => {
   if (!show) {
@@ -179,29 +202,27 @@ watch(showVote, async (show) => {
   await tryNotify(getWeb3Data);
 });
 
-const canExecuteProposal = withProviderReturn(
-  async (provider) => {
-    // Don't bother with non-executable votes.
-    if (!executable.value) {
-      return false;
-    }
+async function canExecuteProposal() {
+  // Don't bother with non-executable votes.
+  if (!executable.value) {
+    return false;
+  }
 
-    const voting = VotingPrisma__factory.connect(PrismaVotingAddress, provider);
-    const MAX_TIME_TO_EXECUTION = await voting
-      .MAX_TIME_TO_EXECUTION()
-      .then((x) => Number(x.toBigInt()));
+  const MAX_TIME_TO_EXECUTION = await readContract(config, {
+    abi: abiVoting,
+    address: PrismaVotingAddress,
+    functionName: "MAX_TIME_TO_EXECUTION",
+  });
 
-    const passed = proposal.executeAfter !== 0;
-    const minTimeToExecution =
-      proposal.executeAfter < new Date().getTime() / 1000;
-    const maxTimeToExecution =
-      proposal.executeAfter + MAX_TIME_TO_EXECUTION >
-      new Date().getTime() / 1000;
+  const passed = proposal.executeAfter !== 0;
+  const minTimeToExecution =
+    proposal.executeAfter < new Date().getTime() / 1000;
+  const maxTimeToExecution =
+    proposal.executeAfter + Number(MAX_TIME_TO_EXECUTION) >
+    new Date().getTime() / 1000;
 
-    return passed && minTimeToExecution && maxTimeToExecution;
-  },
-  () => false
-);
+  return passed && minTimeToExecution && maxTimeToExecution;
+}
 
 // Check if proposal can be executed.
 watch(
