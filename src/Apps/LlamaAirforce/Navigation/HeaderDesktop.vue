@@ -288,6 +288,7 @@ header {
             transition: all $header-hover-duration;
 
             .nav-link-container {
+              height: 2rem;
               display: flex;
               flex-grow: 1;
               justify-content: center;
