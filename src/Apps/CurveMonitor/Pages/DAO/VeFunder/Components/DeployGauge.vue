@@ -38,20 +38,23 @@
 </template>
 
 <script setup lang="ts">
-import { utils } from "ethers";
-import { useWallet } from "@/Wallet";
-import { GaugeFactory__factory } from "@/Contracts";
+import { type Address, isAddress } from "viem";
+import {
+  simulateContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
+import { useConfig } from "@wagmi/vue";
+import { abi } from "@/ABI/veFunder/GaugeFactory";
 
 const { t } = useI18n();
 
 // Emits
 const emit = defineEmits<{
-  gauge: [gauge: string];
+  gauge: [gauge: Address];
 }>();
 
 // Refs
-const { withSigner } = useWallet();
-
 const deploying = ref(false);
 const receiver = ref("");
 const amount = ref(0);
@@ -60,22 +63,17 @@ const receiverPlaceholder = computed((): string => {
   return MultisigAddress;
 });
 
-const isValid = computed(() => {
-  return (
-    utils.isAddress(receiver.value.toLocaleLowerCase()) && amount.value > 0
-  );
-});
+const isValid = computed(
+  () => isAddress(receiver.value.toLocaleLowerCase()) && amount.value > 0
+);
 
-// Methods
-const execute = withSigner((signer) => {
+const config = useConfig();
+async function execute() {
   if (!receiver.value || !amount.value) {
-    return new Promise((resolve) => resolve());
+    return;
   }
 
-  const gaugeFactory = GaugeFactory__factory.connect(
-    veFunderGaugeFactoryAddress,
-    signer
-  );
+  const receiverAddress = receiver.value.toLocaleLowerCase() as Address;
 
   if (typeof amount.value === "string") {
     amount.value = parseFloat(amount.value);
@@ -83,13 +81,19 @@ const execute = withSigner((signer) => {
   const amountFinal = numToBigNumber(amount.value, 18n);
 
   return tryNotifyLoading(deploying, async () => {
-    const gauge = await gaugeFactory.deploy_gauge(
-      receiver.value.toLocaleLowerCase(),
-      amountFinal
-    );
-    emit("gauge", gauge as unknown as string);
+    const { result, request } = await simulateContract(config, {
+      abi,
+      address: veFunderGaugeFactoryAddress,
+      functionName: "deploy_gauge",
+      args: [receiverAddress, amountFinal] as const,
+    });
+
+    const hash = await writeContract(config, request);
+    await waitForTransactionReceipt(config, { hash });
+
+    emit("gauge", result);
   });
-});
+}
 </script>
 
 <style lang="scss" scoped>

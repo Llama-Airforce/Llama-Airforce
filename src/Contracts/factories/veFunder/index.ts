@@ -4,4 +4,3 @@
 export { AragonAgent__factory } from "./AragonAgent__factory";
 export { AragonVoting__factory } from "./AragonVoting__factory";
 export { GaugeController__factory } from "./GaugeController__factory";
-export { GaugeFactory__factory } from "./GaugeFactory__factory";

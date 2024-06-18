@@ -30,5 +30,3 @@ export type { AragonVoting } from "./veFunder/AragonVoting";
 export { AragonVoting__factory } from "./factories/veFunder/AragonVoting__factory";
 export type { GaugeController } from "./veFunder/GaugeController";
 export { GaugeController__factory } from "./factories/veFunder/GaugeController__factory";
-export type { GaugeFactory } from "./veFunder/GaugeFactory";
-export { GaugeFactory__factory } from "./factories/veFunder/GaugeFactory__factory";

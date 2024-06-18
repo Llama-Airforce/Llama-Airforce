@@ -4,4 +4,3 @@
 export type { AragonAgent } from "./AragonAgent";
 export type { AragonVoting } from "./AragonVoting";
 export type { GaugeController } from "./GaugeController";
-export type { GaugeFactory } from "./GaugeFactory";
