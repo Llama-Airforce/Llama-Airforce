@@ -7,6 +7,11 @@ import {
   safe,
 } from "@wagmi/connectors";
 
+// Alternative: https://eth.llamarpc.com
+// eslint-disable-next-line prefer-const
+let rpc: string | undefined = "http://localhost:8545";
+rpc = undefined;
+
 export const config = createConfig({
   chains: [mainnet],
   connectors: [
@@ -24,7 +29,6 @@ export const config = createConfig({
     safe(),
   ],
   transports: {
-    //[mainnet.id]: http("https://eth.llamarpc.com"),
-    [mainnet.id]: http(undefined, { batch: { wait: 100 } }),
+    [mainnet.id]: http(rpc, { batch: { wait: 100 } }),
   },
 });
