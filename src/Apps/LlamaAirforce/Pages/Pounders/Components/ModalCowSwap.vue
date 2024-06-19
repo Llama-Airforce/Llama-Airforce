@@ -10,8 +10,8 @@
           <CowSwap
             class="cow"
             :level="1"
-            :buy="swap.buy"
-            :sell="swap.sell"
+            :buy="swap?.buy ?? 'ETH'"
+            :sell="swap?.sell ?? 'USDC'"
           ></CowSwap>
         </div>
       </div>
@@ -27,7 +27,7 @@ const { t } = useI18n();
 
 // Props
 interface Props {
-  swap: Swap;
+  swap: Swap | null;
 }
 
 const { swap } = defineProps<Props>();
