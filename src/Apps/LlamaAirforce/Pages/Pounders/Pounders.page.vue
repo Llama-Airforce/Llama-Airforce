@@ -79,15 +79,15 @@ const poundersLegacy = computed(() => [store.pounders.ucrv2].filter(notEmpty));
 onMounted(createPounders);
 
 // Claims
-const { claim: claimUCrv } = useClaim(unionService, "union", address, false);
-const { claim: claimUFxs } = useClaim(unionService, "ufxs", address, false);
+const { claim: claimUCrv } = useClaim(unionService, "union", address, true);
+const { claim: claimUFxs } = useClaim(unionService, "ufxs", address, true);
 const { claim: claimUPrisma } = useClaim(
   unionService,
   "uprisma",
   address,
-  false
+  true
 );
-const { claim: claimUCvx } = useClaim(unionService, "ucvx", address, false);
+const { claim: claimUCvx } = useClaim(unionService, "ucvx", address, true);
 watch(claimUCrv, (newClaim) => (store.claims.ucrv = newClaim), {
   immediate: true,
 });
