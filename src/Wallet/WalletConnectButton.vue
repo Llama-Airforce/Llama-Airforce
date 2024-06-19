@@ -33,18 +33,29 @@
     >
       <Card>
         <div class="connectors-body">
-          <div
-            v-for="connector in connectors"
-            :key="connector.id"
-            class="connector"
-          >
-            {{ connector.name }}
-            <Button
-              :primary="true"
-              @click="onConnect(connector)"
+          <div class="title">
+            {{ t("connect-your-wallet") }}
+          </div>
+
+          <div class="connectors">
+            <div
+              v-for="connector in connectors"
+              :key="connector.id"
+              class="connector"
             >
-              Connect
-            </Button>
+              <Button @click="onConnect(connector)">
+                <img
+                  v-if="icon(connector)"
+                  :src="icon(connector)"
+                />
+                <div
+                  v-else
+                  class="empty"
+                ></div>
+
+                <div class="name">{{ connector.name }}</div>
+              </Button>
+            </div>
           </div>
         </div>
       </Card>
@@ -56,20 +67,43 @@
 import { type Connector } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 
+import injected from "@/Assets/Icons/Wallets/injected.webp";
+import rabby from "@/Assets/Icons/Wallets/rabby.svg";
+import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
+import coinbase from "@/Assets/Icons/Wallets/coinbase.webp";
+import safe from "@/Assets/Icons/Wallets/safe.webp";
+
 const { t } = useI18n();
 
 const { connectors, connect } = useWallet();
 
 const showConnectors = ref(false);
 
-const onConnect = (connector: Connector) => {
+function icon(connector: Connector) {
+  switch (connector.id) {
+    case "injected":
+      return injected;
+    case "walletConnect":
+      return walletconnect;
+    case "coinbaseWalletSDK":
+      return coinbase;
+    case "safe":
+      return safe;
+    case "io.rabby":
+      return rabby;
+    default:
+      return "";
+  }
+}
+
+function onConnect(connector: Connector) {
   connect({ connector });
   showConnectors.value = false;
-};
+}
 
-const onClearCache = () => {
+function onClearCache() {
   console.log("nothing to do yet");
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -80,12 +114,46 @@ const onClearCache = () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem;
 
-  .connector {
+  .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0.5rem 0rem;
+    text-align: center;
+  }
+
+  .connectors {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    .connector {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        height: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-grow: 1;
+        background-color: var(--c-lvl2);
+
+        &:hover {
+          background-color: var(--c-lvl3);
+        }
+
+        img,
+        .empty {
+          width: 35px;
+          height: 35px;
+          object-fit: scale-down;
+          border-radius: 25%;
+        }
+      }
+    }
   }
 }
 
