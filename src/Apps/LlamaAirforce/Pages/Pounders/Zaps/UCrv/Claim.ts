@@ -6,7 +6,7 @@ import {
 } from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
 import { maxApprove } from "@/Wallet";
-import { type Airdrop, type ZapClaim, type Swap } from "@Pounders/Models";
+import { type Airdrop, type ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
 
 import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
@@ -19,7 +19,7 @@ export function uCrvClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
-): (ZapClaim | Swap)[] {
+): ZapClaim[] {
   const claimAsCvxCrv = async () => {
     const config = getConfig();
     const address = getAddress();
@@ -74,12 +74,7 @@ export function uCrvClaimZaps(
     zap: () => claimAsCvxCrv(),
   };
 
-  const swap: Swap = {
-    buy: "ETH",
-    sell: "cvxCRV",
-  };
-
-  const options = [ucrv, cvxcrv, swap];
+  const options = [ucrv, cvxcrv];
 
   return options;
 }

@@ -8,46 +8,32 @@
     @close="selectZapOpen = false"
     @input="onZapSelect"
   >
-    <template #item="props: { item: Zap | Swap }">
-      <div
-        v-if="props.item && isZap(props.item)"
-        class="item"
-      >
-        <img :src="icon(props.item.logo)" />
-        <div class="label">{{ props.item.label }}</div>
-      </div>
-
-      <div
-        v-else-if="props.item && isSwap(props.item)"
-        class="item"
-      >
-        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" />
-        <div class="label">{{ t("other-token") }}</div>
+    <template #item="props: { item: Zap | undefined }">
+      <div class="item">
+        <img :src="icon(props.item?.logo ?? '')" />
+        <div class="label">{{ props.item?.label ?? '?' }}</div>
       </div>
     </template>
   </Select>
 </template>
 
 <script setup lang="ts">
-import type { Zap, Swap } from "@Pounders/Models";
-import { isZap, isSwap } from "@Pounders/Models";
-
-const { t } = useI18n();
+import type { Zap } from "@Pounders/Models";
 
 // Props
 interface Props {
-  zaps: (Zap | Swap)[];
+  zaps: Zap[];
 }
 
 const { zaps } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  select: [zap: Zap | Swap];
+  select: [zap: Zap];
 }>();
 
 // Refs
-const zap = defineModel<Zap | Swap | undefined>({
+const zap = defineModel<Zap | undefined>({
   required: true,
   default: undefined,
 });
@@ -63,7 +49,7 @@ const onZapOpen = (): void => {
   selectZapOpen.value = !selectZapOpen.value;
 };
 
-const onZapSelect = (option: Zap | Swap): void => {
+const onZapSelect = (option: Zap): void => {
   emit("select", option);
 };
 
@@ -99,15 +85,3 @@ watch(
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-other-token: Other Token
-</i18n>
-
-<i18n lang="yaml" locale="zh">
-other-token: 其他代币
-</i18n>
-
-<i18n lang="yaml" locale="fr">
-other-token: Autre Token
-</i18n>

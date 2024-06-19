@@ -9,7 +9,7 @@ import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
-import type { ZapDeposit, Swap } from "@Pounders/Models";
+import type { ZapDeposit } from "@Pounders/Models";
 import {
   getBalance,
   getDecimals,
@@ -30,7 +30,7 @@ export function uFxsLpDepositZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapDeposit | Swap)[] {
+): ZapDeposit[] {
   const depositFromFxs = async (minAmountOut: bigint) => {
     const config = getConfig();
     const address = getAddress();

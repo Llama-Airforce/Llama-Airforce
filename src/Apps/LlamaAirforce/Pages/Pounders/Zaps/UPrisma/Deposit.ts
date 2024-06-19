@@ -7,7 +7,7 @@ import {
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZapsMigrate } from "@/ABI/Union/ZapsUPrismaConvexMigration";
 import { maxApprove } from "@/Wallet";
-import type { ZapDeposit, Swap } from "@Pounders/Models";
+import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
 
 import {
@@ -23,7 +23,7 @@ export function uPrismaDepositZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapDeposit | Swap)[] {
+): ZapDeposit[] {
   const deposit = async () => {
     const config = getConfig();
     const address = getAddress();
@@ -100,12 +100,7 @@ export function uPrismaDepositZaps(
     depositDecimals: () => getDecimals(getConfig, CvxPrismaAddress),
   };
 
-  const swap: Swap = {
-    buy: "cvxPRISMA",
-    sell: "ETH",
-  };
-
-  const options = [cvxPRISMA, stkCvxPrisma, swap];
+  const options = [cvxPRISMA, stkCvxPrisma];
 
   return options;
 }

@@ -6,6 +6,7 @@ import {
 import { type abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { type abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
 import { bigNumToNumber } from "@/Util";
+import { type Swap } from "@Pounders/Models/Swap";
 
 export type VaultUnion = GetContractReturnType<
   typeof abiUnionVault,
@@ -60,6 +61,8 @@ export type Pounder<Contract extends Vault> = {
   contract: Contract;
   asset: Address;
   distributor?: Address;
+  swapDeposit?: Swap;
+  swapWithdraw?: Swap;
   lp: PounderLp | null;
   getPriceUnderlying: () => Promise<number>;
   getApy: () => Promise<number>;

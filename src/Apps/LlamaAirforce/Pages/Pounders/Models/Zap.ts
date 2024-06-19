@@ -1,4 +1,3 @@
-import { type Swap } from "@Pounders/Models/Swap";
 import { type TransactionReceipt } from "viem";
 
 export type Zap = {
@@ -28,10 +27,6 @@ export type ZapClaim = ZapWithdraw & {
 };
 
 export type ZapsFactories = {
-  createZapsDeposit: (
-    getInput: () => bigint | undefined
-  ) => (ZapDeposit | Swap)[];
-  createZapsWithdrawal: (
-    getInput: () => bigint | undefined
-  ) => (ZapWithdraw | Swap)[];
+  createZapsDeposit: (getInput: () => bigint | undefined) => ZapDeposit[];
+  createZapsWithdrawal: (getInput: () => bigint | undefined) => ZapWithdraw[];
 };

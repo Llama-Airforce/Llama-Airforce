@@ -9,7 +9,7 @@ import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsPrice } from "@/Util";
-import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
 import { claim, calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 
@@ -23,7 +23,7 @@ export function uFxsClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
-): (ZapClaim | Swap)[] {
+): ZapClaim[] {
   const claimAsCvxFxs = async (minAmountOut: bigint) => {
     const config = getConfig();
     const address = getAddress();
@@ -98,12 +98,7 @@ export function uFxsClaimZaps(
     },
   };
 
-  const swap: Swap = {
-    buy: "ETH",
-    sell: "cvxFXS",
-  };
-
-  const options = [ufxs, cvxFXS, swap];
+  const options = [ufxs, cvxFXS];
 
   return options;
 }

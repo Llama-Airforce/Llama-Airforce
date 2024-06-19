@@ -8,7 +8,7 @@ import {
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Wallet";
-import type { ZapWithdraw, Swap } from "@Pounders/Models";
+import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
@@ -26,7 +26,7 @@ export function uFxsLpWithdrawZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapWithdraw | Swap)[] {
+): ZapWithdraw[] {
   const withdrawAsFxs = async (minAmountOut: bigint) => {
     const config = getConfig();
     const address = getAddress();

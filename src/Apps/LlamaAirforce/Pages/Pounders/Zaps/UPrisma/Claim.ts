@@ -6,7 +6,7 @@ import {
 } from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUPrismaClaim";
 import { maxApprove } from "@/Wallet";
-import type { Airdrop, ZapClaim, Swap } from "@Pounders/Models";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
 
 import {
@@ -22,7 +22,7 @@ export function uPrismaClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getAirdrop: () => Airdrop | undefined
-): (ZapClaim | Swap)[] {
+): ZapClaim[] {
   const claimAsCvxPrisma = async () => {
     const config = getConfig();
     const address = getAddress();
@@ -77,12 +77,7 @@ export function uPrismaClaimZaps(
     zap: () => claimAsCvxPrisma(),
   };
 
-  const swap: Swap = {
-    buy: "ETH",
-    sell: "cvxPRISMA",
-  };
-
-  const options = [uprisma, cvxPRISMA, swap];
+  const options = [uprisma, cvxPRISMA];
 
   return options;
 }

@@ -36,6 +36,7 @@ en:
     optional.
   withdraw-as: "Withdraw as:"
   withdraw-as-token: Withdraw as {0}
+  swap-token: "Sell {0}"
   nothing: Nothing to claim
   claim-info: If you change the 'withdraw as' asset, we will swap your
     {0} for the chosen asset before depositing in your wallet.
@@ -129,7 +130,8 @@ zh:
   # Claim.vue
   claim-notice: 您尚未领取的收益已经自动复利，您可以自由选择是否领取。
   withdraw-as: "提款币种:"
-  withdraw-as-token: 提款为{0}
+  withdraw-as-token: 提款为 {0}
+  sell-token: 卖出 {0}
   nothing: 没有未提取的收益
   claim-info: 如果您修改收益结算的币种, 我们将在存款之前，帮您将
     {0} 兑换为您的所选资产 .
@@ -211,6 +213,7 @@ fr:
     est facultative.
   withdraw-as: "Retirer en tant que :"
   withdraw-as-token: Retirer en tant que {0}
+  sell-token: Vendre {0}
   nothing: Rien à réclamer
   claim-info:
     Si vous modifiez l'actif de retrait 'retirer en tant que', nous échangerons votre

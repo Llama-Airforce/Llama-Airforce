@@ -5,7 +5,7 @@ import {
   waitForTransactionReceipt,
 } from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
-import type { ZapWithdraw, Swap } from "@Pounders/Models";
+import type { ZapWithdraw } from "@Pounders/Models";
 
 import { UnionFxsVaultAddress } from "@/Util/Addresses";
 
@@ -16,7 +16,7 @@ export function uFxsWithdrawZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapWithdraw | Swap)[] {
+): ZapWithdraw[] {
   const config = getConfig();
   const withdraw = async () => {
     const address = getAddress();
@@ -46,12 +46,7 @@ export function uFxsWithdrawZaps(
     zap: () => withdraw(),
   };
 
-  const swap: Swap = {
-    buy: "ETH",
-    sell: "cvxFXS",
-  };
-
-  const options = [cvxFXS, swap];
+  const options = [cvxFXS];
 
   return options;
 }

@@ -10,7 +10,7 @@ import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { maxApprove } from "@/Wallet";
-import type { ZapDeposit, Swap } from "@Pounders/Models";
+import type { ZapDeposit } from "@Pounders/Models";
 import {
   getBalance,
   getDecimals,
@@ -44,7 +44,7 @@ export function uCvxDepositZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapDeposit | Swap)[] {
+): ZapDeposit[] {
   const deposit = async () => {
     const config = getConfig();
     const address = getAddress();
@@ -137,12 +137,7 @@ export function uCvxDepositZaps(
     depositDecimals: () => getDecimals(getConfig, PxCvxAddress),
   };
 
-  const swap: Swap = {
-    buy: "CVX",
-    sell: "ETH",
-  };
-
-  const options = [cvx, pxCVX, swap];
+  const options = [cvx, pxCVX];
 
   return options;
 }

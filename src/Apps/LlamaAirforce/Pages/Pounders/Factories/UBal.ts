@@ -29,6 +29,14 @@ export default function createBalPounder(
     description: "description-ubal",
     asset: AuraBalAddress,
     contract,
+    swapDeposit: {
+      buy: "auraBAL",
+      sell: "ETH",
+    },
+    swapWithdraw: {
+      buy: "ETH",
+      sell: "auraBAL",
+    },
     getPriceUnderlying,
     getApy,
     lp: null,

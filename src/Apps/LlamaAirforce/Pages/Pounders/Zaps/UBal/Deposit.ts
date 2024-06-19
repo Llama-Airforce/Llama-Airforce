@@ -6,7 +6,7 @@ import {
 } from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { maxApprove } from "@/Wallet";
-import type { ZapDeposit, Swap } from "@Pounders/Models";
+import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
 
 import { AuraBalAddress, UnionBalVaultAddress } from "@/Util/Addresses";
@@ -17,7 +17,7 @@ export function uBalDepositZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapDeposit | Swap)[] {
+): ZapDeposit[] {
   const deposit = async () => {
     const config = getConfig();
     const address = getAddress();
@@ -56,12 +56,7 @@ export function uBalDepositZaps(
     depositSymbol: "auraBAL",
   };
 
-  const swap: Swap = {
-    buy: "auraBAL",
-    sell: "ETH",
-  };
-
-  const options = [auraBAL, swap];
+  const options = [auraBAL];
 
   return options;
 }

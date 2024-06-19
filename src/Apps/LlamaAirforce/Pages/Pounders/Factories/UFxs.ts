@@ -36,6 +36,14 @@ export default function createFxsPounder(
     description: "description-ufxs",
     asset: CvxFxsAddress,
     contract,
+    swapDeposit: {
+      buy: "cvxFXS",
+      sell: "ETH",
+    },
+    swapWithdraw: {
+      buy: "ETH",
+      sell: "cvxFXS",
+    },
     distributor: DistributorUFxsAddress,
     getPriceUnderlying,
     getApy,

@@ -17,13 +17,25 @@
             @select="onDepositSelect"
           ></ZapSelect>
 
-          <Button
-            :value="depositLabel"
-            :primary="true"
-            :web3="true"
-            :disabled="!canDeposit"
-            @click="onDeposit(false)"
-          ></Button>
+          <div class="buttons">
+            <Button
+              :value="depositLabel"
+              :primary="true"
+              :web3="true"
+              :disabled="!canDeposit"
+              @click="onDeposit(false)"
+            ></Button>
+
+            <Button
+              v-if="!!swapDeposit"
+              class="swap"
+              :web3="true"
+              @click="showSwapDeposit = true"
+            >
+              <img :src="cow" />
+              {{ t("buy", [swapDeposit?.buy ?? "?"]) }}
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -44,13 +56,25 @@
             @select="onWithdrawSelect"
           ></ZapSelect>
 
-          <Button
-            :value="withdrawLabel"
-            :primary="true"
-            :web3="true"
-            :disabled="!canWithdraw"
-            @click="onWithdraw(false, false)"
-          ></Button>
+          <div class="buttons">
+            <Button
+              :value="withdrawLabel"
+              :primary="true"
+              :web3="true"
+              :disabled="!canWithdraw"
+              @click="onWithdraw(false, false)"
+            ></Button>
+
+            <Button
+              v-if="!!swapWithdraw"
+              class="swap"
+              :web3="true"
+              @click="showSwapWithdraw = true"
+            >
+              <img :src="cow" />
+              {{ t("sell", [swapWithdraw?.sell ?? "?"]) }}
+            </Button>
+          </div>
 
           <ModalYesNo
             :title="t('claim-rewards-title')"
@@ -71,15 +95,15 @@
     </div>
 
     <ModalCowSwap
-      :show="zapDeposit && isSwap(zapDeposit)"
-      :swap="(zapDeposit as Swap)"
-      @close="zapDeposit = zapsDeposit[0]"
+      :show="showSwapDeposit"
+      :swap="swapDeposit"
+      @close="showSwapDeposit = false"
     ></ModalCowSwap>
 
     <ModalCowSwap
-      :show="zapWithdraw && isSwap(zapWithdraw)"
-      :swap="(zapWithdraw as Swap)"
-      @close="zapWithdraw = zapsWithdraw[0]"
+      :show="showSwapWithdraw"
+      :swap="swapWithdraw"
+      @close="showSwapWithdraw = false"
     ></ModalCowSwap>
 
     <ModalSlippage
@@ -101,16 +125,11 @@ import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import ZapSelect from "@Pounders/Components/ZapSelect.vue";
 import { useUnionStore } from "@Pounders/Store";
-import type {
-  PounderId,
-  Zap,
-  ZapWithdraw,
-  ZapDeposit,
-  Swap,
-} from "@Pounders/Models";
-import { isZap, isSwap } from "@Pounders/Models";
+import type { PounderId, Zap, ZapWithdraw, ZapDeposit } from "@Pounders/Models";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 import ModalCowSwap from "@Pounders/Components/ModalCowSwap.vue";
+
+import cow from "@/Assets/Icons/Tokens/cow.webp";
 
 const { t } = useI18n();
 
@@ -145,11 +164,11 @@ const withdraw = ref(0n);
 const depositing = ref(false);
 const withdrawing = ref(false);
 
-const zapsWithdraw = ref<(ZapWithdraw | Swap)[]>([]);
-const zapsDeposit = ref<(ZapDeposit | Swap)[]>([]);
+const zapsWithdraw = ref<ZapWithdraw[]>([]);
+const zapsDeposit = ref<ZapDeposit[]>([]);
 
-const zapWithdraw = ref<ZapWithdraw | Swap | undefined>(undefined);
-const zapDeposit = ref<ZapDeposit | Swap | undefined>(undefined);
+const zapWithdraw = ref<ZapWithdraw | undefined>(undefined);
+const zapDeposit = ref<ZapDeposit | undefined>(undefined);
 
 const minAmountOutRef = ref(0);
 const minAmountOut = ref(0);
@@ -161,6 +180,16 @@ const claim = computed(() => store.claims[pounderId]);
 const description = computed(() => t(pounderStore.value.pounder.description));
 const state = computed(() => pounderStore.value.state);
 const zapsFactories = computed(() => pounderStore.value.zapsFactories);
+
+const showSwapDeposit = ref(false);
+const swapDeposit = computed(
+  () => pounderStore.value.pounder.swapDeposit ?? null
+);
+
+const showSwapWithdraw = ref(false);
+const swapWithdraw = computed(
+  () => pounderStore.value.pounder.swapWithdraw ?? null
+);
 
 /** The total withdrawable balance, including unclaimed amount. */
 const withdrawable = computed(() => {
@@ -230,7 +259,7 @@ watch(
     if (!newExpanded) {
       return;
     }
-    if (zapDeposit.value === undefined || isZap(zapDeposit.value)) {
+    if (zapDeposit.value === undefined) {
       await store.updateZapDeposit(pounderId, zapDeposit.value);
     }
   },
@@ -241,7 +270,7 @@ watch(
 
 // Events
 const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
-  if (!zapDeposit.value || !isZap(zapDeposit.value) || !depositInput.value) {
+  if (!zapDeposit.value || !depositInput.value) {
     return;
   }
 
@@ -263,7 +292,7 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
   }
 
   await tryNotifyLoading(depositing, async () => {
-    if (!zapDeposit.value || !isZap(zapDeposit.value)) return;
+    if (!zapDeposit.value) return;
 
     const zapMinAmountOut = numToBigNumber(
       minAmountOut.value,
@@ -287,7 +316,6 @@ const onWithdraw = async (
 ): Promise<void> => {
   if (
     !zapWithdraw.value ||
-    !isZap(zapWithdraw.value) ||
     !withdrawInput.value ||
     state.value.balanceWithdraw === undefined
   ) {
@@ -327,7 +355,7 @@ const onWithdraw = async (
   }
 
   await tryNotifyLoading(withdrawing, async () => {
-    if (!zapWithdraw.value || !isZap(zapWithdraw.value)) return;
+    if (!zapWithdraw.value) return;
 
     const zapMinAmountOut = numToBigNumber(minAmountOut.value, decimals);
     await zapWithdraw.value.zap(zapMinAmountOut);
@@ -337,7 +365,7 @@ const onWithdraw = async (
     await store.updatePounder(pounderId);
     await store.updateBalances(pounderId, address.value);
 
-    if (zapDeposit.value && isZap(zapDeposit.value)) {
+    if (zapDeposit.value) {
       await store.updateZapDeposit(pounderId, zapDeposit.value);
     }
 
@@ -391,12 +419,12 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
   await modalAction?.();
 };
 
-const onDepositSelect = (zap: Zap | Swap): void => {
-  zapDeposit.value = zap as ZapDeposit | Swap;
+const onDepositSelect = (zap: Zap): void => {
+  zapDeposit.value = zap as ZapDeposit;
 };
 
-const onWithdrawSelect = (zap: Zap | Swap): void => {
-  zapWithdraw.value = zap as ZapWithdraw | Swap;
+const onWithdrawSelect = (zap: Zap): void => {
+  zapWithdraw.value = zap as ZapWithdraw;
 };
 </script>
 
@@ -425,24 +453,6 @@ const onWithdrawSelect = (zap: Zap | Swap): void => {
       flex-direction: column;
       flex-grow: 1;
       flex-basis: 0;
-
-      > .actions {
-        display: flex;
-        flex-direction: column;
-
-        > .select {
-          position: absolute;
-          width: 15rem;
-
-          &:not(.expanded) {
-            display: none;
-          }
-        }
-
-        > button {
-          align-self: flex-end;
-        }
-      }
     }
 
     > .withdraw {
@@ -450,22 +460,48 @@ const onWithdrawSelect = (zap: Zap | Swap): void => {
       flex-direction: column;
       flex-grow: 1;
       flex-basis: 0;
+    }
 
-      > .actions {
-        display: flex;
-        flex-direction: column;
+    .actions {
+      display: grid;
+      grid-template-columns: 6fr 4fr;
+      gap: 1rem;
 
-        > .select {
-          position: absolute;
-          width: 15rem;
+      @media only screen and (max-width: 1280px) {
+        grid-template-columns: 1fr;
+      }
 
-          &:not(.expanded) {
-            display: none;
+      > .select {
+        align-self: start;
+
+        &:not(.expanded) {
+          display: none;
+        }
+      }
+
+      > .buttons {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+
+        > button {
+          justify-content: center;
+
+          img {
+            width: 20px;
+            height: 20px;
+            object-fit: scale-down;
+            margin-right: 1ch;
           }
         }
 
-        > button {
-          align-self: flex-end;
+        > .swap {
+          background-color: var(--c-lvl2);
+
+          &:hover {
+            background-color: var(--c-lvl3);
+          }
         }
       }
     }
@@ -497,6 +533,9 @@ claim-rewards-title: Claim Union rewards
 claim-first: In order to withdraw the requested amount you first need to claim
   your Union rewards
 
+buy: Buy {0}
+sell: Sell {0}
+
 description-ucrv: This pounder stakes cvxCRV single-sidedly on Convex.
   Llama Airforce devs actively choose the highest yielding reward weight option for the staked cvxCRV.
 description-ufxs: This pounder stakes cvxFXS single-sidedly on Convex.
@@ -517,6 +556,9 @@ zap-withdrawing: 提取。。。
 claim-rewards-title: 索取奖励
 claim-first: 在提取您要求的金额之前，请先领取您的收益
 
+buy: 购买 {0}
+sell: 卖出 {0}
+
 information: 信息
 </i18n>
 
@@ -528,6 +570,9 @@ zap-withdrawing: Retirer...
 claim-rewards-title: Réclamer les récompenses de l'Union
 claim-first: Pour retirer le montant demandé, vous devez d'abord réclamer
   vos récompenses de l'Union
+
+buy: Acheter {0}
+sell: Vendre {0}
 
 description-ucrv: Ce pounder stake du cvxCRV en unilatéral sur Convex.
   Les développeurs de Llama Airforce sélectionnent activement l'option de récompense offrant le rendement le plus élevé pour le cvxCRV staké.

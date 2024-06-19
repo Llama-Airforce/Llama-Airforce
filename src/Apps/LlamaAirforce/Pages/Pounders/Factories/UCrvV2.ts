@@ -36,6 +36,14 @@ export default function createCrvV2Pounder(
     description: "description-ucrv",
     asset: CvxCrvAddress,
     contract,
+    swapDeposit: {
+      buy: "cvxCRV",
+      sell: "ETH",
+    },
+    swapWithdraw: {
+      buy: "ETH",
+      sell: "cvxCRV",
+    },
     distributor: DistributorUCrvAddressV2,
     getPriceUnderlying,
     getApy,

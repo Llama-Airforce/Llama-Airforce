@@ -36,6 +36,14 @@ export default function createPrismaPounder(
     description: "description-uprisma",
     asset: CvxPrismaAddress,
     contract,
+    swapDeposit: {
+      buy: "cvxPRISMA",
+      sell: "ETH",
+    },
+    swapWithdraw: {
+      buy: "ETH",
+      sell: "cvxPRISMA",
+    },
     distributor: DistributorUPrismaAddress,
     getPriceUnderlying,
     getApy,

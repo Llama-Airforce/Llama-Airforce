@@ -39,6 +39,14 @@ export default function createCvxPounder(
     asset: PxCvxAddress,
     contract,
     distributor: DistributorUCvxAddress,
+    swapDeposit: {
+      buy: "CVX",
+      sell: "ETH",
+    },
+    swapWithdraw: {
+      buy: "ETH",
+      sell: "CVX",
+    },
     getPriceUnderlying,
     getApy,
     lp: null,

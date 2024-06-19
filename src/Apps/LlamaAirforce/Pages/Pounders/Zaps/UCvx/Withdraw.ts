@@ -8,7 +8,7 @@ import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import type { ZapWithdraw, Swap } from "@Pounders/Models";
+import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
@@ -25,7 +25,7 @@ export function uCvxWithdrawZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,
   getInput: () => bigint | undefined
-): (ZapWithdraw | Swap)[] {
+): ZapWithdraw[] {
   const withdraw = async () => {
     const config = getConfig();
     const address = getAddress();
@@ -107,12 +107,7 @@ export function uCvxWithdrawZaps(
     },
   };
 
-  const swap: Swap = {
-    buy: "ETH",
-    sell: "CVX",
-  };
-
-  const options = [cvx, pxCVX, swap];
+  const options = [cvx, pxCVX];
 
   return options;
 }

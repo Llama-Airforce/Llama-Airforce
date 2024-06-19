@@ -19,7 +19,7 @@ import {
   UnionCvxVaultAddress,
   DistributorUCvxAddress,
 } from "@/Util/Addresses";
-import { getVirtualPrice } from "@Pounders/Models";
+import { type Swap, getVirtualPrice } from "@Pounders/Models";
 import { type AirdropId, type Claim } from "@LAF/Services/UnionService";
 
 export type Airdrop = {
@@ -31,6 +31,7 @@ export type Airdrop = {
   amountAsset: number;
   amountDollar: number;
   distributorAddress: `0x${string}`;
+  swap?: Swap;
 };
 
 export type AirdropUCrv = Airdrop & {
@@ -101,6 +102,10 @@ export async function uCrvAirdrop(
     amountAsset,
     amountDollar,
     distributorAddress: DistributorUCrvAddress,
+    swap: {
+      buy: "ETH",
+      sell: "cvxCRV",
+    },
   };
 }
 
@@ -132,6 +137,10 @@ export async function uFxsAirdrop(
     amountAsset,
     amountDollar,
     distributorAddress: DistributorUFxsAddress,
+    swap: {
+      buy: "ETH",
+      sell: "cvxFXS",
+    },
   };
 }
 
@@ -163,6 +172,10 @@ export async function uPrismaAirdrop(
     amountAsset,
     amountDollar,
     distributorAddress: DistributorUPrismaAddress,
+    swap: {
+      buy: "ETH",
+      sell: "cvxPRISMA",
+    },
   };
 }
 
@@ -194,5 +207,9 @@ export async function uCvxAirdrop(
     amountAsset,
     amountDollar,
     distributorAddress: DistributorUCvxAddress,
+    swap: {
+      buy: "CVX",
+      sell: "ETH",
+    },
   };
 }
