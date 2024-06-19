@@ -140,6 +140,7 @@ function createUCvxPounder() {
     zapsFactories,
     state: createPounderState(),
   };
+  store.updateClaim(pounder.id, claimUCvx.value);
 }
 
 function createUCrvPounder() {
@@ -165,6 +166,7 @@ function createUCrvPounder() {
     zapsFactories,
     state: createPounderState(),
   };
+  store.updateClaim(pounder.id, claimUCrv.value);
 }
 
 function createUFxsPounder() {
@@ -190,6 +192,7 @@ function createUFxsPounder() {
     zapsFactories,
     state: createPounderState(),
   };
+  store.updateClaim(pounder.id, claimUFxs.value);
 }
 
 function createUPrismaPounder() {
@@ -215,6 +218,7 @@ function createUPrismaPounder() {
     zapsFactories,
     state: createPounderState(),
   };
+  store.updateClaim(pounder.id, claimUPrisma.value);
 }
 
 function createUFxsLpPounder() {
