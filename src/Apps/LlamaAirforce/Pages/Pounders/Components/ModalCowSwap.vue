@@ -48,8 +48,6 @@ const emit = defineEmits<{
 
   @media only screen and (max-width: 1280px) {
     width: 80vw;
-    height: 100%;
-    max-height: 80vw;
   }
 }
 
