@@ -136,7 +136,7 @@ export default class SnapshotService extends ServiceBase {
     proposal: ProposalId,
     voters: string[] = []
   ): Promise<Vote[]> {
-    const votersChecksummed = voters.map(getAddress);
+    const votersChecksummed = voters.map((x) => getAddress(x));
     const voterIn =
       voters && voters.length > 0
         ? `voter_in: ${JSON.stringify(votersChecksummed)}`
