@@ -1,5 +1,4 @@
-import { getContract } from "viem";
-import { type Config } from "@wagmi/core";
+import { type PublicClient, getContract } from "viem";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { type DefiLlamaService } from "@/Services";
@@ -75,16 +74,16 @@ export function isAirdropUCvx(airdrop: Airdrop): airdrop is AirdropUCvx {
 }
 
 export async function uCrvAirdrop(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCrv> {
-  const cvxCrvPrice = await getCvxCrvPrice(llamaService, config);
+  const cvxCrvPrice = await getCvxCrvPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
     address: UnionCrvVaultAddress,
-    client: config.getClient(),
+    client,
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
@@ -106,16 +105,16 @@ export async function uCrvAirdrop(
 }
 
 export async function uFxsAirdrop(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUFxs> {
-  const cvxFxsPrice = await getCvxFxsPrice(llamaService, config);
+  const cvxFxsPrice = await getCvxFxsPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
     address: UnionFxsVaultAddress,
-    client: config.getClient(),
+    client,
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
@@ -137,16 +136,16 @@ export async function uFxsAirdrop(
 }
 
 export async function uPrismaAirdrop(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUPrisma> {
-  const cvxPrismaPrice = await getCvxPrismaPrice(llamaService, config);
+  const cvxPrismaPrice = await getCvxPrismaPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
     address: UnionPrismaVaultAddress,
-    client: config.getClient(),
+    client,
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
@@ -168,16 +167,16 @@ export async function uPrismaAirdrop(
 }
 
 export async function uCvxAirdrop(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   claim: Claim | undefined
 ): Promise<AirdropUCvx> {
-  const pxCvxPrice = await getPxCvxPrice(llamaService, config);
+  const pxCvxPrice = await getPxCvxPrice(llamaService, client);
 
   const utkn = getContract({
     abi: abiUnionVaultPirex,
     address: UnionCvxVaultAddress,
-    client: config.getClient(),
+    client,
   });
   const virtualPrice = await getVirtualPrice(utkn);
 

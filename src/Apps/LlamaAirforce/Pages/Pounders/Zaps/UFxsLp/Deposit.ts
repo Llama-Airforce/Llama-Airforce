@@ -1,6 +1,7 @@
 import { type Address } from "viem";
 import {
   type Config,
+  getPublicClient,
   writeContract,
   waitForTransactionReceipt,
 } from "@wagmi/core";
@@ -117,12 +118,16 @@ export function uFxsLpDepositZaps(
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
+      const config = getConfig();
+      const client = getPublicClient(config);
+      if (!client) throw Error("Cannot create public viem client");
+
       const fxs = await llamaService
         .getPrice(FxsAddress)
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, getConfig())
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -145,12 +150,14 @@ export function uFxsLpDepositZaps(
       const llamaService = new DefiLlamaService(host);
 
       const config = getConfig();
+      const client = getPublicClient(config);
+      if (!client) throw Error("Cannot create public viem client");
 
-      const cvxfxs = await getCvxFxsPrice(llamaService, config)
+      const cvxfxs = await getCvxFxsPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, config)
+      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

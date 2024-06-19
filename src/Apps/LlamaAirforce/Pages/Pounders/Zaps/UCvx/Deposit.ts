@@ -1,6 +1,7 @@
 import { type Address } from "viem";
 import {
   type Config,
+  getPublicClient,
   readContract,
   writeContract,
   waitForTransactionReceipt,
@@ -110,12 +111,16 @@ export function uCvxDepositZaps(
     ): Promise<bigint> => {
       const llamaService = new DefiLlamaService(host);
 
+      const config = getConfig();
+      const client = getPublicClient(config);
+      if (!client) throw Error("Cannot create public viem client");
+
       const cvx = await llamaService
         .getPrice(CvxAddress)
         .then((x) => x.price)
         .catch(() => Infinity);
 
-      const pxcvx = await getPxCvxPrice(llamaService, getConfig())
+      const pxcvx = await getPxCvxPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

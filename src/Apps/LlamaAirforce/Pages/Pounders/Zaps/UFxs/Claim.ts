@@ -1,6 +1,7 @@
 import { type Address } from "viem";
 import {
   type Config,
+  getPublicClient,
   writeContract,
   waitForTransactionReceipt,
 } from "@wagmi/core";
@@ -84,8 +85,10 @@ export function uFxsClaimZaps(
       const llamaService = new DefiLlamaService(host);
 
       const config = getConfig();
+      const client = getPublicClient(config);
+      if (!client) throw Error("Cannot create public viem client");
 
-      const cvxfxs = await getCvxFxsPrice(llamaService, config)
+      const cvxfxs = await getCvxFxsPrice(llamaService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

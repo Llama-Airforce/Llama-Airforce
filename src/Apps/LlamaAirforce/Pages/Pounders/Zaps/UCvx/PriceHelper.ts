@@ -1,5 +1,5 @@
 import { getContract } from "viem";
-import { type Config } from "@wagmi/core";
+import { type Config, getPublicClient } from "@wagmi/core";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPrice } from "@/Util";
 import { UnionCvxVaultAddress } from "@/Util/Addresses";
@@ -10,14 +10,17 @@ export async function getUCvxPrice(
   llamaService: DefiLlamaService,
   config: Config
 ) {
-  const pxcvx = await getPxCvxPrice(llamaService, config)
+  const client = getPublicClient(config);
+  if (!client) return 0;
+
+  const pxcvx = await getPxCvxPrice(llamaService, client)
     .then((x) => x)
     .catch(() => Infinity);
 
   const utkn = getContract({
     abi: abiUnionVaultPirex,
     address: UnionCvxVaultAddress,
-    client: config.getClient(),
+    client,
   });
   const vp = await getVirtualPrice(utkn);
   const ucvx = pxcvx * vp;

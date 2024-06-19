@@ -1,5 +1,5 @@
 import { getContract } from "viem";
-import { type Config, readContract } from "@wagmi/core";
+import { type Config, readContract, getPublicClient } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { getCvxFxsLpPrice, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
@@ -18,7 +18,10 @@ export default function createFxsLpPounder(
   config: Config,
   llamaService: DefiLlamaService
 ): Pounder<VaultUnion> {
-  const getPriceUnderlying = () => getCvxFxsLpPrice(llamaService, config);
+  const client = getPublicClient(config);
+  if (!client) throw Error("Cannot create public viem client");
+
+  const getPriceUnderlying = () => getCvxFxsLpPrice(llamaService, client);
   const getApy = () => getCvxFxsLpApy();
 
   const getOraclePrice = () =>
@@ -31,7 +34,7 @@ export default function createFxsLpPounder(
   const contract = getContract({
     abi,
     address: UnionFxsVaultAddressV1,
-    client: config.getClient(),
+    client,
   });
 
   return {

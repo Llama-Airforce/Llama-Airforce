@@ -5,7 +5,6 @@ import {
   erc20Abi as abiERC20,
   getContract,
 } from "viem";
-import { type Config, readContract, multicall } from "@wagmi/core";
 import { abi as abiCurveV1 } from "@/ABI/Curve/CurveV1FactoryPool";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { abi as abiCurveV6 } from "@/ABI/Curve/CurveV6FactoryPool";
@@ -66,10 +65,10 @@ export function getCvxPrice(llamaService: DefiLlamaService): Promise<number> {
 
 export async function getPxCvxPrice(
   llamaService: DefiLlamaService,
-  config: Config
+  client: PublicClient
 ): Promise<number> {
   const cvxPrice = await getDefiLlamaPrice(llamaService, CvxAddress);
-  const price_oracle = await readContract(config, {
+  const price_oracle = await client.readContract({
     abi: abiCurveV2,
     address: LPxCvxFactoryAddress,
     functionName: "price_oracle",
@@ -81,10 +80,10 @@ export async function getPxCvxPrice(
 
 export async function getCvxCrvPrice(
   llamaService: DefiLlamaService,
-  config: Config
+  client: PublicClient
 ): Promise<number> {
   const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
-  const price_oracle = await readContract(config, {
+  const price_oracle = await client.readContract({
     abi: abiCvxCrv,
     address: CvxCrvFactoryAddress,
     functionName: "price_oracle",
@@ -96,10 +95,10 @@ export async function getCvxCrvPrice(
 
 export async function getCvxPrismaPrice(
   llamaService: DefiLlamaService,
-  config: Config
+  client: PublicClient
 ): Promise<number> {
   const prismaPrice = await getDefiLlamaPrice(llamaService, PrismaAddress);
-  const price_oracle = await readContract(config, {
+  const price_oracle = await client.readContract({
     abi: abiCurveV6,
     address: CvxPrismaFactoryAddress,
     functionName: "price_oracle",
@@ -111,7 +110,7 @@ export async function getCvxPrismaPrice(
 
 export async function getCvxCrvPriceV2(
   llamaService: DefiLlamaService,
-  config: Config
+  client: PublicClient
 ): Promise<number> {
   const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
 
@@ -119,7 +118,7 @@ export async function getCvxCrvPriceV2(
   const pool = getContract({
     abi: abiCurveV1,
     address: CvxCrvFactoryAddressV1,
-    client: config.getClient(),
+    client,
   });
   const discount = await getDiscount(pool);
 
@@ -128,11 +127,11 @@ export async function getCvxCrvPriceV2(
 
 export async function getCvxFxsPrice(
   llamaService: DefiLlamaService,
-  config: Config
+  client: PublicClient
 ): Promise<number> {
   const fxsPrice = await getDefiLlamaPrice(llamaService, FxsAddress);
 
-  const price_oracle = await readContract(config, {
+  const price_oracle = await client.readContract({
     abi: abiCurveV2,
     address: CvxFxsFactoryAddress,
     functionName: "price_oracle",
@@ -144,12 +143,12 @@ export async function getCvxFxsPrice(
 
 export async function getCurveV2LpPrice(
   llamaService: DefiLlamaService,
-  config: Config,
+  client: PublicClient,
   tokenAddress: Address,
   factoryAddress: Address,
   factoryTokenAddress: Address
 ): Promise<number> {
-  const multicallResult = await multicall(config, {
+  const multicallResult = await client.multicall({
     contracts: [
       {
         address: factoryAddress,
@@ -200,11 +199,11 @@ export async function getCurveV2LpPrice(
 
 export async function getCvxFxsLpPrice(
   llamaService: DefiLlamaService,
-  config: Config
+  client: PublicClient
 ): Promise<number> {
   return getCurveV2LpPrice(
     llamaService,
-    config,
+    client,
     FxsAddress,
     CvxFxsFactoryAddress,
     CvxFxsFactoryERC20Address

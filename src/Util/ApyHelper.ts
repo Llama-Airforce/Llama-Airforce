@@ -1,5 +1,4 @@
-import { type Address, getContract } from "viem";
-import { type Config } from "@wagmi/vue";
+import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiCvxCrvUtil } from "@/ABI/Convex/CvxCrvUtilities";
 import { abi as abiCvxFxsUtil } from "@/ABI/Convex/CvxFxsRewards";
 import { abi as abiCvxPrismaUtil } from "@/ABI/Convex/CvxPrismaRewards";
@@ -45,14 +44,14 @@ export function getCvxApy(flyerService: FlyerService): Promise<number> {
 }
 
 export async function getCvxCrvAprs(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService,
   address?: Address // If empty, you'll get all APRs of all weights.
 ): Promise<number[]> {
   const util = getContract({
     abi: abiCvxCrvUtil,
     address: CvxCrvUtilities,
-    client: config.getClient(),
+    client,
   });
 
   const mainRates = await (address
@@ -113,10 +112,10 @@ export async function getCvxCrvAprs(
 }
 
 export async function getCvxCrvApy(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Promise<number> {
-  const aprs = await getCvxCrvAprs(config, llamaService, UCrvStrategyAddress);
+  const aprs = await getCvxCrvAprs(client, llamaService, UCrvStrategyAddress);
 
   // Sum all individual APRs together.
   const apr = aprs.reduce((acc, x) => acc + x, 0);
@@ -125,10 +124,10 @@ export async function getCvxCrvApy(
 }
 
 export async function getCvxCrvApyV2(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Promise<number> {
-  const aprs = await getCvxCrvAprs(config, llamaService, UCrvStrategyAddressV2);
+  const aprs = await getCvxCrvAprs(client, llamaService, UCrvStrategyAddressV2);
 
   // Sum all individual APRs together.
   const apr = aprs.reduce((acc, x) => acc + x, 0);
@@ -198,13 +197,13 @@ export function getAuraBalApy(flyerService: FlyerService): Promise<number> {
 }
 
 export async function getCvxFxsApy(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Promise<number> {
   const util = getContract({
     abi: abiCvxFxsUtil,
     address: CvxFxsStaking,
-    client: config.getClient(),
+    client,
   });
 
   const getRewardRate = async (address: Address): Promise<number> => {
@@ -221,7 +220,7 @@ export async function getCvxFxsApy(
   const rateCvx = await getRewardRate(CvxAddress);
   const supply = bigNumToNumber(await util.read.totalSupply(), 18n);
 
-  const priceCvxFxs = await getCvxFxsPrice(llamaService, config);
+  const priceCvxFxs = await getCvxFxsPrice(llamaService, client);
   const priceFxs = await getDefiLlamaPrice(llamaService, FxsAddress);
   const priceCvx = await getDefiLlamaPrice(llamaService, CvxAddress);
 
@@ -239,13 +238,13 @@ export async function getCvxFxsApy(
 }
 
 export async function getCvxPrismaApy(
-  config: Config,
+  client: PublicClient,
   llamaService: DefiLlamaService
 ): Promise<number> {
   const util = getContract({
     abi: abiCvxPrismaUtil,
     address: CvxPrismaStaking,
-    client: config.getClient(),
+    client,
   });
 
   const getRewardRate = async (address: Address): Promise<number> => {
@@ -263,7 +262,7 @@ export async function getCvxPrismaApy(
   const rateMkUsd = await getRewardRate(MkUsdAddress);
   const supply = bigNumToNumber(await util.read.totalSupply(), 18n);
 
-  const priceCvxPrisma = await getCvxPrismaPrice(llamaService, config);
+  const priceCvxPrisma = await getCvxPrismaPrice(llamaService, client);
   const pricePrisma = await getDefiLlamaPrice(llamaService, PrismaAddress);
   const priceCvx = await getDefiLlamaPrice(llamaService, CvxAddress);
   const priceMkUsd = await getDefiLlamaPrice(llamaService, MkUsdAddress);

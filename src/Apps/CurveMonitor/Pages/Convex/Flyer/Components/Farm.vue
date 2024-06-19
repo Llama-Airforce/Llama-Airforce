@@ -61,6 +61,7 @@
 </template>
 
 <script setup lang="ts">
+import { getPublicClient } from "@wagmi/core";
 import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
@@ -90,7 +91,10 @@ const cvxApr = computed((): number | undefined => {
 watch(
   address,
   async () => {
-    const aprs = await getCvxCrvAprs(config, llamaService);
+    const client = getPublicClient(config);
+    if (!client) throw Error("Cannot create public viem client");
+
+    const aprs = await getCvxCrvAprs(client, llamaService);
 
     // Take the average APR of gov rewards and stable
     const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
