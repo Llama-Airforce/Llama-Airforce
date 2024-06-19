@@ -39,7 +39,7 @@
 
           <div class="connectors">
             <div
-              v-for="connector in connectors"
+              v-for="connector in connectorsFiltered"
               :key="connector.id"
               class="connector"
             >
@@ -75,7 +75,17 @@ import safe from "@/Assets/Icons/Wallets/safe.webp";
 const { t } = useI18n();
 
 const { connect } = useConnect();
+
 const connectors = useConnectors();
+const connectorsSupport = [
+  "injected",
+  "walletConnect",
+  "coinbaseWalletSDK",
+  "safe",
+];
+const connectorsFiltered = computed(() =>
+  connectors.value.filter((x) => connectorsSupport.includes(x.id))
+);
 
 const showConnectors = ref(false);
 
