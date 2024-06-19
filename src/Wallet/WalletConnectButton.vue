@@ -53,7 +53,7 @@
                   class="empty"
                 ></div>
 
-                <div class="name">{{ connector.name }}</div>
+                <div class="name">{{ name(connector) }}</div>
               </Button>
             </div>
           </div>
@@ -94,6 +94,14 @@ function icon(connector: Connector) {
     default:
       return "";
   }
+}
+
+function name(connector: Connector) {
+  if (connector.id === "injected") {
+    return "Browser Extension";
+  }
+
+  return connector.name;
 }
 
 function onConnect(connector: Connector) {
