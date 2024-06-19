@@ -64,8 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Connector } from "@wagmi/vue";
-import { useWallet } from "@/Wallet";
+import { type Connector, useConnect, useConnectors } from "@wagmi/vue";
 
 import injected from "@/Assets/Icons/Wallets/injected.webp";
 import rabby from "@/Assets/Icons/Wallets/rabby.svg";
@@ -75,7 +74,8 @@ import safe from "@/Assets/Icons/Wallets/safe.webp";
 
 const { t } = useI18n();
 
-const { connectors, connect } = useWallet();
+const { connect } = useConnect();
+const connectors = useConnectors();
 
 const showConnectors = ref(false);
 

@@ -6,6 +6,7 @@
 </template>
 
 <script setup lang="ts">
+import { useAccount } from "@wagmi/vue";
 import {
   type EthereumProvider,
   type CowSwapWidgetParams,
@@ -13,7 +14,6 @@ import {
   TradeType,
   createCowSwapWidget,
 } from "@cowprotocol/widget-lib";
-import { useWallet } from "@/Wallet";
 
 // Props
 interface Props {
@@ -25,7 +25,11 @@ interface Props {
 const { buy, sell, level } = defineProps<Props>();
 
 // Cowswap
-const { providerCowSwap: provider } = useWallet();
+const { connector } = useAccount();
+const provider = computedAsync(async () => {
+  const prov = await connector.value?.getProvider();
+  return prov;
+});
 
 const cow = ref<HTMLElement | undefined>(undefined);
 let cowHandler: CowSwapWidgetHandler | undefined = undefined;

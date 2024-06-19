@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { useSwitchChain } from "@wagmi/vue";
+import { useDisconnect, useSwitchChain } from "@wagmi/vue";
 import { addressShort, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 
@@ -58,7 +58,8 @@ interface Props {
 const { labelPleaseConnect } = defineProps<Props>();
 
 // Refs
-const { isConnected, network, address, disconnect } = useWallet();
+const { disconnect } = useDisconnect();
+const { isConnected, network, address } = useWallet();
 const { switchChain } = useSwitchChain();
 
 const supportedNetwork = computed(() => network.value === "ethereum");
