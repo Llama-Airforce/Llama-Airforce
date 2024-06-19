@@ -244,21 +244,25 @@ watch(
 }
 
 .vote-content {
-  min-width: 33vw;
+  width: 33vw;
+
+  @media only screen and (max-width: 1280px) {
+    width: 80vw;
+  }
 
   .veprisma {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
 
     > .info {
       width: 100%;
 
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 2rem;
       font-size: 1rem;
 
       > .description {
