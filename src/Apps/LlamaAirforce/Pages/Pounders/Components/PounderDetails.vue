@@ -166,11 +166,7 @@ const zapsFactories = computed(() => pounderStore.value.zapsFactories);
 const withdrawable = computed(() => {
   const { balanceWithdraw, balanceUnclaimed } = state.value;
 
-  if (balanceWithdraw === undefined || balanceUnclaimed === undefined) {
-    return undefined;
-  }
-
-  return balanceWithdraw + balanceUnclaimed;
+  return (balanceWithdraw ?? 0n) + (balanceUnclaimed ?? 0n);
 });
 
 const depositInput = computed(() => {
