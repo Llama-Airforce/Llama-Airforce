@@ -49,7 +49,8 @@ const queryClient = new QueryClient({
       // Ignore these wagmi errors for now.
       if (
         error.message.includes("Connector not connected") ||
-        error.message.includes("connector2.getAccounts is not a function")
+        error.message.includes("connector2.getAccounts is not a function") ||
+        error.message.includes("w.getAccount is not a function")
       ) {
         return;
       }
