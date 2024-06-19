@@ -51,7 +51,9 @@ export function useClaim(
       return claim.value;
     }
 
-    return isFrozen.value ?? isClaimed.value ? undefined : claim.value;
+    // The null coasc operator is fake news, it breaks the code.
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    return isFrozen.value || isClaimed.value ? undefined : claim.value;
   });
 
   return { claim: validClaim, refetch };
