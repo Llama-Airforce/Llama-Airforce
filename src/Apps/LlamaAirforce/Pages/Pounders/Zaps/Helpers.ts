@@ -1,4 +1,4 @@
-import { type Address } from "viem";
+import { type Address, erc20Abi as abiERC20 } from "viem";
 import {
   type Config,
   readContract,
@@ -6,7 +6,6 @@ import {
   waitForTransactionReceipt,
 } from "@wagmi/core";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
-import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { numToBigNumber } from "@/Util";
 import type { Airdrop } from "@Pounders/Models";
 

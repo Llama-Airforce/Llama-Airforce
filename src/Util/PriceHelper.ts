@@ -2,6 +2,7 @@ import {
   type Address,
   type PublicClient,
   type GetContractReturnType,
+  erc20Abi as abiERC20,
   getContract,
 } from "viem";
 import { type Config, readContract, multicall } from "@wagmi/core";
@@ -9,7 +10,6 @@ import { abi as abiCurveV1 } from "@/ABI/Curve/CurveV1FactoryPool";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { abi as abiCurveV6 } from "@/ABI/Curve/CurveV6FactoryPool";
 import { abi as abiCvxCrv } from "@/ABI/Curve/CvxCrvFactoryPool";
-import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
 import {
   CvxAddress,

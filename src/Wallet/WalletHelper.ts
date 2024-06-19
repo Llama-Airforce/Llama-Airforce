@@ -1,11 +1,10 @@
-import { type Address, maxUint256 } from "viem";
+import { type Address, maxUint256, erc20Abi as abiERC20 } from "viem";
 import {
   type Config,
   readContract,
   writeContract,
   waitForTransactionReceipt,
 } from "@wagmi/core";
-import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 
 export function addressShort(address?: string, digits = 6): string {
   if (!address) {

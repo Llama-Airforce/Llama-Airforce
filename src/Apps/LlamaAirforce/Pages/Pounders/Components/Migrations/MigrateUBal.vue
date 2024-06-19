@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
+import { erc20Abi as abiERC20 } from "viem";
 import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
 import { useConfig, useReadContract } from "@wagmi/vue";
-import { abi as abiERC20 } from "@/ABI/Standards/ERC20";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { useWallet } from "@/Wallet";
 
