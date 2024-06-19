@@ -272,7 +272,11 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
     await zapDeposit.value.zap(zapMinAmountOut);
 
     deposit.value = 0n;
+
+    await store.updatePounder(pounderId);
+    await store.updateBalances(pounderId, address.value);
     await store.updateZapDeposit(pounderId, zapDeposit.value);
+
     emit("deposit");
   });
 };
@@ -329,6 +333,14 @@ const onWithdraw = async (
     await zapWithdraw.value.zap(zapMinAmountOut);
 
     withdraw.value = 0n;
+
+    await store.updatePounder(pounderId);
+    await store.updateBalances(pounderId, address.value);
+
+    if (zapDeposit.value && isZap(zapDeposit.value)) {
+      await store.updateZapDeposit(pounderId, zapDeposit.value);
+    }
+
     emit("withdraw");
   });
 };
@@ -361,6 +373,8 @@ const onClaimAndWithdraw = async (): Promise<void> => {
     });
 
     await waitForTransactionReceipt(config, { hash });
+
+    store.updateClaim(pounderId);
 
     await onWithdraw(true, false);
   });
