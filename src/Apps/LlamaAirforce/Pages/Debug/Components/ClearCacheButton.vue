@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 const onClearCache = (): void => {
-  window.localStorage.removeItem("connectedWallet");
+  window.localStorage.clear();
 };
 </script>
 
