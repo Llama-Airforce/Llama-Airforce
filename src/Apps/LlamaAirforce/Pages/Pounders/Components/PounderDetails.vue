@@ -259,7 +259,7 @@ watch(
     if (!newExpanded) {
       return;
     }
-    if (zapDeposit.value === undefined) {
+    if (zapDeposit.value !== undefined) {
       await store.updateZapDeposit(pounderId, zapDeposit.value);
     }
   },
