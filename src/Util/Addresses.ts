@@ -1,3 +1,5 @@
+import { type Address } from "viem";
+
 // Votium
 export const VotiumAddress = "0xde1e6a7ed0ad3f61d531a8a78e83ccddbd6e0c49";
 export const VotiumRegistryAddress =
@@ -14,7 +16,7 @@ export const TreasuryArbitrumAddress =
   "0x657ce046d98d163ef4f846210f25919fa7b31944";
 export const TreasuryBaseAddress = "0x375b28a603be144a646a506fb6673cc3182fc8df";
 
-export const UnionAddresses = [
+export const UnionAddresses: Address[] = [
   "0xcc2a0f5e95c88aabd7b8e0db5c5252820cd47f91",
   "0xd248e64b2d3d00d7f6a21009c3fcc1bd593600c9",
   "0x835076176ab24f2c4372ba15c8e7e76c1429e66f",

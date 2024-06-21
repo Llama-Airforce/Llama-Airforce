@@ -1,3 +1,4 @@
+import { type Address } from "viem";
 import {
   DistributorUCrvAddress,
   DistributorUCvxAddress,
@@ -11,8 +12,8 @@ import {
 import { type AirdropId } from "@LAF/Services/UnionService";
 
 export type Distributor = {
-  address: string;
-  tokenAddress: string;
+  address: Address;
+  tokenAddress: Address;
   network: "ethereum" | "base";
 };
 

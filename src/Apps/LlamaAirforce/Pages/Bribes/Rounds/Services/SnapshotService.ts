@@ -1,5 +1,5 @@
 import { mapKeys } from "lodash";
-import { getAddress } from "viem";
+import { type Address, getAddress } from "viem";
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
@@ -20,10 +20,10 @@ export type Delegation = {
   id: string;
 
   /** The one who votes on behalf of someone. */
-  delegate: string;
+  delegate: Address;
 
   /** The one who let somebody else use their voting power. */
-  delegator: string;
+  delegator: Address;
 
   timestamp: number;
   space: string;
@@ -31,11 +31,11 @@ export type Delegation = {
 
 export type Vote = {
   id: string;
-  voter: string;
+  voter: Address;
   choice: Record<string, number>;
 };
 
-export type Scores = Record<string, number>[];
+export type Scores = Record<Address, number>[];
 
 export default class SnapshotService extends ServiceBase {
   public async getProposal(proposalId: ProposalId): Promise<Proposal> {
@@ -113,8 +113,10 @@ export default class SnapshotService extends ServiceBase {
       timestampLast = Math.max(...delegations.map((d) => d.timestamp));
 
       return delegations.map((delegation) => {
-        delegation.delegate = delegation.delegate.toLocaleLowerCase();
-        delegation.delegator = delegation.delegator.toLocaleLowerCase();
+        delegation.delegate =
+          delegation.delegate.toLocaleLowerCase() as Address;
+        delegation.delegator =
+          delegation.delegator.toLocaleLowerCase() as Address;
 
         return delegation;
       });
@@ -165,7 +167,7 @@ export default class SnapshotService extends ServiceBase {
         };
       }>(SNAPSHOT_URL, { query }).then((resp) =>
         resp.data.votes.map((vote) => {
-          vote.voter = vote.voter.toLocaleLowerCase();
+          vote.voter = vote.voter.toLocaleLowerCase() as Address;
 
           return vote;
         })
@@ -194,7 +196,7 @@ export default class SnapshotService extends ServiceBase {
   public async getScores(
     protocol: Protocol,
     snapshot: number,
-    voters: string[]
+    voters: Address[]
   ): Promise<Scores> {
     switch (protocol) {
       case "cvx-crv":
@@ -212,7 +214,7 @@ export default class SnapshotService extends ServiceBase {
 
   public async getScoresCvx(
     snapshot: number,
-    voters: string[]
+    voters: Address[]
   ): Promise<Scores> {
     const address =
       snapshot >= 13948583
@@ -255,7 +257,7 @@ export default class SnapshotService extends ServiceBase {
 
   public async getScoresAura(
     snapshot: number,
-    voters: string[]
+    voters: Address[]
   ): Promise<Scores> {
     const space =
       snapshot >= 16438041 ? "gauges.aurafinance.eth" : "aurafinance.eth";

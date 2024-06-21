@@ -83,6 +83,7 @@
 </template>
 
 <script setup lang="ts">
+import { type Address } from "viem";
 import { orderBy } from "lodash";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
@@ -166,7 +167,7 @@ const bribed = computed(() => {
   }
 
   // Find the correct delegate by given priority to the space delegate (eg cvx.eth).
-  let delegate: string;
+  let delegate: Address;
   if (protocol.value === "aura-bal") delegate = delegations.value[0].delegate;
   else {
     delegate = prioritizeDelegates(

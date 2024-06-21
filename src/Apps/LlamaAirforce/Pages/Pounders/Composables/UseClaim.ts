@@ -25,7 +25,7 @@ export function useClaim(
 
   const { data: isFrozen } = useReadContract({
     abi: abiMerkle,
-    address: distributor.address as `0x${string}`,
+    address: distributor.address,
     functionName: "frozen",
     query: {
       enabled: checkValidity,
@@ -36,7 +36,7 @@ export function useClaim(
 
   const { data: isClaimed, refetch } = useReadContract({
     abi: abiMerkle,
-    address: distributor.address as `0x${string}`,
+    address: distributor.address,
     functionName: "isClaimed",
     args: computed(() => [BigInt(claim.value?.index ?? 0)] as const),
     query: {

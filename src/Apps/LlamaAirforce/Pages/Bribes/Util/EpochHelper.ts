@@ -1,3 +1,4 @@
+import { type Address } from "viem";
 import { chain, zip } from "lodash";
 import { notEmpty } from "@/Util";
 import {
@@ -157,7 +158,7 @@ export function getBribedPersonal(
  */
 export function prioritizeDelegates(
   delegations: Delegation[], // Global and space specific.
-  voters: string[]
+  voters: Address[]
 ): Delegation[] {
   return chain(delegations)
     .filter(notEmpty)
@@ -170,8 +171,8 @@ export function prioritizeDelegates(
 /** Calculate a user's voting distribution. */
 export function getVoteDistribution(
   proposal: SnapshotProposal,
-  voter: string,
-  delegate: string | undefined,
+  voter: Address,
+  delegate: Address | undefined,
   votes: Vote[],
   scores: Scores
 ): VoteDistribution {
