@@ -183,4 +183,22 @@ export const abi = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "_merkleRoot",
+        type: "bytes32",
+      },
+      {
+        internalType: "bool",
+        name: "_unfreeze",
+        type: "bool",
+      },
+    ],
+    name: "updateMerkleRoot",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ] as const;

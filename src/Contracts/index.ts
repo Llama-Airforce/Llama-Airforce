@@ -3,10 +3,6 @@
 /* eslint-disable */
 import type * as standards from "./Standards";
 export type { standards };
-import type * as union from "./Union";
-export type { union };
 export * as factories from "./factories";
 export type { ERC20 } from "./Standards/ERC20";
 export { ERC20__factory } from "./factories/Standards/ERC20__factory";
-export type { MerkleDistributor2 } from "./Union/MerkleDistributor2";
-export { MerkleDistributor2__factory } from "./factories/Union/MerkleDistributor2__factory";

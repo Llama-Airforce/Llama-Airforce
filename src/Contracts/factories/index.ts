@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as standards from "./Standards";
-export * as union from "./Union";
