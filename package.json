@@ -32,7 +32,6 @@
     "@vueuse/router": "^10.11.0",
     "@wagmi/vue": "^0.0.19",
     "apexcharts": "^3.49.0",
-    "cross-fetch": "^4.0.0",
     "ethers": "^5.7.2",
     "lightweight-charts": "^4.1.5",
     "lodash": "^4.17.21",

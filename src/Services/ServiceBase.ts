@@ -1,5 +1,3 @@
-import "cross-fetch/polyfill";
-
 //export const hostDev = "https://localhost:7019";
 export const hostDev = "https://api.llama.airforce/";
 export const hostProd = "https://api.llama.airforce/";
