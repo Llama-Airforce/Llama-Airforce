@@ -10,8 +10,6 @@ export type { union };
 export * as factories from "./factories";
 export type { AssetRegistry } from "./Registries/AssetRegistry";
 export { AssetRegistry__factory } from "./factories/Registries/AssetRegistry__factory";
-export type { VotiumRegistry } from "./Registries/VotiumRegistry";
-export { VotiumRegistry__factory } from "./factories/Registries/VotiumRegistry__factory";
 export type { ERC20 } from "./Standards/ERC20";
 export { ERC20__factory } from "./factories/Standards/ERC20__factory";
 export type { MerkleDistributor2 } from "./Union/MerkleDistributor2";
