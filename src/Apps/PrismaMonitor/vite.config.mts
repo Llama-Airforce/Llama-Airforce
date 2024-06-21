@@ -2,7 +2,6 @@ import path from "path";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { autoImport } from "../../vite.base";
@@ -26,17 +25,6 @@ export default defineConfig(() => {
       alias: {
         "@": path.resolve(__dirname, "../../"),
         "@PM": path.resolve(__dirname, "./"),
-      },
-    },
-    build: {
-      rollupOptions: {
-        plugins: [
-          /*
-           * Enable rollup polyfills plugin
-           * used during production bundling
-           */
-          rollupNodePolyFill(),
-        ],
       },
     },
   };

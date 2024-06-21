@@ -3,7 +3,6 @@ import process from "process";
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { autoImport } from "../../vite.base";
@@ -37,17 +36,6 @@ export default defineConfig(({ mode }) => {
         "@LAF": path.resolve(__dirname, "./"),
         "@Union": path.resolve(__dirname, "./Pages/Union/"),
         "@Pounders": path.resolve(__dirname, "./Pages/Pounders/"),
-      },
-    },
-    build: {
-      rollupOptions: {
-        plugins: [
-          /*
-           * Enable rollup polyfills plugin
-           * used during production bundling
-           */
-          rollupNodePolyFill(),
-        ],
       },
     },
   };
