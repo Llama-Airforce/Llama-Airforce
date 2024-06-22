@@ -215,7 +215,6 @@ const totalBorrowed = (type: "long" | "short"): number => {
   return marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))
     .filter((market) => !!market)
-    .map((market) => market!)
     .reduce((acc, market) => acc + market.total_debt_usd, 0);
 };
 
@@ -223,7 +222,6 @@ const totalUtilRate = (type: "long" | "short"): number => {
   const totals = marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))
     .filter((market) => !!market)
-    .map((market) => market!)
     .reduce(
       ({ debt, assets }, market) => ({
         debt: debt + market.total_debt_usd,
