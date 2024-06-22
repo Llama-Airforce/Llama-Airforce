@@ -23,6 +23,29 @@
           "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
           "DEBUG": "true"
         }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug Union Allocate Script",
+        "runtimeArgs": [
+          "--no-lazy",
+          "-r",
+          "ts-node/register",
+          "-r",
+          "tsconfig-paths/register"
+        ],
+        "args": [
+          "${workspaceFolder}/src/Apps/LlamaAirforce/Pages/Union/Scripts/Union.allocate.ts"
+        ],
+        "cwd": "${workspaceFolder}",
+        "internalConsoleOptions": "openOnSessionStart",
+        "skipFiles": ["<node_internals>/**", "node_modules/**"],
+        "console": "integratedTerminal",
+        "env": {
+          "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json",
+          "DEBUG": "true"
+        }
       }
     ]
   }
