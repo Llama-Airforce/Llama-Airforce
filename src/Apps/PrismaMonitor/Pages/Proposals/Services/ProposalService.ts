@@ -56,7 +56,10 @@ const parseProposal = (
   const weightReceived = x.received_weight;
   const status = x.status;
   const votes = x.vote_count;
-  const voters = x.voters;
+  const voters = x.voters.map((y) => ({
+    voter: y.voter.toLowerCase(),
+    weight: y.weight,
+  }));
   const tx = x.transaction_hash;
   const txExecuted = x.execution_tx;
   const executeAfter = x.can_execute_after;

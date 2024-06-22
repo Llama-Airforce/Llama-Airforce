@@ -1,14 +1,18 @@
-import { type Network } from "@/Wallet/Network";
-import { useAccount, useConnectorClient } from "@wagmi/vue";
+import { type Address } from "viem";
 import { base, mainnet } from "viem/chains";
+import { useAccount, useConnectorClient } from "@wagmi/vue";
+import { type Network } from "@/Wallet/Network";
 
 export function useWallet() {
   // Account info
   const { address, isConnected, chainId } = useAccount();
   const connectorClient = useConnectorClient();
 
+  // Make it reactive to the connector and also make it lower case as that's our usual convention.
   const addressOnProvider = computed(() =>
-    connectorClient.data.value && address.value ? address.value : undefined
+    connectorClient.data.value && address.value
+      ? (address.value.toLocaleLowerCase() as Address)
+      : undefined
   );
 
   const network = computed((): Network | undefined => {
