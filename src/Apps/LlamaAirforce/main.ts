@@ -67,7 +67,7 @@ const queryClient = new QueryClient({
       if (
         error.message.includes("Connector not connected") ||
         error.message.includes("connector2.getAccounts is not a function") ||
-        error.message.includes("w.getAccounts is not a function")
+        error.message.includes("getAccounts is not a function")
       ) {
         return;
       }
