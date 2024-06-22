@@ -1,5 +1,6 @@
-import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
+import { type Address } from "viem";
 import { useReadContract } from "@wagmi/vue";
+import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 
 import type UnionService from "@LAF/Services/UnionService";
 import type { AirdropId } from "@LAF/Services/UnionService";
@@ -9,7 +10,7 @@ import { getDistributor } from "@Pounders/Models";
 export function useClaim(
   unionService: UnionService,
   airdropId: AirdropId,
-  address: Ref<`0x${string}` | undefined>,
+  address: Ref<Address | undefined>,
   checkValidity: boolean // Set to false to just get the claim to save RPC calls.
 ) {
   const { data: claimRaw } = useQuery({
