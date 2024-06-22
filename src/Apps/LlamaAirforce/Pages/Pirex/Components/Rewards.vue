@@ -23,10 +23,15 @@
       v-if="rewards.length > 0"
       class="right"
     >
-      <RewardsTable :rewards></RewardsTable>
+      <RewardsTable
+        :rewards
+        :loading
+      ></RewardsTable>
+
       <Button
         value="Show Claims"
         :primary="true"
+        @click="showClaims = true"
       ></Button>
     </div>
 
@@ -36,47 +41,64 @@
     >
       No rewards for {{ addressShort(address) }}
     </div>
+
+    <ModalClaim
+      v-if="rewards.length > 0"
+      :show="showClaims"
+      :snapshots
+      :prices="pricesData!"
+      @close="showClaims = false"
+      @claimed="onClaimed"
+    ></ModalClaim>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useWallet, addressShort } from "@/Wallet";
+import { useQueryPrices } from "@/Services/DefiLlamaQuery";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
+import { type Claim, calculateRewards } from "@LAF/Pages/Pirex/Services";
+import { useQueryRewards } from "@LAF/Pages/Pirex/Services/Queries";
+import ModalClaim from "@LAF/Pages/Pirex/Components/ModalClaim.vue";
+
+const showClaims = ref(false);
 
 const { address } = useWallet();
 
-const rewards = computed(() => [
-  {
-    symbol: "WETH",
-    address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-    amount: 0.0001,
-    amountUsd: 0.52,
-  },
-  {
-    symbol: "ALCX",
-    address: "0xdbdb4d16eda451d0503b854cf79d55697f90c8df",
-    amount: 0.0567,
-    amountUsd: 1.43,
-  },
-  {
-    symbol: "FXS",
-    address: "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
-    amount: 0.2124,
-    amountUsd: 1.01,
-  },
-  {
-    symbol: "PRISMA",
-    address: "0xda47862a83dac0c112ba89c6abc2159b95afd71c",
-    amount: 0.2091,
-    amountUsd: 0.02,
-  },
-  {
-    symbol: "PRISMA",
-    address: "0xda47862a83dac0c112ba89c6abc2159b95afd71c",
-    amount: 34534435,
-    amountUsd: 539583798347,
-  },
+const { data: snapshotsRaw, isLoading: snapshotsLoading } =
+  useQueryRewards(address);
+
+// Filter rewards claimed by the front-end.
+const claimed = ref([] as Claim[]);
+const snapshots = computed(() =>
+  snapshotsRaw.value.filter((x) => {
+    const isAlreadyClaimedByFrontEnd = claimed.value.find(
+      (claim) => claim.epoch === x.epoch && claim.rewardIndex === x.rewardIndex
+    );
+
+    return !isAlreadyClaimedByFrontEnd;
+  })
+);
+
+const tokens = computed(() => [
+  ...new Set(snapshots.value.map((x) => x.address)),
 ]);
+
+const { data: pricesData, isLoading: pricesLoading } = useQueryPrices(tokens);
+
+const rewards = computed(() => {
+  if (!pricesData.value) {
+    return [];
+  }
+
+  return calculateRewards(snapshots.value, pricesData.value);
+});
+
+const loading = computed(() => snapshotsLoading.value || pricesLoading.value);
+
+function onClaimed(claims: Claim[]) {
+  claimed.value.push(...claims);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -98,6 +120,7 @@ const rewards = computed(() => [
     }
 
     > .info {
+      align-items: center;
       text-wrap: pretty;
     }
 

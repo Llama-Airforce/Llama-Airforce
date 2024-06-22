@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Staking } from "@LAF/Pages/Pirex/Models";
+import { type Staking } from "@LAF/Pages/Pirex/Services";
 
 type Row = Staking;
 

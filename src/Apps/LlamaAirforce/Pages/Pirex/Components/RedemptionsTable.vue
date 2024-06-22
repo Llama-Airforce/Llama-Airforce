@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Redemption } from "@LAF/Pages/Pirex/Models";
+import { type Redemption } from "@LAF/Pages/Pirex/Services";
 
 type Row = Redemption;
 
