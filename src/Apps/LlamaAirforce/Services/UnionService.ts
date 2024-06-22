@@ -1,9 +1,10 @@
+import { type Address } from "viem";
 import { ServiceBase } from "@/Services";
 
 export type Claim = {
   index: bigint;
   amount: string; // In hex because of big numbers.
-  proof: Readonly<`0x${string}`[]>;
+  proof: Readonly<Address[]>;
 };
 
 type ClaimResponse = {

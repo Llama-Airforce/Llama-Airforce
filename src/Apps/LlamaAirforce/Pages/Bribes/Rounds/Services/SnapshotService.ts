@@ -114,9 +114,9 @@ export default class SnapshotService extends ServiceBase {
 
       return delegations.map((delegation) => {
         delegation.delegate =
-          delegation.delegate.toLocaleLowerCase() as `0x${string}`;
+          delegation.delegate.toLocaleLowerCase() as Address;
         delegation.delegator =
-          delegation.delegator.toLocaleLowerCase() as `0x${string}`;
+          delegation.delegator.toLocaleLowerCase() as Address;
 
         return delegation;
       });
@@ -167,7 +167,7 @@ export default class SnapshotService extends ServiceBase {
         };
       }>(SNAPSHOT_URL, { query }).then((resp) =>
         resp.data.votes.map((vote) => {
-          vote.voter = vote.voter.toLocaleLowerCase() as `0x${string}`;
+          vote.voter = vote.voter.toLocaleLowerCase() as Address;
 
           return vote;
         })

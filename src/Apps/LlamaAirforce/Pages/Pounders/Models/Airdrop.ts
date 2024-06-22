@@ -1,4 +1,4 @@
-import { type PublicClient, getContract } from "viem";
+import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { type DefiLlamaService } from "@/Services";
@@ -30,7 +30,7 @@ export type Airdrop = {
   amount: bigint;
   amountAsset: number;
   amountDollar: number;
-  distributorAddress: `0x${string}`;
+  distributorAddress: Address;
   swap?: Swap;
 };
 
