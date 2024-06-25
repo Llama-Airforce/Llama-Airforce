@@ -3,6 +3,11 @@ node_modules
 dist
 .env
 
+.data
+.nitro
+.cache
+.output
+
 # local env files
 .env.local
 .env.*.local
