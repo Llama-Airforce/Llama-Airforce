@@ -102,3 +102,9 @@ function createParams(
   };
 }
 </script>
+
+<style lang="scss" scoped>
+.cow {
+  color-scheme: initial;
+}
+</style>
