@@ -1,5 +1,4 @@
-import path from "path";
-import process from "process";
+import { resolve } from "path";
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
@@ -14,7 +13,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue({ script: { propsDestructure: true } }),
       VueI18nPlugin({
-        include: path.resolve(__dirname, "../../src/locales/**"),
+        include: resolve(__dirname, "../../src/locales/**"),
         strictMessage: false,
         escapeHtml: false,
       }),
@@ -30,12 +29,12 @@ export default defineConfig(({ mode }) => {
         // Import mock Union page if not configured.
         "@LAF/Pages/Union/Page":
           env.VITE_UNION === "true"
-            ? path.resolve(__dirname, "./Pages/Union/Page")
-            : path.resolve(__dirname, "./Pages/PageMock"),
-        "@": path.resolve(__dirname, "../../"),
-        "@LAF": path.resolve(__dirname, "./"),
-        "@Union": path.resolve(__dirname, "./Pages/Union/"),
-        "@Pounders": path.resolve(__dirname, "./Pages/Pounders/"),
+            ? resolve(__dirname, "./Pages/Union/Page")
+            : resolve(__dirname, "./Pages/PageMock"),
+        "@": resolve(__dirname, "../../"),
+        "@LAF": resolve(__dirname, "./"),
+        "@Union": resolve(__dirname, "./Pages/Union/"),
+        "@Pounders": resolve(__dirname, "./Pages/Pounders/"),
       },
     },
   };

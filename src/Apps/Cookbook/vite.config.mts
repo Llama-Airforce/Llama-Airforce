@@ -1,4 +1,4 @@
-import path from "path";
+import { resolve } from "path";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
@@ -23,8 +23,8 @@ export default defineConfig(() => {
     },
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "../../"),
-        "@CB": path.resolve(__dirname, "./"),
+        "@": resolve(__dirname, "../../"),
+        "@CB": resolve(__dirname, "./"),
       },
     },
   };
