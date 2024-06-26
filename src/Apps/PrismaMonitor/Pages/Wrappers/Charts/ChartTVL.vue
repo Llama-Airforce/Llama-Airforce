@@ -23,7 +23,7 @@ import {
 
 const { t } = useI18n();
 
-const prismaService = new WrapperService(getHost());
+const prismaService = new WrapperService(useHost());
 
 // Props
 interface Props {

@@ -1,7 +1,7 @@
 import LlamaLendService, { type Market } from "@CM/Services/LlamaLend";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new LlamaLendService(getHost());
+const service = new LlamaLendService(useHost());
 
 function useController(market: Ref<Market | undefined>) {
   return computed(() => market.value?.controller);

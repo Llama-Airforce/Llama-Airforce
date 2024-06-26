@@ -1,7 +1,7 @@
 import RevenueService from "@CM/Services/Revenue";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new RevenueService(getHost());
+const service = new RevenueService(useHost());
 
 function initEmptyArray() {
   return {

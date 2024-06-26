@@ -39,7 +39,7 @@ const { t } = useI18n();
 const storeSettings = useSettingsStore();
 
 // Services
-const managerService = new ManagerService(getHost(), storeSettings.flavor);
+const managerService = new ManagerService(useHost(), storeSettings.flavor);
 
 // Props
 interface Props {

@@ -17,8 +17,8 @@ import { useCurveStore } from "@CM/Pages/Platform/Store";
 
 let isMounted = false;
 
-const gaugeService = new GaugeService(getHost());
-const gaugeSnapshotsService = new GaugeSnapshotsService(getHost());
+const gaugeService = new GaugeService(useHost());
+const gaugeSnapshotsService = new GaugeSnapshotsService(useHost());
 
 // Refs
 const store = useCurveStore();

@@ -80,7 +80,7 @@ type Row = VoteIncentive;
 
 const { t } = useI18n();
 
-const vePrismaService = new VePrismaService(getHost());
+const vePrismaService = new VePrismaService(useHost());
 
 // Data
 const { isFetching: loading, data } = useQuery({

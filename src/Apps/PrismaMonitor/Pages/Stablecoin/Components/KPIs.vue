@@ -59,7 +59,7 @@ import { stableSymbol } from "@PM/Models/Flavor";
 const storeSettings = useSettingsStore();
 
 // Services
-const stableService = new StableService(getHost(), storeSettings.flavor);
+const stableService = new StableService(useHost(), storeSettings.flavor);
 
 // Data
 const { data } = useQuery({

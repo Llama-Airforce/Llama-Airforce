@@ -37,11 +37,6 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       imports: ["DataPoint"],
       type: true,
     },
-    {
-      from: "@/Services/Host",
-      imports: ["getHost"],
-      type: false,
-    },
   ],
   dirs: ["../../Framework/**", "../../Util/**"],
   eslintrc: {

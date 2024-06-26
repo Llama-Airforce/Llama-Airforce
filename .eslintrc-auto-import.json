@@ -491,6 +491,8 @@
     "getCvxFxsPriceViem": true,
     "getCvxPriceViem": true,
     "getCvxPrismaPriceViem": true,
-    "getPxCvxPriceViem": true
+    "getPxCvxPriceViem": true,
+    "useDevelopment": true,
+    "useHost": true
   }
 }

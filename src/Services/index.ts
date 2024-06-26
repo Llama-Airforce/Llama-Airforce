@@ -3,6 +3,8 @@
  * which uses meta.import stuff that doesn't work well with the Union.
  */
 
+export { hosts } from "./Hosts";
+
 export * from "./DefiLlamaService";
 export { default as DefiLlamaService } from "./DefiLlamaService";
 

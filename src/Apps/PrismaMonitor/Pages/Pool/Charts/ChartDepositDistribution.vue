@@ -19,7 +19,7 @@ const { t } = useI18n();
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const sbService = new StabilityPoolService(getHost(), flavor.value);
+const sbService = new StabilityPoolService(useHost(), flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

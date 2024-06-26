@@ -63,8 +63,8 @@ const paramProtocol = useRouteParams<string>("protocol");
 const bribesService = computed(
   (): BribesService =>
     product.value?.protocol === "aura-bal"
-      ? new AuraBribesService(getHost())
-      : new BribesService(getHost())
+      ? new AuraBribesService(useHost())
+      : new BribesService(useHost())
 );
 
 // Data

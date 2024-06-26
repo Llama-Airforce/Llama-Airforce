@@ -1,5 +1,3 @@
-export { getHost } from "@/Services/Host";
-
 export { default as StatusService } from "./StatusService";
 export { default as PoolService } from "./PoolService";
 export { default as CoinService } from "./CoinService";

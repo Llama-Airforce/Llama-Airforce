@@ -1,5 +1,3 @@
-export { getHost } from "@/Services/Host";
-
 export * from "./CollateralService";
 export { default as CollateralService } from "./CollateralService";
 export * from "./LiquidationService";

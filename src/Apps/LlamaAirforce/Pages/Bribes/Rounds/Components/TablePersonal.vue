@@ -101,8 +101,8 @@ import {
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
-const snapshotService = new SnapshotService(getHost());
-const auraService = new AuraService(getHost());
+const snapshotService = new SnapshotService(useHost());
+const auraService = new AuraService(useHost());
 
 const { t } = useI18n();
 

@@ -19,8 +19,8 @@ import { useConvexStore } from "@CM/Pages/Convex/Store";
 
 let isMounted = false;
 
-const poolService = new PoolService(getHost());
-const poolSnapshotsService = new PoolSnapshotsService(getHost());
+const poolService = new PoolService(useHost());
+const poolSnapshotsService = new PoolSnapshotsService(useHost());
 
 // Refs
 const store = useConvexStore();

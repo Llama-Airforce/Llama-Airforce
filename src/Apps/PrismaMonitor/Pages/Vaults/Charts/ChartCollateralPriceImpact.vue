@@ -20,7 +20,7 @@ const { t } = useI18n();
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const collateralService = new CollateralService(getHost(), flavor.value);
+const collateralService = new CollateralService(useHost(), flavor.value);
 
 // Props
 interface Props {

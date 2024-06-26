@@ -1,7 +1,7 @@
 import OHLCService from "@CM/Services/OHLC";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new OHLCService(getHost());
+const service = new OHLCService(useHost());
 
 export function useQueryOHLC(
   chain: Ref<Chain | undefined>,

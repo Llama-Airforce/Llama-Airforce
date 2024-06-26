@@ -32,7 +32,7 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const stableService = new StableService(getHost(), flavor.value);
+const stableService = new StableService(useHost(), flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

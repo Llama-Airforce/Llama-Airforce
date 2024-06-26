@@ -37,7 +37,7 @@ import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 
 const { t } = useI18n();
 
-const llamaService = new DefiLlamaService(getHost());
+const llamaService = new DefiLlamaService(useHost());
 
 // Refs
 const { address } = useWallet();

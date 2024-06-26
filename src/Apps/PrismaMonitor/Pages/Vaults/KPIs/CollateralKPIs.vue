@@ -71,7 +71,7 @@ const storeSettings = useSettingsStore();
 
 // Services
 const collateralService = new CollateralService(
-  getHost(),
+  useHost(),
   storeSettings.flavor
 );
 

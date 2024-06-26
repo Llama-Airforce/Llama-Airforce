@@ -55,7 +55,7 @@ import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
 
 const { t } = useI18n();
 
-const proposalService = new ProposalService(getHost());
+const proposalService = new ProposalService(useHost());
 
 // Refs
 const tabActive = ref(0);

@@ -52,9 +52,9 @@ import { useClaim } from "@Pounders/Composables/UseClaim";
 
 const { t } = useI18n();
 
-const unionService = new UnionService(getHost());
-const llamaService = new DefiLlamaService(getHost());
-const flyerService = new FlyerService(getHost());
+const unionService = new UnionService(useHost());
+const llamaService = new DefiLlamaService(useHost());
+const flyerService = new FlyerService(useHost());
 
 // Refs
 const { address } = useWallet();

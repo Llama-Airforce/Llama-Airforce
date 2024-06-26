@@ -21,7 +21,7 @@ const { t } = useI18n();
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const stableService = new StableService(getHost(), flavor.value);
+const stableService = new StableService(useHost(), flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

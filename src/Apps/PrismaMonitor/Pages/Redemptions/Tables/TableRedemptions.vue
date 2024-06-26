@@ -117,7 +117,7 @@ const storeSettings = useSettingsStore();
 
 // Services
 const redemptionService = new RedemptionService(
-  getHost(),
+  useHost(),
   storeSettings.flavor
 );
 

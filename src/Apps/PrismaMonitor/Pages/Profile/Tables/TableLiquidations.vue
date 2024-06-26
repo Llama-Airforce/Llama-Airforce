@@ -113,7 +113,7 @@ const storeSettings = useSettingsStore();
 
 // Services
 const liquidationService = new LiquidationService(
-  getHost(),
+  useHost(),
   storeSettings.flavor
 );
 

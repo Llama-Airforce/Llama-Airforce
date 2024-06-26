@@ -54,8 +54,8 @@ import Summary from "@CM/Pages/Convex/Revenue/Components/Summary.vue";
 
 const { t } = useI18n();
 
-const protocolRevenueService = new ProtocolRevenueService(getHost());
-const historicalRevenueService = new HistoricalRevenueService(getHost());
+const protocolRevenueService = new ProtocolRevenueService(useHost());
+const historicalRevenueService = new HistoricalRevenueService(useHost());
 
 let isInitializing = false;
 

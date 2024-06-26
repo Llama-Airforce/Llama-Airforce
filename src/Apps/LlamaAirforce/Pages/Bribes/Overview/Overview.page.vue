@@ -41,7 +41,7 @@ import type {
 import DashboardService from "@LAF/Pages/Bribes/Services/DashboardService";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
-const dashboardService = new DashboardService(getHost());
+const dashboardService = new DashboardService(useHost());
 
 let isInitializing = false;
 

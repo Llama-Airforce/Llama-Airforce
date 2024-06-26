@@ -38,7 +38,7 @@ const storeBreadcrumb = useBreadcrumbStore();
 const storeVault = useVaultStore();
 
 // Services
-const troveService = new TroveService(getHost(), storeSettings.flavor);
+const troveService = new TroveService(useHost(), storeSettings.flavor);
 
 // Refs
 const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));

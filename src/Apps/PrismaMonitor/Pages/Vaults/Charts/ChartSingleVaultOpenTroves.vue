@@ -43,7 +43,7 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 // Services
-const managerService = new ManagerService(getHost(), flavor.value);
+const managerService = new ManagerService(useHost(), flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

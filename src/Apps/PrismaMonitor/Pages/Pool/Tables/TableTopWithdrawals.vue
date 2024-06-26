@@ -56,7 +56,7 @@ const { t } = useI18n();
 const storeSettings = useSettingsStore();
 
 // Services
-const sbService = new StabilityPoolService(getHost(), storeSettings.flavor);
+const sbService = new StabilityPoolService(useHost(), storeSettings.flavor);
 
 // Refs
 const rows = computed((): PoolStableOperation[] =>

@@ -48,10 +48,8 @@ const { switchChain } = useSwitchChain();
 const onClick = (evt: Event) => {
   evt.stopImmediatePropagation();
 
-  if (web3 && isDevelopment()) {
-    if (network.value !== "ethereum") {
-      switchChain({ chainId: mainnet.id });
-    }
+  if (web3 && network.value !== "ethereum") {
+    switchChain({ chainId: mainnet.id });
   }
 
   emit("click");

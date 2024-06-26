@@ -46,7 +46,7 @@ const { t } = useI18n();
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const managerService = new ManagerService(getHost(), flavor.value);
+const managerService = new ManagerService(useHost(), flavor.value);
 
 // Refs
 const period = ref<Period>("1m");

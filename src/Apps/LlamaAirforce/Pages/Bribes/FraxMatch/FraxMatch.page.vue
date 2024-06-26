@@ -59,7 +59,7 @@ import type { EpochFrax } from "@LAF/Pages/Bribes/FraxMatch/Models/EpochFrax";
 
 let isMounted = false;
 
-const fraxMatchService = new FraxMatchService(getHost());
+const fraxMatchService = new FraxMatchService(useHost());
 
 const { t } = useI18n();
 

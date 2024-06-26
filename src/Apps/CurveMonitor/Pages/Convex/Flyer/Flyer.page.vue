@@ -16,7 +16,7 @@ import Bribes from "@CM/Pages/Convex/Flyer/Components/Bribes.vue";
 import Farm from "@CM/Pages/Convex/Flyer/Components/Farm.vue";
 import FlyerService, { type FlyerConvex } from "@/Services/FlyerService";
 
-const flyerService = new FlyerService(getHost());
+const flyerService = new FlyerService(useHost());
 
 // Refs
 const model = ref<FlyerConvex | null>(null);
