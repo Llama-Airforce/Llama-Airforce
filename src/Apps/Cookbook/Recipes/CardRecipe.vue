@@ -1,96 +1,92 @@
 <template>
-  <div class="card-root">
-    <div class="dashboard">
-      <Recipe title="Card">
-        <template #example>
-          <Card
-            title="Card Title"
-            icon="fas fa-plane"
-          >
-            Content goes here
-          </Card>
-        </template>
+  <div class="cards">
+    <Recipe title="Card">
+      <template #example>
+        <Card
+          title="Card Title"
+          icon="fas fa-plane"
+        >
+          Content goes here
+        </Card>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="card"
-          ></Code>
-        </template>
-      </Recipe>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="card"
+        ></Code>
+      </template>
+    </Recipe>
 
-      <Recipe title="Compact / no padding">
-        <template #example>
-          <Card :compact="true"> Content goes here </Card>
-        </template>
+    <Recipe title="Compact / no padding">
+      <template #example>
+        <Card :compact="true"> Content goes here </Card>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="cardCompact"
-          ></Code>
-        </template>
-      </Recipe>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="cardCompact"
+        ></Code>
+      </template>
+    </Recipe>
 
-      <Recipe title="Collapsible">
-        <template #example>
-          <Card
-            title="Card Title"
-            icon="fas fa-plane"
-            :collapsible="true"
-            :collapsed="collapsed"
-            @click="collapsed = !collapsed"
-          >
-            <template #actions>
-              <i
-                class="expander fas fa-chevron-up"
-                :class="{ expanded: collapsed }"
-              ></i>
-            </template>
+    <Recipe title="Collapsible">
+      <template #example>
+        <Card
+          title="Card Title"
+          icon="fas fa-plane"
+          :collapsible="true"
+          :collapsed="collapsed"
+          @click="collapsed = !collapsed"
+        >
+          <template #actions>
+            <i
+              class="expander fas fa-chevron-up"
+              :class="{ expanded: collapsed }"
+            ></i>
+          </template>
 
-            <Collapsible :expanded="!collapsed">
-              Content goes here
-            </Collapsible>
-          </Card>
-        </template>
+          <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>
+        </Card>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="cardCollapsible1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="cardCollapsible1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="cardCollapsible2"
-          ></Code>
+        <Code
+          lang="typescript"
+          :code="cardCollapsible2"
+        ></Code>
 
-          <Code
-            lang="scss"
-            :code="cardCollapsible3"
-          ></Code>
-        </template>
-      </Recipe>
+        <Code
+          lang="scss"
+          :code="cardCollapsible3"
+        ></Code>
+      </template>
+    </Recipe>
 
-      <Recipe title="Loading">
-        <template #example>
-          <Card
-            title="Card Loading"
-            icon="fas fa-plane"
-            :loading="true"
-          >
-            Content goes here
-          </Card>
-        </template>
+    <Recipe title="Loading">
+      <template #example>
+        <Card
+          title="Card Loading"
+          icon="fas fa-plane"
+          :loading="true"
+        >
+          Content goes here
+        </Card>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="cardLoading"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="cardLoading"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -155,22 +151,19 @@ const cardCollapsible3 = `::v-deep(.card-header) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("card-root");
+@include dashboard("cards");
 
-.card-root {
-  .dashboard {
-    row-gap: 3rem;
-    column-gap: var(--dashboard-gap, 1.5rem);
-    grid-template-columns: 1fr 1fr;
+.cards {
+  column-gap: var(--dashboard-gap, 1.5rem);
+  grid-template-columns: 1fr 1fr;
 
-    ::v-deep(.card-header) {
-      .expander {
-        transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
-        transform: rotate(90deg);
+  ::v-deep(.card-header) {
+    .expander {
+      transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
+      transform: rotate(90deg);
 
-        &.expanded {
-          transform: rotate(180deg);
-        }
+      &.expanded {
+        transform: rotate(180deg);
       }
     }
   }

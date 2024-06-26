@@ -1,31 +1,29 @@
 <template>
-  <div class="slider">
-    <div class="dashboard">
-      <Recipe title="Slider">
-        <template #example>
-          <div class="value">{{ value }}</div>
-          <Slider
-            :min="0"
-            :max="5"
-            :step="0.1"
-            :model-value="value"
-            @update:model-value="onInput"
-          ></Slider>
-        </template>
+  <div class="sliders">
+    <Recipe title="Slider">
+      <template #example>
+        <div class="value">{{ value }}</div>
+        <Slider
+          :min="0"
+          :max="5"
+          :step="0.1"
+          :model-value="value"
+          @update:model-value="onInput"
+        ></Slider>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="slider1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="slider1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="slider2"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="typescript"
+          :code="slider2"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -58,5 +56,5 @@ const onInput = (newVal: string) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("slider");
+@include dashboard("sliders");
 </style>

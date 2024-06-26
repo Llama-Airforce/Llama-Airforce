@@ -1,19 +1,17 @@
 <template>
-  <div class="spinner">
-    <div class="dashboard">
-      <Recipe title="Spinner">
-        <template #example>
-          <Spinner></Spinner>
-        </template>
+  <div class="spinners">
+    <Recipe title="Spinner">
+      <template #example>
+        <Spinner></Spinner>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="spinner"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="spinner"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -26,5 +24,5 @@ const spinner = `<Spinner></Spinner>`;
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("spinner");
+@include dashboard("spinners");
 </style>

@@ -2,7 +2,7 @@
   <div class="checkboxes">
     <Recipe title="Basic Checkbox">
       <template #example>
-        <Checkbox v-model="isChecked1"></Checkbox>
+        <Checkbox v-model="isChecked1">Accept terms and conditions</Checkbox>
       </template>
 
       <template #snippets>
@@ -115,7 +115,6 @@ const onCheckboxChange = (checked: boolean) => {
 @include dashboard("checkboxes");
 
 .checkboxes {
-  row-gap: 3rem;
   grid-template-columns: 1fr 1fr;
 }
 </style>

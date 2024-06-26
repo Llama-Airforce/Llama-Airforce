@@ -1,28 +1,26 @@
 <template>
-  <div class="breadcrumb">
-    <div class="dashboard">
-      <Recipe title="Breadcrumb">
-        <template #example>
-          <Breadcrumb
-            :crumbs="crumbs"
-            :active="crumbActive"
-            @crumb="onCrumb"
-          ></Breadcrumb>
-        </template>
+  <div class="breadcrumbs">
+    <Recipe title="Breadcrumb">
+      <template #example>
+        <Breadcrumb
+          :crumbs="crumbs"
+          :active="crumbActive"
+          @crumb="onCrumb"
+        ></Breadcrumb>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="breadcrumb1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="breadcrumb1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="breadcrumb2"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="typescript"
+          :code="breadcrumb2"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -64,13 +62,5 @@ const onCrumb = (crumb: Crumb) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("breadcrumb");
-
-.breadcrumb {
-  .dashboard {
-    row-gap: 3rem;
-    column-gap: var(--dashboard-gap, 1.5rem);
-    grid-template-columns: 1fr 1fr;
-  }
-}
+@include dashboard("breadcrumbs");
 </style>

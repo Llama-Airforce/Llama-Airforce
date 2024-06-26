@@ -1,24 +1,22 @@
 <template>
-  <div class="input-number">
-    <div class="dashboard">
-      <Recipe title="InputNumber">
-        <template #example>
-          <InputNumber
-            v-model="value"
-            placeholder="Number goes here"
-            :min="-5"
-            :max="Infinity"
-          ></InputNumber>
-        </template>
+  <div class="inputs">
+    <Recipe title="InputNumber">
+      <template #example>
+        <InputNumber
+          v-model="value"
+          placeholder="Number goes here"
+          :min="-5"
+          :max="Infinity"
+        ></InputNumber>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="inputNumber"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="inputNumber"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -38,5 +36,5 @@ const inputNumber = `<InputNumber
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("input-number");
+@include dashboard("inputs");
 </style>

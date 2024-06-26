@@ -1,78 +1,76 @@
 <template>
-  <div class="input-text">
-    <div class="dashboard">
-      <Recipe title="InputText with placeholder">
-        <template #example>
-          <InputText
-            v-model="text1"
-            placeholder="Placeholder goes here"
-          ></InputText>
-        </template>
+  <div class="inputs">
+    <Recipe title="InputText with placeholder">
+      <template #example>
+        <InputText
+          v-model="text1"
+          placeholder="Placeholder goes here"
+        ></InputText>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="inputText"
-          ></Code>
-        </template>
-      </Recipe>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="inputText"
+        ></Code>
+      </template>
+    </Recipe>
 
-      <Recipe title="InputText with search, options, filter, sorting and slot">
-        <template #example>
-          <InputText
-            v-model="pool"
-            placeholder="Search for a pool: enter a space here"
-            :search="true"
-            :auto-complete="autoComplete"
-            :options="pools"
-            :filter
-            :sort
-            @input="onInput"
-            @select="onSelect"
-          >
-            <template #item="props: { item: Pool, idx: number }">
+    <Recipe title="InputText with search, options, filter, sorting and slot">
+      <template #example>
+        <InputText
+          v-model="pool"
+          placeholder="Search for a pool: enter a space here"
+          :search="true"
+          :auto-complete="autoComplete"
+          :options="pools"
+          :filter
+          :sort
+          @input="onInput"
+          @select="onSelect"
+        >
+          <template #item="props: { item: Pool, idx: number }">
+            <div
+              v-if="props.item"
+              class="search-item"
+            >
+              <img src="@/Assets/Icons/why.png" />
+              <div class="label">{{ props.item.name }}</div>
               <div
-                v-if="props.item"
-                class="search-item"
+                v-if="props.idx === 0"
+                class="description"
               >
-                <img src="@/Assets/Icons/why.png" />
-                <div class="label">{{ props.item.name }}</div>
-                <div
-                  v-if="props.idx === 0"
-                  class="description"
-                >
-                  Volume
-                </div>
-                <div class="volume">
-                  <AsyncValue
-                    :value="props.item.volume"
-                    :precision="2"
-                    type="dollar"
-                  />
-                </div>
+                Volume
               </div>
-            </template>
-          </InputText>
-        </template>
+              <div class="volume">
+                <AsyncValue
+                  :value="props.item.volume"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
+            </div>
+          </template>
+        </InputText>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="inputTextSearch1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="inputTextSearch1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="inputTextSearch2"
-          ></Code>
+        <Code
+          lang="typescript"
+          :code="inputTextSearch2"
+        ></Code>
 
-          <Code
-            lang="scss"
-            :code="inputTextSearch3"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="scss"
+          :code="inputTextSearch3"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -238,35 +236,33 @@ const inputTextSearch3 = `.search-item {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("input-text");
+@include dashboard("inputs");
 
-.input-text {
-  .dashboard {
-    .search-item {
-      display: flex;
-      align-items: center;
+.inputs {
+  .search-item {
+    display: flex;
+    align-items: center;
 
-      img {
-        width: 20px;
-        height: 20px;
-        object-fit: scale-down;
-      }
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
+    }
 
-      > .label {
-        flex-grow: 1;
-        font-size: 0.875rem;
-        margin-left: 0.75rem;
-      }
+    > .label {
+      flex-grow: 1;
+      font-size: 0.875rem;
+      margin-left: 0.75rem;
+    }
 
-      > .volume,
-      > .description {
-        font-size: 0.875rem;
-        margin-left: 0.75rem;
-      }
+    > .volume,
+    > .description {
+      font-size: 0.875rem;
+      margin-left: 0.75rem;
+    }
 
-      > .description {
-        color: var(--c-lvl5);
-      }
+    > .description {
+      color: var(--c-lvl5);
     }
   }
 }

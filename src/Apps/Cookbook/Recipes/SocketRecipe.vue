@@ -1,20 +1,18 @@
 <template>
-  <div class="socket">
-    <div class="dashboard">
-      <div class="connect">
-        <InputText v-model="url"></InputText>
+  <div class="sockets">
+    <div class="connect">
+      <InputText v-model="url"></InputText>
 
-        <Button
-          v-if="!connected"
-          value="Connect"
-          @click="connect"
-        ></Button>
-        <Button
-          v-else
-          value="Disconnect"
-          @click="disconnect"
-        ></Button>
-      </div>
+      <Button
+        v-if="!connected"
+        value="Connect"
+        @click="connect"
+      ></Button>
+      <Button
+        v-else
+        value="Disconnect"
+        @click="disconnect"
+      ></Button>
     </div>
   </div>
 </template>
@@ -61,7 +59,7 @@ const disconnect = () => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("socket");
+@include dashboard("sockets");
 
 .connect {
   display: flex;

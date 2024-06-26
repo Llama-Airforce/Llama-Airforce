@@ -1,34 +1,32 @@
 <template>
-  <div class="cart-chart">
-    <div class="dashboard">
-      <Recipe title="Line Chart">
-        <template #example>
-          <CardChart
-            class="chart"
-            title="Line Chart"
-            :options="options"
-            :series="series"
-          ></CardChart>
-        </template>
+  <div class="cards">
+    <Recipe title="Line Chart">
+      <template #example>
+        <CardChart
+          class="chart"
+          title="Line Chart"
+          :options="options"
+          :series="series"
+        ></CardChart>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="CardChartLine1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="CardChartLine1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="CardChartLine2"
-          ></Code>
+        <Code
+          lang="typescript"
+          :code="CardChartLine2"
+        ></Code>
 
-          <Code
-            lang="scss"
-            :code="CardChartLine3"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="scss"
+          :code="CardChartLine3"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -306,7 +304,7 @@ const CardChartLine3 = `.chart {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("cart-chart");
+@include dashboard("cards");
 
 .chart {
   height: 400px;

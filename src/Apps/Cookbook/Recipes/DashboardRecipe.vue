@@ -1,29 +1,27 @@
 <template>
-  <div class="dashboard-root">
-    <div class="dashboard">
-      <Recipe title="Dashboard.vue">
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="html"
-          />
+  <div class="dashboards">
+    <Recipe title="Dashboard.vue">
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="html"
+        />
 
-          <Code
-            lang="typescript"
-            :code="typescript"
-          />
+        <Code
+          lang="typescript"
+          :code="typescript"
+        />
 
-          &lt;style lang=&quot;scss&quot; scoped&gt;
+        &lt;style lang=&quot;scss&quot; scoped&gt;
 
-          <Code
-            lang="scss"
-            :code="scss"
-          />
+        <Code
+          lang="scss"
+          :code="scss"
+        />
 
-          &lt;/style&gt;
-        </template>
-      </Recipe>
-    </div>
+        &lt;/style&gt;
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -32,10 +30,8 @@
 import Recipe from "@CB/Recipe.vue";
 
 const html = `<template>
-  <div class="dashboard-root">
-    <div class="dashboard">
-      Content goes here
-    </div>
+  <div class="dashboard">
+    Content goes here
   </div>
 </template>`;
 
@@ -44,12 +40,12 @@ const typescript = `<script setup lang="ts">
 
 const scss = `@import "@/Styles/Variables.scss";
 
-@include dashboard("dashboard-root");
+@include dashboard("dashboard");
 `;
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("dashboard-root");
+@include dashboard("dashboards");
 </style>

@@ -1,30 +1,28 @@
 <template>
   <div class="tabs">
-    <div class="dashboard">
-      <Recipe title="Tabs">
-        <template #example>
-          <div class="active">Active tab is index {{ tabActive }}</div>
+    <Recipe title="Tabs">
+      <template #example>
+        <div class="active">Active tab is index {{ tabActive }}</div>
 
-          <TabView @tab="tabActive = $event.index">
-            <TabItem header="Tab One"> Tab 1 content goes here </TabItem>
-            <TabItem header="Tab Two"> Tab 2 content goes here </TabItem>
-            <TabItem header="Tab Three"> Tab 3 content goes here </TabItem>
-          </TabView>
-        </template>
+        <TabView @tab="tabActive = $event.index">
+          <TabItem header="Tab One"> Tab 1 content goes here </TabItem>
+          <TabItem header="Tab Two"> Tab 2 content goes here </TabItem>
+          <TabItem header="Tab Three"> Tab 3 content goes here </TabItem>
+        </TabView>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="tabs1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="tabs1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="tabs2"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="typescript"
+          :code="tabs2"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 

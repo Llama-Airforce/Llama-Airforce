@@ -1,47 +1,45 @@
 <template>
-  <div class="select">
-    <div class="dashboard">
-      <Recipe title="Select">
-        <template #example>
-          <Select
-            class="select-component"
-            :options="options"
-            :selected="selected"
-            :open="selectOpen"
-            @open="onSelectOpen"
-            @close="selectOpen = false"
-            @input="onSelect"
-          >
-            <template #item="props: { item: SelectItem }">
-              <div
-                v-if="props.item"
-                class="item"
-              >
-                <img :src="props.item.logo" />
-                <div class="label">{{ props.item.label }}</div>
-              </div>
-            </template>
-          </Select>
-        </template>
+  <div class="selects">
+    <Recipe title="Select">
+      <template #example>
+        <Select
+          class="select-component"
+          :options="options"
+          :selected="selected"
+          :open="selectOpen"
+          @open="onSelectOpen"
+          @close="selectOpen = false"
+          @input="onSelect"
+        >
+          <template #item="props: { item: SelectItem }">
+            <div
+              v-if="props.item"
+              class="item"
+            >
+              <img :src="props.item.logo" />
+              <div class="label">{{ props.item.label }}</div>
+            </div>
+          </template>
+        </Select>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="select1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="select1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="select2"
-          ></Code>
+        <Code
+          lang="typescript"
+          :code="select2"
+        ></Code>
 
-          <Code
-            lang="scss"
-            :code="select3"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="scss"
+          :code="select3"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -167,7 +165,7 @@ const select3 = `::v-deep(.select-component) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("select");
+@include dashboard("selects");
 
 ::v-deep(.select-component) {
   width: 20rem;

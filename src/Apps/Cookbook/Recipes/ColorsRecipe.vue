@@ -1,27 +1,25 @@
 <template>
   <div class="colors">
-    <div class="dashboard">
-      <DataTable
-        class="datatable-colors"
-        columns-header="1fr"
-        columns-data="colors-columns-data"
-        :rows="colors"
-        :columns="['Variable', 'Value', 'Preview']"
-      >
-        <template #header-content>
-          <div class="title">Colors</div>
-        </template>
+    <DataTable
+      class="datatable-colors"
+      columns-header="1fr"
+      columns-data="colors-columns-data"
+      :rows="colors"
+      :columns="['Variable', 'Value', 'Preview']"
+    >
+      <template #header-content>
+        <div class="title">Colors</div>
+      </template>
 
-        <template #row="props: { item: Color }">
-          <div>{{ props.item.variable }}</div>
-          <div>{{ props.item.value }}</div>
-          <div
-            class="preview"
-            :style="{ 'background-color': props.item.value }"
-          ></div>
-        </template>
-      </DataTable>
-    </div>
+      <template #row="props: { item: Color }">
+        <div>{{ props.item.variable }}</div>
+        <div>{{ props.item.value }}</div>
+        <div
+          class="preview"
+          :style="{ 'background-color': props.item.value }"
+        ></div>
+      </template>
+    </DataTable>
   </div>
 </template>
 
@@ -101,6 +99,7 @@ const colors: Color[] = [
 
     .preview {
       height: 33%;
+      border-radius: var(--border-radius);
     }
   }
 }

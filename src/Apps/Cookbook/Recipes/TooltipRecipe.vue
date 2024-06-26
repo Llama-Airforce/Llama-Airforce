@@ -1,25 +1,23 @@
 <template>
-  <div class="tooltip">
-    <div class="dashboard">
-      <Recipe title="Tooltip">
-        <template #example>
-          <Tooltip>
-            <template #item>
-              <div>Hover over me!</div>
-            </template>
+  <div class="tooltips">
+    <Recipe title="Tooltip">
+      <template #example>
+        <Tooltip>
+          <template #item>
+            <div>Hover over me!</div>
+          </template>
 
-            <div>Tooltip content goes here</div>
-          </Tooltip>
-        </template>
+          <div>Tooltip content goes here</div>
+        </Tooltip>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="tooltip"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="tooltip"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -38,5 +36,5 @@ const tooltip = `<Tooltip>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("tooltip");
+@include dashboard("tooltips");
 </style>

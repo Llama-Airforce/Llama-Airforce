@@ -1,24 +1,22 @@
 <template>
-  <div class="pagination">
-    <div class="dashboard">
-      <Recipe title="Pagination">
-        <template #example>
-          <Pagination
-            :items-count="96"
-            :items-per-page="10"
-            :page="page"
-            @page="onPage"
-          ></Pagination>
-        </template>
+  <div class="paginations">
+    <Recipe title="Pagination">
+      <template #example>
+        <Pagination
+          :items-count="96"
+          :items-per-page="10"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="pagination"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="pagination"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -42,5 +40,5 @@ const pagination = `<Pagination
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("pagination");
+@include dashboard("paginations");
 </style>

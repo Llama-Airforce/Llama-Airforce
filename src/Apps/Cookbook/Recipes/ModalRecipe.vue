@@ -1,39 +1,37 @@
 <template>
-  <div class="modal">
-    <div class="dashboard">
-      <Recipe title="ModalYesNo">
-        <template #example>
-          <Button @click="openModal = true">Open Modal</Button>
+  <div class="modals">
+    <Recipe title="ModalYesNo">
+      <template #example>
+        <Button @click="openModal = true">Open Modal</Button>
 
-          <ModalYesNo
-            title="Modal title"
-            :show="openModal"
-            @close="openModal = false"
-            @no="openModal = false"
-            @yes="onYes"
-          >
-            <div class="content">Content goes here</div>
-          </ModalYesNo>
-        </template>
+        <ModalYesNo
+          title="Modal title"
+          :show="openModal"
+          @close="openModal = false"
+          @no="openModal = false"
+          @yes="onYes"
+        >
+          <div class="content">Content goes here</div>
+        </ModalYesNo>
+      </template>
 
-        <template #snippets>
-          <Code
-            lang="xml"
-            :code="modalYesNo1"
-          ></Code>
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="modalYesNo1"
+        ></Code>
 
-          <Code
-            lang="typescript"
-            :code="modalYesNo2"
-          ></Code>
+        <Code
+          lang="typescript"
+          :code="modalYesNo2"
+        ></Code>
 
-          <Code
-            lang="scss"
-            :code="modalYesNo3"
-          ></Code>
-        </template>
-      </Recipe>
-    </div>
+        <Code
+          lang="scss"
+          :code="modalYesNo3"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -74,7 +72,7 @@ const modalYesNo3 = `.my-modal {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("modal");
+@include dashboard("modals");
 
 .content {
   width: 40rem;
