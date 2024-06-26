@@ -153,6 +153,9 @@ type PoolResponse = {
 };
 
 export function getCvxFxsLpApy(): Promise<number> {
+  // The graph has migrated and therefore we stop supporting this.
+  return Promise.resolve(0.01);
+
   const SUBGRAPH_URL_CONVEX =
     "https://api.thegraph.com/subgraphs/name/convex-community/curve-pools";
 
