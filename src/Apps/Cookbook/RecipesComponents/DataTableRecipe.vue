@@ -1,9 +1,6 @@
 <template>
   <div class="datatables">
-    <Recipe
-      title="DataTable"
-      class="recipe"
-    >
+    <Recipe title="DataTable">
       <template #example>
         <DataTable
           class="datatable-example"
@@ -96,6 +93,59 @@
         <Code
           lang="scss"
           :code="dataTable3"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="DataTable Multiselect">
+      <template #example>
+        <DataTable
+          class="datatable-multiselect"
+          columns-header="1fr auto"
+          columns-data="multiselect-columns-data"
+          :rows="rows"
+          :columns="['', 'Deadline', '']"
+          @selected="onCheck"
+        >
+          <template #header-content>
+            <div class="title">All Rounds</div>
+          </template>
+
+          <template #row="props: { item: Round }">
+            <div
+              class="round-number"
+              @click.stop
+            >
+              <a class="vote-link">
+                {{ props.item.round }}
+              </a>
+            </div>
+
+            <div>
+              {{ new Date(Date.now()).toLocaleDateString() }}
+            </div>
+
+            <div>
+              <Checkbox
+                :model-value="checked.includes(props.item)"
+                @update:model-value="() => onCheck(props.item)"
+              />
+            </div>
+          </template>
+        </DataTable>
+
+        <div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="multiselect"
+        ></Code>
+
+        <Code
+          lang="typescript"
+          :code="multiselect2"
         ></Code>
       </template>
     </Recipe>
@@ -296,18 +346,70 @@ const dataTable3 = `.datatable-example {
     }
   }
 }`;
+
+// Multiselect
+const checked = ref<Round[]>([]);
+const onCheck = (round: Round) => {
+  const index = checked.value.indexOf(round);
+  if (index === -1) {
+    checked.value.push(round);
+  } else {
+    checked.value.splice(index, 1);
+  }
+};
+
+const multiselect = `<DataTable
+  class="datatable-multiselect"
+  columns-header="1fr auto"
+  columns-data="multiselect-columns-data"
+  :rows="rows"
+  :columns="['', 'Deadline', '']"
+  @selected="onCheck"
+>
+  <template #header-content>
+    <div class="title">All Rounds</div>
+  </template>
+
+  <template #row="props: { item: Round }">
+    <div
+      class="round-number"
+      @click.stop
+    >
+      <a class="vote-link">
+        {{ props.item.round }}
+      </a>
+    </div>
+
+    <div>
+      {{ new Date(Date.now()).toLocaleDateString() }}
+    </div>
+
+    <div>
+      <Checkbox
+        :model-value="checked.includes(props.item)"
+        @update:model-value="() => onCheck(props.item)"
+      />
+    </div>
+  </template>
+</DataTable>
+
+<div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>`;
+
+const multiselect2 = `const checked = ref<Round[]>([]);
+const onCheck = (round: Round) => {
+  const index = checked.value.indexOf(round);
+  if (index === -1) {
+    checked.value.push(round);
+  } else {
+    checked.value.splice(index, 1);
+  }
+};`;
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 @include dashboard("datatables");
-
-.datatables {
-  .recipe {
-    align-items: stretch;
-  }
-}
 
 .datatable-example {
   .round-number {
@@ -330,6 +432,19 @@ const dataTable3 = `.datatable-example {
       width: 1.5rem;
       text-align: center;
     }
+  }
+}
+
+.datatable-multiselect {
+  .round-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  ::v-deep(.multiselect-columns-data) {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr auto;
   }
 }
 </style>
