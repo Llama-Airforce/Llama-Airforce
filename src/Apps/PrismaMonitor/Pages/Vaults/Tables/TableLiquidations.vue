@@ -109,10 +109,7 @@ const { t } = useI18n();
 const storeSettings = useSettingsStore();
 
 // Services
-const liquidationService = new LiquidationService(
-  useHost(),
-  storeSettings.flavor
-);
+const liquidationService = new LiquidationService(storeSettings.flavor);
 
 // Props
 interface Props {

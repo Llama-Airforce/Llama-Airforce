@@ -51,7 +51,7 @@ import { DefiLlamaService } from "@/Services";
 import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
-const llamaService = new DefiLlamaService(useHost());
+const llamaService = new DefiLlamaService();
 
 // Borrowed
 const { data: markets } = useQueryMarkets();

@@ -1,7 +1,7 @@
 import LendingService, { type Endpoint } from "@CM/Services/Lending";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new LendingService(useHost());
+const service = new LendingService();
 
 export function useQueryLoanDistribution(
   endpoint: Ref<Endpoint>,

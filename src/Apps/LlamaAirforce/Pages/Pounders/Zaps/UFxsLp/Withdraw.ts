@@ -111,11 +111,11 @@ export function uFxsLpWithdrawZaps(
     withdrawDecimals: () => Promise.resolve(18n),
     zap: (minAmountOut?: bigint) => withdrawAsFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const config = getConfig();
       const client = getPublicClient(config);
@@ -141,11 +141,11 @@ export function uFxsLpWithdrawZaps(
     withdrawDecimals: () => Promise.resolve(18n),
     zap: (minAmountOut?: bigint) => withdrawAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const config = getConfig();
       const client = getPublicClient(config);

@@ -1,16 +1,18 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import type { EpochFrax } from "@LAF/Pages/Bribes/FraxMatch/Models/EpochFrax";
 import type { PoolId, Pool } from "@LAF/Pages/Bribes/FraxMatch/Models/Pool";
 
-export default class FraxMatchService extends ServiceBase {
+export default class FraxMatchService extends ServiceBaseHost {
   public async getPools(): Promise<{ pools: Pool[] }> {
-    return this.fetch(`${this.host}/fraxmatch/pools`);
+    const host = await this.getHost();
+    return this.fetch(`${host}/fraxmatch/pools`);
   }
 
   public async getEpochs(poolId: PoolId): Promise<{ epochs: EpochFrax[] }> {
     const poolIds = expandPoolIds(poolId);
+    const host = await this.getHost();
 
-    return this.fetch(`${this.host}/fraxmatch/epochs`, {
+    return this.fetch(`${host}/fraxmatch/epochs`, {
       poolIds,
     });
   }

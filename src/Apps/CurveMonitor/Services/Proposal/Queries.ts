@@ -2,7 +2,7 @@ import { keepPreviousData } from "@tanstack/vue-query";
 import ProposalService from "@CM/Services/Proposal";
 import type * as Models from "@CM/Services/Proposal/Models";
 
-const service = new ProposalService(useHost());
+const service = new ProposalService();
 
 export function useQueryProposal(
   id: Ref<number>,

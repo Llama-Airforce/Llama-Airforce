@@ -9,8 +9,6 @@ export * from "./DefiLlamaService";
 export { default as DefiLlamaService } from "./DefiLlamaService";
 
 export * from "./ServiceBase";
-export { default as ServiceBase } from "./ServiceBase";
-
 export * from "./Socket/Models";
 export * from "./Socket/CurvePriceService";
 export * from "./Socket/CurveVolumeService";

@@ -1,5 +1,5 @@
 import { type Address } from "viem";
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 
 export type Claim = {
   index: bigint;
@@ -14,12 +14,14 @@ type ClaimResponse = {
 
 export type AirdropId = "union" | "ufxs" | "ucvx" | "uprisma" | "cvxprisma";
 
-export default class UnionService extends ServiceBase {
+export default class UnionService extends ServiceBaseHost {
   public async getClaim(
     airdropId: AirdropId,
     address: string
   ): Promise<ClaimResponse> {
-    return this.fetch(`${this.host}/airdrop`, {
+    const host = await this.getHost();
+
+    return this.fetch(`${host}/airdrop`, {
       airdropId,
       address,
     });

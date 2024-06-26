@@ -3,8 +3,8 @@ import { type Chain } from "@CM/Models/Chain";
 import CrvUsdService, { type Market, type Keeper } from "@CM/Services/CrvUsd";
 import OHLCService from "@CM/Services/OHLC";
 
-const service = new CrvUsdService(useHost());
-const serviceOHLC = new OHLCService(useHost());
+const service = new CrvUsdService();
+const serviceOHLC = new OHLCService();
 
 function useMarketAddress(market: Ref<Market | undefined>) {
   return computed(() => market.value?.address);

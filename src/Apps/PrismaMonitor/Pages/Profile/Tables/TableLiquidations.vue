@@ -112,10 +112,7 @@ import { type Liquidation, LiquidationService } from "@PM/Services";
 const storeSettings = useSettingsStore();
 
 // Services
-const liquidationService = new LiquidationService(
-  useHost(),
-  storeSettings.flavor
-);
+const liquidationService = new LiquidationService(storeSettings.flavor);
 
 type Row = Liquidation;
 

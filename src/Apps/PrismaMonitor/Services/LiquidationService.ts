@@ -21,8 +21,8 @@ export type Liquidation = {
 export default class LiquidationService extends ServiceBase {
   private readonly API_URL: string;
 
-  constructor(host: string, flavor: Flavor) {
-    super(host);
+  constructor(flavor: Flavor) {
+    super();
     this.API_URL = apiUrl(flavor);
   }
 

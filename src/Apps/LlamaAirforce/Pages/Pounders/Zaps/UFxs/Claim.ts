@@ -78,11 +78,11 @@ export function uFxsClaimZaps(
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
     zap: (minAmountOut?: bigint) => claimAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const config = getConfig();
       const client = getPublicClient(config);

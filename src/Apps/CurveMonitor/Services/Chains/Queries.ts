@@ -1,7 +1,7 @@
 import ChainsService from "@CM/Services/Chains";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new ChainsService(useHost());
+const service = new ChainsService();
 
 function initEmptyArray() {
   return {

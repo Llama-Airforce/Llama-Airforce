@@ -1,8 +1,9 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 
-export default class GaugeService extends ServiceBase {
+export default class GaugeService extends ServiceBaseHost {
   public async get(): Promise<{ pools: Gauge[] }> {
-    return this.fetch(`${this.host}/curvepool`);
+    const host = await this.getHost();
+    return this.fetch(`${host}/curvepool`);
   }
 }

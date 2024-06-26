@@ -57,7 +57,7 @@ const { items } = useLegend(() => [
 ]);
 
 // Services
-const collateralService = new CollateralService(useHost(), flavor.value);
+const collateralService = new CollateralService(flavor.value);
 
 // Data
 const init = {

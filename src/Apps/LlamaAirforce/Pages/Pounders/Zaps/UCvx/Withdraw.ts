@@ -90,11 +90,11 @@ export function uCvxWithdrawZaps(
     withdrawDecimals: () => Promise.resolve(18n),
     zap: (minAmountOut?: bigint) => withdrawAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const cvx = await llamaService
         .getPrice(CvxAddress)

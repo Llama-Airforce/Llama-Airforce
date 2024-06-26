@@ -109,10 +109,7 @@ const { t } = useI18n();
 const storeSettings = useSettingsStore();
 
 // Services
-const redemptionService = new RedemptionService(
-  useHost(),
-  storeSettings.flavor
-);
+const redemptionService = new RedemptionService(storeSettings.flavor);
 
 // Props
 interface Props {

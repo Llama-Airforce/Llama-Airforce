@@ -280,8 +280,9 @@ const onDeposit = async (skipSlippageModal: boolean): Promise<void> => {
       modalSlippage.value = true;
       modalAction = () => onDeposit(true);
 
+      const host = await useHost();
       minAmountOutRef.value = await zapDeposit.value
-        .getMinAmountOut(useHost(), depositInput.value, 0)
+        .getMinAmountOut(host, depositInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsWithdraw));
       symbolOutput.value = pounderStore.value.pounder.symbol;
 
@@ -343,8 +344,9 @@ const onWithdraw = async (
       modalSlippage.value = true;
       modalAction = () => onWithdraw(true, true);
 
+      const host = await useHost();
       minAmountOutRef.value = await zapWithdraw.value
-        .getMinAmountOut(useHost(), withdrawInput.value, 0)
+        .getMinAmountOut(host, withdrawInput.value, 0)
         .then((x) => bigNumToNumber(x, state.value.decimalsDeposit));
       symbolOutput.value = zapWithdraw.value.withdrawSymbol;
 

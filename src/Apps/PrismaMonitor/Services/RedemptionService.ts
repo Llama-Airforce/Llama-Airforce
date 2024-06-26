@@ -23,8 +23,8 @@ export type Redemption = {
 export default class RedemptionService extends ServiceBase {
   private readonly API_URL: string;
 
-  constructor(host: string, flavor: Flavor) {
-    super(host);
+  constructor(flavor: Flavor) {
+    super();
     this.API_URL = apiUrl(flavor);
   }
 

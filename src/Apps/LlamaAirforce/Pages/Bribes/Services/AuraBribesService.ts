@@ -6,9 +6,9 @@ import { AuraConstants } from "@LAF/Pages/Bribes/Util/AuraHelper";
 export default class AuraBribesService extends BribesService {
   private auraService: AuraService;
 
-  constructor(host: string) {
+  constructor(host: Promise<string>) {
     super(host);
-    this.auraService = new AuraService(host);
+    this.auraService = new AuraService();
   }
 
   override async rounds(): Promise<{
@@ -31,8 +31,11 @@ export default class AuraBribesService extends BribesService {
     if ((epochId?.round ?? Number.MAX_VALUE) >= AuraConstants.START_ROUND) {
       return this.auraService.getRound(epochId.round);
     }
+
     // Else, fallback to Llama
-    return this.fetch(`${this.host}/bribes`, {
+    const host = await this.getHost();
+
+    return this.fetch(`${host}/bribes`, {
       platform: epochId.platform,
       protocol: epochId.protocol,
       round: epochId.round?.toString(),

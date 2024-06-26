@@ -1,4 +1,4 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import type {
   Epoch,
   EpochId,
@@ -6,11 +6,13 @@ import type {
   Product,
 } from "@LAF/Pages/Bribes/Models";
 
-export default class BribesService extends ServiceBase {
+export default class BribesService extends ServiceBaseHost {
   public async rounds(product: Partial<Product>): Promise<{
     rounds: number[];
   }> {
-    return this.fetch(`${this.host}/bribes/rounds`, {
+    const host = await this.getHost();
+
+    return this.fetch(`${host}/bribes/rounds`, {
       platform: product.platform,
       protocol: product.protocol,
     });
@@ -22,7 +24,9 @@ export default class BribesService extends ServiceBase {
     success: boolean;
     epoch?: Epoch;
   }> {
-    return this.fetch(`${this.host}/bribes`, {
+    const host = await this.getHost();
+
+    return this.fetch(`${host}/bribes`, {
       platform: epochId.platform,
       protocol: epochId.protocol,
       round: epochId.round?.toString(),
@@ -32,6 +36,8 @@ export default class BribesService extends ServiceBase {
   public async getOverview(): Promise<{
     epochs: EpochOverview[];
   }> {
-    return this.fetch(`${this.host}/bribes/overview`);
+    const host = await this.getHost();
+
+    return this.fetch(`${host}/bribes/overview`);
   }
 }

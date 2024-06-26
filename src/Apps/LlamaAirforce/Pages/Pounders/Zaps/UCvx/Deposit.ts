@@ -105,11 +105,11 @@ export function uCvxDepositZaps(
     depositBalance: () => getBalance(getConfig, getAddress, CvxAddress),
     depositDecimals: () => getDecimals(getConfig, CvxAddress),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const config = getConfig();
       const client = getPublicClient(config);

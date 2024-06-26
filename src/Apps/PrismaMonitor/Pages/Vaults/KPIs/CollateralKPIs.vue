@@ -70,10 +70,7 @@ import { useSettingsStore } from "@PM/Stores";
 const storeSettings = useSettingsStore();
 
 // Services
-const collateralService = new CollateralService(
-  useHost(),
-  storeSettings.flavor
-);
+const collateralService = new CollateralService(storeSettings.flavor);
 
 // Props
 interface Props {

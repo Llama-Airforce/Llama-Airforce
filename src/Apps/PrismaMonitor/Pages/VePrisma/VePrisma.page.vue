@@ -25,7 +25,7 @@ import TableVotesIncentives from "@PM/Pages/VePrisma/Tables/TableVotesIncentives
 import ChartTopLockers from "@PM/Pages/VePrisma/Charts/ChartTopLockers.vue";
 import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
-const vePrismaService = new VePrismaService(useHost());
+const vePrismaService = new VePrismaService();
 
 const { isFetching: loading, data } = useQuery({
   queryKey: ["prisma-top-lockers"],

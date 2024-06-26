@@ -1,5 +1,5 @@
 import { flattenDeep } from "lodash";
-import ServiceBase from "@/Services/ServiceBase";
+import { ServiceBase } from "@/Services/ServiceBase";
 import {
   type Epoch,
   type EpochOverview,
@@ -57,8 +57,8 @@ export default class AuraService extends ServiceBase {
   public readonly latestRound: number;
   public readonly today: number;
 
-  constructor(host: string) {
-    super(host);
+  constructor() {
+    super();
     const today = Date.now() / 1000;
     this.latestRound = getLatestAuraRound(today);
     this.today = today;

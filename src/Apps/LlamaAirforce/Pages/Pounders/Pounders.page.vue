@@ -53,7 +53,7 @@ import { useClaim } from "@Pounders/Composables/UseClaim";
 const { t } = useI18n();
 
 const unionService = new UnionService(useHost());
-const llamaService = new DefiLlamaService(useHost());
+const llamaService = new DefiLlamaService();
 const flyerService = new FlyerService(useHost());
 
 // Refs

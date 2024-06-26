@@ -116,10 +116,7 @@ import {
 const storeSettings = useSettingsStore();
 
 // Services
-const redemptionService = new RedemptionService(
-  useHost(),
-  storeSettings.flavor
-);
+const redemptionService = new RedemptionService(storeSettings.flavor);
 
 type Row = Redemption;
 

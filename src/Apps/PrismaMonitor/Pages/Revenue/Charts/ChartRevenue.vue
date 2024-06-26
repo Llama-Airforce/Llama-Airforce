@@ -72,7 +72,7 @@ const { t } = useI18n();
 const storeSettings = useSettingsStore();
 
 // Services
-const revenueService = new RevenueService(useHost(), storeSettings.flavor);
+const revenueService = new RevenueService(storeSettings.flavor);
 
 // Refs
 const chartType = ref<ChartType>("line");

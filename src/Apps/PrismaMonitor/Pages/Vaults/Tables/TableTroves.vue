@@ -118,7 +118,7 @@ const { t } = useI18n();
 const storeSettings = useSettingsStore();
 
 // Services
-const troveService = new TroveService(useHost(), storeSettings.flavor);
+const troveService = new TroveService(storeSettings.flavor);
 
 // Props
 interface Props {

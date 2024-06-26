@@ -1,18 +1,20 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import type { OverviewId, OverviewResponse } from "@LAF/Pages/Bribes/Models";
 
-export default class DashboardService extends ServiceBase {
+export default class DashboardService extends ServiceBaseHost {
   private auraService: AuraService;
 
-  constructor(host: string) {
+  constructor(host: Promise<string>) {
     super(host);
-    this.auraService = new AuraService(host);
+    this.auraService = new AuraService();
   }
 
   public async getOverview(overviewId: OverviewId): Promise<OverviewResponse> {
-    const request = this.fetch<OverviewResponse>(`${this.host}/dashboard`, {
+    const host = await this.getHost();
+
+    const request = this.fetch<OverviewResponse>(`${host}/dashboard`, {
       id: overviewId,
     });
 

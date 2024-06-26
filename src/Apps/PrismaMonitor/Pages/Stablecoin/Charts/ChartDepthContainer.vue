@@ -16,7 +16,7 @@ import { useSettingsStore } from "@PM/Stores";
 const storeSettings = useSettingsStore();
 
 // Services
-const stableService = new StableService(useHost(), storeSettings.flavor);
+const stableService = new StableService(storeSettings.flavor);
 
 // Data
 const { isFetching: loading, data } = useQuery({

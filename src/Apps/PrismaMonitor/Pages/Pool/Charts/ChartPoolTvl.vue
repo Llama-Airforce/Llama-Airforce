@@ -32,7 +32,7 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-const sbService = new StabilityPoolService(useHost(), flavor.value);
+const sbService = new StabilityPoolService(flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

@@ -1,8 +1,9 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
 
-export default class PoolService extends ServiceBase {
+export default class PoolService extends ServiceBaseHost {
   public async get(): Promise<{ pools: Pool[] }> {
-    return this.fetch(`${this.host}/pool`);
+    const host = await this.getHost();
+    return this.fetch(`${host}/pool`);
   }
 }

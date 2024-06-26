@@ -1,7 +1,7 @@
 import { type Chain } from "@CM/Models/Chain";
 import LiquidationsService, { type Endpoint } from "@CM/Services/Liquidations";
 
-const service = new LiquidationsService(useHost());
+const service = new LiquidationsService();
 
 function initEmptyArray() {
   return {

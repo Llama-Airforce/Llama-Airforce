@@ -112,11 +112,11 @@ export function uFxsLpDepositZaps(
     depositBalance: () => getBalance(getConfig, getAddress, FxsAddress),
     depositDecimals: () => getDecimals(getConfig, FxsAddress),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const config = getConfig();
       const client = getPublicClient(config);
@@ -143,11 +143,11 @@ export function uFxsLpDepositZaps(
     depositBalance: () => getBalance(getConfig, getAddress, CvxFxsAddress),
     depositDecimals: () => getDecimals(getConfig, CvxFxsAddress),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const config = getConfig();
       const client = getPublicClient(config);

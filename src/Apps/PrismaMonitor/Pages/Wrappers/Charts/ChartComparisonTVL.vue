@@ -28,7 +28,7 @@ import {
 
 const { t } = useI18n();
 
-const prismaService = new WrapperService(useHost());
+const prismaService = new WrapperService();
 
 // Refs
 let serieConvex: ISeriesApi<"Line">;

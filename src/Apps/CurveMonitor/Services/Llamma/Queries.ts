@@ -2,7 +2,7 @@ import { keepPreviousData } from "@tanstack/vue-query";
 import LlammaService, { type Endpoint } from "@CM/Services/Llamma";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new LlammaService(useHost());
+const service = new LlammaService();
 
 export function useQueryEvents(
   endpoint: Ref<Endpoint>,

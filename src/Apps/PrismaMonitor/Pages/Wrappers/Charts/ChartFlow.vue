@@ -20,7 +20,7 @@ type TooltipParams = {
   w: { globals: { seriesNames: string[] } };
 };
 
-const prismaService = new WrapperService(useHost());
+const prismaService = new WrapperService();
 
 // Props
 interface Props {

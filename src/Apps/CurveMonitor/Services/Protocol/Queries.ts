@@ -1,6 +1,6 @@
 import ProtocolService from "@CM/Services/Protocol";
 
-const service = new ProtocolService(useHost());
+const service = new ProtocolService();
 
 function initEmptyArray() {
   return {

@@ -69,7 +69,7 @@ import { type FlyerConvex } from "@/Services/FlyerService";
 
 const { t } = useI18n();
 
-const llamaService = new DefiLlamaService(useHost());
+const llamaService = new DefiLlamaService();
 
 // Props
 interface Props {

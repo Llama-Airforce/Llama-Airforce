@@ -15,7 +15,7 @@ import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 
-const prismaService = new WrapperService(useHost());
+const prismaService = new WrapperService();
 
 // Props
 interface Props {

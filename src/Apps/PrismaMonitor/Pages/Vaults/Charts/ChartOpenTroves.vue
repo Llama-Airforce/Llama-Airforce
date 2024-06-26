@@ -52,7 +52,7 @@ type TooltipParams = {
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const managerService = new ManagerService(useHost(), flavor.value);
+const managerService = new ManagerService(flavor.value);
 
 // Refs
 const period = ref<Period>("1m");

@@ -1,4 +1,4 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 
 type FlyerId = "flyer-convex" | "flyer-aura";
 
@@ -25,14 +25,15 @@ export type FlyerAura = {
   auraBalApr: number;
 };
 
-export default class FlyerService extends ServiceBase {
+export default class FlyerService extends ServiceBaseHost {
   public async getConvex(): Promise<{
     success: boolean;
     dashboard?: FlyerConvex;
   }> {
     const id: FlyerId = "flyer-convex";
+    const host = await this.getHost();
 
-    return this.fetch(`${this.host}/dashboard`, {
+    return this.fetch(`${host}/dashboard`, {
       id,
     });
   }
@@ -42,8 +43,9 @@ export default class FlyerService extends ServiceBase {
     dashboard?: FlyerAura;
   }> {
     const id: FlyerId = "flyer-aura";
+    const host = await this.getHost();
 
-    return this.fetch(`${this.host}/dashboard`, {
+    return this.fetch(`${host}/dashboard`, {
       id,
     });
   }

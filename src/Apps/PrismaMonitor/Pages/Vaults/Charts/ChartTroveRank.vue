@@ -49,7 +49,7 @@ const { t } = useI18n();
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const troveService = new TroveService(useHost(), flavor.value);
+const troveService = new TroveService(flavor.value);
 
 // Props
 interface Props {

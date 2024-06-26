@@ -25,7 +25,7 @@ type TooltipParams = {
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const sbService = new StabilityPoolService(useHost(), flavor.value);
+const sbService = new StabilityPoolService(flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

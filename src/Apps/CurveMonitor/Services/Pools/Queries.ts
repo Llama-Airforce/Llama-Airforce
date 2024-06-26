@@ -3,7 +3,7 @@ import { keepPreviousData } from "@tanstack/vue-query";
 import PoolsService from "@CM/Services/Pools";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new PoolsService(useHost());
+const service = new PoolsService();
 
 export function useQueryPools(chain: Ref<Chain | undefined>) {
   return useQuery({

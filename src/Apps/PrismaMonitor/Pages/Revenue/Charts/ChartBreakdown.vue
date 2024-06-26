@@ -20,7 +20,7 @@ const { t } = useI18n();
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Services
-const revenueService = new RevenueService(useHost(), flavor.value);
+const revenueService = new RevenueService(flavor.value);
 
 // Data
 const { isFetching: loading, data } = useQuery({

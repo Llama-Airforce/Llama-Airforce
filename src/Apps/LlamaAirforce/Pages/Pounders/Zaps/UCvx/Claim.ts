@@ -72,11 +72,11 @@ export function uCvxClaimZaps(
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
     zap: (minAmountOut?: bigint) => claimAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      host: string,
+      _host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService(host);
+      const llamaService = new DefiLlamaService();
 
       const cvx = await llamaService
         .getPrice(CvxAddress)
