@@ -32,6 +32,7 @@ const crumbs: Crumb[] = [
   { id: "home", label: "Home" },
   { id: "crvusd", label: "crvUSD" },
   { id: "market", label: "Market" },
+  { id: "hint", label: "Hint Example", hint: true },
 ];
 
 const crumbActive = ref({ id: "market", label: "Market" });
@@ -46,13 +47,17 @@ const breadcrumb1 = `<Breadcrumb
   @crumb="onCrumb"
 ></Breadcrumb>`;
 
-const breadcrumb2 = `const crumbs: Crumb[] = [
+const breadcrumb2 = `import { ref } from 'vue';
+import { type Crumb } from "@/Framework/Crumb";
+
+const crumbs: Crumb[] = [
   { id: "home", label: "Home" },
   { id: "crvusd", label: "crvUSD" },
   { id: "market", label: "Market" },
+  { id: "hint", label: "Hint Example", hint: true },
 ];
 
-const crumbActive = ref({ id: "market", label: "Market" });
+const crumbActive = ref<Crumb | undefined>({ id: "market", label: "Market" });
 
 const onCrumb = (crumb: Crumb) => {
   crumbActive.value = crumb;

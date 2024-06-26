@@ -16,6 +16,10 @@
           :sorting-columns-enabled="sortColumnsNoEmpty"
           sorting-default-column="deadline"
           sorting-default-dir="desc"
+          :loading="isLoading"
+          :expanded="expandedRows"
+          expand-side="right"
+          icon="fa fa-table"
           @sort-column="onSort"
           @selected="onSelected"
         >
@@ -33,9 +37,11 @@
                 {{ props.item.round }}
               </a>
             </div>
+
             <div>
               {{ new Date(Date.now()).toLocaleDateString() }}
             </div>
+
             <div class="number">
               <AsyncValue
                 :value="props.item.value"
@@ -43,6 +49,7 @@
                 type="dollar"
               />
             </div>
+
             <div class="number">
               <AsyncValue
                 :value="props.item.value * 10000"
@@ -50,6 +57,10 @@
                 type="dollar"
               />
             </div>
+          </template>
+
+          <template #row-details="props: { item: Round }">
+            <div>Additional details for round {{ props.item.round }}</div>
           </template>
 
           <template #row-aggregation>
@@ -63,6 +74,10 @@
                 type="dollar"
               />
             </div>
+          </template>
+
+          <template #no-data>
+            <div>Custom no data message</div>
           </template>
         </DataTable>
       </template>
@@ -127,7 +142,26 @@ const rows = computed((): Round[] => {
 });
 
 const onSelected = (epoch: Round): void => {
-  console.log(epoch.round);
+  toggleExpand(epoch);
+};
+
+// Simulate loading
+const isLoading = ref(false);
+onMounted(() => {
+  isLoading.value = true;
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000);
+});
+
+const expandedRows = ref<Round[]>([]);
+const toggleExpand = (round: Round) => {
+  const index = expandedRows.value.findIndex((r) => r.round === round.round);
+  if (index === -1) {
+    expandedRows.value.push(round);
+  } else {
+    expandedRows.value.splice(index, 1);
+  }
 };
 
 const dataTable1 = `<DataTable
@@ -141,6 +175,10 @@ const dataTable1 = `<DataTable
   :sorting-columns-enabled="sortColumnsNoEmpty"
   sorting-default-column="deadline"
   sorting-default-dir="desc"
+  :loading="isLoading"
+  :expanded="expandedRows"
+  expand-side="right"
+  icon="fa fa-table"
   @sort-column="onSort"
   @selected="onSelected"
 >
@@ -158,9 +196,11 @@ const dataTable1 = `<DataTable
         {{ props.item.round }}
       </a>
     </div>
+
     <div>
       {{ new Date(Date.now()).toLocaleDateString() }}
     </div>
+
     <div class="number">
       <AsyncValue
         :value="props.item.value"
@@ -168,6 +208,7 @@ const dataTable1 = `<DataTable
         type="dollar"
       />
     </div>
+
     <div class="number">
       <AsyncValue
         :value="props.item.value * 10000"
@@ -241,7 +282,7 @@ const dataTable3 = `.datatable-example {
 
   ::v-deep(.example-columns-data) {
     display: grid;
-    grid-template-columns: 1.5rem 1fr 1fr 1fr;
+    grid-template-columns: 1.5rem 1fr 1fr 1fr 20px;
 
     // Right adjust number columns.
     div:nth-child(3),
@@ -277,7 +318,7 @@ const dataTable3 = `.datatable-example {
 
   ::v-deep(.example-columns-data) {
     display: grid;
-    grid-template-columns: 1.5rem 1fr 1fr 1fr;
+    grid-template-columns: 1.5rem 1fr 1fr 1fr 20px;
 
     // Right adjust number columns.
     div:nth-child(3),

@@ -313,6 +313,10 @@ const sortColumn = (index: number): void => {
       display: flex;
       align-items: center;
       color: var(--c-primary);
+
+      &:not(:empty) {
+        margin-right: 1rem;
+      }
     }
 
     > .header-content {

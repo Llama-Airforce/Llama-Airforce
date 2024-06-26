@@ -137,6 +137,42 @@
         ></Code>
       </template>
     </Recipe>
+
+    <Recipe title="Inline">
+      <template #example>
+        <p>
+          This is an inline AsyncValue:
+          <AsyncValue
+            :value="50000"
+            :inline="true"
+          />
+        </p>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="asyncInline"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="Custom Precision Function">
+      <template #example>
+        <AsyncValue
+          :value="50000"
+          :precision="customPrecision"
+          type="dollar"
+        ></AsyncValue>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="asyncCustomPrecision"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
@@ -187,6 +223,18 @@ const asyncUnit = `<AsyncValue
   :show-unit="false"
   type="dollar"
 ></AsyncValue>`;
+
+const asyncInline = `<p>This is an inline AsyncValue:
+  <AsyncValue :value="50000" :inline="true" />
+</p>`;
+
+const asyncCustomPrecision = `<AsyncValue
+  :value="50000"
+  :precision="(x) => x > 10000 ? 0 : 2"
+  type="dollar"
+></AsyncValue>`;
+
+const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
 </script>
 
 <style lang="scss" scoped>

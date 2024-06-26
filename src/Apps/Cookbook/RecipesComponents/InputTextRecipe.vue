@@ -42,6 +42,7 @@
               >
                 Volume
               </div>
+
               <div class="volume">
                 <AsyncValue
                   :value="props.item.volume"

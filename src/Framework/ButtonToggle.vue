@@ -27,9 +27,16 @@ interface Props {
 
 const { icon = "", value = "" } = defineProps<Props>();
 
+// Emits
+const emit = defineEmits<{
+  change: [toggled: boolean];
+}>();
+
 // Events
 const onClick = (): void => {
-  modelValue.value = !modelValue.value;
+  const newValue = !modelValue.value;
+  modelValue.value = newValue;
+  emit("change", newValue);
 };
 </script>
 

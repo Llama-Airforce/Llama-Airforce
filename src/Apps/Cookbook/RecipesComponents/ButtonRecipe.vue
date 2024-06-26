@@ -116,10 +116,43 @@
         ></Code>
       </template>
     </Recipe>
+
+    <Recipe title="Web3">
+      <template #example>
+        <Button
+          value="Switch to Ethereum"
+          :web3="true"
+        ></Button>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="btnWeb3"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="Disabled">
+      <template #example>
+        <Button
+          value="Disabled Button"
+          disabled
+        ></Button>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="xml"
+          :code="btnDisabled"
+        ></Code>
+      </template>
+    </Recipe>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useWallet } from "@/Wallet";
 import Recipe from "@CB/Recipe.vue";
 
 const btnPrimary = `<Button
@@ -159,7 +192,16 @@ const btnClick1 = `<Button
 
 const btnClick2 = `const showAlert = (msg: string) => alert(msg);`;
 
-const showAlert = (msg: string) => alert(msg);
+const { network } = useWallet();
+const currentNetwork = ref(network.value);
+
+const showAlert = (msg: string) => {
+  alert(msg);
+  if (network.value !== currentNetwork.value) {
+    currentNetwork.value = network.value;
+    alert(`Network switched to: ${network.value}`);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -168,6 +210,6 @@ const showAlert = (msg: string) => alert(msg);
 @include dashboard("buttons");
 
 .buttons {
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 </style>
