@@ -9,7 +9,7 @@
     "lint:pm": "eslint src/Apps/PrismaMonitor/**/*.{ts,vue}",
     "lint:cb": "eslint src/Apps/Cookbook/**/*.{ts,vue}",
     "dev:laf": "vite src/Apps/LlamaAirforce",
-    "dev:laf:server": "nitro dev src/Apps/LlamaAirforce",
+    "dev:laf:server": "nitro dev src/Apps/LlamaAirforce --host",
     "dev:cm": "vite src/Apps/CurveMonitor",
     "dev:pm": "vite src/Apps/PrismaMonitor",
     "dev:cb": "vite src/Apps/Cookbook",
