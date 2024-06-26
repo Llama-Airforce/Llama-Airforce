@@ -1,13 +1,13 @@
-import { createError } from "h3";
+import { createError, getRouterParams } from "h3";
 import { defineCachedEventHandler } from "nitropack/runtime";
 import { isAddress } from "viem";
 
 export default defineCachedEventHandler(
   async (event) => {
     // Get the address from the route parameter
-    const address = event.context.params?.address;
+    const { address } = getRouterParams(event);
 
-    if (!address || !isAddress(address)) {
+    if (!isAddress(address)) {
       throw createError({
         statusCode: 400,
         message: "Invalid or missing address parameter",
