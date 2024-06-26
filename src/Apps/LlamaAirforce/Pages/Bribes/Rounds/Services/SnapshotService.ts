@@ -7,7 +7,7 @@ import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
 const SNAPSHOT_URL = "https://hub.snapshot.org/graphql";
 const SNAPSHOT_SCORE_URL = "https://score.snapshot.org/api/scores";
 const SNAPSHOT_THEGRAPH_URL =
-  "https://api.thegraph.com/subgraphs/name/snapshot-labs/snapshot";
+  "https://gateway.thegraph.com/api/0f15b42bdeff7a063a4e1757d7e2f99e/deployments/id/QmXvEzRJXby7KFuTr7NJsM47hGefM5VckEXZrQyZzL9eJd";
 
 export type Proposal = {
   id: ProposalId;
