@@ -10,6 +10,7 @@ import Button from "@CB/Recipes/ButtonRecipe.vue";
 import ButtonToggle from "@CB/Recipes/ButtonToggleRecipe.vue";
 import Card from "@CB/Recipes/CardRecipe.vue";
 import CardChart from "@CB/Recipes/CardChartRecipe.vue";
+import Checkbox from "@CB/Recipes/CheckboxRecipe.vue";
 import DataTable from "@CB/Recipes/DataTableRecipe.vue";
 import InputText from "@CB/Recipes/InputTextRecipe.vue";
 import InputNumber from "@CB/Recipes/InputNumberRecipe.vue";
@@ -67,6 +68,11 @@ export const pageMainRoutes = [
     path: "/card-chart",
     name: "card-chart",
     component: CardChart,
+  },
+  {
+    path: "/checkbox",
+    name: "checkbox",
+    component: Checkbox,
   },
   {
     path: "/data-table",
@@ -161,6 +167,10 @@ export const pageMain: Page = {
         {
           to: "/card-chart",
           label: "CardChart",
+        },
+        {
+          to: "/checkbox",
+          label: "Checkbox",
         },
         {
           to: "/data-table",
