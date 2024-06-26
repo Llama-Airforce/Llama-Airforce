@@ -4,23 +4,23 @@ import Colors from "@CB/Recipes/ColorsRecipe.vue";
 import Dashboard from "@CB/Recipes/DashboardRecipe.vue";
 import Socket from "@CB/Recipes/SocketRecipe.vue";
 
-import AsyncValue from "@CB/Recipes/AsyncValueRecipe.vue";
-import Breadcrumb from "@CB/Recipes/BreadcrumbRecipe.vue";
-import Button from "@CB/Recipes/ButtonRecipe.vue";
-import ButtonToggle from "@CB/Recipes/ButtonToggleRecipe.vue";
-import Card from "@CB/Recipes/CardRecipe.vue";
-import CardChart from "@CB/Recipes/CardChartRecipe.vue";
-import Checkbox from "@CB/Recipes/CheckboxRecipe.vue";
-import DataTable from "@CB/Recipes/DataTableRecipe.vue";
-import InputText from "@CB/Recipes/InputTextRecipe.vue";
-import InputNumber from "@CB/Recipes/InputNumberRecipe.vue";
-import Modal from "@CB/Recipes/ModalRecipe.vue";
-import Pagination from "@CB/Recipes/PaginationRecipe.vue";
-import Select from "@CB/Recipes/SelectRecipe.vue";
-import Slider from "@CB/Recipes/SliderRecipe.vue";
-import Spinner from "@CB/Recipes/SpinnerRecipe.vue";
-import Tabs from "@CB/Recipes/TabsRecipe.vue";
-import Tooltip from "@CB/Recipes/TooltipRecipe.vue";
+import AsyncValue from "@CB/RecipesComponents/AsyncValueRecipe.vue";
+import Breadcrumb from "@CB/RecipesComponents/BreadcrumbRecipe.vue";
+import Button from "@CB/RecipesComponents/ButtonRecipe.vue";
+import ButtonToggle from "@CB/RecipesComponents/ButtonToggleRecipe.vue";
+import Card from "@CB/RecipesComponents/CardRecipe.vue";
+import CardChart from "@CB/RecipesComponents/CardChartRecipe.vue";
+import Checkbox from "@CB/RecipesComponents/CheckboxRecipe.vue";
+import DataTable from "@CB/RecipesComponents/DataTableRecipe.vue";
+import InputText from "@CB/RecipesComponents/InputTextRecipe.vue";
+import InputNumber from "@CB/RecipesComponents/InputNumberRecipe.vue";
+import Modal from "@CB/RecipesComponents/ModalRecipe.vue";
+import Pagination from "@CB/RecipesComponents/PaginationRecipe.vue";
+import Select from "@CB/RecipesComponents/SelectRecipe.vue";
+import Slider from "@CB/RecipesComponents/SliderRecipe.vue";
+import Spinner from "@CB/RecipesComponents/SpinnerRecipe.vue";
+import Tabs from "@CB/RecipesComponents/TabsRecipe.vue";
+import Tooltip from "@CB/RecipesComponents/TooltipRecipe.vue";
 
 export const pageMainRoutes = [
   { path: "/", redirect: { name: "button" } },
@@ -40,87 +40,87 @@ export const pageMainRoutes = [
     component: Socket,
   },
   {
-    path: "/async-value",
+    path: "/components/async-value",
     name: "async-value",
     component: AsyncValue,
   },
   {
-    path: "/breadcrumb",
+    path: "/components/breadcrumb",
     name: "breadcrumb",
     component: Breadcrumb,
   },
   {
-    path: "/button",
+    path: "/components/button",
     name: "button",
     component: Button,
   },
   {
-    path: "/toggle-button",
+    path: "/components/toggle-button",
     name: "toggle-button",
     component: ButtonToggle,
   },
   {
-    path: "/card",
+    path: "/components/card",
     name: "card",
     component: Card,
   },
   {
-    path: "/card-chart",
+    path: "/components/card-chart",
     name: "card-chart",
     component: CardChart,
   },
   {
-    path: "/checkbox",
+    path: "/components/checkbox",
     name: "checkbox",
     component: Checkbox,
   },
   {
-    path: "/data-table",
+    path: "/components/data-table",
     name: "data-table",
     component: DataTable,
   },
   {
-    path: "/input-text",
+    path: "/components/input-text",
     name: "input-text",
     component: InputText,
   },
   {
-    path: "/input-number",
+    path: "/components/input-number",
     name: "input-number",
     component: InputNumber,
   },
   {
-    path: "/modal",
+    path: "/components/modal",
     name: "modal",
     component: Modal,
   },
   {
-    path: "/pagination",
+    path: "/components/pagination",
     name: "pagination",
     component: Pagination,
   },
   {
-    path: "/select",
+    path: "/components/select",
     name: "select",
     component: Select,
   },
   {
-    path: "/slider",
+    path: "/components/slider",
     name: "slider",
     component: Slider,
   },
   {
-    path: "/spinner",
+    path: "/components/spinner",
     name: "spinner",
     component: Spinner,
   },
   {
-    path: "/tabs",
+    path: "/components/tabs",
     name: "tabs",
     component: Tabs,
   },
   {
-    path: "/tooltip",
+    path: "/components/tooltip",
     name: "tooltip",
     component: Tooltip,
   },
@@ -142,74 +142,74 @@ export const pageMain: Page = {
       label: "Socket.IO",
     },
     {
-      label: "Framework",
+      label: "Components",
       children: [
         {
-          to: "/async-value",
+          to: "/components/async-value",
           label: "AsyncValue",
         },
         {
-          to: "/breadcrumb",
+          to: "/components/breadcrumb",
           label: "Breadcrumb",
         },
         {
-          to: "/button",
+          to: "/components/button",
           label: "Button",
         },
         {
-          to: "/toggle-button",
+          to: "/components/toggle-button",
           label: "ButtonToggle",
         },
         {
-          to: "/card",
+          to: "/components/card",
           label: "Card",
         },
         {
-          to: "/card-chart",
+          to: "/components/card-chart",
           label: "CardChart",
         },
         {
-          to: "/checkbox",
+          to: "/components/checkbox",
           label: "Checkbox",
         },
         {
-          to: "/data-table",
+          to: "/components/data-table",
           label: "DataTable",
         },
         {
-          to: "/input-text",
+          to: "/components/input-text",
           label: "InputText",
         },
         {
-          to: "/input-number",
+          to: "/components/input-number",
           label: "InputNumber",
         },
         {
-          to: "/modal",
+          to: "/components/modal",
           label: "Modal",
         },
         {
-          to: "/pagination",
+          to: "/components/pagination",
           label: "Pagination",
         },
         {
-          to: "/select",
+          to: "/components/select",
           label: "Select",
         },
         {
-          to: "/slider",
+          to: "/components/slider",
           label: "Slider",
         },
         {
-          to: "/spinner",
+          to: "/components/spinner",
           label: "Spinner",
         },
         {
-          to: "/tabs",
+          to: "/components/tabs",
           label: "Tabs",
         },
         {
-          to: "/tooltip",
+          to: "/components/tooltip",
           label: "Tooltip",
         },
       ],
