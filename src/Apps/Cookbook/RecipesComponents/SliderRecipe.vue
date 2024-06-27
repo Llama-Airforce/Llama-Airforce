@@ -6,7 +6,7 @@
         <Slider
           :min="0"
           :max="5"
-          :step="0.1"
+          :step="0.2"
           :model-value="value"
           @update:model-value="onInput"
         ></Slider>
@@ -33,14 +33,14 @@ import Recipe from "@CB/Recipe.vue";
 const value = ref(0);
 
 // Events
-const onInput = (newVal: string) => {
-  value.value = parseFloat(newVal);
+const onInput = (newVal: number) => {
+  value.value = newVal;
 };
 
 const slider1 = `<Slider
   :min="0"
   :max="5"
-  :step="0.1"
+  :step="0.2"
   :model-value="value"
   @update:model-value="onInput"
 ></Slider>`;

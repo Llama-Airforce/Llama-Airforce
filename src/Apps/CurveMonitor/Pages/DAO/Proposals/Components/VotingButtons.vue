@@ -102,12 +102,11 @@
         </div>
 
         <Slider
+          v-model="yeaPct"
           class="slider"
           :disabled="!canVote"
           :min="0"
           :max="100"
-          :model-value="yeaPct"
-          @update:model-value="onYeaPct"
         ></Slider>
 
         <Button
@@ -277,10 +276,6 @@ const validate = () => {
       setCursorPosition(cursorPosition - 1); // Restore the cursor position
     }
   }
-};
-
-const onYeaPct = (newVal: string) => {
-  yeaPct.value = parseFloat(newVal);
 };
 
 // Data
