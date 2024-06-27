@@ -331,6 +331,7 @@ declare global {
   const useEventBus: typeof import('@vueuse/core')['useEventBus']
   const useEventListener: typeof import('@vueuse/core')['useEventListener']
   const useEventSource: typeof import('@vueuse/core')['useEventSource']
+  const useExecuteContract: typeof import('../../Framework/Composables/UseExecuteContract')['useExecuteContract']
   const useExpansion: typeof import('../../Framework/Composables/UseExpansion')['useExpansion']
   const useEyeDropper: typeof import('@vueuse/core')['useEyeDropper']
   const useFavicon: typeof import('@vueuse/core')['useFavicon']

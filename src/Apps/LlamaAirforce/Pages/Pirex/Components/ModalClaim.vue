@@ -163,60 +163,33 @@ function canClaim(epoch: Epoch) {
   return !!address.value && (toClaim[epoch.epoch]?.length ?? 0) > 0;
 }
 
-const { data: hash, error, isPending, writeContract } = useWriteContract();
-const { isLoading: isConfirming, isSuccess: isConfirmed } =
-  useWaitForTransactionReceipt({
-    hash,
-  });
-
-const claiming = computed(() => isPending.value || isConfirming.value);
-
 let claimsClaiming: Claim[] = [];
-function claim(epoch: Epoch) {
-  // Get all the reward indices of the claims for the given epoch.
-  const claims = toClaim[epoch.epoch].flatMap((x) =>
-    x.claims.filter((claim) => claim.epoch === epoch.epoch)
-  );
+const { execute: claim, isExecuting: claiming } = useExecuteContract(
+  (writeContract, epoch: Epoch) => {
+    // Get all the reward indices of the claims for the given epoch.
+    const claims = toClaim[epoch.epoch].flatMap((x) =>
+      x.claims.filter((claim) => claim.epoch === epoch.epoch)
+    );
 
-  const rewardIndices = claims.map((r) => BigInt(r.rewardIndex));
+    const rewardIndices = claims.map((r) => BigInt(r.rewardIndex));
 
-  claimsClaiming = claims;
+    claimsClaiming = claims;
 
-  writeContract({
-    address: PirexCvxAddress,
-    abi,
-    functionName: "redeemSnapshotRewards",
-    args: [BigInt(epoch.epoch), rewardIndices, address.value!] as const,
-  });
-}
-
-// Notifications
-watch(error, (newError) => {
-  if (!newError) {
-    return;
+    writeContract({
+      address: PirexCvxAddress,
+      abi,
+      functionName: "redeemSnapshotRewards",
+      args: [BigInt(epoch.epoch), rewardIndices, address.value!] as const,
+    });
+  },
+  `Successfully claimed rewards for epoch: ${claimsClaiming[0]?.epoch ?? "?"}!`,
+  () => {
+    claimsClaiming = [];
+  },
+  () => {
+    claimsClaiming = [];
   }
-
-  notify({ text: prettyError(newError), type: "error" });
-
-  claimsClaiming = [];
-});
-
-watch(isConfirmed, (newIsConfirmed) => {
-  if (!newIsConfirmed) {
-    return;
-  }
-
-  notify({
-    text: `Successfully claimed rewards for epoch: ${
-      claimsClaiming[0]?.epoch ?? "?"
-    }!`,
-    type: "success",
-  });
-
-  emit("claimed", claimsClaiming);
-
-  claimsClaiming = [];
-});
+);
 </script>
 
 <style lang="scss">
