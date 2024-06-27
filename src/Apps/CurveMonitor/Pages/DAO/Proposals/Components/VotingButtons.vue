@@ -358,7 +358,7 @@ const voting = computed(() => isPendingVote.value || isConfirmingVote.value);
 function vote() {
   // PCT_BASE = 10 ** 18; // 0% = 0; 1% = 10^16; 100% = 10^18
   if (!pctBase.value) {
-    notifyError("Missing PCT_BASE");
+    notify({ text: prettyError("Missing PCT_BASE"), type: "error" });
     return;
   }
 
@@ -380,7 +380,7 @@ watch(errorVote, (newError) => {
     return;
   }
 
-  notifyError(newError);
+  notify({ text: prettyError(newError), type: "error" });
 });
 
 watch(isConfirmedVote, (newIsConfirmed) => {
@@ -388,7 +388,7 @@ watch(isConfirmedVote, (newIsConfirmed) => {
     return;
   }
 
-  notifySuccess("Voted");
+  notify({ text: "Voted", type: "success" });
 });
 
 // Execute
@@ -425,7 +425,7 @@ watch(errorExecute, (newError) => {
     return;
   }
 
-  notifyError(newError);
+  notify({ text: prettyError(newError), type: "error" });
 });
 
 watch(isConfirmedExecute, (newIsConfirmed) => {
@@ -433,7 +433,7 @@ watch(isConfirmedExecute, (newIsConfirmed) => {
     return;
   }
 
-  notifySuccess("Executed proposal");
+  notify({ text: "Executed proposal", type: "success" });
 });
 </script>
 

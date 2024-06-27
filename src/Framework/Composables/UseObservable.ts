@@ -1,5 +1,4 @@
 import { type Observable } from "rxjs";
-import { notify } from "@kyvg/vue3-notification";
 
 /**
  * Vue composable that transforms an RxJS Observable into a reactive Vue 3 ref.
@@ -30,10 +29,7 @@ export function useObservable<T>(obs: Observable<T>, init: T): Ref<T> {
       obsRef.value = x;
     },
     error: (err) => {
-      const text =
-        err instanceof Error ? prettyError(err) : JSON.stringify(err);
-
-      notify({ text, type: "error" });
+      notify({ text: prettyError(err), type: "error" });
     },
   });
 

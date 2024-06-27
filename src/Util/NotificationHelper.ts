@@ -1,7 +1,15 @@
 import { type Ref } from "vue";
-import { notify } from "@kyvg/vue3-notification";
 
-export function prettyError(err: Error): string {
+/**
+ * Formats an error message for user-friendly display.
+ * @param err The error to format.
+ * @returns A formatted error message string.
+ */
+export function prettyError(err: unknown): string {
+  if (!(err instanceof Error)) {
+    return JSON.stringify(err);
+  }
+
   if (
     err.message.includes("Exchange resulted in fewer coins than expected") ||
     err.message.includes("Slippage")
@@ -10,19 +18,6 @@ export function prettyError(err: Error): string {
   }
 
   return err.message;
-}
-
-export function notifySuccess(text: string) {
-  notify({ text, type: "success" });
-}
-
-export function notifyWarn(text: string) {
-  notify({ text, type: "warn" });
-}
-
-export function notifyError(err: unknown) {
-  const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
-  notify({ text, type: "error" });
 }
 
 /**
@@ -35,8 +30,7 @@ export async function tryNotify<T>(
   try {
     return await f();
   } catch (err: unknown) {
-    const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
-    notify({ text, type: "error" });
+    notify({ text: prettyError(err), type: "error" });
 
     return undefined;
   }
@@ -56,8 +50,7 @@ export async function tryNotifyLoading<T>(
   try {
     return await f();
   } catch (err: unknown) {
-    const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
-    notify({ text, type: "error" });
+    notify({ text: prettyError(err), type: "error" });
 
     return undefined;
   } finally {
