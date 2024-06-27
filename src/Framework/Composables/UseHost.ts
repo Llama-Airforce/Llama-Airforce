@@ -1,4 +1,5 @@
 import { hosts } from "@/Services/Hosts";
+import { notifyWarn } from "@/Util";
 
 const hostDev = "http://localhost:3000";
 const hostProd = hosts.laf;
@@ -37,12 +38,12 @@ export async function useHost(production?: string): Promise<string> {
         cachedHost = hostDev;
       } else {
         cachedHost = production ?? hostProd;
-        console.warn(
+        notifyWarn(
           "Local development server available but didn't ping back correctly from HEAD, using production host."
         );
       }
     } catch (error) {
-      console.warn(
+      notifyWarn(
         "Local development server not available, using production host."
       );
       cachedHost = hostProd;

@@ -16,6 +16,10 @@ export function notifySuccess(text: string) {
   notify({ text, type: "success" });
 }
 
+export function notifyWarn(text: string) {
+  notify({ text, type: "warn" });
+}
+
 export function notifyError(err: unknown) {
   const text = err instanceof Error ? prettyError(err) : JSON.stringify(err);
   notify({ text, type: "error" });
