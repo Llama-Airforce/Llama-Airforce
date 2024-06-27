@@ -208,7 +208,7 @@ export default class SnapshotService extends ServiceBase {
       case "aura-bal":
         return await this.getScoresAura(snapshot, voters);
       default:
-        throw new Error(`Unkown protocol: '${protocol as string}'`);
+        throw new Error(`Unknown protocol: '${protocol as string}'`);
     }
   }
 
