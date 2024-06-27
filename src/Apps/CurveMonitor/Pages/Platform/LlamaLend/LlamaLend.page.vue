@@ -240,6 +240,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
 @include dashboard("llamalend");
 
 .llamalend {
+  max-width: calc(1920px - 18.125rem);
   grid-template-columns: 1fr 1fr;
 
   .markets {

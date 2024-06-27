@@ -152,6 +152,7 @@ const onPoolSelect = async (newPool: Pool) => {
 @include dashboard("pools");
 
 .pools {
+  max-width: calc(1920px - 18.125rem);
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     "kpi1 kpi2 kpi3 kpi4"
