@@ -145,6 +145,7 @@ declare global {
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const formatNumber: typeof import('../../Util/NumberHelper')['formatNumber']
   const getActivePinia: typeof import('pinia')['getActivePinia']
+  const getAddress: typeof import('viem')['getAddress']
   const getAuraBalApy: typeof import('../../Util/ApyHelper')['getAuraBalApy']
   const getAuraBalPrice: typeof import('../../Util/PriceHelper')['getAuraBalPrice']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
@@ -164,11 +165,13 @@ declare global {
   const getCvxPrismaApy: typeof import('../../Util/ApyHelper')['getCvxPrismaApy']
   const getCvxPrismaPrice: typeof import('../../Util/PriceHelper')['getCvxPrismaPrice']
   const getDefiLlamaPrice: typeof import('../../Util/PriceHelper')['getDefiLlamaPrice']
+  const getPublicClient: typeof import('@wagmi/core')['getPublicClient']
   const getPxCvxPrice: typeof import('../../Util/PriceHelper')['getPxCvxPrice']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
+  const isAddress: typeof import('viem')['isAddress']
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isLeaf: typeof import('../../Framework/Monitor/Menu')['isLeaf']
   const isNode: typeof import('../../Framework/Monitor/Menu')['isNode']
@@ -221,6 +224,7 @@ declare global {
   const reactiveComputed: typeof import('@vueuse/core')['reactiveComputed']
   const reactiveOmit: typeof import('@vueuse/core')['reactiveOmit']
   const reactivePick: typeof import('@vueuse/core')['reactivePick']
+  const readContract: typeof import('@wagmi/core')['readContract']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const refAutoReset: typeof import('@vueuse/core')['refAutoReset']
@@ -240,6 +244,7 @@ declare global {
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
   const shorten: typeof import('../../Util/PoolHelper')['shorten']
+  const simulateContract: typeof import('@wagmi/core')['simulateContract']
   const storeToRefs: typeof import('pinia')['storeToRefs']
   const subIsActive: typeof import('../../Util/RouterHelper')['subIsActive']
   const syncRef: typeof import('@vueuse/core')['syncRef']
@@ -294,6 +299,7 @@ declare global {
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
+  const useConfig: typeof import('@wagmi/vue')['useConfig']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCounter: typeof import('@vueuse/core')['useCounter']
   const useCssModule: typeof import('vue')['useCssModule']
@@ -388,6 +394,7 @@ declare global {
   const useQueries: typeof import('@tanstack/vue-query')['useQueries']
   const useQuery: typeof import('@tanstack/vue-query')['useQuery']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
+  const useReadContract: typeof import('@wagmi/vue')['useReadContract']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
   const useRelativeTime: typeof import('../../Framework/Composables/UseRelativeTime')['useRelativeTime']
   const useResizeObserver: typeof import('@vueuse/core')['useResizeObserver']
@@ -414,6 +421,7 @@ declare global {
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSupported: typeof import('@vueuse/core')['useSupported']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
+  const useSwitchChain: typeof import('@wagmi/vue')['useSwitchChain']
   const useTabNavigation: typeof import('../../Framework/Composables/UseTabNavigation')['useTabNavigation']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('@vueuse/core')['useTextDirection']
@@ -438,6 +446,7 @@ declare global {
   const useVModels: typeof import('@vueuse/core')['useVModels']
   const useVibrate: typeof import('@vueuse/core')['useVibrate']
   const useVirtualList: typeof import('@vueuse/core')['useVirtualList']
+  const useWaitForTransactionReceipt: typeof import('@wagmi/vue')['useWaitForTransactionReceipt']
   const useWakeLock: typeof import('@vueuse/core')['useWakeLock']
   const useWebNotification: typeof import('@vueuse/core')['useWebNotification']
   const useWebSocket: typeof import('@vueuse/core')['useWebSocket']
@@ -446,8 +455,10 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
+  const useWriteContract: typeof import('@wagmi/vue')['useWriteContract']
   const veFunderGaugeController: typeof import('../../Util/Addresses')['veFunderGaugeController']
   const veFunderGaugeFactoryAddress: typeof import('../../Util/Addresses')['veFunderGaugeFactoryAddress']
+  const waitForTransactionReceipt: typeof import('@wagmi/core')['waitForTransactionReceipt']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -464,12 +475,19 @@ declare global {
   const watchTriggerable: typeof import('@vueuse/core')['watchTriggerable']
   const watchWithFilter: typeof import('@vueuse/core')['watchWithFilter']
   const whenever: typeof import('@vueuse/core')['whenever']
+  const writeContract: typeof import('@wagmi/core')['writeContract']
 }
 // for type re-export
 declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { Address } from 'viem'
+  import('viem')
+  // @ts-ignore
+  export type { Config } from '@wagmi/core'
+  import('@wagmi/core')
   // @ts-ignore
   export type { IChartApi, ISeriesApi, UTCTimestamp, LineData, CandlestickData, CandlestickSeriesPartialOptions, HistogramData, HistogramSeriesPartialOptions, AreaSeriesPartialOptions, LineSeriesPartialOptions } from 'lightweight-charts'
   import('lightweight-charts')

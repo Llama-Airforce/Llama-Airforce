@@ -4,13 +4,38 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
   include: [/\.vue$/, /\.ts$/],
   dts: true,
   imports: [
+    // Vue
     "vue",
     "vue-i18n",
     "vue-router",
     "@vueuse/core",
     "pinia",
     { "@vueuse/router": ["useRouteHash", "useRouteParams", "useRouteQuery"] },
+    // Tanstack
     { "@tanstack/vue-query": ["useQuery", "useQueries"] },
+    // Viem + wagmi
+    { viem: ["getAddress", "isAddress"] },
+    { from: "viem", imports: ["Address"], type: true },
+    {
+      "@wagmi/vue": [
+        "useConfig",
+        "useReadContract",
+        "useWriteContract",
+        "useWaitForTransactionReceipt",
+        "useSwitchChain",
+      ],
+    },
+    {
+      "@wagmi/core": [
+        "getPublicClient",
+        "readContract",
+        "simulateContract",
+        "writeContract",
+        "waitForTransactionReceipt",
+      ],
+    },
+    { from: "@wagmi/core", imports: ["Config"], type: true },
+    // Charting
     {
       from: "lightweight-charts",
       imports: ["LineType", "LineStyle", "ColorType", "CrosshairMode"],
@@ -32,6 +57,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       ],
       type: true,
     },
+    // Util
     {
       from: "@/Util",
       imports: ["DataPoint"],

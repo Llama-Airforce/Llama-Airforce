@@ -493,6 +493,20 @@
     "getCvxPrismaPriceViem": true,
     "getPxCvxPriceViem": true,
     "useDevelopment": true,
-    "useHost": true
+    "useHost": true,
+    "Address": true,
+    "Config": true,
+    "getAddress": true,
+    "getPublicClient": true,
+    "isAddress": true,
+    "readContract": true,
+    "useConfig": true,
+    "useReadContract": true,
+    "useSwitchChain": true,
+    "useWaitForTransactionReceipt": true,
+    "useWriteContract": true,
+    "waitForTransactionReceipt": true,
+    "writeContract": true,
+    "simulateContract": true
   }
 }
