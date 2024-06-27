@@ -100,6 +100,17 @@ Union functionality is disabled by default, as its source is behind a private gi
 
 By doing so, the Union page imported into `main.ts` will no longer be aliased in `vite.config.js` to a mock Union page, and instead will be pointing towards the real implementation. The import in `main.ts` is also shimmed in `shims-vue.d.ts` so that compilation and linting will not fail when the git submodule is empty.
 
+# On-chain testing
+
+Install Foundry and use Anvil (https://book.getfoundry.sh/reference/anvil/) for local testing:
+
+1. Open Git Bash (required for Foundry)
+2. Run: `anvil --fork-url https://eth.llamarpc.com`
+3. In `Wagmi.ts`, comment out `rpc = undefined;` to use http://localhost:8545
+4. Add `http://localhost:8545` as a custom RPC for Ethereum in Rabby
+
+Note: Errors may occur due to nonce issues. For out-of-gas errors, try increasing gas by 10x or more.
+
 ## Contributing
 
 We welcome contributions to the Llama Airforce ecosystem. Please feel free to submit issues, feature requests, or pull requests.
