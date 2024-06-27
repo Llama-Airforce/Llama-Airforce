@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { type Address } from "viem";
 import type {
   PounderId,
   Pounder,

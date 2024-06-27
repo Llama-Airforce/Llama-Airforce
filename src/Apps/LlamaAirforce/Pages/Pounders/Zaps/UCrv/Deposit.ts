@@ -1,15 +1,7 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { maxApprove } from "@/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
-
-import { CvxCrvAddress, UnionCrvVaultAddress } from "@/Util/Addresses";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 

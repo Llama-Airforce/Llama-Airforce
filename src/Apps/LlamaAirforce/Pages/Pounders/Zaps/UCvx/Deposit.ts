@@ -1,11 +1,3 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  getPublicClient,
-  readContract,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
@@ -18,12 +10,6 @@ import {
 } from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
 import { getPxCvxPrice } from "@/Util";
-
-import {
-  CvxAddress,
-  LPxCvxFactoryAddress,
-  ZapsUCvxAddress,
-} from "@/Util/Addresses";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 

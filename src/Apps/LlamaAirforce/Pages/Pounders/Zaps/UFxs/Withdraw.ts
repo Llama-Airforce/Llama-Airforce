@@ -1,13 +1,5 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import type { ZapWithdraw } from "@Pounders/Models";
-
-import { UnionFxsVaultAddress } from "@/Util/Addresses";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 

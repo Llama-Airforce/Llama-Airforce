@@ -1,15 +1,7 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
 import { maxApprove } from "@/Wallet";
 import { type Airdrop, type ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
-
-import { UnionCrvVaultAddress, ZapsUCrvClaimAddress } from "@/Util/Addresses";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";

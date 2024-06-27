@@ -1,8 +1,5 @@
-import { getContract } from "viem";
-import { type Config, getPublicClient } from "@wagmi/core";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPrice } from "@/Util";
-import { UnionCvxVaultAddress } from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
 import { getVirtualPrice } from "@Pounders/Models/Pounder";
 

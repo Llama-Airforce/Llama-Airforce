@@ -1,20 +1,8 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZapsMigrate } from "@/ABI/Union/ZapsUPrismaConvexMigration";
 import { maxApprove } from "@/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
-
-import {
-  CvxPrismaAddress,
-  UnionPrismaVaultAddress,
-  StkCvxPrismaAddress,
-} from "@/Util/Addresses";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 

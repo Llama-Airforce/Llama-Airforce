@@ -1,12 +1,5 @@
-import { getContract } from "viem";
-import { type Config, getPublicClient } from "@wagmi/core";
 import { getCvxCrvPrice, getCvxCrvApy } from "@/Util";
 import { abi } from "@/ABI/Union/UnionVault";
-import {
-  CvxCrvAddress,
-  DistributorUCrvAddress,
-  UnionCrvVaultAddress,
-} from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
 import { type VaultUnion, type Pounder } from "@Pounders/Models";
 

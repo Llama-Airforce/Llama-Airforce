@@ -1,10 +1,3 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  getPublicClient,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Wallet";
@@ -12,12 +5,6 @@ import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
-
-import {
-  FxsAddress,
-  UnionFxsVaultAddressV1,
-  ZapsUFxsAddressV1,
-} from "@/Util/Addresses";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 

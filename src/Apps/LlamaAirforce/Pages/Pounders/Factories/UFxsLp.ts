@@ -1,14 +1,6 @@
-import { getContract } from "viem";
-import { type Config, readContract, getPublicClient } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { getCvxFxsLpPrice, getCvxFxsLpApy, bigNumToNumber } from "@/Util";
-import {
-  CvxFxsAddress,
-  CvxFxsFactoryAddress,
-  DistributorUFxsAddressV1,
-  UnionFxsVaultAddressV1,
-} from "@/Util/Addresses";
 import { type DefiLlamaService } from "@/Services";
 import { type VaultUnion, type Pounder } from "@Pounders/Models";
 

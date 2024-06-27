@@ -1,8 +1,5 @@
-import { getContract } from "viem";
-import { type Config } from "@wagmi/core";
 import { abi } from "@/ABI/Union/UnionVault";
 import { getAuraBalPrice, getAuraBalApy } from "@/Util";
-import { UnionBalVaultAddress } from "@/Util/Addresses";
 import type FlyerService from "@/Services/FlyerService";
 import { type VaultUnion, type Pounder } from "@Pounders/Models";
 

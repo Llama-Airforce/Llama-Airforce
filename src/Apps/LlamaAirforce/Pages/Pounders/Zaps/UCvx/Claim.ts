@@ -1,9 +1,3 @@
-import { type Address } from "viem";
-import {
-  type Config,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
@@ -11,12 +5,6 @@ import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 import { claim } from "@Pounders/Zaps/Helpers";
-
-import {
-  CvxAddress,
-  UnionCvxVaultAddress,
-  ZapsUCvxClaimAddress,
-} from "@/Util/Addresses";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
