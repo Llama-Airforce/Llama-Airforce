@@ -124,11 +124,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  useReadContract,
-  useWriteContract,
-  useWaitForTransactionReceipt,
-} from "@wagmi/vue";
 import { abi as abiVeCRV } from "@/ABI/Curve/VeCRV";
 import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
 import { useWallet } from "@/Wallet";

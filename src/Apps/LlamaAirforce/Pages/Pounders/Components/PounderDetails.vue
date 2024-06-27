@@ -118,8 +118,6 @@
 </template>
 
 <script setup lang="ts">
-import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
-import { useConfig } from "@wagmi/vue";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";

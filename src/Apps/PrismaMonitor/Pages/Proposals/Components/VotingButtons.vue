@@ -68,12 +68,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  readContract,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
-import { useConfig } from "@wagmi/vue";
 import { abi as abiLocker } from "@/ABI/Prisma/PrismaLocker";
 import { abi as abiVoting } from "@/ABI/Prisma/VotingPrisma";
 import { useWallet } from "@/Wallet";

@@ -1,7 +1,4 @@
-import { type Address } from "viem";
-import { useReadContract } from "@wagmi/vue";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
-
 import type UnionService from "@LAF/Services/UnionService";
 import type { AirdropId } from "@LAF/Services/UnionService";
 import { getDistributor } from "@Pounders/Models";

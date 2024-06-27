@@ -61,8 +61,6 @@
 </template>
 
 <script setup lang="ts">
-import { getPublicClient } from "@wagmi/core";
-import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { type FlyerConvex } from "@/Services/FlyerService";

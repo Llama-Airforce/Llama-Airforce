@@ -26,8 +26,6 @@
 
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
-import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
-import { useConfig, useReadContract } from "@wagmi/vue";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";

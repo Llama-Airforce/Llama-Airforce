@@ -17,7 +17,6 @@
 
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { useSwitchChain } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 
 // Props

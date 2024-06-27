@@ -38,13 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, isAddress } from "viem";
-import {
-  simulateContract,
-  writeContract,
-  waitForTransactionReceipt,
-} from "@wagmi/core";
-import { useConfig } from "@wagmi/vue";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
 
 const { t } = useI18n();

@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { isAddress } from "viem";
 import { uniqWith } from "lodash";
 import { type Proposal } from "@CM/Services/Proposal";
 import { useQueryProposal } from "@CM/Services/Proposal/Queries";

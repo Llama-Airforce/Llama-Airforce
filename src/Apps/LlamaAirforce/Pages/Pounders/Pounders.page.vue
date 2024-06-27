@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { useConfig } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import UnionService from "@LAF/Services/UnionService";

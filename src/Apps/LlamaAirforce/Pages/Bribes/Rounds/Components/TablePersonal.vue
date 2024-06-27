@@ -83,7 +83,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Address } from "viem";
 import { orderBy } from "lodash";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";

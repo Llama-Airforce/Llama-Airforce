@@ -81,7 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { isAddress } from "viem";
 import { uniqWith } from "lodash";
 import Voters from "@PM/Pages/Proposals/Components/Voters.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";

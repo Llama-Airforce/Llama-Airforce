@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { useReadContract } from "@wagmi/vue";
 import { useWallet } from "@/Wallet";
 import { abi } from "@/ABI/Tokens/TheLlamas";
 

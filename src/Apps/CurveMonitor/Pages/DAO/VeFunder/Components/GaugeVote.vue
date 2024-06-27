@@ -34,9 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, isAddress, encodeFunctionData } from "viem";
-import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
-import { useConfig } from "@wagmi/vue";
+import { encodeFunctionData } from "viem";
 import { abi as abiAgent } from "@/ABI/veFunder/AragonAgent";
 import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
 import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
