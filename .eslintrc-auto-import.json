@@ -493,6 +493,8 @@
     "watchWithFilter": true,
     "whenever": true,
     "writeContract": true,
-    "notify": true
+    "notify": true,
+    "apps": true,
+    "useApp": true
   }
 }
