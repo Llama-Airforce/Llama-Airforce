@@ -14,9 +14,10 @@ let cachedHost: string | null = null;
  *
  * The function caches the result to avoid unnecessary network requests on subsequent calls.
  *
+ * @param {string} [production] Optional override URL for the production host.
  * @returns {Promise<string>} A promise that resolves to the API host URL.
  */
-export async function useHost(): Promise<string> {
+export async function useHost(production?: string): Promise<string> {
   if (cachedHost) return cachedHost;
 
   const isDevelopment = useDevelopment();
@@ -35,7 +36,7 @@ export async function useHost(): Promise<string> {
       if (response.ok) {
         cachedHost = hostDev;
       } else {
-        cachedHost = hostProd;
+        cachedHost = production ?? hostProd;
         console.warn(
           "Local development server available but didn't ping back correctly from HEAD, using production host."
         );
