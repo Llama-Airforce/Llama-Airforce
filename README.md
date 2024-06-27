@@ -36,6 +36,7 @@ The front-end makes use of the following technologies, frameworks, and libraries
 - [Viem](https://viem.sh/) and [@wagmi/vue](https://wagmi.sh/vue/getting-started)
 - [ApexCharts](https://apexcharts.com/docs/vue-charts/) and [TradingView Lightweight Charts](https://www.tradingview.com/lightweight-charts/)
 - [RxJS](https://rxjs.dev/)
+- [Nitro](https://nitro.unjs.io/) for server-side rendering and API routes
 
 ## Quick Start
 
@@ -62,19 +63,28 @@ npm run dev:laf
 
 4. Open your browser and navigate to `http://localhost:8080`.
 
+## Nitro Server
+
+This project includes a Nitro server for backend functionality. To run a local development environment:
+
+Start the Nitro server: `npm run dev:laf:server`.
+
+Note: If you start only the Vite server, `useHost()` will fallback to the production server, and you'll see a notification about this.
+
 ## NPM Scripts
 
-| Command          | Description                                               |
-| ---------------- | --------------------------------------------------------- |
-| `typecheck`      | Typechecks the project using the TypeScript compiler.     |
-| `lint:<app>`     | Lints the specified app (laf, cm, pm).                    |
-| `dev:<app>`      | Starts a development server for the specified app.        |
-| `build:<app>`    | Builds the specified app.                                 |
-| `test`           | Runs unit tests for the Llama Airforce app.               |
-| `union`          | Runs the Union airdrop generation script (LAF devs only). |
-| `union:allocate` | Runs the Union allocation script (LAF devs only).         |
-| `union:migrate`  | Runs the Union migration script (LAF devs only).          |
-| `deploy`         | Runs the deployment script.                               |
+| Command            | Description                                               |
+| ------------------ | --------------------------------------------------------- |
+| `typecheck`        | Typechecks the project using the TypeScript compiler.     |
+| `lint:<app>`       | Lints the specified app (laf, cm, pm).                    |
+| `dev:<app>`        | Starts a development server for the specified app.        |
+| `dev:<app>:server` | Starts a Nitro server for the specified app.              |
+| `build:<app>`      | Builds the specified app.                                 |
+| `test`             | Runs unit tests for the Llama Airforce app.               |
+| `union`            | Runs the Union airdrop generation script (LAF devs only). |
+| `union:allocate`   | Runs the Union allocation script (LAF devs only).         |
+| `union:migrate`    | Runs the Union migration script (LAF devs only).          |
+| `deploy`           | Runs the deployment script.                               |
 
 Replace `<app>` with `laf`, `cm`, or `pm` for the respective application.
 
