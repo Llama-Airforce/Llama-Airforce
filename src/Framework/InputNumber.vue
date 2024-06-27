@@ -1,32 +1,22 @@
 <template>
   <input
+    v-model="modelValue"
     type="number"
     :min="min"
     :max="max"
-    :value="modelValue"
-    @input="onInput"
   />
 </template>
 
 <script setup lang="ts">
 // Props
 interface Props {
-  modelValue: number | null;
   min: number;
   max: number;
 }
 
-const { modelValue, min, max } = defineProps<Props>();
+const { min, max } = defineProps<Props>();
 
-// Emits
-const emit = defineEmits<{
-  "update:modelValue": [val: string];
-}>();
-
-// Events
-const onInput = (evt: Event): void => {
-  emit("update:modelValue", (evt.target as HTMLInputElement).value);
-};
+const modelValue = defineModel<number | null>();
 </script>
 
 <style lang="scss" scoped>
