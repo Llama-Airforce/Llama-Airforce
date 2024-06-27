@@ -11,4 +11,6 @@ export function useApp() {
     notify({ text: error, type: "error" });
     throw new Error(error);
   }
+
+  return app;
 }
