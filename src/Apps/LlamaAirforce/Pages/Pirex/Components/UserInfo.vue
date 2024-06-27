@@ -15,28 +15,19 @@
           @click="onTab('redemptions')"
         >
         </ButtonToggle>
-
-        <ButtonToggle
-          value="Staking"
-          :model-value="tab === 'staking'"
-          @click="onTab('staking')"
-        >
-        </ButtonToggle>
       </div>
     </template>
 
     <Rewards v-if="tab === 'rewards'"></Rewards>
     <RedemptionsUser v-if="tab === 'redemptions'"></RedemptionsUser>
-    <Staking v-if="tab === 'staking'"></Staking>
   </Card>
 </template>
 
 <script setup lang="ts">
 import Rewards from "@LAF/Pages/Pirex/Components/Rewards.vue";
 import RedemptionsUser from "@LAF/Pages/Pirex/Components/RedemptionsUser.vue";
-import Staking from "@LAF/Pages/Pirex/Components/Staking.vue";
 
-const tabs = ["rewards", "redemptions", "staking"] as const;
+const tabs = ["rewards", "redemptions"] as const;
 type Tabs = (typeof tabs)[number];
 const tab = ref(tabs[0] as Tabs);
 
