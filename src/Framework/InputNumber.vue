@@ -14,9 +14,20 @@ interface Props {
   max: number;
 }
 
-const { min, max } = defineProps<Props>();
+const { min = -Infinity, max = Infinity } = defineProps<Props>();
 
-const modelValue = defineModel<number | null>();
+const modelValue = defineModel<number | null | string>({
+  required: true,
+  default: null,
+});
+
+watch(modelValue, (newValue) => {
+  if (newValue === "") {
+    modelValue.value = null;
+  } else if (typeof newValue === "number") {
+    modelValue.value = Math.min(Math.max(newValue, min), max);
+  }
+});
 </script>
 
 <style lang="scss" scoped>
