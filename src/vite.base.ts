@@ -15,7 +15,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     { "@tanstack/vue-query": ["useQuery", "useQueries"] },
     { "@kyvg/vue3-notification": ["notify"] },
     // Viem + wagmi
-    { viem: ["getAddress", "isAddress"] },
+    { viem: ["getAddress", "isAddress", "getContract"] },
     { from: "viem", imports: ["Address"], type: true },
     {
       "@wagmi/vue": [

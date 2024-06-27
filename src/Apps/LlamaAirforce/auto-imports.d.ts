@@ -149,6 +149,7 @@ declare global {
   const getAddress: typeof import('viem')['getAddress']
   const getAuraBalApy: typeof import('../../Util/ApyHelper')['getAuraBalApy']
   const getAuraBalPrice: typeof import('../../Util/PriceHelper')['getAuraBalPrice']
+  const getContract: typeof import('viem')['getContract']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getCurveV2LpPrice: typeof import('../../Util/PriceHelper')['getCurveV2LpPrice']
