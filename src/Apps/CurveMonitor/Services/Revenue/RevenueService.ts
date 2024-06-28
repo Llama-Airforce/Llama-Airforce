@@ -1,4 +1,5 @@
 import { ServiceBase } from "@/Services";
+import { paginate } from "@/Util";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 import * as Parsers from "@CM/Services/Revenue/Parsers";
 
@@ -45,10 +46,14 @@ export default class RevenueService extends ServiceBase {
   }
 
   public async getDistributions() {
-    const resp = await this.fetch<ApiTypes.GetDistributionsResponse>(
-      `${API_URL}/v1/dao/fees/distributions?page=1&per_page=100`
-    );
+    const fs = (page: number) => {
+      return this.fetch<ApiTypes.GetDistributionsResponse>(
+        `${API_URL}/v1/dao/fees/distributions?page=${page}&per_page=100`
+      ).then((resp) => resp.distributions.map(Parsers.parseDistribution));
+    };
 
-    return resp.distributions.map(Parsers.parseDistribution);
+    const distributions = await paginate(fs, 1, 100);
+
+    return distributions;
   }
 }
