@@ -3,7 +3,6 @@
     class="datatable-distributions"
     columns-header="1fr"
     columns-data="distributions-columns-data"
-    :loading
     :rows
     :columns="['Date', 'Fees']"
     :sorting="true"
@@ -28,31 +27,23 @@
         />
       </div>
     </template>
-
-    <template #row-aggregation>
-      <div></div>
-      <div></div>
-      <div></div>
-
-      <div class="number">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.feesUsd, 0)"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
-    </template>
   </DataTable>
 </template>
 
 <script setup lang="ts">
 import { chain } from "lodash";
 import { type Distribution } from "@CM/Services/Revenue";
-import { useQueryDistributions } from "@CM/Services/Revenue/Queries";
 
 const { t } = useI18n();
 
 type Row = Distribution;
+
+// Props
+interface Props {
+  distributions: Distribution[];
+}
+
+const { distributions } = defineProps<Props>();
 
 // Data
 const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
@@ -61,7 +52,7 @@ const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
 );
 
 const rows = computed(() =>
-  chain(rowsRaw.value)
+  chain(distributions)
     .orderBy((distribution) => {
       switch (sortColumn.value) {
         case "timestamp":
@@ -74,8 +65,6 @@ const rows = computed(() =>
     }, sortOrder.value)
     .value()
 );
-
-const { isFetching: loading, data: rowsRaw } = useQueryDistributions();
 
 // Formatters
 function formatDate(epoch: number): string {

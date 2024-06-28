@@ -54,6 +54,7 @@ export function useQueryDistributions() {
   return useQuery({
     queryKey: ["curve-revenue-distributions"],
     queryFn: () => service.getDistributions(),
-    ...initEmptyArray,
+    initialData: [],
+    initialDataUpdatedAt: 0,
   });
 }

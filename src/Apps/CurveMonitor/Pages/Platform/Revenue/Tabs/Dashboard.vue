@@ -1,15 +1,23 @@
 <template>
   <div class="revenue-charts">
-    <ChartRevenueChain class="chain-revenues"></ChartRevenueChain>
-    <ChartRevenueTopPools class="chain-top-pools"></ChartRevenueTopPools>
-    <ChartRevenueBreakdown class="breakdown"></ChartRevenueBreakdown>
+    <ChartChain
+      style="grid-area: chain"
+      class="chain"
+    ></ChartChain>
+
+    <ChartTopPools style="grid-area: top-pools"></ChartTopPools>
+
+    <ChartBreakdown
+      style="grid-area: breakdown"
+      class="breakdown"
+    ></ChartBreakdown>
   </div>
 </template>
 
 <script setup lang="ts">
-import ChartRevenueBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartRevenueBreakdown.vue";
-import ChartRevenueChain from "@CM/Pages/Platform/Revenue/Charts/ChartRevenueChain.vue";
-import ChartRevenueTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartRevenueTopPools.vue";
+import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue";
+import ChartChain from "@CM/Pages/Platform/Revenue/Charts/ChartChain.vue";
+import ChartTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartTopPools.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -22,15 +30,11 @@ import ChartRevenueTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartRevenue
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 400px 600px;
 
-  .chain-top-pools {
-    grid-row: 1;
-    grid-column: 2;
-  }
+  grid-template-areas:
+    "chain top-pools"
+    "breakdown breakdown";
 
   .chain-revenues {
-    grid-row: 1;
-    grid-column: 1;
-
     height: 100%;
 
     @media only screen and (max-width: 1280px) {
@@ -39,9 +43,6 @@ import ChartRevenueTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartRevenue
   }
 
   .breakdown {
-    grid-row: 2;
-    grid-column: 1 / -1;
-
     height: 100%;
 
     @media only screen and (max-width: 1280px) {
