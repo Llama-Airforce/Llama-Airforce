@@ -42,7 +42,7 @@
               <RewardsTable
                 :rewards="rewards[epoch.epoch]"
                 :can-select="true"
-                :selected="rewards[epoch.epoch]"
+                :selected="toClaim[epoch.epoch]"
                 @select="onRewardToggle(epoch, $event)"
               ></RewardsTable>
 

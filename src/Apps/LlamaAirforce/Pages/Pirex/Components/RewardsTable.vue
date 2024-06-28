@@ -29,7 +29,7 @@
 
       <div v-if="canSelect">
         <Checkbox
-          :model-value="selected.includes(reward)"
+          :model-value="isSelected(reward)"
           @update:model-value="emit('select', reward)"
         />
       </div>
@@ -61,6 +61,12 @@ const columns = computed(() =>
     ? ["", "Reward", "Amount", "Value", ""]
     : ["", "Reward", "Amount", "Value"]
 );
+
+function isSelected(reward: Reward) {
+  const rewardJson = JSON.stringify(reward);
+
+  return selected.map((x) => JSON.stringify(x)).includes(rewardJson);
+}
 </script>
 
 <style lang="scss" scoped>
