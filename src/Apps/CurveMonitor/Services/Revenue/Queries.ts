@@ -49,3 +49,11 @@ export function useQueryRevenueBreakdown() {
     ...initEmptyArray(),
   });
 }
+
+export function useQueryDistributions() {
+  return useQuery({
+    queryKey: ["curve-revenue-distributions"],
+    queryFn: () => service.getDistributions(),
+    ...initEmptyArray,
+  });
+}

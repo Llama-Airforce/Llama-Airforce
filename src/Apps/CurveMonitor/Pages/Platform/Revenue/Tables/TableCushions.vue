@@ -1,6 +1,6 @@
 <template>
   <DataTable
-    class="datatable-cushions"
+    class="datatable-distributions"
     columns-header="1fr 14rem minmax(auto, 25rem)"
     columns-data="cushions-columns-data"
     :loading
@@ -107,7 +107,7 @@ const { isFetching: loading, data: rowsRaw } = useQueryCushions();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-cushions {
+.datatable-distributions {
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;

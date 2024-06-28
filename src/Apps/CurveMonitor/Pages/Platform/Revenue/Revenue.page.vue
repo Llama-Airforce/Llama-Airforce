@@ -10,6 +10,12 @@
         </KeepAlive>
       </TabItem>
 
+      <TabItem header="Distributions">
+        <KeepAlive>
+          <Distributions v-if="tabActive === 'distributions'"></Distributions>
+        </KeepAlive>
+      </TabItem>
+
       <TabItem header="Cushions">
         <KeepAlive>
           <Cushions v-if="tabActive === 'cushions'"></Cushions>
@@ -21,10 +27,11 @@
 
 <script setup lang="ts">
 import Dashboard from "@CM/Pages/Platform/Revenue/Tabs/Dashboard.vue";
+import Distributions from "@CM/Pages/Platform/Revenue/Tabs/Distributions.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Tabs/Cushions.vue";
 
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "cushions"],
+  ["overview", "distributions", "cushions"],
   "revenue"
 );
 </script>

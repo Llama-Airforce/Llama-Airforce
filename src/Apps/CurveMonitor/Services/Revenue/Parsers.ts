@@ -1,3 +1,4 @@
+import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 import type * as Models from "@CM/Services/Revenue/Models";
 
@@ -41,5 +42,14 @@ export const parseCushion = (
     balance: x.balance,
     value: x.value,
     totalUSD: x.totalUSD,
+  };
+};
+
+export const parseDistribution = (
+  x: ApiTypes.GetDistributionsResponse["distributions"][number]
+): Models.Distribution => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    feesUsd: x.fees_usd,
   };
 };

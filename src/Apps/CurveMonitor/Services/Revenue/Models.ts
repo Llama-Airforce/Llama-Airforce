@@ -26,3 +26,8 @@ export type Cushion = {
   value: number;
   totalUSD: number;
 };
+
+export type Distribution = {
+  timestamp: number;
+  feesUsd: number;
+};

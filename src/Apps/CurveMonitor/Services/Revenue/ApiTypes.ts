@@ -34,3 +34,10 @@ export type GetTopPoolsResponse = {
     totalDailyFeesUSD: number;
   }[];
 };
+
+export type GetDistributionsResponse = {
+  distributions: {
+    timestamp: string;
+    fees_usd: number;
+  }[];
+};
