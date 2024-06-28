@@ -1,8 +1,20 @@
 <template>
   <Card
-    class="chart-container"
+    ref="chartCard"
+    class="chart-card"
     :title="t('title')"
+    :class="{ fullscreen }"
   >
+    <template #actions>
+      <div class="actions">
+        <BtnChartLWFullscreen
+          v-model="fullscreen"
+          :chart="chart"
+          :target="chartCard?.$el"
+        />
+      </div>
+    </template>
+
     <div
       ref="chartRef"
       class="chart"
@@ -13,6 +25,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWFullscreen } from "@CM/Components/";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
 
@@ -30,6 +43,10 @@ let distributionsSerie: ISeriesApi<"Histogram">;
 
 const { theme } = storeToRefs(useSettingsStore());
 
+// Chart
+const fullscreen = ref(false);
+const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
+
 const { chart, chartRef } = useLightweightChart(
   theme,
   createOptionsChart,
@@ -40,13 +57,11 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-// Watches
 watch([toRef(() => distributions), chart], createSeriesDistributions);
 watch(theme, () =>
   distributionsSerie.applyOptions(createOptionsSerieDistributions())
 );
 
-// Chart
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
     height: 300,
@@ -121,10 +136,15 @@ const formatterPrice = (x: number): string =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-container {
+.chart-card {
   ::v-deep(.card-body) {
     flex-direction: column;
-    justify-content: stretch;
+    justify-content: center;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
   }
 }
 </style>
