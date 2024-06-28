@@ -6,6 +6,7 @@
     :header="false"
     :columns
     :rows="rewards"
+    @selected="emit('select', $event)"
   >
     <template #row="{ item: reward }: { item: Row }">
       <TokenIcon :address="reward.address"></TokenIcon>
