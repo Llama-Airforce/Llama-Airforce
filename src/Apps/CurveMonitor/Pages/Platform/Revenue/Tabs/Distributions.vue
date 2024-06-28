@@ -73,14 +73,16 @@ const totalFees = computed(() => {
 
 const averageWeeklyFees = computed(() => {
   return chain(distributions.value)
-    .takeRight(52)
+    .orderBy((x) => x.timestamp, "desc")
+    .take(52)
     .meanBy((x) => x.feesUsd)
     .value();
 });
 
 const stdDevWeeklyFees = computed(() => {
   const lastYear = chain(distributions.value)
-    .takeRight(52)
+    .orderBy((x) => x.timestamp, "desc")
+    .take(52)
     .map((x) => x.feesUsd)
     .value();
 
