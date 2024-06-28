@@ -305,7 +305,6 @@ const sortColumn = (index: number): void => {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    height: 2.5rem;
 
     > .header-icon {
       grid-column: 1;
@@ -323,6 +322,7 @@ const sortColumn = (index: number): void => {
       grid-column: 2;
       display: grid;
       align-items: center;
+      height: 2.5rem;
 
       button {
         border: 0;
@@ -330,7 +330,7 @@ const sortColumn = (index: number): void => {
 
       ::v-deep(.title) {
         font-size: 1.125rem;
-        font-weight: 600;
+        font-weight: bolder;
         color: var(--c-text);
         align-items: center;
       }
