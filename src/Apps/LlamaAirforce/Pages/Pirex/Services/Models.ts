@@ -22,15 +22,8 @@ export type Reward = {
 };
 
 export type Redemption = {
-  symbol: string;
-  address: Address;
-  amount: number;
-  amountUsd: number;
-};
-
-export type Staking = {
-  symbol: string;
-  address: Address;
-  amount: number;
-  amountUsd: number;
+  lockIndex: number;
+  unlockTime: number;
+  cvxAvailable: number;
+  fee: number;
 };

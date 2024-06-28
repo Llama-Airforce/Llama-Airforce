@@ -22,7 +22,7 @@
       v-if="redemptions.length > 0"
       class="right"
     >
-      <RedemptionsTable :redemptions></RedemptionsTable>
+      <RedemptionsUserTable :redemptions></RedemptionsUserTable>
     </div>
 
     <div
@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { useWallet, addressShort } from "@/Wallet";
-import RedemptionsTable from "@LAF/Pages/Pirex/Components/RedemptionsTable.vue";
+import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTable.vue";
 
 const { address } = useWallet();
 

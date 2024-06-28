@@ -13,7 +13,7 @@
         style="grid-area: right"
         class="col"
       >
-        <Redemptions></Redemptions>
+        <RedemptionsInit></RedemptionsInit>
         <Swap></Swap>
       </div>
     </div>
@@ -25,7 +25,7 @@ import { useWallet } from "@/Wallet";
 import VaultInfo from "@LAF/Pages/Pirex/Components/VaultInfo.vue";
 import UserInfo from "@LAF/Pages/Pirex/Components/UserInfo.vue";
 
-import Redemptions from "@LAF/Pages/Pirex/Components/Redemptions.vue";
+import RedemptionsInit from "@LAF/Pages/Pirex/Components/RedemptionsInit.vue";
 import Swap from "@LAF/Pages/Pirex/Components/Swap.vue";
 
 const { isConnected } = useWallet();

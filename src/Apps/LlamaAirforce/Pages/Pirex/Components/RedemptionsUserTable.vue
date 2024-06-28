@@ -1,13 +1,13 @@
 <template>
   <DataTable
-    class="datatable-redemptions"
+    class="datatable-redemptions-user"
     columns-data="redemptions-columns-data"
     :header="false"
     :columns="['', 'yolo']"
     :rows="redemptions"
   >
     <template #row="{ item: redemption }: { item: Row }">
-      <div>{{ redemption.symbol }}</div>
+      <div>{{ redemption.unlockTime }}</div>
     </template>
   </DataTable>
 </template>
@@ -28,7 +28,7 @@ const { redemptions } = defineProps<Props>();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-redemptions {
+.datatable-redemptions-user {
   padding: 0;
 
   ::v-deep(.redemptions-columns-data) {

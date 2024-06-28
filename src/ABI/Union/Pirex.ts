@@ -1,5 +1,26 @@
 export const abi = [
   {
+    inputs: [],
+    name: "MAX_REDEMPTION_TIME",
+    outputs: [{ internalType: "uint32", name: "", type: "uint32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "enum PirexCvx.Fees", name: "", type: "uint8" }],
+    name: "fees",
+    outputs: [{ internalType: "uint32", name: "", type: "uint32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "redemptions",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "uint256[]", name: "lockIndexes", type: "uint256[]" },
       { internalType: "enum PirexCvx.Futures", name: "f", type: "uint8" },
