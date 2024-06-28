@@ -69,8 +69,8 @@ const onChange = (evt: Event): void => {
     justify-content: center;
     align-items: center;
 
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1rem;
+    width: 1rem;
     background-color: var(--input-background);
     border: solid var(--border-thickness) var(--c-lvl4);
     border-radius: min(var(--border-radius), 25%);
@@ -79,8 +79,8 @@ const onChange = (evt: Event): void => {
 
     svg {
       margin-top: 1px; // Half the SVG stroke width.
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 1rem;
+      height: 1rem;
       opacity: 0;
       transition: opacity 0.2s ease-in-out;
     }
