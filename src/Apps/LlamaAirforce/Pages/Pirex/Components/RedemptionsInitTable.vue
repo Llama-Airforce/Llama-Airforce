@@ -3,8 +3,9 @@
     class="datatable-redemptions-init"
     columns-data="redemptions-columns-data"
     :header="false"
-    :columns="['Unlock Date', 'CVX Available', 'Early Unlock Fee']"
+    :columns="['Unlock Date', 'CVX Available', 'Early Unlock Fee', '']"
     :rows="redemptions"
+    @selected="selected = $event.lockIndex"
   >
     <template #row="{ item: redemption }: { item: Row }">
       <div>{{ formatDate(redemption.unlockTime) }}</div>
@@ -16,6 +17,15 @@
           :value="redemption.fee"
           type="percentage"
         ></AsyncValue>
+      </div>
+
+      <div>
+        <RadioButton
+          v-model="selected"
+          name="redemption"
+          :values
+          :value="redemption.lockIndex"
+        />
       </div>
     </template>
   </DataTable>
@@ -46,6 +56,10 @@ function formatDate(unlockTime: number): string {
 function formatCvxAvailable(value: number): string {
   return Number(value.toFixed(value > 100 ? 0 : 2)).toLocaleString();
 }
+
+// Radio button control
+const selected: Ref<number | undefined> = ref(undefined);
+const values = computed(() => redemptions.map((x) => x.lockIndex));
 </script>
 
 <style lang="scss" scoped>
@@ -56,12 +70,16 @@ function formatCvxAvailable(value: number): string {
 
   ::v-deep(.redemptions-columns-data) {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 3rem;
 
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3) {
       justify-self: end;
+    }
+
+    div:nth-child(4) {
+      justify-self: center;
     }
 
     div:nth-child(2) {

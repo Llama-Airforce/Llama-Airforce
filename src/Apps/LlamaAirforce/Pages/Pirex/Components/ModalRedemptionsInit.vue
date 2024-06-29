@@ -113,7 +113,7 @@ const redemptions = computedAsync(async () => {
 @import "@/Styles/Variables.scss";
 
 .redemptions-init-body {
-  width: 25vw;
+  width: 33vw;
   max-height: 75dvh;
   display: flex;
   flex-direction: column;
