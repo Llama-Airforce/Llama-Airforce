@@ -3,7 +3,7 @@ import App from "@LAF/App.vue";
 import createRouter from "@LAF/Router";
 
 import { pageBribes, pageBribesRoutes } from "@LAF/Pages/Bribes/Page";
-import { pagePirexRoutes } from "@LAF/Pages/Pirex/Page";
+import { pagePirex, pagePirexRoutes } from "@LAF/Pages/Pirex/Page";
 import { pagePounders, pagePoundersRoutes } from "@LAF/Pages/Pounders/Page";
 import { pageUnion, pageUnionRoutes } from "@LAF/Pages/Union/Page";
 
@@ -23,6 +23,7 @@ if (import.meta.env.VITE_UNION === "true") {
   routes.push(pageUnionRoutes);
 }
 
+pages.push(pagePirex);
 pages.push(pagePounders);
 pages.push(pageBribes);
 routes.push(pagePoundersRoutes);
