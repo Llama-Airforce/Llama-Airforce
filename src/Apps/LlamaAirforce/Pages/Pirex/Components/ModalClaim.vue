@@ -182,12 +182,16 @@ const { execute: claim, isExecuting: claiming } = useExecuteContract(
       args: [BigInt(epoch.epoch), rewardIndices, address.value!] as const,
     });
   },
-  `Successfully claimed rewards for epoch: ${claimsClaiming[0]?.epoch ?? "?"}!`,
-  () => {
-    claimsClaiming = [];
-  },
-  () => {
-    claimsClaiming = [];
+  {
+    successMessage: `Successfully claimed rewards for epoch: ${
+      claimsClaiming[0]?.epoch ?? "?"
+    }!`,
+    onSuccess: () => {
+      claimsClaiming = [];
+    },
+    onError: () => {
+      claimsClaiming = [];
+    },
   }
 );
 </script>
