@@ -497,6 +497,7 @@
     "apps": true,
     "useApp": true,
     "getContract": true,
-    "useExecuteContract": true
+    "useExecuteContract": true,
+    "useApprove": true
   }
 }

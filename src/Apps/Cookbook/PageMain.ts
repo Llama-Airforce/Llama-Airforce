@@ -22,8 +22,10 @@ import Spinner from "@CB/RecipesComponents/SpinnerRecipe.vue";
 import Tabs from "@CB/RecipesComponents/TabsRecipe.vue";
 import Tooltip from "@CB/RecipesComponents/TooltipRecipe.vue";
 
+import UseApprove from "@CB/RecipesComposables/UseApproveRecipe.vue";
+
 export const pageMainRoutes = [
-  { path: "/", redirect: { name: "button" } },
+  { path: "/", redirect: { name: "colors" } },
   {
     path: "/colors",
     name: "colors",
@@ -39,6 +41,8 @@ export const pageMainRoutes = [
     name: "socket",
     component: Socket,
   },
+
+  // Components
   {
     path: "/components/async-value",
     name: "async-value",
@@ -124,6 +128,13 @@ export const pageMainRoutes = [
     name: "tooltip",
     component: Tooltip,
   },
+
+  // Composables
+  {
+    path: "/composables/use-approve",
+    name: "use-approve",
+    component: UseApprove,
+  },
 ];
 
 export const pageMain: Page = {
@@ -143,6 +154,7 @@ export const pageMain: Page = {
     },
     {
       label: "Components",
+      initCollapsed: true,
       children: [
         {
           to: "/components/async-value",
@@ -211,6 +223,16 @@ export const pageMain: Page = {
         {
           to: "/components/tooltip",
           label: "Tooltip",
+        },
+      ],
+    },
+    {
+      label: "Composables",
+      initCollapsed: true,
+      children: [
+        {
+          to: "/composables/use-approve",
+          label: "useApprove",
         },
       ],
     },
