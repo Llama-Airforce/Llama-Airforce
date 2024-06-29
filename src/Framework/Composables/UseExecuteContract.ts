@@ -1,9 +1,28 @@
 type WriteContract = ReturnType<typeof useWriteContract>["writeContract"];
 
 type ExecuteContractOptions = {
+  /**
+   * Message to display on successful transaction execution.
+   * Can be a string or a function that returns a string.
+   */
   successMessage?: string | (() => string);
+
+  /**
+   * Callback function to handle errors during transaction execution.
+   * @param error - The error object thrown during execution.
+   */
   onError?: (error: Error) => void;
+
+  /**
+   * Callback function to be called after successful transaction execution.
+   */
   onSuccess?: () => void;
+
+  /**
+   * Flag to determine whether to show a success notification.
+   * Defaults to true if not specified.
+   */
+  showSuccess?: boolean;
 };
 
 /**
@@ -18,7 +37,8 @@ export function useExecuteContract<T extends unknown[]>(
   executeWrite: (writeContract: WriteContract, ...args: T) => void,
   options: ExecuteContractOptions = {}
 ) {
-  const { successMessage, onError, onSuccess } = options;
+  const { successMessage, onError, onSuccess, showSuccess = true } = options;
+
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -39,13 +59,16 @@ export function useExecuteContract<T extends unknown[]>(
 
   watch(isConfirmed, (newIsConfirmed) => {
     if (newIsConfirmed) {
-      notify({
-        text:
-          typeof successMessage === "function"
-            ? successMessage()
-            : successMessage ?? "Transaction has been successfully processed",
-        type: "success",
-      });
+      if (showSuccess) {
+        notify({
+          text:
+            typeof successMessage === "function"
+              ? successMessage()
+              : successMessage ?? "Transaction has been successfully processed",
+          type: "success",
+        });
+      }
+
       onSuccess?.();
     }
   });
