@@ -66,12 +66,10 @@ const onChange = (evt: Event): void => {
   }
 
   .radio-mark {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
 
-    height: 1rem;
-    width: 1rem;
+    height: 16px;
+    width: 16px;
     background-color: var(--input-background);
     border: solid var(--border-thickness) var(--c-lvl4);
     border-radius: 50%;
@@ -79,12 +77,16 @@ const onChange = (evt: Event): void => {
     transition: all 0.2s ease-in-out;
 
     .inner-circle {
-      width: calc(0.5rem - 0.125rem);
-      height: calc(0.5rem - 0.125rem);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+
+      width: 8px;
+      height: 8px;
       background-color: var(--c-text);
       border-radius: 50%;
       opacity: 0;
-      transform: scale(0);
       transition: all 0.2s ease-in-out;
     }
   }
@@ -100,7 +102,7 @@ const onChange = (evt: Event): void => {
 
     .inner-circle {
       opacity: 1;
-      transform: scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
   }
 
