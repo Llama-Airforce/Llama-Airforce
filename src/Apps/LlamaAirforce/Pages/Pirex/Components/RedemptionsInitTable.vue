@@ -43,6 +43,11 @@ interface Props {
 
 const { redemptions } = defineProps<Props>();
 
+// Emits
+const emit = defineEmits<{
+  redemption: [redemption: Redemption];
+}>();
+
 // Formatters
 function formatDate(unlockTime: number): string {
   const date = new Date(unlockTime * 1000); // Convert seconds to milliseconds
@@ -60,6 +65,14 @@ function formatCvxAvailable(value: number): string {
 // Radio button control
 const selected: Ref<number | undefined> = ref(undefined);
 const values = computed(() => redemptions.map((x) => x.lockIndex));
+
+watch(selected, (newRedemption) => {
+  const redemption = redemptions.find((x) => x.lockIndex === newRedemption);
+
+  if (redemption) {
+    return emit("redemption", redemption);
+  }
+});
 </script>
 
 <style lang="scss" scoped>

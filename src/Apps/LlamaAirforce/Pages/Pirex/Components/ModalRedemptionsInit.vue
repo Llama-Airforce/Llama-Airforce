@@ -5,13 +5,42 @@
         <RedemptionsTableInit
           class="redemptions-init-table"
           :redemptions
+          @redemption="redemption = $event"
         ></RedemptionsTableInit>
+
+        <div class="input">
+          <TokenIcon
+            class="icon"
+            :address="pxCvxAddress"
+          ></TokenIcon>
+
+          <div class="symbol">pxCVX</div>
+
+          <InputNumber
+            v-model="balanceRedeem"
+            :min="0"
+            :max="Infinity"
+            :placeholder="balanceNum"
+          ></InputNumber>
+
+          <a @click="balanceRedeem = balanceNum">Max</a>
+
+          <Button
+            :value="submitLabel"
+            :web3="true"
+            :primary="true"
+            :disabled="!canRedeem || isApproving || isRedeeming"
+            @click="onSubmit"
+          ></Button>
+        </div>
       </div>
     </Card>
   </Modal>
 </template>
 
 <script setup lang="ts">
+import { erc20Abi as abiErc20 } from "viem";
+import { useWallet } from "@/Wallet";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
 import RedemptionsTableInit from "@LAF/Pages/Pirex/Components/RedemptionsInitTable.vue";
@@ -21,6 +50,17 @@ import { type Redemption } from "@LAF/Pages/Pirex/Services";
 const emit = defineEmits<{
   close: [];
 }>();
+
+// Refs
+const submitLabel = computed(() => {
+  if (isApproving.value) {
+    return "Approving...";
+  } else if (isRedeeming.value) {
+    return "Redeeming...";
+  }
+
+  return needsApprove.value ? "Approve" : "Redeem";
+});
 
 // Redemptions
 const { data: maxFee } = useReadContract({
@@ -43,7 +83,7 @@ const { data: maxRedemptionTime } = useReadContract({
   functionName: "MAX_REDEMPTION_TIME",
 });
 
-const { data: lockData } = useReadContract({
+const { data: lockData, refetch: refetchLockData } = useReadContract({
   abi: abiVlCvx,
   address: VlCvxAddress,
   functionName: "lockedBalances",
@@ -98,6 +138,83 @@ const redemptions = computedAsync(async () => {
 
   return Promise.all(redemptionData);
 });
+
+// Input
+const pxCvxAddress = PxCvxAddress;
+const { address } = useWallet();
+
+const { data: balance, refetch: refetchBalance } = useReadContract({
+  abi: abiErc20,
+  address: PxCvxAddress,
+  functionName: "balanceOf",
+  args: computed(() => [address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value),
+    initialData: 0n,
+    initialDataUpdatedAt: 0,
+  },
+});
+
+const balanceRedeem: Ref<number | string | null> = ref(null);
+const balanceRedeemSafe = computed(() =>
+  typeof balanceRedeem.value === "number" ? balanceRedeem.value : 0
+);
+const balanceRedeemBigInt = computed(() =>
+  numToBigNumber(balanceRedeemSafe.value, 18n)
+);
+
+const balanceNum = computed(() => bigNumToNumber(balance.value ?? 0n, 18n));
+
+const canRedeem = computed(
+  () =>
+    balanceRedeemSafe.value > 0 &&
+    balanceRedeemSafe.value <= balanceNum.value &&
+    balanceRedeemSafe.value <= (redemption.value?.cvxAvailable ?? 0)
+);
+
+// Approval
+const { needsApprove, approve, isApproving } = useApprove(
+  PxCvxAddress,
+  address,
+  PirexCvxAddress,
+  computed(() => numToBigNumber(balanceRedeemSafe.value, 18n)),
+  { maxApprove: false }
+);
+
+function onSubmit() {
+  if (needsApprove.value) {
+    approve();
+  } else {
+    redeem();
+  }
+}
+
+// Redemption
+const redemption: Ref<Redemption | undefined> = ref(undefined);
+
+const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
+  (writeContract) => {
+    writeContract({
+      abi: abiPirex,
+      address: PirexCvxAddress,
+      functionName: "initiateRedemptions",
+      args: [
+        [BigInt(redemption.value!.lockIndex)],
+        1,
+        [balanceRedeemBigInt.value],
+        address.value!,
+      ] as const,
+    });
+  },
+  {
+    successMessage: "You've succesfully redeemed pxCVX!",
+    onSuccess: () => {
+      void refetchLockData();
+      void refetchBalance();
+      balanceRedeem.value = null;
+    },
+  }
+);
 </script>
 
 <style lang="scss">
@@ -117,7 +234,7 @@ const redemptions = computedAsync(async () => {
   max-height: 75dvh;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   overflow-y: auto;
 
   @media only screen and (max-width: 1280px) {
@@ -126,6 +243,37 @@ const redemptions = computedAsync(async () => {
 
   .redemptions-init-table {
     max-height: 500px;
+  }
+
+  .input {
+    display: grid;
+    grid-template-columns: 40px auto 1fr auto auto;
+    gap: 1rem;
+    align-items: center;
+
+    img {
+      aspect-ratio: 1;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    > .symbol {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    a {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    button {
+      justify-self: end;
+      width: 5rem;
+      margin-left: 1rem;
+      justify-content: center;
+    }
   }
 }
 </style>
