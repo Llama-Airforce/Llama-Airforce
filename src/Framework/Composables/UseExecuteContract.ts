@@ -52,7 +52,15 @@ export function useExecuteContract<T extends unknown[]>(
   const isExecuting = computed(() => isPending.value || isConfirming.value);
 
   const execute = (...args: T) => {
-    executeWrite(writeContract, ...args);
+    try {
+      executeWrite(writeContract, ...args);
+    } catch (error) {
+      notify({ text: prettyError(error), type: "error" });
+
+      if (error instanceof Error) {
+        onError?.(error);
+      }
+    }
   };
 
   watch(error, (newError) => {
