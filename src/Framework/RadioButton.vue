@@ -21,9 +21,9 @@
   </label>
 </template>
 
-<script setup lang="ts" generic="T extends readonly string[]">
+<script setup lang="ts" generic="T extends readonly unknown[]">
 // Props
-interface Props<T extends readonly string[]> {
+interface Props<T extends readonly unknown[]> {
   values: T;
   value: T[number];
   name: string;
