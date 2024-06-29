@@ -140,5 +140,10 @@ export function bigNumToNumber(value: bigint, decimals: bigint): number {
 }
 
 export function numToBigNumber(value: number, decimals: bigint): bigint {
-  return parseUnits(value.toFixed(Number(decimals)), Number(decimals));
+  const decimalPlaces = Number(decimals);
+  const valueString = Number.isInteger(value)
+    ? value.toString()
+    : value.toFixed(decimalPlaces);
+
+  return parseUnits(valueString, decimalPlaces);
 }
