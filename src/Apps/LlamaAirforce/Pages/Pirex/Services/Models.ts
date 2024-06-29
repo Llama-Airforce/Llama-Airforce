@@ -27,3 +27,8 @@ export type Redemption = {
   cvxAvailable: number;
   fee: number;
 };
+
+export type RedemptionPending = {
+  tokenId: bigint;
+  balance: bigint;
+};

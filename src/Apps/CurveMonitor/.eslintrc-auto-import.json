@@ -498,6 +498,7 @@
     "watchWithFilter": true,
     "whenever": true,
     "writeContract": true,
-    "useApprove": true
+    "useApprove": true,
+    "UPxCvxAddress": true
   }
 }

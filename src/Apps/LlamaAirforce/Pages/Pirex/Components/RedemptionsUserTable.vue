@@ -3,26 +3,57 @@
     class="datatable-redemptions-user"
     columns-data="redemptions-columns-data"
     :header="false"
-    :columns="['', 'yolo']"
+    :columns="['Unlock', 'Amount', '']"
     :rows="redemptions"
   >
     <template #row="{ item: redemption }: { item: Row }">
-      <div>{{ redemption.unlockTime }}</div>
+      <div>{{ date(redemption) }}</div>
+
+      <div>
+        <AsyncValue
+          :value="balance(redemption)"
+          :precision="4"
+          :show-symbol="false"
+          type="dollar"
+        ></AsyncValue>
+      </div>
+
+      <div>
+        <Button
+          value="Redeem"
+          :web3="true"
+          :disabled="true"
+        ></Button>
+      </div>
     </template>
   </DataTable>
 </template>
 
 <script setup lang="ts">
-import { type Redemption } from "@LAF/Pages/Pirex/Services";
+import { type RedemptionPending } from "@LAF/Pages/Pirex/Services";
 
-type Row = Redemption;
+type Row = RedemptionPending;
 
 // Props
 interface Props {
-  redemptions: Redemption[];
+  redemptions: RedemptionPending[];
 }
 
 const { redemptions } = defineProps<Props>();
+
+// Formatters
+function date(redemption: RedemptionPending) {
+  const date = new Date(Number(redemption.tokenId) * 1000); // Convert seconds to milliseconds
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function balance(redemption: RedemptionPending) {
+  return bigNumToNumber(redemption.balance, 18n);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -33,12 +64,16 @@ const { redemptions } = defineProps<Props>();
 
   ::v-deep(.redemptions-columns-data) {
     display: grid;
-    grid-template-columns: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
+    grid-template-columns: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
 
     // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
+    div:nth-child(1),
+    div:nth-child(2) {
+      justify-self: end;
+    }
+
+    div:nth-child(3) {
+      justify-self: end;
     }
   }
 
