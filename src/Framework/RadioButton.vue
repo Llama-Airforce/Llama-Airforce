@@ -1,0 +1,120 @@
+<template>
+  <label class="radio">
+    <input
+      type="radio"
+      :checked="modelValue === value"
+      :value
+      :name
+      @change="onChange"
+    />
+
+    <span
+      class="radio-mark"
+      :class="{ checked: modelValue === value }"
+      role="radio"
+      :aria-checked="modelValue === value"
+    >
+      <span class="inner-circle"></span>
+    </span>
+
+    <span class="radio-label"><slot></slot></span>
+  </label>
+</template>
+
+<script setup lang="ts" generic="T extends readonly string[]">
+// Props
+interface Props<T extends readonly string[]> {
+  values: T;
+  value: T[number];
+  name: string;
+}
+
+const { value, name } = defineProps<Props<T>>();
+
+// Model
+const modelValue = defineModel<T[number]>({ required: true });
+
+// Emits
+const emit = defineEmits<{
+  change: [value: T[number]];
+}>();
+
+// Events
+const onChange = (evt: Event): void => {
+  const checked = (evt.target as HTMLInputElement).checked;
+  if (checked) {
+    modelValue.value = value;
+  }
+  emit("change", value);
+};
+</script>
+
+<style lang="scss" scoped>
+@import "@/Styles/Variables.scss";
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  cursor: pointer;
+  user-select: none;
+
+  // We hide the native display as we have our custom implementation.
+  input {
+    display: none;
+  }
+
+  .radio-mark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 1rem;
+    width: 1rem;
+    background-color: var(--input-background);
+    border: solid var(--border-thickness) var(--c-lvl4);
+    border-radius: 50%;
+
+    transition: all 0.2s ease-in-out;
+
+    .inner-circle {
+      width: calc(0.5rem - 0.125rem);
+      height: calc(0.5rem - 0.125rem);
+      background-color: var(--c-text);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  &:hover input ~ .radio-mark {
+    background-color: var(--input-background-hover);
+    border-color: var(--input-border-color-hover);
+  }
+
+  input:checked ~ .radio-mark {
+    background-color: var(--c-primary);
+    border-color: var(--c-primary);
+
+    .inner-circle {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  input:checked:hover ~ .radio-mark {
+    background-color: var(--c-primary-hover);
+    border-color: var(--c-primary-hover);
+  }
+
+  .radio-label {
+    margin-top: 1px;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+</style>

@@ -16,6 +16,7 @@ import InputText from "@CB/RecipesComponents/InputTextRecipe.vue";
 import InputNumber from "@CB/RecipesComponents/InputNumberRecipe.vue";
 import Modal from "@CB/RecipesComponents/ModalRecipe.vue";
 import Pagination from "@CB/RecipesComponents/PaginationRecipe.vue";
+import RadioButton from "@CB/RecipesComponents/RadioButtonRecipe.vue";
 import Select from "@CB/RecipesComponents/SelectRecipe.vue";
 import Slider from "@CB/RecipesComponents/SliderRecipe.vue";
 import Spinner from "@CB/RecipesComponents/SpinnerRecipe.vue";
@@ -102,6 +103,11 @@ export const pageMainRoutes = [
     path: "/components/pagination",
     name: "pagination",
     component: Pagination,
+  },
+  {
+    path: "/components/radio-button",
+    name: "radio-button",
+    component: RadioButton,
   },
   {
     path: "/components/select",
@@ -203,6 +209,10 @@ export const pageMain: Page = {
         {
           to: "/components/pagination",
           label: "Pagination",
+        },
+        {
+          to: "/components/radio-button",
+          label: "RadioButton",
         },
         {
           to: "/components/select",

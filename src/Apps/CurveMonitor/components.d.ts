@@ -31,6 +31,7 @@ declare module 'vue' {
     ModalFullscreen: typeof import('./../../Framework/ModalFullscreen.vue')['default']
     ModalYesNo: typeof import('./../../Framework/ModalYesNo.vue')['default']
     Pagination: typeof import('./../../Framework/Pagination.vue')['default']
+    RadioButton: typeof import('./../../Framework/RadioButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('./../../Framework/Select.vue')['default']
