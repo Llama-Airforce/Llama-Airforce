@@ -30,14 +30,19 @@ type ExecuteContractOptions = {
  *
  * @template T - Array type for additional arguments passed to executeWrite
  * @param executeWrite - Function to execute the contract write operation
- * @param options - Options for handling success and error cases
+ * @param options - Optional. Options for handling success and error cases
  * @returns Object with execute function and isExecuting state
  */
 export function useExecuteContract<T extends unknown[]>(
   executeWrite: (writeContract: WriteContract, ...args: T) => void,
-  options: ExecuteContractOptions = {}
+  options?: ExecuteContractOptions
 ) {
-  const { successMessage, onError, onSuccess, showSuccess = true } = options;
+  const {
+    successMessage,
+    onError,
+    onSuccess,
+    showSuccess = true,
+  } = options ?? {};
 
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
