@@ -20,12 +20,12 @@ const routes: RouteRecordRaw[][] = [];
 // Only add Union if specifically configured to do so.
 if (import.meta.env.VITE_UNION === "true") {
   pages.push(pageUnion);
-  pages.push(pagePounders);
   routes.push(pageUnionRoutes);
-  routes.push(pagePoundersRoutes);
 }
 
+pages.push(pagePounders);
 pages.push(pageBribes);
+routes.push(pagePoundersRoutes);
 routes.push(pageBribesRoutes);
 routes.push(pagePirexRoutes);
 
