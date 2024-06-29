@@ -71,6 +71,7 @@ declare global {
   const UFxsStrategyAddressV1: typeof import('../../Util/Addresses')['UFxsStrategyAddressV1']
   const UPrismaHarvester: typeof import('../../Util/Addresses')['UPrismaHarvester']
   const UPrismaStrategyAddress: typeof import('../../Util/Addresses')['UPrismaStrategyAddress']
+  const UPxCvxAddress: typeof import('../../Util/Addresses')['UPxCvxAddress']
   const UltraAddress: typeof import('../../Util/Addresses')['UltraAddress']
   const UnionAddresses: typeof import('../../Util/Addresses')['UnionAddresses']
   const UnionBalVaultAddress: typeof import('../../Util/Addresses')['UnionBalVaultAddress']

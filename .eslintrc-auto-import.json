@@ -498,6 +498,7 @@
     "useApp": true,
     "getContract": true,
     "useExecuteContract": true,
-    "useApprove": true
+    "useApprove": true,
+    "UPxCvxAddress": true
   }
 }
