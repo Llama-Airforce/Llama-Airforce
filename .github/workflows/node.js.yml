@@ -12,25 +12,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Use Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          bun-version: latest
       - run: git config --global url."https://".insteadOf ssh://
-      - run: npm ci
-      - run: npm run 'typecheck' --if-present
-      - run: npm run 'lint:laf' --if-present
-      - run: npm run 'lint:cm' --if-present
-      - run: npm run 'lint:pm' --if-present
-      - run: npm run 'build:laf' --if-present
-      - run: npm run 'build:cm' --if-present
-      - run: npm run 'build:pm' --if-present
-      - run: npm test
+      - run: bun install
+      - run: bun run typecheck
+      - run: bun run lint:laf
+      - run: bun run lint:cm
+      - run: bun run lint:pm
+      - run: bun run build:laf
+      - run: bun run build:cm
+      - run: bun run build:pm
+      - run: bun test
