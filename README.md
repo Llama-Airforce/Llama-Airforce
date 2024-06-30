@@ -30,6 +30,7 @@ We use `unplugin-auto-import` and `unplugin-vue-components` to reduce the number
 
 The front-end makes use of the following technologies, frameworks, and libraries:
 
+- [Bun](https://bun.sh/) as a fast JavaScript runtime and package manager
 - [TypeScript](https://www.typescriptlang.org/) and [ESLint](https://eslint.org/)
 - [Vite](https://vitejs.dev/) and [Vitest](https://vitest.dev/)
 - [Vue 3](https://vuejs.org/), [Vue Router](https://router.vuejs.org/), and [Pinia](https://pinia.vuejs.org/)
@@ -37,6 +38,10 @@ The front-end makes use of the following technologies, frameworks, and libraries
 - [ApexCharts](https://apexcharts.com/docs/vue-charts/) and [TradingView Lightweight Charts](https://www.tradingview.com/lightweight-charts/)
 - [RxJS](https://rxjs.dev/)
 - [Nitro](https://nitro.unjs.io/) for back-end API
+
+## Bun
+
+It's highly recommended to use Bun if possible, as it acts as a drop-in replacement for Node.js. However, due to VS Code debugging issues with Bun, the debug scripts still rely on Node and require dev dependencies on `dotenv`, `ts-node`, and `tsconfig-paths`. Additionally, Bun's testing framework is not yet sufficient to replace `vitest`. For typechecking, we use `vue-tsc` without the `--bun` flag. We expect to replace these with their Bun counterparts over time.
 
 ## Quick Start
 
@@ -52,13 +57,13 @@ cd Llama-Airforce
 2. Install dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
 3. Start a development server (e.g., for Llama Airforce):
 
 ```bash
-npm run dev:laf
+bun run dev:laf
 ```
 
 4. Open your browser and navigate to `http://localhost:8080`.
@@ -67,11 +72,11 @@ npm run dev:laf
 
 This project includes a Nitro server for backend functionality. To run a local development environment:
 
-Start the Nitro server: `npm run dev:laf:server`.
+Start the Nitro server: `bun run dev:laf:server`.
 
 Note: If you start only the Vite server, `useHost()` will fallback to the production server, and you'll see a notification about this.
 
-## NPM Scripts
+## NPM / Bun Scripts
 
 | Command            | Description                                               |
 | ------------------ | --------------------------------------------------------- |
