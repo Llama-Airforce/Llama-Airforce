@@ -65,20 +65,20 @@ export async function useHost(production?: string): Promise<string> {
         hostCache[hostKey] = hostDev;
         return hostDev;
       }
+
+      // If response is not ok, throw to trigger the catch block
+      throw new Error("Local server not available");
     } catch (error) {
       // Ignore the error and proceed to use the default or production host.
+      notify({
+        text: `Local development server not available, using (production) host: ${hostCache[hostKey]}`,
+        type: "warn",
+      });
     }
   }
 
-  /*
-   * If not in development or the local server is not available,
-   * use the default host if no production overrride was given.
-   */
+  // Use production or default host
   hostCache[hostKey] = production ?? getHostDefault(app);
-  notify({
-    text: `Local development server not available, using (production) host: ${hostCache[hostKey]}`,
-    type: "warn",
-  });
 
   return hostCache[hostKey];
 }
