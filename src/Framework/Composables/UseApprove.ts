@@ -17,7 +17,7 @@ type ApproveOptions = {
  * @returns An object containing approval-related functions and state
  */
 export function useApprove(
-  token: Address,
+  token: Ref<Address> | Address,
   owner: Ref<Address | undefined>,
   spender: Address,
   amount: Ref<bigint | undefined>,
@@ -74,7 +74,7 @@ export function useApprove(
 
       writeContract({
         abi,
-        address: token,
+        address: unref(token),
         functionName: "approve",
         args: [spender, spendAmount] as const,
       });
