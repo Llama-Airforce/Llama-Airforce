@@ -500,6 +500,7 @@
     "useExecuteContract": true,
     "useApprove": true,
     "UPxCvxAddress": true,
-    "useBalance": true
+    "useBalance": true,
+    "LPxCvxAddress": true
   }
 }

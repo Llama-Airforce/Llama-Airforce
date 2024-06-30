@@ -40,6 +40,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const EmptyAddress: typeof import('../../Util/Addresses')['EmptyAddress']
   const FxsAddress: typeof import('../../Util/Addresses')['FxsAddress']
+  const LPxCvxAddress: typeof import('../../Util/Addresses')['LPxCvxAddress']
   const LPxCvxFactoryAddress: typeof import('../../Util/Addresses')['LPxCvxFactoryAddress']
   const LineStyle: typeof import('lightweight-charts')['LineStyle']
   const LineType: typeof import('lightweight-charts')['LineType']
