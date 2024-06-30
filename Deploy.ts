@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { copySync, removeSync } from "fs-extra";
+import { rmSync, cpSync } from "fs";
 import { join } from "path";
 import consola from "consola";
 
@@ -82,10 +82,10 @@ function deploy(opts: Options) {
 
   // Copy dist contents to git folder
   const distPathFull = join(__dirname, dirDist);
-  copySync(distPathFull, outputPathFull, { overwrite: true });
+  cpSync(distPathFull, outputPathFull, { recursive: true });
 
   // Delete old dist folder
-  removeSync(distPathFull);
+  rmSync(distPathFull, { recursive: true, force: true });
 
   // Create new commit & push
   execSync(`git -C ${outputPathFull} add --all`);
