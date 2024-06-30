@@ -9,29 +9,38 @@
     @no="emit('no')"
   >
     <div class="content">
-      <div class="info">
-        {{ t("slippage-info") }}
-      </div>
-
       <div class="slippage">
-        <span>{{ t("percentage") }}</span>
+        <div
+          style="grid-area: info"
+          class="info"
+        >
+          {{ t("slippage-info") }}
+        </div>
+
+        <span style="grid-area: label1">{{ t("percentage") }}</span>
+
         <Slider
           v-model="slippage"
+          style="grid-area: slider"
           :min="0.001"
           :max="0.2"
           :step="0.001"
         ></Slider>
-        <span>
+
+        <span style="grid-area: percentage">
           {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
         </span>
 
-        <span>{{ t("min-amount") }}</span>
+        <span style="grid-area: label2">{{ t("min-amount") }}</span>
+
         <InputNumber
           v-model="minAmountOut"
+          style="grid-area: input"
           :min="0"
           :max="Infinity"
         ></InputNumber>
-        <span>{{ symbolOutput }}</span>
+
+        <span style="grid-area: symbol">{{ symbolOutput }}</span>
       </div>
     </div>
   </ModalYesNo>
@@ -83,19 +92,22 @@ watch(
   gap: 1rem;
 }
 
-.info {
-  color: #a1a1aa;
-}
-
 .slippage {
   display: grid;
   gap: 1rem;
+  row-gap: 2rem;
   align-items: center;
 
-  grid-template-columns: auto 1fr minmax(4rem, auto);
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto minmax(4rem, 1fr) auto;
+  grid-template-areas:
+    "info info info"
+    "label1 slider percentage"
+    "label2 input symbol";
 
-  margin-top: 2rem;
+  .info {
+    color: #a1a1aa;
+    text-wrap: balance;
+  }
 }
 </style>
 

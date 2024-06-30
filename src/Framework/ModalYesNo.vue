@@ -78,7 +78,6 @@ const { t } = useI18n();
 
         &.yes {
           color: var(--c-green);
-          margin-right: 1rem;
         }
       }
 
