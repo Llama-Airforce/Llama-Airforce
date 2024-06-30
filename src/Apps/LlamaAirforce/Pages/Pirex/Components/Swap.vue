@@ -16,12 +16,22 @@
       <Button
         value="Swap"
         :primary="true"
+        @click="showSwap = true"
       ></Button>
     </div>
+
+    <ModalSwap
+      :show="showSwap"
+      @close="showSwap = false"
+    ></ModalSwap>
   </Card>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ModalSwap from "@LAF/Pages/Pirex/Components/ModalSwap.vue";
+
+const showSwap = ref(false);
+</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
