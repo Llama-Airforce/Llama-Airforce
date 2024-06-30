@@ -39,7 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import { erc20Abi as abiErc20 } from "viem";
 import { useWallet } from "@/Wallet";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
@@ -143,17 +142,12 @@ const redemptions = computedAsync(async () => {
 const pxCvxAddress = PxCvxAddress;
 const { address } = useWallet();
 
-const { data: balance, refetch: refetchBalance } = useReadContract({
-  abi: abiErc20,
-  address: PxCvxAddress,
-  functionName: "balanceOf",
-  args: computed(() => [address.value!] as const),
-  query: {
-    enabled: computed(() => !!address.value),
-    initialData: 0n,
-    initialDataUpdatedAt: 0,
-  },
+const { data: balanceInfo, refetch: refetchBalance } = useBalance({
+  address,
+  token: PxCvxAddress,
 });
+const balance = computed(() => balanceInfo.value?.value ?? 0n);
+const balanceNum = computed(() => bigNumToNumber(balance.value, 18n));
 
 const balanceRedeem: Ref<number | string | null> = ref(null);
 const balanceRedeemSafe = computed(() =>
@@ -162,8 +156,6 @@ const balanceRedeemSafe = computed(() =>
 const balanceRedeemBigInt = computed(() =>
   numToBigNumber(balanceRedeemSafe.value, 18n)
 );
-
-const balanceNum = computed(() => bigNumToNumber(balance.value ?? 0n, 18n));
 
 const canRedeem = computed(
   () =>

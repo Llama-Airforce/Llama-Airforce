@@ -24,6 +24,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
         "useWriteContract",
         "useWaitForTransactionReceipt",
         "useSwitchChain",
+        "useBalance",
       ],
     },
     {

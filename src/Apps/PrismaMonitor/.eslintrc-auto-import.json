@@ -499,6 +499,7 @@
     "whenever": true,
     "writeContract": true,
     "useApprove": true,
-    "UPxCvxAddress": true
+    "UPxCvxAddress": true,
+    "useBalance": true
   }
 }

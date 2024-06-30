@@ -25,29 +25,21 @@ const { t } = useI18n();
 // Refs
 const { address } = useWallet();
 
-const { data: balance } = useReadContract({
-  abi: abiERC20,
-  address: UnionCrvVaultAddressV1,
-  functionName: "balanceOf",
-  args: computed(() => [address.value!] as const),
-  query: {
-    enabled: computed(() => !!address.value),
-    initialData: 0n,
-    initialDataUpdatedAt: 0,
-  },
+const { data: balanceInfo } = useBalance({
+  address,
+  token: UnionCrvVaultAddressV1,
 });
+const balance = computed(() => balanceInfo.value?.value ?? 0n);
 
 const migrationMsg = computed(() =>
   t("migrateUCrv", [
-    (
-      Math.round(bigNumToNumber(balance.value ?? 0n, 18n) * 1000) / 1000
-    ).toFixed(3),
+    (Math.round(bigNumToNumber(balance.value, 18n) * 1000) / 1000).toFixed(3),
   ])
 );
 
 const canMigrate = computed(() => {
   const dust = numToBigNumber(0.1, 18n);
-  return (balance.value ?? 0n) > dust;
+  return balance.value > dust;
 });
 
 const migrating = ref(false);
@@ -64,7 +56,7 @@ function onMigrate() {
       abi: abiERC20,
       address: UnionCrvVaultAddressV1,
       functionName: "approve",
-      args: [ZapsUCrvAddressV2, balance.value!] as const,
+      args: [ZapsUCrvAddressV2, balance.value] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });
@@ -73,7 +65,7 @@ function onMigrate() {
       abi: abiMigration,
       address: ZapsUCrvAddressV2,
       functionName: "depositFromUCrv",
-      args: [balance.value!, 0n, address.value!] as const,
+      args: [balance.value, 0n, address.value!] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });

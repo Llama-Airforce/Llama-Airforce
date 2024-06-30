@@ -40,17 +40,11 @@ const llamaService = new DefiLlamaService();
 // Refs
 const { address } = useWallet();
 
-const { data: balance } = useReadContract({
-  abi: abiERC20,
-  address: UnionFxsVaultAddressV1,
-  functionName: "balanceOf",
-  args: computed(() => [address.value!] as const),
-  query: {
-    enabled: computed(() => !!address.value),
-    initialData: 0n,
-    initialDataUpdatedAt: 0,
-  },
+const { data: balanceInfo } = useBalance({
+  address,
+  token: UnionFxsVaultAddressV1,
 });
+const balance = computed(() => balanceInfo.value?.value ?? 0n);
 
 let modalAction: (() => Promise<void>) | null = null;
 const minAmountOut = ref(0);
@@ -59,15 +53,13 @@ const modalSlippage = ref(false);
 
 const migrationMsg = computed(() =>
   t("migrateUFxs", [
-    (
-      Math.round(bigNumToNumber(balance.value ?? 0n, 18n) * 1000) / 1000
-    ).toFixed(3),
+    (Math.round(bigNumToNumber(balance.value, 18n) * 1000) / 1000).toFixed(3),
   ])
 );
 
 const canMigrate = computed(() => {
   const dust = numToBigNumber(0.1, 18n);
-  return (balance.value ?? 0n) > dust;
+  return balance.value > dust;
 });
 
 const migrating = ref(false);
@@ -92,7 +84,7 @@ async function onMigrate(skipSlippageModal: boolean) {
     const ufxs = await getUFxsPriceV1(llamaService, config);
 
     minAmountOutRef.value = bigNumToNumber(
-      calcMinAmountOut(balance.value ?? 0n, ufxs, cvxfxs, 0),
+      calcMinAmountOut(balance.value, ufxs, cvxfxs, 0),
       18n
     );
     return;
@@ -103,7 +95,7 @@ async function onMigrate(skipSlippageModal: boolean) {
       abi: abiERC20,
       address: UnionFxsVaultAddressV1,
       functionName: "approve",
-      args: [ZapsUFxsAddress, balance.value!] as const,
+      args: [ZapsUFxsAddress, balance.value] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });
@@ -113,7 +105,7 @@ async function onMigrate(skipSlippageModal: boolean) {
       abi: abiMigration,
       address: ZapsUFxsAddress,
       functionName: "depositFromUFxs",
-      args: [balance.value!, migrationMinAmount, address.value!] as const,
+      args: [balance.value, migrationMinAmount, address.value!] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });

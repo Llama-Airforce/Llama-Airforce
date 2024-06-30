@@ -25,29 +25,21 @@ const { t } = useI18n();
 // Refs
 const { address } = useWallet();
 
-const { data: balance } = useReadContract({
-  abi: abiERC20,
-  address: StkCvxPrismaAddress,
-  functionName: "balanceOf",
-  args: computed(() => [address.value!] as const),
-  query: {
-    enabled: computed(() => !!address.value),
-    initialData: 0n,
-    initialDataUpdatedAt: 0,
-  },
+const { data: balanceInfo } = useBalance({
+  address,
+  token: StkCvxPrismaAddress,
 });
+const balance = computed(() => balanceInfo.value?.value ?? 0n);
 
 const migrationMsg = computed(() =>
   t("migrateStkCvxCrv", [
-    (
-      Math.round(bigNumToNumber(balance.value ?? 0n, 18n) * 1000) / 1000
-    ).toFixed(3),
+    (Math.round(bigNumToNumber(balance.value, 18n) * 1000) / 1000).toFixed(3),
   ])
 );
 
 const canMigrate = computed(() => {
   const dust = numToBigNumber(0.1, 18n);
-  return (balance.value ?? 0n) > dust;
+  return balance.value > dust;
 });
 
 const migrating = ref(false);
@@ -64,7 +56,7 @@ function onMigrate() {
       abi: abiERC20,
       address: StkCvxPrismaAddress,
       functionName: "approve",
-      args: [ZapsUPrismaConvexMigrationAddress, balance.value!] as const,
+      args: [ZapsUPrismaConvexMigrationAddress, balance.value] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });
@@ -73,7 +65,7 @@ function onMigrate() {
       abi: abiMigration,
       address: ZapsUPrismaConvexMigrationAddress,
       functionName: "migrate",
-      args: [balance.value!, address.value!] as const,
+      args: [balance.value, address.value!] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });

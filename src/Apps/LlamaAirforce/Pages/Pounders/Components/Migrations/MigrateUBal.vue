@@ -33,54 +33,39 @@ const { address } = useWallet();
 
 const migrationUBalMsg = computed(() => {
   return t("migrateUBal", [
-    (
-      Math.round(bigNumToNumber(balanceUBal.value ?? 0n, 18n) * 1000) / 1000
-    ).toFixed(3),
+    (Math.round(bigNumToNumber(balanceUBal.value, 18n) * 1000) / 1000).toFixed(
+      3
+    ),
   ]);
 });
 
-const canWithdraw = computed(
-  () => (balanceUBal.value ?? 0n) > 0n && !migrating.value
-);
+const canWithdraw = computed(() => balanceUBal.value > 0n && !migrating.value);
 
 const canDeposit = computed(
   () =>
-    balanceUBal.value === 0n &&
-    (balanceAuraBal.value ?? 0n) > 0n &&
-    !migrating.value
+    balanceUBal.value === 0n && balanceAuraBal.value > 0n && !migrating.value
 );
 
 const canMigrate = computed(() => {
   const dust = numToBigNumber(0.1, 18n);
-  return (balanceUBal.value ?? 0n) > dust;
+  return balanceUBal.value > dust;
 });
 
 const migrating = ref(false);
 
-const { data: balanceUBal, refetch: refetchBalanceUBal } = useReadContract({
-  abi: abiERC20,
-  address: UnionBalVaultAddressV1,
-  functionName: "balanceOf",
-  args: computed(() => [address.value!] as const),
-  query: {
-    enabled: computed(() => !!address.value),
-    initialData: 0n,
-    initialDataUpdatedAt: 0,
-  },
+const { data: balanceUBalInfo, refetch: refetchBalanceUBal } = useBalance({
+  address,
+  token: UnionBalVaultAddressV1,
 });
+const balanceUBal = computed(() => balanceUBalInfo.value?.value ?? 0n);
 
-const { data: balanceAuraBal, refetch: refetchBalanceAuraBal } =
-  useReadContract({
-    abi: abiERC20,
-    address: AuraBalAddress,
-    functionName: "balanceOf",
-    args: computed(() => [address.value!] as const),
-    query: {
-      enabled: computed(() => !!address.value),
-      initialData: 0n,
-      initialDataUpdatedAt: 0,
-    },
-  });
+const { data: balanceAuraBalInfo, refetch: refetchBalanceAuraBal } = useBalance(
+  {
+    address,
+    token: AuraBalAddress,
+  }
+);
+const balanceAuraBal = computed(() => balanceAuraBalInfo.value?.value ?? 0n);
 
 // Events
 const config = useConfig();
@@ -113,7 +98,7 @@ function onDepositAuraBal() {
       abi: abiERC20,
       address: AuraBalAddress,
       functionName: "approve",
-      args: [UnionBalVaultAddress, balanceAuraBal.value!] as const,
+      args: [UnionBalVaultAddress, balanceAuraBal.value] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });
@@ -122,7 +107,7 @@ function onDepositAuraBal() {
       abi: abiVault,
       address: UnionBalVaultAddress,
       functionName: "deposit",
-      args: [address.value!, balanceAuraBal.value!] as const,
+      args: [address.value!, balanceAuraBal.value] as const,
     });
 
     await waitForTransactionReceipt(config, { hash });
