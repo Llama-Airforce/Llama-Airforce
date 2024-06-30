@@ -98,7 +98,7 @@ watch(
   row-gap: 2rem;
   align-items: center;
 
-  grid-template-columns: auto minmax(4rem, 1fr) auto;
+  grid-template-columns: auto minmax(4rem, 1fr) 6ch;
   grid-template-areas:
     "info info info"
     "label1 slider percentage"
