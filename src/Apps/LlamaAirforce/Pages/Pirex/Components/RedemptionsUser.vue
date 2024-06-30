@@ -43,7 +43,8 @@ import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTab
 const { address } = useWallet();
 
 // Pending redemptions
-const tokenIds = computed(() => [1720051200n, 1729123200n]);
+const tokenIds = computed((): bigint[] => []);
+//const tokenIds = computed(() => [1720051200n, 1729123200n]);
 
 const { data: balances } = useReadContract({
   abi,
