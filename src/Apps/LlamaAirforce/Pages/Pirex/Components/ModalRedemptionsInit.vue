@@ -169,7 +169,7 @@ const { needsApprove, approve, isApproving } = useApprove(
   PxCvxAddress,
   address,
   PirexCvxAddress,
-  computed(() => numToBigNumber(balanceRedeemSafe.value, 18n)),
+  balanceRedeemBigInt,
   { maxApprove: false }
 );
 
