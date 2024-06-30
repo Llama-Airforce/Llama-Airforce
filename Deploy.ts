@@ -68,10 +68,10 @@ function deploy(opts: Options) {
 
   // Build website
   if (check) {
-    execSync(`npm run typecheck`, { stdio: "inherit" });
-    execSync(`npm run lint:${app}`, { stdio: "inherit" });
+    execSync(`bun run typecheck`, { stdio: "inherit" });
+    execSync(`bun run lint:${app}`, { stdio: "inherit" });
   }
-  execSync(`npm run build:${app}`, { stdio: "inherit" });
+  execSync(`bun run build:${app}`, { stdio: "inherit" });
 
   // Ensure output directory exists
   const outputPath = join("..", dirOutput);
