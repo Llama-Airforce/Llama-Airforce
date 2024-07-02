@@ -18,5 +18,5 @@ export const pagePounders: PageLAF = {
   planeX: 215,
   menuHeader,
   menuItems: [],
-  forceShowMenu: true,
+  forceShowMenu: false,
 };

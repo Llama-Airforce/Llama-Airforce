@@ -19,5 +19,5 @@ export const pagePirex: PageLAF = {
   planeX: 445,
   menuHeader,
   menuItems: [],
-  forceShowMenu: true,
+  forceShowMenu: false,
 };
