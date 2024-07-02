@@ -52,66 +52,8 @@
       </nav>
 
       <nav class="support">
-        <ul>
-          <li>
-            <a
-              class="nav-link"
-              href="https://docs.llama.airforce/"
-              target="_blank"
-            >
-              <div class="nav-link-container icon">
-                <i class="fas fa-book"></i>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <a
-              class="nav-link"
-              href="https://medium.com/@llamaairforce"
-              target="_blank"
-            >
-              <div class="nav-link-container icon">
-                <i class="fas fa-bullhorn"></i>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <a
-              class="nav-link"
-              href="https://discord.gg/E3KHXkvzPJ"
-              target="_blank"
-            >
-              <div class="nav-link-container icon">
-                <i class="fab fa-discord"></i>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <a
-              class="nav-link"
-              href="https://twitter.com/0xAlunara"
-              target="_blank"
-            >
-              <div class="nav-link-container icon">
-                <i class="fab fa-twitter"></i>
-              </div>
-            </a>
-          </li>
-
-          <li>
-            <router-link
-              to="/code"
-              class="nav-link"
-            >
-              <div class="nav-link-container icon">
-                <i class="fas fa-code"></i>
-              </div>
-            </router-link>
-          </li>
-        </ul>
+        <Wallet></Wallet>
+        <LlamaNFT></LlamaNFT>
       </nav>
     </div>
   </header>
@@ -190,17 +132,14 @@ header {
       grid-row: 1;
       grid-column: 3;
 
-      .icon {
-        font-size: 1.25rem;
-        color: var(--c-lvl5);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
 
-        height: 1.5rem;
-        display: flex;
-        align-items: center;
-      }
-
-      li:last-child {
-        padding-right: 0;
+      img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
       }
     }
 
@@ -272,13 +211,6 @@ header {
     nav {
       display: flex;
       justify-content: center;
-
-      &.support {
-        ul {
-          flex-grow: 1;
-          justify-content: space-between;
-        }
-      }
 
       ul {
         display: flex;

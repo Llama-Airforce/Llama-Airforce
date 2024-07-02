@@ -25,14 +25,14 @@
       </div>
     </main>
 
-    <FooterMobile class="footer"></FooterMobile>
+    <Footer class="footer"></Footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import Header from "@LAF/Navigation/Header.vue";
-import FooterMobile from "@LAF/Navigation/FooterMobile.vue";
+import Footer from "@LAF/Navigation/Footer.vue";
 import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 import Announcement from "@LAF/Components/Announcement.vue";
 </script>
@@ -114,13 +114,16 @@ a {
   }
 
   > .footer {
-    display: none;
-
     grid-row: 3;
-    grid-column: 1 / span 2;
+    grid-column: 2;
 
     @media only screen and (max-width: 1280px) {
       display: flex;
+
+      grid-row: 3;
+      grid-column: 1 / span 2;
+
+      justify-self: center;
     }
   }
 

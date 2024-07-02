@@ -1,6 +1,8 @@
 <template>
-  <footer class="footer-mobile">
-    <nav class="support">
+  <footer :class="{ 'no-language': !noMenu }">
+    <SelectLanguage v-if="noMenu"></SelectLanguage>
+
+    <nav>
       <ul>
         <li>
           <a
@@ -65,7 +67,24 @@
   </footer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { type PageLAF } from "@LAF/Pages/Page";
+
+const pageStore = usePageStore<PageLAF>();
+const route = useRoute();
+
+const page = computed((): PageLAF | undefined => {
+  return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
+});
+
+const menuItems = computed(() => {
+  return page.value?.menuItems ?? [];
+});
+
+const noMenu = computed((): boolean => {
+  return !(menuItems.value.length > 0 || !!page.value?.forceShowMenu);
+});
+</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
@@ -73,8 +92,22 @@
 
 footer {
   display: flex;
-  margin: 0rem 1rem 2rem 1rem;
-  justify-content: center;
+  margin: 0rem 1rem 2rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1280px) {
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  &.no-language {
+    justify-content: flex-end;
+  }
+
+  .select {
+    width: 8rem;
+  }
 
   nav {
     ul {
@@ -99,6 +132,10 @@ footer {
           color: var(--c-text);
           border-bottom: $header-highlight-size solid $header-background;
           transition: all $header-hover-duration;
+
+          .icon {
+            color: var(--c-lvl5);
+          }
 
           .nav-link-container {
             display: flex;
