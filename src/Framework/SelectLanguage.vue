@@ -25,6 +25,7 @@ const STORAGE_LOCALE = "locale";
 type Direction = "up" | "down";
 
 const { t } = useI18n();
+const locale = useStorage<Locale>(STORAGE_LOCALE, "en");
 const { locale: loc } = useI18n({ useScope: "global" });
 
 // Props
@@ -35,19 +36,14 @@ interface Props {
 
 const { locales = localesAll, direction = "up" } = defineProps<Props>();
 
-// Refs
-const locale = ref<Locale | null>("en");
-const selectLocaleOpen = ref(false);
-
 // Hooks
 onMounted(() => {
-  const locale = localStorage.getItem(STORAGE_LOCALE) as Locale;
-  if (locale && locales.some((l) => l === locale)) {
-    onLocaleSelect(locale);
-  }
+  onLocaleSelect(locale.value);
 });
 
-// Events
+// Select
+const selectLocaleOpen = ref(false);
+
 const onLocaleOpen = (): void => {
   selectLocaleOpen.value = !selectLocaleOpen.value;
 };
@@ -55,8 +51,6 @@ const onLocaleOpen = (): void => {
 const onLocaleSelect = (option: Locale): void => {
   locale.value = option;
   loc.value = locale.value;
-
-  localStorage.setItem(STORAGE_LOCALE, locale.value);
 };
 </script>
 
