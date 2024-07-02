@@ -21,10 +21,8 @@
 
           <img src="@/Assets/Menu/header-edge.png" />
 
-          <img src="@/Assets/Menu/header-separator.png" />
-
           <template
-            v-for="page in pageStore.pages.filter((p) => p.visible)"
+            v-for="(page, index) in pages"
             :key="page.title"
           >
             <li>
@@ -43,7 +41,10 @@
               </router-link>
             </li>
 
-            <img src="@/Assets/Menu/header-separator.png" />
+            <img
+              v-if="index < pages.length - 1"
+              src="@/Assets/Menu/header-separator.png"
+            />
           </template>
 
           <img src="@/Assets/Menu/header-edge.png" />
@@ -119,9 +120,12 @@
 <script setup lang="ts">
 import { subIsActive } from "@/Util";
 import { type PageLAF } from "@LAF/Pages/Page";
+import Wallet from "@/Wallet/Wallet.vue";
 
 const pageStore = usePageStore<PageLAF>();
 const route = useRoute();
+
+const pages = computed(() => pageStore.pages.filter((p) => p.visible));
 
 const planeX = computed((): string => {
   let x = 15;
@@ -212,12 +216,12 @@ header {
       /** Left edge image */
       img:nth-of-type(1) {
         padding-left: 0;
-        padding-right: 0.5rem;
+        padding-right: 2rem;
       }
 
       /** Right edge image */
       img:last-of-type {
-        padding-left: 0.5rem;
+        padding-left: 2rem;
         padding-right: 0;
       }
 
