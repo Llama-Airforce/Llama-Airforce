@@ -108,6 +108,8 @@ header {
     border-bottom: 1px solid var(--c-lvl2);
 
     > .title {
+      z-index: 1; // Needed because the menu is rendered on top, otherwise breaking clicking the logo.
+
       grid-row: 1;
       grid-column: 1;
 
