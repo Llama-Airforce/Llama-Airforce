@@ -48,6 +48,8 @@ export async function useHost(production?: string): Promise<string> {
 
   // Attempt to use local development server if in development mode.
   const isDevelopment = useDevelopment();
+  const hostProduction = production ?? getHostDefault(app);
+
   if (isDevelopment) {
     try {
       // Ping the local development server with a timeout.
@@ -71,14 +73,14 @@ export async function useHost(production?: string): Promise<string> {
     } catch (error) {
       // Ignore the error and proceed to use the default or production host.
       notify({
-        text: `Local development server not available, using (production) host: ${hostCache[hostKey]}`,
+        text: `Local development server not available, using (production) host: ${hostProduction}`,
         type: "warn",
       });
     }
   }
 
   // Use production or default host
-  hostCache[hostKey] = production ?? getHostDefault(app);
+  hostCache[hostKey] = hostProduction;
 
   return hostCache[hostKey];
 }
