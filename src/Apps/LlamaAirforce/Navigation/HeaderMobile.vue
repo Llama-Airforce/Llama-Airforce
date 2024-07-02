@@ -5,7 +5,10 @@
         <img src="@/Assets/Menu/logo.svg" />
       </div>
 
-      <Wallet class="wallet"></Wallet>
+      <div class="wallet">
+        <Wallet class="wallet"></Wallet>
+        <LlamaNFT></LlamaNFT>
+      </div>
 
       <button
         class="hamburger hamburger--spin"
@@ -57,9 +60,10 @@ header {
   user-select: none;
 
   > .header-mobile {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 
     height: 65px;
     width: 100%;
@@ -70,6 +74,9 @@ header {
     border-bottom: 1px solid var(--c-lvl2);
 
     > .title {
+      grid-row: 1;
+      grid-column: 1;
+
       display: flex;
       align-items: flex-end;
       pointer-events: none;
@@ -84,10 +91,29 @@ header {
     }
 
     > .wallet {
-      flex-grow: 1;
+      grid-row: 1;
+      grid-column: 1 / -1;
+      justify-self: center;
+
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      button {
+        min-width: 8rem;
+      }
+
+      img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
     }
 
     > .hamburger {
+      grid-row: 1;
+      grid-column: 3;
+
       padding-top: 5px;
       padding-left: 1.25rem;
       padding-right: 1rem;
