@@ -97,8 +97,8 @@ footer {
   justify-content: space-between;
 
   @media only screen and (max-width: 1280px) {
-    margin-left: 1rem;
-    margin-right: 0.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1rem;
   }
 
   &.no-language {
