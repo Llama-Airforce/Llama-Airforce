@@ -120,6 +120,7 @@ footer {
       li {
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
         justify-content: center;
         padding-right: 0.5rem;
         padding-left: 0.5rem;
