@@ -22,7 +22,10 @@
       v-if="redemptions.length > 0"
       class="right"
     >
-      <RedemptionsUserTable :redemptions></RedemptionsUserTable>
+      <RedemptionsUserTable
+        :redemptions
+        :loading
+      ></RedemptionsUserTable>
     </div>
 
     <div
@@ -35,49 +38,14 @@
 </template>
 
 <script setup lang="ts">
-import { zip } from "lodash";
 import { useWallet, addressShort } from "@/Wallet";
-import { abi } from "@/ABI/Union/PirexUPxCvx";
+import { useQueryRedemptions } from "@LAF/Pages/Pirex/Services/Queries";
 import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTable.vue";
 
 const { address } = useWallet();
 
 // Pending redemptions
-const tokenIds = computed((): bigint[] => []);
-//const tokenIds = computed(() => [1720051200n, 1729123200n]);
-
-const { data: balances } = useReadContract({
-  abi,
-  address: UPxCvxAddress,
-  functionName: "balanceOfBatch",
-  args: computed(
-    () =>
-      [
-        Array(tokenIds.value.length).fill(address.value!),
-        tokenIds.value,
-      ] as const
-  ),
-  query: {
-    enabled: computed(() => !!address.value),
-    initialData: [],
-    initialDataUpdatedAt: 0,
-  },
-});
-
-const redemptions = computed(() => {
-  if (!balances.value) {
-    return [];
-  }
-
-  return zip(tokenIds.value, balances.value)
-    .filter(
-      ([tokenId, balance]) => tokenId !== undefined && balance !== undefined
-    )
-    .map(([tokenId, balance]) => ({
-      tokenId: tokenId!,
-      balance: balance!,
-    }));
-});
+const { data: redemptions, isLoading: loading } = useQueryRedemptions(address);
 </script>
 
 <style lang="scss" scoped>

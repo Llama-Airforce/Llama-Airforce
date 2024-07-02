@@ -1,13 +1,2 @@
-import { type Address } from "viem";
-
-type SnapshotReward = {
-  address: Address;
-  rewardAmount: string;
-  rewardIndex: number;
-  isClaimed: boolean;
-  epoch: number;
-};
-
-export type GetRewardsResponse = {
-  snapshotRewards: SnapshotReward[][];
-};
+export type { Result as GetRewardsResponse } from "@LAF/Server/routes/pirex/rewards/[address].get";
+export type { Result as GetRedemptionsResponse } from "@LAF/Server/routes/pirex/redemptions/[address].get";

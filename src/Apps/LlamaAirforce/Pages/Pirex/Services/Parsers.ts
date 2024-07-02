@@ -13,3 +13,12 @@ export const parseRewards = (
     epoch: x.epoch,
   };
 };
+
+export const parseRedemption = (
+  x: ApiTypes.GetRedemptionsResponse[number]
+): Models.RedemptionPending => {
+  return {
+    tokenId: BigInt(x.tokenId),
+    balance: BigInt(x.balance),
+  };
+};

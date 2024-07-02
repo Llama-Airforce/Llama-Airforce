@@ -1,8 +1,22 @@
 import { createError, getRouterParams } from "h3";
 import { defineCachedEventHandler } from "nitropack/runtime";
-import { isAddress } from "viem";
+import { type Address, isAddress } from "viem";
 
-export default defineCachedEventHandler(
+type SnapshotReward = {
+  address: Address;
+  rewardAmount: string;
+  rewardIndex: number;
+  isClaimed: boolean;
+  epoch: number;
+};
+
+type PirexResponse = {
+  snapshotRewards: SnapshotReward[][];
+};
+
+export type Result = Awaited<ReturnType<typeof handler>>;
+
+const handler = defineCachedEventHandler(
   async (event) => {
     // Get the address from the route parameter
     const { address } = getRouterParams(event);
@@ -16,7 +30,7 @@ export default defineCachedEventHandler(
 
     try {
       // Fetch data from Pirex API using native fetch
-      const res = await $fetch(
+      const res = await $fetch<PirexResponse>(
         `https://pirex.io/api/1/convex/rewards/${address}`
       );
 
@@ -31,5 +45,7 @@ export default defineCachedEventHandler(
       });
     }
   },
-  { maxAge: 60 * 60 }
+  { maxAge: 60 }
 );
+
+export default handler;
