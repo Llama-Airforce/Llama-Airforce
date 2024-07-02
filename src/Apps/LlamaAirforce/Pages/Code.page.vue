@@ -1,47 +1,77 @@
 <template>
   <div class="contracts">
-    <div class="row">
+    <div class="dashboard">
+      <div class="row">
+        <DataTable
+          class="datatable-repositories"
+          columns-data="repositories-columns-data"
+          :rows="repositories"
+          :columns="[t('repository'), t('description')]"
+        >
+          <template #header-content>
+            <div class="title">{{ t("repositories") }}</div>
+          </template>
+
+          <template #row="props: { item: Repository }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
+
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+
+        <DataTable
+          class="datatable-other"
+          columns-data="other-columns-data"
+          :rows="other"
+          :columns="[t('other'), t('description')]"
+        >
+          <template #header-content>
+            <div class="title">{{ t("other") }}</div>
+          </template>
+
+          <template #row="props: { item: Other }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
+
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+      </div>
+
       <DataTable
-        class="datatable-repositories"
-        columns-data="repositories-columns-data"
-        :rows="repositories"
-        :columns="[t('repository'), t('description')]"
+        v-for="(bundle, i) in bundles"
+        :key="i"
+        class="datatable-contracts"
+        columns-header="1fr"
+        columns-data="contracts-columns-data"
+        :rows="bundle.contracts"
+        :columns="[t('contract'), t('description')]"
       >
         <template #header-content>
-          <div class="title">{{ t("repositories") }}</div>
+          <div class="title">{{ t(bundle.name) }}</div>
         </template>
 
-        <template #row="props: { item: Repository }">
+        <template #row="props: { item: Contract }">
           <div>
             <a
-              :href="props.item.url"
+              class="font-mono"
               target="_blank"
+              :href="linkContract(props.item)"
             >
-              {{ props.item.name }}
-            </a>
-          </div>
-
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </DataTable>
-
-      <DataTable
-        class="datatable-other"
-        columns-data="other-columns-data"
-        :rows="other"
-        :columns="[t('other'), t('description')]"
-      >
-        <template #header-content>
-          <div class="title">{{ t("other") }}</div>
-        </template>
-
-        <template #row="props: { item: Other }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
+              {{ props.item.contract }}
             </a>
           </div>
 
@@ -49,34 +79,6 @@
         </template>
       </DataTable>
     </div>
-
-    <DataTable
-      v-for="(bundle, i) in bundles"
-      :key="i"
-      class="datatable-contracts"
-      columns-header="1fr"
-      columns-data="contracts-columns-data"
-      :rows="bundle.contracts"
-      :columns="[t('contract'), t('description')]"
-    >
-      <template #header-content>
-        <div class="title">{{ t(bundle.name) }}</div>
-      </template>
-
-      <template #row="props: { item: Contract }">
-        <div>
-          <a
-            class="font-mono"
-            target="_blank"
-            :href="linkContract(props.item)"
-          >
-            {{ props.item.contract }}
-          </a>
-        </div>
-
-        <div>{{ t(props.item.description) }}</div>
-      </template>
-    </DataTable>
   </div>
 </template>
 
@@ -403,40 +405,41 @@ const { t } = useI18n();
 @include dashboardLAF("contracts");
 
 .contracts {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: var(--page-margin);
-
-  .row {
+  .dashboard {
     display: flex;
-    gap: var(--dashboard-gap);
-  }
+    flex-direction: column;
+    gap: 0;
 
-  .datatable-contracts {
-    ::v-deep(.contracts-columns-data) {
-      display: grid;
-      grid-template-columns: 3fr 4fr;
+    .row {
+      display: flex;
+      gap: var(--dashboard-gap);
     }
-  }
 
-  .datatable-repositories {
-    width: 60%;
-    margin-bottom: 1.5rem;
-
-    ::v-deep(.repositories-columns-data) {
-      display: grid;
-      grid-template-columns: 2fr 6fr;
+    .datatable-contracts {
+      ::v-deep(.contracts-columns-data) {
+        display: grid;
+        grid-template-columns: 3fr 4fr;
+      }
     }
-  }
 
-  .datatable-other {
-    width: 40%;
-    margin-bottom: 1.5rem;
+    .datatable-repositories {
+      width: 60%;
+      margin-bottom: 1.5rem;
 
-    ::v-deep(.other-columns-data) {
-      display: grid;
-      grid-template-columns: 3fr 4fr;
+      ::v-deep(.repositories-columns-data) {
+        display: grid;
+        grid-template-columns: 2fr 6fr;
+      }
+    }
+
+    .datatable-other {
+      width: 40%;
+      margin-bottom: 1.5rem;
+
+      ::v-deep(.other-columns-data) {
+        display: grid;
+        grid-template-columns: 3fr 4fr;
+      }
     }
   }
 }
