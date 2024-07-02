@@ -4,7 +4,7 @@ import { ServiceBaseHost } from "@/Services";
 export type Claim = {
   index: bigint;
   amount: string; // In hex because of big numbers.
-  proof: Readonly<Address[]>;
+  proof: readonly Address[];
 };
 
 type ClaimResponse = {
