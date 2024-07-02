@@ -6,24 +6,6 @@
       </div>
 
       <Wallet class="wallet"></Wallet>
-      <SelectLanguage
-        class="language"
-        direction="down"
-      ></SelectLanguage>
-
-      <nav class="support">
-        <ul>
-          <li>
-            <a
-              class="nav-link"
-              href="https://etherscan.io/address/0x9Bc7c6ad7E7Cf3A6fCB58fb21e27752AC1e53f99"
-              target="_blank"
-            >
-              <div class="nav-link-container donate">Donate</div>
-            </a>
-          </li>
-        </ul>
-      </nav>
 
       <button
         class="hamburger hamburger--spin"
@@ -104,21 +86,6 @@ header {
 
     > .wallet {
       flex-grow: 1;
-    }
-
-    > .language {
-      width: 10rem;
-      display: none;
-    }
-
-    > .support {
-      display: none;
-      flex-grow: 1;
-
-      .donate {
-        font-weight: 500;
-        color: var(--c-primary);
-      }
     }
 
     > .hamburger {
