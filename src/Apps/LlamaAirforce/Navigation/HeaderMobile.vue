@@ -52,7 +52,6 @@ const onNavigated = (): void => {
 
 header {
   width: 100%;
-  display: flex;
 
   background: $header-background;
   user-select: none;
