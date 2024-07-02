@@ -148,7 +148,8 @@ header {
   user-select: none;
 
   > .header-desktop {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
 
     height: 110px;
@@ -161,6 +162,9 @@ header {
     border-bottom: 1px solid var(--c-lvl2);
 
     > .title {
+      grid-row: 1;
+      grid-column: 1;
+
       &:hover {
         background: unset;
       }
@@ -179,6 +183,9 @@ header {
     }
 
     > .support {
+      grid-row: 1;
+      grid-column: 3;
+
       .icon {
         font-size: 1.25rem;
         color: var(--c-lvl5);
@@ -194,6 +201,9 @@ header {
     }
 
     > .navigation {
+      grid-row: 1;
+      grid-column: 1 / -1;
+
       display: flex;
       flex-direction: column;
       flex-grow: 1;
