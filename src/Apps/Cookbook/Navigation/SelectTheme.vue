@@ -62,6 +62,8 @@ import { getColors } from "@/Styles/Themes/CB";
 import { type ThemeId } from "@CB/Models/ThemeId";
 import { useSettingsStore } from "@CB/Stores";
 
+const STORAGE_THEME = "theme";
+
 type ThemeDescription = {
   id: ThemeId;
   colors: ReturnType<typeof getColors>;
@@ -76,35 +78,29 @@ const themes: ThemeDescription[] = [
 // Refs
 const storeSettings = useSettingsStore();
 
-const theme = ref<ThemeDescription>(themes[0]);
-const selectThemeOpen = ref(false);
+const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const defaultTheme = browserDark ? "dark" : "light";
+
+const theme = useStorage<ThemeDescription>(
+  STORAGE_THEME,
+  themes.find((t) => t.id === defaultTheme) ?? themes[0],
+  undefined,
+  {
+    serializer: {
+      read: (v: string) => themes.find((t) => t.id === v) ?? themes[0],
+      write: (v: ThemeDescription) => v.id,
+    },
+  }
+);
 
 // Hooks
 onMounted(() => {
-  /*
-   * Set theme to dark mode if browser is in dark mode.
-   * Except if localstorage says otherwise, though.
-   */
-  const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const savedTheme = localStorage.getItem("theme");
-
-  if (!savedTheme && browserDark) {
-    const theme = themes.find((theme) => theme.id === "dark");
-
-    if (theme) {
-      onThemeSelect(theme);
-    }
-  } else {
-    const theme =
-      themes.find((theme) => theme.id === savedTheme) ??
-      themes.find((theme) => theme.id === "light") ??
-      themes[0];
-
-    onThemeSelect(theme);
-  }
+  onThemeSelect(theme.value);
 });
 
-// Events
+// Select
+const selectThemeOpen = ref(false);
+
 const onThemeOpen = (): void => {
   selectThemeOpen.value = !selectThemeOpen.value;
 };
@@ -112,9 +108,8 @@ const onThemeOpen = (): void => {
 const onThemeSelect = (option: ThemeDescription) => {
   theme.value = option;
 
-  window.document.documentElement.setAttribute("data-theme", theme.value.id);
-  storeSettings.themeId = theme.value.id;
-  localStorage.setItem("theme", theme.value.id);
+  window.document.documentElement.setAttribute("data-theme", option.id);
+  storeSettings.themeId = option.id;
 };
 </script>
 
