@@ -1,131 +1,67 @@
 <template>
   <div class="home">
     <div class="dashboard">
-      <Card class="topic">
-        <router-link
-          to="/curve"
-          class="logo"
-        >
-          <img
-            class="logo-img"
-            src="@/Assets/Menu/curve.png"
-          />
-        </router-link>
+      <Card
+        style="grid-area: pirex"
+        class="topic-card"
+        @click="goto('pirex')"
+      >
+        <div class="topic">
+          <img src="@/Assets/Menu/pirex.webp" />
 
-        <div class="description">{{ t("description-curve") }}</div>
-        <div class="points">
-          <ul>
-            <li>{{ t("point-curve-1") }}</li>
-            <li>{{ t("point-curve-2") }}</li>
-            <li>{{ t("point-curve-3") }}</li>
-            <li>{{ t("point-curve-4") }}</li>
-          </ul>
+          <div class="description">{{ t("description-pirex") }}</div>
+
+          <div class="points">
+            <ul>
+              <li>{{ t("point-pirex-1") }}</li>
+              <li>{{ t("point-pirex-2") }}</li>
+              <li>{{ t("point-pirex-3") }}</li>
+              <li>{{ t("point-pirex-4") }}</li>
+            </ul>
+          </div>
         </div>
-
-        <router-link
-          to="/curve"
-          class="visit"
-        >
-          <Button
-            :value="t('go-to-curve')"
-            :primary="true"
-          ></Button>
-        </router-link>
       </Card>
 
-      <Card class="topic">
-        <router-link
-          to="/convex"
-          class="logo"
-        >
-          <img
-            class="logo-img"
-            src="@/Assets/Menu/convex.png"
-          />
-        </router-link>
+      <Card
+        style="grid-area: union"
+        class="topic-card"
+        @click="goto('union')"
+      >
+        <div class="topic">
+          <img src="@/Assets/Menu/union.png" />
 
-        <div class="description">{{ t("description-convex") }}</div>
-        <div class="points">
-          <ul>
-            <li>{{ t("point-convex-1") }}</li>
-            <li>{{ t("point-convex-2") }}</li>
-            <li>{{ t("point-convex-3") }}</li>
-          </ul>
+          <div class="description">{{ t("description-union") }}</div>
+
+          <div class="points">
+            <ul>
+              <li>{{ t("point-union-1") }}</li>
+              <li>{{ t("point-union-2") }}</li>
+              <li>{{ t("point-union-3") }}</li>
+              <li>{{ t("point-union-4") }}</li>
+            </ul>
+          </div>
         </div>
-
-        <router-link
-          to="/convex"
-          class="visit"
-        >
-          <Button
-            :value="t('go-to-convex')"
-            :primary="true"
-          ></Button>
-        </router-link>
       </Card>
 
-      <Card class="topic">
-        <router-link
-          to="/incentives"
-          class="logo"
-        >
-          <img
-            class="logo-img"
-            src="@/Assets/Menu/votium.png"
-          />
-        </router-link>
+      <Card
+        style="grid-area: votium"
+        class="topic-card"
+        @click="goto('incentives')"
+      >
+        <div class="topic">
+          <img src="@/Assets/Menu/votium.png" />
 
-        <div class="description">{{ t("description-votium") }}</div>
-        <div class="points">
-          <ul>
-            <li>{{ t("point-votium-1") }}</li>
-            <li>{{ t("point-votium-2") }}</li>
-            <li>{{ t("point-votium-3") }}</li>
-            <li>{{ t("point-votium-4") }}</li>
-          </ul>
+          <div class="description">{{ t("description-votium") }}</div>
+
+          <div class="points">
+            <ul>
+              <li>{{ t("point-votium-1") }}</li>
+              <li>{{ t("point-votium-2") }}</li>
+              <li>{{ t("point-votium-3") }}</li>
+              <li>{{ t("point-votium-4") }}</li>
+            </ul>
+          </div>
         </div>
-
-        <router-link
-          to="/incentives"
-          class="visit"
-        >
-          <Button
-            :value="t('go-to-votium')"
-            :primary="true"
-          ></Button>
-        </router-link>
-      </Card>
-
-      <Card class="topic">
-        <router-link
-          to="/union"
-          class="logo"
-        >
-          <img
-            class="logo-img"
-            src="@/Assets/Menu/union.png"
-          />
-        </router-link>
-
-        <div class="description">{{ t("description-union") }}</div>
-        <div class="points">
-          <ul>
-            <li>{{ t("point-union-1") }}</li>
-            <li>{{ t("point-union-2") }}</li>
-            <li>{{ t("point-union-3") }}</li>
-            <li>{{ t("point-union-4") }}</li>
-          </ul>
-        </div>
-
-        <router-link
-          to="/union"
-          class="visit"
-        >
-          <Button
-            :value="t('go-to-union')"
-            :primary="true"
-          ></Button>
-        </router-link>
       </Card>
     </div>
   </div>
@@ -133,102 +69,110 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
+
+const router = useRouter();
+
+function goto(card: "union" | "pirex" | "incentives") {
+  void router.push(`/${card}`);
+}
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@include dashboardLAF("home");
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.9);
+  }
+}
+
 .home {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
   .dashboard {
-    width: 100%;
-    padding: 2.5rem;
-
-    display: flex;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "pirex union votium";
 
     @media only screen and (max-width: 1280px) {
       display: flex;
       flex-direction: column;
-      padding: 1.5rem 1rem;
     }
 
-    > .topic {
-      flex: 1 1;
+    ::v-deep(.topic-card) {
+      &:hover {
+        cursor: pointer;
+
+        .card-container {
+          background-color: var(--c-lvl2);
+        }
+
+        .topic {
+          > img {
+            animation: pulse 0.5s infinite;
+          }
+        }
+      }
+    }
+
+    .topic {
+      margin: 1rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
 
       @media only screen and (max-width: 1280px) {
-        padding: 0 1rem;
-        width: auto;
+        gap: 2rem;
       }
 
-      :deep(.card-body) {
-        display: grid;
+      > img {
+        grid-row: 1;
+        grid-column: 1;
 
-        grid-template-rows: auto 250px 1fr auto;
-        grid-template-columns: 1fr;
-        grid-gap: 2rem;
+        place-self: center;
+        margin-bottom: 1rem;
+      }
+
+      > .description {
+        grid-row: 1;
+        grid-column: 2;
+
+        text-wrap: pretty;
 
         @media only screen and (max-width: 1280px) {
+          font-size: 1rem;
+        }
+      }
+
+      > .points {
+        grid-row: 2;
+        grid-column: 1 / -1;
+
+        ul {
           display: flex;
           flex-direction: column;
-        }
 
-        > .logo {
-          display: flex;
+          margin-block-start: 0;
+          margin-block-end: 0;
+          padding-inline-start: 0rem;
 
-          &:hover {
-            all: unset;
-            display: flex;
-          }
+          li {
+            text-wrap: pretty;
+            margin: 0.5rem 1rem;
+            list-style-type: square;
 
-          > .logo-img {
-            width: 100%;
-            height: 38px;
-            object-fit: none;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-          }
-        }
-
-        > .description {
-          line-height: 1.4rem;
-          font-size: 0.8125rem;
-
-          @media only screen and (max-width: 1280px) {
-            font-size: 1rem;
-          }
-        }
-
-        > .points {
-          ul {
-            margin-block-start: 0;
-            margin-block-end: 0;
-            padding-inline-start: 1rem;
-
-            line-height: 1.4rem;
-            font-size: 0.8125rem;
-
-            @media only screen and (max-width: 1280px) {
-              font-size: 1rem;
+            &::marker {
+              color: var(--c-primary);
             }
-
-            li {
-              margin-bottom: 0.5rem;
-            }
-          }
-        }
-
-        > .visit {
-          display: flex;
-
-          > button {
-            flex-grow: 1;
-            justify-content: center;
           }
         }
       }
@@ -238,58 +182,16 @@ const { t } = useI18n();
 </style>
 
 <i18n lang="yaml" locale="en">
-go-to-curve: Go to Curve
-go-to-convex: Go to Convex
-go-to-votium: Go to Votium
-go-to-union: Go to Union
+description-pirex: pxCVX is a liquid wrapper specifically designed for vlCVX.
+  Known as a 'pure' liquid wrapper, each pxCVX token is directly backed by one vlCVX token,
+  and there is no additional leverage risk.
 
-description-curve:
-  Curve is a decentralized exchange liquidity pool on Ethereum designed
-  for extremely efficient stablecoin trading, but also supports volatile crypto pairs
-  that automatically manage concentrated liquidity for liquidity providers.
-
-point-curve-1:
-  Offers one of the deepest liquidity pools for DAI/USDC/USDT (3crv)
-  with the lowest amount of slippage.
-point-curve-2:
-  Protocols can create their own stable or crypto pools, and can even
-  pair them against 3crv or other base pools.
-point-curve-3:
-  Liquidity providers may be incentivized with CRV emissions through
-  governance votes.
-point-curve-4:
-  Locking veCRV gives you both governance power and a share of the protocol's
-  weekly revenue.
-
-description-convex:
-  Convex simplifies maximizing your yields by offering what is known
-  as "communist boosties". Curve and Frax allow liquidity providers to boost their
-  CRV rewards, but this requires locking tokens which costs a lot of gas. By incentivizing
-  locking CRV and FXS on their platform, it is possible for Convex to give everybody
-  a share of these boosts without locking.
-
-point-convex-1: Allows liquidity providers to receive boosted yields for a small fee.
-point-convex-2:
-  Offers cvxCRV and cvxFXS, liquid veCRV and veFXS tokens whose revenue
-  will always exceed that vanilla locking.
-point-convex-3:
-  Offers CVX, a token that gives users governance rights, platform fees
-  and 'birbs'.
-
-description-votium:
-  Votium is an incentives platform where vlCVX and veCRV holders
-  can receive compensation from buyers interested in amassing deep liquidity through
-  emission rewards. Delegating/Voting incurs no risk to user funds, you always retain
-  custody of your vlCVX and veCRV.
-
-point-votium-1:
-  Allows protocols to buy CRV emissions through Convex's governance
-  system.
-point-votium-2: vlCVX holders are free to accept the incentive rewards to their likings.
-point-votium-3:
-  Rewards roll over to the next round and claiming immediately is not
-  required.
-point-votium-4: Delegating to votium.eth automates voting for the best $ / vlCVX possible.
+point-pirex-1: Llama Airforce operates a pxCVX Pounder vault, which converts the underlying incentives into more pxCVX.
+point-pirex-2: Pirex automatically re-locks CVX as vlCVX, unless a redemption is initiated.
+point-pirex-3: Pirex maintains a pxCVX/CVX liquidity pool for instant swapping, usually at a discount.
+point-pirex-4:
+  pxCVX can be redeemed for CVX, as each pxCVX is backed 1:1 by CVX.
+  There is a redemption fee that scales inversely with the unlock time..
 
 description-union:
   By joining The Union you forward your bribe rewards to Llama Airforce,
@@ -306,4 +208,17 @@ point-union-3: The airdropped rewards will auto-compound even when unclaimed.
 point-union-4:
   By also delegating to votium.eth you don't even have to worry about
   voting and maximizing your output.
+
+description-votium:
+  Votium is an incentives platform where vlCVX and veCRV holders earn rewards from buyers seeking deep liquidity.
+  Delegating/Voting carries no risk to your funds, as you always retain custody of your vlCVX and veCRV.
+
+point-votium-1:
+  Allows protocols to buy CRV emissions through Convex's governance
+  system.
+point-votium-2: vlCVX holders are free to accept the incentive rewards to their likings.
+point-votium-3:
+  Rewards roll over to the next round and claiming immediately is not
+  required.
+point-votium-4: Delegating to votium.eth automates voting for the best $ / vlCVX possible.
 </i18n>
