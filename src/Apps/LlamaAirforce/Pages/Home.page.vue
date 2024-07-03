@@ -182,7 +182,8 @@ function goto(card: "union" | "pirex" | "incentives") {
 </style>
 
 <i18n lang="yaml" locale="en">
-description-pirex: pxCVX is a liquid wrapper specifically designed for vlCVX.
+description-pirex:
+  pxCVX is the cheapest liquid wrapper specifically designed for vlCVX.
   Known as a 'pure' liquid wrapper, each pxCVX token is directly backed by one vlCVX token,
   and there is no additional leverage risk.
 
@@ -224,7 +225,7 @@ point-votium-4: Delegating to votium.eth automates voting for the best $ / vlCVX
 </i18n>
 
 <i18n lang="yaml" locale="zh">
-description-pirex: pxCVX 是专为 vlCVX 设计的液体包装。被称为 "纯 "流动包装，每个 pxCVX 代币直接由一个 vlCVX 代币支持，没有额外的杠杆风险。
+description-pirex: pxCVX 是专为 vlCVX 设计的最便宜的液体包装。被称为 "纯 "流动包装，每个 pxCVX 代币直接由一个 vlCVX 代币支持、 而且没有额外的杠杆风险。
 
 point-pirex-1: Llama Airforce 运营着一个 pxCVX Pounder 金库，它能将基础奖励转换成更多的 pxCVX。
 point-pirex-2: 除非启动赎回，否则 Pirex 会自动将 CVX 重新锁定为 vlCVX。
@@ -247,7 +248,7 @@ point-votium-4: 委托 votium.eth 可自动投票选出最佳 $/vlCVX。
 </i18n>
 
 <i18n lang="yaml" locale="fr">
-description-pirex: Le pxCVX est une enveloppe liquide spécialement conçue pour le vlCVX. Chaque jeton pxCVX est directement soutenu par un jeton vlCVX et il n'y a pas de risque d'effet de levier supplémentaire.
+description-pirex: Le pxCVX est l'enveloppe liquide la moins chère spécialement conçue pour le vlCVX. Connu sous le nom de "pure" liquid wrapper, chaque jeton pxCVX est directement soutenu par un jeton vlCVX, et il n'y a pas de risque d'effet de levier supplémentaire.
 
 point-pirex-1: Llama Airforce exploite un coffre-fort de pxCVX Pounder, qui convertit les incitations sous-jacentes en davantage de pxCVX.
 point-pirex-2: Pirex reverrouille automatiquement CVX en tant que vlCVX, à moins qu'un rachat ne soit initié.
