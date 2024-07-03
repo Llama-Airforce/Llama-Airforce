@@ -3,10 +3,13 @@ import { defineEventHandler } from "h3";
 export default defineEventHandler((event) => {
   const { req, res } = event.node;
 
-  const allowedOrigins = ["https://llama.airforce", "http://localhost:8080"];
+  const allowedOrigins = [
+    /^https:\/\/.*\.llama\.airforce$/,
+    /^http:\/\/localhost(:\d+)?$/,
+  ];
   const origin = req.headers.origin;
 
-  if (origin && allowedOrigins.includes(origin)) {
+  if (origin && allowedOrigins.some((pattern) => pattern.test(origin))) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
 
