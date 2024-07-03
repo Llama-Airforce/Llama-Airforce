@@ -6,7 +6,9 @@ export default defineEventHandler((event) => {
   const allowedOrigins = [
     /^https:\/\/.*\.llama\.airforce$/,
     /^http:\/\/localhost(:\d+)?$/,
+    /^https:\/\/curvemonitor\.com$/,
   ];
+
   const origin = req.headers.origin;
 
   if (origin && allowedOrigins.some((pattern) => pattern.test(origin))) {
