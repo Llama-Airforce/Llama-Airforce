@@ -10,16 +10,6 @@
           {{ t("link-discord") }}
         </a>
       </span>
-
-      <h1 v-html="t('announcement-viem')"></h1>
-      <span>
-        <a
-          href="https://medium.com/@llamaairforce/viem-migration-27085915630f"
-          target="_blank"
-        >
-          {{ t("link-viem") }}
-        </a>
-      </span>
     </div>
   </Card>
 </template>
@@ -57,25 +47,16 @@ const { t } = useI18n();
 </style>
 
 <i18n lang="yaml" locale="en">
-announcement-discord: We now have an official Discord server!
+announcement-discord: Join our official Discord server for emotional and tech support!
 link-discord: You can read our announcement here.
-
-announcement-viem: We have also migrated from Ethers to Viem!
-link-viem: Read this announcement in case you're experiencing problems.
 </i18n>
 
 <i18n lang="yaml" locale="zh">
-announcement-discord: 我们现在有了官方 Discord 服务器！
+announcement-discord: 加入我们的官方 Discord 服务器，获取情感和技术支持！
 link-discord: 您可在此阅读我们的公告。
-
-announcement-viem: 我们还从 Ethers 迁移到了 Viem !
-link-viem: 如果您遇到问题，请阅读本公告。
 </i18n>
 
 <i18n lang="yaml" locale="fr">
-announcement-discord: Nous avons maintenant un serveur Discord officiel !
+announcement-discord: Rejoignez notre serveur Discord officiel pour un soutien émotionnel et technique !
 link-discord: Vous pouvez lire notre annonce ici.
-
-announcement-viem: Nous avons également migré d'Ethers vers Viem !
-link-viem: Lisez cette annonce au cas où vous rencontreriez des problèmes.
 </i18n>
