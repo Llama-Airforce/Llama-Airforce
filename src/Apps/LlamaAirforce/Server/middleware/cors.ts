@@ -1,5 +1,3 @@
-import { defineEventHandler } from "h3";
-
 export default defineEventHandler((event) => {
   const { req, res } = event.node;
 

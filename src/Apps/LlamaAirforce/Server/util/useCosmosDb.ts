@@ -1,5 +1,3 @@
-import { createError } from "h3";
-import { useRuntimeConfig } from "nitropack/runtime";
 import { CosmosClient, type ItemDefinition } from "@azure/cosmos";
 import type { RuntimeConfig } from "@LAF/nitro.config";
 

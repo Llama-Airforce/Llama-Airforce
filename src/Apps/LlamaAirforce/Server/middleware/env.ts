@@ -1,5 +1,3 @@
-import { defineEventHandler, createError } from "h3";
-import { useRuntimeConfig } from "nitropack/runtime";
 import type { RuntimeConfig } from "@LAF/nitro.config";
 
 export default defineEventHandler((event) => {

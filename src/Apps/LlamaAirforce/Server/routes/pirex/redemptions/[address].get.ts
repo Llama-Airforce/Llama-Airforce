@@ -1,5 +1,3 @@
-import { createError, getRouterParams } from "h3";
-import { defineCachedEventHandler } from "nitropack/runtime";
 import { isAddress } from "viem";
 
 type AlchemyResult = {

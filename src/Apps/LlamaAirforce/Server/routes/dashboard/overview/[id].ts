@@ -1,5 +1,3 @@
-import { getRouterParams } from "h3";
-import { defineCachedEventHandler } from "nitropack/runtime";
 import { type Overview } from "@LAF/Pages/Bribes/Models";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 
