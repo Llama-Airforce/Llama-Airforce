@@ -1,5 +1,5 @@
 import type { EpochOverview } from "@LAF/Pages/Bribes/Models";
-export type { Result as OverviewResponse } from "@LAF/Server/routes/dashboard/overview/[id]";
+export type { Result as OverviewResponse } from "@LAF/Server/routes/dashboard/overview/[id].get";
 
 export type OverviewId =
   | "bribes-overview-votium"
