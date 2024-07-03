@@ -15,8 +15,8 @@ export const pagePirexRoutes = [
 export const pagePirex: PageLAF = {
   title: "Pirex",
   titleRoute: "/pirex",
-  visible: false,
-  planeX: 445,
+  visible: true,
+  planeX: 220,
   menuHeader,
   menuItems: [],
   forceShowMenu: false,
