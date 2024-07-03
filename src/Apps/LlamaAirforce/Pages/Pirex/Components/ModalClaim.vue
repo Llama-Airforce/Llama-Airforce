@@ -222,7 +222,7 @@ const { execute: claim, isExecuting: claiming } = useExecuteContract(
 
   > .headers {
     display: grid;
-    grid-template-columns: 1fr 40ch 5rem;
+    grid-template-columns: auto 1fr 5rem;
     margin-left: 1rem;
 
     div:nth-child(2) {
@@ -252,7 +252,7 @@ const { execute: claim, isExecuting: claiming } = useExecuteContract(
 
     > .info {
       display: grid;
-      grid-template-columns: 1fr 40ch 5rem;
+      grid-template-columns: auto 1fr 5rem;
 
       margin: 0.5rem 0;
       margin-left: 1rem;

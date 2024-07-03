@@ -243,11 +243,21 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
     gap: 1rem;
     align-items: center;
 
+    @media only screen and (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
     img {
       aspect-ratio: 1;
       max-width: 100%;
       object-fit: contain;
       border-radius: 50%;
+
+      @media only screen and (max-width: 500px) {
+        display: none;
+      }
     }
 
     > .symbol {
@@ -258,12 +268,16 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
     a {
       cursor: pointer;
       user-select: none;
+      margin-right: 1rem;
+
+      @media only screen and (max-width: 500px) {
+        display: none;
+      }
     }
 
     button {
       justify-self: end;
       width: 5rem;
-      margin-left: 1rem;
       justify-content: center;
     }
   }

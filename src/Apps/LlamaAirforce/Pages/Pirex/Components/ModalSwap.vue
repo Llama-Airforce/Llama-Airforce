@@ -263,6 +263,11 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
       grid-template-columns: 3fr 1fr;
       gap: 1rem;
 
+      @media only screen and (max-width: 1280px) {
+        display: flex;
+        flex-direction: column;
+      }
+
       > .explanation {
         color: #a1a1aa;
         text-wrap: pretty;
@@ -292,6 +297,12 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
     grid-template-columns: 20ch 1fr 6ch;
     gap: 1rem;
     align-items: center;
+
+    @media only screen and (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
 
     a {
       cursor: pointer;

@@ -56,6 +56,11 @@ const { data: redemptions, isLoading: loading } = useQueryRedemptions(address);
   gap: var(--dashboard-gap);
   grid-template-columns: 1fr 1fr;
 
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
+
   > .left {
     display: flex;
     flex-direction: column;
