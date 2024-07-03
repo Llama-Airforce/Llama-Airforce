@@ -10,13 +10,13 @@ function initEmptyArray() {
   };
 }
 
-export function useQueryCushions() {
+export function useQueryCushions(chain: Ref<Chain>) {
   return useQuery({
-    queryKey: ["curve-cushions"],
-    queryFn: () =>
+    queryKey: ["curve-cushions", chain] as const,
+    queryFn: ({ queryKey: [, chain] }) =>
       service
-        .getCushions()
-        .then((x) => x.sort((a, b) => b.totalUSD - a.totalUSD)),
+        .getCushions(chain)
+        .then((x) => x.sort((a, b) => b.usdValue - a.usdValue)),
     ...initEmptyArray(),
   });
 }

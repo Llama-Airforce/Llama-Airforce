@@ -31,17 +31,13 @@ export const parseTopPools = (
 };
 
 export const parseCushion = (
-  x: ApiTypes.GetCushionsResponse["cushions"][number]
+  x: ApiTypes.GetCushionsResponse["data"][number]
 ): Models.Cushion => {
   return {
-    pool: x.pool,
-    address: x.address.toLowerCase(),
-    chain: x.chain,
-    coins: x.coins.map((y) => y.toLocaleLowerCase()),
-    coinNames: x.coinNames,
-    balance: x.balance,
-    value: x.value,
-    totalUSD: x.totalUSD,
+    pool: x.pool.toLocaleLowerCase() as Address,
+    name: x.name,
+    adminFees: x.admin_fees,
+    usdValue: x.usd_value,
   };
 };
 

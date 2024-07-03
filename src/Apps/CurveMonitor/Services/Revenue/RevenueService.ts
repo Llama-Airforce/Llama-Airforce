@@ -37,12 +37,12 @@ export default class RevenueService extends ServiceBase {
     return resp.revenue.map(Parsers.parseTopPools);
   }
 
-  public async getCushions() {
+  public async getCushions(chain: string) {
     const resp = await this.fetch<ApiTypes.GetCushionsResponse>(
-      `${API_URL_OLD}/protocol/couch/cushions`
+      `${API_URL}/v1/dao/fees/${chain}/pending`
     );
 
-    return resp.cushions.map(Parsers.parseCushion);
+    return resp.data.map(Parsers.parseCushion);
   }
 
   public async getDistributions() {

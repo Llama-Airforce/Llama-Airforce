@@ -5,7 +5,7 @@
     columns-data="cushions-columns-data"
     :loading
     :rows
-    :columns="['Name', 'Coins', 'Chain', 'Fees ($)']"
+    :columns="['Name', 'Address', 'Fees ($)']"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -13,8 +13,8 @@
       <SelectChain
         class="chain-select"
         :chain="networkChain"
-        :all="true"
-        @select-chain="networkChain = $event"
+        :chains
+        @select-chain="networkChain = $event === 'all' ? 'ethereum' : $event"
       ></SelectChain>
 
       <InputText
@@ -27,19 +27,21 @@
     </template>
 
     <template #row="props: { item: Row }">
-      <div>{{ props.item.pool }}</div>
-      <div>{{ props.item.coinNames.join(" / ") }}</div>
-      <div class="chain">
-        <img
-          v-if="icon(props.item.chain)"
-          :src="icon(props.item.chain)"
-        />
-        <span class="label">{{ props.item.chain }}</span>
+      <div>{{ props.item.name }}</div>
+
+      <div>
+        <a
+          class="font-mono"
+          :href="linkAddress(props.item.pool)"
+          target="_blank"
+        >
+          {{ props.item.pool }}
+        </a>
       </div>
 
       <div class="number">
         <AsyncValue
-          :value="props.item.totalUSD"
+          :value="props.item.usdValue"
           :precision="2"
           type="dollar"
         />
@@ -49,11 +51,10 @@
     <template #row-aggregation>
       <div></div>
       <div></div>
-      <div></div>
 
       <div class="number">
         <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.totalUSD, 0)"
+          :value="rows.reduce((acc, x) => acc + x.usdValue, 0)"
           :precision="2"
           type="dollar"
         />
@@ -65,9 +66,10 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import SelectChain from "@CM/Components/SelectChain.vue";
-import { type Chain, icon } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models/Chain";
 import { type Cushion } from "@CM/Services/Revenue";
 import { useQueryCushions } from "@CM/Services/Revenue/Queries";
+import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
 
 const { t } = useI18n();
 
@@ -75,33 +77,36 @@ type Row = Cushion;
 
 // Refs
 const search = ref("");
-const networkChain = ref<Chain | "all">("all");
+const loading = computed(
+  () => isLoadingChains.value || isLoadingCushions.value
+);
 
+// Chains
+const networkChain = ref<Chain>("ethereum");
+
+const { data: chains, isFetching: isLoadingChains } = useQueryChainsSupported();
+
+// Data
 const rows = computed((): Row[] =>
   chain(rowsRaw.value)
-    .filter((row) => row.totalUSD > 100)
+    .filter((row) => row.usdValue > 100)
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      const isChainFilter =
-        networkChain.value === "all" ? true : networkChain.value === row.chain;
-
-      return (
-        (includesTerm(row.pool) ||
-          includesTerm(row.address) ||
-          includesTerm(row.chain) ||
-          includesTerm(row.coins.join(" "))) &&
-        isChainFilter
-      );
+      return includesTerm(row.pool) || includesTerm(row.name);
     })
     .value()
 );
 
-// Data
-const { isFetching: loading, data: rowsRaw } = useQueryCushions();
+const { data: rowsRaw, isFetching: isLoadingCushions } =
+  useQueryCushions(networkChain);
+
+const linkAddress = (addr: string): string => {
+  return `https://etherscan.io/address/${addr}`;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -139,18 +144,10 @@ const { isFetching: loading, data: rowsRaw } = useQueryCushions();
 
   ::v-deep(.cushions-columns-data) {
     display: grid;
-    grid-template-columns: 1fr 1fr 7rem 10rem;
-
-    @media only screen and (max-width: 1280px) {
-      grid-template-columns: 1fr 2.5rem 4rem;
-
-      div:nth-child(2) {
-        display: none;
-      }
-    }
+    grid-template-columns: 1fr 25rem 10rem;
 
     // Right adjust number columns.
-    div:nth-child(4) {
+    div:nth-child(3) {
       justify-content: end;
     }
   }

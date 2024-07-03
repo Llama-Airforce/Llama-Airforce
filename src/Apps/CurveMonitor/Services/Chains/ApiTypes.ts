@@ -1,6 +1,10 @@
 import type { Chain } from "@CM/Models/Chain";
 import type { ActivityType } from "@CM/Services/Chains/Models";
 
+export type GetSupportedChainsResponse = {
+  data: { name: string }[];
+};
+
 export type GetChainInfoResponse = {
   chain: Chain;
   total: {

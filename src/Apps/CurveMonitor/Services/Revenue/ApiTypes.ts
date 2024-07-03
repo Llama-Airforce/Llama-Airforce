@@ -1,15 +1,9 @@
-import { type Chain } from "@CM/Models/Chain";
-
 export type GetCushionsResponse = {
-  cushions: {
+  data: {
     pool: string;
-    address: string;
-    chain: Chain;
-    coins: string[];
-    coinNames: string[];
-    balance: number[];
-    value: number;
-    totalUSD: number;
+    name: string;
+    admin_fees: number[];
+    usd_value: number;
   }[];
 };
 

@@ -1,4 +1,4 @@
-import { type Chain } from "@CM/Models/Chain";
+import { type Address } from "viem";
 
 export type BreakdownRevenue = {
   week: number;
@@ -17,14 +17,10 @@ export type ChainTopPoolRevenue = {
 };
 
 export type Cushion = {
-  pool: string;
-  address: string;
-  chain: Chain;
-  coins: string[];
-  coinNames: string[];
-  balance: number[];
-  value: number;
-  totalUSD: number;
+  pool: Address;
+  name: string;
+  adminFees: number[];
+  usdValue: number;
 };
 
 export type Distribution = {

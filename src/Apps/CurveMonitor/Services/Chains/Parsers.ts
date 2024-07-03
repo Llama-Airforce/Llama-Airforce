@@ -1,6 +1,13 @@
 import { toUTC } from "@CM/Services";
+import { type Chain, chains } from "@CM/Models/Chain";
 import type * as ApiTypes from "@CM/Services/Chains/ApiTypes";
 import type * as Models from "@CM/Services/Chains/Models";
+
+export const parseSupportedChains = (
+  x: ApiTypes.GetSupportedChainsResponse
+): Chain[] => {
+  return x.data.map((y) => y.name as Chain).filter((y) => chains.includes(y));
+};
 
 export const parseChainInfo = (
   x: ApiTypes.GetChainInfoResponse

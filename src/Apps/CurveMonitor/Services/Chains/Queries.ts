@@ -10,6 +10,14 @@ function initEmptyArray() {
   };
 }
 
+export function useQueryChainsSupported() {
+  return useQuery({
+    queryKey: ["chains-supported"] as const,
+    queryFn: () => service.getSupportedChains(),
+    ...initEmptyArray(),
+  });
+}
+
 export function useQueryChainInfo(chain: Ref<Chain | undefined>) {
   return useQuery({
     queryKey: ["chain-info", chain] as const,
