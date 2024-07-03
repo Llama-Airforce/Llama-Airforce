@@ -14,7 +14,7 @@ export function getMergeWithHiddenHands(
   newResponse: OverviewResponse
 ) {
   if (!baseResponse.dashboard || !newResponse.dashboard) {
-    return { success: false };
+    return { statusCode: 500, dashboard: undefined };
   }
   const epochs = [
     ...baseResponse.dashboard.epochs,

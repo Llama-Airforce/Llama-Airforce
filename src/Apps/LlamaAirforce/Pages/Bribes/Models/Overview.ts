@@ -1,4 +1,5 @@
 import type { EpochOverview } from "@LAF/Pages/Bribes/Models";
+export type { Result as OverviewResponse } from "@LAF/Server/routes/dashboard/overview/[id]";
 
 export type OverviewId =
   | "bribes-overview-votium"
@@ -10,9 +11,4 @@ export type Overview = {
   id: OverviewId;
   rewardPerDollarBribe: number;
   epochs: EpochOverview[];
-};
-
-export type OverviewResponse = {
-  success: boolean;
-  dashboard?: Overview;
 };

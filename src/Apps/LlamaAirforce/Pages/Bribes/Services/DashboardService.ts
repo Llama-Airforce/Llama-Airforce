@@ -3,6 +3,8 @@ import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import type { OverviewId, OverviewResponse } from "@LAF/Pages/Bribes/Models";
 
+export const API_URL = "https://api-next.llama.airforce";
+
 export default class DashboardService extends ServiceBaseHost {
   private auraService: AuraService;
 
@@ -14,9 +16,9 @@ export default class DashboardService extends ServiceBaseHost {
   public async getOverview(overviewId: OverviewId): Promise<OverviewResponse> {
     const host = await this.getHost();
 
-    const request = this.fetch<OverviewResponse>(`${host}/dashboard`, {
-      id: overviewId,
-    });
+    const request = this.fetch<OverviewResponse>(
+      `${host}/dashboard/overview/${overviewId}`
+    );
 
     if (overviewId === "bribes-overview-aura") {
       const [baseResponse, newResponse] = await Promise.all([

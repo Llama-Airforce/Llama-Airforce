@@ -181,7 +181,7 @@ export default class AuraService extends ServiceBase {
     );
 
     return roundOverviewPromise.then((epochs) => ({
-      success: !!epochs.length,
+      statusCode: epochs.length > 0 ? 200 : 500,
       dashboard: {
         id: "bribes-overview-aura",
         rewardPerDollarBribe,
