@@ -1,3 +1,9 @@
+export class FetchError extends Error {
+  constructor(public status: number, message: string) {
+    super(message);
+  }
+}
+
 /**
  * Performs a fetch operation with error handling and custom configurations.
  *
@@ -25,7 +31,10 @@ async function fetchWork(
 
     if (!resp.ok) {
       // make the promise be rejected if we didn't get a 2xx response
-      throw new Error(`Fetch error ${resp.status} for URL: ${url}`);
+      throw new FetchError(
+        resp.status,
+        `Fetch error ${resp.status} for URL: ${url}`
+      );
     } else {
       return resp;
     }
