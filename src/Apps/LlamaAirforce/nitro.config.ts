@@ -5,6 +5,7 @@ import { resolve } from "path";
 const runtimeConfig = {
   dbEndpoint: process.env.DB_ENDPOINT,
   dbKey: process.env.DB_KEY,
+  clearCachePassword: process.env.CLEAR_CACHE_PASSWORD,
 };
 
 export type RuntimeConfig = {
