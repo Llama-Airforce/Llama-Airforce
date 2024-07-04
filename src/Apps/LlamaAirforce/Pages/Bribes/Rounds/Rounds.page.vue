@@ -43,7 +43,9 @@ import type { Platform, Protocol, Product } from "@LAF/Pages/Bribes/Models";
 import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import AuraBribesService from "@LAF/Pages/Bribes/Services/AuraBribesService";
-import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
+import BribesService, {
+  API_URL,
+} from "@LAF/Pages/Bribes/Services/BribesService";
 
 let isInitializing = false;
 
@@ -63,8 +65,8 @@ const paramProtocol = useRouteParams<string>("protocol");
 const bribesService = computed(
   (): BribesService =>
     product.value?.protocol === "aura-bal"
-      ? new AuraBribesService(useHost())
-      : new BribesService(useHost())
+      ? new AuraBribesService(useHost(API_URL))
+      : new BribesService(useHost(API_URL))
 );
 
 // Data

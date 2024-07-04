@@ -1,5 +1,74 @@
-import { CosmosClient, type ItemDefinition } from "@azure/cosmos";
+import {
+  type Container,
+  type ItemDefinition,
+  type SqlQuerySpec,
+  type Database,
+  CosmosClient,
+} from "@azure/cosmos";
 import type { RuntimeConfig } from "@LAF/nitro.config";
+
+/** Cached database instance. */
+let database: Database | null = null;
+
+/**
+ * Retrieves or initializes the Cosmos DB database.
+ * @returns {Promise<Database>} The database instance.
+ * @throws {H3Error} If there's an error initializing the database.
+ */
+async function getDatabase(): Promise<Database> {
+  if (database) {
+    return database;
+  }
+
+  try {
+    const { dbEndpoint, dbKey } = useRuntimeConfig<RuntimeConfig>();
+    const client = new CosmosClient({ endpoint: dbEndpoint, key: dbKey });
+    const { database: db } = await client.databases.createIfNotExists({
+      id: "LlamaAirforce",
+    });
+
+    database = db;
+
+    return db;
+  } catch (error) {
+    throw createError({
+      statusCode: 500,
+      message: "Error initializing Cosmos database",
+    });
+  }
+}
+
+/** Cache of container instances. */
+const containers: Record<string, Container | undefined> = {};
+
+/**
+ * Retrieves or creates a container in the Cosmos DB.
+ * @param {string} containerId - The ID of the container to retrieve or create.
+ * @returns {Promise<Container>} The container instance.
+ * @throws {H3Error} If there's an error creating or retrieving the container.
+ */
+async function getContainer(containerId: string): Promise<Container> {
+  if (containers[containerId]) {
+    return containers[containerId];
+  }
+
+  try {
+    const database = await getDatabase();
+    const { container } = await database.containers.createIfNotExists({
+      id: containerId,
+      partitionKey: "/id",
+    });
+
+    containers[containerId] = container;
+
+    return container;
+  } catch (error) {
+    throw createError({
+      statusCode: 500,
+      message: `Error creating Cosmos container ${containerId}`,
+    });
+  }
+}
 
 /**
  * Utility function for interacting with Azure Cosmos DB.
@@ -8,24 +77,11 @@ import type { RuntimeConfig } from "@LAF/nitro.config";
  * @returns An object with methods for database operations.
  *
  * @example
- * const { getItem } = useCosmosDb('MyContainer');
+ * const { getItem, queryItems } = useCosmosDb('MyContainer');
  * const item = await getItem<MyType>('itemId');
+ * const items = await queryItems<MyType>('SELECT * FROM c');
  */
 export const useCosmosDb = (containerId: string) => {
-  const { dbEndpoint, dbKey } = useRuntimeConfig<RuntimeConfig>();
-
-  // Function to make client a const yet have a try/catch.
-  const client = (() => {
-    try {
-      return new CosmosClient({ endpoint: dbEndpoint, key: dbKey });
-    } catch (error) {
-      throw createError({
-        statusCode: 500,
-        message: "Error creating Cosmos client",
-      });
-    }
-  })();
-
   /**
    * Retrieves an item from the specified container.
    * @template T - Type of the item, must extend ItemDefinition.
@@ -35,15 +91,7 @@ export const useCosmosDb = (containerId: string) => {
    */
   const getItem = async <T extends ItemDefinition>(id: string) => {
     try {
-      const { database } = await client.databases.createIfNotExists({
-        id: "LlamaAirforce",
-      });
-
-      const { container } = await database.containers.createIfNotExists({
-        id: containerId,
-        partitionKey: "/id",
-      });
-
+      const container = await getContainer(containerId);
       const { resource: item } = await container.item(id, id).read<T>();
 
       if (!item) {
@@ -55,8 +103,6 @@ export const useCosmosDb = (containerId: string) => {
 
       return item;
     } catch (error) {
-      console.error("Error fetching data from database:", error);
-
       throw createError({
         statusCode: 500,
         message: "Error fetching data from database",
@@ -64,5 +110,27 @@ export const useCosmosDb = (containerId: string) => {
     }
   };
 
-  return { getItem };
+  /**
+   * Queries items from the specified container.
+   * @template T - Type of the items, must extend ItemDefinition.
+   * @param {string | SqlQuerySpec} query - The SQL query or SqlQuerySpec to execute.
+   * @returns {Promise<T[]>} An array of items matching the query.
+   * @throws {H3Error} If a database error occurs during the query.
+   */
+  const queryItems = async <T extends ItemDefinition>(
+    query: string | SqlQuerySpec
+  ): Promise<T[]> => {
+    try {
+      const container = await getContainer(containerId);
+      const { resources } = await container.items.query<T>(query).fetchAll();
+      return resources;
+    } catch (error) {
+      throw createError({
+        statusCode: 500,
+        message: "Error fetching data from database",
+      });
+    }
+  };
+
+  return { getItem, queryItems };
 };

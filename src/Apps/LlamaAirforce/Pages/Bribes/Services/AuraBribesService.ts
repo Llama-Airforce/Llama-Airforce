@@ -2,6 +2,7 @@ import type { Epoch, EpochId } from "@LAF/Pages/Bribes/Models";
 import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { AuraConstants } from "@LAF/Pages/Bribes/Util/AuraHelper";
+import { type Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 
 export default class AuraBribesService extends BribesService {
   private auraService: AuraService;
@@ -11,10 +12,9 @@ export default class AuraBribesService extends BribesService {
     this.auraService = new AuraService();
   }
 
-  override async rounds(): Promise<{
-    rounds: number[];
-  }> {
+  override async rounds(): Promise<RoundsResponse> {
     return Promise.resolve({
+      statusCode: 200,
       rounds: [...new Array<number>(this.auraService.latestRound)].map(
         (_, i) => i + 1
       ),
