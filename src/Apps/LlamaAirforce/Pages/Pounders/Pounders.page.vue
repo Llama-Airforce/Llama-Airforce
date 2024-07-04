@@ -37,7 +37,9 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import UnionService from "@LAF/Services/UnionService";
+import UnionService, {
+  API_URL as UNION_API_URL,
+} from "@LAF/Services/UnionService";
 import Documentation from "@LAF/Components/Documentation.vue";
 import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
@@ -51,7 +53,7 @@ import { useClaim } from "@Pounders/Composables/UseClaim";
 
 const { t } = useI18n();
 
-const unionService = new UnionService(useHost());
+const unionService = new UnionService(useHost(UNION_API_URL));
 const llamaService = new DefiLlamaService();
 const flyerService = new FlyerService(useHost());
 
@@ -87,16 +89,20 @@ const { claim: claimUPrisma } = useClaim(
   true
 );
 const { claim: claimUCvx } = useClaim(unionService, "ucvx", address, true);
-watch(claimUCrv, (newClaim) => (store.claims.ucrv = newClaim), {
+watch(claimUCrv, (newClaim) => (store.claims.ucrv = newClaim ?? undefined), {
   immediate: true,
 });
-watch(claimUFxs, (newClaim) => (store.claims.ufxs = newClaim), {
+watch(claimUFxs, (newClaim) => (store.claims.ufxs = newClaim ?? undefined), {
   immediate: true,
 });
-watch(claimUPrisma, (newClaim) => (store.claims.uprisma = newClaim), {
-  immediate: true,
-});
-watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim), {
+watch(
+  claimUPrisma,
+  (newClaim) => (store.claims.uprisma = newClaim ?? undefined),
+  {
+    immediate: true,
+  }
+);
+watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim ?? undefined), {
   immediate: true,
 });
 
@@ -139,7 +145,7 @@ function createUCvxPounder() {
     zapsFactories,
     state: createPounderState(),
   };
-  store.updateClaim(pounder.id, claimUCvx.value);
+  store.updateClaim(pounder.id, claimUCvx.value ?? undefined);
 }
 
 function createUCrvPounder() {
@@ -165,7 +171,7 @@ function createUCrvPounder() {
     zapsFactories,
     state: createPounderState(),
   };
-  store.updateClaim(pounder.id, claimUCrv.value);
+  store.updateClaim(pounder.id, claimUCrv.value ?? undefined);
 }
 
 function createUFxsPounder() {
@@ -191,7 +197,7 @@ function createUFxsPounder() {
     zapsFactories,
     state: createPounderState(),
   };
-  store.updateClaim(pounder.id, claimUFxs.value);
+  store.updateClaim(pounder.id, claimUFxs.value ?? undefined);
 }
 
 function createUPrismaPounder() {
@@ -217,7 +223,7 @@ function createUPrismaPounder() {
     zapsFactories,
     state: createPounderState(),
   };
-  store.updateClaim(pounder.id, claimUPrisma.value);
+  store.updateClaim(pounder.id, claimUPrisma.value ?? undefined);
 }
 
 function createUFxsLpPounder() {

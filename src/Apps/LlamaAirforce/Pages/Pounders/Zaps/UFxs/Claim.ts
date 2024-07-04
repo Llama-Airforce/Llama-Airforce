@@ -33,7 +33,7 @@ export function uFxsClaimZaps(
     );
 
     const args = [
-      airdrop.claim.index,
+      BigInt(airdrop.claim.index),
       address,
       airdrop.amount,
       airdrop.claim.proof,

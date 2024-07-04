@@ -387,7 +387,7 @@ const onClaimAndWithdraw = async (): Promise<void> => {
     }
 
     const args = [
-      claim.value.index,
+      BigInt(claim.value.index),
       address.value,
       amount,
       claim.value.proof,

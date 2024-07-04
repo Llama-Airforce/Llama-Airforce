@@ -88,7 +88,7 @@ export async function uCrvAirdrop(
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
-  claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
+  claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim.amount);
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxCrvPrice;
@@ -123,7 +123,7 @@ export async function uFxsAirdrop(
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
-  claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
+  claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim?.amount ?? 0);
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxFxsPrice;
@@ -158,7 +158,7 @@ export async function uPrismaAirdrop(
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
-  claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
+  claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim?.amount ?? 0);
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxPrismaPrice;
@@ -193,7 +193,7 @@ export async function uCvxAirdrop(
   });
   const virtualPrice = await getVirtualPrice(utkn);
 
-  claim = claim ?? { index: 0n, amount: "0x0", proof: [] };
+  claim = claim ?? { index: 0, amount: "0x0", proof: [] };
   const amount = BigInt(claim.amount);
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * pxCvxPrice;

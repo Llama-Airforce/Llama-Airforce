@@ -30,7 +30,9 @@
 import { useWallet } from "@/Wallet";
 
 import { useUnionStore } from "@Pounders/Store";
-import UnionService from "@LAF/Services/UnionService";
+import UnionService, {
+  API_URL as UNION_API_URL,
+} from "@LAF/Services/UnionService";
 import { DefiLlamaService } from "@/Services";
 import FlyerService from "@/Services/FlyerService";
 import { useClaim } from "@Pounders/Composables/UseClaim";
@@ -46,7 +48,7 @@ import UserInfo from "@LAF/Pages/Pirex/Components/UserInfo.vue";
 import RedemptionsInit from "@LAF/Pages/Pirex/Components/RedemptionsInit.vue";
 import Swap from "@LAF/Pages/Pirex/Components/Swap.vue";
 
-const unionService = new UnionService(useHost());
+const unionService = new UnionService(useHost(UNION_API_URL));
 const llamaService = new DefiLlamaService();
 const flyerService = new FlyerService(useHost());
 
@@ -56,7 +58,7 @@ const store = useUnionStore();
 
 // uCVX claim
 const { claim: claimUCvx } = useClaim(unionService, "ucvx", address, true);
-watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim), {
+watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim ?? undefined), {
   immediate: true,
 });
 
@@ -88,7 +90,7 @@ function createUCvxPounder() {
     zapsFactories,
     state: createPounderState(),
   };
-  store.updateClaim(pounder.id, claimUCvx.value);
+  store.updateClaim(pounder.id, claimUCvx.value ?? undefined);
 }
 </script>
 

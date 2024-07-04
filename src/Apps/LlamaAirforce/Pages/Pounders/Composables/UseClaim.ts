@@ -10,14 +10,12 @@ export function useClaim(
   address: Ref<Address | undefined>,
   checkValidity: boolean // Set to false to just get the claim to save RPC calls.
 ) {
-  const { data: claimRaw } = useQuery({
+  const { data: claim } = useQuery({
     queryKey: ["union-claim", airdropId, address] as const,
     queryFn: ({ queryKey: [, airdropId, address] }) =>
       unionService.getClaim(airdropId, address!),
     enabled: computed(() => !!address.value),
   });
-
-  const claim = computed(() => claimRaw.value?.claim);
 
   const distributor = getDistributor(airdropId);
 

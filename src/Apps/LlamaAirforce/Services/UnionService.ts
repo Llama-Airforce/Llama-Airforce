@@ -1,29 +1,37 @@
-import { type Address } from "viem";
-import { ServiceBaseHost } from "@/Services";
+import { getAddress } from "viem";
+import { FetchError, ServiceBaseHost } from "@/Services";
+import { type Result as Claim } from "@LAF/Server/routes/airdrop/[airdropId]/[address].get";
+export { type Claim };
 
-export type Claim = {
-  index: bigint;
-  amount: string; // In hex because of big numbers.
-  proof: readonly Address[];
-};
+export const airdropIds = [
+  "union",
+  "ufxs",
+  "ucvx",
+  "uprisma",
+  "cvxprisma",
+] as const;
+export type AirdropId = (typeof airdropIds)[number];
 
-type ClaimResponse = {
-  success: boolean;
-  claim: Claim;
-};
+export function isAirdropId(id: string): id is AirdropId {
+  return airdropIds.includes(id as AirdropId);
+}
 
-export type AirdropId = "union" | "ufxs" | "ucvx" | "uprisma" | "cvxprisma";
+export const API_URL = "https://api-next.llama.airforce";
 
 export default class UnionService extends ServiceBaseHost {
   public async getClaim(
     airdropId: AirdropId,
     address: string
-  ): Promise<ClaimResponse> {
+  ): Promise<Claim | null> {
     const host = await this.getHost();
 
-    return this.fetch(`${host}/airdrop`, {
-      airdropId,
-      address,
-    });
+    const addressChecked = getAddress(address);
+    try {
+      return await this.fetch(`${host}/airdrop/${airdropId}/${addressChecked}`);
+    } catch (err) {
+      if (err instanceof FetchError) {
+        return null;
+      } else throw err;
+    }
   }
 }
