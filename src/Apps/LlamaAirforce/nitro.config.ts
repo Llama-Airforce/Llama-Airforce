@@ -12,9 +12,11 @@ export type RuntimeConfig = {
 } & NitroRuntimeConfig;
 
 export default defineNitroConfig({
+  rootDir: __dirname,
   srcDir: resolve(__dirname, "Server"),
   runtimeConfig,
   alias: {
-    "@LAF/Server": "~/",
+    "@": resolve(__dirname, "../../"),
+    "@LAF": resolve(__dirname, "./"),
   },
 });
