@@ -10,7 +10,8 @@
       "outputCapture": "std",
       "restart": true,
       "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "envFile": "${workspaceFolder}/.env"
     },
     {
       "type": "node",
