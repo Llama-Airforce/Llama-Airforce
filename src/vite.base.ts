@@ -66,6 +66,9 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       type: true,
     },
   ],
+  ignoreDts: [
+    "useStorage", // Conflict with Nitro and VueUse.
+  ],
   dirs: ["../../Framework/**", "../../Util/**"],
   eslintrc: {
     enabled: true,

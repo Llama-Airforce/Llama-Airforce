@@ -58,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+import { useStorage } from "@vueuse/core";
 import { getColors } from "@/Styles/Themes/CB";
 import { type ThemeId } from "@CB/Models/ThemeId";
 import { useSettingsStore } from "@CB/Stores";
