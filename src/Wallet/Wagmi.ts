@@ -1,4 +1,4 @@
-import { createConfig, http } from "@wagmi/core";
+import { createConfig, fallback, http, unstable_connector } from "@wagmi/core";
 import { mainnet } from "@wagmi/core/chains";
 import {
   injected,
@@ -29,6 +29,10 @@ export const config = createConfig({
     safe(),
   ],
   transports: {
-    [mainnet.id]: http(rpc, { batch: { wait: 100 } }),
+    [mainnet.id]: fallback([
+      http(rpc, { batch: { wait: 100 } }),
+      unstable_connector(injected),
+      http("https://eth.llamarpc.com", { batch: { wait: 200 } }),
+    ]),
   },
 });
