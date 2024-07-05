@@ -1,15 +1,18 @@
 import type { RuntimeConfig } from "@LAF/nitro.config";
 
-export default defineEventHandler((event) => {
-  const config = useRuntimeConfig<RuntimeConfig>(event);
+export default defineNitroPlugin(() => {
+  console.log("Checking if all expected env vars are set");
+
+  const config = useRuntimeConfig<RuntimeConfig>();
   const requiredVars = ["dbEndpoint", "dbKey", "clearCachePassword"];
 
   for (const variable of requiredVars) {
     if (!config[variable]) {
       throw createError({
-        statusCode: 500,
         message: `${variable} not set in .env file`,
       });
     }
   }
+
+  console.log("All env vars gud");
 });
