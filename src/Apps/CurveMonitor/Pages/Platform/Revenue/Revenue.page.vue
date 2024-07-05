@@ -21,6 +21,12 @@
           <Cushions v-if="tabActive === 'cushions'"></Cushions>
         </KeepAlive>
       </TabItem>
+
+      <TabItem header="Settlements">
+        <KeepAlive>
+          <Settlements v-if="tabActive === 'settlements'"></Settlements>
+        </KeepAlive>
+      </TabItem>
     </TabView>
   </div>
 </template>
@@ -29,9 +35,10 @@
 import Dashboard from "@CM/Pages/Platform/Revenue/Tabs/Dashboard.vue";
 import Distributions from "@CM/Pages/Platform/Revenue/Tabs/Distributions.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Tabs/Cushions.vue";
+import Settlements from "@CM/Pages/Platform/Revenue/Tabs/Settlements.vue";
 
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "distributions", "cushions"],
+  ["overview", "distributions", "cushions", "settlements"],
   "revenue"
 );
 </script>

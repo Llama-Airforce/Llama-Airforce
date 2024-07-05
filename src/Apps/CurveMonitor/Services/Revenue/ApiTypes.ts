@@ -35,3 +35,22 @@ export type GetDistributionsResponse = {
     fees_usd: number;
   }[];
 };
+
+export type GetCowSwapSettlementsResponse = {
+  data: {
+    coin: {
+      lp_token: boolean;
+      symbol: string;
+      address: string;
+      precision: number;
+    };
+    amount: string;
+    fee_amount: string;
+    amount_received: number;
+    router_received: number;
+    epoch: number;
+    tx_hash: string;
+    block_number: number;
+    dt: string;
+  }[];
+};

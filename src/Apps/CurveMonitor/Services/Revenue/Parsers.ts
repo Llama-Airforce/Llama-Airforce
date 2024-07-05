@@ -49,3 +49,24 @@ export const parseDistribution = (
     feesUsd: x.fees_usd,
   };
 };
+
+export const parseCowSwapSettlement = (
+  x: ApiTypes.GetCowSwapSettlementsResponse["data"][number]
+): Models.CowSwapSettlement => {
+  return {
+    timestamp: toUTC(x.dt),
+    coin: {
+      lpToken: x.coin.lp_token,
+      symbol: x.coin.symbol,
+      address: x.coin.address.toLocaleLowerCase() as Address,
+      precision: x.coin.precision,
+    },
+    amount: BigInt(x.amount),
+    amountFee: BigInt(x.fee_amount),
+    amountReceived: x.amount_received,
+    routerReceived: x.router_received,
+    epoch: x.epoch,
+    txHash: x.tx_hash.toLocaleLowerCase() as Address,
+    blockNumber: x.block_number,
+  };
+};

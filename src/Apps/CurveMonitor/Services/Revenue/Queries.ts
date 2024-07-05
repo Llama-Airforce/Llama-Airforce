@@ -58,3 +58,11 @@ export function useQueryDistributions() {
     initialDataUpdatedAt: 0,
   });
 }
+
+export function useQueryCowSwapSettlements() {
+  return useQuery({
+    queryKey: ["curve-revenue-cow-settlements"],
+    queryFn: () => service.getCowSwapSettlements(),
+    ...initEmptyArray(),
+  });
+}

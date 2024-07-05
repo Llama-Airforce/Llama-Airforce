@@ -18,6 +18,13 @@ export function prettyError(err: unknown): string {
     return "Transaction failed because slippage was set too low. A slight increase of one or two percent could help, but don't make it too high to ensure your protection. We also highly recommend using MEVBlocker for extra safety.";
   }
 
+  if (
+    err.message.includes("HTTP request failed") &&
+    err.message.includes("eth_call")
+  ) {
+    return "The RPC returned an error, probably a rate-limit. Try again layer or try a different wallet.";
+  }
+
   return err.message;
 }
 

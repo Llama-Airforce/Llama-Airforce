@@ -56,4 +56,14 @@ export default class RevenueService extends ServiceBase {
 
     return distributions;
   }
+
+  public async getCowSwapSettlements(timestamp?: number) {
+    const resp = await this.fetch<ApiTypes.GetCowSwapSettlementsResponse>(
+      `${API_URL}/v1/dao/fees/settlements${
+        timestamp ? "?timestamp=" + timestamp : ""
+      }`
+    );
+
+    return resp.data.map(Parsers.parseCowSwapSettlement);
+  }
 }
