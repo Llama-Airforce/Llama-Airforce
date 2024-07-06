@@ -25,6 +25,7 @@
       <RedemptionsUserTable
         :redemptions
         :loading
+        @redeemed="onRedeemed"
       ></RedemptionsUserTable>
     </div>
 
@@ -39,13 +40,32 @@
 
 <script setup lang="ts">
 import { useWallet, addressShort } from "@/Wallet";
+import { type RedemptionPending } from "@LAF/Pages/Pirex/Services";
 import { useQueryRedemptions } from "@LAF/Pages/Pirex/Services/Queries";
 import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTable.vue";
 
 const { address } = useWallet();
 
 // Pending redemptions
-const { data: redemptions, isLoading: loading } = useQueryRedemptions(address);
+const { data: redemptionsRaw, isLoading: loading } =
+  useQueryRedemptions(address);
+
+// Filter rewards claimed by the front-end.
+const redeemed = ref([] as RedemptionPending[]);
+const redemptions = computed(() =>
+  redemptionsRaw.value.filter((x) => {
+    const isAlreadyRedeemedByFrontEnd = redeemed.value.find(
+      (redemption) =>
+        redemption.tokenId === x.tokenId && redemption.balance === x.balance
+    );
+
+    return !isAlreadyRedeemedByFrontEnd;
+  })
+);
+
+function onRedeemed(redemption: RedemptionPending) {
+  redeemed.value.push(redemption);
+}
 </script>
 
 <style lang="scss" scoped>

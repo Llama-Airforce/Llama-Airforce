@@ -45,6 +45,11 @@ interface Props {
 
 const { redemptions } = defineProps<Props>();
 
+// Emits
+const emit = defineEmits<{
+  redeemed: [redemption: RedemptionPending];
+}>();
+
 // Redemption
 const { address } = useWallet();
 
@@ -56,8 +61,11 @@ function canRedeem(redemption: RedemptionPending) {
   return !!address.value && redemptionDate(redemption) <= new Date(Date.now());
 }
 
+let redemptionRedeeming: RedemptionPending | null = null;
 const { execute: redeem, isExecuting: redeeming } = useExecuteContract(
   (writeContract, redemption: RedemptionPending) => {
+    redemptionRedeeming = redemption;
+
     writeContract({
       address: PirexCvxAddress,
       abi,
@@ -71,6 +79,13 @@ const { execute: redeem, isExecuting: redeeming } = useExecuteContract(
   },
   {
     successMessage: `Successfully redeemed epoch`,
+    onSuccess: () => {
+      emit("redeemed", redemptionRedeeming!);
+      redemptionRedeeming = null;
+    },
+    onError: () => {
+      redemptionRedeeming = null;
+    },
   }
 );
 
