@@ -22,7 +22,9 @@
         <Button
           value="Redeem"
           :web3="true"
-          :disabled="true"
+          :disabled="redeeming || !canRedeem(redemption)"
+          :primary="true"
+          @click="redeem(redemption)"
         ></Button>
       </div>
     </template>
@@ -30,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+import { abi } from "@/ABI/Union/Pirex";
+import { useWallet } from "@/Wallet";
 import { type RedemptionPending } from "@LAF/Pages/Pirex/Services";
 
 type Row = RedemptionPending;
@@ -41,9 +45,39 @@ interface Props {
 
 const { redemptions } = defineProps<Props>();
 
+// Redemption
+const { address } = useWallet();
+
+function redemptionDate(redemption: RedemptionPending) {
+  return new Date(Number(redemption.tokenId) * 1000); // Convert seconds to milliseconds
+}
+
+function canRedeem(redemption: RedemptionPending) {
+  return !!address.value && redemptionDate(redemption) <= new Date(Date.now());
+}
+
+const { execute: redeem, isExecuting: redeeming } = useExecuteContract(
+  (writeContract, redemption: RedemptionPending) => {
+    writeContract({
+      address: PirexCvxAddress,
+      abi,
+      functionName: "redeem",
+      args: [
+        [redemption.tokenId],
+        [redemption.balance],
+        address.value!,
+      ] as const,
+    });
+  },
+  {
+    successMessage: `Successfully redeemed epoch`,
+  }
+);
+
 // Formatters
 function date(redemption: RedemptionPending) {
-  const date = new Date(Number(redemption.tokenId) * 1000); // Convert seconds to milliseconds
+  const date = redemptionDate(redemption);
+
   return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

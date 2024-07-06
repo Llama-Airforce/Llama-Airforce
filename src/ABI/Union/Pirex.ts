@@ -43,4 +43,19 @@ export const abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "unlockTimes",
+        type: "uint256[]",
+      },
+      { internalType: "uint256[]", name: "assets", type: "uint256[]" },
+      { internalType: "address", name: "receiver", type: "address" },
+    ],
+    name: "redeem",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ] as const;
