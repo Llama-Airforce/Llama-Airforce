@@ -1,8 +1,9 @@
-import type { Epoch, EpochId } from "@LAF/Pages/Bribes/Models";
+import type { EpochId } from "@LAF/Pages/Bribes/Models";
 import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { AuraConstants } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import { type Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
+import { type Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
 
 export default class AuraBribesService extends BribesService {
   private auraService: AuraService;
@@ -23,10 +24,7 @@ export default class AuraBribesService extends BribesService {
 
   override async getEpoch(
     epochId: Omit<EpochId, "round"> & { round?: number } // Round is optional, picks latest if empty.
-  ): Promise<{
-    success: boolean;
-    epoch?: Epoch;
-  }> {
+  ): Promise<EpochResponse> {
     // If epoch greater than cutoff, load from HH
     if ((epochId?.round ?? Number.MAX_VALUE) >= AuraConstants.START_ROUND) {
       return this.auraService.getRound(epochId.round);
@@ -35,10 +33,10 @@ export default class AuraBribesService extends BribesService {
     // Else, fallback to Llama
     const host = await this.getHost();
 
-    return this.fetch(`${host}/bribes`, {
-      platform: epochId.platform,
-      protocol: epochId.protocol,
-      round: epochId.round?.toString(),
-    });
+    const round = epochId.round?.toString();
+
+    return this.fetch(
+      `${host}/bribes/${epochId.platform}/${epochId.protocol}/${round}`
+    );
   }
 }

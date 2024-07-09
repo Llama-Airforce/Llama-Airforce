@@ -1,11 +1,7 @@
 import { ServiceBaseHost } from "@/Services";
-import type {
-  Epoch,
-  EpochId,
-  EpochOverview,
-  Product,
-} from "@LAF/Pages/Bribes/Models";
+import type { EpochId, EpochOverview, Product } from "@LAF/Pages/Bribes/Models";
 import { type Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
+import { type Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
 
 export const API_URL = "https://api-next.llama.airforce";
 
@@ -20,17 +16,14 @@ export default class BribesService extends ServiceBaseHost {
 
   public async getEpoch(
     epochId: Omit<EpochId, "round"> & { round?: number } // Round is optional, picks latest if empty.
-  ): Promise<{
-    success: boolean;
-    epoch?: Epoch;
-  }> {
+  ): Promise<EpochResponse> {
     const host = await this.getHost();
 
-    return this.fetch(`${host}/bribes`, {
-      platform: epochId.platform,
-      protocol: epochId.protocol,
-      round: epochId.round?.toString(),
-    });
+    const round = epochId.round?.toString();
+
+    return this.fetch(
+      `${host}/bribes/${epochId.platform}/${epochId.protocol}/${round}`
+    );
   }
 
   public async getOverview(): Promise<{

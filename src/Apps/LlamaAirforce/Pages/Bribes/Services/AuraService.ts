@@ -1,7 +1,6 @@
 import { flattenDeep } from "lodash";
 import { ServiceBase } from "@/Services/ServiceBase";
 import {
-  type Epoch,
   type EpochOverview,
   type OverviewResponse,
 } from "@LAF/Pages/Bribes/Models";
@@ -10,6 +9,7 @@ import {
   getEndDateForRound,
   getLatestAuraRound,
 } from "@LAF/Pages/Bribes/Util/AuraHelper";
+import { type Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
 
 type GaugeResponse = {
   data: GaugeVote[];
@@ -91,12 +91,9 @@ export default class AuraService extends ServiceBase {
     );
   }
 
-  public async getRound(_epochId?: number): Promise<{
-    success: boolean;
-    epoch?: Epoch;
-  }> {
+  public async getRound(_epochId?: number): Promise<EpochResponse> {
     if ((_epochId ?? Number.MAX_VALUE) < START_ROUND - 1) {
-      return Promise.resolve({ success: false });
+      return Promise.resolve({ statusCode: 400 });
     }
 
     const epochId = _epochId ?? this.latestRound;
@@ -129,7 +126,7 @@ export default class AuraService extends ServiceBase {
     );
 
     return Promise.resolve({
-      success: true,
+      statusCode: 200,
       epoch: {
         round: epochId,
         platform: "hh",
