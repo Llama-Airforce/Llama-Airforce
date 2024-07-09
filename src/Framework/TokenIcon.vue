@@ -1,8 +1,20 @@
 <template>
   <img
+    v-if="!clickable"
     :src="icon"
     @error="onIconError"
   />
+
+  <a
+    v-else
+    target="_blank"
+    :href="link"
+  >
+    <img
+      :src="icon"
+      @error="onIconError"
+    />
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -12,9 +24,10 @@ import { ref, watch } from "vue";
 interface Props {
   chain?: string;
   address: string;
+  clickable?: boolean;
 }
 
-const { chain = "ethereum", address } = defineProps<Props>();
+const { chain = "ethereum", address, clickable = false } = defineProps<Props>();
 
 // Icon
 const icon = ref("");
@@ -36,9 +49,34 @@ watch(
   },
   { immediate: true }
 );
+
+// Link
+const link = computed(() => {
+  switch (chain) {
+    case "arbitrum":
+      return `https://arbiscan.io/address/${address}`;
+    case "ethereum":
+    default:
+      return `https://etherscan.io/address/${address}`;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
+a {
+  all: initial;
+
+  img {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--c-text);
+    cursor: pointer;
+  }
+}
+
 img {
   aspect-ratio: 1;
   max-width: 100%;

@@ -11,6 +11,7 @@
           :key="token.address"
           :chain
           :address="token.address"
+          :clickable="true"
         ></TokenIcon>
       </div>
     </KPI>
