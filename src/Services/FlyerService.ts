@@ -1,4 +1,5 @@
 import { ServiceBaseHost } from "@/Services";
+import type { DashboardResponse } from "@LAF/Pages/Bribes/Models";
 
 type FlyerId = "flyer-convex" | "flyer-aura";
 
@@ -26,27 +27,17 @@ export type FlyerAura = {
 };
 
 export default class FlyerService extends ServiceBaseHost {
-  public async getConvex(): Promise<{
-    success: boolean;
-    dashboard?: FlyerConvex;
-  }> {
+  public async getConvex(): Promise<DashboardResponse<FlyerConvex>> {
     const id: FlyerId = "flyer-convex";
     const host = await this.getHost();
 
-    return this.fetch(`${host}/dashboard`, {
-      id,
-    });
+    return this.fetch(`${host}/dashboard/${id}`);
   }
 
-  public async getAura(): Promise<{
-    success: boolean;
-    dashboard?: FlyerAura;
-  }> {
+  public async getAura(): Promise<DashboardResponse<FlyerAura>> {
     const id: FlyerId = "flyer-aura";
     const host = await this.getHost();
 
-    return this.fetch(`${host}/dashboard`, {
-      id,
-    });
+    return this.fetch(`${host}/dashboard/${id}`);
   }
 }

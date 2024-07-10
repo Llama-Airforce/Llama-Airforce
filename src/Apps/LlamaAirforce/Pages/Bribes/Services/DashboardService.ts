@@ -1,7 +1,11 @@
 import { ServiceBaseHost } from "@/Services";
 import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
-import type { OverviewId, OverviewResponse } from "@LAF/Pages/Bribes/Models";
+import type {
+  Overview,
+  OverviewId,
+  DashboardResponse,
+} from "@LAF/Pages/Bribes/Models";
 
 export default class DashboardService extends ServiceBaseHost {
   private auraService: AuraService;
@@ -11,11 +15,13 @@ export default class DashboardService extends ServiceBaseHost {
     this.auraService = new AuraService();
   }
 
-  public async getOverview(overviewId: OverviewId): Promise<OverviewResponse> {
+  public async getOverview(
+    overviewId: OverviewId
+  ): Promise<DashboardResponse<Overview>> {
     const host = await this.getHost();
 
-    const request = this.fetch<OverviewResponse>(
-      `${host}/dashboard/overview/${overviewId}`
+    const request = this.fetch<DashboardResponse<Overview>>(
+      `${host}/dashboard/${overviewId}`
     );
 
     if (overviewId === "bribes-overview-aura") {

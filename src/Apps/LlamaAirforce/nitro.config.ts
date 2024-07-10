@@ -6,6 +6,7 @@ const runtimeConfig = {
   dbEndpoint: process.env.DB_ENDPOINT,
   dbKey: process.env.DB_KEY,
   clearCachePassword: process.env.CLEAR_CACHE_PASSWORD,
+  alchemyLAF: process.env.NITRO_LAF_ALCHEMY,
 };
 
 export type RuntimeConfig = {

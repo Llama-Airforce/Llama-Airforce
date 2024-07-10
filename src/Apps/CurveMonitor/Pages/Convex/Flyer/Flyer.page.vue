@@ -24,7 +24,7 @@ const model = ref<FlyerConvex | null>(null);
 onMounted(async (): Promise<void> => {
   const resp = await minDelay(flyerService.getConvex());
 
-  if (resp.success && resp.dashboard) {
+  if (resp.statusCode === 200 && resp.dashboard) {
     model.value = resp.dashboard;
   }
 });

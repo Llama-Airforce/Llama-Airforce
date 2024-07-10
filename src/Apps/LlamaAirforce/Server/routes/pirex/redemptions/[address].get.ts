@@ -1,4 +1,5 @@
 import { isAddress } from "viem";
+import type { RuntimeConfig } from "@LAF/nitro.config";
 
 type AlchemyResult = {
   ownedNfts: {
@@ -11,7 +12,7 @@ export type Result = Awaited<ReturnType<typeof handler>>;
 
 const handler = defineCachedEventHandler(
   async (event) => {
-    // Get the address from the route parameter
+    const config = useRuntimeConfig<RuntimeConfig>(event);
     const { address } = getRouterParams(event);
 
     if (!isAddress(address)) {
@@ -22,14 +23,9 @@ const handler = defineCachedEventHandler(
     }
 
     try {
-      const apiKey = process.env.NITRO_LAF_ALCHEMY;
-      if (!apiKey) {
-        throw new Error("Missing LAF Alchemy API key");
-      }
-
       // Fetch data from Alchemy API using native fetch
       const res = await $fetch<AlchemyResult>(
-        `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTsForOwner?contractAddresses[]=0x7A3D81CFC5A942aBE9ec656EFF818f7daB4E0Fe1&owner=${address}&withMetadata=false`
+        `https://eth-mainnet.g.alchemy.com/nft/v3/${config.alchemyLAF}/getNFTsForOwner?contractAddresses[]=0x7A3D81CFC5A942aBE9ec656EFF818f7daB4E0Fe1&owner=${address}&withMetadata=false`
       );
 
       // Return the fetched data

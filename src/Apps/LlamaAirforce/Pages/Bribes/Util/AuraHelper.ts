@@ -1,4 +1,4 @@
-import type { OverviewResponse } from "@LAF/Pages/Bribes/Models";
+import type { Overview, DashboardResponse } from "@LAF/Pages/Bribes/Models";
 
 export const AuraConstants = {
   HH_API_URL: "https://api.hiddenhand.finance/proposal/aura",
@@ -10,8 +10,8 @@ export const AuraConstants = {
 
 // Helper to merge HH data
 export function getMergeWithHiddenHands(
-  baseResponse: OverviewResponse,
-  newResponse: OverviewResponse
+  baseResponse: DashboardResponse<Overview>,
+  newResponse: DashboardResponse<Overview>
 ) {
   if (!baseResponse.dashboard || !newResponse.dashboard) {
     return { statusCode: 500, dashboard: undefined };

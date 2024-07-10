@@ -4,7 +4,12 @@ export default defineNitroPlugin(() => {
   console.log("Checking if all expected env vars are set");
 
   const config = useRuntimeConfig<RuntimeConfig>();
-  const requiredVars = ["dbEndpoint", "dbKey", "clearCachePassword"];
+  const requiredVars = [
+    "dbEndpoint",
+    "dbKey",
+    "clearCachePassword",
+    "alchemyLAF",
+  ];
 
   for (const variable of requiredVars) {
     if (!config[variable]) {

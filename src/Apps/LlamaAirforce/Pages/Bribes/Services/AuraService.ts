@@ -2,7 +2,8 @@ import { flattenDeep } from "lodash";
 import { ServiceBase } from "@/Services/ServiceBase";
 import {
   type EpochOverview,
-  type OverviewResponse,
+  type DashboardResponse,
+  type Overview,
 } from "@LAF/Pages/Bribes/Models";
 import {
   AuraConstants,
@@ -139,7 +140,7 @@ export default class AuraService extends ServiceBase {
     });
   }
 
-  public async getOverview(): Promise<OverviewResponse> {
+  public async getOverview(): Promise<DashboardResponse<Overview>> {
     const roundOverviewPromise = this.fetchRounds().then((incentives) => {
       return incentives.map((item, index) => {
         const mapped = item.map(({ totalValue, voteCount }) => [
