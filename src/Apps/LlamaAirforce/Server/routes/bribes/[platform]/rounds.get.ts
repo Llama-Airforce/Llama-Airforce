@@ -1,9 +1,6 @@
-const handler = defineCachedEventHandler(
-  async () => {
-    const data = await $fetch("/bribes/votium/cvx-crv/rounds");
-    return data;
-  },
-  { maxAge: 60 }
-);
+const handler = defineEventHandler(async () => {
+  const data = await $fetch("/bribes/votium/cvx-crv/rounds");
+  return data;
+});
 
 export default handler;
