@@ -19,6 +19,7 @@
     "build:pm": "bun --bun vite build src/Apps/PrismaMonitor",
     "build:pm-lrt": "bun --bun vite build src/Apps/PrismaMonitor",
     "build:cb": "bun --bun vite build src/Apps/Cookbook",
+    "run:laf:server": "bun --bun src/Apps/LlamaAirforce/.output/server/index.mjs",
     "test": "vitest run --root src/Apps/LlamaAirforce",
     "union": "bun run src/Apps/LlamaAirforce/Pages/Union/Scripts/Union.ts",
     "union:allocate": "bun src/Apps/LlamaAirforce/Pages/Union/Scripts/Union.allocate.ts",
