@@ -2,7 +2,7 @@ export default defineEventHandler((event) => {
   const { req, res } = event.node;
 
   const allowedOrigins = [
-    /^https:\/\/.*\.llama\.airforce$/,
+    /^https:\/\/(.*\.)?llama\.airforce$/,
     /^http:\/\/localhost(:\d+)?$/,
     /^https:\/\/curvemonitor\.com$/,
   ];
