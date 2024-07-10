@@ -137,7 +137,7 @@ export const useCosmosDb = (containerId: string) => {
   return { getItem, queryItems };
 };
 
-function stripMetadata<T extends Resource & { _attachments: unknown }>(
+function stripMetadata<T extends Resource & { _attachments?: unknown }>(
   item: T
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
