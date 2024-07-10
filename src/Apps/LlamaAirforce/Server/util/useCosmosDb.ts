@@ -3,6 +3,7 @@ import {
   type ItemDefinition,
   type SqlQuerySpec,
   type Database,
+  type Resource,
   CosmosClient,
 } from "@azure/cosmos";
 import type { RuntimeConfig } from "@LAF/nitro.config";
@@ -101,7 +102,7 @@ export const useCosmosDb = (containerId: string) => {
         });
       }
 
-      return item;
+      return stripMetadata(item);
     } catch (error) {
       throw createError({
         statusCode: 500,
@@ -123,6 +124,7 @@ export const useCosmosDb = (containerId: string) => {
     try {
       const container = await getContainer(containerId);
       const { resources } = await container.items.query<T>(query).fetchAll();
+
       return resources;
     } catch (error) {
       throw createError({
@@ -134,3 +136,11 @@ export const useCosmosDb = (containerId: string) => {
 
   return { getItem, queryItems };
 };
+
+function stripMetadata<T extends Resource & { _attachments: unknown }>(
+  item: T
+) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _rid, _self, _etag, _attachments, _ts, ...strippedItem } = item;
+  return strippedItem;
+}
