@@ -94,7 +94,7 @@ a {
 }
 
 .kpi {
-  line-height: 1.5rem !important;
+  padding: 0.5rem 0.75rem !important;
 }
 </style>
 
