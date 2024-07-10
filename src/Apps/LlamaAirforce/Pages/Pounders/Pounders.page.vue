@@ -37,9 +37,7 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import UnionService, {
-  API_URL as UNION_API_URL,
-} from "@LAF/Services/UnionService";
+import UnionService from "@LAF/Services/UnionService";
 import Documentation from "@LAF/Components/Documentation.vue";
 import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
@@ -53,7 +51,7 @@ import { useClaim } from "@Pounders/Composables/UseClaim";
 
 const { t } = useI18n();
 
-const unionService = new UnionService(useHost(UNION_API_URL));
+const unionService = new UnionService(useHost());
 const llamaService = new DefiLlamaService();
 const flyerService = new FlyerService(useHost());
 

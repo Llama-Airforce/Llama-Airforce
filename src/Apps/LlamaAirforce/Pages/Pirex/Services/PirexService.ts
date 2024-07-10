@@ -3,8 +3,6 @@ import { ServiceBaseHost } from "@/Services";
 import type * as ApiTypes from "@LAF/Pages/Pirex/Services/ApiTypes";
 import * as Parsers from "@LAF/Pages/Pirex/Services/Parsers";
 
-export const API_URL = "https://api-next.llama.airforce";
-
 export default class PirexService extends ServiceBaseHost {
   public async getRewards(address: Address) {
     const host = await this.getHost();

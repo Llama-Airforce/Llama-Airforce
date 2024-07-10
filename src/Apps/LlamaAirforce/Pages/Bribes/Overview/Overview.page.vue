@@ -38,12 +38,10 @@ import type {
   Platform,
   Protocol,
 } from "@LAF/Pages/Bribes/Models";
-import DashboardService, {
-  API_URL,
-} from "@LAF/Pages/Bribes/Services/DashboardService";
+import DashboardService from "@LAF/Pages/Bribes/Services/DashboardService";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
-const dashboardService = new DashboardService(useHost(API_URL));
+const dashboardService = new DashboardService(useHost());
 
 let isInitializing = false;
 

@@ -16,8 +16,6 @@ export function isAirdropId(id: string): id is AirdropId {
   return airdropIds.includes(id as AirdropId);
 }
 
-export const API_URL = "https://api-next.llama.airforce";
-
 export default class UnionService extends ServiceBaseHost {
   public async getClaim(
     airdropId: AirdropId,

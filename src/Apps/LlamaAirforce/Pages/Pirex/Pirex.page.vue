@@ -30,9 +30,7 @@
 import { useWallet } from "@/Wallet";
 
 import { useUnionStore } from "@Pounders/Store";
-import UnionService, {
-  API_URL as UNION_API_URL,
-} from "@LAF/Services/UnionService";
+import UnionService from "@LAF/Services/UnionService";
 import { DefiLlamaService } from "@/Services";
 import FlyerService from "@/Services/FlyerService";
 import { useClaim } from "@Pounders/Composables/UseClaim";
@@ -48,7 +46,7 @@ import UserInfo from "@LAF/Pages/Pirex/Components/UserInfo.vue";
 import RedemptionsInit from "@LAF/Pages/Pirex/Components/RedemptionsInit.vue";
 import Swap from "@LAF/Pages/Pirex/Components/Swap.vue";
 
-const unionService = new UnionService(useHost(UNION_API_URL));
+const unionService = new UnionService(useHost());
 const llamaService = new DefiLlamaService();
 const flyerService = new FlyerService(useHost());
 

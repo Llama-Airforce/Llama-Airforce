@@ -3,8 +3,6 @@ import type { EpochId, EpochOverview, Product } from "@LAF/Pages/Bribes/Models";
 import { type Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 import { type Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
 
-export const API_URL = "https://api-next.llama.airforce";
-
 export default class BribesService extends ServiceBaseHost {
   public async rounds(product: Partial<Product>): Promise<RoundsResponse> {
     const host = await this.getHost();

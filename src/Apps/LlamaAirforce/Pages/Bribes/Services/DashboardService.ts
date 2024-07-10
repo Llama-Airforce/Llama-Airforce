@@ -3,8 +3,6 @@ import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
 import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import type { OverviewId, OverviewResponse } from "@LAF/Pages/Bribes/Models";
 
-export const API_URL = "https://api-next.llama.airforce";
-
 export default class DashboardService extends ServiceBaseHost {
   private auraService: AuraService;
 

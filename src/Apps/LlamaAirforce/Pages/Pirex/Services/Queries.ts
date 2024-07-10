@@ -1,9 +1,8 @@
 import { type Address } from "viem";
 import { useQuery } from "@tanstack/vue-query";
 import PirexService from "@LAF/Pages/Pirex/Services";
-import { API_URL } from "@LAF/Pages/Pirex/Services/PirexService";
 
-const service = new PirexService(useHost(API_URL));
+const service = new PirexService(useHost());
 
 export function useQueryRewards(address: Ref<Address | undefined>) {
   return useQuery({
