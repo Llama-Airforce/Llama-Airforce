@@ -14,7 +14,7 @@
     "dev:pm": "bun --bun vite src/Apps/PrismaMonitor",
     "dev:cb": "bun --bun vite src/Apps/Cookbook",
     "build:laf": "bun --bun vite build src/Apps/LlamaAirforce",
-    "build:laf:server": "bun --bun nitro build src/Apps/LlamaAirforce",
+    "build:laf:server": "bun --bun nitro build --preset bun src/Apps/LlamaAirforce",
     "build:cm": "bun --bun vite build src/Apps/CurveMonitor",
     "build:pm": "bun --bun vite build src/Apps/PrismaMonitor",
     "build:pm-lrt": "bun --bun vite build src/Apps/PrismaMonitor",
