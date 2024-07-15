@@ -145,11 +145,11 @@ const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 function profit(settlement: CowSwapSettlement) {
-  return settlement.routerReceived - settlement.amountReceived;
+  return settlement.amountReceived - settlement.routerReceived;
 }
 
 function profitPct(settlement: CowSwapSettlement) {
-  return (100 * settlement.routerReceived) / settlement.amountReceived - 100;
+  return (100 * settlement.amountReceived) / settlement.routerReceived - 100;
 }
 
 // Formatters
