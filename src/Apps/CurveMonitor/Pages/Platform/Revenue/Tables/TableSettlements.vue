@@ -13,12 +13,15 @@
       'Transaction',
       'Time',
     ]"
+    :expanded
+    expand-side="right"
     :sorting="true"
     :sorting-columns="sortColumns"
     :sorting-columns-enabled="sortColumnsEnabled"
     sorting-default-column="timestamp"
     sorting-default-dir="desc"
     @sort-column="onSort"
+    @selected="toggleExpand"
   >
     <template #header-content>
       <div class="header-content">
@@ -97,6 +100,14 @@
         {{ relativeTime(item.timestamp) }}
       </div>
     </template>
+
+    <template #row-details="{ item }: { item: Row }">
+      <div class="empty"></div>
+      <SettlementDetails
+        v-if="expanded.includes(item)"
+        :settlement="item"
+      ></SettlementDetails>
+    </template>
   </DataTable>
 </template>
 
@@ -104,6 +115,7 @@
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
+import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
 
 const { t } = useI18n();
 
@@ -157,6 +169,17 @@ function profitPct(settlement: CowSwapSettlement) {
   return (100 * settlement.amountReceived) / settlement.routerReceived - 100;
 }
 
+// Expansion
+const expanded = ref<Row[]>([]);
+const toggleExpand = (row: Row) => {
+  const index = expanded.value.findIndex((r) => r.txHash === row.txHash);
+  if (index === -1) {
+    expanded.value.push(row);
+  } else {
+    expanded.value.splice(index, 1);
+  }
+};
+
 // Formatters
 const { relativeTime } = useRelativeTime();
 
@@ -190,7 +213,8 @@ function symbol(settlement: CowSwapSettlement) {
       minmax(10ch, 1fr)
       10ch
       minmax(5rem, 0.75fr)
-      16ch;
+      16ch
+      20px;
 
     .token {
       display: flex;
