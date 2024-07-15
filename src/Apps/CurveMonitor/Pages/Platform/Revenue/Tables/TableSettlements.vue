@@ -7,7 +7,7 @@
     :columns="[
       'Token',
       'Amount',
-      'Router Amount',
+      'Quote',
       'Router Profit',
       'Transaction',
       'Time',
@@ -115,12 +115,12 @@ const { settlements } = defineProps<Props>();
 
 // Data
 const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["token", "amount", "amountRouter", "profit", "tx", "timestamp"],
+  ["token", "amount", "quote", "profit", "tx", "timestamp"],
   "timestamp"
 );
 
 const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
-  return ["amount", "amountRouter", "profit", "timestamp"];
+  return ["amount", "quote", "profit", "timestamp"];
 });
 
 const rows = computed(() =>
@@ -129,7 +129,7 @@ const rows = computed(() =>
       switch (sortColumn.value) {
         case "amount":
           return settlement.amountReceived;
-        case "amountRouter":
+        case "quote":
           return settlement.routerReceived;
         case "profit":
           return profit(settlement);
