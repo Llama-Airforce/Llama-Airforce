@@ -8,7 +8,8 @@
       'Token',
       'Amount',
       'Quote',
-      'Router Profit',
+      'Profit',
+      '(%)',
       'Transaction',
       'Time',
     ]"
@@ -61,20 +62,22 @@
         />
       </div>
 
-      <div class="number profit">
+      <div class="number">
         <AsyncValue
           :value="profit(item)"
           :precision="2"
           :inline="false"
           type="dollar"
         />
+      </div>
 
+      <div class="number profit">
         <AsyncValue
           class="pct"
           :value="profitPct(item)"
           :precision="2"
           :inline="false"
-          :class="{ green: profit(item) > 0 }"
+          :class="{ green: profitPct(item) > 0 }"
           type="percentage"
         />
       </div>
@@ -115,12 +118,12 @@ const { settlements } = defineProps<Props>();
 
 // Data
 const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["token", "amount", "quote", "profit", "tx", "timestamp"],
+  ["token", "amount", "quote", "profit", "profitPct", "tx", "timestamp"],
   "timestamp"
 );
 
 const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
-  return ["amount", "quote", "profit", "timestamp"];
+  return ["amount", "quote", "profit", "profitPct", "timestamp"];
 });
 
 const rows = computed(() =>
@@ -133,6 +136,8 @@ const rows = computed(() =>
           return settlement.routerReceived;
         case "profit":
           return profit(settlement);
+        case "profitPct":
+          return profitPct(settlement);
         case "timestamp":
         default:
           return settlement.timestamp;
@@ -180,9 +185,10 @@ function symbol(settlement: CowSwapSettlement) {
     display: grid;
     grid-template-columns:
       minmax(5rem, 1fr)
-      minmax(5rem, 1fr)
-      minmax(5rem, 1fr)
-      minmax(5rem, 1fr)
+      minmax(10ch, 1fr)
+      minmax(10ch, 1fr)
+      minmax(10ch, 1fr)
+      10ch
       minmax(5rem, 0.75fr)
       16ch;
 
@@ -197,12 +203,6 @@ function symbol(settlement: CowSwapSettlement) {
     }
 
     .profit {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr minmax(4rem, auto);
-      gap: 1rem;
-      justify-items: end;
-
       > .pct {
         color: var(--c-red);
 
@@ -217,7 +217,8 @@ function symbol(settlement: CowSwapSettlement) {
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5),
-    div:nth-child(6) {
+    div:nth-child(6),
+    div:nth-child(7) {
       justify-content: end;
     }
 
