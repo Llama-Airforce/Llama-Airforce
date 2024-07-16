@@ -1,30 +1,53 @@
 <template>
   <div class="contracts">
-    <div class="row">
-      <DataTable
-        class="datatable-repositories"
-        columns-data="repositories-columns-data"
-        :rows="repositories"
-        :columns="[t('repository'), t('description')]"
-      >
-        <template #header-content>
-          <div class="title">{{ t("repositories") }}</div>
-        </template>
+    <DataTable
+      class="datatable-repositories"
+      columns-data="repositories-columns-data"
+      :rows="repositories"
+      :columns="[t('repository'), t('description')]"
+      title="Yolo"
+    >
+      <template #header-content>
+        <div class="title">{{ t("repositories") }}</div>
+      </template>
 
-        <template #row="props: { item: Repository }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
-            </a>
-          </div>
+      <template #row="props: { item: Repository }">
+        <div>
+          <a
+            :href="props.item.url"
+            target="_blank"
+          >
+            {{ props.item.name }}
+          </a>
+        </div>
 
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </DataTable>
-    </div>
+        <div>{{ t(props.item.description) }}</div>
+      </template>
+    </DataTable>
+
+    <DataTable
+      class="datatable-apis"
+      columns-data="apis-columns-data"
+      :rows="apis"
+      :columns="[t('api'), t('description')]"
+    >
+      <template #header-content>
+        <div class="title">{{ t("apis") }}</div>
+      </template>
+
+      <template #row="props: { item: API }">
+        <div>
+          <a
+            :href="props.item.url"
+            target="_blank"
+          >
+            {{ props.item.name }}
+          </a>
+        </div>
+
+        <div>{{ t(props.item.description) }}</div>
+      </template>
+    </DataTable>
 
     <DataTable
       v-for="(bundle, i) in bundles"
@@ -60,44 +83,28 @@ const { t } = useI18n();
 
 type Network = "ethereum" | "arbitrum";
 
-interface Contract {
+type Contract = {
   contract: string;
   description: string;
   network?: Network;
   gnosis?: boolean;
-}
+};
 
-interface Bundle {
+type Bundle = {
   name: string;
   contracts: Contract[];
-}
+};
 
-interface Repository {
+type Repository = {
   name: string;
   url: string;
   description: string;
-}
+};
 
-const union: Bundle = {
-  name: "Llama Airforce",
-  contracts: [
-    {
-      contract: MultisigAddress,
-      description: "multisig",
-      gnosis: true,
-    },
-    {
-      contract: TreasuryAddress,
-      description: "treasury",
-      gnosis: true,
-    },
-    {
-      contract: TreasuryArbitrumAddress,
-      description: "treasury-arbitrum",
-      network: "arbitrum",
-      gnosis: true,
-    },
-  ],
+type API = {
+  name: string;
+  url: string;
+  description: string;
 };
 
 const vefunder: Bundle = {
@@ -114,7 +121,7 @@ const vefunder: Bundle = {
   ],
 };
 
-const bundles: Bundle[] = [union, vefunder];
+const bundles: Bundle[] = [vefunder];
 
 const repositories: Repository[] = [
   {
@@ -123,9 +130,32 @@ const repositories: Repository[] = [
     description: "repo-laf",
   },
   {
+    name: "Phil's CurveMonitor",
+    url: "https://github.com/phil-svg/CurveMonitor",
+    description: "Phil's code for CurveMonitor",
+  },
+  {
     name: "Subgraphs",
     url: "https://github.com/convex-community/convex-subgraph",
     description: "repo-graphs",
+  },
+  {
+    name: "Tickets",
+    url: "https://github.com/orgs/curve-data-analytics/projects",
+    description: "Tickets",
+  },
+];
+
+const apis: API[] = [
+  {
+    name: "Curve Prices API",
+    url: "https://prices.curve.fi/feeds-docs",
+    description: "Curve utility API co-developed by CurveMonitor",
+  },
+  {
+    name: "LAF / Curve API (Legacy)",
+    url: "https://api-py.llama.airforce/curve/v1/docs",
+    description: "Custom analytics API",
   },
 ];
 
@@ -156,11 +186,6 @@ const linkContract = (contract: Contract): string => {
   flex-direction: column;
   gap: var(--dashboard-gap);
 
-  .row {
-    display: flex;
-    gap: var(--dashboard-gap);
-  }
-
   .datatable-contracts {
     ::v-deep(.contracts-columns-data) {
       display: grid;
@@ -168,9 +193,14 @@ const linkContract = (contract: Contract): string => {
     }
   }
 
-  .datatable-repositories {
-    width: 60%;
+  .datatable-apis {
+    ::v-deep(.apis-columns-data) {
+      display: grid;
+      grid-template-columns: 3fr 4fr;
+    }
+  }
 
+  .datatable-repositories {
     ::v-deep(.repositories-columns-data) {
       display: grid;
       grid-template-columns: 2fr 6fr;
@@ -182,6 +212,8 @@ const linkContract = (contract: Contract): string => {
 <i18n lang="yaml" locale="en">
 repositories: Repositories
 repository: Repository
+apis: APIs
+api: API
 description: Description
 contract: Contract
 other: Other

@@ -1,55 +1,53 @@
 <template>
   <div class="contracts">
     <div class="dashboard">
-      <div class="row">
-        <DataTable
-          class="datatable-repositories"
-          columns-data="repositories-columns-data"
-          :rows="repositories"
-          :columns="[t('repository'), t('description')]"
-        >
-          <template #header-content>
-            <div class="title">{{ t("repositories") }}</div>
-          </template>
+      <DataTable
+        class="datatable-repositories"
+        columns-data="repositories-columns-data"
+        :rows="repositories"
+        :columns="[t('repository'), t('description')]"
+      >
+        <template #header-content>
+          <div class="title">{{ t("repositories") }}</div>
+        </template>
 
-          <template #row="props: { item: Repository }">
-            <div>
-              <a
-                :href="props.item.url"
-                target="_blank"
-              >
-                {{ props.item.name }}
-              </a>
-            </div>
+        <template #row="props: { item: Repository }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
 
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </DataTable>
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
 
-        <DataTable
-          class="datatable-other"
-          columns-data="other-columns-data"
-          :rows="other"
-          :columns="[t('other'), t('description')]"
-        >
-          <template #header-content>
-            <div class="title">{{ t("other") }}</div>
-          </template>
+      <DataTable
+        class="datatable-other"
+        columns-data="other-columns-data"
+        :rows="other"
+        :columns="[t('other'), t('description')]"
+      >
+        <template #header-content>
+          <div class="title">{{ t("other") }}</div>
+        </template>
 
-          <template #row="props: { item: Other }">
-            <div>
-              <a
-                :href="props.item.url"
-                target="_blank"
-              >
-                {{ props.item.name }}
-              </a>
-            </div>
+        <template #row="props: { item: Other }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
 
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </DataTable>
-      </div>
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
 
       <DataTable
         v-for="(bundle, i) in bundles"
@@ -87,29 +85,29 @@ import { last } from "lodash";
 
 type Network = "ethereum" | "arbitrum" | "base";
 
-interface Contract {
+type Contract = {
   contract: string;
   description: string;
   network?: Network;
   gnosis?: boolean;
-}
+};
 
-interface Bundle {
+type Bundle = {
   name: string;
   contracts: Contract[];
-}
+};
 
-interface Repository {
+type Repository = {
   name: string;
   url: string;
   description: string;
-}
+};
 
-interface Other {
+type Other = {
   name: string;
   url: string;
   description: string;
-}
+};
 
 const union: Bundle = {
   name: "union",
@@ -406,16 +404,11 @@ const { t } = useI18n();
 
 .contracts {
   .dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-
-    .row {
-      display: flex;
-      gap: var(--dashboard-gap);
-    }
+    grid-template-columns: 6fr 4fr;
 
     .datatable-contracts {
+      grid-column: 1 / -1;
+
       ::v-deep(.contracts-columns-data) {
         display: grid;
         grid-template-columns: 3fr 4fr;
@@ -423,8 +416,7 @@ const { t } = useI18n();
     }
 
     .datatable-repositories {
-      width: 60%;
-      margin-bottom: 1.5rem;
+      grid-column: 1;
 
       ::v-deep(.repositories-columns-data) {
         display: grid;
@@ -433,8 +425,7 @@ const { t } = useI18n();
     }
 
     .datatable-other {
-      width: 40%;
-      margin-bottom: 1.5rem;
+      grid-column: 2;
 
       ::v-deep(.other-columns-data) {
         display: grid;
