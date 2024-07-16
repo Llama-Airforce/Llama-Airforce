@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-troves"
-    columns-header="1fr 2fr"
-    columns-data="troves-columns-data"
     :loading="loading"
     :rows="rowsPage"
     :columns="columns"
@@ -225,6 +223,12 @@ const onType = (tabIndex: number) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-troves {
+  --columns-header: 1fr 2fr;
+
+  --col-width: 11ch;
+  --columns-data: minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+    minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
+
   container-type: inline-size;
 
   .title {
@@ -249,13 +253,7 @@ const onType = (tabIndex: number) => {
     flex-grow: 1;
   }
 
-  :deep(.troves-columns-data) {
-    --col-width: 11ch;
-
-    grid-template-columns:
-      minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
-      minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
-
+  :deep(.row-data) {
     .hide {
       visibility: hidden;
     }
@@ -263,9 +261,9 @@ const onType = (tabIndex: number) => {
     // Non mobile
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1100px) {
-        grid-template-columns:
-          minmax(12ch, 0.5fr) repeat(3, minmax(var(--col-width), 0.75fr))
-          minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
+        --columns-data: minmax(12ch, 0.5fr)
+          repeat(3, minmax(var(--col-width), 0.75fr)) minmax(12ch, 1fr)
+          minmax(12ch, 1fr) 1rem;
       }
     }
 
@@ -274,15 +272,14 @@ const onType = (tabIndex: number) => {
       gap: 0.25rem;
 
       @container (max-width: 1000px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
-          minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
+        --columns-data: minmax(12ch, 1fr)
+          repeat(3, minmax(var(--col-width), 0.75fr)) minmax(12ch, 1fr)
+          minmax(12ch, 1fr) 1rem;
       }
 
       @container (max-width: 900px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
-          minmax(12ch, 1fr) 1rem;
+        --columns-data: minmax(12ch, 1fr)
+          repeat(3, minmax(var(--col-width), 0.75fr)) minmax(12ch, 1fr) 1rem;
 
         div:nth-child(6) {
           display: none;
@@ -290,9 +287,8 @@ const onType = (tabIndex: number) => {
       }
 
       @container (max-width: 600px) {
-        grid-template-columns:
-          minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
-          1rem;
+        --columns-data: minmax(12ch, 1fr)
+          repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
 
         div:nth-child(5) {
           display: none;

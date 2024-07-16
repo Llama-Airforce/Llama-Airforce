@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-match"
-    columns-header="1fr"
-    columns-data="match-columns-data"
     :rows="epochsSorted"
     :columns="['', t('deadline'), t('native'), t(`frax`), t('total')]"
     :sorting="true"
@@ -182,15 +180,15 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
 @import "@/Styles/Variables.scss";
 
 .datatable-match {
+  --columns-data: 1.5rem 1fr 1fr 1fr 1fr;
+
   .round-number {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  :deep(.match-columns-data) {
-    grid-template-columns: 1.5rem 1fr 1fr 1fr 1fr;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4),

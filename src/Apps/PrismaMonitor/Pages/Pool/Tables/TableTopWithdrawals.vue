@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-withdrawals"
-    columns-header="1fr"
-    columns-data="withdrawals-columns-data"
     :loading="loading"
     :rows="rows"
     :columns="['Address', 'Amount', 'Date', 'Tx']"
@@ -12,7 +10,7 @@
     </template>
 
     <template #row="props: { item: PoolStableOperation }">
-      <div class="address">
+      <div class="address font-mono">
         <a
           :href="`https://etherscan.io/address/${props.item.user}`"
           target="_blank"
@@ -20,6 +18,7 @@
           {{ addressShort(props.item.user, 8) }}
         </a>
       </div>
+
       <div class="number">
         <AsyncValue
           :value="props.item.amount"
@@ -32,7 +31,8 @@
       <div class="number">
         {{ new Date(props.item.timestamp * 1000).toLocaleDateString() }}
       </div>
-      <div class="address">
+
+      <div class="address number font-mono">
         <a
           :href="`https://etherscan.io/tx/${props.item.hash}`"
           target="_blank"
@@ -81,14 +81,13 @@ const { isFetching: loading, data } = useQuery({
 @import "@/Styles/Variables.scss";
 
 .datatable-withdrawals {
-  container-type: inline-size;
+  --columns-data: 1fr 1fr 1fr 1fr;
 
-  :deep(.withdrawals-columns-data) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
-    div:nth-child(3) {
+    div:nth-child(3),
+    div:nth-child(4) {
       justify-content: end;
     }
   }

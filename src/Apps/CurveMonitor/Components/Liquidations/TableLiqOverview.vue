@@ -1,7 +1,6 @@
 <template>
   <DataTable
     class="datatable-liq-overview"
-    columns-data="liq-overview-columns-data"
     :rows
   >
     <template #header-content>
@@ -147,9 +146,7 @@ const rows = computed((): Row[] => [
 @import "@/Styles/Variables.scss";
 
 .datatable-liq-overview {
-  :deep(.liq-overview-columns-data) {
-    grid-template-columns: 1fr auto;
-  }
+  --columns-data: 1fr auto;
 
   .red {
     color: var(--c-red);

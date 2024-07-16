@@ -2,7 +2,6 @@
   <div class="addresses">
     <DataTable
       class="datatable-addresses"
-      columns-data="addresses-columns-data"
       :rows="addresses"
     >
       <template #header-content>
@@ -76,11 +75,9 @@ const clipboard = async (addr: string) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-addresses {
-  height: 100%;
+  --columns-data: 2fr 6fr auto;
 
-  :deep(.addresses-columns-data) {
-    grid-template-columns: 2fr 6fr auto;
-  }
+  height: 100%;
 
   button {
     background: transparent;

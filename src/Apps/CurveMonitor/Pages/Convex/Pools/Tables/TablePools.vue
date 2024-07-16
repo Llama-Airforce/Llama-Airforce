@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-pools"
-    columns-header="1fr"
-    columns-data="pools-columns-data"
     :rows="pools"
     :columns="['', t('name'), t('apr'), t('tvl')]"
     :sorting="true"
@@ -101,11 +99,11 @@ const pools = computed((): Pool[] => {
 @import "@/Styles/Variables.scss";
 
 .datatable-pools {
+  --columns-data: 3fr 2fr 2fr 1rem;
+
   background: var(--c-lvl0);
 
-  :deep(.pools-columns-data) {
-    grid-template-columns: 3fr 2fr 2fr 1rem;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3) {

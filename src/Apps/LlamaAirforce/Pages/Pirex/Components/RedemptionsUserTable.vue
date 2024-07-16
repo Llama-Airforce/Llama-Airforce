@@ -1,7 +1,6 @@
 <template>
   <DataTable
     class="datatable-redemptions-user"
-    columns-data="redemptions-columns-data"
     :header="false"
     :columns="['Unlock', 'Amount', '']"
     :rows="redemptions"
@@ -18,7 +17,7 @@
         ></AsyncValue>
       </div>
 
-      <div>
+      <div class="number">
         <Button
           value="Redeem"
           :web3="true"
@@ -109,18 +108,13 @@ function balance(redemption: RedemptionPending) {
 @import "@/Styles/Variables.scss";
 
 .datatable-redemptions-user {
+  --columns-data: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
   padding: 0;
 
-  :deep(.redemptions-columns-data) {
-    grid-template-columns: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(1),
     div:nth-child(2) {
-      justify-self: end;
-    }
-
-    div:nth-child(3) {
       justify-self: end;
     }
   }

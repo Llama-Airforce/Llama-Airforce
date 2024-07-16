@@ -2,8 +2,6 @@
   <div class="colors">
     <DataTable
       class="datatable-colors"
-      columns-header="1fr"
-      columns-data="colors-columns-data"
       :rows="colors"
       :columns="['Variable', 'Value', 'Preview']"
     >
@@ -68,20 +66,18 @@ const colors: Color[] = [
 @include dashboard("colors");
 
 .datatable-colors {
-  :deep(.colors-columns-data) {
-    grid-template-columns: 0.2fr 0.2fr 0.6fr;
+  --columns-data: 0.2fr 0.2fr 0.6fr;
 
-    .preview-container {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+  .preview-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
-      .preview {
-        width: 50%;
-        height: 50%;
-        border-radius: var(--border-radius);
-      }
+    .preview {
+      width: 50%;
+      height: 50%;
+      border-radius: var(--border-radius);
     }
   }
 }

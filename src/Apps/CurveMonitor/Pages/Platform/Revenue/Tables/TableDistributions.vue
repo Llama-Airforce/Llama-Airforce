@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-distributions"
-    columns-header="1fr"
-    columns-data="distributions-columns-data"
     :rows
     :columns="['Date', 'Fees']"
     :sorting="true"
@@ -81,9 +79,9 @@ function formatDate(epoch: number): string {
 @import "@/Styles/Variables.scss";
 
 .datatable-distributions {
-  :deep(.distributions-columns-data) {
-    grid-template-columns: 1fr 1fr;
+  --columns-data: 1fr 1fr;
 
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2) {
       justify-content: end;

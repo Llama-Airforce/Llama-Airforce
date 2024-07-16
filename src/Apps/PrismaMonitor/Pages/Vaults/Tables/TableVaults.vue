@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-vaults"
-    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
-    columns-data="vaults-columns-data"
     :loading="loading"
     :rows="rows"
     :columns="['', 'Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
@@ -175,6 +173,12 @@ const loading = computed(() => rowsRaw.value.length === 0);
 @import "@/Styles/Variables.scss";
 
 .datatable-vaults {
+  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
+
+  --col-width: 11ch;
+  --columns-data: 20px minmax(12ch, 1fr)
+    repeat(6, minmax(var(--col-width), 0.75fr)) 1rem;
+
   container-type: inline-size;
 
   .search {
@@ -186,25 +190,18 @@ const loading = computed(() => rowsRaw.value.length === 0);
     opacity: 0.5;
   }
 
-  :deep(.vaults-columns-data) {
-    --col-width: 11ch;
+  img {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
+  }
 
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
-
-    grid-template-columns:
-      20px minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
-      1rem;
-
+  :deep(.row-data) {
     // Mobile
     @media only screen and (max-width: 1280px) {
       @container (max-width: 800px) {
-        grid-template-columns:
-          20px minmax(12ch, 1fr) repeat(5, minmax(var(--col-width), 0.75fr))
-          1rem;
+        --columns-data: 20px minmax(12ch, 1fr)
+          repeat(5, minmax(var(--col-width), 0.75fr)) 1rem;
 
         div:nth-child(8) {
           display: none;
@@ -212,9 +209,8 @@ const loading = computed(() => rowsRaw.value.length === 0);
       }
 
       @container (max-width: 650px) {
-        grid-template-columns:
-          20px minmax(12ch, 1fr) repeat(4, minmax(var(--col-width), 0.75fr))
-          1rem;
+        --columns-data: 20px minmax(12ch, 1fr)
+          repeat(4, minmax(var(--col-width), 0.75fr)) 1rem;
 
         div:nth-child(6) {
           display: none;
@@ -224,9 +220,8 @@ const loading = computed(() => rowsRaw.value.length === 0);
       @container (max-width: 550px) {
         --col-width: 10ch;
 
-        grid-template-columns:
-          20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
-          1rem;
+        --columns-data: 20px minmax(12ch, 1fr)
+          repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
 
         div:nth-child(7) {
           display: none;

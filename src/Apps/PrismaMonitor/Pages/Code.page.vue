@@ -2,7 +2,6 @@
   <div class="contracts">
     <DataTable
       class="datatable-repositories"
-      columns-data="repositories-columns-data"
       :rows="repositories"
       :columns="[t('repository'), t('description')]"
     >
@@ -57,9 +56,7 @@ const repositories: Repository[] = [
   gap: var(--dashboard-gap);
 
   .datatable-repositories {
-    :deep(.repositories-columns-data) {
-      grid-template-columns: 2fr 6fr;
-    }
+    --columns-data: 2fr 6fr;
   }
 }
 </style>

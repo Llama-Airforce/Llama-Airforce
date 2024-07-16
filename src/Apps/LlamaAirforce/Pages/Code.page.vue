@@ -3,7 +3,6 @@
     <div class="dashboard">
       <DataTable
         class="datatable-repositories"
-        columns-data="repositories-columns-data"
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
       >
@@ -27,7 +26,6 @@
 
       <DataTable
         class="datatable-other"
-        columns-data="other-columns-data"
         :rows="other"
         :columns="[t('other'), t('description')]"
       >
@@ -53,8 +51,6 @@
         v-for="(bundle, i) in bundles"
         :key="i"
         class="datatable-contracts"
-        columns-header="1fr"
-        columns-data="contracts-columns-data"
         :rows="bundle.contracts"
         :columns="[t('contract'), t('description')]"
       >
@@ -409,25 +405,19 @@ const { t } = useI18n();
     .datatable-contracts {
       grid-column: 1 / -1;
 
-      :deep(.contracts-columns-data) {
-        grid-template-columns: 3fr 4fr;
-      }
+      --columns-data: 3fr 4fr;
     }
 
     .datatable-repositories {
       grid-column: 1;
 
-      :deep(.repositories-columns-data) {
-        grid-template-columns: 2fr 6fr;
-      }
+      --columns-data: 2fr 6fr;
     }
 
     .datatable-other {
       grid-column: 2;
 
-      :deep(.other-columns-data) {
-        grid-template-columns: 3fr 4fr;
-      }
+      --columns-data: 3fr 4fr;
     }
   }
 }

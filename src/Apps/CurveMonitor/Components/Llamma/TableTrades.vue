@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-trades"
-    columns-header="1fr"
-    columns-data="trades-columns-data"
     :rows="trades"
     :columns="['Bought', '', '', 'Sold', '', '', 'Market Maker', 'Time']"
   >
@@ -107,7 +105,8 @@ const round = (x: number) =>
 @import "@/Styles/Variables.scss";
 
 .datatable-trades {
-  container-type: inline-size;
+  --columns-data: minmax(5rem, 1fr) 26px minmax(5rem, 1fr) minmax(5rem, 1fr)
+    26px minmax(5rem, 1fr) 6rem 6rem;
 
   :deep(.header .header-content) {
     display: flex;
@@ -116,17 +115,7 @@ const round = (x: number) =>
     gap: 1rem;
   }
 
-  :deep(.trades-columns-data) {
-    grid-template-columns:
-      minmax(5rem, 1fr)
-      26px
-      minmax(5rem, 1fr)
-      minmax(5rem, 1fr)
-      26px
-      minmax(5rem, 1fr)
-      6rem
-      6rem;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(1),
     div:nth-child(4),

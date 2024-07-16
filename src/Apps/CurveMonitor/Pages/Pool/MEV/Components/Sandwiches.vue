@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-sandwiches"
-    columns-header="1fr 2fr"
-    columns-data="sandwiches-columns-data"
     :rows="sandwiches"
     :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
     :expanded="expanded"
@@ -168,6 +166,9 @@ const onPage = async (pageNew: number) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-sandwiches {
+  --columns-header: 1fr 2fr;
+  --columns-data: 16rem 1fr 16rem 8rem 1rem;
+
   .title {
     margin-right: 1rem;
   }
@@ -195,9 +196,8 @@ const onPage = async (pageNew: number) => {
     }
   }
 
-  :deep(.sandwiches-columns-data) {
+  :deep(.row-data) {
     grid-column-gap: 2.5rem;
-    grid-template-columns: 16rem 1fr 16rem 8rem 1rem;
 
     // Right adjust number columns.
     div:nth-child(4) {

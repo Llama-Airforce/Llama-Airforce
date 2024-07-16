@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-pegkeepers"
-    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
-    columns-data="pegkeepers-columns-data"
     :loading
     :rows
     :columns="['Name', 'Debt', 'TVL', 'Volume', 'Fees']"
@@ -177,6 +175,11 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 @import "@/Styles/Variables.scss";
 
 .datatable-pegkeepers {
+  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
+
+  --col-width: 12ch;
+  --columns-data: 1fr repeat(4, var(--col-width));
+
   container-type: inline-size;
 
   .search {
@@ -184,10 +187,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     margin-left: 1rem;
   }
 
-  :deep(.pegkeepers-columns-data) {
-    --col-width: 12ch;
-
-    grid-template-columns: 1fr repeat(4, var(--col-width));
+  :deep(.row-data) {
+    --columns-data: 1fr repeat(4, var(--col-width));
 
     // Non mobile
     @media only screen and (min-width: 1280px) {
@@ -232,31 +233,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
       @container (max-width: 425px) {
         --col-width: 6ch;
-      }
-
-      @container (max-width: 375px) {
-        grid-template-columns: 1fr repeat(3, var(--col-width));
-
-        div:nth-child(5) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 325px) {
-        grid-template-columns: 1fr repeat(2, var(--col-width));
-
-        div:nth-child(2) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 250px) {
-        grid-template-columns: 1fr;
-
-        div:nth-child(3),
-        div:nth-child(4) {
-          display: none;
-        }
       }
     }
 

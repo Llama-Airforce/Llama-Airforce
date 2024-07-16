@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-settlements"
-    columns-header="1fr"
-    columns-data="settlements-columns-data"
     :rows="rowsPage"
     :columns="[
       'Token',
@@ -197,6 +195,9 @@ function symbol(settlement: CowSwapSettlement) {
 @import "@/Styles/Variables.scss";
 
 .datatable-settlements {
+  --columns-data: minmax(5rem, 1fr) minmax(10ch, 1fr) minmax(10ch, 1fr)
+    minmax(10ch, 1fr) 10ch minmax(5rem, 0.75fr) 16ch 20px;
+
   .header-content {
     display: flex;
     gap: 1rem;
@@ -204,37 +205,33 @@ function symbol(settlement: CowSwapSettlement) {
     align-items: center;
   }
 
-  :deep(.settlements-columns-data) {
-    grid-template-columns:
-      minmax(5rem, 1fr)
-      minmax(10ch, 1fr)
-      minmax(10ch, 1fr)
-      minmax(10ch, 1fr)
-      10ch
-      minmax(5rem, 0.75fr)
-      16ch
-      20px;
+  .token {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 
-    .token {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    img {
+      width: 26px;
+    }
+  }
 
-      img {
-        width: 26px;
+  .profit {
+    > .pct {
+      color: var(--c-red);
+
+      &.green {
+        color: var(--c-green);
       }
     }
+  }
 
-    .profit {
-      > .pct {
-        color: var(--c-red);
+  a {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
-        &.green {
-          color: var(--c-green);
-        }
-      }
-    }
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3),
@@ -243,12 +240,6 @@ function symbol(settlement: CowSwapSettlement) {
     div:nth-child(6),
     div:nth-child(7) {
       justify-content: end;
-    }
-
-    a {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
   }
 }

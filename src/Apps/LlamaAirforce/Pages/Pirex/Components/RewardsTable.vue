@@ -1,7 +1,6 @@
 <template>
   <DataTable
     class="datatable-rewards"
-    columns-data="rewards-columns-data"
     :class="{ 'can-select': canSelect }"
     :header="false"
     :columns
@@ -28,7 +27,10 @@
         ></AsyncValue>
       </div>
 
-      <div v-if="canSelect">
+      <div
+        v-if="canSelect"
+        style="justify-self: center"
+      >
         <Checkbox
           :model-value="isSelected(reward)"
           @update:model-value="emit('select', reward)"
@@ -74,25 +76,19 @@ function isSelected(reward: Reward) {
 @import "@/Styles/Variables.scss";
 
 .datatable-rewards {
+  --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
+
   padding: 0;
 
   &.can-select {
-    :deep(.rewards-columns-data) {
-      grid-template-columns: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr) 3rem;
-    }
+    --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr) 3rem;
   }
 
-  :deep(.rewards-columns-data) {
-    grid-template-columns: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4) {
       justify-content: end;
-    }
-
-    div:nth-child(5) {
-      justify-self: center;
     }
   }
 

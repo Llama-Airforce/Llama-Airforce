@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-trove-ops"
-    columns-header="1fr 1fr auto"
-    columns-data="trove-ops-columns-data"
     :loading="loading"
     :rows="rows"
     :columns="[
@@ -142,27 +140,28 @@ const titleCase = (s: string): string =>
 @import "@/Styles/Variables.scss";
 
 .datatable-trove-ops {
+  --columns-header: 1fr 1fr auto;
+
+  --col-width: 12ch;
+  --columns-data: minmax(14ch, 0.75fr)
+    repeat(5, minmax(var(--col-width), 0.75fr)) 1fr;
+
   container-type: inline-size;
 
   .title {
     margin-right: 1rem;
   }
 
-  :deep(.trove-ops-columns-data) {
+  :deep(.row-data) {
     --col-width: 12ch;
-
-    grid-template-columns:
-      minmax(14ch, 0.75fr) repeat(5, minmax(var(--col-width), 0.75fr))
-      1fr;
 
     // Mobile
     @media only screen and (max-width: 1280px) {
       gap: 0.25rem;
 
       @container (max-width: 800px) {
-        grid-template-columns:
-          minmax(14ch, 0.75fr) repeat(4, minmax(var(--col-width), 0.75fr))
-          1fr;
+        --columns-data: minmax(14ch, 0.75fr)
+          repeat(4, minmax(var(--col-width), 0.75fr)) 1fr;
 
         div:nth-child(5) {
           display: none;
@@ -170,9 +169,8 @@ const titleCase = (s: string): string =>
       }
 
       @container (max-width: 650px) {
-        grid-template-columns:
-          minmax(14ch, 0.75fr) repeat(3, minmax(var(--col-width), 0.75fr))
-          1fr;
+        --columns-data: minmax(14ch, 0.75fr)
+          repeat(3, minmax(var(--col-width), 0.75fr)) 1fr;
 
         div:nth-child(6) {
           display: none;
@@ -180,10 +178,8 @@ const titleCase = (s: string): string =>
       }
 
       @container (max-width: 520px) {
-        grid-template-columns: minmax(14ch, 0.75fr) repeat(
-            3,
-            minmax(var(--col-width), 0.75fr)
-          );
+        --columns-data: minmax(14ch, 0.75fr)
+          repeat(3, minmax(var(--col-width), 0.75fr));
 
         div:nth-child(7) {
           display: none;

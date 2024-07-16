@@ -4,8 +4,6 @@
       <template #example>
         <DataTable
           class="datatable-example"
-          columns-header="1fr auto"
-          columns-data="example-columns-data"
           :rows="rows"
           :columns="['', 'Deadline', '$/vlCVX', 'Total']"
           :sorting="true"
@@ -101,8 +99,6 @@
       <template #example>
         <DataTable
           class="datatable-multiselect"
-          columns-header="1fr auto"
-          columns-data="multiselect-columns-data"
           :rows="rows"
           :columns="['', 'Deadline', '']"
           @selected="onCheck"
@@ -216,8 +212,6 @@ const toggleExpand = (round: Round) => {
 
 const dataTable1 = `<DataTable
   class="datatable-example"
-  columns-header="1fr auto"
-  columns-data="example-columns-data"
   :rows="rows"
   :columns="['', 'Deadline', '$/vlCVX', 'Total']"
   :sorting="true"
@@ -324,24 +318,25 @@ const onSelected = (round: Round): void => {
 };`;
 
 const dataTable3 = `.datatable-example {
+  --columns-header: 1fr auto;
+  --columns-data: 1.5rem 1fr 1fr 1fr 20px;
+
   .round-number {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  :deep(.example-columns-data) {
-    grid-template-columns: 1.5rem 1fr 1fr 1fr 20px;
+  .vote-link {
+    width: 1.5rem;
+    text-align: center;
+  }
 
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4) {
       justify-content: end;
-    }
-
-    .vote-link {
-      width: 1.5rem;
-      text-align: center;
     }
   }
 }`;
@@ -359,8 +354,6 @@ const onCheck = (round: Round) => {
 
 const multiselect = `<DataTable
   class="datatable-multiselect"
-  columns-header="1fr auto"
-  columns-data="multiselect-columns-data"
   :rows="rows"
   :columns="['', 'Deadline', '']"
   @selected="onCheck"
@@ -411,37 +404,37 @@ const onCheck = (round: Round) => {
 @include dashboard("datatables");
 
 .datatable-example {
+  --columns-header: 1fr auto;
+  --columns-data: 1.5rem 1fr 1fr 1fr 20px;
+
   .round-number {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  :deep(.example-columns-data) {
-    grid-template-columns: 1.5rem 1fr 1fr 1fr 20px;
+  .vote-link {
+    width: 1.5rem;
+    text-align: center;
+  }
 
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4) {
       justify-content: end;
     }
-
-    .vote-link {
-      width: 1.5rem;
-      text-align: center;
-    }
   }
 }
 
 .datatable-multiselect {
+  --columns-header: 1fr auto;
+  --columns-data: 1.5rem 1fr auto;
+
   .round-number {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  :deep(.multiselect-columns-data) {
-    grid-template-columns: 1.5rem 1fr auto;
   }
 }
 </style>

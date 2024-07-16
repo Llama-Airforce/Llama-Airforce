@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-lockers"
-    columns-header="1fr 3fr"
-    columns-data="lockers-columns-data"
     :rows="rowsPage"
     :columns="columns"
     :sorting="true"
@@ -165,7 +163,10 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 @import "@/Styles/Variables.scss";
 
 .datatable-lockers {
-  container-type: inline-size;
+  --columns-header: 1fr 3fr;
+
+  --col-width: 11ch;
+  --columns-data: 1fr repeat(4, minmax(12ch, 0.33fr));
 
   .title {
     margin-right: 1rem;
@@ -175,26 +176,17 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     flex-grow: 1;
   }
 
-  :deep(.lockers-columns-data) {
-    --col-width: 11ch;
+  .zero {
+    opacity: 0.5;
+  }
 
-    grid-template-columns: 1fr repeat(4, minmax(12ch, 0.33fr));
-
-    // Mobile
-    @media only screen and (max-width: 1280px) {
-      gap: 0.25rem;
-    }
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3),
     div:nth-child(4),
     div:nth-child(5) {
       justify-content: end;
-    }
-
-    .zero {
-      opacity: 0.5;
     }
   }
 }

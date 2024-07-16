@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-pools"
-    columns-header="1fr auto"
-    columns-data="pools-columns-data"
     expand-side="left"
     :rows="rowsPage"
     :columns="['', '', 'Name', 'Volume (24h)', 'TVL', 'Util Rate']"
@@ -124,16 +122,14 @@ function utilRate(pool: Pool) {
 @import "@/Styles/Variables.scss";
 
 .datatable-pools {
-  container-type: inline-size;
+  --columns-header: 1fr auto;
 
-  :deep(.pools-columns-data) {
-    --col-width: 11ch;
+  --col-width: 11ch;
+  --columns-data: 1rem calc(4 * (26px + 1ch)) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.5fr);
 
-    grid-template-columns:
-      1rem calc(4 * (26px + 1ch))
-      minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.5fr);
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(4),
     div:nth-child(5),

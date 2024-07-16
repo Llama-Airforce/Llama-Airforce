@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-distributions"
-    columns-header="1fr 14rem minmax(auto, 25rem)"
-    columns-data="cushions-columns-data"
     :loading
     :rows
     :columns="['Name', 'Address', 'Fees ($)']"
@@ -113,6 +111,9 @@ const linkAddress = (addr: string): string => {
 @import "@/Styles/Variables.scss";
 
 .datatable-distributions {
+  --columns-header: 1fr 14rem minmax(auto, 25rem);
+  --columns-data: 1fr 25rem 10rem;
+
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
@@ -142,9 +143,7 @@ const linkAddress = (addr: string): string => {
     }
   }
 
-  :deep(.cushions-columns-data) {
-    grid-template-columns: 1fr 25rem 10rem;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3) {
       justify-content: end;

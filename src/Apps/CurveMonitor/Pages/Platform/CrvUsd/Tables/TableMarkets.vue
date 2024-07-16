@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-markets"
-    columns-header="minmax(7rem, 1fr) minmax(auto, 25rem)"
-    columns-data="markets-columns-data"
     expand-side="left"
     :loading
     :rows
@@ -158,26 +156,20 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 @import "@/Styles/Variables.scss";
 
 .datatable-markets {
-  container-type: inline-size;
+  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
+
+  --col-width: 11ch;
+  --columns-data: 1rem minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.75fr);
 
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
   }
 
-  :deep(.markets-columns-data) {
-    --col-width: 11ch;
-
-    grid-template-columns:
-      1rem
-      minmax(12ch, 1fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr);
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4),

@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-markets"
-    columns-header="1fr"
-    columns-data="markets-columns-data"
     expand-side="left"
     :loading
     :rows="markets"
@@ -128,20 +126,12 @@ const tokenIcon = (market: Market) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-markets {
-  container-type: inline-size;
+  --col-width: 10ch;
+  --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.25fr);
 
-  :deep(.markets-columns-data) {
-    --col-width: 10ch;
-
-    grid-template-columns:
-      1rem
-      26px
-      minmax(12ch, 1fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.75fr)
-      minmax(var(--col-width), 0.25fr);
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(4),
     div:nth-child(5),
@@ -149,13 +139,13 @@ const tokenIcon = (market: Market) => {
     div:nth-child(7) {
       justify-content: end;
     }
+  }
 
-    img {
-      aspect-ratio: 1;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-    }
+  img {
+    aspect-ratio: 1;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 50%;
   }
 }
 </style>

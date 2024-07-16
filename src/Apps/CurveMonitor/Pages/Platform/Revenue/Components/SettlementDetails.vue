@@ -57,7 +57,6 @@
 
       <DataTable
         class="datatable-solvers col"
-        columns-data="solvers-columns-data"
         :rows="solutions"
       >
         <template #header-content>
@@ -228,9 +227,7 @@ const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
   }
 
   .datatable-solvers {
-    :deep(.solvers-columns-data) {
-      grid-template-columns: 25px minmax(24ch, 1fr) 2fr auto;
-    }
+    --columns-data: 25px minmax(24ch, 1fr) 2fr auto;
 
     button {
       background: transparent;

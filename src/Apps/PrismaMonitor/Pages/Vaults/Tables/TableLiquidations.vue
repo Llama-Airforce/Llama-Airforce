@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-liquidations"
-    columns-header="1fr 2fr"
-    columns-data="liquidations-columns-data"
     :loading="loading"
     :rows="rowsPage"
     :columns="columns"
@@ -186,7 +184,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 @import "@/Styles/Variables.scss";
 
 .datatable-liquidations {
-  container-type: inline-size;
+  --columns-header: 1fr 2fr;
+
+  --col-width: 11ch;
+  --columns-data: minmax(12ch, 1fr) minmax(12ch, 1fr)
+    repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
 
   .title {
     margin-right: 1rem;
@@ -196,21 +198,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     flex-grow: 1;
   }
 
-  :deep(.liquidations-columns-data) {
-    --col-width: 11ch;
-
-    grid-template-columns:
-      minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(
-        3,
-        minmax(var(--col-width), 0.75fr)
-      )
-      1rem;
-
-    // Mobile
-    @media only screen and (max-width: 1280px) {
-      gap: 0.25rem;
-    }
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4),

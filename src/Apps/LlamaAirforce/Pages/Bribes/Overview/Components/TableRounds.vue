@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-bribe-rounds"
-    columns-header="1fr auto"
-    columns-data="bribes-columns-data"
     :rows="epochs"
     :columns="['', t('deadline'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
@@ -81,7 +79,7 @@ const { protocol } = storeToRefs(useBribesStore());
 const router = useRouter();
 
 const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "deadline", "vlasset", "total"], "total");
+  useSort(["", "deadline", "vlasset", "total"], "deadline");
 
 const epochs = computed((): EpochOverview[] => {
   return orderBy(
@@ -132,33 +130,34 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
 @import "@/Styles/Variables.scss";
 
 .datatable-bribe-rounds {
+  --columns-header: 1fr auto;
+  --columns-data: 1.5rem 1fr 1fr 1fr;
+
   .round-number {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  :deep(.bribes-columns-data) {
-    grid-template-columns: 1.5rem 1fr 1fr 1fr;
+  .vote-link {
+    width: 1.5rem;
+    text-align: center;
 
+    .tooltip {
+      justify-content: center;
+    }
+
+    // Fix text in tooltip having link color.
+    .popper {
+      color: var(--c-text);
+    }
+  }
+
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4) {
       justify-content: end;
-    }
-
-    .vote-link {
-      width: 1.5rem;
-      text-align: center;
-
-      .tooltip {
-        justify-content: center;
-      }
-
-      // Fix text in tooltip having link color.
-      .popper {
-        color: var(--c-text);
-      }
     }
   }
 }

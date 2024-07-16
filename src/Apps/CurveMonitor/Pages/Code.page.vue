@@ -2,7 +2,6 @@
   <div class="contracts">
     <DataTable
       class="datatable-repositories"
-      columns-data="repositories-columns-data"
       :rows="repositories"
       :columns="[t('repository'), t('description')]"
       title="Yolo"
@@ -187,21 +186,15 @@ const linkContract = (contract: Contract): string => {
   gap: var(--dashboard-gap);
 
   .datatable-contracts {
-    :deep(.contracts-columns-data) {
-      grid-template-columns: 3fr 4fr;
-    }
+    --columns-data: 3fr 4fr;
   }
 
   .datatable-apis {
-    :deep(.apis-columns-data) {
-      grid-template-columns: 3fr 4fr;
-    }
+    --columns-data: 3fr 4fr;
   }
 
   .datatable-repositories {
-    :deep(.repositories-columns-data) {
-      grid-template-columns: 2fr 6fr;
-    }
+    --columns-data: 2fr 6fr;
   }
 }
 </style>

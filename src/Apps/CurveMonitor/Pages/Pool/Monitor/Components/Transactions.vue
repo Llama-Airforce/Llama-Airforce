@@ -2,8 +2,6 @@
   <DataTable
     class="datatable-trades"
     :class="{ compact, time }"
-    columns-header="1fr 2fr"
-    columns-data="trades-columns-data"
     :rows="rowsPage"
     :columns="columns"
   >
@@ -238,6 +236,10 @@ const onType = (tabIndex: number) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-trades {
+  --columns-header: 1fr 2fr;
+  --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
+    minmax(10rem, 0.75fr);
+
   &.compact {
     padding: 0 0 1rem 0;
   }
@@ -289,11 +291,12 @@ const onType = (tabIndex: number) => {
     }
   }
 
-  :deep(.trades-columns-data) {
+  .vote-link {
+    text-align: center;
+  }
+
+  :deep(.row-data) {
     grid-column-gap: 4rem;
-    grid-template-columns:
-      6rem 4rem 7rem 7rem minmax(5rem, 2fr)
-      6rem minmax(10rem, 0.75fr);
 
     // Right adjust number columns.
     div:nth-child(6),
@@ -301,18 +304,13 @@ const onType = (tabIndex: number) => {
     div:nth-child(8) {
       justify-content: end;
     }
-
-    .vote-link {
-      text-align: center;
-    }
   }
 
   :not(&.time) {
-    :deep(.trades-columns-data) {
+    --columns-data: 6rem 7rem 7rem minmax(5rem, 1fr) minmax(6rem, 0.75fr);
+
+    :deep(.row-data) {
       grid-column-gap: 4rem;
-      grid-template-columns:
-        6rem 7rem 7rem minmax(5rem, 1fr)
-        minmax(6rem, 0.75fr);
 
       // Right adjust number columns.
       div:nth-child(5) {
@@ -334,9 +332,10 @@ const onType = (tabIndex: number) => {
       }
     }
 
-    :deep(.trades-columns-data) {
+    --columns-data: 1fr auto;
+
+    :deep(.row-data) {
       grid-column-gap: 2rem;
-      grid-template-columns: 1fr auto;
 
       div:nth-child(1),
       div:nth-child(2),

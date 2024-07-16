@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-gauges"
-    columns-header="1fr"
-    columns-data="gauges-columns-data"
     :rows="gauges"
     :columns="['', t('name'), t('tvl')]"
     :sorting="true"
@@ -88,9 +86,9 @@ const gauges = computed((): Gauge[] => {
 @import "@/Styles/Variables.scss";
 
 .datatable-gauges {
-  :deep(.gauges-columns-data) {
-    grid-template-columns: 4fr 1fr 1rem;
+  --columns-data: 4fr 1fr 1rem;
 
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3) {

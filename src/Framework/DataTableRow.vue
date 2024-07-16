@@ -5,7 +5,7 @@
   >
     <div
       class="row-data item"
-      :class="[columns, { active: selected, expandable, 'has-data': !!data }]"
+      :class="{ active: selected, expandable, 'has-data': !!data }"
       @click="onClick"
     >
       <div
@@ -47,7 +47,6 @@
 // Props
 interface Props<T> {
   data?: T;
-  columns?: string;
   selected?: boolean;
   expanded?: boolean;
   expandSide?: "left" | "right";
@@ -55,7 +54,6 @@ interface Props<T> {
 
 const {
   data,
-  columns = "auto",
   selected = false,
   expanded = false,
   expandSide = "right",

@@ -15,10 +15,7 @@
         <i :class="icon"></i>
       </div>
 
-      <div
-        class="header-content"
-        :style="columnsHeaderCss"
-      >
+      <div class="header-content">
         <slot name="header-content"></slot>
       </div>
     </div>
@@ -28,7 +25,7 @@
       <div
         v-if="columns.length > 0"
         class="row-data"
-        :class="[columnsData, { 'selected-below': selectedBelow(-1) }]"
+        :class="{ 'selected-below': selectedBelow(-1) }"
       >
         <slot name="column-headers">
           <div
@@ -68,7 +65,6 @@
           :key="(row as never)"
           :data="row"
           :class="{ 'selected-below': selectedBelow(i) }"
-          :columns="columnsData"
           :selected="selectedRow === row"
           :expanded="expanded.includes(row)"
           :expand-side="expandSide"
@@ -108,7 +104,6 @@
         <DataTableRow
           v-if="!!$slots['row-aggregation'] && rows.length > 0"
           class="aggregation"
-          :columns="columnsData"
         >
           <template #row>
             <slot name="row-aggregation"></slot>
@@ -126,13 +121,8 @@ const { t } = useI18n();
 
 // Props
 interface Props {
-  /** CSS column templates of the header.. */
-  columnsHeader?: string;
-  /** CSS column templates of the underlying data rows. */
-  columnsData?: string;
   /** The names of the columns. */
   columns?: string[];
-
   /** The rows of the data table. */
   rows?: TData[];
   /** The minimum number of rows in case you don't want to show the 'no data' message. */
@@ -161,10 +151,7 @@ interface Props {
 }
 
 const {
-  columnsHeader = "auto",
-  columnsData = "auto",
   columns = [],
-
   rows = [],
   rowsMin = null,
   selectedRow = null,
@@ -192,10 +179,6 @@ const emit = defineEmits<{
 // Refs
 const currentSort = ref(undefined) as Ref<TSortingColumn | undefined>;
 const currentSortDir = ref<SortOrder>("asc");
-
-const columnsHeaderCss = computed((): string => {
-  return `grid-template-columns: ${columnsHeader}`;
-});
 
 const rowsEmpty = computed((): never[] => {
   if (rowsMin === null) {
@@ -289,6 +272,9 @@ const sortColumn = (index: number): void => {
 
   @include loading-backdrop();
 
+  --columns-header: auto;
+  --columns-data: auto;
+
   > .header {
     padding: 0 0 0.875rem 0rem;
     display: grid;
@@ -308,6 +294,8 @@ const sortColumn = (index: number): void => {
     }
 
     > .header-content {
+      grid-template-columns: var(--columns-header);
+
       grid-column: 2;
       display: grid;
       align-items: center;
@@ -377,6 +365,7 @@ const sortColumn = (index: number): void => {
 
   :deep(.row-data) {
     display: grid;
+    grid-template-columns: var(--columns-data);
     padding: 0 1rem;
     grid-column-gap: 1rem;
     min-height: 3rem;

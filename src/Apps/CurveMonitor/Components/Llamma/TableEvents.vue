@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-events"
-    columns-header="1fr"
-    columns-data="events-columns-data"
     :rows="events"
     :columns="['Type', 'Amount', '', 'Provider', 'Time']"
   >
@@ -86,7 +84,7 @@ const type = (x: LlammaEvent) =>
 @import "@/Styles/Variables.scss";
 
 .datatable-events {
-  container-type: inline-size;
+  --columns-data: 8rem 1fr 1fr 6rem 6rem;
 
   :deep(.header .header-content) {
     display: flex;
@@ -95,14 +93,7 @@ const type = (x: LlammaEvent) =>
     gap: 1rem;
   }
 
-  :deep(.events-columns-data) {
-    grid-template-columns:
-      8rem
-      1fr
-      1fr
-      6rem
-      6rem;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(5) {

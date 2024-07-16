@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-bribe-personal"
-    columns-header="1fr auto"
-    columns-data="personal-columns-data"
     :rows="bribedOrdered"
     :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
@@ -286,6 +284,9 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 @import "@/Styles/Variables.scss";
 
 .datatable-personal {
+  --columns-header: 1fr auto;
+  --columns-data: 1fr 3fr 2fr 2fr;
+
   .round-number {
     display: flex;
     justify-content: center;
@@ -300,9 +301,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     }
   }
 
-  :deep(.personal-columns-data) {
-    grid-template-columns: 1fr 3fr 2fr 2fr;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3),
     div:nth-child(4) {

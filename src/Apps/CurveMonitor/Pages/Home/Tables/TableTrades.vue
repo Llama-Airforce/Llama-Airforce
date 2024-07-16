@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-trades"
-    columns-header="1fr"
-    columns-data="trades-columns-data"
     :rows="trades"
     :columns="['Tx', 'Name', 'Value']"
   >
@@ -13,7 +11,7 @@
     <template #row="props: { item: Trade }">
       <div>
         <a
-          class="vote-link"
+          class="vote-link font-mono"
           :href="`https://etherscan.io/tx/${props.item.tx}`"
           target="_blank"
           @click.stop
@@ -48,13 +46,9 @@ const { data: trades } = useQueryTradesLarge();
 @import "@/Styles/Variables.scss";
 
 .datatable-trades {
-  :deep(.trades-columns-data) {
-    grid-template-columns: 6rem 1fr auto;
+  --columns-data: 6rem 1fr auto;
 
-    div:nth-child(1) {
-      font-family: var(--font-mono);
-    }
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(3) {
       justify-content: end;

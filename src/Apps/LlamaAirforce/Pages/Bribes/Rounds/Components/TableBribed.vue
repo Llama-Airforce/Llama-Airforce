@@ -1,8 +1,6 @@
 <template>
   <DataTable
     class="datatable-bribed"
-    columns-header="1fr"
-    columns-data="bribed-columns-data"
     :rows="bribed"
     :columns="[t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="true"
@@ -141,6 +139,8 @@ const bribes = (bribed: Bribed): Bribe[] => {
 @import "@/Styles/Variables.scss";
 
 .datatable-bribed {
+  --columns-data: 1.5fr 0.6fr 0.6fr;
+
   .logo {
     display: flex;
     justify-content: center;
@@ -153,9 +153,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
     object-fit: scale-down;
   }
 
-  :deep(.bribed-columns-data) {
-    grid-template-columns: 1.5fr 0.6fr 0.6fr;
-
+  :deep(.row-data) {
     // Right adjust number columns.
     div:nth-child(2),
     div:nth-child(3) {

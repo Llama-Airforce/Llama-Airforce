@@ -2,7 +2,6 @@
   <div class="properties">
     <DataTable
       class="datatable-properties"
-      columns-data="properties-columns-data"
       :rows="properties"
     >
       <template #header-content>
@@ -114,11 +113,9 @@ const clipboard = async (addr: string) => {
 @import "@/Styles/Variables.scss";
 
 .datatable-properties {
-  height: 100%;
+  --columns-data: 2fr 6fr;
 
-  :deep(.properties-columns-data) {
-    grid-template-columns: 2fr 6fr;
-  }
+  height: 100%;
 
   .token-info {
     display: grid;

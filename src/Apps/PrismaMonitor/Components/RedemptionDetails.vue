@@ -29,8 +29,6 @@
 
       <DataTable
         class="datatable-troves-affected"
-        columns-header="2fr 1fr"
-        columns-data="troves-affected-columns-data"
         :rows="rows"
         :columns="['Trove']"
       >
@@ -116,6 +114,9 @@ const rows = computed((): string[] =>
   }
 
   > .datatable-troves-affected {
+    --columns-header: 2fr 1fr;
+    --columns-data: 1fr;
+
     width: 100%;
     padding: 0;
     max-height: 50ch;
@@ -126,10 +127,6 @@ const rows = computed((): string[] =>
 
     .search {
       font-size: 0.875rem;
-    }
-
-    :deep(.troves-affected-columns-data) {
-      grid-template-columns: 1fr;
     }
   }
 }
