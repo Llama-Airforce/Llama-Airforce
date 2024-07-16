@@ -327,6 +327,12 @@ const sortColumn = (index: number): void => {
       min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
       position: relative;
 
+      > .row {
+        &.aggregation {
+          border-top: var(--datatable-border-aggregation);
+        }
+      }
+
       > .loader {
         position: absolute;
         inset: 0;
@@ -343,19 +349,6 @@ const sortColumn = (index: number): void => {
         justify-content: center;
         margin: 0 auto;
       }
-    }
-  }
-
-  :deep(.row) {
-    &.expanded {
-      > .row-data {
-        background: var(--c-lvl1);
-        border-bottom-width: 0;
-      }
-    }
-
-    &.aggregation {
-      border-top: var(--datatable-border-aggregation);
     }
   }
 

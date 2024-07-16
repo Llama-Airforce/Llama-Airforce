@@ -11,7 +11,6 @@
       <div
         v-if="data && expandable && expandSide === 'left'"
         class="expander"
-        :class="{ expanded }"
       >
         <i class="fas fa-chevron-up"></i>
       </div>
@@ -21,7 +20,6 @@
       <div
         v-if="data && expandable && expandSide !== 'left'"
         class="expander"
-        :class="{ expanded }"
       >
         <i class="fas fa-chevron-up"></i>
       </div>
@@ -115,6 +113,19 @@ const onClick = (): void => {
     }
   }
 
+  &.expanded {
+    > .row-data {
+      background: var(--c-lvl1);
+      border-bottom-width: 0;
+
+      > .expander {
+        > i {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
   > .row-data {
     &.expandable.has-data:hover {
       cursor: pointer;
@@ -130,12 +141,6 @@ const onClick = (): void => {
       > i {
         transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
         transform: rotate(90deg);
-      }
-
-      &.expanded {
-        > i {
-          transform: rotate(180deg);
-        }
       }
     }
   }
