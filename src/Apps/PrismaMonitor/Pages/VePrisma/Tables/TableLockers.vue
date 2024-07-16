@@ -3,11 +3,12 @@
     class="datatable-lockers"
     :rows="rowsPage"
     :columns="columns"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumnsEnabled"
-    sorting-default-column="weight"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      enabled: sortColumnsEnabled,
+      default: 'weight',
+      defaultDir: 'desc',
+    }"
     @sort-column="onSort"
   >
     <template #header-content>

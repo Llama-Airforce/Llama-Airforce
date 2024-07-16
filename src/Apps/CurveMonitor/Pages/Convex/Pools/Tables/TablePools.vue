@@ -3,11 +3,12 @@
     class="datatable-pools"
     :rows="pools"
     :columns="['', t('name'), t('apr'), t('tvl')]"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumnsNoEmpty"
-    sorting-default-column="tvl"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      enabled: sortColumnsNoEmpty,
+      default: 'tvl',
+      defaultDir: 'desc',
+    }"
     :expanded="expanded"
     @sort-column="onSort"
   >

@@ -3,11 +3,11 @@
     class="datatable-bribe-personal"
     :rows="bribedOrdered"
     :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumns"
-    sorting-default-column="total"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      default: 'total',
+      defaultDir: 'desc',
+    }"
     @sort-column="onSort"
   >
     <template #header-content>

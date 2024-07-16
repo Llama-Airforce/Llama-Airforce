@@ -33,15 +33,15 @@
             :key="column"
             class="column-header"
             :class="{
-              'sortable-header': sorting && isSortingEnabled(index),
-              'current-sort': currentSort == sortingColumns[index],
+              'sortable-header': isSortingEnabled(index),
+              'current-sort': currentSort == sorting.columns[index],
             }"
             @click="sortColumn(index)"
           >
             {{ column }}
 
             <i
-              v-if="sorting && isSortingEnabled(index)"
+              v-if="isSortingEnabled(index)"
               class="sorting-arrow fa fa-caret-right"
               :class="{
                 asc: isSortAscending(index),
@@ -119,6 +119,13 @@ import { type SortOrder } from "@/Framework/SortOrder";
 
 const { t } = useI18n();
 
+type Sorting = {
+  columns: readonly TSortingColumn[];
+  enabled?: readonly TSortingColumn[];
+  default?: TSortingColumn;
+  defaultDir?: SortOrder;
+};
+
 // Props
 interface Props {
   /** The names of the columns. */
@@ -135,13 +142,7 @@ interface Props {
   expandSide?: "left" | "right";
 
   /** Whether columns can be sorted or not. */
-  sorting?: boolean;
-
-  /** The names of the sorting columns. */
-  sortingColumns?: readonly TSortingColumn[];
-  sortingColumnsEnabled?: readonly TSortingColumn[];
-  sortingDefaultColumn?: TSortingColumn;
-  sortingDefaultDir?: SortOrder;
+  sorting?: Sorting;
 
   /** Icon shown to the left of the header title. */
   icon?: string;
@@ -158,12 +159,10 @@ const {
 
   expanded = [],
   expandSide = "right",
-  sorting = false,
 
-  sortingColumns = [],
-  sortingColumnsEnabled = [],
-  sortingDefaultColumn,
-  sortingDefaultDir,
+  sorting = {
+    columns: [],
+  },
 
   icon = "",
   header = true,
@@ -177,9 +176,6 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const currentSort = ref(undefined) as Ref<TSortingColumn | undefined>;
-const currentSortDir = ref<SortOrder>("asc");
-
 const rowsEmpty = computed((): never[] => {
   if (rowsMin === null) {
     return [];
@@ -189,18 +185,7 @@ const rowsEmpty = computed((): never[] => {
   return new Array<never>(count);
 });
 
-// Hooks
-onBeforeMount(() => {
-  if (sortingDefaultColumn) {
-    currentSort.value = sortingDefaultColumn;
-  }
-
-  if (sortingDefaultDir) {
-    currentSortDir.value = sortingDefaultDir;
-  }
-});
-
-// Events
+// Selecting
 const onSelect = (data?: TData): void => {
   if (data) {
     emit("selected", data);
@@ -223,23 +208,29 @@ const selectedBelow = (index: number): boolean => {
   return false;
 };
 
+// Sorting
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+const currentSort = ref(sorting.default) as Ref<TSortingColumn | undefined>;
+const currentSortDir = ref<SortOrder>(sorting.defaultDir ?? "asc");
+
 const isSortingEnabled = (index: number) =>
-  sortingColumnsEnabled.includes(sortingColumns[index]);
+  (sorting.enabled ?? sorting.columns).includes(sorting.columns[index]);
 
 const isSortAscending = (index: number) =>
-  currentSort.value === sortingColumns[index] && currentSortDir.value === "asc";
+  currentSort.value === sorting.columns[index] &&
+  currentSortDir.value === "asc";
 
 const isSortDescending = (index: number) =>
-  currentSort.value === sortingColumns[index] &&
+  currentSort.value === sorting.columns[index] &&
   currentSortDir.value === "desc";
 
 const sortColumn = (index: number): void => {
   // Only sort columns where sorting is enabled.
-  if (!sorting || !isSortingEnabled(index)) {
+  if (!isSortingEnabled(index)) {
     return;
   }
 
-  const columnName = sortingColumns[index];
+  const columnName = sorting.columns[index];
 
   currentSortDir.value =
     columnName === currentSort.value

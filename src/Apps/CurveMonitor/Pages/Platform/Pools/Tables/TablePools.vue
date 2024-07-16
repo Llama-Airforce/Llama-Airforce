@@ -4,11 +4,12 @@
     expand-side="left"
     :rows="rowsPage"
     :columns="['', '', 'Name', 'Volume (24h)', 'TVL', 'Util Rate']"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumnsNoEmpty"
-    sorting-default-column="tvl"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      enabled: sortColumnsNoEmpty,
+      default: 'tvl',
+      defaultDir: 'desc',
+    }"
     @sort-column="onSort"
   >
     <template #header-content>

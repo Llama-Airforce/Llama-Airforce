@@ -4,11 +4,12 @@
     :loading="loading"
     :rows="rowsPage"
     :columns="columns"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumnsEnabled"
-    sorting-default-column="timestamp"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      enabled: sortColumnsEnabled,
+      default: 'timestamp',
+      defaultDir: 'desc',
+    }"
     @sort-column="onSort"
     @selected="showDetails = $event"
   >

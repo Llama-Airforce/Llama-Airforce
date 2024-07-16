@@ -3,11 +3,11 @@
     class="datatable-distributions"
     :rows
     :columns="['Date', 'Fees']"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumns"
-    sorting-default-column="timestamp"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      default: 'timestamp',
+      defaultDir: 'desc',
+    }"
     @sort-column="onSort"
   >
     <template #header-content>

@@ -3,11 +3,12 @@
     class="datatable-match"
     :rows="epochsSorted"
     :columns="['', t('deadline'), t('native'), t(`frax`), t('total')]"
-    :sorting="true"
-    :sorting-columns="sortColumns"
-    :sorting-columns-enabled="sortColumnsNoEmpty"
-    sorting-default-column="deadline"
-    sorting-default-dir="desc"
+    :sorting="{
+      columns: sortColumns,
+      enabled: sortColumnsNoEmpty,
+      default: 'deadline',
+      defaultDir: 'desc',
+    }"
     @sort-column="onSort"
   >
     <template #row="props: { item: EpochFrax }">

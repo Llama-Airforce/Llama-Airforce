@@ -6,11 +6,12 @@
           class="datatable-example"
           :rows="rows"
           :columns="['', 'Deadline', '$/vlCVX', 'Total']"
-          :sorting="true"
-          :sorting-columns="sortColumns"
-          :sorting-columns-enabled="sortColumnsNoEmpty"
-          sorting-default-column="deadline"
-          sorting-default-dir="desc"
+          :sorting="{
+            columns: sortColumns,
+            enabled: sortColumnsNoEmpty,
+            default: 'deadline',
+            defaultDir: 'desc',
+          }"
           :loading="isLoading"
           :expanded="expandedRows"
           expand-side="right"
@@ -214,11 +215,12 @@ const dataTable1 = `<DataTable
   class="datatable-example"
   :rows="rows"
   :columns="['', 'Deadline', '$/vlCVX', 'Total']"
-  :sorting="true"
-  :sorting-columns="sortColumns"
-  :sorting-columns-enabled="sortColumnsNoEmpty"
-  sorting-default-column="deadline"
-  sorting-default-dir="desc"
+  :sorting="{
+    names: sortColumns,
+    enabled: sortColumnsNoEmpty,
+    default: 'deadline',
+    defaultDir: 'desc',
+  }"
   :loading="isLoading"
   :expanded="expandedRows"
   expand-side="right"
