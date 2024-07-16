@@ -43,25 +43,14 @@
           >
             {{ column }}
 
-            <div
+            <i
               v-if="sorting && isSortingEnabled(index)"
-              class="sorting-arrows"
-            >
-              <i
-                v-if="isSortAscending(index)"
-                class="sorting-arrow fa fa-caret-up"
-              ></i>
-              <i
-                v-else-if="isSortDescending(index)"
-                class="sorting-arrow fa fa-caret-down"
-              ></i>
-              <span
-                v-else
-                class="sorting-arrow"
-              >
-                &#8212;
-              </span>
-            </div>
+              class="sorting-arrow fa fa-caret-right"
+              :class="{
+                asc: isSortAscending(index),
+                desc: isSortDescending(index),
+              }"
+            ></i>
           </div>
         </slot>
       </div>
@@ -427,23 +416,37 @@ const sortColumn = (index: number): void => {
         -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
         user-select: none;
 
+        gap: 1ch;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
         &.current-sort {
-          > .sorting-arrows {
-            > .sorting-arrow {
-              color: var(--c-primary);
-            }
+          > .sorting-arrow {
+            color: var(--c-primary);
           }
         }
 
-        > .sorting-arrows {
+        > .sorting-arrow {
           display: flex;
           flex-direction: column;
-          margin-left: 0.5rem;
-          width: 10px;
+          align-items: center;
+          margin: 0 0.5ch;
 
-          > .sorting-arrow {
-            font-size: 1rem;
-            color: var(--c-lvl4);
+          font-size: 1rem;
+          color: var(--c-lvl4);
+
+          transition: transform 125ms ease-in-out;
+          transform-origin: center;
+          transform: rotate(0deg);
+
+          &.asc {
+            transform: rotate(90deg);
+          }
+
+          &.desc {
+            transform: rotate(-90deg);
           }
         }
       }
