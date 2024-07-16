@@ -88,7 +88,7 @@
       <div class="number">
         <a
           class="font-mono"
-          :href="`https://etherscan.io/tx/${item.txHash}`"
+          :href="`https://explorer.cow.fi/tx/${item.txHash}`"
           target="_blank"
           @click.stop
         >
