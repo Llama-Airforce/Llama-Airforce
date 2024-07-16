@@ -133,7 +133,7 @@ watch(pair, () => {
   display: flex;
   gap: 1rem;
 
-  ::v-deep(.select) {
+  :deep(.select) {
     padding: 0.1rem 0.33rem;
 
     .chevrons {

@@ -188,7 +188,7 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
     align-items: center;
   }
 
-  ::v-deep(.match-columns-data) {
+  :deep(.match-columns-data) {
     grid-template-columns: 1.5rem 1fr 1fr 1fr 1fr;
 
     // Right adjust number columns.
@@ -199,7 +199,7 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
     }
   }
 
-  ::v-deep(.tooltip) {
+  :deep(.tooltip) {
     grid-column: 1 / span 5;
     display: flex;
     height: 100%;

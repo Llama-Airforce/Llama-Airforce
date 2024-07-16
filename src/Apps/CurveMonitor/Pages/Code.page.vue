@@ -187,19 +187,19 @@ const linkContract = (contract: Contract): string => {
   gap: var(--dashboard-gap);
 
   .datatable-contracts {
-    ::v-deep(.contracts-columns-data) {
+    :deep(.contracts-columns-data) {
       grid-template-columns: 3fr 4fr;
     }
   }
 
   .datatable-apis {
-    ::v-deep(.apis-columns-data) {
+    :deep(.apis-columns-data) {
       grid-template-columns: 3fr 4fr;
     }
   }
 
   .datatable-repositories {
-    ::v-deep(.repositories-columns-data) {
+    :deep(.repositories-columns-data) {
       grid-template-columns: 2fr 6fr;
     }
   }

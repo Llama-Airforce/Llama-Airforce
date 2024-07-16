@@ -63,7 +63,7 @@ const onYes = () => {
 };`;
 
 const modalYesNo3 = `.my-modal {
-  ::v-deep(.content) {
+  :deep(.content) {
     width: 40rem;
   }
 }`;

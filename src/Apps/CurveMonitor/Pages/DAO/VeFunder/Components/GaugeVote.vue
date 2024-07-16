@@ -147,7 +147,7 @@ async function createVote() {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .add-new {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     display: flex;
     flex-direction: column;
     gap: 2rem;

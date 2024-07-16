@@ -153,7 +153,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
     object-fit: scale-down;
   }
 
-  ::v-deep(.bribed-columns-data) {
+  :deep(.bribed-columns-data) {
     grid-template-columns: 1.5fr 0.6fr 0.6fr;
 
     // Right adjust number columns.
@@ -163,7 +163,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
     }
   }
 
-  ::v-deep(.tooltip) {
+  :deep(.tooltip) {
     grid-column: 1 / span 4;
     display: flex;
     height: 100%;

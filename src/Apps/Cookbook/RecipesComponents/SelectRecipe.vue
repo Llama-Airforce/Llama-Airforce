@@ -141,7 +141,7 @@ const onSelect = (option: SelectItem): void => {
   selected.value = option;
 };`;
 
-const select3 = `::v-deep(.select-component) {
+const select3 = `:deep(.select-component) {
   width: 20rem;
 
   .item {
@@ -167,7 +167,7 @@ const select3 = `::v-deep(.select-component) {
 
 @include dashboard("selects");
 
-::v-deep(.select-component) {
+:deep(.select-component) {
   width: 20rem;
 
   .item {

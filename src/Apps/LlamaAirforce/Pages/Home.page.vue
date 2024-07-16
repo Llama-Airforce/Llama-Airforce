@@ -107,7 +107,7 @@ function goto(card: "union" | "pirex" | "incentives") {
       flex-direction: column;
     }
 
-    ::v-deep(.topic-card) {
+    :deep(.topic-card) {
       &:hover {
         cursor: pointer;
 

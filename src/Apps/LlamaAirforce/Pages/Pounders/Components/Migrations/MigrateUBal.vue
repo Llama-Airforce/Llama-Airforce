@@ -127,7 +127,7 @@ function onDepositAuraBal() {
     font-size: 1rem;
   }
 
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     display: flex;
     justify-content: space-between;
 

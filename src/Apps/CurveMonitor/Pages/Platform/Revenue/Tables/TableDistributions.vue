@@ -81,7 +81,7 @@ function formatDate(epoch: number): string {
 @import "@/Styles/Variables.scss";
 
 .datatable-distributions {
-  ::v-deep(.distributions-columns-data) {
+  :deep(.distributions-columns-data) {
     grid-template-columns: 1fr 1fr;
 
     // Right adjust number columns.

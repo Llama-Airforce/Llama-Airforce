@@ -76,7 +76,7 @@ watch(
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .pounder {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
   }
 }

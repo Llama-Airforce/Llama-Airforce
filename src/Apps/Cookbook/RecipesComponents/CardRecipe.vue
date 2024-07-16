@@ -136,7 +136,7 @@ const cardCollapsible1 = `<Card
 const cardCollapsible2 = `const collapsed = ref(false);
 `;
 
-const cardCollapsible3 = `::v-deep(.card-header) {
+const cardCollapsible3 = `:deep(.card-header) {
   .expander {
     transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
     transform: rotate(90deg);
@@ -157,7 +157,7 @@ const cardCollapsible3 = `::v-deep(.card-header) {
   column-gap: var(--dashboard-gap, 1.5rem);
   grid-template-columns: 1fr 1fr;
 
-  ::v-deep(.card-header) {
+  :deep(.card-header) {
     .expander {
       transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
       transform: rotate(90deg);

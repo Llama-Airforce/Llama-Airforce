@@ -21,7 +21,7 @@ const { options, series } = defineProps<Props>();
 @import "@/Styles/Variables.scss";
 
 .chart {
-  &::v-deep(.apexcharts-tooltip) {
+  &:deep(.apexcharts-tooltip) {
     background-color: var(--c-lvl1);
     border: solid var(--border-thickness) var(--c-lvl4);
     border-radius: var(--border-radius);
@@ -36,7 +36,7 @@ const { options, series } = defineProps<Props>();
     gap: 0.5rem;
   }
 
-  &::v-deep(.apexcharts-legend-marker) {
+  &:deep(.apexcharts-legend-marker) {
     border-radius: var(--border-radius) !important;
   }
 }

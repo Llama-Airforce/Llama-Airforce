@@ -90,13 +90,13 @@ const copyUrl = async () => {
     }
   }
 
-  > ::v-deep(.buttons) {
+  > :deep(.buttons) {
     button {
       @include button-bg();
     }
   }
 
-  > ::v-deep(.selectors) {
+  > :deep(.selectors) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
@@ -129,7 +129,7 @@ const copyUrl = async () => {
     }
   }
 
-  > ::v-deep(.wallet) {
+  > :deep(.wallet) {
     .clear,
     .disconnect {
       @include button-bg();

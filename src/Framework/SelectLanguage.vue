@@ -58,7 +58,7 @@ const onLocaleSelect = (option: Locale): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-::v-deep(.select) {
+:deep(.select) {
   .item {
     display: flex;
     align-items: center;
@@ -71,7 +71,7 @@ const onLocaleSelect = (option: Locale): void => {
 }
 
 .direction-up {
-  ::v-deep(.select) {
+  :deep(.select) {
     > .items {
       bottom: 120%; // Items will move upwards.
     }

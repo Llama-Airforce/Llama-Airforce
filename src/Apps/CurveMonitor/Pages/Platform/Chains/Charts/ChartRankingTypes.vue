@@ -143,7 +143,7 @@ const formatterY = (x: number): string =>
 @import "@/Styles/Variables.scss";
 
 .cart-chart {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     .chart {
       height: 300px;
     }

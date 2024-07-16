@@ -34,7 +34,7 @@ const { title = "", loading = false, options, series } = defineProps<Props>();
 @import "@/Styles/Variables.scss";
 
 .cart-chart {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     display: block !important;
     margin-top: -1rem !important;
     overflow-x: clip;

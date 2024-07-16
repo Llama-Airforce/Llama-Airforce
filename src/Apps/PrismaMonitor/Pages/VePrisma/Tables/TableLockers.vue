@@ -175,7 +175,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     flex-grow: 1;
   }
 
-  ::v-deep(.lockers-columns-data) {
+  :deep(.lockers-columns-data) {
     --col-width: 11ch;
 
     grid-template-columns: 1fr repeat(4, minmax(12ch, 0.33fr));

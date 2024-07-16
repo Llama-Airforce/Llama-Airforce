@@ -59,7 +59,7 @@ const onGauge = (newGauge: string): void => {
   max-width: calc(1920px - 18.125rem);
 
   > .explanation {
-    ::v-deep(.card-body) {
+    :deep(.card-body) {
       display: flex;
       flex-direction: column;
       gap: 1rem;

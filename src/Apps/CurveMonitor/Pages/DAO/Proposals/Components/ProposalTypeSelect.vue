@@ -45,7 +45,7 @@ const onTypeSelect = (option: ProposalType): void => {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-::v-deep(.select) {
+:deep(.select) {
   .item {
     display: flex;
     align-items: center;

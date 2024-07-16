@@ -54,7 +54,7 @@ const pool = ref("");
   border-radius: var(--border-radius);
   overflow: hidden;
 
-  ::v-deep(.search) {
+  :deep(.search) {
     input {
       background: var(--c-lvl1);
       border-bottom-left-radius: 0px;

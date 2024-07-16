@@ -196,7 +196,7 @@ const shadeColor = (hex: string, percent: number) => {
 @import "@/Styles/Variables.scss";
 
 .chart {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
       line-height: 0.25rem;

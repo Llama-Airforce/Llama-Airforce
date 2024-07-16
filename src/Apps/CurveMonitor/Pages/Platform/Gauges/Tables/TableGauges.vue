@@ -88,7 +88,7 @@ const gauges = computed((): Gauge[] => {
 @import "@/Styles/Variables.scss";
 
 .datatable-gauges {
-  ::v-deep(.gauges-columns-data) {
+  :deep(.gauges-columns-data) {
     grid-template-columns: 4fr 1fr 1rem;
 
     // Right adjust number columns.

@@ -75,7 +75,7 @@ const { isFetching: loading, data } = useQuery({
 @import "@/Styles/Variables.scss";
 
 .chart-container {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     height: 300px;
     flex-direction: column;
     justify-content: center;

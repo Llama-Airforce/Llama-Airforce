@@ -77,7 +77,7 @@ const onNavigated = () => {
       grid-template-rows: 1fr;
     }
 
-    ::v-deep(.collapsible-inside) {
+    :deep(.collapsible-inside) {
       display: flex;
       flex-direction: column;
       flex-grow: 1;

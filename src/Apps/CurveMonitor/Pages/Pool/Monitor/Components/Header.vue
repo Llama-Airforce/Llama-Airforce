@@ -48,7 +48,7 @@ const onSelect = (poolNew: Pool): void => {
 @import "@/Styles/Variables.scss";
 
 .header {
-  ::v-deep(.card) {
+  :deep(.card) {
     .card-container {
       background: var(--header-background);
 

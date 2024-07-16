@@ -78,7 +78,7 @@ const rows = computed((): Liquidator[] =>
 .datatable-liquidators {
   container-type: inline-size;
 
-  ::v-deep(.liquidators-columns-data) {
+  :deep(.liquidators-columns-data) {
     --col-width: 12ch;
 
     grid-template-columns: 1fr repeat(2, var(--col-width));

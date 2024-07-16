@@ -126,7 +126,7 @@ function utilRate(pool: Pool) {
 .datatable-pools {
   container-type: inline-size;
 
-  ::v-deep(.pools-columns-data) {
+  :deep(.pools-columns-data) {
     --col-width: 11ch;
 
     grid-template-columns:

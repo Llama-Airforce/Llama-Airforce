@@ -131,7 +131,7 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
     font-size: 1rem;
   }
 
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     display: flex;
     justify-content: space-between;
 

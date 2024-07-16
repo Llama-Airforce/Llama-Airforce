@@ -180,8 +180,8 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
     }
   }
 
-  ::v-deep(.platform),
-  ::v-deep(.protocol) {
+  :deep(.platform),
+  :deep(.protocol) {
     flex-grow: 1;
     flex-basis: 0;
 

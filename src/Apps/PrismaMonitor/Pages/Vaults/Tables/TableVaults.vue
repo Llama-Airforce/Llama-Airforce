@@ -186,7 +186,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
     opacity: 0.5;
   }
 
-  ::v-deep(.vaults-columns-data) {
+  :deep(.vaults-columns-data) {
     --col-width: 11ch;
 
     img {

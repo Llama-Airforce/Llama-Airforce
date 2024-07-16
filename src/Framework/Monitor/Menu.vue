@@ -64,7 +64,7 @@ nav {
     margin: 0;
     list-style-type: none;
 
-    ::v-deep(li) {
+    :deep(li) {
       display: flex;
       flex-direction: column;
 

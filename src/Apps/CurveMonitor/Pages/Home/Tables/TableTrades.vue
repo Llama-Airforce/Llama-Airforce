@@ -48,7 +48,7 @@ const { data: trades } = useQueryTradesLarge();
 @import "@/Styles/Variables.scss";
 
 .datatable-trades {
-  ::v-deep(.trades-columns-data) {
+  :deep(.trades-columns-data) {
     grid-template-columns: 6rem 1fr auto;
 
     div:nth-child(1) {

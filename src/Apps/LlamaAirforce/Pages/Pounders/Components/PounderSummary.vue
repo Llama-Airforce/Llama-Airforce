@@ -97,12 +97,12 @@ watch(getFeesTrigger, async (newGetFees) => {
     justify-content: center;
     line-height: 1.5rem;
 
-    ::v-deep(.label) {
+    :deep(.label) {
       color: #a1a1aa;
       font-size: 0.75rem;
     }
 
-    ::v-deep(.value) {
+    :deep(.value) {
       color: white;
       font-size: 1.25rem;
       font-weight: bold;

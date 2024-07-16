@@ -118,7 +118,7 @@ const formatterPrice = (x: number): string =>
 @import "@/Styles/Variables.scss";
 
 .chart-card {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
   }

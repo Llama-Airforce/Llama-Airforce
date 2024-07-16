@@ -138,7 +138,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
     align-items: center;
   }
 
-  ::v-deep(.bribes-columns-data) {
+  :deep(.bribes-columns-data) {
     grid-template-columns: 1.5rem 1fr 1fr 1fr;
 
     // Right adjust number columns.

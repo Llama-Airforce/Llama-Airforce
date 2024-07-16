@@ -155,7 +155,7 @@ const snakeToPascal = (str: string): string =>
   height: 300px;
   z-index: 0;
 
-  &::v-deep(.apexcharts-tooltip-title) {
+  &:deep(.apexcharts-tooltip-title) {
     display: none;
   }
 }

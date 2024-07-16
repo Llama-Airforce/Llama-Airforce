@@ -113,7 +113,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     margin-right: 1rem;
   }
 
-  ::v-deep(.votes-incentives-columns-data) {
+  :deep(.votes-incentives-columns-data) {
     --col-width: 11ch;
 
     grid-template-columns: minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(

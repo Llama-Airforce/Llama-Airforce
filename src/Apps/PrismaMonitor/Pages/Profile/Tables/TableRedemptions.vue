@@ -213,7 +213,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     margin-right: 1rem;
   }
 
-  ::v-deep(.redemptions-columns-data) {
+  :deep(.redemptions-columns-data) {
     --col-width: 11ch;
 
     img {

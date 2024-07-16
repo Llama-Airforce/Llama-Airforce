@@ -328,7 +328,7 @@ const sortColumn = (index: number): void => {
         border: 0;
       }
 
-      ::v-deep(.title) {
+      :deep(.title) {
         font-size: 1.125rem;
         font-weight: bolder;
         color: var(--c-text);
@@ -369,7 +369,7 @@ const sortColumn = (index: number): void => {
     }
   }
 
-  ::v-deep(.row) {
+  :deep(.row) {
     &.expanded {
       > .row-data {
         background: var(--c-lvl1);
@@ -382,11 +382,11 @@ const sortColumn = (index: number): void => {
     }
   }
 
-  ::v-deep(.row-details) {
+  :deep(.row-details) {
     border-bottom: var(--border-thickness) solid var(--c-lvl4);
   }
 
-  ::v-deep(.row-data) {
+  :deep(.row-data) {
     display: grid;
     padding: 0 1rem;
     grid-column-gap: 1rem;

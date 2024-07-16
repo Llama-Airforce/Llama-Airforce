@@ -83,7 +83,7 @@ const rows = computed((): PoolStableOperation[] =>
 .datatable-deposits {
   container-type: inline-size;
 
-  ::v-deep(.deposits-columns-data) {
+  :deep(.deposits-columns-data) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
     // Right adjust number columns.

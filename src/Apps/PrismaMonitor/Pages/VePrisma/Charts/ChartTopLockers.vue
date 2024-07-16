@@ -98,7 +98,7 @@ const formatterPct = (x: number): string =>
 @import "@/Styles/Variables.scss";
 
 .graph {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     @media only screen and (max-width: 1280px) {
       height: 300px;
     }

@@ -43,7 +43,7 @@ const expanded = ref(initExpanded);
 .proposal {
   overflow: hidden;
 
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
   }
 }

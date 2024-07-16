@@ -172,7 +172,7 @@ const onPage = async (pageNew: number) => {
     margin-right: 1rem;
   }
 
-  ::v-deep(.pagination) {
+  :deep(.pagination) {
     li {
       button {
         height: 2rem;
@@ -195,7 +195,7 @@ const onPage = async (pageNew: number) => {
     }
   }
 
-  ::v-deep(.sandwiches-columns-data) {
+  :deep(.sandwiches-columns-data) {
     grid-column-gap: 2.5rem;
     grid-template-columns: 16rem 1fr 16rem 8rem 1rem;
 
@@ -205,14 +205,14 @@ const onPage = async (pageNew: number) => {
     }
   }
 
-  ::v-deep(.transactions) {
+  :deep(.transactions) {
     .row-data {
       border-bottom-width: 0;
       background-color: var(--container-background-hint);
     }
   }
 
-  ::v-deep(.collapsible-outside) {
+  :deep(.collapsible-outside) {
     transition: grid-template-rows 200ms ease-out;
   }
 }

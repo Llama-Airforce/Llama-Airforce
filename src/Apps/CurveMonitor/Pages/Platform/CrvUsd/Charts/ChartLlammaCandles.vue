@@ -220,7 +220,7 @@ const formatterPrice = (x: number): string => {
 @import "@/Styles/Variables.scss";
 
 .candles {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
     gap: 1rem;

@@ -292,7 +292,7 @@ const formatterFees = (x: number): string => {
 const CardChartLine3 = `.chart {
   height: 400px;
 
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
       grid-template-columns: 1fr auto;
@@ -309,7 +309,7 @@ const CardChartLine3 = `.chart {
 .chart {
   height: 400px;
 
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto auto;
       grid-template-columns: 1fr auto;

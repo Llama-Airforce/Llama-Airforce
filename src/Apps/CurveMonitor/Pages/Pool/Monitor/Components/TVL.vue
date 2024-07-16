@@ -117,7 +117,7 @@ const formatter = (y: number): string => {
 @import "@/Styles/Variables.scss";
 
 .tvl {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
     gap: 1rem;

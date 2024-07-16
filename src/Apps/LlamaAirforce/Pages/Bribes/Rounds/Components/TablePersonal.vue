@@ -292,7 +292,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     align-items: center;
   }
 
-  ::v-deep(.header-content) {
+  :deep(.header-content) {
     .personalDollarPerVlAsset {
       color: #a1a1aa;
       font-size: 0.75rem;
@@ -300,7 +300,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     }
   }
 
-  ::v-deep(.personal-columns-data) {
+  :deep(.personal-columns-data) {
     grid-template-columns: 1fr 3fr 2fr 2fr;
 
     // Right adjust number columns.
@@ -310,7 +310,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     }
   }
 
-  ::v-deep(.tooltip) {
+  :deep(.tooltip) {
     grid-column: 1 / span 5;
     display: flex;
     height: 100%;

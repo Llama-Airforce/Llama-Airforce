@@ -11,7 +11,7 @@
     <template #item="props: { item: Zap | undefined }">
       <div class="item">
         <img :src="icon(props.item?.logo ?? '')" />
-        <div class="label">{{ props.item?.label ?? '?' }}</div>
+        <div class="label">{{ props.item?.label ?? "?" }}</div>
       </div>
     </template>
   </Select>
@@ -67,7 +67,7 @@ watch(
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-::v-deep(.select) {
+:deep(.select) {
   .item {
     display: flex;
     align-items: center;

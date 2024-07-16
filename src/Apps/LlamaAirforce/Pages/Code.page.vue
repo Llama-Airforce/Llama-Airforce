@@ -409,7 +409,7 @@ const { t } = useI18n();
     .datatable-contracts {
       grid-column: 1 / -1;
 
-      ::v-deep(.contracts-columns-data) {
+      :deep(.contracts-columns-data) {
         grid-template-columns: 3fr 4fr;
       }
     }
@@ -417,7 +417,7 @@ const { t } = useI18n();
     .datatable-repositories {
       grid-column: 1;
 
-      ::v-deep(.repositories-columns-data) {
+      :deep(.repositories-columns-data) {
         grid-template-columns: 2fr 6fr;
       }
     }
@@ -425,7 +425,7 @@ const { t } = useI18n();
     .datatable-other {
       grid-column: 2;
 
-      ::v-deep(.other-columns-data) {
+      :deep(.other-columns-data) {
         grid-template-columns: 3fr 4fr;
       }
     }

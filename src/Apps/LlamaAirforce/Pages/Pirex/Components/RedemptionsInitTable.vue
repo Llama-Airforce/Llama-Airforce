@@ -81,7 +81,7 @@ watch(selected, (newRedemption) => {
 .datatable-redemptions-init {
   padding: 0;
 
-  ::v-deep(.redemptions-columns-data) {
+  :deep(.redemptions-columns-data) {
     grid-template-columns: 1fr 1fr 1fr 3rem;
 
     // Right adjust number columns.

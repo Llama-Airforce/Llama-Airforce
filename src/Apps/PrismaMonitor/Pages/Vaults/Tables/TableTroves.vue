@@ -231,7 +231,7 @@ const onType = (tabIndex: number) => {
     margin-right: 1rem;
   }
 
-  ::v-deep(.types) {
+  :deep(.types) {
     margin: 0 1rem;
     font-size: 0.875rem;
 
@@ -249,7 +249,7 @@ const onType = (tabIndex: number) => {
     flex-grow: 1;
   }
 
-  ::v-deep(.troves-columns-data) {
+  :deep(.troves-columns-data) {
     --col-width: 11ch;
 
     grid-template-columns:

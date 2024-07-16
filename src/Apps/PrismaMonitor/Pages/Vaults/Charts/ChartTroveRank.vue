@@ -220,7 +220,7 @@ watch(
 @import "@/Styles/Variables.scss";
 
 .chart-container {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     overflow-x: clip;
     flex-direction: column;
     justify-content: center;

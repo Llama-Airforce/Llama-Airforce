@@ -148,7 +148,7 @@ const titleCase = (s: string): string =>
     margin-right: 1rem;
   }
 
-  ::v-deep(.trove-ops-columns-data) {
+  :deep(.trove-ops-columns-data) {
     --col-width: 12ch;
 
     grid-template-columns:

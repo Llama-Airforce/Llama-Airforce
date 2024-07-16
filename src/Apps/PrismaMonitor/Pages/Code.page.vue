@@ -57,7 +57,7 @@ const repositories: Repository[] = [
   gap: var(--dashboard-gap);
 
   .datatable-repositories {
-    ::v-deep(.repositories-columns-data) {
+    :deep(.repositories-columns-data) {
       grid-template-columns: 2fr 6fr;
     }
   }

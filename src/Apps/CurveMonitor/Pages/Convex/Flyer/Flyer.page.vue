@@ -67,7 +67,7 @@ onMounted(async (): Promise<void> => {
     }
 
     // Shared styles for underlying components.
-    ::v-deep(.title) {
+    :deep(.title) {
       display: flex;
       justify-content: center;
       margin-bottom: 1rem;
@@ -77,7 +77,7 @@ onMounted(async (): Promise<void> => {
       text-transform: uppercase;
     }
 
-    ::v-deep(.values) {
+    :deep(.values) {
       .value {
         font-size: 4.8rem;
       }
@@ -92,7 +92,7 @@ onMounted(async (): Promise<void> => {
       }
     }
 
-    ::v-deep(ul) {
+    :deep(ul) {
       display: flex;
       flex-direction: column;
       padding: 0;

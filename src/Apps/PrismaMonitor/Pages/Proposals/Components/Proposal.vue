@@ -39,7 +39,7 @@ const expanded = ref(false);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 .proposal {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
   }
 }

@@ -147,7 +147,7 @@ const rows = computed((): Row[] => [
 @import "@/Styles/Variables.scss";
 
 .datatable-liq-overview {
-  ::v-deep(.liq-overview-columns-data) {
+  :deep(.liq-overview-columns-data) {
     grid-template-columns: 1fr auto;
   }
 

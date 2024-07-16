@@ -116,7 +116,7 @@ const clipboard = async (addr: string) => {
 .datatable-properties {
   height: 100%;
 
-  ::v-deep(.properties-columns-data) {
+  :deep(.properties-columns-data) {
     grid-template-columns: 2fr 6fr;
   }
 

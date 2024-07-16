@@ -182,7 +182,7 @@ const average = (data: number[], n = 7): number[] =>
 @import "@/Styles/Variables.scss";
 
 .chart-container {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
   }

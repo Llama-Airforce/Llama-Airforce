@@ -102,7 +102,7 @@ const formatter = (y: number): string => {
 @import "@/Styles/Variables.scss";
 
 .tvl {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto;
       grid-template-columns: 1fr auto;

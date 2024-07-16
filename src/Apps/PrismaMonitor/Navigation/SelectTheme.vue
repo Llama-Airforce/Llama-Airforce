@@ -116,7 +116,7 @@ const onThemeSelect = (option: ThemeDescription) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-::v-deep(.select) {
+:deep(.select) {
   .theme {
     display: flex;
     justify-content: space-between;
@@ -156,7 +156,7 @@ const onThemeSelect = (option: ThemeDescription) => {
 }
 
 .direction-up {
-  ::v-deep(.select) {
+  :deep(.select) {
     > .items {
       bottom: 120%; // Items will move upwards.
     }

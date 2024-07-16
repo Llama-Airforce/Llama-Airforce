@@ -83,7 +83,7 @@ const { isFetching: loading, data } = useQuery({
 .datatable-withdrawals {
   container-type: inline-size;
 
-  ::v-deep(.withdrawals-columns-data) {
+  :deep(.withdrawals-columns-data) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
     // Right adjust number columns.

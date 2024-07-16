@@ -142,7 +142,7 @@ const hasMenu = computed((): boolean => {
         margin: 0;
         list-style-type: none;
 
-        ::v-deep(li) {
+        :deep(li) {
           display: flex;
           flex-direction: column;
           margin: 0.25rem 0;

@@ -130,7 +130,7 @@ const tokenIcon = (market: Market) => {
 .datatable-markets {
   container-type: inline-size;
 
-  ::v-deep(.markets-columns-data) {
+  :deep(.markets-columns-data) {
     --col-width: 10ch;
 
     grid-template-columns:

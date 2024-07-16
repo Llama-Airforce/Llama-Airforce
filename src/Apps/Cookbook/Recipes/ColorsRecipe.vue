@@ -68,7 +68,7 @@ const colors: Color[] = [
 @include dashboard("colors");
 
 .datatable-colors {
-  ::v-deep(.colors-columns-data) {
+  :deep(.colors-columns-data) {
     grid-template-columns: 0.2fr 0.2fr 0.6fr;
 
     .preview-container {

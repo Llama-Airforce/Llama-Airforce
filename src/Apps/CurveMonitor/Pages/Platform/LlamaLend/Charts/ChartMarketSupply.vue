@@ -218,7 +218,7 @@ const formatterUtil = (x: number): string => `${Math.round(x * 100)}%`;
 @import "@/Styles/Variables.scss";
 
 .chart-card {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
   }

@@ -109,14 +109,14 @@ const round = (x: number) =>
 .datatable-trades {
   container-type: inline-size;
 
-  ::v-deep(.header .header-content) {
+  :deep(.header .header-content) {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
   }
 
-  ::v-deep(.trades-columns-data) {
+  :deep(.trades-columns-data) {
     grid-template-columns:
       minmax(5rem, 1fr)
       26px

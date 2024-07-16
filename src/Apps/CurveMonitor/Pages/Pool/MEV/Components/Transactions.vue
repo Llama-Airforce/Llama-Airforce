@@ -237,7 +237,7 @@ const onType = (tabIndex: number) => {
     margin-right: 1rem;
   }
 
-  ::v-deep(.types) {
+  :deep(.types) {
     margin: 0 1rem;
     font-size: 0.875rem;
 
@@ -280,7 +280,7 @@ const onType = (tabIndex: number) => {
     }
   }
 
-  ::v-deep(.trades-columns-data) {
+  :deep(.trades-columns-data) {
     grid-column-gap: 4rem;
     grid-template-columns:
       6rem 4rem 7rem 7rem minmax(5rem, 2fr)
@@ -299,7 +299,7 @@ const onType = (tabIndex: number) => {
   }
 
   :not(&.time) {
-    ::v-deep(.trades-columns-data) {
+    :deep(.trades-columns-data) {
       grid-column-gap: 4rem;
       grid-template-columns:
         6rem 7rem 7rem minmax(5rem, 1fr)
@@ -313,8 +313,8 @@ const onType = (tabIndex: number) => {
   }
 
   @media only screen and (max-width: 1280px) {
-    ::v-deep(.header),
-    ::v-deep(.header .header-content) {
+    :deep(.header),
+    :deep(.header .header-content) {
       display: flex;
       flex-direction: column;
       align-items: stretch;
@@ -325,7 +325,7 @@ const onType = (tabIndex: number) => {
       }
     }
 
-    ::v-deep(.trades-columns-data) {
+    :deep(.trades-columns-data) {
       grid-column-gap: 2rem;
       grid-template-columns: 1fr auto;
 

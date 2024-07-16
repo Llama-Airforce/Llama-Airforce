@@ -103,7 +103,7 @@ const pools = computed((): Pool[] => {
 .datatable-pools {
   background: var(--c-lvl0);
 
-  ::v-deep(.pools-columns-data) {
+  :deep(.pools-columns-data) {
     grid-template-columns: 3fr 2fr 2fr 1rem;
 
     // Right adjust number columns.

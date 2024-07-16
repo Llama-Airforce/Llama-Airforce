@@ -55,7 +55,7 @@ const { extra = "" } = defineProps<Props>();
     color: var(--c-text);
   }
 
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     a {
       align-self: center;
       cursor: pointer;

@@ -129,7 +129,7 @@ const series = computed(
 @import "@/Styles/Variables.scss";
 
 .revenue {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
   }

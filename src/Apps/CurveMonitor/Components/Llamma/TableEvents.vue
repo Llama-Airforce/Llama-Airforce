@@ -88,14 +88,14 @@ const type = (x: LlammaEvent) =>
 .datatable-events {
   container-type: inline-size;
 
-  ::v-deep(.header .header-content) {
+  :deep(.header .header-content) {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
   }
 
-  ::v-deep(.events-columns-data) {
+  :deep(.events-columns-data) {
     grid-template-columns:
       8rem
       1fr

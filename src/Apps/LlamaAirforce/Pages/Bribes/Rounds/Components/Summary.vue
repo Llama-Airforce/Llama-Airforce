@@ -162,7 +162,7 @@ const onRoundSelect = (round: number): void => {
     }
   }
 
-  ::v-deep(.select-summary) {
+  :deep(.select-summary) {
     flex-grow: 1;
     flex-basis: 0;
 

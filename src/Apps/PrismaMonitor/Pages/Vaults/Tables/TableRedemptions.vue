@@ -196,7 +196,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     flex-grow: 1;
   }
 
-  ::v-deep(.redemptions-columns-data) {
+  :deep(.redemptions-columns-data) {
     --col-width: 11ch;
 
     grid-template-columns:

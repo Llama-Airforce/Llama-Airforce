@@ -128,7 +128,7 @@ const rows = computed((): string[] =>
       font-size: 0.875rem;
     }
 
-    ::v-deep(.troves-affected-columns-data) {
+    :deep(.troves-affected-columns-data) {
       grid-template-columns: 1fr;
     }
   }

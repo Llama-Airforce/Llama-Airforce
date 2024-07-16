@@ -171,7 +171,7 @@ watch(
       //transform: translateX(0);
     }
 
-    ::v-deep(> .select-menu) {
+    :deep(> .select-menu) {
       .chevrons {
         font-size: 1rem;
         top: 2.5rem;
@@ -211,7 +211,7 @@ watch(
         margin: 0;
         list-style-type: none;
 
-        ::v-deep(li) {
+        :deep(li) {
           display: flex;
           flex-direction: column;
           margin: 0.25rem 0;
@@ -264,7 +264,7 @@ watch(
     }
   }
 
-  ::v-deep(.language) {
+  :deep(.language) {
     margin-bottom: calc(2 * 1.25rem);
 
     .chevrons {

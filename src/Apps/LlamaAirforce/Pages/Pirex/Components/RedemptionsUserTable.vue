@@ -111,7 +111,7 @@ function balance(redemption: RedemptionPending) {
 .datatable-redemptions-user {
   padding: 0;
 
-  ::v-deep(.redemptions-columns-data) {
+  :deep(.redemptions-columns-data) {
     grid-template-columns: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
 
     // Right adjust number columns.

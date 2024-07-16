@@ -206,7 +206,7 @@ const formatterRatio = (x: number): string => {
 @import "@/Styles/Variables.scss";
 
 .emissions {
-  ::v-deep(.card-body) {
+  :deep(.card-body) {
     .apexcharts-tooltip {
       grid-template-rows: auto auto auto;
       grid-template-columns: 1fr auto;

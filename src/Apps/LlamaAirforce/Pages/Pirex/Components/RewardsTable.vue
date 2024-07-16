@@ -77,12 +77,12 @@ function isSelected(reward: Reward) {
   padding: 0;
 
   &.can-select {
-    ::v-deep(.rewards-columns-data) {
+    :deep(.rewards-columns-data) {
       grid-template-columns: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr) 3rem;
     }
   }
 
-  ::v-deep(.rewards-columns-data) {
+  :deep(.rewards-columns-data) {
     grid-template-columns: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
 
     // Right adjust number columns.
