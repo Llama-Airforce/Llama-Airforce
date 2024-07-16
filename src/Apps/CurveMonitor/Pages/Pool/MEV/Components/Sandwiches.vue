@@ -196,7 +196,6 @@ const onPage = async (pageNew: number) => {
   }
 
   ::v-deep(.sandwiches-columns-data) {
-    display: grid;
     grid-column-gap: 2.5rem;
     grid-template-columns: 16rem 1fr 16rem 8rem 1rem;
 

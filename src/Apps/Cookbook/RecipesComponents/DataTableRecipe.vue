@@ -331,7 +331,6 @@ const dataTable3 = `.datatable-example {
   }
 
   ::v-deep(.example-columns-data) {
-    display: grid;
     grid-template-columns: 1.5rem 1fr 1fr 1fr 20px;
 
     // Right adjust number columns.
@@ -419,7 +418,6 @@ const onCheck = (round: Round) => {
   }
 
   ::v-deep(.example-columns-data) {
-    display: grid;
     grid-template-columns: 1.5rem 1fr 1fr 1fr 20px;
 
     // Right adjust number columns.
@@ -443,7 +441,6 @@ const onCheck = (round: Round) => {
   }
 
   ::v-deep(.multiselect-columns-data) {
-    display: grid;
     grid-template-columns: 1.5rem 1fr auto;
   }
 }

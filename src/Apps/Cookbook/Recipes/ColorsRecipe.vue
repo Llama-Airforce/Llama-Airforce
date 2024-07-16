@@ -69,7 +69,6 @@ const colors: Color[] = [
 
 .datatable-colors {
   ::v-deep(.colors-columns-data) {
-    display: grid;
     grid-template-columns: 0.2fr 0.2fr 0.6fr;
 
     .preview-container {

@@ -96,7 +96,6 @@ const type = (x: LlammaEvent) =>
   }
 
   ::v-deep(.events-columns-data) {
-    display: grid;
     grid-template-columns:
       8rem
       1fr

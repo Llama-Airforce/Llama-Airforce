@@ -195,7 +195,6 @@ const loading = computed(() => rowsRaw.value.length === 0);
       object-fit: scale-down;
     }
 
-    display: grid;
     grid-template-columns:
       20px minmax(12ch, 1fr) repeat(6, minmax(var(--col-width), 0.75fr))
       1rem;

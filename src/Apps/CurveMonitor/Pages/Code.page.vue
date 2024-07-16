@@ -188,21 +188,18 @@ const linkContract = (contract: Contract): string => {
 
   .datatable-contracts {
     ::v-deep(.contracts-columns-data) {
-      display: grid;
       grid-template-columns: 3fr 4fr;
     }
   }
 
   .datatable-apis {
     ::v-deep(.apis-columns-data) {
-      display: grid;
       grid-template-columns: 3fr 4fr;
     }
   }
 
   .datatable-repositories {
     ::v-deep(.repositories-columns-data) {
-      display: grid;
       grid-template-columns: 2fr 6fr;
     }
   }

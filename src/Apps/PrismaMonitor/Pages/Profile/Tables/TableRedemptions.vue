@@ -222,7 +222,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       object-fit: scale-down;
     }
 
-    display: grid;
     grid-template-columns:
       20px minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(
         3,

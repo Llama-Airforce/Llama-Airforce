@@ -301,7 +301,6 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
   }
 
   ::v-deep(.personal-columns-data) {
-    display: grid;
     grid-template-columns: 1fr 3fr 2fr 2fr;
 
     // Right adjust number columns.

@@ -154,7 +154,6 @@ const bribes = (bribed: Bribed): Bribe[] => {
   }
 
   ::v-deep(.bribed-columns-data) {
-    display: grid;
     grid-template-columns: 1.5fr 0.6fr 0.6fr;
 
     // Right adjust number columns.

@@ -83,7 +83,6 @@ function isSelected(reward: Reward) {
   }
 
   ::v-deep(.rewards-columns-data) {
-    display: grid;
     grid-template-columns: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
 
     // Right adjust number columns.

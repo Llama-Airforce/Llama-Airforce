@@ -129,7 +129,6 @@ function utilRate(pool: Pool) {
   ::v-deep(.pools-columns-data) {
     --col-width: 11ch;
 
-    display: grid;
     grid-template-columns:
       1rem calc(4 * (26px + 1ch))
       minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)

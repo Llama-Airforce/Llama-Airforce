@@ -252,7 +252,6 @@ const onType = (tabIndex: number) => {
   ::v-deep(.troves-columns-data) {
     --col-width: 11ch;
 
-    display: grid;
     grid-template-columns:
       minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
       minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;

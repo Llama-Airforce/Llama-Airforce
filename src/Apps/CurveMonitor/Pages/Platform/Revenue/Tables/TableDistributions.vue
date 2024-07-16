@@ -82,11 +82,7 @@ function formatDate(epoch: number): string {
 
 .datatable-distributions {
   ::v-deep(.distributions-columns-data) {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-
-    @media only screen and (max-width: 1280px) {
-    }
 
     // Right adjust number columns.
     div:nth-child(2) {

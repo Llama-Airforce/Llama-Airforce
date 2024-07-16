@@ -410,7 +410,6 @@ const { t } = useI18n();
       grid-column: 1 / -1;
 
       ::v-deep(.contracts-columns-data) {
-        display: grid;
         grid-template-columns: 3fr 4fr;
       }
     }
@@ -419,7 +418,6 @@ const { t } = useI18n();
       grid-column: 1;
 
       ::v-deep(.repositories-columns-data) {
-        display: grid;
         grid-template-columns: 2fr 6fr;
       }
     }
@@ -428,7 +426,6 @@ const { t } = useI18n();
       grid-column: 2;
 
       ::v-deep(.other-columns-data) {
-        display: grid;
         grid-template-columns: 3fr 4fr;
       }
     }

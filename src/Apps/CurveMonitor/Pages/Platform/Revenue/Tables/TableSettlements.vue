@@ -205,7 +205,6 @@ function symbol(settlement: CowSwapSettlement) {
   }
 
   ::v-deep(.settlements-columns-data) {
-    display: grid;
     grid-template-columns:
       minmax(5rem, 1fr)
       minmax(10ch, 1fr)

@@ -151,7 +151,6 @@ const titleCase = (s: string): string =>
   ::v-deep(.trove-ops-columns-data) {
     --col-width: 12ch;
 
-    display: grid;
     grid-template-columns:
       minmax(14ch, 0.75fr) repeat(5, minmax(var(--col-width), 0.75fr))
       1fr;

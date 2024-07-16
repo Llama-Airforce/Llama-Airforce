@@ -148,7 +148,6 @@ const rows = computed((): Row[] => [
 
 .datatable-liq-overview {
   ::v-deep(.liq-overview-columns-data) {
-    display: grid;
     grid-template-columns: 1fr auto;
   }
 

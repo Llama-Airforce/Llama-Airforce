@@ -89,7 +89,6 @@ const gauges = computed((): Gauge[] => {
 
 .datatable-gauges {
   ::v-deep(.gauges-columns-data) {
-    display: grid;
     grid-template-columns: 4fr 1fr 1rem;
 
     // Right adjust number columns.

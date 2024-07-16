@@ -199,7 +199,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   ::v-deep(.redemptions-columns-data) {
     --col-width: 11ch;
 
-    display: grid;
     grid-template-columns:
       minmax(12ch, 1fr) minmax(12ch, 1fr) repeat(
         3,

@@ -129,7 +129,6 @@ const rows = computed((): string[] =>
     }
 
     ::v-deep(.troves-affected-columns-data) {
-      display: grid;
       grid-template-columns: 1fr;
     }
   }

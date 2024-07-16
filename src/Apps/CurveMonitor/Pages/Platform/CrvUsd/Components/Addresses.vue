@@ -79,7 +79,6 @@ const clipboard = async (addr: string) => {
   height: 100%;
 
   ::v-deep(.addresses-columns-data) {
-    display: grid;
     grid-template-columns: 2fr 6fr auto;
   }
 

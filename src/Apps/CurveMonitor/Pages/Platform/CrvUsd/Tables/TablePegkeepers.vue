@@ -187,7 +187,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   ::v-deep(.pegkeepers-columns-data) {
     --col-width: 12ch;
 
-    display: grid;
     grid-template-columns: 1fr repeat(4, var(--col-width));
 
     // Non mobile

@@ -82,7 +82,6 @@ watch(selected, (newRedemption) => {
   padding: 0;
 
   ::v-deep(.redemptions-columns-data) {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr 3rem;
 
     // Right adjust number columns.

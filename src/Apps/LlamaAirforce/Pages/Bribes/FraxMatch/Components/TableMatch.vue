@@ -189,7 +189,6 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
   }
 
   ::v-deep(.match-columns-data) {
-    display: grid;
     grid-template-columns: 1.5rem 1fr 1fr 1fr 1fr;
 
     // Right adjust number columns.

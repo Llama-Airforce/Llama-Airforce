@@ -168,7 +168,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   ::v-deep(.markets-columns-data) {
     --col-width: 11ch;
 
-    display: grid;
     grid-template-columns:
       1rem
       minmax(12ch, 1fr)

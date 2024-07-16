@@ -81,7 +81,6 @@ const rows = computed((): Liquidator[] =>
   ::v-deep(.liquidators-columns-data) {
     --col-width: 12ch;
 
-    display: grid;
     grid-template-columns: 1fr repeat(2, var(--col-width));
 
     // Non mobile

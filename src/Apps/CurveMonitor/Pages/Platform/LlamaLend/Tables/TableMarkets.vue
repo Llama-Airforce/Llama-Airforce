@@ -133,7 +133,6 @@ const tokenIcon = (market: Market) => {
   ::v-deep(.markets-columns-data) {
     --col-width: 10ch;
 
-    display: grid;
     grid-template-columns:
       1rem
       26px

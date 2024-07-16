@@ -112,7 +112,6 @@ function balance(redemption: RedemptionPending) {
   padding: 0;
 
   ::v-deep(.redemptions-columns-data) {
-    display: grid;
     grid-template-columns: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
 
     // Right adjust number columns.

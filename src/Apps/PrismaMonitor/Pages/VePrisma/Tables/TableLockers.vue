@@ -178,7 +178,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   ::v-deep(.lockers-columns-data) {
     --col-width: 11ch;
 
-    display: grid;
     grid-template-columns: 1fr repeat(4, minmax(12ch, 0.33fr));
 
     // Mobile

@@ -286,7 +286,6 @@ const onType = (tabIndex: number) => {
       object-fit: scale-down;
     }
 
-    display: grid;
     grid-template-columns:
       20px minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
       minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;

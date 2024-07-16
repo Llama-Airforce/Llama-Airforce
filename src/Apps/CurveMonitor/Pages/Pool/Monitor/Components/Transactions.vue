@@ -290,7 +290,6 @@ const onType = (tabIndex: number) => {
   }
 
   ::v-deep(.trades-columns-data) {
-    display: grid;
     grid-column-gap: 4rem;
     grid-template-columns:
       6rem 4rem 7rem 7rem minmax(5rem, 2fr)
@@ -310,7 +309,6 @@ const onType = (tabIndex: number) => {
 
   :not(&.time) {
     ::v-deep(.trades-columns-data) {
-      display: grid;
       grid-column-gap: 4rem;
       grid-template-columns:
         6rem 7rem 7rem minmax(5rem, 1fr)
@@ -337,7 +335,6 @@ const onType = (tabIndex: number) => {
     }
 
     ::v-deep(.trades-columns-data) {
-      display: grid;
       grid-column-gap: 2rem;
       grid-template-columns: 1fr auto;
 

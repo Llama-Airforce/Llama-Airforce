@@ -58,7 +58,6 @@ const repositories: Repository[] = [
 
   .datatable-repositories {
     ::v-deep(.repositories-columns-data) {
-      display: grid;
       grid-template-columns: 2fr 6fr;
     }
   }

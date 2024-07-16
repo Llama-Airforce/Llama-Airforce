@@ -104,7 +104,6 @@ const pools = computed((): Pool[] => {
   background: var(--c-lvl0);
 
   ::v-deep(.pools-columns-data) {
-    display: grid;
     grid-template-columns: 3fr 2fr 2fr 1rem;
 
     // Right adjust number columns.

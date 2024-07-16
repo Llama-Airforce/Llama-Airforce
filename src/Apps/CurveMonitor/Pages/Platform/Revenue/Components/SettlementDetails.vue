@@ -229,7 +229,6 @@ const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
 
   .datatable-solvers {
     ::v-deep(.solvers-columns-data) {
-      display: grid;
       grid-template-columns: 25px minmax(24ch, 1fr) 2fr auto;
     }
 

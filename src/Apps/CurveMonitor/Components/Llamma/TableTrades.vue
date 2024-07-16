@@ -117,7 +117,6 @@ const round = (x: number) =>
   }
 
   ::v-deep(.trades-columns-data) {
-    display: grid;
     grid-template-columns:
       minmax(5rem, 1fr)
       26px

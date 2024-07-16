@@ -84,7 +84,6 @@ const rows = computed((): PoolStableOperation[] =>
   container-type: inline-size;
 
   ::v-deep(.deposits-columns-data) {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
     // Right adjust number columns.

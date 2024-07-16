@@ -143,7 +143,6 @@ const linkAddress = (addr: string): string => {
   }
 
   ::v-deep(.cushions-columns-data) {
-    display: grid;
     grid-template-columns: 1fr 25rem 10rem;
 
     // Right adjust number columns.
