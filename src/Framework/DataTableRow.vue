@@ -139,5 +139,9 @@ const onClick = (): void => {
       }
     }
   }
+
+  .row-details {
+    border-bottom: var(--border-thickness) solid var(--c-lvl4);
+  }
 }
 </style>

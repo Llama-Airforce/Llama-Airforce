@@ -359,10 +359,6 @@ const sortColumn = (index: number): void => {
     }
   }
 
-  :deep(.row-details) {
-    border-bottom: var(--border-thickness) solid var(--c-lvl4);
-  }
-
   :deep(.row-data) {
     display: grid;
     grid-template-columns: var(--columns-data);
