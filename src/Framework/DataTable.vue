@@ -433,30 +433,6 @@ const sortColumn = (index: number): void => {
     &.active {
       border-bottom: var(--border-thickness) solid var(--c-primary);
     }
-
-    &.item {
-      &.has-data {
-        &:hover {
-          background: var(--container-background-hover);
-        }
-
-        &:active,
-        &.active {
-          background: var(--container-background-active);
-        }
-      }
-
-      // These direct divs are most likely your individual cells.
-      div {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-
-        &.number {
-          justify-self: flex-end;
-        }
-      }
-    }
   }
 }
 </style>

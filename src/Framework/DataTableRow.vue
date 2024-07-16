@@ -4,7 +4,7 @@
     :class="{ expanded }"
   >
     <div
-      class="row-data item"
+      class="row-data"
       :class="{ active: selected, expandable, 'has-data': !!data }"
       @click="onClick"
     >
@@ -129,6 +129,28 @@ const onClick = (): void => {
   > .row-data {
     &.expandable.has-data:hover {
       cursor: pointer;
+    }
+
+    &.has-data {
+      &:hover {
+        background: var(--container-background-hover);
+      }
+
+      &:active,
+      &.active {
+        background: var(--container-background-active);
+      }
+    }
+
+    // These direct divs are most likely your individual cells.
+    :deep(> div) {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      &.number {
+        justify-self: flex-end;
+      }
     }
 
     > .expander {
