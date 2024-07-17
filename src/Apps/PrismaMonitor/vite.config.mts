@@ -1,6 +1,7 @@
 import { resolve } from "path";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
@@ -16,6 +17,7 @@ export default defineConfig(() => {
     },
     plugins: [
       vue({ script: { propsDestructure: true } }),
+      vueDevTools({ launchEditor: "cursor" }),
       VueI18nPlugin({
         strictMessage: false,
         escapeHtml: false,

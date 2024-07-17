@@ -78,14 +78,16 @@ const onGauge = (newGauge: string): void => {
 </style>
 
 <i18n lang="yaml" locale="en">
-process: "<strong>veFunder</strong> process:"
+process: >-
+  <strong>veFunder</strong> process:
 
 process-1: Create a fundraising gauge contract that allows a receiver to get a certain amount of CRV.
 process-2: Request a vote to add the gauge to the controller.<br />When
   passed, the newly created gauge can be voted on during gauge
   votes and can then receive gauge emissions.
 
-requirements: "<strong>Gauge vote requirements:</strong>"
+requirements: >-
+  <strong>Gauge vote requirements:</strong>
 
 requirements-1a: New gauge votes must have a vote on the governance forum
 requirements-1b: at this address

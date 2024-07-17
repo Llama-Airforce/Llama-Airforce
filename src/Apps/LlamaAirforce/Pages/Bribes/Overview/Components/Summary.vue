@@ -133,7 +133,8 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
 all-time-revenue: All time revenue
 emissions: Emissions / $1 spent on bribes
 record-earnings: Record earnings per {0}
-tooltip: "This statistic is for <u><strong>bribers</strong></u>:<br />
+tooltip: >-
+  This statistic is for <u><strong>bribers</strong></u>:<br />
   It tells you how much gauge emission rewards ({0}) liquidity providers will get for each dollar spent on pool bribes.<br />
-  A value above $1 means that it's cheaper to bribe compared to directly handing out liquidity mining rewards."
+  A value above $1 means that it's cheaper to bribe compared to directly handing out liquidity mining rewards.
 </i18n>
