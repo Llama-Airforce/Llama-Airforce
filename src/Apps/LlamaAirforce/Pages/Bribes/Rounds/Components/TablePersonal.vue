@@ -1,6 +1,6 @@
 <template>
   <DataTable
-    class="datatable-bribe-personal"
+    class="datatable-personal"
     :rows="bribedOrdered"
     :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
     :sorting="{
@@ -22,6 +22,7 @@
           />
         </span>
       </div>
+
       <div
         v-if="personalDollarPerVlAsset"
         class="personalDollarPerVlAsset"
@@ -45,9 +46,11 @@
                 type="percentage"
               />
             </div>
+
             <div>
               {{ pool(props.item) }}
             </div>
+
             <div class="number">
               <AsyncValue
                 :value="dollarPerVlAsset(props.item)"
@@ -55,6 +58,7 @@
                 type="dollar"
               />
             </div>
+
             <div class="number">
               <AsyncValue
                 :value="amountDollars(props.item)"
@@ -333,10 +337,16 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
           grid-template-columns: 1fr 3fr 2fr 2fr;
           align-items: center;
 
+          div {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
           // Right adjust number columns.
           div:nth-child(3),
           div:nth-child(4) {
-            justify-content: end;
+            justify-self: end;
           }
         }
       }

@@ -186,10 +186,16 @@ const bribes = (bribed: Bribed): Bribe[] => {
           grid-column-gap: 1rem;
           align-items: center;
 
+          div {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
           // Right adjust number columns.
           div:nth-child(2),
           div:nth-child(3) {
-            justify-self: flex-end;
+            justify-self: end;
           }
         }
       }
