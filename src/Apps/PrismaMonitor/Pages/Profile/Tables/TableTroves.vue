@@ -3,13 +3,8 @@
     class="datatable-troves"
     :loading="loading"
     :rows="rowsPage"
-    :columns="columns"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsEnabled,
-      default: 'updated',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #header-content>
@@ -172,34 +167,31 @@ const { relativeTime } = useRelativeTime();
 const search = ref("");
 const type = ref<TroveStatus>("Open");
 
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["", "owner", "debt", "coll", "ratio", "created", "updated"],
-  "updated"
-);
-
-const columns = computed((): string[] => {
+const columns = computed(() => {
   if (type.value === "Open") {
     return [
       "",
-      "Owner",
-      "Debt",
-      "Collateral",
-      "Ratio",
-      "Created At",
-      "Last Updated",
+      { id: "owner", label: "Owner", sort: true } as const,
+      { id: "debt", label: "Debt", sort: true } as const,
+      { id: "coll", label: "Collateral", sort: true } as const,
+      { id: "ratio", label: "Ratio", sort: true } as const,
+      { id: "created", label: "Created At", sort: true } as const,
+      { id: "updated", label: "Last Updated", sort: true } as const,
     ];
   } else {
-    return ["", "Owner", "", "", "", "Created At", "Last Updated"];
+    return [
+      "",
+      { id: "owner", label: "Owner", sort: true } as const,
+      "",
+      "",
+      "",
+      { id: "created", label: "Created At", sort: true } as const,
+      { id: "updated", label: "Last Updated", sort: true } as const,
+    ];
   }
 });
 
-const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
-  if (type.value === "Open") {
-    return ["owner", "debt", "coll", "ratio", "created", "updated"];
-  } else {
-    return ["owner", "created", "updated"];
-  }
-});
+const { sorting, onSort } = useSort<typeof columns.value>("updated");
 
 const rows = computed((): Row[] =>
   chain(data.value)
@@ -213,7 +205,7 @@ const rows = computed((): Row[] =>
       return includesTerm(row.owner);
     })
     .orderBy((row) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "owner":
           return row.owner;
         case "debt":
@@ -229,7 +221,7 @@ const rows = computed((): Row[] =>
         default:
           return row.last_update;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

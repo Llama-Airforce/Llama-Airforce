@@ -2,23 +2,10 @@
   <DataTable
     class="datatable-settlements"
     :rows="rowsPage"
-    :columns="[
-      'Token',
-      'Amount',
-      'Quote',
-      'Profit',
-      '(%)',
-      'Transaction',
-      'Time',
-    ]"
+    :columns
+    :sorting
     :expanded
     expand-side="right"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsEnabled,
-      default: 'timestamp',
-      defaultDir: 'desc',
-    }"
     @sort-column="onSort"
     @selected="toggleExpand"
   >
@@ -128,19 +115,22 @@ interface Props {
 const { settlements } = defineProps<Props>();
 
 // Data
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["token", "amount", "quote", "profit", "profitPct", "tx", "timestamp"],
-  "timestamp"
-);
+const columns = [
+  { id: "token", label: "Token", sort: false } as const,
+  { id: "amount", label: "Amount", sort: true } as const,
+  { id: "quote", label: "Quote", sort: true } as const,
+  { id: "profit", label: "Profit", sort: true } as const,
+  { id: "profitPct", label: "(%)", sort: true } as const,
+  { id: "tx", label: "Transaction", sort: false } as const,
+  { id: "timestamp", label: "Time", sort: true } as const,
+];
 
-const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
-  return ["amount", "quote", "profit", "profitPct", "timestamp"];
-});
+const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed(() =>
   chain(settlements)
     .orderBy((settlement) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "amount":
           return settlement.amountReceived;
         case "quote":
@@ -153,7 +143,7 @@ const rows = computed(() =>
         default:
           return settlement.timestamp;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

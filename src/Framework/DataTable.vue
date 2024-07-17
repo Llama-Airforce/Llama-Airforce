@@ -29,23 +29,23 @@
       >
         <slot name="column-headers">
           <div
-            v-for="(column, index) in columns"
-            :key="column"
+            v-for="column in columnsObjects"
+            :key="column.id"
             class="column-header"
             :class="{
-              'sortable-header': isSortingEnabled(index),
-              'current-sort': currentSort == sorting.columns[index],
+              'sortable-header': column.sort,
+              'current-sort': sorting.column == column.id,
             }"
-            @click="sortColumn(index)"
+            @click="sortColumn(column)"
           >
-            {{ column }}
+            {{ column.label }}
 
             <i
-              v-if="isSortingEnabled(index)"
+              v-if="column.sort"
               class="sorting-arrow fa fa-caret-right"
               :class="{
-                asc: isSortAscending(index),
-                desc: isSortDescending(index),
+                asc: isSortAscending(column),
+                desc: isSortDescending(column),
               }"
             ></i>
           </div>
@@ -119,21 +119,26 @@ import { type SortOrder } from "@/Framework/SortOrder";
 
 const { t } = useI18n();
 
+type Column = {
+  id: TSortingColumn;
+  label: string;
+  sort?: boolean;
+};
+type Columns = (Column | string)[];
+
 type Sorting = {
-  columns: readonly TSortingColumn[];
-  enabled?: readonly TSortingColumn[];
-  default?: TSortingColumn;
-  defaultDir?: SortOrder;
+  column?: TSortingColumn;
+  order: SortOrder;
 };
 
 // Props
 interface Props {
-  /** The names of the columns. */
-  columns?: string[];
-  /** The rows of the data table. */
+  columns?: Columns;
   rows?: TData[];
+
   /** The minimum number of rows in case you don't want to show the 'no data' message. */
   rowsMin?: number | null;
+
   /** The row that should be highlighted as being selected. */
   selectedRow?: TData;
 
@@ -141,7 +146,7 @@ interface Props {
   expanded?: TData[];
   expandSide?: "left" | "right";
 
-  /** Whether columns can be sorted or not. */
+  /** Current sorting state. */
   sorting?: Sorting;
 
   /** Icon shown to the left of the header title. */
@@ -161,7 +166,7 @@ const {
   expandSide = "right",
 
   sorting = {
-    columns: [],
+    order: "asc",
   },
 
   icon = "",
@@ -172,7 +177,14 @@ const {
 // Emits
 const emit = defineEmits<{
   selected: [data: TData];
-  sortColumn: [sort: TSortingColumn, sortOrder: SortOrder];
+
+  /*
+   * I couldn't get the sort parameter type to only be
+   * columns where sort is true, so I set it to never
+   * to ignore typescript issues for now. Most likely
+   * it'll be used in conjunction with useSort anyway.
+   */
+  sortColumn: [sort: never, sortOrder: SortOrder];
 }>();
 
 // Refs
@@ -184,6 +196,17 @@ const rowsEmpty = computed((): never[] => {
   const count = Math.max(0, rowsMin - rows.length);
   return new Array<never>(count);
 });
+
+const columnsObjects = computed((): Column[] =>
+  columns.map((column) => {
+    if (typeof column === "string") {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      return { id: column as TSortingColumn, label: column };
+    }
+
+    return column;
+  })
+);
 
 // Selecting
 const onSelect = (data?: TData): void => {
@@ -209,39 +232,26 @@ const selectedBelow = (index: number): boolean => {
 };
 
 // Sorting
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-const currentSort = ref(sorting.default) as Ref<TSortingColumn | undefined>;
-const currentSortDir = ref<SortOrder>(sorting.defaultDir ?? "asc");
+const isSortAscending = (column: Column) =>
+  sorting.column === column.id && sorting.order === "asc";
 
-const isSortingEnabled = (index: number) =>
-  (sorting.enabled ?? sorting.columns).includes(sorting.columns[index]);
+const isSortDescending = (column: Column) =>
+  sorting.column === column.id && sorting.order === "desc";
 
-const isSortAscending = (index: number) =>
-  currentSort.value === sorting.columns[index] &&
-  currentSortDir.value === "asc";
-
-const isSortDescending = (index: number) =>
-  currentSort.value === sorting.columns[index] &&
-  currentSortDir.value === "desc";
-
-const sortColumn = (index: number): void => {
+const sortColumn = (column: Column): void => {
   // Only sort columns where sorting is enabled.
-  if (!isSortingEnabled(index)) {
+  if (!column.sort) {
     return;
   }
 
-  const columnName = sorting.columns[index];
-
-  currentSortDir.value =
-    columnName === currentSort.value
-      ? currentSortDir.value === "asc" // Reverse
+  const newOrder =
+    column.id === sorting.column
+      ? sorting.order === "asc" // Reverse
         ? "desc"
         : "asc"
       : "asc";
 
-  currentSort.value = columnName;
-
-  emit("sortColumn", columnName, currentSortDir.value);
+  emit("sortColumn", column.id as never, newOrder);
 };
 </script>
 

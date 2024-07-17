@@ -2,13 +2,8 @@
   <DataTable
     class="datatable-pools"
     :rows="pools"
-    :columns="['', t('name'), t('apr'), t('tvl')]"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsNoEmpty,
-      default: 'tvl',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     :expanded="expanded"
     @sort-column="onSort"
   >
@@ -73,14 +68,20 @@ const { expanded = [] } = defineProps<Props>();
 // Refs
 const store = useConvexStore();
 
-const { sortColumn, sortColumns, sortColumnsNoEmpty, sortOrder, onSort } =
-  useSort(["", "name", "apr", "tvl"], "tvl");
+const columns = computed(() => [
+  "",
+  { id: "name" as const, label: t("name"), sort: true as const },
+  { id: "apr" as const, label: t("apr"), sort: true as const },
+  { id: "tvl" as const, label: t("tvl"), sort: true as const },
+]);
+
+const { sorting, onSort } = useSort<typeof columns.value>("tvl");
 
 const pools = computed((): Pool[] => {
   return orderBy(
     store.pools.filter((pool) => !disabled(pool.name)),
     (pool) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "name":
           return shorten(pool.name);
         case "apr":
@@ -91,7 +92,7 @@ const pools = computed((): Pool[] => {
           return pool.tvl;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 </script>

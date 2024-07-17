@@ -2,12 +2,8 @@
   <DataTable
     class="datatable-bribed"
     :rows="bribed"
-    :columns="[t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
-    :sorting="{
-      columns: sortColumns,
-      default: 'vlasset',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #header-content>
@@ -89,10 +85,17 @@ const { epoch } = defineProps<Props>();
 // Refs
 const { protocol } = storeToRefs(useBribesStore());
 
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["pool", "vlasset", "total"],
-  "total"
-);
+const columns = computed(() => [
+  { id: "pool" as const, label: t("pool"), sort: true as const },
+  {
+    id: "vlasset" as const,
+    label: `$/${vlAssetSymbol(protocol.value)}`,
+    sort: true as const,
+  },
+  { id: "total" as const, label: t("total"), sort: true as const },
+]);
+
+const { sorting, onSort } = useSort<typeof columns.value>("total");
 
 const bribed = computed((): Bribed[] => {
   if (!epoch) {
@@ -104,7 +107,7 @@ const bribed = computed((): Bribed[] => {
   return orderBy(
     bribed,
     (b: Bribed) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "pool":
           return b.pool;
         case "vlasset":
@@ -115,7 +118,7 @@ const bribed = computed((): Bribed[] => {
           return b.dollarPerVlAsset;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 

@@ -3,13 +3,8 @@
     class="datatable-liquidations"
     :loading="loading || troves.length === 0"
     :rows="rowsPage"
-    :columns="columns"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsEnabled,
-      default: 'timestamp',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
     @selected="showDetails = $event"
   >
@@ -147,18 +142,16 @@ const search = ref("");
 const vault = ref<Vault | "all">("all");
 const showDetails = ref<Row | null>(null);
 
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["icon", "liquidator", "tx", "debt", "numtroves", "timestamp"],
-  "timestamp"
-);
+const columns = [
+  "",
+  { id: "liquidator", label: "Liquidator", sort: true } as const,
+  { id: "tx", label: "Transaction", sort: true } as const,
+  { id: "debt", label: "Debt", sort: true } as const,
+  { id: "numtroves", label: "# Troves", sort: true } as const,
+  { id: "timestamp", label: "Time", sort: true } as const,
+];
 
-const columns = computed((): string[] => {
-  return ["", "Liquidator", "Transaction", "Debt", "# Troves", "Time"];
-});
-
-const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
-  return ["liquidator", "tx", "debt", "numtroves", "timestamp"];
-});
+const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed((): Row[] =>
   chain(data.value)
@@ -174,7 +167,7 @@ const rows = computed((): Row[] =>
       return includesTerm(row.liquidator) && isVaultFilter;
     })
     .orderBy((row) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "liquidator":
           return row.liquidator;
         case "tx":
@@ -188,7 +181,7 @@ const rows = computed((): Row[] =>
         default:
           return row.timestamp;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

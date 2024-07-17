@@ -3,12 +3,8 @@
     class="datatable-liquidations"
     :loading="loading"
     :rows="rowsPage"
-    :columns="columns"
-    :sorting="{
-      columns: sortColumns,
-      default: 'timestamp',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
     @selected="showDetails = $event"
   >
@@ -138,14 +134,15 @@ const { relativeTime } = useRelativeTime();
 const search = ref("");
 const showDetails = ref<Liquidation | null>(null);
 
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["liquidator", "tx", "debt", "numtroves", "timestamp"],
-  "timestamp"
-);
+const columns = [
+  { id: "liquidator", label: "Liquidator", sort: true } as const,
+  { id: "tx", label: "Transaction", sort: true } as const,
+  { id: "debt", label: "Debt", sort: true } as const,
+  { id: "numtroves", label: "# Troves", sort: true } as const,
+  { id: "timestamp", label: "Time", sort: true } as const,
+];
 
-const columns = computed((): string[] => {
-  return ["Liquidator", "Transaction", "Debt", "# Troves", "Time"];
-});
+const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed((): Row[] =>
   chain(data.value)
@@ -158,7 +155,7 @@ const rows = computed((): Row[] =>
       return includesTerm(row.liquidator);
     })
     .orderBy((row) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "liquidator":
           return row.liquidator;
         case "tx":
@@ -172,7 +169,7 @@ const rows = computed((): Row[] =>
         default:
           return row.timestamp;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

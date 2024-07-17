@@ -2,12 +2,8 @@
   <DataTable
     class="datatable-distributions"
     :rows
-    :columns="['Date', 'Fees']"
-    :sorting="{
-      columns: sortColumns,
-      default: 'timestamp',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #header-content>
@@ -44,15 +40,17 @@ interface Props {
 const { distributions } = defineProps<Props>();
 
 // Data
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["timestamp", "fees"],
-  "timestamp"
-);
+const columns = [
+  { id: "timestamp", label: "Date", sort: true } as const,
+  { id: "fees", label: "Fees", sort: true } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed(() =>
   chain(distributions)
     .orderBy((distribution) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "timestamp":
           return distribution.timestamp;
         case "fees":
@@ -60,7 +58,7 @@ const rows = computed(() =>
         default:
           return distribution.timestamp;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

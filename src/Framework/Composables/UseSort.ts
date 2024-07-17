@@ -1,34 +1,38 @@
 import { type SortOrder } from "@/Framework/SortOrder";
 
+type Column<T> = { id: T; label: string; sort: boolean } | string;
+type ExtractColumnId<T> = T extends { id: infer U; sort: true } ? U : never;
+
 /**
  * Vue composable for managing sorting state within a datatable.
  *
- * @param sortColumns - An array specifying the column names that are eligible for sorting.
- * @param initSort - The initial column name to be sorted by.
- * @param initOrder - (Optional) The initial sorting direction, defaults to SortOrder.Descending if unspecified.
+ * @param initSort - The initial column ID to be sorted by.
+ * @param initOrder - (Optional) The initial sorting direction, defaults to "desc" if unspecified.
  * @returns An object containing:
- *   - sortColumns: The array of column names that can be sorted.
- *   - sortColumnsNoEmpty: The array of columns but without empty string columns.
- *   - sortColumn: A ref that holds the currently active sort column.
+ *   - sortColumn: A ref that holds the currently active sort column ID.
  *   - sortOrder: A ref that holds the current sorting direction.
- *   - onSort: A function that modifies the sort column and direction in response to user actions.
+ *   - sorting: A computed property that combines sortColumn and sortOrder.
+ *   - onSort: A function that updates the sort column and direction.
  */
-export function useSort<TColumn extends string>(
-  sortColumns: readonly TColumn[],
-  initSort: TColumn extends infer U ? (U extends string ? U : never) : never,
+export function useSort<T extends readonly Column<string>[]>(
+  initSort: ExtractColumnId<T[number]>,
   initOrder?: SortOrder
 ) {
-  const sortColumn = ref(initSort) as Ref<TColumn>;
+  const sortColumn = ref(initSort) as Ref<ExtractColumnId<T[number]>>;
   const sortOrder = ref(initOrder ?? "desc");
 
-  const onSort = (columnName: TColumn, order: SortOrder): void => {
+  const onSort = (
+    columnName: ExtractColumnId<T[number]>,
+    order: SortOrder
+  ): void => {
     sortColumn.value = columnName;
     sortOrder.value = order;
   };
 
-  const sortColumnsNoEmpty = computed(() =>
-    sortColumns.filter((column) => column !== "")
-  );
+  const sorting = computed(() => ({
+    column: sortColumn.value,
+    order: sortOrder.value,
+  }));
 
-  return { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort };
+  return { sortColumn, sortOrder, sorting, onSort };
 }

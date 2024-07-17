@@ -3,13 +3,8 @@
     class="datatable-pools"
     expand-side="left"
     :rows="rowsPage"
-    :columns="['', '', 'Name', 'Volume (24h)', 'TVL', 'Util Rate']"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsNoEmpty,
-      default: 'tvl',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #header-content>
@@ -89,13 +84,21 @@ interface Props {
 const { pools } = defineProps<Props>();
 
 // Data
-const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "", "name", "volume", "tvl", "util"], "tvl");
+const columns = [
+  "",
+  "",
+  { id: "name", label: "Name", sort: true } as const,
+  { id: "volume", label: "Volume (24h)", sort: true } as const,
+  { id: "tvl", label: "TVL", sort: true } as const,
+  { id: "util", label: "Util", sort: true } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("tvl");
 
 const poolsFiltered = computed(() =>
   chain_(pools)
     .orderBy((pool) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "name":
           return pool.name;
         case "volume":
@@ -107,7 +110,7 @@ const poolsFiltered = computed(() =>
         default:
           return pool.tvlUsd;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

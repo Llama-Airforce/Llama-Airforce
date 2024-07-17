@@ -2,13 +2,8 @@
   <DataTable
     class="datatable-bribe-rounds"
     :rows="epochs"
-    :columns="['', t('deadline'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsNoEmpty,
-      default: 'deadline',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
     @selected="onSelected"
   >
@@ -79,14 +74,24 @@ const { protocol } = storeToRefs(useBribesStore());
 
 const router = useRouter();
 
-const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "deadline", "vlasset", "total"], "deadline");
+const columns = computed(() => [
+  "",
+  { id: "deadline" as const, label: t("deadline"), sort: true as const },
+  {
+    id: "vlasset" as const,
+    label: `$/${vlAssetSymbol(protocol.value)}`,
+    sort: true as const,
+  },
+  { id: "total" as const, label: t("total"), sort: true as const },
+]);
+
+const { sorting, onSort } = useSort<typeof columns.value>("deadline");
 
 const epochs = computed((): EpochOverview[] => {
   return orderBy(
     overview?.epochs ?? [],
     (epoch: EpochOverview) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "deadline":
           return epoch.round;
         case "vlasset":
@@ -97,7 +102,7 @@ const epochs = computed((): EpochOverview[] => {
           return epoch.round;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 

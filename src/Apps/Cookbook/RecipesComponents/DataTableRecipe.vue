@@ -4,14 +4,9 @@
       <template #example>
         <DataTable
           class="datatable-example"
-          :rows="rows"
-          :columns="['', 'Deadline', '$/vlCVX', 'Total']"
-          :sorting="{
-            columns: sortColumns,
-            enabled: sortColumnsNoEmpty,
-            default: 'deadline',
-            defaultDir: 'desc',
-          }"
+          :rows
+          :columns
+          :sorting
           :loading="isLoading"
           :expanded="expandedRows"
           expand-side="right"
@@ -158,8 +153,14 @@ type Round = {
   value: number;
 };
 
-const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "deadline", "vlasset", "total"], "total");
+const columns = [
+  "",
+  { id: "deadline", label: "Deadline", sort: true } as const,
+  { id: "vlasset", label: "$/vlCVX", sort: true } as const,
+  { id: "total", label: "Total", sort: true } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("total");
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -173,7 +174,7 @@ const rows = computed((): Round[] => {
   return orderBy(
     data ?? [],
     (row: Round) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "deadline":
           return row.round;
         case "vlasset":
@@ -184,7 +185,7 @@ const rows = computed((): Round[] => {
           return row.round;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 
@@ -213,14 +214,9 @@ const toggleExpand = (round: Round) => {
 
 const dataTable1 = `<DataTable
   class="datatable-example"
-  :rows="rows"
-  :columns="['', 'Deadline', '$/vlCVX', 'Total']"
-  :sorting="{
-    names: sortColumns,
-    enabled: sortColumnsNoEmpty,
-    default: 'deadline',
-    defaultDir: 'desc',
-  }"
+  :rows
+  :columns
+  :sorting
   :loading="isLoading"
   :expanded="expandedRows"
   expand-side="right"
@@ -285,8 +281,14 @@ type Round = {
   value: number;
 };
 
-const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "deadline", "vlasset", "total"], "total");
+const columns = [
+  "",
+  { id: "deadline", label: "Deadline", sort: true } as const,
+  { id: "vlasset", label: "$/vlCVX", sort: true } as const,
+  { id: "total", label: "Total", sort: true } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("total");
 
 const data: Round[] = [
   { round: 1, value: 1 * Math.random() },
@@ -300,7 +302,7 @@ const rows = computed((): Round[] => {
   return orderBy(
     data ?? [],
     (row: Round) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "deadline":
           return row.round;
         case "vlasset":
@@ -311,7 +313,7 @@ const rows = computed((): Round[] => {
           return row.round;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 

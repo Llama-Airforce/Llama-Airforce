@@ -2,13 +2,8 @@
   <DataTable
     class="datatable-match"
     :rows="epochsSorted"
-    :columns="['', t('deadline'), t('native'), t(`frax`), t('total')]"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsNoEmpty,
-      default: 'deadline',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #row="props: { item: EpochFrax }">
@@ -107,14 +102,21 @@ interface Props {
 const { epochs = [] } = defineProps<Props>();
 
 // Refs
-const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "deadline", "native", "frax", "total"], "deadline");
+const columns = computed(() => [
+  "",
+  { id: "deadline" as const, label: t("deadline"), sort: true as const },
+  { id: "native" as const, label: t("native"), sort: true as const },
+  { id: "frax" as const, label: t("frax"), sort: true as const },
+  { id: "total" as const, label: t("total"), sort: true as const },
+]);
+
+const { sorting, onSort } = useSort<typeof columns.value>("deadline");
 
 const epochsSorted = computed((): EpochFrax[] => {
   return orderBy(
     epochs,
     (epoch: EpochFrax) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "deadline":
           return epoch.round;
         case "native":
@@ -127,7 +129,7 @@ const epochsSorted = computed((): EpochFrax[] => {
           return epoch.round;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 

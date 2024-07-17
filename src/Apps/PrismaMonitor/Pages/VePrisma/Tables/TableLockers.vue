@@ -2,13 +2,8 @@
   <DataTable
     class="datatable-lockers"
     :rows="rowsPage"
-    :columns="columns"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsEnabled,
-      default: 'weight',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #header-content>
@@ -116,18 +111,15 @@ const { lockers = [] } = defineProps<Props>();
 
 const search = ref("");
 
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["locker", "weight", "locked", "unlocked", "frozen"],
-  "weight"
-);
+const columns = [
+  { id: "locker", label: "Locker", sort: false } as const,
+  { id: "weight", label: "Weight", sort: true } as const,
+  { id: "locked", label: "Locked", sort: true } as const,
+  { id: "unlocked", label: "Unlocked", sort: true } as const,
+  { id: "frozen", label: "Frozen", sort: true } as const,
+];
 
-const columns = computed((): string[] => {
-  return ["Locker", "Weight", "Locked", "Unlocked", "Frozen"];
-});
-
-const sortColumnsEnabled = computed((): (typeof sortColumn.value)[] => {
-  return ["weight", "locked", "unlocked", "frozen"];
-});
+const { sorting, onSort } = useSort<typeof columns>("weight");
 
 const rows = computed((): Row[] =>
   chain(lockers)
@@ -140,7 +132,7 @@ const rows = computed((): Row[] =>
       return includesTerm(row.id);
     })
     .orderBy((row) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "weight":
           return row.weight;
         case "locked":
@@ -152,7 +144,7 @@ const rows = computed((): Row[] =>
         default:
           return row.weight;
       }
-    }, sortOrder.value)
+    }, sorting.value.order)
     .value()
 );
 

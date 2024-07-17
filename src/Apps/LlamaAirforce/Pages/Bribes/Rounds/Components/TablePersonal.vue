@@ -2,12 +2,8 @@
   <DataTable
     class="datatable-personal"
     :rows="bribedOrdered"
-    :columns="['%', t('pool'), `$/${vlAssetSymbol(protocol)}`, t('total')]"
-    :sorting="{
-      columns: sortColumns,
-      default: 'total',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     @sort-column="onSort"
   >
     <template #header-content>
@@ -118,10 +114,18 @@ const { epoch } = defineProps<Props>();
 const { protocol } = storeToRefs(useBribesStore());
 const { isConnected, address } = useWallet();
 
-const { sortColumns, sortColumn, sortOrder, onSort } = useSort(
-  ["percentage", "pool", "vlasset", "total"],
-  "total"
-);
+const columns = computed(() => [
+  { id: "percentage" as const, label: "%", sort: true as const },
+  { id: "pool" as const, label: t("pool"), sort: true as const },
+  {
+    id: "vlasset" as const,
+    label: `$/${vlAssetSymbol(protocol.value)}`,
+    sort: true as const,
+  },
+  { id: "total" as const, label: t("total"), sort: true as const },
+]);
+
+const { sorting, onSort } = useSort<typeof columns.value>("total");
 
 const isSupported = computed((): boolean => epoch?.platform !== "hh");
 
@@ -129,7 +133,7 @@ const bribedOrdered = computed((): BribedPersonal[] => {
   return orderBy(
     bribed.value,
     (bribed) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "pool":
           return bribed.pool;
         case "vlasset":
@@ -139,7 +143,7 @@ const bribedOrdered = computed((): BribedPersonal[] => {
           return bribed.amountDollars;
       }
     },
-    sortOrder.value
+    sorting.value.order
   );
 });
 

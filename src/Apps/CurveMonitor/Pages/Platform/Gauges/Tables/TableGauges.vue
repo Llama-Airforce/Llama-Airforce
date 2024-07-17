@@ -2,13 +2,8 @@
   <DataTable
     class="datatable-gauges"
     :rows="gauges"
-    :columns="['', t('name'), t('tvl')]"
-    :sorting="{
-      columns: sortColumns,
-      enabled: sortColumnsNoEmpty,
-      default: 'tvl',
-      defaultDir: 'desc',
-    }"
+    :columns
+    :sorting
     :expanded="expanded"
     @sort-column="onSort"
   >
@@ -62,14 +57,19 @@ const { t } = useI18n();
 // Refs
 const store = useCurveStore();
 
-const { sortColumns, sortColumnsNoEmpty, sortColumn, sortOrder, onSort } =
-  useSort(["", "name", "tvl"], "tvl");
+const columns = computed(() => [
+  "",
+  { id: "name" as const, label: t("name"), sort: true as const },
+  { id: "tvl" as const, label: t("tvl"), sort: true as const },
+]);
+
+const { sorting, onSort } = useSort<typeof columns.value>("tvl");
 
 const gauges = computed((): Gauge[] => {
   return orderBy(
     store.gauges,
     (gauge) => {
-      switch (sortColumn.value) {
+      switch (sorting.value.column) {
         case "name":
           return shorten(gauge.name);
         case "tvl":
@@ -78,7 +78,7 @@ const gauges = computed((): Gauge[] => {
           return gauge.tvl;
       }
     },
-    sortOrder.value
+    sorting.value.order,
   );
 });
 </script>
