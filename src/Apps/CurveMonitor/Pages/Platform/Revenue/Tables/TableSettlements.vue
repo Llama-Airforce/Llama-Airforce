@@ -53,6 +53,7 @@
 
       <div class="number">
         <AsyncValue
+          v-if="item.routerReceived > 1"
           :value="profit(item)"
           :precision="2"
           :inline="false"
@@ -62,6 +63,7 @@
 
       <div class="number profit">
         <AsyncValue
+          v-if="item.routerReceived > 1"
           class="pct"
           :value="profitPct(item)"
           :precision="2"
