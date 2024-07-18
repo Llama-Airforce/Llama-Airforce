@@ -21,4 +21,10 @@ export default defineNitroConfig({
     "@": resolve(__dirname, "../../"),
     "@LAF": resolve(__dirname, "./"),
   },
+  storage: {
+    cache: {
+      driver: "fs",
+      base: "./tmp",
+    },
+  },
 });
