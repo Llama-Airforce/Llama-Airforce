@@ -21,12 +21,10 @@
         <Button icon="fab fa-github"></Button>
       </a>
 
-      <router-link to="/code">
-        <Button
-          icon="fas fa-code"
-          @click="emit('navigated')"
-        ></Button>
-      </router-link>
+      <Button
+        icon="fas fa-code"
+        @click="router.push('/code')"
+      ></Button>
     </div>
 
     <div class="selectors">
@@ -44,6 +42,8 @@
 <script setup lang="ts">
 import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@CM/Navigation/SelectTheme.vue";
+
+const router = useRouter();
 
 // Emits
 const emit = defineEmits<{
