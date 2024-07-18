@@ -1,7 +1,4 @@
-import {
-  createRouter as createVueRouter,
-  createWebHashHistory,
-} from "vue-router";
+import { createRouter as createVueRouter, createWebHistory } from "vue-router";
 import { usePageStore } from "@/Framework/Stores";
 
 import Home from "@LAF/Pages/Home.page.vue";
@@ -28,7 +25,7 @@ export default function createRouter() {
   ];
 
   const router = createVueRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes,
   });
 

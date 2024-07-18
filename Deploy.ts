@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { rmSync, cpSync } from "fs";
+import { rmSync, cpSync, writeFileSync } from "fs";
 import { join } from "path";
 import consola from "consola";
 
@@ -83,6 +83,11 @@ function deploy(opts: Options) {
   // Copy dist contents to git folder
   const distPathFull = join(__dirname, dirDist);
   cpSync(distPathFull, outputPathFull, { recursive: true });
+
+  // Create _redirects file specifically for Cloudflare Pages and createWebHistory().
+  const redirectsContent = "/* /index.html 200";
+  const redirectsPath = join(outputPathFull, "_redirects");
+  writeFileSync(redirectsPath, redirectsContent);
 
   // Delete old dist folder
   rmSync(distPathFull, { recursive: true, force: true });
