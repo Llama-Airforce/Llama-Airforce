@@ -62,7 +62,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           type="dollar"
           :value="Math.round(props.item.actual_debt_amount)"
@@ -70,9 +70,9 @@
         ></AsyncValue>
       </div>
 
-      <div class="number">{{ props.item.troves_affected_count }}</div>
+      <div class="end">{{ props.item.troves_affected_count }}</div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(props.item.timestamp) }}
       </div>
     </template>
@@ -146,9 +146,9 @@ const columns = [
   "",
   { id: "redeemer", label: "Redeemer", sort: true } as const,
   { id: "tx", label: "Transaction", sort: true } as const,
-  { id: "debt", label: "Debt", sort: true } as const,
-  { id: "numtroves", label: "# Troves", sort: true } as const,
-  { id: "timestamp", label: "Time", sort: true } as const,
+  { id: "debt", label: "Debt", sort: true, align: "end" } as const,
+  { id: "numtroves", label: "# Troves", sort: true, align: "end" } as const,
+  { id: "timestamp", label: "Time", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
@@ -215,15 +215,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     width: 20px;
     height: 20px;
     object-fit: scale-down;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6) {
-      justify-content: end;
-    }
   }
 }
 </style>

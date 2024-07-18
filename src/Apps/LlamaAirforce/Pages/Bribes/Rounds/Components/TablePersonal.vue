@@ -47,7 +47,7 @@
               {{ pool(props.item) }}
             </div>
 
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="dollarPerVlAsset(props.item)"
                 :precision="5"
@@ -55,7 +55,7 @@
               />
             </div>
 
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="amountDollars(props.item)"
                 :precision="2"
@@ -121,8 +121,14 @@ const columns = computed(() => [
     id: "vlasset" as const,
     label: `$/${vlAssetSymbol(protocol.value)}`,
     sort: true as const,
+    align: "end" as const,
   },
-  { id: "total" as const, label: t("total"), sort: true as const },
+  {
+    id: "total" as const,
+    label: t("total"),
+    sort: true as const,
+    align: "end" as const,
+  },
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("total");
@@ -309,14 +315,6 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     }
   }
 
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
-    }
-  }
-
   :deep(.tooltip) {
     grid-column: 1 / span 5;
     display: flex;
@@ -345,12 +343,6 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-          }
-
-          // Right adjust number columns.
-          div:nth-child(3),
-          div:nth-child(4) {
-            justify-self: end;
           }
         }
       }

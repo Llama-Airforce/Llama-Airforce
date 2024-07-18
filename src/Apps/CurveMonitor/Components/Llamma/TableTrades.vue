@@ -2,7 +2,16 @@
   <DataTable
     class="datatable-trades"
     :rows="trades"
-    :columns="['Bought', '', '', 'Sold', '', '', 'Market Maker', 'Time']"
+    :columns="[
+      { label: 'Bought', align: 'end' },
+      '',
+      '',
+      { label: 'Sold', align: 'end' },
+      '',
+      '',
+      'Market Maker',
+      { label: 'Time', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -17,7 +26,7 @@
     </template>
 
     <template #row="{ item: trade }: { item: LlammaTrade }">
-      <div class="number">{{ round(trade.amount_bought) }}</div>
+      <div class="end">{{ round(trade.amount_bought) }}</div>
       <TokenIcon
         :chain="chain"
         :address="trade.token_bought.address"
@@ -32,7 +41,7 @@
         </a>
       </div>
 
-      <div class="number">{{ round(trade.amount_sold) }}</div>
+      <div class="end">{{ round(trade.amount_sold) }}</div>
       <TokenIcon
         :chain="chain"
         :address="trade.token_sold.address"
@@ -57,7 +66,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <a
           :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
           target="_blank"
@@ -113,15 +122,6 @@ const round = (x: number) =>
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(1),
-    div:nth-child(4),
-    div:nth-child(8) {
-      justify-content: end;
-    }
   }
 }
 </style>

@@ -27,21 +27,21 @@
             <div>
               {{ date(props.item) }}
             </div>
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="native(props.item)"
                 :precision="2"
                 type="dollar"
               />
             </div>
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="frax(props.item)"
                 :precision="2"
                 type="dollar"
               />
             </div>
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="total(props.item)"
                 :precision="2"
@@ -105,9 +105,24 @@ const { epochs = [] } = defineProps<Props>();
 const columns = computed(() => [
   "",
   { id: "deadline" as const, label: t("deadline"), sort: true as const },
-  { id: "native" as const, label: t("native"), sort: true as const },
-  { id: "frax" as const, label: t("frax"), sort: true as const },
-  { id: "total" as const, label: t("total"), sort: true as const },
+  {
+    id: "native" as const,
+    label: t("native"),
+    sort: true as const,
+    align: "end" as const,
+  },
+  {
+    id: "frax" as const,
+    label: t("frax"),
+    sort: true as const,
+    align: "end" as const,
+  },
+  {
+    id: "total" as const,
+    label: t("total"),
+    sort: true as const,
+    align: "end" as const,
+  },
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("deadline");
@@ -189,15 +204,6 @@ const bribes = (epoch: EpochFrax): Bribe[] => {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5) {
-      justify-content: end;
-    }
   }
 
   :deep(.tooltip) {

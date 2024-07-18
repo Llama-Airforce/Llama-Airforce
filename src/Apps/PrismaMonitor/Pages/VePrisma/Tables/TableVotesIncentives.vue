@@ -40,7 +40,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           type="dollar"
           :value="Math.round(props.item.points)"
@@ -50,7 +50,7 @@
         ></AsyncValue>
       </div>
 
-      <div class="number">
+      <div class="end">
         <a
           class="font-mono"
           :href="`https://etherscan.io/tx/${props.item.transaction}`"
@@ -61,7 +61,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(props.item.timestamp) }}
       </div>
     </template>
@@ -91,8 +91,14 @@ const { isFetching: loading, data } = useQuery({
 // Refs
 const { relativeTime } = useRelativeTime();
 
-const columns = computed((): string[] => {
-  return ["Voter", "Recipient", "Points", "Tx", "Time"];
+const columns = computed(() => {
+  return [
+    "Voter",
+    "Recipient",
+    { label: "Points", align: "end" } as const,
+    { label: "Tx", align: "end" } as const,
+    { label: "Time", align: "end" } as const,
+  ];
 });
 
 const rows = computed((): Row[] => data.value);
@@ -113,15 +119,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
   .title {
     margin-right: 1rem;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5) {
-      justify-content: end;
-    }
   }
 }
 </style>

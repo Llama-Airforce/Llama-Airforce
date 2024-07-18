@@ -3,7 +3,7 @@
     class="datatable-distributions"
     :loading
     :rows
-    :columns="['Name', 'Address', 'Fees ($)']"
+    :columns="['Name', 'Address', { label: 'Fees ($)', align: 'end' }]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -37,7 +37,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.usdValue"
           :precision="2"
@@ -50,7 +50,7 @@
       <div></div>
       <div></div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.usdValue, 0)"
           :precision="2"
@@ -140,13 +140,6 @@ const linkAddress = (addr: string): string => {
       .label {
         display: none;
       }
-    }
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3) {
-      justify-content: end;
     }
   }
 }

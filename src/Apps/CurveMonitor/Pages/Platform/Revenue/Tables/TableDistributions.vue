@@ -13,7 +13,7 @@
     <template #row="{ item: { timestamp, feesUsd } }: { item: Row }">
       <div>{{ formatDate(timestamp) }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="feesUsd"
           :precision="2"
@@ -42,7 +42,7 @@ const { distributions } = defineProps<Props>();
 // Data
 const columns = [
   { id: "timestamp", label: "Date", sort: true } as const,
-  { id: "fees", label: "Fees", sort: true } as const,
+  { id: "fees", label: "Fees", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
@@ -78,13 +78,6 @@ function formatDate(epoch: number): string {
 
 .datatable-distributions {
   --columns-data: 1fr 1fr;
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2) {
-      justify-content: end;
-    }
-  }
 }
 </style>
 

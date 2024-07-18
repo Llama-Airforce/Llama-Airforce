@@ -3,7 +3,15 @@
     class="datatable-vaults"
     :loading="loading"
     :rows="rows"
-    :columns="['', 'Name', 'TVL', 'Debt', 'CR', 'MCR', 'Troves', 'Price']"
+    :columns="[
+      '',
+      'Name',
+      { label: 'TVL', align: 'end' },
+      { label: 'CR', align: 'end' },
+      { label: 'MCR', align: 'end' },
+      { label: 'Troves', align: 'end' },
+      { label: 'Price', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -24,7 +32,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ deprecated: isDeprecated(props.item.address) }"
       >
         <AsyncValue
@@ -36,7 +44,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ deprecated: isDeprecated(props.item.address) }"
       >
         <AsyncValue
@@ -48,7 +56,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ deprecated: isDeprecated(props.item.address) }"
       >
         <AsyncValue
@@ -59,7 +67,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ deprecated: isDeprecated(props.item.address) }"
       >
         <AsyncValue
@@ -70,14 +78,14 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ deprecated: isDeprecated(props.item.address) }"
       >
         {{ props.item.open_troves }}
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ deprecated: isDeprecated(props.item.address) }"
       >
         <AsyncValue
@@ -92,7 +100,7 @@
       <div></div>
       <div></div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
           :precision="0"
@@ -101,7 +109,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.debt, 0)"
           :precision="0"
@@ -113,7 +121,7 @@
       <div></div>
       <div></div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.open_troves, 0)"
           :precision="0"
@@ -227,16 +235,6 @@ const loading = computed(() => rowsRaw.value.length === 0);
           display: none;
         }
       }
-    }
-
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7),
-    div:nth-child(8) {
-      justify-content: end;
     }
   }
 }

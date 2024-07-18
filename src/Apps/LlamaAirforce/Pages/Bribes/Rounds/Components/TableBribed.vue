@@ -17,14 +17,16 @@
             <div>
               {{ pool(props.item) }}
             </div>
-            <div class="number">
+
+            <div class="end">
               <AsyncValue
                 :value="dollarPerVlAsset(props.item)"
                 :precision="5"
                 type="dollar"
               />
             </div>
-            <div class="number">
+
+            <div class="end">
               <AsyncValue
                 :value="amountDollars(props.item)"
                 :precision="2"
@@ -42,14 +44,16 @@
               :key="i"
             >
               <div>{{ bribe.token }}</div>
-              <div>
+
+              <div class="end">
                 <AsyncValue
                   :value="bribe.amountDollars"
                   :precision="2"
                   type="dollar"
                 />
               </div>
-              <div>
+
+              <div class="end">
                 <AsyncValue
                   :value="bribe.amount"
                   :precision="2"
@@ -91,8 +95,14 @@ const columns = computed(() => [
     id: "vlasset" as const,
     label: `$/${vlAssetSymbol(protocol.value)}`,
     sort: true as const,
+    align: "end" as const,
   },
-  { id: "total" as const, label: t("total"), sort: true as const },
+  {
+    id: "total" as const,
+    label: t("total"),
+    sort: true as const,
+    align: "end" as const,
+  },
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("total");
@@ -156,14 +166,6 @@ const bribes = (bribed: Bribed): Bribe[] => {
     object-fit: scale-down;
   }
 
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3) {
-      justify-content: end;
-    }
-  }
-
   :deep(.tooltip) {
     grid-column: 1 / span 4;
     display: flex;
@@ -194,12 +196,6 @@ const bribes = (bribed: Bribed): Bribe[] => {
             white-space: nowrap;
             text-overflow: ellipsis;
           }
-
-          // Right adjust number columns.
-          div:nth-child(2),
-          div:nth-child(3) {
-            justify-self: end;
-          }
         }
       }
     }
@@ -212,6 +208,10 @@ const bribes = (bribed: Bribed): Bribe[] => {
         flex-direction: column;
         align-items: start;
         gap: 1rem;
+
+        .end {
+          justify-self: end;
+        }
 
         > span {
           font-weight: bold;

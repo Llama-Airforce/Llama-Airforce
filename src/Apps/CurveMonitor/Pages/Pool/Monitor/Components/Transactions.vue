@@ -71,7 +71,7 @@
 
       <div
         v-if="time"
-        class="number"
+        class="end"
       >
         <a
           class="vote-link"
@@ -120,7 +120,7 @@
 
       <div
         v-if="time"
-        class="number"
+        class="end"
       >
         {{ relativeTime(props.item.timestamp) }}
       </div>

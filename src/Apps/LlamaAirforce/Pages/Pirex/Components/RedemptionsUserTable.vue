@@ -2,13 +2,17 @@
   <DataTable
     class="datatable-redemptions-user"
     :header="false"
-    :columns="['Unlock', 'Amount', '']"
+    :columns="[
+      { label: 'Unlock', align: 'end' },
+      { label: 'Amount', align: 'end' },
+      '',
+    ]"
     :rows="redemptions"
   >
     <template #row="{ item: redemption }: { item: Row }">
-      <div>{{ date(redemption) }}</div>
+      <div class="end">{{ date(redemption) }}</div>
 
-      <div>
+      <div class="end">
         <AsyncValue
           :value="balance(redemption)"
           :precision="4"
@@ -17,7 +21,7 @@
         ></AsyncValue>
       </div>
 
-      <div class="number">
+      <div class="end">
         <Button
           value="Redeem"
           :web3="true"
@@ -110,14 +114,6 @@ function balance(redemption: RedemptionPending) {
 .datatable-redemptions-user {
   --columns-data: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
   padding: 0;
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(1),
-    div:nth-child(2) {
-      justify-self: end;
-    }
-  }
 
   img {
     aspect-ratio: 1;

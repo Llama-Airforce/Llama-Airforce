@@ -54,7 +54,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ hide: type === 'Closed' }"
       >
         <AsyncValue
@@ -65,7 +65,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ hide: type === 'Closed' }"
       >
         <AsyncValue
@@ -76,7 +76,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ hide: type === 'Closed' }"
       >
         <AsyncValue
@@ -86,11 +86,11 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(props.item.created_at) }}
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(props.item.last_update) }}
       </div>
     </template>
@@ -172,11 +172,16 @@ const columns = computed(() => {
     return [
       "",
       { id: "owner", label: "Owner", sort: true } as const,
-      { id: "debt", label: "Debt", sort: true } as const,
-      { id: "coll", label: "Collateral", sort: true } as const,
-      { id: "ratio", label: "Ratio", sort: true } as const,
-      { id: "created", label: "Created At", sort: true } as const,
-      { id: "updated", label: "Last Updated", sort: true } as const,
+      { id: "debt", label: "Debt", sort: true, align: "end" } as const,
+      { id: "coll", label: "Collateral", sort: true, align: "end" } as const,
+      { id: "ratio", label: "Ratio", sort: true, align: "end" } as const,
+      { id: "created", label: "Created At", sort: true, align: "end" } as const,
+      {
+        id: "updated",
+        label: "Last Updated",
+        sort: true,
+        align: "end",
+      } as const,
     ];
   } else {
     return [
@@ -185,8 +190,13 @@ const columns = computed(() => {
       "",
       "",
       "",
-      { id: "created", label: "Created At", sort: true } as const,
-      { id: "updated", label: "Last Updated", sort: true } as const,
+      { id: "created", label: "Created At", sort: true, align: "end" } as const,
+      {
+        id: "updated",
+        label: "Last Updated",
+        sort: true,
+        align: "end",
+      } as const,
     ];
   }
 });
@@ -322,15 +332,6 @@ const onType = (tabIndex: number) => {
           display: none;
         }
       }
-    }
-
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7) {
-      justify-content: end;
     }
   }
 }

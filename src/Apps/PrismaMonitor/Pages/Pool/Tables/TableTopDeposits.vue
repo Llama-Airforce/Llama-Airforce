@@ -3,7 +3,12 @@
     class="datatable-deposits"
     :loading="loading"
     :rows="rows"
-    :columns="['Address', 'Amount', 'Date', 'Tx']"
+    :columns="[
+      'Address',
+      { label: 'Amount', align: 'end' },
+      { label: 'Date', align: 'end' },
+      { label: 'Tx', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -19,7 +24,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.amount"
           :precision="2"
@@ -28,11 +33,11 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ new Date(props.item.timestamp * 1000).toLocaleDateString() }}
       </div>
 
-      <div class="address number font-mono">
+      <div class="address end font-mono">
         <a
           :href="`https://etherscan.io/tx/${props.item.hash}`"
           target="_blank"
@@ -82,15 +87,6 @@ const rows = computed((): PoolStableOperation[] =>
 
 .datatable-deposits {
   --columns-data: 1fr 1fr 1fr 1fr;
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
-    }
-  }
 }
 </style>
 

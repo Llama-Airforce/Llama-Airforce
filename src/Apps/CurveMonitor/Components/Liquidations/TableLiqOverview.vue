@@ -12,7 +12,7 @@
 
       <div
         v-if="type === 'collateral'"
-        class="number"
+        class="end"
       >
         <AsyncValue
           :value="value[0]"
@@ -31,7 +31,7 @@
 
       <div
         v-else
-        class="number"
+        class="end"
       >
         <AsyncValue
           v-if="type === 'bad-debt'"

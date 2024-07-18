@@ -2,7 +2,7 @@
   <DataTable
     class="datatable-trades"
     :rows="trades"
-    :columns="['Tx', 'Name', 'Value']"
+    :columns="['Tx', 'Name', { label: 'Value', align: 'end' }]"
   >
     <template #header-content>
       <div class="title">Largest Trades</div>
@@ -22,7 +22,7 @@
 
       <div>{{ props.item.name }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.value"
           :precision="2"
@@ -47,12 +47,5 @@ const { data: trades } = useQueryTradesLarge();
 
 .datatable-trades {
   --columns-data: 6rem 1fr auto;
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3) {
-      justify-content: end;
-    }
-  }
 }
 </style>

@@ -31,14 +31,14 @@
       <div>
         {{ date(props.item) }}
       </div>
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="dollarPerVlAsset(props.item)"
           :precision="5"
           type="dollar"
         />
       </div>
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="totalAmountDollars(props.item)"
           :precision="2"
@@ -81,8 +81,14 @@ const columns = computed(() => [
     id: "vlasset" as const,
     label: `$/${vlAssetSymbol(protocol.value)}`,
     sort: true as const,
+    align: "end" as const,
   },
-  { id: "total" as const, label: t("total"), sort: true as const },
+  {
+    id: "total" as const,
+    label: t("total"),
+    sort: true as const,
+    align: "end" as const,
+  },
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("deadline");
@@ -156,14 +162,6 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
     // Fix text in tooltip having link color.
     .popper {
       color: var(--c-text);
-    }
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
     }
   }
 }

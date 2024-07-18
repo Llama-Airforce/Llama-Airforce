@@ -2,7 +2,12 @@
   <DataTable
     class="datatable-sandwiches"
     :rows="sandwiches"
-    :columns="['Pool', 'Action', 'Affected Contract', 'Time']"
+    :columns="[
+      'Pool',
+      'Action',
+      'Affected Contract',
+      { label: 'Time', align: 'end' },
+    ]"
     :expanded="expanded"
     @selected="toggleExpansion($event)"
   >
@@ -75,7 +80,7 @@
         {{ props.item.label }}
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(props.item.frontrun.block_unixtime) }}
       </div>
     </template>
@@ -198,11 +203,6 @@ const onPage = async (pageNew: number) => {
 
   :deep(.row-data) {
     grid-column-gap: 2.5rem;
-
-    // Right adjust number columns.
-    div:nth-child(4) {
-      justify-content: end;
-    }
   }
 
   :deep(.transactions) {

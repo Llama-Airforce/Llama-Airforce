@@ -41,7 +41,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ zero: props.item.weight === 0 }"
       >
         <AsyncValue
@@ -54,7 +54,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ zero: props.item.locked === 0 }"
       >
         <AsyncValue
@@ -67,7 +67,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ zero: props.item.unlocked === 0 }"
       >
         <AsyncValue
@@ -80,7 +80,7 @@
       </div>
 
       <div
-        class="number"
+        class="end"
         :class="{ zero: props.item.frozen === 0 }"
       >
         <AsyncValue
@@ -113,10 +113,10 @@ const search = ref("");
 
 const columns = [
   { id: "locker", label: "Locker", sort: false } as const,
-  { id: "weight", label: "Weight", sort: true } as const,
-  { id: "locked", label: "Locked", sort: true } as const,
-  { id: "unlocked", label: "Unlocked", sort: true } as const,
-  { id: "frozen", label: "Frozen", sort: true } as const,
+  { id: "weight", label: "Weight", sort: true, align: "end" } as const,
+  { id: "locked", label: "Locked", sort: true, align: "end" } as const,
+  { id: "unlocked", label: "Unlocked", sort: true, align: "end" } as const,
+  { id: "frozen", label: "Frozen", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("weight");
@@ -171,16 +171,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
   .zero {
     opacity: 0.5;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5) {
-      justify-content: end;
-    }
   }
 }
 </style>

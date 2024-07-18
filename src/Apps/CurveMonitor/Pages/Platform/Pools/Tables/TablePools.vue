@@ -33,7 +33,7 @@
 
       <div>{{ pool.name }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="pool.tradingVolume24h"
           :precision="2"
@@ -42,7 +42,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="pool.tvlUsd"
           :precision="2"
@@ -51,7 +51,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="utilRate(pool)"
           :precision="2"
@@ -88,9 +88,9 @@ const columns = [
   "",
   "",
   { id: "name", label: "Name", sort: true } as const,
-  { id: "volume", label: "Volume (24h)", sort: true } as const,
-  { id: "tvl", label: "TVL", sort: true } as const,
-  { id: "util", label: "Util", sort: true } as const,
+  { id: "volume", label: "Volume (24h)", sort: true, align: "end" } as const,
+  { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
+  { id: "util", label: "Util", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("tvl");
@@ -132,15 +132,6 @@ function utilRate(pool: Pool) {
   --columns-data: 1rem calc(4 * (26px + 1ch)) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.5fr);
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6) {
-      justify-content: end;
-    }
-  }
 
   .tokens {
     display: grid;

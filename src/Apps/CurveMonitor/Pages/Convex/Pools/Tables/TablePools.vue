@@ -13,14 +13,14 @@
 
     <template #row="props: { item: Pool }">
       <div>{{ shorten(props.item.name) }}</div>
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="totalApr(props.item) * 100"
           :precision="1"
           type="percentage"
         />
       </div>
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.tvl"
           :precision="1"
@@ -71,8 +71,18 @@ const store = useConvexStore();
 const columns = computed(() => [
   "",
   { id: "name" as const, label: t("name"), sort: true as const },
-  { id: "apr" as const, label: t("apr"), sort: true as const },
-  { id: "tvl" as const, label: t("tvl"), sort: true as const },
+  {
+    id: "apr" as const,
+    label: t("apr"),
+    sort: true as const,
+    align: "end" as const,
+  },
+  {
+    id: "tvl" as const,
+    label: t("tvl"),
+    sort: true as const,
+    align: "end" as const,
+  },
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("tvl");
@@ -104,14 +114,6 @@ const pools = computed((): Pool[] => {
   --columns-data: 3fr 2fr 2fr 1rem;
 
   background: var(--c-lvl0);
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3) {
-      justify-content: end;
-    }
-  }
 
   .charts {
     display: flex;

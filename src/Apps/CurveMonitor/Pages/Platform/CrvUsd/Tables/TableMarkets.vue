@@ -7,12 +7,12 @@
     :columns="[
       '',
       'Name',
-      'Loans',
-      'Rate',
-      'Borrowed',
-      'Collateral',
-      'Fees Pending',
-      'Fees Collected',
+      { label: 'Loans', align: 'end' },
+      { label: 'Rate', align: 'end' },
+      { label: 'Borrowed', align: 'end' },
+      { label: 'Collateral', align: 'end' },
+      { label: 'Fees Pending', align: 'end' },
+      { label: 'Fees Collected', align: 'end' },
     ]"
   >
     <template #header-content>
@@ -29,9 +29,9 @@
 
     <template #row="props: { item: Row }">
       <div>{{ props.item.name }}</div>
-      <div class="number">{{ props.item.loans }}</div>
+      <div class="end">{{ props.item.loans }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.rate * 100"
           :precision="2"
@@ -39,7 +39,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.borrowed"
           :precision="decimals"
@@ -48,7 +48,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.collateralUsd"
           :precision="decimals"
@@ -56,7 +56,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.fees.pending"
           :precision="decimals"
@@ -64,7 +64,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.fees.collected"
           :precision="decimals"
@@ -77,10 +77,10 @@
     <template #row-aggregation>
       <div></div>
       <div></div>
-      <div class="number">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
+      <div class="end">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
       <div></div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
           :precision="decimals"
@@ -89,7 +89,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.collateralUsd, 0)"
           :precision="decimals"
@@ -97,7 +97,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.fees.pending, 0)"
           :precision="decimals"
@@ -105,7 +105,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.fees.collected, 0)"
           :precision="decimals"
@@ -167,18 +167,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   .search {
     font-size: 0.875rem;
     margin-left: 1rem;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7),
-    div:nth-child(8) {
-      justify-content: end;
-    }
   }
 }
 </style>

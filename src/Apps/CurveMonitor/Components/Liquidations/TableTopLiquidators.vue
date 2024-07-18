@@ -2,7 +2,11 @@
   <DataTable
     class="datatable-liquidators"
     :rows
-    :columns="['Address', 'Count', 'Value']"
+    :columns="[
+      'Address',
+      { label: 'Count', align: 'end' },
+      { label: 'Value', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -17,7 +21,7 @@
           {{ addressShort(props.item.liquidator, 8) }}
         </a>
       </div>
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.count"
           :precision="0"
@@ -25,7 +29,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.value"
           :precision="1"
@@ -78,14 +82,6 @@ const rows = computed((): Liquidator[] =>
 
   --col-width: 12ch;
   --columns-data: 1fr repeat(2, var(--col-width));
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3) {
-      justify-content: end;
-    }
-  }
 }
 </style>
 

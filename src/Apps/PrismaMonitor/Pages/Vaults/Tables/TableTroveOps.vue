@@ -5,12 +5,12 @@
     :rows="rows"
     :columns="[
       'Operation',
-      'Collateral',
-      'Debt',
-      'Ratio',
-      'Stake',
-      'Tx',
-      'Time',
+      { label: 'Collateral', align: 'end' },
+      { label: 'Debt', align: 'end' },
+      { label: 'Ratio', align: 'end' },
+      { label: 'Stake', align: 'end' },
+      { label: 'Tx', align: 'end' },
+      { label: 'Time', align: 'end' },
     ]"
   >
     <template #header-content>
@@ -20,7 +20,7 @@
     <template #row="props: { item: Row }">
       <div>{{ titleCase(props.item.operation) }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           v-if="props.item.collateral"
           :value="props.item.collateral"
@@ -30,7 +30,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           type="dollar"
           :value="Math.round(props.item.debt)"
@@ -38,7 +38,7 @@
         ></AsyncValue>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           v-if="props.item.cr"
           :value="props.item.cr * 100"
@@ -47,7 +47,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           v-if="props.item.stake"
           :value="props.item.stake"
@@ -57,7 +57,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <a
           class="font-mono"
           :href="`https://etherscan.io/tx/${props.item.hash}`"
@@ -68,7 +68,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(props.item.timestamp) }}
       </div>
     </template>
@@ -185,16 +185,6 @@ const titleCase = (s: string): string =>
           display: none;
         }
       }
-    }
-
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7) {
-      justify-content: end;
     }
   }
 }

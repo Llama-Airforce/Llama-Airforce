@@ -2,7 +2,13 @@
   <DataTable
     class="datatable-events"
     :rows="events"
-    :columns="['Type', 'Amount', '', 'Provider', 'Time']"
+    :columns="[
+      'Type',
+      { label: 'Amount', align: 'end' },
+      '',
+      'Provider',
+      { label: 'Time', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -18,7 +24,7 @@
 
     <template #row="{ item: event }: { item: LlammaEvent }">
       <div>{{ type(event) }}</div>
-      <div class="number">{{ amount(event) }}</div>
+      <div class="end">{{ amount(event) }}</div>
       <div></div>
 
       <div>
@@ -31,7 +37,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <a
           :href="`https://etherscan.io/tx/${event.transaction_hash}`"
           target="_blank"
@@ -91,14 +97,6 @@ const type = (x: LlammaEvent) =>
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(5) {
-      justify-content: end;
-    }
   }
 }
 </style>

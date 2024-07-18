@@ -3,7 +3,13 @@
     class="datatable-pegkeepers"
     :loading
     :rows
-    :columns="['Name', 'Debt', 'TVL', 'Volume', 'Fees']"
+    :columns="[
+      'Name',
+      { label: 'Debt', align: 'end' },
+      { label: 'TVL', align: 'end' },
+      { label: 'Volume', align: 'end' },
+      { label: 'Fees', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ t("title") }}</div>
@@ -20,7 +26,7 @@
     <template #row="props: { item: Row }">
       <div>{{ name(props.item) }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.total_debt"
           :precision="decimals"
@@ -29,7 +35,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.tvlUsd"
           :precision="decimals"
@@ -38,7 +44,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.tradingVolume24h"
           :precision="decimals"
@@ -47,7 +53,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.total_profit"
           :precision="decimals"
@@ -60,7 +66,7 @@
     <template #row-aggregation>
       <div></div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.total_debt, 0)"
           :precision="decimals"
@@ -69,7 +75,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.tvlUsd, 0)"
           :precision="decimals"
@@ -78,7 +84,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.tradingVolume24h, 0)"
           :precision="decimals"
@@ -87,7 +93,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
           :precision="decimals"
@@ -234,14 +240,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       @container (max-width: 425px) {
         --col-width: 6ch;
       }
-    }
-
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5) {
-      justify-content: end;
     }
   }
 }

@@ -147,10 +147,6 @@ const onClick = (): void => {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-
-      &.number {
-        justify-self: flex-end;
-      }
     }
 
     > .expander {

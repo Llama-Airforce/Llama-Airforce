@@ -4,7 +4,15 @@
     expand-side="left"
     :loading
     :rows="markets"
-    :columns="['', '', 'Name', 'Borrow Rate', 'Lend Rate', 'TVL', 'Loans']"
+    :columns="[
+      '',
+      '',
+      'Name',
+      { label: 'Borrow Rate', align: 'end' },
+      { label: 'Lend Rate', align: 'end' },
+      { label: 'TVL', align: 'end' },
+      { label: 'Loans', align: 'end' },
+    ]"
   >
     <template #header-content>
       <div class="title">{{ title }}</div>
@@ -19,7 +27,7 @@
 
         <div>{{ name(market) }}</div>
 
-        <div class="number">
+        <div class="end">
           <AsyncValue
             v-if="market.borrow_apy"
             :value="market.borrow_apy"
@@ -27,7 +35,7 @@
           />
         </div>
 
-        <div class="number">
+        <div class="end">
           <AsyncValue
             v-if="market.lend_apy"
             :value="market.lend_apy"
@@ -35,7 +43,7 @@
           />
         </div>
 
-        <div class="number">
+        <div class="end">
           <AsyncValue
             v-if="tvl(market)"
             :value="tvl(market)"
@@ -43,7 +51,7 @@
           />
         </div>
 
-        <div class="number">{{ market.n_loans }}</div>
+        <div class="end">{{ market.n_loans }}</div>
       </template>
     </template>
 
@@ -53,13 +61,13 @@
       <div></div>
       <div></div>
       <div></div>
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
           type="dollar"
         />
       </div>
-      <div class="number">
+      <div class="end">
         {{
           markets
             .filter((market) => market)
@@ -130,16 +138,6 @@ const tokenIcon = (market: Market) => {
   --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.25fr);
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7) {
-      justify-content: end;
-    }
-  }
 
   img {
     aspect-ratio: 1;

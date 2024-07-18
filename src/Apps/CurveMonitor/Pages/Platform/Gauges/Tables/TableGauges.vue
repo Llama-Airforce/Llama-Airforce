@@ -14,7 +14,7 @@
     <template #row="props: { item: Gauge }">
       <div>{{ shorten(props.item.name) }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="props.item.tvl"
           :precision="1"
@@ -60,7 +60,12 @@ const store = useCurveStore();
 const columns = computed(() => [
   "",
   { id: "name" as const, label: t("name"), sort: true as const },
-  { id: "tvl" as const, label: t("tvl"), sort: true as const },
+  {
+    id: "tvl" as const,
+    label: t("tvl"),
+    sort: true as const,
+    align: "end" as const,
+  },
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("tvl");
@@ -78,7 +83,7 @@ const gauges = computed((): Gauge[] => {
           return gauge.tvl;
       }
     },
-    sorting.value.order,
+    sorting.value.order
   );
 });
 </script>
@@ -88,14 +93,6 @@ const gauges = computed((): Gauge[] => {
 
 .datatable-gauges {
   --columns-data: 4fr 1fr 1rem;
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3) {
-      justify-content: end;
-    }
-  }
 
   .charts {
     display: flex;

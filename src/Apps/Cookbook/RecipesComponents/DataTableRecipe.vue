@@ -33,7 +33,7 @@
               {{ new Date(Date.now()).toLocaleDateString() }}
             </div>
 
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="props.item.value"
                 :precision="5"
@@ -41,7 +41,7 @@
               />
             </div>
 
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="props.item.value * 10000"
                 :precision="2"
@@ -58,7 +58,7 @@
             <div></div>
             <div></div>
             <div></div>
-            <div class="number">
+            <div class="end">
               <AsyncValue
                 :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
                 :precision="2"
@@ -117,7 +117,7 @@
               {{ new Date(Date.now()).toLocaleDateString() }}
             </div>
 
-            <div>
+            <div class="center">
               <Checkbox
                 :model-value="checked.includes(props.item)"
                 @update:model-value="() => onCheck(props.item)"
@@ -156,8 +156,8 @@ type Round = {
 const columns = [
   "",
   { id: "deadline", label: "Deadline", sort: true } as const,
-  { id: "vlasset", label: "$/vlCVX", sort: true } as const,
-  { id: "total", label: "Total", sort: true } as const,
+  { id: "vlasset", label: "$/vlCVX", sort: true, align: "end" } as const,
+  { id: "total", label: "Total", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("total");
@@ -243,7 +243,7 @@ const dataTable1 = `<DataTable
       {{ new Date(Date.now()).toLocaleDateString() }}
     </div>
 
-    <div class="number">
+    <div class="end">
       <AsyncValue
         :value="props.item.value"
         :precision="5"
@@ -251,7 +251,7 @@ const dataTable1 = `<DataTable
       />
     </div>
 
-    <div class="number">
+    <div class="end">
       <AsyncValue
         :value="props.item.value * 10000"
         :precision="2"
@@ -264,7 +264,7 @@ const dataTable1 = `<DataTable
     <div></div>
     <div></div>
     <div></div>
-    <div class="number">
+    <div class="end">
       <AsyncValue
         :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
         :precision="2"
@@ -284,8 +284,8 @@ type Round = {
 const columns = [
   "",
   { id: "deadline", label: "Deadline", sort: true } as const,
-  { id: "vlasset", label: "$/vlCVX", sort: true } as const,
-  { id: "total", label: "Total", sort: true } as const,
+  { id: "vlasset", label: "$/vlCVX", sort: true, align: "end" } as const,
+  { id: "total", label: "Total", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("total");
@@ -334,14 +334,6 @@ const dataTable3 = `.datatable-example {
   .vote-link {
     width: 1.5rem;
     text-align: center;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
-    }
   }
 }`;
 
@@ -420,14 +412,6 @@ const onCheck = (round: Round) => {
   .vote-link {
     width: 1.5rem;
     text-align: center;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
-    }
   }
 }
 

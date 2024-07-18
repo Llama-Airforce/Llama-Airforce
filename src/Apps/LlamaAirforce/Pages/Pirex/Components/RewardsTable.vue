@@ -11,7 +11,7 @@
       <TokenIcon :address="reward.address"></TokenIcon>
       <div>{{ reward.symbol }}</div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="reward.amount"
           :precision="4"
@@ -20,7 +20,7 @@
         ></AsyncValue>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="reward.amountUsd"
           type="dollar"
@@ -29,7 +29,7 @@
 
       <div
         v-if="canSelect"
-        style="justify-self: center"
+        class="center"
       >
         <Checkbox
           :model-value="isSelected(reward)"
@@ -59,11 +59,13 @@ const emit = defineEmits<{
   select: [rewards: Reward];
 }>();
 
-const columns = computed(() =>
-  canSelect
-    ? ["", "Reward", "Amount", "Value", ""]
-    : ["", "Reward", "Amount", "Value"]
-);
+const columns = computed(() => [
+  "",
+  { label: "Reward", align: "end" } as const,
+  { label: "Amount", align: "end" } as const,
+  { label: "Value", align: "end" } as const,
+  ...(canSelect ? [""] : []),
+]);
 
 function isSelected(reward: Reward) {
   const rewardJson = JSON.stringify(reward);
@@ -82,14 +84,6 @@ function isSelected(reward: Reward) {
 
   &.can-select {
     --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr) 3rem;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(3),
-    div:nth-child(4) {
-      justify-content: end;
-    }
   }
 
   img {

@@ -35,10 +35,12 @@
             :class="{
               'sortable-header': column.sort,
               'current-sort': sorting.column == column.id,
+              center: column.align === 'center',
+              end: column.align === 'end',
             }"
             @click="sortColumn(column)"
           >
-            {{ column.label }}
+            <span>{{ column.label }}</span>
 
             <i
               v-if="column.sort"
@@ -120,9 +122,10 @@ import { type SortOrder } from "@/Framework/SortOrder";
 const { t } = useI18n();
 
 type Column = {
-  id: TSortingColumn;
+  id?: TSortingColumn;
   label: string;
   sort?: boolean;
+  align?: "center" | "end";
 };
 type Columns = (Column | string)[];
 
@@ -359,12 +362,17 @@ const sortColumn = (column: Column): void => {
     padding: 0 1rem;
     grid-column-gap: 1rem;
     min-height: 3rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
     //border-bottom: var(--border-thickness) solid var(--c-lvl4);
     align-items: center;
     transition: background $datatable-hover-duration;
+
+    .center {
+      justify-self: center;
+    }
+
+    .end {
+      justify-self: end;
+    }
 
     &:last-child {
       border-bottom-width: 0;
@@ -379,10 +387,11 @@ const sortColumn = (column: Column): void => {
       align-items: center;
       font-weight: 800;
       height: 2.75rem;
-      overflow: hidden;
 
-      &.number {
-        justify-content: flex-end;
+      > span {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       .icon {

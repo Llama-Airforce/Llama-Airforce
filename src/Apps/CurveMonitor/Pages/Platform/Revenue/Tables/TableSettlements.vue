@@ -35,7 +35,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="item.amountReceived"
           :precision="2"
@@ -43,7 +43,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           :value="item.routerReceived"
           :precision="2"
@@ -51,7 +51,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <AsyncValue
           v-if="item.routerReceived > 1"
           :value="profit(item)"
@@ -61,7 +61,7 @@
         />
       </div>
 
-      <div class="number profit">
+      <div class="end profit">
         <AsyncValue
           v-if="item.routerReceived > 1"
           class="pct"
@@ -73,7 +73,7 @@
         />
       </div>
 
-      <div class="number">
+      <div class="end">
         <a
           class="font-mono"
           :href="`https://explorer.cow.fi/tx/${item.txHash}`"
@@ -84,7 +84,7 @@
         </a>
       </div>
 
-      <div class="number">
+      <div class="end">
         {{ relativeTime(item.timestamp) }}
       </div>
     </template>
@@ -119,12 +119,12 @@ const { settlements } = defineProps<Props>();
 // Data
 const columns = [
   { id: "token", label: "Token", sort: false } as const,
-  { id: "amount", label: "Amount", sort: true } as const,
-  { id: "quote", label: "Quote", sort: true } as const,
-  { id: "profit", label: "Profit", sort: true } as const,
-  { id: "profitPct", label: "(%)", sort: true } as const,
-  { id: "tx", label: "Transaction", sort: false } as const,
-  { id: "timestamp", label: "Time", sort: true } as const,
+  { id: "amount", label: "Amount", sort: true, align: "end" } as const,
+  { id: "quote", label: "Quote", sort: true, align: "end" } as const,
+  { id: "profit", label: "Profit", sort: true, align: "end" } as const,
+  { id: "profitPct", label: "(%)", sort: true, align: "end" } as const,
+  { id: "tx", label: "Transaction", sort: false, align: "end" } as const,
+  { id: "timestamp", label: "Time", sort: true, align: "end" } as const,
 ];
 
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
@@ -222,18 +222,6 @@ function symbol(settlement: CowSwapSettlement) {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3),
-    div:nth-child(4),
-    div:nth-child(5),
-    div:nth-child(6),
-    div:nth-child(7) {
-      justify-content: end;
-    }
   }
 }
 </style>

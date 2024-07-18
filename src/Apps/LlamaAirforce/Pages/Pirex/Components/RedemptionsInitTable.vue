@@ -2,23 +2,28 @@
   <DataTable
     class="datatable-redemptions-init"
     :header="false"
-    :columns="['Unlock Date', 'CVX Available', 'Early Unlock Fee', '']"
+    :columns="[
+      'Unlock Date',
+      { label: 'CVX Available', align: 'end' },
+      { label: 'Early Unlock Fee', align: 'end' },
+      '',
+    ]"
     :rows="redemptions"
     @selected="selected = $event.lockIndex"
   >
     <template #row="{ item: redemption }: { item: Row }">
       <div>{{ formatDate(redemption.unlockTime) }}</div>
 
-      <div>{{ formatCvxAvailable(redemption.cvxAvailable) }}</div>
+      <div class="end">{{ formatCvxAvailable(redemption.cvxAvailable) }}</div>
 
-      <div>
+      <div class="end">
         <AsyncValue
           :value="redemption.fee"
           type="percentage"
         ></AsyncValue>
       </div>
 
-      <div style="justify-self: center">
+      <div class="center">
         <RadioButton
           v-model="selected"
           name="redemption"
@@ -81,13 +86,5 @@ watch(selected, (newRedemption) => {
   --columns-data: 1fr 1fr 1fr 3rem;
 
   padding: 0;
-
-  :deep(.row-data) {
-    // Right adjust number columns.
-    div:nth-child(2),
-    div:nth-child(3) {
-      justify-self: end;
-    }
-  }
 }
 </style>
