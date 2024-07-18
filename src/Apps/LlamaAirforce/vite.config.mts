@@ -48,10 +48,8 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         plugins: [
-          /*
-           * Enable rollup polyfills plugin
-           * used during production bundling
-           */
+          // Enable rollup polyfills plugin used during production bundling.
+          // So far only used for Coinbase Wallet SDK.
           rollupNodePolyFill(),
         ],
       },
