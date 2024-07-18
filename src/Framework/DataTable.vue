@@ -22,12 +22,11 @@
 
     <div class="list">
       <!-- DataTable column headers -->
-      <div
+      <DataTableRow
         v-if="columns.length > 0"
-        class="row-data"
         :class="{ 'selected-below': selectedBelow(-1) }"
       >
-        <slot name="column-headers">
+        <template #row>
           <div
             v-for="column in columnsObjects"
             :key="column.id"
@@ -51,8 +50,8 @@
               }"
             ></i>
           </div>
-        </slot>
-      </div>
+        </template>
+      </DataTableRow>
 
       <div class="rows">
         <Spinner
@@ -323,66 +322,7 @@ const sortColumn = (column: Column): void => {
     flex-direction: column;
     overflow-y: auto;
 
-    > .rows {
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-
-      min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
-      position: relative;
-
-      > .row {
-        &.aggregation {
-          border-top: var(--datatable-border-aggregation);
-        }
-      }
-
-      > .loader {
-        position: absolute;
-        inset: 0;
-        margin: auto auto;
-        z-index: 1;
-
-        @include loading-spinner();
-      }
-
-      > .no-data {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0 auto;
-      }
-    }
-  }
-
-  :deep(.row-data) {
-    display: grid;
-    grid-template-columns: var(--columns-data);
-    padding: 0 1rem;
-    grid-column-gap: 1rem;
-    min-height: 3rem;
-    //border-bottom: var(--border-thickness) solid var(--c-lvl4);
-    align-items: center;
-    transition: background $datatable-hover-duration;
-
-    .center {
-      justify-self: center;
-    }
-
-    .end {
-      justify-self: end;
-    }
-
-    &:last-child {
-      border-bottom-width: 0;
-    }
-
-    &.selected-below {
-      border-bottom: var(--border-thickness) solid var(--c-primary);
-    }
-
-    > .column-header {
+    .column-header {
       display: flex;
       align-items: center;
       font-weight: 800;
@@ -438,10 +378,42 @@ const sortColumn = (column: Column): void => {
           }
         }
       }
+
+      &.active {
+        border-bottom: var(--border-thickness) solid var(--c-primary);
+      }
     }
 
-    &.active {
-      border-bottom: var(--border-thickness) solid var(--c-primary);
+    > .rows {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+
+      min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
+      position: relative;
+
+      > .row {
+        &.aggregation {
+          border-top: var(--datatable-border-aggregation);
+        }
+      }
+
+      > .loader {
+        position: absolute;
+        inset: 0;
+        margin: auto auto;
+        z-index: 1;
+
+        @include loading-spinner();
+      }
+
+      > .no-data {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+      }
     }
   }
 }

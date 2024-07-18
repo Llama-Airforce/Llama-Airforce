@@ -126,7 +126,42 @@ const onClick = (): void => {
     }
   }
 
+  /** Utility classes for row cells. */
+  :deep(.row-data) {
+    .center {
+      justify-self: center;
+    }
+
+    .end {
+      justify-self: end;
+    }
+  }
+
   > .row-data {
+    display: grid;
+    grid-template-columns: var(--columns-data);
+    padding: 0 1rem;
+    grid-column-gap: 1rem;
+    min-height: 3rem;
+    //border-bottom: var(--border-thickness) solid var(--c-lvl4);
+    align-items: center;
+    transition: background $datatable-hover-duration;
+
+    // These direct divs are most likely your individual cells.
+    :deep(> div) {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    &:last-child {
+      border-bottom-width: 0;
+    }
+
+    &.selected-below {
+      border-bottom: var(--border-thickness) solid var(--c-primary);
+    }
+
     &.expandable.has-data:hover {
       cursor: pointer;
     }
@@ -140,13 +175,6 @@ const onClick = (): void => {
       &.active {
         background: var(--container-background-active);
       }
-    }
-
-    // These direct divs are most likely your individual cells.
-    :deep(> div) {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
     }
 
     > .expander {
