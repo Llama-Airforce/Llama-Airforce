@@ -38,8 +38,8 @@
             :key="column.id"
             class="column-header"
             :class="{
-              'sortable-header': column.sort,
-              'current-sort': sorting.column == column.id,
+              sortable: column.sort,
+              sorting: column.sort && sorting.column === column.id,
               [column.align || '']: !!column.align,
             }"
             @click="sortColumn(column)"
@@ -301,10 +301,6 @@ const sortColumn = (column: Column): void => {
       align-items: center;
       height: 2.5rem;
 
-      button {
-        border: 0;
-      }
-
       :deep(.title) {
         font-size: 1.125rem;
         font-weight: bolder;
@@ -334,12 +330,7 @@ const sortColumn = (column: Column): void => {
         overflow: hidden;
       }
 
-      .icon {
-        color: var(--c-primary);
-        padding-right: 1rem;
-      }
-
-      &.sortable-header {
+      &.sortable {
         cursor: pointer;
         -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
         user-select: none;
@@ -350,7 +341,7 @@ const sortColumn = (column: Column): void => {
           opacity: 0.7;
         }
 
-        &.current-sort {
+        &.sorting {
           > .sorting-arrow {
             color: var(--c-primary);
           }
@@ -377,10 +368,6 @@ const sortColumn = (column: Column): void => {
             transform: rotate(-90deg);
           }
         }
-      }
-
-      &.active {
-        border-bottom: var(--border-thickness) solid var(--c-primary);
       }
     }
 
