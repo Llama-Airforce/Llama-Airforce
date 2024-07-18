@@ -85,11 +85,11 @@ const changeNetwork = () => switchChain({ chainId: mainnet.id });
   }
 
   .unsupportedNetwork {
+    margin-bottom: 1rem;
+
     @media only screen and (max-width: 1280px) {
       display: none !important;
     }
-
-    margin-bottom: 1rem;
   }
 
   .notConnected,
@@ -99,14 +99,14 @@ const changeNetwork = () => switchChain({ chainId: mainnet.id });
     flex-direction: column;
 
     > .info {
-      @media only screen and (max-width: 1280px) {
-        display: none;
-      }
-
       margin-top: 1rem;
       font-size: 0.75rem;
       color: #a1a1aa;
       text-align: center;
+
+      @media only screen and (max-width: 1280px) {
+        display: none;
+      }
     }
   }
 }

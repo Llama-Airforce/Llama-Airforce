@@ -22,9 +22,10 @@ const { t } = useI18n();
 @import "@/Styles/Variables.scss";
 
 .announcement-card {
-  @include border(var(--c-yellow-rgb), true);
   margin: var(--dashboard-gap);
   margin-bottom: 0;
+
+  @include border(var(--c-yellow-rgb), true);
 
   .announcements {
     flex-grow: 1;

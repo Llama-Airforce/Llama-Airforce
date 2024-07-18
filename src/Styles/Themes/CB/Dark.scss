@@ -8,7 +8,6 @@
 
 @mixin themeDark() {
   color-scheme: dark;
-  @include themeDarkFont();
 
   $text: #ffffff;
 
@@ -111,9 +110,14 @@
 
   --spinner-color: var(--c-text);
 
-  // CSS Variables
+  @include themeDarkFont();
+
   @each $colorName, $colorValue in $colors {
     @include register($colorName, $colorValue);
+  }
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
   }
 }
 
@@ -121,8 +125,4 @@
   font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 14px;
-  }
 }

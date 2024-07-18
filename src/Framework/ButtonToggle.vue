@@ -50,6 +50,7 @@ button {
   line-height: 1;
   padding: 0.5rem 1rem;
   color: var(--c-text);
+  background: var(--c-lvl1);
   user-select: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
@@ -64,8 +65,6 @@ button {
     align-items: center;
     margin-right: 1rem;
   }
-
-  background: var(--c-lvl1);
 
   &:disabled {
     pointer-events: none;

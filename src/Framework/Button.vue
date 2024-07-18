@@ -64,6 +64,7 @@ button {
   align-items: center;
   line-height: 1;
   padding: 0.5rem 1rem;
+  background: var(--c-lvl1);
   color: var(--c-text);
   user-select: none;
   cursor: pointer;
@@ -82,8 +83,6 @@ button {
       margin-right: 1rem;
     }
   }
-
-  background: var(--c-lvl1);
 
   &:disabled {
     pointer-events: none;

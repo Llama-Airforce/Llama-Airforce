@@ -320,6 +320,8 @@ const onType = (tabIndex: number) => {
   }
 
   @media only screen and (max-width: 1280px) {
+    --columns-data: 1fr auto;
+
     :deep(.header),
     :deep(.header .header-content) {
       display: flex;
@@ -331,8 +333,6 @@ const onType = (tabIndex: number) => {
         margin-right: 0;
       }
     }
-
-    --columns-data: 1fr auto;
 
     :deep(.row-data) {
       grid-column-gap: 2rem;

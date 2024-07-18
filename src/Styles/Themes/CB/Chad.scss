@@ -8,7 +8,6 @@
 
 @mixin themeChad() {
   color-scheme: light dark;
-  @include themeChadFont();
 
   $text: black;
 
@@ -69,11 +68,6 @@
     "primary-disabled": lighten($primary, 20%),
   );
 
-  // CSS Variables
-  @each $colorName, $colorValue in $colors {
-    @include register($colorName, $colorValue);
-  }
-
   --page-margin: 2.375rem;
   --dashboard-gap: 1.5rem;
 
@@ -118,20 +112,19 @@
 
   --spinner-color: var(--c-text);
 
-  // body {
-  //   background-image: url("https://curve.fi/_next/static/images/hero-bg-115e1b5f55244753b7ccdab6ad758895.webp");
-  //   background-size: auto 400px;
-  //   background-repeat: repeat-x;
-  //   background-attachment: fixed;
-  // }
+  @include themeChadFont();
+
+  @each $colorName, $colorValue in $colors {
+    @include register($colorName, $colorValue);
+  }
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
 }
 
 @mixin themeChadFont() {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 14px;
-  }
 }

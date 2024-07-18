@@ -94,6 +94,11 @@ const onInput = (evt: Event): void => {
   display: flex;
   flex-grow: 1;
 
+  position: relative;
+  text-align: left;
+  outline-color: transparent;
+  line-height: 1.5rem;
+
   > input {
     all: unset;
 
@@ -136,11 +141,6 @@ const onInput = (evt: Event): void => {
   > input[type="search"] {
     padding-left: 2.875rem;
   }
-
-  position: relative;
-  text-align: left;
-  outline-color: transparent;
-  line-height: 1.5rem;
 
   > .items {
     color: var(--c-text);

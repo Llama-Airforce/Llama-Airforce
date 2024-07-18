@@ -54,11 +54,11 @@
       height: 2.25rem;
       object-fit: contain;
 
+      transform: translateY(var(--translate-mobile, 0rem));
+
       @media only screen and (max-width: 1280px) {
         --translate-mobile: 0.5rem;
       }
-
-      transform: translateY(var(--translate-mobile, 0rem));
 
       &:nth-child(2) {
         transform: scale(0.66) translateX(-0.5rem)

@@ -8,7 +8,6 @@
 
 @mixin themeDark() {
   color-scheme: dark;
-  @include themeDarkFont();
 
   $text: #fafafa;
 
@@ -109,13 +108,27 @@
 
   --spinner-color: var(--c-text);
 
-  // CSS Variables
   @each $colorName, $colorValue in $colors {
     @include register($colorName, $colorValue);
+  }
+
+  @include themeDarkFont();
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+  
+  .card-body {
+    line-height: 1.4rem;
+    color: darken(#fafafa, 15%);
   }
 }
 
 @mixin themeDarkFont() {
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 17px;
+
   @font-face {
     font-family: "SF Mono";
     font-style: normal;
@@ -142,18 +155,5 @@
     font-style: normal;
     font-weight: bold;
     src: url("@/Assets/Fonts/SF-Mono-Bold.otf") format("opentype");
-  }
-
-  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 17px;
-
-  .card-body {
-    line-height: 1.4rem;
-    color: darken(#fafafa, 15%);
-  }
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 14px;
   }
 }

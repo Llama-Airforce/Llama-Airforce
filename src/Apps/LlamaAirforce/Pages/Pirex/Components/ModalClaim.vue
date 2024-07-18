@@ -225,12 +225,12 @@ const { execute: claim, isExecuting: claiming } = useExecuteContract(
     grid-template-columns: auto 1fr 5rem;
     margin-left: 1rem;
 
+    font-size: 1rem;
+    font-weight: bold;
+
     div:nth-child(2) {
       justify-self: end;
     }
-
-    font-size: 1rem;
-    font-weight: bold;
   }
 
   > .epoch {

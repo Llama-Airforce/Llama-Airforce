@@ -204,12 +204,12 @@ p {
     grid-row: 1;
     grid-column: 2;
 
+    overflow-y: auto;
+
     @media only screen and (max-width: 1280px) {
       grid-row: 2;
       grid-column: 1;
     }
-
-    overflow-y: auto;
 
     @include toolbar;
   }

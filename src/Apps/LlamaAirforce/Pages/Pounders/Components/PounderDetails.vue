@@ -441,12 +441,11 @@ const onWithdrawSelect = (zap: Zap): void => {
   > .deposit-and-withdraw {
     display: flex;
     flex-direction: row;
+    gap: 2rem;
 
     @media only screen and (max-width: 1280px) {
       flex-direction: column;
     }
-
-    gap: 2rem;
 
     > .deposit {
       display: flex;

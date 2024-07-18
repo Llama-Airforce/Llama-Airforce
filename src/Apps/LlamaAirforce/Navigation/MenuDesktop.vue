@@ -79,6 +79,9 @@ const hasMenu = computed((): boolean => {
   $menu-width: 223px;
   width: 0;
 
+  margin: 1.5rem 0;
+  font-size: 1rem;
+
   &.hasMenu {
     width: $menu-width;
     transition: width $content-show-duration $ease-out;
@@ -94,9 +97,6 @@ const hasMenu = computed((): boolean => {
       }
     }
   }
-
-  margin: 1.5rem 0;
-  font-size: 1rem;
 
   > .sticky-wrapper {
     position: sticky;

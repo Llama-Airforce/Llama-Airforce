@@ -8,7 +8,6 @@
 
 @mixin themeLight() {
   color-scheme: light;
-  @include themeLightFont();
 
   $text: #333333;
 
@@ -116,6 +115,12 @@
 
   --spinner-color: var(--c-text);
 
+  @include themeLightFont();
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+
   body {
     background-color: transparent;
     background-image: linear-gradient(
@@ -150,8 +155,4 @@
   font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 14px;
-  }
 }

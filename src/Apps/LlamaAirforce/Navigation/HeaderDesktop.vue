@@ -113,16 +113,16 @@ header {
       grid-row: 1;
       grid-column: 1;
 
-      &:hover {
-        background: unset;
-      }
-
       display: flex;
       align-items: flex-end;
 
       color: #e8f0f8;
       font-weight: bold;
       line-height: 1.25rem;
+
+      &:hover {
+        background: unset;
+      }
 
       img {
         height: 75px;

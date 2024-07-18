@@ -33,12 +33,12 @@ const { proposal, expanded = false } = defineProps<Props>();
   display: flex;
   flex-grow: 1;
 
+  margin: 0 0.875rem 1.125rem 0.875rem;
+
   @media only screen and (max-width: 1280px) {
     display: flex;
     flex-direction: column;
   }
-
-  margin: 0 0.875rem 1.125rem 0.875rem;
 
   > .proposal-details-container {
     flex-grow: 1;

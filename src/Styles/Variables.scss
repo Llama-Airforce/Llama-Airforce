@@ -50,14 +50,16 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
-@mixin dashboard-grid($padding: false) {
+@mixin dashboard-grid() {
   display: grid;
   gap: var(--dashboard-gap);
   grid-gap: var(--dashboard-gap);
 
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
+}
 
+@mixin dashboard-grid-mobile($padding: false) {
   @media only screen and (max-width: 1280px) {
     display: flex;
     flex-direction: column;
@@ -73,7 +75,8 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
     margin: auto;
     padding: var(--page-margin);
 
-    @include dashboard-grid(true);
+    @include dashboard-grid();
+    @include dashboard-grid-mobile(true);
   }
 }
 
@@ -86,7 +89,8 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
       width: 100%;
       padding: var(--page-margin);
 
-      @include dashboard-grid(true);
+      @include dashboard-grid();
+      @include dashboard-grid-mobile(true);
     }
   }
 }

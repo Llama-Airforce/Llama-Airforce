@@ -274,10 +274,10 @@ const sortColumn = (column: Column): void => {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
-  @include loading-backdrop();
-
   --columns-header: auto;
   --columns-data: auto;
+
+  @include loading-backdrop();
 
   > .header {
     padding: 0 0 0.875rem 0rem;
