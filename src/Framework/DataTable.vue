@@ -20,7 +20,13 @@
       </div>
     </div>
 
-    <div class="list">
+    <div class="rows">
+      <Spinner
+        v-if="loading !== null"
+        class="loader"
+        :class="{ loading }"
+      ></Spinner>
+
       <!-- DataTable column headers -->
       <DataTableRow
         v-if="columns.length > 0"
@@ -34,8 +40,7 @@
             :class="{
               'sortable-header': column.sort,
               'current-sort': sorting.column == column.id,
-              center: column.align === 'center',
-              end: column.align === 'end',
+              [column.align || '']: !!column.align,
             }"
             @click="sortColumn(column)"
           >
@@ -53,64 +58,56 @@
         </template>
       </DataTableRow>
 
-      <div class="rows">
-        <Spinner
-          v-if="loading !== null"
-          class="loader"
-          :class="{ loading }"
-        ></Spinner>
+      <!-- DataTable rows -->
+      <DataTableRow
+        v-for="(row, i) in rows"
+        :key="(row as never)"
+        :data="row"
+        :class="{ 'selected-below': selectedBelow(i) }"
+        :selected="selectedRow === row"
+        :expanded="expanded.includes(row)"
+        :expand-side="expandSide"
+        @click="onSelect"
+      >
+        <template #row>
+          <slot
+            name="row"
+            :item="(row as never)"
+          ></slot>
+        </template>
 
-        <!-- DataTable rows -->
-        <DataTableRow
-          v-for="(row, i) in rows"
-          :key="(row as never)"
-          :data="row"
-          :class="{ 'selected-below': selectedBelow(i) }"
-          :selected="selectedRow === row"
-          :expanded="expanded.includes(row)"
-          :expand-side="expandSide"
-          @click="onSelect"
-        >
-          <template #row>
-            <slot
-              name="row"
-              :item="(row as never)"
-            ></slot>
-          </template>
+        <template #row-details>
+          <slot
+            name="row-details"
+            :item="(row as never)"
+          ></slot>
+        </template>
+      </DataTableRow>
 
-          <template #row-details>
-            <slot
-              name="row-details"
-              :item="(row as never)"
-            ></slot>
-          </template>
-        </DataTableRow>
+      <!-- Empty DataTable rows in case minRows is set -->
+      <DataTableRow
+        v-for="row in rowsEmpty"
+        :key="row"
+      >
+      </DataTableRow>
 
-        <!-- Empty DataTable rows in case minRows is set -->
-        <DataTableRow
-          v-for="row in rowsEmpty"
-          :key="row"
-        >
-        </DataTableRow>
-
-        <!-- No data to show. -->
-        <div
-          v-if="!rowsMin && (!rows || rows.length === 0) && !loading"
-          class="no-data"
-        >
-          <slot name="no-data">{{ t("no-data") }}</slot>
-        </div>
-
-        <!-- Aggregation -->
-        <DataTableRow
-          v-if="!!$slots['row-aggregation'] && rows.length > 0"
-          class="aggregation"
-        >
-          <template #row>
-            <slot name="row-aggregation"></slot>
-          </template>
-        </DataTableRow>
+      <!-- No data to show. -->
+      <div
+        v-if="!rowsMin && (!rows || rows.length === 0) && !loading"
+        class="no-data"
+      >
+        <slot name="no-data">{{ t("no-data") }}</slot>
       </div>
+
+      <!-- Aggregation -->
+      <DataTableRow
+        v-if="!!$slots['row-aggregation'] && rows.length > 0"
+        class="aggregation"
+      >
+        <template #row>
+          <slot name="row-aggregation"></slot>
+        </template>
+      </DataTableRow>
     </div>
   </div>
 </template>
@@ -317,10 +314,13 @@ const sortColumn = (column: Column): void => {
     }
   }
 
-  > .list {
+  > .rows {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+
+    min-height: 200px; // Size of the loader, hardcoded, dunno how to make dynamic.
+    position: relative;
 
     .column-header {
       display: flex;
@@ -384,36 +384,25 @@ const sortColumn = (column: Column): void => {
       }
     }
 
-    > .rows {
+    > .aggregation {
+      border-top: var(--datatable-border-aggregation);
+    }
+
+    > .loader {
+      position: absolute;
+      inset: 0;
+      margin: auto auto;
+      z-index: 1;
+
+      @include loading-spinner();
+    }
+
+    > .no-data {
       display: flex;
+      flex-grow: 1;
       flex-direction: column;
-      overflow-y: auto;
-
-      min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
-      position: relative;
-
-      > .row {
-        &.aggregation {
-          border-top: var(--datatable-border-aggregation);
-        }
-      }
-
-      > .loader {
-        position: absolute;
-        inset: 0;
-        margin: auto auto;
-        z-index: 1;
-
-        @include loading-spinner();
-      }
-
-      > .no-data {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0 auto;
-      }
+      justify-content: center;
+      margin: 0 auto;
     }
   }
 }
