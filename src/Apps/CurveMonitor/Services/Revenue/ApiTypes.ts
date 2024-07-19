@@ -29,6 +29,23 @@ export type GetTopPoolsResponse = {
   }[];
 };
 
+export type GetCrvUsdWeeklyResponse = {
+  fees: {
+    controller: string;
+    collateral: string;
+    fees_usd: number;
+    timestamp: string;
+  }[];
+};
+
+export type GetPoolsWeeklyResponse = {
+  fees: {
+    chain: string;
+    fees_usd: number;
+    timestamp: string;
+  }[];
+};
+
 export type GetDistributionsResponse = {
   distributions: {
     timestamp: string;

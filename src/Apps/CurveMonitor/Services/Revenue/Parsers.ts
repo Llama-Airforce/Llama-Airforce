@@ -1,3 +1,4 @@
+import { type Chain } from "@CM/Models/Chain";
 import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 import type * as Models from "@CM/Services/Revenue/Models";
@@ -27,6 +28,27 @@ export const parseTopPools = (
   return {
     name: x.name,
     totalDailyFeesUSD: x.totalDailyFeesUSD,
+  };
+};
+
+export const parseCrvUsdWeekly = (
+  x: ApiTypes.GetCrvUsdWeeklyResponse["fees"][number]
+): Models.CrvUsdWeekly => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    controller: x.controller.toLocaleLowerCase() as Address,
+    collateral: x.collateral,
+    feesUsd: x.fees_usd,
+  };
+};
+
+export const parsePoolsWeekly = (
+  x: ApiTypes.GetPoolsWeeklyResponse["fees"][number]
+): Models.PoolsWeekly => {
+  return {
+    timestamp: toUTC(x.timestamp),
+    chain: x.chain as Chain,
+    feesUsd: x.fees_usd,
   };
 };
 

@@ -1,4 +1,5 @@
 import { type Address } from "viem";
+import { type Chain } from "@CM/Models/Chain";
 
 export type BreakdownRevenue = {
   week: number;
@@ -14,6 +15,19 @@ export type ChainRevenue = {
 export type ChainTopPoolRevenue = {
   name: string;
   totalDailyFeesUSD: number;
+};
+
+export type CrvUsdWeekly = {
+  timestamp: number;
+  controller: Address;
+  collateral: string;
+  feesUsd: number;
+};
+
+export type PoolsWeekly = {
+  timestamp: number;
+  chain: Chain;
+  feesUsd: number;
 };
 
 export type Cushion = {

@@ -1,4 +1,4 @@
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import { paginate } from "@/Util";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 import * as Parsers from "@CM/Services/Revenue/Parsers";
@@ -6,7 +6,7 @@ import * as Parsers from "@CM/Services/Revenue/Parsers";
 const API_URL_OLD = "https://api-py.llama.airforce/curve/v1";
 const API_URL = "https://prices.curve.fi";
 
-export default class RevenueService extends ServiceBase {
+export default class RevenueService extends ServiceBaseHost {
   public async getBreakdown(signal?: AbortSignal) {
     const resp = await this.fetch<ApiTypes.GetBreakdownResponse>(
       `${API_URL_OLD}/protocol/revenue/historical/breakdown?from=1686750777`,
@@ -35,6 +35,26 @@ export default class RevenueService extends ServiceBase {
     );
 
     return resp.revenue.map(Parsers.parseTopPools);
+  }
+
+  public async getCrvUsdWeekly() {
+    const host = await this.getHost();
+
+    const resp = await this.fetch<ApiTypes.GetCrvUsdWeeklyResponse>(
+      `${host}/revenue/crvusdweekly`
+    );
+
+    return resp.fees.map(Parsers.parseCrvUsdWeekly);
+  }
+
+  public async getPoolsWeekly() {
+    const host = await this.getHost();
+
+    const resp = await this.fetch<ApiTypes.GetPoolsWeeklyResponse>(
+      `${host}/revenue/pools`
+    );
+
+    return resp.fees.map(Parsers.parsePoolsWeekly);
   }
 
   public async getCushions(chain: string) {

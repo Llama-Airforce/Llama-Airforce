@@ -1,7 +1,7 @@
 import RevenueService from "@CM/Services/Revenue";
 import { type Chain } from "@CM/Models/Chain";
 
-const service = new RevenueService();
+const service = new RevenueService(useHost());
 
 function initEmptyArray() {
   return {
@@ -63,6 +63,22 @@ export function useQueryCowSwapSettlements() {
   return useQuery({
     queryKey: ["curve-revenue-cow-settlements"],
     queryFn: () => service.getCowSwapSettlements(),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryCrvUsdWeekly() {
+  return useQuery({
+    queryKey: ["curve-revenue-crvusd-weekly"],
+    queryFn: () => service.getCrvUsdWeekly(),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryPoolsWeekly() {
+  return useQuery({
+    queryKey: ["curve-revenue-pools-weekly"],
+    queryFn: () => service.getPoolsWeekly(),
     ...initEmptyArray(),
   });
 }
