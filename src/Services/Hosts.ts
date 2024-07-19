@@ -4,7 +4,7 @@ import { type App } from "@/Framework/Apps";
 export const hosts: Record<App, string | undefined> = {
   laf: "https://api.llama.airforce",
   cb: undefined,
-  cm: "https://api.curvemonitor.com",
+  cm: "https://api2.curvemonitor.com",
   pm: undefined,
   "pm-lrt": undefined,
 };
