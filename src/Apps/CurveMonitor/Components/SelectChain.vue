@@ -29,7 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain, icon } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models/Chain";
+import icon from "@CM/Models/ChainIcon";
 
 type SelectItem = {
   label: string;

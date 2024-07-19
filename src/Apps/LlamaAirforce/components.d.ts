@@ -23,6 +23,7 @@ declare module 'vue' {
     InputNumber: typeof import('./../../Framework/InputNumber.vue')['default']
     InputText: typeof import('./../../Framework/InputText.vue')['default']
     KPI: typeof import('./../../Framework/KPI.vue')['default']
+    Layout: typeof import('./../../Framework/Monitor/Layout.vue')['default']
     Legend: typeof import('./../../Framework/Monitor/Legend.vue')['default']
     LlamaNFT: typeof import('./../../Framework/LlamaNFT.vue')['default']
     Menu: typeof import('./../../Framework/Monitor/Menu.vue')['default']

@@ -1,6 +1,5 @@
-import { hosts } from "@/Services/Hosts";
+import { hosts, ports } from "@/Services/Hosts";
 
-const hostDev = "http://localhost:3000";
 const hostCache: Record<string, string> = {};
 
 /**
@@ -52,6 +51,8 @@ export async function useHost(production?: string): Promise<string> {
 
   if (isDevelopment) {
     try {
+      const hostDev = `http://localhost:${ports[app] ?? 3000}`;
+
       // Ping the local development server with a timeout.
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
