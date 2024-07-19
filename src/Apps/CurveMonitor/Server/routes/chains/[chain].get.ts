@@ -15,7 +15,6 @@ const handler = defineCachedEventHandler(
     }
 
     try {
-      // Fetch data from Alchemy API using native fetch
       const res = await $fetch<ApiTypes.GetPoolsResponse>(
         `https://prices.curve.fi/v1/chains/${chain}?page=1&per_page=9999`
       );
