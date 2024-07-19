@@ -45,11 +45,6 @@ import SelectTheme from "@CM/Navigation/SelectTheme.vue";
 
 const router = useRouter();
 
-// Emits
-const emit = defineEmits<{
-  navigated: [];
-}>();
-
 // Methods
 const copyUrl = async () => {
   await navigator.clipboard.writeText(window.location.href);
