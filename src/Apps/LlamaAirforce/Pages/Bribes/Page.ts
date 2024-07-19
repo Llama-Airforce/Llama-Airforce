@@ -2,7 +2,6 @@ import { type PageLAF } from "@LAF/Pages/Page";
 
 import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.page.vue";
 import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.page.vue";
-import FraxMatch from "@LAF/Pages/Bribes/FraxMatch/FraxMatch.page.vue";
 
 import menuHeader from "@/Assets/Menu/votium.png";
 
@@ -20,11 +19,6 @@ export const pageBribesRoutes = [
     name: "overview",
     component: BribesOverview,
   },
-  {
-    path: "/bribes/fraxmatch",
-    name: "fraxmatch",
-    component: FraxMatch,
-  },
 
   { path: "/incentives", redirect: { name: "rounds-incentives" } },
   {
@@ -36,11 +30,6 @@ export const pageBribesRoutes = [
     path: "/incentives/overview/:platform?/:protocol?",
     name: "overview-incentives",
     component: BribesOverview,
-  },
-  {
-    path: "/incentives/fraxmatch",
-    name: "fraxmatch-incentives",
-    component: FraxMatch,
   },
 ];
 
@@ -61,13 +50,6 @@ export const pageBribes: PageLAF = {
       icon: "fas fa-file-alt",
       label: "Overview",
     },
-    /*
-     * {
-     *   to: "/incentives/fraxmatch",
-     *   icon: "fas fa-gift",
-     *   label: "Frax Match",
-     * },
-     */
   ],
   forceShowMenu: false,
 };
