@@ -9,7 +9,7 @@ export default class PoolService extends ServiceBase {
   public async getPools(chain: Chain) {
     const resp = await this.fetch<ApiTypes.GetPoolsResponse>(
       //`${API_URL}/v1/chains/${chain}?page=${page}&per_page=20`
-      `https://api.curvemonitor.com/proxyCurvePricesAPI/chains/${chain}`
+      `https://api-phil.curvemonitor.com/proxyCurvePricesAPI/chains/${chain}`
     );
 
     return {
