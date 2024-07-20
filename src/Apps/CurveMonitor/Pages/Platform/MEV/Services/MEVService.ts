@@ -15,7 +15,7 @@ export default class MEVService {
     this.socket = socket;
   }
 
-  public search(input: string): Promise<SearchResult[]> {
+  public search(input: string) {
     const promise = new Promise<SearchResult[]>((resolve) => {
       this.socket.once("userSearchResult", (searchResults) => {
         resolve(searchResults);
@@ -27,7 +27,7 @@ export default class MEVService {
     return promise;
   }
 
-  public getSandwichLabelOccurrences(): Promise<LabelRankingExtended[]> {
+  public getSandwichLabelOccurrences() {
     const promise = new Promise<LabelRankingExtended[]>((resolve) => {
       this.socket.once("sandwichLabelOccurrences", (labelsOccurrence) => {
         resolve(labelsOccurrence);
@@ -39,7 +39,7 @@ export default class MEVService {
     return promise;
   }
 
-  public getAbsoluteLabelsRanking(): Promise<LabelRankingShort[]> {
+  public getAbsoluteLabelsRanking() {
     const promise = new Promise<LabelRankingShort[]>((resolve) => {
       this.socket.once("absoluteLabelsRanking", (labelsRanking) => {
         resolve(labelsRanking);
@@ -51,7 +51,7 @@ export default class MEVService {
     return promise;
   }
 
-  public getSandwiches(page = 1): Promise<GetSandwichesResp> {
+  public getSandwiches(page = 1) {
     const promise = new Promise<GetSandwichesResp>((resolve) => {
       this.socket.once("fullSandwichTableContent", ({ data, totalPages }) => {
         resolve({ sandwiches: data, totalPages });
