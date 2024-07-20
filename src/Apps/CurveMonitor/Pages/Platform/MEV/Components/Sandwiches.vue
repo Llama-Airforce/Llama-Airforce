@@ -107,12 +107,15 @@ import Transactions from "@CM/Pages/Platform/MEV/Components/Transactions.vue";
 import {
   type TransactionDetail,
   type SandwichDetail,
-  type SocketMEV,
+  useSocketMEV,
 } from "@CM/Services/Sockets/SocketMEV";
 
 const { t } = useI18n();
 
 const swsPerPage = 10;
+
+const { socket } = useSocketMEV();
+const mevService = new MEVService(socket);
 
 // Refs
 const store = useMEVStore();
@@ -155,12 +158,6 @@ const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
 
 // Events
 const onPage = async (pageNew: number) => {
-  if (!store.socket) {
-    return;
-  }
-
-  const mevService = new MEVService(store.socket as SocketMEV);
-
   const { sandwiches, totalPages } = await mevService.getSandwiches(pageNew);
   store.sandwiches = sandwiches;
   store.sandwichesPage = { cur: pageNew, total: totalPages };

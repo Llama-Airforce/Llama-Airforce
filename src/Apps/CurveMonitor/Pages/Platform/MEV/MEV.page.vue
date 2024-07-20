@@ -13,26 +13,21 @@
 </template>
 
 <script setup lang="ts">
-import { createSocketMEV } from "@CM/Services/Sockets";
+import { useSocketMEV } from "@CM/Services/Sockets";
 import { MEVService } from "@CM/Pages/Platform/MEV/Services";
 import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
 import LabelsWorstRelative from "@CM/Pages/Platform/MEV/Components/LabelsWorstRelative.vue";
 import LabelsWorstAbsolute from "@CM/Pages/Platform/MEV/Components/LabelsWorstAbsolute.vue";
 import Sandwiches from "@CM/Pages/Platform/MEV/Components/Sandwiches.vue";
 
-const hostMEV = "wss://api.curvemonitor.com";
-const socketMEV = createSocketMEV(hostMEV);
-
-const mevService = new MEVService(socketMEV);
+const { socket } = useSocketMEV();
+const mevService = new MEVService(socket);
 
 // Refs.
 const store = useMEVStore();
-store.socket = socketMEV;
 
 // Hooks
 onMounted(() => {
-  socketMEV.connect();
-
   void mevService.getSandwichLabelOccurrences().then((x) => {
     store.labelRankingExtended = x;
     return;

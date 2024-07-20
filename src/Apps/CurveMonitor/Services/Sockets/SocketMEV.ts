@@ -87,15 +87,56 @@ export type SandwichDetail = {
 
 export type SocketMEV = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function createSocketMEV(url: string): SocketMEV {
+function createSocket() {
+  const url = "wss://api.curvemonitor.com";
+
   const socket = io(`${url}/main`, {
     autoConnect: false,
     secure: true,
-  });
-
-  socket.on("error", (error: Error) => {
+  }).on("error", (error: Error) => {
     console.error("Socket.IO error:", error);
   });
+
+  // Connecting.
+  const connecting = ref(false);
+
+  function onConnect() {
+    connecting.value = false;
+  }
+
+  function onConnectError(error: Error) {
+    console.error("Connection error:", error);
+    connecting.value = false;
+  }
+
+  // Disposal.
+  function dispose() {
+    socket?.off("connect", onConnect);
+    socket?.off("connect_error", onConnectError);
+    socket?.disconnect();
+  }
+
+  // Connect on mount.
+  onMounted(() => {
+    if (socket.connected || connecting.value) {
+      return;
+    }
+
+    connecting.value = true;
+
+    socket.on("connect", onConnect);
+    socket.on("connect_error", onConnectError);
+    socket.connect();
+  });
+
+  return { socket, connecting, dispose };
+}
+
+let socket: ReturnType<typeof createSocket> | undefined;
+export function useSocketMEV() {
+  if (!socket) {
+    socket = createSocket();
+  }
 
   return socket;
 }
