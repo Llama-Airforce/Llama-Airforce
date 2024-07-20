@@ -1,6 +1,10 @@
 import { hosts, ports } from "@/Services/Hosts";
 
+/** Cache for storing resolved host URLs. */
 const hostCache: Record<string, string> = {};
+
+/** Tracks whether warnings have been issued for specific scenarios to prevent duplicate warnings. */
+const hasWarned: Record<string, boolean> = {};
 
 /**
  * Get the default host for a given app.
@@ -73,10 +77,14 @@ export async function useHost(production?: string): Promise<string> {
       throw new Error("Local server not available");
     } catch (error) {
       // Ignore the error and proceed to use the default or production host.
-      notify({
-        text: `Local development server not available, using (production) host: ${hostProduction}`,
-        type: "warn",
-      });
+      if (!hasWarned[hostProduction]) {
+        notify({
+          text: `Local development server not available, using (production) host: ${hostProduction}`,
+          type: "warn",
+        });
+
+        hasWarned[hostProduction] = true;
+      }
     }
   }
 
