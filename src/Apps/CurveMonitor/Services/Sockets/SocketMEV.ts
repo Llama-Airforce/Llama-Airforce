@@ -1,6 +1,7 @@
 import { io, type Socket } from "socket.io-client";
 
-type TimeDuration = "1 day" | "1 week" | "1 month" | "full";
+const timeDurations = ["1 day", "1 week", "1 month", "full"] as const;
+type TimeDuration = (typeof timeDurations)[number];
 
 export type ClientToServerEvents = {
   ping: () => void;
@@ -23,15 +24,6 @@ export type ServerToClientEvents = {
     totalPages: number;
   }) => void;
 };
-
-export type SocketMEV = Socket<ServerToClientEvents, ClientToServerEvents>;
-
-export function createSocketMEV(url: string): SocketMEV {
-  return io(`${url}/main`, {
-    autoConnect: false,
-    secure: true,
-  });
-}
 
 export type LabelRankingExtended = {
   address: string;
@@ -92,3 +84,18 @@ export type SandwichDetail = {
   poolName: string;
   lossInUsd: number;
 };
+
+export type SocketMEV = Socket<ServerToClientEvents, ClientToServerEvents>;
+
+export function createSocketMEV(url: string): SocketMEV {
+  const socket = io(`${url}/main`, {
+    autoConnect: false,
+    secure: true,
+  });
+
+  socket.on("error", (error: Error) => {
+    console.error("Socket.IO error:", error);
+  });
+
+  return socket;
+}
