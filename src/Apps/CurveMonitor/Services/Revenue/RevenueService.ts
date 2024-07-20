@@ -7,16 +7,6 @@ const API_URL_OLD = "https://api-py.llama.airforce/curve/v1";
 const API_URL = "https://prices.curve.fi";
 
 export default class RevenueService extends ServiceBaseHost {
-  public async getBreakdown(signal?: AbortSignal) {
-    const resp = await this.fetch<ApiTypes.GetBreakdownResponse>(
-      `${API_URL_OLD}/protocol/revenue/historical/breakdown?from=1686750777`,
-      undefined,
-      signal
-    );
-
-    return resp.revenue.map(Parsers.parseBreakdown);
-  }
-
   public async getByChain(signal?: AbortSignal) {
     const resp = await this.fetch<ApiTypes.GetByChainResponse>(
       `${API_URL_OLD}/protocol/revenue/chains`,

@@ -42,14 +42,6 @@ export function useQueryRevenueChains() {
   });
 }
 
-export function useQueryRevenueBreakdown() {
-  return useQuery({
-    queryKey: ["curve-revenue-breakdown"],
-    queryFn: () => service.getBreakdown(),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryDistributions() {
   return useQuery({
     queryKey: ["curve-revenue-distributions"],

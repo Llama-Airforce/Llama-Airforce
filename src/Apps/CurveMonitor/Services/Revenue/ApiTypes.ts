@@ -7,14 +7,6 @@ export type GetCushionsResponse = {
   }[];
 };
 
-export type GetBreakdownResponse = {
-  revenue: {
-    week: number;
-    label: string;
-    total_fees: number;
-  }[];
-};
-
 export type GetByChainResponse = {
   revenue: {
     chain: string;

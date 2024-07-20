@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { useQueryRevenueBreakdown } from "@CM/Services/Revenue/Queries";
+import {
+  useQueryCrvUsdWeekly,
+  useQueryPoolsWeekly,
+} from "@CM/Services/Revenue/Queries";
 
 type Serie = {
   name: string;
@@ -14,31 +17,28 @@ const { theme } = storeToRefs(useSettingsStore());
 // Legend
 const { items } = useLegend(() => [
   {
-    id: "dao",
-    label: "DAO",
+    id: "crvusd",
+    label: "crvUSD",
     color: theme.value.colorsArray[0],
   },
   {
-    id: "lps",
-    label: "Liquidity Providers",
+    id: "pools",
+    label: "Pools",
     color: theme.value.colorsArray[1],
   },
 ]);
 
 // Data
-const { isFetching: loading, data: breakdown } = useQueryRevenueBreakdown();
+const { isFetching: loadingCrvUsd, data: crvUsd } = useQueryCrvUsdWeekly();
+const { isFetching: loadingPools, data: pools } = useQueryPoolsWeekly();
+
+const loading = computed(() => loadingCrvUsd.value || loadingPools.value);
 
 // Chart
 const options = computed(() => {
   const { colors, colorsArray } = {
     colors: theme.value.colors,
-    colorsArray: [
-      theme.value.colorsArray[0],
-      shadeColor(theme.value.colorsArray[0], 10),
-      shadeColor(theme.value.colorsArray[0], 20),
-      theme.value.colorsArray[1],
-      shadeColor(theme.value.colorsArray[1], 10),
-    ],
+    colorsArray: [theme.value.colorsArray[0], theme.value.colorsArray[1]],
   };
 
   return createChartStyles(
@@ -54,7 +54,7 @@ const options = computed(() => {
       xaxis: {
         categories: categories.value,
         labels: {
-          formatter: formatterX,
+          formatter: (x: string): string => x,
           rotate: 0,
         },
         axisBorder: {
@@ -66,7 +66,8 @@ const options = computed(() => {
       },
       yaxis: {
         labels: {
-          formatter: formatterY,
+          formatter: (y: number): string =>
+            `$${round(y, 0, "dollar")}${unit(y, "dollar")}`,
         },
         min: 0,
       },
@@ -93,77 +94,72 @@ const options = computed(() => {
   );
 });
 
-// Take the N latest weeks.
-const weeks = computed(() =>
-  breakdown.value
-    .groupBy((x) => x.week)
+function feesPerTimestamp(xs: { timestamp: number; feesUsd: number }[]) {
+  return xs
+    .groupBy((x) => x.timestamp)
     .entries()
-    .map(([, breakdowns]) => ({
-      week: breakdowns[0].week,
-      numLabels: breakdowns.length,
-    }))
-    .orderBy((x) => x.week, "asc")
-    // We want to start at the first occurance of crvUSD.
-    .dropWhile((x) => x.numLabels < 3)
-    .map((x) => x.week)
-);
+    .map(([timestamp, xs]) => {
+      const sum = xs.reduce((acc, x) => acc + x.feesUsd, 0);
+
+      return {
+        timestamp: Number(timestamp),
+        feesUsd: sum,
+      };
+    })
+    .orderBy((x) => x.timestamp, "asc");
+}
+
+const timestamps = computed((): number[] => {
+  const feesCrvUsd = feesPerTimestamp(crvUsd.value);
+  const feesPools = feesPerTimestamp(pools.value);
+
+  return (
+    feesCrvUsd
+      .concat(feesPools)
+      .groupBy((x) => x.timestamp)
+      .entries()
+      .map(([, feeCategories]) => ({
+        timestamp: feeCategories[0].timestamp,
+        numLabels: feeCategories.length,
+      }))
+      .orderBy((x) => x.timestamp, "asc")
+      // We want to start at the first occurance of both crvUSD and pools data.
+      .dropWhile((x) => x.numLabels < 2)
+      .map((x) => x.timestamp)
+  );
+});
+
+function toCategory(timestamp: number) {
+  return new Date(timestamp * 1000).toLocaleDateString(undefined, {
+    day: "2-digit",
+    month: "short",
+  });
+}
 
 const categories = computed(() =>
-  weeks.value.map((week) =>
-    new Date(week * 1000).toLocaleDateString(undefined, {
-      day: "2-digit",
-      month: "2-digit",
-    })
-  )
+  timestamps.value.map((timestamp) => toCategory(timestamp))
 );
 
-const series = computed((): Serie[] =>
-  breakdown.value
-    .groupBy((x) => x.label)
-    .entries()
-    .map(([origin, breakdown]) => ({
-      name: origin,
-      // For each week, find the corresponding data if available, else zero.
-      data: weeks.value
-        .map((week) => ({
-          week,
-          breakdown: breakdown.find((x) => x.week === week),
-        }))
-        .map((x) => ({
-          x: new Date(x.week * 1000).toLocaleDateString(),
-          y: x.breakdown?.total_fees ?? 0,
-        })),
-    }))
-    .orderBy((x) => x.name, "asc")
-);
+const series = computed((): Serie[] => {
+  function toDataPoints(xs: typeof crvUsd.value | typeof pools.value) {
+    return feesPerTimestamp(xs).map((x) => ({
+      x: toCategory(x.timestamp),
+      y: x.feesUsd,
+    }));
+  }
 
-// Methods
-const formatterX = (x: string): string => x;
-
-const formatterY = (y: number): string =>
-  `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
-
-const shadeColor = (hex: string, percent: number) => {
-  // Parse the hex into RGB values
-  let [r, g, b] = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map(
-    (hex) => parseInt(hex, 16)
-  );
-
-  // Calculate the adjustment value
-  const adjust = (amount: number, color: number) => {
-    return Math.min(255, Math.max(0, color + Math.round(2.55 * amount)));
+  const feesCrvUsd = {
+    name: "crvusd",
+    data: toDataPoints(crvUsd.value),
   };
 
-  // Adjust each color component
-  r = adjust(percent, r);
-  g = adjust(percent, g);
-  b = adjust(percent, b);
+  const feesPools = {
+    name: "pools",
+    data: toDataPoints(pools.value),
+  };
 
-  // Convert the RGB values back to hex
-  return `#${r.toString(16).padStart(2, "0")}${g
-    .toString(16)
-    .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
-};
+  return [feesCrvUsd, feesPools];
+});
 </script>
 
 <template>
@@ -177,13 +173,6 @@ const shadeColor = (hex: string, percent: number) => {
     <template #actions>
       <div class="actions">
         <Legend :items></Legend>
-
-        <Tooltip>
-          <div>
-            DAO revenue goes to veCRV lockers, Liquidity Provider revenue goes
-            to people that LP
-          </div>
-        </Tooltip>
       </div>
     </template>
   </CardChart>
@@ -195,9 +184,6 @@ const shadeColor = (hex: string, percent: number) => {
 .chart {
   :deep(.card-body) {
     .apexcharts-tooltip {
-      grid-template-rows: auto auto;
-      line-height: 0.25rem;
-
       .apexcharts-tooltip-title {
         color: var(--c-text);
         background: transparent;

@@ -1,12 +1,6 @@
 import { type Address } from "@/Framework/Address";
 import { type Chain } from "@CM/Models";
 
-export type BreakdownRevenue = {
-  week: number;
-  label: string;
-  total_fees: number;
-};
-
 export type ChainRevenue = {
   chain: string;
   totalDailyFeesUSD: number;

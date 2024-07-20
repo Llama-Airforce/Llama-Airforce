@@ -12,7 +12,7 @@ const app = new Hono().get(path, async (c) => {
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
-        "https://prices.curve.fi/v1/dao/fees/pools/weekly"
+        "https://prices.curve.fi/v1/dao/fees/pools/weekly?start=1704063600"
       );
       const data = (await res.json()) as ApiTypes.GetPoolsWeeklyResponse;
 

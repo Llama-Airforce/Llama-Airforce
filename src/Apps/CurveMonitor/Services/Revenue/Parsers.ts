@@ -4,16 +4,6 @@ import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 import type * as Models from "@CM/Services/Revenue/Models";
 
-export const parseBreakdown = (
-  x: ApiTypes.GetBreakdownResponse["revenue"][number]
-): Models.BreakdownRevenue => {
-  return {
-    week: x.week,
-    label: x.label,
-    total_fees: x.total_fees,
-  };
-};
-
 export const parseChainRevenue = (
   x: ApiTypes.GetByChainResponse["revenue"][number]
 ): Models.ChainRevenue => {
