@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { type Socket } from "socket.io-client";
-import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
+import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
 import { StatusService } from "@CM/Services";
 
 // Refs

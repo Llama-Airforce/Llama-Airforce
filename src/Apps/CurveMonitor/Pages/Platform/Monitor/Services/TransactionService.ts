@@ -5,7 +5,7 @@ import type {
   Swap,
   Deposit,
   Withdraw,
-} from "@CM/Pages/Pool/Monitor/Models";
+} from "@CM/Pages/Platform/Monitor/Models";
 import { type SocketPool } from "@CM/Services/Sockets";
 import type {
   TransactionDto,

@@ -13,8 +13,8 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import type { Price, Volume } from "@CM/Pages/Pool/Monitor/Models";
-import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
+import type { Price, Volume } from "@CM/Pages/Platform/Monitor/Models";
+import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 

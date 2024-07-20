@@ -1,7 +1,7 @@
 import { Observable, share } from "rxjs";
 import { type SocketPool } from "@CM/Services/Sockets";
 import { type TvlDto } from "@CM/Services/Sockets/SocketPool";
-import type { Tvl } from "@CM/Pages/Pool/Monitor/Models";
+import type { Tvl } from "@CM/Pages/Platform/Monitor/Models";
 
 export default class TvlService {
   public readonly init$: Observable<Tvl[]>;

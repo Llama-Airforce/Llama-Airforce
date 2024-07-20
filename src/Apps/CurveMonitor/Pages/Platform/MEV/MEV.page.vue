@@ -14,11 +14,11 @@
 
 <script setup lang="ts">
 import { createSocketMEV } from "@CM/Services/Sockets";
-import { MEVService } from "@CM/Pages/Pool/MEV/Services";
-import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
-import LabelsWorstRelative from "@CM/Pages/Pool/MEV/Components/LabelsWorstRelative.vue";
-import LabelsWorstAbsolute from "@CM/Pages/Pool/MEV/Components/LabelsWorstAbsolute.vue";
-import Sandwiches from "@CM/Pages/Pool/MEV/Components/Sandwiches.vue";
+import { MEVService } from "@CM/Pages/Platform/MEV/Services";
+import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
+import LabelsWorstRelative from "@CM/Pages/Platform/MEV/Components/LabelsWorstRelative.vue";
+import LabelsWorstAbsolute from "@CM/Pages/Platform/MEV/Components/LabelsWorstAbsolute.vue";
+import Sandwiches from "@CM/Pages/Platform/MEV/Components/Sandwiches.vue";
 
 const hostMEV = "wss://api.curvemonitor.com";
 const socketMEV = createSocketMEV(hostMEV);

@@ -14,8 +14,8 @@ import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.page.vue";
 import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue";
 import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
 
-import Monitor from "@CM/Pages/Pool/Monitor/Monitor.page.vue";
-import MEV from "@CM/Pages/Pool/MEV/MEV.page.vue";
+import Monitor from "@CM/Pages/Platform/Monitor/Monitor.page.vue";
+import MEV from "@CM/Pages/Platform/MEV/MEV.page.vue";
 
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
 import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
@@ -67,15 +67,13 @@ export const pageMainRoutes = [
     name: "llamalendmarket",
     component: LlamaLendMarket,
   },
-
-  { path: "/pool", redirect: { name: "monitor" } },
   {
-    path: "/pool/monitor/:pool?",
+    path: "/platform/monitor/:pool?",
     name: "curvemonitor",
     component: Monitor,
   },
   {
-    path: "/pool/mev",
+    path: "/platform/mev",
     component: MEV,
   },
 
@@ -133,7 +131,7 @@ export const pageMain: Page = {
           label: "Lending",
         },
         {
-          to: "/pool/mev",
+          to: "/platform/mev",
           label: "MEV",
           tag: "beta",
         },

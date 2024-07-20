@@ -101,9 +101,9 @@
 import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
-import { MEVService } from "@CM/Pages/Pool/MEV/Services";
-import Transactions from "@CM/Pages/Pool/MEV/Components/Transactions.vue";
-import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
+import { MEVService } from "@CM/Pages/Platform/MEV/Services";
+import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
+import Transactions from "@CM/Pages/Platform/MEV/Components/Transactions.vue";
 import {
   type TransactionDetail,
   type SandwichDetail,

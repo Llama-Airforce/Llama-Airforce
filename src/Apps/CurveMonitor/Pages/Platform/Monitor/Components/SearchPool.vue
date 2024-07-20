@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { debounce } from "lodash";
-import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
-import { getPools } from "@CM/Pages/Pool/Monitor/DataLoaders";
+import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
+import { getPools } from "@CM/Pages/Platform/Monitor/DataLoaders";
 import { type Pool } from "@CM/Models";
 import { type PoolService } from "@CM/Services";
 

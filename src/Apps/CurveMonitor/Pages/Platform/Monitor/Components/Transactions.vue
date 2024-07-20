@@ -131,7 +131,7 @@
 <script setup lang="ts">
 import { chain, round } from "lodash";
 import { addressShort } from "@/Wallet";
-import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
+import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
 import {
   type Transaction,
   isDeposit,
@@ -139,7 +139,7 @@ import {
   isWithdraw,
   type Swap,
   type TransactionType,
-} from "@CM/Pages/Pool/Monitor/Models/Transaction";
+} from "@CM/Pages/Platform/Monitor/Models/Transaction";
 
 const { t } = useI18n();
 

@@ -1,5 +1,5 @@
 import { type Subscription } from "rxjs";
-import { type useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
+import { type useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
 import { type PoolService, CoinService, PairService } from "@CM/Services";
 import {
   BalanceService,
@@ -8,7 +8,7 @@ import {
   TransactionService,
   TvlService,
   BondingService,
-} from "@CM/Pages/Pool/Monitor/Services";
+} from "@CM/Pages/Platform/Monitor/Services";
 import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(

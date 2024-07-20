@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import SelectorPair from "@CM/Components/SelectorPair.vue";
-import SelectorRange from "@CM/Components/SelectorRange.vue";
+import SelectorPair from "@CM/Pages/Platform/Monitor/Components/SelectorPair.vue";
+import SelectorRange from "@CM/Pages/Platform/Monitor/Components/SelectorRange.vue";
 </script>
 
 <style lang="scss" scoped>

@@ -22,15 +22,15 @@
 <script setup lang="ts">
 import type { Pool } from "@CM/Models";
 import { PoolService } from "@CM/Services";
-import { useMonitorStore } from "@CM/Pages/Pool/Monitor/Store";
-import Header from "@CM/Pages/Pool/Monitor/Components/Header.vue";
-import Controls from "@CM/Pages/Pool/Monitor/Components/Controls.vue";
-import Transactions from "@CM/Pages/Pool/Monitor/Components/Transactions.vue";
-import TVL from "@CM/Pages/Pool/Monitor/Components/TVL.vue";
-import Bonding from "@CM/Pages/Pool/Monitor/Components/Bonding.vue";
-import Balances from "@CM/Pages/Pool/Monitor/Components/Balances.vue";
-import Prices from "@CM/Pages/Pool/Monitor/Components/Prices.vue";
-import { loadPool } from "@CM/Pages/Pool/Monitor/DataLoaders";
+import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
+import Header from "@CM/Pages/Platform/Monitor/Components/Header.vue";
+import Controls from "@CM/Pages/Platform/Monitor/Components/Controls.vue";
+import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
+import TVL from "@CM/Pages/Platform/Monitor/Components/TVL.vue";
+import Bonding from "@CM/Pages/Platform/Monitor/Components/Bonding.vue";
+import Balances from "@CM/Pages/Platform/Monitor/Components/Balances.vue";
+import Prices from "@CM/Pages/Platform/Monitor/Components/Prices.vue";
+import { loadPool } from "@CM/Pages/Platform/Monitor/DataLoaders";
 import { createSocketRoot } from "@CM/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";

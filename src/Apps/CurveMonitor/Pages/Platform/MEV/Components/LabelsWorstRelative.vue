@@ -1,7 +1,7 @@
 <template>
   <CardChart
     class="mevLabels"
-    title="Worst absolute offenders"
+    title="Worst relative offenders"
     :options="options"
     :series="series"
   >
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { useMEVStore } from "@CM/Pages/Pool/MEV/Store";
+import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 
 // Refs
@@ -23,9 +23,9 @@ const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
     .filter((label) => label.numOfAllTx >= 12) // filter labels with at least 12 numOfAllTx
     .map((label) => ({
       ...label,
-      occurrences: label.occurrences,
-    }))
-    .sort((a, b) => b.occurrences - a.occurrences) // sort in descending order
+      ratio: Number(((label.occurrences / label.numOfAllTx) * 100).toFixed(2)),
+    })) // calculate the ratio as a percentage with 2 decimal places
+    .sort((a, b) => b.ratio - a.ratio) // sort in descending order
     .slice(0, 10); // get the top 10
 
 const labels = computed(() =>
@@ -33,7 +33,7 @@ const labels = computed(() =>
 );
 
 const series = computed(() =>
-  topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.occurrences)
+  topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.ratio)
 );
 
 const options = computed(() => {
@@ -61,9 +61,7 @@ const options = computed(() => {
         const revenue = x.series[x.seriesIndex] as unknown as number;
 
         const data = [
-          `<div><b>${chain}</b>:</div><div>Occurences: ${formatter(
-            revenue
-          )}</div>`,
+          `<div><b>${chain}</b>:</div><div>Ratio: ${formatter(revenue)}</div>`,
         ];
 
         return data.join("");
@@ -74,7 +72,7 @@ const options = computed(() => {
 });
 
 // Methods
-const formatter = (x: number): string => `${x}`;
+const formatter = (x: number): string => `${x}%`;
 </script>
 
 <style lang="scss" scoped>

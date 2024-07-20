@@ -2,7 +2,7 @@ import { Observable, share } from "rxjs";
 import { zipWith } from "lodash";
 import { type SocketPool } from "@CM/Services/Sockets";
 import { type BondingDto } from "@CM/Services/Sockets/SocketPool";
-import type { Bonding } from "@CM/Pages/Pool/Monitor/Models";
+import type { Bonding } from "@CM/Pages/Platform/Monitor/Models";
 
 export default class BondingService {
   public readonly get$: Observable<Bonding>;
