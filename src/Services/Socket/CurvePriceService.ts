@@ -7,7 +7,7 @@ import {
 } from "@/Services/Socket/Models";
 
 export const WS_URL = "wss://prices.curve.fi/v1/stream/ws";
-const OHLC_CHANNEL = "pool_ohlc" as const;
+const OHLC_CHANNEL = "pool_ohlc";
 
 export type OHLC = {
   time: number;

@@ -6,7 +6,7 @@ import {
   type Request,
 } from "@/Services/Socket/Models";
 
-const OHLC_CHANNEL = "pool_volume" as const;
+const OHLC_CHANNEL = "pool_volume";
 
 export type Volume = {
   timestamp: number;
