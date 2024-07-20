@@ -17,11 +17,12 @@ export function useExpansion<T>() {
   const expanded = ref<T[]>([]) as Ref<T[]>;
 
   const toggleExpansion = (item: T): boolean => {
-    if (!expanded.value.includes(item)) {
+    const index = expanded.value.findIndex((r) => r === item);
+    if (index === -1) {
       expanded.value.push(item);
       return true;
     } else {
-      expanded.value = expanded.value.filter((x) => x !== item);
+      expanded.value.splice(index, 1);
       return false;
     }
   };
