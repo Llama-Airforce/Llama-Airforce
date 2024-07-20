@@ -99,20 +99,28 @@ function createSocket() {
 
   // Connecting.
   const connecting = ref(false);
+  const isConnected = ref(false);
 
   function onConnect() {
     connecting.value = false;
+    isConnected.value = true;
   }
 
   function onConnectError(error: Error) {
     console.error("Connection error:", error);
     connecting.value = false;
+    isConnected.value = false;
+  }
+
+  function onDisconnect() {
+    isConnected.value = false;
   }
 
   // Disposal.
   function dispose() {
     socket?.off("connect", onConnect);
     socket?.off("connect_error", onConnectError);
+    socket?.off("disconnect", onDisconnect);
     socket?.disconnect();
   }
 
@@ -126,10 +134,11 @@ function createSocket() {
 
     socket.on("connect", onConnect);
     socket.on("connect_error", onConnectError);
+    socket.on("disconnect", onDisconnect);
     socket.connect();
   });
 
-  return { socket, connecting, dispose };
+  return { socket, connecting, isConnected, dispose };
 }
 
 let socket: ReturnType<typeof createSocket> | undefined;
