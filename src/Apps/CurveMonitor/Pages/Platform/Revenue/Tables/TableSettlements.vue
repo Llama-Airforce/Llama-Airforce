@@ -7,7 +7,7 @@
     :expanded
     expand-side="right"
     @sort-column="onSort"
-    @selected="toggleExpand"
+    @selected="toggleExpansion"
   >
     <template #header-content>
       <div class="header-content">
@@ -152,6 +152,10 @@ const rows = computed(() =>
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
+const { expanded, toggleExpansion } = useExpansion<Row>();
+const { relativeTime } = useRelativeTime();
+
+// Formatters
 function profit(settlement: CowSwapSettlement) {
   return settlement.amountReceived - settlement.routerReceived;
 }
@@ -159,20 +163,6 @@ function profit(settlement: CowSwapSettlement) {
 function profitPct(settlement: CowSwapSettlement) {
   return (100 * settlement.amountReceived) / settlement.routerReceived - 100;
 }
-
-// Expansion
-const expanded = ref<Row[]>([]);
-const toggleExpand = (row: Row) => {
-  const index = expanded.value.findIndex((r) => r.txHash === row.txHash);
-  if (index === -1) {
-    expanded.value.push(row);
-  } else {
-    expanded.value.splice(index, 1);
-  }
-};
-
-// Formatters
-const { relativeTime } = useRelativeTime();
 
 function symbol(settlement: CowSwapSettlement) {
   const symbol = settlement.coin.symbol;
