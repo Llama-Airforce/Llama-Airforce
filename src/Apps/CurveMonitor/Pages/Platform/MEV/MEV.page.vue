@@ -28,11 +28,6 @@ const store = useMEVStore();
 
 // Hooks
 onMounted(() => {
-  void mevService.getSandwichLabelOccurrences().then((x) => {
-    store.labelRankingExtended = x;
-    return;
-  });
-
   void mevService.getSandwiches().then((x) => {
     store.sandwiches = x.sandwiches;
     store.sandwichesPage = { cur: 1, total: x.totalPages };

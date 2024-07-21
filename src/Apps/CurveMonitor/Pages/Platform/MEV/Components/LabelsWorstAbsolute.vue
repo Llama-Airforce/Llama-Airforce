@@ -11,11 +11,11 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
+import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/MEV/Services/Queries";
 
 // Refs
-const store = useMEVStore();
+const { data: labelRankingExtended } = useQueryGetSandwichLabelOccurrences();
 const { theme } = storeToRefs(useSettingsStore());
 
 const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
@@ -29,11 +29,11 @@ const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
     .slice(0, 10); // get the top 10
 
 const labels = computed(() =>
-  topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.label)
+  topWorstPerformingLabels(labelRankingExtended.value).map((x) => x.label)
 );
 
 const series = computed(() =>
-  topWorstPerformingLabels(store.labelRankingExtended).map((x) => x.occurrences)
+  topWorstPerformingLabels(labelRankingExtended.value).map((x) => x.occurrences)
 );
 
 const options = computed(() => {
