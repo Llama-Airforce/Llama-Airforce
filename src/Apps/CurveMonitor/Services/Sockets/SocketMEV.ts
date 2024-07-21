@@ -1,4 +1,5 @@
-import { io, type Socket } from "socket.io-client";
+import { type Socket } from "socket.io-client";
+import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
 
 const timeDurations = ["1 day", "1 week", "1 month", "full"] as const;
 type TimeDuration = (typeof timeDurations)[number];
@@ -87,65 +88,11 @@ export type SandwichDetail = {
 
 export type SocketMEV = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-function createSocket() {
-  const url = "wss://api.curvemonitor.com";
-
-  const socket = io(`${url}/main`, {
-    autoConnect: false,
-    secure: true,
-  }).on("error", (error: Error) => {
-    console.error("Socket.IO error:", error);
-  });
-
-  // Connecting.
-  const connecting = ref(false);
-  const isConnected = ref(false);
-
-  function onConnect() {
-    connecting.value = false;
-    isConnected.value = true;
-  }
-
-  function onConnectError(error: Error) {
-    console.error("Connection error:", error);
-    connecting.value = false;
-    isConnected.value = false;
-  }
-
-  function onDisconnect() {
-    isConnected.value = false;
-  }
-
-  // Disposal.
-  function dispose() {
-    socket?.off("connect", onConnect);
-    socket?.off("connect_error", onConnectError);
-    socket?.off("disconnect", onDisconnect);
-    socket?.disconnect();
-  }
-
-  // Connect on mount.
-  onMounted(() => {
-    if (socket.connected || connecting.value) {
-      return;
-    }
-
-    connecting.value = true;
-
-    socket.on("connect", onConnect);
-    socket.on("connect_error", onConnectError);
-    socket.on("disconnect", onDisconnect);
-    socket.connect();
-  });
-
-  return { socket, connecting, isConnected, dispose };
-}
-
-let socket: ReturnType<typeof createSocket> | undefined;
+let socket: ReturnType<typeof useSocketIO> | undefined;
 export function useSocketMEV() {
   if (!socket) {
-    socket = createSocket();
+    socket = useSocketIO("wss://api.curvemonitor.com");
   }
 
-  return socket;
+  return { ...socket, socket: socket.socket as SocketMEV };
 }

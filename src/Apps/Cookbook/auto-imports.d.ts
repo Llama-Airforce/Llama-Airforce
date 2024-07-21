@@ -418,6 +418,7 @@ declare global {
   const useSessionStorage: typeof import('@vueuse/core')['useSessionStorage']
   const useShare: typeof import('@vueuse/core')['useShare']
   const useSlots: typeof import('vue')['useSlots']
+  const useSocketIO: typeof import('../../Framework/Composables/UseSocketIO')['useSocketIO']
   const useSort: typeof import('../../Framework/Composables/UseSort')['useSort']
   const useSorted: typeof import('@vueuse/core')['useSorted']
   const useSpeechRecognition: typeof import('@vueuse/core')['useSpeechRecognition']
