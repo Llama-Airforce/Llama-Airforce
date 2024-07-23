@@ -60,13 +60,13 @@ const { address } = useWallet();
 
 const token = WEthAddress;
 const spender = TreasuryAddress;
-const amount = ref(0n);
+const amount = ref(0);
 
 const { allowance, needsApprove, approve, isApproving } = useApprove(
   token,
   address,
   spender,
-  amount,
+  computed(() => BigInt(amount.value)),
   { maxApprove: false }
 );
 
@@ -74,13 +74,13 @@ const code = `const { address } = useWallet();
 
 const token = WEthAddress;
 const spender = TreasuryAddress;
-const amount = ref(0n);
+const amount = ref(0);
 
 const { allowance, needsApprove, approve, isApproving } = useApprove(
   token,
   address,
   spender,
-  amount,
+  computed(() => BigInt(amount.value)),
   { maxApprove: false }
 );
 `;

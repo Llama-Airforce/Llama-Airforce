@@ -32,7 +32,8 @@ interface Props<T extends readonly unknown[]> {
 const { value, name } = defineProps<Props<T>>();
 
 // Model
-const modelValue = defineModel<T[number]>({ required: true });
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+const modelValue = defineModel<T[number] | undefined>({ required: true });
 
 // Emits
 const emit = defineEmits<{
