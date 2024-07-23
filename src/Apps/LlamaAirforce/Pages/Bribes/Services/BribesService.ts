@@ -18,10 +18,12 @@ export default class BribesService extends ServiceBaseHost {
     const host = await this.getHost();
 
     const round = epochId.round?.toString();
+    let url = `${host}/bribes/${epochId.platform}/${epochId.protocol}`;
+    if (round) {
+      url += `/${round}`;
+    }
 
-    return this.fetch(
-      `${host}/bribes/${epochId.platform}/${epochId.protocol}/${round}`
-    );
+    return this.fetch(url);
   }
 
   public async getOverview(): Promise<{
