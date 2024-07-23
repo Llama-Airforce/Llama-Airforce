@@ -502,6 +502,7 @@
     "UPxCvxAddress": true,
     "useBalance": true,
     "LPxCvxAddress": true,
-    "useSocketIO": true
+    "useSocketIO": true,
+    "RPxCvxAddress": true
   }
 }
