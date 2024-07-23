@@ -7,103 +7,67 @@ import type {
   FuturesReward,
 } from "@LAF/Pages/Pirex/Services";
 
-export function calculateSnapshotRewards(
+function calculateRewards<T extends SnapshotReward | FuturesReward>(
+  rewards: T[],
+  prices: Record<Address, Price | undefined>,
+  type: "snapshot" | "futures"
+): Reward[] {
+  if (!prices) return [];
+
+  return chain(rewards)
+    .groupBy((x) => x.address)
+    .mapValues((group) => ({
+      address: group[0].address,
+      amount: group.reduce((sum, { rewardAmount }) => sum + rewardAmount, 0n),
+      metadata: group.map((x) =>
+        type === "snapshot"
+          ? { epoch: x.epoch, rewardIndex: (x as SnapshotReward).rewardIndex }
+          : x.epoch
+      ),
+    }))
+    .map(({ address, amount, metadata }) => {
+      const priceInfo = prices[address];
+      if (!priceInfo) {
+        return {
+          type,
+          symbol: "?",
+          address,
+          amount: 0,
+          amountUsd: 0,
+          [type === "snapshot" ? "claims" : "epochs"]: [],
+        } as Reward;
+      }
+
+      const { symbol, decimals, price } = priceInfo;
+      const formattedAmount = Number(formatUnits(amount, decimals));
+      const amountUsd = formattedAmount * price;
+
+      return {
+        type,
+        symbol: symbol.toLocaleUpperCase(),
+        address,
+        amount: formattedAmount,
+        amountUsd,
+        [type === "snapshot" ? "claims" : "epochs"]: metadata,
+      };
+    })
+    .value();
+}
+
+export const calculateSnapshotRewards = (
   snapshots: SnapshotReward[],
   prices: Record<Address, Price | undefined>
-): Reward[] {
-  if (!prices) {
-    return [];
-  }
+): Reward[] =>
+  calculateRewards(
+    snapshots.filter(({ isClaimed }) => !isClaimed),
+    prices,
+    "snapshot"
+  );
 
-  return chain(snapshots)
-    .filter(({ isClaimed }) => !isClaimed)
-    .groupBy((x) => x.address)
-    .mapValues((group) => {
-      return {
-        address: group[0].address,
-        amount: group.reduce((sum, { rewardAmount }) => sum + rewardAmount, 0n),
-        claims: group.map((x) => ({
-          epoch: x.epoch,
-          rewardIndex: x.rewardIndex,
-        })),
-      };
-    })
-    .map(({ address, amount, claims }) => {
-      const priceInfo = prices[address];
-      if (!priceInfo) {
-        return {
-          type: "snapshot" as const,
-          symbol: "?",
-          address,
-          amount: 0,
-          amountUsd: 0,
-          claims: [],
-        };
-      }
-
-      const { symbol, decimals, price } = priceInfo;
-      const formattedAmount = formatUnits(amount, decimals);
-      const amountUsd = Number(formattedAmount) * price;
-
-      return {
-        type: "snapshot" as const,
-        symbol: symbol.toLocaleUpperCase(),
-        address,
-        amount: Number(formattedAmount),
-        amountUsd,
-        claims,
-      };
-    })
-    .value();
-}
-
-export function calculateFuturesRewards(
+export const calculateFuturesRewards = (
   futures: FuturesReward[],
   prices: Record<Address, Price | undefined>
-): Reward[] {
-  if (!prices) {
-    return [];
-  }
-
-  return chain(futures)
-    .groupBy((x) => x.address)
-    .mapValues((group) => {
-      return {
-        address: group[0].address,
-        amount: group.reduce((sum, { rewardAmount }) => sum + rewardAmount, 0n),
-        epochs: group.map((x) => ({
-          epoch: x.epoch,
-        })),
-      };
-    })
-    .map(({ address, amount, epochs }) => {
-      const priceInfo = prices[address];
-      if (!priceInfo) {
-        return {
-          type: "futures" as const,
-          symbol: "?",
-          address,
-          amount: 0,
-          amountUsd: 0,
-          epochs: [],
-        };
-      }
-
-      const { symbol, decimals, price } = priceInfo;
-      const formattedAmount = formatUnits(amount, decimals);
-      const amountUsd = Number(formattedAmount) * price;
-
-      return {
-        type: "futures" as const,
-        symbol: symbol.toLocaleUpperCase(),
-        address,
-        amount: Number(formattedAmount),
-        amountUsd,
-        epochs,
-      };
-    })
-    .value();
-}
+): Reward[] => calculateRewards(futures, prices, "futures");
 
 export function sumRewards(
   snapshotRewards: Reward[],
