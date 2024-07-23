@@ -20,11 +20,21 @@ export type Claim = {
 };
 
 export type Reward = {
+  type: "snapshot" | "futures" | "combined";
   symbol: string;
   address: Address;
   amount: number;
   amountUsd: number;
+};
+
+export type RewardSnapshot = Reward & {
+  type: "snapshot";
   claims: Claim[];
+};
+
+export type RewardFutures = Reward & {
+  type: "futures";
+  epochs: number[];
 };
 
 export type Redemption = {
@@ -38,3 +48,11 @@ export type RedemptionPending = {
   tokenId: bigint;
   balance: bigint;
 };
+
+export function isSnapshotReward(reward: Reward): reward is RewardSnapshot {
+  return reward.type === "snapshot";
+}
+
+export function isFuturesReward(reward: Reward): reward is RewardFutures {
+  return reward.type === "futures";
+}

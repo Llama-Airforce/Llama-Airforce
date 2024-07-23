@@ -71,7 +71,8 @@ import {
   type SnapshotReward,
   type Reward,
   type Claim,
-  calculateRewards,
+  calculateSnapshotRewards,
+  isSnapshotReward,
 } from "@LAF/Pages/Pirex/Services";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 
@@ -117,7 +118,7 @@ const rewards = computed(() =>
   Object.fromEntries(
     epochs.value.map((epoch) => [
       epoch.epoch,
-      calculateRewards(epoch.snapshots, prices),
+      calculateSnapshotRewards(epoch.snapshots, prices),
     ])
   )
 );
@@ -167,9 +168,9 @@ let claimsClaiming: Claim[] = [];
 const { execute: claim, isExecuting: claiming } = useExecuteContract(
   (writeContract, epoch: Epoch) => {
     // Get all the reward indices of the claims for the given epoch.
-    const claims = toClaim[epoch.epoch].flatMap((x) =>
-      x.claims.filter((claim) => claim.epoch === epoch.epoch)
-    );
+    const claims = toClaim[epoch.epoch]
+      .filter((x) => isSnapshotReward(x))
+      .flatMap((x) => x.claims.filter((claim) => claim.epoch === epoch.epoch));
 
     const rewardIndices = claims.map((r) => BigInt(r.rewardIndex));
 

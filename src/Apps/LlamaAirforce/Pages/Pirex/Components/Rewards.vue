@@ -57,7 +57,12 @@
 import { useWallet, addressShort } from "@/Wallet";
 import { useQueryPrices } from "@/Services/DefiLlamaQuery";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
-import { type Claim, calculateRewards } from "@LAF/Pages/Pirex/Services";
+import {
+  type Claim,
+  calculateFuturesRewards,
+  calculateSnapshotRewards,
+  sumRewards,
+} from "@LAF/Pages/Pirex/Services";
 import { useQueryRewards } from "@LAF/Pages/Pirex/Services/Queries";
 import ModalClaim from "@LAF/Pages/Pirex/Components/ModalClaim.vue";
 
@@ -96,7 +101,17 @@ const rewards = computed(() => {
     return [];
   }
 
-  return calculateRewards(snapshots.value, pricesData.value);
+  const rewardsSnapshot = calculateSnapshotRewards(
+    snapshots.value,
+    pricesData.value
+  );
+
+  const rewardsFutures = calculateFuturesRewards(
+    futures.value,
+    pricesData.value
+  );
+
+  return sumRewards(rewardsSnapshot, rewardsFutures);
 });
 
 const loading = computed(() => snapshotsLoading.value || pricesLoading.value);
