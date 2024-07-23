@@ -501,6 +501,7 @@
     "useApprove": true,
     "UPxCvxAddress": true,
     "useBalance": true,
-    "LPxCvxAddress": true
+    "LPxCvxAddress": true,
+    "useSocketIO": true
   }
 }
