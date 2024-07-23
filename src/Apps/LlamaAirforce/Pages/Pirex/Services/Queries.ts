@@ -8,7 +8,10 @@ export function useQueryRewards(address: Ref<Address | undefined>) {
   return useQuery({
     queryKey: ["pirex-rewards", address] as const,
     queryFn: async ({ queryKey: [, address] }) => service.getRewards(address!),
-    initialData: [],
+    initialData: {
+      snapshotRewards: [],
+      futuresRewards: [],
+    },
     initialDataUpdatedAt: 0,
     enabled: computed(() => !!address.value),
   });

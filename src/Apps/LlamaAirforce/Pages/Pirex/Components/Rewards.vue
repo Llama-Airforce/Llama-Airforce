@@ -65,13 +65,13 @@ const showClaims = ref(false);
 
 const { address } = useWallet();
 
-const { data: snapshotsRaw, isLoading: snapshotsLoading } =
+const { data: rewardsRaw, isLoading: snapshotsLoading } =
   useQueryRewards(address);
 
 // Filter rewards claimed by the front-end.
 const claimed = ref([] as Claim[]);
 const snapshots = computed(() =>
-  snapshotsRaw.value.filter((x) => {
+  rewardsRaw.value.snapshotRewards.filter((x) => {
     const isAlreadyClaimedByFrontEnd = claimed.value.find(
       (claim) => claim.epoch === x.epoch && claim.rewardIndex === x.rewardIndex
     );
@@ -80,8 +80,13 @@ const snapshots = computed(() =>
   })
 );
 
+const futures = computed(() => rewardsRaw.value.futuresRewards);
+
 const tokens = computed(() => [
-  ...new Set(snapshots.value.map((x) => x.address)),
+  ...new Set([
+    ...snapshots.value.map((x) => x.address),
+    ...futures.value.map((x) => x.address),
+  ]),
 ]);
 
 const { data: pricesData, isLoading: pricesLoading } = useQueryPrices(tokens);

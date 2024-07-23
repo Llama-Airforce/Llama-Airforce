@@ -2,7 +2,7 @@ import { type Address } from "viem";
 import type * as ApiTypes from "@LAF/Pages/Pirex/Services/ApiTypes";
 import type * as Models from "@LAF/Pages/Pirex/Services/Models";
 
-export const parseRewards = (
+export const parseSnapshotRewards = (
   x: ApiTypes.GetRewardsResponse["snapshotRewards"][number][number]
 ): Models.SnapshotReward => {
   return {
@@ -10,6 +10,16 @@ export const parseRewards = (
     rewardAmount: BigInt(x.rewardAmount),
     rewardIndex: x.rewardIndex,
     isClaimed: x.isClaimed,
+    epoch: x.epoch,
+  };
+};
+
+export const parseFuturesRewards = (
+  x: ApiTypes.GetRewardsResponse["futuresRewards"][number][number]
+): Models.FuturesReward => {
+  return {
+    address: x.address.toLocaleLowerCase() as Address,
+    rewardAmount: BigInt(x.rewardAmount),
     epoch: x.epoch,
   };
 };

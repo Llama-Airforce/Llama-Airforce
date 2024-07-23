@@ -11,7 +11,14 @@ export default class PirexService extends ServiceBaseHost {
       `${host}/pirex/rewards/${address}`
     );
 
-    return resp.snapshotRewards.flat().flatMap((x) => Parsers.parseRewards(x));
+    return {
+      snapshotRewards: resp.snapshotRewards
+        .flat()
+        .flatMap((x) => Parsers.parseSnapshotRewards(x)),
+      futuresRewards: resp.futuresRewards
+        .flat()
+        .flatMap((x) => Parsers.parseFuturesRewards(x)),
+    };
   }
 
   public async getRedemptions(address: Address) {

@@ -8,8 +8,15 @@ type SnapshotReward = {
   epoch: number;
 };
 
+type FuturesReward = {
+  address: Address;
+  rewardAmount: string;
+  epoch: number;
+};
+
 type PirexResponse = {
   snapshotRewards: SnapshotReward[][];
+  futuresRewards: FuturesReward[][];
 };
 
 export type Result = Awaited<ReturnType<typeof handler>>;

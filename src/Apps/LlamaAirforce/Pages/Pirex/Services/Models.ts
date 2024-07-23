@@ -8,6 +8,12 @@ export type SnapshotReward = {
   epoch: number;
 };
 
+export type FuturesReward = {
+  address: Address;
+  rewardAmount: bigint;
+  epoch: number;
+};
+
 export type Claim = {
   epoch: number;
   rewardIndex: number;
