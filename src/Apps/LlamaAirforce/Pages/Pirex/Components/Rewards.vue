@@ -46,6 +46,7 @@
       v-if="rewards.length > 0"
       :show="showClaims"
       :snapshots
+      :futures
       :prices="pricesData!"
       @close="showClaims = false"
       @claimed="onClaimed"

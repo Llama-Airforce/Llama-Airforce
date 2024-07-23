@@ -5,6 +5,8 @@ import type {
   Reward,
   SnapshotReward,
   FuturesReward,
+  RewardSnapshot,
+  RewardFutures,
 } from "@LAF/Pages/Pirex/Services";
 
 function calculateRewards<T extends SnapshotReward | FuturesReward>(
@@ -57,17 +59,17 @@ function calculateRewards<T extends SnapshotReward | FuturesReward>(
 export const calculateSnapshotRewards = (
   snapshots: SnapshotReward[],
   prices: Record<Address, Price | undefined>
-): Reward[] =>
+) =>
   calculateRewards(
     snapshots.filter(({ isClaimed }) => !isClaimed),
     prices,
     "snapshot"
-  );
+  ) as RewardSnapshot[];
 
 export const calculateFuturesRewards = (
   futures: FuturesReward[],
   prices: Record<Address, Price | undefined>
-): Reward[] => calculateRewards(futures, prices, "futures");
+) => calculateRewards(futures, prices, "futures") as RewardFutures[];
 
 export function sumRewards(
   snapshotRewards: Reward[],

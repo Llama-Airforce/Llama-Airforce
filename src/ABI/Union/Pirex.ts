@@ -45,6 +45,16 @@ export const abi = [
   },
   {
     inputs: [
+      { internalType: "uint256", name: "epoch", type: "uint256" },
+      { internalType: "address", name: "receiver", type: "address" },
+    ],
+    name: "redeemFuturesRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
         internalType: "uint256[]",
         name: "unlockTimes",

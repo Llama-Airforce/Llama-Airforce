@@ -52,6 +52,7 @@ declare global {
   const PrismaVotingAddress: typeof import('../../Util/Addresses')['PrismaVotingAddress']
   const PxCvxAddress: typeof import('../../Util/Addresses')['PxCvxAddress']
   const PxCvxFactoryAddress: typeof import('../../Util/Addresses')['PxCvxFactoryAddress']
+  const RPxCvxAddress: typeof import('../../Util/Addresses')['RPxCvxAddress']
   const SnapshotRegistryAddress: typeof import('../../Util/Addresses')['SnapshotRegistryAddress']
   const StkCvxPrismaAddress: typeof import('../../Util/Addresses')['StkCvxPrismaAddress']
   const TheLlamas: typeof import('../../Util/Addresses')['TheLlamas']

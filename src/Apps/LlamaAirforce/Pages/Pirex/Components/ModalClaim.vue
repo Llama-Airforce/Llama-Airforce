@@ -39,20 +39,56 @@
             @click.stop
           >
             <div class="epoch-details">
-              <RewardsTable
-                :rewards="rewards[epoch.epoch]"
-                :can-select="true"
-                :selected="toClaim[epoch.epoch]"
-                @select="onRewardToggle(epoch, $event)"
-              ></RewardsTable>
-
-              <Button
-                :primary="true"
-                :disabled="claiming || !canClaim(epoch)"
-                @click="claim(epoch)"
+              <div
+                v-if="rewards[epoch.epoch].snapshot.length > 0"
+                class="reward-type"
               >
-                Claim
-              </Button>
+                <div class="title">Snapshot Rewards</div>
+
+                <RewardsTable
+                  :rewards="rewards[epoch.epoch].snapshot"
+                  :can-select="true"
+                  :selected="toClaim[epoch.epoch]"
+                  @select="onRewardToggle(epoch, $event)"
+                ></RewardsTable>
+
+                <Button
+                  :primary="true"
+                  :disabled="claimingSnapshot || !canClaimSnapshot(epoch)"
+                  @click="claimSnapshot(epoch)"
+                >
+                  Claim Snapshot Rewards
+                </Button>
+              </div>
+
+              <div
+                v-if="rewards[epoch.epoch].futures.length > 0"
+                class="reward-type"
+              >
+                <div class="title">Futures Rewards</div>
+
+                <RewardsTable
+                  :rewards="rewards[epoch.epoch].futures"
+                ></RewardsTable>
+
+                <Button
+                  v-if="isApprovedForAll"
+                  :primary="true"
+                  :disabled="claimingFutures || !canClaimFutures()"
+                  @click="claimFutures(epoch)"
+                >
+                  Claim Futures Rewards
+                </Button>
+
+                <Button
+                  v-else
+                  :primary="true"
+                  :disabled="approving"
+                  @click="approve"
+                >
+                  Approve Futures Claim Zap (only once needed)
+                </Button>
+              </div>
             </div>
           </Collapsible>
         </div>
@@ -65,13 +101,16 @@
 import { type Address } from "viem";
 import { chain } from "lodash";
 import { abi } from "@/ABI/Union/Pirex";
+import { abi as abiERC1155 } from "@/ABI/Standards/ERC1155";
 import { useWallet } from "@/Wallet";
 import { type Price } from "@/Services";
 import {
   type SnapshotReward,
+  type FuturesReward,
   type Reward,
   type Claim,
   calculateSnapshotRewards,
+  calculateFuturesRewards,
   isSnapshotReward,
 } from "@LAF/Pages/Pirex/Services";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
@@ -79,10 +118,11 @@ import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 // Props
 interface Props {
   snapshots: SnapshotReward[];
+  futures: FuturesReward[];
   prices: Record<Address, Price | undefined>;
 }
 
-const { snapshots, prices } = defineProps<Props>();
+const { snapshots, futures, prices } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -103,28 +143,32 @@ function formatDate(epoch: number): string {
 }
 
 // Rewards
-const epochs = computed(() => {
-  return chain(snapshots)
-    .groupBy((x) => x.epoch)
+const epochs = computed(() =>
+  chain([...snapshots, ...futures])
+    .groupBy("epoch")
     .map((group) => ({
       epoch: group[0].epoch,
-      snapshots: group,
+      snapshots: group.filter((x): x is SnapshotReward => "rewardIndex" in x),
+      futures: group.filter((x): x is FuturesReward => !("rewardIndex" in x)),
     }))
-    .value();
-});
+    .value()
+);
 
 type Epoch = (typeof epochs)["value"][number];
 const rewards = computed(() =>
   Object.fromEntries(
     epochs.value.map((epoch) => [
       epoch.epoch,
-      calculateSnapshotRewards(epoch.snapshots, prices),
+      {
+        snapshot: calculateSnapshotRewards(epoch.snapshots, prices),
+        futures: calculateFuturesRewards(epoch.futures, prices),
+      },
     ])
   )
 );
 
 function total(epoch: Epoch) {
-  const epochRewards = rewards.value[epoch.epoch];
+  const epochRewards = rewards.value[epoch.epoch].snapshot;
   return epochRewards.reduce((acc, x) => acc + x.amountUsd, 0);
 }
 
@@ -139,7 +183,7 @@ function onToggle(epoch: Epoch) {
 
   // Check all rewards on when expanded for the first time
   if (!toClaim[epoch.epoch]) {
-    toClaim[epoch.epoch] = rewards.value[epoch.epoch];
+    toClaim[epoch.epoch] = rewards.value[epoch.epoch].snapshot;
   }
 }
 
@@ -160,41 +204,95 @@ function onRewardToggle(epoch: Epoch, reward: Reward) {
   }
 }
 
-function canClaim(epoch: Epoch) {
+function canClaimSnapshot(epoch: Epoch) {
   return !!address.value && (toClaim[epoch.epoch]?.length ?? 0) > 0;
 }
 
+function canClaimFutures() {
+  return !!address.value;
+}
+
+// Claiming snapshot
 let claimsClaiming: Claim[] = [];
-const { execute: claim, isExecuting: claiming } = useExecuteContract(
-  (writeContract, epoch: Epoch) => {
-    // Get all the reward indices of the claims for the given epoch.
-    const claims = toClaim[epoch.epoch]
-      .filter((x) => isSnapshotReward(x))
-      .flatMap((x) => x.claims.filter((claim) => claim.epoch === epoch.epoch));
+const { execute: claimSnapshot, isExecuting: claimingSnapshot } =
+  useExecuteContract(
+    (writeContract, epoch: Epoch) => {
+      // Get all the reward indices of the claims for the given epoch.
+      const claims = toClaim[epoch.epoch]
+        .filter((x) => isSnapshotReward(x))
+        .flatMap((x) =>
+          x.claims.filter((claim) => claim.epoch === epoch.epoch)
+        );
 
-    const rewardIndices = claims.map((r) => BigInt(r.rewardIndex));
+      const rewardIndices = claims.map((r) => BigInt(r.rewardIndex));
 
-    claimsClaiming = claims;
+      claimsClaiming = claims;
 
+      writeContract({
+        address: PirexCvxAddress,
+        abi,
+        functionName: "redeemSnapshotRewards",
+        args: [BigInt(epoch.epoch), rewardIndices, address.value!] as const,
+      });
+    },
+    {
+      successMessage: `Successfully claimed snapshot rewards for epoch: ${
+        claimsClaiming[0]?.epoch ?? "?"
+      }!`,
+      onSuccess: () => {
+        claimsClaiming = [];
+      },
+      onError: () => {
+        claimsClaiming = [];
+      },
+    }
+  );
+
+// Claiming futures
+const { data: isApprovedForAll, refetch: refetchIsApprovedForAll } =
+  useReadContract({
+    abi: abiERC1155,
+    address: RPxCvxAddress,
+    functionName: "isApprovedForAll",
+    args: computed(() => [address.value!, PirexCvxAddress] as const),
+    query: {
+      enabled: computed(() => !!address.value),
+      initialData: false,
+      initialDataUpdatedAt: 0,
+    },
+  });
+
+const { execute: approve, isExecuting: approving } = useExecuteContract(
+  (writeContract) => {
     writeContract({
-      address: PirexCvxAddress,
-      abi,
-      functionName: "redeemSnapshotRewards",
-      args: [BigInt(epoch.epoch), rewardIndices, address.value!] as const,
+      abi: abiERC1155,
+      address: RPxCvxAddress,
+      functionName: "setApprovalForAll",
+      args: [PirexCvxAddress, true] as const,
     });
   },
   {
-    successMessage: `Successfully claimed rewards for epoch: ${
-      claimsClaiming[0]?.epoch ?? "?"
-    }!`,
+    successMessage: `Successfully approved futures claim zap!`,
     onSuccess: () => {
-      claimsClaiming = [];
-    },
-    onError: () => {
-      claimsClaiming = [];
+      void refetchIsApprovedForAll();
     },
   }
 );
+
+const { execute: claimFutures, isExecuting: claimingFutures } =
+  useExecuteContract(
+    (writeContract, epoch: Epoch) => {
+      writeContract({
+        address: PirexCvxAddress,
+        abi,
+        functionName: "redeemFuturesRewards",
+        args: [BigInt(epoch.epoch), address.value!] as const,
+      });
+    },
+    {
+      successMessage: `Successfully claimed futures rewards!`,
+    }
+  );
 </script>
 
 <style lang="scss">
@@ -288,15 +386,29 @@ const { execute: claim, isExecuting: claiming } = useExecuteContract(
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      padding-top: 1rem;
 
-      div:nth-child(1) {
+      div {
         background-color: var(--c-lvl2);
       }
 
-      > button {
-        align-self: end;
-        margin-right: 1rem;
-        margin-bottom: 1rem;
+      > .reward-type {
+        display: flex;
+        flex-direction: column;
+
+        > .title {
+          font-size: 1rem;
+          font-weight: bold;
+          margin-inline: 1rem;
+          color: var(--c-text);
+        }
+
+        > button {
+          align-self: end;
+          margin-top: 1rem;
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+        }
       }
     }
   }

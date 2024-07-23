@@ -156,6 +156,7 @@ export const UltraAddress = "0x35282d87011f87508d457f08252bc5bfa52e10a0";
 
 export const PxCvxAddress = "0xbce0cf87f513102f22232436cca2ca49e815c3ac";
 export const UPxCvxAddress = "0x7a3d81cfc5a942abe9ec656eff818f7dab4e0fe1";
+export const RPxCvxAddress = "0xc044613b702ed11567a38108703ac5478a3f7db8";
 export const LPxCvxAddress = "0x389fb29230d02e67eb963c1f5a00f2b16f95beb7";
 export const VlCvxAddress = "0x72a19342e8f1838460ebfccef09f6585e32db86e";
 export const CvxCrvAddress = "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7";
