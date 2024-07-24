@@ -16,7 +16,7 @@ export default defineConfig(() => {
       "import.meta.env.VITE_APP": JSON.stringify(app),
     },
     plugins: [
-      vue({ script: { propsDestructure: true } }),
+      vue({ features: { propsDestructure: true } }),
       vueDevTools({ launchEditor: "cursor" }),
       VueI18nPlugin({
         strictMessage: false,
