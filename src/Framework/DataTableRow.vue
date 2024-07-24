@@ -6,7 +6,7 @@
     <div
       class="row-data"
       :class="{ active: selected, expandable, 'has-data': !!data }"
-      @click.prevent="onClick"
+      @click="onClick"
     >
       <div
         v-if="data && expandable && expandSide === 'left'"
