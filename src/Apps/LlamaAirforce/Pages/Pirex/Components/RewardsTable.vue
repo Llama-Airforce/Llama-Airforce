@@ -30,6 +30,7 @@
       <div
         v-if="canSelect"
         class="center"
+        @click.stop
       >
         <Checkbox
           :model-value="isSelected(reward)"
