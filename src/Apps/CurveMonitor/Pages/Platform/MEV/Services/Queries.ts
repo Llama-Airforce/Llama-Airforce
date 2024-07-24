@@ -19,3 +19,16 @@ export function useQueryGetSandwichLabelOccurrences() {
     enabled: isConnected,
   });
 }
+
+export function useQuerySandwiches(page: Ref<number>) {
+  const { socket, isConnected } = useSocketMEV();
+  const service = new MEVService(socket);
+
+  return useQuery({
+    queryKey: ["mev-sandwiches", page] as const,
+    queryFn: ({ queryKey: [, page] }) => service.getSandwiches(page),
+    initialData: { sandwiches: [], totalPages: 0 },
+    initialDataUpdatedAt: 0,
+    enabled: isConnected,
+  });
+}

@@ -8,7 +8,8 @@
       'Affected Contract',
       { label: 'Time', align: 'end' },
     ]"
-    :expanded="expanded"
+    :expanded
+    :loading
     @selected="toggleExpansion($event)"
   >
     <template #header-content>
@@ -28,8 +29,8 @@
           class="pagination"
           :items-count="numSandwiches"
           :items-per-page="swsPerPage"
-          :page="page"
-          @page="onPage"
+          :page
+          @page="page = $event"
         ></Pagination>
       </div>
     </template>
@@ -101,36 +102,31 @@
 import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
-import { MEVService } from "@CM/Pages/Platform/MEV/Services";
-import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
 import Transactions from "@CM/Pages/Platform/MEV/Components/Transactions.vue";
 import {
   type TransactionDetail,
   type SandwichDetail,
-  useSocketMEV,
 } from "@CM/Services/Sockets/SocketMEV";
+import { useQuerySandwiches } from "@CM/Pages/Platform/MEV/Services/Queries";
 
 const { t } = useI18n();
 
 const swsPerPage = 10;
 
-const { socket } = useSocketMEV();
-const mevService = new MEVService(socket);
+const page = ref(1);
+const { data: sandwichesRaw, isPending: loading } = useQuerySandwiches(page);
 
-// Refs
-const store = useMEVStore();
 const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
 const { relativeTime } = useRelativeTime();
 
 const search = ref("");
 
-const page = computed((): number => store.sandwichesPage.cur);
 const numSandwiches = computed(
-  (): number => store.sandwichesPage.total * swsPerPage
+  () => sandwichesRaw.value.totalPages * swsPerPage
 );
 
 const sandwiches = computed((): SandwichDetail[] =>
-  chain(store.sandwiches)
+  chain(sandwichesRaw.value.sandwiches)
     .filter((sw) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -155,13 +151,6 @@ const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
     [sw.frontrun, ...sw.center, sw.backrun],
     [(x) => x.block_unixtime, (x) => x.tx_position]
   );
-
-// Events
-const onPage = async (pageNew: number) => {
-  const { sandwiches, totalPages } = await mevService.getSandwiches(pageNew);
-  store.sandwiches = sandwiches;
-  store.sandwichesPage = { cur: pageNew, total: totalPages };
-};
 </script>
 
 <style lang="scss" scoped>

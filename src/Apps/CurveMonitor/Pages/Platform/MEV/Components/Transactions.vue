@@ -3,8 +3,8 @@
     class="datatable-trades"
     :class="{ compact, time }"
     :rows="rowsPage"
-    :columns="columns"
-    :header="header"
+    :columns
+    :header
   >
     <template
       v-if="header"
@@ -37,7 +37,7 @@
           class="pagination"
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>

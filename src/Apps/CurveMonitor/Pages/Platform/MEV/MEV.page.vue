@@ -13,27 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { useSocketMEV } from "@CM/Services/Sockets";
-import { MEVService } from "@CM/Pages/Platform/MEV/Services";
-import { useMEVStore } from "@CM/Pages/Platform/MEV/Store";
 import LabelsWorstRelative from "@CM/Pages/Platform/MEV/Components/LabelsWorstRelative.vue";
 import LabelsWorstAbsolute from "@CM/Pages/Platform/MEV/Components/LabelsWorstAbsolute.vue";
 import Sandwiches from "@CM/Pages/Platform/MEV/Components/Sandwiches.vue";
-
-const { socket } = useSocketMEV();
-const mevService = new MEVService(socket);
-
-// Refs.
-const store = useMEVStore();
-
-// Hooks
-onMounted(() => {
-  void mevService.getSandwiches().then((x) => {
-    store.sandwiches = x.sandwiches;
-    store.sandwichesPage = { cur: 1, total: x.totalPages };
-    return;
-  });
-});
 </script>
 
 <style lang="scss" scoped>
