@@ -2,8 +2,9 @@
   <CardChart
     class="mevLabels"
     title="Worst relative offenders"
-    :options="options"
-    :series="series"
+    :options
+    :series
+    :loading
   >
   </CardChart>
 </template>
@@ -14,8 +15,9 @@ import { useSettingsStore } from "@CM/Stores";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/MEV/Services/Queries";
 
-// Refs
-const { data: labelRankingExtended } = useQueryGetSandwichLabelOccurrences();
+const { data: labelRankingExtended, isPending: loading } =
+  useQueryGetSandwichLabelOccurrences();
+
 const { theme } = storeToRefs(useSettingsStore());
 
 const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
