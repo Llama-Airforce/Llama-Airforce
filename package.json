@@ -37,7 +37,7 @@
     "@tanstack/vue-query-devtools": "5.51.9",
     "@vueuse/core": "^10.11.0",
     "@vueuse/router": "^10.11.0",
-    "@wagmi/vue": "0.0.32",
+    "@wagmi/vue": "0.0.31",
     "apexcharts": "3.51.0",
     "lightweight-charts": "4.1.7",
     "lodash": "^4.17.21",
