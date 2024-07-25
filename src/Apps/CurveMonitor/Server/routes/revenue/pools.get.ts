@@ -4,24 +4,17 @@ import {
   type HonoResultOutput,
   withCache,
 } from "@/Framework/Hono";
-import { isChain } from "@CM/Models/Chain";
-import type * as ApiTypes from "@CM/Services/Pools/ApiTypes";
+import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 
-const path = "/:chain";
+const path = "/";
 
 const app = new Hono().get(path, (c) =>
   withCache(c, async () => {
-    const chain = c.req.param("chain");
-
-    if (!isChain(chain)) {
-      throw new HTTPException(400, { message: "Invalid chain" });
-    }
-
     try {
       const res = await fetch(
-        `https://prices.curve.fi/v1/chains/${chain}?page=1&per_page=9999`
+        "https://prices.curve.fi/v1/dao/fees/pools/weekly"
       );
-      const data = (await res.json()) as ApiTypes.GetPoolsResponse;
+      const data = (await res.json()) as ApiTypes.GetPoolsWeeklyResponse;
 
       return data;
     } catch (error) {

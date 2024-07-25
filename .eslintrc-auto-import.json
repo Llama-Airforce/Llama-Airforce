@@ -503,6 +503,9 @@
     "useBalance": true,
     "LPxCvxAddress": true,
     "useSocketIO": true,
-    "RPxCvxAddress": true
+    "RPxCvxAddress": true,
+    "HTTPException": true,
+    "Hono": true,
+    "withCache": true
   }
 }

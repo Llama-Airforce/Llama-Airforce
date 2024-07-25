@@ -1,5 +1,9 @@
-export default defineEventHandler((event) => {
-  event.node.res.setHeader("Content-Type", "text/plain");
-  event.node.res.setHeader("Content-Length", "0");
-  return null;
+import { Hono } from "@/Framework/Hono";
+
+const app = new Hono();
+
+app.get("/", (c) => {
+  return c.body(null);
 });
+
+export default app;

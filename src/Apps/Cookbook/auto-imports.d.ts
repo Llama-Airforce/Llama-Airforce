@@ -40,6 +40,8 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const EmptyAddress: typeof import('../../Util/Addresses')['EmptyAddress']
   const FxsAddress: typeof import('../../Util/Addresses')['FxsAddress']
+  const HTTPException: typeof import('../../Framework/Hono')['HTTPException']
+  const Hono: typeof import('../../Framework/Hono')['Hono']
   const LPxCvxAddress: typeof import('../../Util/Addresses')['LPxCvxAddress']
   const LPxCvxFactoryAddress: typeof import('../../Util/Addresses')['LPxCvxFactoryAddress']
   const LineStyle: typeof import('lightweight-charts')['LineStyle']
@@ -483,6 +485,7 @@ declare global {
   const watchTriggerable: typeof import('@vueuse/core')['watchTriggerable']
   const watchWithFilter: typeof import('@vueuse/core')['watchWithFilter']
   const whenever: typeof import('@vueuse/core')['whenever']
+  const withCache: typeof import('../../Framework/Hono')['withCache']
   const writeContract: typeof import('@wagmi/core')['writeContract']
 }
 // for type re-export
