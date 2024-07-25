@@ -1,3 +1,4 @@
+import { type Address } from "@/Framework/Address";
 import SolverService from "@CM/Services/Solver";
 
 const service = new SolverService();

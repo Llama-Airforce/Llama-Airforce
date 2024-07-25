@@ -1,5 +1,5 @@
-import { type Address } from "viem";
 import { useQuery } from "@tanstack/vue-query";
+import { type Address } from "@/Framework/Address";
 import PirexService from "@LAF/Pages/Pirex/Services";
 
 const service = new PirexService(useHost());

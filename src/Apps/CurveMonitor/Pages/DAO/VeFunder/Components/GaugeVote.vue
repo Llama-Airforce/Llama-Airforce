@@ -38,6 +38,7 @@ import { encodeFunctionData } from "viem";
 import { abi as abiAgent } from "@/ABI/veFunder/AragonAgent";
 import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
 import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
+import { type Address } from "@/Framework/Address";
 
 const { t } = useI18n();
 

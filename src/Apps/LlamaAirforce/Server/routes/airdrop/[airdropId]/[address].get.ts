@@ -1,3 +1,4 @@
+import { type Address } from "@/Framework/Address";
 import { isAddress } from "viem";
 import { isAirdropId } from "@LAF/Services/UnionService";
 import { getAirdropClaims } from "@LAF/Server/util/getAirdropClaims";

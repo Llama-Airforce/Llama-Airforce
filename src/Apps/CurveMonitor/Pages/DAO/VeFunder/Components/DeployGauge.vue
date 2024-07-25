@@ -38,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
 
 const { t } = useI18n();
@@ -84,7 +85,7 @@ async function execute() {
     const hash = await writeContract(config, request);
     await waitForTransactionReceipt(config, { hash });
 
-    emit("gauge", result);
+    emit("gauge", result as Address);
   });
 }
 </script>

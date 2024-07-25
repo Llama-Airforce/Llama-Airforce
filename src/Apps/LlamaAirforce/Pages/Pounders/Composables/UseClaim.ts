@@ -1,3 +1,4 @@
+import { type Address } from "@/Framework/Address";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import type UnionService from "@LAF/Services/UnionService";
 import type { AirdropId } from "@LAF/Services/UnionService";

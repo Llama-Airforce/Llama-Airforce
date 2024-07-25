@@ -1,3 +1,4 @@
+import { type Address } from "@/Framework/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
 import { maxApprove } from "@/Wallet";
 import { type Airdrop, type ZapClaim } from "@Pounders/Models";

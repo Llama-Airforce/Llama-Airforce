@@ -491,9 +491,6 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { Address } from 'viem'
-  import('viem')
-  // @ts-ignore
   export type { Config } from '@wagmi/core'
   import('@wagmi/core')
   // @ts-ignore

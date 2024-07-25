@@ -1,4 +1,4 @@
-import { type Address } from "viem";
+import { type Address } from "@/Framework/Address";
 
 // Votium
 export const VotiumAddress = "0xde1e6a7ed0ad3f61d531a8a78e83ccddbd6e0c49";

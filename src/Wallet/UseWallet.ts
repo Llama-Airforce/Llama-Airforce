@@ -1,4 +1,4 @@
-import { type Address } from "viem";
+import { type Address } from "@/Framework/Address";
 import { base, mainnet } from "viem/chains";
 import { useAccount, useConnectorClient } from "@wagmi/vue";
 import { type Network } from "@/Wallet/Network";

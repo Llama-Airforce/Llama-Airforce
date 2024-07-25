@@ -78,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+import { type Address } from "@/Framework/Address";
 import { useWallet } from "@/Wallet";
 import { abi as abiLPxCvx } from "@/ABI/Union/PirexLPxCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";

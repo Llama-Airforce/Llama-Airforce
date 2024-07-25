@@ -24,7 +24,6 @@ declare module 'vue' {
     InputText: typeof import('./../../Framework/InputText.vue')['default']
     KPI: typeof import('./../../Framework/KPI.vue')['default']
     Layout: typeof import('./../../Framework/Monitor/Layout.vue')['default']
-    LayoutMonitor: typeof import('./../../Framework/Layouts/LayoutMonitor.vue')['default']
     Legend: typeof import('./../../Framework/Monitor/Legend.vue')['default']
     LlamaNFT: typeof import('./../../Framework/LlamaNFT.vue')['default']
     Menu: typeof import('./../../Framework/Monitor/Menu.vue')['default']

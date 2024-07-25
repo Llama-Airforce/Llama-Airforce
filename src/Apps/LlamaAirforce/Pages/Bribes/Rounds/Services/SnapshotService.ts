@@ -1,5 +1,6 @@
 import { mapKeys } from "lodash";
-import { type Address, getAddress } from "viem";
+import { getAddress } from "viem";
+import { type Address } from "@/Framework/Address";
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";

@@ -1,3 +1,4 @@
+import { type Address } from "@/Framework/Address";
 import type * as ApiTypes from "@CM/Services/Solver/ApiTypes";
 import type * as Models from "@CM/Services/Solver/Models";
 

@@ -1,4 +1,4 @@
-import { type Address } from "viem";
+import { type Address } from "@/Framework/Address";
 import { ServiceBase } from "@/Services";
 import type * as ApiTypes from "@CM/Services/Solver/ApiTypes";
 import * as Parsers from "@CM/Services/Solver/Parsers";

@@ -1,3 +1,4 @@
+import { type Address } from "@/Framework/Address";
 import { type Chain } from "@CM/Models/Chain";
 import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";

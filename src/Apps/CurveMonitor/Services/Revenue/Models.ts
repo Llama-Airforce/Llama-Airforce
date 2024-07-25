@@ -1,4 +1,4 @@
-import { type Address } from "viem";
+import { type Address } from "@/Framework/Address";
 import { type Chain } from "@CM/Models/Chain";
 
 export type BreakdownRevenue = {

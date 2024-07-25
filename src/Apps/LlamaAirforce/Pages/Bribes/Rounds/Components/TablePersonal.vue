@@ -82,6 +82,7 @@
 
 <script setup lang="ts">
 import { orderBy } from "lodash";
+import { type Address } from "@/Framework/Address";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";

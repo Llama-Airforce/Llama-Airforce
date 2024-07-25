@@ -1,5 +1,5 @@
-import { type Address } from "viem";
 import { chain, zip } from "lodash";
+import { type Address } from "@/Framework/Address";
 import { notEmpty } from "@/Util";
 import {
   type Delegation,
