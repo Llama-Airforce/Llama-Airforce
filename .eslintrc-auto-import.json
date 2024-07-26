@@ -506,6 +506,9 @@
     "RPxCvxAddress": true,
     "HTTPException": true,
     "Hono": true,
-    "withCache": true
+    "withCache": true,
+    "cache": true,
+    "cacheDelete": true,
+    "createEnvHelpers": true
   }
 }

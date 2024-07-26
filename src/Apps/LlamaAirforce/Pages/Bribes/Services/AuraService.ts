@@ -92,8 +92,8 @@ export default class AuraService extends ServiceBase {
     );
   }
 
-  public async getRound(_epochId?: number): Promise<EpochResponse> {
-    if ((_epochId ?? Number.MAX_VALUE) < START_ROUND - 1) {
+  public async getRound(_epochId: number): Promise<EpochResponse> {
+    if (_epochId < START_ROUND - 1) {
       return Promise.resolve({ statusCode: 400 });
     }
 

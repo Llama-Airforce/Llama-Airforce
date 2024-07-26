@@ -12,9 +12,7 @@ export default class BribesService extends ServiceBaseHost {
     );
   }
 
-  public async getEpoch(
-    epochId: Omit<EpochId, "round"> & { round?: number } // Round is optional, picks latest if empty.
-  ): Promise<EpochResponse> {
+  public async getEpoch(epochId: EpochId): Promise<EpochResponse> {
     const host = await this.getHost();
 
     const round = epochId.round?.toString();

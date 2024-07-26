@@ -68,10 +68,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": [
-      "vite/client",
-      "./src/Apps/LlamaAirforce/.nitro/types/nitro-imports"
-    ]
+    "types": ["vite/client"]
   },
   "include": [
     "src/**/*.ts",

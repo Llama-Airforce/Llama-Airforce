@@ -6,7 +6,8 @@ import {
   type Resource,
   CosmosClient,
 } from "@azure/cosmos";
-import type { RuntimeConfig } from "@LAF/nitro.config";
+import { HTTPException } from "hono/http-exception";
+import { env } from "@LAF/Server/helpers/env";
 
 /** Cached database instance. */
 let database: Database | null = null;
@@ -22,7 +23,7 @@ async function getDatabase(): Promise<Database> {
   }
 
   try {
-    const { dbEndpoint, dbKey } = useRuntimeConfig<RuntimeConfig>();
+    const { dbEndpoint, dbKey } = env();
     const client = new CosmosClient({ endpoint: dbEndpoint, key: dbKey });
     const { database: db } = await client.databases.createIfNotExists({
       id: "LlamaAirforce",
@@ -32,8 +33,7 @@ async function getDatabase(): Promise<Database> {
 
     return db;
   } catch (error) {
-    throw createError({
-      statusCode: 500,
+    throw new HTTPException(500, {
       message: "Error initializing Cosmos database",
     });
   }
@@ -64,8 +64,7 @@ async function getContainer(containerId: string): Promise<Container> {
 
     return container;
   } catch (error) {
-    throw createError({
-      statusCode: 500,
+    throw new HTTPException(500, {
       message: `Error creating Cosmos container ${containerId}`,
     });
   }
@@ -96,16 +95,18 @@ export const useCosmosDb = (containerId: string) => {
       const { resource: item } = await container.item(id, id).read<T>();
 
       if (!item) {
-        throw createError({
-          statusCode: 404,
+        throw new HTTPException(404, {
           message: `Item '${id}' not found`,
         });
       }
 
       return stripMetadata(item);
     } catch (error) {
-      throw createError({
-        statusCode: 500,
+      if (error instanceof HTTPException) {
+        throw error;
+      }
+
+      throw new HTTPException(500, {
         message: "Error fetching data from database",
       });
     }
@@ -127,8 +128,7 @@ export const useCosmosDb = (containerId: string) => {
 
       return resources;
     } catch (error) {
-      throw createError({
-        statusCode: 500,
+      throw new HTTPException(500, {
         message: "Error fetching data from database",
       });
     }

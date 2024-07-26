@@ -62,6 +62,15 @@ export async function cache<T extends JSONObject | JSONArray>(
   return data;
 }
 
+/**
+ * Deletes an item from the cache by its key
+ * @param key The key of the item to delete
+ * @returns true if the item was found and deleted, false otherwise
+ */
+export function cacheDelete(key: string): boolean {
+  return cacheLRU.delete(key);
+}
+
 export function createEnvHelpers<T extends Record<string, string>>(keys: T) {
   /**
    * Retrieves environment variables based on the provided keys.

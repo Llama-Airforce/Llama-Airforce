@@ -1,27 +1,28 @@
+import {
+  Hono,
+  HTTPException,
+  type HonoResultOutput,
+  cache,
+} from "@/Framework/Hono";
 import _ from "lodash";
 import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 
-export type Result = Awaited<ReturnType<typeof handler>>;
+const path = "/:platform/:protocol/rounds";
 
-const handler = defineCachedEventHandler(
-  async (event) => {
-    const { platform, protocol } = getRouterParams(event);
+const app = new Hono().get(path, async (c) => {
+  const platform = c.req.param("platform");
+  const protocol = c.req.param("protocol");
 
-    if (!isPlatform(platform)) {
-      throw createError({
-        statusCode: 400,
-        message: "Invalid platform",
-      });
-    }
+  if (!isPlatform(platform)) {
+    throw new HTTPException(400, { message: "Invalid platform" });
+  }
 
-    if (!isProtocol(protocol)) {
-      throw createError({
-        statusCode: 400,
-        message: "Invalid protocol",
-      });
-    }
+  if (!isProtocol(protocol)) {
+    throw new HTTPException(400, { message: "Invalid protocol" });
+  }
 
+  const data = await cache(c.req.url, async () => {
     const { queryItems: queryBribesV1 } = useCosmosDb("Bribes");
     const { queryItems: queryBribesV2 } = useCosmosDb("BribesV2");
     const { queryItems: queryBribesV3 } = useCosmosDb("BribesV3");
@@ -47,12 +48,11 @@ const handler = defineCachedEventHandler(
       .orderBy((x) => x, "asc")
       .value();
 
-    return {
-      statusCode: 200,
-      rounds,
-    };
-  },
-  { maxAge: 60 }
-);
+    return { statusCode: 200, rounds };
+  });
 
-export default handler;
+  return c.json(data);
+});
+
+export type Result = HonoResultOutput<typeof app, typeof path>;
+export default app;

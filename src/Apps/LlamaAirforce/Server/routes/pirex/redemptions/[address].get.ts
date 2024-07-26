@@ -1,5 +1,11 @@
+import {
+  Hono,
+  HTTPException,
+  type HonoResultOutput,
+  cache,
+} from "@/Framework/Hono";
 import { isAddress } from "viem";
-import type { RuntimeConfig } from "@LAF/nitro.config";
+import { env } from "@LAF/Server/helpers/env";
 
 type AlchemyResult = {
   ownedNfts: {
@@ -8,41 +14,45 @@ type AlchemyResult = {
   }[];
 };
 
-export type Result = Awaited<ReturnType<typeof handler>>;
+const path = "/redemptions/:address";
 
-const handler = defineCachedEventHandler(
-  async (event) => {
-    const config = useRuntimeConfig<RuntimeConfig>(event);
-    const { address } = getRouterParams(event);
+const app = new Hono().get(path, async (c) => {
+  const address = c.req.param("address");
+  const { alchemyLAF } = env();
 
-    if (!isAddress(address)) {
-      throw createError({
-        statusCode: 400,
-        message: "Invalid or missing address parameter",
-      });
-    }
+  if (!isAddress(address)) {
+    throw new HTTPException(400, {
+      message: "Invalid or missing address parameter",
+    });
+  }
 
-    try {
-      // Fetch data from Alchemy API using native fetch
-      const res = await $fetch<AlchemyResult>(
-        `https://eth-mainnet.g.alchemy.com/nft/v3/${config.alchemyLAF}/getNFTsForOwner?contractAddresses[]=0x7A3D81CFC5A942aBE9ec656EFF818f7daB4E0Fe1&owner=${address}&withMetadata=false`
-      );
+  const data = await cache(
+    c.req.url,
+    async () => {
+      try {
+        // Fetch data from Alchemy API using native fetch
+        const res = await fetch(
+          `https://eth-mainnet.g.alchemy.com/nft/v3/${alchemyLAF}/getNFTsForOwner?contractAddresses[]=0x7A3D81CFC5A942aBE9ec656EFF818f7daB4E0Fe1&owner=${address}&withMetadata=false`
+        );
+        const data = (await res.json()) as AlchemyResult;
 
-      // Return the fetched data
-      return res.ownedNfts.map((x) => ({
-        tokenId: x.tokenId,
-        balance: x.balance,
-      }));
-    } catch (error) {
-      console.error("Error fetching data from Alchemy API:", error);
+        return data.ownedNfts.map((x) => ({
+          tokenId: x.tokenId,
+          balance: x.balance,
+        }));
+      } catch (error) {
+        console.error("Error fetching data from Alchemy API:", error);
 
-      throw createError({
-        statusCode: 500,
-        message: "Error fetching data from Alchemy API",
-      });
-    }
-  },
-  { maxAge: 60 }
-);
+        throw new HTTPException(500, {
+          message: "Error fetching data from Alchemy API",
+        });
+      }
+    },
+    { ttl: 1000 * 60 }
+  );
 
-export default handler;
+  return c.json(data);
+});
+
+export type Result = HonoResultOutput<typeof app, typeof path>;
+export default app;

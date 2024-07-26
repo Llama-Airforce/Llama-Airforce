@@ -1,22 +1,23 @@
+import { Hono, type HonoResultOutput, cache } from "@/Framework/Hono";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 
-export type Result<T = unknown> = Awaited<ReturnType<typeof handler>> & {
-  dashboard?: T;
-};
+const path = "/:id";
 
-const handler = defineCachedEventHandler(
-  async (event) => {
-    const { id } = getRouterParams(event);
+const app = new Hono().get(path, async (c) => {
+  const id = c.req.param("id");
 
+  const data = await cache(c.req.url, async () => {
     const { getItem } = useCosmosDb("Dashboards");
     const item = await getItem(id);
 
-    return {
-      statusCode: 200,
-      dashboard: item,
-    } as { statusCode: number; dashboard?: unknown };
-  },
-  { maxAge: 60 }
-);
+    return { statusCode: 200, dashboard: item };
+  });
 
-export default handler;
+  return c.json(data);
+});
+
+type ResultBase = HonoResultOutput<typeof app, typeof path>;
+export type Result<T = unknown> = Omit<ResultBase, "dashboard"> & {
+  dashboard?: T;
+};
+export default app;

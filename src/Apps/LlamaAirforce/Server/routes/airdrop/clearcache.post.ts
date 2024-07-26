@@ -1,29 +1,35 @@
-import type { RuntimeConfig } from "@LAF/nitro.config";
+import { Hono, HTTPException, cacheDelete } from "@/Framework/Hono";
 import { airdropIds } from "@LAF/Services/UnionService";
 import { GET_AIRDROP_CLAIM } from "@LAF/Server/util/getAirdropClaims";
+import { env } from "@LAF/Server/helpers/env";
 
 type Body = {
   password: string;
 };
 
-export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig<RuntimeConfig>(event);
-  const body = await readBody<Body>(event);
+const path = "/clearcache";
 
-  if (body?.password !== config.clearCachePassword) {
-    throw createError({
-      statusCode: 400,
-      message: "Wrong password",
+const app = new Hono().post(path, async (c) => {
+  const { clearCachePassword } = env();
+
+  let body: Body;
+  try {
+    body = await c.req.json<Body>();
+  } catch {
+    throw new HTTPException(400, {
+      message: "Missing or invalid request body",
     });
   }
 
-  const storage = useStorage("cache");
+  if (body?.password !== clearCachePassword) {
+    throw new HTTPException(400, { message: "Wrong password" });
+  }
 
-  const removals = airdropIds.map((airdropId) =>
-    storage.removeItem(`nitro:functions:${GET_AIRDROP_CLAIM}:${airdropId}.json`)
-  );
+  for (const airdropId of airdropIds) {
+    cacheDelete(`${GET_AIRDROP_CLAIM}:${airdropId}`);
+  }
 
-  await Promise.all(removals);
-
-  return `Cleared cache for: ${airdropIds.join(", ")}`;
+  return c.text(`Cleared cache for: ${airdropIds.join(", ")}`);
 });
+
+export default app;

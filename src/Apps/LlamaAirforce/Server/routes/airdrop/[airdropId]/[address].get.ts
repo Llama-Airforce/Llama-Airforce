@@ -1,42 +1,38 @@
-import { type Address } from "@/Framework/Address";
 import { isAddress } from "viem";
+import { Hono, HTTPException, type HonoResultOutput } from "@/Framework/Hono";
+import { type Address } from "@/Framework/Address";
 import { isAirdropId } from "@LAF/Services/UnionService";
 import { getAirdropClaims } from "@LAF/Server/util/getAirdropClaims";
 
-export type Result = Awaited<ReturnType<typeof handler>>;
+const path = "/:airdropId/:address";
 
-const handler = defineEventHandler(async (event) => {
-  const { airdropId, address } = getRouterParams(event);
+const app = new Hono().get(path, async (c) => {
+  const airdropId = c.req.param("airdropId");
+  const address = c.req.param("address");
 
   if (!isAirdropId(airdropId)) {
-    throw createError({
-      statusCode: 400,
-      message: "Invalid airdrop id",
-    });
+    throw new HTTPException(400, { message: "Invalid airdrop id" });
   }
 
   if (!isAddress(address)) {
-    throw createError({
-      statusCode: 400,
-      message: "Invalid address parameter",
-    });
+    throw new HTTPException(400, { message: "Invalid address parameter" });
   }
 
   const claims = await getAirdropClaims(airdropId);
   const claim = claims.claims[address];
 
   if (!claim) {
-    throw createError({
-      statusCode: 404,
+    throw new HTTPException(404, {
       message: `Claim for '${address}' not found`,
     });
   }
 
-  return {
+  return c.json({
     index: claim.index,
     amount: claim.amount,
-    proof: claim.proof.map((x) => x as Address) as readonly Address[],
-  };
+    proof: claim.proof.map((x) => x as Address),
+  });
 });
 
-export default handler;
+export type Result = HonoResultOutput<typeof app, typeof path>;
+export default app;

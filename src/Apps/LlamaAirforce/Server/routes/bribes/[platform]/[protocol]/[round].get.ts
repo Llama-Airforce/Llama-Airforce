@@ -1,4 +1,10 @@
 import {
+  Hono,
+  HTTPException,
+  type HonoResultOutput,
+  cache,
+} from "@/Framework/Hono";
+import {
   type Epoch,
   type EpochId,
   isPlatform,
@@ -7,39 +13,28 @@ import {
 } from "@LAF/Pages/Bribes/Models";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 
-export type Result = Awaited<ReturnType<typeof handler>>;
+const path = "/:platform/:protocol/:round";
 
-const handler = defineCachedEventHandler(
-  async (event) => {
-    const { platform, protocol, round: roundString } = getRouterParams(event);
+const app = new Hono().get(path, async (c) => {
+  const platform = c.req.param("platform");
+  const protocol = c.req.param("protocol");
+  const roundString = c.req.param("round");
 
-    if (!isPlatform(platform)) {
-      throw createError({
-        statusCode: 400,
-        message: "Invalid platform",
-      });
-    }
+  if (!isPlatform(platform)) {
+    throw new HTTPException(400, { message: "Invalid platform" });
+  }
 
-    if (!isProtocol(protocol)) {
-      throw createError({
-        statusCode: 400,
-        message: "Invalid protocol",
-      });
-    }
+  if (!isProtocol(protocol)) {
+    throw new HTTPException(400, { message: "Invalid protocol" });
+  }
 
-    const round = parseInt(roundString, 10);
-    if (isNaN(round)) {
-      throw createError({
-        statusCode: 400,
-        message: "Invalid round",
-      });
-    }
+  const round = parseInt(roundString, 10);
+  if (isNaN(round)) {
+    throw new HTTPException(400, { message: "Invalid round" });
+  }
 
-    const epochId: EpochId = {
-      platform,
-      protocol,
-      round,
-    };
+  const data = await cache(c.req.url, async () => {
+    const epochId: EpochId = { platform, protocol, round };
     const epochIdString = toIdString(epochId);
 
     // Try to get a V1 bribe, if not try to get a V2.
@@ -57,18 +52,16 @@ const handler = defineCachedEventHandler(
     const epoch = await getEpoch();
 
     if (epoch === null) {
-      throw createError({
-        statusCode: 404,
+      throw new HTTPException(404, {
         message: `Epoch '${epochId.round}' not found`,
       });
     }
 
-    return {
-      statusCode: 200,
-      epoch,
-    } as { statusCode: number; epoch?: Epoch };
-  },
-  { maxAge: 60 }
-);
+    return { statusCode: 200, epoch } as { statusCode: number; epoch?: Epoch };
+  });
 
-export default handler;
+  return c.json(data);
+});
+
+export type Result = HonoResultOutput<typeof app, typeof path>;
+export default app;

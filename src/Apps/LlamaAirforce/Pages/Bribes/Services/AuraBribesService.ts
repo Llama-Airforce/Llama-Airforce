@@ -22,11 +22,9 @@ export default class AuraBribesService extends BribesService {
     });
   }
 
-  override async getEpoch(
-    epochId: Omit<EpochId, "round"> & { round?: number } // Round is optional, picks latest if empty.
-  ): Promise<EpochResponse> {
+  override async getEpoch(epochId: EpochId): Promise<EpochResponse> {
     // If epoch greater than cutoff, load from HH
-    if ((epochId?.round ?? Number.MAX_VALUE) >= AuraConstants.START_ROUND) {
+    if (epochId.round >= AuraConstants.START_ROUND) {
       return this.auraService.getRound(epochId.round);
     }
 
