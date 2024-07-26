@@ -2,14 +2,14 @@ import {
   Hono,
   HTTPException,
   type HonoResultOutput,
-  withCache,
+  cache,
 } from "@/Framework/Hono";
 import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
 
 const path = "/";
 
-const app = new Hono().get(path, (c) =>
-  withCache(c, async () => {
+const app = new Hono().get(path, async (c) => {
+  const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
         "https://prices.curve.fi/v1/dao/fees/pools/weekly"
@@ -24,8 +24,10 @@ const app = new Hono().get(path, (c) =>
         message: "Error fetching data from Coin Prices API",
       });
     }
-  })
-);
+  });
+
+  return c.json(data);
+});
 
 export type Result = HonoResultOutput<typeof app, typeof path>;
 export default app;

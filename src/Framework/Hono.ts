@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import type { Env, Schema, Context } from "hono";
+import type { Env, Schema } from "hono";
 import type { JSONObject, JSONArray } from "hono/utils/types";
 import { HTTPException } from "hono/http-exception";
 import { LRUCache } from "lru-cache";
@@ -24,41 +24,40 @@ export type HonoResultOutput<
     : `Error: Endpoint "${Path}" does not exist`
   : never;
 
-const cache = new LRUCache<string, object>({
+const cacheLRU = new LRUCache<string, object>({
   max: 100,
   ttl: 1000 * 60 * 5, // 5 minutes default
   allowStale: true,
   noDeleteOnStaleGet: true,
 });
 
+type WithCacheOptions = Parameters<typeof cacheLRU.set>["2"];
+
 /**
- * Middleware for caching API responses
- * @param c Hono context
- * @param handler Function to execute if cache miss, should return JSON-serializable data
+ * Caches API responses with background revalidation
+ * @param key Unique cache key
+ * @param handler Function to fetch data on cache miss
  * @param options LRUCache set options
- * @returns JSON response, either from cache (potentially stale) or newly fetched
+ * @returns Cached or newly fetched data
  * @note Returns stale data immediately if available, then revalidates in the background
  * @note Multiple simultaneous calls may result in redundant cache updates
  */
-export async function withCache<T extends JSONObject | JSONArray>(
-  c: Context,
+export async function cache<T extends JSONObject | JSONArray>(
+  key: string,
   handler: () => Promise<T>,
-  options: Parameters<typeof cache.set>["2"] = {}
+  options: WithCacheOptions = {}
 ) {
-  const key = c.req.url;
-  const cachedData = cache.get(key);
+  const cachedData = cacheLRU.get(key) as T | undefined;
 
   if (cachedData) {
-    // Return potentially stale data immediately, update cache in background if expired
-    if (cache.getRemainingTTL(key) <= 0) {
-      void handler().then((data) => cache.set(key, data, options));
+    if (cacheLRU.getRemainingTTL(key) <= 0) {
+      void handler().then((data) => cacheLRU.set(key, data, options));
     }
-    return c.json(cachedData as T);
+    return cachedData;
   }
 
-  // Cache miss: fetch new data and store in cache
   const data = await handler();
-  cache.set(key, data, options);
+  cacheLRU.set(key, data, options);
 
-  return c.json(data);
+  return data;
 }

@@ -2,15 +2,15 @@ import {
   Hono,
   HTTPException,
   type HonoResultOutput,
-  withCache,
+  cache,
 } from "@/Framework/Hono";
 import { isChain } from "@CM/Models/Chain";
 import type * as ApiTypes from "@CM/Services/Pools/ApiTypes";
 
 const path = "/:chain";
 
-const app = new Hono().get(path, (c) =>
-  withCache(c, async () => {
+const app = new Hono().get(path, async (c) => {
+  const data = await cache(c.req.url, async () => {
     const chain = c.req.param("chain");
 
     if (!isChain(chain)) {
@@ -31,8 +31,10 @@ const app = new Hono().get(path, (c) =>
         message: "Error fetching data from Coin Prices API",
       });
     }
-  })
-);
+  });
+
+  return c.json(data);
+});
 
 export type Result = HonoResultOutput<typeof app, typeof path>;
 export default app;
