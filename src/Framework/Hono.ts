@@ -61,3 +61,33 @@ export async function cache<T extends JSONObject | JSONArray>(
 
   return data;
 }
+
+export function createEnvHelpers<T extends Record<string, string>>(keys: T) {
+  /**
+   * Retrieves environment variables based on the provided keys.
+   * @returns An object with the environment variables.
+   */
+  function env(): { [K in keyof T]: string } {
+    return Object.fromEntries(
+      Object.entries(keys).map(([key, envVar]) => [key, process.env[envVar]])
+    ) as { [K in keyof T]: string };
+  }
+
+  /**
+   * Checks if all expected environment variables are set.
+   * @throws Error if any environment variable is not set.
+   */
+  function check() {
+    console.log("Checking if all expected env vars are set");
+
+    Object.values(keys).forEach((variable) => {
+      if (!process.env[variable]) {
+        throw new Error(`${variable} not set in .env file`);
+      }
+    });
+
+    console.log("All env vars gud");
+  }
+
+  return { env, check };
+}
