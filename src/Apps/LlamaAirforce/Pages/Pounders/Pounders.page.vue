@@ -12,21 +12,11 @@
       ></PounderComponent>
 
       <Card class="information">
-        {{ t("pounders-info-other") }}
+        {{ t("pounders-info-deprecated") }}
       </Card>
 
       <PounderComponent
-        v-for="pounder in poundersOther"
-        :key="pounder.pounder.id"
-        :pounder-id="pounder.pounder.id"
-      ></PounderComponent>
-
-      <Card class="information">
-        {{ t("pounders-info-legacy") }}
-      </Card>
-
-      <PounderComponent
-        v-for="pounder in poundersLegacy"
+        v-for="pounder in poundersDeprecated"
         :key="pounder.pounder.id"
         :pounder-id="pounder.pounder.id"
       ></PounderComponent>
@@ -60,19 +50,19 @@ const { address } = useWallet();
 const store = useUnionStore();
 
 const poundersUnion = computed(() =>
+  [store.pounders.ucrv, store.pounders.ucvx, store.pounders.uprisma].filter(
+    notEmpty
+  )
+);
+
+const poundersDeprecated = computed(() =>
   [
-    store.pounders.ucrv,
+    store.pounders.ubal,
     store.pounders.ufxs,
-    store.pounders.ucvx,
-    store.pounders.uprisma,
+    store.pounders.ufxslp,
+    store.pounders.ucrv2,
   ].filter(notEmpty)
 );
-
-const poundersOther = computed(() =>
-  [store.pounders.ubal, store.pounders.ufxslp].filter(notEmpty)
-);
-
-const poundersLegacy = computed(() => [store.pounders.ucrv2].filter(notEmpty));
 
 // Hooks
 onMounted(createPounders);
@@ -312,10 +302,7 @@ watch(address, createPounders);
   .dashboard {
     > .information {
       font-size: 0.875rem;
-
-      &:not(:nth-child(1 of .information)) {
-        margin-top: 3rem;
-      }
+      margin-top: 3rem;
     }
   }
 }
@@ -323,19 +310,16 @@ watch(address, createPounders);
 
 <i18n lang="yaml" locale="en">
 pounders-info: Union's auto-compounders streamline life for busy llamas.
-pounders-info-other: The following pounders are not part of the Union's allocation set, but they still make life easier.
-pounders-info-legacy: The following pounders are considered legacy. They still work, but we recommend migrating.
+pounders-info-deprecated: The following pounders are considered legacy. If you're lucky they still yield.
 </i18n>
 
 <i18n lang="yaml" locale="zh">
 pounders-info: Union的自动复投功能使辛劳的羊驼们更加方便管理他们的贿赂收益。
-pounders-info-other: 以下金库不属于Union的分配集，但它们仍然使生活更容易。
-pounders-info-legacy: 下面的保险库被认为是传统的。它们仍然有效，但我们建议迁移。
+pounders-info-deprecated: 以下金库被视为传统金库。如果你幸运的话，它们还能产出。
 </i18n>
 
 <i18n lang="yaml" locale="fr">
 pounders-info: Les auto-compounders de l'Union rendent la vie un peu
   plus facile à gérer pour les llamas qui travaillent dur.
-pounders-info-other: Les pounders suivants ne font pas partie de l'ensemble d'allocation de l'Union, mais ils rendent tout de même la vie plus facile.
-pounders-info-legacy: Les pounders suivants sont considérés comme étant obsolètes. Ils fonctionnent toujours, mais nous recommandons de migrer vers une solution plus récente.
+pounders-info-deprecated: Les pounders suivants sont considérés comme des héritages. Si vous avez de la chance, ils sont encore disponibles
 </i18n>
