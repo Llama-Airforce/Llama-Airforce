@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 
 /**
  * Vue composable for managing a Socket.IO connection.
@@ -10,13 +10,13 @@ import { io } from "socket.io-client";
  *   - isConnected: A ref indicating if the socket is currently connected.
  *   - dispose: A function to clean up the socket connection and event listeners.
  */
-export function useSocketIO(url: string) {
+export function useSocketIO<TSocket extends Socket = Socket>(url: string) {
   const socket = io(`${url}/main`, {
     autoConnect: false,
     secure: true,
   }).on("error", (error: Error) => {
     console.error("Socket.IO error:", error);
-  });
+  }) as TSocket;
 
   // Refs for connection state
   const connecting = ref(false);
