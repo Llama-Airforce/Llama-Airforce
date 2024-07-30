@@ -29,6 +29,6 @@ export const parseRedemption = (
 ): Models.RedemptionPending => {
   return {
     tokenId: BigInt(x.tokenId),
-    balance: BigInt(x.balance),
+    balance: BigInt(parseFloat(x.balance)), // Can be with scientific notation.
   };
 };
