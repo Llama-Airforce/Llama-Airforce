@@ -20,16 +20,6 @@
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="Gauge">
-        <KeepAlive>
-          <Gauge
-            v-if="tabActive === 'gauge'"
-            :pool
-            :chain
-          ></Gauge>
-        </KeepAlive>
-      </TabItem>
-
       <TabItem header="MEV">
         <KeepAlive>
           <MEV
@@ -47,7 +37,6 @@
 import { type Chain } from "@CM/Models/Chain";
 import { useQueryPool } from "@CM/Services/Pools/Queries";
 import PoolOverview from "@CM/Pages/Platform/Pools/Tabs/PoolOverview.vue";
-import Gauge from "@CM/Pages/Platform/Pools/Tabs/Gauge.vue";
 import MEV from "@CM/Pages/Platform/Pools/Tabs/MEV.vue";
 
 const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
@@ -85,7 +74,7 @@ onMounted(() => {
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "gauge", "mev"],
+  ["overview", "mev"],
   "poolspool",
   () => ({
     chain: chain.value,
