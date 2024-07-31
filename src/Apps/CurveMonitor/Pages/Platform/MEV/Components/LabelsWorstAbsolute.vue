@@ -15,7 +15,7 @@ import { useSettingsStore } from "@CM/Stores";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/MEV/Services/Queries";
 
-const { data: labelRankingExtended, isPending: loading } =
+const { data: labelRankingExtended, isFetching: loading } =
   useQueryGetSandwichLabelOccurrences();
 
 const { theme } = storeToRefs(useSettingsStore());

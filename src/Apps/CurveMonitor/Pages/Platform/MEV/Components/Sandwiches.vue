@@ -114,7 +114,7 @@ const { t } = useI18n();
 const swsPerPage = 10;
 
 const page = ref(1);
-const { data: sandwichesRaw, isPending: loading } = useQuerySandwiches(page);
+const { data: sandwichesRaw, isFetching: loading } = useQuerySandwiches(page);
 
 const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
 const { relativeTime } = useRelativeTime();
