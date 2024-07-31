@@ -14,28 +14,28 @@ module.exports = {
   ],
   parser: "vue-eslint-parser",
   parserOptions: {
-    "parser": "@typescript-eslint/parser",
-    "project": "tsconfig.json",
-    "sourceType": "module",
-    "extraFileExtensions": [".vue"],
-    "createDefaultProgram": true,
-    "ecmaVersion": 2020
+    parser: "@typescript-eslint/parser",
+    project: "tsconfig.json",
+    sourceType: "module",
+    extraFileExtensions: [".vue"],
+    createDefaultProgram: true,
+    ecmaVersion: 2020,
   },
-  "plugins": [
-    "@typescript-eslint",
-    "promise"
-  ],
+  plugins: ["@typescript-eslint", "promise"],
   rules: {
-    "indent": ["error", 2, { "SwitchCase": 1, "offsetTernaryExpressions": true }],
+    indent: ["error", 2, { SwitchCase: 1, offsetTernaryExpressions: true }],
     "multiline-comment-style": ["error", "starred-block"],
     "no-tabs": "error",
     //"max-len": ["error", { "code": 120 }],
     "max-lines": ["error", 1000],
-    "max-lines-per-function": ["error", { "max": 80, "skipBlankLines": true, "skipComments": true }],
+    "max-lines-per-function": [
+      "error",
+      { max: 80, skipBlankLines: true, skipComments: true },
+    ],
     "max-params": ["error", 7],
-    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
+    "newline-per-chained-call": ["error", { ignoreChainWithDepth: 3 }],
     "prefer-const": "error",
-    "complexity": ["error", { "max": 20 }],
+    complexity: ["error", { max: 20 }],
 
     "new-parens": "error",
     "no-bitwise": "error",
@@ -50,10 +50,10 @@ module.exports = {
     "no-useless-constructor": "off",
     "array-callback-return": "error",
     "default-case": "error",
-    "eqeqeq": "error",
-    "radix": "error",
-        
-    "semi": "off",
+    eqeqeq: "error",
+    radix: "error",
+
+    semi: "off",
     "@typescript-eslint/semi": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-extra-semi": "error",
@@ -64,35 +64,41 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/consistent-indexed-object-style": "off",
-    "@typescript-eslint/consistent-type-imports": ["error", {
-      "prefer": "type-imports",
-      "fixStyle": "inline-type-imports",
-    }],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      },
+    ],
 
-    "vue/max-attributes-per-line": ["error", {
-      "singleline": {
-        "max": 2
-      },      
-      "multiline": {
-        "max": 2
-      }
-    }],
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        singleline: {
+          max: 2,
+        },
+        multiline: {
+          max: 2,
+        },
+      },
+    ],
 
     "vue/singleline-html-element-content-newline": "off",
     "vue/html-self-closing": "off",
     "vue/no-setup-props-destructure": "off",
     "vue/multi-word-component-names": "off",
-    "vue/no-v-html": "off"
+    "vue/no-v-html": "off",
   },
   overrides: [
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+        "**/__tests__/*.{j,t}s?(x)",
+        "**/tests/unit/**/*.spec.{j,t}s?(x)",
       ],
       env: {
-        jest: true
-      }
-    }
-  ]
+        jest: true,
+      },
+    },
+  ],
 };
