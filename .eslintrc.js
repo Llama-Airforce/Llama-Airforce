@@ -101,4 +101,5 @@ module.exports = {
       },
     },
   ],
+  ignorePatterns: ["src/Apps/CurveMonitor/phil/**"],
 };

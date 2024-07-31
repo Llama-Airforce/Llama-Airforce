@@ -4,3 +4,6 @@
 [submodule "src/Pages/Union"]
 	path = src/Apps/LlamaAirforce/Pages/Union
 	url = https://github.com/Llama-Airforce/Llama-Airforce-Union.git
+[submodule "src/Apps/CurveMonitor/phil"]
+	path = src/Apps/CurveMonitor/phil
+	url = https://github.com/Llama-Airforce/CurveMonitor.git

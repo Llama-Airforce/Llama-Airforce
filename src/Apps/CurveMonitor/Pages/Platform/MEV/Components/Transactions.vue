@@ -127,8 +127,8 @@
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import {
+  TransactionType,
   type TransactionDetail,
-  type TransactionType,
 } from "@CM/Services/Sockets/SocketMEV";
 
 const { t } = useI18n();
@@ -154,7 +154,11 @@ const {
 const { relativeTime } = useRelativeTime();
 
 const search = ref("");
-const types = ref<TransactionType[]>(["swap", "deposit", "remove"]);
+const types = ref<TransactionType[]>([
+  TransactionType.Swap,
+  TransactionType.Deposit,
+  TransactionType.Remove,
+]);
 
 const columns = computed((): string[] => {
   return time
@@ -184,26 +188,26 @@ const rowsPerPage = 10;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
 const getAssetsString = (tx: TransactionDetail): string => {
-  if (tx.transaction_type === "swap") {
+  if (tx.transaction_type === TransactionType.Swap) {
     // TODO: make generic for multiple coins.
     const coinIn = tx.coins_leaving_wallet[0];
     const coinOut = tx.coins_entering_wallet[0];
-    const amountIn = roundPhil(parseFloat(coinIn.amount));
-    const amountOut = roundPhil(parseFloat(coinOut.amount));
+    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
+    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
 
     const from = `<span>${amountIn} ${coinIn.name}</span>`;
     const arrow = `<i class='fas fa-arrow-right'></i>`;
     const to = `<span style='justify-self: end;'>${amountOut} ${coinOut.name}</span>`;
 
     return `${from}${arrow}${to}`;
-  } else if (tx.transaction_type === "deposit") {
+  } else if (tx.transaction_type === TransactionType.Deposit) {
     const coinIn = tx.coins_entering_wallet[0];
-    const amountIn = roundPhil(parseFloat(coinIn.amount));
+    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
 
     return `${amountIn} ${coinIn.name}`;
-  } else if (tx.transaction_type === "remove") {
+  } else if (tx.transaction_type === TransactionType.Remove) {
     const coinOut = tx.coins_leaving_wallet[0];
-    const amountOut = roundPhil(parseFloat(coinOut.amount));
+    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
 
     return `${amountOut} ${coinOut.name}`;
   }
@@ -214,13 +218,17 @@ const getAssetsString = (tx: TransactionDetail): string => {
 // Events
 const onType = (tabIndex: number) => {
   if (tabIndex === 0) {
-    types.value = ["swap", "deposit", "remove"];
+    types.value = [
+      TransactionType.Swap,
+      TransactionType.Deposit,
+      TransactionType.Remove,
+    ];
   } else if (tabIndex === 1) {
-    types.value = ["swap"];
+    types.value = [TransactionType.Swap];
   } else if (tabIndex === 2) {
-    types.value = ["deposit"];
+    types.value = [TransactionType.Deposit];
   } else if (tabIndex === 3) {
-    types.value = ["remove"];
+    types.value = [TransactionType.Remove];
   } else {
     types.value = [];
   }

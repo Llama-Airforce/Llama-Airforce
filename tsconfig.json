@@ -78,7 +78,7 @@
     "tests/**/*.tsx",
     "Deploy.ts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "src/Apps/CurveMonitor/phil"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",
