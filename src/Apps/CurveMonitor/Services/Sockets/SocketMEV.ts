@@ -91,7 +91,7 @@ export type SocketMEV = Socket<ServerToClientEvents, ClientToServerEvents>;
 let socket: ReturnType<typeof useSocketIO<SocketMEV>> | undefined;
 export function useSocketMEV() {
   if (!socket) {
-    socket = useSocketIO("wss://api.curvemonitor.com");
+    socket = useSocketIO({ url: "wss://api.curvemonitor.com" });
   }
 
   return socket;

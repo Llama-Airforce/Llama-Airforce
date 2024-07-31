@@ -4,56 +4,83 @@
       <InputText v-model="url"></InputText>
 
       <Button
-        v-if="!connected"
-        value="Connect"
+        value="Ping"
+        :disabled="!isConnected"
+        @click="ping"
+      >
+      </Button>
+
+      <Button
+        v-if="!isConnected"
+        :value="connecting ? 'Connecting' : 'Connect'"
+        :disabled="connecting"
         @click="connect"
       ></Button>
+
       <Button
         v-else
         value="Disconnect"
         @click="disconnect"
       ></Button>
     </div>
+
+    <div
+      class="output font-mono"
+      v-html="output"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { io, type Socket } from "socket.io-client";
+import { type Socket } from "socket.io-client";
+import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
+import SocketIOService from "@/Services/Socket/SocketIOService";
 
-type ClientToServerEvents = Record<string, never>;
+type ClientToServerEvents = {
+  Ping: () => void;
+};
+
 type ServerToClientEvents = {
-  message: (msg: string) => void;
+  Pong: () => void;
 };
 
-let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
+type SocketTest = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-// Refs
-const url = ref("https://ws.llama.airforce:2053");
-const connected = ref(false);
+class TestSocketService extends SocketIOService<
+  ServerToClientEvents,
+  ClientToServerEvents,
+  SocketTest
+> {
+  ping() {
+    return this.emitAndListen("Ping", "Pong");
+  }
+}
 
-// Methods
-const connect = () => {
-  socket = io(`${url.value}`, {
-    autoConnect: false,
-    reconnection: false,
-    secure: true,
+const output = ref("");
+const url = ref("wss://api.curvemonitor.com");
+const { socket, connecting, isConnected, connect, disconnect } =
+  useSocketIO<SocketTest>({
+    url: () => url.value,
+    connectOnMount: false,
   });
 
-  socket.on("connect_error", (err) => console.log(err));
-  socket.on("message", (msg) => {
-    console.log(msg);
-    connected.value = true;
-  });
+const service = new TestSocketService(socket);
 
-  socket.connect();
-};
+async function ping() {
+  await service.ping();
 
-const disconnect = () => {
-  socket?.close();
-  socket = null;
+  const timestamp = new Date(Date.now());
+  const formattedTime = timestamp.toLocaleTimeString();
 
-  connected.value = false;
-};
+  output.value = `Pong received at ${formattedTime}<br />` + output.value;
+}
+
+watch(isConnected, (newIsConnected) => {
+  output.value =
+    (newIsConnected
+      ? `Connected to ${url.value}<br />`
+      : "Disconnected<br />") + output.value;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -61,8 +88,23 @@ const disconnect = () => {
 
 @include dashboard("sockets");
 
-.connect {
-  display: flex;
-  gap: 1rem;
+.sockets {
+  display: grid;
+  grid-template-rows: auto auto;
+
+  .connect {
+    grid-row: 1;
+
+    display: flex;
+    gap: 1rem;
+  }
+
+  .output {
+    grid-row: 2;
+
+    max-height: 80svh;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
 }
 </style>

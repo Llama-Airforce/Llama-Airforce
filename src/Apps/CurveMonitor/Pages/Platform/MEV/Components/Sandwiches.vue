@@ -134,9 +134,9 @@ const sandwiches = computed((): SandwichDetail[] =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
       return (
-        includesTerm(sw.poolName.toString()) ||
-        includesTerm(sw.poolAddress.toString()) ||
-        includesTerm(sw.label.toString())
+        includesTerm(sw.poolName) ||
+        includesTerm(sw.poolAddress) ||
+        includesTerm(sw.label)
       );
     })
     .orderBy(
