@@ -2,6 +2,8 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { Pool, Coin, Pair, TimeRange } from "@CM/Models";
 import type {
+  SocketPool,
+  SocketRoot,
   Balances,
   Volume,
   Price,
@@ -9,7 +11,6 @@ import type {
   Tvl,
   Bonding,
 } from "@CM/Services/MonitorLegacy";
-import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
 
 export const useMonitorStore = defineStore("monitorStore", () => {
   const socket = ref<SocketRoot | null>(null);

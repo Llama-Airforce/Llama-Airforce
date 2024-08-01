@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/Monitor/Services/Queries";
+import { useQueryGetSandwichLabelOccurrences } from "@CM/Services/MEV/Queries";
 
 const { data: labelRankingExtended, isFetching: loading } =
   useQueryGetSandwichLabelOccurrences();

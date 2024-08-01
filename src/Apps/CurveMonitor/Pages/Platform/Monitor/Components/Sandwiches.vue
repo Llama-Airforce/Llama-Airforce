@@ -103,11 +103,8 @@ import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
 import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
-import {
-  type TransactionDetail,
-  type SandwichDetail,
-} from "@CM/Services/Sockets/SocketMEV";
-import { useQuerySandwiches } from "@CM/Pages/Platform/Monitor/Services/Queries";
+import { type TransactionDetail, type SandwichDetail } from "@CM/Services/MEV";
+import { useQuerySandwiches } from "@CM/Services/MEV/Queries";
 
 const { t } = useI18n();
 

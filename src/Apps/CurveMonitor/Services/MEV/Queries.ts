@@ -1,5 +1,4 @@
-import { useSocketMEV } from "@CM/Services/Sockets";
-import MEVService from "@CM/Pages/Platform/Monitor/Services/MEVService";
+import { useSocketMEV, MEVService } from "@CM/Services/MEV";
 
 function initEmptyArray() {
   return {

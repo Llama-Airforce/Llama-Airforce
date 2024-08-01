@@ -44,8 +44,7 @@
 
 <script setup lang="ts">
 import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
-import { PairService } from "@CM/Services/MonitorLegacy";
-import { type SocketPool } from "@CM/Services/Sockets";
+import { PairService, type SocketPool } from "@CM/Services/MonitorLegacy";
 
 type Coin = {
   label: string;

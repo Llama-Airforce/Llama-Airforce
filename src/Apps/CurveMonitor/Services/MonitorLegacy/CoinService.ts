@@ -1,7 +1,7 @@
 import { Observable, share } from "rxjs";
 import type { Coin } from "@CM/Models";
-import { type SocketPool } from "@CM/Services/Sockets";
-import { type NamesDto } from "@CM/Services/Sockets/SocketPool";
+import { type SocketPool } from "@CM/Services/MonitorLegacy";
+import { type NamesDto } from "@CM/Services/MonitorLegacy/SocketPool";
 
 export default class CoinService {
   public readonly get$: Observable<Coin[]>;

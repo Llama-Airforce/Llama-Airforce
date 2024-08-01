@@ -1,5 +1,5 @@
 import type { TimeRange } from "@CM/Models";
-import { type SocketPool } from "@CM/Services/Sockets";
+import { type SocketPool } from "@CM/Services/MonitorLegacy";
 
 export default class TimeRangeService {
   private readonly socket: SocketPool;

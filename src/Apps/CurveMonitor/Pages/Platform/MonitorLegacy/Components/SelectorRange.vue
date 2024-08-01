@@ -14,8 +14,7 @@
 <script setup lang="ts">
 import { type TimeRange, timeRanges } from "@CM/Models/TimeRange";
 import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
-import type { SocketPool } from "@CM/Services/Sockets";
-import { TimeRangeService } from "@CM/Services/MonitorLegacy";
+import { TimeRangeService, type SocketPool } from "@CM/Services/MonitorLegacy";
 
 const { t } = useI18n();
 

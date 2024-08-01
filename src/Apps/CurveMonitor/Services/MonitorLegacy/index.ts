@@ -12,3 +12,6 @@ export { default as TvlService } from "./TvlService";
 export { default as BondingService } from "./BondingService";
 
 export * from "./Models";
+
+export { type SocketRoot, createSocketRoot } from "./SocketRoot";
+export { type SocketPool, createSocketPool } from "./SocketPool";

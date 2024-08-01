@@ -6,13 +6,13 @@ import type {
   Deposit,
   Withdraw,
 } from "@CM/Services/MonitorLegacy";
-import { type SocketPool } from "@CM/Services/Sockets";
+import { type SocketPool } from "@CM/Services/MonitorLegacy";
 import type {
   TransactionDto,
   TransactionDtoDeposit,
   TransactionDtoRemove,
   TransactionDtoSwap,
-} from "@CM/Services/Sockets/SocketPool";
+} from "@CM/Services/MonitorLegacy/SocketPool";
 
 export default class TransactionService {
   public readonly init$: Observable<Transaction[]>;

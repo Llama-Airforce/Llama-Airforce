@@ -1,14 +1,9 @@
 <template>
   <div class="mev">
-    <LabelsWorstRelative
-      style="grid-row: 1; grid-column: 1"
-    ></LabelsWorstRelative>
+    <Sandwiches style="grid-area: sws"></Sandwiches>
 
-    <LabelsWorstAbsolute
-      style="grid-row: 1; grid-column: 2"
-    ></LabelsWorstAbsolute>
-
-    <Sandwiches style="grid-row: 2; grid-column: 1 / -1"></Sandwiches>
+    <LabelsWorstRelative style="grid-area: relative"></LabelsWorstRelative>
+    <LabelsWorstAbsolute style="grid-area: absolute"></LabelsWorstAbsolute>
   </div>
 </template>
 
@@ -26,5 +21,8 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 .mev {
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "sws sws"
+    "relative absolute";
 }
 </style>

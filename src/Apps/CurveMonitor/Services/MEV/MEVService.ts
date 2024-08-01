@@ -3,7 +3,7 @@ import type {
   SocketMEV,
   ServerToClientEvents,
   ClientToServerEvents,
-} from "@CM/Services/Sockets/SocketMEV";
+} from "@CM/Services/MEV/SocketMEV";
 
 export default class MEVService extends SocketIOService<
   ServerToClientEvents,

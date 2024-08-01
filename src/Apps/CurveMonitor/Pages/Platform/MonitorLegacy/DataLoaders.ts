@@ -10,8 +10,8 @@ import {
   TransactionService,
   TvlService,
   BondingService,
+  createSocketPool,
 } from "@CM/Services/MonitorLegacy";
-import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(
   store: ReturnType<typeof useMonitorStore>,

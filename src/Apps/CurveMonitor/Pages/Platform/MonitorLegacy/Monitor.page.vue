@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import type { Pool } from "@CM/Models";
-import { PoolService } from "@CM/Services/MonitorLegacy";
+import { PoolService, createSocketRoot } from "@CM/Services/MonitorLegacy";
 import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
 import Header from "@CM/Pages/Platform/Monitor/Components/Header.vue";
 import Controls from "@CM/Pages/Platform/Monitor/Components/Controls.vue";
@@ -31,7 +31,6 @@ import Bonding from "@CM/Pages/Platform/Monitor/Components/Bonding.vue";
 import Balances from "@CM/Pages/Platform/Monitor/Components/Balances.vue";
 import Prices from "@CM/Pages/Platform/Monitor/Components/Prices.vue";
 import { loadPool } from "@CM/Pages/Platform/MonitorLegacy/DataLoaders";
-import { createSocketRoot } from "@CM/Services/Sockets";
 
 const host = "https://ws.llama.airforce:2053";
 const socket = createSocketRoot(host);
