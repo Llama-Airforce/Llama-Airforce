@@ -14,7 +14,7 @@ import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.page.vue";
 import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue";
 import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
 
-import Monitor from "@CM/Pages/Platform/Monitor/MEV.page.vue";
+import Monitor from "@CM/Pages/Platform/Monitor/Monitor.page.vue";
 
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
 import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
@@ -69,6 +69,7 @@ export const pageMainRoutes = [
 
   {
     path: "/platform/monitor",
+    name: "monitor",
     component: Monitor,
   },
 

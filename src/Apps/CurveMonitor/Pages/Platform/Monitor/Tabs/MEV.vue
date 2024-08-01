@@ -16,9 +16,11 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("mev");
-
 .mev {
+  margin: var(--dashboard-gap) 0;
+
+  @include dashboard-grid;
+
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
