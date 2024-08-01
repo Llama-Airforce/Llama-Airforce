@@ -12,7 +12,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
 import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/Monitor/Services/Queries";
 
 const { data: labelRankingExtended, isFetching: loading } =
@@ -20,7 +19,9 @@ const { data: labelRankingExtended, isFetching: loading } =
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const topWorstPerformingLabels = (labelsOccurrence: LabelRankingExtended[]) =>
+const topWorstPerformingLabels = (
+  labelsOccurrence: typeof labelRankingExtended.value
+) =>
   labelsOccurrence
     .filter((label) => label.numOfAllTx >= 12) // filter labels with at least 12 numOfAllTx
     .map((label) => ({
