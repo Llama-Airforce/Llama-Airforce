@@ -3,7 +3,6 @@ import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
 import type {
   LabelRankingShort,
   LabelRankingExtended,
-  UserSearchResult,
   TransactionDetail,
 } from "@CM/phil/src/utils/Interfaces";
 import type { SandwichDetail } from "@CM/phil/src/utils/postgresTables/readFunctions/SandwichDetail";
@@ -25,7 +24,6 @@ export type ClientToServerEvents = {
   ping: () => void;
   getSandwichLabelOccurrences: () => void;
   getAbsoluteLabelsRanking: () => void;
-  getUserSearchResult: (input: string) => void;
   getFullSandwichTableContent: (
     timeDuration: TimeDuration,
     page: number
@@ -34,7 +32,6 @@ export type ClientToServerEvents = {
 
 export type ServerToClientEvents = {
   pong: () => void;
-  userSearchResult: (searchResults: UserSearchResult[]) => void;
   sandwichLabelOccurrences: (labelsOccurrence: LabelRankingExtended[]) => void;
   absoluteLabelsRanking: (labelsRanking: LabelRankingShort[]) => void;
   fullSandwichTableContent: (resp: {

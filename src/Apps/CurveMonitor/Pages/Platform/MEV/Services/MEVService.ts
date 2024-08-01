@@ -10,10 +10,6 @@ export default class MEVService extends SocketIOService<
   ClientToServerEvents,
   SocketMEV
 > {
-  search(input: string) {
-    return this.emitAndListen("getUserSearchResult", "userSearchResult", input);
-  }
-
   getSandwichLabelOccurrences() {
     return this.emitAndListen(
       "getSandwichLabelOccurrences",
