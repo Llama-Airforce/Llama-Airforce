@@ -33,7 +33,7 @@ export function useSocketIO<TSocket extends Socket = Socket>(
       disconnect();
     }
 
-    return io(`${url()}/main`, {
+    return io(`${url()}`, {
       autoConnect: false,
       secure: true,
       reconnection: false, // Reconnection is giving all kind of problems atm...
