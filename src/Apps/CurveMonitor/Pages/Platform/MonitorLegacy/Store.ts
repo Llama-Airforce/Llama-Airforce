@@ -8,7 +8,7 @@ import type {
   Transaction,
   Tvl,
   Bonding,
-} from "@CM/Pages/Platform/MonitorLegacy/Models";
+} from "@CM/Services/MonitorLegacy";
 import type { SocketPool, SocketRoot } from "@CM/Services/Sockets";
 
 export const useMonitorStore = defineStore("monitorStore", () => {

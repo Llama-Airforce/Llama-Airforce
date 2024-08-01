@@ -139,7 +139,7 @@ import {
   isWithdraw,
   type Swap,
   type TransactionType,
-} from "@CM/Pages/Platform/MonitorLegacy/Models/Transaction";
+} from "@CM/Services/MonitorLegacy";
 
 const { t } = useI18n();
 

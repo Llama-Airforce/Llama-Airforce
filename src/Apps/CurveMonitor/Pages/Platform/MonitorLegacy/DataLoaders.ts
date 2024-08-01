@@ -4,15 +4,13 @@ import {
   type PoolService,
   CoinService,
   PairService,
-} from "@CM/Services/MonitorLegacy";
-import {
   BalanceService,
   PriceService,
   VolumeService,
   TransactionService,
   TvlService,
   BondingService,
-} from "@CM/Pages/Platform/MonitorLegacy/Services";
+} from "@CM/Services/MonitorLegacy";
 import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(

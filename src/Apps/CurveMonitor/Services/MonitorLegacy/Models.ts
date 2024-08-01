@@ -1,3 +1,32 @@
+export type Balances = {
+  timestamp: number;
+  balances: number[];
+};
+
+export type Bonding = {
+  curve: {
+    x: number;
+    y: number;
+  }[];
+  balanceCoin0: number;
+  balanceCoin1: number;
+};
+
+export type Price = {
+  timestamp: number;
+  value: number;
+};
+
+export type Tvl = {
+  timestamp: number;
+  tvl: number;
+};
+
+export type Volume = {
+  timestamp: number;
+  volume: number; // In dollars
+};
+
 export type TransactionType = "swap" | "deposit" | "withdraw";
 
 export type Transaction = {

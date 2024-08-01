@@ -1,7 +1,7 @@
 import { Observable, share } from "rxjs";
 import { type SocketPool } from "@CM/Services/Sockets";
 import { type BalancesDto } from "@CM/Services/Sockets/SocketPool";
-import type { Balances } from "@CM/Pages/Platform/MonitorLegacy/Models";
+import type { Balances } from "@CM/Services/MonitorLegacy";
 
 export default class BalanceService {
   public readonly init$: Observable<Balances[]>;
