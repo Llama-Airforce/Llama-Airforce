@@ -1,5 +1,5 @@
 import { useSocketMEV } from "@CM/Services/Sockets";
-import MEVService from "@CM/Pages/Platform/MEV/Services/MEVService";
+import MEVService from "@CM/Pages/Platform/Monitor/Services/MEVService";
 
 function initEmptyArray() {
   return {

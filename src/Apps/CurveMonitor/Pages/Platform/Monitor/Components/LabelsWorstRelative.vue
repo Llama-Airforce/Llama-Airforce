@@ -13,7 +13,7 @@
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import { type LabelRankingExtended } from "@CM/Services/Sockets/SocketMEV";
-import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/MEV/Services/Queries";
+import { useQueryGetSandwichLabelOccurrences } from "@CM/Pages/Platform/Monitor/Services/Queries";
 
 const { data: labelRankingExtended, isFetching: loading } =
   useQueryGetSandwichLabelOccurrences();

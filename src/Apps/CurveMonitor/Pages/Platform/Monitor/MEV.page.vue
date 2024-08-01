@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import LabelsWorstRelative from "@CM/Pages/Platform/MEV/Components/LabelsWorstRelative.vue";
-import LabelsWorstAbsolute from "@CM/Pages/Platform/MEV/Components/LabelsWorstAbsolute.vue";
-import Sandwiches from "@CM/Pages/Platform/MEV/Components/Sandwiches.vue";
+import LabelsWorstRelative from "@CM/Pages/Platform/Monitor/Components/LabelsWorstRelative.vue";
+import LabelsWorstAbsolute from "@CM/Pages/Platform/Monitor/Components/LabelsWorstAbsolute.vue";
+import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 </script>
 
 <style lang="scss" scoped>
