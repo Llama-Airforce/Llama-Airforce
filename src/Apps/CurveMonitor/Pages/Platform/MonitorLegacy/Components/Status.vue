@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { type Socket } from "socket.io-client";
-import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
-import { StatusService } from "@CM/Services";
+import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
+import { StatusService } from "@CM/Services/MonitorLegacy";
 
 // Refs
 const storeMonitor = useMonitorStore();

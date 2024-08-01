@@ -1,6 +1,6 @@
 <template>
   <Card
-    class="bondings"
+    class="tvl"
     :title="t('title')"
   >
     <div
@@ -12,19 +12,16 @@
 
 <script setup lang="ts">
 import { chain } from "lodash";
-import {
-  createChart as createChartFunc,
-  type SeriesMarker,
-} from "lightweight-charts";
-import type { Bonding } from "@CM/Pages/Platform/Monitor/Models";
-import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
+import { createChart as createChartFunc } from "lightweight-charts";
+import type { Tvl } from "@CM/Pages/Platform/MonitorLegacy/Models";
+import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 
 const { t } = useI18n();
 
 let chart: IChartApi;
-let lineSerie: ISeriesApi<"Line">;
+let areaSerie: ISeriesApi<"Area">;
 
 // Refs
 const store = useMonitorStore();
@@ -32,8 +29,8 @@ const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 
-const bonding = computed((): Bonding => {
-  return store.bonding;
+const tvl = computed((): Tvl[] => {
+  return store.tvl;
 });
 
 // Hooks
@@ -41,21 +38,20 @@ onMounted((): void => {
   if (!chartRef.value) return;
 
   chart = createChartFunc(chartRef.value, createOptionsChart(chartRef.value));
-  lineSerie = chart.addLineSeries(createOptionsSerie());
+  areaSerie = chart.addAreaSeries(createOptionsSerie());
 
-  createSeries(bonding.value);
+  createSeries(tvl.value);
 });
 
 // Watches
-watch(bonding, (newBonding) => {
-  createSeries(newBonding);
+watch(tvl, (newTvl) => {
+  createSeries(newTvl);
 });
 
-watch(theme.value, () => {
+watch(theme, () => {
   if (chartRef.value) {
     chart.applyOptions(createOptionsChart(chartRef.value));
-    lineSerie.applyOptions(createOptionsSerie());
-    createMarkers();
+    areaSerie.applyOptions(createOptionsSerie());
   }
 });
 
@@ -63,27 +59,18 @@ watch(theme.value, () => {
 const createOptionsChart = (chartRef: HTMLElement) => {
   return createChartStyles(chartRef, theme.value, {
     rightPriceScale: {
-      visible: false,
-    },
-    leftPriceScale: {
-      visible: true,
-      borderVisible: false,
       scaleMargins: {
         top: 0.1,
-        bottom: 0,
+        bottom: 0.1,
       },
-    },
-    timeScale: {
-      tickMarkFormatter: (time: UTCTimestamp) => formatter(time),
     },
     localization: {
       priceFormatter: (price: number) => formatter(price),
-      timeFormatter: (time: number) => formatter(time),
     },
   });
 };
 
-const createOptionsSerie = (): LineSeriesPartialOptions => {
+const createOptionsSerie = (): AreaSeriesPartialOptions => {
   return {
     priceFormat: {
       type: "price",
@@ -92,58 +79,44 @@ const createOptionsSerie = (): LineSeriesPartialOptions => {
     },
     lineWidth: 2,
     lineType: LineType.WithSteps,
-    color: theme.value.colors.blue,
+    lineColor: theme.value.colors.blue,
+    topColor: "rgb(32, 129, 240, 0.2)",
+    bottomColor: "rgba(32, 129, 240, 0)",
     lastValueVisible: false,
     priceLineVisible: false,
   };
 };
 
-const createMarkers = () => {
-  const markers: SeriesMarker<UTCTimestamp>[] = [
-    {
-      time: bonding.value.balanceCoin1 as UTCTimestamp,
-      position: "inBar",
-      color: theme.value.colors.yellow,
-      shape: "circle",
-    },
-  ];
-
-  lineSerie.setMarkers(markers);
-};
-
-const createSeries = (newBonding: Bonding): void => {
-  if (!chart || !lineSerie) {
+const createSeries = (newTvl: Tvl[]): void => {
+  if (!chart || !areaSerie) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newBonding.curve)
+  const newSerie: LineData[] = chain(newTvl)
     .map((x) => ({
-      time: x.x as UTCTimestamp,
-      value: x.y,
+      time: x.timestamp as UTCTimestamp,
+      value: x.tvl,
     }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((c) => c.time, "asc")
     .value();
 
   if (newSerie.length > 0) {
-    lineSerie.setData(newSerie);
-    createMarkers();
+    areaSerie.setData(newSerie);
   }
 
   chart.timeScale().fitContent();
 };
 
-const formatter = (x: number): string => {
-  if (x < 0) {
-    return "";
-  }
-
-  return `${round(Math.abs(x), 0, "dollar")}${unit(x, "dollar")}`;
+const formatter = (y: number): string => {
+  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.bondings {
+.tvl {
   :deep(.card-body) {
     flex-direction: column;
     justify-content: center;
@@ -158,5 +131,5 @@ const formatter = (x: number): string => {
 </style>
 
 <i18n lang="yaml" locale="en">
-title: Bonding Curve
+title: TVL
 </i18n>

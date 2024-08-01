@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
+import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
 import type { Pool } from "@CM/Models";
-import { type PoolService } from "@CM/Services";
-import SearchPool from "@CM/Pages/Platform/Monitor/Components/SearchPool.vue";
-import Status from "@CM/Pages/Platform/Monitor/Components/Status.vue";
+import { type PoolService } from "@CM/Services/MonitorLegacy";
+import SearchPool from "@CM/Pages/Platform/MonitorLegacy/Components/SearchPool.vue";
+import Status from "@CM/Pages/Platform/MonitorLegacy/Components/Status.vue";
 
 // Props
 interface Props {

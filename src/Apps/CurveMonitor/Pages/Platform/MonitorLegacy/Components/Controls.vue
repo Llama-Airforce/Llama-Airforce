@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import SelectorPair from "@CM/Pages/Platform/Monitor/Components/SelectorPair.vue";
+import SelectorPair from "@CM/Pages/Platform/MonitorLegacy/Components/SelectorPair.vue";
 import SelectorRange from "@CM/Pages/Platform/Monitor/Components/SelectorRange.vue";
 </script>
 

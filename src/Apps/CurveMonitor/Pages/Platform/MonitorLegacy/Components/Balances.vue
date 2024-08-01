@@ -15,8 +15,8 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { createChart as createChartFunc } from "lightweight-charts";
-import type { Balances } from "@CM/Pages/Platform/Monitor/Models";
-import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
+import type { Balances } from "@CM/Pages/Platform/MonitorLegacy/Models";
+import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 

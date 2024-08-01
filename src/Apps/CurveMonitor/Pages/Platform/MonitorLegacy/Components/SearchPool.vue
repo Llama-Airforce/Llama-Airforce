@@ -22,10 +22,10 @@
 
 <script setup lang="ts">
 import { debounce } from "lodash";
-import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
-import { getPools } from "@CM/Pages/Platform/Monitor/DataLoaders";
+import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
+import { getPools } from "@CM/Pages/Platform/MonitorLegacy/DataLoaders";
 import { type Pool } from "@CM/Models";
-import { type PoolService } from "@CM/Services";
+import { type PoolService } from "@CM/Services/MonitorLegacy";
 
 const { t } = useI18n();
 

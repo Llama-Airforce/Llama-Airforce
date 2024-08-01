@@ -1,6 +1,10 @@
 import { type Subscription } from "rxjs";
-import { type useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
-import { type PoolService, CoinService, PairService } from "@CM/Services";
+import { type useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
+import {
+  type PoolService,
+  CoinService,
+  PairService,
+} from "@CM/Services/MonitorLegacy";
 import {
   BalanceService,
   PriceService,
@@ -8,7 +12,7 @@ import {
   TransactionService,
   TvlService,
   BondingService,
-} from "@CM/Pages/Platform/Monitor/Services";
+} from "@CM/Pages/Platform/MonitorLegacy/Services";
 import { createSocketPool } from "@CM/Services/Sockets";
 
 export function loadPool(

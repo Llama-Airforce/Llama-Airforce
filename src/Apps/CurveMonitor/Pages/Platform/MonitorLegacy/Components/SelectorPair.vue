@@ -43,8 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMonitorStore } from "@CM/Pages/Platform/Monitor/Store";
-import { PairService } from "@CM/Services";
+import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
+import { PairService } from "@CM/Services/MonitorLegacy";
 import { type SocketPool } from "@CM/Services/Sockets";
 
 type Coin = {
