@@ -23,17 +23,16 @@ export function useSocketIO<TSocket extends Socket = Socket>(
   const { url: urlSource, connectOnMount = true } = opts;
 
   const socket: ShallowRef<TSocket | null> = shallowRef(null);
-
-  function url() {
-    return typeof urlSource === "function" ? urlSource() : urlSource;
-  }
+  const url = ref("");
 
   function createSocket() {
     if (socket.value) {
       disconnect();
     }
 
-    return io(`${url()}`, {
+    url.value = typeof urlSource === "function" ? urlSource() : urlSource;
+
+    return io(`${url.value}`, {
       autoConnect: false,
       secure: true,
       reconnection: false, // Reconnection is giving all kind of problems atm...
@@ -53,7 +52,7 @@ export function useSocketIO<TSocket extends Socket = Socket>(
   }
 
   function onConnectError() {
-    notify({ text: `Failed to connect to ${url()}`, type: "error" });
+    notify({ text: `Failed to connect to ${url.value}`, type: "error" });
     connecting.value = false;
   }
 
@@ -99,5 +98,5 @@ export function useSocketIO<TSocket extends Socket = Socket>(
     onMounted(connect);
   }
 
-  return { socket, connecting, isConnected, connect, disconnect };
+  return { socket, connecting, isConnected, connect, disconnect, url };
 }

@@ -406,6 +406,8 @@ declare global {
   const usePromise: typeof import('../../Framework/Composables/UsePromise')['usePromise']
   const useQueries: typeof import('@tanstack/vue-query')['useQueries']
   const useQuery: typeof import('@tanstack/vue-query')['useQuery']
+  const useQueryClient: typeof import('@tanstack/vue-query')['useQueryClient']
+  const useQueryRx: typeof import('../../Framework/Composables/UseQueryRx')['useQueryRx']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
   const useReadContract: typeof import('@wagmi/vue')['useReadContract']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']

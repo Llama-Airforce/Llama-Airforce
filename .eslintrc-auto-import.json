@@ -509,6 +509,8 @@
     "withCache": true,
     "cache": true,
     "cacheDelete": true,
-    "createEnvHelpers": true
+    "createEnvHelpers": true,
+    "useQueryClient": true,
+    "useQueryRx": true
   }
 }

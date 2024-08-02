@@ -12,7 +12,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     "pinia",
     { "@vueuse/router": ["useRouteHash", "useRouteParams", "useRouteQuery"] },
     // Vue plugins
-    { "@tanstack/vue-query": ["useQuery", "useQueries"] },
+    { "@tanstack/vue-query": ["useQuery", "useQueries", "useQueryClient"] },
     { "@kyvg/vue3-notification": ["notify"] },
     // Viem + wagmi
     { viem: ["getAddress", "isAddress", "getContract"] },
