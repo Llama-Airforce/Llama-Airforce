@@ -1,4 +1,4 @@
-import { useSocketMEV, MEVService } from "@CM/Services/MEV";
+import { useSocketMEV, MEVService, MEVServiceRx } from "./";
 
 function initEmptyArray() {
   return {
@@ -29,5 +29,21 @@ export function useQuerySandwiches(page: Ref<number>) {
     initialData: { sandwiches: [], totalPages: 0 },
     initialDataUpdatedAt: 0,
     enabled: isConnected,
+  });
+}
+
+export function useQuerySandwichesRx() {
+  const { socket, isConnected, url } = useSocketMEV();
+  const service = computed(() =>
+    socket.value ? new MEVServiceRx(socket.value) : null
+  );
+  const queryKey = computed(() => ["mev-sandwiches-tx", url.value] as const);
+
+  return useQueryRx({
+    queryKey,
+    queryFn: () => service.value?.getSandwiches(),
+    enabled: isConnected,
+    observable: computed(() => service.value?.sandwiches$),
+    setQueryData: (_, x) => x,
   });
 }

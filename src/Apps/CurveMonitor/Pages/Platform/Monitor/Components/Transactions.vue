@@ -126,7 +126,10 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
-import { TransactionType, type TransactionDetail } from "@CM/Services/MEV";
+import {
+  TransactionType,
+  type TransactionDetail,
+} from "@CM/Services/Monitor/MEV";
 
 const { t } = useI18n();
 
