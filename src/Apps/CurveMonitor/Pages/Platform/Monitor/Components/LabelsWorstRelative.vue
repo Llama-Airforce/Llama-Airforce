@@ -12,17 +12,14 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import { useQueryGetSandwichLabelOccurrences } from "@CM/Services/MEV/Queries";
-
-const { data: labelRankingExtended, isFetching: loading } =
-  useQueryGetSandwichLabelOccurrences();
+import { useQueryLabels } from "@CM/Services/Monitor/MEV/Queries";
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const topWorstPerformingLabels = (
-  labelsOccurrence: typeof labelRankingExtended.value
-) =>
-  labelsOccurrence
+const { data: labelsRaw, isFetching: loading } = useQueryLabels();
+
+const topWorstPerformingLabels = (labels: typeof labelsRaw.value) =>
+  (labels ?? [])
     .filter((label) => label.numOfAllTx >= 12) // filter labels with at least 12 numOfAllTx
     .map((label) => ({
       ...label,
@@ -32,11 +29,11 @@ const topWorstPerformingLabels = (
     .slice(0, 10); // get the top 10
 
 const labels = computed(() =>
-  topWorstPerformingLabels(labelRankingExtended.value).map((x) => x.label)
+  topWorstPerformingLabels(labelsRaw.value).map((x) => x.label)
 );
 
 const series = computed(() =>
-  topWorstPerformingLabels(labelRankingExtended.value).map((x) => x.ratio)
+  topWorstPerformingLabels(labelsRaw.value).map((x) => x.ratio)
 );
 
 const options = computed(() => {

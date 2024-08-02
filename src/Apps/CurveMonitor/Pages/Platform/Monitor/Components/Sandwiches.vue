@@ -103,15 +103,18 @@ import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
 import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
-import { type TransactionDetail, type SandwichDetail } from "@CM/Services/MEV";
-import { useQuerySandwiches } from "@CM/Services/MEV/Queries";
+import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
+import type {
+  SandwichDetail,
+  TransactionDetail,
+} from "@CM/Services/Monitor/SocketMonitorCurve";
 
 const { t } = useI18n();
 
 const swsPerPage = 10;
 
 const page = ref(1);
-const { data: sandwichesRaw, isFetching: loading } = useQuerySandwiches(page);
+const { data: sandwichesRaw, isFetching: loading } = useQuerySandwiches();
 
 const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
 const { relativeTime } = useRelativeTime();
@@ -119,11 +122,11 @@ const { relativeTime } = useRelativeTime();
 const search = ref("");
 
 const numSandwiches = computed(
-  () => sandwichesRaw.value.totalPages * swsPerPage
+  () => sandwichesRaw.value?.totalPages ?? 0 * swsPerPage
 );
 
 const sandwiches = computed((): SandwichDetail[] =>
-  chain(sandwichesRaw.value.sandwiches)
+  chain(sandwichesRaw.value?.data ?? [])
     .filter((sw) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
