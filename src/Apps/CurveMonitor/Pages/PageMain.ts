@@ -24,6 +24,8 @@ import ConvexFlyer from "@CM/Pages/Convex/Flyer/Flyer.page.vue";
 import ConvexPools from "@CM/Pages/Convex/Pools/Pools.page.vue";
 import ConvexRevenue from "@CM/Pages/Convex/Revenue/Revenue.page.vue";
 
+import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
+
 export const pageMainRoutes = [
   { path: "/", component: Home },
 
@@ -96,6 +98,12 @@ export const pageMainRoutes = [
     path: "/convex/revenue",
     name: "convexrevenue",
     component: ConvexRevenue,
+  },
+
+  {
+    path: "/defimonitor",
+    name: "defimonitor",
+    component: DefiMonitor,
   },
 ];
 
