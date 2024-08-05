@@ -66,53 +66,49 @@ export function useQueryRx<T, U>({
 }: UseQueryRxOptions<T, U>) {
   const queryClient = useQueryClient();
 
-  let queryResolve: ((value: U) => void) | null = null;
-  let queryReject: ((reason: unknown) => void) | null = null;
+  let subscription: Subscription | null = null;
 
   const query = useQuery({
     queryKey,
-    queryFn: () => {
-      queryFn();
+    queryFn: () =>
+      // This promise won't resolve until the subscription receives its first data.
+      new Promise<U>((resolve, reject) => {
+        // Unsubscribe any previous to prevent leaks.
+        subscription?.unsubscribe();
 
-      /*
-       * The queryFn will be in 'fetching' state until the watchEffect
-       * resolves it when it has called setQueryData.
-       */
-      return new Promise<U>((resolve, reject) => {
-        queryResolve = resolve;
-        queryReject = reject;
-      });
-    },
+        subscription = observable.value!.subscribe({
+          next: (data: T) => {
+            const oldData = queryClient.getQueryData<U | undefined>(
+              queryKey.value
+            );
+
+            const newData = setQueryData(oldData, data);
+            queryClient.setQueryData(queryKey.value, newData);
+            resolve(newData);
+          },
+          error: (error: unknown) => {
+            reject(error instanceof Error ? error : new Error(String(error)));
+          },
+        });
+
+        queryFn();
+      }),
     enabled: computed(() => enabled.value && !!observable.value),
     // Staletime being set as undefined is different from not setting it at all.
     ...(staleTime !== undefined ? { staleTime } : {}),
   });
 
-  let subscription: Subscription | null = null;
-
-  watchEffect(() => {
-    subscription?.unsubscribe();
-
-    // Resubscribe if query is enabled and we have an observable to subscribe to.
-    if (enabled.value && observable.value) {
-      subscription = observable.value.subscribe({
-        next: (data: T) => {
-          const oldData = queryClient.getQueryData<U | undefined>(
-            queryKey.value
-          );
-
-          const newData = setQueryData(oldData, data);
-          queryClient.setQueryData(queryKey.value, newData);
-          queryResolve?.(newData);
-        },
-
-        error: (error: unknown) => {
-          queryReject?.(
-            error instanceof Error ? error : new Error(String(error))
-          );
-        },
-      });
+  /*
+   * Invalidate query whenever observable or enabled changes.
+   * Unsubscribe from the current subscription to prevent
+   * listening to no observables or when disabled.
+   */
+  watch([enabled, observable], async () => {
+    if (!enabled.value || !observable.value) {
+      subscription?.unsubscribe();
     }
+
+    await queryClient.invalidateQueries({ queryKey });
   });
 
   onUnmounted(() => subscription?.unsubscribe());
