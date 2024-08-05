@@ -12,6 +12,15 @@ export function addressShort(address?: string, digits = 6): string {
   return `${address.substring(0, pre)}...${address.substring(post)}`;
 }
 
+export function addressLeft(address?: string, digits = 6): string {
+  if (!address) return "0x000";
+  const length = Math.min(address.length, digits + 2);
+
+  return address.length > length
+    ? `${address.substring(0, length)}...`
+    : address;
+}
+
 export async function approve(
   config: Config,
   erc20: Address,
