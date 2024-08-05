@@ -1,7 +1,7 @@
 import type { Observable, Subscription } from "rxjs";
 
 /** Options for useQueryRx function */
-type UseQueryRxOptions<T, U> = {
+type UseQueryRxOptions<T, U = T> = {
   /** Unique key for identifying and caching the query */
   queryKey: Ref<readonly unknown[]>;
 
@@ -56,7 +56,7 @@ type UseQueryRxOptions<T, U> = {
  *   staleTime: Infinity
  * });
  */
-export function useQueryRx<T, U>({
+export function useQueryRx<T, U = T>({
   queryKey,
   queryFn,
   enabled,
