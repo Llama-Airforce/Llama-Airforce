@@ -93,7 +93,7 @@ export function useQueryRx<T, U>({
   watchEffect(() => {
     subscription?.unsubscribe();
 
-    // Resubscribe is query is enabled and we have an observable to subscribe to.
+    // Resubscribe if query is enabled and we have an observable to subscribe to.
     if (enabled.value && observable.value) {
       subscription = observable.value.subscribe({
         next: (data: T) => {
