@@ -1,10 +1,10 @@
+import SocketIOService, {
+  type SocketObservableT,
+} from "@/Services/Socket/SocketIOService";
 import type {
   SocketMonitorCurve,
   ServerToClientEvents,
 } from "../SocketMonitorCurve";
-import SocketIOService, {
-  type SocketObservableT,
-} from "@/Services/Socket/SocketIOService";
 
 type SocketObservable<T extends keyof ServerToClientEvents> = SocketObservableT<
   ServerToClientEvents,
