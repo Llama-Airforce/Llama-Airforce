@@ -16,6 +16,7 @@ export function useQueryTransfers() {
 
   // Always purge old data when using this query.
   const queryClient = useQueryClient();
+  queryClient.setQueryData(queryKey.value, null);
   void queryClient.invalidateQueries({ queryKey });
 
   return useQueryRx({

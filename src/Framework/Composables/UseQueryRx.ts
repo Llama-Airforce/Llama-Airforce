@@ -78,9 +78,7 @@ export function useQueryRx<T, U = T>({
 
         subscription = observable.value!.subscribe({
           next: (data: T) => {
-            const oldData = queryClient.getQueryData<U | undefined>(
-              queryKey.value
-            );
+            const oldData = queryClient.getQueryData<U | undefined>(queryKey);
 
             const newData = setQueryData(oldData, data);
             queryClient.setQueryData(queryKey.value, newData);
@@ -108,6 +106,7 @@ export function useQueryRx<T, U = T>({
       subscription?.unsubscribe();
     }
 
+    queryClient.setQueryData(queryKey.value, null);
     await queryClient.invalidateQueries({ queryKey });
   });
 
