@@ -1,58 +1,27 @@
-import { Observable, share } from "rxjs";
 import type {
   SocketMonitorCurve,
   ServerToClientEvents,
 } from "../SocketMonitorCurve";
+import SocketIOService, {
+  type SocketObservableT,
+} from "@/Services/Socket/SocketIOService";
 
-type ResponseType<T extends keyof ServerToClientEvents> = Parameters<
-  ServerToClientEvents[T]
->[0];
+type SocketObservable<T extends keyof ServerToClientEvents> = SocketObservableT<
+  ServerToClientEvents,
+  T
+>;
 
-type SandwichData = ResponseType<"fullSandwichTableContent">;
-type LabelsData = ResponseType<"sandwichLabelOccurrences">;
-type LabelsRankingData = ResponseType<"absoluteLabelsRanking">;
+export default class MEVService extends SocketIOService<SocketMonitorCurve> {
+  public readonly sandwiches$: SocketObservable<"fullSandwichTableContent">;
+  public readonly labels$: SocketObservable<"sandwichLabelOccurrences">;
+  public readonly labelsRanking$: SocketObservable<"absoluteLabelsRanking">;
 
-export default class MEVService {
-  public readonly sandwiches$: Observable<SandwichData>;
-  public readonly labels$: Observable<LabelsData>;
-  public readonly labelsRanking$: Observable<LabelsRankingData>;
+  constructor(socket: SocketMonitorCurve) {
+    super(socket);
 
-  constructor(private socket: SocketMonitorCurve) {
-    this.sandwiches$ = new Observable<SandwichData>((subscriber) => {
-      const onData = (data: SandwichData) => {
-        subscriber.next(data);
-      };
-
-      socket.on("fullSandwichTableContent", onData);
-
-      return () => {
-        socket.off("fullSandwichTableContent", onData);
-      };
-    }).pipe(share());
-
-    this.labels$ = new Observable<LabelsData>((subscriber) => {
-      const onData = (data: LabelsData) => {
-        subscriber.next(data);
-      };
-
-      socket.on("sandwichLabelOccurrences", onData);
-
-      return () => {
-        socket.off("sandwichLabelOccurrences", onData);
-      };
-    }).pipe(share());
-
-    this.labelsRanking$ = new Observable<LabelsRankingData>((subscriber) => {
-      const onData = (data: LabelsRankingData) => {
-        subscriber.next(data);
-      };
-
-      socket.on("absoluteLabelsRanking", onData);
-
-      return () => {
-        socket.off("absoluteLabelsRanking", onData);
-      };
-    }).pipe(share());
+    this.sandwiches$ = this.createObservable("fullSandwichTableContent");
+    this.labels$ = this.createObservable("sandwichLabelOccurrences");
+    this.labelsRanking$ = this.createObservable("absoluteLabelsRanking");
   }
 
   getSandwiches() {

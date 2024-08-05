@@ -11,6 +11,13 @@
       </Button>
 
       <Button
+        value="Labels"
+        :disabled="!isConnected"
+        @click="getLabels"
+      >
+      </Button>
+
+      <Button
         v-if="!isConnected"
         :value="connecting ? 'Connecting' : 'Connect'"
         :disabled="connecting"
@@ -33,47 +40,97 @@
 
 <script setup lang="ts">
 import { type Socket } from "socket.io-client";
+import { type Subscription } from "rxjs";
 import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
-import SocketIOService from "@/Services/Socket/SocketIOService";
+import SocketIOService, {
+  type SocketObservableT,
+} from "@/Services/Socket/SocketIOService";
 
 type ClientToServerEvents = {
   Ping: () => void;
+  getSandwichLabelOccurrences: () => void;
 };
 
 type ServerToClientEvents = {
   Pong: () => void;
+  sandwichLabelOccurrences: (labelsOccurrence: never[]) => void;
 };
 
 type SocketTest = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-class TestSocketService extends SocketIOService<
+type SocketObservable<T extends keyof ServerToClientEvents> = SocketObservableT<
   ServerToClientEvents,
-  ClientToServerEvents,
-  SocketTest
-> {
+  T
+>;
+
+class TestSocketService extends SocketIOService<SocketTest> {
+  public readonly labels$: SocketObservable<"sandwichLabelOccurrences">;
+
+  constructor(socket: SocketTest) {
+    super(socket);
+
+    this.labels$ = this.createObservable("sandwichLabelOccurrences");
+  }
+
   ping() {
     return this.emitAndListen("Ping", "Pong");
+  }
+
+  getLabels() {
+    this.socket.emit("getSandwichLabelOccurrences");
   }
 }
 
 const output = ref("");
-const url = ref("wss://api.curvemonitor.com");
+const url = ref("wss://api.curvemonitor.com/main");
 const { socket, connecting, isConnected, connect, disconnect } =
   useSocketIO<SocketTest>({
     url: () => url.value,
     connectOnMount: false,
   });
 
-const service = new TestSocketService(socket);
+const service = computed(() =>
+  socket.value ? new TestSocketService(socket.value) : null
+);
 
 async function ping() {
-  await service.ping();
+  if (!service.value) {
+    output.value += "Not connected, cannot ping<br />" + output.value;
+    return;
+  }
+
+  await service.value.ping();
 
   const timestamp = new Date(Date.now());
   const formattedTime = timestamp.toLocaleTimeString();
 
-  output.value = `Pong received at ${formattedTime}<br />` + output.value;
+  output.value =
+    `Pong received with emitAndListen at ${formattedTime}<br />` + output.value;
 }
+
+function getLabels() {
+  if (!service.value) {
+    output.value += "Not connected, cannot ping<br />" + output.value;
+    return;
+  }
+
+  service.value.getLabels();
+}
+
+// Labels subscription.
+let labelsSub: Subscription | null = null;
+whenever(service, (newService) => {
+  labelsSub?.unsubscribe();
+  labelsSub = newService.labels$.subscribe((labels) => {
+    const timestamp = new Date(Date.now());
+    const formattedTime = timestamp.toLocaleTimeString();
+
+    output.value =
+      `Labels received with observable at ${formattedTime}: ${JSON.stringify(
+        labels
+      )}<br />` + output.value;
+  });
+});
 
 watch(isConnected, (newIsConnected) => {
   output.value =
