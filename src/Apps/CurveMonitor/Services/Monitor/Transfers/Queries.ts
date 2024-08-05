@@ -14,6 +14,10 @@ export function useQueryTransfers() {
     () => ["defimonitor-transfers", url.value] as const
   );
 
+  // Always purge old data when using this query.
+  const queryClient = useQueryClient();
+  void queryClient.invalidateQueries({ queryKey });
+
   return useQueryRx({
     queryKey,
     queryFn: () => service.value?.subTransfers(),
