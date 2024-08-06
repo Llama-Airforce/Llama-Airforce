@@ -1,27 +1,22 @@
-import SocketIOService, {
-  type SocketObservableT,
-} from "@/Services/Socket/SocketIOService";
+import { createObservable } from "@/Services/Socket";
 import type {
   SocketMonitorCurve,
   ServerToClientEvents,
 } from "../SocketMonitorCurve";
 
-type SocketObservable<T extends keyof ServerToClientEvents> = SocketObservableT<
-  ServerToClientEvents,
-  T
+type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
+  typeof createObservable<ServerToClientEvents, T>
 >;
 
-export default class MEVService extends SocketIOService<SocketMonitorCurve> {
+export default class MEVService {
   public readonly sandwiches$: SocketObservable<"fullSandwichTableContent">;
   public readonly labels$: SocketObservable<"sandwichLabelOccurrences">;
   public readonly labelsRanking$: SocketObservable<"absoluteLabelsRanking">;
 
-  constructor(socket: SocketMonitorCurve) {
-    super(socket);
-
-    this.sandwiches$ = this.createObservable("fullSandwichTableContent");
-    this.labels$ = this.createObservable("sandwichLabelOccurrences");
-    this.labelsRanking$ = this.createObservable("absoluteLabelsRanking");
+  constructor(private socket: SocketMonitorCurve) {
+    this.sandwiches$ = createObservable(socket, "fullSandwichTableContent");
+    this.labels$ = createObservable(socket, "sandwichLabelOccurrences");
+    this.labelsRanking$ = createObservable(socket, "absoluteLabelsRanking");
   }
 
   getSandwiches() {

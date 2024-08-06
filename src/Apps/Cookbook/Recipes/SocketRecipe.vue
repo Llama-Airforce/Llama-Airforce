@@ -42,9 +42,7 @@
 import { type Socket } from "socket.io-client";
 import { type Subscription } from "rxjs";
 import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
-import SocketIOService, {
-  type SocketObservableT,
-} from "@/Services/Socket/SocketIOService";
+import { emitAndListen, createObservable } from "@/Services/Socket";
 
 type ClientToServerEvents = {
   Ping: () => void;
@@ -58,22 +56,19 @@ type ServerToClientEvents = {
 
 type SocketTest = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-type SocketObservable<T extends keyof ServerToClientEvents> = SocketObservableT<
-  ServerToClientEvents,
-  T
+type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
+  typeof createObservable<ServerToClientEvents, T>
 >;
 
-class TestSocketService extends SocketIOService<SocketTest> {
+class TestSocketService {
   public readonly labels$: SocketObservable<"sandwichLabelOccurrences">;
 
-  constructor(socket: SocketTest) {
-    super(socket);
-
-    this.labels$ = this.createObservable("sandwichLabelOccurrences");
+  constructor(private socket: SocketTest) {
+    this.labels$ = createObservable(socket, "sandwichLabelOccurrences");
   }
 
   ping() {
-    return this.emitAndListen("Ping", "Pong");
+    return emitAndListen(this.socket, "Ping", "Pong");
   }
 
   getLabels() {

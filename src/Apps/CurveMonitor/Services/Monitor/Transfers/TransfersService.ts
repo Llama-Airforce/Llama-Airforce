@@ -1,23 +1,18 @@
-import SocketIOService, {
-  type SocketObservableT,
-} from "@/Services/Socket/SocketIOService";
+import { createObservable } from "@/Services/Socket";
 import type {
   SocketMonitorDefi,
   ServerToClientEvents,
 } from "../SocketMonitorDefi";
 
-type SocketObservable<T extends keyof ServerToClientEvents> = SocketObservableT<
-  ServerToClientEvents,
-  T
+type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
+  typeof createObservable<ServerToClientEvents, T>
 >;
 
-export default class TransfersService extends SocketIOService<SocketMonitorDefi> {
+export default class TransfersService {
   public readonly transfers$: SocketObservable<"NewTransfersUSDC">;
 
-  constructor(socket: SocketMonitorDefi) {
-    super(socket);
-
-    this.transfers$ = this.createObservable("NewTransfersUSDC");
+  constructor(private socket: SocketMonitorDefi) {
+    this.transfers$ = createObservable(socket, "NewTransfersUSDC");
   }
 
   subTransfers() {
