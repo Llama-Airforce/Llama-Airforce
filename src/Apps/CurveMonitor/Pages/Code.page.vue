@@ -1,79 +1,75 @@
 <template>
   <div class="contracts">
-    <DataTable
-      class="datatable-repositories"
-      :rows="repositories"
-      :columns="[t('repository'), t('description')]"
-      title="Yolo"
-    >
-      <template #header-content>
-        <div class="title">{{ t("repositories") }}</div>
-      </template>
+    <Card :title="t('repositories')">
+      <DataTable
+        class="datatable-repositories"
+        :rows="repositories"
+        :columns="[t('repository'), t('description')]"
+        title="Yolo"
+      >
+        <template #row="props: { item: Repository }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
 
-      <template #row="props: { item: Repository }">
-        <div>
-          <a
-            :href="props.item.url"
-            target="_blank"
-          >
-            {{ props.item.name }}
-          </a>
-        </div>
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
+    </Card>
 
-        <div>{{ t(props.item.description) }}</div>
-      </template>
-    </DataTable>
+    <Card :title="t('apis')">
+      <DataTable
+        class="datatable-apis"
+        columns-data="apis-columns-data"
+        :rows="apis"
+        :columns="[t('api'), t('description')]"
+      >
+        <template #row="props: { item: API }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
 
-    <DataTable
-      class="datatable-apis"
-      columns-data="apis-columns-data"
-      :rows="apis"
-      :columns="[t('api'), t('description')]"
-    >
-      <template #header-content>
-        <div class="title">{{ t("apis") }}</div>
-      </template>
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
+    </Card>
 
-      <template #row="props: { item: API }">
-        <div>
-          <a
-            :href="props.item.url"
-            target="_blank"
-          >
-            {{ props.item.name }}
-          </a>
-        </div>
-
-        <div>{{ t(props.item.description) }}</div>
-      </template>
-    </DataTable>
-
-    <DataTable
+    <Card
       v-for="(bundle, i) in bundles"
       :key="i"
-      class="datatable-contracts"
-      columns-header="1fr"
-      columns-data="contracts-columns-data"
-      :rows="bundle.contracts"
-      :columns="[t('contract'), t('description')]"
+      :title="t(bundle.name)"
     >
-      <template #header-content>
-        <div class="title">{{ t(bundle.name) }}</div>
-      </template>
+      <DataTable
+        class="datatable-contracts"
+        columns-header="1fr"
+        columns-data="contracts-columns-data"
+        :rows="bundle.contracts"
+        :columns="[t('contract'), t('description')]"
+      >
+        <template #row="props: { item: Contract }">
+          <div>
+            <a
+              :href="linkContract(props.item)"
+              target="_blank"
+            >
+              {{ props.item.contract }}
+            </a>
+          </div>
 
-      <template #row="props: { item: Contract }">
-        <div>
-          <a
-            :href="linkContract(props.item)"
-            target="_blank"
-          >
-            {{ props.item.contract }}
-          </a>
-        </div>
-
-        <div>{{ t(props.item.description) }}</div>
-      </template>
-    </DataTable>
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
+    </Card>
   </div>
 </template>
 

@@ -1,41 +1,39 @@
 <template>
-  <DataTable
-    class="datatable-gauges"
-    :rows="gauges"
-    :columns
-    :sorting
-    :expanded="expanded"
-    @sort-column="onSort"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-gauges"
+      :rows="gauges"
+      :columns
+      :sorting
+      :expanded="expanded"
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: Gauge }">
+        <div>{{ shorten(props.item.name) }}</div>
 
-    <template #row="props: { item: Gauge }">
-      <div>{{ shorten(props.item.name) }}</div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.tvl"
+            :precision="1"
+            type="dollar"
+          />
+        </div>
+      </template>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.tvl"
-          :precision="1"
-          type="dollar"
-        />
-      </div>
-    </template>
-
-    <template #row-details="props: { item: Gauge }">
-      <div
-        v-if="expanded.includes(props.item)"
-        class="charts"
-      >
-        <ChartEmissions
-          class="fees-and-emissions"
-          :gauge-selected="props.item"
-        ></ChartEmissions>
-      </div>
-      <span v-else></span>
-    </template>
-  </DataTable>
+      <template #row-details="props: { item: Gauge }">
+        <div
+          v-if="expanded.includes(props.item)"
+          class="charts"
+        >
+          <ChartEmissions
+            class="fees-and-emissions"
+            :gauge-selected="props.item"
+          ></ChartEmissions>
+        </div>
+        <span v-else></span>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

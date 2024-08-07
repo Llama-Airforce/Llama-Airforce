@@ -1,7 +1,6 @@
 <template>
   <DataTable
     class="datatable-redemptions-init"
-    :header="false"
     :columns="[
       'Unlock Date',
       { label: 'CVX Available', align: 'end' },

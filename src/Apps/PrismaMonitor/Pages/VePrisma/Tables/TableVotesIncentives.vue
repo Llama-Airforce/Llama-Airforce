@@ -1,15 +1,7 @@
 <template>
-  <DataTable
-    class="datatable-votes-incentives"
-    :loading="loading"
-    :rows="rowsPage"
-    :columns="columns"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <Pagination
-        class="pagination"
         :items-count="rows.length"
         :items-per-page="rowsPerPage"
         :page="page"
@@ -17,55 +9,62 @@
       ></Pagination>
     </template>
 
-    <template #row="props: { item: Row }">
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/address/${props.item.voter}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.voter) }}
-        </a>
-      </div>
+    <DataTable
+      class="datatable-votes-incentives"
+      :loading="loading"
+      :rows="rowsPage"
+      :columns="columns"
+    >
+      <template #row="props: { item: Row }">
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.voter}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.voter) }}
+          </a>
+        </div>
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/tx/${props.item.recipient}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.recipient) }}
-        </a>
-      </div>
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/tx/${props.item.recipient}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.recipient) }}
+          </a>
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.points)"
-          :precision="2"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </div>
+        <div class="end">
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.points)"
+            :precision="2"
+            :show-symbol="false"
+            :show-zero="true"
+          ></AsyncValue>
+        </div>
 
-      <div class="end">
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/tx/${props.item.transaction}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.transaction) }}
-        </a>
-      </div>
+        <div class="end">
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.transaction) }}
+          </a>
+        </div>
 
-      <div class="end">
-        {{ relativeTime(props.item.timestamp) }}
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          {{ relativeTime(props.item.timestamp) }}
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -116,10 +115,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   --col-width: 11ch;
   --columns-data: minmax(12ch, 1fr) minmax(12ch, 1fr)
     repeat(3, minmax(var(--col-width), 0.75fr));
-
-  .title {
-    margin-right: 1rem;
-  }
 }
 </style>
 

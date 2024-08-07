@@ -1,13 +1,12 @@
 <template>
-  <div class="properties">
+  <Card
+    class="properties"
+    :title="t('properties')"
+  >
     <DataTable
       class="datatable-properties"
       :rows="properties"
     >
-      <template #header-content>
-        <div class="title">{{ t("properties") }}</div>
-      </template>
-
       <template #row="{ item: { description, value } }: { item: Row }">
         <div>{{ t(description) }}</div>
 
@@ -42,7 +41,7 @@
         <div v-else>{{ value }}</div>
       </template>
     </DataTable>
-  </div>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -114,8 +113,6 @@ const clipboard = async (addr: string) => {
 
 .datatable-properties {
   --columns-data: 2fr 6fr;
-
-  height: 100%;
 
   .token-info {
     display: grid;

@@ -1,27 +1,25 @@
 <template>
   <div class="contracts">
-    <DataTable
-      class="datatable-repositories"
-      :rows="repositories"
-      :columns="[t('repository'), t('description')]"
-    >
-      <template #header-content>
-        <div class="title">{{ t("repositories") }}</div>
-      </template>
+    <Card :title="t('repositories')">
+      <DataTable
+        class="datatable-repositories"
+        :rows="repositories"
+        :columns="[t('repository'), t('description')]"
+      >
+        <template #row="props: { item: Repository }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
 
-      <template #row="props: { item: Repository }">
-        <div>
-          <a
-            :href="props.item.url"
-            target="_blank"
-          >
-            {{ props.item.name }}
-          </a>
-        </div>
-
-        <div>{{ t(props.item.description) }}</div>
-      </template>
-    </DataTable>
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </DataTable>
+    </Card>
   </div>
 </template>
 

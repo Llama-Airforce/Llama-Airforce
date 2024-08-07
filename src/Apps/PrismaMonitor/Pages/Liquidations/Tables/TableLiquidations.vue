@@ -1,16 +1,6 @@
 <template>
-  <DataTable
-    class="datatable-liquidations"
-    :loading="loading"
-    :rows="rowsPage"
-    :columns
-    :sorting
-    @sort-column="onSort"
-    @selected="showDetails = $event"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <SelectVault
         class="select-vault"
         :vault="vault"
@@ -38,49 +28,59 @@
       </div>
     </template>
 
-    <template #row="props: { item: Row }">
-      <img :src="icon(props.item.vault)" />
+    <DataTable
+      class="datatable-liquidations"
+      :loading="loading"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+      @selected="showDetails = $event"
+    >
+      <template #row="props: { item: Row }">
+        <img :src="icon(props.item.vault)" />
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/address/${props.item.liquidator}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.liquidator) }}
-        </a>
-      </div>
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.liquidator}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.liquidator) }}
+          </a>
+        </div>
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/tx/${props.item.transaction}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.transaction) }}
-        </a>
-      </div>
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.transaction) }}
+          </a>
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.liquidated_debt)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
+        <div class="end">
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.liquidated_debt)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
 
-      <div class="end">{{ props.item.troves_affected_count }}</div>
+        <div class="end">{{ props.item.troves_affected_count }}</div>
 
-      <div class="end">
-        {{ relativeTime(props.item.timestamp) }}
-      </div>
-    </template>
+        <div class="end">
+          {{ relativeTime(props.item.timestamp) }}
+        </div>
+      </template>
 
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 
   <Modal
     :show="!!showDetails"
@@ -207,18 +207,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   --col-width: 11ch;
   --columns-data: 20px minmax(12ch, 1fr) minmax(12ch, 1fr)
     repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
-
-  .title {
-    margin-right: 1rem;
-  }
-
-  .search {
-    flex-grow: 1;
-  }
-
-  .select-vault {
-    margin-right: 1rem;
-  }
 
   img {
     width: 20px;

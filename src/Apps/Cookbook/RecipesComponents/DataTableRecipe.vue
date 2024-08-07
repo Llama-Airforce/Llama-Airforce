@@ -13,11 +13,6 @@
           @sort-column="onSort"
           @selected="onSelected"
         >
-          <template #header-content>
-            <div class="title">All Rounds</div>
-            <Tooltip>Tooltip data goes here</Tooltip>
-          </template>
-
           <template #row="props: { item: Round }">
             <div
               class="round-number"
@@ -98,10 +93,6 @@
           :columns="['', 'Deadline', '']"
           @selected="onCheck"
         >
-          <template #header-content>
-            <div class="title">All Rounds</div>
-          </template>
-
           <template #row="props: { item: Round }">
             <div
               class="round-number"
@@ -223,11 +214,6 @@ const dataTable1 = `<DataTable
   @sort-column="onSort"
   @selected="onSelected"
 >
-  <template #header-content>
-    <div class="title">All Rounds</div>
-    <Tooltip>Tooltip data goes here</Tooltip>
-  </template>
-
   <template #row="props: { item: Round }">
     <div
       class="round-number"
@@ -353,10 +339,6 @@ const multiselect = `<DataTable
   :columns="['', 'Deadline', '']"
   @selected="onCheck"
 >
-  <template #header-content>
-    <div class="title">All Rounds</div>
-  </template>
-
   <template #row="props: { item: Round }">
     <div
       class="round-number"

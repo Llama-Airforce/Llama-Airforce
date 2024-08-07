@@ -1,77 +1,80 @@
 <template>
   <div class="contracts">
     <div class="dashboard">
-      <DataTable
-        class="datatable-repositories"
-        :rows="repositories"
-        :columns="[t('repository'), t('description')]"
+      <Card
+        class="card-repositories"
+        :title="t('repositories')"
       >
-        <template #header-content>
-          <div class="title">{{ t("repositories") }}</div>
-        </template>
+        <DataTable
+          class="datatable-repositories"
+          :rows="repositories"
+          :columns="[t('repository'), t('description')]"
+        >
+          <template #row="props: { item: Repository }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
 
-        <template #row="props: { item: Repository }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
-            </a>
-          </div>
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+      </Card>
 
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </DataTable>
-
-      <DataTable
-        class="datatable-other"
-        :rows="other"
-        :columns="[t('other'), t('description')]"
+      <Card
+        class="card-other"
+        :title="t('other')"
       >
-        <template #header-content>
-          <div class="title">{{ t("other") }}</div>
-        </template>
+        <DataTable
+          class="datatable-other"
+          :rows="other"
+          :columns="[t('other'), t('description')]"
+        >
+          <template #row="props: { item: Other }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
 
-        <template #row="props: { item: Other }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
-            </a>
-          </div>
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+      </Card>
 
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </DataTable>
-
-      <DataTable
+      <Card
         v-for="(bundle, i) in bundles"
         :key="i"
-        class="datatable-contracts"
-        :rows="bundle.contracts"
-        :columns="[t('contract'), t('description')]"
+        :title="t(bundle.name)"
+        class="card-contracts"
       >
-        <template #header-content>
-          <div class="title">{{ t(bundle.name) }}</div>
-        </template>
+        <DataTable
+          class="datatable-contracts"
+          :rows="bundle.contracts"
+          :columns="[t('contract'), t('description')]"
+        >
+          <template #row="props: { item: Contract }">
+            <div>
+              <a
+                class="font-mono"
+                target="_blank"
+                :href="linkContract(props.item)"
+              >
+                {{ props.item.contract }}
+              </a>
+            </div>
 
-        <template #row="props: { item: Contract }">
-          <div>
-            <a
-              class="font-mono"
-              target="_blank"
-              :href="linkContract(props.item)"
-            >
-              {{ props.item.contract }}
-            </a>
-          </div>
-
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </DataTable>
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </DataTable>
+      </Card>
     </div>
   </div>
 </template>
@@ -402,22 +405,28 @@ const { t } = useI18n();
   .dashboard {
     grid-template-columns: 6fr 4fr;
 
-    .datatable-contracts {
+    .card-contracts {
       grid-column: 1 / -1;
 
-      --columns-data: 3fr 4fr;
+      .datatable-contracts {
+        --columns-data: 3fr 4fr;
+      }
     }
 
-    .datatable-repositories {
+    .card-repositories {
       grid-column: 1;
 
-      --columns-data: 2fr 6fr;
+      .datatable-repositories {
+        --columns-data: 2fr 6fr;
+      }
     }
 
-    .datatable-other {
+    .card-other {
       grid-column: 2;
 
-      --columns-data: 3fr 4fr;
+      .datatable-other {
+        --columns-data: 3fr 4fr;
+      }
     }
   }
 }

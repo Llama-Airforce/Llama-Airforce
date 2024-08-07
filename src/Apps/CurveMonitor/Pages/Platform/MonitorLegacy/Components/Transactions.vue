@@ -1,17 +1,10 @@
 <template>
-  <DataTable
-    class="datatable-trades"
-    :class="{ compact, time }"
-    :rows="rowsPage"
-    :columns="columns"
-  >
+  <Card :title="t('title')">
     <template
       v-if="header"
-      #header-content
+      #actions
     >
       <div style="display: grid; grid-template-columns: auto auto">
-        <div class="title">{{ t("title") }}</div>
-
         <TabView
           class="types"
           @tab="onType($event.index)"
@@ -33,7 +26,6 @@
         </InputText>
 
         <Pagination
-          class="pagination"
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
           :page="page"
@@ -42,90 +34,97 @@
       </div>
     </template>
 
-    <template #row="props: { item: Transaction }">
-      <div
-        class="type"
-        :class="{
-          deposit: props.item.type === 'deposit',
-          withdraw: props.item.type === 'withdraw',
-          swap: props.item.type === 'swap',
-        }"
-      >
-        <i
-          v-if="props.item.type === 'deposit'"
-          class="fas fa-arrow-up"
-        ></i>
-
-        <i
-          v-else-if="props.item.type === 'withdraw'"
-          class="fas fa-arrow-down"
-        ></i>
-
-        <i
-          v-else
-          class="fas fa-exchange-alt"
-        ></i>
-
-        {{ t(props.item.type) }}
-      </div>
-
-      <div
-        v-if="time"
-        class="end"
-      >
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/block/${props.item.blockNumber}`"
-          target="_blank"
+    <DataTable
+      class="datatable-trades"
+      :class="{ compact, time }"
+      :rows="rowsPage"
+      :columns="columns"
+    >
+      <template #row="props: { item: Transaction }">
+        <div
+          class="type"
+          :class="{
+            deposit: props.item.type === 'deposit',
+            withdraw: props.item.type === 'withdraw',
+            swap: props.item.type === 'swap',
+          }"
         >
-          {{ props.item.blockNumber }}
-        </a>
-      </div>
+          <i
+            v-if="props.item.type === 'deposit'"
+            class="fas fa-arrow-up"
+          ></i>
 
-      <div>
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/tx/${props.item.txHash}`"
-          target="_blank"
-          @click.stop
+          <i
+            v-else-if="props.item.type === 'withdraw'"
+            class="fas fa-arrow-down"
+          ></i>
+
+          <i
+            v-else
+            class="fas fa-exchange-alt"
+          ></i>
+
+          {{ t(props.item.type) }}
+        </div>
+
+        <div
+          v-if="time"
+          class="end"
         >
-          {{ addressShort(props.item.txHash) }}
-        </a>
-      </div>
+          <a
+            class="vote-link"
+            :href="`https://etherscan.io/block/${props.item.blockNumber}`"
+            target="_blank"
+          >
+            {{ props.item.blockNumber }}
+          </a>
+        </div>
 
-      <div>
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/address/${props.item.trader}`"
-          target="_blank"
-          @click.stop
+        <div>
+          <a
+            class="vote-link"
+            :href="`https://etherscan.io/tx/${props.item.txHash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.txHash) }}
+          </a>
+        </div>
+
+        <div>
+          <a
+            class="vote-link"
+            :href="`https://etherscan.io/address/${props.item.trader}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.trader) }}
+          </a>
+        </div>
+
+        <div
+          class="assets"
+          :class="{
+            swap: props.item.type === 'swap',
+          }"
+          v-html="getAssetsString(props.item)"
+        ></div>
+
+        <div :class="{ number: time }">
+          <span v-if="props.item.type === 'swap'">
+            ${{ round((props.item as Swap).fee).toLocaleString() }}
+          </span>
+        </div>
+
+        <div
+          v-if="time"
+          class="end"
         >
-          {{ addressShort(props.item.trader) }}
-        </a>
-      </div>
-
-      <div
-        class="assets"
-        :class="{
-          swap: props.item.type === 'swap',
-        }"
-        v-html="getAssetsString(props.item)"
-      ></div>
-
-      <div :class="{ number: time }">
-        <span v-if="props.item.type === 'swap'">
-          ${{ round((props.item as Swap).fee).toLocaleString() }}
-        </span>
-      </div>
-
-      <div
-        v-if="time"
-        class="end"
-      >
-        {{ relativeTime(props.item.timestamp) }}
-      </div>
-    </template>
-  </DataTable>
+          {{ relativeTime(props.item.timestamp) }}
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -235,6 +234,20 @@ const onType = (tabIndex: number) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+:deep(.types) {
+  margin: 0 1rem;
+  font-size: 0.875rem;
+
+  ul {
+    width: auto;
+    border-bottom: 0;
+  }
+
+  .tab-header {
+    padding: 0.5rem 1rem;
+  }
+}
+
 .datatable-trades {
   --columns-header: 1fr 2fr;
   --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
@@ -246,24 +259,6 @@ const onType = (tabIndex: number) => {
 
   .title {
     margin-right: 1rem;
-  }
-
-  :deep(.types) {
-    margin: 0 1rem;
-    font-size: 0.875rem;
-
-    ul {
-      width: auto;
-      border-bottom: 0;
-    }
-
-    .tab-header {
-      padding: 0.5rem 1rem;
-    }
-  }
-
-  .search {
-    flex-grow: 1;
   }
 
   .type {

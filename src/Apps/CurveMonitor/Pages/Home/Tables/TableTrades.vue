@@ -1,36 +1,34 @@
 <template>
-  <DataTable
-    class="datatable-trades"
-    :rows="trades"
-    :columns="['Tx', 'Name', { label: 'Value', align: 'end' }]"
-  >
-    <template #header-content>
-      <div class="title">Largest Trades</div>
-    </template>
+  <Card title="Largest Trades">
+    <DataTable
+      class="datatable-trades"
+      :rows="trades"
+      :columns="['Tx', 'Name', { label: 'Value', align: 'end' }]"
+    >
+      <template #row="props: { item: Trade }">
+        <div>
+          <a
+            class="vote-link font-mono"
+            :href="`https://etherscan.io/tx/${props.item.tx}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.tx) }}
+          </a>
+        </div>
 
-    <template #row="props: { item: Trade }">
-      <div>
-        <a
-          class="vote-link font-mono"
-          :href="`https://etherscan.io/tx/${props.item.tx}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.tx) }}
-        </a>
-      </div>
+        <div>{{ props.item.name }}</div>
 
-      <div>{{ props.item.name }}</div>
-
-      <div class="end">
-        <AsyncValue
-          :value="props.item.value"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.value"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

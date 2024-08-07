@@ -1,51 +1,49 @@
 <template>
-  <DataTable
-    class="datatable-pools"
-    :rows="pools"
-    :columns
-    :sorting
-    :expanded="expanded"
-    @sort-column="onSort"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-pools"
+      :rows="pools"
+      :columns
+      :sorting
+      :expanded="expanded"
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: Pool }">
+        <div>{{ shorten(props.item.name) }}</div>
+        <div class="end">
+          <AsyncValue
+            :value="totalApr(props.item) * 100"
+            :precision="1"
+            type="percentage"
+          />
+        </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.tvl"
+            :precision="1"
+            type="dollar"
+          />
+        </div>
+      </template>
 
-    <template #row="props: { item: Pool }">
-      <div>{{ shorten(props.item.name) }}</div>
-      <div class="end">
-        <AsyncValue
-          :value="totalApr(props.item) * 100"
-          :precision="1"
-          type="percentage"
-        />
-      </div>
-      <div class="end">
-        <AsyncValue
-          :value="props.item.tvl"
-          :precision="1"
-          type="dollar"
-        />
-      </div>
-    </template>
+      <template #row-details="props: { item: Pool }">
+        <div
+          v-if="expanded.includes(props.item)"
+          class="charts"
+        >
+          <ChartTvl
+            class="tvl"
+            :pool-selected="props.item"
+          ></ChartTvl>
 
-    <template #row-details="props: { item: Pool }">
-      <div
-        v-if="expanded.includes(props.item)"
-        class="charts"
-      >
-        <ChartTvl
-          class="tvl"
-          :pool-selected="props.item"
-        ></ChartTvl>
-
-        <ChartApr
-          class="apr"
-          :pool-selected="props.item"
-        ></ChartApr>
-      </div>
-    </template>
-  </DataTable>
+          <ChartApr
+            class="apr"
+            :pool-selected="props.item"
+          ></ChartApr>
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -112,8 +110,6 @@ const pools = computed((): Pool[] => {
 
 .datatable-pools {
   --columns-data: 3fr 2fr 2fr 1rem;
-
-  background: var(--c-lvl0);
 
   .charts {
     display: flex;

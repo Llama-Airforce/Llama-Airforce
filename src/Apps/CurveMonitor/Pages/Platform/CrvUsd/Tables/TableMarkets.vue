@@ -1,23 +1,6 @@
 <template>
-  <DataTable
-    class="datatable-markets"
-    expand-side="left"
-    :loading
-    :rows
-    :columns="[
-      '',
-      'Name',
-      { label: 'Loans', align: 'end' },
-      { label: 'Rate', align: 'end' },
-      { label: 'Borrowed', align: 'end' },
-      { label: 'Collateral', align: 'end' },
-      { label: 'Fees Pending', align: 'end' },
-      { label: 'Fees Collected', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <InputText
         v-model="search"
         class="search"
@@ -27,97 +10,114 @@
       </InputText>
     </template>
 
-    <template #row="props: { item: Row }">
-      <div>{{ props.item.name }}</div>
-      <div class="end">{{ props.item.loans }}</div>
+    <DataTable
+      class="datatable-markets"
+      expand-side="left"
+      :loading
+      :rows
+      :columns="[
+        '',
+        'Name',
+        { label: 'Loans', align: 'end' },
+        { label: 'Rate', align: 'end' },
+        { label: 'Borrowed', align: 'end' },
+        { label: 'Collateral', align: 'end' },
+        { label: 'Fees Pending', align: 'end' },
+        { label: 'Fees Collected', align: 'end' },
+      ]"
+    >
+      <template #row="props: { item: Row }">
+        <div>{{ props.item.name }}</div>
+        <div class="end">{{ props.item.loans }}</div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.rate * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.rate * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.borrowed"
-          :precision="decimals"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.borrowed"
+            :precision="decimals"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.collateralUsd"
-          :precision="decimals"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.collateralUsd"
+            :precision="decimals"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.fees.pending"
-          :precision="decimals"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.fees.pending"
+            :precision="decimals"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.fees.collected"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
-    </template>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.fees.collected"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
+      </template>
 
-    <template #row-aggregation>
-      <div></div>
-      <div></div>
-      <div class="end">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
-      <div></div>
+      <template #row-aggregation>
+        <div></div>
+        <div></div>
+        <div class="end">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
+        <div></div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
-          :precision="decimals"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
+            :precision="decimals"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.collateralUsd, 0)"
-          :precision="decimals"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.collateralUsd, 0)"
+            :precision="decimals"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.fees.pending, 0)"
-          :precision="decimals"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.fees.pending, 0)"
+            :precision="decimals"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.fees.collected, 0)"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
-    </template>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.fees.collected, 0)"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
+      </template>
 
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -154,6 +154,9 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
+.search {
+  margin-left: 1rem;
+}
 
 .datatable-markets {
   --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
@@ -163,11 +166,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr);
-
-  .search {
-    font-size: 0.875rem;
-    margin-left: 1rem;
-  }
 }
 </style>
 

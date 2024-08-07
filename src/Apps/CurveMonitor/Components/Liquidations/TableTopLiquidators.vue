@@ -1,43 +1,41 @@
 <template>
-  <DataTable
-    class="datatable-liquidators"
-    :rows
-    :columns="[
-      'Address',
-      { label: 'Count', align: 'end' },
-      { label: 'Value', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-liquidators"
+      :rows
+      :columns="[
+        'Address',
+        { label: 'Count', align: 'end' },
+        { label: 'Value', align: 'end' },
+      ]"
+    >
+      <template #row="props: { item: Liquidator }">
+        <div class="address">
+          <a
+            :href="`https://etherscan.io/address/${props.item.liquidator}`"
+            target="_blank"
+          >
+            {{ addressShort(props.item.liquidator, 8) }}
+          </a>
+        </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.count"
+            :precision="0"
+            :show-zero="true"
+          />
+        </div>
 
-    <template #row="props: { item: Liquidator }">
-      <div class="address">
-        <a
-          :href="`https://etherscan.io/address/${props.item.liquidator}`"
-          target="_blank"
-        >
-          {{ addressShort(props.item.liquidator, 8) }}
-        </a>
-      </div>
-      <div class="end">
-        <AsyncValue
-          :value="props.item.count"
-          :precision="0"
-          :show-zero="true"
-        />
-      </div>
-
-      <div class="end">
-        <AsyncValue
-          :value="props.item.value"
-          :precision="1"
-          type="dollar"
-        />
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.value"
+            :precision="1"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

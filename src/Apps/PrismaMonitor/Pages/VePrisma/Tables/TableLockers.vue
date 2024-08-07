@@ -1,25 +1,15 @@
 <template>
-  <DataTable
-    class="datatable-lockers"
-    :rows="rowsPage"
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
-          class="search"
           :search="true"
           :placeholder="t('search-placeholder')"
         >
         </InputText>
 
         <Pagination
-          class="pagination"
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
           :page="page"
@@ -28,71 +18,79 @@
       </div>
     </template>
 
-    <template #row="props: { item: Row }">
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/address/${props.item.id}`"
-          target="_blank"
-          @click.stop
+    <DataTable
+      class="datatable-lockers"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: Row }">
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.id}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ props.item.id }}
+          </a>
+        </div>
+
+        <div
+          class="end"
+          :class="{ zero: props.item.weight === 0 }"
         >
-          {{ props.item.id }}
-        </a>
-      </div>
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.weight)"
+            :precision="2"
+            :show-symbol="false"
+            :show-zero="true"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ zero: props.item.weight === 0 }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.weight)"
-          :precision="2"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </div>
+        <div
+          class="end"
+          :class="{ zero: props.item.locked === 0 }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.locked)"
+            :precision="2"
+            :show-symbol="false"
+            :show-zero="true"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ zero: props.item.locked === 0 }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.locked)"
-          :precision="2"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </div>
+        <div
+          class="end"
+          :class="{ zero: props.item.unlocked === 0 }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.unlocked)"
+            :precision="2"
+            :show-symbol="false"
+            :show-zero="true"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ zero: props.item.unlocked === 0 }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.unlocked)"
-          :precision="2"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </div>
-
-      <div
-        class="end"
-        :class="{ zero: props.item.frozen === 0 }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.frozen)"
-          :precision="2"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </div>
-    </template>
-  </DataTable>
+        <div
+          class="end"
+          :class="{ zero: props.item.frozen === 0 }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.frozen)"
+            :precision="2"
+            :show-symbol="false"
+            :show-zero="true"
+          ></AsyncValue>
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -160,14 +158,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
   --col-width: 11ch;
   --columns-data: 1fr repeat(4, minmax(12ch, 0.33fr));
-
-  .title {
-    margin-right: 1rem;
-  }
-
-  .search {
-    flex-grow: 1;
-  }
 
   .zero {
     opacity: 0.5;

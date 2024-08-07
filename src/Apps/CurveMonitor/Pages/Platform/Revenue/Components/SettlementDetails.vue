@@ -55,54 +55,55 @@
         </Card>
       </div>
 
-      <DataTable
-        class="datatable-solvers col"
-        :rows="solutions"
+      <Card
+        class="col"
+        title="Solvers"
       >
-        <template #header-content>
-          <div class="title">Solvers</div>
-        </template>
-
-        <template
-          #row="{
-            item: { solver, solverAddress, ranking, score },
-          }: {
-            item: Row,
-          }"
+        <DataTable
+          class="datatable-solvers col"
+          :rows="solutions"
         >
-          <div
-            class="trophy"
-            :class="rankClass(ranking)"
+          <template
+            #row="{
+              item: { solver, solverAddress, ranking, score },
+            }: {
+              item: Row,
+            }"
           >
-            <i
-              v-if="ranking <= 3"
-              class="fas fa-trophy"
-            ></i>
-            <span v-else>{{ ranking }}</span>
-          </div>
-
-          <div>
-            <a
-              class="font-mono"
-              :href="linkAddress(solverAddress)"
-              target="_blank"
+            <div
+              class="trophy"
+              :class="rankClass(ranking)"
             >
-              {{ solver }}
-            </a>
-          </div>
+              <i
+                v-if="ranking <= 3"
+                class="fas fa-trophy"
+              ></i>
+              <span v-else>{{ ranking }}</span>
+            </div>
 
-          <div>
-            {{ score }}
-          </div>
+            <div>
+              <a
+                class="font-mono"
+                :href="linkAddress(solverAddress)"
+                target="_blank"
+              >
+                {{ solver }}
+              </a>
+            </div>
 
-          <div>
-            <Button
-              icon="fas fa-link"
-              @click="clipboard(solverAddress)"
-            ></Button>
-          </div>
-        </template>
-      </DataTable>
+            <div>
+              {{ score }}
+            </div>
+
+            <div>
+              <Button
+                icon="fas fa-link"
+                @click="clipboard(solverAddress)"
+              ></Button>
+            </div>
+          </template>
+        </DataTable>
+      </Card>
     </div>
   </Card>
 </template>

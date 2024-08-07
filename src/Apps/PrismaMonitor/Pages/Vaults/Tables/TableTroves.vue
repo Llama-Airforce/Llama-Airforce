@@ -1,13 +1,6 @@
 <template>
-  <DataTable
-    class="datatable-troves"
-    :loading="loading"
-    :rows="rowsPage"
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
+  <Card>
+    <template #actions>
       <TabView
         class="types"
         @tab="onType($event.index)"
@@ -19,14 +12,12 @@
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
-          class="search"
           :search="true"
           :placeholder="t('search-placeholder')"
         >
         </InputText>
 
         <Pagination
-          class="pagination"
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
           :page="page"
@@ -35,62 +26,72 @@
       </div>
     </template>
 
-    <template #row="props: { item: Row }">
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/address/${props.item.owner}`"
-          target="_blank"
-          @click.stop
+    <DataTable
+      class="datatable-troves"
+      :loading="loading"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: Row }">
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.owner}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.owner) }}
+          </a>
+        </div>
+
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
         >
-          {{ addressShort(props.item.owner) }}
-        </a>
-      </div>
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.debt)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ hide: type === 'Closed' }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.debt)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.collateral_usd)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ hide: type === 'Closed' }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.collateral_usd)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            :value="props.item.collateral_ratio * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div
-        class="end"
-        :class="{ hide: type === 'Closed' }"
-      >
-        <AsyncValue
-          :value="props.item.collateral_ratio * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div class="end">
+          {{ relativeTime(props.item.created_at) }}
+        </div>
 
-      <div class="end">
-        {{ relativeTime(props.item.created_at) }}
-      </div>
+        <div class="end">
+          {{ relativeTime(props.item.last_update) }}
+        </div>
+      </template>
 
-      <div class="end">
-        {{ relativeTime(props.item.last_update) }}
-      </div>
-    </template>
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -224,6 +225,20 @@ const onType = (tabIndex: number) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+:deep(.types) {
+  margin: 0 1rem;
+  font-size: 0.875rem;
+
+  ul {
+    width: auto;
+    border-bottom: 0;
+  }
+
+  .tab-header {
+    padding: 0.5rem 1rem;
+  }
+}
+
 .datatable-troves {
   --columns-header: 1fr 2fr;
 
@@ -232,28 +247,6 @@ const onType = (tabIndex: number) => {
     minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
 
   container-type: inline-size;
-
-  .title {
-    margin-right: 1rem;
-  }
-
-  :deep(.types) {
-    margin: 0 1rem;
-    font-size: 0.875rem;
-
-    ul {
-      width: auto;
-      border-bottom: 0;
-    }
-
-    .tab-header {
-      padding: 0.5rem 1rem;
-    }
-  }
-
-  .search {
-    flex-grow: 1;
-  }
 
   :deep(.row-data) {
     .hide {

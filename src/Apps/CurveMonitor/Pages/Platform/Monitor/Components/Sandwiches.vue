@@ -1,20 +1,6 @@
 <template>
-  <DataTable
-    class="datatable-sandwiches"
-    :rows="sandwiches"
-    :columns="[
-      'Pool',
-      'Action',
-      'Affected Contract',
-      { label: 'Time', align: 'end' },
-    ]"
-    :expanded
-    :loading
-    @selected="toggleExpansion($event)"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
@@ -35,67 +21,85 @@
       </div>
     </template>
 
-    <template #row="props: { item: SandwichDetail }">
-      <div>
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/address/${props.item.poolAddress}`"
-          target="_blank"
-        >
-          {{ props.item.poolName }}
-        </a>
-      </div>
-
-      <div>
-        <div
-          style="display: grid; gap: 1ch; grid-template-columns: auto 16ch 1fr"
-        >
+    <DataTable
+      class="datatable-sandwiches"
+      :rows="sandwiches"
+      :columns="[
+        'Pool',
+        'Action',
+        'Affected Contract',
+        { label: 'Time', align: 'end' },
+      ]"
+      :expanded
+      :loading
+      @selected="toggleExpansion($event)"
+    >
+      <template #row="props: { item: SandwichDetail }">
+        <div>
           <a
-            class="vote-link font-mono"
+            class="vote-link"
+            :href="`https://etherscan.io/address/${props.item.poolAddress}`"
             target="_blank"
-            :href="`https://etherscan.io/address/${props.item.center[0].trader}`"
           >
-            {{ addressShort(props.item.center[0].trader) }}
+            {{ props.item.poolName }}
           </a>
-          <span>
-            lost
-            {{
-              roundPhil(
-                props.item.user_losses_details.reduce(
-                  (acc, x) => acc + x.amount,
-                  0
-                )
-              )
-            }}
-            {{ props.item.user_losses_details[0].unit }}
-          </span>
-          <span>
-            {{
-              roundPhil(-props.item.user_losses_details[0].lossInPercentage)
-            }}% slippage, or ${{ roundPhil(props.item.lossInUsd) }}
-          </span>
         </div>
-      </div>
 
-      <div>
-        {{ props.item.label }}
-      </div>
+        <div>
+          <div
+            style="
+              display: grid;
+              gap: 1ch;
+              grid-template-columns: auto 16ch 1fr;
+            "
+          >
+            <a
+              class="vote-link font-mono"
+              target="_blank"
+              :href="`https://etherscan.io/address/${props.item.center[0].trader}`"
+            >
+              {{ addressShort(props.item.center[0].trader) }}
+            </a>
+            <span>
+              lost
+              {{
+                roundPhil(
+                  props.item.user_losses_details.reduce(
+                    (acc, x) => acc + x.amount,
+                    0
+                  )
+                )
+              }}
+              {{ props.item.user_losses_details[0].unit }}
+            </span>
+            <span>
+              {{
+                roundPhil(-props.item.user_losses_details[0].lossInPercentage)
+              }}% slippage, or ${{ roundPhil(props.item.lossInUsd) }}
+            </span>
+          </div>
+        </div>
 
-      <div class="end">
-        {{ relativeTime(props.item.frontrun.block_unixtime) }}
-      </div>
-    </template>
+        <div>
+          {{ props.item.label }}
+        </div>
 
-    <template #row-details="props: { item: SandwichDetail }">
-      <Transactions
-        class="transactions"
-        :txs="sandwichTxs(props.item)"
-        :header="false"
-        :compact="true"
-        :time="false"
-      ></Transactions>
-    </template>
-  </DataTable>
+        <div class="end">
+          {{ relativeTime(props.item.frontrun.block_unixtime) }}
+        </div>
+      </template>
+
+      <template #row-details="props: { item: SandwichDetail }">
+        <Transactions
+          class="transactions"
+          :txs="sandwichTxs(props.item)"
+          :header="false"
+          :compact="true"
+          :time="false"
+        ></Transactions>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -156,35 +160,29 @@ const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+:deep(.pagination) {
+  li {
+    button {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}
+
+.search {
+  width: 600px;
+
+  @media only screen and (max-width: 1280px) {
+    width: auto;
+  }
+}
+
 .datatable-sandwiches {
   --columns-header: 1fr 2fr;
   --columns-data: 16rem 1fr 16rem 8rem 1rem;
 
   .title {
     margin-right: 1rem;
-  }
-
-  :deep(.pagination) {
-    li {
-      button {
-        height: 2rem;
-        width: 2rem;
-      }
-    }
-  }
-
-  .search {
-    flex-grow: 1;
-    font-size: 0.875rem;
-    width: 600px;
-    justify-self: end;
-    margin-top: 0.125rem;
-    margin-bottom: 0.125rem;
-    margin-right: 2rem;
-
-    @media only screen and (max-width: 1280px) {
-      width: auto;
-    }
   }
 
   :deep(.row-data) {

@@ -1,52 +1,53 @@
 <template>
-  <DataTable
-    class="datatable-bribe-rounds"
-    :rows="epochs"
-    :columns
-    :sorting
-    @sort-column="onSort"
-    @selected="onSelected"
-  >
-    <template #header-content>
-      <div class="title">{{ t("all-rounds") }}</div>
+  <Card :title="t('all-rounds')">
+    <template #actions>
       <Tooltip>{{ t("tooltip") }}</Tooltip>
     </template>
 
-    <template #row="props: { item: EpochOverview }">
-      <div
-        class="round-number"
-        @click.stop
-      >
-        <a
-          :href="voteLink(props.item)"
-          target="_blank"
-          class="vote-link"
+    <DataTable
+      class="datatable-bribe-rounds"
+      :rows="epochs"
+      :columns
+      :sorting
+      @sort-column="onSort"
+      @selected="onSelected"
+    >
+      <template #row="props: { item: EpochOverview }">
+        <div
+          class="round-number"
+          @click.stop
         >
-          <span v-if="isFinished(props.item)">{{ round(props.item) }}</span>
-          <span v-else>
-            <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
-          </span>
-        </a>
-      </div>
-      <div>
-        {{ date(props.item) }}
-      </div>
-      <div class="end">
-        <AsyncValue
-          :value="dollarPerVlAsset(props.item)"
-          :precision="5"
-          type="dollar"
-        />
-      </div>
-      <div class="end">
-        <AsyncValue
-          :value="totalAmountDollars(props.item)"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
-    </template>
-  </DataTable>
+          <a
+            :href="voteLink(props.item)"
+            target="_blank"
+            class="vote-link"
+          >
+            <span v-if="isFinished(props.item)">{{ round(props.item) }}</span>
+            <span v-else>
+              <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
+            </span>
+          </a>
+        </div>
+        <div>
+          {{ date(props.item) }}
+        </div>
+        <div class="end">
+          <AsyncValue
+            :value="dollarPerVlAsset(props.item)"
+            :precision="5"
+            type="dollar"
+          />
+        </div>
+        <div class="end">
+          <AsyncValue
+            :value="totalAmountDollars(props.item)"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

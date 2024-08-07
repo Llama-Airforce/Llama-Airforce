@@ -1,27 +1,25 @@
 <template>
-  <DataTable
-    class="datatable-distributions"
-    :rows
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-distributions"
+      :rows
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="{ item: { timestamp, feesUsd } }: { item: Row }">
+        <div>{{ formatDate(timestamp) }}</div>
 
-    <template #row="{ item: { timestamp, feesUsd } }: { item: Row }">
-      <div>{{ formatDate(timestamp) }}</div>
-
-      <div class="end">
-        <AsyncValue
-          :value="feesUsd"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <AsyncValue
+            :value="feesUsd"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

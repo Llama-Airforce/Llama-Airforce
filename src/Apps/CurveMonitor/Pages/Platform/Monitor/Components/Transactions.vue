@@ -1,18 +1,10 @@
 <template>
-  <DataTable
-    class="datatable-trades"
-    :class="{ compact, time }"
-    :rows="rowsPage"
-    :columns
-    :header
-  >
+  <Card :title="t('title')">
     <template
       v-if="header"
-      #header-content
+      #actions
     >
       <div style="display: grid; grid-template-columns: auto auto">
-        <div class="title">{{ t("title") }}</div>
-
         <TabView
           class="types"
           @tab="onType($event.index)"
@@ -43,84 +35,91 @@
       </div>
     </template>
 
-    <template #row="props: { item: TransactionDetail }">
-      <div
-        class="type"
-        :class="{
-          deposit: props.item.transaction_type === 'deposit',
-          remove: props.item.transaction_type === 'remove',
-          swap: props.item.transaction_type === 'swap',
-        }"
-      >
-        <i
-          v-if="props.item.transaction_type === 'deposit'"
-          class="fas fa-arrow-up"
-        ></i>
-
-        <i
-          v-else-if="props.item.transaction_type === 'remove'"
-          class="fas fa-arrow-down"
-        ></i>
-
-        <i
-          v-else
-          class="fas fa-exchange-alt"
-        ></i>
-
-        {{ t(props.item.transaction_type) }}
-      </div>
-
-      <div
-        v-if="time"
-        class="end"
-      >
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/block/${props.item.block_number}`"
-          target="_blank"
+    <DataTable
+      class="datatable-trades"
+      :class="{ compact, time }"
+      :rows="rowsPage"
+      :columns
+    >
+      <template #row="props: { item: TransactionDetail }">
+        <div
+          class="type"
+          :class="{
+            deposit: props.item.transaction_type === 'deposit',
+            remove: props.item.transaction_type === 'remove',
+            swap: props.item.transaction_type === 'swap',
+          }"
         >
-          {{ props.item.block_number }}
-        </a>
-      </div>
+          <i
+            v-if="props.item.transaction_type === 'deposit'"
+            class="fas fa-arrow-up"
+          ></i>
 
-      <div>
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/tx/${props.item.tx_hash}`"
-          target="_blank"
-          @click.stop
+          <i
+            v-else-if="props.item.transaction_type === 'remove'"
+            class="fas fa-arrow-down"
+          ></i>
+
+          <i
+            v-else
+            class="fas fa-exchange-alt"
+          ></i>
+
+          {{ t(props.item.transaction_type) }}
+        </div>
+
+        <div
+          v-if="time"
+          class="end"
         >
-          {{ addressShort(props.item.tx_hash) }}
-        </a>
-      </div>
+          <a
+            class="vote-link"
+            :href="`https://etherscan.io/block/${props.item.block_number}`"
+            target="_blank"
+          >
+            {{ props.item.block_number }}
+          </a>
+        </div>
 
-      <div>
-        <a
-          class="vote-link"
-          :href="`https://etherscan.io/address/${props.item.trader}`"
-          target="_blank"
-          @click.stop
+        <div>
+          <a
+            class="vote-link"
+            :href="`https://etherscan.io/tx/${props.item.tx_hash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.tx_hash) }}
+          </a>
+        </div>
+
+        <div>
+          <a
+            class="vote-link"
+            :href="`https://etherscan.io/address/${props.item.trader}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.trader) }}
+          </a>
+        </div>
+
+        <div
+          class="assets"
+          :class="{
+            swap: props.item.transaction_type === 'swap',
+          }"
+          v-html="getAssetsString(props.item)"
+        ></div>
+
+        <div
+          v-if="time"
+          class="end"
         >
-          {{ addressShort(props.item.trader) }}
-        </a>
-      </div>
-
-      <div
-        class="assets"
-        :class="{
-          swap: props.item.transaction_type === 'swap',
-        }"
-        v-html="getAssetsString(props.item)"
-      ></div>
-
-      <div
-        v-if="time"
-        class="end"
-      >
-        {{ relativeTime(props.item.block_unixtime) }}
-      </div>
-    </template>
-  </DataTable>
+          {{ relativeTime(props.item.block_unixtime) }}
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

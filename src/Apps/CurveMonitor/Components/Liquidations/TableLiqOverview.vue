@@ -1,56 +1,54 @@
 <template>
-  <DataTable
-    class="datatable-liq-overview"
-    :rows
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-liq-overview"
+      :rows
+    >
+      <template #row="{ item: { description, value, type } }: { item: Row }">
+        <div>{{ description }}</div>
 
-    <template #row="{ item: { description, value, type } }: { item: Row }">
-      <div>{{ description }}</div>
+        <div
+          v-if="type === 'collateral'"
+          class="end"
+        >
+          <AsyncValue
+            :value="value[0]"
+            :show-zero="true"
+            type="dollar"
+          />
 
-      <div
-        v-if="type === 'collateral'"
-        class="end"
-      >
-        <AsyncValue
-          :value="value[0]"
-          :show-zero="true"
-          type="dollar"
-        />
+          /
 
-        /
+          <AsyncValue
+            :value="value[1]"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-        <AsyncValue
-          :value="value[1]"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
-
-      <div
-        v-else
-        class="end"
-      >
-        <AsyncValue
-          v-if="type === 'bad-debt'"
-          class="red"
-          :value="value"
-          :show-zero="true"
-          :inline="false"
-          type="dollar"
-        />
-        <AsyncValue
-          v-else-if="type !== 'number'"
-          :value="value"
-          :show-zero="true"
-          :type
-        />
-        <span v-else>{{ value }}</span>
-      </div>
-    </template>
-  </DataTable>
+        <div
+          v-else
+          class="end"
+        >
+          <AsyncValue
+            v-if="type === 'bad-debt'"
+            class="red"
+            :value="value"
+            :show-zero="true"
+            :inline="false"
+            type="dollar"
+          />
+          <AsyncValue
+            v-else-if="type !== 'number'"
+            :value="value"
+            :show-zero="true"
+            :type
+          />
+          <span v-else>{{ value }}</span>
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

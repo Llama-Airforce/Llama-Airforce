@@ -1,16 +1,7 @@
 <template>
-  <DataTable
-    class="datatable-troves"
-    :loading="loading"
-    :rows="rowsPage"
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
+  <Card :title="t('title')">
+    <template #actions>
       <div style="display: grid; grid-template-columns: auto 1fr">
-        <div class="title">{{ t("title") }}</div>
-
         <TabView
           class="types"
           @tab="onType($event.index)"
@@ -39,64 +30,74 @@
       </div>
     </template>
 
-    <template #row="props: { item: Row }">
-      <img :src="icon(props.item.vault)" />
+    <DataTable
+      class="datatable-troves"
+      :loading="loading"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: Row }">
+        <img :src="icon(props.item.vault)" />
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/address/${props.item.owner}`"
-          target="_blank"
-          @click.stop
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.owner}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.owner) }}
+          </a>
+        </div>
+
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
         >
-          {{ addressShort(props.item.owner) }}
-        </a>
-      </div>
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.debt)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ hide: type === 'Closed' }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.debt)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.collateral_usd)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
 
-      <div
-        class="end"
-        :class="{ hide: type === 'Closed' }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.collateral_usd)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            :value="props.item.collateral_ratio * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div
-        class="end"
-        :class="{ hide: type === 'Closed' }"
-      >
-        <AsyncValue
-          :value="props.item.collateral_ratio * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div class="end">
+          {{ relativeTime(props.item.created_at) }}
+        </div>
 
-      <div class="end">
-        {{ relativeTime(props.item.created_at) }}
-      </div>
+        <div class="end">
+          {{ relativeTime(props.item.last_update) }}
+        </div>
+      </template>
 
-      <div class="end">
-        {{ relativeTime(props.item.last_update) }}
-      </div>
-    </template>
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

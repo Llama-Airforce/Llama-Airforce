@@ -1,20 +1,7 @@
 <template>
-  <DataTable
-    class="datatable-events"
-    :rows="events"
-    :columns="[
-      'Type',
-      { label: 'Amount', align: 'end' },
-      '',
-      'Provider',
-      { label: 'Time', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <Pagination
-        class="pagination"
         :items-count="count"
         :items-per-page="10"
         :page="page"
@@ -22,32 +9,44 @@
       ></Pagination>
     </template>
 
-    <template #row="{ item: event }: { item: LlammaEvent }">
-      <div>{{ type(event) }}</div>
-      <div class="end">{{ amount(event) }}</div>
-      <div></div>
+    <DataTable
+      class="datatable-events"
+      :rows="events"
+      :columns="[
+        'Type',
+        { label: 'Amount', align: 'end' },
+        '',
+        'Provider',
+        { label: 'Time', align: 'end' },
+      ]"
+    >
+      <template #row="{ item: event }: { item: LlammaEvent }">
+        <div>{{ type(event) }}</div>
+        <div class="end">{{ amount(event) }}</div>
+        <div></div>
 
-      <div>
-        <a
-          :href="`https://etherscan.io/address/${event.provider}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(event.provider) }}
-        </a>
-      </div>
+        <div>
+          <a
+            :href="`https://etherscan.io/address/${event.provider}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(event.provider) }}
+          </a>
+        </div>
 
-      <div class="end">
-        <a
-          :href="`https://etherscan.io/tx/${event.transaction_hash}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ relativeTime(event.timestamp) }}
-        </a>
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <a
+            :href="`https://etherscan.io/tx/${event.transaction_hash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ relativeTime(event.timestamp) }}
+          </a>
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -91,13 +90,6 @@ const type = (x: LlammaEvent) =>
 
 .datatable-events {
   --columns-data: 8rem 1fr 1fr 6rem 6rem;
-
-  :deep(.header .header-content) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
 }
 </style>
 

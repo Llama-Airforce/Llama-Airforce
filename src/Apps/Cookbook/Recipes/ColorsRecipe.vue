@@ -1,14 +1,13 @@
 <template>
-  <div class="colors">
+  <Card
+    class="colors"
+    title="Colors"
+  >
     <DataTable
       class="datatable-colors"
       :rows="colors"
       :columns="['Variable', 'Value', 'Preview']"
     >
-      <template #header-content>
-        <div class="title">Colors</div>
-      </template>
-
       <template #row="props: { item: Color }">
         <div>{{ props.item.variable }}</div>
         <div>{{ props.item.value }}</div>
@@ -27,7 +26,7 @@
         </div>
       </template>
     </DataTable>
-  </div>
+  </Card>
 </template>
 
 <script setup lang="ts">

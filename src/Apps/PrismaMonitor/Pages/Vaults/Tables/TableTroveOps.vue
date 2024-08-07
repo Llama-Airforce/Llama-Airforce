@@ -1,78 +1,76 @@
 <template>
-  <DataTable
-    class="datatable-trove-ops"
-    :loading="loading"
-    :rows="rows"
-    :columns="[
-      'Operation',
-      { label: 'Collateral', align: 'end' },
-      { label: 'Debt', align: 'end' },
-      { label: 'Ratio', align: 'end' },
-      { label: 'Stake', align: 'end' },
-      { label: 'Tx', align: 'end' },
-      { label: 'Time', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-trove-ops"
+      :loading="loading"
+      :rows="rows"
+      :columns="[
+        'Operation',
+        { label: 'Collateral', align: 'end' },
+        { label: 'Debt', align: 'end' },
+        { label: 'Ratio', align: 'end' },
+        { label: 'Stake', align: 'end' },
+        { label: 'Tx', align: 'end' },
+        { label: 'Time', align: 'end' },
+      ]"
+    >
+      <template #row="props: { item: Row }">
+        <div>{{ titleCase(props.item.operation) }}</div>
 
-    <template #row="props: { item: Row }">
-      <div>{{ titleCase(props.item.operation) }}</div>
+        <div class="end">
+          <AsyncValue
+            v-if="props.item.collateral"
+            :value="props.item.collateral"
+            :precision="3"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          v-if="props.item.collateral"
-          :value="props.item.collateral"
-          :precision="3"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.debt)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.debt)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
+        <div class="end">
+          <AsyncValue
+            v-if="props.item.cr"
+            :value="props.item.cr * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          v-if="props.item.cr"
-          :value="props.item.cr * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            v-if="props.item.stake"
+            :value="props.item.stake"
+            :precision="2"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          v-if="props.item.stake"
-          :value="props.item.stake"
-          :precision="2"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/tx/${props.item.hash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.hash) }}
+          </a>
+        </div>
 
-      <div class="end">
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/tx/${props.item.hash}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(props.item.hash) }}
-        </a>
-      </div>
-
-      <div class="end">
-        {{ relativeTime(props.item.timestamp) }}
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          {{ relativeTime(props.item.timestamp) }}
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

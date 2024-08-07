@@ -1,141 +1,140 @@
 <template>
-  <DataTable
-    class="datatable-vaults"
-    :loading="loading"
-    :rows="rows"
-    :columns="[
-      '',
-      'Name',
-      { label: 'TVL', align: 'end' },
-      { label: 'CR', align: 'end' },
-      { label: 'MCR', align: 'end' },
-      { label: 'Troves', align: 'end' },
-      { label: 'Price', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <InputText
         v-model="search"
-        class="search"
         :search="true"
         :placeholder="t('search-placeholder')"
       >
       </InputText>
     </template>
 
-    <template #row="props: { item: Row }">
-      <img :src="icon(props.item.address)" />
-      <div :class="{ deprecated: isDeprecated(props.item.address) }">
-        {{ label(props.item.address) ?? props.item.name }}
-      </div>
+    <DataTable
+      class="datatable-vaults"
+      :loading="loading"
+      :rows="rows"
+      :columns="[
+        '',
+        'Name',
+        { label: 'TVL', align: 'end' },
+        { label: 'CR', align: 'end' },
+        { label: 'MCR', align: 'end' },
+        { label: 'Troves', align: 'end' },
+        { label: 'Price', align: 'end' },
+      ]"
+    >
+      <template #row="props: { item: Row }">
+        <img :src="icon(props.item.address)" />
+        <div :class="{ deprecated: isDeprecated(props.item.address) }">
+          {{ label(props.item.address) ?? props.item.name }}
+        </div>
 
-      <div
-        class="end"
-        :class="{ deprecated: isDeprecated(props.item.address) }"
-      >
-        <AsyncValue
-          :value="props.item.tvl"
-          :precision="0"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div
+          class="end"
+          :class="{ deprecated: isDeprecated(props.item.address) }"
+        >
+          <AsyncValue
+            :value="props.item.tvl"
+            :precision="0"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div
-        class="end"
-        :class="{ deprecated: isDeprecated(props.item.address) }"
-      >
-        <AsyncValue
-          :value="props.item.debt"
-          :precision="0"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div
+          class="end"
+          :class="{ deprecated: isDeprecated(props.item.address) }"
+        >
+          <AsyncValue
+            :value="props.item.debt"
+            :precision="0"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div
-        class="end"
-        :class="{ deprecated: isDeprecated(props.item.address) }"
-      >
-        <AsyncValue
-          :value="props.item.cr * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div
+          class="end"
+          :class="{ deprecated: isDeprecated(props.item.address) }"
+        >
+          <AsyncValue
+            :value="props.item.cr * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div
-        class="end"
-        :class="{ deprecated: isDeprecated(props.item.address) }"
-      >
-        <AsyncValue
-          :value="props.item.mcr * 100"
-          :precision="2"
-          type="percentage"
-        />
-      </div>
+        <div
+          class="end"
+          :class="{ deprecated: isDeprecated(props.item.address) }"
+        >
+          <AsyncValue
+            :value="props.item.mcr * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
 
-      <div
-        class="end"
-        :class="{ deprecated: isDeprecated(props.item.address) }"
-      >
-        {{ props.item.open_troves }}
-      </div>
+        <div
+          class="end"
+          :class="{ deprecated: isDeprecated(props.item.address) }"
+        >
+          {{ props.item.open_troves }}
+        </div>
 
-      <div
-        class="end"
-        :class="{ deprecated: isDeprecated(props.item.address) }"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="Math.round(props.item.price)"
-          :precision="Infinity"
-        ></AsyncValue>
-      </div>
-    </template>
+        <div
+          class="end"
+          :class="{ deprecated: isDeprecated(props.item.address) }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.price)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
+      </template>
 
-    <template #row-aggregation>
-      <div></div>
-      <div></div>
+      <template #row-aggregation>
+        <div></div>
+        <div></div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
-          :precision="0"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
+            :precision="0"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.debt, 0)"
-          :precision="0"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.debt, 0)"
+            :precision="0"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div></div>
-      <div></div>
+        <div></div>
+        <div></div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.open_troves, 0)"
-          :precision="0"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.open_troves, 0)"
+            :precision="0"
+            :show-symbol="false"
+            type="dollar"
+          />
+        </div>
 
-      <div></div>
-    </template>
+        <div></div>
+      </template>
 
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -188,11 +187,6 @@ const loading = computed(() => rowsRaw.value.length === 0);
     repeat(6, minmax(var(--col-width), 0.75fr)) 1rem;
 
   container-type: inline-size;
-
-  .search {
-    font-size: 0.875rem;
-    margin-left: 1rem;
-  }
 
   .deprecated {
     opacity: 0.5;

@@ -1,72 +1,70 @@
 <template>
-  <DataTable
-    class="datatable-bribed"
-    :rows="bribed"
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-    </template>
+  <Card :title="t('title')">
+    <DataTable
+      class="datatable-bribed"
+      :rows="bribed"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: Bribed }">
+        <Tooltip>
+          <template #item>
+            <div class="tooltip-bribed-columns-data">
+              <div>
+                {{ pool(props.item) }}
+              </div>
 
-    <template #row="props: { item: Bribed }">
-      <Tooltip>
-        <template #item>
-          <div class="tooltip-bribed-columns-data">
-            <div>
-              {{ pool(props.item) }}
-            </div>
+              <div class="end">
+                <AsyncValue
+                  :value="dollarPerVlAsset(props.item)"
+                  :precision="5"
+                  type="dollar"
+                />
+              </div>
 
-            <div class="end">
-              <AsyncValue
-                :value="dollarPerVlAsset(props.item)"
-                :precision="5"
-                type="dollar"
-              />
+              <div class="end">
+                <AsyncValue
+                  :value="amountDollars(props.item)"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
             </div>
+          </template>
 
-            <div class="end">
-              <AsyncValue
-                :value="amountDollars(props.item)"
-                :precision="2"
-                type="dollar"
-              />
-            </div>
+          <div class="bribes">
+            <span>{{ pool(props.item) }}</span>
+            <ul>
+              <li
+                v-for="(bribe, i) in bribes(props.item)"
+                :key="i"
+              >
+                <div>{{ bribe.token }}</div>
+
+                <div class="end">
+                  <AsyncValue
+                    :value="bribe.amountDollars"
+                    :precision="2"
+                    type="dollar"
+                  />
+                </div>
+
+                <div class="end">
+                  <AsyncValue
+                    :value="bribe.amount"
+                    :precision="2"
+                    :show-symbol="false"
+                    type="dollar"
+                  />
+                </div>
+              </li>
+            </ul>
           </div>
-        </template>
-
-        <div class="bribes">
-          <span>{{ pool(props.item) }}</span>
-          <ul>
-            <li
-              v-for="(bribe, i) in bribes(props.item)"
-              :key="i"
-            >
-              <div>{{ bribe.token }}</div>
-
-              <div class="end">
-                <AsyncValue
-                  :value="bribe.amountDollars"
-                  :precision="2"
-                  type="dollar"
-                />
-              </div>
-
-              <div class="end">
-                <AsyncValue
-                  :value="bribe.amount"
-                  :precision="2"
-                  :show-symbol="false"
-                  type="dollar"
-                />
-              </div>
-            </li>
-          </ul>
-        </div>
-      </Tooltip>
-    </template>
-  </DataTable>
+        </Tooltip>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

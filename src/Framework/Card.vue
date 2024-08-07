@@ -14,18 +14,21 @@
       :class="{ loading }"
     >
       <div
-        v-if="title"
+        v-if="title || $slots.title || $slots.actions"
         class="card-header"
         :class="{ collapsible }"
       >
-        <div class="text">
-          <i
-            v-if="icon"
-            class="icon"
-            :class="icon"
-          ></i>
-          {{ title }}
-        </div>
+        <slot name="title">
+          <div class="title">
+            <i
+              v-if="icon"
+              class="icon"
+              :class="icon"
+            ></i>
+            {{ title }}
+          </div>
+        </slot>
+
         <slot name="actions"></slot>
       </div>
 
@@ -102,11 +105,12 @@ const {
 
     @include loading-backdrop();
 
-    > .card-header {
+    :deep(.card-header) {
       display: flex;
       align-items: center;
       justify-content: space-between;
 
+      font-size: 0.875rem;
       height: 2.5rem;
       margin: $card-margin-height $card-margin-width;
 
@@ -114,13 +118,13 @@ const {
         margin-bottom: $card-margin-height;
       }
 
-      .icon {
+      > .icon {
         font-size: 1.125rem;
         color: var(--c-primary);
         padding-right: 0.5rem;
       }
 
-      .text {
+      > .title {
         font-size: 1.125rem;
         font-weight: bold;
         color: var(--c-text);

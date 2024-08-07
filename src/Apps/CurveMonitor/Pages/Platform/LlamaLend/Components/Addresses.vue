@@ -1,13 +1,12 @@
 <template>
-  <div class="addresses">
+  <Card
+    :title="t('addresses')"
+    class="addresses"
+  >
     <DataTable
       class="datatable-addresses"
       :rows="addresses"
     >
-      <template #header-content>
-        <div class="title">{{ t("addresses") }}</div>
-      </template>
-
       <template #row="{ item: { description, address } }: { item: Row }">
         <div>{{ t(description) }}</div>
 
@@ -31,7 +30,7 @@
         </div>
       </template>
     </DataTable>
-  </div>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -84,8 +83,6 @@ const clipboard = async (addr: string) => {
 
 .datatable-addresses {
   --columns-data: 2fr 6fr auto;
-
-  height: 100%;
 
   button {
     background: transparent;

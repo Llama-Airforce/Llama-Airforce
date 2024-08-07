@@ -1,12 +1,6 @@
 <template>
-  <DataTable
-    class="datatable-personal"
-    :rows="bribedOrdered"
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
+  <Card>
+    <template #title>
       <div class="title">
         {{ t("title") }}
         <span v-if="bribedAmount">
@@ -18,7 +12,9 @@
           />
         </span>
       </div>
+    </template>
 
+    <template #actions>
       <div
         v-if="personalDollarPerVlAsset"
         class="personalDollarPerVlAsset"
@@ -31,53 +27,61 @@
       </div>
     </template>
 
-    <template #row="props: { item: BribedPersonal }">
-      <Tooltip>
-        <template #item>
-          <div class="tooltip-personal-columns-data">
-            <div>
-              <AsyncValue
-                :value="percentage(props.item)"
-                :precision="0"
-                type="percentage"
-              />
-            </div>
+    <DataTable
+      class="datatable-personal"
+      :rows="bribedOrdered"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: BribedPersonal }">
+        <Tooltip>
+          <template #item>
+            <div class="tooltip-personal-columns-data">
+              <div>
+                <AsyncValue
+                  :value="percentage(props.item)"
+                  :precision="0"
+                  type="percentage"
+                />
+              </div>
 
-            <div>
-              {{ pool(props.item) }}
-            </div>
+              <div>
+                {{ pool(props.item) }}
+              </div>
 
-            <div class="end">
-              <AsyncValue
-                :value="dollarPerVlAsset(props.item)"
-                :precision="5"
-                type="dollar"
-              />
-            </div>
+              <div class="end">
+                <AsyncValue
+                  :value="dollarPerVlAsset(props.item)"
+                  :precision="5"
+                  type="dollar"
+                />
+              </div>
 
-            <div class="end">
-              <AsyncValue
-                :value="amountDollars(props.item)"
-                :precision="2"
-                type="dollar"
-              />
+              <div class="end">
+                <AsyncValue
+                  :value="amountDollars(props.item)"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
             </div>
+          </template>
+
+          <div class="tooltip-hover">
+            {{ pool(props.item) }}
           </div>
-        </template>
+        </Tooltip>
+      </template>
 
-        <div class="tooltip-hover">
-          {{ pool(props.item) }}
-        </div>
-      </Tooltip>
-    </template>
-
-    <template #no-data>
-      <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
-      <WalletConnectButton
-        v-if="!isConnected && isSupported"
-      ></WalletConnectButton>
-    </template>
-  </DataTable>
+      <template #no-data>
+        <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
+        <WalletConnectButton
+          v-if="!isConnected && isSupported"
+        ></WalletConnectButton>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -298,6 +302,12 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+.personalDollarPerVlAsset {
+  color: #a1a1aa;
+  font-size: 0.75rem;
+  margin-right: 1rem;
+}
+
 .datatable-personal {
   --columns-header: 1fr auto;
   --columns-data: 1fr 3fr 2fr 2fr;
@@ -306,14 +316,6 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  :deep(.header-content) {
-    .personalDollarPerVlAsset {
-      color: #a1a1aa;
-      font-size: 0.75rem;
-      margin-right: 1rem;
-    }
   }
 
   :deep(.tooltip) {

@@ -1,18 +1,8 @@
 <template>
-  <DataTable
-    class="datatable-pools"
-    expand-side="left"
-    :rows="rowsPage"
-    :columns
-    :sorting
-    @sort-column="onSort"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <div style="display: flex; gap: 1rem">
         <Pagination
-          class="pagination"
           :items-count="pools.length"
           :items-per-page="rowsPerPage"
           :page="page"
@@ -21,49 +11,58 @@
       </div>
     </template>
 
-    <template #row="{ item: pool }: { item: Row }">
-      <div class="tokens">
-        <TokenIcon
-          v-for="token of pool.coins"
-          :key="token.address"
-          :chain
-          :address="token.address"
-        ></TokenIcon>
-      </div>
+    <DataTable
+      class="datatable-pools"
+      expand-side="left"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="{ item: pool }: { item: Row }">
+        <div class="tokens">
+          <TokenIcon
+            v-for="token of pool.coins"
+            :key="token.address"
+            :chain
+            :address="token.address"
+          ></TokenIcon>
+        </div>
 
-      <div>{{ pool.name }}</div>
+        <div>{{ pool.name }}</div>
 
-      <div class="end">
-        <AsyncValue
-          :value="pool.tradingVolume24h"
-          :precision="2"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="pool.tradingVolume24h"
+            :precision="2"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="pool.tvlUsd"
-          :precision="2"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="pool.tvlUsd"
+            :precision="2"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="utilRate(pool)"
-          :precision="2"
-          :show-zero="true"
-          type="percentage"
-        />
-      </div>
-    </template>
+        <div class="end">
+          <AsyncValue
+            :value="utilRate(pool)"
+            :precision="2"
+            :show-zero="true"
+            type="percentage"
+          />
+        </div>
+      </template>
 
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

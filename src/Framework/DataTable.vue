@@ -4,104 +4,93 @@
     :class="{ loading }"
     :inert="!!loading"
   >
-    <div
-      v-if="header"
-      class="header"
+    <Spinner
+      v-if="loading !== null"
+      class="loader"
+      :class="{ loading }"
+    ></Spinner>
+
+    <!-- DataTable column headers -->
+    <DataTableRow
+      v-if="columns.length > 0"
+      :class="{ 'selected-below': selectedBelow(-1) }"
     >
-      <div class="header-content">
-        <slot name="header-content"></slot>
-      </div>
-    </div>
+      <template #row>
+        <div
+          v-for="column in columnsObjects"
+          :key="column.id"
+          class="column-header"
+          :class="{
+            sortable: column.sort,
+            sorting: column.sort && sorting.column === column.id,
+            [column.align || '']: !!column.align,
+          }"
+          @click="sortColumn(column)"
+        >
+          <span>{{ column.label }}</span>
 
-    <div class="rows">
-      <Spinner
-        v-if="loading !== null"
-        class="loader"
-        :class="{ loading }"
-      ></Spinner>
-
-      <!-- DataTable column headers -->
-      <DataTableRow
-        v-if="columns.length > 0"
-        :class="{ 'selected-below': selectedBelow(-1) }"
-      >
-        <template #row>
-          <div
-            v-for="column in columnsObjects"
-            :key="column.id"
-            class="column-header"
+          <i
+            v-if="column.sort"
+            class="sorting-arrow fa fa-caret-right"
             :class="{
-              sortable: column.sort,
-              sorting: column.sort && sorting.column === column.id,
-              [column.align || '']: !!column.align,
+              asc: isSortAscending(column),
+              desc: isSortDescending(column),
             }"
-            @click="sortColumn(column)"
-          >
-            <span>{{ column.label }}</span>
+          ></i>
+        </div>
+      </template>
+    </DataTableRow>
 
-            <i
-              v-if="column.sort"
-              class="sorting-arrow fa fa-caret-right"
-              :class="{
-                asc: isSortAscending(column),
-                desc: isSortDescending(column),
-              }"
-            ></i>
-          </div>
-        </template>
-      </DataTableRow>
+    <!-- DataTable rows -->
+    <DataTableRow
+      v-for="(row, i) in rows"
+      :key="(row as never)"
+      :data="row"
+      :class="{ 'selected-below': selectedBelow(i) }"
+      :selected="selectedRow === row"
+      :expanded="expanded.includes(row)"
+      :expand-side="expandSide"
+      @click="onSelect"
+    >
+      <template #row>
+        <slot
+          name="row"
+          :item="(row as never)"
+        ></slot>
+      </template>
 
-      <!-- DataTable rows -->
-      <DataTableRow
-        v-for="(row, i) in rows"
-        :key="(row as never)"
-        :data="row"
-        :class="{ 'selected-below': selectedBelow(i) }"
-        :selected="selectedRow === row"
-        :expanded="expanded.includes(row)"
-        :expand-side="expandSide"
-        @click="onSelect"
-      >
-        <template #row>
-          <slot
-            name="row"
-            :item="(row as never)"
-          ></slot>
-        </template>
+      <template #row-details>
+        <slot
+          name="row-details"
+          :item="(row as never)"
+        ></slot>
+      </template>
+    </DataTableRow>
 
-        <template #row-details>
-          <slot
-            name="row-details"
-            :item="(row as never)"
-          ></slot>
-        </template>
-      </DataTableRow>
+    <!-- Empty DataTable rows in case minRows is set -->
+    <DataTableRow
+      v-for="row in rowsEmpty"
+      :key="row"
+    >
+    </DataTableRow>
 
-      <!-- Empty DataTable rows in case minRows is set -->
-      <DataTableRow
-        v-for="row in rowsEmpty"
-        :key="row"
-      >
-      </DataTableRow>
-
-      <!-- No data to show. -->
-      <div
-        v-if="!rowsMin && (!rows || rows.length === 0) && !loading"
-        class="no-data"
-      >
-        <slot name="no-data">{{ t("no-data") }}</slot>
-      </div>
-
-      <!-- Aggregation -->
-      <DataTableRow
-        v-if="!!$slots['row-aggregation'] && rows.length > 0"
-        class="aggregation"
-      >
-        <template #row>
-          <slot name="row-aggregation"></slot>
-        </template>
-      </DataTableRow>
+    <!-- No data to show. -->
+    <div
+      v-if="!rowsMin && (!rows || rows.length === 0) && !loading"
+      class="no-data"
+    >
+      <slot name="no-data">{{ t("no-data") }}</slot>
     </div>
+
+    <!-- Aggregation -->
+    <DataTableRow
+      v-if="!!$slots['row-aggregation'] && rows.length > 0"
+      class="aggregation"
+    >
+      <template #row>
+        <slot name="row-aggregation"></slot>
+      </template>
+    </DataTableRow>
   </div>
 </template>
 
@@ -144,7 +133,6 @@ interface Props {
   /** Icon shown to the left of the header title. */
   icon?: string;
 
-  header?: boolean;
   loading?: boolean;
 }
 
@@ -161,7 +149,6 @@ const {
     order: "asc",
   },
 
-  header = true,
   loading = null,
 } = defineProps<Props>();
 
@@ -256,121 +243,89 @@ const sortColumn = (column: Column): void => {
   flex-direction: column;
   flex-grow: 1;
   font-size: 0.875rem;
-  padding: 0.875rem 1.125rem;
 
   background: var(--c-lvl1);
-  border-radius: var(--border-radius);
-  box-shadow: var(--container-box-shadow);
+
+  overflow-y: auto;
+  min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
 
   --columns-header: auto;
   --columns-data: auto;
 
   @include loading-backdrop();
 
-  > .header {
-    padding: 0 0 0.875rem 0rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
+  .column-header {
+    display: flex;
     align-items: center;
+    font-weight: 800;
+    height: 2.75rem;
 
-    > .header-content {
-      grid-template-columns: var(--columns-header);
+    > span {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
 
-      grid-column: 1;
-      display: grid;
-      align-items: center;
-      height: 2.5rem;
+    &.sortable {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+      user-select: none;
 
-      :deep(.title) {
-        font-size: 1.125rem;
-        font-weight: bolder;
-        color: var(--c-text);
+      gap: 1ch;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &.sorting {
+        > .sorting-arrow {
+          color: var(--c-primary);
+        }
+      }
+
+      > .sorting-arrow {
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        margin: 0 0.5ch;
+
+        font-size: 1rem;
+        color: var(--c-lvl4);
+
+        transition: transform 125ms ease-in-out;
+        transform-origin: center;
+        transform: rotate(0deg);
+
+        &.asc {
+          transform: rotate(90deg);
+        }
+
+        &.desc {
+          transform: rotate(-90deg);
+        }
       }
     }
   }
 
-  > .rows {
+  > .aggregation {
+    border-top: var(--datatable-border-aggregation);
+  }
+
+  > .loader {
+    position: absolute;
+    inset: 0;
+    margin: auto auto;
+    z-index: 1;
+
+    @include loading-spinner();
+  }
+
+  > .no-data {
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
-    overflow-y: auto;
-
-    min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
-    position: relative;
-
-    .column-header {
-      display: flex;
-      align-items: center;
-      font-weight: 800;
-      height: 2.75rem;
-
-      > span {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-
-      &.sortable {
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-        user-select: none;
-
-        gap: 1ch;
-
-        &:hover {
-          opacity: 0.7;
-        }
-
-        &.sorting {
-          > .sorting-arrow {
-            color: var(--c-primary);
-          }
-        }
-
-        > .sorting-arrow {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin: 0 0.5ch;
-
-          font-size: 1rem;
-          color: var(--c-lvl4);
-
-          transition: transform 125ms ease-in-out;
-          transform-origin: center;
-          transform: rotate(0deg);
-
-          &.asc {
-            transform: rotate(90deg);
-          }
-
-          &.desc {
-            transform: rotate(-90deg);
-          }
-        }
-      }
-    }
-
-    > .aggregation {
-      border-top: var(--datatable-border-aggregation);
-    }
-
-    > .loader {
-      position: absolute;
-      inset: 0;
-      margin: auto auto;
-      z-index: 1;
-
-      @include loading-spinner();
-    }
-
-    > .no-data {
-      display: flex;
-      flex-grow: 1;
-      flex-direction: column;
-      justify-content: center;
-      margin: 0 auto;
-    }
+    justify-content: center;
+    margin: 0 auto;
   }
 }
 </style>

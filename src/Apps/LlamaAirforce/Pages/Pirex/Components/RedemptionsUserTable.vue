@@ -1,7 +1,6 @@
 <template>
   <DataTable
     class="datatable-redemptions-user"
-    :header="false"
     :columns="[
       { label: 'Unlock', align: 'end' },
       { label: 'Amount', align: 'end' },

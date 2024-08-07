@@ -1,26 +1,12 @@
 <template>
-  <DataTable
-    class="datatable-transfers"
-    :rows="rowsPage"
-    :columns="[
-      'Hash',
-      'Block',
-      'Gas',
-      'From',
-      'To',
-      'Amount',
-      'Token',
-      { label: 'Age', align: 'end' },
-    ]"
-    :loading
+  <Card
+    class="card-transfers"
+    :title="t('title')"
   >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+    <template #actions>
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
-          class="search"
           :search="true"
           :placeholder="t('search-placeholder')"
         >
@@ -28,7 +14,6 @@
 
         <Pagination
           v-if="transfers.length > rowsPerPage"
-          class="pagination"
           :items-count="transfers.length"
           :items-per-page="rowsPerPage"
           :page
@@ -37,83 +22,99 @@
       </div>
     </template>
 
-    <template #row="{ item }: { item: CleanedTransfer }">
-      <div class="hash">
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/tx/${item.txHash}`"
-          target="_blank"
-        >
-          {{ addressLeft(item.txHash, 10) }}
-        </a>
+    <DataTable
+      class="datatable-transfers"
+      :rows="rowsPage"
+      :columns="[
+        'Hash',
+        'Block',
+        'Gas',
+        'From',
+        'To',
+        'Amount',
+        'Token',
+        { label: 'Age', align: 'end' },
+      ]"
+      :loading
+    >
+      <template #row="{ item }: { item: CleanedTransfer }">
+        <div class="hash">
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/tx/${item.txHash}`"
+            target="_blank"
+          >
+            {{ addressLeft(item.txHash, 10) }}
+          </a>
 
-        <Button
-          icon="fas fa-link"
-          @click="clipboard(item.txHash)"
-        ></Button>
-      </div>
+          <Button
+            icon="fas fa-link"
+            @click="clipboard(item.txHash)"
+          ></Button>
+        </div>
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/block/${item.blockNumber}`"
-          target="_blank"
-        >
-          {{ item.blockNumber }}
-        </a>
-      </div>
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/block/${item.blockNumber}`"
+            target="_blank"
+          >
+            {{ item.blockNumber }}
+          </a>
+        </div>
 
-      <div>
-        {{ item.gasInGwei }}
-      </div>
+        <div>
+          {{ item.gasInGwei }}
+        </div>
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/address/${item.transferFrom}`"
-          target="_blank"
-        >
-          {{ addressShort(item.transferFrom, 10) }}
-        </a>
-      </div>
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${item.transferFrom}`"
+            target="_blank"
+          >
+            {{ addressShort(item.transferFrom, 10) }}
+          </a>
+        </div>
 
-      <div>
-        <a
-          class="font-mono"
-          :href="`https://etherscan.io/addr ess/${item.transferTo}`"
-          target="_blank"
-        >
-          {{ addressShort(item.transferTo, 10) }}
-        </a>
-      </div>
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/addr ess/${item.transferTo}`"
+            target="_blank"
+          >
+            {{ addressShort(item.transferTo, 10) }}
+          </a>
+        </div>
 
-      <div>{{ round(item.parsedAmount) }}</div>
+        <div>{{ round(item.parsedAmount) }}</div>
 
-      <div class="token">
-        <TokenIcon
-          chain="ethereum"
-          :address="item.coinAddress"
-        ></TokenIcon>
+        <div class="token">
+          <TokenIcon
+            chain="ethereum"
+            :address="item.coinAddress"
+          ></TokenIcon>
 
-        <a
-          target="_blank"
-          :href="`https://etherscan.io/address/${item.coinAddress}`"
-        >
-          {{ item.coinSymbol }}
-        </a>
-      </div>
+          <a
+            target="_blank"
+            :href="`https://etherscan.io/address/${item.coinAddress}`"
+          >
+            {{ item.coinSymbol }}
+          </a>
+        </div>
 
-      <div class="end">
-        <a
-          :href="`https://etherscan.io/tx/${item.txHash}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ relativeTime(item.blockUnixtime) }}
-        </a>
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <a
+            :href="`https://etherscan.io/tx/${item.txHash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ relativeTime(item.blockUnixtime) }}
+          </a>
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

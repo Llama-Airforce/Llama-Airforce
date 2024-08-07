@@ -1,18 +1,7 @@
 <template>
-  <DataTable
-    class="datatable-settlements"
-    :rows="rowsPage"
-    :columns
-    :sorting
-    :expanded
-    expand-side="right"
-    @sort-column="onSort"
-    @selected="toggleExpansion"
-  >
-    <template #header-content>
+  <Card :title="t('title')">
+    <template #actions>
       <div class="header-content">
-        <div class="title">{{ t("title") }}</div>
-
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
@@ -22,81 +11,92 @@
       </div>
     </template>
 
-    <template #row="{ item }: { item: Row }">
-      <div class="token">
-        <TokenIcon :address="item.coin.address"></TokenIcon>
+    <DataTable
+      class="datatable-settlements"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      :expanded
+      expand-side="right"
+      @sort-column="onSort"
+      @selected="toggleExpansion"
+    >
+      <template #row="{ item }: { item: Row }">
+        <div class="token">
+          <TokenIcon :address="item.coin.address"></TokenIcon>
 
-        <a
-          class="font-mono"
-          target="_blank"
-          :href="`https://etherscan.io/address/${item.coin.address}`"
-        >
-          {{ symbol(item) }}
-        </a>
-      </div>
+          <a
+            class="font-mono"
+            target="_blank"
+            :href="`https://etherscan.io/address/${item.coin.address}`"
+          >
+            {{ symbol(item) }}
+          </a>
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="item.amountReceived"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="item.amountReceived"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="item.routerReceived"
-          :precision="2"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="item.routerReceived"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          v-if="item.routerReceived > 1"
-          :value="profit(item)"
-          :precision="2"
-          :inline="false"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            v-if="item.routerReceived > 1"
+            :value="profit(item)"
+            :precision="2"
+            :inline="false"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end profit">
-        <AsyncValue
-          v-if="item.routerReceived > 1"
-          class="pct"
-          :value="profitPct(item)"
-          :precision="2"
-          :inline="false"
-          :class="{ green: profitPct(item) > 0 }"
-          type="percentage"
-        />
-      </div>
+        <div class="end profit">
+          <AsyncValue
+            v-if="item.routerReceived > 1"
+            class="pct"
+            :value="profitPct(item)"
+            :precision="2"
+            :inline="false"
+            :class="{ green: profitPct(item) > 0 }"
+            type="percentage"
+          />
+        </div>
 
-      <div class="end">
-        <a
-          class="font-mono"
-          :href="`https://explorer.cow.fi/tx/${item.txHash}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(item.txHash) }}
-        </a>
-      </div>
+        <div class="end">
+          <a
+            class="font-mono"
+            :href="`https://explorer.cow.fi/tx/${item.txHash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(item.txHash) }}
+          </a>
+        </div>
 
-      <div class="end">
-        {{ relativeTime(item.timestamp) }}
-      </div>
-    </template>
+        <div class="end">
+          {{ relativeTime(item.timestamp) }}
+        </div>
+      </template>
 
-    <template #row-details="{ item }: { item: Row }">
-      <div class="empty"></div>
-      <SettlementDetails
-        v-if="expanded.includes(item)"
-        :settlement="item"
-      ></SettlementDetails>
-    </template>
-  </DataTable>
+      <template #row-details="{ item }: { item: Row }">
+        <div class="empty"></div>
+        <SettlementDetails
+          v-if="expanded.includes(item)"
+          :settlement="item"
+        ></SettlementDetails>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -177,16 +177,16 @@ function symbol(settlement: CowSwapSettlement) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+.header-content {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .datatable-settlements {
   --columns-data: minmax(5rem, 1fr) minmax(10ch, 1fr) minmax(10ch, 1fr)
     minmax(10ch, 1fr) 10ch minmax(5rem, 0.75fr) 16ch 20px;
-
-  .header-content {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    align-items: center;
-  }
 
   .token {
     display: flex;

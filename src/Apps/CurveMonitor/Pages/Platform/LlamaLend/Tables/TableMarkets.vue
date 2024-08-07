@@ -1,85 +1,83 @@
 <template>
-  <DataTable
-    class="datatable-markets"
-    expand-side="left"
-    :loading
-    :rows="markets"
-    :columns="[
-      '',
-      '',
-      'Name',
-      { label: 'Borrow Rate', align: 'end' },
-      { label: 'Lend Rate', align: 'end' },
-      { label: 'TVL', align: 'end' },
-      { label: 'Loans', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ title }}</div>
-    </template>
+  <Card :title>
+    <DataTable
+      class="datatable-markets"
+      expand-side="left"
+      :loading
+      :rows="markets"
+      :columns="[
+        '',
+        '',
+        'Name',
+        { label: 'Borrow Rate', align: 'end' },
+        { label: 'Lend Rate', align: 'end' },
+        { label: 'TVL', align: 'end' },
+        { label: 'Loans', align: 'end' },
+      ]"
+    >
+      <template #row="{ item: market }: { item: Market }">
+        <template v-if="market">
+          <TokenIcon
+            :chain
+            :address="tokenIcon(market)"
+          ></TokenIcon>
 
-    <template #row="{ item: market }: { item: Market }">
-      <template v-if="market">
-        <TokenIcon
-          :chain
-          :address="tokenIcon(market)"
-        ></TokenIcon>
+          <div>{{ name(market) }}</div>
 
-        <div>{{ name(market) }}</div>
+          <div class="end">
+            <AsyncValue
+              v-if="market.borrow_apy"
+              :value="market.borrow_apy"
+              type="percentage"
+            />
+          </div>
 
+          <div class="end">
+            <AsyncValue
+              v-if="market.lend_apy"
+              :value="market.lend_apy"
+              type="percentage"
+            />
+          </div>
+
+          <div class="end">
+            <AsyncValue
+              v-if="tvl(market)"
+              :value="tvl(market)"
+              type="dollar"
+            />
+          </div>
+
+          <div class="end">{{ market.n_loans }}</div>
+        </template>
+      </template>
+
+      <template #row-aggregation>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
         <div class="end">
           <AsyncValue
-            v-if="market.borrow_apy"
-            :value="market.borrow_apy"
-            type="percentage"
-          />
-        </div>
-
-        <div class="end">
-          <AsyncValue
-            v-if="market.lend_apy"
-            :value="market.lend_apy"
-            type="percentage"
-          />
-        </div>
-
-        <div class="end">
-          <AsyncValue
-            v-if="tvl(market)"
-            :value="tvl(market)"
+            :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
             type="dollar"
           />
         </div>
-
-        <div class="end">{{ market.n_loans }}</div>
+        <div class="end">
+          {{
+            markets
+              .filter((market) => market)
+              .map((market) => market!)
+              .reduce((acc, x) => acc + x.n_loans, 0)
+          }}
+        </div>
       </template>
-    </template>
 
-    <template #row-aggregation>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div class="end">
-        <AsyncValue
-          :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
-          type="dollar"
-        />
-      </div>
-      <div class="end">
-        {{
-          markets
-            .filter((market) => market)
-            .map((market) => market!)
-            .reduce((acc, x) => acc + x.n_loans, 0)
-        }}
-      </div>
-    </template>
-
-    <!-- Empty for expander arrow and pointer on hover -->
-    <template #row-details> &nbsp; </template>
-  </DataTable>
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">

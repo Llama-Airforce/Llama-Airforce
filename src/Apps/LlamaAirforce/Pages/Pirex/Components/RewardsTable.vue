@@ -2,7 +2,6 @@
   <DataTable
     class="datatable-rewards"
     :class="{ 'can-select': canSelect }"
-    :header="false"
     :columns
     :rows="rewards"
     @selected="emit('select', $event)"

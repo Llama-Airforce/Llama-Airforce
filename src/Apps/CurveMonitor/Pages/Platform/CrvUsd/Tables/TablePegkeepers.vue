@@ -1,19 +1,6 @@
 <template>
-  <DataTable
-    class="datatable-pegkeepers"
-    :loading
-    :rows
-    :columns="[
-      'Name',
-      { label: 'Debt', align: 'end' },
-      { label: 'TVL', align: 'end' },
-      { label: 'Volume', align: 'end' },
-      { label: 'Fees', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <InputText
         v-model="search"
         class="search"
@@ -23,86 +10,99 @@
       </InputText>
     </template>
 
-    <template #row="props: { item: Row }">
-      <div>{{ name(props.item) }}</div>
+    <DataTable
+      class="datatable-pegkeepers"
+      :loading
+      :rows
+      :columns="[
+        'Name',
+        { label: 'Debt', align: 'end' },
+        { label: 'TVL', align: 'end' },
+        { label: 'Volume', align: 'end' },
+        { label: 'Fees', align: 'end' },
+      ]"
+    >
+      <template #row="props: { item: Row }">
+        <div>{{ name(props.item) }}</div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.total_debt"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.total_debt"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.tvlUsd"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.tvlUsd"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.tradingVolume24h"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.tradingVolume24h"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="props.item.total_profit"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
-    </template>
+        <div class="end">
+          <AsyncValue
+            :value="props.item.total_profit"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
+      </template>
 
-    <template #row-aggregation>
-      <div></div>
+      <template #row-aggregation>
+        <div></div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.total_debt, 0)"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.total_debt, 0)"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.tvlUsd, 0)"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.tvlUsd, 0)"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.tradingVolume24h, 0)"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.tradingVolume24h, 0)"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
 
-      <div class="end">
-        <AsyncValue
-          :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
-          :precision="decimals"
-          :show-zero="true"
-          type="dollar"
-        />
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <AsyncValue
+            :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
+            :precision="decimals"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -180,6 +180,10 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+.search {
+  margin-left: 1rem;
+}
+
 .datatable-pegkeepers {
   --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
 
@@ -187,11 +191,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   --columns-data: 1fr repeat(4, var(--col-width));
 
   container-type: inline-size;
-
-  .search {
-    font-size: 0.875rem;
-    margin-left: 1rem;
-  }
 
   :deep(.row-data) {
     --columns-data: 1fr repeat(4, var(--col-width));

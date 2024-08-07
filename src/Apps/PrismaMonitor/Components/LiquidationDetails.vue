@@ -28,36 +28,38 @@
         </KPI>
       </div>
 
-      <DataTable
-        class="datatable-troves-affected"
-        :rows="rows"
-        :columns="['Trove']"
+      <Card
+        :title="t('troves-affected')"
+        :compact="true"
       >
-        <template #header-content>
-          <div class="title">{{ t("troves-affected") }}</div>
-
+        <template #actions>
           <InputText
             v-model="search"
-            class="search"
             :search="true"
             :placeholder="t('search-placeholder')"
           >
           </InputText>
         </template>
 
-        <template #row="props: { item: Row }">
-          <div>
-            <a
-              class="font-mono"
-              target="_blank"
-              :href="`#/vault/${vaultAddr}/trove/${props.item}`"
-              @click.stop
-            >
-              {{ props.item }}
-            </a>
-          </div>
-        </template>
-      </DataTable>
+        <DataTable
+          class="datatable-troves-affected"
+          :rows="rows"
+          :columns="['Trove']"
+        >
+          <template #row="props: { item: Row }">
+            <div>
+              <a
+                class="font-mono"
+                target="_blank"
+                :href="`#/vault/${vaultAddr}/trove/${props.item}`"
+                @click.stop
+              >
+                {{ props.item }}
+              </a>
+            </div>
+          </template>
+        </DataTable>
+      </Card>
     </div>
   </Card>
 </template>
@@ -121,14 +123,6 @@ const rows = computed((): string[] =>
     width: 100%;
     padding: 0;
     max-height: 50ch;
-
-    .title {
-      margin-right: 1rem;
-    }
-
-    .search {
-      font-size: 0.875rem;
-    }
   }
 }
 </style>

@@ -1,23 +1,7 @@
 <template>
-  <DataTable
-    class="datatable-trades"
-    :rows="trades"
-    :columns="[
-      { label: 'Bought', align: 'end' },
-      '',
-      '',
-      { label: 'Sold', align: 'end' },
-      '',
-      '',
-      'Market Maker',
-      { label: 'Time', align: 'end' },
-    ]"
-  >
-    <template #header-content>
-      <div class="title">{{ t("title") }}</div>
-
+  <Card :title="t('title')">
+    <template #actions>
       <Pagination
-        class="pagination"
         :items-count="count"
         :items-per-page="10"
         :page="page"
@@ -25,58 +9,73 @@
       ></Pagination>
     </template>
 
-    <template #row="{ item: trade }: { item: LlammaTrade }">
-      <div class="end">{{ round(trade.amount_bought) }}</div>
-      <TokenIcon
-        :chain="chain"
-        :address="trade.token_bought.address"
-      ></TokenIcon>
-      <div>
-        <a
-          class="font-mono"
-          target="_blank"
-          :href="`https://etherscan.io/address/${trade.token_bought.address}`"
-        >
-          {{ trade.token_bought.symbol }}
-        </a>
-      </div>
+    <DataTable
+      class="datatable-trades"
+      :rows="trades"
+      :columns="[
+        { label: 'Bought', align: 'end' },
+        '',
+        '',
+        { label: 'Sold', align: 'end' },
+        '',
+        '',
+        'Market Maker',
+        { label: 'Time', align: 'end' },
+      ]"
+    >
+      <template #row="{ item: trade }: { item: LlammaTrade }">
+        <div class="end">{{ round(trade.amount_bought) }}</div>
+        <TokenIcon
+          :chain="chain"
+          :address="trade.token_bought.address"
+        ></TokenIcon>
+        <div>
+          <a
+            class="font-mono"
+            target="_blank"
+            :href="`https://etherscan.io/address/${trade.token_bought.address}`"
+          >
+            {{ trade.token_bought.symbol }}
+          </a>
+        </div>
 
-      <div class="end">{{ round(trade.amount_sold) }}</div>
-      <TokenIcon
-        :chain="chain"
-        :address="trade.token_sold.address"
-      ></TokenIcon>
-      <div>
-        <a
-          class="font-mono"
-          target="_blank"
-          :href="`https://etherscan.io/address/${trade.token_sold.address}`"
-        >
-          {{ trade.token_sold.symbol }}
-        </a>
-      </div>
+        <div class="end">{{ round(trade.amount_sold) }}</div>
+        <TokenIcon
+          :chain="chain"
+          :address="trade.token_sold.address"
+        ></TokenIcon>
+        <div>
+          <a
+            class="font-mono"
+            target="_blank"
+            :href="`https://etherscan.io/address/${trade.token_sold.address}`"
+          >
+            {{ trade.token_sold.symbol }}
+          </a>
+        </div>
 
-      <div>
-        <a
-          :href="`https://etherscan.io/address/${trade.buyer}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ addressShort(trade.buyer) }}
-        </a>
-      </div>
+        <div>
+          <a
+            :href="`https://etherscan.io/address/${trade.buyer}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(trade.buyer) }}
+          </a>
+        </div>
 
-      <div class="end">
-        <a
-          :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
-          target="_blank"
-          @click.stop
-        >
-          {{ relativeTime(trade.timestamp) }}
-        </a>
-      </div>
-    </template>
-  </DataTable>
+        <div class="end">
+          <a
+            :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ relativeTime(trade.timestamp) }}
+          </a>
+        </div>
+      </template>
+    </DataTable>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -116,13 +115,6 @@ const round = (x: number) =>
 .datatable-trades {
   --columns-data: minmax(5rem, 1fr) 26px minmax(5rem, 1fr) minmax(5rem, 1fr)
     26px minmax(5rem, 1fr) 6rem 6rem;
-
-  :deep(.header .header-content) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
 }
 </style>
 
