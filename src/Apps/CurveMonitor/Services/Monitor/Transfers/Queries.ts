@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { useSocketMonitorDefi } from "../SocketMonitorDefi";
 import {
   type CleanedTransfer,
@@ -14,11 +15,6 @@ export function useQueryTransfers() {
     () => ["defimonitor-transfers", url.value] as const
   );
 
-  // Always purge old data when using this query.
-  const queryClient = useQueryClient();
-  queryClient.setQueryData(queryKey.value, null);
-  void queryClient.invalidateQueries({ queryKey });
-
   return useQueryRx({
     queryKey,
     queryFn: () => service.value?.subTransfers(),
@@ -28,6 +24,6 @@ export function useQueryTransfers() {
       oldData: CleanedTransfer[] | undefined,
       blockSummary: USDCBlockSummary
     ) => [...(oldData ?? []), ...blockSummary.transfers.flat()],
-    staleTime: Infinity,
+    resetOnSubscribe: true,
   });
 }
