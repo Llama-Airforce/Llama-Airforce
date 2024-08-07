@@ -87,16 +87,14 @@ export function emitAndListen<
     : never
 >(
   socket: TSocket,
-  emitEvent: TEmit,
+  emitEvent: TEmit & string,
   listenEvent: TListen,
   ...args: Parameters<TClientToServerEvents[TEmit]>
 ): Promise<Parameters<TServerToClientEvents[TListen]>[0]> {
   if (!socket) return Promise.reject(new Error("No socket connection"));
 
   return new Promise((resolve) => {
-    // @ts-expect-error Socket is checked above, but TypeScript can't infer it
-    socket.once(listenEvent, resolve);
-    // @ts-expect-error Socket is checked above, but TypeScript can't infer it
+    socket.once(listenEvent as string, resolve);
     socket.emit(emitEvent, ...args);
   });
 }
