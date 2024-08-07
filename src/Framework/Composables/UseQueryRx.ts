@@ -124,6 +124,8 @@ export function useQueryRx<T, U = T>({
     staleTime: Infinity,
   });
 
+  const cleanup = useCleanup(queryKey, queryKeyString);
+
   /**
    * Clean up when the query becomes disabled to prevent memory leaks.
    * When the query becomes disabled, all the cleanups will eventually
@@ -150,55 +152,58 @@ export function useQueryRx<T, U = T>({
     }
   });
 
-  /*
-   * We start in a 'cleaned up' state until the usageCountSub has recorded a sub.
-   * This way calls the cleanup won't cause incorrect count management if there's no sub.
-   */
-  let isCleanedUp = true;
+  return query;
+}
 
-  // Whenever a resub happens, increase the usage count.
-  const usageCountSub = subscriptionSubject.subscribe((subscriptionRecord) => {
-    if (subscriptionRecord) {
-      subscriptionRecord.count++;
-      isCleanedUp = false;
+/**
+ * Manages cleanup of RxJS subscriptions and query cache for a specific query.
+ *
+ * @param queryKey - Ref containing the query key array
+ * @param queryKeyString - Ref containing the stringified query key
+ * @returns A cleanup function to be called when the query is disabled or component unmounts
+ */
+function useCleanup(
+  queryKey: Ref<readonly unknown[]>,
+  queryKeyString: Ref<string>
+) {
+  const queryClient = useQueryClient();
+
+  let subRecord: SubscriptionRecord | undefined;
+
+  // Subscribe to new subscription records and update the usage count
+  const newSubRecordSub = subscriptionSubject.subscribe((newSub) => {
+    subRecord = newSub;
+
+    if (subRecord) {
+      subRecord.count++;
     }
   });
 
   /**
-   * Tracks query usages. When no usages remain, unsubscribes and invalidates cache,
-   * ensuring queryFn resubscribes on next use.
+   * Decrements the subscription usage count and performs cleanup if necessary.
+   * If this was the last consumer, it unsubscribes, removes the record, and invalidates the query cache.
    */
   async function cleanup() {
-    // Prevent double cleanups by first checking if this specific query usage is subscribed at all.
-    if (isCleanedUp) {
+    if (!subRecord) {
       return;
     }
 
-    const record = subscriptions.get(queryKeyString.value);
-    if (!record) {
-      return;
-    }
+    subRecord.count--;
 
-    record.count--;
-
-    // Delete and unsubscribe if this was the last consumer of the sub.
-    if (record.count === 0) {
-      record.subscription.unsubscribe();
+    if (subRecord.count === 0) {
+      subRecord.subscription.unsubscribe();
       subscriptions.delete(queryKeyString.value);
       await queryClient.invalidateQueries({ queryKey });
     }
 
-    isCleanedUp = true;
+    subRecord = undefined;
   }
 
-  /**
-   * Cleanup subscriptions when the component is unmounted.
-   * This prevents memory leaks and unnecessary network activity.
-   */
+  // Ensure cleanup is performed when the component unmounts
   onUnmounted(async () => {
     await cleanup();
-    usageCountSub.unsubscribe();
+    newSubRecordSub.unsubscribe();
   });
 
-  return query;
+  return cleanup;
 }
