@@ -8,12 +8,10 @@ export function useQueryLabels() {
   );
   const queryKey = computed(() => ["mev-labels", url.value] as const);
 
-  return useQueryRx({
+  return useQuery({
     queryKey,
     queryFn: () => service.value?.getLabels(),
     enabled: isConnected,
-    observable: computed(() => service.value?.labels$),
-    setQueryData: (_, x) => x,
   });
 }
 
@@ -24,11 +22,9 @@ export function useQuerySandwiches() {
   );
   const queryKey = computed(() => ["mev-sandwiches-tx", url.value] as const);
 
-  return useQueryRx({
+  return useQuery({
     queryKey,
     queryFn: () => service.value?.getSandwiches(),
     enabled: isConnected,
-    observable: computed(() => service.value?.sandwiches$),
-    setQueryData: (_, x) => x,
   });
 }

@@ -1,33 +1,32 @@
-import { createObservable } from "@/Services/Socket";
-import type {
-  SocketMonitorCurve,
-  ServerToClientEvents,
-} from "../SocketMonitorCurve";
-
-type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
-  typeof createObservable<ServerToClientEvents, T>
->;
+import { emitAndListen } from "@/Services/Socket";
+import type { SocketMonitorCurve } from "../SocketMonitorCurve";
 
 export default class MEVService {
-  public readonly sandwiches$: SocketObservable<"fullSandwichTableContent">;
-  public readonly labels$: SocketObservable<"sandwichLabelOccurrences">;
-  public readonly labelsRanking$: SocketObservable<"absoluteLabelsRanking">;
-
-  constructor(private socket: SocketMonitorCurve) {
-    this.sandwiches$ = createObservable(socket, "fullSandwichTableContent");
-    this.labels$ = createObservable(socket, "sandwichLabelOccurrences");
-    this.labelsRanking$ = createObservable(socket, "absoluteLabelsRanking");
-  }
+  constructor(private socket: SocketMonitorCurve) {}
 
   getSandwiches() {
-    this.socket.emit("getFullSandwichTableContent", "full", 1);
+    return emitAndListen(
+      this.socket,
+      "getFullSandwichTableContent",
+      "fullSandwichTableContent",
+      "full",
+      1
+    );
   }
 
   getLabels() {
-    this.socket.emit("getSandwichLabelOccurrences");
+    return emitAndListen(
+      this.socket,
+      "getSandwichLabelOccurrences",
+      "sandwichLabelOccurrences"
+    );
   }
 
   getLabelsRanking() {
-    this.socket.emit("getAbsoluteLabelsRanking");
+    return emitAndListen(
+      this.socket,
+      "getAbsoluteLabelsRanking",
+      "absoluteLabelsRanking"
+    );
   }
 }
