@@ -1,4 +1,4 @@
-import type { Observable, Subscription } from "rxjs";
+import { type Observable, type Subscription, BehaviorSubject } from "rxjs";
 
 /** Options for useQueryRx function */
 type UseQueryRxOptions<T, U = T> = {
@@ -34,6 +34,11 @@ type SubscriptionRecord = {
 /** Global map to store and manage shared subscriptions across multiple query instances */
 const subscriptions = new Map<string, SubscriptionRecord>();
 
+/** Event emitter in case a refetch has created a new sub, use it to increase usage counts */
+const subscriptionSubject = new BehaviorSubject<SubscriptionRecord | undefined>(
+  undefined
+);
+
 /**
  * Combines Vue Query with never ending RxJS Observables for reactive data fetching and updates.
  *
@@ -41,6 +46,7 @@ const subscriptions = new Map<string, SubscriptionRecord>();
  * 1. Subscription to RxJS Observable for real-time updates.
  * 2. Automatic query cache updates when new data arrives.
  * 3. Shared subscription management across multiple query instances.
+ * 4. Automatic cleanup of subscriptions when no longer needed.
  *
  * It's suited for scenarios requiring live updates from streaming data sources,
  * such as WebSocket connections.
@@ -61,6 +67,7 @@ const subscriptions = new Map<string, SubscriptionRecord>();
  *   resetOnSubscribe: true,
  * });
  */
+// eslint-disable-next-line max-lines-per-function
 export function useQueryRx<T, U = T>({
   queryKey,
   queryFn,
@@ -73,9 +80,6 @@ export function useQueryRx<T, U = T>({
 
   const queryKeyString = computed(() => JSON.stringify(queryKey.value));
   const queryEnabled = computed(() => enabled.value && !!observable.value);
-
-  // Flag for this specific usQuery instance to prevent double cleanups.
-  let isSubscribed = false;
 
   const query = useQuery({
     queryKey,
@@ -104,12 +108,15 @@ export function useQueryRx<T, U = T>({
               reject(error instanceof Error ? error : new Error(String(error)));
             },
           }),
-          // Count is 1 if it's new, otherwise it stays the same since it was a resub.
-          count: record?.count ?? 1,
+          /*
+           * A resub always starts with a new count.
+           * subscriptionSubject subscriptions should increase it again.
+           */
+          count: 0,
         };
 
         subscriptions.set(queryKeyString.value, record);
-        isSubscribed = true;
+        subscriptionSubject.next(record);
 
         queryFn();
       }),
@@ -117,7 +124,12 @@ export function useQueryRx<T, U = T>({
     staleTime: Infinity,
   });
 
-  /** Clean up when the query becomes disabled to prevent memory leaks */
+  /**
+   * Clean up when the query becomes disabled to prevent memory leaks.
+   * When the query becomes disabled, all the cleanups will eventually
+   * trigger a cache invalidation, and when it becomes enabled again
+   * the queryFn will create a new subscription.
+   */
   watch(queryEnabled, async (newQueryEnabled) => {
     if (!newQueryEnabled) {
       await cleanup();
@@ -138,12 +150,18 @@ export function useQueryRx<T, U = T>({
     }
   });
 
-  /**
-   * Cleanup subscriptions when the component is unmounted.
-   * This prevents memory leaks and unnecessary network activity.
+  /*
+   * We start in a 'cleaned up' state until the usageCountSub has recorded a sub.
+   * This way calls the cleanup won't cause incorrect count management if there's no sub.
    */
-  onUnmounted(async () => {
-    await cleanup();
+  let isCleanedUp = true;
+
+  // Whenever a resub happens, increase the usage count.
+  const usageCountSub = subscriptionSubject.subscribe((subscriptionRecord) => {
+    if (subscriptionRecord) {
+      subscriptionRecord.count++;
+      isCleanedUp = false;
+    }
   });
 
   /**
@@ -151,11 +169,8 @@ export function useQueryRx<T, U = T>({
    * ensuring queryFn resubscribes on next use.
    */
   async function cleanup() {
-    /*
-     * Prevent double cleanups by first checking if this specific query usage
-     * is subscribed at all.
-     */
-    if (!isSubscribed) {
+    // Prevent double cleanups by first checking if this specific query usage is subscribed at all.
+    if (isCleanedUp) {
       return;
     }
 
@@ -173,8 +188,17 @@ export function useQueryRx<T, U = T>({
       await queryClient.invalidateQueries({ queryKey });
     }
 
-    isSubscribed = false;
+    isCleanedUp = true;
   }
+
+  /**
+   * Cleanup subscriptions when the component is unmounted.
+   * This prevents memory leaks and unnecessary network activity.
+   */
+  onUnmounted(async () => {
+    await cleanup();
+    usageCountSub.unsubscribe();
+  });
 
   return query;
 }
