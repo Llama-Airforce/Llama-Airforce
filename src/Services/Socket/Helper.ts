@@ -71,10 +71,20 @@ type SocketObservableT<
  */
 export function emitAndListen<
   TSocket extends Socket,
-  TServerToClientEvents extends EventMap,
-  TClientToServerEvents extends EventMap,
   TEmit extends keyof TClientToServerEvents,
-  TListen extends keyof TServerToClientEvents
+  TListen extends keyof TServerToClientEvents,
+  TServerToClientEvents extends EventMap = TSocket extends Socket<
+    infer S,
+    never
+  >
+    ? S
+    : never,
+  TClientToServerEvents extends EventMap = TSocket extends Socket<
+    never,
+    infer C
+  >
+    ? C
+    : never
 >(
   socket: TSocket,
   emitEvent: TEmit,
