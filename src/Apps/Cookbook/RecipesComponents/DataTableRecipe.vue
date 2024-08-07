@@ -10,7 +10,6 @@
           :loading="isLoading"
           :expanded="expandedRows"
           expand-side="right"
-          icon="fa fa-table"
           @sort-column="onSort"
           @selected="onSelected"
         >

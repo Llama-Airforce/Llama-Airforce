@@ -8,13 +8,6 @@
       v-if="header"
       class="header"
     >
-      <div
-        v-if="icon"
-        class="header-icon"
-      >
-        <i :class="icon"></i>
-      </div>
-
       <div class="header-content">
         <slot name="header-content"></slot>
       </div>
@@ -168,7 +161,6 @@ const {
     order: "asc",
   },
 
-  icon = "",
   header = true,
   loading = null,
 } = defineProps<Props>();
@@ -278,25 +270,13 @@ const sortColumn = (column: Column): void => {
   > .header {
     padding: 0 0 0.875rem 0rem;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
-
-    > .header-icon {
-      grid-column: 1;
-
-      display: flex;
-      align-items: center;
-      color: var(--c-primary);
-
-      &:not(:empty) {
-        margin-right: 1rem;
-      }
-    }
 
     > .header-content {
       grid-template-columns: var(--columns-header);
 
-      grid-column: 2;
+      grid-column: 1;
       display: grid;
       align-items: center;
       height: 2.5rem;
