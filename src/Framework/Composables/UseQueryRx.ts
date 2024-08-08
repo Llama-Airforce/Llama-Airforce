@@ -1,3 +1,4 @@
+import { uniqueId } from "lodash";
 import { type Observable, type Subscription, BehaviorSubject } from "rxjs";
 
 /** Options for useQueryRx function */
@@ -25,10 +26,10 @@ type UseQueryRxOptions<T, U = T> = {
   resetOnSubscribe: boolean;
 };
 
-/** Represents a record of an RxJS subscription with a reference count */
+/** Represents a record of an RxJS subscription with all its usages. */
 type SubscriptionRecord = {
   subscription: Subscription;
-  count: number;
+  users: Set<string>;
 };
 
 /** Global map to store and manage shared subscriptions across multiple query instances */
@@ -109,10 +110,10 @@ export function useQueryRx<T, U = T>({
             },
           }),
           /*
-           * A resub always starts with a new count.
+           * A resubscription always starts with an empty usage set.
            * subscriptionSubject subscriptions should increase it again.
            */
-          count: 0,
+          users: new Set<string>(),
         };
 
         subscriptions.set(queryKeyString.value, record);
@@ -122,20 +123,6 @@ export function useQueryRx<T, U = T>({
       }),
     enabled: queryEnabled,
     staleTime: Infinity,
-  });
-
-  const cleanup = useCleanup(queryKey, queryKeyString);
-
-  /**
-   * Clean up when the query becomes disabled to prevent memory leaks.
-   * When the query becomes disabled, all the cleanups will eventually
-   * trigger a cache invalidation, and when it becomes enabled again
-   * the queryFn will create a new subscription.
-   */
-  watch(queryEnabled, async (newQueryEnabled) => {
-    if (!newQueryEnabled) {
-      await cleanup();
-    }
   });
 
   /**
@@ -152,54 +139,71 @@ export function useQueryRx<T, U = T>({
     }
   });
 
+  useCleanup(queryKey, queryKeyString, queryEnabled);
+
   return query;
 }
 
 /**
- * Manages cleanup of RxJS subscriptions and query cache for a specific query.
+ * Handles cleanup of RxJS subscriptions and query cache for a specific query.
  *
  * @param queryKey - Ref containing the query key array
  * @param queryKeyString - Ref containing the stringified query key
- * @returns A cleanup function to be called when the query is disabled or component unmounts
+ * @param queryEnabled - Ref indicating if the query is enabled
+ * @returns A cleanup function to be called when the query is disabled or the component unmounts
  */
 function useCleanup(
   queryKey: Ref<readonly unknown[]>,
-  queryKeyString: Ref<string>
+  queryKeyString: Ref<string>,
+  queryEnabled: Ref<boolean>
 ) {
   const queryClient = useQueryClient();
+  const userId = uniqueId();
 
   let subRecord: SubscriptionRecord | undefined;
 
-  // Subscribe to new subscription records and update the usage count
+  // Subscribe to new subscription records and update the usage set.
   const newSubRecordSub = subscriptionSubject.subscribe((newSub) => {
     subRecord = newSub;
 
-    if (subRecord) {
-      subRecord.count++;
+    if (subRecord && queryEnabled.value) {
+      subRecord.users.add(userId);
+    }
+  });
+
+  // Clean up on query disable to prevent bandwidth consumption, add usage on re-enable.
+  watch(queryEnabled, async (newQueryEnabled) => {
+    if (!newQueryEnabled) {
+      await cleanup();
+    } else if (subRecord) {
+      subRecord.users.add(userId);
     }
   });
 
   /**
-   * Decrements the subscription usage count and performs cleanup if necessary.
-   * If this was the last consumer, it unsubscribes, removes the record, and invalidates the query cache.
+   * Decrement the subscription usage count and perform cleanup if necessary.
+   * If this was the last consumer, unsubscribe, remove the record, and invalidate the query cache.
    */
   async function cleanup() {
     if (!subRecord) {
       return;
     }
 
-    subRecord.count--;
+    subRecord.users.delete(userId);
 
-    if (subRecord.count === 0) {
+    if (subRecord.users.size === 0) {
+      /*
+       * Unsubscribe the original subscription to release resources,
+       * just in case the query does not get refetched and unsubscribed there.
+       */
       subRecord.subscription.unsubscribe();
+
       subscriptions.delete(queryKeyString.value);
       await queryClient.invalidateQueries({ queryKey });
     }
-
-    subRecord = undefined;
   }
 
-  // Ensure cleanup is performed when the component unmounts
+  // Ensure cleanup is performed when the component unmounts to prevent memory leaks.
   onUnmounted(async () => {
     await cleanup();
     newSubRecordSub.unsubscribe();
