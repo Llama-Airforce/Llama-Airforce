@@ -6,16 +6,18 @@
     :loading
     :title="t('title')"
   >
-    <div
-      class="selector"
-      :class="{ loading }"
-    >
-      <SelectChain
-        :chain="chain"
-        @select-chain="onSelectChain"
+    <template #actions>
+      <div
+        class="selector"
+        :class="{ loading }"
       >
-      </SelectChain>
-    </div>
+        <SelectChain
+          :chain="chain"
+          @select-chain="onSelectChain"
+        >
+        </SelectChain>
+      </div>
+    </template>
   </CardChart>
 </template>
 
@@ -107,7 +109,7 @@ const onSelectChain = (newChain: Chain | "all"): void => {
 @import "@/Styles/Variables.scss";
 
 .graph {
-  height: calc(100% - 2.5rem);
+  --header-columns: auto auto;
 
   .selector {
     padding-left: 10px;

@@ -10,44 +10,39 @@
     ></Spinner>
 
     <div
-      class="card-container"
-      :class="{ loading }"
+      v-if="title || $slots.title || $slots.actions"
+      class="card-header"
+      :class="{ collapsible }"
     >
-      <div
-        v-if="title || $slots.title || $slots.actions"
-        class="card-header"
-        :class="{ collapsible }"
-      >
-        <slot name="title">
-          <div
-            v-if="title"
-            class="title"
-          >
-            <i
-              v-if="icon"
-              class="icon"
-              :class="icon"
-            ></i>
-            {{ title }}
-          </div>
-        </slot>
+      <slot name="title">
+        <div
+          v-if="title"
+          class="title"
+        >
+          <i
+            v-if="icon"
+            class="icon"
+            :class="icon"
+          ></i>
+          {{ title }}
+        </div>
+      </slot>
 
-        <slot name="actions"></slot>
-      </div>
+      <slot name="actions"></slot>
+    </div>
 
-      <!-- Just for margin reasons -->
-      <div
-        v-else
-        class="card-no-header"
-        :class="{ compact }"
-      ></div>
+    <!-- Just for margin reasons -->
+    <div
+      v-else
+      class="card-no-header"
+      :class="{ compact }"
+    ></div>
 
-      <div
-        class="card-body"
-        :class="{ compact, collapsed }"
-      >
-        <slot></slot>
-      </div>
+    <div
+      class="card-body"
+      :class="{ compact, collapsed }"
+    >
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -82,13 +77,19 @@ const {
   position: relative;
 
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
+  flex-grow: 1;
+
+  background: var(--c-lvl1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--container-box-shadow);
 
   $card-margin-width: 1.125rem;
   $card-margin-height: 0.875rem;
 
   --header-columns: 1fr auto;
+
+  @include loading-backdrop();
 
   > .loader {
     position: absolute;
@@ -98,72 +99,59 @@ const {
     @include loading-spinner();
   }
 
-  > .card-container {
+  :deep(.card-header) {
+    display: grid;
+    grid-template-columns: var(--header-columns);
+    gap: 1rem;
+    align-items: center;
+
+    font-size: 0.875rem;
+    height: 2.5rem;
+    margin: $card-margin-height $card-margin-width;
+
+    &.collapsible {
+      margin-bottom: $card-margin-height;
+    }
+
+    > .icon {
+      font-size: 1.125rem;
+      color: var(--c-primary);
+      padding-right: 0.5rem;
+    }
+
+    > .title {
+      font-size: 1.125rem;
+      font-weight: bold;
+      color: var(--c-text);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  > .card-no-header {
+    margin-top: $card-margin-height;
+
+    &.compact {
+      margin-top: 0;
+    }
+  }
+
+  > .card-body {
     display: flex;
-    flex-direction: column;
     flex-grow: 1;
-    justify-content: stretch;
+    margin: 0 $card-margin-width $card-margin-height $card-margin-width;
 
-    background: var(--c-lvl1);
-    border-radius: var(--border-radius);
-    box-shadow: var(--container-box-shadow);
-
-    @include loading-backdrop();
-
-    :deep(.card-header) {
-      display: grid;
-      grid-template-columns: var(--header-columns);
-      gap: 1rem;
-      align-items: center;
-
-      font-size: 0.875rem;
-      height: 2.5rem;
-      margin: $card-margin-height $card-margin-width;
-
-      &.collapsible {
-        margin-bottom: $card-margin-height;
-      }
-
-      > .icon {
-        font-size: 1.125rem;
-        color: var(--c-primary);
-        padding-right: 0.5rem;
-      }
-
-      > .title {
-        font-size: 1.125rem;
-        font-weight: bold;
-        color: var(--c-text);
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-    }
-
-    > .card-no-header {
-      margin-top: $card-margin-height;
-
-      &.compact {
-        margin-top: 0;
-      }
-    }
-
-    > .card-body {
-      display: flex;
-      flex-grow: 1;
+    @media only screen and (max-width: 1280px) {
       margin: 0 $card-margin-width $card-margin-height $card-margin-width;
+    }
 
-      @media only screen and (max-width: 1280px) {
-        margin: 0 $card-margin-width $card-margin-height $card-margin-width;
-      }
+    &.compact {
+      margin: 0;
+    }
 
-      &.compact {
-        margin: 0;
-      }
-
-      &.collapsed {
-        margin: 0 $card-margin-width;
-      }
+    &.collapsed {
+      margin: 0 $card-margin-width;
     }
   }
 

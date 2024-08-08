@@ -76,7 +76,7 @@ const onMarketSelect = async (newMarket: Market) => {
     flex-direction: column;
     gap: var(--dashboard-gap);
 
-    div {
+    .card {
       flex-grow: 0;
     }
   }
@@ -88,10 +88,6 @@ const onMarketSelect = async (newMarket: Market) => {
     @media only screen and (max-width: 1280px) {
       display: flex;
       flex-direction: column;
-    }
-
-    div {
-      flex-grow: 1;
     }
   }
 
