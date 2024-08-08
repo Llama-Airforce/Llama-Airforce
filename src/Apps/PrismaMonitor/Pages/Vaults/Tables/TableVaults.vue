@@ -22,6 +22,7 @@
         { label: 'Troves', align: 'end' },
         { label: 'Price', align: 'end' },
       ]"
+      @selected="emit('selected', $event)"
     >
       <template #row="props: { item: Row }">
         <img :src="icon(props.item.address)" />
@@ -146,6 +147,11 @@ import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 const { t } = useI18n();
 
 type Row = TroveManagerDetails;
+
+// Emit
+const emit = defineEmits<{
+  selected: [vault: Row];
+}>();
 
 // Stores
 const storeSettings = useSettingsStore();

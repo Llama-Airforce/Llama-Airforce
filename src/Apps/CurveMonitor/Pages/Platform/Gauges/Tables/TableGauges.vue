@@ -7,6 +7,7 @@
       :sorting
       :expanded="expanded"
       @sort-column="onSort"
+      @selected="emit('selected', $event)"
     >
       <template #row="props: { item: Gauge }">
         <div>{{ shorten(props.item.name) }}</div>
@@ -42,6 +43,11 @@ import { shorten } from "@/Util";
 import ChartEmissions from "@CM/Pages/Platform/Gauges/Charts/ChartEmissions.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
+
+// Emit
+const emit = defineEmits<{
+  selected: [market: Gauge];
+}>();
 
 // Props
 interface Props {

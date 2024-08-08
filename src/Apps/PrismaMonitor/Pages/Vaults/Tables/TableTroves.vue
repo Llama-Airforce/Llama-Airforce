@@ -33,6 +33,7 @@
       :columns
       :sorting
       @sort-column="onSort"
+      @selected="emit('selected', $event)"
     >
       <template #row="props: { item: Row }">
         <div>
@@ -108,6 +109,11 @@ import {
 type Row = Trove;
 
 const { t } = useI18n();
+
+// Emit
+const emit = defineEmits<{
+  selected: [trove: Row];
+}>();
 
 // Stores
 const storeSettings = useSettingsStore();

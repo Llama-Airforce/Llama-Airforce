@@ -18,6 +18,7 @@
       :columns
       :sorting
       @sort-column="onSort"
+      @selected="emit('selected', $event)"
     >
       <template #row="{ item: pool }: { item: Row }">
         <div class="tokens">
@@ -73,6 +74,11 @@ import { type Pool } from "@CM/Services/Pools";
 type Row = Pool;
 
 const { t } = useI18n();
+
+// Emit
+const emit = defineEmits<{
+  selected: [pool: Row];
+}>();
 
 // Props
 interface Props {

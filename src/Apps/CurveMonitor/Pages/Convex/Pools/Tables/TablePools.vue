@@ -7,6 +7,7 @@
       :sorting
       :expanded="expanded"
       @sort-column="onSort"
+      @selected="emit('selected', $event)"
     >
       <template #row="props: { item: Pool }">
         <div>{{ shorten(props.item.name) }}</div>
@@ -55,6 +56,11 @@ import { totalApr } from "@CM/Pages/Convex/Pools/Util/PoolHelper";
 import { useConvexStore } from "@CM/Pages/Convex/Store";
 
 const { t } = useI18n();
+
+// Emit
+const emit = defineEmits<{
+  selected: [market: Pool];
+}>();
 
 // Props
 interface Props {

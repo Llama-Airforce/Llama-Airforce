@@ -25,6 +25,7 @@
         { label: 'Fees Pending', align: 'end' },
         { label: 'Fees Collected', align: 'end' },
       ]"
+      @selected="emit('selected', $event)"
     >
       <template #row="props: { item: Row }">
         <div>{{ props.item.name }}</div>
@@ -128,6 +129,11 @@ import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 const { t } = useI18n();
 
 type Row = Market;
+
+// Emit
+const emit = defineEmits<{
+  selected: [market: Row];
+}>();
 
 // Refs
 const search = ref("");

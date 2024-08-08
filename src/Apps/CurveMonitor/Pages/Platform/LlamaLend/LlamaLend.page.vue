@@ -199,7 +199,11 @@ onMounted(() => {
 const router = useRouter();
 
 // Market selection
-const onMarketSelect = async (newMarket: Market) => {
+const onMarketSelect = async (newMarket: Market | undefined) => {
+  if (!newMarket) {
+    return;
+  }
+
   await router.push({
     name: "llamalendmarket",
     params: {

@@ -14,6 +14,7 @@
         { label: 'TVL', align: 'end' },
         { label: 'Loans', align: 'end' },
       ]"
+      @selected="emit('selected', $event)"
     >
       <template #row="{ item: market }: { item: Market }">
         <template v-if="market">
@@ -88,6 +89,11 @@ import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 type Row = Market | undefined;
 
 const { t } = useI18n();
+
+// Emit
+const emit = defineEmits<{
+  selected: [market: Row];
+}>();
 
 // Props
 interface Props {
