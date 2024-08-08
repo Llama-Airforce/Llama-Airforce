@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-deposits"
+      class="deposits-table"
       :loading="loading"
       :rows="rows"
       :columns="[
@@ -83,7 +83,7 @@ const rows = computed((): PoolStableOperation[] =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-deposits {
+.deposits-table {
   --columns-data: 1fr 1fr 1fr 1fr;
 }
 </style>

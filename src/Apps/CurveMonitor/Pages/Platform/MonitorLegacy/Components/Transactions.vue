@@ -35,7 +35,7 @@
     </template>
 
     <DataTable
-      class="datatable-trades"
+      class="trades-table"
       :class="{ compact, time }"
       :rows="rowsPage"
       :columns="columns"
@@ -248,7 +248,7 @@ const onType = (tabIndex: number) => {
   }
 }
 
-.datatable-trades {
+.trades-table {
   --columns-header: 1fr 2fr;
   --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
     minmax(10rem, 0.75fr);

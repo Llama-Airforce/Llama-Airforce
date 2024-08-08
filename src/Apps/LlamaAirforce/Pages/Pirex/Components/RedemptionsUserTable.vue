@@ -1,6 +1,6 @@
 <template>
   <DataTable
-    class="datatable-redemptions-user"
+    class="redemptions-user-table"
     :columns="[
       { label: 'Unlock', align: 'end' },
       { label: 'Amount', align: 'end' },
@@ -110,7 +110,7 @@ function balance(redemption: RedemptionPending) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-redemptions-user {
+.redemptions-user-table {
   --columns-data: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
   padding: 0;
 

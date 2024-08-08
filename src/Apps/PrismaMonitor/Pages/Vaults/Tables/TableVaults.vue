@@ -10,7 +10,7 @@
     </template>
 
     <DataTable
-      class="datatable-vaults"
+      class="vaults-table"
       :loading="loading"
       :rows="rows"
       :columns="[
@@ -185,7 +185,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-vaults {
+.vaults-table {
   --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
 
   --col-width: 11ch;

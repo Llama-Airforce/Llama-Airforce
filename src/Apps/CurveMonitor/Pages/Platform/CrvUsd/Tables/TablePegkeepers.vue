@@ -11,7 +11,7 @@
     </template>
 
     <DataTable
-      class="datatable-pegkeepers"
+      class="pegkeepers-table"
       :loading
       :rows
       :columns="[
@@ -184,7 +184,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   margin-left: 1rem;
 }
 
-.datatable-pegkeepers {
+.pegkeepers-table {
   --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
 
   --col-width: 12ch;

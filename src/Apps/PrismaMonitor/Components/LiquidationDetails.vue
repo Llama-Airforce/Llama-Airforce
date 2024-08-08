@@ -42,7 +42,7 @@
         </template>
 
         <DataTable
-          class="datatable-troves-affected"
+          class="troves-affected-table"
           :rows="rows"
           :columns="['Trove']"
         >
@@ -116,7 +116,7 @@ const rows = computed((): string[] =>
     }
   }
 
-  > .datatable-troves-affected {
+  > .troves-affected-table {
     --columns-header: 2fr 1fr;
     --columns-data: 1fr;
 

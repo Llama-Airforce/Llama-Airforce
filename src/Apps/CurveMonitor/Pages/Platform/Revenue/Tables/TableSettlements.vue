@@ -12,7 +12,7 @@
     </template>
 
     <DataTable
-      class="datatable-settlements"
+      class="settlements-table"
       :rows="rowsPage"
       :columns
       :sorting
@@ -184,7 +184,7 @@ function symbol(settlement: CowSwapSettlement) {
   align-items: center;
 }
 
-.datatable-settlements {
+.settlements-table {
   --columns-data: minmax(5rem, 1fr) minmax(10ch, 1fr) minmax(10ch, 1fr)
     minmax(10ch, 1fr) 10ch minmax(5rem, 0.75fr) 16ch 20px;
 

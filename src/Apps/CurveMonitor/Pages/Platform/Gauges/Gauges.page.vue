@@ -1,7 +1,7 @@
 <template>
   <div class="gauges">
     <TableGauges
-      class="datatable-gauges"
+      class="gauges-table"
       :expanded="expanded"
       @selected="onSelected"
     ></TableGauges>
@@ -113,7 +113,7 @@ const onSelected = async (gauge: Gauge): Promise<void> => {
 .gauges {
   max-width: calc(1920px - 18.125rem);
 
-  .datatable-gauges {
+  .gauges-table {
     grid-column: 1;
     grid-row: 1;
   }

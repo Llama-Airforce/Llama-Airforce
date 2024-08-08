@@ -1,7 +1,7 @@
 <template>
   <Card :title>
     <DataTable
-      class="datatable-markets"
+      class="markets-table"
       expand-side="left"
       :loading
       :rows="markets"
@@ -137,7 +137,7 @@ const tokenIcon = (market: Market) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-markets {
+.markets-table {
   --col-width: 10ch;
   --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)

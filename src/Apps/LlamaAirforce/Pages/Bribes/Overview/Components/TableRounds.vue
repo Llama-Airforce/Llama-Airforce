@@ -5,7 +5,7 @@
     </template>
 
     <DataTable
-      class="datatable-bribe-rounds"
+      class="bribe-rounds-table"
       :rows="epochs"
       :columns
       :sorting
@@ -142,7 +142,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-bribe-rounds {
+.bribe-rounds-table {
   --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr 1fr 1fr;
 

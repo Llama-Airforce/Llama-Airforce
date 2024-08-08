@@ -19,7 +19,7 @@
     </template>
 
     <DataTable
-      class="datatable-liquidations"
+      class="liquidations-table"
       :loading="loading"
       :rows="rowsPage"
       :columns
@@ -178,7 +178,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-liquidations {
+.liquidations-table {
   --columns-header: 1fr 2fr;
 
   --col-width: 11ch;

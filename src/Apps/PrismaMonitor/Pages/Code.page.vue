@@ -2,7 +2,7 @@
   <div class="contracts">
     <Card :title="t('repositories')">
       <DataTable
-        class="datatable-repositories"
+        class="repositories-table"
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
       >
@@ -53,7 +53,7 @@ const repositories: Repository[] = [
   flex-direction: column;
   gap: var(--dashboard-gap);
 
-  .datatable-repositories {
+  .repositories-table {
     --columns-data: 2fr 6fr;
   }
 }

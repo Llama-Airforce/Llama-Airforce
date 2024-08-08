@@ -11,7 +11,7 @@
     </template>
 
     <DataTable
-      class="datatable-markets"
+      class="markets-table"
       expand-side="left"
       :loading
       :rows
@@ -164,7 +164,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   margin-left: 1rem;
 }
 
-.datatable-markets {
+.markets-table {
   --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
 
   --col-width: 11ch;

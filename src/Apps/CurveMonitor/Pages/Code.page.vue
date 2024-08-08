@@ -2,7 +2,7 @@
   <div class="contracts">
     <Card :title="t('repositories')">
       <DataTable
-        class="datatable-repositories"
+        class="repositories-table"
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
         title="Yolo"
@@ -24,7 +24,7 @@
 
     <Card :title="t('apis')">
       <DataTable
-        class="datatable-apis"
+        class="apis-table"
         columns-data="apis-columns-data"
         :rows="apis"
         :columns="[t('api'), t('description')]"
@@ -50,7 +50,7 @@
       :title="t(bundle.name)"
     >
       <DataTable
-        class="datatable-contracts"
+        class="contracts-table"
         columns-header="1fr"
         columns-data="contracts-columns-data"
         :rows="bundle.contracts"
@@ -181,15 +181,15 @@ const linkContract = (contract: Contract): string => {
   flex-direction: column;
   gap: var(--dashboard-gap);
 
-  .datatable-contracts {
+  .contracts-table {
     --columns-data: 3fr 4fr;
   }
 
-  .datatable-apis {
+  .apis-table {
     --columns-data: 3fr 4fr;
   }
 
-  .datatable-repositories {
+  .repositories-table {
     --columns-data: 2fr 6fr;
   }
 }

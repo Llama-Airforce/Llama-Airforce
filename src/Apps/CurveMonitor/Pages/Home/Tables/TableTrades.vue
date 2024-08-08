@@ -1,7 +1,7 @@
 <template>
   <Card title="Largest Trades">
     <DataTable
-      class="datatable-trades"
+      class="trades-trades"
       :rows="trades"
       :columns="['Tx', 'Name', { label: 'Value', align: 'end' }]"
     >
@@ -43,7 +43,7 @@ const { data: trades } = useQueryTradesLarge();
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-trades {
+.trades-trades {
   --columns-data: 6rem 1fr auto;
 }
 </style>

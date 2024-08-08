@@ -12,7 +12,7 @@
     </template>
 
     <DataTable
-      class="datatable-pools"
+      class="pools-table"
       expand-side="left"
       :rows="rowsPage"
       :columns
@@ -130,7 +130,7 @@ function utilRate(pool: Pool) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-pools {
+.pools-table {
   --columns-header: 1fr auto;
 
   --col-width: 11ch;

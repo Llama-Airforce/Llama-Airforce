@@ -21,12 +21,12 @@
       ></ChartBribesRound>
 
       <TablePersonal
-        class="datatable-personal"
+        class="personal-table"
         :epoch="epoch"
       ></TablePersonal>
 
       <TableBribed
-        class="datatable-bribed"
+        class="bribed-table"
         :epoch="epoch"
       ></TableBribed>
     </div>
@@ -217,11 +217,11 @@ function initFromRouter() {
       height: 370px;
     }
 
-    .datatable-bribed {
+    .bribed-table {
       grid-column: 1;
     }
 
-    .datatable-personal {
+    .personal-table {
       grid-column: 2;
       grid-row: calc(var(--offset) + 4);
     }

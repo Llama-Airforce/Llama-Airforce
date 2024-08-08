@@ -28,7 +28,7 @@
     </template>
 
     <DataTable
-      class="datatable-personal"
+      class="personal-table"
       :rows="bribedOrdered"
       :columns
       :sorting
@@ -308,7 +308,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
   margin-right: 1rem;
 }
 
-.datatable-personal {
+.personal-table {
   --columns-header: 1fr auto;
   --columns-data: 1fr 3fr 2fr 2fr;
 

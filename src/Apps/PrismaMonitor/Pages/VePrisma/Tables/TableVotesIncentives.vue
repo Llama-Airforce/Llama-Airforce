@@ -10,7 +10,7 @@
     </template>
 
     <DataTable
-      class="datatable-votes-incentives"
+      class="votes-incentives-table"
       :loading="loading"
       :rows="rowsPage"
       :columns="columns"
@@ -109,7 +109,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-votes-incentives {
+.votes-incentives-table {
   --columns-header: 1fr minmax(auto, 25rem) auto;
 
   --col-width: 11ch;

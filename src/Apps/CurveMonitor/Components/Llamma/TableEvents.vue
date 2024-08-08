@@ -10,7 +10,7 @@
     </template>
 
     <DataTable
-      class="datatable-events"
+      class="events-table"
       :rows="events"
       :columns="[
         'Type',
@@ -88,7 +88,7 @@ const type = (x: LlammaEvent) =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-events {
+.events-table {
   --columns-data: 8rem 1fr 1fr 6rem 6rem;
 }
 </style>

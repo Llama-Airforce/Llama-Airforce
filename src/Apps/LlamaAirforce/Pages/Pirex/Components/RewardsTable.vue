@@ -1,6 +1,6 @@
 <template>
   <DataTable
-    class="datatable-rewards"
+    class="rewards-table"
     :class="{ 'can-select': canSelect }"
     :columns
     :rows="rewards"
@@ -77,7 +77,7 @@ function isSelected(reward: Reward) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-rewards {
+.rewards-table {
   --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
 
   padding: 0;

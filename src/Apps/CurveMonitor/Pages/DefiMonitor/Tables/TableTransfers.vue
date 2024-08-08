@@ -23,7 +23,7 @@
     </template>
 
     <DataTable
-      class="datatable-transfers"
+      class="transfers-table"
       :rows="rowsPage"
       :columns="[
         'Hash',
@@ -166,7 +166,7 @@ const clipboard = async (addr: string) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-transfers {
+.transfers-table {
   --columns-header: 1fr 2fr;
   --columns-data: minmax(6rem, 1fr) minmax(5rem, 1fr) 5rem minmax(5rem, 1fr)
     minmax(5rem, 1fr) minmax(5rem, 1fr) calc(26px + 8rem) minmax(5rem, 1fr);

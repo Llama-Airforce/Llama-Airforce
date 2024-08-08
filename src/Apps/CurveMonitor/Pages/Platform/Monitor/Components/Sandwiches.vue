@@ -22,7 +22,7 @@
     </template>
 
     <DataTable
-      class="datatable-sandwiches"
+      class="sandwiches-table"
       :rows="sandwiches"
       :columns="[
         'Pool',
@@ -177,7 +177,7 @@ const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
   }
 }
 
-.datatable-sandwiches {
+.sandwiches-table {
   --columns-header: 1fr 2fr;
   --columns-data: 16rem 1fr 16rem 8rem 1rem;
 

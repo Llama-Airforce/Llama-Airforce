@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-withdrawals"
+      class="withdrawals-table"
       :loading="loading"
       :rows="rows"
       :columns="[
@@ -83,7 +83,7 @@ const { isFetching: loading, data } = useQuery({
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-withdrawals {
+.withdrawals-table {
   --columns-data: 1fr 1fr 1fr 1fr;
 }
 </style>

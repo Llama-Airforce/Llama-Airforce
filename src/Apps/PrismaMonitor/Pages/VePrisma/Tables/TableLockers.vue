@@ -19,7 +19,7 @@
     </template>
 
     <DataTable
-      class="datatable-lockers"
+      class="lockers-table"
       :rows="rowsPage"
       :columns
       :sorting
@@ -153,7 +153,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-lockers {
+.lockers-table {
   --columns-header: 1fr 3fr;
 
   --col-width: 11ch;

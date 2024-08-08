@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-bribed"
+      class="bribed-table"
       :rows="bribed"
       :columns
       :sorting
@@ -149,7 +149,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-bribed {
+.bribed-table {
   --columns-data: 1.5fr 0.6fr 0.6fr;
 
   .logo {

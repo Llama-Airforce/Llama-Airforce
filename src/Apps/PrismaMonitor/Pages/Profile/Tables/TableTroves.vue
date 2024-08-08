@@ -31,7 +31,7 @@
     </template>
 
     <DataTable
-      class="datatable-troves"
+      class="troves-table"
       :loading="loading"
       :rows="rowsPage"
       :columns
@@ -254,7 +254,7 @@ const onType = (tabIndex: number) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-troves {
+.troves-table {
   --columns-header: 1fr 14rem 2fr;
 
   --col-width: 11ch;

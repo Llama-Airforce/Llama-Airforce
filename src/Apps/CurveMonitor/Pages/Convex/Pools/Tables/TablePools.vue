@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-pools"
+      class="pools-table"
       :rows="pools"
       :columns
       :sorting
@@ -114,7 +114,7 @@ const pools = computed((): Pool[] => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-pools {
+.pools-table {
   --columns-data: 3fr 2fr 2fr 1rem;
 
   .charts {

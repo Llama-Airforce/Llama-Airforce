@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-liquidators"
+      class="liquidators-table"
       :rows
       :columns="[
         'Address',
@@ -75,7 +75,7 @@ const rows = computed((): Liquidator[] =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-liquidators {
+.liquidators-table {
   --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
 
   --col-width: 12ch;

@@ -27,7 +27,7 @@
     </template>
 
     <DataTable
-      class="datatable-troves"
+      class="troves-table"
       :loading="loading"
       :rows="rowsPage"
       :columns
@@ -245,7 +245,7 @@ const onType = (tabIndex: number) => {
   }
 }
 
-.datatable-troves {
+.troves-table {
   --columns-header: 1fr 2fr;
 
   --col-width: 11ch;

@@ -60,7 +60,7 @@
         title="Solvers"
       >
         <DataTable
-          class="datatable-solvers col"
+          class="solvers-table col"
           :rows="solutions"
         >
           <template
@@ -227,7 +227,7 @@ const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
     gap: var(--dashboard-gap);
   }
 
-  .datatable-solvers {
+  .solvers-table {
     --columns-data: 25px minmax(24ch, 1fr) 2fr auto;
 
     button {

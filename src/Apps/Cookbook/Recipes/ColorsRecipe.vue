@@ -1,10 +1,7 @@
 <template>
-  <Card
-    class="colors"
-    title="Colors"
-  >
+  <Card title="Colors">
     <DataTable
-      class="datatable-colors"
+      class="colors-table"
       :rows="colors"
       :columns="['Variable', 'Value', 'Preview']"
     >
@@ -64,7 +61,7 @@ const colors: Color[] = [
 
 @include dashboard("colors");
 
-.datatable-colors {
+.colors-table {
   --columns-data: 0.2fr 0.2fr 0.6fr;
 
   .preview-container {

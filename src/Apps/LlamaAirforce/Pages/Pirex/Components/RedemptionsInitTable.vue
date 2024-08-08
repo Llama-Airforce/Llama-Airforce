@@ -1,6 +1,6 @@
 <template>
   <DataTable
-    class="datatable-redemptions-init"
+    class="redemptions-init-table"
     :columns="[
       'Unlock Date',
       { label: 'CVX Available', align: 'end' },
@@ -81,7 +81,7 @@ watch(selected, (newRedemption) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-redemptions-init {
+.redemptions-init-table {
   --columns-data: 1fr 1fr 1fr 3rem;
 
   padding: 0;

@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-distributions"
+      class="distributions-table"
       :rows
       :columns
       :sorting
@@ -74,7 +74,7 @@ function formatDate(epoch: number): string {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-distributions {
+.distributions-table {
   --columns-data: 1fr 1fr;
 }
 </style>

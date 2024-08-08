@@ -18,7 +18,7 @@
     </template>
 
     <DataTable
-      class="datatable-distributions"
+      class="distributions-table"
       :loading
       :rows
       :columns="['Name', 'Address', { label: 'Fees ($)', align: 'end' }]"
@@ -118,7 +118,7 @@ const linkAddress = (addr: string): string => {
   margin-left: 1rem;
 }
 
-.datatable-distributions {
+.distributions-table {
   --columns-header: 1fr 14rem minmax(auto, 25rem);
   --columns-data: 1fr 25rem 10rem;
 

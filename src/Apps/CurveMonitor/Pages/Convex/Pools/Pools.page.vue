@@ -2,7 +2,7 @@
   <div class="pools">
     <div class="dashboard">
       <TablePools
-        class="datatable-pools"
+        class="pools-table"
         :expanded="expanded"
         @selected="onSelected"
       ></TablePools>
@@ -110,7 +110,7 @@ const onSelected = async (pool: Pool): Promise<void> => {
 
 .pools {
   .dashboard {
-    .datatable-pools {
+    .pools-table {
       grid-column: 1;
       grid-row: 1;
     }

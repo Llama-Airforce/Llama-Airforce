@@ -4,7 +4,7 @@
     class="addresses"
   >
     <DataTable
-      class="datatable-addresses"
+      class="addresses-table"
       :rows="addresses"
     >
       <template #row="{ item: { description, address } }: { item: Row }">
@@ -81,7 +81,7 @@ const clipboard = async (addr: string) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-addresses {
+.addresses-table {
   --columns-data: 2fr 6fr auto;
 
   button {

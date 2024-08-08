@@ -2,11 +2,11 @@
   <div class="contracts">
     <div class="dashboard">
       <Card
-        class="card-repositories"
+        class="repositories-card"
         :title="t('repositories')"
       >
         <DataTable
-          class="datatable-repositories"
+          class="repositories-table"
           :rows="repositories"
           :columns="[t('repository'), t('description')]"
         >
@@ -26,11 +26,11 @@
       </Card>
 
       <Card
-        class="card-other"
+        class="other-card"
         :title="t('other')"
       >
         <DataTable
-          class="datatable-other"
+          class="other-table"
           :rows="other"
           :columns="[t('other'), t('description')]"
         >
@@ -53,10 +53,10 @@
         v-for="(bundle, i) in bundles"
         :key="i"
         :title="t(bundle.name)"
-        class="card-contracts"
+        class="contracts-card"
       >
         <DataTable
-          class="datatable-contracts"
+          class="contracts-table"
           :rows="bundle.contracts"
           :columns="[t('contract'), t('description')]"
         >
@@ -405,26 +405,26 @@ const { t } = useI18n();
   .dashboard {
     grid-template-columns: 6fr 4fr;
 
-    .card-contracts {
+    .contracts-card {
       grid-column: 1 / -1;
 
-      .datatable-contracts {
+      .contracts-table {
         --columns-data: 3fr 4fr;
       }
     }
 
-    .card-repositories {
+    .repositories-card {
       grid-column: 1;
 
-      .datatable-repositories {
+      .repositories-table {
         --columns-data: 2fr 6fr;
       }
     }
 
-    .card-other {
+    .other-card {
       grid-column: 2;
 
-      .datatable-other {
+      .other-table {
         --columns-data: 3fr 4fr;
       }
     }

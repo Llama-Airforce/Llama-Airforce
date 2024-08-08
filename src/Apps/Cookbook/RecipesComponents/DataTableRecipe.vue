@@ -3,7 +3,7 @@
     <Recipe title="DataTable">
       <template #example>
         <DataTable
-          class="datatable-example"
+          class="example-table"
           :rows
           :columns
           :sorting
@@ -88,7 +88,7 @@
     <Recipe title="DataTable Multiselect">
       <template #example>
         <DataTable
-          class="datatable-multiselect"
+          class="multiselect-table"
           :rows="rows"
           :columns="['', 'Deadline', '']"
           @selected="onCheck"
@@ -203,7 +203,7 @@ const toggleExpand = (round: Round) => {
 };
 
 const dataTable1 = `<DataTable
-  class="datatable-example"
+  class="example-table"
   :rows
   :columns
   :sorting
@@ -306,7 +306,7 @@ const onSelected = (round: Round): void => {
   console.log(epoch.round);
 };`;
 
-const dataTable3 = `.datatable-example {
+const dataTable3 = `.example-table {
   --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
@@ -334,7 +334,7 @@ const onCheck = (round: Round) => {
 };
 
 const multiselect = `<DataTable
-  class="datatable-multiselect"
+  class="multiselect-table"
   :rows="rows"
   :columns="['', 'Deadline', '']"
   @selected="onCheck"
@@ -380,7 +380,7 @@ const onCheck = (round: Round) => {
 
 @include dashboard("datatables");
 
-.datatable-example {
+.example-table {
   --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
@@ -396,7 +396,7 @@ const onCheck = (round: Round) => {
   }
 }
 
-.datatable-multiselect {
+.multiselect-table {
   --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr auto;
 

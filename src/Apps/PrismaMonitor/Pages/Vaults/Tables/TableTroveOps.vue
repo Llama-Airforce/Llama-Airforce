@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-trove-ops"
+      class="trove-ops-table"
       :loading="loading"
       :rows="rows"
       :columns="[
@@ -137,7 +137,7 @@ const titleCase = (s: string): string =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-trove-ops {
+.trove-ops-table {
   --columns-header: 1fr 1fr auto;
 
   --col-width: 12ch;

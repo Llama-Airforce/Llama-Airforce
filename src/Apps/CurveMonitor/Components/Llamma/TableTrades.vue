@@ -10,7 +10,7 @@
     </template>
 
     <DataTable
-      class="datatable-trades"
+      class="trades-table"
       :rows="trades"
       :columns="[
         { label: 'Bought', align: 'end' },
@@ -112,7 +112,7 @@ const round = (x: number) =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-trades {
+.trades-table {
   --columns-data: minmax(5rem, 1fr) 26px minmax(5rem, 1fr) minmax(5rem, 1fr)
     26px minmax(5rem, 1fr) 6rem 6rem;
 }

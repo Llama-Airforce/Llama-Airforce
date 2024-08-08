@@ -4,7 +4,7 @@
     :title="t('properties')"
   >
     <DataTable
-      class="datatable-properties"
+      class="properties-table"
       :rows="properties"
     >
       <template #row="{ item: { description, value } }: { item: Row }">
@@ -111,7 +111,7 @@ const clipboard = async (addr: string) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-properties {
+.properties-table {
   --columns-data: 2fr 6fr;
 
   height: 100%;

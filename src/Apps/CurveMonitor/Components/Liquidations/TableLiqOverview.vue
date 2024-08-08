@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-liq-overview"
+      class="liq-overview-table"
       :rows
     >
       <template #row="{ item: { description, value, type } }: { item: Row }">
@@ -143,7 +143,7 @@ const rows = computed((): Row[] => [
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-liq-overview {
+.liq-overview-table {
   --columns-data: 1fr auto;
 
   .red {

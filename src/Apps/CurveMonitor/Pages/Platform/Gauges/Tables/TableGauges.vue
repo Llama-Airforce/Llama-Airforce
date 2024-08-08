@@ -1,7 +1,7 @@
 <template>
   <Card :title="t('title')">
     <DataTable
-      class="datatable-gauges"
+      class="gauges-tables"
       :rows="gauges"
       :columns
       :sorting
@@ -95,7 +95,7 @@ const gauges = computed((): Gauge[] => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable-gauges {
+.gauges-tables {
   --columns-data: 4fr 1fr 1rem;
 
   .charts {
