@@ -143,7 +143,6 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
 @import "@/Styles/Variables.scss";
 
 .bribe-rounds-table {
-  --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr 1fr 1fr;
 
   .round-number {

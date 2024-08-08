@@ -249,7 +249,6 @@ const sortColumn = (column: Column): void => {
   overflow-y: auto;
   min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
 
-  --columns-header: auto;
   --columns-data: auto;
 
   @include loading-backdrop();

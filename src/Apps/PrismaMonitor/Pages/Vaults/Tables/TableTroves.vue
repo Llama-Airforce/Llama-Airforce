@@ -1,15 +1,17 @@
 <template>
-  <Card>
+  <Card class="troves-card">
     <template #actions>
-      <TabView
-        class="types"
-        @tab="onType($event.index)"
+      <div
+        style="display: grid; gap: 1rem; grid-template-columns: 1fr 2fr auto"
       >
-        <TabItem header="Open"></TabItem>
-        <TabItem header="Closed"></TabItem>
-      </TabView>
+        <TabView
+          class="types"
+          @tab="onType($event.index)"
+        >
+          <TabItem header="Open"></TabItem>
+          <TabItem header="Closed"></TabItem>
+        </TabView>
 
-      <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
           :search="true"
@@ -231,23 +233,25 @@ const onType = (tabIndex: number) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.types) {
-  margin: 0 1rem;
-  font-size: 0.875rem;
+.troves-card {
+  --header-columns: 1fr;
 
-  ul {
-    width: auto;
-    border-bottom: 0;
-  }
+  :deep(.types) {
+    margin: 0 1rem;
+    font-size: 0.875rem;
 
-  .tab-header {
-    padding: 0.5rem 1rem;
+    ul {
+      width: auto;
+      border-bottom: 0;
+    }
+
+    .tab-header {
+      padding: 0.5rem 1rem;
+    }
   }
 }
 
 .troves-table {
-  --columns-header: 1fr 2fr;
-
   --col-width: 11ch;
   --columns-data: minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
     minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;

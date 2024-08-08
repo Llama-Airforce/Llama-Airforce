@@ -309,7 +309,6 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 }
 
 .personal-table {
-  --columns-header: 1fr auto;
   --columns-data: 1fr 3fr 2fr 2fr;
 
   .round-number {

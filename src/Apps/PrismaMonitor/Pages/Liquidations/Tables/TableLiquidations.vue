@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="liquidations-card"
+    :title="t('title')"
+  >
     <template #actions>
       <SelectVault
         class="select-vault"
@@ -201,9 +204,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.liquidations-table {
-  --columns-header: 1fr 14rem 2fr;
+.liquidations-card {
+  --header-columns: 1fr 14rem 2fr;
+}
 
+.liquidations-table {
   --col-width: 11ch;
   --columns-data: 20px minmax(12ch, 1fr) minmax(12ch, 1fr)
     repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;

@@ -1,14 +1,12 @@
 <template>
   <Card :title="t('title')">
     <template #actions>
-      <div style="display: flex; gap: 1rem">
-        <Pagination
-          :items-count="pools.length"
-          :items-per-page="rowsPerPage"
-          :page="page"
-          @page="onPage"
-        ></Pagination>
-      </div>
+      <Pagination
+        :items-count="pools.length"
+        :items-per-page="rowsPerPage"
+        :page="page"
+        @page="onPage"
+      ></Pagination>
     </template>
 
     <DataTable
@@ -131,8 +129,6 @@ function utilRate(pool: Pool) {
 @import "@/Styles/Variables.scss";
 
 .pools-table {
-  --columns-header: 1fr auto;
-
   --col-width: 11ch;
   --columns-data: 1rem calc(4 * (26px + 1ch)) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)

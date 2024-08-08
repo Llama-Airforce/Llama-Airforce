@@ -307,7 +307,6 @@ const onSelected = (round: Round): void => {
 };`;
 
 const dataTable3 = `.example-table {
-  --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
   .round-number {
@@ -381,7 +380,6 @@ const onCheck = (round: Round) => {
 @include dashboard("datatables");
 
 .example-table {
-  --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
   .round-number {
@@ -397,7 +395,6 @@ const onCheck = (round: Round) => {
 }
 
 .multiselect-table {
-  --columns-header: 1fr auto;
   --columns-data: 1.5rem 1fr auto;
 
   .round-number {

@@ -163,14 +163,6 @@ const onPeriod = (newPeriod: Period) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.cart-chart {
-  :deep(.card-body) {
-    @media only screen and (max-width: 1280px) {
-      height: 300px;
-    }
-  }
-}
-
 .actions {
   .periods {
     display: flex;

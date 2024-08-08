@@ -1,9 +1,11 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="markets-card"
+    :title="t('title')"
+  >
     <template #actions>
       <InputText
         v-model="search"
-        class="search"
         :search="true"
         :placeholder="t('search-placeholder')"
       >
@@ -160,13 +162,12 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-.search {
-  margin-left: 1rem;
+
+.markets-card {
+  --header-columns: minmax(7rem, 1fr) minmax(auto, 25rem);
 }
 
 .markets-table {
-  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
-
   --col-width: 11ch;
   --columns-data: 1rem minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)

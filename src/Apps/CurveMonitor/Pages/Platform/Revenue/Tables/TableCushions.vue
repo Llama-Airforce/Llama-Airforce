@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="cushions-card"
+    :title="t('title')"
+  >
     <template #actions>
       <SelectChain
         class="chain-select"
@@ -18,7 +21,7 @@
     </template>
 
     <DataTable
-      class="distributions-table"
+      class="cushions-table"
       :loading
       :rows
       :columns="['Name', 'Address', { label: 'Fees ($)', align: 'end' }]"
@@ -110,16 +113,11 @@ const linkAddress = (addr: string): string => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.search {
-  margin-left: 1rem;
+.cushions-card {
+  --header-columns: 1fr 14rem minmax(auto, 25rem);
 }
 
-.chain-select {
-  margin-left: 1rem;
-}
-
-.distributions-table {
-  --columns-header: 1fr 14rem minmax(auto, 25rem);
+.cushions-table {
   --columns-data: 1fr 25rem 10rem;
 
   .chain {

@@ -76,8 +76,6 @@ const rows = computed((): Liquidator[] =>
 @import "@/Styles/Variables.scss";
 
 .liquidators-table {
-  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
-
   --col-width: 12ch;
   --columns-data: 1fr repeat(2, var(--col-width));
 }

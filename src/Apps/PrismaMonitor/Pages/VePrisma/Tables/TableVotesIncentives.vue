@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="votes-incentives-card"
+    :title="t('title')"
+  >
     <template #actions>
       <Pagination
         :items-count="rows.length"
@@ -109,9 +112,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.votes-incentives-table {
-  --columns-header: 1fr minmax(auto, 25rem) auto;
+.votes-incentives-card {
+  --header-columns: 1fr minmax(auto, 25rem) auto;
+}
 
+.votes-incentives-table {
   --col-width: 11ch;
   --columns-data: minmax(12ch, 1fr) minmax(12ch, 1fr)
     repeat(3, minmax(var(--col-width), 0.75fr));

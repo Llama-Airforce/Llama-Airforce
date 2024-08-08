@@ -19,7 +19,10 @@
         :class="{ collapsible }"
       >
         <slot name="title">
-          <div class="title">
+          <div
+            v-if="title"
+            class="title"
+          >
             <i
               v-if="icon"
               class="icon"
@@ -85,6 +88,8 @@ const {
   $card-margin-width: 1.125rem;
   $card-margin-height: 0.875rem;
 
+  --header-columns: 1fr auto;
+
   > .loader {
     position: absolute;
     inset: 0;
@@ -106,9 +111,10 @@ const {
     @include loading-backdrop();
 
     :deep(.card-header) {
-      display: flex;
+      display: grid;
+      grid-template-columns: var(--header-columns);
+      gap: 1rem;
       align-items: center;
-      justify-content: space-between;
 
       font-size: 0.875rem;
       height: 2.5rem;

@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="vaults-card"
+    :title="t('title')"
+  >
     <template #actions>
       <InputText
         v-model="search"
@@ -17,6 +20,7 @@
         '',
         'Name',
         { label: 'TVL', align: 'end' },
+        { label: 'Debt', align: 'end' },
         { label: 'CR', align: 'end' },
         { label: 'MCR', align: 'end' },
         { label: 'Troves', align: 'end' },
@@ -185,9 +189,11 @@ const loading = computed(() => rowsRaw.value.length === 0);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.vaults-table {
-  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
+.vaults-card {
+  --header-columns: minmax(7rem, 1fr) minmax(auto, 25rem);
+}
 
+.vaults-table {
   --col-width: 11ch;
   --columns-data: 20px minmax(12ch, 1fr)
     repeat(6, minmax(var(--col-width), 0.75fr)) 1rem;

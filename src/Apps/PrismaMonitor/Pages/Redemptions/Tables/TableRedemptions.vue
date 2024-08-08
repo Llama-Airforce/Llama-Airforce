@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="redemptions-card"
+    :title="t('title')"
+  >
     <template #actions>
       <SelectVault
         :vault="vault"
@@ -198,9 +201,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.redemptions-table {
-  --columns-header: 1fr 14rem 2fr;
+.redemptions-card {
+  --header-columns: 1fr 14rem 2fr;
+}
 
+.redemptions-table {
   --col-width: 11ch;
   --columns-data: 20px minmax(12ch, 1fr) minmax(12ch, 1fr)
     repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;

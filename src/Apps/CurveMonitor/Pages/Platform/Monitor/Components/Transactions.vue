@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="trades-card"
+    :title="t('title')"
+  >
     <template
       v-if="header"
       #actions
@@ -237,14 +240,8 @@ const onType = (tabIndex: number) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.trades-table {
-  --columns-header: 1fr 2fr;
-  --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
-    minmax(10rem, 0.75fr);
-
-  .title {
-    margin-right: 1rem;
-  }
+.trades-card {
+  --header-columns: 1fr 2fr;
 
   :deep(.types) {
     margin: 0 1rem;
@@ -259,10 +256,11 @@ const onType = (tabIndex: number) => {
       padding: 0.5rem 1rem;
     }
   }
+}
 
-  .search {
-    flex-grow: 1;
-  }
+.trades-table {
+  --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
+    minmax(10rem, 0.75fr);
 
   .type {
     &.swap {

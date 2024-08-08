@@ -138,8 +138,6 @@ const titleCase = (s: string): string =>
 @import "@/Styles/Variables.scss";
 
 .trove-ops-table {
-  --columns-header: 1fr 1fr auto;
-
   --col-width: 12ch;
   --columns-data: minmax(14ch, 0.75fr)
     repeat(5, minmax(var(--col-width), 0.75fr)) 1fr;

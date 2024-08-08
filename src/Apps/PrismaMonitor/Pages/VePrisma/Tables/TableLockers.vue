@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="lockers-card"
+    :title="t('title')"
+  >
     <template #actions>
       <div style="display: flex; gap: 1rem">
         <InputText
@@ -153,9 +156,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.lockers-table {
-  --columns-header: 1fr 3fr;
+.lockers-card {
+  --header-columns: 1fr 3fr;
+}
 
+.lockers-table {
   --col-width: 11ch;
   --columns-data: 1fr repeat(4, minmax(12ch, 0.33fr));
 

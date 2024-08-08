@@ -116,7 +116,6 @@ const rows = computed((): string[] =>
   }
 
   > .troves-affected-table {
-    --columns-header: 2fr 1fr;
     --columns-data: 1fr;
 
     width: 100%;

@@ -1,9 +1,11 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="pegkeepers-card"
+    :title="t('title')"
+  >
     <template #actions>
       <InputText
         v-model="search"
-        class="search"
         :search="true"
         :placeholder="t('search-placeholder')"
       >
@@ -180,13 +182,11 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.search {
-  margin-left: 1rem;
+.pegkeepers-card {
+  --header-columns: minmax(7rem, 1fr) minmax(auto, 25rem);
 }
 
 .pegkeepers-table {
-  --columns-header: minmax(7rem, 1fr) minmax(auto, 25rem);
-
   --col-width: 12ch;
   --columns-data: 1fr repeat(4, var(--col-width));
 

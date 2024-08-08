@@ -93,6 +93,8 @@ const onChartType = (type: ChartType) => {
 @import "@/Styles/Variables.scss";
 
 .chart-container {
+  --header-columns: auto 1fr;
+
   :deep(.card-body) {
     flex-direction: column;
     justify-content: center;

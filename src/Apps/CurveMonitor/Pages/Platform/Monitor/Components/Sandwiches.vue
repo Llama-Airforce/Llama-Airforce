@@ -1,5 +1,8 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    class="sandwiches-card"
+    :title="t('title')"
+  >
     <template #actions>
       <div style="display: flex; gap: 1rem">
         <InputText
@@ -160,25 +163,28 @@ const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.pagination) {
-  li {
-    button {
-      height: 2rem;
-      width: 2rem;
+.sandwiches-card {
+  --header-columns: 1fr 2fr;
+
+  :deep(.pagination) {
+    li {
+      button {
+        height: 2rem;
+        width: 2rem;
+      }
+    }
+  }
+
+  .search {
+    width: 600px;
+
+    @media only screen and (max-width: 1280px) {
+      width: auto;
     }
   }
 }
 
-.search {
-  width: 600px;
-
-  @media only screen and (max-width: 1280px) {
-    width: auto;
-  }
-}
-
 .sandwiches-table {
-  --columns-header: 1fr 2fr;
   --columns-data: 16rem 1fr 16rem 8rem 1rem;
 
   .title {

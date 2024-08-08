@@ -1,6 +1,6 @@
 <template>
   <Card
-    class="card-transfers"
+    class="transfers-card"
     :title="t('title')"
   >
     <template #actions>
@@ -166,8 +166,11 @@ const clipboard = async (addr: string) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+.transfers-card {
+  --header-columns: 1fr 2fr;
+}
+
 .transfers-table {
-  --columns-header: 1fr 2fr;
   --columns-data: minmax(6rem, 1fr) minmax(5rem, 1fr) 5rem minmax(5rem, 1fr)
     minmax(5rem, 1fr) minmax(5rem, 1fr) calc(26px + 8rem) minmax(5rem, 1fr);
 
