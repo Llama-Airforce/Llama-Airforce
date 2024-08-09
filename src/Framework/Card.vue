@@ -155,6 +155,10 @@ const {
     &.collapsed {
       margin: 0 $card-margin-width;
     }
+
+    &:has(.datatable) {
+      overflow-y: auto;
+    }
   }
 
   /** Helpful style in conjuction with ModalFullscreen, esp for charts. */
