@@ -18,7 +18,9 @@ export type HonoResultOutput<
   Path extends string
 > = T extends Hono<Env, infer P, "/">
   ? Path extends keyof P
-    ? P[Path] extends { $get: { output: infer O } }
+    ? P[Path] extends
+        | { $get: { output: infer O } }
+        | { $post: { output: infer O } }
       ? O
       : never
     : `Error: Endpoint "${Path}" does not exist`
