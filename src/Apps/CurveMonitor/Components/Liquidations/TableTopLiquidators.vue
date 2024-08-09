@@ -1,6 +1,6 @@
 <template>
   <Card :title="t('title')">
-    <DataTable
+    <Table
       class="liquidators-table"
       :rows
       :columns="[
@@ -34,7 +34,7 @@
           />
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

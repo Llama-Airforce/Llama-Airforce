@@ -4,7 +4,7 @@
       <Tooltip>{{ t("tooltip") }}</Tooltip>
     </template>
 
-    <DataTable
+    <Table
       class="bribe-rounds-table"
       :rows="epochs"
       :columns
@@ -46,7 +46,7 @@
           />
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

@@ -25,7 +25,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="sandwiches-table"
       :rows="sandwiches"
       :columns="[
@@ -101,7 +101,7 @@
           :time="false"
         ></Transactions>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

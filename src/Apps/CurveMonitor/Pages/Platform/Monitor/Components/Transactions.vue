@@ -38,7 +38,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="trades-table"
       :class="{ compact, time }"
       :rows="rowsPage"
@@ -121,7 +121,7 @@
           {{ relativeTime(props.item.block_unixtime) }}
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

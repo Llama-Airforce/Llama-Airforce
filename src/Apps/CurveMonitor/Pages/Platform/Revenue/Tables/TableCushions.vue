@@ -21,7 +21,7 @@
       </InputText>
     </template>
 
-    <DataTable
+    <Table
       class="cushions-table"
       :rows
       :columns="['Name', 'Address', { label: 'Fees ($)', align: 'end' }]"
@@ -60,7 +60,7 @@
           />
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

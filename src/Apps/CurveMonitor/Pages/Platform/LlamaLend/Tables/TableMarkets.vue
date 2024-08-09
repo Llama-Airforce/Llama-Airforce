@@ -3,7 +3,7 @@
     :title
     :loading
   >
-    <DataTable
+    <Table
       class="markets-table"
       expand-side="left"
       :rows="markets"
@@ -79,7 +79,7 @@
 
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

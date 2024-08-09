@@ -38,8 +38,8 @@
 
 <script setup lang="ts" generic="T">
 /**
- * A single row of data in the datatable.
- * The selected and expanded states of a single row are controlled by the datatable itself.
+ * A single row of data in the table.
+ * The selected and expanded states of a single row are controlled by the table itself.
  * For this reason the toggles are simply an event emission.
  */
 // Props
@@ -145,7 +145,7 @@ const onClick = (): void => {
     min-height: 3rem;
     //border-bottom: var(--border-thickness) solid var(--c-lvl4);
     align-items: center;
-    transition: background $datatable-hover-duration;
+    transition: background $table-hover-duration;
 
     // These direct divs are most likely your individual cells.
     :deep(> div) {

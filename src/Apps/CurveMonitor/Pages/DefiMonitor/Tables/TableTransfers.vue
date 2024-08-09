@@ -23,7 +23,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="transfers-table"
       :rows="rowsPage"
       :columns="[
@@ -113,7 +113,7 @@
           </a>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

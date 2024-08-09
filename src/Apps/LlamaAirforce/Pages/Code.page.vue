@@ -5,7 +5,7 @@
         class="repositories-card"
         :title="t('repositories')"
       >
-        <DataTable
+        <Table
           class="repositories-table"
           :rows="repositories"
           :columns="[t('repository'), t('description')]"
@@ -22,14 +22,14 @@
 
             <div>{{ t(props.item.description) }}</div>
           </template>
-        </DataTable>
+        </Table>
       </Card>
 
       <Card
         class="other-card"
         :title="t('other')"
       >
-        <DataTable
+        <Table
           class="other-table"
           :rows="other"
           :columns="[t('other'), t('description')]"
@@ -46,7 +46,7 @@
 
             <div>{{ t(props.item.description) }}</div>
           </template>
-        </DataTable>
+        </Table>
       </Card>
 
       <Card
@@ -55,7 +55,7 @@
         :title="t(bundle.name)"
         class="contracts-card"
       >
-        <DataTable
+        <Table
           class="contracts-table"
           :rows="bundle.contracts"
           :columns="[t('contract'), t('description')]"
@@ -73,7 +73,7 @@
 
             <div>{{ t(props.item.description) }}</div>
           </template>
-        </DataTable>
+        </Table>
       </Card>
     </div>
   </div>

@@ -3,7 +3,7 @@
     :title="t('title')"
     :loading
   >
-    <DataTable
+    <Table
       class="trove-ops-table"
       :rows="rows"
       :columns="[
@@ -71,7 +71,7 @@
           {{ relativeTime(props.item.timestamp) }}
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

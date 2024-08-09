@@ -1,8 +1,8 @@
 <template>
-  <div class="datatables">
-    <Recipe title="DataTable">
+  <div class="tables">
+    <Recipe title="Table">
       <template #example>
-        <DataTable
+        <Table
           class="example-table"
           :rows
           :columns
@@ -63,30 +63,30 @@
           <template #no-data>
             <div>Custom no data message</div>
           </template>
-        </DataTable>
+        </Table>
       </template>
 
       <template #snippets>
         <Code
           lang="xml"
-          :code="dataTable1"
+          :code="table1"
         ></Code>
 
         <Code
           lang="typescript"
-          :code="dataTable2"
+          :code="table2"
         ></Code>
 
         <Code
           lang="scss"
-          :code="dataTable3"
+          :code="table3"
         ></Code>
       </template>
     </Recipe>
 
-    <Recipe title="DataTable Multiselect">
+    <Recipe title="Table Multiselect">
       <template #example>
-        <DataTable
+        <Table
           class="multiselect-table"
           :rows="rows"
           :columns="['', 'Deadline', '']"
@@ -113,7 +113,7 @@
               />
             </div>
           </template>
-        </DataTable>
+        </Table>
 
         <div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>
       </template>
@@ -192,7 +192,7 @@ const toggleExpand = (round: Round) => {
   }
 };
 
-const dataTable1 = `<DataTable
+const table1 = `<Table
   class="example-table"
   :rows
   :columns
@@ -246,9 +246,9 @@ const dataTable1 = `<DataTable
       />
     </div>
   </template>
-</DataTable>`;
+</Table>`;
 
-const dataTable2 = `import { orderBy } from "lodash";
+const table2 = `import { orderBy } from "lodash";
 
 type Round = {
   round: number;
@@ -295,7 +295,7 @@ const onSelected = (round: Round): void => {
   console.log(epoch.round);
 };`;
 
-const dataTable3 = `.example-table {
+const table3 = `.example-table {
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
   .round-number {
@@ -321,7 +321,7 @@ const onCheck = (round: Round) => {
   }
 };
 
-const multiselect = `<DataTable
+const multiselect = `<Table
   class="multiselect-table"
   :rows="rows"
   :columns="['', 'Deadline', '']"
@@ -348,7 +348,7 @@ const multiselect = `<DataTable
       />
     </div>
   </template>
-</DataTable>
+</Table>
 
 <div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>`;
 
@@ -366,7 +366,7 @@ const onCheck = (round: Round) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("datatables");
+@include dashboard("tables");
 
 .example-table {
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;

@@ -13,7 +13,7 @@
       </InputText>
     </template>
 
-    <DataTable
+    <Table
       class="vaults-table"
       :rows="rows"
       :columns="[
@@ -138,7 +138,7 @@
 
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

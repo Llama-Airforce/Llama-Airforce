@@ -13,7 +13,7 @@
       </InputText>
     </template>
 
-    <DataTable
+    <Table
       class="markets-table"
       expand-side="left"
       :rows
@@ -119,7 +119,7 @@
 
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

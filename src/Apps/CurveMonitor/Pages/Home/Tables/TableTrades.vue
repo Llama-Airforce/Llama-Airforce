@@ -1,6 +1,6 @@
 <template>
   <Card title="Largest Trades">
-    <DataTable
+    <Table
       class="trades-trades"
       :rows="trades"
       :columns="['Tx', 'Name', { label: 'Value', align: 'end' }]"
@@ -27,7 +27,7 @@
           />
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

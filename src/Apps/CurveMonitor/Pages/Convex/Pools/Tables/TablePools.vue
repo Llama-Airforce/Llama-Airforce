@@ -1,6 +1,6 @@
 <template>
   <Card :title="t('title')">
-    <DataTable
+    <Table
       class="pools-table"
       :rows="pools"
       :columns
@@ -43,7 +43,7 @@
           ></ChartApr>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

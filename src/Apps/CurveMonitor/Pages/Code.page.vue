@@ -1,7 +1,7 @@
 <template>
   <div class="contracts">
     <Card :title="t('repositories')">
-      <DataTable
+      <Table
         class="repositories-table"
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
@@ -19,11 +19,11 @@
 
           <div>{{ t(props.item.description) }}</div>
         </template>
-      </DataTable>
+      </Table>
     </Card>
 
     <Card :title="t('apis')">
-      <DataTable
+      <Table
         class="apis-table"
         columns-data="apis-columns-data"
         :rows="apis"
@@ -41,7 +41,7 @@
 
           <div>{{ t(props.item.description) }}</div>
         </template>
-      </DataTable>
+      </Table>
     </Card>
 
     <Card
@@ -49,7 +49,7 @@
       :key="i"
       :title="t(bundle.name)"
     >
-      <DataTable
+      <Table
         class="contracts-table"
         columns-header="1fr"
         columns-data="contracts-columns-data"
@@ -68,7 +68,7 @@
 
           <div>{{ t(props.item.description) }}</div>
         </template>
-      </DataTable>
+      </Table>
     </Card>
   </div>
 </template>

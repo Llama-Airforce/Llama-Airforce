@@ -1,6 +1,6 @@
 <template>
   <Card :title="t('title')">
-    <DataTable
+    <Table
       class="gauges-tables"
       :rows="gauges"
       :columns
@@ -33,7 +33,7 @@
         </div>
         <span v-else></span>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

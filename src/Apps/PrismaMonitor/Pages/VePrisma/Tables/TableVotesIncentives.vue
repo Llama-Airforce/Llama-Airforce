@@ -13,7 +13,7 @@
       ></Pagination>
     </template>
 
-    <DataTable
+    <Table
       class="votes-incentives-table"
       :rows="rowsPage"
       :columns="columns"
@@ -66,7 +66,7 @@
           {{ relativeTime(props.item.timestamp) }}
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

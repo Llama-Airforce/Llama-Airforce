@@ -41,7 +41,7 @@
           </InputText>
         </template>
 
-        <DataTable
+        <Table
           class="troves-affected-table"
           :rows="rows"
           :columns="['Trove']"
@@ -58,7 +58,7 @@
               </a>
             </div>
           </template>
-        </DataTable>
+        </Table>
       </Card>
     </div>
   </Card>

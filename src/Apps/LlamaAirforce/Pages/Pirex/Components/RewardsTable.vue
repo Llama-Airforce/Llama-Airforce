@@ -1,5 +1,5 @@
 <template>
-  <DataTable
+  <Table
     class="rewards-table"
     :class="{ 'can-select': canSelect }"
     :columns
@@ -37,7 +37,7 @@
         />
       </div>
     </template>
-  </DataTable>
+  </Table>
 </template>
 
 <script setup lang="ts">

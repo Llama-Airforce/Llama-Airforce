@@ -1,5 +1,5 @@
 <template>
-  <DataTable
+  <Table
     class="redemptions-user-table"
     :columns="[
       { label: 'Unlock', align: 'end' },
@@ -30,7 +30,7 @@
         ></Button>
       </div>
     </template>
-  </DataTable>
+  </Table>
 </template>
 
 <script setup lang="ts">

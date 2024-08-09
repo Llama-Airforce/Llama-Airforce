@@ -1,7 +1,7 @@
 <template>
   <div class="contracts">
     <Card :title="t('repositories')">
-      <DataTable
+      <Table
         class="repositories-table"
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
@@ -18,7 +18,7 @@
 
           <div>{{ t(props.item.description) }}</div>
         </template>
-      </DataTable>
+      </Table>
     </Card>
   </div>
 </template>

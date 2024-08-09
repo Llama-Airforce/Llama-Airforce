@@ -1,6 +1,6 @@
 <template>
   <Card :title="t('title')">
-    <DataTable
+    <Table
       class="liq-overview-table"
       :rows
     >
@@ -47,7 +47,7 @@
           <span v-else>{{ value }}</span>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

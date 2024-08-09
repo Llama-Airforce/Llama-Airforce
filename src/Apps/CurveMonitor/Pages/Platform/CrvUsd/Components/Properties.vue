@@ -3,7 +3,7 @@
     class="properties"
     :title="t('properties')"
   >
-    <DataTable
+    <Table
       class="properties-table"
       :rows="properties"
     >
@@ -40,7 +40,7 @@
 
         <div v-else>{{ value }}</div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

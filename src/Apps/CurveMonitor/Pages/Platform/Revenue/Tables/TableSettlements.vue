@@ -11,7 +11,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="settlements-table"
       :rows="rowsPage"
       :columns
@@ -95,7 +95,7 @@
           :settlement="item"
         ></SettlementDetails>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

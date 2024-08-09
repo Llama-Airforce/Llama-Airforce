@@ -156,7 +156,7 @@ const {
       margin: 0 $card-margin-width;
     }
 
-    &:has(.datatable) {
+    &:has(.table) {
       overflow-y: auto;
     }
   }

@@ -9,7 +9,7 @@
       ></Pagination>
     </template>
 
-    <DataTable
+    <Table
       class="events-table"
       :rows="events"
       :columns="[
@@ -45,7 +45,7 @@
           </a>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

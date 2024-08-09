@@ -27,7 +27,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="personal-table"
       :rows="bribedOrdered"
       :columns
@@ -80,7 +80,7 @@
           v-if="!isConnected && isSupported"
         ></WalletConnectButton>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

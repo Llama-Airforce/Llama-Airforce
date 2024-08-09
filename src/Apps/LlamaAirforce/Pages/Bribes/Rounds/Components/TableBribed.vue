@@ -1,6 +1,6 @@
 <template>
   <Card :title="t('title')">
-    <DataTable
+    <Table
       class="bribed-table"
       :rows="bribed"
       :columns
@@ -63,7 +63,7 @@
           </div>
         </Tooltip>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

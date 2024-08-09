@@ -11,7 +11,7 @@ import ButtonToggle from "@CB/RecipesComponents/ButtonToggleRecipe.vue";
 import Card from "@CB/RecipesComponents/CardRecipe.vue";
 import CardChart from "@CB/RecipesComponents/CardChartRecipe.vue";
 import Checkbox from "@CB/RecipesComponents/CheckboxRecipe.vue";
-import DataTable from "@CB/RecipesComponents/DataTableRecipe.vue";
+import Table from "@CB/RecipesComponents/TableRecipe.vue";
 import InputText from "@CB/RecipesComponents/InputTextRecipe.vue";
 import InputNumber from "@CB/RecipesComponents/InputNumberRecipe.vue";
 import Modal from "@CB/RecipesComponents/ModalRecipe.vue";
@@ -82,7 +82,7 @@ export const pageMainRoutes = [
   {
     path: "/components/data-table",
     name: "data-table",
-    component: DataTable,
+    component: Table,
   },
   {
     path: "/components/input-text",

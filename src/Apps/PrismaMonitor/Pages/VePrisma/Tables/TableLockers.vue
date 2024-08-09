@@ -21,7 +21,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="lockers-table"
       :rows="rowsPage"
       :columns
@@ -92,7 +92,7 @@
           ></AsyncValue>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

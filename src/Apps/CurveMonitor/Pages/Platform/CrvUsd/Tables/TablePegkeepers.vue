@@ -13,7 +13,7 @@
       </InputText>
     </template>
 
-    <DataTable
+    <Table
       class="pegkeepers-table"
       :rows
       :columns="[
@@ -103,7 +103,7 @@
           />
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

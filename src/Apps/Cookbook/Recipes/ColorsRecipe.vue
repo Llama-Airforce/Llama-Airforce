@@ -1,6 +1,6 @@
 <template>
   <Card title="Colors">
-    <DataTable
+    <Table
       class="colors-table"
       :rows="colors"
       :columns="['Variable', 'Value', 'Preview']"
@@ -22,7 +22,7 @@
           </span>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

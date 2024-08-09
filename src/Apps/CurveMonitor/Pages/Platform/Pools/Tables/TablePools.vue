@@ -9,7 +9,7 @@
       ></Pagination>
     </template>
 
-    <DataTable
+    <Table
       class="pools-table"
       expand-side="left"
       :rows="rowsPage"
@@ -60,7 +60,7 @@
 
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

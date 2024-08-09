@@ -32,7 +32,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="liquidations-table"
       :rows="rowsPage"
       :columns
@@ -82,7 +82,7 @@
 
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
-    </DataTable>
+    </Table>
   </Card>
 
   <Modal

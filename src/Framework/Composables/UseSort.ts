@@ -4,7 +4,7 @@ type Column<T> = { id: T; label: string; sort: boolean } | string;
 type ExtractColumnId<T> = T extends { id: infer U; sort: true } ? U : never;
 
 /**
- * Vue composable for managing sorting state within a datatable.
+ * Vue composable for managing sorting state within a table.
  *
  * @param initSort - The initial column ID to be sorted by.
  * @param initOrder - (Optional) The initial sorting direction, defaults to "desc" if unspecified.

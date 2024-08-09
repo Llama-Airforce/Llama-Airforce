@@ -59,7 +59,7 @@
         class="col"
         title="Solvers"
       >
-        <DataTable
+        <Table
           class="solvers-table col"
           :rows="solutions"
         >
@@ -102,7 +102,7 @@
               ></Button>
             </div>
           </template>
-        </DataTable>
+        </Table>
       </Card>
     </div>
   </Card>

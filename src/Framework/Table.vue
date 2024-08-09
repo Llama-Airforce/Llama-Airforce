@@ -1,7 +1,7 @@
 <template>
-  <div class="datatable">
-    <!-- DataTable column headers -->
-    <DataTableRow
+  <div class="table">
+    <!-- Table column headers -->
+    <TableRow
       v-if="columns.length > 0"
       :class="{ 'selected-below': selectedBelow(-1) }"
     >
@@ -29,10 +29,10 @@
           ></i>
         </div>
       </template>
-    </DataTableRow>
+    </TableRow>
 
-    <!-- DataTable rows -->
-    <DataTableRow
+    <!-- Table rows -->
+    <TableRow
       v-for="(row, i) in rows"
       :key="(row as never)"
       :data="row"
@@ -55,14 +55,14 @@
           :item="(row as never)"
         ></slot>
       </template>
-    </DataTableRow>
+    </TableRow>
 
-    <!-- Empty DataTable rows in case minRows is set -->
-    <DataTableRow
+    <!-- Empty Table rows in case minRows is set -->
+    <TableRow
       v-for="row in rowsEmpty"
       :key="row"
     >
-    </DataTableRow>
+    </TableRow>
 
     <!-- No data to show. -->
     <div
@@ -73,14 +73,14 @@
     </div>
 
     <!-- Aggregation -->
-    <DataTableRow
+    <TableRow
       v-if="!!$slots['row-aggregation'] && rows.length > 0"
       class="aggregation"
     >
       <template #row>
         <slot name="row-aggregation"></slot>
       </template>
-    </DataTableRow>
+    </TableRow>
   </div>
 </template>
 
@@ -222,7 +222,7 @@ const sortColumn = (column: Column): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.datatable {
+.table {
   position: relative;
 
   display: flex;
@@ -291,7 +291,7 @@ const sortColumn = (column: Column): void => {
   }
 
   > .aggregation {
-    border-top: var(--datatable-border-aggregation);
+    border-top: var(--table-border-aggregation);
   }
 
   > .no-data {

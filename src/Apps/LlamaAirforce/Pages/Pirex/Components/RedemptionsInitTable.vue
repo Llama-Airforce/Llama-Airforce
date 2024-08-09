@@ -1,5 +1,5 @@
 <template>
-  <DataTable
+  <Table
     class="redemptions-init-table"
     :columns="[
       'Unlock Date',
@@ -31,7 +31,7 @@
         />
       </div>
     </template>
-  </DataTable>
+  </Table>
 </template>
 
 <script setup lang="ts">

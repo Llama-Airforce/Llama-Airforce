@@ -3,7 +3,7 @@
     :title="t('title')"
     :loading
   >
-    <DataTable
+    <Table
       class="deposits-table"
       :rows="rows"
       :columns="[
@@ -45,7 +45,7 @@
           </a>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

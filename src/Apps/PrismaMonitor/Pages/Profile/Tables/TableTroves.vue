@@ -38,7 +38,7 @@
       </div>
     </template>
 
-    <DataTable
+    <Table
       class="troves-table"
       :rows="rowsPage"
       :columns
@@ -103,7 +103,7 @@
 
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

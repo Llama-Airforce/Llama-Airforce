@@ -9,7 +9,7 @@
       ></Pagination>
     </template>
 
-    <DataTable
+    <Table
       class="trades-table"
       :rows="trades"
       :columns="[
@@ -74,7 +74,7 @@
           </a>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 

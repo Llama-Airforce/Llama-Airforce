@@ -3,7 +3,7 @@
     class="addresses"
     :title="t('addresses')"
   >
-    <DataTable
+    <Table
       class="addresses-table"
       :rows="addresses"
     >
@@ -29,7 +29,7 @@
           ></Button>
         </div>
       </template>
-    </DataTable>
+    </Table>
   </Card>
 </template>
 
