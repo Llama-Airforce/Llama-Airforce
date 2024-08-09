@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="datatable"
-    :class="{ loading }"
-    :inert="!!loading"
-  >
-    <Spinner
-      v-if="loading !== null"
-      class="loader"
-      :class="{ loading }"
-    ></Spinner>
-
+  <div class="datatable">
     <!-- DataTable column headers -->
     <DataTableRow
       v-if="columns.length > 0"
@@ -76,7 +66,7 @@
 
     <!-- No data to show. -->
     <div
-      v-if="!rowsMin && (!rows || rows.length === 0) && !loading"
+      v-if="!rowsMin && (!rows || rows.length === 0)"
       class="no-data"
     >
       <slot name="no-data">{{ t("no-data") }}</slot>
@@ -132,8 +122,6 @@ interface Props {
 
   /** Icon shown to the left of the header title. */
   icon?: string;
-
-  loading?: boolean;
 }
 
 const {
@@ -148,8 +136,6 @@ const {
   sorting = {
     order: "asc",
   },
-
-  loading = null,
 } = defineProps<Props>();
 
 // Emits
@@ -251,8 +237,6 @@ const sortColumn = (column: Column): void => {
 
   --columns-data: auto;
 
-  @include loading-backdrop();
-
   .column-header {
     display: flex;
     align-items: center;
@@ -308,15 +292,6 @@ const sortColumn = (column: Column): void => {
 
   > .aggregation {
     border-top: var(--datatable-border-aggregation);
-  }
-
-  > .loader {
-    position: absolute;
-    inset: 0;
-    margin: auto auto;
-    z-index: 1;
-
-    @include loading-spinner();
   }
 
   > .no-data {

@@ -2,6 +2,7 @@
   <Card
     class="redemptions-card"
     :title="t('title')"
+    :loading="loading || troves.length === 0"
   >
     <template #actions>
       <SelectVault
@@ -29,7 +30,6 @@
 
     <DataTable
       class="redemptions-table"
-      :loading="loading || troves.length === 0"
       :rows="rowsPage"
       :columns
       :sorting

@@ -1,6 +1,7 @@
 <template>
   <div
     class="card"
+    :class="{ loading }"
     :inert="!!loading"
   >
     <Spinner
@@ -95,6 +96,7 @@ const {
     position: absolute;
     inset: 0;
     margin: auto auto;
+    z-index: 2;
 
     @include loading-spinner();
   }

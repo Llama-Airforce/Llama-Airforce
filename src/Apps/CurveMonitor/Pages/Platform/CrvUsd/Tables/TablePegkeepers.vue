@@ -2,6 +2,7 @@
   <Card
     class="pegkeepers-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <InputText
@@ -14,7 +15,6 @@
 
     <DataTable
       class="pegkeepers-table"
-      :loading
       :rows
       :columns="[
         'Name',

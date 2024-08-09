@@ -2,6 +2,7 @@
   <Card
     class="vaults-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <InputText
@@ -14,7 +15,6 @@
 
     <DataTable
       class="vaults-table"
-      :loading="loading"
       :rows="rows"
       :columns="[
         '',

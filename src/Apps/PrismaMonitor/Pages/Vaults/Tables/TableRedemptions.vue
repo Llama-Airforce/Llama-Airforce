@@ -2,6 +2,7 @@
   <Card
     class="redemptions-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <div style="display: flex; gap: 1rem">
@@ -23,7 +24,6 @@
 
     <DataTable
       class="redemptions-table"
-      :loading="loading"
       :rows="rowsPage"
       :columns
       :sorting

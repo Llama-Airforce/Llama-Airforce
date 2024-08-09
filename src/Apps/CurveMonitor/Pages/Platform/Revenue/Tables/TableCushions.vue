@@ -2,6 +2,7 @@
   <Card
     class="cushions-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <SelectChain
@@ -22,7 +23,6 @@
 
     <DataTable
       class="cushions-table"
-      :loading
       :rows
       :columns="['Name', 'Address', { label: 'Fees ($)', align: 'end' }]"
     >

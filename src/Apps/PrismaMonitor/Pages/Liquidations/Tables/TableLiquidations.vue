@@ -2,6 +2,7 @@
   <Card
     class="liquidations-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <SelectVault
@@ -33,7 +34,6 @@
 
     <DataTable
       class="liquidations-table"
-      :loading="loading"
       :rows="rowsPage"
       :columns
       :sorting

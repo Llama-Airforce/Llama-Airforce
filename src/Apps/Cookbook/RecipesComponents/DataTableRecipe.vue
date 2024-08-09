@@ -7,7 +7,6 @@
           :rows
           :columns
           :sorting
-          :loading="isLoading"
           :expanded="expandedRows"
           expand-side="right"
           @sort-column="onSort"
@@ -183,15 +182,6 @@ const onSelected = (epoch: Round): void => {
   toggleExpand(epoch);
 };
 
-// Simulate loading
-const isLoading = ref(false);
-onMounted(() => {
-  isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
-});
-
 const expandedRows = ref<Round[]>([]);
 const toggleExpand = (round: Round) => {
   const index = expandedRows.value.findIndex((r) => r.round === round.round);
@@ -207,7 +197,6 @@ const dataTable1 = `<DataTable
   :rows
   :columns
   :sorting
-  :loading="isLoading"
   :expanded="expandedRows"
   expand-side="right"
   icon="fa fa-table"

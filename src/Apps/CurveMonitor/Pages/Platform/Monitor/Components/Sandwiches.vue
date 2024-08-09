@@ -2,6 +2,7 @@
   <Card
     class="sandwiches-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <div style="display: flex; gap: 1rem">
@@ -34,7 +35,6 @@
         { label: 'Time', align: 'end' },
       ]"
       :expanded
-      :loading
       @selected="toggleExpansion($event)"
     >
       <template #row="props: { item: SandwichDetail }">

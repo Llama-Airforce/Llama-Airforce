@@ -1,9 +1,11 @@
 <template>
-  <Card :title>
+  <Card
+    :title
+    :loading
+  >
     <DataTable
       class="markets-table"
       expand-side="left"
-      :loading
       :rows="markets"
       :columns="[
         '',

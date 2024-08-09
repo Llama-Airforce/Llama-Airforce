@@ -2,6 +2,7 @@
   <Card
     class="markets-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <InputText
@@ -15,7 +16,6 @@
     <DataTable
       class="markets-table"
       expand-side="left"
-      :loading
       :rows
       :columns="[
         '',

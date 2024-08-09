@@ -2,6 +2,7 @@
   <Card
     class="transfers-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <div style="display: flex; gap: 1rem">
@@ -35,7 +36,6 @@
         'Token',
         { label: 'Age', align: 'end' },
       ]"
-      :loading
     >
       <template #row="{ item }: { item: CleanedTransfer }">
         <div class="hash">

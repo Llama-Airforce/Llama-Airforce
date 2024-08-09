@@ -2,6 +2,7 @@
   <Card
     class="troves-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <div
@@ -39,7 +40,6 @@
 
     <DataTable
       class="troves-table"
-      :loading="loading"
       :rows="rowsPage"
       :columns
       :sorting

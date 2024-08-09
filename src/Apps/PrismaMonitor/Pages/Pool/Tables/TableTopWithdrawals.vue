@@ -1,8 +1,10 @@
 <template>
-  <Card :title="t('title')">
+  <Card
+    :title="t('title')"
+    :loading
+  >
     <DataTable
       class="withdrawals-table"
-      :loading="loading"
       :rows="rows"
       :columns="[
         'Address',

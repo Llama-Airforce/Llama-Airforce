@@ -2,6 +2,7 @@
   <Card
     class="votes-incentives-card"
     :title="t('title')"
+    :loading
   >
     <template #actions>
       <Pagination
@@ -14,7 +15,6 @@
 
     <DataTable
       class="votes-incentives-table"
-      :loading="loading"
       :rows="rowsPage"
       :columns="columns"
     >

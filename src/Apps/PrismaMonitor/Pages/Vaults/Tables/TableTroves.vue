@@ -1,5 +1,8 @@
 <template>
-  <Card class="troves-card">
+  <Card
+    class="troves-card"
+    :loading
+  >
     <template #actions>
       <div
         style="display: grid; gap: 1rem; grid-template-columns: 1fr 2fr auto"
@@ -30,7 +33,6 @@
 
     <DataTable
       class="troves-table"
-      :loading="loading"
       :rows="rowsPage"
       :columns
       :sorting
