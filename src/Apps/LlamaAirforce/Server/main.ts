@@ -5,6 +5,7 @@ import cors from "@LAF/Server/middleware/cors";
 
 import index from "@LAF/Server/routes/index.head";
 import dashboard from "@LAF/Server/routes/dashboard/[id].get";
+import delegations from "@LAF/Server/routes/delegations.post";
 
 import airdropClaim from "@LAF/Server/routes/airdrop/[airdropId]/[address].get";
 import airdropClearCache from "@LAF/Server/routes/airdrop/clearcache.post";
@@ -39,6 +40,7 @@ pirex.route("/", pirexRewards);
 app.use(cors());
 
 app.route("/", index);
+app.route("/delegations", delegations);
 app.route("/airdrop", airdrop);
 app.route("/bribes", bribes);
 app.route("/dashboard", dashboard);

@@ -2,13 +2,12 @@ import { mapKeys } from "lodash";
 import { getAddress } from "viem";
 import { type Address } from "@/Framework/Address";
 import { paginate } from "@/Util";
-import { ServiceBase } from "@/Services";
+import { ServiceBaseHost } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
+import { type Result as DelegationsResponse } from "@LAF/Server/routes/delegations.post";
 
 const SNAPSHOT_URL = "https://hub.snapshot.org/graphql";
 const SNAPSHOT_SCORE_URL = "https://score.snapshot.org/api/scores";
-const SNAPSHOT_THEGRAPH_URL =
-  "https://gateway.thegraph.com/api/0f15b42bdeff7a063a4e1757d7e2f99e/deployments/id/QmXvEzRJXby7KFuTr7NJsM47hGefM5VckEXZrQyZzL9eJd";
 
 export type Proposal = {
   id: ProposalId;
@@ -38,7 +37,7 @@ export type Vote = {
 
 export type Scores = Record<Address, number>[];
 
-export default class SnapshotService extends ServiceBase {
+export default class SnapshotService extends ServiceBaseHost {
   public async getProposal(proposalId: ProposalId): Promise<Proposal> {
     const query = `{
             proposal(id: "${proposalId}") {
@@ -79,35 +78,20 @@ export default class SnapshotService extends ServiceBase {
     let timestampLast = 0;
 
     const fs = async (_page: number, offset: number) => {
-      const query = `{
-            delegations (
-              where: {
-                timestamp_gte: ${timestampLast}
-                ${spaceIn}
-                ${delegateIn}
-                ${delegatorIn}
-              },
-              first: ${offset}
-              block: {
-                number: ${block}
-              }
-              orderBy: timestamp
-              orderDirection: asc
-            ) {
-                id
-                timestamp
-                delegate
-                delegator
-                space
-            } }`;
+      const body = {
+        block,
+        timestampLast,
+        spaceIn,
+        delegateIn,
+        delegatorIn,
+        offset,
+      };
 
-      const resp = await this.fetch<{
-        data: {
-          delegations: Delegation[];
-        };
-      }>(SNAPSHOT_THEGRAPH_URL, {
-        query,
-      });
+      const host = await this.getHost();
+      const resp = await this.fetch<DelegationsResponse>(
+        `${host}/delegations`,
+        body
+      );
 
       const delegations = resp.data.delegations;
 
