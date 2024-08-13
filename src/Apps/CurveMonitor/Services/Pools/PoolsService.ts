@@ -42,4 +42,19 @@ export default class PoolService extends ServiceBaseHost {
 
     return resp.data.map(Parsers.parseVolume);
   }
+
+  public async getTvl(chain: Chain, poolAddr: string) {
+    const range = 120 * 60 * 1000;
+    const end = Math.floor(new Date().getTime() / 1000);
+    const start = Math.floor(end - range);
+
+    const resp = await this.fetch<ApiTypes.GetTvlResponse>(
+      `${API_URL}/v1/snapshots/${chain}/${poolAddr}/tvl?` +
+        `interval=day&` +
+        `start=${start}&` +
+        `end=${end}`
+    );
+
+    return resp.data.map(Parsers.parseTvl);
+  }
 }

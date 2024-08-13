@@ -60,15 +60,25 @@
       :volume
       :loading="loadingVolume"
     ></ChartVolume>
+
+    <ChartTvl
+      style="grid-area: tvl"
+      :tvl
+      :loading="loadingTvl"
+    ></ChartTvl>
   </div>
 </template>
 
 <script setup lang="ts">
 import { type Chain } from "@CM/Models/Chain";
 import { type Pool } from "@CM/Services/Pools";
-import { useQueryVolume } from "@CM/Services/Pools/Queries";
+import { useQueryVolume, useQueryTvl } from "@CM/Services/Pools/Queries";
 import { useQueryOHLC } from "@CM/Services/OHLC/Queries";
-import { ChartPrice, ChartVolume } from "@CM/Pages/Platform/Pools/Charts";
+import {
+  ChartPrice,
+  ChartVolume,
+  ChartTvl,
+} from "@CM/Pages/Platform/Pools/Charts";
 
 const { t } = useI18n();
 
@@ -97,10 +107,22 @@ const { isFetching: loadingVolume, data: volumeRaw } = useQueryVolume(
   poolAddr
 );
 
+const { isFetching: loadingTvl, data: tvlRaw } = useQueryTvl(
+  toRef(() => chain),
+  poolAddr
+);
+
 const volume = computed(() =>
   volumeRaw.value.map((x) => ({
     timestamp: x.timestamp,
     volume: x.volume,
+  }))
+);
+
+const tvl = computed(() =>
+  tvlRaw.value.map((x) => ({
+    timestamp: x.timestamp,
+    tvl: x.tvlUSD,
   }))
 );
 </script>
@@ -116,8 +138,8 @@ const volume = computed(() =>
 
   grid-template-areas:
     "kpi1 kpi2 kpi3 kpi4"
-    "price price volume volume"
-    "trades trades trades trades";
+    "price price price price"
+    "volume volume tvl tvl";
 
   .tokens {
     display: grid;

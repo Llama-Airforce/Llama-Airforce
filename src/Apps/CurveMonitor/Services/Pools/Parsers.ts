@@ -47,3 +47,12 @@ export const parseVolume = (
     fees: x.fees,
   };
 };
+
+export const parseTvl = (
+  x: ApiTypes.GetTvlResponse["data"][number]
+): Models.Tvl => {
+  return {
+    timestamp: x.timestamp,
+    tvlUSD: x.tvl_usd ?? 0,
+  };
+};

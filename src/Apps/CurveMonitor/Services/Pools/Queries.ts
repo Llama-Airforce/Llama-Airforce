@@ -45,9 +45,23 @@ export function useQueryVolume(
   poolAddr: Ref<string | undefined>
 ) {
   return useQuery({
-    queryKey: ["curve-volume", poolAddr] as const,
+    queryKey: ["curve-pool-volume", poolAddr] as const,
     queryFn: async ({ queryKey: [, poolAddr] }) =>
       service.getVolume(chain.value!, poolAddr!),
+    enabled: computed(() => !!chain.value && !!poolAddr.value),
+    initialData: [],
+    initialDataUpdatedAt: 0,
+  });
+}
+
+export function useQueryTvl(
+  chain: Ref<Chain | undefined>,
+  poolAddr: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: ["curve-pool-tvl", poolAddr] as const,
+    queryFn: async ({ queryKey: [, poolAddr] }) =>
+      service.getTvl(chain.value!, poolAddr!),
     enabled: computed(() => !!chain.value && !!poolAddr.value),
     initialData: [],
     initialDataUpdatedAt: 0,

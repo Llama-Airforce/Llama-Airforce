@@ -33,3 +33,8 @@ export type Volume = {
   volume: number;
   fees: number;
 };
+
+export type Tvl = {
+  timestamp: number;
+  tvlUSD: number;
+};
