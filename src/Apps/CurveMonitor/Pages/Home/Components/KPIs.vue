@@ -79,15 +79,59 @@ const { data: price } = useQuery({
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .kpis {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: var(--dashboard-gap);
 
-  @media only screen and (max-width: 1280px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+  .kpi {
+    position: relative;
+    box-shadow: none;
+    flex-grow: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      z-index: -1;
+      padding: 3px;
+      border-radius: calc(var(--border-radius) + 3px);
+
+      background-image: conic-gradient(
+        from var(--angle),
+        var(--c-blue),
+        var(--c-purple),
+        var(--c-blue)
+      );
+
+      animation: 10s spin linear infinite;
+
+      @keyframes spin {
+        from {
+          --angle: 0deg;
+        }
+
+        to {
+          --angle: 360deg;
+        }
+      }
+    }
+
+    &::after {
+      filter: blur(5px);
+      opacity: 0.5;
+    }
   }
 }
 </style>
