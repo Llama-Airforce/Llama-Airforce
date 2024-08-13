@@ -8,7 +8,7 @@ export type GetProposalsResponse = {
     start_date: number;
     snapshot_block: number;
     ipfs_metadata: string;
-    metadata: string;
+    metadata?: string;
     votes_for: string;
     votes_against: string;
     vote_count: number;

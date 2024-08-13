@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { useSocketMonitorDefi } from "../SocketMonitorDefi";
 import {
   type CleanedTransfer,

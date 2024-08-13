@@ -12,8 +12,6 @@
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
-import { type Fee } from "@CM/Pages/Platform/Gauges/Models/Fee";
-import { type Emission } from "@CM/Pages/Platform/Gauges/Models/Emission";
 import { useCurveStore } from "@CM/Pages/Platform/Store";
 import { aggregateDataPoints } from "@CM/Pages/Platform/Gauges/Util/SnapshotHelper";
 
@@ -38,20 +36,13 @@ const { theme } = storeToRefs(useSettingsStore());
 
 const title = computed((): string => {
   let title = t("title");
-  if (gaugeSelected) {
-    title += ` - ${shorten(gaugeSelected.name)}`;
-  }
+  title += ` - ${shorten(gaugeSelected.name)}`;
 
   return title;
 });
 
-const emissions = computed((): Emission[] => {
-  return gaugeSelected ? store.emissions[gaugeSelected.name] ?? [] : [];
-});
-
-const fees = computed((): Fee[] => {
-  return gaugeSelected ? store.fees[gaugeSelected.name] ?? [] : [];
-});
+const emissions = computed(() => store.emissions[gaugeSelected.name] ?? []);
+const fees = computed(() => store.fees[gaugeSelected.name] ?? []);
 
 const yMin = computed((): number => {
   return Math.min(
@@ -198,7 +189,7 @@ const formatterFees = (x: number): string => {
 };
 
 const formatterRatio = (x: number): string => {
-  return `${formatNumber(x, 2)}`;
+  return formatNumber(x, 2);
 };
 </script>
 

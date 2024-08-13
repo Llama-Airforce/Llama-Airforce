@@ -43,6 +43,7 @@ onMounted(async (): Promise<void> => {
      * Select first gauge by default if none given by the URL.
      * It's possible the component has unmounted before we arrive here.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!isMounted) {
       return;
     }
@@ -64,6 +65,7 @@ const getSnapshots = async (gauge?: Gauge): Promise<void> => {
   }
 
   // Don't request new snapshots if there's already cached.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (store.fees[gauge.name] && store.emissions[gauge.name]) {
     return;
   }

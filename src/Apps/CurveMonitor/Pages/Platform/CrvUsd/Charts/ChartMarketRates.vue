@@ -40,8 +40,8 @@ interface Props {
 const { market } = defineProps<Props>();
 
 // Refs
-let ratesSerie: ISeriesApi<"Area">;
-let ratesEMASerie: ISeriesApi<"Line">;
+let ratesSerie: ISeriesApi<"Area"> | undefined;
+let ratesEMASerie: ISeriesApi<"Line"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -63,10 +63,12 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 
 // Watches
 watch([snapshots, chart], createSeries);
-watch(avgLength, () => createSeries([snapshots.value, chart.value]));
+watch(avgLength, () => {
+  createSeries([snapshots.value, chart.value]);
+});
 watch(theme, () => {
-  ratesSerie.applyOptions(createOptionsSerieRates());
-  ratesEMASerie.applyOptions(createOptionsSerieRatesEMA());
+  ratesSerie?.applyOptions(createOptionsSerieRates());
+  ratesEMASerie?.applyOptions(createOptionsSerieRatesEMA());
 });
 
 // Chart
@@ -113,7 +115,7 @@ function createOptionsSerieRatesEMA(): LineSeriesPartialOptions {
 }
 
 function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !ratesSerie) {
+  if (!chart || !ratesSerie || !ratesEMASerie) {
     return;
   }
 

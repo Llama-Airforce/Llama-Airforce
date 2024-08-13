@@ -15,7 +15,7 @@ export default class BribesService extends ServiceBaseHost {
   public async getEpoch(epochId: EpochId): Promise<EpochResponse> {
     const host = await this.getHost();
 
-    const round = epochId.round?.toString();
+    const round = epochId.round.toString();
     let url = `${host}/bribes/${epochId.platform}/${epochId.protocol}`;
     if (round) {
       url += `/${round}`;

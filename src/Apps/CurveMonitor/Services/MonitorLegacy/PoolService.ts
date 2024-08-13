@@ -8,7 +8,7 @@ export default class PoolService {
     this.socket = socket;
   }
 
-  public get(input: string): Promise<Pool[]> {
+  public get(input: string): Promise<Pool[] | undefined> {
     const promise = new Promise<Pool[]>((resolve) => {
       this.socket.once("search_res", (poolsDto) => {
         const pools = Object.entries(poolsDto).map(([id, name]) => ({

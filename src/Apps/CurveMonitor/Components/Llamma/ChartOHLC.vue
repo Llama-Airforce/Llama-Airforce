@@ -44,8 +44,8 @@ interface Props {
 const { ohlc } = defineProps<Props>();
 
 // Refs
-let ohlcSerie: ISeriesApi<"Candlestick">;
-let oracleSerie: ISeriesApi<"Line">;
+let ohlcSerie: ISeriesApi<"Candlestick"> | undefined;
+let oracleSerie: ISeriesApi<"Line"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -125,7 +125,7 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
   boolean?,
   boolean?
 ]): void {
-  if (!chart || !ohlcSerie) {
+  if (!chart || !ohlcSerie || !oracleSerie) {
     return;
   }
 

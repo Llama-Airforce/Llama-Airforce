@@ -14,8 +14,6 @@ function calculateRewards<T extends SnapshotReward | FuturesReward>(
   prices: Record<Address, Price | undefined>,
   type: "snapshot" | "futures"
 ): Reward[] {
-  if (!prices) return [];
-
   return chain(rewards)
     .groupBy((x) => x.address)
     .mapValues((group) => ({

@@ -19,8 +19,8 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
-let supplySerie: ISeriesApi<"Area">;
-let debtSerie: ISeriesApi<"Line">;
+let supplySerie: ISeriesApi<"Area"> | undefined;
+let debtSerie: ISeriesApi<"Line"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -36,8 +36,8 @@ const { chart, chartRef } = useLightweightChart(
 // Watches
 watch([() => data, chart], createSeries);
 watch(theme, () => {
-  supplySerie.applyOptions(createSupplyOptionsSerie());
-  debtSerie.applyOptions(createDebtOptionsSerie());
+  supplySerie?.applyOptions(createSupplyOptionsSerie());
+  debtSerie?.applyOptions(createDebtOptionsSerie());
 });
 
 // Chart
@@ -84,7 +84,7 @@ function createDebtOptionsSerie(): LineSeriesPartialOptions {
 }
 
 function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
-  if (!chart || !supplySerie) {
+  if (!chart || !supplySerie || !debtSerie) {
     return;
   }
 

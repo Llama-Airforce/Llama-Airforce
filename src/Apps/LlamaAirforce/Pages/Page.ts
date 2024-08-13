@@ -23,9 +23,9 @@ export type MenuLeaf = MenuItem & {
 };
 
 export function isNode(menuItem: MenuItem): menuItem is MenuNode {
-  return (menuItem as MenuNode)?.children !== undefined;
+  return Array.isArray((menuItem as MenuNode).children);
 }
 
 export function isLeaf(menuItem: MenuItem): menuItem is MenuLeaf {
-  return (menuItem as MenuLeaf)?.to !== undefined;
+  return typeof (menuItem as MenuLeaf).to === "string";
 }

@@ -21,6 +21,7 @@ const app = new Hono().get(path, async (c) => {
   const claims = await getAirdropClaims(airdropId);
   const claim = claims.claims[address];
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!claim) {
     throw new HTTPException(404, {
       message: `Claim for '${address}' not found`,

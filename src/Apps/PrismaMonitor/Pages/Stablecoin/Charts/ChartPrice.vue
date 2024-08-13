@@ -27,7 +27,7 @@ import { stableSymbol } from "@PM/Models/Flavor";
 const { t } = useI18n();
 
 // Refs
-let serie: ISeriesApi<"Candlestick">;
+let serie: ISeriesApi<"Candlestick"> | undefined;
 
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
@@ -106,7 +106,9 @@ const tooltip = computed(() => {
 
 // Watches
 watch(data, createSeries);
-watch(theme, () => serie.applyOptions(createOptionsSerie()));
+watch(theme, () => {
+  serie?.applyOptions(createOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

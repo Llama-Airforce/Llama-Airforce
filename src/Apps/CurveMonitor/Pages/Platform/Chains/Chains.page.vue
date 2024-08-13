@@ -142,9 +142,7 @@ const chain = computed({
 const chains = computed((): (Chain | "all")[] => {
   const allChains = chain_(txsRaw.value.map((x) => x.chain))
     .concat(usersRaw.value.map((x) => x.chain))
-    .concat(
-      chain.value !== undefined && chain.value !== "all" ? [chain.value] : []
-    ) // Add chain selected from router.
+    .concat(chain.value !== "all" ? [chain.value] : []) // Add chain selected from router.
     .uniq()
     .orderBy((x) => x)
     .value();
@@ -218,7 +216,7 @@ function calculateAverage(activities: { timestamp: number; count: number }[]) {
 
   const total = lastSevenDaysActivities.reduce((acc, x) => acc + x.count, 0);
 
-  return daysBetween > 0 ? Math.round(total / daysBetween) : 0;
+  return Math.round(total / daysBetween);
 }
 
 const txsToday = computed(() => last(txs.value)?.count ?? 0);

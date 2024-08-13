@@ -23,8 +23,8 @@ import createChartStyles from "@CM/Util/ChartStyles";
 
 const { t } = useI18n();
 
-let chart: IChartApi;
-let lineSerie: ISeriesApi<"Line">;
+let chart: IChartApi | undefined;
+let lineSerie: ISeriesApi<"Line"> | undefined;
 
 // Refs
 const store = useMonitorStore();
@@ -53,8 +53,8 @@ watch(bonding, (newBonding) => {
 
 watch(theme.value, () => {
   if (chartRef.value) {
-    chart.applyOptions(createOptionsChart(chartRef.value));
-    lineSerie.applyOptions(createOptionsSerie());
+    chart?.applyOptions(createOptionsChart(chartRef.value));
+    lineSerie?.applyOptions(createOptionsSerie());
     createMarkers();
   }
 });
@@ -108,7 +108,7 @@ const createMarkers = () => {
     },
   ];
 
-  lineSerie.setMarkers(markers);
+  lineSerie?.setMarkers(markers);
 };
 
 const createSeries = (newBonding: Bonding): void => {

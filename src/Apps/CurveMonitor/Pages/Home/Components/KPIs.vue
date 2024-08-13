@@ -55,14 +55,14 @@ const llamaService = new DefiLlamaService();
 
 // Borrowed
 const { data: markets } = useQueryMarkets();
-const borrowed = computed(
-  () => markets.value?.reduce((acc, x) => acc + x.borrowed, 0) ?? 0
+const borrowed = computed(() =>
+  markets.value.reduce((acc, x) => acc + x.borrowed, 0)
 );
 
 // ChainInfo
 const { data: chainInfo } = useQueryChainInfo(ref("ethereum"));
-const tvl = computed(() => chainInfo?.value?.total.tvl ?? 0);
-const volume = computed(() => chainInfo?.value?.total.tradingVolume24h ?? 0);
+const tvl = computed(() => chainInfo.value?.total.tvl ?? 0);
+const volume = computed(() => chainInfo.value?.total.tradingVolume24h ?? 0);
 
 // CRV Price
 const { data: price } = useQuery({

@@ -32,7 +32,7 @@ async function getDatabase(): Promise<Database> {
     database = db;
 
     return db;
-  } catch (error) {
+  } catch {
     throw new HTTPException(500, {
       message: "Error initializing Cosmos database",
     });
@@ -63,7 +63,7 @@ async function getContainer(containerId: string): Promise<Container> {
     containers[containerId] = container;
 
     return container;
-  } catch (error) {
+  } catch {
     throw new HTTPException(500, {
       message: `Error creating Cosmos container ${containerId}`,
     });
@@ -127,7 +127,7 @@ export const useCosmosDb = (containerId: string) => {
       const { resources } = await container.items.query<T>(query).fetchAll();
 
       return resources;
-    } catch (error) {
+    } catch {
       throw new HTTPException(500, {
         message: "Error fetching data from database",
       });

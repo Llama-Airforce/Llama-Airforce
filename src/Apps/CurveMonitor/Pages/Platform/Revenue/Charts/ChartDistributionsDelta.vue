@@ -39,7 +39,7 @@ interface Props {
 const { distributions } = defineProps<Props>();
 
 // Refs
-let distributionsSerie: ISeriesApi<"Histogram">;
+let distributionsSerie: ISeriesApi<"Histogram"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -58,9 +58,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 watch([toRef(() => distributions), chart], createSeriesDistributions);
-watch(theme, () =>
-  distributionsSerie.applyOptions(createOptionsSerieDistributions())
-);
+watch(theme, () => {
+  distributionsSerie?.applyOptions(createOptionsSerieDistributions());
+});
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {

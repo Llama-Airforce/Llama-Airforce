@@ -20,7 +20,7 @@ import { type DecimalTimeSeries, StableService } from "@PM/Services";
 const { t } = useI18n();
 
 // Refs
-let serie: ISeriesApi<"Area">;
+let serie: ISeriesApi<"Area"> | undefined;
 
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
@@ -45,7 +45,9 @@ const { isFetching: loading, data } = useQuery({
 
 // Watches
 watch([data, chart], createSeries);
-watch(theme, () => serie.applyOptions(createOptionsSerie()));
+watch(theme, () => {
+  serie?.applyOptions(createOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

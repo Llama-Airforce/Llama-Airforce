@@ -33,7 +33,7 @@ let originalHeight = 0;
 let originalWidth = 0;
 
 function onEnterBefore() {
-  const parent = chart!.chartElement()?.parentElement;
+  const parent = chart!.chartElement().parentElement;
   originalHeight = parent?.clientHeight ?? 0;
   originalWidth = parent?.clientWidth ?? 0;
 }

@@ -82,7 +82,7 @@ const { t } = useI18n();
 // Props
 interface Props {
   proposal: Proposal;
-  proposalDetails: ProposalDetails;
+  proposalDetails: ProposalDetails | undefined;
 }
 
 const { proposal, proposalDetails } = defineProps<Props>();

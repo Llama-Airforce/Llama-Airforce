@@ -37,7 +37,7 @@ interface Props {
 const { equity } = defineProps<Props>();
 
 // Refs
-let equitySerie: ISeriesApi<"Baseline">;
+let equitySerie: ISeriesApi<"Baseline"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -51,7 +51,9 @@ const { chart, chartRef } = useLightweightChart(
 
 // Watches
 watch([toRef(() => equity), chart], createSeries);
-watch(theme, () => equitySerie.applyOptions(createOptionsSerie()));
+watch(theme, () => {
+  equitySerie?.applyOptions(createOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

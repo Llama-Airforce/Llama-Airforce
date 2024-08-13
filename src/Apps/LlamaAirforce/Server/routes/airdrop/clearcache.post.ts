@@ -21,7 +21,7 @@ const app = new Hono().post(path, async (c) => {
     });
   }
 
-  if (body?.password !== clearCachePassword) {
+  if (body.password !== clearCachePassword) {
     throw new HTTPException(400, { message: "Wrong password" });
   }
 

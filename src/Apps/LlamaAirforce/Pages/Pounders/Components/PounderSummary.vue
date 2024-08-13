@@ -71,7 +71,7 @@ const state = computed(() => pounderStore.value.state);
 const fees = ref<Fees | undefined>(undefined);
 const getFeesTrigger = ref(false);
 watch(getFeesTrigger, async (newGetFees) => {
-  if (!newGetFees || !pounder.value) {
+  if (!newGetFees) {
     return;
   }
 

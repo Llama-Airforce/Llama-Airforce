@@ -35,8 +35,8 @@ const store = useConvexStore();
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const snapshots = computed((): Snapshot[] => {
-  return poolSelected ? store.snapshots[poolSelected.name] ?? [] : [];
+const snapshots = computed(() => {
+  return store.snapshots[poolSelected.name] ?? [];
 });
 
 const options = computed(() => {

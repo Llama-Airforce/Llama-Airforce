@@ -141,11 +141,11 @@ const json = computed(() => {
 });
 
 const solutions = computed(() => {
-  if ((competition.value?.solutions?.length ?? 0) === 0) {
+  if (!competition.value) {
     return [];
   }
 
-  return chain(competition.value!.solutions)
+  return chain(competition.value.solutions)
     .orderBy((x) => x.ranking, "asc")
     .value();
 });

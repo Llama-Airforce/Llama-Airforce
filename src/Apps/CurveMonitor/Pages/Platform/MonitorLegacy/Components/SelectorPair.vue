@@ -80,11 +80,11 @@ const pair = computed((): [Coin, Coin] | null => {
 
 // Methods
 const icon = (coin: Coin | null): string => {
-  return coin?.logo ? `${coin.logo}` : "";
+  return coin?.logo ? coin.logo : "";
 };
 
 const label = (coin: Coin | null): string => {
-  return coin ? `${coin.label}` : "?";
+  return coin ? coin.label : "?";
 };
 
 // Events

@@ -15,7 +15,7 @@ import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 
-let deadlineTimer: ReturnType<typeof setTimeout>;
+let deadlineTimer: ReturnType<typeof setTimeout> | undefined;
 
 // Props
 interface Props {

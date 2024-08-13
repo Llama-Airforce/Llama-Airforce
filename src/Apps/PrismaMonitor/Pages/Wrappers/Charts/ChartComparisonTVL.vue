@@ -31,8 +31,8 @@ const { t } = useI18n();
 const prismaService = new WrapperService();
 
 // Refs
-let serieConvex: ISeriesApi<"Line">;
-let serieYearn: ISeriesApi<"Line">;
+let serieConvex: ISeriesApi<"Line"> | undefined;
+let serieYearn: ISeriesApi<"Line"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -78,16 +78,16 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 watch(theme, () => {
-  serieConvex.applyOptions(createOptionsSerie("convex"));
-  serieYearn.applyOptions(createOptionsSerie("yearn"));
+  serieConvex?.applyOptions(createOptionsSerie("convex"));
+  serieYearn?.applyOptions(createOptionsSerie("yearn"));
 });
 
-watch([dataConvex, chart], ([newData, chart]) =>
-  createSeries("convex", newData, chart)
-);
-watch([dataYearn, chart], ([newData, chart]) =>
-  createSeries("yearn", newData, chart)
-);
+watch([dataConvex, chart], ([newData, chart]) => {
+  createSeries("convex", newData, chart);
+});
+watch([dataYearn, chart], ([newData, chart]) => {
+  createSeries("yearn", newData, chart);
+});
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
@@ -143,7 +143,7 @@ function createSeries(
   if (newSerie.length > 0) {
     if (contract === "convex") {
       serieConvex.setData(newSerie);
-    } else if (contract === "yearn") {
+    } else {
       serieYearn.setData(newSerie);
     }
 

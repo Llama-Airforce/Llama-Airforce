@@ -41,7 +41,7 @@ const { distributions } = defineProps<Props>();
 const { theme } = storeToRefs(useSettingsStore());
 
 // Refs
-let distributionsSerie: ISeriesApi<"Histogram">;
+let distributionsSerie: ISeriesApi<"Histogram"> | undefined;
 
 // Chart
 const fullscreen = ref(false);
@@ -58,9 +58,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 watch([toRef(() => distributions), chart], createSeriesDistributions);
-watch(theme, () =>
-  distributionsSerie.applyOptions(createOptionsSerieDistributions())
-);
+watch(theme, () => {
+  distributionsSerie?.applyOptions(createOptionsSerieDistributions());
+});
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {

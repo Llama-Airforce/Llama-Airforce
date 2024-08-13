@@ -71,7 +71,7 @@ const bribesService = computed(
 const { data: rounds } = useQuery({
   queryKey: ["bribes-rounds", product] as const,
   queryFn: ({ queryKey: [, product] }) => {
-    if (product && bribesService.value) {
+    if (product) {
       return bribesService.value.rounds(product).then((x) => x.rounds);
     }
 
@@ -84,7 +84,7 @@ const { data: rounds } = useQuery({
 const { data: epoch } = useQuery({
   queryKey: ["bribes-epoch", product, round] as const,
   queryFn: ({ queryKey: [, product, round] }) => {
-    if (product && round && bribesService.value) {
+    if (product && round) {
       return bribesService.value
         .getEpoch({
           platform: product.platform,

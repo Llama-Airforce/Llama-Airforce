@@ -149,11 +149,7 @@ const endsWithDot = ref(false);
 const yeaPctStr = computed(() => {
   if (endsWithDot.value) return `${yeaPct.value}.`;
 
-  if (
-    yeaPct.value === 0 &&
-    !endsWithDot.value &&
-    editor.value?.textContent !== "0"
-  ) {
+  if (yeaPct.value === 0 && editor.value?.textContent !== "0") {
     return "";
   }
 

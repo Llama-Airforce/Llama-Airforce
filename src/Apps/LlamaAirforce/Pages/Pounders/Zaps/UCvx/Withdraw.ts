@@ -9,7 +9,6 @@ import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uCvxWithdrawZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

@@ -93,7 +93,7 @@ const options = computed(() => {
   const { colors } = theme.value;
 
   const xaxis = {
-    x: data.value?.ratio ?? 0,
+    x: data.value.ratio ?? 0,
     borderColor: colors.yellow,
     strokeDashArray: 2,
     label: {
@@ -104,7 +104,7 @@ const options = computed(() => {
       },
       position: "top",
       offsetX: 15,
-      text: `This trove: ${pctFormatter(data.value?.ratio ?? 0, 1)}`,
+      text: `This trove: ${pctFormatter(data.value.ratio ?? 0, 1)}`,
     },
   };
 
@@ -202,10 +202,10 @@ const pctFormatter = (y: number, decimals = 0): string => {
 };
 
 // Watches
-watch(
+whenever(
   data,
   (newData) => {
-    if (newData && typeof newData.rank === "number") {
+    if (typeof newData.rank === "number") {
       dynamicTitle.value = t("title", {
         rank: newData.rank,
         total_positions: newData.total_positions,

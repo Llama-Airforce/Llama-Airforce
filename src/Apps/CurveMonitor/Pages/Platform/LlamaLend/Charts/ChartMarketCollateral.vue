@@ -43,18 +43,20 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 // Refs
-let collateralSerie: ISeriesApi<"Line">;
-let borrowedSerie: ISeriesApi<"Line">;
+let collateralSerie: ISeriesApi<"Line"> | undefined;
+let borrowedSerie: ISeriesApi<"Line"> | undefined;
 
 const denomDollars = ref(true);
 
 const { theme } = storeToRefs(useSettingsStore());
 
 // Legend
-const symbolCollateral = computed(
-  () => market?.collateral_token?.symbol ?? "?"
+const symbolCollateral = computed(() =>
+  market ? market.collateral_token.symbol : "?"
 );
-const symbolBorrowed = computed(() => market?.borrowed_token?.symbol ?? "?");
+const symbolBorrowed = computed(() =>
+  market ? market.borrowed_token.symbol : "?"
+);
 
 const { items } = useLegend(() => [
   {
@@ -87,8 +89,8 @@ const { chart, chartRef } = useLightweightChart(
 
 watch([snapshots, chart, denomDollars], createSeries);
 watch(theme, () => {
-  collateralSerie.applyOptions(createOptionsSerieCollateral());
-  borrowedSerie.applyOptions(createOptionsSerieBorrowed());
+  collateralSerie?.applyOptions(createOptionsSerieCollateral());
+  borrowedSerie?.applyOptions(createOptionsSerieBorrowed());
 });
 
 function createOptionsChart(chartRef: HTMLElement) {
@@ -168,15 +170,14 @@ function createSeries([newSnapshots, chart, newDenomDollars]: [
 
   if (newCollateralSerie.length > 0 || newBorrowedSerie.length > 0) {
     const from = Math.min(
-      (newCollateralSerie[0]?.time as UTCTimestamp) ?? Infinity,
-      (newBorrowedSerie[0]?.time as UTCTimestamp) ?? Infinity
+      (newCollateralSerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity,
+      (newBorrowedSerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newCollateralSerie[newCollateralSerie.length - 1]
-        ?.time as UTCTimestamp) ?? -Infinity,
-      (newBorrowedSerie[newBorrowedSerie.length - 1]?.time as UTCTimestamp) ??
-        -Infinity
+      (newCollateralSerie.at(-1)?.time as UTCTimestamp | undefined) ??
+        -Infinity,
+      (newBorrowedSerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
     ) as UTCTimestamp;
 
     chart.timeScale().setVisibleRange({ from, to });

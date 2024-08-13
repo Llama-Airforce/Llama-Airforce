@@ -56,11 +56,8 @@ export function map(tx: TransactionDto): Transaction[] {
     type = "swap";
   } else if (tx.type === "deposit") {
     type = "deposit";
-  } else if (tx.type === "remove") {
-    type = "withdraw";
   } else {
-    // Unsupported message type.
-    return [];
+    type = "withdraw";
   }
 
   const txHash = tx.txHash.toLocaleLowerCase() as Lowercase<string>;

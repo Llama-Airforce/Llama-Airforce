@@ -4,7 +4,6 @@ import type { ZapWithdraw } from "@Pounders/Models";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
-// eslint-disable-next-line max-lines-per-function
 export function uFxsWithdrawZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

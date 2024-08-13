@@ -36,8 +36,8 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 // Refs
-let borrowApySerie: ISeriesApi<"Line">;
-let lendApySerie: ISeriesApi<"Line">;
+let borrowApySerie: ISeriesApi<"Line"> | undefined;
+let lendApySerie: ISeriesApi<"Line"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -73,8 +73,8 @@ const { chart, chartRef } = useLightweightChart(
 
 watch([snapshots, chart], createSeries);
 watch(theme, () => {
-  borrowApySerie.applyOptions(createOptionsSerieBorrowApy());
-  lendApySerie.applyOptions(createOptionsLendApy());
+  borrowApySerie?.applyOptions(createOptionsSerieBorrowApy());
+  lendApySerie?.applyOptions(createOptionsLendApy());
 });
 
 function createOptionsChart(chartRef: HTMLElement) {
@@ -153,15 +153,13 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
 
   if (newBorrowApySerie.length > 0 || newLendApySerie.length > 0) {
     const from = Math.min(
-      (newBorrowApySerie[0]?.time as UTCTimestamp) ?? Infinity,
-      (newLendApySerie[0]?.time as UTCTimestamp) ?? Infinity
+      (newBorrowApySerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity,
+      (newLendApySerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newBorrowApySerie[newBorrowApySerie.length - 1]?.time as UTCTimestamp) ??
-        -Infinity,
-      (newLendApySerie[newLendApySerie.length - 1]?.time as UTCTimestamp) ??
-        -Infinity
+      (newBorrowApySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity,
+      (newLendApySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
     ) as UTCTimestamp;
 
     chart.timeScale().setVisibleRange({ from, to });

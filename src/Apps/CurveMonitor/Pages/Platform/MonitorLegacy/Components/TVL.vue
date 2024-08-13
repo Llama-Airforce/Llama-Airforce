@@ -20,8 +20,8 @@ import createChartStyles from "@CM/Util/ChartStyles";
 
 const { t } = useI18n();
 
-let chart: IChartApi;
-let areaSerie: ISeriesApi<"Area">;
+let chart: IChartApi | undefined;
+let areaSerie: ISeriesApi<"Area"> | undefined;
 
 // Refs
 const store = useMonitorStore();
@@ -50,8 +50,8 @@ watch(tvl, (newTvl) => {
 
 watch(theme, () => {
   if (chartRef.value) {
-    chart.applyOptions(createOptionsChart(chartRef.value));
-    areaSerie.applyOptions(createOptionsSerie());
+    chart?.applyOptions(createOptionsChart(chartRef.value));
+    areaSerie?.applyOptions(createOptionsSerie());
   }
 });
 

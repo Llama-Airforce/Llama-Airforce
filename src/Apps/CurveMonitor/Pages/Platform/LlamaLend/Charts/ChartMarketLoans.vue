@@ -30,7 +30,7 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 // Refs
-let loansSerie: ISeriesApi<"Histogram">;
+let loansSerie: ISeriesApi<"Histogram"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -50,7 +50,9 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 
 // Watches
 watch([snapshots, chart], createSeriesLoans);
-watch(theme, () => loansSerie.applyOptions(createOptionsSerieLoans()));
+watch(theme, () => {
+  loansSerie?.applyOptions(createOptionsSerieLoans());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

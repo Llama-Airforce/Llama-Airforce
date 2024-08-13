@@ -161,7 +161,7 @@ const data: Round[] = [
 
 const rows = computed((): Round[] => {
   return orderBy(
-    data ?? [],
+    data,
     (row: Round) => {
       switch (sorting.value.column) {
         case "deadline":

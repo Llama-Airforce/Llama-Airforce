@@ -37,8 +37,8 @@ interface Props {
 const { contract } = defineProps<Props>();
 
 // Refs
-let seriePrice: ISeriesApi<"Candlestick">;
-let serieVolume: ISeriesApi<"Histogram">;
+let seriePrice: ISeriesApi<"Candlestick"> | undefined;
+let serieVolume: ISeriesApi<"Histogram"> | undefined;
 let max = 1;
 let min = 0;
 
@@ -72,8 +72,8 @@ const loading = computed(
 
 // Watches
 watch(theme, () => {
-  seriePrice.applyOptions(createOptionsSeriePrice());
-  serieVolume.applyOptions(createOptionsSerieVolume());
+  seriePrice?.applyOptions(createOptionsSeriePrice());
+  serieVolume?.applyOptions(createOptionsSerieVolume());
 });
 
 watch(dataPrice, createSeriesPrice);

@@ -124,7 +124,7 @@ export async function uFxsAirdrop(
   const virtualPrice = await getVirtualPrice(utkn);
 
   claim = claim ?? { index: 0, amount: "0x0", proof: [] };
-  const amount = BigInt(claim?.amount ?? 0);
+  const amount = BigInt(claim.amount);
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxFxsPrice;
 
@@ -159,7 +159,7 @@ export async function uPrismaAirdrop(
   const virtualPrice = await getVirtualPrice(utkn);
 
   claim = claim ?? { index: 0, amount: "0x0", proof: [] };
-  const amount = BigInt(claim?.amount ?? 0);
+  const amount = BigInt(claim.amount);
   const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
   const amountDollar = amountAsset * cvxPrismaPrice;
 

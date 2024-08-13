@@ -7,7 +7,6 @@ import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
 
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uPrismaDepositZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

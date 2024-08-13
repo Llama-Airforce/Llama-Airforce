@@ -64,24 +64,36 @@ type TokenInfo = {
   symbol: string;
   address: string;
 };
+
 function isTokenInfo(value: unknown): value is TokenInfo {
-  return typeof value === "object" && (value as TokenInfo)?.type === "token";
+  return (
+    typeof value === "object" && (value as { type: string }).type === "token"
+  );
 }
+
 function getTokenInfo(
   type: "collateral" | "borrowed",
   market?: Market
 ): TokenInfo {
+  if (!market) {
+    return {
+      type: "token",
+      symbol: "?",
+      address: "?",
+    };
+  }
+
   if (type === "collateral") {
     return {
       type: "token",
-      symbol: market?.collateral_token.symbol ?? "?",
-      address: market?.collateral_token?.address ?? "",
+      symbol: market.collateral_token.symbol,
+      address: market.collateral_token.address,
     };
   } else {
     return {
       type: "token",
-      symbol: market?.stablecoin_token.symbol ?? "?",
-      address: market?.stablecoin_token?.address ?? "",
+      symbol: market.stablecoin_token.symbol,
+      address: market.stablecoin_token.address,
     };
   }
 }

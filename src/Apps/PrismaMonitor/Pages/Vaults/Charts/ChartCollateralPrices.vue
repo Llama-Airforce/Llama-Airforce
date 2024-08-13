@@ -37,8 +37,8 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
-let oracleSerie: ISeriesApi<"Area">;
-let marketSerie: ISeriesApi<"Area">;
+let oracleSerie: ISeriesApi<"Area"> | undefined;
+let marketSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
@@ -136,8 +136,8 @@ const { chart, chartRef } = useLightweightChart(
 
 watch([data, chart], createSeries);
 watch(theme, () => {
-  oracleSerie.applyOptions(createProportionOptionsSerie());
-  marketSerie.applyOptions(createPriceOptionsSerie());
+  oracleSerie?.applyOptions(createProportionOptionsSerie());
+  marketSerie?.applyOptions(createPriceOptionsSerie());
 });
 
 function createOptionsChart(chartRef: HTMLElement) {
@@ -191,7 +191,7 @@ function createSeries([newData, chart]: [
   }?,
   IChartApi?
 ]): void {
-  if (!chart || !oracleSerie) {
+  if (!chart || !oracleSerie || !marketSerie) {
     return;
   }
 

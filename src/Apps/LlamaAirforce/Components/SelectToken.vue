@@ -60,7 +60,7 @@ const onTokenSelect = (option: Token): void => {
 watch(
   () => tokens,
   () => {
-    if (tokens && tokens.length > 0) {
+    if (tokens.length > 0) {
       onTokenSelect(tokens[0]);
     }
   },

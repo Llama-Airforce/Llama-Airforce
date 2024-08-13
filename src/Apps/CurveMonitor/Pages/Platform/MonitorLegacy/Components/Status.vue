@@ -25,13 +25,9 @@ const ping = ref(Infinity);
 const status = ref<"good" | "meh" | "bad">("bad");
 
 // Hooks
-watch(
+whenever(
   () => storeMonitor.socket as Socket,
   (socket: Socket) => {
-    if (!socket) {
-      return;
-    }
-
     const statusService = new StatusService(socket);
 
     statusService.get$.subscribe((ms) => {

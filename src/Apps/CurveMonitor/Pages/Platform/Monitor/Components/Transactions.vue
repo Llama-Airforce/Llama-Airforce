@@ -207,14 +207,12 @@ const getAssetsString = (tx: TransactionDetail): string => {
     const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
 
     return `${amountIn} ${coinIn.name}`;
-  } else if (tx.transaction_type === TransactionType.Remove) {
+  } else {
     const coinOut = tx.coins_leaving_wallet[0];
     const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
 
     return `${amountOut} ${coinOut.name}`;
   }
-
-  return "???";
 };
 
 // Events

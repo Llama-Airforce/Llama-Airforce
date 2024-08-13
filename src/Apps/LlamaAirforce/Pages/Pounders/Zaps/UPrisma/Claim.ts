@@ -7,7 +7,6 @@ import { claim } from "@Pounders/Zaps/Helpers";
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uPrismaClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

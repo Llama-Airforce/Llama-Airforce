@@ -38,8 +38,8 @@ interface Props {
 const { discounts, liqs } = defineProps<Props>();
 
 // Refs
-let discountSerie: ISeriesApi<"Area">;
-let revenueSerie: ISeriesApi<"Area">;
+let discountSerie: ISeriesApi<"Area"> | undefined;
+let revenueSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -69,8 +69,8 @@ const { chart, chartRef } = useLightweightChart(
 
 watch([toRef(() => discounts), toRef(() => liqs), chart], createSeries);
 watch(theme, () => {
-  discountSerie.applyOptions(createDiscountOptionsSerie());
-  revenueSerie.applyOptions(createRevenueOptionsSerie());
+  discountSerie?.applyOptions(createDiscountOptionsSerie());
+  revenueSerie?.applyOptions(createRevenueOptionsSerie());
 });
 
 function createOptionsChart(chartRef: HTMLElement) {
@@ -150,7 +150,8 @@ function createSeries([newDiscount, newLiqs, chart]: [
     }, [] as LineData[])
     .value();
 
-  const minTime = (newRevenueSerie[0]?.time as number) ?? 0;
+  const minTime =
+    newRevenueSerie.length > 0 ? (newRevenueSerie[0].time as number) : 0;
 
   const newDiscountSerie: LineData[] = chain(newDiscount)
     .filter((x) => x.timestamp >= minTime)

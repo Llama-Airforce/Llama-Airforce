@@ -10,7 +10,6 @@ import { claim } from "@Pounders/Zaps/Helpers";
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uCvxClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

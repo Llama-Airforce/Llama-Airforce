@@ -74,10 +74,10 @@ interface Props {
 const { yields = [] } = defineProps<Props>();
 
 const yieldsMax = computed(
-  (): Yield | null =>
+  (): Yield =>
     chain(yields)
       .maxBy((x) => x.apy)
-      .value() ?? null
+      .value()
 );
 
 const yieldsTop = computed((): Yield[] =>

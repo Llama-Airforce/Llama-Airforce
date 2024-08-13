@@ -20,13 +20,10 @@ import { useMonitorStore } from "@CM/Pages/Platform/MonitorLegacy/Store";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 
-type Mode = "percentage" | "absolute";
-
 const { t } = useI18n();
 
-let chart: IChartApi;
+let chart: IChartApi | undefined;
 let lineSeries: ISeriesApi<"Line">[] = [];
-const mode: Mode = "absolute";
 
 // Refs
 const store = useMonitorStore();
@@ -70,7 +67,7 @@ watch(balances, (newBalances) => {
 });
 
 watch(theme.value, () => {
-  if (chartRef.value) {
+  if (chart && chartRef.value) {
     chart.applyOptions(createOptionsChart(chartRef.value));
 
     for (const [i, serie] of lineSeries.entries()) {
@@ -89,10 +86,7 @@ const createOptionsChart = (chartRef: HTMLElement) => {
       },
     },
     localization: {
-      priceFormatter:
-        mode === "absolute"
-          ? (price: number) => formatterAbsolute(price)
-          : (price: number) => formatterPercentage(price),
+      priceFormatter: (price: number) => formatterAbsolute(price),
     },
   });
 };
@@ -141,10 +135,7 @@ const createSeries = (newBalances: Balances[]): void => {
     const newLineSerie: LineData[] = chain(newBalances)
       .map((b) => ({
         time: b.timestamp as UTCTimestamp,
-        value:
-          mode === "absolute"
-            ? b.balances[i]
-            : (b.balances[i] / b.balances.reduce((acc, x) => acc + x, 0)) * 100,
+        value: b.balances[i],
       }))
       .uniqWith((x, y) => x.time === y.time)
       .orderBy((c) => c.time, "asc")
@@ -156,10 +147,6 @@ const createSeries = (newBalances: Balances[]): void => {
   }
 
   chart.timeScale().fitContent();
-};
-
-const formatterPercentage = (y: number): string => {
-  return `${round(y, 2, "percentage")}${unit(y, "percentage")}`;
 };
 
 const formatterAbsolute = (y: number): string => {

@@ -60,6 +60,7 @@ onMounted(async (): Promise<void> => {
     troveAddr.value
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (fetchedTrove) {
     storeVault.trove = fetchedTrove;
   }

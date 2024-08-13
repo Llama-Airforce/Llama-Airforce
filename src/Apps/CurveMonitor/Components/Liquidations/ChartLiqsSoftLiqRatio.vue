@@ -38,8 +38,8 @@ interface Props {
 const { ratios, pricesOracle } = defineProps<Props>();
 
 // Refs
-let proportionSerie: ISeriesApi<"Area">;
-let priceSerie: ISeriesApi<"Area">;
+let proportionSerie: ISeriesApi<"Area"> | undefined;
+let priceSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -69,8 +69,8 @@ const { chart, chartRef } = useLightweightChart(
 
 watch([toRef(() => ratios), toRef(() => pricesOracle), chart], createSeries);
 watch(theme, () => {
-  proportionSerie.applyOptions(createProportionOptionsSerie());
-  priceSerie.applyOptions(createPriceOptionsSerie());
+  proportionSerie?.applyOptions(createProportionOptionsSerie());
+  priceSerie?.applyOptions(createPriceOptionsSerie());
 });
 
 function createOptionsChart(chartRef: HTMLElement) {
@@ -130,7 +130,7 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
   PriceOracle[]?,
   IChartApi?
 ]): void {
-  if (!chart || !proportionSerie) {
+  if (!chart || !proportionSerie || !priceSerie) {
     return;
   }
 
@@ -143,7 +143,8 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
     .orderBy((c) => c.time, "asc")
     .value();
 
-  const minTime = (newProportionSerie[0]?.time as number) ?? 0;
+  const minTime =
+    newProportionSerie.length > 0 ? (newProportionSerie[0].time as number) : 0;
 
   const newPriceSerie: LineData[] = chain_(newSnapshots)
     .filter((x) => x.timestamp >= minTime)

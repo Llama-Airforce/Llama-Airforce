@@ -20,9 +20,9 @@ import createChartStyles from "@CM/Util/ChartStyles";
 
 const { t } = useI18n();
 
-let chart: IChartApi;
-let areaSerie: ISeriesApi<"Area">;
-let volumeSerie: ISeriesApi<"Histogram">;
+let chart: IChartApi | undefined;
+let areaSerie: ISeriesApi<"Area"> | undefined;
+let volumeSerie: ISeriesApi<"Histogram"> | undefined;
 let max = 1;
 let min = 0;
 
@@ -32,13 +32,8 @@ const { theme } = storeToRefs(useSettingsStore());
 
 const chartRef = ref<HTMLElement | null>(null);
 
-const prices = computed((): Price[] => {
-  return store.prices;
-});
-
-const volumes = computed((): Volume[] => {
-  return store.volumes;
-});
+const prices = computed(() => store.prices);
+const volumes = computed(() => store.volumes);
 
 // Hooks
 onMounted((): void => {
@@ -63,9 +58,9 @@ watch(volumes, (newVolumes) => {
 
 watch(theme.value, () => {
   if (chartRef.value) {
-    chart.applyOptions(createOptionsChart(chartRef.value));
-    areaSerie.applyOptions(createOptionsSeriePrice());
-    volumeSerie.applyOptions(createOptionsSerieVolume());
+    chart?.applyOptions(createOptionsChart(chartRef.value));
+    areaSerie?.applyOptions(createOptionsSeriePrice());
+    volumeSerie?.applyOptions(createOptionsSerieVolume());
   }
 });
 

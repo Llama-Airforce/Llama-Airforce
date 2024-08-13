@@ -40,7 +40,7 @@ export type PounderLp = {
   getOraclePrice(): Promise<number>;
 };
 
-const pounderIds = [
+export const pounderIds = [
   "ucrv",
   "ufxs",
   "ucvx",

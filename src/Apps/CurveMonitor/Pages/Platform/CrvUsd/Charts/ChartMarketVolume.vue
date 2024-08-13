@@ -31,7 +31,7 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 // Refs
-let areaSerie: ISeriesApi<"Area">;
+let areaSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -52,7 +52,9 @@ const { isFetching: loading, data: ohlc } = useQueryOHLC(
 
 // Watches
 watch([ohlc, chart], createSeries);
-watch(theme, () => areaSerie.applyOptions(createOptionsSerie()));
+watch(theme, () => {
+  areaSerie?.applyOptions(createOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

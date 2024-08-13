@@ -41,7 +41,7 @@ const selectZapOpen = ref(false);
 
 // Methods
 const icon = (logo: string): string => {
-  return `${logo}`;
+  return logo;
 };
 
 // Events
@@ -57,7 +57,7 @@ const onZapSelect = (option: Zap): void => {
 watch(
   () => zaps,
   () => {
-    if (zaps && zaps.length > 0) {
+    if (zaps.length > 0) {
       onZapSelect(zaps[0]);
     }
   },

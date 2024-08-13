@@ -28,7 +28,7 @@ interface Props {
 const { market } = defineProps<Props>();
 
 // Refs
-let availSerie: ISeriesApi<"Area">;
+let availSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -45,7 +45,9 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 
 // Watches
 watch([snapshots, chart], createSeries);
-watch(theme, () => availSerie.applyOptions(createAvailOptionsSerie()));
+watch(theme, () => {
+  availSerie?.applyOptions(createAvailOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

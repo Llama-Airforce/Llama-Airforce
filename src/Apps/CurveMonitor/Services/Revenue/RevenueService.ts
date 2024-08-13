@@ -80,7 +80,7 @@ export default class RevenueService extends ServiceBaseHost {
   public async getCowSwapSettlements(timestamp?: number) {
     const resp = await this.fetch<ApiTypes.GetCowSwapSettlementsResponse>(
       `${API_URL}/v1/dao/fees/settlements${
-        timestamp ? "?timestamp=" + timestamp : ""
+        timestamp ? "?timestamp=" + timestamp.toString() : ""
       }`
     );
 

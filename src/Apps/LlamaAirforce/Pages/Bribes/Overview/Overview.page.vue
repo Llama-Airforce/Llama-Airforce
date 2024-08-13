@@ -58,7 +58,7 @@ const paramProtocol = useRouteParams<string>("protocol");
 const overviewId = computed((): OverviewId | null => {
   switch (product.value?.platform) {
     case "votium":
-      switch (product.value?.protocol) {
+      switch (product.value.protocol) {
         case "cvx-crv":
           return "bribes-overview-votium";
         case "cvx-prisma":

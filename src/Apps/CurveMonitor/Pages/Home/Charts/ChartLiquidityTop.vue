@@ -85,7 +85,7 @@ const series = computed((): { data: number[] }[] => [
 ]);
 
 // Methods
-const formatterX = (x: number): string => `${round(Math.abs(x), 2, "dollar")}`;
+const formatterX = (x: number): string => round(Math.abs(x), 2, "dollar");
 
 const formatterY = (x: string): string => x.toString().substring(0, 12);
 </script>

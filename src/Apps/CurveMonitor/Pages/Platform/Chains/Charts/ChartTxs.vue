@@ -43,7 +43,7 @@ interface Props {
 const { txs } = defineProps<Props>();
 
 // Refs
-let txsSerie: ISeriesApi<"Area">;
+let txsSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -59,7 +59,9 @@ const { chart, chartRef } = useLightweightChart(
   }
 );
 
-watch(theme, () => txsSerie.applyOptions(createOptionsSerieTxs()));
+watch(theme, () => {
+  txsSerie?.applyOptions(createOptionsSerieTxs());
+});
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {

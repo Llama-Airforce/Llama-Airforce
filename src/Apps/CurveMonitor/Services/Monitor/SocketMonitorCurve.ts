@@ -17,6 +17,7 @@ export type {
 
 export { TransactionType };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const timeDurations = ["1 day", "1 week", "1 month", "full"] as const;
 type TimeDuration = (typeof timeDurations)[number];
 

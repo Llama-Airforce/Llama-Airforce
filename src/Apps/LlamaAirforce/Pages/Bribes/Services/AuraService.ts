@@ -97,7 +97,7 @@ export default class AuraService extends ServiceBase {
       return Promise.resolve({ statusCode: 400 });
     }
 
-    const epochId = _epochId ?? this.latestRound;
+    const epochId = this.latestRound;
 
     const round = await this.fetchRound(
       START_DATE + (epochId - START_ROUND) * BIWEEKLY

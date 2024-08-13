@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import { test, describe, expect } from "vitest";
 import dotenv from "dotenv";
 

@@ -182,6 +182,7 @@ function onToggle(epoch: Epoch) {
   }
 
   // Check all rewards on when expanded for the first time
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!toClaim[epoch.epoch]) {
     toClaim[epoch.epoch] = rewards.value[epoch.epoch].snapshot;
   }
@@ -205,6 +206,7 @@ function onRewardToggle(epoch: Epoch, reward: Reward) {
 }
 
 function canClaimSnapshot(epoch: Epoch) {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   return !!address.value && (toClaim[epoch.epoch]?.length ?? 0) > 0;
 }
 

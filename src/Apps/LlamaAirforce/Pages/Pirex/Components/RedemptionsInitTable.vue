@@ -73,7 +73,7 @@ watch(selected, (newRedemption) => {
   const redemption = redemptions.find((x) => x.lockIndex === newRedemption);
 
   if (redemption) {
-    return emit("redemption", redemption);
+    emit("redemption", redemption);
   }
 });
 </script>

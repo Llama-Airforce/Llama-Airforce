@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
-import { type Snapshot } from "@CM/Pages/Convex/Pools/Models/Snapshot";
 import { useConvexStore } from "@CM/Pages/Convex/Store";
 import { useSettingsStore } from "@CM/Stores";
 
@@ -31,9 +30,7 @@ const store = useConvexStore();
 
 const { theme } = storeToRefs(useSettingsStore());
 
-const snapshots = computed((): Snapshot[] => {
-  return poolSelected ? store.snapshots[poolSelected.name] ?? [] : [];
-});
+const snapshots = computed(() => store.snapshots[poolSelected.name] ?? []);
 
 const options = computed(() => {
   return createChartStyles(theme.value, {

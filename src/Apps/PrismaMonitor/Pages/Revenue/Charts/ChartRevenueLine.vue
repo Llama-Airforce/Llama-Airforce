@@ -19,7 +19,7 @@ interface Props {
 const { data = [] } = defineProps<Props>();
 
 // Refs
-let revenueSerie: ISeriesApi<"Area">;
+let revenueSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -33,7 +33,9 @@ const { chart, chartRef } = useLightweightChart(
 
 // Watches
 watch(() => data, createSeries);
-watch(theme, () => revenueSerie.applyOptions(createRevenueOptionsSerie()));
+watch(theme, () => {
+  revenueSerie?.applyOptions(createRevenueOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {
@@ -67,7 +69,7 @@ function createRevenueOptionsSerie(): AreaSeriesPartialOptions {
 }
 
 function createSeries(newRevenue: SnapshotRevenue[]): void {
-  if (!chart.value || !newRevenue) {
+  if (!chart.value || !revenueSerie) {
     return;
   }
 

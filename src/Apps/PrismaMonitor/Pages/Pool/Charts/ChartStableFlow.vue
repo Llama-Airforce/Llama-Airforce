@@ -35,7 +35,6 @@ const { isFetching: loading, data } = useQuery({
   initialDataUpdatedAt: 0,
 });
 
-// eslint-disable-next-line max-lines-per-function
 const options = computed(() => {
   const { colors } = theme.value;
 

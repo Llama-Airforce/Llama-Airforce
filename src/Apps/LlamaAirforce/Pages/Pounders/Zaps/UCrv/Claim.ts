@@ -7,7 +7,6 @@ import { claim } from "@Pounders/Zaps/Helpers";
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uCrvClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

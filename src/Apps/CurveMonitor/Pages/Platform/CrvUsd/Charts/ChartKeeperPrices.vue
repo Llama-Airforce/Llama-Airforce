@@ -109,7 +109,7 @@ function createOptionsSerie(i: number): LineSeriesPartialOptions {
     color: theme.value.colorsArray[i],
     lastValueVisible: false,
     priceLineVisible: false,
-    autoscaleInfoProvider: (original: () => AutoscaleInfo) => {
+    autoscaleInfoProvider: (original: () => AutoscaleInfo | null) => {
       const res = original();
 
       if (res !== null) {

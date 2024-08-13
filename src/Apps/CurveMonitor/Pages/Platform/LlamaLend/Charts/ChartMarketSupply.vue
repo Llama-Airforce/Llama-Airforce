@@ -49,9 +49,9 @@ interface Props {
 const { market, chain } = defineProps<Props>();
 
 // Refs
-let supplySerie: ISeriesApi<"Line">;
-let debtSerie: ISeriesApi<"Line">;
-let utilSerie: ISeriesApi<"Line">;
+let supplySerie: ISeriesApi<"Line"> | undefined;
+let debtSerie: ISeriesApi<"Line"> | undefined;
+let utilSerie: ISeriesApi<"Line"> | undefined;
 
 const { theme, themeId } = storeToRefs(useSettingsStore());
 
@@ -86,9 +86,9 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 watch(theme, () => {
-  supplySerie.applyOptions(createOptionsSerieSupply());
-  debtSerie.applyOptions(createOptionsSerieDebt());
-  utilSerie.applyOptions(createOptionsSerieUtil());
+  supplySerie?.applyOptions(createOptionsSerieSupply());
+  debtSerie?.applyOptions(createOptionsSerieDebt());
+  utilSerie?.applyOptions(createOptionsSerieUtil());
 });
 
 function createOptionsChart(chartRef: HTMLElement) {
@@ -151,7 +151,7 @@ function createOptionsSerieUtil(): LineSeriesPartialOptions {
 
 watchEffect(createSeries);
 function createSeries(): void {
-  if (!chart.value || !supplySerie || !debtSerie) {
+  if (!chart.value || !supplySerie || !debtSerie || !utilSerie) {
     return;
   }
 
@@ -194,14 +194,13 @@ function createSeries(): void {
 
   if (newSupplySerie.length > 0 || newDebtSerie.length > 0) {
     const from = Math.min(
-      (newSupplySerie[0]?.time as UTCTimestamp) ?? Infinity,
-      (newDebtSerie[0]?.time as UTCTimestamp) ?? Infinity
+      (newSupplySerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity,
+      (newDebtSerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newSupplySerie[newSupplySerie.length - 1]?.time as UTCTimestamp) ??
-        -Infinity,
-      (newDebtSerie[newDebtSerie.length - 1]?.time as UTCTimestamp) ?? -Infinity
+      (newSupplySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity,
+      (newDebtSerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
     ) as UTCTimestamp;
 
     chart.value.timeScale().setVisibleRange({ from, to });

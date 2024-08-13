@@ -6,7 +6,6 @@ import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
 
 import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
-// eslint-disable-next-line max-lines-per-function
 export function uCrvDepositZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

@@ -37,7 +37,7 @@ interface Props {
 const { ohlc } = defineProps<Props>();
 
 // Refs
-let ohlcSerie: ISeriesApi<"Candlestick">;
+let ohlcSerie: ISeriesApi<"Candlestick"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 

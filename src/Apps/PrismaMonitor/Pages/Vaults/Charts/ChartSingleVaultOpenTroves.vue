@@ -30,7 +30,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
-let globalCrSerie: ISeriesApi<"Area">;
+let globalCrSerie: ISeriesApi<"Area"> | undefined;
 
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
@@ -66,7 +66,9 @@ const { isFetching: loading, data } = useQuery({
 
 // Watches
 watch([data, chart], createSeries);
-watch(theme, () => globalCrSerie.applyOptions(createGlobalCrOptionsSerie()));
+watch(theme, () => {
+  return globalCrSerie?.applyOptions(createGlobalCrOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

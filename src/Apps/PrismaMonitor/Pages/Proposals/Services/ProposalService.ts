@@ -51,7 +51,7 @@ const parseProposal = (
 ): Proposal => {
   const id = x.index;
   const proposer = x.creator;
-  const proposerLabel = x.creator_label ?? "";
+  const proposerLabel = x.creator_label;
   const weightRequired = x.required_weight;
   const weightReceived = x.received_weight;
   const status = x.status;
@@ -68,7 +68,7 @@ const parseProposal = (
   const end = x.execution_timestamp ? x.execution_timestamp : start + 604800;
   const script = x.decode_data;
 
-  const metadata = metadataResp?.data?.proposals.find(
+  const metadata = metadataResp?.data.proposals.find(
     (proposal) => proposal.id === id
   )?.metadata;
 

@@ -10,7 +10,6 @@ import { claim, calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
-// eslint-disable-next-line max-lines-per-function
 export function uFxsClaimZaps(
   getConfig: () => Config,
   getAddress: () => Address | undefined,

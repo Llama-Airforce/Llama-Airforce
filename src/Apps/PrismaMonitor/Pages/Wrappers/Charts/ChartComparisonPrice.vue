@@ -27,8 +27,8 @@ import { type Contract } from "@PM/Services";
 const { t } = useI18n();
 
 // Refs
-let serieConvex: ISeriesApi<"Line">;
-let serieYearn: ISeriesApi<"Line">;
+let serieConvex: ISeriesApi<"Line"> | undefined;
+let serieYearn: ISeriesApi<"Line"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -78,12 +78,16 @@ const { chart, chartRef } = useLightweightChart(
 );
 
 watch(theme, () => {
-  serieConvex.applyOptions(createOptionsSerie("convex"));
-  serieYearn.applyOptions(createOptionsSerie("yearn"));
+  serieConvex?.applyOptions(createOptionsSerie("convex"));
+  serieYearn?.applyOptions(createOptionsSerie("yearn"));
 });
 
-watch(dataConvex, (newData) => createSeries(newData, "convex"));
-watch(dataYearn, (newData) => createSeries(newData, "yearn"));
+watch(dataConvex, (newData) => {
+  createSeries(newData, "convex");
+});
+watch(dataYearn, (newData) => {
+  createSeries(newData, "yearn");
+});
 
 function createOptionsChart(chartRef: HTMLElement) {
   return createChartStyles(chartRef, theme.value, {
@@ -135,7 +139,7 @@ function createSeries(newData: OHLC[], contract: Contract): void {
   if (newSerie.length > 0) {
     if (contract === "convex") {
       serieConvex.setData(newSerie);
-    } else if (contract === "yearn") {
+    } else {
       serieYearn.setData(newSerie);
     }
 

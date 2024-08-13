@@ -44,6 +44,7 @@ onMounted(async (): Promise<void> => {
      * Select first pool by default if none given by the URL.
      * It's possible the component has unmounted before we arrive here.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!isMounted) {
       return;
     }
@@ -65,6 +66,7 @@ const getSnapshots = async (pool?: Pool): Promise<void> => {
   }
 
   // Don't request new snapshots if there's already cached.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (store.snapshots[pool.name]) {
     return;
   }

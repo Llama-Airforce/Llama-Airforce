@@ -33,7 +33,7 @@ interface Props {
 const { contract } = defineProps<Props>();
 
 // Refs
-let serie: ISeriesApi<"Area">;
+let serie: ISeriesApi<"Area"> | undefined;
 
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -56,7 +56,9 @@ const { isFetching: loading, data } = useQuery({
 
 // Watches
 watch([data, chart], createSeries);
-watch(theme, () => serie.applyOptions(createOptionsSerie()));
+watch(theme, () => {
+  serie?.applyOptions(createOptionsSerie());
+});
 
 // Chart
 function createOptionsChart(chartRef: HTMLElement) {

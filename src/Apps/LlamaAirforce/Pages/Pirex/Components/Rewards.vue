@@ -71,7 +71,7 @@ const showClaims = ref(false);
 
 const { address } = useWallet();
 
-const { data: rewardsRaw, isLoading: snapshotsLoading } =
+const { data: rewardsRaw, isFetching: snapshotsLoading } =
   useQueryRewards(address);
 
 // Filter rewards claimed by the front-end.

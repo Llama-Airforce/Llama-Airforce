@@ -55,7 +55,9 @@ export default class AuraService extends ServiceBase {
       query,
     });
 
-    const delegate = resp.data.auraLockerAccounts[0]?.delegate?.id as Address;
+    const delegate = resp.data.auraLockerAccounts[0]?.delegate?.id as
+      | Address
+      | undefined;
 
     return {
       id: "",

@@ -31,7 +31,7 @@ export default class AuraBribesService extends BribesService {
     // Else, fallback to Llama
     const host = await this.getHost();
 
-    const round = epochId.round?.toString();
+    const round = epochId.round.toString();
 
     return this.fetch(
       `${host}/bribes/${epochId.platform}/${epochId.protocol}/${round}`

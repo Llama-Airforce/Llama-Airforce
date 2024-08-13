@@ -125,9 +125,7 @@ export default class SnapshotService extends ServiceBaseHost {
   ): Promise<Vote[]> {
     const votersChecksummed = voters.map((x) => getAddress(x));
     const voterIn =
-      voters && voters.length > 0
-        ? `voter_in: ${JSON.stringify(votersChecksummed)}`
-        : "";
+      voters.length > 0 ? `voter_in: ${JSON.stringify(votersChecksummed)}` : "";
 
     const fs = (page: number, offset: number) => {
       const query = `{

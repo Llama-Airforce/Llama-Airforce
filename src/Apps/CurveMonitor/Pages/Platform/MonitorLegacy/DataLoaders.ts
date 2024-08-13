@@ -29,14 +29,14 @@ export function loadPool(
   const coinService = new CoinService(socketPool);
   const pairService = new PairService(socketPool);
 
-  void getTransactions(store, transactionService);
-  void getPrices(store, priceService);
-  void getBalances(store, balanceService);
-  void getTvl(store, tvlService);
-  void getVolumes(store, volumeService);
-  void getBondings(store, bondingService);
-  void getCoins(store, coinService);
-  void getPair(store, pairService);
+  getTransactions(store, transactionService);
+  getPrices(store, priceService);
+  getBalances(store, balanceService);
+  getTvl(store, tvlService);
+  getVolumes(store, volumeService);
+  getBondings(store, bondingService);
+  getCoins(store, coinService);
+  getPair(store, pairService);
 
   socketPool.connect();
 
@@ -71,7 +71,9 @@ function getBalances(
       next: (balances) => {
         store.balances = balances;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
 
     balances$_.add(
@@ -79,10 +81,12 @@ function getBalances(
         next: (balances) => {
           store.balances.push(balances);
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          console.error(err);
+        },
       })
     );
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -102,7 +106,9 @@ function getTvl(
       next: (tvls) => {
         store.tvl = tvls;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
 
     tvl$_.add(
@@ -110,10 +116,12 @@ function getTvl(
         next: (tvl) => {
           store.tvl.push(tvl);
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          console.error(err);
+        },
       })
     );
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -133,7 +141,9 @@ function getPrices(
       next: (prices) => {
         store.prices = prices;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
 
     prices$_.add(
@@ -141,10 +151,12 @@ function getPrices(
         next: (price) => {
           store.prices.push(price);
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          console.error(err);
+        },
       })
     );
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -164,7 +176,9 @@ function getVolumes(
       next: (volumes) => {
         store.volumes = volumes;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
 
     volumes$_.add(
@@ -172,10 +186,12 @@ function getVolumes(
         next: (volume) => {
           store.volumes.push(volume);
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          console.error(err);
+        },
       })
     );
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -195,7 +211,9 @@ function getTransactions(
       next: (txs) => {
         store.transactions = txs;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
 
     txs$_.add(
@@ -203,10 +221,12 @@ function getTransactions(
         next: (tx) => {
           store.transactions.push(tx);
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          console.error(err);
+        },
       })
     );
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -226,9 +246,11 @@ function getBondings(
       next: (bonding) => {
         store.bonding = bonding;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -248,9 +270,11 @@ function getCoins(
       next: (coins) => {
         store.coins = coins;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
@@ -270,9 +294,11 @@ function getPair(
       next: (pair) => {
         store.pair = pair;
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+      },
     });
-  } catch (err) {
+  } catch {
     store.poolsLoadingError = true;
   }
 }
