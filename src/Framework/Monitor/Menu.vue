@@ -88,8 +88,11 @@ nav {
         }
 
         &.node {
-          background: var(--c-lvl1);
           cursor: pointer;
+
+          &:not(:hover) {
+            background: var(--c-lvl1);
+          }
         }
 
         &:not(.node) {
