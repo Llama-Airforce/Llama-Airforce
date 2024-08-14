@@ -34,7 +34,7 @@
     </KPI>
 
     <KPI
-      label="7-day Volume"
+      label="24h Volume"
       :has-value="!!volume"
     >
       <AsyncValue
