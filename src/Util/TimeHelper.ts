@@ -12,18 +12,25 @@ export function relativeTime(now: Ref<number>, unixtime: number): string {
   const secondsPast = nowUnixTime - unixtime;
 
   if (secondsPast < SECONDS_IN_MINUTE) {
-    return `${Math.round(secondsPast)} seconds ago`;
+    const seconds = Math.round(secondsPast);
+    return `${seconds} ${seconds === 1 ? "second" : "seconds"} ago`;
   } else if (secondsPast < SECONDS_IN_HOUR) {
-    return `${Math.round(secondsPast / SECONDS_IN_MINUTE)} minutes ago`;
+    const minutes = Math.round(secondsPast / SECONDS_IN_MINUTE);
+    return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
   } else if (secondsPast < SECONDS_IN_DAY) {
-    return `${Math.round(secondsPast / SECONDS_IN_HOUR)} hours ago`;
+    const hours = Math.round(secondsPast / SECONDS_IN_HOUR);
+    return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
   } else if (secondsPast < SECONDS_IN_WEEK) {
-    return `${Math.round(secondsPast / SECONDS_IN_DAY)} days ago`;
+    const days = Math.round(secondsPast / SECONDS_IN_DAY);
+    return `${days} ${days === 1 ? "day" : "days"} ago`;
   } else if (secondsPast < SECONDS_IN_MONTH) {
-    return `${Math.round(secondsPast / SECONDS_IN_WEEK)} weeks ago`;
+    const weeks = Math.round(secondsPast / SECONDS_IN_WEEK);
+    return `${weeks} ${weeks === 1 ? "week" : "weeks"} ago`;
   } else if (secondsPast < SECONDS_IN_YEAR) {
-    return `${Math.round(secondsPast / SECONDS_IN_MONTH)} months ago`;
+    const months = Math.round(secondsPast / SECONDS_IN_MONTH);
+    return `${months} ${months === 1 ? "month" : "months"} ago`;
   } else {
-    return `${Math.round(secondsPast / SECONDS_IN_YEAR)} years ago`;
+    const years = Math.round(secondsPast / SECONDS_IN_YEAR);
+    return `${years} ${years === 1 ? "year" : "years"} ago`;
   }
 }
