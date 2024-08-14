@@ -66,6 +66,8 @@
     "primary-hover": lighten($primary, 20%),
     "primary-active": lighten($primary, 30%),
     "primary-disabled": lighten($primary, 30%),
+    "card-special-1": lighten($blue, 20%),
+    "card-special-2": lighten($blue, 8%)
   );
 
   --page-margin: 2.375rem;

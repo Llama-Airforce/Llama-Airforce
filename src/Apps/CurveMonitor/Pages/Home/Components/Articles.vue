@@ -187,9 +187,9 @@ function go(url: string) {
 
         background-image: conic-gradient(
           from var(--angle),
-          var(--c-blue),
-          var(--c-purple),
-          var(--c-blue)
+          var(--c-card-special-1),
+          var(--c-card-special-2),
+          var(--c-card-special-1)
         );
 
         animation: 2s spin linear infinite;
