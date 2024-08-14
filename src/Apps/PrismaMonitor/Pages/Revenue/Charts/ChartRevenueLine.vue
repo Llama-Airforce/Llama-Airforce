@@ -18,58 +18,48 @@ interface Props {
 
 const { data = [] } = defineProps<Props>();
 
-// Refs
-let revenueSerie: ISeriesApi<"Area"> | undefined;
-
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    revenueSerie = chart.addAreaSeries(createRevenueOptionsSerie());
-  }
-);
-
-// Watches
-watch(() => data, createSeries);
-watch(theme, () => {
-  revenueSerie?.applyOptions(createRevenueOptionsSerie());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (y: number): string =>
+          `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+      },
+    }),
+  series: {
+    type: "Area",
+    name: "revenue" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "price",
+          precision: 6,
+          minMove: 0.000001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lastValueVisible: false,
+        priceLineVisible: false,
+        ...theme.value.lineChartColors,
+      })
+    ),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-}
-
-function createRevenueOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lastValueVisible: false,
-    priceLineVisible: false,
-    ...theme.value.lineChartColors,
-  };
-}
-
+watch(() => data, createSeries);
 function createSeries(newRevenue: SnapshotRevenue[]): void {
-  if (!chart.value || !revenueSerie) {
+  if (!chart.value || !series.revenue) {
     return;
   }
 
@@ -86,14 +76,11 @@ function createSeries(newRevenue: SnapshotRevenue[]): void {
     .value();
 
   if (newRevenueSerie.length > 0) {
-    revenueSerie.setData(newRevenueSerie);
+    series.revenue.setData(newRevenueSerie);
   }
 
   chart.value.timeScale().fitContent();
 }
-
-const formatter = (y: number): string =>
-  `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 
 const totalRevenue = (s: SnapshotRevenue) =>
   s.unlock_penalty_revenue_usd +

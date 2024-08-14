@@ -30,17 +30,7 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
-let globalCrSerie: ISeriesApi<"Area"> | undefined;
-
 const { theme, flavor } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    globalCrSerie = chart.addAreaSeries(createGlobalCrOptionsSerie());
-  }
-);
 
 // Services
 const managerService = new ManagerService(flavor.value);
@@ -64,45 +54,45 @@ const { isFetching: loading, data } = useQuery({
   initialDataUpdatedAt: 0,
 });
 
-// Watches
-watch([data, chart], createSeries);
-watch(theme, () => {
-  return globalCrSerie?.applyOptions(createGlobalCrOptionsSerie());
+// Chart
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: {
+    type: "Area",
+    name: "troves" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "price",
+          precision: 0,
+          minMove: 0.1,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lastValueVisible: false,
+        priceLineVisible: false,
+        ...theme.value.lineChartColors,
+      })
+    ),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createGlobalCrOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 0,
-      minMove: 0.1,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lastValueVisible: false,
-    priceLineVisible: false,
-    ...theme.value.lineChartColors,
-  };
-}
-
+watch([data, chart], createSeries);
 function createSeries([globalCr, chart]: [
   DecimalTimeSeries[]?,
   IChartApi?
 ]): void {
-  if (!chart || !globalCrSerie) {
+  if (!chart || !series.troves) {
     return;
   }
 
@@ -116,7 +106,7 @@ function createSeries([globalCr, chart]: [
     .value();
 
   if (newGlobalCrSerie.length > 0) {
-    globalCrSerie.setData(newGlobalCrSerie);
+    series.troves.setData(newGlobalCrSerie);
   }
 
   chart.timeScale().fitContent();

@@ -37,13 +37,9 @@ interface Props {
 
 const { discounts, liqs } = defineProps<Props>();
 
-// Refs
-let discountSerie: ISeriesApi<"Area"> | undefined;
-let revenueSerie: ISeriesApi<"Area"> | undefined;
-
+// Legend
 const { theme } = storeToRefs(useSettingsStore());
 
-// Legend
 const { items } = useLegend(() => [
   {
     id: "revenue",
@@ -58,81 +54,77 @@ const { items } = useLegend(() => [
 ]);
 
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    discountSerie = chart.addAreaSeries(createDiscountOptionsSerie());
-    revenueSerie = chart.addAreaSeries(createRevenueOptionsSerie());
-  }
-);
-
-watch([toRef(() => discounts), toRef(() => liqs), chart], createSeries);
-watch(theme, () => {
-  discountSerie?.applyOptions(createDiscountOptionsSerie());
-  revenueSerie?.applyOptions(createRevenueOptionsSerie());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      leftPriceScale: {
+        visible: true,
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: [
+    {
+      type: "Area",
+      name: "revenue" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 0,
+            minMove: 1,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lineColor: theme.value.colors.blue,
+          topColor: "rgb(32, 129, 240, 0.2)",
+          bottomColor: "rgba(32, 129, 240, 0)",
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Area",
+      name: "discount" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "percent",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lineColor: theme.value.colors.yellow,
+          priceScaleId: "left",
+          topColor: "rgb(32, 129, 240, 0.2)",
+          bottomColor: "rgba(32, 129, 240, 0)",
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    leftPriceScale: {
-      visible: true,
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createRevenueOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 0,
-      minMove: 1,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createDiscountOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "percent",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.yellow,
-    priceScaleId: "left",
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => discounts), toRef(() => liqs), chart], createSeries);
 function createSeries([newDiscount, newLiqs, chart]: [
   Discount[]?,
   LiquidationDetails[]?,
   IChartApi?
 ]): void {
-  if (!chart || !discountSerie || !revenueSerie) {
+  if (!chart || !series.discount || !series.revenue) {
     return;
   }
 
@@ -164,11 +156,11 @@ function createSeries([newDiscount, newLiqs, chart]: [
     .value();
 
   if (newRevenueSerie.length > 0) {
-    revenueSerie.setData(newRevenueSerie);
+    series.revenue.setData(newRevenueSerie);
   }
 
   if (newDiscountSerie.length > 0) {
-    discountSerie.setData(newDiscountSerie);
+    series.discount.setData(newDiscountSerie);
   }
 
   chart.timeScale().fitContent();

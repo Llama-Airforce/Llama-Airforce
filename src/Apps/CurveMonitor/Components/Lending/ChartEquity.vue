@@ -36,58 +36,48 @@ interface Props {
 
 const { equity } = defineProps<Props>();
 
-// Refs
-let equitySerie: ISeriesApi<"Baseline"> | undefined;
-
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    equitySerie = chart.addBaselineSeries(createOptionsSerie());
-  }
-);
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: {
+    type: "Baseline",
+    name: "equity" as const,
+    options: computed((): BaselineSeriesPartialOptions => {
+      const { colors } = theme.value;
 
-// Watches
-watch([toRef(() => equity), chart], createSeries);
-watch(theme, () => {
-  equitySerie?.applyOptions(createOptionsSerie());
+      return {
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          minMove: 0.01,
+        },
+        lineWidth: 2,
+        baseValue: { type: "price", price: 0 },
+        topLineColor: colors.green,
+        bottomLineColor: colors.red,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      };
+    }),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOptionsSerie(): BaselineSeriesPartialOptions {
-  const { colors } = theme.value;
-
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter: (x: number) => formatterPrice(x),
-      minMove: 0.01,
-    },
-    lineWidth: 2,
-    baseValue: { type: "price", price: 0 },
-    topLineColor: colors.green,
-    bottomLineColor: colors.red,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => equity), chart], createSeries);
 function createSeries([newRatios, chart]: [Equity[]?, IChartApi?]): void {
-  if (!chart || !equitySerie) {
+  if (!chart || !series.equity) {
     return;
   }
 
@@ -101,14 +91,11 @@ function createSeries([newRatios, chart]: [Equity[]?, IChartApi?]): void {
     .value();
 
   if (newEquitySerie.length > 0) {
-    equitySerie.setData(newEquitySerie);
+    series.equity.setData(newEquitySerie);
   }
 
   chart.timeScale().fitContent();
 }
-
-const formatterPrice = (x: number): string =>
-  `$${round(x, 0, "dollar")}${unit(x, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>

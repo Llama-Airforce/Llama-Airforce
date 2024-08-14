@@ -26,13 +26,9 @@ import { type Contract } from "@PM/Services";
 
 const { t } = useI18n();
 
-// Refs
-let serieConvex: ISeriesApi<"Line"> | undefined;
-let serieYearn: ISeriesApi<"Line"> | undefined;
-
+// Legend
 const { theme } = storeToRefs(useSettingsStore());
 
-// Legend
 const { items } = useLegend(() => [
   {
     id: "cvxprisma",
@@ -68,18 +64,59 @@ let max = 1.1;
 let min = 0;
 
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    serieConvex = chart.addLineSeries(createOptionsSerie("convex"));
-    serieYearn = chart.addLineSeries(createOptionsSerie("yearn"));
-  }
-);
-
-watch(theme, () => {
-  serieConvex?.applyOptions(createOptionsSerie("convex"));
-  serieYearn?.applyOptions(createOptionsSerie("yearn"));
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (price: number) => formatterPrice(price),
+      },
+    }),
+  series: [
+    {
+      type: "Line",
+      name: "convex" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          color: theme.value.colors.blue,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Line",
+      name: "yearn" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          color: theme.value.colors.yellow,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
 watch(dataConvex, (newData) => {
@@ -89,41 +126,8 @@ watch(dataYearn, (newData) => {
   createSeries(newData, "yearn");
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatterPrice(price),
-    },
-  });
-}
-
-function createOptionsSerie(contract: Contract): LineSeriesPartialOptions {
-  const color =
-    contract === "convex" ? theme.value.colors.blue : theme.value.colors.yellow;
-
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    color,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
 function createSeries(newData: OHLC[], contract: Contract): void {
-  if (!chart.value || !serieConvex || !serieYearn) {
+  if (!chart.value || !series.convex || !series.yearn) {
     return;
   }
 
@@ -138,9 +142,9 @@ function createSeries(newData: OHLC[], contract: Contract): void {
 
   if (newSerie.length > 0) {
     if (contract === "convex") {
-      serieConvex.setData(newSerie);
+      series.convex.setData(newSerie);
     } else {
-      serieYearn.setData(newSerie);
+      series.yearn.setData(newSerie);
     }
 
     const allValues = [
@@ -154,14 +158,14 @@ function createSeries(newData: OHLC[], contract: Contract): void {
   }
 }
 
-const formatterPrice = (x: number): string => {
+function formatterPrice(x: number): string {
   // Count number of leading zeroes after the decimal.
   const delta = max - min;
   const y = delta > 1 ? delta - Math.floor(delta) : delta;
   const m = -Math.floor(Math.log10(y) + 1) + 2;
 
   return `${round(x, m, "dollar")}${unit(x, "dollar")}`;
-};
+}
 </script>
 
 <style lang="scss" scoped>

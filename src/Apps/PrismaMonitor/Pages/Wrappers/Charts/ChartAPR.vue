@@ -32,19 +32,6 @@ interface Props {
 
 const { contract } = defineProps<Props>();
 
-// Refs
-let serie: ISeriesApi<"Area"> | undefined;
-
-const { theme } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    serie = chart.addAreaSeries(createOptionsSerie());
-  }
-);
-
 // Data
 const { isFetching: loading, data } = useQuery({
   queryKey: ["prisma-wrapper-snapshots", computed(() => contract)] as const,
@@ -54,48 +41,50 @@ const { isFetching: loading, data } = useQuery({
   initialDataUpdatedAt: 0,
 });
 
-// Watches
-watch([data, chart], createSeries);
-watch(theme, () => {
-  serie?.applyOptions(createOptionsSerie());
+// Chart
+const { theme } = storeToRefs(useSettingsStore());
+
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (price: number) => formatter(price),
+      },
+    }),
+  series: {
+    type: "Area",
+    name: "apr" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "price",
+          precision: 6,
+          minMove: 0.01,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lastValueVisible: false,
+        priceLineVisible: false,
+        ...theme.value.lineChartColors,
+      })
+    ),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-}
-
-function createOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.01,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lastValueVisible: false,
-    priceLineVisible: false,
-    ...theme.value.lineChartColors,
-  };
-}
-
+watch([data, chart], createSeries);
 function createSeries([newData, chart]: [
   SnapshotWrapper[]?,
   IChartApi?
 ]): void {
-  if (!chart || !serie) {
+  if (!chart || !series.apr) {
     return;
   }
 
@@ -111,7 +100,7 @@ function createSeries([newData, chart]: [
     .value();
 
   if (newSerie.length > 0) {
-    serie.setData(newSerie);
+    series.apr.setData(newSerie);
   }
 
   chart.timeScale().fitContent();

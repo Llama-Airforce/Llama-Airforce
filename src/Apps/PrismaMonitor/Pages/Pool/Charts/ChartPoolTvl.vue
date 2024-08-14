@@ -20,17 +20,7 @@ import { type DecimalTimeSeries, StabilityPoolService } from "@PM/Services";
 const { t } = useI18n();
 
 // Refs
-let serie: ISeriesApi<"Area"> | undefined;
-
 const { theme, flavor } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    serie = chart.addAreaSeries(createOptionsSerie());
-  }
-);
 
 const sbService = new StabilityPoolService(flavor.value);
 
@@ -42,46 +32,49 @@ const { isFetching: loading, data } = useQuery({
   initialDataUpdatedAt: 0,
 });
 
-// Watches
-watch([data, chart], createSeries);
-watch(theme, () => serie?.applyOptions(createOptionsSerie()));
-
 // Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
       },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-}
+      localization: {
+        priceFormatter: (y: number): string =>
+          `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+      },
+    }),
+  series: {
+    type: "Area",
+    name: "tvl" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "price",
+          precision: 2,
+          minMove: 0.001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lastValueVisible: false,
+        priceLineVisible: false,
+        ...theme.value.lineChartColors,
+      })
+    ),
+  },
+});
 
-function createOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lastValueVisible: false,
-    priceLineVisible: false,
-    ...theme.value.lineChartColors,
-  };
-}
-
+watch([data, chart], createSeries);
 function createSeries([newData, chart]: [
   DecimalTimeSeries[]?,
   IChartApi?
 ]): void {
-  if (!chart || !serie) {
+  if (!chart || !series.tvl) {
     return;
   }
 
@@ -95,15 +88,11 @@ function createSeries([newData, chart]: [
     .value();
 
   if (newSerie.length > 0) {
-    serie.setData(newSerie);
+    series.tvl.setData(newSerie);
   }
 
   chart.timeScale().fitContent();
 }
-
-const formatter = (y: number): string => {
-  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
-};
 </script>
 
 <style lang="scss" scoped>

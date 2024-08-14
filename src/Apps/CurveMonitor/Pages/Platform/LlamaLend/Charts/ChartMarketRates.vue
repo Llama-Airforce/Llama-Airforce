@@ -35,13 +35,9 @@ interface Props {
 
 const { market, chain } = defineProps<Props>();
 
-// Refs
-let borrowApySerie: ISeriesApi<"Line"> | undefined;
-let lendApySerie: ISeriesApi<"Line"> | undefined;
-
+// Legend
 const { theme } = storeToRefs(useSettingsStore());
 
-// Legend
 const { items } = useLegend(() => [
   {
     id: "borrow",
@@ -62,64 +58,60 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 );
 
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    borrowApySerie = chart.addLineSeries(createOptionsSerieBorrowApy());
-    lendApySerie = chart.addLineSeries(createOptionsLendApy());
-  }
-);
-
-watch([snapshots, chart], createSeries);
-watch(theme, () => {
-  borrowApySerie?.applyOptions(createOptionsSerieBorrowApy());
-  lendApySerie?.applyOptions(createOptionsLendApy());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (apy: number) => formatter(apy),
+      },
+    }),
+  series: [
+    {
+      type: "Line",
+      name: "borrowApy" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter,
+          },
+          lineWidth: 2,
+          color: theme.value.colors.red,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Line",
+      name: "lendApy" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter,
+          },
+          lineWidth: 2,
+          color: theme.value.colors.green,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (apy: number) => formatter(apy),
-    },
-  });
-}
-
-function createOptionsSerieBorrowApy(): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    color: theme.value.colors.red,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createOptionsLendApy(): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    color: theme.value.colors.green,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([snapshots, chart], createSeries);
 function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !borrowApySerie || !lendApySerie) {
+  if (!chart || !series.borrowApy || !series.lendApy) {
     return;
   }
 
@@ -143,12 +135,12 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
 
   // Borrow APY serie
   if (newBorrowApySerie.length > 0) {
-    borrowApySerie.setData(newBorrowApySerie);
+    series.borrowApy.setData(newBorrowApySerie);
   }
 
   // Lend APY serie
   if (newLendApySerie.length > 0) {
-    lendApySerie.setData(newLendApySerie);
+    series.lendApy.setData(newLendApySerie);
   }
 
   if (newBorrowApySerie.length > 0 || newLendApySerie.length > 0) {
@@ -166,8 +158,9 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
   }
 }
 
-const formatter = (x: number): string =>
-  `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
+function formatter(x: number): string {
+  return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
+}
 </script>
 
 <style lang="scss" scoped>

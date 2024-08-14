@@ -30,13 +30,9 @@ const { t } = useI18n();
 
 const prismaService = new WrapperService();
 
-// Refs
-let serieConvex: ISeriesApi<"Line"> | undefined;
-let serieYearn: ISeriesApi<"Line"> | undefined;
-
+// Legend
 const { theme } = storeToRefs(useSettingsStore());
 
-// Legend
 const { items } = useLegend(() => [
   {
     id: "cvxprisma",
@@ -68,18 +64,59 @@ const { isFetching: loadingYearn, data: dataYearn } = useQuery({
 });
 
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    serieConvex = chart.addLineSeries(createOptionsSerie("convex"));
-    serieYearn = chart.addLineSeries(createOptionsSerie("yearn"));
-  }
-);
-
-watch(theme, () => {
-  serieConvex?.applyOptions(createOptionsSerie("convex"));
-  serieYearn?.applyOptions(createOptionsSerie("yearn"));
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (price: number) => formatter(price),
+      },
+    }),
+  series: [
+    {
+      type: "Line",
+      name: "convex" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          color: theme.value.colors.blue,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Line",
+      name: "yearn" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          color: theme.value.colors.yellow,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
 watch([dataConvex, chart], ([newData, chart]) => {
@@ -89,45 +126,12 @@ watch([dataYearn, chart], ([newData, chart]) => {
   createSeries("yearn", newData, chart);
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-}
-
-function createOptionsSerie(contract: Contract): LineSeriesPartialOptions {
-  const color =
-    contract === "convex" ? theme.value.colors.blue : theme.value.colors.yellow;
-
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    color,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
 function createSeries(
   contract: Contract,
   newData?: DecimalTimeSeries[],
   chart?: IChartApi
 ): void {
-  if (!chart || !serieConvex || !serieYearn) {
+  if (!chart || !series.convex || !series.yearn) {
     return;
   }
 
@@ -142,18 +146,18 @@ function createSeries(
 
   if (newSerie.length > 0) {
     if (contract === "convex") {
-      serieConvex.setData(newSerie);
+      series.convex.setData(newSerie);
     } else {
-      serieYearn.setData(newSerie);
+      series.yearn.setData(newSerie);
     }
 
     chart.timeScale().fitContent();
   }
 }
 
-const formatter = (y: number): string => {
+function formatter(y: number): string {
   return `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -29,56 +29,46 @@ interface Props {
 
 const { tvl } = defineProps<Props>();
 
-// Refs
-let areaSerie: ISeriesApi<"Area"> | undefined;
-
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    areaSerie = chart.addAreaSeries(createOptionsSerie());
-  }
-);
-
-// Watches
-watch([toRef(() => tvl), chart], createSeries);
-watch(theme, () => {
-  areaSerie?.applyOptions(createOptionsSerie());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: {
+    type: "Area",
+    name: "tvl" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (y: number): string =>
+            `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.blue,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })
+    ),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => tvl), chart], createSeries);
 function createSeries([newOHLC, chart]: [Tvl[]?, IChartApi?]): void {
-  if (!chart || !areaSerie) {
+  if (!chart || !series.tvl) {
     return;
   }
 
@@ -92,15 +82,11 @@ function createSeries([newOHLC, chart]: [Tvl[]?, IChartApi?]): void {
     .value();
 
   if (newSerie.length > 0) {
-    areaSerie.setData(newSerie);
+    series.tvl.setData(newSerie);
   }
 
   chart.timeScale().fitContent();
 }
-
-const formatter = (y: number): string => {
-  return `$${round(y, 1, "dollar")}${unit(y, "dollar")}`;
-};
 </script>
 
 <style lang="scss" scoped>

@@ -37,13 +37,9 @@ interface Props {
 
 const { ratios, pricesOracle } = defineProps<Props>();
 
-// Refs
-let proportionSerie: ISeriesApi<"Area"> | undefined;
-let priceSerie: ISeriesApi<"Area"> | undefined;
-
+// Legend
 const { theme } = storeToRefs(useSettingsStore());
 
-// Legend
 const { items } = useLegend(() => [
   {
     id: "percentage",
@@ -58,79 +54,77 @@ const { items } = useLegend(() => [
 ]);
 
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    proportionSerie = chart.addAreaSeries(createProportionOptionsSerie());
-    priceSerie = chart.addAreaSeries(createPriceOptionsSerie());
-  }
-);
-
-watch([toRef(() => ratios), toRef(() => pricesOracle), chart], createSeries);
-watch(theme, () => {
-  proportionSerie?.applyOptions(createProportionOptionsSerie());
-  priceSerie?.applyOptions(createPriceOptionsSerie());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      leftPriceScale: {
+        visible: true,
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: [
+    {
+      type: "Area",
+      name: "price" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter: (x: number): string =>
+              `$${round(x, 2, "dollar")}${unit(x, "dollar")}`,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lineColor: theme.value.colors.yellow,
+          topColor: "rgb(32, 129, 240, 0.2)",
+          bottomColor: "rgba(32, 129, 240, 0)",
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Area",
+      name: "ratio" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter: (x: number): string =>
+              `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lineColor: theme.value.colors.blue,
+          priceScaleId: "left",
+          topColor: "rgb(32, 129, 240, 0.2)",
+          bottomColor: "rgba(32, 129, 240, 0)",
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    leftPriceScale: {
-      visible: true,
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createPriceOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter: formatterPrice,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.yellow,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createProportionOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter: formatterDiscount,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.blue,
-    priceScaleId: "left",
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => ratios), toRef(() => pricesOracle), chart], createSeries);
 function createSeries([newSoftLiq, newSnapshots, chart]: [
   SoftLiqRatio[]?,
   PriceOracle[]?,
   IChartApi?
 ]): void {
-  if (!chart || !proportionSerie || !priceSerie) {
+  if (!chart || !series.price || !series.ratio) {
     return;
   }
 
@@ -157,21 +151,15 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
     .value();
 
   if (newPriceSerie.length > 0) {
-    priceSerie.setData(newPriceSerie);
+    series.price.setData(newPriceSerie);
   }
 
   if (newProportionSerie.length > 0) {
-    proportionSerie.setData(newProportionSerie);
+    series.ratio.setData(newProportionSerie);
   }
 
   chart.timeScale().fitContent();
 }
-
-const formatterPrice = (x: number): string =>
-  `$${round(x, 2, "dollar")}${unit(x, "dollar")}`;
-
-const formatterDiscount = (x: number): string =>
-  `${round(x, 0, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>

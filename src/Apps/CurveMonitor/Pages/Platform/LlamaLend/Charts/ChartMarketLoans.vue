@@ -29,63 +29,53 @@ interface Props {
 
 const { market, chain } = defineProps<Props>();
 
-// Refs
-let loansSerie: ISeriesApi<"Histogram"> | undefined;
-
-const { theme } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    loansSerie = chart.addHistogramSeries(createOptionsSerieLoans());
-  }
-);
-
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(
   toRef(() => market),
   toRef(() => chain)
 );
 
-// Watches
-watch([snapshots, chart], createSeriesLoans);
-watch(theme, () => {
-  loansSerie?.applyOptions(createOptionsSerieLoans());
+// Chart
+const { theme } = storeToRefs(useSettingsStore());
+
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.15,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        // Needed to fix weird right margin wtf.
+        priceFormatter: (y: number): string => Math.round(y).toString(),
+      },
+    }),
+  series: {
+    type: "Histogram",
+    name: "loans" as const,
+    options: computed(
+      (): HistogramSeriesPartialOptions => ({
+        color: theme.value.colors.yellow,
+        lastValueVisible: false,
+        priceFormat: {
+          type: "volume",
+        },
+        priceLineVisible: false,
+      })
+    ),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.15,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: formatter,
-    },
-  });
-}
-
-function createOptionsSerieLoans(): HistogramSeriesPartialOptions {
-  return {
-    color: theme.value.colors.yellow,
-    lastValueVisible: false,
-    priceFormat: {
-      type: "volume",
-    },
-    priceLineVisible: false,
-  };
-}
-
+watch([snapshots, chart], createSeriesLoans);
 function createSeriesLoans([newSnapshots, chart]: [
   Snapshot[]?,
   IChartApi?
 ]): void {
-  if (!chart || !loansSerie) {
+  if (!chart || !series.loans) {
     return;
   }
 
@@ -99,16 +89,13 @@ function createSeriesLoans([newSnapshots, chart]: [
     .value();
 
   if (newLoansSeries.length > 0) {
-    loansSerie.setData(newLoansSeries);
+    series.loans.setData(newLoansSeries);
 
     const from = newLoansSeries[0].time;
     const to = newLoansSeries[newLoansSeries.length - 1].time;
     chart.timeScale().setVisibleRange({ from, to });
   }
 }
-
-// Needed to fix weird right margin wtf.
-const formatter = (y: number): string => Math.round(y).toString();
 </script>
 
 <style lang="scss" scoped>

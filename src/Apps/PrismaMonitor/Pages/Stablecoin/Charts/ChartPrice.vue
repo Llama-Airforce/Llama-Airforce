@@ -27,17 +27,7 @@ import { stableSymbol } from "@PM/Models/Flavor";
 const { t } = useI18n();
 
 // Refs
-let serie: ISeriesApi<"Candlestick"> | undefined;
-
 const { theme, flavor } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    serie = chart.addCandlestickSeries(createOptionsSerie());
-  }
-);
 
 // Price settings specifics.
 const getPool = () => {
@@ -104,52 +94,53 @@ const tooltip = computed(() => {
   }
 });
 
-// Watches
-watch(data, createSeries);
-watch(theme, () => {
-  serie?.applyOptions(createOptionsSerie());
+// Chart
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (y: number): string =>
+          `$${round(y, 4, "dollar")}${unit(y, "dollar")}`,
+      },
+    }),
+  series: {
+    type: "Candlestick",
+    name: "price" as const,
+    options: computed((): CandlestickSeriesPartialOptions => {
+      const { colors } = theme.value;
+
+      return {
+        priceFormat: {
+          type: "price",
+          precision: 6,
+          minMove: 0.01,
+        },
+
+        upColor: colors.green,
+        borderUpColor: colors.green,
+        wickUpColor: colors.green,
+        downColor: colors.red,
+        borderDownColor: colors.red,
+        wickDownColor: colors.red,
+
+        lastValueVisible: true,
+        priceLineVisible: false,
+      };
+    }),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-}
-
-function createOptionsSerie(): CandlestickSeriesPartialOptions {
-  const { colors } = theme.value;
-
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.01,
-    },
-
-    upColor: colors.green,
-    borderUpColor: colors.green,
-    wickUpColor: colors.green,
-    downColor: colors.red,
-    borderDownColor: colors.red,
-    wickDownColor: colors.red,
-
-    lastValueVisible: true,
-    priceLineVisible: false,
-  };
-}
-
+watch(data, createSeries);
 function createSeries(newData: OHLC[]): void {
-  if (!chart.value || !serie) {
+  if (!chart.value || !series.price) {
     return;
   }
 
@@ -166,15 +157,11 @@ function createSeries(newData: OHLC[]): void {
     .value();
 
   if (newSerie.length > 0) {
-    serie.setData(newSerie);
+    series.price.setData(newSerie);
   }
 
   chart.value.timeScale().fitContent();
 }
-
-const formatter = (y: number): string => {
-  return `$${round(y, 4, "dollar")}${unit(y, "dollar")}`;
-};
 </script>
 
 <style lang="scss" scoped>

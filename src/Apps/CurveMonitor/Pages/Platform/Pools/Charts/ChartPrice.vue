@@ -36,65 +36,54 @@ interface Props {
 
 const { ohlc } = defineProps<Props>();
 
-// Refs
-let ohlcSerie: ISeriesApi<"Candlestick"> | undefined;
-
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
 const invert = ref(false);
 let max = 1;
 let min = 0;
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    ohlcSerie = chart.addCandlestickSeries(createOHLCOptionsSerie());
-  }
-);
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: {
+    type: "Candlestick",
+    name: "ohlc" as const,
+    options: computed((): CandlestickSeriesPartialOptions => {
+      const { colors } = theme.value;
 
-// Watches
-watch([toRef(() => ohlc), chart, invert], createSeries);
-watch(theme, () => {
-  ohlcSerie?.applyOptions(createOHLCOptionsSerie());
+      return {
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        upColor: colors.green,
+        borderUpColor: colors.green,
+        wickUpColor: colors.green,
+        downColor: colors.red,
+        borderDownColor: colors.red,
+        wickDownColor: colors.red,
+      };
+    }),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOHLCOptionsSerie(): CandlestickSeriesPartialOptions {
-  const { colors } = theme.value;
-
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    upColor: colors.green,
-    borderUpColor: colors.green,
-    wickUpColor: colors.green,
-    downColor: colors.red,
-    borderDownColor: colors.red,
-    wickDownColor: colors.red,
-  };
-}
-
+watch([toRef(() => ohlc), chart, invert], createSeries);
 function createSeries([newOHLC, chart, newInvert]: [
   OHLC[]?,
   IChartApi?,
   boolean?
 ]): void {
-  if (!chart || !ohlcSerie) {
+  if (!chart || !series.ohlc) {
     return;
   }
 
@@ -113,7 +102,7 @@ function createSeries([newOHLC, chart, newInvert]: [
     .value();
 
   if (newOHLCSerie.length > 0) {
-    ohlcSerie.setData(newOHLCSerie);
+    series.ohlc.setData(newOHLCSerie);
     min = Math.min(...newOHLCSerie.map((c) => c.low));
     max = Math.max(...newOHLCSerie.map((c) => c.high));
   }
@@ -122,14 +111,14 @@ function createSeries([newOHLC, chart, newInvert]: [
 }
 
 // Methods
-const formatter = (x: number): string => {
+function formatter(x: number): string {
   // Count number of leading zeroes after the decimal.
   const delta = max - min;
   const y = delta > 1 ? delta - Math.floor(delta) : delta;
   const m = -Math.floor(Math.log10(y) + 1) + 2;
 
   return `${round(x, m, "dollar")}${unit(x, "dollar")}`;
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -36,23 +36,6 @@ interface Props {
 
 const { contract } = defineProps<Props>();
 
-// Refs
-let seriePrice: ISeriesApi<"Candlestick"> | undefined;
-let serieVolume: ISeriesApi<"Histogram"> | undefined;
-let max = 1;
-let min = 0;
-
-const { theme, flavor } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    seriePrice = chart.addCandlestickSeries(createOptionsSeriePrice());
-    serieVolume = chart.addHistogramSeries(createOptionsSerieVolume());
-  }
-);
-
 // Data
 const priceSettings = getPriceSettings(contract);
 const volumeSettings = getVolumeSettings(contract);
@@ -70,69 +53,77 @@ const loading = computed(
   () => dataPrice.value.length + dataVolume.value.length === 0
 );
 
-// Watches
-watch(theme, () => {
-  seriePrice?.applyOptions(createOptionsSeriePrice());
-  serieVolume?.applyOptions(createOptionsSerieVolume());
+// Chart
+let max = 1;
+let min = 0;
+
+const { theme, flavor } = storeToRefs(useSettingsStore());
+
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.75,
+          bottom: 0,
+        },
+      },
+      localization: {
+        priceFormatter: (price: number) => formatterPrice(price),
+      },
+    }),
+  series: [
+    {
+      type: "Candlestick",
+      name: "price" as const,
+      options: computed((): CandlestickSeriesPartialOptions => {
+        const { colors } = theme.value;
+
+        return {
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.01,
+          },
+
+          upColor: colors.green,
+          borderUpColor: colors.green,
+          wickUpColor: colors.green,
+          downColor: colors.red,
+          borderDownColor: colors.red,
+          wickDownColor: colors.red,
+
+          lastValueVisible: false,
+          priceLineVisible: false,
+        };
+      }),
+    },
+    {
+      type: "Histogram",
+      name: "volume" as const,
+      options: computed((): HistogramSeriesPartialOptions => {
+        const { colors } = theme.value;
+
+        return {
+          color: flavor.value === "lsd" ? colors.blue : colors.purple,
+          lastValueVisible: false,
+          priceFormat: {
+            type: "volume",
+          },
+          priceScaleId: "left",
+          priceLineVisible: false,
+        };
+      }),
+    },
+  ],
 });
 
 watch(dataPrice, createSeriesPrice);
 watch(dataVolume, createSeriesVolume);
-
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.75,
-        bottom: 0,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatterPrice(price),
-    },
-  });
-}
-
-function createOptionsSeriePrice(): CandlestickSeriesPartialOptions {
-  const { colors } = theme.value;
-
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.01,
-    },
-
-    upColor: colors.green,
-    borderUpColor: colors.green,
-    wickUpColor: colors.green,
-    downColor: colors.red,
-    borderDownColor: colors.red,
-    wickDownColor: colors.red,
-
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createOptionsSerieVolume(): HistogramSeriesPartialOptions {
-  const { colors } = theme.value;
-
-  return {
-    color: flavor.value === "lsd" ? colors.blue : colors.purple,
-    lastValueVisible: false,
-    priceFormat: {
-      type: "volume",
-    },
-    priceScaleId: "left",
-    priceLineVisible: false,
-  };
-}
-
 function createSeriesPrice(newData: OHLC[]): void {
-  if (!chart.value || !seriePrice) {
+  if (!chart.value || !series.price) {
     return;
   }
 
@@ -151,7 +142,7 @@ function createSeriesPrice(newData: OHLC[]): void {
     .value();
 
   if (newSerie.length > 0) {
-    seriePrice.setData(newSerie);
+    series.price.setData(newSerie);
     chart.value.timeScale().fitContent();
 
     min = Math.min(...newSerie.map((c) => c.low));
@@ -162,7 +153,7 @@ function createSeriesPrice(newData: OHLC[]): void {
 }
 
 function createSeriesVolume(newVolumes: Volume[]): void {
-  if (!chart.value || !serieVolume) {
+  if (!chart.value || !series.volume) {
     return;
   }
 
@@ -176,7 +167,7 @@ function createSeriesVolume(newVolumes: Volume[]): void {
     .value();
 
   if (newVolumeSeries.length > 0) {
-    serieVolume.setData(newVolumeSeries);
+    series.volume.setData(newVolumeSeries);
   }
 }
 

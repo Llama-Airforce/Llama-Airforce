@@ -42,59 +42,49 @@ interface Props {
 
 const { users } = defineProps<Props>();
 
-// Refs
-let userSerie: ISeriesApi<"Area"> | undefined;
-
-const { theme } = storeToRefs(useSettingsStore());
-
 // Chart
+const { theme } = storeToRefs(useSettingsStore());
 const fullscreen = ref(false);
 const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    userSerie = chart.addAreaSeries(createOptionsSerieUsers());
-  }
-);
-
-watch(theme, () => {
-  userSerie?.applyOptions(createOptionsSerieUsers());
-});
-
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: chartRef.clientHeight || 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: chartRef.clientHeight || 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
       },
-    },
-  });
-}
-
-function createOptionsSerieUsers(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter: (x: number) => formatterPrice(x),
-      minMove: 0.01,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
+    }),
+  series: {
+    type: "Area",
+    name: "users" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          minMove: 0.01,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.blue,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })
+    ),
+  },
+});
 
 watchEffect(createSeries);
 function createSeries(): void {
-  if (!chart.value || !userSerie) {
+  if (!chart.value || !series.users) {
     return;
   }
 
@@ -107,13 +97,10 @@ function createSeries(): void {
     .orderBy((c) => c.time, "asc")
     .value();
 
-  userSerie.setData(newTxsSerie);
+  series.users.setData(newTxsSerie);
 
   chart.value.timeScale().fitContent();
 }
-
-const formatterPrice = (x: number): string =>
-  `${round(x, 0, "dollar")}${unit(x, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>

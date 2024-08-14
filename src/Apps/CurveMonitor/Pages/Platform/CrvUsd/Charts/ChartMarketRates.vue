@@ -39,83 +39,73 @@ interface Props {
 
 const { market } = defineProps<Props>();
 
-// Refs
-let ratesSerie: ISeriesApi<"Area"> | undefined;
-let ratesEMASerie: ISeriesApi<"Line"> | undefined;
-
-const { theme } = storeToRefs(useSettingsStore());
-
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    ratesSerie = chart.addAreaSeries(createOptionsSerieRates());
-    ratesEMASerie = chart.addLineSeries(createOptionsSerieRatesEMA());
-  }
-);
-
-const avgLength = ref<number | null>(null);
-
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(
   toRef(() => market)
 );
 
-// Watches
+// Chart
+const { theme } = storeToRefs(useSettingsStore());
+const avgLength = ref<number | null>(null);
+
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: [
+    {
+      type: "Area",
+      name: "rates" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lineColor: theme.value.colors.blue,
+          topColor: "rgb(32, 129, 240, 0.2)",
+          bottomColor: "rgba(32, 129, 240, 0)",
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Line",
+      name: "ema" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          color: theme.value.colors.yellow,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
+});
+
 watch([snapshots, chart], createSeries);
 watch(avgLength, () => {
   createSeries([snapshots.value, chart.value]);
 });
-watch(theme, () => {
-  ratesSerie?.applyOptions(createOptionsSerieRates());
-  ratesEMASerie?.applyOptions(createOptionsSerieRatesEMA());
-});
-
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOptionsSerieRates(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createOptionsSerieRatesEMA(): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    color: theme.value.colors.yellow,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
 function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !ratesSerie || !ratesEMASerie) {
+  if (!chart || !series.rates || !series.ema) {
     return;
   }
 
@@ -143,12 +133,12 @@ function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
 
   // EMA rates serie.
   if (newRatesEMASerie.length > 0) {
-    ratesEMASerie.setData(newRatesEMASerie);
+    series.ema.setData(newRatesEMASerie);
   }
 
   // Normal rates serie.
   if (newRatesSerie.length > 0) {
-    ratesSerie.setData(newRatesSerie);
+    series.rates.setData(newRatesSerie);
 
     const from = newRatesSerie[0].time;
     const to = newRatesSerie[newRatesSerie.length - 1].time;
@@ -157,9 +147,9 @@ function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
   }
 }
 
-const formatter = (x: number): string => {
+function formatter(x: number): string {
   return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
-};
+}
 
 /**
  * Normal non-weighted N sized average.

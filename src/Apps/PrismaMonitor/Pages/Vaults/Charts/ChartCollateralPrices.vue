@@ -37,9 +37,6 @@ interface Props {
 const { vault = null } = defineProps<Props>();
 
 // Refs
-let oracleSerie: ISeriesApi<"Area"> | undefined;
-let marketSerie: ISeriesApi<"Area"> | undefined;
-
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 // Legend
@@ -125,65 +122,61 @@ const processSeries = (
 };
 
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    oracleSerie = chart.addAreaSeries(createProportionOptionsSerie());
-    marketSerie = chart.addAreaSeries(createPriceOptionsSerie());
-  }
-);
-
-watch([data, chart], createSeries);
-watch(theme, () => {
-  oracleSerie?.applyOptions(createProportionOptionsSerie());
-  marketSerie?.applyOptions(createPriceOptionsSerie());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      leftPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: [
+    {
+      type: "Area",
+      name: "oracle" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 2,
+            minMove: 0.001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lastValueVisible: false,
+          priceLineVisible: false,
+          ...theme.value.lineChartColors,
+        })
+      ),
+    },
+    {
+      type: "Area",
+      name: "market" as const,
+      options: computed(
+        (): AreaSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 2,
+            minMove: 0.001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          lineColor: theme.value.colors.yellow,
+          topColor: "rgb(32, 129, 240, 0.2)",
+          bottomColor: "rgba(32, 129, 240, 0)",
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    leftPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createPriceOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.yellow,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createProportionOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 2,
-      minMove: 0.001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lastValueVisible: false,
-    priceLineVisible: false,
-    ...theme.value.lineChartColors,
-  };
-}
-
+watch([data, chart], createSeries);
 function createSeries([newData, chart]: [
   {
     oracle: DecimalTimeSeries[];
@@ -191,7 +184,7 @@ function createSeries([newData, chart]: [
   }?,
   IChartApi?
 ]): void {
-  if (!chart || !oracleSerie || !marketSerie) {
+  if (!chart || !series.oracle || !series.market) {
     return;
   }
 
@@ -214,11 +207,11 @@ function createSeries([newData, chart]: [
     .value();
 
   if (newMarketSerie.length > 0) {
-    marketSerie.setData(newMarketSerie);
+    series.market.setData(newMarketSerie);
   }
 
   if (newOracleSerie.length > 0) {
-    oracleSerie.setData(newOracleSerie);
+    series.oracle.setData(newOracleSerie);
   }
 
   chart.timeScale().fitContent();

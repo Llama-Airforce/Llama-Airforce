@@ -25,57 +25,47 @@ interface Props {
 
 const { losses } = defineProps<Props>();
 
-// Refs
-let areaSerie: ISeriesApi<"Area"> | undefined;
-
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    areaSerie = chart.addAreaSeries(createOptionsSerie());
-  }
-);
-
-// Watches
-watch([toRef(() => losses), chart], createSeries);
-watch(theme, () => {
-  areaSerie?.applyOptions(createOptionsSerie());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: {
+    type: "Area",
+    name: "losses" as const,
+    options: computed(
+      (): AreaSeriesPartialOptions => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
+          minMove: 0.1,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.blue,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })
+    ),
+  },
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOptionsSerie(): AreaSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-      minMove: 0.1,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    lineColor: theme.value.colors.blue,
-    topColor: "rgb(32, 129, 240, 0.2)",
-    bottomColor: "rgba(32, 129, 240, 0)",
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => losses), chart], createSeries);
 function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
-  if (!chart || !areaSerie) {
+  if (!chart || !series.losses) {
     return;
   }
 
@@ -92,14 +82,11 @@ function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
     .value();
 
   if (newSerie.length > 0) {
-    areaSerie.setData(newSerie);
+    series.losses.setData(newSerie);
   }
 
   chart.timeScale().fitContent();
 }
-
-const formatter = (x: number): string =>
-  `${round(x, 0, "percentage")}${unit(x, "percentage")}`;
 </script>
 
 <style lang="scss" scoped>

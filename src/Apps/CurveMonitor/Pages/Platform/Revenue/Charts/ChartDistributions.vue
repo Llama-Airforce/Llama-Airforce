@@ -38,60 +38,49 @@ interface Props {
 
 const { distributions } = defineProps<Props>();
 
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
-// Refs
-let distributionsSerie: ISeriesApi<"Histogram"> | undefined;
-
-// Chart
 const fullscreen = ref(false);
 const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    distributionsSerie = chart.addHistogramSeries(
-      createOptionsSerieDistributions()
-    );
-  }
-);
-
-watch([toRef(() => distributions), chart], createSeriesDistributions);
-watch(theme, () => {
-  distributionsSerie?.applyOptions(createOptionsSerieDistributions());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.15,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: {
+    type: "Histogram",
+    name: "distributions" as const,
+    options: computed(
+      (): HistogramSeriesPartialOptions => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          minMove: 0.01,
+        },
+        color: theme.value.colors.blue,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })
+    ),
+  },
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.15,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOptionsSerieDistributions(): HistogramSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter: (x: number) => formatterPrice(x),
-      minMove: 0.01,
-    },
-    color: theme.value.colors.blue,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => distributions), chart], createSeriesDistributions);
 function createSeriesDistributions([newDistributions, chart]: [
   Distribution[]?,
   IChartApi?
 ]): void {
-  if (!chart || !distributionsSerie) {
+  if (!chart || !series.distributions) {
     return;
   }
 
@@ -106,16 +95,13 @@ function createSeriesDistributions([newDistributions, chart]: [
     .value();
 
   if (newDistributionsSeries.length > 0) {
-    distributionsSerie.setData(newDistributionsSeries);
+    series.distributions.setData(newDistributionsSeries);
 
     const from = newDistributionsSeries[0].time;
     const to = newDistributionsSeries[newDistributionsSeries.length - 1].time;
     chart.timeScale().setVisibleRange({ from, to });
   }
 }
-
-const formatterPrice = (x: number): string =>
-  `$${round(x, 0, "dollar")}${unit(x, "dollar")}`;
 </script>
 
 <style lang="scss" scoped>

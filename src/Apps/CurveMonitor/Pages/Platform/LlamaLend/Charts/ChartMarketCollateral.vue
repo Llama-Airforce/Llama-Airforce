@@ -42,15 +42,15 @@ interface Props {
 
 const { market, chain } = defineProps<Props>();
 
-// Refs
-let collateralSerie: ISeriesApi<"Line"> | undefined;
-let borrowedSerie: ISeriesApi<"Line"> | undefined;
-
-const denomDollars = ref(true);
-
-const { theme } = storeToRefs(useSettingsStore());
+// Data
+const { isFetching: loading, data: snapshots } = useQuerySnapshots(
+  toRef(() => market),
+  toRef(() => chain)
+);
 
 // Legend
+const { theme } = storeToRefs(useSettingsStore());
+
 const symbolCollateral = computed(() =>
   market ? market.collateral_token.symbol : "?"
 );
@@ -71,72 +71,64 @@ const { items } = useLegend(() => [
   },
 ]);
 
-// Data
-const { isFetching: loading, data: snapshots } = useQuerySnapshots(
-  toRef(() => market),
-  toRef(() => chain)
-);
-
 // Chart
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    collateralSerie = chart.addLineSeries(createOptionsSerieCollateral());
-    borrowedSerie = chart.addLineSeries(createOptionsSerieBorrowed());
-  }
-);
+const denomDollars = ref(true);
 
-watch([snapshots, chart, denomDollars], createSeries);
-watch(theme, () => {
-  collateralSerie?.applyOptions(createOptionsSerieCollateral());
-  borrowedSerie?.applyOptions(createOptionsSerieBorrowed());
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+    }),
+  series: [
+    {
+      type: "Line",
+      name: "collateral" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter,
+          },
+          lineWidth: 2,
+          color: theme.value.colors.blue,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+    {
+      type: "Line",
+      name: "borrowed" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "custom",
+            formatter,
+          },
+          lineWidth: 2,
+          color: theme.value.colors.yellow,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-  });
-}
-
-function createOptionsSerieCollateral(): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    color: theme.value.colors.blue,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
-function createOptionsSerieBorrowed(): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    color: theme.value.colors.yellow,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([snapshots, chart, denomDollars], createSeries);
 function createSeries([newSnapshots, chart, newDenomDollars]: [
   Snapshot[]?,
   IChartApi?,
   boolean?
 ]): void {
-  if (!chart || !collateralSerie || !borrowedSerie) {
+  if (!chart || !series.collateral || !series.borrowed) {
     return;
   }
 
@@ -160,12 +152,12 @@ function createSeries([newSnapshots, chart, newDenomDollars]: [
 
   // Borrow APY serie
   if (newCollateralSerie.length > 0) {
-    collateralSerie.setData(newCollateralSerie);
+    series.collateral.setData(newCollateralSerie);
   }
 
   // Lend APY serie
   if (newBorrowedSerie.length > 0) {
-    borrowedSerie.setData(newBorrowedSerie);
+    series.borrowed.setData(newBorrowedSerie);
   }
 
   if (newCollateralSerie.length > 0 || newBorrowedSerie.length > 0) {
@@ -184,11 +176,12 @@ function createSeries([newSnapshots, chart, newDenomDollars]: [
   }
 }
 
-const formatter = (x: number): string =>
-  `${denomDollars.value ? "$" : ""}${round(x, 0, "dollar")}${unit(
+function formatter(x: number): string {
+  return `${denomDollars.value ? "$" : ""}${round(x, 0, "dollar")}${unit(
     x,
     "dollar"
   )}`;
+}
 </script>
 
 <style lang="scss" scoped>

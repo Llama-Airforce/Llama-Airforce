@@ -43,22 +43,19 @@ import {
 
 const { t } = useI18n();
 
-// Refs
-let lineSeries: ISeriesApi<"Line">[] = [];
-
 const { theme } = storeToRefs(useSettingsStore());
 
 // Legend
 const coins = ["USDC", "USDT", "TUSD", "USDP"] as const;
 
-const { items, toggles, disabled } = useLegend(() => {
-  return coins.map((coin, i) => ({
+const { items, toggles, disabled } = useLegend(() =>
+  coins.map((coin, i) => ({
     id: coin,
     label: coin,
     color: theme.value.colorsArray[i],
     togglable: true,
-  }));
-});
+  }))
+);
 
 // Data
 const loading = computed(
@@ -72,84 +69,58 @@ const { isFetching: loadingKeeperPrices, data: prices } =
 const fullscreen = ref(false);
 const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  () => {
-    addSeries();
-  }
-);
-
-watch(theme, () => {
-  for (const [i, serie] of lineSeries.entries()) {
-    serie.applyOptions(createOptionsSerie(i));
-  }
-});
-
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: chartRef.clientHeight || 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: chartRef.clientHeight || 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
       },
-    },
-  });
-}
+    }),
+  series: coins.map((coin, i) => ({
+    type: "Line",
+    name: coin,
+    options: computed(
+      (): LineSeriesPartialOptions => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (y: number) =>
+            `${round(y, 3, "dollar")}${unit(y, "dollar")}`,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        color: theme.value.colorsArray[i],
+        lastValueVisible: false,
+        priceLineVisible: false,
+        autoscaleInfoProvider: (original: () => AutoscaleInfo | null) => {
+          const res = original();
 
-function createOptionsSerie(i: number): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "custom",
-      formatter,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    color: theme.value.colorsArray[i],
-    lastValueVisible: false,
-    priceLineVisible: false,
-    autoscaleInfoProvider: (original: () => AutoscaleInfo | null) => {
-      const res = original();
+          if (res !== null) {
+            res.priceRange.minValue = Math.max(0.98, res.priceRange.minValue);
+            res.priceRange.maxValue = Math.min(1.02, res.priceRange.maxValue);
+          }
 
-      if (res !== null) {
-        res.priceRange.minValue = Math.max(0.98, res.priceRange.minValue);
-        res.priceRange.maxValue = Math.min(1.02, res.priceRange.maxValue);
-      }
-
-      return res;
-    },
-  };
-}
-
-function addSeries(): void {
-  if (!chart.value) {
-    return;
-  }
-
-  // Clear old line series before adding new ones.
-  for (const serie of lineSeries) {
-    chart.value.removeSeries(serie);
-  }
-
-  lineSeries = [];
-  for (let i = 0; i < coins.length; i++) {
-    const lineSerie = chart.value.addLineSeries(createOptionsSerie(i));
-
-    lineSeries.push(lineSerie);
-  }
-}
+          return res;
+        },
+      })
+    ),
+  })),
+});
 
 watchEffect(createSeries);
 function createSeries(): void {
-  if (!chart.value || lineSeries.length < 0) {
+  if (!chart.value || Object.values(series).length < 0) {
     return;
   }
 
-  for (const [i, coin] of coins.entries()) {
+  for (const [, coin] of coins.entries()) {
     // Don't render disabled coins. But keep the serie so colors don't get mixed up.
     if (!toggles[coin].value) {
-      lineSeries[i].setData([]);
+      series[coin]?.setData([]);
       continue;
     }
 
@@ -163,16 +134,12 @@ function createSeries(): void {
       .value();
 
     if (newLineSerie.length > 0) {
-      lineSeries[i].setData(newLineSerie);
+      series[coin]?.setData(newLineSerie);
     }
   }
 
   chart.value.timeScale().fitContent();
 }
-
-const formatter = (y: number): string => {
-  return `${round(y, 3, "dollar")}${unit(y, "dollar")}`;
-};
 </script>
 
 <style lang="scss" scoped>

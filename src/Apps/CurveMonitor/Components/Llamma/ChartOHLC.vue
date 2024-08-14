@@ -43,10 +43,7 @@ interface Props {
 
 const { ohlc } = defineProps<Props>();
 
-// Refs
-let ohlcSerie: ISeriesApi<"Candlestick"> | undefined;
-let oracleSerie: ISeriesApi<"Line"> | undefined;
-
+// Chart
 const { theme } = storeToRefs(useSettingsStore());
 
 const invert = ref(false);
@@ -54,78 +51,72 @@ const oracle = ref(false);
 let max = 1;
 let min = 0;
 
-const { chart, chartRef } = useLightweightChart(
-  theme,
-  createOptionsChart,
-  (chart) => {
-    ohlcSerie = chart.addCandlestickSeries(createOHLCOptionsSerie());
-    oracleSerie = chart.addLineSeries(createOracleOptionsSerie());
-  }
-);
+const { chart, chartRef, series } = useLightweightChart({
+  recreateChartTrigger: theme,
+  createChartOptions: (chartRef) =>
+    createChartStyles(chartRef, theme.value, {
+      height: 300,
+      rightPriceScale: {
+        scaleMargins: {
+          top: 0.1,
+          bottom: 0.1,
+        },
+      },
+      localization: {
+        priceFormatter: (price: number) => formatter(price),
+      },
+    }),
+  series: [
+    {
+      type: "Candlestick",
+      name: "ohlc" as const,
+      options: computed((): CandlestickSeriesPartialOptions => {
+        const { colors } = theme.value;
 
-// Watches
-watch([toRef(() => ohlc), chart, invert, oracle], createSeries);
-watch(theme, () => {
-  ohlcSerie?.applyOptions(createOHLCOptionsSerie());
-  oracleSerie?.applyOptions(createOracleOptionsSerie());
+        return {
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          upColor: colors.green,
+          borderUpColor: colors.green,
+          wickUpColor: colors.green,
+          downColor: colors.red,
+          borderDownColor: colors.red,
+          wickDownColor: colors.red,
+        };
+      }),
+    },
+    {
+      type: "Line",
+      name: "oracle" as const,
+      options: computed(
+        (): LineSeriesPartialOptions => ({
+          priceFormat: {
+            type: "price",
+            precision: 6,
+            minMove: 0.000001,
+          },
+          lineWidth: 2,
+          lineType: LineType.WithSteps,
+          color: theme.value.colors.blue,
+          lastValueVisible: false,
+          priceLineVisible: false,
+        })
+      ),
+    },
+  ],
 });
 
-// Chart
-function createOptionsChart(chartRef: HTMLElement) {
-  return createChartStyles(chartRef, theme.value, {
-    height: 300,
-    rightPriceScale: {
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.1,
-      },
-    },
-    localization: {
-      priceFormatter: (price: number) => formatter(price),
-    },
-  });
-}
-
-function createOHLCOptionsSerie(): CandlestickSeriesPartialOptions {
-  const { colors } = theme.value;
-
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    upColor: colors.green,
-    borderUpColor: colors.green,
-    wickUpColor: colors.green,
-    downColor: colors.red,
-    borderDownColor: colors.red,
-    wickDownColor: colors.red,
-  };
-}
-
-function createOracleOptionsSerie(): LineSeriesPartialOptions {
-  return {
-    priceFormat: {
-      type: "price",
-      precision: 6,
-      minMove: 0.000001,
-    },
-    lineWidth: 2,
-    lineType: LineType.WithSteps,
-    color: theme.value.colors.blue,
-    lastValueVisible: false,
-    priceLineVisible: false,
-  };
-}
-
+watch([toRef(() => ohlc), chart, invert, oracle], createSeries);
 function createSeries([newOHLC, chart, newInvert, newOracle]: [
   LlammaOHLC[]?,
   IChartApi?,
   boolean?,
   boolean?
 ]): void {
-  if (!chart || !ohlcSerie || !oracleSerie) {
+  if (!chart || !series.ohlc || !series.oracle) {
     return;
   }
 
@@ -144,7 +135,7 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
     .value();
 
   if (newOHLCSerie.length > 0) {
-    ohlcSerie.setData(newOHLCSerie);
+    series.ohlc.setData(newOHLCSerie);
     min = Math.min(...newOHLCSerie.map((c) => c.low));
     max = Math.max(...newOHLCSerie.map((c) => c.high));
   }
@@ -160,18 +151,17 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
     .value();
 
   if (newOracleSerie.length > 0) {
-    oracleSerie.setData(newOracleSerie);
+    series.oracle.setData(newOracleSerie);
   }
 
   // Hide or show the oracle series based on the newOracle value
-  oracleSerie.applyOptions({
+  series.oracle.applyOptions({
     visible: newOracle,
   });
 
   chart.timeScale().fitContent();
 }
 
-// Methods
 const formatter = (x: number): string => {
   // Count number of leading zeroes after the decimal.
   const delta = max - min;
