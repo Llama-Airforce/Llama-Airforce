@@ -14,6 +14,18 @@
     </a>
   </li>
 
+  <li v-if="isExternal(item)">
+    <a
+      class="nav-link node"
+      :href="item.url"
+      target="_blank"
+    >
+      <div class="nav-link-container">
+        {{ item.label }}
+      </div>
+    </a>
+  </li>
+
   <Collapsible
     class="items"
     :expanded="expanded"
@@ -55,7 +67,12 @@
 </template>
 
 <script setup lang="ts">
-import { isNode, isLeaf, type MenuItem } from "@/Framework/Monitor/Menu";
+import {
+  isNode,
+  isLeaf,
+  isExternal,
+  type MenuItem,
+} from "@/Framework/Monitor/Menu";
 import { subIsActive } from "@/Util";
 
 // Props

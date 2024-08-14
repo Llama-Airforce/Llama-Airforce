@@ -1,6 +1,10 @@
-import { type MenuLeaf, type MenuNode } from "@/Framework/Monitor/Menu";
+import type {
+  MenuNode,
+  MenuLeaf,
+  MenuExternal,
+} from "@/Framework/Monitor/Menu";
 
 export type Page = {
   titleRoute: string | string[];
-  menuItems: (MenuNode | MenuLeaf)[];
+  menuItems: (MenuNode | MenuLeaf | MenuExternal)[];
 };

@@ -15,10 +15,18 @@ export type MenuLeaf = MenuItem & {
   to: string;
 };
 
+export type MenuExternal = MenuItem & {
+  url: string;
+};
+
 export function isNode(menuItem: MenuItem): menuItem is MenuNode {
-  return (menuItem as MenuNode)?.children !== undefined;
+  return !!(menuItem as MenuNode).children;
 }
 
 export function isLeaf(menuItem: MenuItem): menuItem is MenuLeaf {
-  return (menuItem as MenuLeaf)?.to !== undefined;
+  return !!(menuItem as MenuLeaf).to;
+}
+
+export function isExternal(menuItem: MenuItem): menuItem is MenuExternal {
+  return !!(menuItem as MenuExternal).url;
 }

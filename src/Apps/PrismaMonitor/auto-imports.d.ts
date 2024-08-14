@@ -183,6 +183,7 @@ declare global {
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const isAddress: typeof import('viem')['isAddress']
   const isDefined: typeof import('@vueuse/core')['isDefined']
+  const isExternal: typeof import('../../Framework/Monitor/Menu')['isExternal']
   const isLeaf: typeof import('../../Framework/Monitor/Menu')['isLeaf']
   const isNode: typeof import('../../Framework/Monitor/Menu')['isNode']
   const isProxy: typeof import('vue')['isProxy']

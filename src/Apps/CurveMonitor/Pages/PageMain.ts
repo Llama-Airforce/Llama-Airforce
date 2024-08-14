@@ -111,6 +111,10 @@ export const pageMain: Page = {
   titleRoute: "/",
   menuItems: [
     {
+      label: "Articles",
+      url: "https://blog.curvemonitor.com/",
+    },
+    {
       label: "Platform",
       children: [
         {
