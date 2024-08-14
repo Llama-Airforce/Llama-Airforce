@@ -112,6 +112,10 @@ function go(url: string) {
   > .title {
     font-size: 1.875rem;
     font-weight: bolder;
+
+    @media only screen and (max-width: 825px) {
+      font-size: 1.75rem;
+    }
   }
 
   > .articles-cards {
@@ -133,6 +137,11 @@ function go(url: string) {
           "description description"
           "date read";
 
+        @media only screen and (max-width: 825px) {
+          grid-template-rows: auto 1fr auto;
+          min-height: unset;
+        }
+
         > .title {
           grid-area: title;
 
@@ -140,6 +149,10 @@ function go(url: string) {
           font-weight: bold;
           text-wrap: balance;
           overflow: hidden;
+
+          @media only screen and (max-width: 825px) {
+            font-size: 1.25rem;
+          }
         }
 
         > .description {

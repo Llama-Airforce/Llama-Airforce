@@ -30,18 +30,19 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
 .home {
   max-width: calc(1920px - 18.125rem);
 
-  grid-template-columns: 3fr minmax(400px, 1fr);
+  grid-template-columns: 3fr 1fr;
   grid-template-areas:
     "description llama"
     "kpis llama"
     "articles articles";
 
-  padding-inline: calc(3 * var(--page-margin));
+  padding-inline: 0;
+  margin-inline: calc(3 * var(--page-margin));
   gap: calc(3 * var(--dashboard-gap));
 
   @media only screen and (max-width: 1280px) {
     display: grid;
-    padding-inline: var(--page-margin);
+    margin-inline: var(--page-margin);
     gap: calc(2 * var(--dashboard-gap));
 
     grid-template-areas:
@@ -64,13 +65,17 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
     > .title {
       font-size: 3.5rem;
       font-weight: bold;
+
+      @media only screen and (max-width: 825px) {
+        font-size: 2.5rem;
+      }
     }
 
     > .tag {
       font-size: 1.5rem;
       opacity: 0.9;
 
-      @media only screen and (max-width: 800px) {
+      @media only screen and (max-width: 825px) {
         max-width: 400px;
       }
 
@@ -102,7 +107,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
       max-height: 200px;
     }
 
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 825px) {
       opacity: 0.25;
     }
 
