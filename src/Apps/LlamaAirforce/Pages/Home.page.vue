@@ -107,13 +107,11 @@ function goto(card: "union" | "pirex" | "incentives") {
       flex-direction: column;
     }
 
-    :deep(.topic-card) {
+    .topic-card {
       &:hover {
         cursor: pointer;
 
-        .card-container {
-          background-color: var(--c-lvl2);
-        }
+        background-color: var(--c-lvl2);
 
         .topic {
           > img {

@@ -165,14 +165,9 @@ const {
   &.fullscreen {
     width: 100%;
 
-    .card-container {
+    .card-body {
       height: 100%;
       overflow: hidden;
-
-      .card-body {
-        height: 100%;
-        overflow: hidden;
-      }
     }
   }
 }
