@@ -48,12 +48,6 @@ const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
     createChartStyles(chartRef, theme.value, {
-      leftPriceScale: {
-        scaleMargins: {
-          top: 0.1,
-          bottom: 0.1,
-        },
-      },
       localization: {
         priceFormatter: (price: number) => formatter(price),
       },

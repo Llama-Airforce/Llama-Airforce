@@ -23,6 +23,12 @@ const createDefault = (
         bottom: 0.1,
       },
     },
+    leftPriceScale: {
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.1,
+      },
+    },
     layout: {
       background: {
         type: ColorType.Solid,

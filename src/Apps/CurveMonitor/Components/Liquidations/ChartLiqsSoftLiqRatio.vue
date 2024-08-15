@@ -60,10 +60,6 @@ const { chart, chartRef, series } = useLightweightChart({
     createChartStyles(chartRef, theme.value, {
       leftPriceScale: {
         visible: true,
-        scaleMargins: {
-          top: 0.1,
-          bottom: 0.1,
-        },
       },
     }),
   series: [
