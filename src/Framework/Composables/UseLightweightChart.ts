@@ -96,12 +96,6 @@ type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
  *   recreateChartTrigger: theme,
  *   createChartOptions: (chartRef) => ({
  *     height: chartRef.clientHeight,
- *     rightPriceScale: {
- *       scaleMargins: {
- *         top: 0.1,
- *         bottom: 0.1,
- *       },
- *     },
  *   }),
  *   series: [
  *     {

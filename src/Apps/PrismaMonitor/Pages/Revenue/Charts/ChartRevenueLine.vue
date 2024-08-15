@@ -26,12 +26,6 @@ const { chart, chartRef, series } = useLightweightChart({
   createChartOptions: (chartRef) =>
     createChartStyles(chartRef, theme.value, {
       height: 300,
-      rightPriceScale: {
-        scaleMargins: {
-          top: 0.1,
-          bottom: 0.1,
-        },
-      },
       localization: {
         priceFormatter: (y: number): string =>
           `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,

@@ -16,6 +16,13 @@ const createDefault = (
   return {
     width: chartRef.clientWidth,
     height: chartRef.clientHeight,
+    rightPriceScale: {
+      borderVisible: false,
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.1,
+      },
+    },
     layout: {
       background: {
         type: ColorType.Solid,
@@ -33,9 +40,6 @@ const createDefault = (
         color: colors.level4,
         style: LineStyle.SparseDotted,
       },
-    },
-    rightPriceScale: {
-      borderVisible: false,
     },
     timeScale: {
       borderVisible: false,

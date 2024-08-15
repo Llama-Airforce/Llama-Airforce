@@ -43,12 +43,6 @@ const { chart, chartRef, series } = useLightweightChart({
   createChartOptions: (chartRef) =>
     createChartStyles(chartRef, theme.value, {
       height: 300,
-      rightPriceScale: {
-        scaleMargins: {
-          top: 0.15,
-          bottom: 0.1,
-        },
-      },
       localization: {
         // Needed to fix weird right margin wtf.
         priceFormatter: (y: number): string => Math.round(y).toString(),
