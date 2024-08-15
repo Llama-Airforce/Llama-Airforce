@@ -511,6 +511,7 @@
     "cacheDelete": true,
     "createEnvHelpers": true,
     "useQueryClient": true,
-    "useQueryRx": true
+    "useQueryRx": true,
+    "isExternal": true
   }
 }
