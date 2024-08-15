@@ -1,4 +1,4 @@
-import { type PoolId } from "@CM/Models";
+type PoolId = string;
 
 export type Bribed = {
   pool: PoolId;
