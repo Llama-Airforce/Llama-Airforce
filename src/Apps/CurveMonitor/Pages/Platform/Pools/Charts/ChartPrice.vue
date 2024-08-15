@@ -45,10 +45,7 @@ let min = 0;
 
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
-  createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      height: 300,
-    }),
+  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: {
     type: "Candlestick",
     name: "ohlc" as const,

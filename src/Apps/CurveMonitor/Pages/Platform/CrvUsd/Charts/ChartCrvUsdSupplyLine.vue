@@ -23,10 +23,7 @@ const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
-  createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      height: chartRef.clientHeight || 300,
-    }),
+  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: [
     {
       type: "Area",

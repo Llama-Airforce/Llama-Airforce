@@ -39,7 +39,6 @@ const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
     createChartStyles(chartRef, theme.value, {
-      height: 300,
       localization: {
         // Needed to fix weird right margin wtf.
         priceFormatter: (y: number): string => Math.round(y).toString(),

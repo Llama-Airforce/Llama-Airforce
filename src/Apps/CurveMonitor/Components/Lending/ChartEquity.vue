@@ -41,10 +41,7 @@ const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
-  createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      height: 300,
-    }),
+  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: {
     type: "Baseline",
     name: "equity" as const,

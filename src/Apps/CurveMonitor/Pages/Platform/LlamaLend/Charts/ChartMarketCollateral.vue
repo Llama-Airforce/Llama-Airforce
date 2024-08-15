@@ -76,10 +76,7 @@ const denomDollars = ref(true);
 
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
-  createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      height: 300,
-    }),
+  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: [
     {
       type: "Line",

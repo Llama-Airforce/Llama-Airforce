@@ -57,10 +57,7 @@ const { isFetching: loading, data } = useQuery({
 // Chart
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
-  createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      height: 300,
-    }),
+  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: {
     type: "Area",
     name: "troves" as const,

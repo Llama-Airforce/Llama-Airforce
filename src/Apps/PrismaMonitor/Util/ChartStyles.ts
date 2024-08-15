@@ -15,7 +15,7 @@ const createDefault = (
 
   return {
     width: chartRef.clientWidth,
-    height: chartRef.clientHeight,
+    height: chartRef.clientHeight || 300,
     rightPriceScale: {
       borderVisible: false,
       scaleMargins: {
@@ -54,7 +54,7 @@ const createDefault = (
 export default function createChartStyles(
   chartRef: HTMLElement,
   theme: Theme,
-  options: DeepPartial<ChartOptions>
+  options?: DeepPartial<ChartOptions>
 ): DeepPartial<ChartOptions> {
   const _default = createDefault(chartRef, theme);
 
@@ -69,5 +69,5 @@ export default function createChartStyles(
     }
   };
 
-  return mergeWith(options, _default, mergeFunction);
+  return mergeWith(options ?? {}, _default, mergeFunction);
 }

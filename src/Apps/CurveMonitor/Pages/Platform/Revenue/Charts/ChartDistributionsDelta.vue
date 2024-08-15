@@ -46,10 +46,7 @@ const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
 
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
-  createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      height: 300,
-    }),
+  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: {
     type: "Histogram",
     name: "deltas" as const,

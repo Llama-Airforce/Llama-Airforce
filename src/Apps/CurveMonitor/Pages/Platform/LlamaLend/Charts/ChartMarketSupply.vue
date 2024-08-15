@@ -76,7 +76,6 @@ const { chart, chartRef, series } = useLightweightChart({
   ),
   createChartOptions: (chartRef) =>
     createChartStyles(chartRef, theme.value, {
-      height: chartRef.clientHeight || 300,
       leftPriceScale: {
         visible: toggles.util.value,
       },
