@@ -1,6 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-name: Node.js CI
+name: Bun CI
 
 on:
   push:
@@ -14,6 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout submodule
+        run: |
+          git submodule init src/Apps/CurveMonitor/phil
+          git submodule update src/Apps/CurveMonitor/phil
       - name: Use Bun
         uses: oven-sh/setup-bun@v1
         with:

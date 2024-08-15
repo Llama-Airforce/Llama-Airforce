@@ -4,7 +4,7 @@
 
   <p align="center">
     <a><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
-    <a href="https://github.com/Llama-Airforce/Llama-Airforce/actions"><img alt="Build Status" src="https://github.com/Llama-Airforce/Llama-Airforce/actions/workflows/node.js.yml/badge.svg"></a>
+    <a href="https://github.com/Llama-Airforce/Llama-Airforce/actions"><img alt="Build Status" src="https://github.com/Llama-Airforce/Llama-Airforce/actions/workflows/bun.js.yml/badge.svg"></a>
   </p>
 </p>
 
