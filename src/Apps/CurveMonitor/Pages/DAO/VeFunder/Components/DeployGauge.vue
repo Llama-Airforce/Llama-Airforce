@@ -51,22 +51,21 @@ const emit = defineEmits<{
 // Refs
 const deploying = ref(false);
 const receiver = ref("");
-const amount = ref(0);
+const amount: Ref<number | string> = ref(0);
 
 const receiverPlaceholder = computed((): string => {
   return MultisigAddress;
 });
 
 const isValid = computed(
-  () => isAddress(receiver.value.toLocaleLowerCase()) && amount.value > 0
+  () =>
+    isAddress(receiver.value.toLocaleLowerCase()) &&
+    typeof amount.value === "number" &&
+    amount.value > 0
 );
 
 const config = useConfig();
 async function execute() {
-  if (!receiver.value || !amount.value) {
-    return;
-  }
-
   const receiverAddress = receiver.value.toLocaleLowerCase() as Address;
 
   if (typeof amount.value === "string") {
