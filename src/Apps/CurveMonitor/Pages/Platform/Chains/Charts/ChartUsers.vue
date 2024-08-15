@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -79,14 +78,13 @@ function createSeries(): void {
     return;
   }
 
-  const newTxsSerie: LineData[] = chain(users)
+  const newTxsSerie: LineData[] = users
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.count,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   series.users.setData(newTxsSerie);
 

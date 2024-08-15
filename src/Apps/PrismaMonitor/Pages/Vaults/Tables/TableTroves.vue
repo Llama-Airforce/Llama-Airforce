@@ -100,7 +100,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import {
@@ -185,8 +184,8 @@ const columns = computed(() => {
 
 const { sorting, onSort } = useSort<typeof columns.value>("updated");
 
-const rows = computed((): Row[] =>
-  chain(data.value)
+const rows = computed(() =>
+  data.value
     .filter((row) => type.value === row.status)
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
@@ -214,7 +213,6 @@ const rows = computed((): Row[] =>
           return row.last_update;
       }
     }, sorting.value.order)
-    .value()
 );
 
 const rowsPerPage = 15;

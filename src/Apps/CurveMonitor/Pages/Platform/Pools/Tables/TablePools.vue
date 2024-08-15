@@ -65,7 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models";
 import { type Pool } from "@CM/Services/Pools";
 
@@ -99,22 +98,20 @@ const columns = [
 const { sorting, onSort } = useSort<typeof columns>("tvl");
 
 const poolsFiltered = computed(() =>
-  chain_(pools)
-    .orderBy((pool) => {
-      switch (sorting.value.column) {
-        case "name":
-          return pool.name;
-        case "volume":
-          return pool.tradingVolume24h;
-        case "tvl":
-          return pool.tvlUsd;
-        case "util":
-          return utilRate(pool);
-        default:
-          return pool.tvlUsd;
-      }
-    }, sorting.value.order)
-    .value()
+  pools.orderBy((pool) => {
+    switch (sorting.value.column) {
+      case "name":
+        return pool.name;
+      case "volume":
+        return pool.tradingVolume24h;
+      case "tvl":
+        return pool.tvlUsd;
+      case "util":
+        return utilRate(pool);
+      default:
+        return pool.tvlUsd;
+    }
+  }, sorting.value.order)
 );
 
 const rowsPerPage = 20;

@@ -76,7 +76,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import {
@@ -106,9 +105,7 @@ const { vault = null, trove = null } = defineProps<Props>();
 // Refs
 const { relativeTime } = useRelativeTime();
 
-const rows = computed((): Row[] => {
-  return orderBy(data.value, (row) => row.timestamp, "desc");
-});
+const rows = computed(() => data.value.orderBy((row) => row.timestamp, "desc"));
 
 // Data
 const { isFetching: loading, data } = useQuery({

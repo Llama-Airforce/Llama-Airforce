@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -77,7 +76,7 @@ function createSeriesDistributions([newDistributions, chart]: [
 
   const { colors } = theme.value;
 
-  const newDistributionsSeries: HistogramData[] = chain(newDistributions)
+  const newDistributionsSeries: HistogramData[] = (newDistributions ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.feesUsd,
@@ -85,7 +84,7 @@ function createSeriesDistributions([newDistributions, chart]: [
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
     .takeRight(53) // Take 53 weeks to calculate 52 deltas
-    .reduce((acc, curr, index, array) => {
+    .reduce<HistogramData[]>((acc, curr, index, array) => {
       if (index === 0) return acc;
 
       const value = curr.value - array[index - 1].value;
@@ -97,8 +96,7 @@ function createSeriesDistributions([newDistributions, chart]: [
         color,
       });
       return acc;
-    }, [] as HistogramData[])
-    .value();
+    }, []);
 
   if (newDistributionsSeries.length > 0) {
     series.deltas.setData(newDistributionsSeries);

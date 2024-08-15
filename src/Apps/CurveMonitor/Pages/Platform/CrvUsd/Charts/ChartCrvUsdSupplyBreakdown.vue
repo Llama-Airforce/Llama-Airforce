@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
@@ -75,44 +74,44 @@ const options = computed(() => {
   });
 });
 
-const categories = computed((): string[] =>
-  chain(data)
+const categories = computed(() =>
+  data
     .orderBy((x) => x.timestamp, "asc")
     .groupBy((x) => x.timestamp)
-    .map((_, timestamp) =>
+    .entries()
+    .map(([timestamp]) =>
       new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
       })
     )
     .map((x, i) => (i % 8 === 0 ? x : ""))
-    .value()
 );
 
 const series = computed((): Serie[] =>
-  chain(data)
+  data
     .groupBy((x) => x.market)
-    .map((supplyData, market) => ({
+    .entries()
+    .map(([market, supplyData]) => ({
       name: market,
-      data: chain(supplyData)
+      data: supplyData
         .groupBy((s) => s.timestamp)
-        .map((supplyByTimestamp, timestamp) => ({
+        .entries()
+        .map(([timestamp, supplyByTimestamp]) => ({
           x: new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(),
           y: supplyByTimestamp.reduce((acc, s) => acc + s.supply, 0),
         }))
-        .orderBy((s) => s.x, "asc")
-        .value(),
+        .orderBy((s) => s.x, "asc"),
     }))
-    .value()
 );
 
 const max = computed(
   (): number =>
     Math.max(
-      ...chain(data)
+      ...data
         .groupBy((x) => x.timestamp)
-        .map((supply) => supply.reduce((acc, x) => acc + x.supply, 0))
-        .value()
+        .entries()
+        .map(([, supply]) => supply.reduce((acc, x) => acc + x.supply, 0))
     ) * 1.1
 );
 

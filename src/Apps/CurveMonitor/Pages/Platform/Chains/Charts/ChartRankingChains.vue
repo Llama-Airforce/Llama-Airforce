@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { chain, capitalize } from "lodash";
+import { capitalize } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import type { Activity } from "@CM/Services/Chains";
@@ -55,9 +55,10 @@ const { items, toggles, disabled } = useLegend(() => {
 
 // Chart
 function getData(xs: ActivityValue[]) {
-  return chain(xs)
+  return xs
     .groupBy((x) => x.chain)
-    .mapValues((xs, chain) => {
+    .entries()
+    .map(([chain, xs]) => {
       const sum = xs.reduce((acc, x) => acc + x.value, 0);
 
       return {
@@ -65,9 +66,7 @@ function getData(xs: ActivityValue[]) {
         count: sum,
       };
     })
-    .values()
-    .orderBy((x) => x.count, "desc")
-    .value();
+    .orderBy((x) => x.count, "desc");
 }
 
 const options = computed(() => {
@@ -107,13 +106,12 @@ const options = computed(() => {
 const dataTxs = computed(() => (toggles.txs.value ? getData(txs) : []));
 const dataUsers = computed(() => (toggles.users.value ? getData(users) : []));
 
-const categories = computed((): string[] =>
-  chain(dataTxs.value)
+const categories = computed(() =>
+  dataTxs.value
     .concat(dataUsers.value)
     .orderBy((x) => x.count, "desc")
     .map((x) => x.chain)
     .uniq()
-    .value()
 );
 
 const series = computed((): { data: number[] }[] => {

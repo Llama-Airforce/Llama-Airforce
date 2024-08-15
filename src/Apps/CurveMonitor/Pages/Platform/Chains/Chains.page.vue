@@ -103,7 +103,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_, last } from "lodash";
 import { type Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import type { Activity, ActivityType } from "@CM/Services/Chains";
@@ -140,18 +139,17 @@ const chain = computed({
  * Order alphabetically but put all and ethereum on top.
  */
 const chains = computed((): (Chain | "all")[] => {
-  const allChains = chain_(txsRaw.value.map((x) => x.chain))
+  const allChains = txsRaw.value
+    .map((x) => x.chain)
     .concat(usersRaw.value.map((x) => x.chain))
     .concat(chain.value !== "all" ? [chain.value] : []) // Add chain selected from router.
     .uniq()
-    .orderBy((x) => x)
-    .value();
+    .orderBy((x) => x, "asc");
 
   const topChains: Chain[] = ["ethereum"];
-  const orderedChains = chain_(allChains)
+  const orderedChains = allChains
     .difference(topChains)
-    .orderBy((x) => x)
-    .value();
+    .orderBy((x) => x, "asc");
 
   return ["all", ...topChains, ...orderedChains];
 });
@@ -180,20 +178,19 @@ function filterAndSum<T extends Activity>(
   type: ActivityType | "all",
   selector: (activity: T) => number
 ) {
-  return chain_(activities)
+  return activities
     .filter((x) => (chain === "all" ? true : x.chain === chain))
     .filter((x) => (type === "all" ? true : x.type === type))
     .groupBy((x) => x.timestamp)
-    .mapValues((xs, timestamp) => {
+    .entries()
+    .map(([timestamp, xs]) => {
       const sum = xs.reduce((acc, x) => acc + selector(x), 0);
 
       return {
         timestamp: Number(timestamp),
         count: sum,
       };
-    })
-    .values()
-    .value();
+    });
 }
 
 const txs = computed(() =>
@@ -219,10 +216,10 @@ function calculateAverage(activities: { timestamp: number; count: number }[]) {
   return Math.round(total / daysBetween);
 }
 
-const txsToday = computed(() => last(txs.value)?.count ?? 0);
+const txsToday = computed(() => txs.value.at(-1)?.count ?? 0);
 const txsAvg = computed(() => calculateAverage(txs.value));
 
-const usersToday = computed(() => last(users.value)?.count ?? 0);
+const usersToday = computed(() => users.value.at(-1)?.count ?? 0);
 const usersAvg = computed(() => calculateAverage(users.value));
 
 // Ranking
@@ -232,11 +229,10 @@ function filterAndSelect<T extends Activity>(
   type: ActivityType | "all",
   selector: (activity: T) => number
 ) {
-  return chain_(activities)
+  return activities
     .filter((x) => (chain === "all" ? true : x.chain === chain))
     .filter((x) => (type === "all" ? true : x.type === type))
-    .map((x) => ({ chain: x.chain, type: x.type, value: selector(x) }))
-    .value();
+    .map((x) => ({ chain: x.chain, type: x.type, value: selector(x) }));
 }
 
 const rankChainsTxs = computed(() =>

@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LiquidationDetails } from "@CM/Services/Liquidations";
@@ -117,32 +116,30 @@ function createSeries([newDiscount, newLiqs, chart]: [
     return;
   }
 
-  const newRevenueSerie: LineData[] = chain(newLiqs)
+  const newRevenueSerie: LineData[] = (newLiqs ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.debt,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc")
-    .reduce((acc, curr) => {
+    .reduce<LineData[]>((acc, curr) => {
       const lastAccum = acc.length > 0 ? acc[acc.length - 1].value : 0;
       acc.push({ time: curr.time, value: curr.value + lastAccum });
       return acc;
-    }, [] as LineData[])
-    .value();
+    }, []);
 
   const minTime =
     newRevenueSerie.length > 0 ? (newRevenueSerie[0].time as number) : 0;
 
-  const newDiscountSerie: LineData[] = chain(newDiscount)
+  const newDiscountSerie: LineData[] = (newDiscount ?? [])
     .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.discount * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newRevenueSerie.length > 0) {
     series.revenue.setData(newRevenueSerie);

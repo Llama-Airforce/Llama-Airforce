@@ -97,7 +97,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 type Row = AccountData;
@@ -122,8 +121,8 @@ const columns = [
 
 const { sorting, onSort } = useSort<typeof columns>("weight");
 
-const rows = computed((): Row[] =>
-  chain(lockers)
+const rows = computed(() =>
+  lockers
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -146,7 +145,6 @@ const rows = computed((): Row[] =>
           return row.weight;
       }
     }, sorting.value.order)
-    .value()
 );
 
 const rowsPerPage = 10;

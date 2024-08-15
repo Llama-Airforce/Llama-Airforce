@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { shorten } from "@/Util";
 import ChartEmissions from "@CM/Pages/Platform/Gauges/Charts/ChartEmissions.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
@@ -75,20 +74,16 @@ const columns = computed(() => [
 const { sorting, onSort } = useSort<typeof columns.value>("tvl");
 
 const gauges = computed((): Gauge[] => {
-  return orderBy(
-    store.gauges,
-    (gauge) => {
-      switch (sorting.value.column) {
-        case "name":
-          return shorten(gauge.name);
-        case "tvl":
-          return gauge.tvl;
-        default:
-          return gauge.tvl;
-      }
-    },
-    sorting.value.order
-  );
+  return store.gauges.orderBy((gauge) => {
+    switch (sorting.value.column) {
+      case "name":
+        return shorten(gauge.name);
+      case "tvl":
+        return gauge.tvl;
+      default:
+        return gauge.tvl;
+    }
+  }, sorting.value.order);
 });
 </script>
 

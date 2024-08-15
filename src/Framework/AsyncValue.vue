@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { isFinite } from "lodash";
 import { unit as unitF } from "@/Util";
 
 const rodChars = "|/-\\";

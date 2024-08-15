@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { uniqWith } from "lodash";
 import { type Proposal } from "@CM/Services/Proposal";
 import { useQueryProposal } from "@CM/Services/Proposal/Queries";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
@@ -79,7 +78,7 @@ const { data: proposalDetails } = useQueryProposal(
 
 const numVoters = computed(() => {
   if (proposalDetails.value) {
-    return uniqWith(proposalDetails.value.votes, (x, y) => x.voter === y.voter)
+    return proposalDetails.value.votes.uniqWith((x, y) => x.voter === y.voter)
       .length;
   }
 

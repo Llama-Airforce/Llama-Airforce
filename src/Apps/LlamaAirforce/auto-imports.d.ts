@@ -122,6 +122,7 @@ declare global {
   const bigNumToNumber: typeof import('../../Util/NumberHelper')['bigNumToNumber']
   const cache: typeof import('../../Framework/Hono')['cache']
   const cacheDelete: typeof import('../../Framework/Hono')['cacheDelete']
+  const capitalize: typeof import('../../Util/StringHelper')['capitalize']
   const chunk: typeof import('../../Util/ArrayHelper')['chunk']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']

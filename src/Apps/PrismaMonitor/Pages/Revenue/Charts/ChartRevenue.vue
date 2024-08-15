@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { cloneDeep } from "lodash";
 import ChartRevenueLine from "@PM/Pages/Revenue/Charts/ChartRevenueLine.vue";
 import ChartRevenueBreakdown from "@PM/Pages/Revenue/Charts/ChartRevenueBreakdown.vue";
 import { RevenueService } from "@PM/Services";
@@ -90,7 +89,7 @@ const { isFetching: loading, data } = useQuery({
 const dataFiltered = computed(() =>
   data.value
     .filter((x) => x.timestamp > timestampCutoff.value)
-    .map((x) => cloneDeep(x))
+    .map((x) => structuredClone(x))
     .map((x) => {
       if (!includeUnlockPenalty.value) {
         x.unlock_penalty_revenue_usd = 0;

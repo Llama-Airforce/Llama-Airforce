@@ -118,7 +118,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort, addressLeft } from "@/Wallet";
 import { type CleanedTransfer } from "@CM/Services/Monitor/Transfers";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfers/Queries";
@@ -131,7 +130,7 @@ const { relativeTime } = useRelativeTime();
 const search = ref("");
 
 const transfers = computed(() =>
-  chain(transfersRaw.value ?? [])
+  (transfersRaw.value ?? [])
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -149,7 +148,6 @@ const transfers = computed(() =>
       );
     })
     .orderBy([(x) => x.blockUnixtime, (x) => x.positionInBlock], "desc")
-    .value()
 );
 
 const rowsPerPage = 10;

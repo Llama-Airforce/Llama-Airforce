@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
@@ -123,23 +122,21 @@ function createSeries([newSnapshots, chart, newDenomDollars]: [
     return;
   }
 
-  const newCollateralSerie: LineData[] = chain_(newSnapshots)
+  const newCollateralSerie: LineData[] = (newSnapshots ?? [])
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: newDenomDollars ? c.collateralBalanceUsd : c.collateralBalance,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
-  const newBorrowedSerie: LineData[] = chain_(newSnapshots)
+  const newBorrowedSerie: LineData[] = (newSnapshots ?? [])
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: newDenomDollars ? c.borrowedBalanceUsd : c.borrowedBalance,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   // Borrow APY serie
   if (newCollateralSerie.length > 0) {

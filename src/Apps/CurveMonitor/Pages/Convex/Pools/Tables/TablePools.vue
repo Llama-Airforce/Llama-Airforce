@@ -48,7 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { shorten, disabled } from "@/Util";
 import { ChartTvl, ChartApr } from "@CM/Pages/Convex/Pools/Charts";
 import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
@@ -91,10 +90,10 @@ const columns = computed(() => [
 
 const { sorting, onSort } = useSort<typeof columns.value>("tvl");
 
-const pools = computed((): Pool[] => {
-  return orderBy(
-    store.pools.filter((pool) => !disabled(pool.name)),
-    (pool) => {
+const pools = computed(() =>
+  store.pools
+    .filter((pool) => !disabled(pool.name))
+    .orderBy((pool) => {
       switch (sorting.value.column) {
         case "name":
           return shorten(pool.name);
@@ -105,10 +104,8 @@ const pools = computed((): Pool[] => {
         default:
           return pool.tvl;
       }
-    },
-    sorting.value.order
-  );
-});
+    }, sorting.value.order)
+);
 </script>
 
 <style lang="scss" scoped>

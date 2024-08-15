@@ -65,7 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain } from "@CM/Models";
 import { type Cushion } from "@CM/Services/Revenue";
@@ -88,8 +87,8 @@ const networkChain = ref<Chain>("ethereum");
 const { data: chains, isFetching: isLoadingChains } = useQueryChainsSupported();
 
 // Data
-const rows = computed((): Row[] =>
-  chain(rowsRaw.value)
+const rows = computed(() =>
+  rowsRaw.value
     .filter((row) => row.usdValue > 100)
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
@@ -99,7 +98,6 @@ const rows = computed((): Row[] =>
 
       return includesTerm(row.pool) || includesTerm(row.name);
     })
-    .value()
 );
 
 const { data: rowsRaw, isFetching: isLoadingCushions } =

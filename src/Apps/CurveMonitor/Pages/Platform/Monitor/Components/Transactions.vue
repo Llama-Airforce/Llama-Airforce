@@ -126,7 +126,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import {
   TransactionType,
@@ -134,8 +133,6 @@ import {
 } from "@CM/Services/Monitor/SocketMonitorCurve";
 
 const { t } = useI18n();
-
-type Row = TransactionDetail;
 
 // Props
 interface Props {
@@ -162,14 +159,14 @@ const types = ref<TransactionType[]>([
   TransactionType.Remove,
 ]);
 
-const columns = computed((): string[] => {
+const columns = computed(() => {
   return time
     ? ["Type", "Block", "Tx", "Trader", "Assets", "Time"]
     : ["Type", "Tx", "Trader", "Assets"];
 });
 
-const rows = computed((): Row[] =>
-  chain(txs)
+const rows = computed(() =>
+  (txs ?? [])
     .filter((tx) => types.value.includes(tx.transaction_type))
     .filter((tx) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
@@ -183,7 +180,6 @@ const rows = computed((): Row[] =>
         includesTerm(tx.tx_hash)
       );
     })
-    .value()
 );
 
 const rowsPerPage = 10;

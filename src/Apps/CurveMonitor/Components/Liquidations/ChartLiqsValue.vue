@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import { type LiquidationAggregate } from "@CM/Services/Liquidations";
@@ -76,17 +75,17 @@ const options = computed(() => {
 });
 
 const categories = computed((): string[] =>
-  chain(liqs)
+  liqs
     .orderBy((x) => x.timestamp, "asc")
     .groupBy((x) => x.timestamp)
-    .map((_, timestamp) =>
+    .entries()
+    .map(([timestamp]) =>
       new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
       })
     )
     .map((x, i) => (i % 8 === 0 ? x : ""))
-    .value()
 );
 
 const series = computed((): Serie[] => [
@@ -109,12 +108,12 @@ const series = computed((): Serie[] => [
 const max = computed(
   (): number =>
     Math.max(
-      ...chain(liqs)
+      ...liqs
         .groupBy((x) => x.timestamp)
-        .map((supply) =>
+        .entries()
+        .map(([, supply]) =>
           supply.reduce((acc, x) => acc + x.selfValue + x.hardValue, 0)
         )
-        .value()
     ) * 1.1
 );
 

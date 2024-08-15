@@ -6,6 +6,7 @@ export * from "./PaginationHelper";
 export * from "./PoolHelper";
 export * from "./PromiseHelper";
 export * from "./RouterHelper";
+export * from "./StringHelper";
 export * from "./Types";
 export * from "./PriceHelper";
 export * from "./ApyHelper";

@@ -84,7 +84,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models";
 import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 
@@ -110,18 +109,17 @@ const { pairs = [], loading, type, chain } = defineProps<Props>();
 // Refs
 const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
 
-const markets = computed((): Row[] =>
-  chain_(pairs)
+const markets = computed(() =>
+  pairs
     .map((pair) => {
       const count = (pair.long ? 1 : 0) + (pair.short ? 1 : 0);
       return { count, ...pair };
     })
     .orderBy(
-      ["count", ({ long, short }) => tvl(long) + tvl(short)],
+      [(x) => x.count, ({ long, short }) => tvl(long) + tvl(short)],
       ["desc", "desc"]
     )
     .map(({ long, short }) => (type === "long" ? long : short))
-    .value()
 );
 
 // Methods

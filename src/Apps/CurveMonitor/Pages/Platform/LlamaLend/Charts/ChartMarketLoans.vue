@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import { type Chain } from "@CM/Models";
@@ -72,14 +71,13 @@ function createSeriesLoans([newSnapshots, chart]: [
     return;
   }
 
-  const newLoansSeries: HistogramData[] = chain_(newSnapshots)
+  const newLoansSeries: HistogramData[] = (newSnapshots ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.numLoans,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newLoansSeries.length > 0) {
     series.loans.setData(newLoansSeries);

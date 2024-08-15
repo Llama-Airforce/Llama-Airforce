@@ -9,9 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import type { Bribe, Epoch } from "@LAF/Pages/Bribes/Models";
+import type { Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
 type Serie = { name: string; data: number[] };
@@ -28,21 +27,20 @@ const { epoch } = defineProps<Props>();
 // Refs
 const { protocol } = storeToRefs(useBribesStore());
 
-const bribes = computed((): Bribe[] => {
+const bribes = computed(() => {
   const stinkBid = protocol.value === "aura-bal" ? 0 : 2500;
 
   // Filter stink bids.
-  return chain(epoch?.bribes)
-    .filter((bribe) => bribe.amountDollars > stinkBid)
-    .value();
+  return (epoch?.bribes ?? []).filter(
+    (bribe) => bribe.amountDollars > stinkBid
+  );
 });
 
-const categories = computed((): string[] => {
-  type Pool = { pool: string; amountDollars: number };
-
-  return chain(bribes.value)
+const categories = computed(() =>
+  bribes.value
     .groupBy((bribe) => bribe.pool)
-    .map((bribes) =>
+    .entries()
+    .map(([, bribes]) =>
       bribes.reduce(
         (acc, bribe) => ({
           pool: acc.pool,
@@ -51,11 +49,10 @@ const categories = computed((): string[] => {
         { pool: bribes[0].pool, amountDollars: 0 }
       )
     )
-    .orderBy((x: Pool) => x.amountDollars, "desc")
+    .orderBy((x) => x.amountDollars, "desc")
     .map((x) => x.pool)
-    .slice(0, 20)
-    .value();
-});
+    .take(20)
+);
 
 const options = computed(() => {
   return createChartStylesLAF({
@@ -92,21 +89,18 @@ const options = computed(() => {
       enabled: true,
       intersect: false,
       custom: (x: DataPoint<Serie>) => {
-        const data = chain(x.w.globals.initialSeries)
-          .map((token) => {
-            return {
-              token: token.name,
-              sum: token.data[x.dataPointIndex],
-            };
-          })
+        const data = x.w.globals.initialSeries
+          .map((token) => ({
+            token: token.name,
+            sum: token.data[x.dataPointIndex],
+          }))
           .filter((x) => x.sum > 0)
           .map((x) => ({
             token: x.token,
             sum: `$${round(x.sum, 2, "dollar")}${unit(x.sum, "dollar")}`,
           }))
           .orderBy((x) => x.sum, "desc")
-          .map((x) => `<div><b>${x.token}</b>:</div><div>${x.sum}</div>`)
-          .value();
+          .map((x) => `<div><b>${x.token}</b>:</div><div>${x.sum}</div>`);
 
         return data.join("");
       },
@@ -130,25 +124,23 @@ const options = computed(() => {
   });
 });
 
-const series = computed((): Serie[] => {
-  return (
-    chain(bribes.value)
-      // Create a series per token paid.
-      .groupBy((bribe) => bribe.token)
-      .map((bribes, token) => ({
-        name: token,
-        // For each pool we will aggregate the bribes for that pool.
-        data: categories.value.map((pool) =>
-          bribes.reduce(
-            (acc, bribe) =>
-              bribe.pool === pool ? acc + bribe.amountDollars : acc,
-            0
-          )
-        ),
-      }))
-      .value()
-  );
-});
+const series = computed((): Serie[] =>
+  bribes.value
+    // Create a series per token paid.
+    .groupBy((bribe) => bribe.token)
+    .entries()
+    .map(([token, bribes]) => ({
+      name: token,
+      // For each pool we will aggregate the bribes for that pool.
+      data: categories.value.map((pool) =>
+        bribes.reduce(
+          (acc, bribe) =>
+            bribe.pool === pool ? acc + bribe.amountDollars : acc,
+          0
+        )
+      ),
+    }))
+);
 
 // Methods
 const optimalColumnWidthPercent = (numBars: number): number => {

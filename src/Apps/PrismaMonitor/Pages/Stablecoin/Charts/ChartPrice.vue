@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { CurvePriceService, type OHLC } from "@/Services";
@@ -137,7 +136,7 @@ function createSeries(newData: OHLC[]): void {
     return;
   }
 
-  const newSerie: CandlestickData[] = chain(newData)
+  const newSerie: CandlestickData[] = newData
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: c.open,
@@ -146,8 +145,7 @@ function createSeries(newData: OHLC[]): void {
       close: c.close,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     series.price.setData(newSerie);

@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LiqLosses } from "@CM/Services/Liquidations";
@@ -60,7 +59,7 @@ function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
     return;
   }
 
-  const newSerie: LineData[] = chain_(newLosses)
+  const newSerie: LineData[] = (newLosses ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value:
@@ -69,8 +68,7 @@ function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
           : 0,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     series.losses.setData(newSerie);

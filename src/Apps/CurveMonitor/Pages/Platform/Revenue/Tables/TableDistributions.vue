@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type Distribution } from "@CM/Services/Revenue";
 
 const { t } = useI18n();
@@ -46,18 +45,16 @@ const columns = [
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed(() =>
-  chain(distributions)
-    .orderBy((distribution) => {
-      switch (sorting.value.column) {
-        case "timestamp":
-          return distribution.timestamp;
-        case "fees":
-          return distribution.feesUsd;
-        default:
-          return distribution.timestamp;
-      }
-    }, sorting.value.order)
-    .value()
+  distributions.orderBy((distribution) => {
+    switch (sorting.value.column) {
+      case "timestamp":
+        return distribution.timestamp;
+      case "fees":
+        return distribution.feesUsd;
+      default:
+        return distribution.timestamp;
+    }
+  }, sorting.value.order)
 );
 
 // Formatters

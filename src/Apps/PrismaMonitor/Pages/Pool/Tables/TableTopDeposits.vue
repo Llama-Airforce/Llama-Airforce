@@ -50,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { type PoolStableOperation, StabilityPoolService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
@@ -75,11 +74,7 @@ const { isFetching: loading, data } = useQuery({
 });
 
 // Refs
-const rows = computed((): PoolStableOperation[] =>
-  chain(data.value)
-    .map((x) => x)
-    .value()
-);
+const rows = computed(() => data.value.map((x) => x));
 </script>
 
 <style lang="scss" scoped>

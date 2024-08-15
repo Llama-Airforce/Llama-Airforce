@@ -60,7 +60,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { type ProposalType, type ProposalStatus } from "@CM/Services/Proposal";
 import { useQueryProposals } from "@CM/Services/Proposal/Queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
@@ -103,7 +102,7 @@ const search = computed(() =>
 
 const count = computed(() => data.value?.count ?? 0);
 const proposals = computed(() =>
-  orderBy(data.value?.proposals ?? [], (x) => x.start, "desc")
+  (data.value?.proposals ?? []).orderBy((x) => x.start, "desc")
 );
 
 // Data

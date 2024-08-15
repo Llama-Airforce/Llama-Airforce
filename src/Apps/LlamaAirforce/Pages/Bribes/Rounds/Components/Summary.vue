@@ -53,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy, reverse } from "lodash";
 import { type Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
@@ -91,23 +90,21 @@ const roundOpen = ref(false);
 const roundSelected = ref(false);
 const countdownString = ref("");
 
-const roundsOrdered = computed((): number[] => reverse(orderBy(rounds)));
+const roundsOrdered = computed(() => rounds.orderBy((x) => x, "desc"));
 
-const voteLink = computed((): string =>
-  epoch ? getLink(epoch, epoch.proposal) : ""
-);
+const voteLink = computed(() => (epoch ? getLink(epoch, epoch.proposal) : ""));
 
-const dollarPerVlAsset = computed((): number | undefined =>
+const dollarPerVlAsset = computed(() =>
   epoch ? dollarPerVlAssetFunc(epoch) : undefined
 );
 
-const totalAmountDollars = computed((): number | undefined =>
+const totalAmountDollars = computed(() =>
   epoch ? totalAmountDollarsFunc(epoch) : undefined
 );
 
-const date = computed((): string => (epoch ? getDate(epoch) : ""));
+const date = computed(() => (epoch ? getDate(epoch) : ""));
 
-const isFinished = computed((): boolean =>
+const isFinished = computed(() =>
   epoch ? new Date().getTime() > getDateRaw(epoch).getTime() : false
 );
 

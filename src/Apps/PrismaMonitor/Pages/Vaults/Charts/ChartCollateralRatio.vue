@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { ManagerService, type DecimalTimeSeries } from "@PM/Services";
@@ -69,14 +68,13 @@ function createSeries([globalCr, chart]: [
     return;
   }
 
-  const newGlobalCrSerie: LineData[] = chain(globalCr)
+  const newGlobalCrSerie: LineData[] = (globalCr ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newGlobalCrSerie.length > 0) {
     series.cr.setData(newGlobalCrSerie);

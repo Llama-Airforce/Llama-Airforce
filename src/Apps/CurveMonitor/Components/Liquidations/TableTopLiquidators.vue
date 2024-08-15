@@ -39,7 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { addressShort } from "@/Wallet";
 import { type LiquidationDetails } from "@CM/Services/Liquidations";
 
@@ -59,16 +58,16 @@ type Liquidator = {
 };
 
 const rows = computed((): Liquidator[] =>
-  chain_(liqs)
+  liqs
     .groupBy((x) => x.liquidator)
-    .map((xs, liquidator) => ({
+    .entries()
+    .map(([liquidator, xs]) => ({
       liquidator,
       count: xs.length,
       value: xs.reduce((acc, x) => acc + x.collateralReceivedUsd, 0),
     }))
     .orderBy((x) => x.value, "desc")
     .take(5)
-    .value()
 );
 </script>
 

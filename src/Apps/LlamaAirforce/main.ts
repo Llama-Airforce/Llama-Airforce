@@ -1,4 +1,5 @@
 import { type RouteRecordRaw } from "vue-router";
+import "@/Util/llamadash";
 import App from "@LAF/App.vue";
 import createRouter from "@LAF/Router";
 

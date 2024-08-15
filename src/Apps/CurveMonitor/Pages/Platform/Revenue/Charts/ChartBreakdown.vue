@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import { useQueryRevenueBreakdown } from "@CM/Services/Revenue/Queries";
@@ -117,10 +116,11 @@ const options = computed(() => {
 });
 
 // Take the N latest weeks.
-const weeks = computed((): number[] =>
-  chain(breakdown.value)
+const weeks = computed(() =>
+  breakdown.value
     .groupBy((x) => x.week)
-    .map((breakdowns) => ({
+    .entries()
+    .map(([, breakdowns]) => ({
       week: breakdowns[0].week,
       numLabels: breakdowns.length,
     }))
@@ -128,27 +128,25 @@ const weeks = computed((): number[] =>
     // We want to start at the first occurance of crvUSD.
     .dropWhile((x) => x.numLabels < 3)
     .map((x) => x.week)
-    .value()
 );
 
-const categories = computed((): string[] =>
-  chain(weeks.value)
-    .map((week) =>
-      new Date(week * 1000).toLocaleDateString(undefined, {
-        day: "2-digit",
-        month: "2-digit",
-      })
-    )
-    .value()
+const categories = computed(() =>
+  weeks.value.map((week) =>
+    new Date(week * 1000).toLocaleDateString(undefined, {
+      day: "2-digit",
+      month: "2-digit",
+    })
+  )
 );
 
 const series = computed((): Serie[] =>
-  chain(breakdown.value)
+  breakdown.value
     .groupBy((x) => x.label)
-    .map((breakdown, origin) => ({
+    .entries()
+    .map(([origin, breakdown]) => ({
       name: origin,
       // For each week, find the corresponding data if available, else zero.
-      data: chain(weeks.value)
+      data: weeks.value
         .map((week) => ({
           week,
           breakdown: breakdown.find((x) => x.week === week),
@@ -156,11 +154,9 @@ const series = computed((): Serie[] =>
         .map((x) => ({
           x: new Date(x.week * 1000).toLocaleDateString(),
           y: x.breakdown?.total_fees ?? 0,
-        }))
-        .value(),
+        })),
     }))
-    .orderBy((x) => x.name)
-    .value()
+    .orderBy((x) => x.name, "asc")
 );
 
 // Methods

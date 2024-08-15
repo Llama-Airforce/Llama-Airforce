@@ -512,6 +512,7 @@
     "createEnvHelpers": true,
     "useQueryClient": true,
     "useQueryRx": true,
-    "isExternal": true
+    "isExternal": true,
+    "capitalize": true
   }
 }

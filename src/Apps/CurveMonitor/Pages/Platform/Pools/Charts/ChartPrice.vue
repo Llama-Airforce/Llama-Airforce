@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type OHLC } from "@CM/Services/OHLC";
@@ -80,7 +79,7 @@ function createSeries([newOHLC, chart, newInvert]: [
 
   // OHLC
   const invertMultiplier = newInvert ? -1 : 1;
-  const newOHLCSerie: CandlestickData[] = chain_(newOHLC)
+  const newOHLCSerie: CandlestickData[] = (newOHLC ?? [])
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -89,8 +88,7 @@ function createSeries([newOHLC, chart, newInvert]: [
       close: Math.pow(c.close, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newOHLCSerie.length > 0) {
     series.ohlc.setData(newOHLCSerie);

@@ -41,13 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import ProposalComponent from "@PM/Pages/Proposals/Components/Proposal.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
 const { t } = useI18n();
-
-type Row = Proposal;
 
 // Props
 interface Props {
@@ -60,15 +57,12 @@ const { proposals } = defineProps<Props>();
 const proposalSearch = ref("");
 const placeholder = ref(t("search-placeholder"));
 
-const rows = computed((): Row[] => {
+const rows = computed(() => {
   const search = proposalSearch.value.toLocaleLowerCase();
 
-  return chain(proposals)
-    .filter(
-      (p) =>
-        !!p.metadata && p.metadata.title.toLocaleLowerCase().includes(search)
-    )
-    .value();
+  return proposals.filter(
+    (p) => !!p.metadata && p.metadata.title.toLocaleLowerCase().includes(search)
+  );
 });
 
 const rowsPerPage = 10;

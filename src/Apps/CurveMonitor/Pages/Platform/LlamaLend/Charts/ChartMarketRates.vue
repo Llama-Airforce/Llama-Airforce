@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
@@ -108,23 +107,21 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     return;
   }
 
-  const newBorrowApySerie: LineData[] = chain_(newSnapshots)
+  const newBorrowApySerie: LineData[] = (newSnapshots ?? [])
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.borrowApy,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
-  const newLendApySerie: LineData[] = chain_(newSnapshots)
+  const newLendApySerie: LineData[] = (newSnapshots ?? [])
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.lendApy,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   // Borrow APY serie
   if (newBorrowApySerie.length > 0) {

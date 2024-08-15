@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import {
@@ -81,7 +80,7 @@ function createSeries([newData, chart]: [
     return;
   }
 
-  const newSerie: LineData[] = chain(newData)
+  const newSerie: LineData[] = (newData ?? [])
     // Filter super high APR at the start.
     .filter((x) => x.timestamp >= 1699630610)
     .map((x) => ({
@@ -89,8 +88,7 @@ function createSeries([newData, chart]: [
       value: x.total_apr * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     series.apr.setData(newSerie);

@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { CurvePriceService, type OHLC } from "@/Services";
@@ -124,14 +123,13 @@ function createSeries(newData: OHLC[], contract: Contract): void {
     return;
   }
 
-  const newSerie: LineData[] = chain(newData)
+  const newSerie: LineData[] = newData
     .map((x) => ({
       time: x.time as UTCTimestamp,
       value: x.close,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     if (contract === "convex") {

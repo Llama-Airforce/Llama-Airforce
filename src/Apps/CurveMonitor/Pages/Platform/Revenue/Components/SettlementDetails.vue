@@ -109,7 +109,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
 import { type SolverCompetition } from "@CM/Services/Solver";
 import { useQuerySolverCompetition } from "@CM/Services/Solver/Queries";
@@ -145,9 +144,7 @@ const solutions = computed(() => {
     return [];
   }
 
-  return chain(competition.value.solutions)
-    .orderBy((x) => x.ranking, "asc")
-    .value();
+  return competition.value.solutions.orderBy((x) => x.ranking, "asc");
 });
 
 function linkAddress(addr: string): string {

@@ -124,7 +124,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
@@ -140,8 +139,8 @@ const emit = defineEmits<{
 // Refs
 const search = ref("");
 
-const rows = computed((): Row[] =>
-  chain(markets.value)
+const rows = computed(() =>
+  markets.value
     .filter((market) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -151,7 +150,6 @@ const rows = computed((): Row[] =>
       return includesTerm(market.name) || includesTerm(market.address);
     })
     .orderBy((x) => x.borrowed, "desc")
-    .value()
 );
 
 // Data

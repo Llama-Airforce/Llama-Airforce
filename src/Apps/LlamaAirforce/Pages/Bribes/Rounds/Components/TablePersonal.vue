@@ -85,7 +85,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { type Address } from "@/Framework/Address";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
@@ -140,23 +139,19 @@ const { sorting, onSort } = useSort<typeof columns.value>("total");
 
 const isSupported = computed((): boolean => epoch?.platform !== "hh");
 
-const bribedOrdered = computed((): BribedPersonal[] => {
-  return orderBy(
-    bribed.value,
-    (bribed) => {
-      switch (sorting.value.column) {
-        case "pool":
-          return bribed.pool;
-        case "vlasset":
-          return bribed.dollarPerVlAsset;
-        default:
-        case "total":
-          return bribed.amountDollars;
-      }
-    },
-    sorting.value.order
-  );
-});
+const bribedOrdered = computed(() =>
+  bribed.value.orderBy((bribed) => {
+    switch (sorting.value.column) {
+      case "pool":
+        return bribed.pool;
+      case "vlasset":
+        return bribed.dollarPerVlAsset;
+      default:
+      case "total":
+        return bribed.amountDollars;
+    }
+  }, sorting.value.order)
+);
 
 const bribedAmount = computed((): number => {
   return bribedOrdered.value.reduce((acc, x) => acc + x.amountDollars, 0);

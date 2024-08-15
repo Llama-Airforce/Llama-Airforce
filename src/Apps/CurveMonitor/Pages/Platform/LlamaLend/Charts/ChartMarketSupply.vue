@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
@@ -144,36 +143,30 @@ function createSeries(): void {
     return;
   }
 
-  const newSupplySerie: LineData[] = chain_(snapshots.value)
+  const newSupplySerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.totalAssetsUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
-  const newDebtSerie: LineData[] = chain_(snapshots.value)
+  const newDebtSerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.totalDebtUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
-  const newUtilSerie: LineData[] = chain_(
-    toggles.util.value ? newSupplySerie : []
-  )
+  const newUtilSerie: LineData[] = (toggles.util.value ? newSupplySerie : [])
     .zip(newDebtSerie)
-    .filter((x) => !!x[1])
     .map(([supply, debt]) => ({
-      time: debt!.time,
-      value: supply && supply.value > 0 ? debt!.value / supply.value : 0,
+      time: debt.time as UTCTimestamp,
+      value: supply.value > 0 ? debt.value / supply.value : 0,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   series.supply.setData(newSupplySerie);
   series.debt.setData(newDebtSerie);

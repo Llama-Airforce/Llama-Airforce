@@ -73,7 +73,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort, useWallet } from "@/Wallet";
 import { type Proposal, type ProposalDetails } from "@CM/Services/Proposal";
 
@@ -95,10 +94,9 @@ const votesFor = computed(() => {
     return null;
   }
 
-  return chain(proposalDetails.votes)
+  return proposalDetails.votes
     .filter((vote) => vote.supports)
-    .orderBy((vote) => vote.votingPower, "desc")
-    .value();
+    .orderBy((vote) => vote.votingPower, "desc");
 });
 
 const votesAgainst = computed(() => {
@@ -106,10 +104,9 @@ const votesAgainst = computed(() => {
     return null;
   }
 
-  return chain(proposalDetails.votes)
+  return proposalDetails.votes
     .filter((vote) => !vote.supports)
-    .orderBy((vote) => vote.votingPower, "desc")
-    .value();
+    .orderBy((vote) => vote.votingPower, "desc");
 });
 
 // Methods

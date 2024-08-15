@@ -94,7 +94,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
@@ -123,12 +122,11 @@ const { isFetching: loading, data } = useQuery({
   queryKey: ["prisma-liquidations-troves", computed(() => troves)] as const,
   queryFn: ({ queryKey: [, troves] }) => {
     return Promise.all(
-      chain(troves)
+      troves
         .uniq()
         .map((trove) =>
           liquidationService.getLiquidationsForTrove("ethereum", trove)
         )
-        .value()
     ).then((rs) => rs.flat());
   },
   initialData: [],
@@ -153,8 +151,8 @@ const columns = [
 
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
-const rows = computed((): Row[] =>
-  chain(data.value)
+const rows = computed(() =>
+  data.value
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -182,7 +180,6 @@ const rows = computed((): Row[] =>
           return row.timestamp;
       }
     }, sorting.value.order)
-    .value()
 );
 
 const rowsPerPage = 15;

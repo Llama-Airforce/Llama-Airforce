@@ -100,7 +100,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort } from "@/Wallet";
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
 import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
@@ -130,23 +129,21 @@ const columns = [
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed(() =>
-  chain(settlements)
-    .orderBy((settlement) => {
-      switch (sorting.value.column) {
-        case "amount":
-          return settlement.amountReceived;
-        case "quote":
-          return settlement.routerReceived;
-        case "profit":
-          return profit(settlement);
-        case "profitPct":
-          return profitPct(settlement);
-        case "timestamp":
-        default:
-          return settlement.timestamp;
-      }
-    }, sorting.value.order)
-    .value()
+  settlements.orderBy((settlement) => {
+    switch (sorting.value.column) {
+      case "amount":
+        return settlement.amountReceived;
+      case "quote":
+        return settlement.routerReceived;
+      case "profit":
+        return profit(settlement);
+      case "profitPct":
+        return profitPct(settlement);
+      case "timestamp":
+      default:
+        return settlement.timestamp;
+    }
+  }, sorting.value.order)
 );
 
 const rowsPerPage = 15;

@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { type DecimalTimeSeries, StabilityPoolService } from "@PM/Services";
@@ -71,14 +70,13 @@ function createSeries([newData, chart]: [
     return;
   }
 
-  const newSerie: LineData[] = chain(newData)
+  const newSerie: LineData[] = (newData ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     series.tvl.setData(newSerie);

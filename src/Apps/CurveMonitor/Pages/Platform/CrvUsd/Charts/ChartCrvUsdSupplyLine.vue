@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
@@ -70,18 +69,16 @@ function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
     return;
   }
 
-  const newSupplySerie: (LineData & { debt: number })[] = chain(newSupply)
+  const newSupplySerie: (LineData & { debt: number })[] = (newSupply ?? [])
     .groupBy((x) => x.timestamp)
-    .mapValues((x) => ({
+    .entries()
+    .map(([, x]) => ({
       time: x[0].timestamp as UTCTimestamp,
       value: x.reduce((acc, y) => acc + y.supply, 0),
       debt: x.find((y) => y.market === "Keepers debt")?.supply ?? 0,
     }))
-    .entries()
-    .map((x) => x[1])
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   const newDebtSerie: LineData[] = newSupplySerie.map((x) => ({
     time: x.time,

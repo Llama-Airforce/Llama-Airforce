@@ -98,7 +98,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/Union/Pirex";
 import { abi as abiERC1155 } from "@/ABI/Standards/ERC1155";
@@ -144,14 +143,14 @@ function formatDate(epoch: number): string {
 
 // Rewards
 const epochs = computed(() =>
-  chain([...snapshots, ...futures])
-    .groupBy("epoch")
-    .map((group) => ({
+  [...snapshots, ...futures]
+    .groupBy((x) => x.epoch)
+    .entries()
+    .map(([, group]) => ({
       epoch: group[0].epoch,
       snapshots: group.filter((x): x is SnapshotReward => "rewardIndex" in x),
       futures: group.filter((x): x is FuturesReward => !("rewardIndex" in x)),
     }))
-    .value()
 );
 
 type Epoch = (typeof epochs)["value"][number];

@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import {
@@ -179,23 +178,21 @@ function createSeries([newData, chart]: [
     return;
   }
 
-  const newOracleSerie: LineData[] = chain(newData?.oracle)
+  const newOracleSerie: LineData[] = (newData?.oracle ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
-  const newMarketSerie: LineData[] = chain(newData?.market)
+  const newMarketSerie: LineData[] = (newData?.market ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newMarketSerie.length > 0) {
     series.market.setData(newMarketSerie);

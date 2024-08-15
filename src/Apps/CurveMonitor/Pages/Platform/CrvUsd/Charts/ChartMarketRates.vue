@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market, type Snapshot } from "@CM/Services/CrvUsd";
@@ -100,27 +99,23 @@ function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
     return;
   }
 
-  const newRatesSerie: LineData[] = chain(newRates)
+  const newRatesSerie: LineData[] = (newRates ?? [])
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.rate,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   const averages = average(
     newRatesSerie.map((x) => x.value),
     avgLength.value ?? 31
   );
 
-  const newRatesEMASerie: LineData[] = chain(averages)
-    .zip(newRatesSerie)
-    .map((x) => ({
-      time: x[1]!.time,
-      value: x[0]!,
-    }))
-    .value();
+  const newRatesEMASerie: LineData[] = averages.zip(newRatesSerie).map((x) => ({
+    time: x[1].time,
+    value: x[0],
+  }));
 
   // EMA rates serie.
   if (newRatesEMASerie.length > 0) {

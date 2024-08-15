@@ -65,7 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type Liquidation } from "@PM/Services";
 
 type Row = string;
@@ -83,17 +82,15 @@ const { liquidation } = defineProps<Props>();
 // Refs
 const search = ref("");
 
-const rows = computed((): string[] =>
-  chain(liquidation.troves_affected)
-    .filter((trove) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
+const rows = computed(() =>
+  liquidation.troves_affected.filter((trove) => {
+    const terms = search.value.toLocaleLowerCase().split(" ");
 
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
+    const includesTerm = (x: string): boolean =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(trove);
-    })
-    .value()
+    return includesTerm(trove);
+  })
 );
 </script>
 

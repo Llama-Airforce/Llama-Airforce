@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { type SnapshotRevenue } from "@PM/Services";
@@ -56,17 +55,15 @@ function createSeries(newRevenue: SnapshotRevenue[]): void {
     return;
   }
 
-  const newRevenueSerie: LineData[] = chain(newRevenue)
+  const newRevenueSerie: LineData[] = newRevenue
     .groupBy((x) => x.timestamp)
-    .mapValues((x) => ({
+    .entries()
+    .map(([, x]) => ({
       time: x[0].timestamp as UTCTimestamp,
       value: totalRevenue(x[0]),
     }))
-    .entries()
-    .map((x) => x[1])
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newRevenueSerie.length > 0) {
     series.revenue.setData(newRevenueSerie);

@@ -108,7 +108,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type Keeper } from "@CM/Services/CrvUsd";
 import { type Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
@@ -124,7 +123,7 @@ const search = ref("");
 const loading = computed(() => loadingPools.value || loadingKeepers.value);
 
 const rowsRaw = computed(() =>
-  chain(keepers.value)
+  keepers.value
     .map((keeper) => {
       const pool = pools.value.find(
         (pool) => keeper.pool_address === pool.address
@@ -141,20 +140,17 @@ const rowsRaw = computed(() =>
     })
     .filter(notEmpty)
     .orderBy((x) => x.tvlUsd, "desc")
-    .value()
 );
 
-const rows = computed((): Row[] =>
-  chain(rowsRaw.value)
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
+const rows = computed(() =>
+  rowsRaw.value.filter((row) => {
+    const terms = search.value.toLocaleLowerCase().split(" ");
 
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
+    const includesTerm = (x: string): boolean =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(row.name) || includesTerm(row.address);
-    })
-    .value()
+    return includesTerm(row.name) || includesTerm(row.address);
+  })
 );
 
 // Keepers

@@ -92,7 +92,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { type Chain } from "@CM/Models";
 import {
   useQueryMarkets,
@@ -117,16 +116,14 @@ const chain = computed({
 const search = ref("");
 
 const marketPairsFiltered = computed((): MarketPair[] =>
-  chain_(marketPairs.value)
-    .filter(({ long, short }) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
+  marketPairs.value.filter(({ long, short }) => {
+    const terms = search.value.toLocaleLowerCase().split(" ");
 
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
+    const includesTerm = (x: string): boolean =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      return includesTerm(`${long?.name ?? ""}${short?.name ?? ""}`);
-    })
-    .value()
+    return includesTerm(`${long?.name ?? ""}${short?.name ?? ""}`);
+  })
 );
 
 const marketPairs = computed((): MarketPair[] => {

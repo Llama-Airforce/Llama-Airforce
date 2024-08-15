@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
 import { type SnapshotRevenue } from "@PM/Services";
@@ -75,46 +74,48 @@ const options = computed(() => {
   });
 });
 
-const categories = computed((): string[] =>
-  chain(data)
+const categories = computed(() =>
+  data
     .orderBy((x) => x.timestamp, "asc")
     .groupBy((x) => x.timestamp)
-    .map((_, timestamp) =>
+    .entries()
+    .map(([timestamp]) =>
       new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
       })
     )
     .map((x, i) => (i % 8 === 0 ? x : ""))
-    .value()
 );
 
 const series = computed((): Serie[] =>
-  chain(Object.keys(data[0]).filter((x) => x !== "timestamp"))
+  Object.keys(data[0])
+    .filter((x) => x !== "timestamp")
     .map((source) => data.map((x) => ({ ...x, source })))
-    .flatten()
+    .flat()
     .groupBy((x) => x.source)
-    .map((snapshot, source) => ({
+    .entries()
+    .map(([source, snapshot]) => ({
       name: sourceToLabel(source),
-      data: chain(snapshot)
+      data: snapshot
         .orderBy((s) => s.timestamp, "asc")
         .map((s) => ({
           x: new Date(s.timestamp * 1000).toLocaleDateString(),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
           y: (s as any)[source] as number,
-        }))
-        .value(),
+        })),
     }))
-    .value()
 );
 
 const max = computed(
-  (): number =>
+  () =>
     Math.max(
-      ...chain(data)
+      ...data
         .groupBy((x) => x.timestamp)
-        .map((supply) => supply.reduce((acc, x) => acc + totalRevenue(x), 0))
-        .value()
+        .entries()
+        .map(([, supply]) =>
+          supply.reduce((acc, x) => acc + totalRevenue(x), 0)
+        )
     ) * 1.1
 );
 

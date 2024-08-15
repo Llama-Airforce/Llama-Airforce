@@ -54,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain, mean, sum } from "lodash";
 import TableDistributions from "@CM/Pages/Platform/Revenue/Tables/TableDistributions.vue";
 import ChartDistributions from "@CM/Pages/Platform/Revenue/Charts/ChartDistributions.vue";
 import ChartDistributionsDelta from "@CM/Pages/Platform/Revenue/Charts/ChartDistributionsDelta.vue";
@@ -65,30 +64,24 @@ const { t } = useI18n();
 const { isFetching: loading, data: distributions } = useQueryDistributions();
 
 // KPIs
-const totalFees = computed(() => {
-  return chain(distributions.value)
-    .sumBy((x) => x.feesUsd)
-    .value();
-});
+const totalFees = computed(() => distributions.value.sumBy((x) => x.feesUsd));
 
-const averageWeeklyFees = computed(() => {
-  return chain(distributions.value)
+const averageWeeklyFees = computed(() =>
+  distributions.value
     .orderBy((x) => x.timestamp, "desc")
     .take(52)
     .meanBy((x) => x.feesUsd)
-    .value();
-});
+);
 
 const stdDevWeeklyFees = computed(() => {
-  const lastYear = chain(distributions.value)
+  const lastYear = distributions.value
     .orderBy((x) => x.timestamp, "desc")
     .take(52)
-    .map((x) => x.feesUsd)
-    .value();
+    .map((x) => x.feesUsd);
 
-  const avg = mean(lastYear);
+  const avg = lastYear.meanBy((x) => x);
   const squareDiffs = lastYear.map((value) => Math.pow(value - avg, 2));
-  return Math.sqrt(sum(squareDiffs) / (lastYear.length - 1));
+  return Math.sqrt(squareDiffs.sumBy((x) => x) / (lastYear.length - 1));
 });
 </script>
 

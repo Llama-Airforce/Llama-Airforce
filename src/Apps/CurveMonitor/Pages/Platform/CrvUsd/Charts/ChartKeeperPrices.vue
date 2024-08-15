@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type AutoscaleInfo } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
@@ -115,14 +114,13 @@ function createSeries(): void {
       continue;
     }
 
-    const newLineSerie: LineData[] = chain(prices.value as PoolPrice[])
+    const newLineSerie: LineData[] = (prices.value as PoolPrice[])
       .map((x) => ({
         time: x.timestamp as UTCTimestamp,
         value: x[coin],
       }))
       .uniqWith((x, y) => x.time === y.time)
-      .orderBy((c) => c.time, "asc")
-      .value();
+      .orderBy((c) => c.time, "asc");
 
     if (newLineSerie.length > 0) {
       series[coin]?.setData(newLineSerie);

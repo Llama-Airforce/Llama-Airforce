@@ -134,7 +134,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import Recipe from "@CB/Recipe.vue";
 
 type Round = {
@@ -159,23 +158,19 @@ const data: Round[] = [
   { round: 5, value: 3 * Math.random() },
 ];
 
-const rows = computed((): Round[] => {
-  return orderBy(
-    data,
-    (row: Round) => {
-      switch (sorting.value.column) {
-        case "deadline":
-          return row.round;
-        case "vlasset":
-          return row.value;
-        case "total":
-          return row.value;
-        default:
-          return row.round;
-      }
-    },
-    sorting.value.order
-  );
+const rows = computed(() => {
+  return data.orderBy((row) => {
+    switch (sorting.value.column) {
+      case "deadline":
+        return row.round;
+      case "vlasset":
+        return row.value;
+      case "total":
+        return row.value;
+      default:
+        return row.round;
+    }
+  }, sorting.value.order);
 });
 
 const onSelected = (epoch: Round): void => {
@@ -248,9 +243,7 @@ const table1 = `<Table
   </template>
 </Table>`;
 
-const table2 = `import { orderBy } from "lodash";
-
-type Round = {
+const table2 = `type Round = {
   round: number;
   value: number;
 };
@@ -272,23 +265,19 @@ const data: Round[] = [
   { round: 5, value: 3 * Math.random() },
 ];
 
-const rows = computed((): Round[] => {
-  return orderBy(
-    data ?? [],
-    (row: Round) => {
-      switch (sorting.value.column) {
-        case "deadline":
-          return row.round;
-        case "vlasset":
-          return row.value;
-        case "total":
-          return row.value;
-        default:
-          return row.round;
-      }
-    },
-    sorting.value.order
-  );
+const rows = computed(() => {
+  return data.orderBy((row) => {
+    switch (sorting.value.column) {
+      case "deadline":
+        return row.round;
+      case "vlasset":
+        return row.value;
+      case "total":
+        return row.value;
+      default:
+        return row.round;
+    }
+  }, sorting.value.order);
 });
 
 const onSelected = (round: Round): void => {

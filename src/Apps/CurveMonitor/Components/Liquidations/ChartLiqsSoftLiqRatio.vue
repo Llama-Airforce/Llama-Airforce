@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type SoftLiqRatio } from "@CM/Services/Liquidations";
@@ -117,27 +116,25 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
     return;
   }
 
-  const newProportionSerie: LineData[] = chain_(newSoftLiq)
+  const newProportionSerie: LineData[] = (newSoftLiq ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.proportion,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   const minTime =
     newProportionSerie.length > 0 ? (newProportionSerie[0].time as number) : 0;
 
-  const newPriceSerie: LineData[] = chain_(newSnapshots)
+  const newPriceSerie: LineData[] = (newSnapshots ?? [])
     .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.priceOracle,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newPriceSerie.length > 0) {
     series.price.setData(newPriceSerie);

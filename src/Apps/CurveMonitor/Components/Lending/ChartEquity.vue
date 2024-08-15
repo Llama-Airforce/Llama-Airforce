@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type BaselineSeriesPartialOptions } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -72,14 +71,13 @@ function createSeries([newRatios, chart]: [Equity[]?, IChartApi?]): void {
     return;
   }
 
-  const newEquitySerie: LineData[] = chain(newRatios)
+  const newEquitySerie: LineData[] = (newRatios ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.equity,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newEquitySerie.length > 0) {
     series.equity.setData(newEquitySerie);

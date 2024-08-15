@@ -80,8 +80,6 @@
 </template>
 
 <script setup lang="ts">
-import { last } from "lodash";
-
 type Network = "ethereum" | "arbitrum" | "base";
 
 type Contract = {
@@ -134,7 +132,7 @@ const union: Bundle = {
       gnosis: true,
     },
     {
-      contract: last(UnionAddresses) ?? "",
+      contract: UnionAddresses.at(-1) ?? "",
       description: "union-zap",
     },
     {

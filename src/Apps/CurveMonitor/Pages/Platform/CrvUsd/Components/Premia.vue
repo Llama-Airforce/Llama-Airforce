@@ -62,7 +62,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { type Market, type Yield } from "@CM/Services/CrvUsd";
 
 // Props
@@ -73,19 +72,8 @@ interface Props {
 
 const { yields = [] } = defineProps<Props>();
 
-const yieldsMax = computed(
-  (): Yield =>
-    chain(yields)
-      .maxBy((x) => x.apy)
-      .value()
-);
-
-const yieldsTop = computed((): Yield[] =>
-  chain(yields)
-    .orderBy((x) => x.apy, "desc")
-    .take(5)
-    .value()
-);
+const yieldsMax = computed((): Yield | undefined => yields.maxBy((x) => x.apy));
+const yieldsTop = computed(() => yields.orderBy((x) => x.apy, "desc").take(5));
 </script>
 
 <style lang="scss" scoped>

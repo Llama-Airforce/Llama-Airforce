@@ -81,7 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { uniqWith } from "lodash";
 import Voters from "@PM/Pages/Proposals/Components/Voters.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
@@ -103,12 +102,9 @@ const authorUrl = computed(() => {
   return `https://twitter.com/@${proposal.metadata!.author}`;
 });
 
-const numVoters = computed(() => {
-  return uniqWith(
-    proposal.voters.map((v) => v.voter),
-    (x, y) => x === y
-  ).length;
-});
+const numVoters = computed(
+  () => proposal.voters.map((v) => v.voter).uniqWith((x, y) => x === y).length
+);
 
 const callData = computed(() => {
   return proposal.script

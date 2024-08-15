@@ -143,7 +143,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { icon, label, isDeprecated } from "@PM/Models/Vault";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
@@ -169,8 +168,8 @@ const search = ref("");
 
 const rowsRaw = useObservable(prismaService.overview$, []);
 
-const rows = computed((): Row[] =>
-  chain(rowsRaw.value)
+const rows = computed(() =>
+  rowsRaw.value
     .filter((row) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -180,7 +179,6 @@ const rows = computed((): Row[] =>
       return includesTerm(row.name) || includesTerm(row.address);
     })
     .orderBy((row) => row.debt, "desc")
-    .value()
 );
 
 const loading = computed(() => rowsRaw.value.length === 0);

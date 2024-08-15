@@ -106,15 +106,11 @@
 </template>
 
 <script setup lang="ts">
-import { chain, orderBy } from "lodash";
 import { addressShort } from "@/Wallet";
 import { roundPhil } from "@/Util";
 import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
 import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
-import type {
-  SandwichDetail,
-  TransactionDetail,
-} from "@CM/Services/Monitor/SocketMonitorCurve";
+import type { SandwichDetail } from "@CM/Services/Monitor/SocketMonitorCurve";
 
 const { t } = useI18n();
 
@@ -132,8 +128,8 @@ const numSandwiches = computed(
   () => sandwichesRaw.value?.totalPages ?? 0 * swsPerPage
 );
 
-const sandwiches = computed((): SandwichDetail[] =>
-  chain(sandwichesRaw.value?.data ?? [])
+const sandwiches = computed(() =>
+  (sandwichesRaw.value?.data ?? [])
     .filter((sw) => {
       const terms = search.value.toLocaleLowerCase().split(" ");
 
@@ -150,14 +146,13 @@ const sandwiches = computed((): SandwichDetail[] =>
       [(x) => x.frontrun.block_unixtime, (x) => x.frontrun.tx_position],
       "desc"
     )
-    .value()
 );
 
-const sandwichTxs = (sw: SandwichDetail): TransactionDetail[] =>
-  orderBy(
-    [sw.frontrun, ...sw.center, sw.backrun],
-    [(x) => x.block_unixtime, (x) => x.tx_position]
-  );
+const sandwichTxs = (sw: SandwichDetail) =>
+  [sw.frontrun, ...sw.center, sw.backrun].orderBy([
+    (x) => x.block_unixtime,
+    (x) => x.tx_position,
+  ]);
 </script>
 
 <style lang="scss" scoped>

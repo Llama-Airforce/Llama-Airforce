@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { type Contract } from "@PM/Services";
@@ -122,7 +121,7 @@ function createSeriesPrice(newData: OHLC[]): void {
 
   const invertMultiplier = 1;
 
-  const newSerie: CandlestickData[] = chain(newData)
+  const newSerie: CandlestickData[] = newData
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -131,8 +130,7 @@ function createSeriesPrice(newData: OHLC[]): void {
       close: Math.pow(c.close, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     series.price.setData(newSerie);
@@ -150,14 +148,13 @@ function createSeriesVolume(newVolumes: Volume[]): void {
     return;
   }
 
-  const newVolumeSeries: HistogramData[] = chain(newVolumes)
+  const newVolumeSeries: HistogramData[] = newVolumes
     .map((v) => ({
       time: v.timestamp as UTCTimestamp,
       value: v.volume,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newVolumeSeries.length > 0) {
     series.volume.setData(newVolumeSeries);

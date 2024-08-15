@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LlammaOHLC } from "@CM/Services/Llamma";
@@ -115,7 +114,7 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
 
   // OHLC
   const invertMultiplier = newInvert ? -1 : 1;
-  const newOHLCSerie: CandlestickData[] = chain_(newOHLC)
+  const newOHLCSerie: CandlestickData[] = (newOHLC ?? [])
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -124,8 +123,7 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
       close: Math.pow(c.close, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newOHLCSerie.length > 0) {
     series.ohlc.setData(newOHLCSerie);
@@ -134,14 +132,13 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
   }
 
   // Price Oracle
-  const newOracleSerie: LineData[] = chain_(newOHLC)
+  const newOracleSerie: LineData[] = (newOHLC ?? [])
     .map((x) => ({
       time: x.time as UTCTimestamp,
       value: Math.pow(x.oracle_price, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newOracleSerie.length > 0) {
     series.oracle.setData(newOracleSerie);

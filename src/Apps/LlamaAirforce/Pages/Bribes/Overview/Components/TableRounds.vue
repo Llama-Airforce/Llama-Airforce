@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { orderBy } from "lodash";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
   getDate,
@@ -94,24 +93,20 @@ const columns = computed(() => [
 
 const { sorting, onSort } = useSort<typeof columns.value>("deadline");
 
-const epochs = computed((): EpochOverview[] => {
-  return orderBy(
-    overview?.epochs ?? [],
-    (epoch: EpochOverview) => {
-      switch (sorting.value.column) {
-        case "deadline":
-          return epoch.round;
-        case "vlasset":
-          return dollarPerVlAsset(epoch);
-        case "total":
-          return totalAmountDollars(epoch);
-        default:
-          return epoch.round;
-      }
-    },
-    sorting.value.order
-  );
-});
+const epochs = computed(() =>
+  (overview?.epochs ?? []).orderBy((epoch) => {
+    switch (sorting.value.column) {
+      case "deadline":
+        return epoch.round;
+      case "vlasset":
+        return dollarPerVlAsset(epoch);
+      case "total":
+        return totalAmountDollars(epoch);
+      default:
+        return epoch.round;
+    }
+  }, sorting.value.order)
+);
 
 // Methods
 const round = (epoch: EpochOverview): number => epoch.round;

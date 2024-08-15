@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 
@@ -63,14 +62,13 @@ function createSeries([newOHLC, chart]: [Tvl[]?, IChartApi?]): void {
     return;
   }
 
-  const newSerie: LineData[] = chain_(newOHLC)
+  const newSerie: LineData[] = (newOHLC ?? [])
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.tvl,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
     series.tvl.setData(newSerie);

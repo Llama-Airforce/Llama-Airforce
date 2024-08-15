@@ -68,12 +68,10 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import type { Bribe, Bribed, Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getBribed } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
-import { orderBy } from "lodash";
 
 const { t } = useI18n();
 
@@ -112,22 +110,18 @@ const bribed = computed((): Bribed[] => {
 
   const bribed = getBribed(epoch);
 
-  return orderBy(
-    bribed,
-    (b: Bribed) => {
-      switch (sorting.value.column) {
-        case "pool":
-          return b.pool;
-        case "vlasset":
-          return b.dollarPerVlAsset;
-        case "total":
-          return b.amountDollars.reduce((acc, x) => acc + x, 0);
-        default:
-          return b.dollarPerVlAsset;
-      }
-    },
-    sorting.value.order
-  );
+  return bribed.orderBy((b) => {
+    switch (sorting.value.column) {
+      case "pool":
+        return b.pool;
+      case "vlasset":
+        return b.dollarPerVlAsset;
+      case "total":
+        return b.amountDollars.reduce((acc, x) => acc + x, 0);
+      default:
+        return b.dollarPerVlAsset;
+    }
+  }, sorting.value.order);
 });
 
 // Methods
@@ -139,10 +133,9 @@ const amountDollars = (bribed: Bribed): number =>
 const dollarPerVlAsset = (bribed: Bribed): number => bribed.dollarPerVlAsset;
 
 const bribes = (bribed: Bribed): Bribe[] => {
-  return chain(epoch?.bribes)
+  return (epoch?.bribes ?? [])
     .filter((bribe) => bribe.pool === bribed.pool)
-    .orderBy((bribe) => bribe.amountDollars, "desc")
-    .value();
+    .orderBy((bribe) => bribe.amountDollars, "desc");
 };
 </script>
 

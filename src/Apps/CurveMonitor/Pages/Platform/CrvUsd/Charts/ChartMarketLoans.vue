@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market, type Snapshot } from "@CM/Services/CrvUsd";
@@ -66,14 +65,13 @@ function createSeriesLoans([newLoans, chart]: [Snapshot[]?, IChartApi?]): void {
     return;
   }
 
-  const newLoansSeries: HistogramData[] = chain(newLoans)
+  const newLoansSeries: HistogramData[] = (newLoans ?? [])
     .map((v) => ({
       time: v.timestamp as UTCTimestamp,
       value: v.nLoans,
     }))
     .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .value();
+    .orderBy((c) => c.time, "asc");
 
   if (newLoansSeries.length > 0) {
     series.loans.setData(newLoansSeries);

@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { chain } from "lodash";
 import { addressShort, useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
@@ -48,11 +47,9 @@ const { proposal } = defineProps<Props>();
 // Refs
 const { address: walletAddress } = useWallet();
 
-const votes = computed(() => {
-  return chain(proposal.voters)
-    .orderBy((vote) => vote.weight, "desc")
-    .value();
-});
+const votes = computed(() =>
+  proposal.voters.orderBy((vote) => vote.weight, "desc")
+);
 
 // Methods
 const address = (address: string): string => {
