@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";

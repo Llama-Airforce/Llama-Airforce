@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type Pool } from "@CM/Services/Pools";
 
 type Row = Pool;

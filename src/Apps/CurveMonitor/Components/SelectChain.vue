@@ -14,8 +14,8 @@
         class="item"
       >
         <img
-          v-if="icon(props.item.chain)"
-          :src="icon(props.item.chain)"
+          v-if="chainIcon(props.item.chain)"
+          :src="chainIcon(props.item.chain)"
         />
         <div
           v-else
@@ -29,8 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
-import icon from "@CM/Models/ChainIcon";
+import { type Chain, chainIcon } from "@CM/Models";
 
 type SelectItem = {
   label: string;

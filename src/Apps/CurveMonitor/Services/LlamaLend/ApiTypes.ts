@@ -1,4 +1,4 @@
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 
 export type GetChainsResponse = {
   data: Chain[];

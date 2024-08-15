@@ -67,7 +67,7 @@
 <script setup lang="ts">
 import { chain } from "lodash";
 import SelectChain from "@CM/Components/SelectChain.vue";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type Cushion } from "@CM/Services/Revenue";
 import { useQueryCushions } from "@CM/Services/Revenue/Queries";
 import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";

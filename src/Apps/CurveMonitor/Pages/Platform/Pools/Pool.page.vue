@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { useQueryPool } from "@CM/Services/Pools/Queries";
 import PoolOverview from "@CM/Pages/Platform/Pools/Tabs/PoolOverview.vue";
 import MEV from "@CM/Pages/Platform/Pools/Tabs/MEV.vue";

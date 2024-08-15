@@ -104,7 +104,7 @@
 
 <script setup lang="ts">
 import { chain as chain_, last } from "lodash";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import type { Activity, ActivityType } from "@CM/Services/Chains";
 import { useQueryTxs, useQueryUsers } from "@CM/Services/Chains/Queries";

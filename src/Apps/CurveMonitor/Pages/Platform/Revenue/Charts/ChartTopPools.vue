@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
-import type { Chain } from "@CM/Models/Chain";
+import type { Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useQueryTopPools } from "@CM/Services/Revenue/Queries";
 

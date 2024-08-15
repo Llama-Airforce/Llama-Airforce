@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/LlamaLend";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
 import {

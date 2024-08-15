@@ -1,5 +1,5 @@
 import { chain } from "lodash";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import CrvUsdService, { type Market, type Keeper } from "@CM/Services/CrvUsd";
 import OHLCService from "@CM/Services/OHLC";
 

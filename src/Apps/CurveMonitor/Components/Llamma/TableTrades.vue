@@ -80,7 +80,7 @@
 
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type LlammaTrade } from "@CM/Services/Llamma";
 
 const { t } = useI18n();

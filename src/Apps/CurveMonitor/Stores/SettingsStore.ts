@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { type Theme } from "@/Styles/Theme";
 import { getColors, getColorsArray } from "@/Styles/Themes/CM";
-import type { ThemeId } from "@CM/Models/ThemeId";
+import type { ThemeId } from "@CM/Models";
 
 export const useSettingsStore = defineStore("settingsStore", () => {
   const themeId = ref<ThemeId>("light");

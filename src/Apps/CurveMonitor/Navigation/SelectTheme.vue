@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
 import { getColors } from "@/Styles/Themes/CM";
-import { type ThemeId } from "@CM/Models/ThemeId";
+import { type ThemeId } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 
 const STORAGE_THEME = "theme";

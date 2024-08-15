@@ -1,5 +1,5 @@
 import { type Address } from "@/Framework/Address";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 
 export type BreakdownRevenue = {
   week: number;

@@ -15,7 +15,7 @@
 import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market, type Snapshot } from "@CM/Services/LlamaLend";
 

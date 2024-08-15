@@ -1,5 +1,5 @@
 import LendingService, { type Endpoint } from "@CM/Services/Lending";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 
 const service = new LendingService();
 

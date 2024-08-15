@@ -1,5 +1,5 @@
 import { ServiceBase } from "@/Services";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import type * as ApiTypes from "@CM/Services/CrvUsd/ApiTypes";
 import type * as Models from "@CM/Services/CrvUsd/Models";
 import * as Parsers from "@CM/Services/CrvUsd/Parsers";

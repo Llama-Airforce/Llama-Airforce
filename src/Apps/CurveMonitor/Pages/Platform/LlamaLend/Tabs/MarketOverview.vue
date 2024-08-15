@@ -96,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type Market, tvl } from "@CM/Services/LlamaLend";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import {

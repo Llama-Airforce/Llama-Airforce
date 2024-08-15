@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type Pool } from "@CM/Services/Pools";
 import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { useQueryPools } from "@CM/Services/Pools/Queries";

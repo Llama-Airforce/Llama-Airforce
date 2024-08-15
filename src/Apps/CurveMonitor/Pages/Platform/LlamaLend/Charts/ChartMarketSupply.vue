@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { chain as chain_ } from "lodash";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";

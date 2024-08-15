@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { useQueryMarkets } from "@CM/Services/LlamaLend/Queries";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/Tabs/MarketOverview.vue";
 import Trading from "@CM/Pages/Platform/LlamaLend/Tabs/Trading.vue";

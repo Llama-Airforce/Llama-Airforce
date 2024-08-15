@@ -1,6 +1,6 @@
 import { keepPreviousData } from "@tanstack/vue-query";
 import LlammaService, { type Endpoint } from "@CM/Services/Llamma";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 
 const service = new LlammaService();
 

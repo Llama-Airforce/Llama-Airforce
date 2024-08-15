@@ -1,7 +1,7 @@
 import { ColorsCMDark, ColorsCMDarkArray } from "@/Styles/Themes/CM/Dark";
 import { ColorsCMLight, ColorsCMLightArray } from "@/Styles/Themes/CM/Light";
 import { ColorsCMChad, ColorsCMChadArray } from "@/Styles/Themes/CM/Chad";
-import type { ThemeId } from "@CM/Models/ThemeId";
+import type { ThemeId } from "@CM/Models";
 
 export function getColors(themeId: ThemeId) {
   switch (themeId) {

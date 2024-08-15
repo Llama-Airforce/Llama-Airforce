@@ -15,7 +15,7 @@
 import { chain as chain_ } from "lodash";
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
 import { type Endpoint, type LlammaOHLC } from "@CM/Services/Llamma";
 import { useQueryOHLC } from "@CM/Services/Llamma/Queries";

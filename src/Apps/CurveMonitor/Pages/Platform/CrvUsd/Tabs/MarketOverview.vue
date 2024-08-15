@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Chain } from "@CM/Models/Chain";
+import { type Chain } from "@CM/Models";
 import type { Market } from "@CM/Services/CrvUsd";
 import {
   ChartMarketVolume,
