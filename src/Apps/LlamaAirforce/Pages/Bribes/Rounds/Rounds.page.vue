@@ -110,17 +110,17 @@ onBeforeUnmount((): void => {
 // Watches
 watch(
   rounds,
-  (newRounds) => {
+  (rounds) => {
     if (!round.value) {
-      round.value = newRounds.at(-1);
+      round.value = rounds.at(-1);
     }
   },
   { immediate: true }
 );
 
-watch(round, (newRound) => {
-  if (product.value && newRound) {
-    void updateRouter(product.value, newRound);
+watch(round, (round) => {
+  if (product.value && round) {
+    void updateRouter(product.value, round);
   }
 });
 

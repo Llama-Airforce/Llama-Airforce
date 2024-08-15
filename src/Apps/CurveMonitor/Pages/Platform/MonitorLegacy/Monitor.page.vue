@@ -91,17 +91,15 @@ const onNewPoolRoute = async (routePool: string | string[]) => {
 };
 
 // Watches
-watch(
+whenever(
   () => store.pool,
-  async (newPool) => {
-    if (newPool) {
-      await onNewPool(newPool, true);
-    }
+  async (pool) => {
+    await onNewPool(pool, true);
   }
 );
 
-watch(pool, async (newPool) => {
-  await onNewPoolRoute(newPool);
+watch(pool, async (pool) => {
+  await onNewPoolRoute(pool);
 });
 </script>
 

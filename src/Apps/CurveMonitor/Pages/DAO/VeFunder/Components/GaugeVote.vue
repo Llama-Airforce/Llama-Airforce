@@ -74,8 +74,8 @@ const canRequest = computed((): boolean => {
 // Watches
 watch(
   () => gauge,
-  (newGauge) => {
-    gauge_.value = newGauge.toLocaleLowerCase();
+  (gauge) => {
+    gauge_.value = gauge.toLocaleLowerCase();
   }
 );
 

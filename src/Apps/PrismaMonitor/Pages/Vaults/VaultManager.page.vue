@@ -96,16 +96,17 @@ onMounted(() => {
 });
 
 // Watches
-watch(vaults, (newVaults) => {
-  const vault = newVaults.find((v) => v.address === vaultAddr.value);
+watch(vaults, (vaults) => {
+  const vault = vaults.find((v) => v.address === vaultAddr.value);
+
   if (vault) {
     storeVault.vault = vault;
   }
 });
 
-watch(vault, (newVault) => {
+watch(vault, (vault) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-  const vaultLabel = label(newVault?.address!) ?? newVault?.name ?? "?";
+  const vaultLabel = label(vault?.address!) ?? vault?.name ?? "?";
 
   storeBreadcrumb.crumbs = [
     {

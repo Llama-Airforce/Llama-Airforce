@@ -34,14 +34,14 @@ const { data: tokenUri } = useReadContract({
   },
 });
 
-watch(tokenUri, async (newTokenUri) => {
-  if (!newTokenUri) {
+watch(tokenUri, async (tokenUri) => {
+  if (!tokenUri) {
     uri.value = "";
     return;
   }
 
-  const tokenResp = await fetch(newTokenUri);
-  const token = (await tokenResp.json()) as { image: string };
+  const tokenResp = await fetch(tokenUri);
+  const token = (await tokenResp.json()) as { image: string } | undefined;
   if (token?.image) {
     uri.value = token.image;
   }

@@ -27,7 +27,7 @@ onMounted(() => {
 // Watches
 watch(
   () => route.fullPath,
-  (newRoute) => {
+  (route) => {
     const noCrumbs = [
       "/pool",
       "/stable",
@@ -39,7 +39,7 @@ watch(
       "/veprisma",
     ];
 
-    if (noCrumbs.some((x) => newRoute.startsWith(x))) {
+    if (noCrumbs.some((x) => route.startsWith(x))) {
       storeBreadcrumb.show = false;
     }
   }

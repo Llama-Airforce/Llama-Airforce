@@ -77,10 +77,8 @@ watch(
   { immediate: true }
 );
 
-watch(addr, (newAddr) => {
-  if (newAddr) {
-    user.value = newAddr;
-  }
+whenever(addr, (addr) => {
+  user.value = addr;
 });
 </script>
 

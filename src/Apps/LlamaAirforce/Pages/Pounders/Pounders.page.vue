@@ -77,20 +77,16 @@ const { claim: claimUPrisma } = useClaim(
   true
 );
 const { claim: claimUCvx } = useClaim(unionService, "ucvx", address, true);
-watch(claimUCrv, (newClaim) => (store.claims.ucrv = newClaim ?? undefined), {
+watch(claimUCrv, (claim) => (store.claims.ucrv = claim ?? undefined), {
   immediate: true,
 });
-watch(claimUFxs, (newClaim) => (store.claims.ufxs = newClaim ?? undefined), {
+watch(claimUFxs, (claim) => (store.claims.ufxs = claim ?? undefined), {
   immediate: true,
 });
-watch(
-  claimUPrisma,
-  (newClaim) => (store.claims.uprisma = newClaim ?? undefined),
-  {
-    immediate: true,
-  }
-);
-watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim ?? undefined), {
+watch(claimUPrisma, (claim) => (store.claims.uprisma = claim ?? undefined), {
+  immediate: true,
+});
+watch(claimUCvx, (claim) => (store.claims.ucvx = claim ?? undefined), {
   immediate: true,
 });
 

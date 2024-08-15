@@ -44,7 +44,9 @@ const emit = defineEmits<{
 // Refs
 const show = ref(false);
 
-watch(show, (newShow) => emit("show", newShow));
+watch(show, (show) => {
+  emit("show", show);
+});
 </script>
 
 <style lang="scss" scoped>

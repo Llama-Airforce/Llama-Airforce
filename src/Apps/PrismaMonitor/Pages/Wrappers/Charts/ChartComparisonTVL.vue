@@ -119,11 +119,11 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([dataConvex, chart], ([newData, chart]) => {
-  createSeries("convex", newData, chart);
+watch([dataConvex, chart], ([data, chart]) => {
+  createSeries("convex", data, chart);
 });
-watch([dataYearn, chart], ([newData, chart]) => {
-  createSeries("yearn", newData, chart);
+watch([dataYearn, chart], ([data, chart]) => {
+  createSeries("yearn", data, chart);
 });
 
 function createSeries(

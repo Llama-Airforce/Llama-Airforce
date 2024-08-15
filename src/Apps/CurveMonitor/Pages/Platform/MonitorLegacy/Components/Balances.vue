@@ -61,9 +61,9 @@ onMounted((): void => {
 });
 
 // Watches
-watch(balances, (newBalances) => {
+watch(balances, (balances) => {
   addSeries();
-  createSeries(newBalances);
+  createSeries(balances);
 });
 
 watch(theme.value, () => {

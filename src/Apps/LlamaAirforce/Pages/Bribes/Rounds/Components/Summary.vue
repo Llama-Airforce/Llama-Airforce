@@ -114,12 +114,12 @@ const isFinished = computed((): boolean =>
 // Watches
 watch(
   () => epoch,
-  (newEpoch): void => {
+  (epoch): void => {
     clearInterval(countdownTimer);
 
-    if (newEpoch) {
+    if (epoch) {
       countdownTimer = setInterval(() => {
-        countdownString.value = countdown(getDateRaw(newEpoch));
+        countdownString.value = countdown(getDateRaw(epoch));
       });
     }
   }

@@ -119,11 +119,11 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch(dataConvex, (newData) => {
-  createSeries(newData, "convex");
+watch(dataConvex, (data) => {
+  createSeries(data, "convex");
 });
-watch(dataYearn, (newData) => {
-  createSeries(newData, "yearn");
+watch(dataYearn, (data) => {
+  createSeries(data, "yearn");
 });
 
 function createSeries(newData: OHLC[], contract: Contract): void {

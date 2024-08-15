@@ -21,11 +21,11 @@ const modelValue = defineModel<number | null | string>({
   default: null,
 });
 
-watch(modelValue, (newValue) => {
-  if (newValue === "") {
+watch(modelValue, (value) => {
+  if (value === "") {
     modelValue.value = null;
-  } else if (typeof newValue === "number") {
-    modelValue.value = Math.min(Math.max(newValue, min), max);
+  } else if (typeof value === "number") {
+    modelValue.value = Math.min(Math.max(value, min), max);
   }
 });
 </script>

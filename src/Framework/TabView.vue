@@ -48,7 +48,7 @@ const tabActive = ref<number | null>(null);
 
 const slots = useSlots();
 const tabs = computed(() => {
-  const tabs = slots?.default
+  const tabs = slots.default
     ? (slots.default() as unknown as (typeof TabItem)[])
     : [];
 
@@ -58,9 +58,9 @@ const tabs = computed(() => {
 // Watches
 watch(
   () => active,
-  (newActive): void => {
-    tabActive.value = newActive;
-    emit("tab", { tab: tabs.value[newActive], index: tabActive.value });
+  (active): void => {
+    tabActive.value = active;
+    emit("tab", { tab: tabs.value[active], index: tabActive.value });
   },
   { immediate: true }
 );

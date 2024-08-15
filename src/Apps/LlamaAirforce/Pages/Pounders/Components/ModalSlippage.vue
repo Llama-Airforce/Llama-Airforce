@@ -70,8 +70,8 @@ const slippage = ref(0.03);
 const minAmountOut = ref(0);
 
 // Watches
-watch([slippage, () => minAmountOutRef], ([newSlippage]) => {
-  minAmountOut.value = minAmountOutRef * (1 - newSlippage);
+watch([slippage, () => minAmountOutRef], ([slippage]) => {
+  minAmountOut.value = minAmountOutRef * (1 - slippage);
 });
 
 watch(

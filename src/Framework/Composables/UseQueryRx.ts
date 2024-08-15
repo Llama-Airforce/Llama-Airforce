@@ -94,7 +94,8 @@ export function useQueryRx<T, U = T>({
 
         // Unsubscribe from any previous subscription to prevent leaks.
         let record = subscriptions.get(queryKeyString.value);
-        record?.subscription?.unsubscribe();
+        const sub = record?.subscription;
+        sub?.unsubscribe();
 
         record = {
           subscription: observable.value!.subscribe({
@@ -172,8 +173,8 @@ function useCleanup(
   });
 
   // Clean up on query disable to prevent bandwidth consumption, add usage on re-enable.
-  watch(queryEnabled, async (newQueryEnabled) => {
-    if (!newQueryEnabled) {
+  watch(queryEnabled, async (queryEnabled) => {
+    if (!queryEnabled) {
       await cleanup();
     } else if (subRecord) {
       subRecord.users.add(userId);

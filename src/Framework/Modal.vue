@@ -47,8 +47,8 @@ onUnmounted(() => {
 // Watches
 watch(
   () => show,
-  (newShow) => {
-    document.body.style.overflow = newShow ? "hidden" : "";
+  (show) => {
+    document.body.style.overflow = show ? "hidden" : "";
   }
 );
 </script>

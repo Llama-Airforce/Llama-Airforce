@@ -47,8 +47,8 @@ onMounted((): void => {
 });
 
 // Watches
-watch(bonding, (newBonding) => {
-  createSeries(newBonding);
+watch(bonding, (bonding) => {
+  createSeries(bonding);
 });
 
 watch(theme.value, () => {

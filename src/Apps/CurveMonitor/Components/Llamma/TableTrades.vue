@@ -102,8 +102,8 @@ const emit = defineEmits<{
 // Trades
 const { page, onPage } = usePaginationAsync();
 const pageDebounced = refDebounced(page, 200);
-watch(pageDebounced, (newPage) => {
-  emit("page", newPage);
+watch(pageDebounced, (page) => {
+  emit("page", page);
 });
 
 const { relativeTime } = useRelativeTime();

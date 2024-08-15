@@ -127,11 +127,10 @@ whenever(service, (newService) => {
   });
 });
 
-watch(isConnected, (newIsConnected) => {
+watch(isConnected, (isConnected) => {
   output.value =
-    (newIsConnected
-      ? `Connected to ${url.value}<br />`
-      : "Disconnected<br />") + output.value;
+    (isConnected ? `Connected to ${url.value}<br />` : "Disconnected<br />") +
+    output.value;
 });
 </script>
 

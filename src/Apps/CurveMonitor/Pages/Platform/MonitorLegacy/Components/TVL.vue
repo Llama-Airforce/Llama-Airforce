@@ -44,8 +44,8 @@ onMounted((): void => {
 });
 
 // Watches
-watch(tvl, (newTvl) => {
-  createSeries(newTvl);
+watch(tvl, (tvl) => {
+  createSeries(tvl);
 });
 
 watch(theme, () => {

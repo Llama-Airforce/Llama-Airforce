@@ -56,7 +56,7 @@ const store = useUnionStore();
 
 // uCVX claim
 const { claim: claimUCvx } = useClaim(unionService, "ucvx", address, true);
-watch(claimUCvx, (newClaim) => (store.claims.ucvx = newClaim ?? undefined), {
+watch(claimUCvx, (claimUCvx) => (store.claims.ucvx = claimUCvx ?? undefined), {
   immediate: true,
 });
 

@@ -54,8 +54,8 @@ watch(
 
 watch(
   claim,
-  (newClaim) => {
-    store.updateClaim(pounderId, newClaim);
+  (claim) => {
+    store.updateClaim(pounderId, claim);
   },
   {
     immediate: true,

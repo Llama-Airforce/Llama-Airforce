@@ -252,11 +252,12 @@ watch(zapsFactories, updateZaps, { immediate: true });
 
 watch(
   [zapDeposit, address, toRef(() => expanded)],
-  async ([, , newExpanded]) => {
+  async ([, , expanded]) => {
     // Only load when expanded to save RPC resources.
-    if (!newExpanded) {
+    if (!expanded) {
       return;
     }
+
     if (zapDeposit.value !== undefined) {
       await store.updateZapDeposit(pounderId, zapDeposit.value);
     }

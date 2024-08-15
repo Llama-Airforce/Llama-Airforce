@@ -48,7 +48,7 @@ const { isFetching: loading, data: pool } = useQueryPool(chain, poolAddr.value);
 
 watch(
   pool,
-  (newPool) => {
+  (pool) => {
     crumbs.value = [
       {
         id: "pools",
@@ -60,7 +60,7 @@ watch(
       },
       {
         id: "pool",
-        label: `Pool: ${newPool?.name ?? "?"}`,
+        label: `Pool: ${pool?.name ?? "?"}`,
       },
     ];
   },

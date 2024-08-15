@@ -121,9 +121,9 @@ const menuLabel = (item: MenuItem): string => {
 // Watches
 watch(
   () => item,
-  (newItem) => {
-    if (isNode(newItem)) {
-      expanded.value = !newItem.initCollapsed;
+  (item) => {
+    if (isNode(item)) {
+      expanded.value = !item.initCollapsed;
     }
 
     expandIfChildActive();

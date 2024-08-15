@@ -44,8 +44,8 @@ const onIconError = () => {
 
 watch(
   () => address,
-  (newAddress) => {
-    icon.value = getIcon(newAddress.toLowerCase());
+  (address) => {
+    icon.value = getIcon(address.toLowerCase());
   },
   { immediate: true }
 );

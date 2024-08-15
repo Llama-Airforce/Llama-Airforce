@@ -81,15 +81,12 @@ const { chart, chartRef, series } = useLightweightChart({
 });
 
 watch([data, chart], createSeries);
-function createSeries([newData, chart]: [
-  DecimalTimeSeries[]?,
-  IChartApi?
-]): void {
+function createSeries([data, chart]: [DecimalTimeSeries[]?, IChartApi?]): void {
   if (!chart || !series.tvl) {
     return;
   }
 
-  const newSerie: LineData[] = chain(newData)
+  const newSerie: LineData[] = chain(data)
     .filter((x) => x.value > 0)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,

@@ -188,11 +188,7 @@ async function getWeb3Data() {
   });
 }
 
-watch(showVote, async (show) => {
-  if (!show) {
-    return;
-  }
-
+whenever(showVote, async () => {
   await tryNotify(getWeb3Data);
 });
 

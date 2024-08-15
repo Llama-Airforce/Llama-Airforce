@@ -63,7 +63,7 @@ const market = computed(() =>
 
 watch(
   market,
-  (newMarket) => {
+  (market) => {
     crumbs.value = [
       {
         id: "llamalend",
@@ -75,7 +75,7 @@ watch(
       },
       {
         id: "market",
-        label: `Market: ${newMarket?.name ?? "?"}`,
+        label: `Market: ${market?.name ?? "?"}`,
       },
     ];
   },

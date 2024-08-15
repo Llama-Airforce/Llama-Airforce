@@ -97,14 +97,14 @@ const step = computed((): number => {
 });
 
 // Watches
-watch(value, (newValue) => {
+watch(value, (value) => {
   try {
     // Incoming type may not be number, typing is fake news.
-    if (typeof newValue === "string") {
-      newValue = parseFloat(newValue);
+    if (typeof value === "string") {
+      value = parseFloat(value);
     }
 
-    emit("update:modelValue", numToBigNumber(newValue, decimals));
+    emit("update:modelValue", numToBigNumber(value, decimals));
   } catch {
     // nothing
   }

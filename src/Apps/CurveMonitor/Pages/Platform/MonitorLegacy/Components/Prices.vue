@@ -48,12 +48,12 @@ onMounted((): void => {
 });
 
 // Watches
-watch(prices, (newPrices) => {
-  createSeriesPrice(newPrices);
+watch(prices, (prices) => {
+  createSeriesPrice(prices);
 });
 
-watch(volumes, (newVolumes) => {
-  createSeriesVolume(newVolumes);
+watch(volumes, (volumes) => {
+  createSeriesVolume(volumes);
 });
 
 watch(theme.value, () => {

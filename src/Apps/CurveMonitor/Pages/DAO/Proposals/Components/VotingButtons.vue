@@ -366,19 +366,11 @@ function vote() {
 }
 
 // Notifications
-watch(errorVote, (newError) => {
-  if (!newError) {
-    return;
-  }
-
-  notify({ text: prettyError(newError), type: "error" });
+whenever(errorVote, (error) => {
+  notify({ text: prettyError(error), type: "error" });
 });
 
-watch(isConfirmedVote, (newIsConfirmed) => {
-  if (!newIsConfirmed) {
-    return;
-  }
-
+whenever(isConfirmedVote, () => {
   notify({ text: "Voted", type: "success" });
 });
 
@@ -411,19 +403,11 @@ function execute() {
 }
 
 // Notifications
-watch(errorExecute, (newError) => {
-  if (!newError) {
-    return;
-  }
-
-  notify({ text: prettyError(newError), type: "error" });
+whenever(errorExecute, (errorExecute) => {
+  notify({ text: prettyError(errorExecute), type: "error" });
 });
 
-watch(isConfirmedExecute, (newIsConfirmed) => {
-  if (!newIsConfirmed) {
-    return;
-  }
-
+whenever(isConfirmedExecute, () => {
   notify({ text: "Executed proposal", type: "success" });
 });
 </script>

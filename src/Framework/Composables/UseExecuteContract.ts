@@ -63,27 +63,23 @@ export function useExecuteContract<T extends unknown[]>(
     }
   };
 
-  watch(error, (newError) => {
-    if (newError) {
-      notify({ text: prettyError(newError), type: "error" });
-      onError?.(newError);
-    }
+  whenever(error, (error) => {
+    notify({ text: prettyError(error), type: "error" });
+    onError?.(error);
   });
 
-  watch(isConfirmed, (newIsConfirmed) => {
-    if (newIsConfirmed) {
-      if (showSuccess) {
-        notify({
-          text:
-            typeof successMessage === "function"
-              ? successMessage()
-              : successMessage ?? "Transaction has been successfully processed",
-          type: "success",
-        });
-      }
-
-      onSuccess?.();
+  whenever(isConfirmed, () => {
+    if (showSuccess) {
+      notify({
+        text:
+          typeof successMessage === "function"
+            ? successMessage()
+            : successMessage ?? "Transaction has been successfully processed",
+        type: "success",
+      });
     }
+
+    onSuccess?.();
   });
 
   return {

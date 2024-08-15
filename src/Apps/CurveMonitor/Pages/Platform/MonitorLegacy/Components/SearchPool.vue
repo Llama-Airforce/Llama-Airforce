@@ -81,8 +81,8 @@ const onSelect = (pool: Pool): void => {
 // Watches
 watch(
   () => storeMonitor.poolsLoadingError,
-  (newError) => {
-    if (newError) {
+  (error) => {
+    if (error) {
       placeholder.value = t("search-error");
     } else {
       placeholder.value = t("search-placeholder");
