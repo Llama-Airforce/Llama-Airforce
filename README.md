@@ -37,7 +37,7 @@ The front-end makes use of the following technologies, frameworks, and libraries
 - [Viem](https://viem.sh/) and [@wagmi/vue](https://wagmi.sh/vue/getting-started)
 - [ApexCharts](https://apexcharts.com/docs/vue-charts/) and [TradingView Lightweight Charts](https://www.tradingview.com/lightweight-charts/)
 - [RxJS](https://rxjs.dev/)
-- [Nitro](https://nitro.unjs.io/) for back-end API
+- [Hono](https://hono.dev/) for back-end API
 
 ## Bun
 
