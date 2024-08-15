@@ -383,7 +383,7 @@ const onClaimAndWithdraw = async (): Promise<void> => {
   const amount = BigInt(claim.value.amount);
 
   await tryNotify(async () => {
-    if (!claim.value || !address.value || !distributor) {
+    if (!claim.value || !address.value) {
       return;
     }
 
