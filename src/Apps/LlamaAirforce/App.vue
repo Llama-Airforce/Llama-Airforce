@@ -95,6 +95,10 @@ a {
 
 .kpi {
   padding: 0.5rem 0.75rem !important;
+
+  > .value-container {
+    font-size: 1.125rem !important;
+  }
 }
 </style>
 
