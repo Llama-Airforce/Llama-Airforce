@@ -4,6 +4,7 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
+import "@/Util/llamadash";
 import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 
