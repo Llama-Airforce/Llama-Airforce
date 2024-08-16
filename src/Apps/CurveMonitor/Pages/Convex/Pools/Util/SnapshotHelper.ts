@@ -1,4 +1,3 @@
-import { last } from "lodash";
 import { type Snapshot } from "@CM/Pages/Convex/Pools/Models/Snapshot";
 
 export function totalApr(snapshot: Snapshot): number {
@@ -11,6 +10,6 @@ export function totalApr(snapshot: Snapshot): number {
 }
 
 export function startDate(snapshots: Snapshot[]): Date {
-  const start = last(snapshots);
+  const start = snapshots.at(-1);
   return new Date((start ? start.timeStamp : 0) * 1000);
 }

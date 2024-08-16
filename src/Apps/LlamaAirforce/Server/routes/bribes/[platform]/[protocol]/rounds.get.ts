@@ -4,7 +4,6 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import _ from "lodash";
 import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 
@@ -40,13 +39,12 @@ const app = new Hono().get(path, async (c) => {
     const roundsV2 = await queryBribesV2<{ round: number }>(query);
     const roundsV3 = await queryBribesV3<{ round: number }>(query);
 
-    const rounds = _.chain(roundsV1)
+    const rounds = roundsV1
       .concat(roundsV2)
       .concat(roundsV3)
       .map((x) => x.round)
       .uniq()
-      .orderBy((x) => x, "asc")
-      .value();
+      .orderBy((x) => x, "asc");
 
     return { statusCode: 200, rounds };
   });

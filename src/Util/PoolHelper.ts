@@ -1,6 +1,8 @@
-import { invert } from "lodash";
-
 type GaugeId = string;
+
+function invert(x: Record<string, string>) {
+  return Object.fromEntries(Object.entries(x).map(([k, v]) => [v, k]));
+}
 
 const poolNameMapping: Record<string, string> = {
   "Curve.fi Factory USD Metapool: Magic Internet Money 3Pool": "mim",

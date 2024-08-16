@@ -44,6 +44,14 @@ declare global {
     takeRight(n: number): T[];
 
     /**
+     * Creates a slice of array with n elements dropped from the beginning.
+     * @param n The number of elements to drop (default: 1).
+     * @returns A new array with the dropped elements.
+     * @example [1, 2, 3].drop(2) // [3]
+     */
+    drop(n?: number): T[];
+
+    /**
      * Creates a slice of array excluding elements dropped from the beginning until predicate returns falsey.
      * @param predicate The function invoked per iteration.
      * @returns The slice of the array.
@@ -133,6 +141,10 @@ Array.prototype.take = function <T>(this: T[], n: number) {
 
 Array.prototype.takeRight = function <T>(this: T[], n: number) {
   return this.slice(-n);
+};
+
+Array.prototype.drop = function <T>(this: T[], n: number = 1) {
+  return this.slice(Math.max(0, n));
 };
 
 Array.prototype.dropWhile = function <T>(

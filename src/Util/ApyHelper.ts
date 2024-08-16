@@ -2,7 +2,6 @@ import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiCvxCrvUtil } from "@/ABI/Convex/CvxCrvUtilities";
 import { abi as abiCvxFxsUtil } from "@/ABI/Convex/CvxFxsRewards";
 import { abi as abiCvxPrismaUtil } from "@/ABI/Convex/CvxPrismaRewards";
-import { chain, zip } from "lodash";
 import {
   bigNumToNumber,
   numToBigNumber,
@@ -11,6 +10,7 @@ import {
   getCvxPrismaPrice,
   getDefiLlamaPrice,
 } from "@/Util";
+import "@/Util/llamadash";
 import {
   CvxAddress,
   CvxCrvAddress,
@@ -57,30 +57,33 @@ export async function getCvxCrvAprs(
   const mainRates = await (address
     ? util.read.accountRewardRates([address])
     : util.read.mainRewardRates()
-  ).then(([tokens, rates]) => zip(tokens, rates) as [string, bigint][]);
+  ).then(
+    ([tokens, rates]) => [...tokens].zip([...rates]) as [string, bigint][]
+  );
 
   const extraRates = await (address
     ? util.read.accountExtraRewardRates([address])
     : util.read.extraRewardRates()
-  ).then(([tokens, rates]) => zip(tokens, rates) as [string, bigint][]);
+  ).then(
+    ([tokens, rates]) => [...tokens].zip([...rates]) as [string, bigint][]
+  );
 
-  const rates = chain(mainRates)
+  const rates = mainRates
     .concat(extraRates)
     // Only take rate > 0
     .filter((x) => x[1] > 0)
     // Sum the rates of addresses both in main and extra.
     .groupBy((x) => x[0])
-    .map((x, address) => ({
+    .entries()
+    .map(([address, x]) => ({
       address,
       rate: x.reduce((acc, r) => acc + r[1], BigInt(0)),
-    }))
-    .value();
+    }));
 
-  const addresses = chain(rates)
+  const addresses = rates
     .map((x) => x.address)
     .concat([CvxCrvAddress])
-    .uniq()
-    .value();
+    .uniq();
 
   const prices = await llamaService.getPrices(addresses).then((coins) =>
     toRecord(

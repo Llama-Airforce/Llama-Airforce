@@ -1,4 +1,3 @@
-import { chain } from "lodash";
 import { type Chain } from "@CM/Models";
 import CrvUsdService, { type Market, type Keeper } from "@CM/Services/CrvUsd";
 import OHLCService from "@CM/Services/OHLC";
@@ -84,13 +83,13 @@ export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
 
       const prices = (await Promise.all(promises)).flat();
 
-      const result = chain(prices)
+      const result = prices
         .groupBy((x) => x.time)
-        .map((x, time) => ({
+        .entries()
+        .map(([time, x]) => ({
           timestamp: Number(time),
           ...Object.fromEntries(x.map((y) => [y.coin, y.price])),
-        }))
-        .value();
+        }));
 
       return result.length > 0 ? result : [{ timestamp: 0 }];
     },

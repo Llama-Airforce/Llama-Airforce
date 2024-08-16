@@ -1,7 +1,6 @@
-import { mapKeys } from "lodash";
 import { getAddress } from "viem";
 import { type Address } from "@/Framework/Address";
-import { paginate } from "@/Util";
+import { paginate, mapKeys } from "@/Util";
 import { ServiceBaseHost } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
 import { type Result as DelegationsResponse } from "@LAF/Server/routes/delegations.post";

@@ -4,7 +4,7 @@ import {
   ColorType,
   LineStyle,
 } from "lightweight-charts";
-import { mergeWith } from "lodash";
+import { deepMerge } from "@/Util";
 import type { Theme } from "@/Styles/Theme";
 
 const createDefault = (
@@ -61,19 +61,8 @@ export default function createChartStyles(
   chartRef: HTMLElement,
   theme: Theme,
   options?: DeepPartial<ChartOptions>
-): DeepPartial<ChartOptions> {
+) {
   const _default = createDefault(chartRef, theme);
 
-  const mergeFunction = (objValue: unknown, srcValue: unknown) => {
-    if (typeof srcValue === "object") {
-      mergeWith(objValue, srcValue, mergeFunction);
-      return undefined;
-    } else if (objValue) {
-      return objValue;
-    } else {
-      return srcValue;
-    }
-  };
-
-  return mergeWith(options ?? {}, _default, mergeFunction);
+  return options ? deepMerge(_default, options) : _default;
 }

@@ -1,6 +1,6 @@
-import { chain, zip } from "lodash";
 import { type Address } from "@/Framework/Address";
 import { notEmpty } from "@/Util";
+import "@/Util/llamadash";
 import {
   type Delegation,
   type Proposal as SnapshotProposal,
@@ -109,30 +109,20 @@ export function getBribedPersonal(
        * So if I voted with 50 vlCVX, I'd get 0.5 * 50 = 25 FXS. Now the total bribe amount was 600 FXS ($3600),
        * so the price is $3600/600 = $6 per FXS, so my final dollar amount is $6 * 25 = $150.
        */
-      const amountDollarsPerBribed = zip(
-        bribed.amount,
-        bribed.amountDollars,
-        bribed.maxPerVote
-      ).map(([amount_, amountDollars_, maxPerVote_]) => {
-        if (
-          amount_ === undefined ||
-          amountDollars_ === undefined ||
-          maxPerVote_ === undefined
-        ) {
-          return 0;
-        }
+      const amountDollarsPerBribed = bribed.amount
+        .zip(bribed.amountDollars, bribed.maxPerVote)
+        .map(([amount_, amountDollars_, maxPerVote_]) => {
+          const tokenPrice = amountDollars_ / amount_;
+          let amountPerVlAsset = amount_ / bribed.vlAsset;
+          if (maxPerVote_) {
+            amountPerVlAsset = Math.min(maxPerVote_, amountPerVlAsset);
+          }
 
-        const tokenPrice = amountDollars_ / amount_;
-        let amountPerVlAsset = amount_ / bribed.vlAsset;
-        if (maxPerVote_) {
-          amountPerVlAsset = Math.min(maxPerVote_, amountPerVlAsset);
-        }
+          const amount = amountPerVlAsset * allocation.vlAsset;
+          const amountDollars = amount * tokenPrice;
 
-        const amount = amountPerVlAsset * allocation.vlAsset;
-        const amountDollars = amount * tokenPrice;
-
-        return amountDollars;
-      });
+          return amountDollars;
+        });
 
       const amountDollars = amountDollarsPerBribed.reduce(
         (acc, cur) => acc + cur,
@@ -160,12 +150,11 @@ export function prioritizeDelegates(
   delegations: Delegation[], // Global and space specific.
   voters: Address[]
 ): Delegation[] {
-  return chain(delegations)
+  return delegations
     .filter(notEmpty)
     .filter((delegation) => voters.includes(delegation.delegate))
     .orderBy((d) => d.space, "desc")
-    .uniqWith((x, y) => x.delegator === y.delegator)
-    .value();
+    .uniqWith((x, y) => x.delegator === y.delegator);
 }
 
 /** Calculate a user's voting distribution. */

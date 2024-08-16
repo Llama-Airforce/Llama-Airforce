@@ -1,4 +1,3 @@
-import { flattenDeep } from "lodash";
 import { ServiceBase } from "@/Services/ServiceBase";
 import {
   type EpochOverview,
@@ -115,8 +114,8 @@ export default class AuraService extends ServiceBase {
         .filter(([, value]) => !!value)
     );
 
-    const bribes = flattenDeep(
-      round.map((vote) =>
+    const bribes = round
+      .map((vote) =>
         vote.bribes.map((bribe) => ({
           pool: vote.title,
           token: bribe.symbol.toUpperCase(),
@@ -124,7 +123,7 @@ export default class AuraService extends ServiceBase {
           amountDollars: bribe.value,
         }))
       )
-    );
+      .flat();
 
     return Promise.resolve({
       statusCode: 200,

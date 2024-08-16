@@ -1,5 +1,5 @@
 import { type Address, formatUnits } from "viem";
-import { chain } from "lodash";
+import "@/Util/llamadash";
 import { type Price } from "@/Services";
 import type {
   Reward,
@@ -14,9 +14,10 @@ function calculateRewards<T extends SnapshotReward | FuturesReward>(
   prices: Record<Address, Price | undefined>,
   type: "snapshot" | "futures"
 ): Reward[] {
-  return chain(rewards)
+  return rewards
     .groupBy((x) => x.address)
-    .mapValues((group) => ({
+    .entries()
+    .map(([, group]) => ({
       address: group[0].address,
       amount: group.reduce((sum, { rewardAmount }) => sum + rewardAmount, 0n),
       metadata: group.map((x) =>
@@ -50,8 +51,7 @@ function calculateRewards<T extends SnapshotReward | FuturesReward>(
         amountUsd,
         [type === "snapshot" ? "claims" : "epochs"]: metadata,
       };
-    })
-    .value();
+    });
 }
 
 export const calculateSnapshotRewards = (
@@ -73,10 +73,11 @@ export function sumRewards(
   snapshotRewards: Reward[],
   futuresRewards: Reward[]
 ): Reward[] {
-  return chain(snapshotRewards)
+  return snapshotRewards
     .concat(futuresRewards)
     .groupBy((reward) => reward.address)
-    .map((group) => {
+    .entries()
+    .map(([, group]) => {
       const first = group[0];
 
       return {
@@ -86,6 +87,5 @@ export function sumRewards(
         amount: group.reduce((sum, { amount }) => sum + amount, 0),
         amountUsd: group.reduce((sum, { amountUsd }) => sum + amountUsd, 0),
       };
-    })
-    .value();
+    });
 }

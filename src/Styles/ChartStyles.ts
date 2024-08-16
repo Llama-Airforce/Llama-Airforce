@@ -1,8 +1,8 @@
-import { mergeWith } from "lodash";
+import { deepMerge } from "@/Util";
 import { ColorsLAFDark, ColorsLAFDarkArray } from "@/Styles/Themes/LAF/Dark";
 import type { Theme } from "@/Styles/Theme";
 
-const createDefault = (theme: Theme): object => ({
+const createDefault = (theme: Theme): Record<string, unknown> => ({
   chart: {
     id: "chart",
     background: "transparant",
@@ -68,39 +68,20 @@ const createDefault = (theme: Theme): object => ({
   },
 });
 
-export function createChartStylesLAF(options: object): object {
+export function createChartStylesLAF(options?: Record<string, unknown>) {
   const _default = createDefault({
     colors: ColorsLAFDark,
     colorsArray: ColorsLAFDarkArray,
   });
 
-  const mergeFunction = (objValue: unknown, srcValue: unknown) => {
-    if (typeof srcValue === "object") {
-      mergeWith(objValue, srcValue, mergeFunction);
-      return undefined;
-    } else if (objValue) {
-      return objValue;
-    } else {
-      return srcValue;
-    }
-  };
-
-  return mergeWith(options, _default, mergeFunction);
+  return options ? deepMerge(_default, options) : _default;
 }
 
-export function createChartStyles(theme: Theme, options: object): object {
+export function createChartStyles(
+  theme: Theme,
+  options?: Record<string, unknown>
+) {
   const _default = createDefault(theme);
 
-  const mergeFunction = (objValue: unknown, srcValue: unknown) => {
-    if (typeof srcValue === "object") {
-      mergeWith(objValue, srcValue, mergeFunction);
-      return undefined;
-    } else if (objValue) {
-      return objValue;
-    } else {
-      return srcValue;
-    }
-  };
-
-  return mergeWith(options, _default, mergeFunction);
+  return options ? deepMerge(_default, options) : _default;
 }

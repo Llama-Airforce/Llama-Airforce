@@ -513,6 +513,9 @@
     "useQueryClient": true,
     "useQueryRx": true,
     "isExternal": true,
-    "capitalize": true
+    "capitalize": true,
+    "uniqueId": true,
+    "deepMerge": true,
+    "mapKeys": true
   }
 }

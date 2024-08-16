@@ -1,5 +1,3 @@
-import { chain } from "lodash";
-
 /**
  * Vue composable that provides functionality for table pagination where all data is loaded.
  *
@@ -13,11 +11,8 @@ import { chain } from "lodash";
 export function usePagination<Row>(rows: Ref<Row[]>, rowsPerPage: number) {
   const page = ref(1);
 
-  const rowsPage = computed((): Row[] =>
-    chain(rows.value)
-      .drop((page.value - 1) * rowsPerPage)
-      .take(rowsPerPage)
-      .value()
+  const rowsPage = computed(() =>
+    rows.value.drop((page.value - 1) * rowsPerPage).take(rowsPerPage)
   );
 
   const onPage = (pageNew: number) => {
