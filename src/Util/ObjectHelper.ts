@@ -5,7 +5,12 @@ export function deepMerge<T extends Record<string, unknown>>(
   const result: T = { ...target };
 
   for (const key in source) {
-    if (typeof source[key] === "object" && source[key] !== null) {
+    if (Array.isArray(source[key])) {
+      result[key] = [...(source[key] as unknown[])] as T[Extract<
+        keyof T,
+        string
+      >];
+    } else if (typeof source[key] === "object" && source[key] !== null) {
       result[key] = deepMerge(
         result[key] as Record<string, unknown>,
         source[key] as Record<string, unknown>
