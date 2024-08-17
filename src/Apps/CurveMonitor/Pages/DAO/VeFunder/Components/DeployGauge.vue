@@ -84,7 +84,7 @@ async function execute() {
     const hash = await writeContract(config, request);
     await waitForTransactionReceipt(config, { hash });
 
-    emit("gauge", result as Address);
+    emit("gauge", result as unknown as Address);
   });
 }
 </script>
