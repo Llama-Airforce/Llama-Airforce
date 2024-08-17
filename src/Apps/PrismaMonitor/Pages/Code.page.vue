@@ -1,5 +1,5 @@
 <template>
-  <div class="contracts">
+  <div class="code">
     <Card :title="t('repositories')">
       <Table
         class="repositories-table"
@@ -19,6 +19,20 @@
           <div>{{ t(props.item.description) }}</div>
         </template>
       </Table>
+    </Card>
+
+    <Card>
+      <div class="notices">
+        TradingView Lightweight Charts™ Copyright (с) 2023 TradingView, Inc.
+        <span>
+          <a
+            href="https://www.tradingview.com/"
+            target="_blank"
+          >
+            https://www.tradingview.com
+          </a>
+        </span>
+      </div>
     </Card>
   </div>
 </template>
@@ -44,9 +58,9 @@ const repositories: Repository[] = [
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("contracts");
+@include dashboard("code");
 
-.contracts {
+.code {
   max-width: calc(1920px - 18.125rem);
 
   display: flex;
@@ -55,6 +69,12 @@ const repositories: Repository[] = [
 
   .repositories-table {
     --columns-data: 2fr 6fr;
+  }
+
+  .notices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75ch;
   }
 }
 </style>

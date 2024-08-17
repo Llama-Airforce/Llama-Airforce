@@ -38,7 +38,7 @@
     "@wagmi/vue": "0.0.37",
     "apexcharts": "3.52.0",
     "hono": "4.5.5",
-    "lightweight-charts": "4.1.7",
+    "lightweight-charts": "4.2.0",
     "lru-cache": "^11.0.0",
     "pinia": "2.2.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
