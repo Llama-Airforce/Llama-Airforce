@@ -14,11 +14,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import {
-  WrapperService,
-  type Contract,
-  type SnapshotWrapper,
-} from "@PM/Services";
+import { WrapperService, type Contract } from "@PM/Services";
 
 const { t } = useI18n();
 
@@ -71,16 +67,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([data, chart], createSeries);
-function createSeries([newData, chart]: [
-  SnapshotWrapper[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.apr) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.apr) {
     return;
   }
 
-  const newSerie: LineData[] = (newData ?? [])
+  const newSerie: LineData[] = data.value
     // Filter super high APR at the start.
     .filter((x) => x.timestamp >= 1699630610)
     .map((x) => ({
@@ -94,7 +87,7 @@ function createSeries([newData, chart]: [
     series.apr.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 
 const formatter = (y: number): string => {

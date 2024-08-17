@@ -63,13 +63,13 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([() => data, chart], createSeries);
-function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
-  if (!chart || !series.debt || !series.supply) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.debt || !series.supply) {
     return;
   }
 
-  const newSupplySerie: (LineData & { debt: number })[] = (newSupply ?? [])
+  const newSupplySerie: (LineData & { debt: number })[] = data
     .groupBy((x) => x.timestamp)
     .entries()
     .map(([, x]) => ({
@@ -93,7 +93,7 @@ function createSeries([newSupply, chart]: [CrvUsdSupply[]?, IChartApi?]): void {
     series.debt.setData(newDebtSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 
 function formatter(y: number): string {

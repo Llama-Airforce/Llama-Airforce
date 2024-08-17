@@ -57,16 +57,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([toRef(() => ratios), chart], createSeries);
-function createSeries([newRatios, chart]: [
-  CollateralRatio[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.ratios) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.ratios) {
     return;
   }
 
-  const newSerie: LineData[] = (newRatios ?? [])
+  const newSerie: LineData[] = ratios
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.ratio * 100,
@@ -78,7 +75,7 @@ function createSeries([newRatios, chart]: [
     series.ratios.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

@@ -101,20 +101,15 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([toRef(() => ohlc), chart, invert, oracle], createSeries);
-function createSeries([newOHLC, chart, newInvert, newOracle]: [
-  LlammaOHLC[]?,
-  IChartApi?,
-  boolean?,
-  boolean?
-]): void {
-  if (!chart || !series.ohlc || !series.oracle) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.ohlc || !series.oracle) {
     return;
   }
 
   // OHLC
-  const invertMultiplier = newInvert ? -1 : 1;
-  const newOHLCSerie: CandlestickData[] = (newOHLC ?? [])
+  const invertMultiplier = invert.value ? -1 : 1;
+  const newOHLCSerie: CandlestickData[] = ohlc
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -132,7 +127,7 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
   }
 
   // Price Oracle
-  const newOracleSerie: LineData[] = (newOHLC ?? [])
+  const newOracleSerie: LineData[] = ohlc
     .map((x) => ({
       time: x.time as UTCTimestamp,
       value: Math.pow(x.oracle_price, invertMultiplier),
@@ -146,10 +141,10 @@ function createSeries([newOHLC, chart, newInvert, newOracle]: [
 
   // Hide or show the oracle series based on the newOracle value
   series.oracle.applyOptions({
-    visible: newOracle,
+    visible: oracle.value,
   });
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 
 const formatter = (x: number): string => {

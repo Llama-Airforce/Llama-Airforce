@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import { CurvePriceService, type OHLC } from "@/Services";
+import { CurvePriceService } from "@/Services";
 import { stableSymbol } from "@PM/Models/Flavor";
 
 const { t } = useI18n();
@@ -130,13 +130,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch(data, createSeries);
-function createSeries(newData: OHLC[]): void {
+watchEffect(createSeries);
+function createSeries() {
   if (!chart.value || !series.price) {
     return;
   }
 
-  const newSerie: CandlestickData[] = newData
+  const newSerie: CandlestickData[] = data.value
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: c.open,

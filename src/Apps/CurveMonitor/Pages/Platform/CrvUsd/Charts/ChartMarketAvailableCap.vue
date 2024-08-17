@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Snapshot, type Market } from "@CM/Services/CrvUsd";
+import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
@@ -59,13 +59,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([snapshots, chart], createSeries);
-function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !series.available) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.available) {
     return;
   }
 
-  const newAvailSerie: LineData[] = (newSnapshots ?? [])
+  const newAvailSerie: LineData[] = snapshots.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.borrowable,
@@ -78,7 +78,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     series.available.setData(newAvailSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

@@ -65,18 +65,15 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([toRef(() => distributions), chart], createSeriesDistributions);
-function createSeriesDistributions([newDistributions, chart]: [
-  Distribution[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.deltas) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.deltas) {
     return;
   }
 
   const { colors } = theme.value;
 
-  const newDistributionsSeries: HistogramData[] = (newDistributions ?? [])
+  const newDistributionsSeries: HistogramData[] = distributions
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.feesUsd,
@@ -103,7 +100,7 @@ function createSeriesDistributions([newDistributions, chart]: [
 
     const from = newDistributionsSeries[0].time;
     const to = newDistributionsSeries[newDistributionsSeries.length - 1].time;
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 </script>

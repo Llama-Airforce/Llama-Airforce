@@ -16,7 +16,7 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
-import { type Endpoint, type LlammaOHLC } from "@CM/Services/Llamma";
+import { type Endpoint } from "@CM/Services/Llamma";
 import { useQueryOHLC } from "@CM/Services/Llamma/Queries";
 
 const { t } = useI18n();
@@ -64,13 +64,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([ohlc, chart], createSeries);
-function createSeries([newOHLC, chart]: [LlammaOHLC[]?, IChartApi?]): void {
-  if (!chart || !series.volume) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.volume) {
     return;
   }
 
-  const newSerie: LineData[] = (newOHLC ?? [])
+  const newSerie: LineData[] = (ohlc.value ?? [])
     .map((x) => ({
       time: x.time as UTCTimestamp,
       value: x.volume,
@@ -82,7 +82,7 @@ function createSeries([newOHLC, chart]: [LlammaOHLC[]?, IChartApi?]): void {
     series.volume.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

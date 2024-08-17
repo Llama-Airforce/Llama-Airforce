@@ -16,7 +16,7 @@ import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import { type Chain } from "@CM/Models";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type Snapshot } from "@CM/Services/LlamaLend";
+import { type Market } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
@@ -62,16 +62,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([snapshots, chart], createSeriesLoans);
-function createSeriesLoans([newSnapshots, chart]: [
-  Snapshot[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.loans) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.loans) {
     return;
   }
 
-  const newLoansSeries: HistogramData[] = (newSnapshots ?? [])
+  const newLoansSeries: HistogramData[] = snapshots.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.numLoans,
@@ -84,7 +81,8 @@ function createSeriesLoans([newSnapshots, chart]: [
 
     const from = newLoansSeries[0].time;
     const to = newLoansSeries[newLoansSeries.length - 1].time;
-    chart.timeScale().setVisibleRange({ from, to });
+
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 </script>

@@ -106,17 +106,13 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([toRef(() => ratios), toRef(() => pricesOracle), chart], createSeries);
-function createSeries([newSoftLiq, newSnapshots, chart]: [
-  SoftLiqRatio[]?,
-  PriceOracle[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.price || !series.ratio) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.price || !series.ratio) {
     return;
   }
 
-  const newProportionSerie: LineData[] = (newSoftLiq ?? [])
+  const newProportionSerie: LineData[] = ratios
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.proportion,
@@ -127,7 +123,7 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
   const minTime =
     newProportionSerie.length > 0 ? (newProportionSerie[0].time as number) : 0;
 
-  const newPriceSerie: LineData[] = (newSnapshots ?? [])
+  const newPriceSerie: LineData[] = pricesOracle
     .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
@@ -144,7 +140,7 @@ function createSeries([newSoftLiq, newSnapshots, chart]: [
     series.ratio.setData(newProportionSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

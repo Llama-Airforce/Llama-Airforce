@@ -14,11 +14,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import {
-  ManagerService,
-  type TroveManagerDetails,
-  type DecimalTimeSeries,
-} from "@PM/Services";
+import { ManagerService, type TroveManagerDetails } from "@PM/Services";
 
 const { t } = useI18n();
 
@@ -77,16 +73,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([data, chart], createSeries);
-function createSeries([globalCr, chart]: [
-  DecimalTimeSeries[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.troves) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.troves) {
     return;
   }
 
-  const newGlobalCrSerie: LineData[] = (globalCr ?? [])
+  const newGlobalCrSerie: LineData[] = data.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -98,7 +91,7 @@ function createSeries([globalCr, chart]: [
     series.troves.setData(newGlobalCrSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

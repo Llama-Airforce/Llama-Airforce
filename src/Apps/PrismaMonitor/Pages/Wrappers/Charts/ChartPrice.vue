@@ -15,12 +15,7 @@
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { type Contract } from "@PM/Services";
-import {
-  CurvePriceService,
-  CurveVolumeService,
-  type OHLC,
-  type Volume,
-} from "@/Services";
+import { CurvePriceService, CurveVolumeService } from "@/Services";
 import {
   getPriceSettings,
   getVolumeSettings,
@@ -112,16 +107,15 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch(dataPrice, createSeriesPrice);
-watch(dataVolume, createSeriesVolume);
-function createSeriesPrice(newData: OHLC[]): void {
+watchEffect(createSeriesPrice);
+function createSeriesPrice() {
   if (!chart.value || !series.price) {
     return;
   }
 
   const invertMultiplier = 1;
 
-  const newSerie: CandlestickData[] = newData
+  const newSerie: CandlestickData[] = dataPrice.value
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -143,12 +137,13 @@ function createSeriesPrice(newData: OHLC[]): void {
   chart.value.timeScale().fitContent();
 }
 
-function createSeriesVolume(newVolumes: Volume[]): void {
+watchEffect(createSeriesVolume);
+function createSeriesVolume() {
   if (!chart.value || !series.volume) {
     return;
   }
 
-  const newVolumeSeries: HistogramData[] = newVolumes
+  const newVolumeSeries: HistogramData[] = dataVolume.value
     .map((v) => ({
       time: v.timestamp as UTCTimestamp,
       value: v.volume,

@@ -106,17 +106,13 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([toRef(() => discounts), toRef(() => liqs), chart], createSeries);
-function createSeries([newDiscount, newLiqs, chart]: [
-  Discount[]?,
-  LiquidationDetails[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.discount || !series.revenue) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.discount || !series.revenue) {
     return;
   }
 
-  const newRevenueSerie: LineData[] = (newLiqs ?? [])
+  const newRevenueSerie: LineData[] = liqs
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.debt,
@@ -132,7 +128,7 @@ function createSeries([newDiscount, newLiqs, chart]: [
   const minTime =
     newRevenueSerie.length > 0 ? (newRevenueSerie[0].time as number) : 0;
 
-  const newDiscountSerie: LineData[] = (newDiscount ?? [])
+  const newDiscountSerie: LineData[] = discounts
     .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
@@ -149,7 +145,7 @@ function createSeries([newDiscount, newLiqs, chart]: [
     series.discount.setData(newDiscountSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

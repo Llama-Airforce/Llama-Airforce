@@ -56,13 +56,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([toRef(() => tvl), chart], createSeries);
-function createSeries([newOHLC, chart]: [Tvl[]?, IChartApi?]): void {
-  if (!chart || !series.tvl) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.tvl) {
     return;
   }
 
-  const newSerie: LineData[] = (newOHLC ?? [])
+  const newSerie: LineData[] = tvl
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.tvl,
@@ -74,7 +74,7 @@ function createSeries([newOHLC, chart]: [Tvl[]?, IChartApi?]): void {
     series.tvl.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

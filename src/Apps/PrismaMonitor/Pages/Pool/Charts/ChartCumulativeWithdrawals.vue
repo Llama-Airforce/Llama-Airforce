@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import { type DecimalTimeSeries, StabilityPoolService } from "@PM/Services";
+import { StabilityPoolService } from "@PM/Services";
 
 const { t } = useI18n();
 
@@ -64,16 +64,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([data, chart], createSeries);
-function createSeries([newData, chart]: [
-  DecimalTimeSeries[]?,
-  IChartApi?
-]): void {
-  if (!chart || !series.withdrawals) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.withdrawals) {
     return;
   }
 
-  const newSerie: LineData[] = (newData ?? [])
+  const newSerie: LineData[] = data.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -85,7 +82,7 @@ function createSeries([newData, chart]: [
     series.withdrawals.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

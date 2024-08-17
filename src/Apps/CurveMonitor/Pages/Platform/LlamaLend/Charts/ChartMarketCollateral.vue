@@ -29,7 +29,7 @@ import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type Snapshot } from "@CM/Services/LlamaLend";
+import { type Market } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
@@ -112,28 +112,25 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([snapshots, chart, denomDollars], createSeries);
-function createSeries([newSnapshots, chart, newDenomDollars]: [
-  Snapshot[]?,
-  IChartApi?,
-  boolean?
-]): void {
-  if (!chart || !series.collateral || !series.borrowed) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.collateral || !series.borrowed) {
     return;
   }
 
-  const newCollateralSerie: LineData[] = (newSnapshots ?? [])
+  const denom = denomDollars.value;
+  const newCollateralSerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      value: newDenomDollars ? c.collateralBalanceUsd : c.collateralBalance,
+      value: denom ? c.collateralBalanceUsd : c.collateralBalance,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newBorrowedSerie: LineData[] = (newSnapshots ?? [])
+  const newBorrowedSerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
-      value: newDenomDollars ? c.borrowedBalanceUsd : c.borrowedBalance,
+      value: denom ? c.borrowedBalanceUsd : c.borrowedBalance,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
@@ -160,7 +157,7 @@ function createSeries([newSnapshots, chart, newDenomDollars]: [
       (newBorrowedSerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
     ) as UTCTimestamp;
 
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 

@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type Snapshot } from "@CM/Services/CrvUsd";
+import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
@@ -90,16 +90,13 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([snapshots, chart], createSeries);
-watch(avgLength, () => {
-  createSeries([snapshots.value, chart.value]);
-});
-function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !series.rates || !series.ema) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.rates || !series.ema) {
     return;
   }
 
-  const newRatesSerie: LineData[] = (newRates ?? [])
+  const newRatesSerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.rate,
@@ -129,7 +126,7 @@ function createSeries([newRates, chart]: [Snapshot[]?, IChartApi?]): void {
     const from = newRatesSerie[0].time;
     const to = newRatesSerie[newRatesSerie.length - 1].time;
 
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 

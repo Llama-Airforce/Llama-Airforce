@@ -67,19 +67,15 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([toRef(() => ohlc), chart, invert], createSeries);
-function createSeries([newOHLC, chart, newInvert]: [
-  OHLC[]?,
-  IChartApi?,
-  boolean?
-]): void {
-  if (!chart || !series.ohlc) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.ohlc) {
     return;
   }
 
   // OHLC
-  const invertMultiplier = newInvert ? -1 : 1;
-  const newOHLCSerie: CandlestickData[] = (newOHLC ?? [])
+  const invertMultiplier = invert.value ? -1 : 1;
+  const newOHLCSerie: CandlestickData[] = ohlc
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -96,7 +92,7 @@ function createSeries([newOHLC, chart, newInvert]: [
     max = Math.max(...newOHLCSerie.map((c) => c.high));
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 
 // Methods

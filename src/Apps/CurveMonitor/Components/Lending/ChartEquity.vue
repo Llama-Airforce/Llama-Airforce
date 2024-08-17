@@ -65,13 +65,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([toRef(() => equity), chart], createSeries);
-function createSeries([newRatios, chart]: [Equity[]?, IChartApi?]): void {
-  if (!chart || !series.equity) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.equity) {
     return;
   }
 
-  const newEquitySerie: LineData[] = (newRatios ?? [])
+  const newEquitySerie: LineData[] = equity
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.equity,
@@ -83,7 +83,7 @@ function createSeries([newRatios, chart]: [Equity[]?, IChartApi?]): void {
     series.equity.setData(newEquitySerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

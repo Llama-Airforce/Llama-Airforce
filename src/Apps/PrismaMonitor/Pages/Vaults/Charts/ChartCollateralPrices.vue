@@ -166,19 +166,13 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([data, chart], createSeries);
-function createSeries([newData, chart]: [
-  {
-    oracle: DecimalTimeSeries[];
-    market: DecimalTimeSeries[];
-  }?,
-  IChartApi?
-]): void {
-  if (!chart || !series.oracle || !series.market) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.oracle || !series.market) {
     return;
   }
 
-  const newOracleSerie: LineData[] = (newData?.oracle ?? [])
+  const newOracleSerie: LineData[] = data.value.oracle
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -186,7 +180,7 @@ function createSeries([newData, chart]: [
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newMarketSerie: LineData[] = (newData?.market ?? [])
+  const newMarketSerie: LineData[] = data.value.market
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -202,7 +196,7 @@ function createSeries([newData, chart]: [
     series.oracle.setData(newOracleSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

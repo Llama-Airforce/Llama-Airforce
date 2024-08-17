@@ -14,11 +14,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
-import {
-  WrapperService,
-  type Contract,
-  type DecimalTimeSeries,
-} from "@PM/Services";
+import { WrapperService, type Contract } from "@PM/Services";
 
 const { t } = useI18n();
 
@@ -72,13 +68,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([data, chart], createSeries);
-function createSeries([data, chart]: [DecimalTimeSeries[]?, IChartApi?]): void {
-  if (!chart || !series.tvl) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.tvl) {
     return;
   }
 
-  const newSerie: LineData[] = (data ?? [])
+  const newSerie: LineData[] = data.value
     .filter((x) => x.value > 0)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
@@ -91,7 +87,7 @@ function createSeries([data, chart]: [DecimalTimeSeries[]?, IChartApi?]): void {
     series.tvl.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

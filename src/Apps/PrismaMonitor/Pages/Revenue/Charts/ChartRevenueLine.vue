@@ -49,13 +49,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch(() => data, createSeries);
-function createSeries(newRevenue: SnapshotRevenue[]): void {
+watchEffect(createSeries);
+function createSeries() {
   if (!chart.value || !series.revenue) {
     return;
   }
 
-  const newRevenueSerie: LineData[] = newRevenue
+  const newRevenueSerie: LineData[] = data
     .groupBy((x) => x.timestamp)
     .entries()
     .map(([, x]) => ({

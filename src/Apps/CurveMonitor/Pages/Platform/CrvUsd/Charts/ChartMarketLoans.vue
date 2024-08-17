@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type Snapshot } from "@CM/Services/CrvUsd";
+import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
 const { t } = useI18n();
@@ -59,13 +59,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([snapshots, chart], createSeriesLoans);
-function createSeriesLoans([newLoans, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !series.loans) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.loans) {
     return;
   }
 
-  const newLoansSeries: HistogramData[] = (newLoans ?? [])
+  const newLoansSeries: HistogramData[] = snapshots.value
     .map((v) => ({
       time: v.timestamp as UTCTimestamp,
       value: v.nLoans,
@@ -78,7 +78,7 @@ function createSeriesLoans([newLoans, chart]: [Snapshot[]?, IChartApi?]): void {
 
     const from = newLoansSeries[0].time;
     const to = newLoansSeries[newLoansSeries.length - 1].time;
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 </script>

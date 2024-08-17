@@ -53,13 +53,13 @@ const { chart, chartRef, series } = useLightweightChart({
   },
 });
 
-watch([toRef(() => losses), chart], createSeries);
-function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
-  if (!chart || !series.losses) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.losses) {
     return;
   }
 
-  const newSerie: LineData[] = (newLosses ?? [])
+  const newSerie: LineData[] = losses
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value:
@@ -74,7 +74,7 @@ function createSeries([newLosses, chart]: [LiqLosses[]?, IChartApi?]): void {
     series.losses.setData(newSerie);
   }
 
-  chart.timeScale().fitContent();
+  chart.value.timeScale().fitContent();
 }
 </script>
 

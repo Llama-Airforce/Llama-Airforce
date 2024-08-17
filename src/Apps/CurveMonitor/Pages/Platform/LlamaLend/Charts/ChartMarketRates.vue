@@ -22,7 +22,7 @@ import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
-import { type Market, type Snapshot } from "@CM/Services/LlamaLend";
+import { type Market } from "@CM/Services/LlamaLend";
 
 const { t } = useI18n();
 
@@ -101,13 +101,13 @@ const { chart, chartRef, series } = useLightweightChart({
   ],
 });
 
-watch([snapshots, chart], createSeries);
-function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
-  if (!chart || !series.borrowApy || !series.lendApy) {
+watchEffect(createSeries);
+function createSeries() {
+  if (!chart.value || !series.borrowApy || !series.lendApy) {
     return;
   }
 
-  const newBorrowApySerie: LineData[] = (newSnapshots ?? [])
+  const newBorrowApySerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.borrowApy,
@@ -115,7 +115,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newLendApySerie: LineData[] = (newSnapshots ?? [])
+  const newLendApySerie: LineData[] = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.lendApy,
@@ -144,7 +144,7 @@ function createSeries([newSnapshots, chart]: [Snapshot[]?, IChartApi?]): void {
       (newLendApySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
     ) as UTCTimestamp;
 
-    chart.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 
