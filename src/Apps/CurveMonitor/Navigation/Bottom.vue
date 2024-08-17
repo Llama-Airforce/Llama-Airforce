@@ -1,24 +1,11 @@
 <template>
   <div class="bottom">
     <div class="buttons">
-      <Button
-        class="copy"
-        icon="fas fa-link"
-        @click="copyUrl"
-      ></Button>
-
       <a
         href="https://twitter.com/0xAlunara"
         target="_blank"
       >
         <Button icon="fab fa-twitter"></Button>
-      </a>
-
-      <a
-        href="https://github.com/Llama-Airforce/Llama-Airforce"
-        target="_blank"
-      >
-        <Button icon="fab fa-github"></Button>
       </a>
 
       <Button
@@ -27,13 +14,7 @@
       ></Button>
     </div>
 
-    <div class="selectors">
-      <SelectTheme class="themes"></SelectTheme>
-      <SelectLanguage
-        class="langs"
-        :locales="['en']"
-      ></SelectLanguage>
-    </div>
+    <SelectTheme class="themes"></SelectTheme>
 
     <Wallet></Wallet>
   </div>
@@ -44,34 +25,20 @@ import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@CM/Navigation/SelectTheme.vue";
 
 const router = useRouter();
-
-// Methods
-const copyUrl = async () => {
-  await navigator.clipboard.writeText(window.location.href);
-};
 </script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .bottom {
-  display: flex;
-  flex-direction: column;
-
+  display: grid;
   gap: 1rem;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "themes buttons"
+    "wallet wallet";
+
   margin: 1.125rem;
-
-  .buttons {
-    display: flex;
-    gap: 1.25rem;
-
-    a {
-      &:hover,
-      &:active {
-        background: initial;
-      }
-    }
-  }
 
   @mixin button-bg() {
     background: var(--c-lvl2);
@@ -85,16 +52,25 @@ const copyUrl = async () => {
     }
   }
 
-  > :deep(.buttons) {
+  .buttons {
+    grid-area: buttons;
+    display: flex;
+    gap: 1rem;
+
     button {
       @include button-bg();
     }
+
+    a {
+      &:hover,
+      &:active {
+        background: initial;
+      }
+    }
   }
 
-  > :deep(.selectors) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+  :deep(.themes) {
+    grid-area: themes;
 
     .label {
       font-size: 1rem;
@@ -105,27 +81,26 @@ const copyUrl = async () => {
       font-size: 0.5rem;
     }
 
-    .themes {
-      .selected {
-        .theme {
-          .colors {
-            display: none;
-          }
+    .selected {
+      .theme {
+        .colors {
+          display: none;
         }
       }
+    }
 
-      .items {
-        width: 220%;
+    .items {
+      width: 210%;
 
-        @media only screen and (max-width: 1280px) {
-          width: 125%;
-        }
+      @media only screen and (max-width: 1280px) {
+        width: 130%;
       }
     }
   }
 
   > :deep(.wallet) {
-    .clear,
+    grid-area: wallet;
+
     .disconnect {
       @include button-bg();
     }
