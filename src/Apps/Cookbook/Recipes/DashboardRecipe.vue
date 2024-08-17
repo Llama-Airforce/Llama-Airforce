@@ -3,7 +3,7 @@
     <Recipe title="Dashboard.vue">
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="html"
         />
 

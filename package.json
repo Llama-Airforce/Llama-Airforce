@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@cowprotocol/widget-lib": "0.13.2",
-    "@highlightjs/vue-plugin": "^2.1.0",
     "@kyvg/vue3-notification": "^3.2.1",
     "@tanstack/vue-query": "5.51.21",
     "@tanstack/vue-query-devtools": "5.51.21",
@@ -72,6 +71,7 @@
     "eslint-plugin-vue": "9.27.0",
     "globals": "^15.9.0",
     "sass": "1.77.8",
+    "shiki": "^1.13.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.5.4",

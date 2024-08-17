@@ -12,7 +12,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="pagination"
         ></Code>
       </template>

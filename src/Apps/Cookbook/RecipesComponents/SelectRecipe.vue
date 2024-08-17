@@ -25,7 +25,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="select1"
         ></Code>
 

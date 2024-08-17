@@ -11,7 +11,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="breadcrumb1"
         ></Code>
 

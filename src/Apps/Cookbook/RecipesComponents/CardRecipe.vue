@@ -12,7 +12,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="card"
         ></Code>
       </template>
@@ -25,7 +25,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="cardCompact"
         ></Code>
       </template>
@@ -53,7 +53,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="cardCollapsible1"
         ></Code>
 
@@ -82,7 +82,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="cardLoading"
         ></Code>
       </template>

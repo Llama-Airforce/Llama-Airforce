@@ -14,7 +14,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="slider1"
         ></Code>
 

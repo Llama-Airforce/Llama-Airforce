@@ -19,7 +19,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="darkModeExample"
         ></Code>
       </template>

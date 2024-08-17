@@ -10,7 +10,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="inputText"
         ></Code>
       </template>
@@ -57,7 +57,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="inputTextSearch1"
         ></Code>
 

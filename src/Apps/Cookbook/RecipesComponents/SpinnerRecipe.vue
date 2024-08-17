@@ -7,7 +7,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="spinner"
         ></Code>
       </template>

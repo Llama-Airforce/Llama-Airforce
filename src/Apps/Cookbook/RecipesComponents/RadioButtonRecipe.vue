@@ -23,7 +23,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="radioBasic"
         ></Code>
       </template>
@@ -52,7 +52,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="radioCustom"
         ></Code>
       </template>
@@ -83,7 +83,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="radioEvent1"
         />
 

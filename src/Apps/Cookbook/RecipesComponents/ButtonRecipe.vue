@@ -10,7 +10,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnPrimary"
         ></Code>
       </template>
@@ -26,7 +26,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnPrimaryNon"
         ></Code>
       </template>
@@ -42,7 +42,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnDisabled"
         ></Code>
       </template>
@@ -58,7 +58,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnWeb3"
         ></Code>
       </template>
@@ -74,7 +74,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnIcon"
         ></Code>
       </template>
@@ -90,7 +90,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnSlot"
         ></Code>
       </template>
@@ -106,7 +106,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnClick1"
         />
 
@@ -127,7 +127,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnWeb3"
         ></Code>
       </template>
@@ -143,7 +143,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="btnDisabled"
         ></Code>
       </template>

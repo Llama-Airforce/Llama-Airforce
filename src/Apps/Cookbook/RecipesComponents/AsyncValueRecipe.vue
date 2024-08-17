@@ -7,7 +7,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="async"
         ></Code>
       </template>
@@ -23,7 +23,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncDollar"
         ></Code>
       </template>
@@ -39,7 +39,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncPercentage"
         ></Code>
       </template>
@@ -52,7 +52,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncLoading"
         ></Code>
       </template>
@@ -65,7 +65,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncUnknown"
         ></Code>
       </template>
@@ -81,7 +81,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncZero"
         ></Code>
       </template>
@@ -98,7 +98,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncPrecision"
         ></Code>
       </template>
@@ -115,7 +115,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncSymbol"
         ></Code>
       </template>
@@ -132,7 +132,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncUnit"
         ></Code>
       </template>
@@ -151,7 +151,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncInline"
         ></Code>
       </template>
@@ -168,7 +168,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="asyncCustomPrecision"
         ></Code>
       </template>

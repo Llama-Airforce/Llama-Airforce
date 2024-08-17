@@ -7,7 +7,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="checkboxBasic"
         ></Code>
       </template>
@@ -22,7 +22,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="checkboxCustom"
         ></Code>
       </template>
@@ -41,7 +41,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="checkboxIcon"
         ></Code>
       </template>
@@ -59,7 +59,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="checkboxEvent1"
         />
 

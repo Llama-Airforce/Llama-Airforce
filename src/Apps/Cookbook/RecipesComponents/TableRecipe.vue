@@ -68,18 +68,8 @@
 
       <template #snippets>
         <Code
-          lang="xml"
-          :code="table1"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="table2"
-        ></Code>
-
-        <Code
-          lang="scss"
-          :code="table3"
+          lang="vue"
+          :code="table"
         ></Code>
       </template>
     </Recipe>
@@ -120,13 +110,8 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="vue"
           :code="multiselect"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="multiselect2"
         ></Code>
       </template>
     </Recipe>
@@ -187,63 +172,66 @@ const toggleExpand = (round: Round) => {
   }
 };
 
-const table1 = `<Table
-  class="example-table"
-  :rows
-  :columns
-  :sorting
-  :expanded="expandedRows"
-  expand-side="right"
-  icon="fa fa-table"
-  @sort-column="onSort"
-  @selected="onSelected"
->
-  <template #row="props: { item: Round }">
-    <div
-      class="round-number"
-      @click.stop
-    >
-      <a class="vote-link">
-        {{ props.item.round }}
-      </a>
-    </div>
+const table = `<template>
+  <Table
+    class="example-table"
+    :rows
+    :columns
+    :sorting
+    :expanded="expandedRows"
+    expand-side="right"
+    icon="fa fa-table"
+    @sort-column="onSort"
+    @selected="onSelected"
+  >
+    <template #row="props: { item: Round }">
+      <div
+        class="round-number"
+        @click.stop
+      >
+        <a class="vote-link">
+          {{ props.item.round }}
+        </a>
+      </div>
 
-    <div>
-      {{ new Date(Date.now()).toLocaleDateString() }}
-    </div>
+      <div>
+        {{ new Date(Date.now()).toLocaleDateString() }}
+      </div>
 
-    <div class="end">
-      <AsyncValue
-        :value="props.item.value"
-        :precision="5"
-        type="dollar"
-      />
-    </div>
+      <div class="end">
+        <AsyncValue
+          :value="props.item.value"
+          :precision="5"
+          type="dollar"
+        />
+      </div>
 
-    <div class="end">
-      <AsyncValue
-        :value="props.item.value * 10000"
-        :precision="2"
-        type="dollar"
-      />
-    </div>
-  </template>
+      <div class="end">
+        <AsyncValue
+          :value="props.item.value * 10000"
+          :precision="2"
+          type="dollar"
+        />
+      </div>
+    </template>
 
-  <template #row-aggregation>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div class="end">
-      <AsyncValue
-        :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
-        :precision="2"
-        type="dollar"
-      />
-    </div>
-  </template>
-</Table>`;
+    <template #row-aggregation>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div class="end">
+        <AsyncValue
+          :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
+          :precision="2"
+          type="dollar"
+        />
+      </div>
+    </template>
+  </Table>
+</template>
 
-const table2 = `type Round = {
+<script setup lang="ts">
+type Round = {
   round: number;
   value: number;
 };
@@ -282,9 +270,11 @@ const rows = computed(() => {
 
 const onSelected = (round: Round): void => {
   console.log(epoch.round);
-};`;
+};
+<\/script>
 
-const table3 = `.example-table {
+<style lang="scss" scoped>
+.example-table {
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
   .round-number {
@@ -297,7 +287,8 @@ const table3 = `.example-table {
     width: 1.5rem;
     text-align: center;
   }
-}`;
+}
+</style>`;
 
 // Multiselect
 const checked = ref<Round[]>([]);
@@ -310,38 +301,33 @@ const onCheck = (round: Round) => {
   }
 };
 
-const multiselect = `<Table
-  class="multiselect-table"
-  :rows="rows"
-  :columns="['', 'Deadline', '']"
-  @selected="onCheck"
->
-  <template #row="props: { item: Round }">
-    <div
-      class="round-number"
-      @click.stop
-    >
-      <a class="vote-link">
-        {{ props.item.round }}
-      </a>
-    </div>
+const multiselect = `<template>
+  <Table
+    class="multiselect-table"
+    :rows="rows"
+    :columns="['', 'Deadline', '']"
+    @selected="onCheck"
+  >
+    <template #row="props: { item: Round }">
+      <div class="round-number" @click.stop>
+        <a class="vote-link">{{ props.item.round }}</a>
+      </div>
+      <div>{{ new Date(Date.now()).toLocaleDateString() }}</div>
+      <div>
+        <Checkbox
+          :model-value="checked.includes(props.item)"
+          @update:model-value="() => onCheck(props.item)"
+        />
+      </div>
+    </template>
+  </Table>
+  <div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>
+</template>
 
-    <div>
-      {{ new Date(Date.now()).toLocaleDateString() }}
-    </div>
+<script setup lang="ts">
+type Round = { round: number; value: number };
 
-    <div>
-      <Checkbox
-        :model-value="checked.includes(props.item)"
-        @update:model-value="() => onCheck(props.item)"
-      />
-    </div>
-  </template>
-</Table>
-
-<div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>`;
-
-const multiselect2 = `const checked = ref<Round[]>([]);
+const checked = ref<Round[]>([]);
 const onCheck = (round: Round) => {
   const index = checked.value.indexOf(round);
   if (index === -1) {
@@ -349,7 +335,20 @@ const onCheck = (round: Round) => {
   } else {
     checked.value.splice(index, 1);
   }
-};`;
+};
+<\/script>
+
+<style lang="scss" scoped>
+.multiselect-table {
+  --columns-data: 1.5rem 1fr auto;
+
+  .round-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+</style>`;
 </script>
 
 <style lang="scss" scoped>

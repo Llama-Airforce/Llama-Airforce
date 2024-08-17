@@ -13,7 +13,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="defaultTooltip"
         ></Code>
       </template>
@@ -28,7 +28,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="customIconTooltip"
         ></Code>
       </template>
@@ -49,7 +49,7 @@
 
       <template #snippets>
         <Code
-          lang="xml"
+          lang="html"
           :code="eventTooltip"
         ></Code>
 
