@@ -134,12 +134,22 @@ const tvl = computed(() =>
   margin: var(--dashboard-gap) 0;
 
   @include dashboard-grid;
-  grid-template-columns: repeat(4, 1fr);
 
+  grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     "kpi1 kpi2 kpi3 kpi4"
     "price price price price"
     "volume volume tvl tvl";
+
+  @media only screen and (max-width: 1280px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "kpi1 kpi2"
+      "kpi3 kpi4"
+      "price price"
+      "volume volume"
+      "tvl tvl";
+  }
 
   .tokens {
     display: grid;

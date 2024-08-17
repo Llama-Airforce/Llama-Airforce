@@ -169,7 +169,6 @@ const equity = computed(() =>
   @include dashboard-grid;
 
   grid-template-columns: repeat(4, 1fr);
-
   grid-template-areas:
     "usage usage usage usage"
     "kpi1 kpi2 kpi3 kpi4"
@@ -177,6 +176,22 @@ const equity = computed(() =>
     "colratio colratio equity equity"
     "rates rates loans loans"
     "properties properties addresses addresses";
+
+  @media only screen and (max-width: 1280px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "usage usage"
+      "kpi1 kpi2"
+      "kpi3 kpi4"
+      "supply supply"
+      "collateral collateral"
+      "colratio colratio"
+      "equity equity"
+      "rates rates"
+      "loans loans"
+      "properties properties"
+      "addresses addresses";
+  }
 }
 </style>
 

@@ -264,11 +264,21 @@ const rankTypesUsers = computed(() =>
     @include dashboard-grid;
 
     grid-template-columns: repeat(4, 1fr);
-
     grid-template-areas:
       "kpi1 kpi2 kpi3 kpi4"
       "txs txs users users"
       "top-chains top-chains top-types top-types";
+
+    @media only screen and (max-width: 1280px) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "kpi1 kpi2"
+        "kpi3 kpi4"
+        "txs txs"
+        "users users"
+        "top-chains top-chains"
+        "top-types top-types";
+    }
   }
 }
 

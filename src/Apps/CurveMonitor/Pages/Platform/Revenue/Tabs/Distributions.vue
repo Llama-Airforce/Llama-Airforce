@@ -95,11 +95,20 @@ const stdDevWeeklyFees = computed(() => {
 
   grid-template-columns: 0.3fr 0.33fr 0.33fr 0.33fr;
   grid-template-rows: 5rem 400px 400px;
-
   grid-template-areas:
     "table kpi1 kpi2 kpi3"
     "table chart chart chart"
     "table delta delta delta";
+
+  @media only screen and (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 400px 400px 400px;
+    grid-template-areas:
+      "kpi1 kpi2 kpi3"
+      "chart chart chart"
+      "delta delta delta"
+      "table table table";
+  }
 }
 </style>
 

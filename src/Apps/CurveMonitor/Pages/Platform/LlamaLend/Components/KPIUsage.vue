@@ -1,6 +1,7 @@
 <template>
   <div class="usage">
     <KPI
+      style="grid-area: kpi1"
       :label="collateralLabel"
       :has-value="!!market"
     >
@@ -33,6 +34,7 @@
     </KPI>
 
     <KPI
+      style="grid-area: kpi2"
       :label="t('borrowed') + ` (${market?.borrowed_token.symbol ?? '?'})`"
       :has-value="!!market"
     >
@@ -55,6 +57,7 @@
     </KPI>
 
     <KPI
+      style="grid-area: kpi3"
       :label="t('supplied') + ` (${market?.borrowed_token.symbol ?? '?'})`"
       :has-value="!!market"
     >
@@ -77,6 +80,7 @@
     </KPI>
 
     <KPI
+      style="grid-area: kpi4"
       tooltip-type="icon"
       :label="t('util-rate')"
       :has-value="!!market"
@@ -131,11 +135,16 @@ const utilRate = computed(() => {
 @import "@/Styles/Variables.scss";
 
 .usage {
-  display: flex;
+  display: grid;
   gap: var(--dashboard-gap);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "kpi1 kpi2 kpi3 kpi4";
 
   @media only screen and (max-width: 1280px) {
-    flex-direction: column;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "kpi1 kpi2"
+      "kpi3 kpi4";
   }
 
   .two-sides {

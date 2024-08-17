@@ -1,16 +1,16 @@
 <template>
   <div class="revenue-charts">
+    <ChartBreakdown
+      style="grid-area: breakdown"
+      class="breakdown"
+    ></ChartBreakdown>
+
     <ChartChain
       style="grid-area: chain"
       class="chain"
     ></ChartChain>
 
     <ChartTopPools style="grid-area: top-pools"></ChartTopPools>
-
-    <ChartBreakdown
-      style="grid-area: breakdown"
-      class="breakdown"
-    ></ChartBreakdown>
   </div>
 </template>
 
@@ -29,10 +29,14 @@ import ChartTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartTopPools.vue";
   @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 400px 600px;
-
   grid-template-areas:
     "chain top-pools"
     "breakdown breakdown";
+
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
 
   .chain-revenues {
     height: 100%;
