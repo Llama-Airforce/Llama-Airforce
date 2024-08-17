@@ -27,7 +27,6 @@
           ref="cardJson"
           class="card-json col"
           title="Json"
-          :class="{ fullscreen }"
         >
           <template #actions>
             <div class="buttons">

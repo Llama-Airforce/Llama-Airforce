@@ -160,15 +160,5 @@ const {
       overflow-y: auto;
     }
   }
-
-  /** Helpful style in conjuction with ModalFullscreen, esp for charts. */
-  &.fullscreen {
-    width: 100%;
-
-    .card-body {
-      height: 100%;
-      overflow: hidden;
-    }
-  }
 }
 </style>

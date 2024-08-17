@@ -4,7 +4,6 @@
     class="chart-card"
     :title="t('title')"
     :loading
-    :class="{ fullscreen }"
   >
     <template #actions>
       <div class="actions">

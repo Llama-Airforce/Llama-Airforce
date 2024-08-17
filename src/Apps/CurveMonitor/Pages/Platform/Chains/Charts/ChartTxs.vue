@@ -3,7 +3,6 @@
     ref="chartCard"
     class="chart-card"
     :title="t('title')"
-    :class="{ fullscreen }"
   >
     <template #actions>
       <div class="actions">
