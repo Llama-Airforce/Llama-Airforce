@@ -3,7 +3,7 @@ import { rmSync, cpSync, writeFileSync } from "fs";
 import { join } from "path";
 import consola from "consola";
 
-const apps = ["cb", "laf", "cm", "pm", "pm-lrt"] as const;
+const apps = ["laf", "cm", "pm", "pm-lrt"] as const;
 
 type App = (typeof apps)[number];
 
@@ -44,10 +44,6 @@ function deploy(opts: Options) {
 
   // eslint-disable-next-line default-case
   switch (app) {
-    case "cb":
-      dirDist = "src/Apps/Cookbook/dist";
-      dirOutput = "Cookbook-Web";
-      break;
     case "laf":
       dirDist = "src/Apps/LlamaAirforce/dist";
       dirOutput = "Llama-Airforce-Web";
