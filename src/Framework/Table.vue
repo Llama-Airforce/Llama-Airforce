@@ -232,7 +232,6 @@ const sortColumn = (column: Column): void => {
 
   background: var(--c-lvl1);
 
-  overflow-y: auto;
   min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
 
   --columns-data: auto;
