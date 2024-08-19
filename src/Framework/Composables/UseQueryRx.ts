@@ -40,6 +40,9 @@ const subscriptionSubject = new BehaviorSubject<SubscriptionRecord | undefined>(
   undefined
 );
 
+const queryKeySerialize = (queryKey: readonly unknown[]) =>
+  JSON.stringify(queryKey);
+
 /**
  * Combines Vue Query with never ending RxJS Observables for reactive data fetching and updates.
  *
@@ -68,7 +71,6 @@ const subscriptionSubject = new BehaviorSubject<SubscriptionRecord | undefined>(
  *   resetOnSubscribe: true,
  * });
  */
-// eslint-disable-next-line max-lines-per-function
 export function useQueryRx<T, U = T>({
   queryKey,
   queryFn,
@@ -78,8 +80,6 @@ export function useQueryRx<T, U = T>({
   resetOnSubscribe,
 }: UseQueryRxOptions<T, U>) {
   const queryClient = useQueryClient();
-
-  const queryKeyString = computed(() => JSON.stringify(queryKey.value));
   const queryEnabled = computed(() => enabled.value && !!observable.value);
 
   const query = useQuery({
@@ -93,10 +93,13 @@ export function useQueryRx<T, U = T>({
         }
 
         // Unsubscribe from any previous subscription to prevent leaks.
-        let record = subscriptions.get(queryKeyString.value);
+        const queryKeyString = queryKeySerialize(queryKey.value);
+
+        let record = subscriptions.get(queryKeyString);
         const sub = record?.subscription;
         sub?.unsubscribe();
 
+        // Create new subscription here.
         record = {
           subscription: observable.value!.subscribe({
             next: (data: T) => {
@@ -117,7 +120,7 @@ export function useQueryRx<T, U = T>({
           users: new Set<string>(),
         };
 
-        subscriptions.set(queryKeyString.value, record);
+        subscriptions.set(queryKeyString, record);
         subscriptionSubject.next(record);
 
         queryFn();
@@ -140,7 +143,7 @@ export function useQueryRx<T, U = T>({
     }
   });
 
-  useCleanup(queryKey, queryKeyString, queryEnabled);
+  useCleanup(queryKey, queryEnabled);
 
   return query;
 }
@@ -149,13 +152,11 @@ export function useQueryRx<T, U = T>({
  * Handles cleanup of RxJS subscriptions and query cache for a specific query.
  *
  * @param queryKey - Ref containing the query key array
- * @param queryKeyString - Ref containing the stringified query key
  * @param queryEnabled - Ref indicating if the query is enabled
  * @returns A cleanup function to be called when the query is disabled or the component unmounts
  */
 function useCleanup(
   queryKey: Ref<readonly unknown[]>,
-  queryKeyString: Ref<string>,
   queryEnabled: Ref<boolean>
 ) {
   const queryClient = useQueryClient();
@@ -199,7 +200,8 @@ function useCleanup(
        */
       subRecord.subscription.unsubscribe();
 
-      subscriptions.delete(queryKeyString.value);
+      const queryKeyString = queryKeySerialize(queryKey.value);
+      subscriptions.delete(queryKeyString);
       await queryClient.invalidateQueries({ queryKey });
     }
   }
