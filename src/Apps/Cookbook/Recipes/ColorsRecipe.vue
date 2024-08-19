@@ -1,29 +1,31 @@
 <template>
-  <Card title="Colors">
-    <Table
-      class="colors-table"
-      :rows="colors"
-      :columns="['Variable', 'Value', 'Preview']"
-    >
-      <template #row="props: { item: Color }">
-        <div>{{ props.item.variable }}</div>
-        <div>{{ props.item.value }}</div>
-        <div class="preview-container">
-          <div
-            class="preview"
-            :style="{ 'background-color': props.item.value }"
-          ></div>
+  <div class="colors">
+    <Card title="Colors">
+      <Table
+        class="colors-table"
+        :rows="colors"
+        :columns="['Variable', 'Value', 'Preview']"
+      >
+        <template #row="props: { item: Color }">
+          <div>{{ props.item.variable }}</div>
+          <div>{{ props.item.value }}</div>
+          <div class="preview-container">
+            <div
+              class="preview"
+              :style="{ 'background-color': props.item.value }"
+            ></div>
 
-          <span
-            class="preview-text"
-            :style="{ color: props.item.value }"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </span>
-        </div>
-      </template>
-    </Table>
-  </Card>
+            <span
+              class="preview-text"
+              :style="{ color: props.item.value }"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </span>
+          </div>
+        </template>
+      </Table>
+    </Card>
+  </div>
 </template>
 
 <script setup lang="ts">
