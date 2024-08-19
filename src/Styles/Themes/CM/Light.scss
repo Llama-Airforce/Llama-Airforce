@@ -85,6 +85,9 @@
   --table-border-aggregation: calc(var(--border-thickness) + 2px) solid
     var(--c-lvl3);
 
+  --card-margin-block: 0.875rem;
+  --card-margin-inline: 1.125rem;
+
   --container-background: var(--c-lvl0);
   --container-background-hint: var(--c-lvl0-hint);
   --container-background-hover: var(--c-lvl0-hover);

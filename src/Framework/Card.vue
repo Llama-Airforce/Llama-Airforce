@@ -85,9 +85,6 @@ const {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
-  $card-margin-width: 1.125rem;
-  $card-margin-height: 0.875rem;
-
   --header-columns: 1fr auto;
 
   @include loading-backdrop();
@@ -109,10 +106,11 @@ const {
 
     font-size: 0.875rem;
     height: 2.5rem;
-    margin: $card-margin-height $card-margin-width;
+    margin-block: var(--card-margin-block);
+    margin-inline: var(--card-margin-inline);
 
     &.collapsible {
-      margin-bottom: $card-margin-height;
+      margin-bottom: var(--card-margin-block);
     }
 
     > .icon {
@@ -132,7 +130,7 @@ const {
   }
 
   > .card-no-header {
-    margin-top: $card-margin-height;
+    margin-top: var(--card-margin-block);
 
     &.compact {
       margin-top: 0;
@@ -142,10 +140,12 @@ const {
   > .card-body {
     display: flex;
     flex-grow: 1;
-    margin: 0 $card-margin-width $card-margin-height $card-margin-width;
+    margin: 0 var(--card-margin-inline) var(--card-margin-block)
+      var(--card-margin-inline);
 
     @media only screen and (max-width: 1280px) {
-      margin: 0 $card-margin-width $card-margin-height $card-margin-width;
+      margin: 0 var(--card-margin-inline) var(--card-margin-block)
+        var(--card-margin-inline);
     }
 
     &.compact {
@@ -153,7 +153,7 @@ const {
     }
 
     &.collapsed {
-      margin: 0 $card-margin-width;
+      margin: 0 var(--card-margin-inline);
     }
 
     &:has(.table) {
