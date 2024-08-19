@@ -1,11 +1,34 @@
 <script setup lang="ts">
+import { type Address } from "@/Framework/Address";
 import { addressShort, addressLeft } from "@/Wallet";
 import { type CleanedTransfer } from "@CM/Services/Monitor/Transfers";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfers/Queries";
 
 const { t } = useI18n();
 
-const { data: transfersRaw, isFetching: loading } = useQueryTransfers();
+// Options
+const tokens = [
+  {
+    address: "0xdAC17F958D2ee523a2206206994597C13D831ec7" as Address,
+    symbol: "USDT",
+  },
+  {
+    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" as Address,
+    symbol: "USDC",
+  },
+];
+const token = ref(tokens[0]);
+
+const minAmount = ref<number | null | string>(0);
+const minAmountParsed = computed(() => {
+  const value = minAmount.value;
+  return typeof value === "string" ? parseFloat(value) || 0 : value ? value : 0;
+});
+
+// Data
+const { data: transfersRaw, isFetching: loading } = useQueryTransfers(
+  computed(() => token.value.address)
+);
 const { relativeTime } = useRelativeTime();
 
 const search = ref("");
@@ -18,14 +41,9 @@ const transfers = computed(() =>
       const includesTerm = (x: string): boolean =>
         terms.some((term) => x.toLocaleLowerCase().includes(term));
 
-      // Min amount parsing.
-      const parsedAmount = terms.length === 1 ? parseFloat(terms[0]) : NaN;
-      const minAmount = !isNaN(parsedAmount) ? parsedAmount : 0;
-
       return (
-        includesTerm(row.transferFrom) ||
-        includesTerm(row.transferTo) ||
-        (minAmount > 0 && row.parsedAmount >= minAmount)
+        (includesTerm(row.transferFrom) || includesTerm(row.transferTo)) &&
+        row.parsedAmount >= minAmountParsed.value
       );
     })
     .orderBy([(x) => x.blockUnixtime, (x) => x.positionInBlock], "desc")
@@ -67,97 +85,119 @@ const clipboard = async (addr: string) => {
       </div>
     </template>
 
-    <Table
-      class="transfers-table"
-      :rows="rowsPage"
-      :columns="[
-        'Hash',
-        'Block',
-        'Gas',
-        'From',
-        'To',
-        'Amount',
-        'Token',
-        { label: 'Age', align: 'end' },
-      ]"
-    >
-      <template #row="{ item }: { item: CleanedTransfer }">
-        <div class="hash">
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/tx/${item.txHash}`"
-            target="_blank"
-          >
-            {{ addressLeft(item.txHash, 10) }}
-          </a>
-
-          <Button
-            icon="fas fa-link"
-            @click="clipboard(item.txHash)"
-          ></Button>
+    <div class="transfers-card-body">
+      <div class="transfers-options">
+        <div class="option">
+          <div class="label">Token</div>
+          <SelectToken
+            v-model="token"
+            :tokens
+            @select="token = $event"
+          ></SelectToken>
         </div>
 
-        <div>
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/block/${item.blockNumber}`"
-            target="_blank"
-          >
-            {{ item.blockNumber }}
-          </a>
+        <div class="option">
+          <div class="label">Min Amount</div>
+          <InputNumber
+            v-model="minAmount"
+            :min="0"
+            :max="Infinity"
+          ></InputNumber>
         </div>
+      </div>
 
-        <div>
-          {{ item.gasInGwei }}
-        </div>
+      <Table
+        class="transfers-table"
+        :rows="rowsPage"
+        :columns="[
+          'Hash',
+          'Block',
+          'Gas',
+          'From',
+          'To',
+          'Amount',
+          'Token',
+          { label: 'Age', align: 'end' },
+        ]"
+      >
+        <template #row="{ item }: { item: CleanedTransfer }">
+          <div class="hash">
+            <a
+              class="font-mono"
+              :href="`https://etherscan.io/tx/${item.txHash}`"
+              target="_blank"
+            >
+              {{ addressLeft(item.txHash, 10) }}
+            </a>
 
-        <div>
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/address/${item.transferFrom}`"
-            target="_blank"
-          >
-            {{ addressShort(item.transferFrom, 10) }}
-          </a>
-        </div>
+            <Button
+              icon="fas fa-link"
+              @click="clipboard(item.txHash)"
+            ></Button>
+          </div>
 
-        <div>
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/addr ess/${item.transferTo}`"
-            target="_blank"
-          >
-            {{ addressShort(item.transferTo, 10) }}
-          </a>
-        </div>
+          <div>
+            <a
+              class="font-mono"
+              :href="`https://etherscan.io/block/${item.blockNumber}`"
+              target="_blank"
+            >
+              {{ item.blockNumber }}
+            </a>
+          </div>
 
-        <div>{{ round(item.parsedAmount) }}</div>
+          <div>
+            {{ item.gasInGwei }}
+          </div>
 
-        <div class="token">
-          <TokenIcon
-            chain="ethereum"
-            :address="item.coinAddress"
-          ></TokenIcon>
+          <div>
+            <a
+              class="font-mono"
+              :href="`https://etherscan.io/address/${item.transferFrom}`"
+              target="_blank"
+            >
+              {{ addressShort(item.transferFrom, 10) }}
+            </a>
+          </div>
 
-          <a
-            target="_blank"
-            :href="`https://etherscan.io/address/${item.coinAddress}`"
-          >
-            {{ item.coinSymbol }}
-          </a>
-        </div>
+          <div>
+            <a
+              class="font-mono"
+              :href="`https://etherscan.io/addr ess/${item.transferTo}`"
+              target="_blank"
+            >
+              {{ addressShort(item.transferTo, 10) }}
+            </a>
+          </div>
 
-        <div class="end">
-          <a
-            :href="`https://etherscan.io/tx/${item.txHash}`"
-            target="_blank"
-            @click.stop
-          >
-            {{ relativeTime(item.blockUnixtime) }}
-          </a>
-        </div>
-      </template>
-    </Table>
+          <div>{{ round(item.parsedAmount) }}</div>
+
+          <div class="token">
+            <TokenIcon
+              chain="ethereum"
+              :address="item.coinAddress"
+            ></TokenIcon>
+
+            <a
+              target="_blank"
+              :href="`https://etherscan.io/address/${item.coinAddress}`"
+            >
+              {{ item.coinSymbol }}
+            </a>
+          </div>
+
+          <div class="end">
+            <a
+              :href="`https://etherscan.io/tx/${item.txHash}`"
+              target="_blank"
+              @click.stop
+            >
+              {{ relativeTime(item.blockUnixtime) }}
+            </a>
+          </div>
+        </template>
+      </Table>
+    </div>
   </Card>
 </template>
 
@@ -165,7 +205,33 @@ const clipboard = async (addr: string) => {
 @import "@/Styles/Variables.scss";
 
 .transfers-card {
-  --header-columns: 1fr 2fr;
+  --header-columns: 3fr 4fr;
+
+  .transfers-card-body {
+    display: flex;
+    gap: var(--card-margin-inline);
+  }
+}
+
+.transfers-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-gap);
+
+  margin-top: 1.125rem;
+  padding-right: calc(1.5 * var(--card-margin-inline));
+
+  border-right: 1px solid var(--c-lvl2);
+
+  > .option {
+    display: flex;
+    flex-direction: column;
+    gap: 1ch;
+
+    .label {
+      font-weight: bolder;
+    }
+  }
 }
 
 .transfers-table {
