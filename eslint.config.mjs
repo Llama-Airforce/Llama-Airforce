@@ -102,6 +102,7 @@ export default [
       "no-setter-return": "error",
       "no-unneeded-ternary": "error",
       "no-useless-constructor": "off",
+      "no-useless-escape": "off",
       "array-callback-return": "error",
       "default-case": "error",
       eqeqeq: "error",
