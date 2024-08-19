@@ -91,8 +91,6 @@ export function emitAndListen<
   listenEvent: TListen,
   ...args: Parameters<TClientToServerEvents[TEmit]>
 ): Promise<Parameters<TServerToClientEvents[TListen]>[0]> {
-  if (!socket) return Promise.reject(new Error("No socket connection"));
-
   return new Promise((resolve) => {
     socket.once(listenEvent as string, resolve);
     socket.emit(emitEvent, ...args);
