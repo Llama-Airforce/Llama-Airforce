@@ -72,6 +72,10 @@ watch(
 @import "@/Styles/Variables.scss";
 
 :deep(.select) {
+  .chevrons {
+    font-size: 0.5rem;
+  }
+
   .item {
     display: flex;
     align-items: center;
