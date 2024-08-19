@@ -145,7 +145,12 @@ export default [
           },
         },
       ],
-
+      "vue/block-order": [
+        "error",
+        {
+          order: ["script", "template", "style"],
+        },
+      ],
       "vue/singleline-html-element-content-newline": "off",
       "vue/html-self-closing": "off",
       "vue/no-setup-props-destructure": "off",
