@@ -1,13 +1,15 @@
 import { type Socket } from "socket.io-client";
 import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
-import type { USDCBlockSummary } from "@CM/Services/Monitor/Transfers";
+import type { GeneralErc20TokenSpecificBlockSummary } from "@CM/Services/Monitor/Transfers";
 
 export type ClientToServerEvents = {
-  connectToUSDCLivestream: () => void;
+  connectToGeneralErc20Livestream: (tokenAddress: string) => void;
 };
 
 export type ServerToClientEvents = {
-  NewTransfersUSDC: (blockSummary: USDCBlockSummary) => void;
+  NewTransfersForToken: (
+    blockSummary: GeneralErc20TokenSpecificBlockSummary
+  ) => void;
 };
 
 export type SocketMonitorDefi = Socket<

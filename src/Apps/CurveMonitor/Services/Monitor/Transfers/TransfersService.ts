@@ -9,18 +9,19 @@ type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
 >;
 
 type Observables = {
-  transers$?: SocketObservable<"NewTransfersUSDC">;
+  transers$?: SocketObservable<"NewTransfersForToken">;
 };
 
 export default class TransfersService {
-  public readonly transfers$: SocketObservable<"NewTransfersUSDC">;
+  public readonly transfers$: SocketObservable<"NewTransfersForToken">;
 
   constructor(private socket: SocketMonitorDefi, observables?: Observables) {
     this.transfers$ =
-      observables?.transers$ ?? createObservable(socket, "NewTransfersUSDC");
+      observables?.transers$ ??
+      createObservable(socket, "NewTransfersForToken");
   }
 
-  subTransfers() {
-    this.socket.emit("connectToUSDCLivestream");
+  subTransfers(tokenAddress: string) {
+    this.socket.emit("connectToGeneralErc20Livestream", tokenAddress);
   }
 }

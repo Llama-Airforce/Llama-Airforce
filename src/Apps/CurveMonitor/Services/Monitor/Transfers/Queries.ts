@@ -2,7 +2,7 @@ import { useSocketMonitorDefi } from "../SocketMonitorDefi";
 import {
   type CleanedTransfer,
   TransfersService,
-  type USDCBlockSummary,
+  type GeneralErc20TokenSpecificBlockSummary,
 } from "./";
 
 export function useQueryTransfers() {
@@ -16,12 +16,13 @@ export function useQueryTransfers() {
 
   return useQueryRx({
     queryKey,
-    queryFn: () => service.value?.subTransfers(),
+    queryFn: () =>
+      service.value?.subTransfers("0xdAC17F958D2ee523a2206206994597C13D831ec7"),
     enabled: isConnected,
     observable: computed(() => service.value?.transfers$),
     setQueryData: (
       oldData: CleanedTransfer[] | undefined,
-      blockSummary: USDCBlockSummary
+      blockSummary: GeneralErc20TokenSpecificBlockSummary
     ) => [...(oldData ?? []), ...blockSummary.transfers.flat()],
     resetOnSubscribe: true,
   });

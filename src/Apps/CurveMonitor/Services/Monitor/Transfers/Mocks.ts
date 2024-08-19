@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
-import { type USDCBlockSummary } from "./Models";
+import { type GeneralErc20TokenSpecificBlockSummary } from "./Models";
 
-const mockUSDCBlockSummary: USDCBlockSummary = {
+const mockUSDCBlockSummary: GeneralErc20TokenSpecificBlockSummary = {
   blockNumber: 17000000,
   blockUnixtime: 1686000000,
   transfers: [
@@ -25,8 +25,8 @@ const mockUSDCBlockSummary: USDCBlockSummary = {
   ],
 };
 
-export const mockUSDCBlockSummaryObservable = () =>
-  new Observable<USDCBlockSummary>((subscriber) => {
+export const mockBlockSummaryObservable = () =>
+  new Observable<GeneralErc20TokenSpecificBlockSummary>((subscriber) => {
     subscriber.next(mockUSDCBlockSummary);
     subscriber.complete();
   });
