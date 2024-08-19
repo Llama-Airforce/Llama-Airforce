@@ -9,13 +9,16 @@ export default function createBalPounder(
   config: Config,
   flyerService: FlyerService
 ): Pounder<VaultUnion> {
+  const client = getPublicClient(config);
+  if (!client) throw Error("Cannot create public viem client");
+
   const getPriceUnderlying = () => getAuraBalPrice(flyerService);
   const getApy = () => getAuraBalApy(flyerService);
 
   const contract = getContract({
     abi,
     address: UnionBalVaultAddress,
-    client: config.getClient(),
+    client,
   });
 
   return {
