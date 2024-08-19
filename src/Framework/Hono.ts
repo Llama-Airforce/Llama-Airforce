@@ -14,9 +14,9 @@ export { Hono, HTTPException };
  * @returns The output type of the GET endpoint, or an error message if the endpoint doesn't exist
  */
 export type HonoResultOutput<
-  T extends Hono<Env, Schema, "/">,
+  T extends Hono<Env, Schema>,
   Path extends string
-> = T extends Hono<Env, infer P, "/">
+> = T extends Hono<Env, infer P>
   ? Path extends keyof P
     ? P[Path] extends
         | { $get: { output: infer O } }
