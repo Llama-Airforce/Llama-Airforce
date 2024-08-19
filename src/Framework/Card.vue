@@ -17,7 +17,7 @@ const {
   compact = false,
   collapsible = false,
   collapsed = false,
-  loading = null,
+  loading = false,
 } = defineProps<Props>();
 </script>
 
