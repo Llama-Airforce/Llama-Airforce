@@ -1,21 +1,3 @@
-<template>
-  <Teleport to="body">
-    <div
-      v-if="show"
-      class="modal"
-    >
-      <div
-        class="modal-mask"
-        @click="emit('close')"
-      ></div>
-
-      <div class="modal-popup">
-        <slot></slot>
-      </div>
-    </div>
-  </Teleport>
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -52,6 +34,24 @@ watch(
   }
 );
 </script>
+
+<template>
+  <Teleport to="body">
+    <div
+      v-if="show"
+      class="modal"
+    >
+      <div
+        class="modal-mask"
+        @click="emit('close')"
+      ></div>
+
+      <div class="modal-popup">
+        <slot></slot>
+      </div>
+    </div>
+  </Teleport>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

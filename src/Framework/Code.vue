@@ -1,7 +1,3 @@
-<template>
-  <div v-html="html"></div>
-</template>
-
 <script setup lang="ts">
 import { createHighlighterCore, makeSingletonHighlighterCore } from "shiki";
 
@@ -32,6 +28,10 @@ const html = computedAsync(async () => {
   return highlighter.codeToHtml(code, { lang, theme: "dark-plus" });
 });
 </script>
+
+<template>
+  <div v-html="html"></div>
+</template>
 
 <style lang="scss">
 pre {

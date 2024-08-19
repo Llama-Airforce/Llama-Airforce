@@ -1,18 +1,3 @@
-<template>
-  <div
-    v-if="!inline"
-    class="async-value"
-  >
-    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
-    }}{{ showUnit ? unit : "" }}
-  </div>
-
-  <template v-else>
-    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
-    }}{{ showUnit ? unit : "" }}
-  </template>
-</template>
-
 <script setup lang="ts">
 import { unit as unitF } from "@/Util";
 
@@ -97,3 +82,18 @@ watch(
   { immediate: true }
 );
 </script>
+
+<template>
+  <div
+    v-if="!inline"
+    class="async-value"
+  >
+    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
+    }}{{ showUnit ? unit : "" }}
+  </div>
+
+  <template v-else>
+    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
+    }}{{ showUnit ? unit : "" }}
+  </template>
+</template>

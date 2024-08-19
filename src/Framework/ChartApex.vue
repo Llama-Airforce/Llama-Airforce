@@ -1,12 +1,3 @@
-<template>
-  <apexchart
-    class="chart"
-    height="100%"
-    :options="options"
-    :series="series"
-  ></apexchart>
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -16,6 +7,15 @@ interface Props {
 
 const { options, series } = defineProps<Props>();
 </script>
+
+<template>
+  <apexchart
+    class="chart"
+    height="100%"
+    :options="options"
+    :series="series"
+  ></apexchart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,47 +1,3 @@
-<template>
-  <ul v-if="pages > 1">
-    <li
-      :class="{ active: page === 1 }"
-      @click="onPage(1)"
-    >
-      <button>1</button>
-    </li>
-
-    <li
-      v-if="pages > 2"
-      @click="prev"
-    >
-      <button>
-        <i class="fas fa-chevron-left"></i>
-      </button>
-    </li>
-
-    <li
-      v-for="(p, i) in pageButtons"
-      :key="i"
-      :class="{ active: p === page }"
-      @click="onPage(p)"
-    >
-      <button>{{ p }}</button>
-    </li>
-
-    <li
-      v-if="pages > 2"
-      @click="next"
-    >
-      <button><i class="fas fa-chevron-right"></i></button>
-    </li>
-
-    <li
-      v-if="pages > 1"
-      :class="{ active: page === pages }"
-      @click="onPage(pages)"
-    >
-      <button>{{ pages }}</button>
-    </li>
-  </ul>
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -133,6 +89,50 @@ const prev = () => emit("page", clamp(page - 1, 1, pages.value));
 const next = () => emit("page", clamp(page + 1, 1, pages.value));
 const onPage = (p: number) => emit("page", clamp(p, 1, pages.value));
 </script>
+
+<template>
+  <ul v-if="pages > 1">
+    <li
+      :class="{ active: page === 1 }"
+      @click="onPage(1)"
+    >
+      <button>1</button>
+    </li>
+
+    <li
+      v-if="pages > 2"
+      @click="prev"
+    >
+      <button>
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </li>
+
+    <li
+      v-for="(p, i) in pageButtons"
+      :key="i"
+      :class="{ active: p === page }"
+      @click="onPage(p)"
+    >
+      <button>{{ p }}</button>
+    </li>
+
+    <li
+      v-if="pages > 2"
+      @click="next"
+    >
+      <button><i class="fas fa-chevron-right"></i></button>
+    </li>
+
+    <li
+      v-if="pages > 1"
+      :class="{ active: page === pages }"
+      @click="onPage(pages)"
+    >
+      <button>{{ pages }}</button>
+    </li>
+  </ul>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

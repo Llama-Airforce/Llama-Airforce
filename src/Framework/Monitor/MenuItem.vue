@@ -1,71 +1,3 @@
-<template>
-  <li v-if="isNode(item)">
-    <a
-      class="nav-link node"
-      @click="onClickNode"
-    >
-      <div class="nav-link-container">
-        {{ item.label }}
-        <i
-          class="expander fas fa-chevron-up"
-          :class="{ expanded }"
-        ></i>
-      </div>
-    </a>
-  </li>
-
-  <li v-if="isExternal(item)">
-    <a
-      class="nav-link node"
-      :href="item.url"
-      target="_blank"
-    >
-      <div class="nav-link-container">
-        {{ item.label }}
-      </div>
-    </a>
-  </li>
-
-  <Collapsible
-    class="items"
-    :expanded="expanded"
-  >
-    <ul>
-      <li
-        v-for="menuItem in items"
-        :key="menuLabel(menuItem)"
-      >
-        <router-link
-          v-if="isLeaf(menuItem)"
-          :to="menuItem.to"
-          class="nav-link leaf"
-          :class="{ 'router-link-active': subIsActive(menuItem.to, route) }"
-          @click="emit('navigated')"
-        >
-          <div class="nav-link-container">
-            <div class="left">
-              <div
-                v-if="menuItem.icon"
-                class="icon"
-              >
-                <i :class="menuItem.icon"></i>
-              </div>
-              {{ menuLabel(menuItem) }}
-            </div>
-
-            <div class="right">
-              <Badge
-                v-if="menuItem.tag"
-                :label="menuItem.tag"
-              ></Badge>
-            </div>
-          </div>
-        </router-link>
-      </li>
-    </ul>
-  </Collapsible>
-</template>
-
 <script setup lang="ts">
 import {
   isNode,
@@ -143,6 +75,74 @@ const onClickNode = (): void => {
   expanded.value = !expanded.value;
 };
 </script>
+
+<template>
+  <li v-if="isNode(item)">
+    <a
+      class="nav-link node"
+      @click="onClickNode"
+    >
+      <div class="nav-link-container">
+        {{ item.label }}
+        <i
+          class="expander fas fa-chevron-up"
+          :class="{ expanded }"
+        ></i>
+      </div>
+    </a>
+  </li>
+
+  <li v-if="isExternal(item)">
+    <a
+      class="nav-link node"
+      :href="item.url"
+      target="_blank"
+    >
+      <div class="nav-link-container">
+        {{ item.label }}
+      </div>
+    </a>
+  </li>
+
+  <Collapsible
+    class="items"
+    :expanded="expanded"
+  >
+    <ul>
+      <li
+        v-for="menuItem in items"
+        :key="menuLabel(menuItem)"
+      >
+        <router-link
+          v-if="isLeaf(menuItem)"
+          :to="menuItem.to"
+          class="nav-link leaf"
+          :class="{ 'router-link-active': subIsActive(menuItem.to, route) }"
+          @click="emit('navigated')"
+        >
+          <div class="nav-link-container">
+            <div class="left">
+              <div
+                v-if="menuItem.icon"
+                class="icon"
+              >
+                <i :class="menuItem.icon"></i>
+              </div>
+              {{ menuLabel(menuItem) }}
+            </div>
+
+            <div class="right">
+              <Badge
+                v-if="menuItem.tag"
+                :label="menuItem.tag"
+              ></Badge>
+            </div>
+          </div>
+        </router-link>
+      </li>
+    </ul>
+  </Collapsible>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

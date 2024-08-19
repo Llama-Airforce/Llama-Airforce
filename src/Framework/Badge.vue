@@ -1,9 +1,3 @@
-<template>
-  <div class="badge">
-    <div class="label">{{ label }}</div>
-  </div>
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -12,6 +6,12 @@ interface Props {
 
 const { label = "" } = defineProps<Props>();
 </script>
+
+<template>
+  <div class="badge">
+    <div class="label">{{ label }}</div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

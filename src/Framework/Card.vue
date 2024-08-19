@@ -1,3 +1,26 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  title?: string;
+  icon?: string;
+  compact?: boolean;
+
+  collapsible?: boolean;
+  collapsed?: boolean;
+
+  loading?: boolean;
+}
+
+const {
+  title = "",
+  icon = "",
+  compact = false,
+  collapsible = false,
+  collapsed = false,
+  loading = null,
+} = defineProps<Props>();
+</script>
+
 <template>
   <div
     class="card"
@@ -47,29 +70,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  title?: string;
-  icon?: string;
-  compact?: boolean;
-
-  collapsible?: boolean;
-  collapsed?: boolean;
-
-  loading?: boolean;
-}
-
-const {
-  title = "",
-  icon = "",
-  compact = false,
-  collapsible = false,
-  collapsed = false,
-  loading = null,
-} = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

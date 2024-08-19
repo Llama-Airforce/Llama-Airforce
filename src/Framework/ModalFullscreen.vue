@@ -1,12 +1,3 @@
-<template>
-  <Modal>
-    <div
-      ref="modalRef"
-      class="fullscreen-content"
-    ></div>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 /**
  * This component takes an existing HTML element, removes it from its original container,
@@ -90,6 +81,15 @@ function exitFullscreen(
   emit("exit", modal);
 }
 </script>
+
+<template>
+  <Modal>
+    <div
+      ref="modalRef"
+      class="fullscreen-content"
+    ></div>
+  </Modal>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

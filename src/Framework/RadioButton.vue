@@ -1,26 +1,3 @@
-<template>
-  <label class="radio">
-    <input
-      type="radio"
-      :checked="modelValue === value"
-      :value
-      :name
-      @change="onChange"
-    />
-
-    <span
-      class="radio-mark"
-      :class="{ checked: modelValue === value }"
-      role="radio"
-      :aria-checked="modelValue === value"
-    >
-      <span class="inner-circle"></span>
-    </span>
-
-    <span class="radio-label"><slot></slot></span>
-  </label>
-</template>
-
 <script setup lang="ts" generic="T extends readonly unknown[]">
 // Props
 interface Props<T extends readonly unknown[]> {
@@ -49,6 +26,29 @@ const onChange = (evt: Event): void => {
   emit("change", value);
 };
 </script>
+
+<template>
+  <label class="radio">
+    <input
+      type="radio"
+      :checked="modelValue === value"
+      :value
+      :name
+      @change="onChange"
+    />
+
+    <span
+      class="radio-mark"
+      :class="{ checked: modelValue === value }"
+      role="radio"
+      :aria-checked="modelValue === value"
+    >
+      <span class="inner-circle"></span>
+    </span>
+
+    <span class="radio-label"><slot></slot></span>
+  </label>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

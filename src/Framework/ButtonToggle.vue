@@ -1,20 +1,3 @@
-<template>
-  <button
-    :class="{ toggled: modelValue }"
-    @click="onClick"
-  >
-    <slot>
-      <i
-        v-if="icon"
-        class="icon"
-        :class="icon"
-      >
-      </i>
-      {{ value }}
-    </slot>
-  </button>
-</template>
-
 <script setup lang="ts">
 // Model
 const modelValue = defineModel<boolean>({ default: false });
@@ -39,6 +22,23 @@ const onClick = (): void => {
   emit("change", newValue);
 };
 </script>
+
+<template>
+  <button
+    :class="{ toggled: modelValue }"
+    @click="onClick"
+  >
+    <slot>
+      <i
+        v-if="icon"
+        class="icon"
+        :class="icon"
+      >
+      </i>
+      {{ value }}
+    </slot>
+  </button>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,32 +1,3 @@
-<template>
-  <div class="tab-view">
-    <!-- Headers -->
-    <ul class="tab-headers">
-      <li
-        v-for="(tab, i) in tabs"
-        :key="i"
-        class="tab-header"
-        :class="{ active: tabActive === i, disabled: (tab as any).props.disabled }"
-        @click="onTabClick(tab, i)"
-      >
-        {{ (tab as any).props.header }}
-      </li>
-    </ul>
-
-    <!-- Content -->
-    <div class="tabs">
-      <div
-        v-for="(tab, i) in tabs"
-        v-show="tabActive === i"
-        :key="i"
-        class="tab"
-      >
-        <component :is="tab"></component>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useSlots } from "vue";
 import type TabItem from "@/Framework/TabItem.vue";
@@ -76,6 +47,35 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
   emit("tab", { tab: tabs.value[index], index: tabActive.value });
 };
 </script>
+
+<template>
+  <div class="tab-view">
+    <!-- Headers -->
+    <ul class="tab-headers">
+      <li
+        v-for="(tab, i) in tabs"
+        :key="i"
+        class="tab-header"
+        :class="{ active: tabActive === i, disabled: (tab as any).props.disabled }"
+        @click="onTabClick(tab, i)"
+      >
+        {{ (tab as any).props.header }}
+      </li>
+    </ul>
+
+    <!-- Content -->
+    <div class="tabs">
+      <div
+        v-for="(tab, i) in tabs"
+        v-show="tabActive === i"
+        :key="i"
+        class="tab"
+      >
+        <component :is="tab"></component>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

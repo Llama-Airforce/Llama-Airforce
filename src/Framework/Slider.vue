@@ -1,12 +1,3 @@
-<template>
-  <input
-    v-model="modelValue"
-    type="range"
-    :min="min"
-    :max="max"
-  />
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -23,6 +14,15 @@ const modelValue = defineModel<number>({
   },
 });
 </script>
+
+<template>
+  <input
+    v-model="modelValue"
+    type="range"
+    :min="min"
+    :max="max"
+  />
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

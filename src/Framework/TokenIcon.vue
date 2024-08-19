@@ -1,22 +1,3 @@
-<template>
-  <img
-    v-if="!clickable"
-    :src="icon"
-    @error="onIconError"
-  />
-
-  <a
-    v-else
-    target="_blank"
-    :href="link"
-  >
-    <img
-      :src="icon"
-      @error="onIconError"
-    />
-  </a>
-</template>
-
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
@@ -61,6 +42,25 @@ const link = computed(() => {
   }
 });
 </script>
+
+<template>
+  <img
+    v-if="!clickable"
+    :src="icon"
+    @error="onIconError"
+  />
+
+  <a
+    v-else
+    target="_blank"
+    :href="link"
+  >
+    <img
+      :src="icon"
+      @error="onIconError"
+    />
+  </a>
+</template>
 
 <style lang="scss" scoped>
 a {

@@ -1,18 +1,3 @@
-<template>
-  <nav>
-    <ul
-      v-for="menuItem in menuItems"
-      :key="menuLabel(menuItem)"
-    >
-      <MenuItem
-        :item="menuItem"
-        @navigated="emit('navigated')"
-      >
-      </MenuItem>
-    </ul>
-  </nav>
-</template>
-
 <script setup lang="ts">
 import { type Page } from "@/Framework/Monitor/Page";
 import { type MenuItem as MenuItemT } from "@/Framework/Monitor/Menu";
@@ -46,6 +31,21 @@ const menuLabel = (item: MenuItemT): string => {
   return typeof item.label === "string" ? item.label : item.label();
 };
 </script>
+
+<template>
+  <nav>
+    <ul
+      v-for="menuItem in menuItems"
+      :key="menuLabel(menuItem)"
+    >
+      <MenuItem
+        :item="menuItem"
+        @navigated="emit('navigated')"
+      >
+      </MenuItem>
+    </ul>
+  </nav>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,29 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  show?: boolean;
+  title?: string;
+  ready?: boolean;
+  readyMsg?: string;
+}
+
+const {
+  show = false,
+  title = "",
+  ready = true,
+  readyMsg = "",
+} = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  yes: [];
+  no: [];
+}>();
+
+// Methods
+const { t } = useI18n();
+</script>
+
 <template>
   <Modal :show="show">
     <Card
@@ -30,32 +56,6 @@
     </Card>
   </Modal>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  show?: boolean;
-  title?: string;
-  ready?: boolean;
-  readyMsg?: string;
-}
-
-const {
-  show = false,
-  title = "",
-  ready = true,
-  readyMsg = "",
-} = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  yes: [];
-  no: [];
-}>();
-
-// Methods
-const { t } = useI18n();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

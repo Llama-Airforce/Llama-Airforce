@@ -1,41 +1,3 @@
-<template>
-  <div
-    class="row"
-    :class="{ expanded }"
-  >
-    <div
-      class="row-data"
-      :class="{ active: selected, expandable, 'has-data': !!data }"
-      @click="onClick"
-    >
-      <div
-        v-if="data && expandable && expandSide === 'left'"
-        class="expander"
-      >
-        <i class="fas fa-chevron-up"></i>
-      </div>
-
-      <slot name="row"></slot>
-
-      <div
-        v-if="data && expandable && expandSide !== 'left'"
-        class="expander"
-      >
-        <i class="fas fa-chevron-up"></i>
-      </div>
-    </div>
-
-    <Collapsible
-      v-if="data"
-      :expanded="expanded"
-    >
-      <div class="row-details">
-        <slot name="row-details"></slot>
-      </div>
-    </Collapsible>
-  </div>
-</template>
-
 <script setup lang="ts" generic="T">
 /**
  * A single row of data in the table.
@@ -82,6 +44,44 @@ const onClick = (): void => {
   emit("click", data);
 };
 </script>
+
+<template>
+  <div
+    class="row"
+    :class="{ expanded }"
+  >
+    <div
+      class="row-data"
+      :class="{ active: selected, expandable, 'has-data': !!data }"
+      @click="onClick"
+    >
+      <div
+        v-if="data && expandable && expandSide === 'left'"
+        class="expander"
+      >
+        <i class="fas fa-chevron-up"></i>
+      </div>
+
+      <slot name="row"></slot>
+
+      <div
+        v-if="data && expandable && expandSide !== 'left'"
+        class="expander"
+      >
+        <i class="fas fa-chevron-up"></i>
+      </div>
+    </div>
+
+    <Collapsible
+      v-if="data"
+      :expanded="expanded"
+    >
+      <div class="row-details">
+        <slot name="row-details"></slot>
+      </div>
+    </Collapsible>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

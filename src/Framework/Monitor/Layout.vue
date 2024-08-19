@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
+import { type Crumb } from "@/Framework/Crumb";
+
+// Refs
+const storeBreadcrumb = useBreadcrumbStore();
+const router = useRouter();
+
+// Methods
+const onCrumb = async (crumb: Crumb) => {
+  if (crumb.pathName) {
+    await router.push({
+      name: crumb.pathName,
+      ...(crumb.params && { params: crumb.params() }),
+    });
+  }
+};
+</script>
+
 <template>
   <div class="root">
     <notifications
@@ -37,25 +56,6 @@
     </main>
   </div>
 </template>
-
-<script setup lang="ts">
-import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
-import { type Crumb } from "@/Framework/Crumb";
-
-// Refs
-const storeBreadcrumb = useBreadcrumbStore();
-const router = useRouter();
-
-// Methods
-const onCrumb = async (crumb: Crumb) => {
-  if (crumb.pathName) {
-    await router.push({
-      name: crumb.pathName,
-      ...(crumb.params && { params: crumb.params() }),
-    });
-  }
-};
-</script>
 
 <style lang="scss">
 @import "@/Styles/Variables.scss";

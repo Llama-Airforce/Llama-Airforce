@@ -1,7 +1,3 @@
-<template>
-  <slot></slot>
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -12,3 +8,7 @@ interface Props {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { header = "", disabled = false } = defineProps<Props>();
 </script>
+
+<template>
+  <slot></slot>
+</template>

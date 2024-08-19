@@ -1,22 +1,3 @@
-<template>
-  <Select
-    class="select"
-    :class="{ 'direction-up': direction === 'up' }"
-    :options="locales.map((x) => x)"
-    :selected="locale"
-    :open="selectLocaleOpen"
-    @open="onLocaleOpen"
-    @close="selectLocaleOpen = false"
-    @input="onLocaleSelect"
-  >
-    <template #item="props: { item: Locale }">
-      <div class="item">
-        <div class="label">{{ t(props.item) }}</div>
-      </div>
-    </template>
-  </Select>
-</template>
-
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
 import { locales as localesAll, type Locale } from "@/Framework/Locale";
@@ -54,6 +35,25 @@ const onLocaleSelect = (option: Locale): void => {
   loc.value = locale.value;
 };
 </script>
+
+<template>
+  <Select
+    class="select"
+    :class="{ 'direction-up': direction === 'up' }"
+    :options="locales.map((x) => x)"
+    :selected="locale"
+    :open="selectLocaleOpen"
+    @open="onLocaleOpen"
+    @close="selectLocaleOpen = false"
+    @input="onLocaleSelect"
+  >
+    <template #item="props: { item: Locale }">
+      <div class="item">
+        <div class="label">{{ t(props.item) }}</div>
+      </div>
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

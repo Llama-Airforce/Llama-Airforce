@@ -1,43 +1,3 @@
-<template>
-  <div class="input-text">
-    <span
-      v-if="search"
-      class="icon"
-    >
-      <i class="fas fa-search"></i>
-    </span>
-
-    <input
-      :type="search ? 'search' : 'text'"
-      :value="modelValue"
-      :placeholder="placeholder"
-      @input.stop="onInput"
-      @select.stop=""
-    />
-
-    <!-- Auto-complete -->
-    <div
-      v-if="options && autoComplete"
-      class="items"
-      :class="{ selectHide: !autoComplete }"
-    >
-      <div
-        v-for="(option, i) of optionsProcessed"
-        :key="i"
-        @click="emit('select', option)"
-      >
-        <slot
-          name="item"
-          :item="(option as never)"
-          :idx="i"
-        >
-          {{ option }}
-        </slot>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts" generic="T">
 // Model
 const modelValue = defineModel<string>({ required: true });
@@ -87,6 +47,46 @@ const onInput = (evt: Event): void => {
   emit("input", value);
 };
 </script>
+
+<template>
+  <div class="input-text">
+    <span
+      v-if="search"
+      class="icon"
+    >
+      <i class="fas fa-search"></i>
+    </span>
+
+    <input
+      :type="search ? 'search' : 'text'"
+      :value="modelValue"
+      :placeholder="placeholder"
+      @input.stop="onInput"
+      @select.stop=""
+    />
+
+    <!-- Auto-complete -->
+    <div
+      v-if="options && autoComplete"
+      class="items"
+      :class="{ selectHide: !autoComplete }"
+    >
+      <div
+        v-for="(option, i) of optionsProcessed"
+        :key="i"
+        @click="emit('select', option)"
+      >
+        <slot
+          name="item"
+          :item="(option as never)"
+          :idx="i"
+        >
+          {{ option }}
+        </slot>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

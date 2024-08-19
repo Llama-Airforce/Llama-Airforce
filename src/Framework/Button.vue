@@ -1,20 +1,3 @@
-<template>
-  <button
-    :class="{ primary: primary }"
-    @click="onClick"
-  >
-    <slot>
-      <i
-        v-if="icon"
-        class="icon"
-        :class="[icon, { noValue: !!value }]"
-      >
-      </i>
-      {{ value }}
-    </slot>
-  </button>
-</template>
-
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
 import { useWallet } from "@/Wallet";
@@ -54,6 +37,23 @@ const onClick = (evt: Event) => {
   emit("click");
 };
 </script>
+
+<template>
+  <button
+    :class="{ primary: primary }"
+    @click="onClick"
+  >
+    <slot>
+      <i
+        v-if="icon"
+        class="icon"
+        :class="[icon, { noValue: !!value }]"
+      >
+      </i>
+      {{ value }}
+    </slot>
+  </button>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

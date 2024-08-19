@@ -1,3 +1,15 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  title?: string;
+  loading?: boolean;
+  options: unknown;
+  series: unknown;
+}
+
+const { title = "", loading = false, options, series } = defineProps<Props>();
+</script>
+
 <template>
   <Card
     class="cart-chart"
@@ -17,18 +29,6 @@
     <slot></slot>
   </Card>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  title?: string;
-  loading?: boolean;
-  options: unknown;
-  series: unknown;
-}
-
-const { title = "", loading = false, options, series } = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

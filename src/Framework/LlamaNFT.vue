@@ -1,10 +1,3 @@
-<template>
-  <img
-    v-if="uri"
-    :src="uri"
-  />
-</template>
-
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { abi } from "@/ABI/Tokens/TheLlamas";
@@ -47,6 +40,13 @@ watch(tokenUri, async (tokenUri) => {
   }
 });
 </script>
+
+<template>
+  <img
+    v-if="uri"
+    :src="uri"
+  />
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

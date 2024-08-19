@@ -1,3 +1,20 @@
+<script setup lang="ts" generic="T extends string">
+import { type LegendItem } from "@/Framework/Monitor/LegendItem";
+
+// Props
+interface Props<T extends string> {
+  items: LegendItem<T>[];
+  disabled?: T[];
+}
+
+const { items, disabled = [] } = defineProps<Props<T>>();
+
+// Emits
+const emit = defineEmits<{
+  toggle: [item: T];
+}>();
+</script>
+
 <template>
   <div class="legend">
     <div
@@ -23,23 +40,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts" generic="T extends string">
-import { type LegendItem } from "@/Framework/Monitor/LegendItem";
-
-// Props
-interface Props<T extends string> {
-  items: LegendItem<T>[];
-  disabled?: T[];
-}
-
-const { items, disabled = [] } = defineProps<Props<T>>();
-
-// Emits
-const emit = defineEmits<{
-  toggle: [item: T];
-}>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

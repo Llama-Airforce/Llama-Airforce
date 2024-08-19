@@ -1,3 +1,27 @@
+<script setup lang="ts" generic="T">
+// Props
+interface Props<T> {
+  options?: T[];
+  open?: boolean;
+  selected?: T | null;
+  label?: string;
+}
+
+const {
+  options = [],
+  open = false,
+  selected = null,
+  label,
+} = defineProps<Props<T>>();
+
+// Emits
+const emit = defineEmits<{
+  open: [];
+  close: [];
+  input: [option: T];
+}>();
+</script>
+
 <template>
   <div
     class="select-container"
@@ -51,30 +75,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts" generic="T">
-// Props
-interface Props<T> {
-  options?: T[];
-  open?: boolean;
-  selected?: T | null;
-  label?: string;
-}
-
-const {
-  options = [],
-  open = false,
-  selected = null,
-  label,
-} = defineProps<Props<T>>();
-
-// Emits
-const emit = defineEmits<{
-  open: [];
-  close: [];
-  input: [option: T];
-}>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

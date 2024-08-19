@@ -1,12 +1,3 @@
-<template>
-  <input
-    v-model="modelValue"
-    type="number"
-    :min="min"
-    :max="max"
-  />
-</template>
-
 <script setup lang="ts">
 // Props
 interface Props {
@@ -29,6 +20,15 @@ watch(modelValue, (value) => {
   }
 });
 </script>
+
+<template>
+  <input
+    v-model="modelValue"
+    type="number"
+    :min="min"
+    :max="max"
+  />
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

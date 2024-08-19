@@ -1,89 +1,3 @@
-<template>
-  <div class="table">
-    <!-- Table column headers -->
-    <TableRow
-      v-if="columns.length > 0"
-      :class="{ 'selected-below': selectedBelow(-1) }"
-    >
-      <template #row>
-        <div
-          v-for="column in columnsObjects"
-          :key="column.id"
-          class="column-header"
-          :class="{
-            sortable: column.sort,
-            sorting: column.sort && sorting.column === column.id,
-            [column.align || '']: !!column.align,
-          }"
-          @click="sortColumn(column)"
-        >
-          <span>{{ column.label }}</span>
-
-          <i
-            v-if="column.sort"
-            class="sorting-arrow fa fa-caret-right"
-            :class="{
-              asc: isSortAscending(column),
-              desc: isSortDescending(column),
-            }"
-          ></i>
-        </div>
-      </template>
-    </TableRow>
-
-    <!-- Table rows -->
-    <TableRow
-      v-for="(row, i) in rows"
-      :key="(row as never)"
-      :data="row"
-      :class="{ 'selected-below': selectedBelow(i) }"
-      :selected="selectedRow === row"
-      :expanded="expanded.includes(row)"
-      :expand-side="expandSide"
-      @click="onSelect"
-    >
-      <template #row>
-        <slot
-          name="row"
-          :item="(row as never)"
-        ></slot>
-      </template>
-
-      <template #row-details>
-        <slot
-          name="row-details"
-          :item="(row as never)"
-        ></slot>
-      </template>
-    </TableRow>
-
-    <!-- Empty Table rows in case minRows is set -->
-    <TableRow
-      v-for="row in rowsEmpty"
-      :key="row"
-    >
-    </TableRow>
-
-    <!-- No data to show. -->
-    <div
-      v-if="!rowsMin && (!rows || rows.length === 0)"
-      class="no-data"
-    >
-      <slot name="no-data">{{ t("no-data") }}</slot>
-    </div>
-
-    <!-- Aggregation -->
-    <TableRow
-      v-if="!!$slots['row-aggregation'] && rows.length > 0"
-      class="aggregation"
-    >
-      <template #row>
-        <slot name="row-aggregation"></slot>
-      </template>
-    </TableRow>
-  </div>
-</template>
-
 <script setup lang="ts" generic="TData, TSortingColumn extends string">
 import { type SortOrder } from "@/Framework/SortOrder";
 
@@ -218,6 +132,92 @@ const sortColumn = (column: Column): void => {
   emit("sortColumn", column.id as never, newOrder);
 };
 </script>
+
+<template>
+  <div class="table">
+    <!-- Table column headers -->
+    <TableRow
+      v-if="columns.length > 0"
+      :class="{ 'selected-below': selectedBelow(-1) }"
+    >
+      <template #row>
+        <div
+          v-for="column in columnsObjects"
+          :key="column.id"
+          class="column-header"
+          :class="{
+            sortable: column.sort,
+            sorting: column.sort && sorting.column === column.id,
+            [column.align || '']: !!column.align,
+          }"
+          @click="sortColumn(column)"
+        >
+          <span>{{ column.label }}</span>
+
+          <i
+            v-if="column.sort"
+            class="sorting-arrow fa fa-caret-right"
+            :class="{
+              asc: isSortAscending(column),
+              desc: isSortDescending(column),
+            }"
+          ></i>
+        </div>
+      </template>
+    </TableRow>
+
+    <!-- Table rows -->
+    <TableRow
+      v-for="(row, i) in rows"
+      :key="(row as never)"
+      :data="row"
+      :class="{ 'selected-below': selectedBelow(i) }"
+      :selected="selectedRow === row"
+      :expanded="expanded.includes(row)"
+      :expand-side="expandSide"
+      @click="onSelect"
+    >
+      <template #row>
+        <slot
+          name="row"
+          :item="(row as never)"
+        ></slot>
+      </template>
+
+      <template #row-details>
+        <slot
+          name="row-details"
+          :item="(row as never)"
+        ></slot>
+      </template>
+    </TableRow>
+
+    <!-- Empty Table rows in case minRows is set -->
+    <TableRow
+      v-for="row in rowsEmpty"
+      :key="row"
+    >
+    </TableRow>
+
+    <!-- No data to show. -->
+    <div
+      v-if="!rowsMin && (!rows || rows.length === 0)"
+      class="no-data"
+    >
+      <slot name="no-data">{{ t("no-data") }}</slot>
+    </div>
+
+    <!-- Aggregation -->
+    <TableRow
+      v-if="!!$slots['row-aggregation'] && rows.length > 0"
+      class="aggregation"
+    >
+      <template #row>
+        <slot name="row-aggregation"></slot>
+      </template>
+    </TableRow>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

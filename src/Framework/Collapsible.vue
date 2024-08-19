@@ -1,3 +1,12 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  expanded: boolean;
+}
+
+const { expanded = true } = defineProps<Props>();
+</script>
+
 <template>
   <div
     class="collapsible-outside"
@@ -8,15 +17,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  expanded: boolean;
-}
-
-const { expanded = true } = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 .collapsible-outside {

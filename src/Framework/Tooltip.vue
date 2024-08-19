@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import Popper from "vue3-popper";
+
+// Props
+interface Props {
+  icon?: string;
+}
+
+const { icon = "" } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  show: [boolean];
+}>();
+
+// Refs
+const show = ref(false);
+
+watch(show, (show) => {
+  emit("show", show);
+});
+</script>
+
 <template>
   <Popper
     class="tooltip"
@@ -25,29 +48,6 @@
     </template>
   </Popper>
 </template>
-
-<script setup lang="ts">
-import Popper from "vue3-popper";
-
-// Props
-interface Props {
-  icon?: string;
-}
-
-const { icon = "" } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  show: [boolean];
-}>();
-
-// Refs
-const show = ref(false);
-
-watch(show, (show) => {
-  emit("show", show);
-});
-</script>
 
 <style lang="scss" scoped>
 .tooltip {

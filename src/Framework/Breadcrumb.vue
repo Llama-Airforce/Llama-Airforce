@@ -1,30 +1,3 @@
-<template>
-  <Card>
-    <TransitionGroup
-      name="fade"
-      tag="ul"
-    >
-      <li
-        v-for="crumb in crumbs"
-        :key="crumb.id"
-      >
-        <component
-          :is="isActive(crumb) ? 'span' : 'a'"
-          :class="{ active: isActive(crumb), hint: crumb.hint }"
-          @click="emit('crumb', crumb)"
-        >
-          {{ crumb.label }}
-        </component>
-
-        <i
-          v-if="!isLast(crumb) || crumbs.length === 1"
-          class="fas fa-chevron-right"
-        ></i>
-      </li>
-    </TransitionGroup>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Crumb } from "@/Framework/Crumb";
 
@@ -52,6 +25,33 @@ const isActive = (crumb: Crumb): boolean => {
 
 const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 </script>
+
+<template>
+  <Card>
+    <TransitionGroup
+      name="fade"
+      tag="ul"
+    >
+      <li
+        v-for="crumb in crumbs"
+        :key="crumb.id"
+      >
+        <component
+          :is="isActive(crumb) ? 'span' : 'a'"
+          :class="{ active: isActive(crumb), hint: crumb.hint }"
+          @click="emit('crumb', crumb)"
+        >
+          {{ crumb.label }}
+        </component>
+
+        <i
+          v-if="!isLast(crumb) || crumbs.length === 1"
+          class="fas fa-chevron-right"
+        ></i>
+      </li>
+    </TransitionGroup>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

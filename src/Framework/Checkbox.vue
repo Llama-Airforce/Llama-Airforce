@@ -1,3 +1,20 @@
+<script setup lang="ts">
+// Model
+const modelValue = defineModel<boolean>({ required: true });
+
+// Emits
+const emit = defineEmits<{
+  change: [checked: boolean];
+}>();
+
+// Events
+const onChange = (evt: Event): void => {
+  const checked = (evt.target as HTMLInputElement).checked;
+  modelValue.value = checked;
+  emit("change", checked);
+};
+</script>
+
 <template>
   <label class="checkbox">
     <input
@@ -30,23 +47,6 @@
     <span class="checkmark-label"><slot></slot></span>
   </label>
 </template>
-
-<script setup lang="ts">
-// Model
-const modelValue = defineModel<boolean>({ required: true });
-
-// Emits
-const emit = defineEmits<{
-  change: [checked: boolean];
-}>();
-
-// Events
-const onChange = (evt: Event): void => {
-  const checked = (evt.target as HTMLInputElement).checked;
-  modelValue.value = checked;
-  emit("change", checked);
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,24 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  label?: string;
+  labelSecond?: string;
+  tooltip?: string;
+  tooltipType?: "icon" | "underline";
+  value?: string | number;
+  hasValue?: boolean;
+}
+
+const {
+  label = "",
+  labelSecond = "",
+  tooltip = "",
+  tooltipType = "icon",
+  value,
+  hasValue = false,
+} = defineProps<Props>();
+</script>
+
 <template>
   <div
     class="kpi"
@@ -63,27 +84,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  label?: string;
-  labelSecond?: string;
-  tooltip?: string;
-  tooltipType?: "icon" | "underline";
-  value?: string | number;
-  hasValue?: boolean;
-}
-
-const {
-  label = "",
-  labelSecond = "",
-  tooltip = "",
-  tooltipType = "icon",
-  value,
-  hasValue = false,
-} = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
