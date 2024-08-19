@@ -162,31 +162,49 @@ function useCleanup(
   const queryClient = useQueryClient();
   const userId = uniqueId();
 
-  let subRecord: SubscriptionRecord | undefined;
-
   // Subscribe to new subscription records and update the usage set.
-  const newSubRecordSub = subscriptionSubject.subscribe((newSub) => {
-    subRecord = newSub;
-
-    if (subRecord && queryEnabled.value) {
-      subRecord.users.add(userId);
+  const newSubRecordSub = subscriptionSubject.subscribe((sub) => {
+    if (sub && queryEnabled.value) {
+      sub.users.add(userId);
     }
   });
 
   // Clean up on query disable to prevent bandwidth consumption, add usage on re-enable.
   watch(queryEnabled, async (queryEnabled) => {
     if (!queryEnabled) {
-      await cleanup();
-    } else if (subRecord) {
-      subRecord.users.add(userId);
+      await cleanup(queryKey.value);
+    } else {
+      const queryKeyString = queryKeySerialize(queryKey.value);
+      const subRecord = subscriptions.get(queryKeyString);
+
+      if (subRecord) {
+        subRecord.users.add(userId);
+      }
     }
+  });
+
+  /*
+   * If the query key has changed, it means the query will refetch and resubscribe,
+   * therefore it should also be cleaned up.
+   */
+  watch(queryKey, async (_newQueryKey, oldQueryKey) => {
+    await cleanup(oldQueryKey);
+  });
+
+  // Ensure cleanup is performed when the component unmounts to prevent memory leaks.
+  onUnmounted(async () => {
+    await cleanup(queryKey.value);
+    newSubRecordSub.unsubscribe();
   });
 
   /**
    * Decrement the subscription usage count and perform cleanup if necessary.
    * If this was the last consumer, unsubscribe, remove the record, and invalidate the query cache.
+   * @param queryKey - The query key to clean up
    */
-  async function cleanup() {
+  async function cleanup(queryKey: readonly unknown[]) {
+    const queryKeyString = queryKeySerialize(queryKey);
+    const subRecord = subscriptions.get(queryKeyString);
     if (!subRecord) {
       return;
     }
@@ -200,17 +218,10 @@ function useCleanup(
        */
       subRecord.subscription.unsubscribe();
 
-      const queryKeyString = queryKeySerialize(queryKey.value);
       subscriptions.delete(queryKeyString);
       await queryClient.invalidateQueries({ queryKey });
     }
   }
-
-  // Ensure cleanup is performed when the component unmounts to prevent memory leaks.
-  onUnmounted(async () => {
-    await cleanup();
-    newSubRecordSub.unsubscribe();
-  });
 
   return cleanup;
 }
