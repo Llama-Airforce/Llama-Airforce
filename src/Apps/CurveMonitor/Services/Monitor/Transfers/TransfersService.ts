@@ -9,7 +9,7 @@ type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
 >;
 
 type Observables = {
-  transers$?: SocketObservable<"NewTransfersForToken">;
+  transfers$?: SocketObservable<"NewTransfersForToken">;
 };
 
 export default class TransfersService {
@@ -17,7 +17,7 @@ export default class TransfersService {
 
   constructor(private socket: SocketMonitorDefi, observables?: Observables) {
     this.transfers$ =
-      observables?.transers$ ??
+      observables?.transfers$ ??
       createObservable(socket, "NewTransfersForToken");
   }
 
