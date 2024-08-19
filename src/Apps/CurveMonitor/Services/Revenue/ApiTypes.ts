@@ -71,3 +71,22 @@ export type GetCowSwapSettlementsResponse = {
     dt: string;
   }[];
 };
+
+type GetFeesResponse = {
+  coin: {
+    lp_token: boolean;
+    symbol: string;
+    address: string;
+    precision: number;
+  };
+  amount: string;
+  usd_amount: string;
+};
+
+export type GetFeesCollectedResponse = {
+  data: GetFeesResponse[];
+};
+
+export type GetFeesStagedResponse = {
+  data: GetFeesResponse[];
+};

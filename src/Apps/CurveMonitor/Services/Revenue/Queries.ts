@@ -82,3 +82,19 @@ export function useQueryPoolsWeekly() {
     ...initEmptyArray(),
   });
 }
+
+export function useQueryFeesCollected() {
+  return useQuery({
+    queryKey: ["curve-revenue-fees-collected"],
+    queryFn: () => service.getFeesCollected(),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryFeesStaged() {
+  return useQuery({
+    queryKey: ["curve-revenue-fees-staged"],
+    queryFn: () => service.getFeesStaged(),
+    ...initEmptyArray(),
+  });
+}

@@ -93,3 +93,33 @@ export const parseCowSwapSettlement = (
     blockNumber: x.block_number,
   };
 };
+
+export const parseFeesCollected = (
+  x: ApiTypes.GetFeesCollectedResponse["data"][number]
+): Models.FeesCollected => {
+  return {
+    coin: {
+      lpToken: x.coin.lp_token,
+      symbol: x.coin.symbol,
+      address: x.coin.address.toLocaleLowerCase() as Address,
+      decimals: x.coin.precision,
+    },
+    amount: parseFloat(x.amount),
+    amountUsd: parseFloat(x.usd_amount),
+  };
+};
+
+export const parseFeesStaged = (
+  x: ApiTypes.GetFeesStagedResponse["data"][number]
+): Models.FeesStaged => {
+  return {
+    coin: {
+      lpToken: x.coin.lp_token,
+      symbol: x.coin.symbol,
+      address: x.coin.address.toLocaleLowerCase() as Address,
+      decimals: x.coin.precision,
+    },
+    amount: parseFloat(x.amount),
+    amountUsd: parseFloat(x.usd_amount),
+  };
+};

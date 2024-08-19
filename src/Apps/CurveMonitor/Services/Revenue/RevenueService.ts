@@ -86,4 +86,24 @@ export default class RevenueService extends ServiceBaseHost {
 
     return resp.data.map(Parsers.parseCowSwapSettlement);
   }
+
+  public async getFeesCollected() {
+    const host = await this.getHost();
+
+    const resp = await this.fetch<ApiTypes.GetFeesCollectedResponse>(
+      `${host}/revenue/fees-collected`
+    );
+
+    return resp.data.map(Parsers.parseFeesCollected);
+  }
+
+  public async getFeesStaged() {
+    const host = await this.getHost();
+
+    const resp = await this.fetch<ApiTypes.GetFeesStagedResponse>(
+      `${host}/revenue/fees-staged`
+    );
+
+    return resp.data.map(Parsers.parseFeesStaged);
+  }
 }

@@ -3,9 +3,10 @@ import Dashboard from "@CM/Pages/Platform/Revenue/Tabs/Dashboard.vue";
 import Distributions from "@CM/Pages/Platform/Revenue/Tabs/Distributions.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Tabs/Cushions.vue";
 import Settlements from "@CM/Pages/Platform/Revenue/Tabs/Settlements.vue";
+import Harvesting from "@CM/Pages/Platform/Revenue/Tabs/Harvesting.vue";
 
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "distributions", "cushions", "settlements"],
+  ["overview", "distributions", "cushions", "settlements", "harvesting"],
   "revenue"
 );
 </script>
@@ -37,6 +38,12 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
       <TabItem header="Settlements">
         <KeepAlive>
           <Settlements v-if="tabActive === 'settlements'"></Settlements>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Harvesting">
+        <KeepAlive>
+          <Harvesting v-if="tabActive === 'harvesting'"></Harvesting>
         </KeepAlive>
       </TabItem>
     </TabView>
