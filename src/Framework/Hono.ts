@@ -26,12 +26,16 @@ export type HonoResultOutput<
     : `Error: Endpoint "${Path}" does not exist`
   : never;
 
+/** Our global cache. */
 const cacheLRU = new LRUCache<string, object>({
   max: 100,
   ttl: 1000 * 60 * 5, // 5 minutes default
   allowStale: true,
   noDeleteOnStaleGet: true,
 });
+
+/** Map that keeps track of cache keys that are in the middle of being updated. */
+const cacheUpdates = new Map<string, Promise<unknown>>();
 
 type WithCacheOptions = Parameters<typeof cacheLRU.set>["2"];
 
@@ -52,9 +56,25 @@ export async function cache<T extends JSONObject | JSONArray>(
   const cachedData = cacheLRU.get(key) as T | undefined;
 
   if (cachedData) {
+    // Update cache if TTL expired, except if already being updated.
     if (cacheLRU.getRemainingTTL(key) <= 0) {
-      void handler().then((data) => cacheLRU.set(key, data, options));
+      if (!cacheUpdates.has(key)) {
+        const updater = handler()
+          .then((data) => {
+            cacheLRU.set(key, data, options);
+            cacheUpdates.delete(key);
+
+            return data;
+          })
+          .catch(() => {
+            console.error(`Failed to update ${key}, cleared updater cache`);
+            cacheUpdates.delete(key);
+          });
+
+        cacheUpdates.set(key, updater);
+      }
     }
+
     return cachedData;
   }
 
