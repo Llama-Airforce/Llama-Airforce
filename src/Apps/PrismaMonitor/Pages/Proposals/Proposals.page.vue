@@ -1,3 +1,44 @@
+<script setup lang="ts">
+import ProposalsTab from "@PM/Pages/Proposals/Components/ProposalsTab.vue";
+import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
+import ProposalService from "@PM/Pages/Proposals/Services/ProposalService";
+import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
+
+const { t } = useI18n();
+
+const proposalService = new ProposalService();
+
+// Refs
+const tabActive = ref(0);
+
+// Data
+const { isFetching: loading, data: proposals } = useQuery({
+  queryKey: ["prisma-proposals"],
+  queryFn: () =>
+    proposalService
+      .getProposals()
+      .then((ps) => ps.sort((a, b) => b.start - a.start)),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const proposalsActive = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "active");
+});
+
+const proposalsPassed = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "passed");
+});
+
+const proposalsDenied = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "denied");
+});
+
+const proposalsExecuted = computed((): Proposal[] => {
+  return proposals.value.filter((p) => getStatus(p) === "executed");
+});
+</script>
+
 <template>
   <div class="proposals">
     <TabView
@@ -46,47 +87,6 @@
     ></Spinner>
   </div>
 </template>
-
-<script setup lang="ts">
-import ProposalsTab from "@PM/Pages/Proposals/Components/ProposalsTab.vue";
-import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
-import ProposalService from "@PM/Pages/Proposals/Services/ProposalService";
-import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
-
-const { t } = useI18n();
-
-const proposalService = new ProposalService();
-
-// Refs
-const tabActive = ref(0);
-
-// Data
-const { isFetching: loading, data: proposals } = useQuery({
-  queryKey: ["prisma-proposals"],
-  queryFn: () =>
-    proposalService
-      .getProposals()
-      .then((ps) => ps.sort((a, b) => b.start - a.start)),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const proposalsActive = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "active");
-});
-
-const proposalsPassed = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "passed");
-});
-
-const proposalsDenied = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "denied");
-});
-
-const proposalsExecuted = computed((): Proposal[] => {
-  return proposals.value.filter((p) => getStatus(p) === "executed");
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,38 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="dynamicTitle"
-    :loading="loading"
-  >
-    <template #actions>
-      <Tooltip>
-        <div>
-          This chart displays that amount of collateral available below
-          different collateral ratios.
-          <br />
-          It also displays the position of the trove relative to other troves in
-          this vault. <br />
-          <br />
-          This information is useful to estimate a trove's risk of redemption.
-          <br />
-          Even if the trove's collateral ratio is high in the absolute, a lower
-          ratio relative <br />
-          to other troves means a higher risk of redemption.<br />
-          <br />
-          As such, the lower the "risk rank" displayed, the higher the trove's
-          risk of being redeemed.
-        </div>
-      </Tooltip>
-    </template>
-
-    <ChartApex
-      class="chart"
-      :options="options"
-      :series="series"
-    ></ChartApex>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import {
@@ -215,6 +180,41 @@ whenever(
   { immediate: true }
 );
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="dynamicTitle"
+    :loading="loading"
+  >
+    <template #actions>
+      <Tooltip>
+        <div>
+          This chart displays that amount of collateral available below
+          different collateral ratios.
+          <br />
+          It also displays the position of the trove relative to other troves in
+          this vault. <br />
+          <br />
+          This information is useful to estimate a trove's risk of redemption.
+          <br />
+          Even if the trove's collateral ratio is high in the absolute, a lower
+          ratio relative <br />
+          to other troves means a higher risk of redemption.<br />
+          <br />
+          As such, the lower the "risk rank" displayed, the higher the trove's
+          risk of being redeemed.
+        </div>
+      </Tooltip>
+    </template>
+
+    <ChartApex
+      class="chart"
+      :options="options"
+      :series="series"
+    ></ChartApex>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,22 +1,3 @@
-<template>
-  <Select
-    class="select"
-    :options="zaps"
-    :selected="zap"
-    :open="selectZapOpen"
-    @open="onZapOpen"
-    @close="selectZapOpen = false"
-    @input="onZapSelect"
-  >
-    <template #item="props: { item: Zap | undefined }">
-      <div class="item">
-        <img :src="icon(props.item?.logo ?? '')" />
-        <div class="label">{{ props.item?.label ?? "?" }}</div>
-      </div>
-    </template>
-  </Select>
-</template>
-
 <script setup lang="ts">
 import type { Zap } from "@Pounders/Models";
 
@@ -64,6 +45,25 @@ watch(
   { immediate: true }
 );
 </script>
+
+<template>
+  <Select
+    class="select"
+    :options="zaps"
+    :selected="zap"
+    :open="selectZapOpen"
+    @open="onZapOpen"
+    @close="selectZapOpen = false"
+    @input="onZapSelect"
+  >
+    <template #item="props: { item: Zap | undefined }">
+      <div class="item">
+        <img :src="icon(props.item?.logo ?? '')" />
+        <div class="label">{{ props.item?.label ?? "?" }}</div>
+      </div>
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

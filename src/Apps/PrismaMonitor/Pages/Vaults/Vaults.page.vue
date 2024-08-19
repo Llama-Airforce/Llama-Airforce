@@ -1,16 +1,3 @@
-<template>
-  <div class="vaults">
-    <TableVaults
-      style="grid-column: 1 / -1"
-      @selected="onVaultSelect"
-    ></TableVaults>
-    <ChartCollateralRatio></ChartCollateralRatio>
-    <ChartRatioDeciles></ChartRatioDeciles>
-    <ChartGlobalCollateral></ChartGlobalCollateral>
-    <ChartOpenTroves></ChartOpenTroves>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services";
 import ChartOpenTroves from "@PM/Pages/Vaults/Charts/ChartOpenTroves.vue";
@@ -50,6 +37,19 @@ const onVaultSelect = async (vault: TroveManagerDetails) => {
   });
 };
 </script>
+
+<template>
+  <div class="vaults">
+    <TableVaults
+      style="grid-column: 1 / -1"
+      @selected="onVaultSelect"
+    ></TableVaults>
+    <ChartCollateralRatio></ChartCollateralRatio>
+    <ChartRatioDeciles></ChartRatioDeciles>
+    <ChartGlobalCollateral></ChartGlobalCollateral>
+    <ChartOpenTroves></ChartOpenTroves>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,13 +1,3 @@
-<template>
-  <KPI
-    class="type"
-    :label="t('type')"
-    :value="type"
-    :has-value="true"
-  >
-  </KPI>
-</template>
-
 <script setup lang="ts">
 import { type Proposal } from "@CM/Services/Proposal";
 
@@ -33,6 +23,16 @@ const type = computed((): string => {
   }
 });
 </script>
+
+<template>
+  <KPI
+    class="type"
+    :label="t('type')"
+    :value="type"
+    :has-value="true"
+  >
+  </KPI>
+</template>
 
 <i18n lang="yaml" locale="en">
 type: Type

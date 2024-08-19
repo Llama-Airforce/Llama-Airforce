@@ -1,3 +1,31 @@
+<script setup lang="ts">
+import { type Proposal } from "@CM/Services/Proposal";
+
+const MIN_WIDTH = 4;
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+}
+
+const { proposal } = defineProps<Props>();
+
+// Methods
+const total = computed(() => {
+  return proposal.votesFor + proposal.votesAgainst;
+});
+
+const forPercentage = computed((): number => {
+  return (proposal.votesFor / total.value) * 100;
+});
+
+const againstPercentage = computed(() => {
+  return (proposal.votesAgainst / total.value) * 100;
+});
+</script>
+
 <template>
   <div class="results">
     <div class="heading">{{ t("results") }}</div>
@@ -72,34 +100,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Proposal } from "@CM/Services/Proposal";
-
-const MIN_WIDTH = 4;
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
-
-// Methods
-const total = computed(() => {
-  return proposal.votesFor + proposal.votesAgainst;
-});
-
-const forPercentage = computed((): number => {
-  return (proposal.votesFor / total.value) * 100;
-});
-
-const againstPercentage = computed(() => {
-  return (proposal.votesAgainst / total.value) * 100;
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

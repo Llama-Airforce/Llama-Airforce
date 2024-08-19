@@ -1,10 +1,3 @@
-<template>
-  <div
-    ref="chartRef"
-    class="chart"
-  ></div>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -77,3 +70,10 @@ const totalRevenue = (s: SnapshotRevenue) =>
   s.borrowing_fees_revenue_usd +
   s.redemption_fees_revenue_usd;
 </script>
+
+<template>
+  <div
+    ref="chartRef"
+    class="chart"
+  ></div>
+</template>

@@ -1,3 +1,46 @@
+<script setup lang="ts">
+import { useWallet } from "@/Wallet";
+import { DefiLlamaService } from "@/Services";
+import { type FlyerConvex } from "@/Services/FlyerService";
+
+const { t } = useI18n();
+
+const llamaService = new DefiLlamaService();
+
+// Props
+interface Props {
+  model: FlyerConvex | null;
+}
+
+const { model } = defineProps<Props>();
+
+// Refs
+const { address } = useWallet();
+const config = useConfig();
+
+const cvxCrvApr = ref<number | undefined>(undefined);
+
+const cvxApr = computed((): number | undefined => {
+  return model?.cvxApr;
+});
+
+watch(
+  address,
+  async () => {
+    const client = getPublicClient(config);
+    if (!client) throw Error("Cannot create public viem client");
+
+    const aprs = await getCvxCrvAprs(client, llamaService);
+
+    // Take the average APR of gov rewards and stable
+    const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
+
+    cvxCrvApr.value = apr * 100;
+  },
+  { immediate: true }
+);
+</script>
+
 <template>
   <div class="farm">
     <div class="title">{{ t("income") }}</div>
@@ -59,49 +102,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useWallet } from "@/Wallet";
-import { DefiLlamaService } from "@/Services";
-import { type FlyerConvex } from "@/Services/FlyerService";
-
-const { t } = useI18n();
-
-const llamaService = new DefiLlamaService();
-
-// Props
-interface Props {
-  model: FlyerConvex | null;
-}
-
-const { model } = defineProps<Props>();
-
-// Refs
-const { address } = useWallet();
-const config = useConfig();
-
-const cvxCrvApr = ref<number | undefined>(undefined);
-
-const cvxApr = computed((): number | undefined => {
-  return model?.cvxApr;
-});
-
-watch(
-  address,
-  async () => {
-    const client = getPublicClient(config);
-    if (!client) throw Error("Cannot create public viem client");
-
-    const aprs = await getCvxCrvAprs(client, llamaService);
-
-    // Take the average APR of gov rewards and stable
-    const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
-
-    cvxCrvApr.value = apr * 100;
-  },
-  { immediate: true }
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

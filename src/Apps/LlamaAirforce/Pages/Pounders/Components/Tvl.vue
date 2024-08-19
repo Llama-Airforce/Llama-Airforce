@@ -1,17 +1,3 @@
-<template>
-  <div class="tvl">
-    <div class="value">
-      <AsyncValue
-        :value="tvl"
-        :precision="1"
-        :show-zero="true"
-        type="dollar"
-      />
-    </div>
-    <div class="label">{{ t("tvl") }}</div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type PounderState } from "@Pounders/Models";
 
@@ -38,6 +24,20 @@ const tvl = computed(() => {
   return bigNumToNumber(tvl, decimalsWithdraw) * priceUnderlying * priceShare;
 });
 </script>
+
+<template>
+  <div class="tvl">
+    <div class="value">
+      <AsyncValue
+        :value="tvl"
+        :precision="1"
+        :show-zero="true"
+        type="dollar"
+      />
+    </div>
+    <div class="label">{{ t("tvl") }}</div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

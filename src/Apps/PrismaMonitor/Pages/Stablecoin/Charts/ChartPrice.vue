@@ -1,22 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title', { stable: stableSymbol(flavor) })"
-    :loading="loading"
-  >
-    <template #actions>
-      <Tooltip placement="left">
-        <div>{{ tooltip }}</div>
-      </Tooltip>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -154,6 +135,25 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title', { stable: stableSymbol(flavor) })"
+    :loading="loading"
+  >
+    <template #actions>
+      <Tooltip placement="left">
+        <div>{{ tooltip }}</div>
+      </Tooltip>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

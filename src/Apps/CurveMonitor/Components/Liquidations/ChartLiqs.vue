@@ -1,3 +1,32 @@
+<script setup lang="ts">
+import { type LiquidationAggregate } from "@CM/Services/Liquidations";
+import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
+
+type ChartType = "count" | "value";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  liqs: LiquidationAggregate[];
+}
+
+const { liqs = [] } = defineProps<Props>();
+
+// Refs
+const chartType = ref<ChartType>("count");
+
+// Events
+const onChartType = (type: ChartType) => {
+  // Don't do anything if we're not changing the type.
+  if (chartType.value === type) {
+    return;
+  }
+
+  chartType.value = type;
+};
+</script>
+
 <template>
   <Card
     class="chart-container"
@@ -34,35 +63,6 @@
     ></ChartLiqsValue>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type LiquidationAggregate } from "@CM/Services/Liquidations";
-import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
-
-type ChartType = "count" | "value";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  liqs: LiquidationAggregate[];
-}
-
-const { liqs = [] } = defineProps<Props>();
-
-// Refs
-const chartType = ref<ChartType>("count");
-
-// Events
-const onChartType = (type: ChartType) => {
-  // Don't do anything if we're not changing the type.
-  if (chartType.value === type) {
-    return;
-  }
-
-  chartType.value = type;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

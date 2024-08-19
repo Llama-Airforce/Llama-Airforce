@@ -1,49 +1,3 @@
-<template>
-  <Card
-    class="properties"
-    :title="t('properties')"
-  >
-    <Table
-      class="properties-table"
-      :rows="properties"
-    >
-      <template #row="{ item: { description, value } }: { item: Row }">
-        <div>{{ t(description) }}</div>
-
-        <div v-if="isTokenInfo(value)">
-          <div class="token-info">
-            <TokenIcon
-              :chain
-              :address="value.address"
-            ></TokenIcon>
-
-            <div>{{ value.symbol }}</div>
-
-            <div>
-              <a
-                class="font-mono"
-                :href="linkAddress(value.address)"
-                target="_blank"
-              >
-                {{ value.address }}
-              </a>
-            </div>
-
-            <div>
-              <Button
-                icon="fas fa-link"
-                @click="clipboard(value.address)"
-              ></Button>
-            </div>
-          </div>
-        </div>
-
-        <div v-else>{{ value }}</div>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/LlamaLend";
@@ -119,6 +73,52 @@ const clipboard = async (addr: string) => {
   await navigator.clipboard.writeText(addr);
 };
 </script>
+
+<template>
+  <Card
+    class="properties"
+    :title="t('properties')"
+  >
+    <Table
+      class="properties-table"
+      :rows="properties"
+    >
+      <template #row="{ item: { description, value } }: { item: Row }">
+        <div>{{ t(description) }}</div>
+
+        <div v-if="isTokenInfo(value)">
+          <div class="token-info">
+            <TokenIcon
+              :chain
+              :address="value.address"
+            ></TokenIcon>
+
+            <div>{{ value.symbol }}</div>
+
+            <div>
+              <a
+                class="font-mono"
+                :href="linkAddress(value.address)"
+                target="_blank"
+              >
+                {{ value.address }}
+              </a>
+            </div>
+
+            <div>
+              <Button
+                icon="fas fa-link"
+                @click="clipboard(value.address)"
+              ></Button>
+            </div>
+          </div>
+        </div>
+
+        <div v-else>{{ value }}</div>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,20 +1,3 @@
-<template>
-  <Card
-    v-if="canMigrate"
-    class="migration"
-  >
-    <h1 v-html="migrationMsg"></h1>
-    <span class="actions">
-      <a
-        :class="{ disabled: !canMigrate || migrating }"
-        @click="onMigrate"
-      >
-        {{ t(migrating ? "migrating" : "migrate") }}
-      </a>
-    </span>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUCrvV2";
@@ -74,6 +57,23 @@ function onMigrate() {
   });
 }
 </script>
+
+<template>
+  <Card
+    v-if="canMigrate"
+    class="migration"
+  >
+    <h1 v-html="migrationMsg"></h1>
+    <span class="actions">
+      <a
+        :class="{ disabled: !canMigrate || migrating }"
+        @click="onMigrate"
+      >
+        {{ t(migrating ? "migrating" : "migrate") }}
+      </a>
+    </span>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

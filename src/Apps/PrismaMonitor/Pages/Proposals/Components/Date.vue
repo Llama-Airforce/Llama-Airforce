@@ -1,15 +1,3 @@
-<template>
-  <KPI
-    class="date"
-    tooltip-type="underline"
-    :label="label"
-    :value="date"
-    :has-value="true"
-    :tooltip="dateWithTime"
-  >
-  </KPI>
-</template>
-
 <script setup lang="ts">
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
@@ -91,6 +79,18 @@ const createTimer = (): void => {
   });
 };
 </script>
+
+<template>
+  <KPI
+    class="date"
+    tooltip-type="underline"
+    :label="label"
+    :value="date"
+    :has-value="true"
+    :tooltip="dateWithTime"
+  >
+  </KPI>
+</template>
 
 <i18n lang="yaml" locale="en">
 start: Start

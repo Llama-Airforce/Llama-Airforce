@@ -1,14 +1,3 @@
-<template>
-  <CardChart
-    class="graph"
-    :title="t('title')"
-    :loading="loading"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
@@ -91,6 +80,17 @@ const categories = computed(() => data.value.map((x) => x.label));
 const formatter = (x: number): string =>
   `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    class="graph"
+    :title="t('title')"
+    :loading="loading"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

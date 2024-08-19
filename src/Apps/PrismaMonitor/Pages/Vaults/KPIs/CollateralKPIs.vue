@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { CollateralService, type TroveManagerDetails } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const collateralService = new CollateralService(storeSettings.flavor);
+
+// Props
+interface Props {
+  vault?: TroveManagerDetails | null;
+}
+const { vault = null } = defineProps<Props>();
+
+// Data
+const { data } = useQuery({
+  queryKey: ["prisma-collateral-info", computed(() => vault?.address)] as const,
+  queryFn: ({ queryKey: [, collateral] }) => {
+    if (collateral) {
+      return collateralService
+        .getCollateralInfo("ethereum", collateral)
+        .then((x) => x.info);
+    } else {
+      return Promise.resolve(null);
+    }
+  },
+  initialData: null,
+  initialDataUpdatedAt: 0,
+});
+</script>
+
 <template>
   <div class="kpis">
     <KPI
@@ -61,39 +94,6 @@
     </KPI>
   </div>
 </template>
-
-<script setup lang="ts">
-import { CollateralService, type TroveManagerDetails } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const collateralService = new CollateralService(storeSettings.flavor);
-
-// Props
-interface Props {
-  vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
-
-// Data
-const { data } = useQuery({
-  queryKey: ["prisma-collateral-info", computed(() => vault?.address)] as const,
-  queryFn: ({ queryKey: [, collateral] }) => {
-    if (collateral) {
-      return collateralService
-        .getCollateralInfo("ethereum", collateral)
-        .then((x) => x.info);
-    } else {
-      return Promise.resolve(null);
-    }
-  },
-  initialData: null,
-  initialDataUpdatedAt: 0,
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import Dashboard from "@CM/Pages/Platform/Revenue/Tabs/Dashboard.vue";
+import Distributions from "@CM/Pages/Platform/Revenue/Tabs/Distributions.vue";
+import Cushions from "@CM/Pages/Platform/Revenue/Tabs/Cushions.vue";
+import Settlements from "@CM/Pages/Platform/Revenue/Tabs/Settlements.vue";
+
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["overview", "distributions", "cushions", "settlements"],
+  "revenue"
+);
+</script>
+
 <template>
   <div class="revenue">
     <TabView
@@ -30,18 +42,6 @@
     </TabView>
   </div>
 </template>
-
-<script setup lang="ts">
-import Dashboard from "@CM/Pages/Platform/Revenue/Tabs/Dashboard.vue";
-import Distributions from "@CM/Pages/Platform/Revenue/Tabs/Distributions.vue";
-import Cushions from "@CM/Pages/Platform/Revenue/Tabs/Cushions.vue";
-import Settlements from "@CM/Pages/Platform/Revenue/Tabs/Settlements.vue";
-
-const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "distributions", "cushions", "settlements"],
-  "revenue"
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

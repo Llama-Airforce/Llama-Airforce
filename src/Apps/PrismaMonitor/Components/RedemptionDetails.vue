@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { type Redemption } from "@PM/Services";
+
+type Row = string;
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  vaultAddr: string;
+  redemption: Redemption;
+}
+
+const { redemption } = defineProps<Props>();
+
+// Refs
+const search = ref("");
+
+const rows = computed(() =>
+  redemption.troves_affected.filter((trove) => {
+    const terms = search.value.toLocaleLowerCase().split(" ");
+
+    const includesTerm = (x: string): boolean =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+    return includesTerm(trove);
+  })
+);
+</script>
+
 <template>
   <Card :title="t('redemption-details')">
     <div class="redemption-details">
@@ -62,36 +92,6 @@
     </div>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type Redemption } from "@PM/Services";
-
-type Row = string;
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  vaultAddr: string;
-  redemption: Redemption;
-}
-
-const { redemption } = defineProps<Props>();
-
-// Refs
-const search = ref("");
-
-const rows = computed(() =>
-  redemption.troves_affected.filter((trove) => {
-    const terms = search.value.toLocaleLowerCase().split(" ");
-
-    const includesTerm = (x: string): boolean =>
-      terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-    return includesTerm(trove);
-  })
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

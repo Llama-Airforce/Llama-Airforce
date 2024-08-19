@@ -1,26 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-  >
-    <template #actions>
-      <div class="controls">
-        <ButtonToggle
-          value="Invert"
-          :model-value="invert"
-          @click="invert = !invert"
-        >
-        </ButtonToggle>
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -105,6 +82,29 @@ function formatter(x: number): string {
   return `${round(x, m, "dollar")}${unit(x, "dollar")}`;
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+  >
+    <template #actions>
+      <div class="controls">
+        <ButtonToggle
+          value="Invert"
+          :model-value="invert"
+          @click="invert = !invert"
+        >
+        </ButtonToggle>
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

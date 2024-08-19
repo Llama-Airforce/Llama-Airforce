@@ -1,56 +1,3 @@
-<template>
-  <Card :title="t('title')">
-    <Table
-      class="liq-overview-table"
-      :rows
-    >
-      <template #row="{ item: { description, value, type } }: { item: Row }">
-        <div>{{ description }}</div>
-
-        <div
-          v-if="type === 'collateral'"
-          class="end"
-        >
-          <AsyncValue
-            :value="value[0]"
-            :show-zero="true"
-            type="dollar"
-          />
-
-          /
-
-          <AsyncValue
-            :value="value[1]"
-            :show-zero="true"
-            type="dollar"
-          />
-        </div>
-
-        <div
-          v-else
-          class="end"
-        >
-          <AsyncValue
-            v-if="type === 'bad-debt'"
-            class="red"
-            :value="value"
-            :show-zero="true"
-            :inline="false"
-            type="dollar"
-          />
-          <AsyncValue
-            v-else-if="type !== 'number'"
-            :value="value"
-            :show-zero="true"
-            :type
-          />
-          <span v-else>{{ value }}</span>
-        </div>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type LiqOverview } from "@CM/Services/Liquidations";
 
@@ -139,6 +86,59 @@ const rows = computed((): Row[] => [
   ...badDebt.value,
 ]);
 </script>
+
+<template>
+  <Card :title="t('title')">
+    <Table
+      class="liq-overview-table"
+      :rows
+    >
+      <template #row="{ item: { description, value, type } }: { item: Row }">
+        <div>{{ description }}</div>
+
+        <div
+          v-if="type === 'collateral'"
+          class="end"
+        >
+          <AsyncValue
+            :value="value[0]"
+            :show-zero="true"
+            type="dollar"
+          />
+
+          /
+
+          <AsyncValue
+            :value="value[1]"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
+
+        <div
+          v-else
+          class="end"
+        >
+          <AsyncValue
+            v-if="type === 'bad-debt'"
+            class="red"
+            :value="value"
+            :show-zero="true"
+            :inline="false"
+            type="dollar"
+          />
+          <AsyncValue
+            v-else-if="type !== 'number'"
+            :value="value"
+            :show-zero="true"
+            :type
+          />
+          <span v-else>{{ value }}</span>
+        </div>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

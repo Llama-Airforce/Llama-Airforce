@@ -1,40 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    :title="t('title')"
-    :loading="loading"
-    :options="options"
-    :series="series"
-  >
-    <template #actions>
-      <div class="actions">
-        <div class="periods">
-          <ButtonToggle
-            value="1m"
-            :model-value="period === '1m'"
-            @click="onPeriod('1m')"
-          >
-          </ButtonToggle>
-
-          <ButtonToggle
-            value="3m"
-            :model-value="period === '3m'"
-            @click="onPeriod('3m')"
-          >
-          </ButtonToggle>
-
-          <ButtonToggle
-            value="6m"
-            :model-value="period === '6m'"
-            @click="onPeriod('6m')"
-          >
-          </ButtonToggle>
-        </div>
-      </div>
-    </template>
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { ManagerService, type Period } from "@PM/Services";
@@ -152,6 +115,43 @@ const onPeriod = (newPeriod: Period) => {
   period.value = newPeriod;
 };
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    :title="t('title')"
+    :loading="loading"
+    :options="options"
+    :series="series"
+  >
+    <template #actions>
+      <div class="actions">
+        <div class="periods">
+          <ButtonToggle
+            value="1m"
+            :model-value="period === '1m'"
+            @click="onPeriod('1m')"
+          >
+          </ButtonToggle>
+
+          <ButtonToggle
+            value="3m"
+            :model-value="period === '3m'"
+            @click="onPeriod('3m')"
+          >
+          </ButtonToggle>
+
+          <ButtonToggle
+            value="6m"
+            :model-value="period === '6m'"
+            @click="onPeriod('6m')"
+          >
+          </ButtonToggle>
+        </div>
+      </div>
+    </template>
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

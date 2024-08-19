@@ -1,12 +1,3 @@
-<template>
-  <div class="troves">
-    <TableTroves
-      :vault="vault"
-      @selected="onTroveSelect"
-    ></TableTroves>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Trove, type TroveManagerDetails } from "@PM/Services";
 import TableTroves from "@PM/Pages/Vaults/Tables/TableTroves.vue";
@@ -38,6 +29,15 @@ const onTroveSelect = async (trove: Trove) => {
   }
 };
 </script>
+
+<template>
+  <div class="troves">
+    <TableTroves
+      :vault="vault"
+      @selected="onTroveSelect"
+    ></TableTroves>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

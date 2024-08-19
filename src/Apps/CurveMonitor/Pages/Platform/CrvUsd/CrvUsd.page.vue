@@ -1,22 +1,3 @@
-<template>
-  <div class="crvusd">
-    <TableMarkets
-      style="grid-column: 1 / -1"
-      @selected="onMarketSelect"
-    ></TableMarkets>
-
-    <div class="col">
-      <TablePegkeepers></TablePegkeepers>
-      <ChartKeeperPrices></ChartKeeperPrices>
-    </div>
-
-    <div class="col">
-      <ChartCrvUsdSupply></ChartCrvUsdSupply>
-      <ChartCrvUsdPriceHistogram></ChartCrvUsdPriceHistogram>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import {
   TableMarkets,
@@ -60,6 +41,25 @@ const onMarketSelect = async (newMarket: Market) => {
   });
 };
 </script>
+
+<template>
+  <div class="crvusd">
+    <TableMarkets
+      style="grid-column: 1 / -1"
+      @selected="onMarketSelect"
+    ></TableMarkets>
+
+    <div class="col">
+      <TablePegkeepers></TablePegkeepers>
+      <ChartKeeperPrices></ChartKeeperPrices>
+    </div>
+
+    <div class="col">
+      <ChartCrvUsdSupply></ChartCrvUsdSupply>
+      <ChartCrvUsdPriceHistogram></ChartCrvUsdPriceHistogram>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

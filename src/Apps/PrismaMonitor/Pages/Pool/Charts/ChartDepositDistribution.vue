@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    :title="t('title')"
-    :loading="loading"
-    :series="series"
-    :options="options"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
@@ -75,6 +65,16 @@ const series = computed((): { name: string; data: number[] }[] => [
 
 const categories = computed(() => data.value.map((x) => x.label));
 </script>
+
+<template>
+  <CardChart
+    :title="t('title')"
+    :loading="loading"
+    :series="series"
+    :options="options"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,43 +1,3 @@
-<template>
-  <Modal @close="emit('close')">
-    <Card title="Pirex Convex Redemptions">
-      <div class="redemptions-init-body">
-        <RedemptionsTableInit
-          class="redemptions-init-table"
-          :redemptions
-          @redemption="redemption = $event"
-        ></RedemptionsTableInit>
-
-        <div class="input">
-          <TokenIcon
-            class="icon"
-            :address="pxCvxAddress"
-          ></TokenIcon>
-
-          <div class="symbol">pxCVX</div>
-
-          <InputNumber
-            v-model="balanceRedeem"
-            :min="0"
-            :max="Infinity"
-            :placeholder="balanceNum"
-          ></InputNumber>
-
-          <a @click="balanceRedeem = balanceNum">Max</a>
-
-          <Button
-            :value="submitLabel"
-            :web3="true"
-            :primary="true"
-            :disabled="!canRedeem || isApproving || isRedeeming"
-            @click="onSubmit"
-          ></Button>
-        </div>
-      </div>
-    </Card>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
@@ -208,6 +168,46 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
   }
 );
 </script>
+
+<template>
+  <Modal @close="emit('close')">
+    <Card title="Pirex Convex Redemptions">
+      <div class="redemptions-init-body">
+        <RedemptionsTableInit
+          class="redemptions-init-table"
+          :redemptions
+          @redemption="redemption = $event"
+        ></RedemptionsTableInit>
+
+        <div class="input">
+          <TokenIcon
+            class="icon"
+            :address="pxCvxAddress"
+          ></TokenIcon>
+
+          <div class="symbol">pxCVX</div>
+
+          <InputNumber
+            v-model="balanceRedeem"
+            :min="0"
+            :max="Infinity"
+            :placeholder="balanceNum"
+          ></InputNumber>
+
+          <a @click="balanceRedeem = balanceNum">Max</a>
+
+          <Button
+            :value="submitLabel"
+            :web3="true"
+            :primary="true"
+            :disabled="!canRedeem || isApproving || isRedeeming"
+            @click="onSubmit"
+          ></Button>
+        </div>
+      </div>
+    </Card>
+  </Modal>
+</template>
 
 <style lang="scss">
 .modal:has(.redemptions-init-table) {

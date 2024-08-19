@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div class="strategy">
     <div class="info">
@@ -23,8 +25,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

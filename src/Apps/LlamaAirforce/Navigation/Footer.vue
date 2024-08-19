@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { type PageLAF } from "@LAF/Pages/Page";
+
+const pageStore = usePageStore<PageLAF>();
+const route = useRoute();
+
+const page = computed((): PageLAF | undefined => {
+  return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
+});
+
+const menuItems = computed(() => {
+  return page.value?.menuItems ?? [];
+});
+
+const noMenu = computed((): boolean => {
+  return !(menuItems.value.length > 0 || !!page.value?.forceShowMenu);
+});
+</script>
+
 <template>
   <footer :class="{ 'no-language': !noMenu }">
     <SelectLanguage v-if="noMenu"></SelectLanguage>
@@ -66,25 +85,6 @@
     </nav>
   </footer>
 </template>
-
-<script setup lang="ts">
-import { type PageLAF } from "@LAF/Pages/Page";
-
-const pageStore = usePageStore<PageLAF>();
-const route = useRoute();
-
-const page = computed((): PageLAF | undefined => {
-  return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
-});
-
-const menuItems = computed(() => {
-  return page.value?.menuItems ?? [];
-});
-
-const noMenu = computed((): boolean => {
-  return !(menuItems.value.length > 0 || !!page.value?.forceShowMenu);
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

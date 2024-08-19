@@ -1,3 +1,47 @@
+<script setup lang="ts">
+import SelectChain from "@CM/Components/SelectChain.vue";
+import { type Chain } from "@CM/Models";
+import { type Cushion } from "@CM/Services/Revenue";
+import { useQueryCushions } from "@CM/Services/Revenue/Queries";
+import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
+
+const { t } = useI18n();
+
+type Row = Cushion;
+
+// Refs
+const search = ref("");
+const loading = computed(
+  () => isLoadingChains.value || isLoadingCushions.value
+);
+
+// Chains
+const networkChain = ref<Chain>("ethereum");
+
+const { data: chains, isFetching: isLoadingChains } = useQueryChainsSupported();
+
+// Data
+const rows = computed(() =>
+  rowsRaw.value
+    .filter((row) => row.usdValue > 100)
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(row.pool) || includesTerm(row.name);
+    })
+);
+
+const { data: rowsRaw, isFetching: isLoadingCushions } =
+  useQueryCushions(networkChain);
+
+const linkAddress = (addr: string): string => {
+  return `https://etherscan.io/address/${addr}`;
+};
+</script>
+
 <template>
   <Card
     class="cushions-card"
@@ -63,50 +107,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import SelectChain from "@CM/Components/SelectChain.vue";
-import { type Chain } from "@CM/Models";
-import { type Cushion } from "@CM/Services/Revenue";
-import { useQueryCushions } from "@CM/Services/Revenue/Queries";
-import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
-
-const { t } = useI18n();
-
-type Row = Cushion;
-
-// Refs
-const search = ref("");
-const loading = computed(
-  () => isLoadingChains.value || isLoadingCushions.value
-);
-
-// Chains
-const networkChain = ref<Chain>("ethereum");
-
-const { data: chains, isFetching: isLoadingChains } = useQueryChainsSupported();
-
-// Data
-const rows = computed(() =>
-  rowsRaw.value
-    .filter((row) => row.usdValue > 100)
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return includesTerm(row.pool) || includesTerm(row.name);
-    })
-);
-
-const { data: rowsRaw, isFetching: isLoadingCushions } =
-  useQueryCushions(networkChain);
-
-const linkAddress = (addr: string): string => {
-  return `https://etherscan.io/address/${addr}`;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,11 +1,3 @@
-<template>
-  <ChartApex
-    class="chart"
-    :options
-    :series
-  ></ChartApex>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -120,6 +112,14 @@ const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
 </script>
+
+<template>
+  <ChartApex
+    class="chart"
+    :options
+    :series
+  ></ChartApex>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

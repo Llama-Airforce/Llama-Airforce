@@ -1,14 +1,3 @@
-<template>
-  <CardChart
-    class="health"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-    :loading="loading"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import {
@@ -157,6 +146,17 @@ const formatterRatio = (x: number): string => {
   return `${formatNumber(x * 100, 2)}%`;
 };
 </script>
+
+<template>
+  <CardChart
+    class="health"
+    :title="t('title')"
+    :options="options"
+    :series="series"
+    :loading="loading"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

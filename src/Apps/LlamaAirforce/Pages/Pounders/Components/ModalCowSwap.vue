@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import type { Swap } from "@Pounders/Models";
+import CowSwap from "@LAF/Components/CowSwap.vue";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  swap: Swap | null;
+}
+
+const { swap } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  close: [];
+}>();
+</script>
+
 <template>
   <Modal @close="emit('close')">
     <Card :title="t('swap')">
@@ -18,25 +37,6 @@
     </Card>
   </Modal>
 </template>
-
-<script setup lang="ts">
-import type { Swap } from "@Pounders/Models";
-import CowSwap from "@LAF/Components/CowSwap.vue";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  swap: Swap | null;
-}
-
-const { swap } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  close: [];
-}>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,10 +1,3 @@
-<template>
-  <div
-    ref="chartRef"
-    class="chart"
-  ></div>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -100,3 +93,10 @@ function formatter(y: number): string {
   return `${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 }
 </script>
+
+<template>
+  <div
+    ref="chartRef"
+    class="chart"
+  ></div>
+</template>

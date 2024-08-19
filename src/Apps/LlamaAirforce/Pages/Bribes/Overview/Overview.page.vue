@@ -1,31 +1,3 @@
-<template>
-  <div class="overview">
-    <div class="dashboard">
-      <SystemSelect
-        class="system-select"
-        @select-platform="onSelectPlatform"
-        @select-protocol="onSelectProtocol"
-      >
-      </SystemSelect>
-
-      <Summary
-        class="summary"
-        :overview="overview"
-      ></Summary>
-
-      <ChartBribesRevenue
-        class="graph-bribes-revenue"
-        :overview="overview"
-      ></ChartBribesRevenue>
-
-      <TableRounds
-        class="table-rounds"
-        :overview="overview"
-      ></TableRounds>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import ChartBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/ChartBribesRevenue.vue";
@@ -146,6 +118,34 @@ function initFromRouter() {
   isInitializing = false;
 }
 </script>
+
+<template>
+  <div class="overview">
+    <div class="dashboard">
+      <SystemSelect
+        class="system-select"
+        @select-platform="onSelectPlatform"
+        @select-protocol="onSelectProtocol"
+      >
+      </SystemSelect>
+
+      <Summary
+        class="summary"
+        :overview="overview"
+      ></Summary>
+
+      <ChartBribesRevenue
+        class="graph-bribes-revenue"
+        :overview="overview"
+      ></ChartBribesRevenue>
+
+      <TableRounds
+        class="table-rounds"
+        :overview="overview"
+      ></TableRounds>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

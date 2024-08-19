@@ -1,3 +1,61 @@
+<script setup lang="ts">
+import { type Chain } from "@CM/Models";
+import { type Pool } from "@CM/Services/Pools";
+
+type Row = Pool;
+
+const { t } = useI18n();
+
+// Emit
+const emit = defineEmits<{
+  selected: [pool: Row];
+}>();
+
+// Props
+interface Props {
+  chain: Chain;
+  pools: Pool[];
+}
+
+const { pools } = defineProps<Props>();
+
+// Data
+const columns = [
+  "",
+  "",
+  { id: "name", label: "Name", sort: true } as const,
+  { id: "volume", label: "Volume (24h)", sort: true, align: "end" } as const,
+  { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
+  { id: "util", label: "Util", sort: true, align: "end" } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("tvl");
+
+const poolsFiltered = computed(() =>
+  pools.orderBy((pool) => {
+    switch (sorting.value.column) {
+      case "name":
+        return pool.name;
+      case "volume":
+        return pool.tradingVolume24h;
+      case "tvl":
+        return pool.tvlUsd;
+      case "util":
+        return utilRate(pool);
+      default:
+        return pool.tvlUsd;
+    }
+  }, sorting.value.order)
+);
+
+const rowsPerPage = 20;
+const { page, rowsPage, onPage } = usePagination(poolsFiltered, rowsPerPage);
+
+function utilRate(pool: Pool) {
+  return pool.tvlUsd !== 0 ? (100 * pool.tradingVolume24h) / pool.tvlUsd : 0;
+}
+</script>
+
 <template>
   <Card :title="t('title')">
     <template #actions>
@@ -63,64 +121,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import { type Pool } from "@CM/Services/Pools";
-
-type Row = Pool;
-
-const { t } = useI18n();
-
-// Emit
-const emit = defineEmits<{
-  selected: [pool: Row];
-}>();
-
-// Props
-interface Props {
-  chain: Chain;
-  pools: Pool[];
-}
-
-const { pools } = defineProps<Props>();
-
-// Data
-const columns = [
-  "",
-  "",
-  { id: "name", label: "Name", sort: true } as const,
-  { id: "volume", label: "Volume (24h)", sort: true, align: "end" } as const,
-  { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
-  { id: "util", label: "Util", sort: true, align: "end" } as const,
-];
-
-const { sorting, onSort } = useSort<typeof columns>("tvl");
-
-const poolsFiltered = computed(() =>
-  pools.orderBy((pool) => {
-    switch (sorting.value.column) {
-      case "name":
-        return pool.name;
-      case "volume":
-        return pool.tradingVolume24h;
-      case "tvl":
-        return pool.tvlUsd;
-      case "util":
-        return utilRate(pool);
-      default:
-        return pool.tvlUsd;
-    }
-  }, sorting.value.order)
-);
-
-const rowsPerPage = 20;
-const { page, rowsPage, onPage } = usePagination(poolsFiltered, rowsPerPage);
-
-function utilRate(pool: Pool) {
-  return pool.tvlUsd !== 0 ? (100 * pool.tradingVolume24h) / pool.tvlUsd : 0;
-}
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,14 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    :title="t('title')"
-    :loading="loading"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import { CollateralService, type TroveManagerDetails } from "@PM/Services";
@@ -133,6 +122,17 @@ const pctFormatter = (y: number): string => {
   return `${round(y, 2, "percentage")}${unit(y, "percentage")}`;
 };
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    :title="t('title')"
+    :loading="loading"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

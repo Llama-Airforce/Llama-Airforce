@@ -1,107 +1,3 @@
-<template>
-  <div class="chains">
-    <Teleport to="#toolbar">
-      <div class="toolbar">
-        <ActivityTypeSelect
-          style="grid-area: type"
-          @select="onTypeSelect"
-        ></ActivityTypeSelect>
-
-        <SelectChain
-          style="grid-area: chain"
-          class="chain-select"
-          :chain
-          :chains
-          :all="true"
-          @select-chain="chain = $event"
-        ></SelectChain>
-      </div>
-    </Teleport>
-
-    <div class="activity">
-      <KPI
-        style="grid-area: kpi1"
-        :label="t('txs-today')"
-        :has-value="!!loadingTxs"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="txsToday"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </KPI>
-
-      <KPI
-        style="grid-area: kpi2"
-        :label="t('txs-avg')"
-        :has-value="!!loadingTxs"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="txsAvg"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </KPI>
-
-      <KPI
-        style="grid-area: kpi3"
-        :label="t('users-today')"
-        :has-value="!!loadingUsers"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="usersToday"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </KPI>
-
-      <KPI
-        style="grid-area: kpi4"
-        :label="t('users-avg')"
-        :has-value="!!loadingUsers"
-      >
-        <AsyncValue
-          type="dollar"
-          :value="usersAvg"
-          :show-symbol="false"
-          :show-zero="true"
-        ></AsyncValue>
-      </KPI>
-
-      <ChartTxs
-        style="grid-area: txs"
-        :txs
-        :loading="loadingTxs"
-      ></ChartTxs>
-
-      <ChartUsers
-        style="grid-area: users"
-        :users
-        :loading="loadingUsers"
-      ></ChartUsers>
-
-      <ChartRankingChains
-        style="grid-area: top-chains"
-        :type
-        :txs="rankChainsTxs"
-        :users="rankChainsUsers"
-        :loading="loadingTxs || loadingUsers"
-      ></ChartRankingChains>
-
-      <ChartRankingTypes
-        style="grid-area: top-types"
-        :chain
-        :txs="rankTypesTxs"
-        :users="rankTypesUsers"
-        :loading="loadingTxs || loadingUsers"
-      ></ChartRankingTypes>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
@@ -251,6 +147,110 @@ const rankTypesUsers = computed(() =>
   filterAndSelect(usersRaw.value, chain.value, "all", (x) => x.users)
 );
 </script>
+
+<template>
+  <div class="chains">
+    <Teleport to="#toolbar">
+      <div class="toolbar">
+        <ActivityTypeSelect
+          style="grid-area: type"
+          @select="onTypeSelect"
+        ></ActivityTypeSelect>
+
+        <SelectChain
+          style="grid-area: chain"
+          class="chain-select"
+          :chain
+          :chains
+          :all="true"
+          @select-chain="chain = $event"
+        ></SelectChain>
+      </div>
+    </Teleport>
+
+    <div class="activity">
+      <KPI
+        style="grid-area: kpi1"
+        :label="t('txs-today')"
+        :has-value="!!loadingTxs"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="txsToday"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </KPI>
+
+      <KPI
+        style="grid-area: kpi2"
+        :label="t('txs-avg')"
+        :has-value="!!loadingTxs"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="txsAvg"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </KPI>
+
+      <KPI
+        style="grid-area: kpi3"
+        :label="t('users-today')"
+        :has-value="!!loadingUsers"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="usersToday"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </KPI>
+
+      <KPI
+        style="grid-area: kpi4"
+        :label="t('users-avg')"
+        :has-value="!!loadingUsers"
+      >
+        <AsyncValue
+          type="dollar"
+          :value="usersAvg"
+          :show-symbol="false"
+          :show-zero="true"
+        ></AsyncValue>
+      </KPI>
+
+      <ChartTxs
+        style="grid-area: txs"
+        :txs
+        :loading="loadingTxs"
+      ></ChartTxs>
+
+      <ChartUsers
+        style="grid-area: users"
+        :users
+        :loading="loadingUsers"
+      ></ChartUsers>
+
+      <ChartRankingChains
+        style="grid-area: top-chains"
+        :type
+        :txs="rankChainsTxs"
+        :users="rankChainsUsers"
+        :loading="loadingTxs || loadingUsers"
+      ></ChartRankingChains>
+
+      <ChartRankingTypes
+        style="grid-area: top-types"
+        :chain
+        :txs="rankTypesTxs"
+        :users="rankTypesUsers"
+        :loading="loadingTxs || loadingUsers"
+      ></ChartRankingTypes>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

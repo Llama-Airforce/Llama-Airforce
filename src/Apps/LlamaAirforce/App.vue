@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
+import Header from "@LAF/Navigation/Header.vue";
+import Footer from "@LAF/Navigation/Footer.vue";
+import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
+import Announcement from "@LAF/Components/Announcement.vue";
+</script>
+
 <template>
   <div class="root">
     <notifications
@@ -28,14 +36,6 @@
     <Footer class="footer"></Footer>
   </div>
 </template>
-
-<script setup lang="ts">
-import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
-import Header from "@LAF/Navigation/Header.vue";
-import Footer from "@LAF/Navigation/Footer.vue";
-import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
-import Announcement from "@LAF/Components/Announcement.vue";
-</script>
 
 <style lang="scss">
 @import "@/Styles/Themes/LAF/Dark.scss";

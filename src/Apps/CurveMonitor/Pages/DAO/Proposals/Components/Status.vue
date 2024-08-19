@@ -1,34 +1,3 @@
-<template>
-  <KPI
-    class="status"
-    tooltip-type="underline"
-    :label="t('status')"
-    :has-value="true"
-    :tooltip="statusDetails"
-  >
-    <Tooltip v-if="statusDetails">
-      <template #item>
-        <span
-          class="status-value"
-          :class="getStatus(proposal)"
-        >
-          {{ statusLabel }}
-        </span>
-      </template>
-
-      {{ statusDetails }}
-    </Tooltip>
-
-    <span
-      v-else
-      class="status-value"
-      :class="getStatus(proposal)"
-    >
-      {{ statusLabel }}
-    </span>
-  </KPI>
-</template>
-
 <script setup lang="ts">
 import {
   type Proposal,
@@ -77,6 +46,37 @@ const statusLabel = computed((): string => {
   }
 });
 </script>
+
+<template>
+  <KPI
+    class="status"
+    tooltip-type="underline"
+    :label="t('status')"
+    :has-value="true"
+    :tooltip="statusDetails"
+  >
+    <Tooltip v-if="statusDetails">
+      <template #item>
+        <span
+          class="status-value"
+          :class="getStatus(proposal)"
+        >
+          {{ statusLabel }}
+        </span>
+      </template>
+
+      {{ statusDetails }}
+    </Tooltip>
+
+    <span
+      v-else
+      class="status-value"
+      :class="getStatus(proposal)"
+    >
+      {{ statusLabel }}
+    </span>
+  </KPI>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

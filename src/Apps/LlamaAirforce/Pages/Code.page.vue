@@ -1,84 +1,3 @@
-<template>
-  <div class="contracts">
-    <div class="dashboard">
-      <Card
-        class="repositories-card"
-        :title="t('repositories')"
-      >
-        <Table
-          class="repositories-table"
-          :rows="repositories"
-          :columns="[t('repository'), t('description')]"
-        >
-          <template #row="props: { item: Repository }">
-            <div>
-              <a
-                :href="props.item.url"
-                target="_blank"
-              >
-                {{ props.item.name }}
-              </a>
-            </div>
-
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </Table>
-      </Card>
-
-      <Card
-        class="other-card"
-        :title="t('other')"
-      >
-        <Table
-          class="other-table"
-          :rows="other"
-          :columns="[t('other'), t('description')]"
-        >
-          <template #row="props: { item: Other }">
-            <div>
-              <a
-                :href="props.item.url"
-                target="_blank"
-              >
-                {{ props.item.name }}
-              </a>
-            </div>
-
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </Table>
-      </Card>
-
-      <Card
-        v-for="(bundle, i) in bundles"
-        :key="i"
-        :title="t(bundle.name)"
-        class="contracts-card"
-      >
-        <Table
-          class="contracts-table"
-          :rows="bundle.contracts"
-          :columns="[t('contract'), t('description')]"
-        >
-          <template #row="props: { item: Contract }">
-            <div>
-              <a
-                class="font-mono"
-                target="_blank"
-                :href="linkContract(props.item)"
-              >
-                {{ props.item.contract }}
-              </a>
-            </div>
-
-            <div>{{ t(props.item.description) }}</div>
-          </template>
-        </Table>
-      </Card>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 type Network = "ethereum" | "arbitrum" | "base";
 
@@ -393,6 +312,87 @@ const linkContract = (contract: Contract): string => {
 
 const { t } = useI18n();
 </script>
+
+<template>
+  <div class="contracts">
+    <div class="dashboard">
+      <Card
+        class="repositories-card"
+        :title="t('repositories')"
+      >
+        <Table
+          class="repositories-table"
+          :rows="repositories"
+          :columns="[t('repository'), t('description')]"
+        >
+          <template #row="props: { item: Repository }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
+
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </Table>
+      </Card>
+
+      <Card
+        class="other-card"
+        :title="t('other')"
+      >
+        <Table
+          class="other-table"
+          :rows="other"
+          :columns="[t('other'), t('description')]"
+        >
+          <template #row="props: { item: Other }">
+            <div>
+              <a
+                :href="props.item.url"
+                target="_blank"
+              >
+                {{ props.item.name }}
+              </a>
+            </div>
+
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </Table>
+      </Card>
+
+      <Card
+        v-for="(bundle, i) in bundles"
+        :key="i"
+        :title="t(bundle.name)"
+        class="contracts-card"
+      >
+        <Table
+          class="contracts-table"
+          :rows="bundle.contracts"
+          :columns="[t('contract'), t('description')]"
+        >
+          <template #row="props: { item: Contract }">
+            <div>
+              <a
+                class="font-mono"
+                target="_blank"
+                :href="linkContract(props.item)"
+              >
+                {{ props.item.contract }}
+              </a>
+            </div>
+
+            <div>{{ t(props.item.description) }}</div>
+          </template>
+        </Table>
+      </Card>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

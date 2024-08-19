@@ -1,92 +1,3 @@
-<template>
-  <div class="code">
-    <Card :title="t('repositories')">
-      <Table
-        class="repositories-table"
-        :rows="repositories"
-        :columns="[t('repository'), t('description')]"
-        title="Yolo"
-      >
-        <template #row="props: { item: Repository }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
-            </a>
-          </div>
-
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </Table>
-    </Card>
-
-    <Card :title="t('apis')">
-      <Table
-        class="apis-table"
-        columns-data="apis-columns-data"
-        :rows="apis"
-        :columns="[t('api'), t('description')]"
-      >
-        <template #row="props: { item: API }">
-          <div>
-            <a
-              :href="props.item.url"
-              target="_blank"
-            >
-              {{ props.item.name }}
-            </a>
-          </div>
-
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </Table>
-    </Card>
-
-    <Card
-      v-for="(bundle, i) in bundles"
-      :key="i"
-      :title="t(bundle.name)"
-    >
-      <Table
-        class="contracts-table"
-        columns-header="1fr"
-        columns-data="contracts-columns-data"
-        :rows="bundle.contracts"
-        :columns="[t('contract'), t('description')]"
-      >
-        <template #row="props: { item: Contract }">
-          <div>
-            <a
-              :href="linkContract(props.item)"
-              target="_blank"
-            >
-              {{ props.item.contract }}
-            </a>
-          </div>
-
-          <div>{{ t(props.item.description) }}</div>
-        </template>
-      </Table>
-    </Card>
-
-    <Card>
-      <div class="notices">
-        TradingView Lightweight Charts™ Copyright (с) 2023 TradingView, Inc.
-        <span>
-          <a
-            href="https://www.tradingview.com/"
-            target="_blank"
-          >
-            https://www.tradingview.com
-          </a>
-        </span>
-      </div>
-    </Card>
-  </div>
-</template>
-
 <script setup lang="ts">
 const { t } = useI18n();
 
@@ -182,6 +93,95 @@ const linkContract = (contract: Contract): string => {
   }
 };
 </script>
+
+<template>
+  <div class="code">
+    <Card :title="t('repositories')">
+      <Table
+        class="repositories-table"
+        :rows="repositories"
+        :columns="[t('repository'), t('description')]"
+        title="Yolo"
+      >
+        <template #row="props: { item: Repository }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
+
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </Table>
+    </Card>
+
+    <Card :title="t('apis')">
+      <Table
+        class="apis-table"
+        columns-data="apis-columns-data"
+        :rows="apis"
+        :columns="[t('api'), t('description')]"
+      >
+        <template #row="props: { item: API }">
+          <div>
+            <a
+              :href="props.item.url"
+              target="_blank"
+            >
+              {{ props.item.name }}
+            </a>
+          </div>
+
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </Table>
+    </Card>
+
+    <Card
+      v-for="(bundle, i) in bundles"
+      :key="i"
+      :title="t(bundle.name)"
+    >
+      <Table
+        class="contracts-table"
+        columns-header="1fr"
+        columns-data="contracts-columns-data"
+        :rows="bundle.contracts"
+        :columns="[t('contract'), t('description')]"
+      >
+        <template #row="props: { item: Contract }">
+          <div>
+            <a
+              :href="linkContract(props.item)"
+              target="_blank"
+            >
+              {{ props.item.contract }}
+            </a>
+          </div>
+
+          <div>{{ t(props.item.description) }}</div>
+        </template>
+      </Table>
+    </Card>
+
+    <Card>
+      <div class="notices">
+        TradingView Lightweight Charts™ Copyright (с) 2023 TradingView, Inc.
+        <span>
+          <a
+            href="https://www.tradingview.com/"
+            target="_blank"
+          >
+            https://www.tradingview.com
+          </a>
+        </span>
+      </div>
+    </Card>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

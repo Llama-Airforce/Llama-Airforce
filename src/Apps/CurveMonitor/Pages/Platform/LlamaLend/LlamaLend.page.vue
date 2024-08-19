@@ -1,96 +1,3 @@
-<template>
-  <div class="llamalend">
-    <Teleport to="#toolbar">
-      <div class="toolbar">
-        <InputText
-          v-model="search"
-          class="search"
-          :search="true"
-          :placeholder="t('search-placeholder')"
-        >
-        </InputText>
-
-        <SelectChain
-          class="chain-select"
-          :chain
-          :chains
-          @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-        ></SelectChain>
-      </div>
-    </Teleport>
-
-    <div class="markets">
-      <div class="kpis">
-        <KPI
-          :label="t('open-interest')"
-          :has-value="!loadingMarkets"
-        >
-          <AsyncValue
-            :value="totalBorrowed('long')"
-            type="dollar"
-          ></AsyncValue>
-        </KPI>
-
-        <KPI
-          tooltip-type="icon"
-          :label="t('avg-util-rate')"
-          :has-value="!loadingMarkets"
-          :tooltip="t('avg-util-rate-tooltip')"
-        >
-          <AsyncValue
-            :value="totalUtilRate('long')"
-            type="percentage"
-          ></AsyncValue>
-        </KPI>
-      </div>
-
-      <TableMarkets
-        style="grid-column: 1"
-        type="long"
-        :pairs="marketPairsFiltered"
-        :loading="loadingMarkets"
-        :chain="chain"
-        @selected="onMarketSelect"
-      ></TableMarkets>
-    </div>
-
-    <div class="markets">
-      <div class="kpis">
-        <KPI
-          :label="t('open-interest')"
-          :has-value="!loadingMarkets"
-        >
-          <AsyncValue
-            :value="totalBorrowed('short')"
-            type="dollar"
-          ></AsyncValue>
-        </KPI>
-
-        <KPI
-          tooltip-type="icon"
-          :label="t('avg-util-rate')"
-          :has-value="!loadingMarkets"
-          :tooltip="t('avg-util-rate-tooltip')"
-        >
-          <AsyncValue
-            :value="totalUtilRate('short')"
-            type="percentage"
-          ></AsyncValue>
-        </KPI>
-      </div>
-
-      <TableMarkets
-        style="grid-column: 2"
-        type="short"
-        :pairs="marketPairsFiltered"
-        :loading="loadingMarkets"
-        :chain
-        @selected="onMarketSelect"
-      ></TableMarkets>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import {
@@ -234,6 +141,99 @@ const totalUtilRate = (type: "long" | "short"): number => {
   return totals.assets === 0 ? 0 : (totals.debt / totals.assets) * 100;
 };
 </script>
+
+<template>
+  <div class="llamalend">
+    <Teleport to="#toolbar">
+      <div class="toolbar">
+        <InputText
+          v-model="search"
+          class="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
+
+        <SelectChain
+          class="chain-select"
+          :chain
+          :chains
+          @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
+        ></SelectChain>
+      </div>
+    </Teleport>
+
+    <div class="markets">
+      <div class="kpis">
+        <KPI
+          :label="t('open-interest')"
+          :has-value="!loadingMarkets"
+        >
+          <AsyncValue
+            :value="totalBorrowed('long')"
+            type="dollar"
+          ></AsyncValue>
+        </KPI>
+
+        <KPI
+          tooltip-type="icon"
+          :label="t('avg-util-rate')"
+          :has-value="!loadingMarkets"
+          :tooltip="t('avg-util-rate-tooltip')"
+        >
+          <AsyncValue
+            :value="totalUtilRate('long')"
+            type="percentage"
+          ></AsyncValue>
+        </KPI>
+      </div>
+
+      <TableMarkets
+        style="grid-column: 1"
+        type="long"
+        :pairs="marketPairsFiltered"
+        :loading="loadingMarkets"
+        :chain="chain"
+        @selected="onMarketSelect"
+      ></TableMarkets>
+    </div>
+
+    <div class="markets">
+      <div class="kpis">
+        <KPI
+          :label="t('open-interest')"
+          :has-value="!loadingMarkets"
+        >
+          <AsyncValue
+            :value="totalBorrowed('short')"
+            type="dollar"
+          ></AsyncValue>
+        </KPI>
+
+        <KPI
+          tooltip-type="icon"
+          :label="t('avg-util-rate')"
+          :has-value="!loadingMarkets"
+          :tooltip="t('avg-util-rate-tooltip')"
+        >
+          <AsyncValue
+            :value="totalUtilRate('short')"
+            type="percentage"
+          ></AsyncValue>
+        </KPI>
+      </div>
+
+      <TableMarkets
+        style="grid-column: 2"
+        type="short"
+        :pairs="marketPairsFiltered"
+        :loading="loadingMarkets"
+        :chain
+        @selected="onMarketSelect"
+      ></TableMarkets>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

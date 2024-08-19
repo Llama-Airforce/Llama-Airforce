@@ -1,11 +1,3 @@
-<template>
-  <ChartApex
-    class="chart"
-    :options="options"
-    :series="series"
-  ></ChartApex>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
@@ -148,6 +140,14 @@ const snakeToPascal = (str: string): string =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join("");
 </script>
+
+<template>
+  <ChartApex
+    class="chart"
+    :options="options"
+    :series="series"
+  ></ChartApex>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

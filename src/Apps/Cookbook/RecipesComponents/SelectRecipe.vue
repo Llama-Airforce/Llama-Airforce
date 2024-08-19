@@ -1,48 +1,3 @@
-<template>
-  <div class="selects">
-    <Recipe title="Select">
-      <template #example>
-        <Select
-          class="select-component"
-          :options="options"
-          :selected="selected"
-          :open="selectOpen"
-          @open="onSelectOpen"
-          @close="selectOpen = false"
-          @input="onSelect"
-        >
-          <template #item="props: { item: SelectItem }">
-            <div
-              v-if="props.item"
-              class="item"
-            >
-              <img :src="props.item.logo" />
-              <div class="label">{{ props.item.label }}</div>
-            </div>
-          </template>
-        </Select>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="select1"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="select2"
-        ></Code>
-
-        <Code
-          lang="scss"
-          :code="select3"
-        ></Code>
-      </template>
-    </Recipe>
-  </div>
-</template>
-
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
 import why from "@/Assets/Icons/why.png";
@@ -161,6 +116,51 @@ const select3 = `:deep(.select-component) {
   }
 }`;
 </script>
+
+<template>
+  <div class="selects">
+    <Recipe title="Select">
+      <template #example>
+        <Select
+          class="select-component"
+          :options="options"
+          :selected="selected"
+          :open="selectOpen"
+          @open="onSelectOpen"
+          @close="selectOpen = false"
+          @input="onSelect"
+        >
+          <template #item="props: { item: SelectItem }">
+            <div
+              v-if="props.item"
+              class="item"
+            >
+              <img :src="props.item.logo" />
+              <div class="label">{{ props.item.label }}</div>
+            </div>
+          </template>
+        </Select>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="html"
+          :code="select1"
+        ></Code>
+
+        <Code
+          lang="typescript"
+          :code="select2"
+        ></Code>
+
+        <Code
+          lang="scss"
+          :code="select3"
+        ></Code>
+      </template>
+    </Recipe>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

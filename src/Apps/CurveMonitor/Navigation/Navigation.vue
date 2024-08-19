@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import Header from "@CM/Navigation/Header.vue";
+import Bottom from "@CM/Navigation/Bottom.vue";
+
+// Emits
+const emit = defineEmits<{
+  navigated: [];
+}>();
+
+// Refs
+const storePage = usePageStore();
+
+const expanded = ref(false);
+
+// Events
+const onNavigated = () => {
+  expanded.value = false;
+  emit("navigated");
+};
+</script>
+
 <template>
   <div
     class="menu-desktop"
@@ -21,27 +42,6 @@
     </Collapsible>
   </div>
 </template>
-
-<script setup lang="ts">
-import Header from "@CM/Navigation/Header.vue";
-import Bottom from "@CM/Navigation/Bottom.vue";
-
-// Emits
-const emit = defineEmits<{
-  navigated: [];
-}>();
-
-// Refs
-const storePage = usePageStore();
-
-const expanded = ref(false);
-
-// Events
-const onNavigated = () => {
-  expanded.value = false;
-  emit("navigated");
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

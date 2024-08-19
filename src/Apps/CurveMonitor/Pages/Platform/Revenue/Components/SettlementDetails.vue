@@ -1,3 +1,72 @@
+<script setup lang="ts">
+import { type CowSwapSettlement } from "@CM/Services/Revenue";
+import { type SolverCompetition } from "@CM/Services/Solver";
+import { useQuerySolverCompetition } from "@CM/Services/Solver/Queries";
+
+type Row = SolverCompetition["solutions"][number];
+
+// Props
+interface Props {
+  settlement: CowSwapSettlement;
+}
+
+const { settlement } = defineProps<Props>();
+
+// Data
+const { data: competition, isPending: isLoading } = useQuerySolverCompetition(
+  toRef(() => settlement.txHash)
+);
+
+const json = computed(() => {
+  if (!competition.value) {
+    return "no data";
+  }
+
+  return JSON.stringify(
+    competition.value,
+    (_, v: unknown) => (typeof v === "bigint" ? v.toString() : v),
+    2
+  );
+});
+
+const solutions = computed(() => {
+  if (!competition.value) {
+    return [];
+  }
+
+  return competition.value.solutions.orderBy((x) => x.ranking, "asc");
+});
+
+function linkAddress(addr: string): string {
+  return `https://etherscan.io/address/${addr}`;
+}
+
+async function clipboard(addr: string) {
+  await navigator.clipboard.writeText(addr);
+}
+
+async function clipboardJson() {
+  await navigator.clipboard.writeText(json.value);
+}
+
+function rankClass(ranking: number) {
+  switch (ranking) {
+    case 1:
+      return "gold";
+    case 2:
+      return "silver";
+    case 3:
+      return "bronze";
+    default:
+      return "";
+  }
+}
+
+// Fullscreen
+const fullscreen = ref(false);
+const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
+</script>
+
 <template>
   <Card class="settlement-details">
     <div class="settlement-details-body">
@@ -106,75 +175,6 @@
     </div>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type CowSwapSettlement } from "@CM/Services/Revenue";
-import { type SolverCompetition } from "@CM/Services/Solver";
-import { useQuerySolverCompetition } from "@CM/Services/Solver/Queries";
-
-type Row = SolverCompetition["solutions"][number];
-
-// Props
-interface Props {
-  settlement: CowSwapSettlement;
-}
-
-const { settlement } = defineProps<Props>();
-
-// Data
-const { data: competition, isPending: isLoading } = useQuerySolverCompetition(
-  toRef(() => settlement.txHash)
-);
-
-const json = computed(() => {
-  if (!competition.value) {
-    return "no data";
-  }
-
-  return JSON.stringify(
-    competition.value,
-    (_, v: unknown) => (typeof v === "bigint" ? v.toString() : v),
-    2
-  );
-});
-
-const solutions = computed(() => {
-  if (!competition.value) {
-    return [];
-  }
-
-  return competition.value.solutions.orderBy((x) => x.ranking, "asc");
-});
-
-function linkAddress(addr: string): string {
-  return `https://etherscan.io/address/${addr}`;
-}
-
-async function clipboard(addr: string) {
-  await navigator.clipboard.writeText(addr);
-}
-
-async function clipboardJson() {
-  await navigator.clipboard.writeText(json.value);
-}
-
-function rankClass(ranking: number) {
-  switch (ranking) {
-    case 1:
-      return "gold";
-    case 2:
-      return "silver";
-    case 3:
-      return "bronze";
-    default:
-      return "";
-  }
-}
-
-// Fullscreen
-const fullscreen = ref(false);
-const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

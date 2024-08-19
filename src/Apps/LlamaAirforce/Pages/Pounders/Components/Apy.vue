@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { type Fees } from "@Pounders/Models";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  apy: number | undefined;
+  fees: Fees | undefined;
+}
+
+const { apy, fees } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  show: [boolean];
+}>();
+</script>
+
 <template>
   <div class="apy">
     <div class="value">
@@ -55,25 +74,6 @@
     <div class="label">{{ t("apy") }}</div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Fees } from "@Pounders/Models";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  apy: number | undefined;
-  fees: Fees | undefined;
-}
-
-const { apy, fees } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  show: [boolean];
-}>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

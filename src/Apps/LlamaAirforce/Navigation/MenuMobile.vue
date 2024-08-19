@@ -1,46 +1,3 @@
-<template>
-  <div class="menu-mobile">
-    <div
-      class="overlay"
-      :class="{ open, closed: !open }"
-      @click="emit('closed')"
-    ></div>
-
-    <div
-      class="menu"
-      :class="{ open, closed: !open }"
-    >
-      <Select
-        class="select-menu"
-        :options="pages"
-        :selected="page"
-        :open="pageOpen"
-        @open="onPageOpen"
-        @close="pageOpen = false"
-        @input="onPageSelect"
-      ></Select>
-
-      <nav class="navigation">
-        <ul
-          v-for="menuItem in menuItems"
-          :key="menuItem.label"
-        >
-          <MenuItem
-            :item="menuItem"
-            @navigated="emit('navigated')"
-          >
-          </MenuItem>
-        </ul>
-      </nav>
-
-      <SelectLanguage
-        class="language"
-        direction="up"
-      ></SelectLanguage>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import { type PageLAF } from "@LAF/Pages/Page";
@@ -110,6 +67,49 @@ watch(
   }
 );
 </script>
+
+<template>
+  <div class="menu-mobile">
+    <div
+      class="overlay"
+      :class="{ open, closed: !open }"
+      @click="emit('closed')"
+    ></div>
+
+    <div
+      class="menu"
+      :class="{ open, closed: !open }"
+    >
+      <Select
+        class="select-menu"
+        :options="pages"
+        :selected="page"
+        :open="pageOpen"
+        @open="onPageOpen"
+        @close="pageOpen = false"
+        @input="onPageSelect"
+      ></Select>
+
+      <nav class="navigation">
+        <ul
+          v-for="menuItem in menuItems"
+          :key="menuItem.label"
+        >
+          <MenuItem
+            :item="menuItem"
+            @navigated="emit('navigated')"
+          >
+          </MenuItem>
+        </ul>
+      </nav>
+
+      <SelectLanguage
+        class="language"
+        direction="up"
+      ></SelectLanguage>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,122 +1,3 @@
-<template>
-  <div class="details">
-    <div class="deposit-and-withdraw">
-      <div class="deposit">
-        <PounderInput
-          v-model="deposit"
-          :token="state.symbolDeposit"
-          :balance="state.balanceDeposit"
-          :decimals="state.decimalsDeposit"
-        ></PounderInput>
-
-        <div class="actions">
-          <ZapSelect
-            v-model="zapDeposit"
-            :class="{ expanded }"
-            :zaps="zapsDeposit"
-            @select="onDepositSelect"
-          ></ZapSelect>
-
-          <div class="buttons">
-            <Button
-              :value="depositLabel"
-              :primary="true"
-              :web3="true"
-              :disabled="!canDeposit"
-              @click="onDeposit(false)"
-            ></Button>
-
-            <Button
-              v-if="!!swapDeposit"
-              class="swap"
-              :web3="true"
-              @click="showSwapDeposit = true"
-            >
-              <img :src="cow" />
-              {{ t("buy", [swapDeposit?.buy ?? "?"]) }}
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div class="withdraw">
-        <PounderInput
-          v-model="withdraw"
-          :token="state.symbolWithdraw"
-          :balance="withdrawable"
-          :decimals="state.decimalsWithdraw"
-          :price="(state.priceShare ?? 0) * (state.priceUnderlying ?? 0)"
-        ></PounderInput>
-
-        <div class="actions">
-          <ZapSelect
-            v-model="zapWithdraw"
-            :class="{ expanded }"
-            :zaps="zapsWithdraw"
-            @select="onWithdrawSelect"
-          ></ZapSelect>
-
-          <div class="buttons">
-            <Button
-              :value="withdrawLabel"
-              :primary="true"
-              :web3="true"
-              :disabled="!canWithdraw"
-              @click="onWithdraw(false, false)"
-            ></Button>
-
-            <Button
-              v-if="!!swapWithdraw"
-              class="swap"
-              :web3="true"
-              @click="showSwapWithdraw = true"
-            >
-              <img :src="cow" />
-              {{ t("sell", [swapWithdraw?.sell ?? "?"]) }}
-            </Button>
-          </div>
-
-          <ModalYesNo
-            :title="t('claim-rewards-title')"
-            :show="modalClaim"
-            @close="modalClaim = false"
-            @no="modalClaim = false"
-            @yes="onYesModalClaim"
-          >
-            <span>{{ t("claim-first") }} </span>
-          </ModalYesNo>
-        </div>
-      </div>
-    </div>
-
-    <div class="description">
-      <span class="title">{{ t("information") }}</span>
-      <span>{{ description }}</span>
-    </div>
-
-    <ModalCowSwap
-      :show="showSwapDeposit"
-      :swap="swapDeposit"
-      @close="showSwapDeposit = false"
-    ></ModalCowSwap>
-
-    <ModalCowSwap
-      :show="showSwapWithdraw"
-      :swap="swapWithdraw"
-      @close="showSwapWithdraw = false"
-    ></ModalCowSwap>
-
-    <ModalSlippage
-      :show="modalSlippage"
-      :symbol-output="symbolOutput"
-      :min-amount-out-ref="minAmountOutRef"
-      @close="modalSlippage = false"
-      @no="modalSlippage = false"
-      @yes="onYesModalSlippage"
-    ></ModalSlippage>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { useWallet } from "@/Wallet";
@@ -428,6 +309,125 @@ const onWithdrawSelect = (zap: Zap): void => {
   zapWithdraw.value = zap as ZapWithdraw;
 };
 </script>
+
+<template>
+  <div class="details">
+    <div class="deposit-and-withdraw">
+      <div class="deposit">
+        <PounderInput
+          v-model="deposit"
+          :token="state.symbolDeposit"
+          :balance="state.balanceDeposit"
+          :decimals="state.decimalsDeposit"
+        ></PounderInput>
+
+        <div class="actions">
+          <ZapSelect
+            v-model="zapDeposit"
+            :class="{ expanded }"
+            :zaps="zapsDeposit"
+            @select="onDepositSelect"
+          ></ZapSelect>
+
+          <div class="buttons">
+            <Button
+              :value="depositLabel"
+              :primary="true"
+              :web3="true"
+              :disabled="!canDeposit"
+              @click="onDeposit(false)"
+            ></Button>
+
+            <Button
+              v-if="!!swapDeposit"
+              class="swap"
+              :web3="true"
+              @click="showSwapDeposit = true"
+            >
+              <img :src="cow" />
+              {{ t("buy", [swapDeposit?.buy ?? "?"]) }}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div class="withdraw">
+        <PounderInput
+          v-model="withdraw"
+          :token="state.symbolWithdraw"
+          :balance="withdrawable"
+          :decimals="state.decimalsWithdraw"
+          :price="(state.priceShare ?? 0) * (state.priceUnderlying ?? 0)"
+        ></PounderInput>
+
+        <div class="actions">
+          <ZapSelect
+            v-model="zapWithdraw"
+            :class="{ expanded }"
+            :zaps="zapsWithdraw"
+            @select="onWithdrawSelect"
+          ></ZapSelect>
+
+          <div class="buttons">
+            <Button
+              :value="withdrawLabel"
+              :primary="true"
+              :web3="true"
+              :disabled="!canWithdraw"
+              @click="onWithdraw(false, false)"
+            ></Button>
+
+            <Button
+              v-if="!!swapWithdraw"
+              class="swap"
+              :web3="true"
+              @click="showSwapWithdraw = true"
+            >
+              <img :src="cow" />
+              {{ t("sell", [swapWithdraw?.sell ?? "?"]) }}
+            </Button>
+          </div>
+
+          <ModalYesNo
+            :title="t('claim-rewards-title')"
+            :show="modalClaim"
+            @close="modalClaim = false"
+            @no="modalClaim = false"
+            @yes="onYesModalClaim"
+          >
+            <span>{{ t("claim-first") }} </span>
+          </ModalYesNo>
+        </div>
+      </div>
+    </div>
+
+    <div class="description">
+      <span class="title">{{ t("information") }}</span>
+      <span>{{ description }}</span>
+    </div>
+
+    <ModalCowSwap
+      :show="showSwapDeposit"
+      :swap="swapDeposit"
+      @close="showSwapDeposit = false"
+    ></ModalCowSwap>
+
+    <ModalCowSwap
+      :show="showSwapWithdraw"
+      :swap="swapWithdraw"
+      @close="showSwapWithdraw = false"
+    ></ModalCowSwap>
+
+    <ModalSlippage
+      :show="modalSlippage"
+      :symbol-output="symbolOutput"
+      :min-amount-out-ref="minAmountOutRef"
+      @close="modalSlippage = false"
+      @no="modalSlippage = false"
+      @yes="onYesModalSlippage"
+    ></ModalSlippage>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

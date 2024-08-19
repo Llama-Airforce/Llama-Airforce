@@ -1,27 +1,3 @@
-<template>
-  <div class="trove">
-    <ChartTroveRank
-      class="graph-rank"
-      :vault="vault"
-      :trove="trove"
-    >
-    </ChartTroveRank>
-
-    <ChartTroveHealth
-      class="graph-health"
-      :vault="vault"
-      :trove="trove"
-    >
-    </ChartTroveHealth>
-
-    <TableTroveOps
-      class="table-ops"
-      :vault="vault"
-      :trove="trove"
-    ></TableTroveOps>
-  </div>
-</template>
-
 <script setup lang="ts">
 // Refs
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
@@ -140,6 +116,30 @@ watch(trove, (trove) => {
   ];
 });
 </script>
+
+<template>
+  <div class="trove">
+    <ChartTroveRank
+      class="graph-rank"
+      :vault="vault"
+      :trove="trove"
+    >
+    </ChartTroveRank>
+
+    <ChartTroveHealth
+      class="graph-health"
+      :vault="vault"
+      :trove="trove"
+    >
+    </ChartTroveHealth>
+
+    <TableTroveOps
+      class="table-ops"
+      :vault="vault"
+      :trove="trove"
+    ></TableTroveOps>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

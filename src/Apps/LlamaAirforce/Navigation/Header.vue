@@ -1,13 +1,3 @@
-<template>
-  <div
-    class="headers"
-    :class="{ hasHeader }"
-  >
-    <HeaderDesktop class="desktop"></HeaderDesktop>
-    <HeaderMobile class="mobile"></HeaderMobile>
-  </div>
-</template>
-
 <script setup lang="ts">
 import HeaderDesktop from "@LAF/Navigation/HeaderDesktop.vue";
 import HeaderMobile from "@LAF/Navigation/HeaderMobile.vue";
@@ -18,6 +8,16 @@ const hasHeader = computed((): boolean => {
   return route.name !== "curvemonitor";
 });
 </script>
+
+<template>
+  <div
+    class="headers"
+    :class="{ hasHeader }"
+  >
+    <HeaderDesktop class="desktop"></HeaderDesktop>
+    <HeaderMobile class="mobile"></HeaderMobile>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

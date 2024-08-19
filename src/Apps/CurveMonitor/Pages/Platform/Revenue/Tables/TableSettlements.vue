@@ -1,3 +1,75 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { type CowSwapSettlement } from "@CM/Services/Revenue";
+import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
+
+const { t } = useI18n();
+
+type Row = CowSwapSettlement;
+
+// Props
+interface Props {
+  settlements: CowSwapSettlement[];
+}
+
+const { settlements } = defineProps<Props>();
+
+// Data
+const columns = [
+  { id: "token", label: "Token", sort: false } as const,
+  { id: "amount", label: "Amount", sort: true, align: "end" } as const,
+  { id: "quote", label: "Quote", sort: true, align: "end" } as const,
+  { id: "profit", label: "Profit", sort: true, align: "end" } as const,
+  { id: "profitPct", label: "(%)", sort: true, align: "end" } as const,
+  { id: "tx", label: "Transaction", sort: false, align: "end" } as const,
+  { id: "timestamp", label: "Time", sort: true, align: "end" } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("timestamp");
+
+const rows = computed(() =>
+  settlements.orderBy((settlement) => {
+    switch (sorting.value.column) {
+      case "amount":
+        return settlement.amountReceived;
+      case "quote":
+        return settlement.routerReceived;
+      case "profit":
+        return profit(settlement);
+      case "profitPct":
+        return profitPct(settlement);
+      case "timestamp":
+      default:
+        return settlement.timestamp;
+    }
+  }, sorting.value.order)
+);
+
+const rowsPerPage = 15;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+
+const { expanded, toggleExpansion } = useExpansion<Row>();
+const { relativeTime } = useRelativeTime();
+
+// Formatters
+function profit(settlement: CowSwapSettlement) {
+  return settlement.amountReceived - settlement.routerReceived;
+}
+
+function profitPct(settlement: CowSwapSettlement) {
+  return (100 * settlement.amountReceived) / settlement.routerReceived - 100;
+}
+
+function symbol(settlement: CowSwapSettlement) {
+  const symbol = settlement.coin.symbol;
+  if (symbol.includes(":")) {
+    return symbol.split(":")[1];
+  }
+
+  return symbol;
+}
+</script>
+
 <template>
   <Card :title="t('title')">
     <template #actions>
@@ -98,78 +170,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { type CowSwapSettlement } from "@CM/Services/Revenue";
-import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
-
-const { t } = useI18n();
-
-type Row = CowSwapSettlement;
-
-// Props
-interface Props {
-  settlements: CowSwapSettlement[];
-}
-
-const { settlements } = defineProps<Props>();
-
-// Data
-const columns = [
-  { id: "token", label: "Token", sort: false } as const,
-  { id: "amount", label: "Amount", sort: true, align: "end" } as const,
-  { id: "quote", label: "Quote", sort: true, align: "end" } as const,
-  { id: "profit", label: "Profit", sort: true, align: "end" } as const,
-  { id: "profitPct", label: "(%)", sort: true, align: "end" } as const,
-  { id: "tx", label: "Transaction", sort: false, align: "end" } as const,
-  { id: "timestamp", label: "Time", sort: true, align: "end" } as const,
-];
-
-const { sorting, onSort } = useSort<typeof columns>("timestamp");
-
-const rows = computed(() =>
-  settlements.orderBy((settlement) => {
-    switch (sorting.value.column) {
-      case "amount":
-        return settlement.amountReceived;
-      case "quote":
-        return settlement.routerReceived;
-      case "profit":
-        return profit(settlement);
-      case "profitPct":
-        return profitPct(settlement);
-      case "timestamp":
-      default:
-        return settlement.timestamp;
-    }
-  }, sorting.value.order)
-);
-
-const rowsPerPage = 15;
-const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-const { expanded, toggleExpansion } = useExpansion<Row>();
-const { relativeTime } = useRelativeTime();
-
-// Formatters
-function profit(settlement: CowSwapSettlement) {
-  return settlement.amountReceived - settlement.routerReceived;
-}
-
-function profitPct(settlement: CowSwapSettlement) {
-  return (100 * settlement.amountReceived) / settlement.routerReceived - 100;
-}
-
-function symbol(settlement: CowSwapSettlement) {
-  const symbol = settlement.coin.symbol;
-  if (symbol.includes(":")) {
-    return symbol.split(":")[1];
-  }
-
-  return symbol;
-}
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

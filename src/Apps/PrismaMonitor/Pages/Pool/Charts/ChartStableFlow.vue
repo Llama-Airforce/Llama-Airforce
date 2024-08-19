@@ -1,12 +1,3 @@
-<template>
-  <CardChart
-    :title="t('title', { stable: stableSymbol(flavor) })"
-    :loading="loading"
-    :options="options"
-    :series="series"
-  ></CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
@@ -127,6 +118,15 @@ const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    :title="t('title', { stable: stableSymbol(flavor) })"
+    :loading="loading"
+    :options="options"
+    :series="series"
+  ></CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

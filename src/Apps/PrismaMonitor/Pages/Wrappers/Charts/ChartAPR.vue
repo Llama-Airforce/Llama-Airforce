@@ -1,16 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-    :loading="loading"
-  >
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -94,6 +81,19 @@ const formatter = (y: number): string => {
   return `${round(y, 0, "percentage")}${unit(y, "percentage")}`;
 };
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+    :loading="loading"
+  >
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

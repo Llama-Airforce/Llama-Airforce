@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import MEV from "@CM/Pages/Platform/Monitor/Tabs/MEV.vue";
+
+// Tabs
+const { tabActive, tabActiveIndex } = useTabNavigation(["mev"], "monitor");
+</script>
+
 <template>
   <div class="monitor">
     <TabView
@@ -12,13 +19,6 @@
     </TabView>
   </div>
 </template>
-
-<script setup lang="ts">
-import MEV from "@CM/Pages/Platform/Monitor/Tabs/MEV.vue";
-
-// Tabs
-const { tabActive, tabActiveIndex } = useTabNavigation(["mev"], "monitor");
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

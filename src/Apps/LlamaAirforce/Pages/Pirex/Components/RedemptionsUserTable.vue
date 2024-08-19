@@ -1,38 +1,3 @@
-<template>
-  <Table
-    class="redemptions-user-table"
-    :columns="[
-      { label: 'Unlock', align: 'end' },
-      { label: 'Amount', align: 'end' },
-      '',
-    ]"
-    :rows="redemptions"
-  >
-    <template #row="{ item: redemption }: { item: Row }">
-      <div class="end">{{ date(redemption) }}</div>
-
-      <div class="end">
-        <AsyncValue
-          :value="balance(redemption)"
-          :precision="4"
-          :show-symbol="false"
-          type="dollar"
-        ></AsyncValue>
-      </div>
-
-      <div class="end">
-        <Button
-          value="Redeem"
-          :web3="true"
-          :disabled="redeeming || !canRedeem(redemption)"
-          :primary="true"
-          @click="redeem(redemption)"
-        ></Button>
-      </div>
-    </template>
-  </Table>
-</template>
-
 <script setup lang="ts">
 import { abi } from "@/ABI/Union/Pirex";
 import { useWallet } from "@/Wallet";
@@ -106,6 +71,41 @@ function balance(redemption: RedemptionPending) {
   return bigNumToNumber(redemption.balance, 18n);
 }
 </script>
+
+<template>
+  <Table
+    class="redemptions-user-table"
+    :columns="[
+      { label: 'Unlock', align: 'end' },
+      { label: 'Amount', align: 'end' },
+      '',
+    ]"
+    :rows="redemptions"
+  >
+    <template #row="{ item: redemption }: { item: Row }">
+      <div class="end">{{ date(redemption) }}</div>
+
+      <div class="end">
+        <AsyncValue
+          :value="balance(redemption)"
+          :precision="4"
+          :show-symbol="false"
+          type="dollar"
+        ></AsyncValue>
+      </div>
+
+      <div class="end">
+        <Button
+          value="Redeem"
+          :web3="true"
+          :disabled="redeeming || !canRedeem(redemption)"
+          :primary="true"
+          @click="redeem(redemption)"
+        ></Button>
+      </div>
+    </template>
+  </Table>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,82 +1,3 @@
-<template>
-  <Modal @close="emit('close')">
-    <Card title="Swap">
-      <div class="swap-body">
-        <div class="input">
-          <SelectToken
-            v-model="token"
-            class="token-select"
-            :tokens
-            @select="token = $event"
-          ></SelectToken>
-
-          <InputNumber
-            v-model="balanceSwap"
-            :min="0"
-            :max="Infinity"
-            :placeholder="balanceNum"
-          ></InputNumber>
-
-          <a @click="balanceSwap = balanceNum">Max</a>
-        </div>
-
-        <h3>Slippage</h3>
-        <div class="slippage">
-          <div
-            style="grid-area: info"
-            class="info"
-          >
-            <div class="explanation">{{ t("slippage-info") }}</div>
-            <div class="discount">
-              <div class="title">Current discount</div>
-
-              <AsyncValue
-                type="percentage"
-                :value="discount"
-                :inline="false"
-              ></AsyncValue>
-            </div>
-          </div>
-
-          <span style="grid-area: label1">{{ t("percentage") }}</span>
-
-          <Slider
-            v-model="slippage"
-            style="grid-area: slider"
-            :min="0.001"
-            :max="0.2"
-            :step="0.001"
-          ></Slider>
-
-          <span style="grid-area: percentage">
-            {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
-          </span>
-
-          <span style="grid-area: label2">{{ t("min-amount") }}</span>
-
-          <InputNumber
-            v-model="minAmountOutSafe"
-            style="grid-area: input"
-            disabled
-            :min="0"
-            :max="Infinity"
-          ></InputNumber>
-
-          <span style="grid-area: symbol">{{ swapInfo.to.symbol }}</span>
-        </div>
-
-        <Button
-          :value="submitLabel"
-          :web3="true"
-          :primary="true"
-          :disabled="!canSwap || isApproving || isSwapping"
-          @click="onSubmit"
-        ></Button>
-      </div>
-    </Card>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { useWallet } from "@/Wallet";
@@ -226,6 +147,85 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
   }
 );
 </script>
+
+<template>
+  <Modal @close="emit('close')">
+    <Card title="Swap">
+      <div class="swap-body">
+        <div class="input">
+          <SelectToken
+            v-model="token"
+            class="token-select"
+            :tokens
+            @select="token = $event"
+          ></SelectToken>
+
+          <InputNumber
+            v-model="balanceSwap"
+            :min="0"
+            :max="Infinity"
+            :placeholder="balanceNum"
+          ></InputNumber>
+
+          <a @click="balanceSwap = balanceNum">Max</a>
+        </div>
+
+        <h3>Slippage</h3>
+        <div class="slippage">
+          <div
+            style="grid-area: info"
+            class="info"
+          >
+            <div class="explanation">{{ t("slippage-info") }}</div>
+            <div class="discount">
+              <div class="title">Current discount</div>
+
+              <AsyncValue
+                type="percentage"
+                :value="discount"
+                :inline="false"
+              ></AsyncValue>
+            </div>
+          </div>
+
+          <span style="grid-area: label1">{{ t("percentage") }}</span>
+
+          <Slider
+            v-model="slippage"
+            style="grid-area: slider"
+            :min="0.001"
+            :max="0.2"
+            :step="0.001"
+          ></Slider>
+
+          <span style="grid-area: percentage">
+            {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
+          </span>
+
+          <span style="grid-area: label2">{{ t("min-amount") }}</span>
+
+          <InputNumber
+            v-model="minAmountOutSafe"
+            style="grid-area: input"
+            disabled
+            :min="0"
+            :max="Infinity"
+          ></InputNumber>
+
+          <span style="grid-area: symbol">{{ swapInfo.to.symbol }}</span>
+        </div>
+
+        <Button
+          :value="submitLabel"
+          :web3="true"
+          :primary="true"
+          :disabled="!canSwap || isApproving || isSwapping"
+          @click="onSubmit"
+        ></Button>
+      </div>
+    </Card>
+  </Modal>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

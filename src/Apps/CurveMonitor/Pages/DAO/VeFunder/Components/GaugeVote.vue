@@ -1,38 +1,3 @@
-<template>
-  <Card
-    class="add-new"
-    title="Gauge Addition Vote"
-  >
-    <div class="form">
-      <div class="field">
-        <div class="label">{{ t("gauge") }}:</div>
-        <div class="value">
-          <InputText
-            v-model="gauge_"
-            :placeholder="gaugePlaceholder"
-          ></InputText>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">{{ t("description") }}:</div>
-        <div class="value">
-          <InputText v-model="description"></InputText>
-        </div>
-      </div>
-    </div>
-
-    <Button
-      class="action-button request"
-      :value="t('submit')"
-      :disabled="!canRequest"
-      :primary="true"
-      :web3="true"
-      @click="execute"
-    ></Button>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { encodeFunctionData } from "viem";
 import { abi as abiAgent } from "@/ABI/veFunder/AragonAgent";
@@ -144,6 +109,41 @@ async function createVote() {
   await waitForTransactionReceipt(config, { hash });
 }
 </script>
+
+<template>
+  <Card
+    class="add-new"
+    title="Gauge Addition Vote"
+  >
+    <div class="form">
+      <div class="field">
+        <div class="label">{{ t("gauge") }}:</div>
+        <div class="value">
+          <InputText
+            v-model="gauge_"
+            :placeholder="gaugePlaceholder"
+          ></InputText>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="label">{{ t("description") }}:</div>
+        <div class="value">
+          <InputText v-model="description"></InputText>
+        </div>
+      </div>
+    </div>
+
+    <Button
+      class="action-button request"
+      :value="t('submit')"
+      :disabled="!canRequest"
+      :primary="true"
+      :web3="true"
+      @click="execute"
+    ></Button>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

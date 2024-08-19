@@ -1,98 +1,3 @@
-<template>
-  <Card
-    class="redemptions-card"
-    :title="t('title')"
-    :loading
-  >
-    <template #actions>
-      <SelectVault
-        :vault="vault"
-        :all="true"
-        @select-vault="vault = $event"
-      ></SelectVault>
-
-      <div style="display: flex; gap: 1rem">
-        <InputText
-          v-model="search"
-          :search="true"
-          :placeholder="t('search-placeholder')"
-        >
-        </InputText>
-
-        <Pagination
-          :items-count="rows.length"
-          :items-per-page="rowsPerPage"
-          :page="page"
-          @page="onPage"
-        ></Pagination>
-      </div>
-    </template>
-
-    <Table
-      class="redemptions-table"
-      :rows="rowsPage"
-      :columns
-      :sorting
-      @sort-column="onSort"
-      @selected="showDetails = $event"
-    >
-      <template #row="props: { item: Row }">
-        <img :src="icon(props.item.vault)" />
-
-        <div>
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.redeemer}`"
-            target="_blank"
-            @click.stop
-          >
-            {{ addressShort(props.item.redeemer) }}
-          </a>
-        </div>
-
-        <div>
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.transaction}`"
-            target="_blank"
-            @click.stop
-          >
-            {{ addressShort(props.item.transaction) }}
-          </a>
-        </div>
-
-        <div class="end">
-          <AsyncValue
-            type="dollar"
-            :value="Math.round(props.item.actual_debt_amount)"
-            :precision="Infinity"
-          ></AsyncValue>
-        </div>
-
-        <div class="end">{{ props.item.troves_affected_count }}</div>
-
-        <div class="end">
-          {{ relativeTime(props.item.timestamp) }}
-        </div>
-      </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
-    </Table>
-  </Card>
-
-  <Modal
-    :show="!!showDetails"
-    @close="showDetails = null"
-  >
-    <RedemptionDetails
-      v-if="!!showDetails"
-      :redemption="showDetails"
-      :vault-addr="showDetails.vault"
-    ></RedemptionDetails>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
@@ -195,6 +100,101 @@ const rows = computed(() =>
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 </script>
+
+<template>
+  <Card
+    class="redemptions-card"
+    :title="t('title')"
+    :loading
+  >
+    <template #actions>
+      <SelectVault
+        :vault="vault"
+        :all="true"
+        @select-vault="vault = $event"
+      ></SelectVault>
+
+      <div style="display: flex; gap: 1rem">
+        <InputText
+          v-model="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
+
+        <Pagination
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
+    </template>
+
+    <Table
+      class="redemptions-table"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+      @selected="showDetails = $event"
+    >
+      <template #row="props: { item: Row }">
+        <img :src="icon(props.item.vault)" />
+
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.redeemer}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.redeemer) }}
+          </a>
+        </div>
+
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.transaction) }}
+          </a>
+        </div>
+
+        <div class="end">
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.actual_debt_amount)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
+
+        <div class="end">{{ props.item.troves_affected_count }}</div>
+
+        <div class="end">
+          {{ relativeTime(props.item.timestamp) }}
+        </div>
+      </template>
+
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </Table>
+  </Card>
+
+  <Modal
+    :show="!!showDetails"
+    @close="showDetails = null"
+  >
+    <RedemptionDetails
+      v-if="!!showDetails"
+      :redemption="showDetails"
+      :vault-addr="showDetails.vault"
+    ></RedemptionDetails>
+  </Modal>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

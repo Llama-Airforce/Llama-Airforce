@@ -1,16 +1,3 @@
-<template>
-  <div class="proposal-details">
-    <div class="proposal-details-container">
-      <Technicals
-        :proposal="proposal"
-        :expanded="expanded"
-      ></Technicals>
-
-      <Voting :proposal="proposal"></Voting>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Proposal } from "@CM/Services/Proposal";
 import Voting from "@CM/Pages/DAO/Proposals/Components/Voting.vue";
@@ -26,6 +13,19 @@ const { proposal, expanded = false } = defineProps<Props>();
 
 // Refs
 </script>
+
+<template>
+  <div class="proposal-details">
+    <div class="proposal-details-container">
+      <Technicals
+        :proposal="proposal"
+        :expanded="expanded"
+      ></Technicals>
+
+      <Voting :proposal="proposal"></Voting>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

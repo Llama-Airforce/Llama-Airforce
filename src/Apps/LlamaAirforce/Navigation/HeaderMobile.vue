@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import Wallet from "@/Wallet/Wallet.vue";
+import MenuMobile from "@LAF/Navigation/MenuMobile.vue";
+
+// Refs
+const menuOpen = ref(false);
+
+// Methods
+const toggleMenu = (): void => {
+  menuOpen.value = !menuOpen.value;
+  document.documentElement.style.overflow = menuOpen.value ? "hidden" : "";
+};
+
+const onNavigated = (): void => {
+  menuOpen.value = false;
+  document.documentElement.style.overflow = "";
+};
+</script>
+
 <template>
   <header>
     <div class="header-mobile">
@@ -29,25 +48,6 @@
     ></MenuMobile>
   </header>
 </template>
-
-<script setup lang="ts">
-import Wallet from "@/Wallet/Wallet.vue";
-import MenuMobile from "@LAF/Navigation/MenuMobile.vue";
-
-// Refs
-const menuOpen = ref(false);
-
-// Methods
-const toggleMenu = (): void => {
-  menuOpen.value = !menuOpen.value;
-  document.documentElement.style.overflow = menuOpen.value ? "hidden" : "";
-};
-
-const onNavigated = (): void => {
-  menuOpen.value = false;
-  document.documentElement.style.overflow = "";
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

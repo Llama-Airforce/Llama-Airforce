@@ -1,10 +1,3 @@
-<template>
-  <div
-    ref="cow"
-    class="cow"
-  ></div>
-</template>
-
 <script setup lang="ts">
 import { useAccount } from "@wagmi/vue";
 import {
@@ -102,6 +95,13 @@ function createParams(
   };
 }
 </script>
+
+<template>
+  <div
+    ref="cow"
+    class="cow"
+  ></div>
+</template>
 
 <style lang="scss" scoped>
 .cow {

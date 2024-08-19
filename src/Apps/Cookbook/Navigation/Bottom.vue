@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import Wallet from "@/Wallet/Wallet.vue";
+import SelectTheme from "@CB/Navigation/SelectTheme.vue";
+
+// Emits
+const emit = defineEmits<{
+  navigated: [];
+}>();
+
+// Methods
+const copyUrl = async () => {
+  await navigator.clipboard.writeText(window.location.href);
+};
+</script>
+
 <template>
   <div class="bottom">
     <div class="buttons">
@@ -40,21 +55,6 @@
     <Wallet></Wallet>
   </div>
 </template>
-
-<script setup lang="ts">
-import Wallet from "@/Wallet/Wallet.vue";
-import SelectTheme from "@CB/Navigation/SelectTheme.vue";
-
-// Emits
-const emit = defineEmits<{
-  navigated: [];
-}>();
-
-// Methods
-const copyUrl = async () => {
-  await navigator.clipboard.writeText(window.location.href);
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

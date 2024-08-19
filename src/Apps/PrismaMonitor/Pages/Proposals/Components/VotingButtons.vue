@@ -1,72 +1,3 @@
-<template>
-  <div class="buttons">
-    <Button
-      :value="t('vote')"
-      :primary="true"
-      @click="showVote = true"
-    ></Button>
-
-    <Button
-      v-if="executable"
-      :value="t(executing ? 'executing' : 'execute')"
-      :primary="true"
-      :disabled="!canExecute || executing"
-      @click="execute"
-    ></Button>
-  </div>
-
-  <Modal
-    :show="showVote"
-    @close="showVote = false"
-  >
-    <Card
-      :title="t('vote-with-veprisma')"
-      class="vote-content"
-    >
-      <div class="veprisma">
-        <div class="info">
-          <div class="kpis">
-            <KPI
-              :label="t('voting-power')"
-              :has-value="true"
-            >
-              <AsyncValue
-                :value="votingPowerNumber"
-                :precision="2"
-                type="dollar"
-                :show-symbol="false"
-                :show-zero="true"
-              />
-              vePRISMA
-            </KPI>
-
-            <KPI
-              :label="t('block')"
-              :value="proposal.block"
-              :has-value="true"
-            >
-            </KPI>
-          </div>
-
-          <div class="description">
-            <span class="title">{{ t("description") }}: </span>
-            <span>{{ proposal.metadata?.description || "" }}</span>
-          </div>
-        </div>
-
-        <Button
-          class="submit"
-          :value="t(voteButtonText)"
-          :primary="true"
-          :disabled="!canVote"
-          :web3="true"
-          @click="vote"
-        ></Button>
-      </div>
-    </Card>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { abi as abiLocker } from "@/ABI/Prisma/PrismaLocker";
 import { abi as abiVoting } from "@/ABI/Prisma/VotingPrisma";
@@ -223,6 +154,75 @@ watch(
   { immediate: true }
 );
 </script>
+
+<template>
+  <div class="buttons">
+    <Button
+      :value="t('vote')"
+      :primary="true"
+      @click="showVote = true"
+    ></Button>
+
+    <Button
+      v-if="executable"
+      :value="t(executing ? 'executing' : 'execute')"
+      :primary="true"
+      :disabled="!canExecute || executing"
+      @click="execute"
+    ></Button>
+  </div>
+
+  <Modal
+    :show="showVote"
+    @close="showVote = false"
+  >
+    <Card
+      :title="t('vote-with-veprisma')"
+      class="vote-content"
+    >
+      <div class="veprisma">
+        <div class="info">
+          <div class="kpis">
+            <KPI
+              :label="t('voting-power')"
+              :has-value="true"
+            >
+              <AsyncValue
+                :value="votingPowerNumber"
+                :precision="2"
+                type="dollar"
+                :show-symbol="false"
+                :show-zero="true"
+              />
+              vePRISMA
+            </KPI>
+
+            <KPI
+              :label="t('block')"
+              :value="proposal.block"
+              :has-value="true"
+            >
+            </KPI>
+          </div>
+
+          <div class="description">
+            <span class="title">{{ t("description") }}: </span>
+            <span>{{ proposal.metadata?.description || "" }}</span>
+          </div>
+        </div>
+
+        <Button
+          class="submit"
+          :value="t(voteButtonText)"
+          :primary="true"
+          :disabled="!canVote"
+          :web3="true"
+          @click="vote"
+        ></Button>
+      </div>
+    </Card>
+  </Modal>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

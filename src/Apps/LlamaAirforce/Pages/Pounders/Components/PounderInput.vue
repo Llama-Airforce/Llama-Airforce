@@ -1,50 +1,3 @@
-<template>
-  <div class="pounder-input">
-    <div class="input">
-      <div class="labels">
-        <div class="balance">
-          <div class="value">
-            {{ t("balance") }} {{ balanceNumber }} {{ token }}
-          </div>
-          <a
-            class="max"
-            @click="onMax"
-          >
-            {{ t("max") }}
-          </a>
-        </div>
-
-        <div
-          class="dollars"
-          :class="{ hide: price === 0 }"
-        >
-          {{ t("dollars") }}
-          <AsyncValue
-            :value="valueDollar"
-            :precision="2"
-            :show-zero="true"
-            type="dollar"
-          />
-        </div>
-      </div>
-
-      <InputNumber
-        v-model="value"
-        :min="0"
-        :max="balanceNumber"
-      ></InputNumber>
-    </div>
-
-    <Slider
-      v-model="value"
-      class="slider"
-      :min="0"
-      :max="balanceNumber"
-      :step="step"
-    ></Slider>
-  </div>
-</template>
-
 <script setup lang="ts">
 const { t } = useI18n();
 
@@ -125,6 +78,53 @@ const onMax = (): void => {
   }
 };
 </script>
+
+<template>
+  <div class="pounder-input">
+    <div class="input">
+      <div class="labels">
+        <div class="balance">
+          <div class="value">
+            {{ t("balance") }} {{ balanceNumber }} {{ token }}
+          </div>
+          <a
+            class="max"
+            @click="onMax"
+          >
+            {{ t("max") }}
+          </a>
+        </div>
+
+        <div
+          class="dollars"
+          :class="{ hide: price === 0 }"
+        >
+          {{ t("dollars") }}
+          <AsyncValue
+            :value="valueDollar"
+            :precision="2"
+            :show-zero="true"
+            type="dollar"
+          />
+        </div>
+      </div>
+
+      <InputNumber
+        v-model="value"
+        :min="0"
+        :max="balanceNumber"
+      ></InputNumber>
+    </div>
+
+    <Slider
+      v-model="value"
+      class="slider"
+      :min="0"
+      :max="balanceNumber"
+      :step="step"
+    ></Slider>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,127 +1,3 @@
-<template>
-  <div class="buttons">
-    <Button
-      :value="t('vote')"
-      :primary="true"
-      @click="showVote = true"
-    ></Button>
-
-    <Button
-      v-if="executable"
-      :value="t(executing ? 'executing' : 'execute')"
-      :primary="true"
-      :disabled="!canExecute || executing"
-      @click="execute"
-    ></Button>
-  </div>
-
-  <Modal
-    :show="showVote"
-    @close="showVote = false"
-  >
-    <Card
-      :title="t('vote-with-vecrv')"
-      class="vote-content"
-    >
-      <div class="vecrv">
-        <div class="info">
-          <div class="kpis">
-            <KPI
-              :label="t('voting-power')"
-              :has-value="true"
-            >
-              <AsyncValue
-                :value="votingPowerNumber"
-                :precision="2"
-                type="dollar"
-                :show-symbol="false"
-                :show-zero="true"
-              />
-              veCRV
-            </KPI>
-
-            <KPI
-              :label="t('block')"
-              :value="proposal.block"
-              :has-value="true"
-            >
-            </KPI>
-          </div>
-
-          <div class="description">
-            <span class="title">{{ t("description") }}: </span>
-            <span>{{ proposal.metadata }}</span>
-          </div>
-        </div>
-
-        <div class="options">
-          <Button
-            class="no"
-            :class="{ winning: yeaPct < 50 }"
-            :disabled="!canVote"
-            @click="selectNo"
-          >
-            <span class="label"> {{ t("no") }}</span>
-          </Button>
-
-          <div class="middle">
-            <i
-              class="fas fa-times"
-              :class="{ winning: yeaPct < 50 }"
-            ></i>
-
-            <div
-              class="value"
-              :class="{ disabled: !canVote }"
-              @click="onEdit"
-            >
-              <span
-                ref="editor"
-                :contenteditable="canVote"
-                @input="validate"
-                v-text="yeaPctStr"
-              >
-              </span>
-              %
-            </div>
-
-            <i
-              class="fas fa-check"
-              :class="{ winning: yeaPct > 50 }"
-            ></i>
-          </div>
-
-          <Button
-            class="yes"
-            :class="{ winning: yeaPct > 50 }"
-            :disabled="!canVote"
-            @click="selectYes"
-          >
-            <span class="label"> {{ t("yes") }}</span>
-          </Button>
-        </div>
-
-        <Slider
-          v-model="yeaPct"
-          class="slider"
-          :disabled="!canVote"
-          :min="0"
-          :max="100"
-        ></Slider>
-
-        <Button
-          class="submit"
-          :value="t(voteButtonText)"
-          :primary="true"
-          :disabled="!canVote"
-          :web3="true"
-          @click="vote"
-        ></Button>
-      </div>
-    </Card>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { abi as abiVeCRV } from "@/ABI/Curve/VeCRV";
 import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
@@ -411,6 +287,130 @@ whenever(isConfirmedExecute, () => {
   notify({ text: "Executed proposal", type: "success" });
 });
 </script>
+
+<template>
+  <div class="buttons">
+    <Button
+      :value="t('vote')"
+      :primary="true"
+      @click="showVote = true"
+    ></Button>
+
+    <Button
+      v-if="executable"
+      :value="t(executing ? 'executing' : 'execute')"
+      :primary="true"
+      :disabled="!canExecute || executing"
+      @click="execute"
+    ></Button>
+  </div>
+
+  <Modal
+    :show="showVote"
+    @close="showVote = false"
+  >
+    <Card
+      :title="t('vote-with-vecrv')"
+      class="vote-content"
+    >
+      <div class="vecrv">
+        <div class="info">
+          <div class="kpis">
+            <KPI
+              :label="t('voting-power')"
+              :has-value="true"
+            >
+              <AsyncValue
+                :value="votingPowerNumber"
+                :precision="2"
+                type="dollar"
+                :show-symbol="false"
+                :show-zero="true"
+              />
+              veCRV
+            </KPI>
+
+            <KPI
+              :label="t('block')"
+              :value="proposal.block"
+              :has-value="true"
+            >
+            </KPI>
+          </div>
+
+          <div class="description">
+            <span class="title">{{ t("description") }}: </span>
+            <span>{{ proposal.metadata }}</span>
+          </div>
+        </div>
+
+        <div class="options">
+          <Button
+            class="no"
+            :class="{ winning: yeaPct < 50 }"
+            :disabled="!canVote"
+            @click="selectNo"
+          >
+            <span class="label"> {{ t("no") }}</span>
+          </Button>
+
+          <div class="middle">
+            <i
+              class="fas fa-times"
+              :class="{ winning: yeaPct < 50 }"
+            ></i>
+
+            <div
+              class="value"
+              :class="{ disabled: !canVote }"
+              @click="onEdit"
+            >
+              <span
+                ref="editor"
+                :contenteditable="canVote"
+                @input="validate"
+                v-text="yeaPctStr"
+              >
+              </span>
+              %
+            </div>
+
+            <i
+              class="fas fa-check"
+              :class="{ winning: yeaPct > 50 }"
+            ></i>
+          </div>
+
+          <Button
+            class="yes"
+            :class="{ winning: yeaPct > 50 }"
+            :disabled="!canVote"
+            @click="selectYes"
+          >
+            <span class="label"> {{ t("yes") }}</span>
+          </Button>
+        </div>
+
+        <Slider
+          v-model="yeaPct"
+          class="slider"
+          :disabled="!canVote"
+          :min="0"
+          :max="100"
+        ></Slider>
+
+        <Button
+          class="submit"
+          :value="t(voteButtonText)"
+          :primary="true"
+          :disabled="!canVote"
+          :web3="true"
+          @click="vote"
+        ></Button>
+      </div>
+    </Card>
+  </Modal>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

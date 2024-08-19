@@ -1,31 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-    :loading="loading"
-  >
-    <template #actions>
-      <div class="actions">
-        <ButtonToggle
-          value="Coll."
-          :model-value="chartType === 'collateral'"
-          @click="chartType = 'collateral'"
-        >
-        </ButtonToggle>
-
-        <ButtonToggle
-          value="Debt"
-          :model-value="chartType === 'debt'"
-          @click="chartType = 'debt'"
-        >
-        </ButtonToggle>
-      </div>
-    </template>
-
-    <ChartDistribution :data="data"></ChartDistribution>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { ManagerService, type TroveManagerDetails } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
@@ -70,6 +42,34 @@ const { isFetching: loading, data } = useQuery({
   initialDataUpdatedAt: 0,
 });
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+    :loading="loading"
+  >
+    <template #actions>
+      <div class="actions">
+        <ButtonToggle
+          value="Coll."
+          :model-value="chartType === 'collateral'"
+          @click="chartType = 'collateral'"
+        >
+        </ButtonToggle>
+
+        <ButtonToggle
+          value="Debt"
+          :model-value="chartType === 'debt'"
+          @click="chartType = 'debt'"
+        >
+        </ButtonToggle>
+      </div>
+    </template>
+
+    <ChartDistribution :data="data"></ChartDistribution>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

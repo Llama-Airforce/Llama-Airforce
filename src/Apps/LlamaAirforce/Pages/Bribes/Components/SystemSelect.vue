@@ -1,49 +1,3 @@
-<template>
-  <div class="system-selector">
-    <Select
-      class="platform"
-      :label="t('platform')"
-      :options="platforms"
-      :selected="platform"
-      :open="platformOpen"
-      @open="onPlatformOpen"
-      @close="platformOpen = false"
-      @input="onPlatformSelect"
-    >
-      <template #item="props: { item: PlatformInfo }">
-        <div
-          v-if="props.item"
-          class="item"
-        >
-          <img :src="props.item.logo" />
-          <div class="label">{{ props.item.label }}</div>
-        </div>
-      </template>
-    </Select>
-
-    <Select
-      class="protocol"
-      :label="t('protocol')"
-      :options="protocols"
-      :selected="protocol"
-      :open="protocolOpen"
-      @open="onProtocolOpen"
-      @close="protocolOpen = false"
-      @input="onProtocolSelect"
-    >
-      <template #item="props: { item: SelectItem }">
-        <div
-          v-if="props.item"
-          class="item"
-        >
-          <img :src="props.item.logo" />
-          <div class="label">{{ props.item.label }}</div>
-        </div>
-      </template>
-    </Select>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { type Protocol, type Platform } from "@LAF/Pages/Bribes/Models";
@@ -154,6 +108,52 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
   emit("select-protocol", protocol);
 };
 </script>
+
+<template>
+  <div class="system-selector">
+    <Select
+      class="platform"
+      :label="t('platform')"
+      :options="platforms"
+      :selected="platform"
+      :open="platformOpen"
+      @open="onPlatformOpen"
+      @close="platformOpen = false"
+      @input="onPlatformSelect"
+    >
+      <template #item="props: { item: PlatformInfo }">
+        <div
+          v-if="props.item"
+          class="item"
+        >
+          <img :src="props.item.logo" />
+          <div class="label">{{ props.item.label }}</div>
+        </div>
+      </template>
+    </Select>
+
+    <Select
+      class="protocol"
+      :label="t('protocol')"
+      :options="protocols"
+      :selected="protocol"
+      :open="protocolOpen"
+      @open="onProtocolOpen"
+      @close="protocolOpen = false"
+      @input="onProtocolSelect"
+    >
+      <template #item="props: { item: SelectItem }">
+        <div
+          v-if="props.item"
+          class="item"
+        >
+          <img :src="props.item.logo" />
+          <div class="label">{{ props.item.label }}</div>
+        </div>
+      </template>
+    </Select>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

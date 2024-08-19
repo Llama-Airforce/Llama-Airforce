@@ -1,29 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-    :loading
-  >
-    <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-
-        <ButtonToggle
-          value="Dollars"
-          :model-value="denomDollars"
-          @click="denomDollars = !denomDollars"
-        >
-        </ButtonToggle>
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
@@ -168,6 +142,32 @@ function formatter(x: number): string {
   )}`;
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+    :loading
+  >
+    <template #actions>
+      <div class="actions">
+        <Legend :items></Legend>
+
+        <ButtonToggle
+          value="Dollars"
+          :model-value="denomDollars"
+          @click="denomDollars = !denomDollars"
+        >
+        </ButtonToggle>
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

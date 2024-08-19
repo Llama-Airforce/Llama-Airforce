@@ -1,15 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-  >
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -78,6 +66,18 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+  >
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

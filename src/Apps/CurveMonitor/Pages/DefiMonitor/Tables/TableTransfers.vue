@@ -1,3 +1,47 @@
+<script setup lang="ts">
+import { addressShort, addressLeft } from "@/Wallet";
+import { type CleanedTransfer } from "@CM/Services/Monitor/Transfers";
+import { useQueryTransfers } from "@CM/Services/Monitor/Transfers/Queries";
+
+const { t } = useI18n();
+
+const { data: transfersRaw, isFetching: loading } = useQueryTransfers();
+const { relativeTime } = useRelativeTime();
+
+const search = ref("");
+
+const transfers = computed(() =>
+  (transfersRaw.value ?? [])
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      // Min amount parsing.
+      const parsedAmount = terms.length === 1 ? parseFloat(terms[0]) : NaN;
+      const minAmount = !isNaN(parsedAmount) ? parsedAmount : 0;
+
+      return (
+        includesTerm(row.transferFrom) ||
+        includesTerm(row.transferTo) ||
+        (minAmount > 0 && row.parsedAmount >= minAmount)
+      );
+    })
+    .orderBy([(x) => x.blockUnixtime, (x) => x.positionInBlock], "desc")
+);
+
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(transfers, rowsPerPage);
+
+const round = (x: number) =>
+  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
+
+const clipboard = async (addr: string) => {
+  await navigator.clipboard.writeText(addr);
+};
+</script>
+
 <template>
   <Card
     class="transfers-card"
@@ -116,50 +160,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort, addressLeft } from "@/Wallet";
-import { type CleanedTransfer } from "@CM/Services/Monitor/Transfers";
-import { useQueryTransfers } from "@CM/Services/Monitor/Transfers/Queries";
-
-const { t } = useI18n();
-
-const { data: transfersRaw, isFetching: loading } = useQueryTransfers();
-const { relativeTime } = useRelativeTime();
-
-const search = ref("");
-
-const transfers = computed(() =>
-  (transfersRaw.value ?? [])
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      // Min amount parsing.
-      const parsedAmount = terms.length === 1 ? parseFloat(terms[0]) : NaN;
-      const minAmount = !isNaN(parsedAmount) ? parsedAmount : 0;
-
-      return (
-        includesTerm(row.transferFrom) ||
-        includesTerm(row.transferTo) ||
-        (minAmount > 0 && row.parsedAmount >= minAmount)
-      );
-    })
-    .orderBy([(x) => x.blockUnixtime, (x) => x.positionInBlock], "desc")
-);
-
-const rowsPerPage = 10;
-const { page, rowsPage, onPage } = usePagination(transfers, rowsPerPage);
-
-const round = (x: number) =>
-  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
-
-const clipboard = async (addr: string) => {
-  await navigator.clipboard.writeText(addr);
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

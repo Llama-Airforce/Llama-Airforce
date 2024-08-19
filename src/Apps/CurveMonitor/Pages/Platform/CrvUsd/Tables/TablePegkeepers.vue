@@ -1,3 +1,71 @@
+<script setup lang="ts">
+import { type Keeper } from "@CM/Services/CrvUsd";
+import { type Pool } from "@CM/Services/Pools";
+import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
+import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
+
+const { t } = useI18n();
+
+type Row = Pool & Keeper;
+
+// Refs
+const search = ref("");
+
+const loading = computed(() => loadingPools.value || loadingKeepers.value);
+
+const rowsRaw = computed(() =>
+  keepers.value
+    .map((keeper) => {
+      const pool = pools.value.find(
+        (pool) => keeper.pool_address === pool.address
+      );
+
+      if (!pool) {
+        return undefined;
+      }
+
+      return {
+        ...pool,
+        ...keeper,
+      };
+    })
+    .filter(notEmpty)
+    .orderBy((x) => x.tvlUsd, "desc")
+);
+
+const rows = computed(() =>
+  rowsRaw.value.filter((row) => {
+    const terms = search.value.toLocaleLowerCase().split(" ");
+
+    const includesTerm = (x: string): boolean =>
+      terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+    return includesTerm(row.name) || includesTerm(row.address);
+  })
+);
+
+// Keepers
+const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
+const name = (keeper: Keeper): string =>
+  `${keeper.pair[1].symbol} / ${keeper.pair[0].symbol}`;
+
+// Pools
+const poolAddresses = computed(() =>
+  keepers.value.map((keeper) => keeper.pool_address)
+);
+
+const poolQueries = useQueryPoolMultiple(ref("ethereum"), poolAddresses);
+const loadingPools = computed(() =>
+  poolQueries.value.some((x) => x.isFetching)
+);
+const pools = computed(() =>
+  poolQueries.value.filter((x) => x.data).map((x) => x.data!)
+);
+
+// Methods
+const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
+</script>
+
 <template>
   <Card
     class="pegkeepers-card"
@@ -106,74 +174,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type Keeper } from "@CM/Services/CrvUsd";
-import { type Pool } from "@CM/Services/Pools";
-import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
-import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
-
-const { t } = useI18n();
-
-type Row = Pool & Keeper;
-
-// Refs
-const search = ref("");
-
-const loading = computed(() => loadingPools.value || loadingKeepers.value);
-
-const rowsRaw = computed(() =>
-  keepers.value
-    .map((keeper) => {
-      const pool = pools.value.find(
-        (pool) => keeper.pool_address === pool.address
-      );
-
-      if (!pool) {
-        return undefined;
-      }
-
-      return {
-        ...pool,
-        ...keeper,
-      };
-    })
-    .filter(notEmpty)
-    .orderBy((x) => x.tvlUsd, "desc")
-);
-
-const rows = computed(() =>
-  rowsRaw.value.filter((row) => {
-    const terms = search.value.toLocaleLowerCase().split(" ");
-
-    const includesTerm = (x: string): boolean =>
-      terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-    return includesTerm(row.name) || includesTerm(row.address);
-  })
-);
-
-// Keepers
-const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
-const name = (keeper: Keeper): string =>
-  `${keeper.pair[1].symbol} / ${keeper.pair[0].symbol}`;
-
-// Pools
-const poolAddresses = computed(() =>
-  keepers.value.map((keeper) => keeper.pool_address)
-);
-
-const poolQueries = useQueryPoolMultiple(ref("ethereum"), poolAddresses);
-const loadingPools = computed(() =>
-  poolQueries.value.some((x) => x.isFetching)
-);
-const pools = computed(() =>
-  poolQueries.value.filter((x) => x.data).map((x) => x.data!)
-);
-
-// Methods
-const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

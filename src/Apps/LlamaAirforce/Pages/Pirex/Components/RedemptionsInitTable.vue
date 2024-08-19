@@ -1,39 +1,3 @@
-<template>
-  <Table
-    class="redemptions-init-table"
-    :columns="[
-      'Unlock Date',
-      { label: 'CVX Available', align: 'end' },
-      { label: 'Early Unlock Fee', align: 'end' },
-      '',
-    ]"
-    :rows="redemptions"
-    @selected="selected = $event.lockIndex"
-  >
-    <template #row="{ item: redemption }: { item: Row }">
-      <div>{{ formatDate(redemption.unlockTime) }}</div>
-
-      <div class="end">{{ formatCvxAvailable(redemption.cvxAvailable) }}</div>
-
-      <div class="end">
-        <AsyncValue
-          :value="redemption.fee"
-          type="percentage"
-        ></AsyncValue>
-      </div>
-
-      <div class="center">
-        <RadioButton
-          v-model="selected"
-          name="redemption"
-          :values
-          :value="redemption.lockIndex"
-        />
-      </div>
-    </template>
-  </Table>
-</template>
-
 <script setup lang="ts">
 import { type Redemption } from "@LAF/Pages/Pirex/Services";
 
@@ -77,6 +41,42 @@ watch(selected, (newRedemption) => {
   }
 });
 </script>
+
+<template>
+  <Table
+    class="redemptions-init-table"
+    :columns="[
+      'Unlock Date',
+      { label: 'CVX Available', align: 'end' },
+      { label: 'Early Unlock Fee', align: 'end' },
+      '',
+    ]"
+    :rows="redemptions"
+    @selected="selected = $event.lockIndex"
+  >
+    <template #row="{ item: redemption }: { item: Row }">
+      <div>{{ formatDate(redemption.unlockTime) }}</div>
+
+      <div class="end">{{ formatCvxAvailable(redemption.cvxAvailable) }}</div>
+
+      <div class="end">
+        <AsyncValue
+          :value="redemption.fee"
+          type="percentage"
+        ></AsyncValue>
+      </div>
+
+      <div class="center">
+        <RadioButton
+          v-model="selected"
+          name="redemption"
+          :values
+          :value="redemption.lockIndex"
+        />
+      </div>
+    </template>
+  </Table>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

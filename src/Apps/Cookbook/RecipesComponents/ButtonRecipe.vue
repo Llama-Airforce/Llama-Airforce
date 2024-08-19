@@ -1,3 +1,56 @@
+<script setup lang="ts">
+import { useWallet } from "@/Wallet";
+import Recipe from "@CB/Recipe.vue";
+
+const btnPrimary = `<Button
+  value="Value"
+  :primary="true"
+></Button>`;
+
+const btnPrimaryNon = `<Button
+  value="Value"
+  :primary="false"
+></Button>`;
+
+const btnDisabled = `<Button
+  value="Value"
+  :disabled="true"
+></Button>`;
+
+const btnWeb3 = `<Button
+  value="Value"
+  :web3="true"
+></Button>`;
+
+const btnIcon = `<Button
+  value="Value"
+  icon="fas fa-plane"
+></Button>`;
+
+const btnSlot = `<Button>
+  <div style="margin-right: 1rem">Content goes here</div>
+  <i class="fas fa-plane"></i>
+</Button>`;
+
+const btnClick1 = `<Button
+  value="Click me!"
+  @click="showAlert('You clicked me!')"
+></Button>`;
+
+const btnClick2 = `const showAlert = (msg: string) => alert(msg);`;
+
+const { network } = useWallet();
+const currentNetwork = ref(network.value);
+
+const showAlert = (msg: string) => {
+  alert(msg);
+  if (network.value !== currentNetwork.value) {
+    currentNetwork.value = network.value;
+    alert(`Network switched to: ${network.value}`);
+  }
+};
+</script>
+
 <template>
   <div class="buttons">
     <Recipe title="Primary">
@@ -150,59 +203,6 @@
     </Recipe>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useWallet } from "@/Wallet";
-import Recipe from "@CB/Recipe.vue";
-
-const btnPrimary = `<Button
-  value="Value"
-  :primary="true"
-></Button>`;
-
-const btnPrimaryNon = `<Button
-  value="Value"
-  :primary="false"
-></Button>`;
-
-const btnDisabled = `<Button
-  value="Value"
-  :disabled="true"
-></Button>`;
-
-const btnWeb3 = `<Button
-  value="Value"
-  :web3="true"
-></Button>`;
-
-const btnIcon = `<Button
-  value="Value"
-  icon="fas fa-plane"
-></Button>`;
-
-const btnSlot = `<Button>
-  <div style="margin-right: 1rem">Content goes here</div>
-  <i class="fas fa-plane"></i>
-</Button>`;
-
-const btnClick1 = `<Button
-  value="Click me!"
-  @click="showAlert('You clicked me!')"
-></Button>`;
-
-const btnClick2 = `const showAlert = (msg: string) => alert(msg);`;
-
-const { network } = useWallet();
-const currentNetwork = ref(network.value);
-
-const showAlert = (msg: string) => {
-  alert(msg);
-  if (network.value !== currentNetwork.value) {
-    currentNetwork.value = network.value;
-    alert(`Network switched to: ${network.value}`);
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

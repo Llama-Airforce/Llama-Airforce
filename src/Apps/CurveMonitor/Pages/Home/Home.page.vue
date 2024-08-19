@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import KPIs from "@CM/Pages/Home/Components/KPIs.vue";
+import Articles from "@CM/Pages/Home/Components/Articles.vue";
+</script>
+
 <template>
   <div class="home">
     <div class="description">
@@ -16,11 +21,6 @@
     <Articles style="grid-area: articles"></Articles>
   </div>
 </template>
-
-<script setup lang="ts">
-import KPIs from "@CM/Pages/Home/Components/KPIs.vue";
-import Articles from "@CM/Pages/Home/Components/Articles.vue";
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

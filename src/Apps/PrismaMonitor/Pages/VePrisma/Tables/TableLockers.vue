@@ -1,3 +1,58 @@
+<script setup lang="ts">
+import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
+
+type Row = AccountData;
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  lockers: AccountData[];
+}
+const { lockers = [] } = defineProps<Props>();
+
+const search = ref("");
+
+const columns = [
+  { id: "locker", label: "Locker", sort: false } as const,
+  { id: "weight", label: "Weight", sort: true, align: "end" } as const,
+  { id: "locked", label: "Locked", sort: true, align: "end" } as const,
+  { id: "unlocked", label: "Unlocked", sort: true, align: "end" } as const,
+  { id: "frozen", label: "Frozen", sort: true, align: "end" } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("weight");
+
+const rows = computed(() =>
+  lockers
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string) =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(row.id);
+    })
+    .orderBy((row) => {
+      switch (sorting.value.column) {
+        case "weight":
+          return row.weight;
+        case "locked":
+          return row.locked;
+        case "unlocked":
+          return row.unlocked;
+        case "frozen":
+          return row.frozen;
+        default:
+          return row.weight;
+      }
+    }, sorting.value.order)
+);
+
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+</script>
+
 <template>
   <Card
     class="lockers-card"
@@ -95,61 +150,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
-
-type Row = AccountData;
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  lockers: AccountData[];
-}
-const { lockers = [] } = defineProps<Props>();
-
-const search = ref("");
-
-const columns = [
-  { id: "locker", label: "Locker", sort: false } as const,
-  { id: "weight", label: "Weight", sort: true, align: "end" } as const,
-  { id: "locked", label: "Locked", sort: true, align: "end" } as const,
-  { id: "unlocked", label: "Unlocked", sort: true, align: "end" } as const,
-  { id: "frozen", label: "Frozen", sort: true, align: "end" } as const,
-];
-
-const { sorting, onSort } = useSort<typeof columns>("weight");
-
-const rows = computed(() =>
-  lockers
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string) =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return includesTerm(row.id);
-    })
-    .orderBy((row) => {
-      switch (sorting.value.column) {
-        case "weight":
-          return row.weight;
-        case "locked":
-          return row.locked;
-        case "unlocked":
-          return row.unlocked;
-        case "frozen":
-          return row.frozen;
-        default:
-          return row.weight;
-      }
-    }, sorting.value.order)
-);
-
-const rowsPerPage = 10;
-const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

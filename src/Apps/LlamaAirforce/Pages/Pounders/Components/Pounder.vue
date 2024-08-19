@@ -1,24 +1,3 @@
-<template>
-  <Card
-    class="pounder"
-    :compact="true"
-  >
-    <PounderSummary
-      :pounder-id="pounderId"
-      :expanded="expanded"
-      @toggle-expand="expanded = !expanded"
-    ></PounderSummary>
-
-    <Collapsible :expanded="expanded">
-      <PounderDetails
-        :pounder-id="pounderId"
-        :expanded="expanded"
-      >
-      </PounderDetails>
-    </Collapsible>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { useUnionStore } from "@Pounders/Store";
@@ -72,6 +51,27 @@ watch(
   }
 );
 </script>
+
+<template>
+  <Card
+    class="pounder"
+    :compact="true"
+  >
+    <PounderSummary
+      :pounder-id="pounderId"
+      :expanded="expanded"
+      @toggle-expand="expanded = !expanded"
+    ></PounderSummary>
+
+    <Collapsible :expanded="expanded">
+      <PounderDetails
+        :pounder-id="pounderId"
+        :expanded="expanded"
+      >
+      </PounderDetails>
+    </Collapsible>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

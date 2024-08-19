@@ -1,12 +1,3 @@
-<template>
-  <CardChart
-    :title="t('title')"
-    :loading="loading"
-    :options="options"
-    :series="series"
-  ></CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { WrapperService, type Contract } from "@PM/Services";
@@ -135,6 +126,15 @@ const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    :title="t('title')"
+    :loading="loading"
+    :options="options"
+    :series="series"
+  ></CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

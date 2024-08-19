@@ -1,3 +1,32 @@
+<script setup lang="ts">
+import ProposalComponent from "@PM/Pages/Proposals/Components/Proposal.vue";
+import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposals: Proposal[];
+}
+
+const { proposals } = defineProps<Props>();
+
+// Refs
+const proposalSearch = ref("");
+const placeholder = ref(t("search-placeholder"));
+
+const rows = computed(() => {
+  const search = proposalSearch.value.toLocaleLowerCase();
+
+  return proposals.filter(
+    (p) => !!p.metadata && p.metadata.title.toLocaleLowerCase().includes(search)
+  );
+});
+
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+</script>
+
 <template>
   <div class="proposals-tab">
     <div class="filters">
@@ -39,35 +68,6 @@
     <div v-if="rows.length === 0">{{ t("no-proposals") }}</div>
   </div>
 </template>
-
-<script setup lang="ts">
-import ProposalComponent from "@PM/Pages/Proposals/Components/Proposal.vue";
-import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposals: Proposal[];
-}
-
-const { proposals } = defineProps<Props>();
-
-// Refs
-const proposalSearch = ref("");
-const placeholder = ref(t("search-placeholder"));
-
-const rows = computed(() => {
-  const search = proposalSearch.value.toLocaleLowerCase();
-
-  return proposals.filter(
-    (p) => !!p.metadata && p.metadata.title.toLocaleLowerCase().includes(search)
-  );
-});
-
-const rowsPerPage = 10;
-const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

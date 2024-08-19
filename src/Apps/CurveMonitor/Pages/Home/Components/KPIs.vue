@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { DefiLlamaService } from "@/Services";
+import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
+import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
+
+const llamaService = new DefiLlamaService();
+
+// Borrowed
+const { data: markets } = useQueryMarkets();
+const borrowed = computed(() =>
+  markets.value.reduce((acc, x) => acc + x.borrowed, 0)
+);
+
+// ChainInfo
+const { data: chainInfo } = useQueryChainInfo(ref("ethereum"));
+const tvl = computed(() => chainInfo.value?.total.tvl ?? 0);
+const volume = computed(() => chainInfo.value?.total.tradingVolume24h ?? 0);
+
+// CRV Price
+const { data: price } = useQuery({
+  queryKey: ["crv-price"],
+  queryFn: () =>
+    llamaService
+      .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
+      .then((x) => x.price),
+  initialData: 0,
+  initialDataUpdatedAt: 0,
+});
+</script>
+
 <template>
   <div class="kpis">
     <KPI
@@ -45,36 +75,6 @@
     </KPI>
   </div>
 </template>
-
-<script setup lang="ts">
-import { DefiLlamaService } from "@/Services";
-import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
-import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
-
-const llamaService = new DefiLlamaService();
-
-// Borrowed
-const { data: markets } = useQueryMarkets();
-const borrowed = computed(() =>
-  markets.value.reduce((acc, x) => acc + x.borrowed, 0)
-);
-
-// ChainInfo
-const { data: chainInfo } = useQueryChainInfo(ref("ethereum"));
-const tvl = computed(() => chainInfo.value?.total.tvl ?? 0);
-const volume = computed(() => chainInfo.value?.total.tradingVolume24h ?? 0);
-
-// CRV Price
-const { data: price } = useQuery({
-  queryKey: ["crv-price"],
-  queryFn: () =>
-    llamaService
-      .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
-      .then((x) => x.price),
-  initialData: 0,
-  initialDataUpdatedAt: 0,
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,54 +1,3 @@
-<template>
-  <div class="liquidations">
-    <TableLiqOverview
-      :overview
-      :loading="loadingOverview"
-    ></TableLiqOverview>
-
-    <ChartLiqsSoftLiqRatio
-      :ratios="softLiqRatios"
-      :prices-oracle="pricesOracle"
-      :loading="loadingSoftLiqs || loadingSnapshots"
-    ></ChartLiqsSoftLiqRatio>
-
-    <ChartLiqsMedianLoss
-      :losses
-      :loading="loadingLosses"
-    ></ChartLiqsMedianLoss>
-
-    <ChartLiqsLosersProportion
-      :losses
-      :loading="loadingLosses"
-    ></ChartLiqsLosersProportion>
-
-    <ChartLiqsHealthDeciles
-      :deciles
-      :loading="loadingDeciles"
-    ></ChartLiqsHealthDeciles>
-
-    <ChartCollateralRatio
-      :ratios="collateralRatios"
-      :loading="loadingSnapshots"
-    ></ChartCollateralRatio>
-
-    <ChartLiqs
-      :liqs="liqsAggregate"
-      :loading="loadingLiqsAggregate"
-    ></ChartLiqs>
-
-    <TableTopLiquidators
-      :liqs="liqsDetailed"
-      :loading="loadingLiqsDetailed"
-    ></TableTopLiquidators>
-
-    <ChartLiquidatorRevenue
-      :discounts
-      :liqs="liqsDetailed"
-      :loading="loadingSnapshots || loadingLiqsDetailed"
-    ></ChartLiquidatorRevenue>
-  </div>
-</template>
-
 <script setup lang="ts">
 import type { Chain } from "@CM/Models";
 import type { Market } from "@CM/Services/CrvUsd";
@@ -146,6 +95,57 @@ const { isFetching: loadingLosses, data: losses } = useQueryLiqLosses(
   marketAddr
 );
 </script>
+
+<template>
+  <div class="liquidations">
+    <TableLiqOverview
+      :overview
+      :loading="loadingOverview"
+    ></TableLiqOverview>
+
+    <ChartLiqsSoftLiqRatio
+      :ratios="softLiqRatios"
+      :prices-oracle="pricesOracle"
+      :loading="loadingSoftLiqs || loadingSnapshots"
+    ></ChartLiqsSoftLiqRatio>
+
+    <ChartLiqsMedianLoss
+      :losses
+      :loading="loadingLosses"
+    ></ChartLiqsMedianLoss>
+
+    <ChartLiqsLosersProportion
+      :losses
+      :loading="loadingLosses"
+    ></ChartLiqsLosersProportion>
+
+    <ChartLiqsHealthDeciles
+      :deciles
+      :loading="loadingDeciles"
+    ></ChartLiqsHealthDeciles>
+
+    <ChartCollateralRatio
+      :ratios="collateralRatios"
+      :loading="loadingSnapshots"
+    ></ChartCollateralRatio>
+
+    <ChartLiqs
+      :liqs="liqsAggregate"
+      :loading="loadingLiqsAggregate"
+    ></ChartLiqs>
+
+    <TableTopLiquidators
+      :liqs="liqsDetailed"
+      :loading="loadingLiqsDetailed"
+    ></TableTopLiquidators>
+
+    <ChartLiquidatorRevenue
+      :discounts
+      :liqs="liqsDetailed"
+      :loading="loadingSnapshots || loadingLiqsDetailed"
+    ></ChartLiquidatorRevenue>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

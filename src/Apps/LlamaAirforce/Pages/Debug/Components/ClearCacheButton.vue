@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const onClearCache = (): void => {
+  window.localStorage.clear();
+};
+</script>
+
 <template>
   <Button
     class="button"
@@ -7,12 +13,6 @@
     Clear Cache
   </Button>
 </template>
-
-<script setup lang="ts">
-const onClearCache = (): void => {
-  window.localStorage.clear();
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

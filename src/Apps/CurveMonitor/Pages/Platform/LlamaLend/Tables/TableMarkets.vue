@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import { type Chain } from "@CM/Models";
+import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
+
+type Row = Market | undefined;
+
+const { t } = useI18n();
+
+// Emit
+const emit = defineEmits<{
+  selected: [market: Row];
+}>();
+
+// Props
+interface Props {
+  pairs: MarketPair[];
+  loading: boolean;
+  type: "long" | "short";
+  chain: Chain;
+}
+
+const { pairs = [], loading, type, chain } = defineProps<Props>();
+
+// Refs
+const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
+
+const markets = computed(() =>
+  pairs
+    .map((pair) => {
+      const count = (pair.long ? 1 : 0) + (pair.short ? 1 : 0);
+      return { count, ...pair };
+    })
+    .orderBy(
+      [(x) => x.count, ({ long, short }) => tvl(long) + tvl(short)],
+      ["desc", "desc"]
+    )
+    .map(({ long, short }) => (type === "long" ? long : short))
+);
+
+// Methods
+function name(market: Market) {
+  return market.name.replace(/(-long|-short)/i, "");
+}
+
+const tokenIcon = (market: Market) => {
+  return type === "long"
+    ? market.collateral_token.address
+    : market.borrowed_token.address;
+};
+</script>
+
 <template>
   <Card
     :title
@@ -82,57 +133,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
-
-type Row = Market | undefined;
-
-const { t } = useI18n();
-
-// Emit
-const emit = defineEmits<{
-  selected: [market: Row];
-}>();
-
-// Props
-interface Props {
-  pairs: MarketPair[];
-  loading: boolean;
-  type: "long" | "short";
-  chain: Chain;
-}
-
-const { pairs = [], loading, type, chain } = defineProps<Props>();
-
-// Refs
-const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
-
-const markets = computed(() =>
-  pairs
-    .map((pair) => {
-      const count = (pair.long ? 1 : 0) + (pair.short ? 1 : 0);
-      return { count, ...pair };
-    })
-    .orderBy(
-      [(x) => x.count, ({ long, short }) => tvl(long) + tvl(short)],
-      ["desc", "desc"]
-    )
-    .map(({ long, short }) => (type === "long" ? long : short))
-);
-
-// Methods
-function name(market: Market) {
-  return market.name.replace(/(-long|-short)/i, "");
-}
-
-const tokenIcon = (market: Market) => {
-  return type === "long"
-    ? market.collateral_token.address
-    : market.borrowed_token.address;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import ModalRedemptionsInit from "@LAF/Pages/Pirex/Components/ModalRedemptionsInit.vue";
+
+const showRedemptionsInit = ref(false);
+</script>
+
 <template>
   <Card title="Redemptions">
     <div class="redemptions-init-body">
@@ -26,12 +32,6 @@
     ></ModalRedemptionsInit>
   </Card>
 </template>
-
-<script setup lang="ts">
-import ModalRedemptionsInit from "@LAF/Pages/Pirex/Components/ModalRedemptionsInit.vue";
-
-const showRedemptionsInit = ref(false);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

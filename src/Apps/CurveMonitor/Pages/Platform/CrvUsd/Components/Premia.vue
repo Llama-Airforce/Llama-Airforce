@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { type Market, type Yield } from "@CM/Services/CrvUsd";
+
+// Props
+interface Props {
+  market: Market | undefined;
+  yields: Yield[];
+}
+
+const { yields = [] } = defineProps<Props>();
+
+const yieldsMax = computed((): Yield | undefined => yields.maxBy((x) => x.apy));
+const yieldsTop = computed(() => yields.orderBy((x) => x.apy, "desc").take(5));
+</script>
+
 <template>
   <Tooltip v-if="yieldsMax && market">
     <template #item>
@@ -60,21 +75,6 @@
     </div>
   </Tooltip>
 </template>
-
-<script setup lang="ts">
-import { type Market, type Yield } from "@CM/Services/CrvUsd";
-
-// Props
-interface Props {
-  market: Market | undefined;
-  yields: Yield[];
-}
-
-const { yields = [] } = defineProps<Props>();
-
-const yieldsMax = computed((): Yield | undefined => yields.maxBy((x) => x.apy));
-const yieldsTop = computed(() => yields.orderBy((x) => x.apy, "desc").take(5));
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

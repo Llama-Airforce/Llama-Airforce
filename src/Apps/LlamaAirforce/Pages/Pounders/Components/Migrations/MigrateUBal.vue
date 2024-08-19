@@ -1,26 +1,3 @@
-<template>
-  <Card
-    v-if="canMigrate"
-    class="migrations"
-  >
-    <h1 v-html="migrationUBalMsg"></h1>
-    <span class="actions">
-      <a
-        :class="{ disabled: !canWithdraw || migrating }"
-        @click="onWithdrawUBal"
-      >
-        {{ t("withdraw") }}
-      </a>
-      <a
-        :class="{ disabled: !canDeposit || migrating }"
-        @click="onDepositAuraBal"
-      >
-        {{ t("deposit") }}
-      </a>
-    </span>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
@@ -116,6 +93,29 @@ function onDepositAuraBal() {
   });
 }
 </script>
+
+<template>
+  <Card
+    v-if="canMigrate"
+    class="migrations"
+  >
+    <h1 v-html="migrationUBalMsg"></h1>
+    <span class="actions">
+      <a
+        :class="{ disabled: !canWithdraw || migrating }"
+        @click="onWithdrawUBal"
+      >
+        {{ t("withdraw") }}
+      </a>
+      <a
+        :class="{ disabled: !canDeposit || migrating }"
+        @click="onDepositAuraBal"
+      >
+        {{ t("deposit") }}
+      </a>
+    </span>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

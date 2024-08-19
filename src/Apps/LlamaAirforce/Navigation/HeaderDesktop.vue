@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import { subIsActive } from "@/Util";
+import { type PageLAF } from "@LAF/Pages/Page";
+import Wallet from "@/Wallet/Wallet.vue";
+
+const pageStore = usePageStore<PageLAF>();
+const route = useRoute();
+
+const pages = computed(() => pageStore.pages.filter((p) => p.visible));
+
+const planeX = computed((): string => {
+  let x = 15;
+
+  for (const page of pageStore.pages) {
+    if (subIsActive(page.titleRoute, route)) {
+      x = page.planeX;
+      break;
+    }
+  }
+
+  return `transform: scale(0.75) translateX(${x}px);`;
+});
+</script>
+
 <template>
   <header>
     <div class="header-desktop">
@@ -58,30 +82,6 @@
     </div>
   </header>
 </template>
-
-<script setup lang="ts">
-import { subIsActive } from "@/Util";
-import { type PageLAF } from "@LAF/Pages/Page";
-import Wallet from "@/Wallet/Wallet.vue";
-
-const pageStore = usePageStore<PageLAF>();
-const route = useRoute();
-
-const pages = computed(() => pageStore.pages.filter((p) => p.visible));
-
-const planeX = computed((): string => {
-  let x = 15;
-
-  for (const page of pageStore.pages) {
-    if (subIsActive(page.titleRoute, route)) {
-      x = page.planeX;
-      break;
-    }
-  }
-
-  return `transform: scale(0.75) translateX(${x}px);`;
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

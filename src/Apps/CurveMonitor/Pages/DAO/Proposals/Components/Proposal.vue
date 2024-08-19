@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { type Proposal } from "@CM/Services/Proposal";
+import ProposalSummary from "@CM/Pages/DAO/Proposals/Components/ProposalSummary.vue";
+import ProposalDetails from "@CM/Pages/DAO/Proposals/Components/ProposalDetails.vue";
+
+// Props
+interface Props {
+  proposal: Proposal;
+  initExpanded?: boolean;
+}
+
+const { proposal, initExpanded = false } = defineProps<Props>();
+
+// Refs
+const expanded = ref(initExpanded);
+</script>
+
 <template>
   <Card
     class="proposal"
@@ -20,23 +37,6 @@
     </Collapsible>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type Proposal } from "@CM/Services/Proposal";
-import ProposalSummary from "@CM/Pages/DAO/Proposals/Components/ProposalSummary.vue";
-import ProposalDetails from "@CM/Pages/DAO/Proposals/Components/ProposalDetails.vue";
-
-// Props
-interface Props {
-  proposal: Proposal;
-  initExpanded?: boolean;
-}
-
-const { proposal, initExpanded = false } = defineProps<Props>();
-
-// Refs
-const expanded = ref(initExpanded);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

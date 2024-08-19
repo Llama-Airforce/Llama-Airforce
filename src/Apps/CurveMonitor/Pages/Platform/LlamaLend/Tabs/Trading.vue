@@ -1,3 +1,49 @@
+<script setup lang="ts">
+import { type Chain } from "@CM/Models";
+import { type Market } from "@CM/Services/LlamaLend";
+import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
+import {
+  useQueryOHLC,
+  useQueryEvents,
+  useQueryTrades,
+} from "@CM/Services/Llamma/Queries";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  market: Market | undefined;
+  chain: Chain | undefined;
+}
+
+const { market, chain } = defineProps<Props>();
+
+const llamma = computed(() => market?.llamma);
+
+// Data
+const { isFetching: loadingOHLC, data: ohlc } = useQueryOHLC(
+  ref("lending"),
+  llamma,
+  toRef(() => chain)
+);
+
+const pageTrades = ref(1);
+const { isFetching: loadingTrades, data: trades } = useQueryTrades(
+  ref("lending"),
+  llamma,
+  toRef(() => chain),
+  pageTrades
+);
+
+const pageEvents = ref(1);
+const { isFetching: loadingEvents, data: events } = useQueryEvents(
+  ref("lending"),
+  llamma,
+  toRef(() => chain),
+  pageEvents
+);
+</script>
+
 <template>
   <div class="trading">
     <KPI
@@ -46,52 +92,6 @@
     ></TableEvents>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import { type Market } from "@CM/Services/LlamaLend";
-import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
-import {
-  useQueryOHLC,
-  useQueryEvents,
-  useQueryTrades,
-} from "@CM/Services/Llamma/Queries";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  market: Market | undefined;
-  chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
-
-const llamma = computed(() => market?.llamma);
-
-// Data
-const { isFetching: loadingOHLC, data: ohlc } = useQueryOHLC(
-  ref("lending"),
-  llamma,
-  toRef(() => chain)
-);
-
-const pageTrades = ref(1);
-const { isFetching: loadingTrades, data: trades } = useQueryTrades(
-  ref("lending"),
-  llamma,
-  toRef(() => chain),
-  pageTrades
-);
-
-const pageEvents = ref(1);
-const { isFetching: loadingEvents, data: events } = useQueryEvents(
-  ref("lending"),
-  llamma,
-  toRef(() => chain),
-  pageEvents
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

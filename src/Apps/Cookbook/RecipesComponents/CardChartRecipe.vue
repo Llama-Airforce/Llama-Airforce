@@ -1,35 +1,3 @@
-<template>
-  <div class="cards">
-    <Recipe title="Line Chart">
-      <template #example>
-        <CardChart
-          class="chart"
-          title="Line Chart"
-          :options="options"
-          :series="series"
-        ></CardChart>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="CardChartLine1"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="CardChartLine2"
-        ></Code>
-
-        <Code
-          lang="scss"
-          :code="CardChartLine3"
-        ></Code>
-      </template>
-    </Recipe>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import Recipe from "@CB/Recipe.vue";
@@ -300,6 +268,38 @@ const CardChartLine3 = `.chart {
   }
 }`;
 </script>
+
+<template>
+  <div class="cards">
+    <Recipe title="Line Chart">
+      <template #example>
+        <CardChart
+          class="chart"
+          title="Line Chart"
+          :options="options"
+          :series="series"
+        ></CardChart>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="html"
+          :code="CardChartLine1"
+        ></Code>
+
+        <Code
+          lang="typescript"
+          :code="CardChartLine2"
+        ></Code>
+
+        <Code
+          lang="scss"
+          :code="CardChartLine3"
+        ></Code>
+      </template>
+    </Recipe>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

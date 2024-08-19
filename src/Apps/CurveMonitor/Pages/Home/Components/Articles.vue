@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const { relativeTime } = useRelativeTime();
+
+function go(url: string) {
+  window.open(url, "_blank");
+}
+</script>
+
 <template>
   <div class="articles">
     <div class="title">Articles</div>
@@ -86,14 +94,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const { relativeTime } = useRelativeTime();
-
-function go(url: string) {
-  window.open(url, "_blank");
-}
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

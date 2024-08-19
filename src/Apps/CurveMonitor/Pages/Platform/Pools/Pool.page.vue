@@ -1,38 +1,3 @@
-<template>
-  <div class="pool">
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
-
-    <TabView
-      v-if="!loading && pool"
-      :active="tabActiveIndex"
-      @tab="tabActiveIndex = $event.index"
-    >
-      <TabItem header="Overview">
-        <KeepAlive>
-          <PoolOverview
-            v-if="tabActive === 'overview'"
-            :pool
-            :chain
-          ></PoolOverview>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="MEV">
-        <KeepAlive>
-          <MEV
-            v-if="tabActive === 'mev'"
-            :pool
-            :chain
-          ></MEV>
-        </KeepAlive>
-      </TabItem>
-    </TabView>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useQueryPool } from "@CM/Services/Pools/Queries";
@@ -82,6 +47,41 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   })
 );
 </script>
+
+<template>
+  <div class="pool">
+    <Spinner
+      class="spinner"
+      :class="{ loading }"
+    ></Spinner>
+
+    <TabView
+      v-if="!loading && pool"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
+    >
+      <TabItem header="Overview">
+        <KeepAlive>
+          <PoolOverview
+            v-if="tabActive === 'overview'"
+            :pool
+            :chain
+          ></PoolOverview>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="MEV">
+        <KeepAlive>
+          <MEV
+            v-if="tabActive === 'mev'"
+            :pool
+            :chain
+          ></MEV>
+        </KeepAlive>
+      </TabItem>
+    </TabView>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

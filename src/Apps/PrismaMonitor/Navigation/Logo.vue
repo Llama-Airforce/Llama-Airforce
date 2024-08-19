@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div class="logo">
     <div class="visual">
@@ -7,8 +9,6 @@
     <span>prisma.monitor</span>
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

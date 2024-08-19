@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    class="revenue"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
@@ -124,6 +114,16 @@ const series = computed(
   }
 );
 </script>
+
+<template>
+  <CardChart
+    class="revenue"
+    :title="t('title')"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { type Proposal } from "@CM/Services/Proposal";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+}
+
+const { proposal } = defineProps<Props>();
+
+// Methods
+const votesSupport = computed((): number => {
+  return proposal.votesFor;
+});
+
+const votesQuorum = computed((): number => {
+  return proposal.quorum * proposal.totalSupply;
+});
+
+/** What's the % of the quorum % that's been reached so far? */
+const reached = computed((): number => {
+  return (votesSupport.value / votesQuorum.value) * 100;
+});
+</script>
+
 <template>
   <div class="quorum">
     <div class="heading">{{ t("quorum") }}</div>
@@ -42,33 +69,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Proposal } from "@CM/Services/Proposal";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
-
-// Methods
-const votesSupport = computed((): number => {
-  return proposal.votesFor;
-});
-
-const votesQuorum = computed((): number => {
-  return proposal.quorum * proposal.totalSupply;
-});
-
-/** What's the % of the quorum % that's been reached so far? */
-const reached = computed((): number => {
-  return (votesSupport.value / votesQuorum.value) * 100;
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,55 +1,3 @@
-<template>
-  <div class="technicals">
-    <div class="technical">
-      <div class="heading">{{ t("description") }}</div>
-      <div class="description">{{ proposal.metadata }}</div>
-    </div>
-
-    <div class="technical">
-      <div
-        class="heading"
-        @click="expandedVoters = !expandedVoters"
-      >
-        {{ t("voters") }} ({{ numVoters ?? "?" }})
-        <i
-          class="fas fa-chevron-up expander"
-          :class="{ expandedVoters }"
-        ></i>
-      </div>
-
-      <!-- Make scroll, not collapsible -->
-      <Collapsible :expanded="expandedVoters">
-        <Voters
-          v-if="proposalDetails"
-          class="voters"
-          :proposal="proposal"
-          :proposal-details="proposalDetails"
-        ></Voters>
-      </Collapsible>
-    </div>
-
-    <div class="technical">
-      <div
-        class="heading"
-        @click="expandedCallData = !expandedCallData"
-      >
-        {{ t("calldata") }}
-        <i
-          class="fas fa-chevron-up expander"
-          :class="{ expandedCallData }"
-        ></i>
-      </div>
-      <Collapsible :expanded="expandedCallData">
-        <div
-          v-if="proposalDetails"
-          class="calldata"
-          v-html="callData"
-        ></div>
-      </Collapsible>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Proposal } from "@CM/Services/Proposal";
 import { useQueryProposal } from "@CM/Services/Proposal/Queries";
@@ -101,6 +49,58 @@ const callData = computed(() => {
     );
 });
 </script>
+
+<template>
+  <div class="technicals">
+    <div class="technical">
+      <div class="heading">{{ t("description") }}</div>
+      <div class="description">{{ proposal.metadata }}</div>
+    </div>
+
+    <div class="technical">
+      <div
+        class="heading"
+        @click="expandedVoters = !expandedVoters"
+      >
+        {{ t("voters") }} ({{ numVoters ?? "?" }})
+        <i
+          class="fas fa-chevron-up expander"
+          :class="{ expandedVoters }"
+        ></i>
+      </div>
+
+      <!-- Make scroll, not collapsible -->
+      <Collapsible :expanded="expandedVoters">
+        <Voters
+          v-if="proposalDetails"
+          class="voters"
+          :proposal="proposal"
+          :proposal-details="proposalDetails"
+        ></Voters>
+      </Collapsible>
+    </div>
+
+    <div class="technical">
+      <div
+        class="heading"
+        @click="expandedCallData = !expandedCallData"
+      >
+        {{ t("calldata") }}
+        <i
+          class="fas fa-chevron-up expander"
+          :class="{ expandedCallData }"
+        ></i>
+      </div>
+      <Collapsible :expanded="expandedCallData">
+        <div
+          v-if="proposalDetails"
+          class="calldata"
+          v-html="callData"
+        ></div>
+      </Collapsible>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

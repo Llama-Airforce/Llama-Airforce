@@ -1,3 +1,61 @@
+<script setup lang="ts">
+import { type Chain } from "@CM/Models";
+import { type Pool } from "@CM/Services/Pools";
+import { useQueryVolume, useQueryTvl } from "@CM/Services/Pools/Queries";
+import { useQueryOHLC } from "@CM/Services/OHLC/Queries";
+import {
+  ChartPrice,
+  ChartVolume,
+  ChartTvl,
+} from "@CM/Pages/Platform/Pools/Charts";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  pool: Pool | undefined;
+  chain: Chain | undefined;
+}
+
+const { pool, chain } = defineProps<Props>();
+
+const poolAddr = computed(() => pool?.address);
+const coin0 = computed(() => pool?.coins[0].address);
+const coin1 = computed(() => pool?.coins[1].address);
+
+// Data
+const { isFetching: loadingOHLC, data: ohlc } = useQueryOHLC(
+  toRef(() => chain),
+  poolAddr,
+  coin0,
+  coin1
+);
+
+const { isFetching: loadingVolume, data: volumeRaw } = useQueryVolume(
+  toRef(() => chain),
+  poolAddr
+);
+
+const { isFetching: loadingTvl, data: tvlRaw } = useQueryTvl(
+  toRef(() => chain),
+  poolAddr
+);
+
+const volume = computed(() =>
+  volumeRaw.value.map((x) => ({
+    timestamp: x.timestamp,
+    volume: x.volume,
+  }))
+);
+
+const tvl = computed(() =>
+  tvlRaw.value.map((x) => ({
+    timestamp: x.timestamp,
+    tvl: x.tvlUSD,
+  }))
+);
+</script>
+
 <template>
   <div class="pool-overview">
     <KPI
@@ -68,64 +126,6 @@
     ></ChartTvl>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import { type Pool } from "@CM/Services/Pools";
-import { useQueryVolume, useQueryTvl } from "@CM/Services/Pools/Queries";
-import { useQueryOHLC } from "@CM/Services/OHLC/Queries";
-import {
-  ChartPrice,
-  ChartVolume,
-  ChartTvl,
-} from "@CM/Pages/Platform/Pools/Charts";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  pool: Pool | undefined;
-  chain: Chain | undefined;
-}
-
-const { pool, chain } = defineProps<Props>();
-
-const poolAddr = computed(() => pool?.address);
-const coin0 = computed(() => pool?.coins[0].address);
-const coin1 = computed(() => pool?.coins[1].address);
-
-// Data
-const { isFetching: loadingOHLC, data: ohlc } = useQueryOHLC(
-  toRef(() => chain),
-  poolAddr,
-  coin0,
-  coin1
-);
-
-const { isFetching: loadingVolume, data: volumeRaw } = useQueryVolume(
-  toRef(() => chain),
-  poolAddr
-);
-
-const { isFetching: loadingTvl, data: tvlRaw } = useQueryTvl(
-  toRef(() => chain),
-  poolAddr
-);
-
-const volume = computed(() =>
-  volumeRaw.value.map((x) => ({
-    timestamp: x.timestamp,
-    volume: x.volume,
-  }))
-);
-
-const tvl = computed(() =>
-  tvlRaw.value.map((x) => ({
-    timestamp: x.timestamp,
-    tvl: x.tvlUSD,
-  }))
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

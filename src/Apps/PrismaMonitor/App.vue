@@ -1,11 +1,3 @@
-<template>
-  <Layout>
-    <template #navigation>
-      <Navigation class="navigation"></Navigation>
-    </template>
-  </Layout>
-</template>
-
 <script setup lang="ts">
 import Navigation from "@PM/Navigation/Navigation.vue";
 import { useSettingsStore } from "@PM/Stores";
@@ -45,6 +37,14 @@ watch(
   }
 );
 </script>
+
+<template>
+  <Layout>
+    <template #navigation>
+      <Navigation class="navigation"></Navigation>
+    </template>
+  </Layout>
+</template>
 
 <style lang="scss">
 @import "@/Styles/Themes/PM/Light.scss";

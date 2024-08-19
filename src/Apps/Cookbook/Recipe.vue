@@ -1,3 +1,12 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  title: string;
+}
+
+const { title } = defineProps<Props>();
+</script>
+
 <template>
   <Card
     :title="title"
@@ -16,15 +25,6 @@
     </div>
   </Card>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  title: string;
-}
-
-const { title } = defineProps<Props>();
-</script>
 
 <style lang="scss">
 .recipe-card {

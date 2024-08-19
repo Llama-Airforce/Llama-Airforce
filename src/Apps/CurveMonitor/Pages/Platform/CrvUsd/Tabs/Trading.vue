@@ -1,30 +1,3 @@
-<template>
-  <div class="trading">
-    <ChartOHLC
-      style="grid-area: ohlc"
-      :ohlc="ohlc ?? []"
-      :loading="loadingOHLC"
-    ></ChartOHLC>
-
-    <TableTrades
-      style="grid-area: trades"
-      :trades="trades?.trades ?? []"
-      :count="trades?.count ?? 0"
-      :chain
-      :loading="loadingTrades"
-      @page="pageTrades = $event"
-    ></TableTrades>
-
-    <TableEvents
-      style="grid-area: events"
-      :events="events?.events ?? []"
-      :count="events?.count ?? 0"
-      :loading="loadingEvents"
-      @page="pageEvents = $event"
-    ></TableEvents>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
@@ -68,6 +41,33 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
   pageEvents
 );
 </script>
+
+<template>
+  <div class="trading">
+    <ChartOHLC
+      style="grid-area: ohlc"
+      :ohlc="ohlc ?? []"
+      :loading="loadingOHLC"
+    ></ChartOHLC>
+
+    <TableTrades
+      style="grid-area: trades"
+      :trades="trades?.trades ?? []"
+      :count="trades?.count ?? 0"
+      :chain
+      :loading="loadingTrades"
+      @page="pageTrades = $event"
+    ></TableTrades>
+
+    <TableEvents
+      style="grid-area: events"
+      :events="events?.events ?? []"
+      :count="events?.count ?? 0"
+      :loading="loadingEvents"
+      @page="pageEvents = $event"
+    ></TableEvents>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

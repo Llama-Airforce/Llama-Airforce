@@ -1,29 +1,3 @@
-<template>
-  <Card
-    v-if="canMigrate"
-    class="migration"
-  >
-    <h1 v-html="migrationMsg"></h1>
-    <span class="actions">
-      <a
-        :class="{ disabled: !canMigrate || migrating }"
-        @click="onMigrate(false)"
-      >
-        {{ t(migrating ? "migrating" : "migrate") }}
-      </a>
-    </span>
-
-    <ModalSlippage
-      symbol-output="cvxFXS"
-      :show="modalSlippage"
-      :min-amount-out-ref="minAmountOutRef"
-      @close="modalSlippage = false"
-      @no="modalSlippage = false"
-      @yes="onYesModalSlippage"
-    ></ModalSlippage>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
@@ -120,6 +94,32 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
   await modalAction?.();
 };
 </script>
+
+<template>
+  <Card
+    v-if="canMigrate"
+    class="migration"
+  >
+    <h1 v-html="migrationMsg"></h1>
+    <span class="actions">
+      <a
+        :class="{ disabled: !canMigrate || migrating }"
+        @click="onMigrate(false)"
+      >
+        {{ t(migrating ? "migrating" : "migrate") }}
+      </a>
+    </span>
+
+    <ModalSlippage
+      symbol-output="cvxFXS"
+      :show="modalSlippage"
+      :min-amount-out-ref="minAmountOutRef"
+      @close="modalSlippage = false"
+      @no="modalSlippage = false"
+      @yes="onYesModalSlippage"
+    ></ModalSlippage>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

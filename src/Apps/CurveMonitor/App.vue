@@ -1,11 +1,3 @@
-<template>
-  <Layout>
-    <template #navigation>
-      <Navigation class="navigation"></Navigation>
-    </template>
-  </Layout>
-</template>
-
 <script setup lang="ts">
 import Navigation from "@CM/Navigation/Navigation.vue";
 
@@ -25,6 +17,14 @@ watch(
   }
 );
 </script>
+
+<template>
+  <Layout>
+    <template #navigation>
+      <Navigation class="navigation"></Navigation>
+    </template>
+  </Layout>
+</template>
 
 <style lang="scss">
 @import "@/Styles/Themes/CM/Chad.scss";

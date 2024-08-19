@@ -1,3 +1,21 @@
+<script setup lang="ts">
+const { t } = useI18n();
+
+type Repository = {
+  name: string;
+  url: string;
+  description: string;
+};
+
+const repositories: Repository[] = [
+  {
+    name: "Llama Airforce",
+    url: "https://github.com/Llama-Airforce/Llama-Airforce",
+    description: "repo-laf",
+  },
+];
+</script>
+
 <template>
   <div class="code">
     <Card :title="t('repositories')">
@@ -36,24 +54,6 @@
     </Card>
   </div>
 </template>
-
-<script setup lang="ts">
-const { t } = useI18n();
-
-type Repository = {
-  name: string;
-  url: string;
-  description: string;
-};
-
-const repositories: Repository[] = [
-  {
-    name: "Llama Airforce",
-    url: "https://github.com/Llama-Airforce/Llama-Airforce",
-    description: "repo-laf",
-  },
-];
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

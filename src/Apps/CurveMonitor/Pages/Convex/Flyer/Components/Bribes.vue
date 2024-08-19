@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { type FlyerConvex } from "@/Services/FlyerService";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  model: FlyerConvex | null;
+}
+
+const { model } = defineProps<Props>();
+
+// Refs
+const bribesIncomeAnnually = computed((): number | undefined => {
+  return model?.bribesIncomeAnnually;
+});
+
+const bribesIncomeBiWeekly = computed((): number | undefined => {
+  return model?.bribesIncomeBiWeekly;
+});
+</script>
+
 <template>
   <div class="bribes">
     <div class="title">{{ t("incentives") }}</div>
@@ -24,28 +46,6 @@
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type FlyerConvex } from "@/Services/FlyerService";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  model: FlyerConvex | null;
-}
-
-const { model } = defineProps<Props>();
-
-// Refs
-const bribesIncomeAnnually = computed((): number | undefined => {
-  return model?.bribesIncomeAnnually;
-});
-
-const bribesIncomeBiWeekly = computed((): number | undefined => {
-  return model?.bribesIncomeBiWeekly;
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

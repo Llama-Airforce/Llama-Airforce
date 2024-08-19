@@ -1,45 +1,3 @@
-<template>
-  <div class="revenue">
-    <div
-      class="dashboard"
-      :class="{ loading }"
-    >
-      <Spinner
-        v-if="loading"
-        class="spinner"
-      ></Spinner>
-
-      <div class="revenue-charts">
-        <Summary class="summary"></Summary>
-        <RevenueSources
-          class="chart-revenue-sources"
-          :title="t('revenue-breakdown')"
-        ></RevenueSources>
-
-        <HistoricalRevenue
-          class="chart-historical-revenue"
-          :title="t('revenue-historical')"
-        ></HistoricalRevenue>
-
-        <LPRevenue
-          class="chart-lp-revenue"
-          :title="t('revenue-lp')"
-        ></LPRevenue>
-
-        <HolderRevenue
-          class="chart-holder-revenue"
-          :title="t('revenue-holder')"
-        ></HolderRevenue>
-
-        <LiquidRevenue
-          class="chart-liquid-revenue"
-          :title="t('revenue-liquid')"
-        ></LiquidRevenue>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import ProtocolRevenueService, {
   HistoricalRevenueService,
@@ -91,6 +49,48 @@ onBeforeUnmount((): void => {
   isInitializing = false;
 });
 </script>
+
+<template>
+  <div class="revenue">
+    <div
+      class="dashboard"
+      :class="{ loading }"
+    >
+      <Spinner
+        v-if="loading"
+        class="spinner"
+      ></Spinner>
+
+      <div class="revenue-charts">
+        <Summary class="summary"></Summary>
+        <RevenueSources
+          class="chart-revenue-sources"
+          :title="t('revenue-breakdown')"
+        ></RevenueSources>
+
+        <HistoricalRevenue
+          class="chart-historical-revenue"
+          :title="t('revenue-historical')"
+        ></HistoricalRevenue>
+
+        <LPRevenue
+          class="chart-lp-revenue"
+          :title="t('revenue-lp')"
+        ></LPRevenue>
+
+        <HolderRevenue
+          class="chart-holder-revenue"
+          :title="t('revenue-holder')"
+        ></HolderRevenue>
+
+        <LiquidRevenue
+          class="chart-liquid-revenue"
+          :title="t('revenue-liquid')"
+        ></LiquidRevenue>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

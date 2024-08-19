@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import ClearCacheButton from "@LAF/Pages/Debug/Components/ClearCacheButton.vue";
+</script>
+
 <template>
   <div class="debug">
     <div class="dashboard">
@@ -5,10 +9,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import ClearCacheButton from "@LAF/Pages/Debug/Components/ClearCacheButton.vue";
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

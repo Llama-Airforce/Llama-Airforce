@@ -1,26 +1,3 @@
-<template>
-  <CardChart
-    class="graph"
-    :options
-    :series
-    :loading
-    :title="t('title')"
-  >
-    <template #actions>
-      <div
-        class="selector"
-        :class="{ loading }"
-      >
-        <SelectChain
-          :chain="chain"
-          @select-chain="onSelectChain"
-        >
-        </SelectChain>
-      </div>
-    </template>
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -104,6 +81,29 @@ const onSelectChain = (newChain: Chain | "all"): void => {
   }
 };
 </script>
+
+<template>
+  <CardChart
+    class="graph"
+    :options
+    :series
+    :loading
+    :title="t('title')"
+  >
+    <template #actions>
+      <div
+        class="selector"
+        :class="{ loading }"
+      >
+        <SelectChain
+          :chain="chain"
+          @select-chain="onSelectChain"
+        >
+        </SelectChain>
+      </div>
+    </template>
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

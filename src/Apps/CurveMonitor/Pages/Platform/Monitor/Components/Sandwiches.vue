@@ -1,3 +1,53 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { roundPhil } from "@/Util";
+import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
+import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
+import type { SandwichDetail } from "@CM/Services/Monitor/SocketMonitorCurve";
+
+const { t } = useI18n();
+
+const swsPerPage = 10;
+
+const page = ref(1);
+const { data: sandwichesRaw, isFetching: loading } = useQuerySandwiches();
+
+const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
+const { relativeTime } = useRelativeTime();
+
+const search = ref("");
+
+const numSandwiches = computed(
+  () => sandwichesRaw.value?.totalPages ?? 0 * swsPerPage
+);
+
+const sandwiches = computed(() =>
+  (sandwichesRaw.value?.data ?? [])
+    .filter((sw) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return (
+        includesTerm(sw.poolName) ||
+        includesTerm(sw.poolAddress) ||
+        includesTerm(sw.label)
+      );
+    })
+    .orderBy(
+      [(x) => x.frontrun.block_unixtime, (x) => x.frontrun.tx_position],
+      "desc"
+    )
+);
+
+const sandwichTxs = (sw: SandwichDetail) =>
+  [sw.frontrun, ...sw.center, sw.backrun].orderBy([
+    (x) => x.block_unixtime,
+    (x) => x.tx_position,
+  ]);
+</script>
+
 <template>
   <Card
     class="sandwiches-card"
@@ -104,56 +154,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { roundPhil } from "@/Util";
-import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
-import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
-import type { SandwichDetail } from "@CM/Services/Monitor/SocketMonitorCurve";
-
-const { t } = useI18n();
-
-const swsPerPage = 10;
-
-const page = ref(1);
-const { data: sandwichesRaw, isFetching: loading } = useQuerySandwiches();
-
-const { expanded, toggleExpansion } = useExpansion<SandwichDetail>();
-const { relativeTime } = useRelativeTime();
-
-const search = ref("");
-
-const numSandwiches = computed(
-  () => sandwichesRaw.value?.totalPages ?? 0 * swsPerPage
-);
-
-const sandwiches = computed(() =>
-  (sandwichesRaw.value?.data ?? [])
-    .filter((sw) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return (
-        includesTerm(sw.poolName) ||
-        includesTerm(sw.poolAddress) ||
-        includesTerm(sw.label)
-      );
-    })
-    .orderBy(
-      [(x) => x.frontrun.block_unixtime, (x) => x.frontrun.tx_position],
-      "desc"
-    )
-);
-
-const sandwichTxs = (sw: SandwichDetail) =>
-  [sw.frontrun, ...sw.center, sw.backrun].orderBy([
-    (x) => x.block_unixtime,
-    (x) => x.tx_position,
-  ]);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

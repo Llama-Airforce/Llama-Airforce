@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { type Proposal } from "@CM/Services/Proposal";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+}
+
+const { proposal } = defineProps<Props>();
+</script>
+
 <template>
   <KPI
     class="proposer"
@@ -12,20 +26,6 @@
     </a>
   </KPI>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { type Proposal } from "@CM/Services/Proposal";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
-</script>
 
 <i18n lang="yaml" locale="en">
 proposer: Proposer

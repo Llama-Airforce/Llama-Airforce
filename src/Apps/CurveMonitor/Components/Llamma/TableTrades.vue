@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { type Chain } from "@CM/Models";
+import { type LlammaTrade } from "@CM/Services/Llamma";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  trades: LlammaTrade[];
+  count: number;
+  chain: Chain | undefined;
+}
+
+const { trades, count, chain } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  page: [page: number];
+}>();
+
+// Trades
+const { page, onPage } = usePaginationAsync();
+const pageDebounced = refDebounced(page, 200);
+watch(pageDebounced, (page) => {
+  emit("page", page);
+});
+
+const { relativeTime } = useRelativeTime();
+const round = (x: number) =>
+  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
+</script>
+
 <template>
   <Card :title="t('title')">
     <template #actions>
@@ -77,39 +110,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { type Chain } from "@CM/Models";
-import { type LlammaTrade } from "@CM/Services/Llamma";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  trades: LlammaTrade[];
-  count: number;
-  chain: Chain | undefined;
-}
-
-const { trades, count, chain } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  page: [page: number];
-}>();
-
-// Trades
-const { page, onPage } = usePaginationAsync();
-const pageDebounced = refDebounced(page, 200);
-watch(pageDebounced, (page) => {
-  emit("page", page);
-});
-
-const { relativeTime } = useRelativeTime();
-const round = (x: number) =>
-  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

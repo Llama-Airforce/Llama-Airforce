@@ -1,35 +1,3 @@
-<template>
-  <Select
-    class="select"
-    :options="vaults"
-    :selected="vault"
-    :open="vaultOpen"
-    @open="onVaultOpen"
-    @close="vaultOpen = false"
-    @input="onVaultSelect"
-  >
-    <template #item="props: { item: Vault | 'all' }">
-      <div
-        v-if="props.item"
-        class="item"
-      >
-        <img
-          v-if="props.item !== 'all'"
-          :src="icon(props.item)"
-        />
-        <div
-          v-else
-          class="empty"
-        ></div>
-
-        <div class="label">
-          {{ props.item === "all" ? "All" : label(props.item) }}
-        </div>
-      </div>
-    </template>
-  </Select>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import {
@@ -78,6 +46,38 @@ const onVaultSelect = (option: Vault | "all"): void => {
   emit("select-vault", option);
 };
 </script>
+
+<template>
+  <Select
+    class="select"
+    :options="vaults"
+    :selected="vault"
+    :open="vaultOpen"
+    @open="onVaultOpen"
+    @close="vaultOpen = false"
+    @input="onVaultSelect"
+  >
+    <template #item="props: { item: Vault | 'all' }">
+      <div
+        v-if="props.item"
+        class="item"
+      >
+        <img
+          v-if="props.item !== 'all'"
+          :src="icon(props.item)"
+        />
+        <div
+          v-else
+          class="empty"
+        ></div>
+
+        <div class="label">
+          {{ props.item === "all" ? "All" : label(props.item) }}
+        </div>
+      </div>
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

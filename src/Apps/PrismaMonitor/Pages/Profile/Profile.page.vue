@@ -1,22 +1,3 @@
-<template>
-  <div class="profile">
-    <h2 style="grid-column: 1 / -1; margin-bottom: -0.5rem">
-      Profile: {{ user ?? "?" }}
-    </h2>
-
-    <TableTroves
-      style="z-index: 2"
-      :vaults="vaults"
-      :user="user"
-      @troves="onTroves"
-    ></TableTroves>
-
-    <TableRedemptions :troves="trovesUser"></TableRedemptions>
-
-    <TableLiquidations :troves="trovesUser"></TableLiquidations>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
@@ -81,6 +62,25 @@ whenever(addr, (addr) => {
   user.value = addr;
 });
 </script>
+
+<template>
+  <div class="profile">
+    <h2 style="grid-column: 1 / -1; margin-bottom: -0.5rem">
+      Profile: {{ user ?? "?" }}
+    </h2>
+
+    <TableTroves
+      style="z-index: 2"
+      :vaults="vaults"
+      :user="user"
+      @troves="onTroves"
+    ></TableTroves>
+
+    <TableRedemptions :troves="trovesUser"></TableRedemptions>
+
+    <TableLiquidations :troves="trovesUser"></TableLiquidations>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

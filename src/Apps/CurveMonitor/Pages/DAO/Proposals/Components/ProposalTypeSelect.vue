@@ -1,21 +1,3 @@
-<template>
-  <Select
-    class="select"
-    :options="types.map((x) => x)"
-    :selected="type"
-    :open="selectTypeOpen"
-    @open="onTypeOpen"
-    @close="selectTypeOpen = false"
-    @input="onTypeSelect"
-  >
-    <template #item="props: { item: ProposalType }">
-      <div class="item">
-        <div class="label">{{ t(props.item) }}</div>
-      </div>
-    </template>
-  </Select>
-</template>
-
 <script setup lang="ts">
 import { type ProposalType, proposalTypes } from "@CM/Services/Proposal";
 
@@ -42,6 +24,24 @@ const onTypeSelect = (option: ProposalType): void => {
   emit("select", type.value);
 };
 </script>
+
+<template>
+  <Select
+    class="select"
+    :options="types.map((x) => x)"
+    :selected="type"
+    :open="selectTypeOpen"
+    @open="onTypeOpen"
+    @close="selectTypeOpen = false"
+    @input="onTypeSelect"
+  >
+    <template #item="props: { item: ProposalType }">
+      <div class="item">
+        <div class="label">{{ t(props.item) }}</div>
+      </div>
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

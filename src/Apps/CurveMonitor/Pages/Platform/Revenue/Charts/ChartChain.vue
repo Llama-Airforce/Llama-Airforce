@@ -1,14 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    :options
-    :series
-    :loading
-    :title="t('title')"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -72,6 +61,17 @@ const series = computed(() =>
 const formatter = (x: number): string =>
   `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    :options
+    :series
+    :loading
+    :title="t('title')"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,42 +1,3 @@
-<template>
-  <Card :title="t('title')">
-    <Table
-      class="gauges-tables"
-      :rows="gauges"
-      :columns
-      :sorting
-      :expanded="expanded"
-      @sort-column="onSort"
-      @selected="emit('selected', $event)"
-    >
-      <template #row="props: { item: Gauge }">
-        <div>{{ shorten(props.item.name) }}</div>
-
-        <div class="end">
-          <AsyncValue
-            :value="props.item.tvl"
-            :precision="1"
-            type="dollar"
-          />
-        </div>
-      </template>
-
-      <template #row-details="props: { item: Gauge }">
-        <div
-          v-if="expanded.includes(props.item)"
-          class="charts"
-        >
-          <ChartEmissions
-            class="fees-and-emissions"
-            :gauge-selected="props.item"
-          ></ChartEmissions>
-        </div>
-        <span v-else></span>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { shorten } from "@/Util";
 import ChartEmissions from "@CM/Pages/Platform/Gauges/Charts/ChartEmissions.vue";
@@ -86,6 +47,45 @@ const gauges = computed((): Gauge[] => {
   }, sorting.value.order);
 });
 </script>
+
+<template>
+  <Card :title="t('title')">
+    <Table
+      class="gauges-tables"
+      :rows="gauges"
+      :columns
+      :sorting
+      :expanded="expanded"
+      @sort-column="onSort"
+      @selected="emit('selected', $event)"
+    >
+      <template #row="props: { item: Gauge }">
+        <div>{{ shorten(props.item.name) }}</div>
+
+        <div class="end">
+          <AsyncValue
+            :value="props.item.tvl"
+            :precision="1"
+            type="dollar"
+          />
+        </div>
+      </template>
+
+      <template #row-details="props: { item: Gauge }">
+        <div
+          v-if="expanded.includes(props.item)"
+          class="charts"
+        >
+          <ChartEmissions
+            class="fees-and-emissions"
+            :gauge-selected="props.item"
+          ></ChartEmissions>
+        </div>
+        <span v-else></span>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

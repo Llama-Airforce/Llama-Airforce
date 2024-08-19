@@ -1,3 +1,35 @@
+<script setup lang="ts">
+import TableDistributions from "@CM/Pages/Platform/Revenue/Tables/TableDistributions.vue";
+import ChartDistributions from "@CM/Pages/Platform/Revenue/Charts/ChartDistributions.vue";
+import ChartDistributionsDelta from "@CM/Pages/Platform/Revenue/Charts/ChartDistributionsDelta.vue";
+import { useQueryDistributions } from "@CM/Services/Revenue/Queries";
+
+const { t } = useI18n();
+
+const { isFetching: loading, data: distributions } = useQueryDistributions();
+
+// KPIs
+const totalFees = computed(() => distributions.value.sumBy((x) => x.feesUsd));
+
+const averageWeeklyFees = computed(() =>
+  distributions.value
+    .orderBy((x) => x.timestamp, "desc")
+    .take(52)
+    .meanBy((x) => x.feesUsd)
+);
+
+const stdDevWeeklyFees = computed(() => {
+  const lastYear = distributions.value
+    .orderBy((x) => x.timestamp, "desc")
+    .take(52)
+    .map((x) => x.feesUsd);
+
+  const avg = lastYear.meanBy((x) => x);
+  const squareDiffs = lastYear.map((value) => Math.pow(value - avg, 2));
+  return Math.sqrt(squareDiffs.sumBy((x) => x) / (lastYear.length - 1));
+});
+</script>
+
 <template>
   <div class="distributions">
     <KPI
@@ -52,38 +84,6 @@
     ></TableDistributions>
   </div>
 </template>
-
-<script setup lang="ts">
-import TableDistributions from "@CM/Pages/Platform/Revenue/Tables/TableDistributions.vue";
-import ChartDistributions from "@CM/Pages/Platform/Revenue/Charts/ChartDistributions.vue";
-import ChartDistributionsDelta from "@CM/Pages/Platform/Revenue/Charts/ChartDistributionsDelta.vue";
-import { useQueryDistributions } from "@CM/Services/Revenue/Queries";
-
-const { t } = useI18n();
-
-const { isFetching: loading, data: distributions } = useQueryDistributions();
-
-// KPIs
-const totalFees = computed(() => distributions.value.sumBy((x) => x.feesUsd));
-
-const averageWeeklyFees = computed(() =>
-  distributions.value
-    .orderBy((x) => x.timestamp, "desc")
-    .take(52)
-    .meanBy((x) => x.feesUsd)
-);
-
-const stdDevWeeklyFees = computed(() => {
-  const lastYear = distributions.value
-    .orderBy((x) => x.timestamp, "desc")
-    .take(52)
-    .map((x) => x.feesUsd);
-
-  const avg = lastYear.meanBy((x) => x);
-  const squareDiffs = lastYear.map((value) => Math.pow(value - avg, 2));
-  return Math.sqrt(squareDiffs.sumBy((x) => x) / (lastYear.length - 1));
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

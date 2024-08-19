@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import { type Proposal } from "@CM/Services/Proposal";
+import Status from "@CM/Pages/DAO/Proposals/Components/Status.vue";
+import Type from "@CM/Pages/DAO/Proposals/Components/Type.vue";
+import Proposer from "@CM/Pages/DAO/Proposals/Components/Proposer.vue";
+import Date from "@CM/Pages/DAO/Proposals/Components/Date.vue";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+  expanded: boolean;
+}
+
+const { proposal } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  toggleExpand: [];
+}>();
+
+// Refs
+const proposalLink = computed(
+  () => `/dao/proposal/${proposal.type}/${proposal.id}`
+);
+
+// Methods
+const proposalToClipboard = async () => {
+  await navigator.clipboard.writeText(
+    `${window.location.origin}/#/dao/proposal/${proposal.type}/${proposal.id}`
+  );
+};
+</script>
+
 <template>
   <div
     class="proposal-summary"
@@ -57,41 +92,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Proposal } from "@CM/Services/Proposal";
-import Status from "@CM/Pages/DAO/Proposals/Components/Status.vue";
-import Type from "@CM/Pages/DAO/Proposals/Components/Type.vue";
-import Proposer from "@CM/Pages/DAO/Proposals/Components/Proposer.vue";
-import Date from "@CM/Pages/DAO/Proposals/Components/Date.vue";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-  expanded: boolean;
-}
-
-const { proposal } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  toggleExpand: [];
-}>();
-
-// Refs
-const proposalLink = computed(
-  () => `/dao/proposal/${proposal.type}/${proposal.id}`
-);
-
-// Methods
-const proposalToClipboard = async () => {
-  await navigator.clipboard.writeText(
-    `${window.location.origin}/#/dao/proposal/${proposal.type}/${proposal.id}`
-  );
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

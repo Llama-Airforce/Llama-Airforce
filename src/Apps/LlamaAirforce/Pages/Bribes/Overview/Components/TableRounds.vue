@@ -1,55 +1,3 @@
-<template>
-  <Card :title="t('all-rounds')">
-    <template #actions>
-      <Tooltip>{{ t("tooltip") }}</Tooltip>
-    </template>
-
-    <Table
-      class="bribe-rounds-table"
-      :rows="epochs"
-      :columns
-      :sorting
-      @sort-column="onSort"
-      @selected="onSelected"
-    >
-      <template #row="props: { item: EpochOverview }">
-        <div
-          class="round-number"
-          @click.stop
-        >
-          <a
-            :href="voteLink(props.item)"
-            target="_blank"
-            class="vote-link"
-          >
-            <span v-if="isFinished(props.item)">{{ round(props.item) }}</span>
-            <span v-else>
-              <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
-            </span>
-          </a>
-        </div>
-        <div>
-          {{ date(props.item) }}
-        </div>
-        <div class="end">
-          <AsyncValue
-            :value="dollarPerVlAsset(props.item)"
-            :precision="5"
-            type="dollar"
-          />
-        </div>
-        <div class="end">
-          <AsyncValue
-            :value="totalAmountDollars(props.item)"
-            :precision="2"
-            type="dollar"
-          />
-        </div>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
@@ -133,6 +81,58 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
   });
 };
 </script>
+
+<template>
+  <Card :title="t('all-rounds')">
+    <template #actions>
+      <Tooltip>{{ t("tooltip") }}</Tooltip>
+    </template>
+
+    <Table
+      class="bribe-rounds-table"
+      :rows="epochs"
+      :columns
+      :sorting
+      @sort-column="onSort"
+      @selected="onSelected"
+    >
+      <template #row="props: { item: EpochOverview }">
+        <div
+          class="round-number"
+          @click.stop
+        >
+          <a
+            :href="voteLink(props.item)"
+            target="_blank"
+            class="vote-link"
+          >
+            <span v-if="isFinished(props.item)">{{ round(props.item) }}</span>
+            <span v-else>
+              <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
+            </span>
+          </a>
+        </div>
+        <div>
+          {{ date(props.item) }}
+        </div>
+        <div class="end">
+          <AsyncValue
+            :value="dollarPerVlAsset(props.item)"
+            :precision="5"
+            type="dollar"
+          />
+        </div>
+        <div class="end">
+          <AsyncValue
+            :value="totalAmountDollars(props.item)"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

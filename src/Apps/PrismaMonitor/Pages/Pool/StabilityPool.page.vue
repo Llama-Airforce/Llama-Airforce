@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import ChartPoolTvl from "@PM/Pages/Pool/Charts/ChartPoolTvl.vue";
+import ChartStableFlow from "@PM/Pages/Pool/Charts/ChartStableFlow.vue";
+import ChartDepositDistribution from "@PM/Pages/Pool/Charts/ChartDepositDistribution.vue";
+import ChartCumulativeWithdrawals from "@PM/Pages/Pool/Charts/ChartCumulativeWithdrawals.vue";
+import TableTopDeposits from "@PM/Pages/Pool/Tables/TableTopDeposits.vue";
+import TableTopWithdrawals from "@PM/Pages/Pool/Tables/TableTopWithdrawals.vue";
+</script>
+
 <template>
   <div class="pool">
     <ChartPoolTvl></ChartPoolTvl>
@@ -8,15 +17,6 @@
     <TableTopWithdrawals></TableTopWithdrawals>
   </div>
 </template>
-
-<script setup lang="ts">
-import ChartPoolTvl from "@PM/Pages/Pool/Charts/ChartPoolTvl.vue";
-import ChartStableFlow from "@PM/Pages/Pool/Charts/ChartStableFlow.vue";
-import ChartDepositDistribution from "@PM/Pages/Pool/Charts/ChartDepositDistribution.vue";
-import ChartCumulativeWithdrawals from "@PM/Pages/Pool/Charts/ChartCumulativeWithdrawals.vue";
-import TableTopDeposits from "@PM/Pages/Pool/Tables/TableTopDeposits.vue";
-import TableTopWithdrawals from "@PM/Pages/Pool/Tables/TableTopWithdrawals.vue";
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

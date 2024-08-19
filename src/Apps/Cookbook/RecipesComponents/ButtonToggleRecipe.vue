@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import Recipe from "@CB/Recipe.vue";
+import { ref } from "vue";
+
+const darkMode = ref(false);
+const notifications = ref(true);
+
+const toggleDarkMode = (value: boolean) => {
+  console.log(`Switching to ${value ? "dark" : "light"} mode`);
+};
+
+const darkModeExample = `<ButtonToggle v-model="darkMode" @change="toggleDarkMode">
+  <i :class="darkMode ? 'fas fa-moon' : 'fas fa-sun'"></i>
+  {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
+</ButtonToggle>`;
+
+const notificationsExample = `<ButtonToggle v-model="notifications" value="Notifications" icon="fas fa-bell"></ButtonToggle>`;
+</script>
+
 <template>
   <div class="button-toggles">
     <Recipe title="Dark Mode Toggle">
@@ -48,25 +67,6 @@
     </Recipe>
   </div>
 </template>
-
-<script setup lang="ts">
-import Recipe from "@CB/Recipe.vue";
-import { ref } from "vue";
-
-const darkMode = ref(false);
-const notifications = ref(true);
-
-const toggleDarkMode = (value: boolean) => {
-  console.log(`Switching to ${value ? "dark" : "light"} mode`);
-};
-
-const darkModeExample = `<ButtonToggle v-model="darkMode" @change="toggleDarkMode">
-  <i :class="darkMode ? 'fas fa-moon' : 'fas fa-sun'"></i>
-  {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
-</ButtonToggle>`;
-
-const notificationsExample = `<ButtonToggle v-model="notifications" value="Notifications" icon="fas fa-bell"></ButtonToggle>`;
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

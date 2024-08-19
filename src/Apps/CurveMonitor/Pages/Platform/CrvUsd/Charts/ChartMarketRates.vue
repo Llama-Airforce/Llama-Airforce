@@ -1,28 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-    :loading
-  >
-    <template #actions>
-      <div class="actions">
-        <InputNumber
-          v-model="avgLength"
-          class="avg-span"
-          placeholder="Avg span (days)"
-          :min="1"
-          :max="Infinity"
-        ></InputNumber>
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
@@ -152,6 +127,31 @@ const average = (data: number[], n = 7): number[] =>
     return average;
   });
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+    :loading
+  >
+    <template #actions>
+      <div class="actions">
+        <InputNumber
+          v-model="avgLength"
+          class="avg-span"
+          placeholder="Avg span (days)"
+          :min="1"
+          :max="Infinity"
+        ></InputNumber>
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,22 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    :title
-    :options="options"
-    :series="series"
-  >
-    <template #actions>
-      <div class="actions">
-        <Legend
-          :items
-          :disabled
-          @toggle="toggles[$event].value = !toggles[$event].value"
-        ></Legend>
-      </div>
-    </template>
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { capitalize } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
@@ -136,6 +117,25 @@ const formatterX = (x: string): string => x;
 const formatterY = (x: number): string =>
   `${round(x, 0, "dollar")}${unit(x, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    :title
+    :options="options"
+    :series="series"
+  >
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items
+          :disabled
+          @toggle="toggles[$event].value = !toggles[$event].value"
+        ></Legend>
+      </div>
+    </template>
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

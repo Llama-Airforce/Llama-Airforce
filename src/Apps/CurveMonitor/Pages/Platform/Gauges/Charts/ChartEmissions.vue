@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    class="emissions"
-    :title="title"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -192,6 +182,16 @@ const formatterRatio = (x: number): string => {
   return formatNumber(x, 2);
 };
 </script>
+
+<template>
+  <CardChart
+    class="emissions"
+    :title="title"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

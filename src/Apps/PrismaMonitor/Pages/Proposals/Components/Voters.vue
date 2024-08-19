@@ -1,38 +1,3 @@
-<template>
-  <div class="voters">
-    <div
-      v-for="vote in votes"
-      :key="vote.voter"
-      class="vote"
-    >
-      <div class="address">
-        <a
-          target="_blank"
-          :href="`https://etherscan.io/address/${vote.voter}`"
-          :class="{ you: you(vote.voter) }"
-        >
-          {{ address(vote.voter) }}
-        </a>
-      </div>
-      <div class="amount">
-        <AsyncValue
-          :value="vote.weight"
-          :precision="2"
-          :show-symbol="false"
-          type="dollar"
-        />
-      </div>
-      <div class="percentage">
-        <AsyncValue
-          :value="percentage(vote.weight)"
-          :precision="0"
-          type="percentage"
-        />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { addressShort, useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
@@ -71,6 +36,41 @@ const percentage = (voteWeight: number): number => {
 
 const you = (address: string): boolean => address === walletAddress.value;
 </script>
+
+<template>
+  <div class="voters">
+    <div
+      v-for="vote in votes"
+      :key="vote.voter"
+      class="vote"
+    >
+      <div class="address">
+        <a
+          target="_blank"
+          :href="`https://etherscan.io/address/${vote.voter}`"
+          :class="{ you: you(vote.voter) }"
+        >
+          {{ address(vote.voter) }}
+        </a>
+      </div>
+      <div class="amount">
+        <AsyncValue
+          :value="vote.weight"
+          :precision="2"
+          :show-symbol="false"
+          type="dollar"
+        />
+      </div>
+      <div class="percentage">
+        <AsyncValue
+          :value="percentage(vote.weight)"
+          :precision="0"
+          type="percentage"
+        />
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

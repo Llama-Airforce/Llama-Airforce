@@ -1,3 +1,56 @@
+<script setup lang="ts">
+import ChartRevenueLine from "@PM/Pages/Revenue/Charts/ChartRevenueLine.vue";
+import ChartRevenueBreakdown from "@PM/Pages/Revenue/Charts/ChartRevenueBreakdown.vue";
+import { RevenueService } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
+
+type ChartType = "line" | "breakdown";
+
+const { t } = useI18n();
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const revenueService = new RevenueService(storeSettings.flavor);
+
+// Refs
+const chartType = ref<ChartType>("line");
+const timestampCutoff = ref(1699723102);
+const includeUnlockPenalty = ref(true);
+
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-revenue-snapshots"],
+  queryFn: () => revenueService.getSnapshots().then((x) => x.snapshots),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const dataFiltered = computed(() =>
+  data.value
+    .filter((x) => x.timestamp > timestampCutoff.value)
+    .map((x) => structuredClone(x))
+    .map((x) => {
+      if (!includeUnlockPenalty.value) {
+        x.unlock_penalty_revenue_usd = 0;
+      }
+
+      return x;
+    })
+);
+
+// Events
+const onChartType = (type: ChartType) => {
+  // Don't do anything if we're not changing the type.
+  if (chartType.value === type) {
+    return;
+  }
+
+  chartType.value = type;
+};
+</script>
+
 <template>
   <Card
     class="chart-container"
@@ -56,59 +109,6 @@
     ></ChartRevenueBreakdown>
   </Card>
 </template>
-
-<script setup lang="ts">
-import ChartRevenueLine from "@PM/Pages/Revenue/Charts/ChartRevenueLine.vue";
-import ChartRevenueBreakdown from "@PM/Pages/Revenue/Charts/ChartRevenueBreakdown.vue";
-import { RevenueService } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
-
-type ChartType = "line" | "breakdown";
-
-const { t } = useI18n();
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const revenueService = new RevenueService(storeSettings.flavor);
-
-// Refs
-const chartType = ref<ChartType>("line");
-const timestampCutoff = ref(1699723102);
-const includeUnlockPenalty = ref(true);
-
-// Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-revenue-snapshots"],
-  queryFn: () => revenueService.getSnapshots().then((x) => x.snapshots),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const dataFiltered = computed(() =>
-  data.value
-    .filter((x) => x.timestamp > timestampCutoff.value)
-    .map((x) => structuredClone(x))
-    .map((x) => {
-      if (!includeUnlockPenalty.value) {
-        x.unlock_penalty_revenue_usd = 0;
-      }
-
-      return x;
-    })
-);
-
-// Events
-const onChartType = (type: ChartType) => {
-  // Don't do anything if we're not changing the type.
-  if (chartType.value === type) {
-    return;
-  }
-
-  chartType.value = type;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

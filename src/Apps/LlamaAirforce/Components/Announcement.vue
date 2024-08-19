@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { t } = useI18n();
+</script>
+
 <template>
   <Card class="announcement-card">
     <div class="announcements">
@@ -13,10 +17,6 @@
     </div>
   </Card>
 </template>
-
-<script setup lang="ts">
-const { t } = useI18n();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

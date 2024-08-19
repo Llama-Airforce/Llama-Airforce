@@ -1,3 +1,64 @@
+<script setup lang="ts">
+import Recipe from "@CB/Recipe.vue";
+
+const async = `<AsyncValue
+  :value="50000">
+</AsyncValue>`;
+
+const asyncDollar = `<AsyncValue
+  :value="50000"
+  type="dollar"
+></AsyncValue>`;
+
+const asyncPercentage = `<AsyncValue
+  :value="50000"
+  type="percentage"
+></AsyncValue>`;
+
+const asyncLoading = `<AsyncValue
+  :value="null">
+</AsyncValue>`;
+
+const asyncUnknown = `<AsyncValue
+  :value="0">
+</AsyncValue>`;
+
+const asyncZero = ` <AsyncValue
+  :value="0"
+  :show-zero="true"
+></AsyncValue>`;
+
+const asyncPrecision = `<AsyncValue
+  :value="50000"
+  :precision="5"
+  type="dollar"
+></AsyncValue>`;
+
+const asyncSymbol = `<AsyncValue
+  :value="50000"
+  :show-symbol="false"
+  type="dollar"
+></AsyncValue>`;
+
+const asyncUnit = `<AsyncValue
+  :value="50000"
+  :show-unit="false"
+  type="dollar"
+></AsyncValue>`;
+
+const asyncInline = `<p>This is an inline AsyncValue:
+  <AsyncValue :value="50000" :inline="true" />
+</p>`;
+
+const asyncCustomPrecision = `<AsyncValue
+  :value="50000"
+  :precision="(x) => x > 10000 ? 0 : 2"
+  type="dollar"
+></AsyncValue>`;
+
+const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
+</script>
+
 <template>
   <div class="async-values">
     <Recipe title="AsyncValue">
@@ -175,67 +236,6 @@
     </Recipe>
   </div>
 </template>
-
-<script setup lang="ts">
-import Recipe from "@CB/Recipe.vue";
-
-const async = `<AsyncValue
-  :value="50000">
-</AsyncValue>`;
-
-const asyncDollar = `<AsyncValue
-  :value="50000"
-  type="dollar"
-></AsyncValue>`;
-
-const asyncPercentage = `<AsyncValue
-  :value="50000"
-  type="percentage"
-></AsyncValue>`;
-
-const asyncLoading = `<AsyncValue
-  :value="null">
-</AsyncValue>`;
-
-const asyncUnknown = `<AsyncValue
-  :value="0">
-</AsyncValue>`;
-
-const asyncZero = ` <AsyncValue
-  :value="0"
-  :show-zero="true"
-></AsyncValue>`;
-
-const asyncPrecision = `<AsyncValue
-  :value="50000"
-  :precision="5"
-  type="dollar"
-></AsyncValue>`;
-
-const asyncSymbol = `<AsyncValue
-  :value="50000"
-  :show-symbol="false"
-  type="dollar"
-></AsyncValue>`;
-
-const asyncUnit = `<AsyncValue
-  :value="50000"
-  :show-unit="false"
-  type="dollar"
-></AsyncValue>`;
-
-const asyncInline = `<p>This is an inline AsyncValue:
-  <AsyncValue :value="50000" :inline="true" />
-</p>`;
-
-const asyncCustomPrecision = `<AsyncValue
-  :value="50000"
-  :precision="(x) => x > 10000 ? 0 : 2"
-  type="dollar"
-></AsyncValue>`;
-
-const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

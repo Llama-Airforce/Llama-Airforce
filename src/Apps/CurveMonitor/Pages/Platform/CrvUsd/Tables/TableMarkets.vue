@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import { type Market } from "@CM/Services/CrvUsd";
+import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
+
+const { t } = useI18n();
+
+type Row = Market;
+
+// Emit
+const emit = defineEmits<{
+  selected: [market: Row];
+}>();
+
+// Refs
+const search = ref("");
+
+const rows = computed(() =>
+  markets.value
+    .filter((market) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(market.name) || includesTerm(market.address);
+    })
+    .orderBy((x) => x.borrowed, "desc")
+);
+
+// Data
+const { isFetching: loading, data: markets } = useQueryMarkets();
+
+const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
+</script>
+
 <template>
   <Card
     class="markets-card"
@@ -122,41 +157,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { type Market } from "@CM/Services/CrvUsd";
-import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
-
-const { t } = useI18n();
-
-type Row = Market;
-
-// Emit
-const emit = defineEmits<{
-  selected: [market: Row];
-}>();
-
-// Refs
-const search = ref("");
-
-const rows = computed(() =>
-  markets.value
-    .filter((market) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return includesTerm(market.name) || includesTerm(market.address);
-    })
-    .orderBy((x) => x.borrowed, "desc")
-);
-
-// Data
-const { isFetching: loading, data: markets } = useQueryMarkets();
-
-const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const { t } = useI18n();
+
+const router = useRouter();
+
+function goto(card: "union" | "pirex" | "incentives") {
+  void router.push(`/${card}`);
+}
+</script>
+
 <template>
   <div class="home">
     <div class="dashboard">
@@ -66,16 +76,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const { t } = useI18n();
-
-const router = useRouter();
-
-function goto(card: "union" | "pirex" | "incentives") {
-  void router.push(`/${card}`);
-}
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

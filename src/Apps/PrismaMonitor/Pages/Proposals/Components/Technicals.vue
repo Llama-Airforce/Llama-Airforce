@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import Voters from "@PM/Pages/Proposals/Components/Voters.vue";
+import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+  expanded: boolean;
+}
+
+const { proposal } = defineProps<Props>();
+
+// Refs
+const expandedCallData = ref(true);
+const expandedVoters = ref(proposal.votes > 0);
+
+const authorUrl = computed(() => {
+  return `https://twitter.com/@${proposal.metadata!.author}`;
+});
+
+const numVoters = computed(
+  () => proposal.voters.map((v) => v.voter).uniqWith((x, y) => x === y).length
+);
+
+const callData = computed(() => {
+  return proposal.script
+    .replace(/(?:\r\n|\r|\n)/g, "<br>")
+    .replace("/\u251c/g", "├")
+    .replace("/\u2500/g", "─")
+    .replace(/0x[a-fA-F0-9]{40}/g, (match) =>
+      /[A-F]/g.test(match) && isAddress(match)
+        ? `<a href='https://etherscan.io/address/${match}'>${match}</a>`
+        : match
+    );
+});
+</script>
+
 <template>
   <div class="technicals">
     <div
@@ -79,45 +118,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import Voters from "@PM/Pages/Proposals/Components/Voters.vue";
-import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-  expanded: boolean;
-}
-
-const { proposal } = defineProps<Props>();
-
-// Refs
-const expandedCallData = ref(true);
-const expandedVoters = ref(proposal.votes > 0);
-
-const authorUrl = computed(() => {
-  return `https://twitter.com/@${proposal.metadata!.author}`;
-});
-
-const numVoters = computed(
-  () => proposal.voters.map((v) => v.voter).uniqWith((x, y) => x === y).length
-);
-
-const callData = computed(() => {
-  return proposal.script
-    .replace(/(?:\r\n|\r|\n)/g, "<br>")
-    .replace("/\u251c/g", "├")
-    .replace("/\u2500/g", "─")
-    .replace(/0x[a-fA-F0-9]{40}/g, (match) =>
-      /[A-F]/g.test(match) && isAddress(match)
-        ? `<a href='https://etherscan.io/address/${match}'>${match}</a>`
-        : match
-    );
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

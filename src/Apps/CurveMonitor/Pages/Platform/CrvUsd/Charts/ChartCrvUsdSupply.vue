@@ -1,3 +1,47 @@
+<script setup lang="ts">
+import { useSettingsStore } from "@CM/Stores";
+import { useQueryCrvUsdSupply } from "@CM/Services/CrvUsd/Queries";
+import {
+  ChartCrvUsdSupplyLine,
+  ChartCrvUsdSupplyBreakdown,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
+
+type ChartType = "line" | "breakdown";
+
+const { t } = useI18n();
+
+// Refs
+const { theme } = storeToRefs(useSettingsStore());
+const chartType = ref<ChartType>("line");
+
+// Legend
+const { items } = useLegend(() => [
+  {
+    id: "supply",
+    label: "Supply",
+    color: theme.value.colorsArray[0],
+  },
+  {
+    id: "borrowed",
+    label: "Borrowed",
+    color: theme.value.colorsArray[1],
+  },
+]);
+
+// Data
+const { isFetching: loading, data } = useQueryCrvUsdSupply();
+
+// Events
+const onChartType = (type: ChartType) => {
+  // Don't do anything if we're not changing the type.
+  if (chartType.value === type) {
+    return;
+  }
+
+  chartType.value = type;
+};
+</script>
+
 <template>
   <Card
     class="chart-container"
@@ -44,50 +88,6 @@
     </KeepAlive>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
-import { useQueryCrvUsdSupply } from "@CM/Services/CrvUsd/Queries";
-import {
-  ChartCrvUsdSupplyLine,
-  ChartCrvUsdSupplyBreakdown,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
-
-type ChartType = "line" | "breakdown";
-
-const { t } = useI18n();
-
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
-const chartType = ref<ChartType>("line");
-
-// Legend
-const { items } = useLegend(() => [
-  {
-    id: "supply",
-    label: "Supply",
-    color: theme.value.colorsArray[0],
-  },
-  {
-    id: "borrowed",
-    label: "Borrowed",
-    color: theme.value.colorsArray[1],
-  },
-]);
-
-// Data
-const { isFetching: loading, data } = useQueryCrvUsdSupply();
-
-// Events
-const onChartType = (type: ChartType) => {
-  // Don't do anything if we're not changing the type.
-  if (chartType.value === type) {
-    return;
-  }
-
-  chartType.value = type;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

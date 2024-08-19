@@ -1,21 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-    :loading="loading"
-  >
-    <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-      </div>
-    </template>
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
@@ -150,6 +132,24 @@ function formatter(y: number): string {
   return `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+    :loading="loading"
+  >
+    <template #actions>
+      <div class="actions">
+        <Legend :items></Legend>
+      </div>
+    </template>
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

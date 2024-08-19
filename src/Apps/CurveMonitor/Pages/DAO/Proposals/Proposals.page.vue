@@ -1,3 +1,63 @@
+<script setup lang="ts">
+import { type ProposalType, type ProposalStatus } from "@CM/Services/Proposal";
+import { useQueryProposals } from "@CM/Services/Proposal/Queries";
+import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
+import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
+
+const { t } = useI18n();
+
+// Refs
+const tabActive = ref(0);
+
+const { page, onPage } = usePaginationAsync();
+const pageDebounced = refDebounced(page, 200);
+
+const placeholder = ref(t("search-placeholder"));
+const proposalSearch = ref("");
+const proposalSearchDebounced = refDebounced(proposalSearch, 300);
+
+const proposalType = ref<ProposalType>("all");
+
+const proposalStatus = computed((): ProposalStatus => {
+  switch (tabActive.value) {
+    case 0:
+      return "all";
+    case 1:
+      return "active";
+    case 2:
+      return "passed";
+    case 3:
+      return "denied";
+    case 4:
+      return "executed";
+    default:
+      return "all";
+  }
+});
+
+const search = computed(() =>
+  proposalSearchDebounced.value.toLocaleLowerCase()
+);
+
+const count = computed(() => data.value?.count ?? 0);
+const proposals = computed(() =>
+  (data.value?.proposals ?? []).orderBy((x) => x.start, "desc")
+);
+
+// Data
+const { isFetching: loading, data } = useQueryProposals(
+  pageDebounced,
+  proposalType,
+  proposalStatus,
+  search
+);
+
+// Events
+const onTypeSelect = (type: ProposalType): void => {
+  proposalType.value = type;
+};
+</script>
+
 <template>
   <div class="proposals">
     <TabView @tab="tabActive = $event.index">
@@ -58,66 +118,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type ProposalType, type ProposalStatus } from "@CM/Services/Proposal";
-import { useQueryProposals } from "@CM/Services/Proposal/Queries";
-import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
-import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
-
-const { t } = useI18n();
-
-// Refs
-const tabActive = ref(0);
-
-const { page, onPage } = usePaginationAsync();
-const pageDebounced = refDebounced(page, 200);
-
-const placeholder = ref(t("search-placeholder"));
-const proposalSearch = ref("");
-const proposalSearchDebounced = refDebounced(proposalSearch, 300);
-
-const proposalType = ref<ProposalType>("all");
-
-const proposalStatus = computed((): ProposalStatus => {
-  switch (tabActive.value) {
-    case 0:
-      return "all";
-    case 1:
-      return "active";
-    case 2:
-      return "passed";
-    case 3:
-      return "denied";
-    case 4:
-      return "executed";
-    default:
-      return "all";
-  }
-});
-
-const search = computed(() =>
-  proposalSearchDebounced.value.toLocaleLowerCase()
-);
-
-const count = computed(() => data.value?.count ?? 0);
-const proposals = computed(() =>
-  (data.value?.proposals ?? []).orderBy((x) => x.start, "desc")
-);
-
-// Data
-const { isFetching: loading, data } = useQueryProposals(
-  pageDebounced,
-  proposalType,
-  proposalStatus,
-  search
-);
-
-// Events
-const onTypeSelect = (type: ProposalType): void => {
-  proposalType.value = type;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

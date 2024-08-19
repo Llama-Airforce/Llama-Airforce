@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import { StableService } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
+import { stableSymbol } from "@PM/Models/Flavor";
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const stableService = new StableService(storeSettings.flavor);
+
+// Data
+const { data } = useQuery({
+  queryKey: ["prisma-stable-kpi"],
+  queryFn: () => stableService.getStableCoinKPI("ethereum").then((x) => x.info),
+});
+</script>
+
 <template>
   <div class="kpis">
     <KPI
@@ -49,24 +67,6 @@
     </KPI>
   </div>
 </template>
-
-<script setup lang="ts">
-import { StableService } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
-import { stableSymbol } from "@PM/Models/Flavor";
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const stableService = new StableService(storeSettings.flavor);
-
-// Data
-const { data } = useQuery({
-  queryKey: ["prisma-stable-kpi"],
-  queryFn: () => stableService.getStableCoinKPI("ethereum").then((x) => x.info),
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

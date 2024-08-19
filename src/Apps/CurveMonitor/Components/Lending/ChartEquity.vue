@@ -1,21 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-  >
-    <template #actions>
-      <div class="actions">
-        <Tooltip><span v-html="t('tooltip')"></span></Tooltip>
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type BaselineSeriesPartialOptions } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
@@ -86,6 +68,24 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+  >
+    <template #actions>
+      <div class="actions">
+        <Tooltip><span v-html="t('tooltip')"></span></Tooltip>
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

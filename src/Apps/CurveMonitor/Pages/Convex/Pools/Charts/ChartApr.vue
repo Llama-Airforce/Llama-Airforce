@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    class="apr"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
@@ -119,6 +109,16 @@ const formatter = (y: number): string => {
   return `${round(y, 1, "percentage")}${unit(y, "percentage")}`;
 };
 </script>
+
+<template>
+  <CardChart
+    class="apr"
+    :title="t('title')"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

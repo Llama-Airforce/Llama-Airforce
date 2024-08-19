@@ -1,14 +1,3 @@
-<template>
-  <CardChart
-    class="mevLabels"
-    title="Worst absolute offenders"
-    :options
-    :series
-    :loading
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -76,6 +65,17 @@ const options = computed(() => {
 // Methods
 const formatter = (x: number): string => `${x}`;
 </script>
+
+<template>
+  <CardChart
+    class="mevLabels"
+    title="Worst absolute offenders"
+    :options
+    :series
+    :loading
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

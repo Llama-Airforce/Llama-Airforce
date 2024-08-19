@@ -1,57 +1,3 @@
-<template>
-  <div class="summary">
-    <Select
-      class="select-summary"
-      :label="t('round-number')"
-      :options="roundsOrdered"
-      :selected="epoch?.round"
-      :open="roundOpen"
-      @open="onRoundOpen"
-      @close="roundOpen = false"
-      @input="onRoundSelect"
-    ></Select>
-
-    <KPI
-      :label="'$/' + vlAssetSymbol(product?.protocol)"
-      :has-value="!!dollarPerVlAsset"
-    >
-      <AsyncValue
-        :value="dollarPerVlAsset"
-        :precision="5"
-        type="dollar"
-      />
-    </KPI>
-
-    <KPI
-      :label="t('deadline')"
-      :value="date"
-      :has-value="!!date"
-    >
-      <template #label-second>
-        <a
-          :href="voteLink"
-          target="_blank"
-          class="vote-link"
-        >
-          <span v-if="isFinished">{{ t("voting-ended") }}</span>
-          <span v-else><i class="far fa-clock"></i> {{ countdownString }}</span>
-        </a>
-      </template>
-    </KPI>
-
-    <KPI
-      label="Total"
-      :has-value="!!totalAmountDollars"
-    >
-      <AsyncValue
-        :value="totalAmountDollars"
-        :precision="2"
-        type="dollar"
-      />
-    </KPI>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
@@ -138,6 +84,60 @@ const onRoundSelect = (round: number): void => {
   emit("select-round", round);
 };
 </script>
+
+<template>
+  <div class="summary">
+    <Select
+      class="select-summary"
+      :label="t('round-number')"
+      :options="roundsOrdered"
+      :selected="epoch?.round"
+      :open="roundOpen"
+      @open="onRoundOpen"
+      @close="roundOpen = false"
+      @input="onRoundSelect"
+    ></Select>
+
+    <KPI
+      :label="'$/' + vlAssetSymbol(product?.protocol)"
+      :has-value="!!dollarPerVlAsset"
+    >
+      <AsyncValue
+        :value="dollarPerVlAsset"
+        :precision="5"
+        type="dollar"
+      />
+    </KPI>
+
+    <KPI
+      :label="t('deadline')"
+      :value="date"
+      :has-value="!!date"
+    >
+      <template #label-second>
+        <a
+          :href="voteLink"
+          target="_blank"
+          class="vote-link"
+        >
+          <span v-if="isFinished">{{ t("voting-ended") }}</span>
+          <span v-else><i class="far fa-clock"></i> {{ countdownString }}</span>
+        </a>
+      </template>
+    </KPI>
+
+    <KPI
+      label="Total"
+      :has-value="!!totalAmountDollars"
+    >
+      <AsyncValue
+        :value="totalAmountDollars"
+        :precision="2"
+        type="dollar"
+      />
+    </KPI>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

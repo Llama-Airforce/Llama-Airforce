@@ -1,3 +1,109 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import {
+  TransactionType,
+  type TransactionDetail,
+} from "@CM/Services/Monitor/SocketMonitorCurve";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  txs?: TransactionDetail[];
+  header?: boolean;
+  compact?: boolean;
+  time?: boolean;
+}
+
+const {
+  txs = null,
+  header = true,
+  compact = false,
+  time = true,
+} = defineProps<Props>();
+
+// Refs
+const { relativeTime } = useRelativeTime();
+
+const search = ref("");
+const types = ref<TransactionType[]>([
+  TransactionType.Swap,
+  TransactionType.Deposit,
+  TransactionType.Remove,
+]);
+
+const columns = computed(() => {
+  return time
+    ? ["Type", "Block", "Tx", "Trader", "Assets", "Time"]
+    : ["Type", "Tx", "Trader", "Assets"];
+});
+
+const rows = computed(() =>
+  (txs ?? [])
+    .filter((tx) => types.value.includes(tx.transaction_type))
+    .filter((tx) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string): boolean =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return (
+        includesTerm(tx.block_number.toString()) ||
+        includesTerm(tx.trader) ||
+        includesTerm(tx.tx_hash)
+      );
+    })
+);
+
+const rowsPerPage = 10;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+
+const getAssetsString = (tx: TransactionDetail): string => {
+  if (tx.transaction_type === TransactionType.Swap) {
+    // TODO: make generic for multiple coins.
+    const coinIn = tx.coins_leaving_wallet[0];
+    const coinOut = tx.coins_entering_wallet[0];
+    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
+    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
+
+    const from = `<span>${amountIn} ${coinIn.name}</span>`;
+    const arrow = `<i class='fas fa-arrow-right'></i>`;
+    const to = `<span style='justify-self: end;'>${amountOut} ${coinOut.name}</span>`;
+
+    return `${from}${arrow}${to}`;
+  } else if (tx.transaction_type === TransactionType.Deposit) {
+    const coinIn = tx.coins_entering_wallet[0];
+    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
+
+    return `${amountIn} ${coinIn.name}`;
+  } else {
+    const coinOut = tx.coins_leaving_wallet[0];
+    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
+
+    return `${amountOut} ${coinOut.name}`;
+  }
+};
+
+// Events
+const onType = (tabIndex: number) => {
+  if (tabIndex === 0) {
+    types.value = [
+      TransactionType.Swap,
+      TransactionType.Deposit,
+      TransactionType.Remove,
+    ];
+  } else if (tabIndex === 1) {
+    types.value = [TransactionType.Swap];
+  } else if (tabIndex === 2) {
+    types.value = [TransactionType.Deposit];
+  } else if (tabIndex === 3) {
+    types.value = [TransactionType.Remove];
+  } else {
+    types.value = [];
+  }
+};
+</script>
+
 <template>
   <Card
     class="trades-card"
@@ -124,112 +230,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import {
-  TransactionType,
-  type TransactionDetail,
-} from "@CM/Services/Monitor/SocketMonitorCurve";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  txs?: TransactionDetail[];
-  header?: boolean;
-  compact?: boolean;
-  time?: boolean;
-}
-
-const {
-  txs = null,
-  header = true,
-  compact = false,
-  time = true,
-} = defineProps<Props>();
-
-// Refs
-const { relativeTime } = useRelativeTime();
-
-const search = ref("");
-const types = ref<TransactionType[]>([
-  TransactionType.Swap,
-  TransactionType.Deposit,
-  TransactionType.Remove,
-]);
-
-const columns = computed(() => {
-  return time
-    ? ["Type", "Block", "Tx", "Trader", "Assets", "Time"]
-    : ["Type", "Tx", "Trader", "Assets"];
-});
-
-const rows = computed(() =>
-  (txs ?? [])
-    .filter((tx) => types.value.includes(tx.transaction_type))
-    .filter((tx) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string): boolean =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return (
-        includesTerm(tx.block_number.toString()) ||
-        includesTerm(tx.trader) ||
-        includesTerm(tx.tx_hash)
-      );
-    })
-);
-
-const rowsPerPage = 10;
-const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-
-const getAssetsString = (tx: TransactionDetail): string => {
-  if (tx.transaction_type === TransactionType.Swap) {
-    // TODO: make generic for multiple coins.
-    const coinIn = tx.coins_leaving_wallet[0];
-    const coinOut = tx.coins_entering_wallet[0];
-    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
-    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
-
-    const from = `<span>${amountIn} ${coinIn.name}</span>`;
-    const arrow = `<i class='fas fa-arrow-right'></i>`;
-    const to = `<span style='justify-self: end;'>${amountOut} ${coinOut.name}</span>`;
-
-    return `${from}${arrow}${to}`;
-  } else if (tx.transaction_type === TransactionType.Deposit) {
-    const coinIn = tx.coins_entering_wallet[0];
-    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
-
-    return `${amountIn} ${coinIn.name}`;
-  } else {
-    const coinOut = tx.coins_leaving_wallet[0];
-    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
-
-    return `${amountOut} ${coinOut.name}`;
-  }
-};
-
-// Events
-const onType = (tabIndex: number) => {
-  if (tabIndex === 0) {
-    types.value = [
-      TransactionType.Swap,
-      TransactionType.Deposit,
-      TransactionType.Remove,
-    ];
-  } else if (tabIndex === 1) {
-    types.value = [TransactionType.Swap];
-  } else if (tabIndex === 2) {
-    types.value = [TransactionType.Deposit];
-  } else if (tabIndex === 3) {
-    types.value = [TransactionType.Remove];
-  } else {
-    types.value = [];
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

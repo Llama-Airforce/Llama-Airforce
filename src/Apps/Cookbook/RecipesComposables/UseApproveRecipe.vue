@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import { zeroAddress } from "viem";
+import { useApprove } from "@/Framework/Composables/UseApprove";
+import { useWallet } from "@/Wallet";
+import Recipe from "@CB/Recipe.vue";
+
+const { address } = useWallet();
+
+const token = WEthAddress;
+const spender = TreasuryAddress;
+const amount = ref(0);
+
+const { allowance, needsApprove, approve, isApproving } = useApprove(
+  token,
+  address,
+  spender,
+  computed(() => BigInt(amount.value)),
+  { maxApprove: false }
+);
+
+const code = `const { address } = useWallet();
+
+const token = WEthAddress;
+const spender = TreasuryAddress;
+const amount = ref(0);
+
+const { allowance, needsApprove, approve, isApproving } = useApprove(
+  token,
+  address,
+  spender,
+  computed(() => BigInt(amount.value)),
+  { maxApprove: false }
+);
+`;
+</script>
+
 <template>
   <div class="use-approve">
     <Recipe title="Approval">
@@ -49,42 +85,6 @@
     </Recipe>
   </div>
 </template>
-
-<script setup lang="ts">
-import { zeroAddress } from "viem";
-import { useApprove } from "@/Framework/Composables/UseApprove";
-import { useWallet } from "@/Wallet";
-import Recipe from "@CB/Recipe.vue";
-
-const { address } = useWallet();
-
-const token = WEthAddress;
-const spender = TreasuryAddress;
-const amount = ref(0);
-
-const { allowance, needsApprove, approve, isApproving } = useApprove(
-  token,
-  address,
-  spender,
-  computed(() => BigInt(amount.value)),
-  { maxApprove: false }
-);
-
-const code = `const { address } = useWallet();
-
-const token = WEthAddress;
-const spender = TreasuryAddress;
-const amount = ref(0);
-
-const { allowance, needsApprove, approve, isApproving } = useApprove(
-  token,
-  address,
-  spender,
-  computed(() => BigInt(amount.value)),
-  { maxApprove: false }
-);
-`;
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,89 +1,3 @@
-<template>
-  <Card>
-    <template #title>
-      <div class="title">
-        {{ t("title") }}
-        <span v-if="bribedAmount">
-          -
-          <AsyncValue
-            :value="bribedAmount"
-            :precision="2"
-            type="dollar"
-          />
-        </span>
-      </div>
-    </template>
-
-    <template #actions>
-      <div
-        v-if="personalDollarPerVlAsset"
-        class="personalDollarPerVlAsset"
-      >
-        <AsyncValue
-          :value="personalDollarPerVlAsset"
-          :precision="4"
-          type="dollar"
-        />/{{ vlAssetSymbol(protocol) }}
-      </div>
-    </template>
-
-    <Table
-      class="personal-table"
-      :rows="bribedOrdered"
-      :columns
-      :sorting
-      @sort-column="onSort"
-    >
-      <template #row="props: { item: BribedPersonal }">
-        <Tooltip>
-          <template #item>
-            <div class="tooltip-personal-columns-data">
-              <div>
-                <AsyncValue
-                  :value="percentage(props.item)"
-                  :precision="0"
-                  type="percentage"
-                />
-              </div>
-
-              <div>
-                {{ pool(props.item) }}
-              </div>
-
-              <div class="end">
-                <AsyncValue
-                  :value="dollarPerVlAsset(props.item)"
-                  :precision="5"
-                  type="dollar"
-                />
-              </div>
-
-              <div class="end">
-                <AsyncValue
-                  :value="amountDollars(props.item)"
-                  :precision="2"
-                  type="dollar"
-                />
-              </div>
-            </div>
-          </template>
-
-          <div class="tooltip-hover">
-            {{ pool(props.item) }}
-          </div>
-        </Tooltip>
-      </template>
-
-      <template #no-data>
-        <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
-        <WalletConnectButton
-          v-if="!isConnected && isSupported"
-        ></WalletConnectButton>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { useWallet, addressShort } from "@/Wallet";
@@ -293,6 +207,92 @@ const dollarPerVlAsset = (bribed: BribedPersonal): number =>
   bribed.dollarPerVlAsset;
 const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 </script>
+
+<template>
+  <Card>
+    <template #title>
+      <div class="title">
+        {{ t("title") }}
+        <span v-if="bribedAmount">
+          -
+          <AsyncValue
+            :value="bribedAmount"
+            :precision="2"
+            type="dollar"
+          />
+        </span>
+      </div>
+    </template>
+
+    <template #actions>
+      <div
+        v-if="personalDollarPerVlAsset"
+        class="personalDollarPerVlAsset"
+      >
+        <AsyncValue
+          :value="personalDollarPerVlAsset"
+          :precision="4"
+          type="dollar"
+        />/{{ vlAssetSymbol(protocol) }}
+      </div>
+    </template>
+
+    <Table
+      class="personal-table"
+      :rows="bribedOrdered"
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="props: { item: BribedPersonal }">
+        <Tooltip>
+          <template #item>
+            <div class="tooltip-personal-columns-data">
+              <div>
+                <AsyncValue
+                  :value="percentage(props.item)"
+                  :precision="0"
+                  type="percentage"
+                />
+              </div>
+
+              <div>
+                {{ pool(props.item) }}
+              </div>
+
+              <div class="end">
+                <AsyncValue
+                  :value="dollarPerVlAsset(props.item)"
+                  :precision="5"
+                  type="dollar"
+                />
+              </div>
+
+              <div class="end">
+                <AsyncValue
+                  :value="amountDollars(props.item)"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
+            </div>
+          </template>
+
+          <div class="tooltip-hover">
+            {{ pool(props.item) }}
+          </div>
+        </Tooltip>
+      </template>
+
+      <template #no-data>
+        <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
+        <WalletConnectButton
+          v-if="!isConnected && isSupported"
+        ></WalletConnectButton>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

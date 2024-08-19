@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const { t } = useI18n();
+
+// Props
+interface Props {
+  extra?: string;
+}
+
+const { extra = "" } = defineProps<Props>();
+</script>
+
 <template>
   <Card>
     <div class="docs">
@@ -18,17 +29,6 @@
     </div>
   </Card>
 </template>
-
-<script setup lang="ts">
-const { t } = useI18n();
-
-// Props
-interface Props {
-  extra?: string;
-}
-
-const { extra = "" } = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

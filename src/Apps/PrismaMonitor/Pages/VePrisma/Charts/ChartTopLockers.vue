@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    class="graph"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
@@ -93,6 +83,16 @@ const formatter = (x: number): string =>
 const formatterPct = (x: number): string =>
   `${round(x, 2, "percentage")}${unit(x, "percentage")}`;
 </script>
+
+<template>
+  <CardChart
+    class="graph"
+    :title="t('title')"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

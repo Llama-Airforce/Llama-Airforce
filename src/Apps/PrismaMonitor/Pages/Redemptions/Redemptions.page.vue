@@ -1,9 +1,3 @@
-<template>
-  <div class="redemptions">
-    <TableRedemptions :vaults="vaults"></TableRedemptions>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { getApiSocket, useSocketStore } from "@PM/Stores";
 import { TroveOverviewService } from "@PM/Services";
@@ -16,6 +10,12 @@ const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 </script>
+
+<template>
+  <div class="redemptions">
+    <TableRedemptions :vaults="vaults"></TableRedemptions>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

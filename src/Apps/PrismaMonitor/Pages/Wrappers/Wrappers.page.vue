@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import Overview from "@PM/Pages/Wrappers/Tabs/Overview.vue";
+import CvxPrisma from "@PM/Pages/Wrappers/Tabs/CvxPrisma.vue";
+import YPrisma from "@PM/Pages/Wrappers/Tabs/YPrisma.vue";
+
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["overview", "cvxprisma", "yprisma"],
+  "wrappers"
+);
+</script>
+
 <template>
   <div class="wrappers">
     <TabView
@@ -18,17 +29,6 @@
     </TabView>
   </div>
 </template>
-
-<script setup lang="ts">
-import Overview from "@PM/Pages/Wrappers/Tabs/Overview.vue";
-import CvxPrisma from "@PM/Pages/Wrappers/Tabs/CvxPrisma.vue";
-import YPrisma from "@PM/Pages/Wrappers/Tabs/YPrisma.vue";
-
-const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "cvxprisma", "yprisma"],
-  "wrappers"
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

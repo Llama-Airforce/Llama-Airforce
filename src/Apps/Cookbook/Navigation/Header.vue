@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import Logo from "@CB/Navigation/Logo.vue";
+
+// Emits
+const emit = defineEmits<{
+  "toggle-expansion": [];
+  navigated: [];
+}>();
+</script>
+
 <template>
   <div class="header">
     <router-link
@@ -16,16 +26,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import Logo from "@CB/Navigation/Logo.vue";
-
-// Emits
-const emit = defineEmits<{
-  "toggle-expansion": [];
-  navigated: [];
-}>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

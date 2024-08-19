@@ -1,3 +1,96 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
+import { type Vault, icon } from "@PM/Models/Vault";
+import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
+import SelectVault from "@PM/Components/SelectVault.vue";
+import { type Redemption, RedemptionService } from "@PM/Services";
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const redemptionService = new RedemptionService(storeSettings.flavor);
+
+type Row = Redemption;
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  troves: string[];
+}
+const { troves = [] } = defineProps<Props>();
+
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-redemptions", computed(() => troves)] as const,
+  queryFn: ({ queryKey: [, troves] }) => {
+    return Promise.all(
+      troves
+        .uniq()
+        .map((trove) =>
+          redemptionService.getRedemptionsForTrove("ethereum", trove)
+        )
+    ).then((rs) => rs.flat());
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+// Refs
+const { relativeTime } = useRelativeTime();
+
+const search = ref("");
+const vault = ref<Vault | "all">("all");
+const showDetails = ref<Row | null>(null);
+
+const columns = [
+  "",
+  { id: "redeemer", label: "Redeemer", sort: true } as const,
+  { id: "tx", label: "Transaction", sort: true } as const,
+  { id: "debt", label: "Debt", sort: true, align: "end" } as const,
+  { id: "numtroves", label: "# Troves", sort: true, align: "end" } as const,
+  { id: "timestamp", label: "Time", sort: true, align: "end" } as const,
+];
+
+const { sorting, onSort } = useSort<typeof columns>("timestamp");
+
+const rows = computed(() =>
+  data.value
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string) =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      const isVaultFilter =
+        vault.value === "all" ? true : row.vault === vault.value;
+
+      return includesTerm(row.redeemer) && isVaultFilter;
+    })
+    .orderBy((row) => {
+      switch (sorting.value.column) {
+        case "redeemer":
+          return row.redeemer;
+        case "tx":
+          return row.transaction;
+        case "debt":
+          return row.actual_debt_amount;
+        case "numtroves":
+          return row.troves_affected_count;
+        case "timestamp":
+          return row.timestamp;
+        default:
+          return row.timestamp;
+      }
+    }, sorting.value.order)
+);
+
+const rowsPerPage = 15;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+</script>
+
 <template>
   <Card
     class="redemptions-card"
@@ -92,99 +185,6 @@
     ></RedemptionDetails>
   </Modal>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { useSettingsStore } from "@PM/Stores";
-import { type Vault, icon } from "@PM/Models/Vault";
-import RedemptionDetails from "@PM/Components/RedemptionDetails.vue";
-import SelectVault from "@PM/Components/SelectVault.vue";
-import { type Redemption, RedemptionService } from "@PM/Services";
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const redemptionService = new RedemptionService(storeSettings.flavor);
-
-type Row = Redemption;
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  troves: string[];
-}
-const { troves = [] } = defineProps<Props>();
-
-// Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-redemptions", computed(() => troves)] as const,
-  queryFn: ({ queryKey: [, troves] }) => {
-    return Promise.all(
-      troves
-        .uniq()
-        .map((trove) =>
-          redemptionService.getRedemptionsForTrove("ethereum", trove)
-        )
-    ).then((rs) => rs.flat());
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-// Refs
-const { relativeTime } = useRelativeTime();
-
-const search = ref("");
-const vault = ref<Vault | "all">("all");
-const showDetails = ref<Row | null>(null);
-
-const columns = [
-  "",
-  { id: "redeemer", label: "Redeemer", sort: true } as const,
-  { id: "tx", label: "Transaction", sort: true } as const,
-  { id: "debt", label: "Debt", sort: true, align: "end" } as const,
-  { id: "numtroves", label: "# Troves", sort: true, align: "end" } as const,
-  { id: "timestamp", label: "Time", sort: true, align: "end" } as const,
-];
-
-const { sorting, onSort } = useSort<typeof columns>("timestamp");
-
-const rows = computed(() =>
-  data.value
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string) =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      const isVaultFilter =
-        vault.value === "all" ? true : row.vault === vault.value;
-
-      return includesTerm(row.redeemer) && isVaultFilter;
-    })
-    .orderBy((row) => {
-      switch (sorting.value.column) {
-        case "redeemer":
-          return row.redeemer;
-        case "tx":
-          return row.transaction;
-        case "debt":
-          return row.actual_debt_amount;
-        case "numtroves":
-          return row.troves_affected_count;
-        case "timestamp":
-          return row.timestamp;
-        default:
-          return row.timestamp;
-      }
-    }, sorting.value.order)
-);
-
-const rowsPerPage = 15;
-const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

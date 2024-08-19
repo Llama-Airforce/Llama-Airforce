@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    class="bribes"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStylesLAF } from "@/Styles/ChartStyles";
 import type { Epoch } from "@LAF/Pages/Bribes/Models";
@@ -147,6 +137,16 @@ const optimalColumnWidthPercent = (numBars: number): number => {
   return 20 + 60 / (1 + 30 * Math.exp(-numBars / 3));
 };
 </script>
+
+<template>
+  <CardChart
+    class="bribes"
+    :title="t('title')"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

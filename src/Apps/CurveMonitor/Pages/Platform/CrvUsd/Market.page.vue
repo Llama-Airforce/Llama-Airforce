@@ -1,48 +1,3 @@
-<template>
-  <div class="market-overview">
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
-
-    <TabView
-      v-if="!loading && market"
-      :active="tabActiveIndex"
-      @tab="tabActiveIndex = $event.index"
-    >
-      <TabItem header="Overview">
-        <KeepAlive>
-          <MarketOverview
-            v-if="tabActive === 'overview'"
-            :market
-            chain="ethereum"
-          ></MarketOverview>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Trading">
-        <KeepAlive>
-          <Trading
-            v-if="tabActive === 'trading'"
-            :market
-            chain="ethereum"
-          ></Trading>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Liquidations">
-        <KeepAlive>
-          <Liquidations
-            v-if="tabActive === 'liquidations'"
-            :market
-            chain="ethereum"
-          ></Liquidations>
-        </KeepAlive>
-      </TabItem>
-    </TabView>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/Tabs/MarketOverview.vue";
@@ -91,6 +46,51 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   })
 );
 </script>
+
+<template>
+  <div class="market-overview">
+    <Spinner
+      class="spinner"
+      :class="{ loading }"
+    ></Spinner>
+
+    <TabView
+      v-if="!loading && market"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
+    >
+      <TabItem header="Overview">
+        <KeepAlive>
+          <MarketOverview
+            v-if="tabActive === 'overview'"
+            :market
+            chain="ethereum"
+          ></MarketOverview>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Trading">
+        <KeepAlive>
+          <Trading
+            v-if="tabActive === 'trading'"
+            :market
+            chain="ethereum"
+          ></Trading>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Liquidations">
+        <KeepAlive>
+          <Liquidations
+            v-if="tabActive === 'liquidations'"
+            :market
+            chain="ethereum"
+          ></Liquidations>
+        </KeepAlive>
+      </TabItem>
+    </TabView>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

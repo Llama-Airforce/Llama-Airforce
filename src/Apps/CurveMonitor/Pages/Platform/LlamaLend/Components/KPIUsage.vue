@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import { type Market } from "@CM/Services/LlamaLend";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  market: Market | undefined;
+}
+
+const { market } = defineProps<Props>();
+
+const totalCollateralUsd = computed(
+  () =>
+    (market?.collateral_balance_usd ?? 0) + (market?.borrowed_balance_usd ?? 0)
+);
+
+const collateralLabel = computed(() => {
+  const collateral = t("collateral");
+  const symbolCollateral = market?.collateral_token.symbol ?? "?";
+  const symbolBorrowed = market?.borrowed_token.symbol ?? "?";
+
+  return `${collateral} (${symbolCollateral} / ${symbolBorrowed})`;
+});
+
+const utilRate = computed(() => {
+  if (!market) {
+    return 0;
+  }
+
+  return market.total_assets_usd === 0
+    ? 0
+    : market.total_debt_usd / market.total_assets_usd;
+});
+</script>
+
 <template>
   <div class="usage">
     <KPI
@@ -94,42 +130,6 @@
     </KPI>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Market } from "@CM/Services/LlamaLend";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  market: Market | undefined;
-}
-
-const { market } = defineProps<Props>();
-
-const totalCollateralUsd = computed(
-  () =>
-    (market?.collateral_balance_usd ?? 0) + (market?.borrowed_balance_usd ?? 0)
-);
-
-const collateralLabel = computed(() => {
-  const collateral = t("collateral");
-  const symbolCollateral = market?.collateral_token.symbol ?? "?";
-  const symbolBorrowed = market?.borrowed_token.symbol ?? "?";
-
-  return `${collateral} (${symbolCollateral} / ${symbolBorrowed})`;
-});
-
-const utilRate = computed(() => {
-  if (!market) {
-    return 0;
-  }
-
-  return market.total_assets_usd === 0
-    ? 0
-    : market.total_debt_usd / market.total_assets_usd;
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

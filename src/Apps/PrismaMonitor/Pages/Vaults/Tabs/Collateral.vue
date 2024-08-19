@@ -1,14 +1,3 @@
-<template>
-  <div class="collateral">
-    <CollateralKPIs
-      style="grid-column: 1 / -1"
-      :vault="vault"
-    ></CollateralKPIs>
-    <ChartCollateralPrices :vault="vault"></ChartCollateralPrices>
-    <ChartCollateralPriceImpact :vault="vault"></ChartCollateralPriceImpact>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services";
 import ChartCollateralPrices from "@PM/Pages/Vaults/Charts/ChartCollateralPrices.vue";
@@ -22,6 +11,17 @@ interface Props {
 
 const { vault } = defineProps<Props>();
 </script>
+
+<template>
+  <div class="collateral">
+    <CollateralKPIs
+      style="grid-column: 1 / -1"
+      :vault="vault"
+    ></CollateralKPIs>
+    <ChartCollateralPrices :vault="vault"></ChartCollateralPrices>
+    <ChartCollateralPriceImpact :vault="vault"></ChartCollateralPriceImpact>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

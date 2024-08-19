@@ -1,3 +1,51 @@
+<script setup lang="ts">
+import { useConvexStore } from "@CM/Pages/Convex/Store";
+
+const { t } = useI18n();
+
+// Refs
+const store = useConvexStore();
+
+const totalRevenue = computed(
+  (): number =>
+    store.revenue.totalBribeRevenue +
+    store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
+    store.revenue.totalCrvRevenue +
+    store.revenue.totalFxsRevenue +
+    store.revenue.totalOtherRevenue
+);
+
+const lpRevenue = computed(
+  (): number =>
+    store.revenue.totalCrvRevenueToLpProviders +
+    store.revenue.totalFxsRevenueToLpProviders +
+    store.revenue.totalCvxRevenueToLpProviders
+);
+
+const treasuryRevenue = computed(
+  (): number =>
+    store.revenue.totalCrvRevenueToPlatform +
+    store.revenue.totalFxsRevenueToPlatform +
+    store.revenue.totalFxsRevenueToCallers +
+    store.revenue.totalOtherRevenue
+);
+
+const tokenRevenue = computed(
+  (): number =>
+    store.revenue.totalBribeRevenue +
+    store.revenue.totalCrvRevenueToCvxStakers +
+    store.revenue.totalFxsRevenueToCvxStakers
+);
+
+const liquidRevenue = computed(
+  (): number =>
+    store.revenue.totalCrvRevenueToCvxCrvStakers +
+    store.revenue.totalCvxRevenueToCvxCrvStakers +
+    store.revenue.totalFxsRevenueToCvxFxsStakers +
+    store.revenue.totalThreeCrvRevenueToCvxCrvStakers
+);
+</script>
+
 <template>
   <div class="summary">
     <KPI
@@ -61,54 +109,6 @@
     </KPI>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useConvexStore } from "@CM/Pages/Convex/Store";
-
-const { t } = useI18n();
-
-// Refs
-const store = useConvexStore();
-
-const totalRevenue = computed(
-  (): number =>
-    store.revenue.totalBribeRevenue +
-    store.revenue.totalThreeCrvRevenueToCvxCrvStakers +
-    store.revenue.totalCrvRevenue +
-    store.revenue.totalFxsRevenue +
-    store.revenue.totalOtherRevenue
-);
-
-const lpRevenue = computed(
-  (): number =>
-    store.revenue.totalCrvRevenueToLpProviders +
-    store.revenue.totalFxsRevenueToLpProviders +
-    store.revenue.totalCvxRevenueToLpProviders
-);
-
-const treasuryRevenue = computed(
-  (): number =>
-    store.revenue.totalCrvRevenueToPlatform +
-    store.revenue.totalFxsRevenueToPlatform +
-    store.revenue.totalFxsRevenueToCallers +
-    store.revenue.totalOtherRevenue
-);
-
-const tokenRevenue = computed(
-  (): number =>
-    store.revenue.totalBribeRevenue +
-    store.revenue.totalCrvRevenueToCvxStakers +
-    store.revenue.totalFxsRevenueToCvxStakers
-);
-
-const liquidRevenue = computed(
-  (): number =>
-    store.revenue.totalCrvRevenueToCvxCrvStakers +
-    store.revenue.totalCvxRevenueToCvxCrvStakers +
-    store.revenue.totalFxsRevenueToCvxFxsStakers +
-    store.revenue.totalThreeCrvRevenueToCvxCrvStakers
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import TableSettlements from "@CM/Pages/Platform/Revenue/Tables/TableSettlements.vue";
+import { useQueryCowSwapSettlements } from "@CM/Services/Revenue/Queries";
+
+const { isFetching: loading, data: settlements } = useQueryCowSwapSettlements();
+</script>
+
 <template>
   <div class="settlements">
     <TableSettlements
@@ -7,13 +14,6 @@
     ></TableSettlements>
   </div>
 </template>
-
-<script setup lang="ts">
-import TableSettlements from "@CM/Pages/Platform/Revenue/Tables/TableSettlements.vue";
-import { useQueryCowSwapSettlements } from "@CM/Services/Revenue/Queries";
-
-const { isFetching: loading, data: settlements } = useQueryCowSwapSettlements();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

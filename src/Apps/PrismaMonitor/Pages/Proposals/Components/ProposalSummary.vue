@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
+import Status from "@PM/Pages/Proposals/Components/Status.vue";
+import Proposer from "@PM/Pages/Proposals/Components/Proposer.vue";
+import Date from "@PM/Pages/Proposals/Components/Date.vue";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+  expanded: boolean;
+}
+
+const { proposal } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  toggleExpand: [];
+}>();
+</script>
+
 <template>
   <div
     class="proposal-summary"
@@ -45,28 +67,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
-import Status from "@PM/Pages/Proposals/Components/Status.vue";
-import Proposer from "@PM/Pages/Proposals/Components/Proposer.vue";
-import Date from "@PM/Pages/Proposals/Components/Date.vue";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-  expanded: boolean;
-}
-
-const { proposal } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  toggleExpand: [];
-}>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

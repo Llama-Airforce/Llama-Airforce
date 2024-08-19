@@ -1,38 +1,3 @@
-<template>
-  <div class="bribes">
-    <div class="dashboard">
-      <SystemSelect
-        class="system-select"
-        @select-platform="onSelectPlatform"
-        @select-protocol="onSelectProtocol"
-      >
-      </SystemSelect>
-
-      <Summary
-        class="summary"
-        :rounds="rounds"
-        :epoch="epoch"
-        @select-round="onSelectRound"
-      ></Summary>
-
-      <ChartBribesRound
-        class="graph-bribes-round"
-        :epoch="epoch"
-      ></ChartBribesRound>
-
-      <TablePersonal
-        class="personal-table"
-        :epoch="epoch"
-      ></TablePersonal>
-
-      <TableBribed
-        class="bribed-table"
-        :epoch="epoch"
-      ></TableBribed>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
 import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
@@ -188,6 +153,41 @@ function initFromRouter() {
   isInitializing = false;
 }
 </script>
+
+<template>
+  <div class="bribes">
+    <div class="dashboard">
+      <SystemSelect
+        class="system-select"
+        @select-platform="onSelectPlatform"
+        @select-protocol="onSelectProtocol"
+      >
+      </SystemSelect>
+
+      <Summary
+        class="summary"
+        :rounds="rounds"
+        :epoch="epoch"
+        @select-round="onSelectRound"
+      ></Summary>
+
+      <ChartBribesRound
+        class="graph-bribes-round"
+        :epoch="epoch"
+      ></ChartBribesRound>
+
+      <TablePersonal
+        class="personal-table"
+        :epoch="epoch"
+      ></TablePersonal>
+
+      <TableBribed
+        class="bribed-table"
+        :epoch="epoch"
+      ></TableBribed>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

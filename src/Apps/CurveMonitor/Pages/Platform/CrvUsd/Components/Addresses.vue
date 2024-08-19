@@ -1,38 +1,3 @@
-<template>
-  <Card
-    class="addresses"
-    :title="t('addresses')"
-  >
-    <Table
-      class="addresses-table"
-      :rows="addresses"
-    >
-      <template #row="{ item: { description, address } }: { item: Row }">
-        <div>{{ t(description) }}</div>
-
-        <div>
-          <a
-            v-if="address"
-            class="font-mono"
-            :href="linkAddress(address)"
-            target="_blank"
-          >
-            {{ address }}
-          </a>
-          <span v-else>?</span>
-        </div>
-
-        <div>
-          <Button
-            icon="fas fa-link"
-            @click="clipboard(address)"
-          ></Button>
-        </div>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Market } from "@CM/Services/CrvUsd";
 
@@ -69,6 +34,41 @@ const clipboard = async (addr: string) => {
   await navigator.clipboard.writeText(addr);
 };
 </script>
+
+<template>
+  <Card
+    class="addresses"
+    :title="t('addresses')"
+  >
+    <Table
+      class="addresses-table"
+      :rows="addresses"
+    >
+      <template #row="{ item: { description, address } }: { item: Row }">
+        <div>{{ t(description) }}</div>
+
+        <div>
+          <a
+            v-if="address"
+            class="font-mono"
+            :href="linkAddress(address)"
+            target="_blank"
+          >
+            {{ address }}
+          </a>
+          <span v-else>?</span>
+        </div>
+
+        <div>
+          <Button
+            icon="fas fa-link"
+            @click="clipboard(address)"
+          ></Button>
+        </div>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

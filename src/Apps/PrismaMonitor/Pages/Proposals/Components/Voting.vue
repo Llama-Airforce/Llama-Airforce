@@ -1,10 +1,3 @@
-<template>
-  <div class="voting">
-    <VotingQuorum :proposal="proposal"></VotingQuorum>
-    <VotingButtons :proposal="proposal"></VotingButtons>
-  </div>
-</template>
-
 <script setup lang="ts">
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import VotingQuorum from "@PM/Pages/Proposals/Components/VotingQuorum.vue";
@@ -17,6 +10,13 @@ interface Props {
 
 const { proposal } = defineProps<Props>();
 </script>
+
+<template>
+  <div class="voting">
+    <VotingQuorum :proposal="proposal"></VotingQuorum>
+    <VotingButtons :proposal="proposal"></VotingButtons>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

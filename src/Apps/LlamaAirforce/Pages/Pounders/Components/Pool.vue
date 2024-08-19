@@ -1,3 +1,15 @@
+<script setup lang="ts">
+// Props
+interface Props {
+  name: string;
+  logo: string;
+  symbol: string;
+  priceUnderlying: number | undefined;
+}
+
+const { name, logo, symbol, priceUnderlying } = defineProps<Props>();
+</script>
+
 <template>
   <div class="pool">
     <Tooltip>
@@ -24,18 +36,6 @@
     </Tooltip>
   </div>
 </template>
-
-<script setup lang="ts">
-// Props
-interface Props {
-  name: string;
-  logo: string;
-  symbol: string;
-  priceUnderlying: number | undefined;
-}
-
-const { name, logo, symbol, priceUnderlying } = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

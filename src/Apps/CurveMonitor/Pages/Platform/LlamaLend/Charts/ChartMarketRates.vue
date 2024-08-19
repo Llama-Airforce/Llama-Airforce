@@ -1,22 +1,3 @@
-<template>
-  <Card
-    class="chart-container"
-    :title="t('title')"
-    :loading
-  >
-    <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
@@ -152,6 +133,25 @@ function formatter(x: number): string {
   return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
 }
 </script>
+
+<template>
+  <Card
+    class="chart-container"
+    :title="t('title')"
+    :loading
+  >
+    <template #actions>
+      <div class="actions">
+        <Legend :items></Legend>
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

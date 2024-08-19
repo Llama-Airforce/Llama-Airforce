@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { type LiquidationDetails } from "@CM/Services/Liquidations";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  liqs: LiquidationDetails[];
+}
+
+const { liqs } = defineProps<Props>();
+
+type Liquidator = {
+  liquidator: string;
+  count: number;
+  value: number;
+};
+
+const rows = computed((): Liquidator[] =>
+  liqs
+    .groupBy((x) => x.liquidator)
+    .entries()
+    .map(([liquidator, xs]) => ({
+      liquidator,
+      count: xs.length,
+      value: xs.reduce((acc, x) => acc + x.collateralReceivedUsd, 0),
+    }))
+    .orderBy((x) => x.value, "desc")
+    .take(5)
+);
+</script>
+
 <template>
   <Card :title="t('title')">
     <Table
@@ -37,39 +70,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { type LiquidationDetails } from "@CM/Services/Liquidations";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  liqs: LiquidationDetails[];
-}
-
-const { liqs } = defineProps<Props>();
-
-type Liquidator = {
-  liquidator: string;
-  count: number;
-  value: number;
-};
-
-const rows = computed((): Liquidator[] =>
-  liqs
-    .groupBy((x) => x.liquidator)
-    .entries()
-    .map(([liquidator, xs]) => ({
-      liquidator,
-      count: xs.length,
-      value: xs.reduce((acc, x) => acc + x.collateralReceivedUsd, 0),
-    }))
-    .orderBy((x) => x.value, "desc")
-    .take(5)
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

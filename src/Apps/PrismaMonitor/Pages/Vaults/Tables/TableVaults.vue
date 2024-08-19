@@ -1,3 +1,45 @@
+<script setup lang="ts">
+import { icon, label, isDeprecated } from "@PM/Models/Vault";
+import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
+import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
+
+const { t } = useI18n();
+
+type Row = TroveManagerDetails;
+
+// Emit
+const emit = defineEmits<{
+  selected: [vault: Row];
+}>();
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
+const prismaService = new TroveOverviewService(socket, "ethereum");
+
+// Refs
+const search = ref("");
+
+const rowsRaw = useObservable(prismaService.overview$, []);
+
+const rows = computed(() =>
+  rowsRaw.value
+    .filter((row) => {
+      const terms = search.value.toLocaleLowerCase().split(" ");
+
+      const includesTerm = (x: string) =>
+        terms.some((term) => x.toLocaleLowerCase().includes(term));
+
+      return includesTerm(row.name) || includesTerm(row.address);
+    })
+    .orderBy((row) => row.debt, "desc")
+);
+
+const loading = computed(() => rowsRaw.value.length === 0);
+</script>
+
 <template>
   <Card
     class="vaults-card"
@@ -141,48 +183,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { icon, label, isDeprecated } from "@PM/Models/Vault";
-import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
-import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
-
-const { t } = useI18n();
-
-type Row = TroveManagerDetails;
-
-// Emit
-const emit = defineEmits<{
-  selected: [vault: Row];
-}>();
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
-const prismaService = new TroveOverviewService(socket, "ethereum");
-
-// Refs
-const search = ref("");
-
-const rowsRaw = useObservable(prismaService.overview$, []);
-
-const rows = computed(() =>
-  rowsRaw.value
-    .filter((row) => {
-      const terms = search.value.toLocaleLowerCase().split(" ");
-
-      const includesTerm = (x: string) =>
-        terms.some((term) => x.toLocaleLowerCase().includes(term));
-
-      return includesTerm(row.name) || includesTerm(row.address);
-    })
-    .orderBy((row) => row.debt, "desc")
-);
-
-const loading = computed(() => rowsRaw.value.length === 0);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

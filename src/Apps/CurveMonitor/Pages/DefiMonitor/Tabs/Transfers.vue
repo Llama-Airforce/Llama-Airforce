@@ -1,12 +1,12 @@
+<script setup lang="ts">
+import TableTransfers from "@CM/Pages/DefiMonitor/Tables/TableTransfers.vue";
+</script>
+
 <template>
   <div class="transfers">
     <TableTransfers style="grid-area: transfers"></TableTransfers>
   </div>
 </template>
-
-<script setup lang="ts">
-import TableTransfers from "@CM/Pages/DefiMonitor/Tables/TableTransfers.vue";
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

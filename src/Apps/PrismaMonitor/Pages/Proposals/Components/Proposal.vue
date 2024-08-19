@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import ProposalSummary from "@PM/Pages/Proposals/Components/ProposalSummary.vue";
+import ProposalDetails from "@PM/Pages/Proposals/Components/ProposalDetails.vue";
+import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
+
+// Props
+interface Props {
+  proposal: Proposal;
+}
+
+const { proposal } = defineProps<Props>();
+
+const expanded = ref(false);
+</script>
+
 <template>
   <Card
     class="proposal"
@@ -20,21 +35,6 @@
     </Collapsible>
   </Card>
 </template>
-
-<script setup lang="ts">
-import ProposalSummary from "@PM/Pages/Proposals/Components/ProposalSummary.vue";
-import ProposalDetails from "@PM/Pages/Proposals/Components/ProposalDetails.vue";
-import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
-
-// Props
-interface Props {
-  proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
-
-const expanded = ref(false);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

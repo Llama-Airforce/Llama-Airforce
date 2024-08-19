@@ -1,3 +1,31 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { type PoolStableOperation, StabilityPoolService } from "@PM/Services";
+import { useSettingsStore } from "@PM/Stores";
+
+const { t } = useI18n();
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const sbService = new StabilityPoolService(storeSettings.flavor);
+
+// Refs
+const rows = computed(() => data.value.map((x) => x));
+
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-stable-top-withdrawals"],
+  queryFn: () =>
+    sbService
+      .getTopStableWithdrawals("ethereum", 5, "7d")
+      .then((x) => x.operations),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+</script>
+
 <template>
   <Card
     :title="t('title')"
@@ -48,34 +76,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { type PoolStableOperation, StabilityPoolService } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
-
-const { t } = useI18n();
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const sbService = new StabilityPoolService(storeSettings.flavor);
-
-// Refs
-const rows = computed(() => data.value.map((x) => x));
-
-// Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-stable-top-withdrawals"],
-  queryFn: () =>
-    sbService
-      .getTopStableWithdrawals("ethereum", 5, "7d")
-      .then((x) => x.operations),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

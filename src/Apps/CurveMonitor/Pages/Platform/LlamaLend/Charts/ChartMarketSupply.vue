@@ -1,33 +1,3 @@
-<template>
-  <Card
-    ref="chartCard"
-    class="chart-card"
-    :title="t('title')"
-    :loading
-  >
-    <template #actions>
-      <div class="actions">
-        <Legend
-          :items
-          :disabled
-          @toggle="toggles[$event].value = !toggles[$event].value"
-        ></Legend>
-
-        <BtnChartLWFullscreen
-          v-model="fullscreen"
-          :chart="chart"
-          :target="chartCard?.$el"
-        />
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
@@ -188,6 +158,36 @@ function createSeries(): void {
   }
 }
 </script>
+
+<template>
+  <Card
+    ref="chartCard"
+    class="chart-card"
+    :title="t('title')"
+    :loading
+  >
+    <template #actions>
+      <div class="actions">
+        <Legend
+          :items
+          :disabled
+          @toggle="toggles[$event].value = !toggles[$event].value"
+        ></Legend>
+
+        <BtnChartLWFullscreen
+          v-model="fullscreen"
+          :chart="chart"
+          :target="chartCard?.$el"
+        />
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

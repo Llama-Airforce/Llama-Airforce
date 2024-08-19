@@ -1,18 +1,3 @@
-<template>
-  <div class="vault-overview">
-    <VaultKPIs
-      style="grid-column: 1 / -1"
-      :vault="vault"
-    ></VaultKPIs>
-    <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
-    <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
-    <ChartSingleVaultCollateralRatio
-      :vault="vault"
-    ></ChartSingleVaultCollateralRatio>
-    <ChartSingleVaultOpenTroves :vault="vault"></ChartSingleVaultOpenTroves>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services";
 import ChartLargePositionsSelector from "@PM/Pages/Vaults/Charts/ChartLargePositionsSelector.vue";
@@ -28,6 +13,21 @@ interface Props {
 
 const { vault } = defineProps<Props>();
 </script>
+
+<template>
+  <div class="vault-overview">
+    <VaultKPIs
+      style="grid-column: 1 / -1"
+      :vault="vault"
+    ></VaultKPIs>
+    <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
+    <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
+    <ChartSingleVaultCollateralRatio
+      :vault="vault"
+    ></ChartSingleVaultCollateralRatio>
+    <ChartSingleVaultOpenTroves :vault="vault"></ChartSingleVaultOpenTroves>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

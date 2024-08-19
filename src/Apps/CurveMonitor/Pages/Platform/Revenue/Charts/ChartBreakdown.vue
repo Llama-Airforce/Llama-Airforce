@@ -1,23 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    :options
-    :series
-    :loading
-    :title="t('title')"
-  >
-    <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-
-        <Tooltip placement="left">
-          <div>{{ t("legend-explanation") }}</div>
-        </Tooltip>
-      </div>
-    </template>
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -187,6 +167,26 @@ const shadeColor = (hex: string, percent: number) => {
     .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 };
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    :options
+    :series
+    :loading
+    :title="t('title')"
+  >
+    <template #actions>
+      <div class="actions">
+        <Legend :items></Legend>
+
+        <Tooltip placement="left">
+          <div>{{ t("legend-explanation") }}</div>
+        </Tooltip>
+      </div>
+    </template>
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

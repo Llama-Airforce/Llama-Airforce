@@ -1,59 +1,3 @@
-<template>
-  <div class="rewards">
-    <div class="left">
-      <div class="title">Rewards</div>
-
-      <div class="info">
-        Depositors are eligible to claim rewards for their
-        <strong>pxCVX</strong> holdings at the epoch timestamp. Rewards are
-        distributed based on a snapshot of <strong>pxCVX</strong> balances,
-        taken at the timestamp of each epoch. Claims for
-        <strong>RFN</strong> and pending unlocks are also available here.
-      </div>
-
-      <a
-        href="https://docs.redacted.finance/products/pirex/convex/pxcvx-standard-mode"
-        target="_blank"
-      >
-        Learn More
-      </a>
-    </div>
-
-    <div
-      v-if="rewards.length > 0"
-      class="right"
-    >
-      <RewardsTable
-        :rewards
-        :loading
-      ></RewardsTable>
-
-      <Button
-        value="Show Claims"
-        :primary="true"
-        @click="showClaims = true"
-      ></Button>
-    </div>
-
-    <div
-      v-else
-      class="right no-data"
-    >
-      No rewards for {{ addressShort(address) }}
-    </div>
-
-    <ModalClaim
-      v-if="rewards.length > 0"
-      :show="showClaims"
-      :snapshots
-      :futures
-      :prices="pricesData!"
-      @close="showClaims = false"
-      @claimed="onClaimed"
-    ></ModalClaim>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useWallet, addressShort } from "@/Wallet";
 import { useQueryPrices } from "@/Services/DefiLlamaQuery";
@@ -121,6 +65,62 @@ function onClaimed(claims: Claim[]) {
   claimed.value.push(...claims);
 }
 </script>
+
+<template>
+  <div class="rewards">
+    <div class="left">
+      <div class="title">Rewards</div>
+
+      <div class="info">
+        Depositors are eligible to claim rewards for their
+        <strong>pxCVX</strong> holdings at the epoch timestamp. Rewards are
+        distributed based on a snapshot of <strong>pxCVX</strong> balances,
+        taken at the timestamp of each epoch. Claims for
+        <strong>RFN</strong> and pending unlocks are also available here.
+      </div>
+
+      <a
+        href="https://docs.redacted.finance/products/pirex/convex/pxcvx-standard-mode"
+        target="_blank"
+      >
+        Learn More
+      </a>
+    </div>
+
+    <div
+      v-if="rewards.length > 0"
+      class="right"
+    >
+      <RewardsTable
+        :rewards
+        :loading
+      ></RewardsTable>
+
+      <Button
+        value="Show Claims"
+        :primary="true"
+        @click="showClaims = true"
+      ></Button>
+    </div>
+
+    <div
+      v-else
+      class="right no-data"
+    >
+      No rewards for {{ addressShort(address) }}
+    </div>
+
+    <ModalClaim
+      v-if="rewards.length > 0"
+      :show="showClaims"
+      :snapshots
+      :futures
+      :prices="pricesData!"
+      @close="showClaims = false"
+      @claimed="onClaimed"
+    ></ModalClaim>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

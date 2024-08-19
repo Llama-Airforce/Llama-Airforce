@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    :title="t('title')"
-    :loading="loading"
-    :series="series"
-    :options="options"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
@@ -92,6 +82,16 @@ const formatLabel = (label: string): string => {
   return label.replace(numberRegex, (match) => roundToFourDigits(match));
 };
 </script>
+
+<template>
+  <CardChart
+    :title="t('title')"
+    :loading="loading"
+    :series="series"
+    :options="options"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

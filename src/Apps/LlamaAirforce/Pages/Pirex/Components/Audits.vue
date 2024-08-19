@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div class="audits">
     <div class="audit">
@@ -43,8 +45,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

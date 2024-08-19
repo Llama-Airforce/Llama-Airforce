@@ -1,29 +1,3 @@
-<template>
-  <div class="breadcrumbs">
-    <Recipe title="Breadcrumb">
-      <template #example>
-        <Breadcrumb
-          :crumbs="crumbs"
-          :active="crumbActive"
-          @crumb="onCrumb"
-        ></Breadcrumb>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="breadcrumb1"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="breadcrumb2"
-        ></Code>
-      </template>
-    </Recipe>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Crumb } from "@/Framework/Crumb";
 import Recipe from "@CB/Recipe.vue";
@@ -63,6 +37,32 @@ const onCrumb = (crumb: Crumb) => {
   crumbActive.value = crumb;
 };`;
 </script>
+
+<template>
+  <div class="breadcrumbs">
+    <Recipe title="Breadcrumb">
+      <template #example>
+        <Breadcrumb
+          :crumbs="crumbs"
+          :active="crumbActive"
+          @crumb="onCrumb"
+        ></Breadcrumb>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="html"
+          :code="breadcrumb1"
+        ></Code>
+
+        <Code
+          lang="typescript"
+          :code="breadcrumb2"
+        ></Code>
+      </template>
+    </Recipe>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

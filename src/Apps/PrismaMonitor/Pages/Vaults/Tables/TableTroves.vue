@@ -1,104 +1,3 @@
-<template>
-  <Card
-    class="troves-card"
-    :loading
-  >
-    <template #actions>
-      <div
-        style="display: grid; gap: 1rem; grid-template-columns: 1fr 2fr auto"
-      >
-        <TabView
-          class="types"
-          @tab="onType($event.index)"
-        >
-          <TabItem header="Open"></TabItem>
-          <TabItem header="Closed"></TabItem>
-        </TabView>
-
-        <InputText
-          v-model="search"
-          :search="true"
-          :placeholder="t('search-placeholder')"
-        >
-        </InputText>
-
-        <Pagination
-          :items-count="rows.length"
-          :items-per-page="rowsPerPage"
-          :page="page"
-          @page="onPage"
-        ></Pagination>
-      </div>
-    </template>
-
-    <Table
-      class="troves-table"
-      :rows="rowsPage"
-      :columns
-      :sorting
-      @sort-column="onSort"
-      @selected="emit('selected', $event)"
-    >
-      <template #row="props: { item: Row }">
-        <div>
-          <a
-            class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.owner}`"
-            target="_blank"
-            @click.stop
-          >
-            {{ addressShort(props.item.owner) }}
-          </a>
-        </div>
-
-        <div
-          class="end"
-          :class="{ hide: type === 'Closed' }"
-        >
-          <AsyncValue
-            type="dollar"
-            :value="Math.round(props.item.debt)"
-            :precision="Infinity"
-          ></AsyncValue>
-        </div>
-
-        <div
-          class="end"
-          :class="{ hide: type === 'Closed' }"
-        >
-          <AsyncValue
-            type="dollar"
-            :value="Math.round(props.item.collateral_usd)"
-            :precision="Infinity"
-          ></AsyncValue>
-        </div>
-
-        <div
-          class="end"
-          :class="{ hide: type === 'Closed' }"
-        >
-          <AsyncValue
-            :value="props.item.collateral_ratio * 100"
-            :precision="2"
-            type="percentage"
-          />
-        </div>
-
-        <div class="end">
-          {{ relativeTime(props.item.created_at) }}
-        </div>
-
-        <div class="end">
-          {{ relativeTime(props.item.last_update) }}
-        </div>
-      </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { useSettingsStore } from "@PM/Stores";
@@ -229,6 +128,107 @@ const onType = (tabIndex: number) => {
   }
 };
 </script>
+
+<template>
+  <Card
+    class="troves-card"
+    :loading
+  >
+    <template #actions>
+      <div
+        style="display: grid; gap: 1rem; grid-template-columns: 1fr 2fr auto"
+      >
+        <TabView
+          class="types"
+          @tab="onType($event.index)"
+        >
+          <TabItem header="Open"></TabItem>
+          <TabItem header="Closed"></TabItem>
+        </TabView>
+
+        <InputText
+          v-model="search"
+          :search="true"
+          :placeholder="t('search-placeholder')"
+        >
+        </InputText>
+
+        <Pagination
+          :items-count="rows.length"
+          :items-per-page="rowsPerPage"
+          :page="page"
+          @page="onPage"
+        ></Pagination>
+      </div>
+    </template>
+
+    <Table
+      class="troves-table"
+      :rows="rowsPage"
+      :columns
+      :sorting
+      @sort-column="onSort"
+      @selected="emit('selected', $event)"
+    >
+      <template #row="props: { item: Row }">
+        <div>
+          <a
+            class="font-mono"
+            :href="`https://etherscan.io/address/${props.item.owner}`"
+            target="_blank"
+            @click.stop
+          >
+            {{ addressShort(props.item.owner) }}
+          </a>
+        </div>
+
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.debt)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
+
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            type="dollar"
+            :value="Math.round(props.item.collateral_usd)"
+            :precision="Infinity"
+          ></AsyncValue>
+        </div>
+
+        <div
+          class="end"
+          :class="{ hide: type === 'Closed' }"
+        >
+          <AsyncValue
+            :value="props.item.collateral_ratio * 100"
+            :precision="2"
+            type="percentage"
+          />
+        </div>
+
+        <div class="end">
+          {{ relativeTime(props.item.created_at) }}
+        </div>
+
+        <div class="end">
+          {{ relativeTime(props.item.last_update) }}
+        </div>
+      </template>
+
+      <!-- Empty for expander arrow and pointer on hover -->
+      <template #row-details> &nbsp; </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

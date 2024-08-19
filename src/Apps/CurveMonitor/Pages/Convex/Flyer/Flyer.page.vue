@@ -1,14 +1,3 @@
-<template>
-  <div class="flyer">
-    <div class="flyer-items">
-      <Header></Header>
-      <Farm :model="model"></Farm>
-      <General :model="model"></General>
-      <Bribes :model="model"></Bribes>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import Header from "@CM/Pages/Convex/Flyer/Components/Header.vue";
 import General from "@CM/Pages/Convex/Flyer/Components/General.vue";
@@ -29,6 +18,17 @@ onMounted(async (): Promise<void> => {
   }
 });
 </script>
+
+<template>
+  <div class="flyer">
+    <div class="flyer-items">
+      <Header></Header>
+      <Farm :model="model"></Farm>
+      <General :model="model"></General>
+      <Bribes :model="model"></Bribes>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

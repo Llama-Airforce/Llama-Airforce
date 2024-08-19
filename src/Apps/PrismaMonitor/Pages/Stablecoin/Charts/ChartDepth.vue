@@ -1,14 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    :title="title"
-    :loading="loading"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import { type PoolDepth } from "@PM/Services";
@@ -150,6 +139,17 @@ const formatter = (x: number): string => {
   return `$${round(Math.abs(x), 2, "dollar")}${unit(x, "dollar")}`;
 };
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    :title="title"
+    :loading="loading"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

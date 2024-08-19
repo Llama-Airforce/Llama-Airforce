@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div class="header">
     <img
@@ -6,8 +8,6 @@
     />
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 // Small hack because the current header is a placeholder for something real.

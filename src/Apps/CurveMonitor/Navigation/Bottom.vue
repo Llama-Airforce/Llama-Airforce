@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import Wallet from "@/Wallet/Wallet.vue";
+import SelectTheme from "@CM/Navigation/SelectTheme.vue";
+
+const router = useRouter();
+</script>
+
 <template>
   <div class="bottom">
     <div class="buttons">
@@ -19,13 +26,6 @@
     <Wallet></Wallet>
   </div>
 </template>
-
-<script setup lang="ts">
-import Wallet from "@/Wallet/Wallet.vue";
-import SelectTheme from "@CM/Navigation/SelectTheme.vue";
-
-const router = useRouter();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

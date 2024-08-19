@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import VePrismaService, {
+  type VoteIncentive,
+} from "@PM/Pages/VePrisma/VePrismaService";
+
+type Row = VoteIncentive;
+
+const { t } = useI18n();
+
+const vePrismaService = new VePrismaService();
+
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: ["prisma-vote-incentives"],
+  queryFn: () => vePrismaService.getVotesIncentives(),
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+// Refs
+const { relativeTime } = useRelativeTime();
+
+const columns = computed(() => {
+  return [
+    "Voter",
+    "Recipient",
+    { label: "Points", align: "end" } as const,
+    { label: "Tx", align: "end" } as const,
+    { label: "Time", align: "end" } as const,
+  ];
+});
+
+const rows = computed((): Row[] => data.value);
+
+const rowsPerPage = 20;
+const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
+</script>
+
 <template>
   <Card
     class="votes-incentives-card"
@@ -69,45 +108,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import VePrismaService, {
-  type VoteIncentive,
-} from "@PM/Pages/VePrisma/VePrismaService";
-
-type Row = VoteIncentive;
-
-const { t } = useI18n();
-
-const vePrismaService = new VePrismaService();
-
-// Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: ["prisma-vote-incentives"],
-  queryFn: () => vePrismaService.getVotesIncentives(),
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-// Refs
-const { relativeTime } = useRelativeTime();
-
-const columns = computed(() => {
-  return [
-    "Voter",
-    "Recipient",
-    { label: "Points", align: "end" } as const,
-    { label: "Tx", align: "end" } as const,
-    { label: "Time", align: "end" } as const,
-  ];
-});
-
-const rows = computed((): Row[] => data.value);
-
-const rowsPerPage = 20;
-const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

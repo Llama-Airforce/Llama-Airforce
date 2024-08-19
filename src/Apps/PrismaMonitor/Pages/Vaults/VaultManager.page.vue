@@ -1,57 +1,3 @@
-<template>
-  <div class="vault-manager">
-    <TabView
-      :active="tabActiveIndex"
-      @tab="tabActiveIndex = $event.index"
-    >
-      <TabItem header="Overview">
-        <KeepAlive>
-          <VaultOverview
-            v-if="tabActive === 'overview'"
-            :vault="vault"
-          ></VaultOverview>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Collateral">
-        <KeepAlive>
-          <Collateral
-            v-if="tabActive === 'collateral' && vault"
-            :vault="vault"
-          ></Collateral>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Troves">
-        <KeepAlive>
-          <Troves
-            v-if="tabActive === 'trove' && vault"
-            :vault="vault"
-          ></Troves>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Liquidations">
-        <KeepAlive>
-          <Liquidations
-            v-if="tabActive === 'liquidations' && vault"
-            :vault="vault"
-          ></Liquidations>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Redemptions">
-        <KeepAlive>
-          <Redemptions
-            v-if="tabActive === 'redemptions' && vault"
-            :vault="vault"
-          ></Redemptions>
-        </KeepAlive>
-      </TabItem>
-    </TabView>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
@@ -130,6 +76,60 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   })
 );
 </script>
+
+<template>
+  <div class="vault-manager">
+    <TabView
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
+    >
+      <TabItem header="Overview">
+        <KeepAlive>
+          <VaultOverview
+            v-if="tabActive === 'overview'"
+            :vault="vault"
+          ></VaultOverview>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Collateral">
+        <KeepAlive>
+          <Collateral
+            v-if="tabActive === 'collateral' && vault"
+            :vault="vault"
+          ></Collateral>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Troves">
+        <KeepAlive>
+          <Troves
+            v-if="tabActive === 'trove' && vault"
+            :vault="vault"
+          ></Troves>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Liquidations">
+        <KeepAlive>
+          <Liquidations
+            v-if="tabActive === 'liquidations' && vault"
+            :vault="vault"
+          ></Liquidations>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Redemptions">
+        <KeepAlive>
+          <Redemptions
+            v-if="tabActive === 'redemptions' && vault"
+            :vault="vault"
+          ></Redemptions>
+        </KeepAlive>
+      </TabItem>
+    </TabView>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

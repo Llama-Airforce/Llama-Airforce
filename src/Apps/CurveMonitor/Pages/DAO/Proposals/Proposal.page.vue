@@ -1,18 +1,3 @@
-<template>
-  <div class="proposal-container">
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
-
-    <ProposalComponent
-      v-if="!loading && proposal"
-      :proposal="proposal"
-      :init-expanded="true"
-    ></ProposalComponent>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type ProposalType } from "@CM/Services/Proposal";
 import { useQueryProposal } from "@CM/Services/Proposal/Queries";
@@ -28,6 +13,21 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
   proposalType
 );
 </script>
+
+<template>
+  <div class="proposal-container">
+    <Spinner
+      class="spinner"
+      :class="{ loading }"
+    ></Spinner>
+
+    <ProposalComponent
+      v-if="!loading && proposal"
+      :proposal="proposal"
+      :init-expanded="true"
+    ></ProposalComponent>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

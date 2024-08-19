@@ -1,3 +1,41 @@
+<script setup lang="ts">
+import { type FlyerConvex } from "@/Services/FlyerService";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  model: FlyerConvex | null;
+}
+
+const { model } = defineProps<Props>();
+
+// Refs
+const crvLockedDollars = computed((): number | undefined => {
+  return model?.crvLockedDollars;
+});
+
+const crvLockedDollarsMonthly = computed((): number | undefined => {
+  return model?.crvLockedDollarsMonthly;
+});
+
+const cvxTvl = computed((): number | undefined => {
+  return model?.cvxTvl;
+});
+
+const cvxVotingPercentage = computed((): number | undefined => {
+  return model?.cvxVotingPercentage;
+});
+
+const cvxMarketCap = computed((): number | undefined => {
+  return model?.cvxMarketCap;
+});
+
+const cvxMarketCapFullyDiluted = computed((): number | undefined => {
+  return model?.cvxMarketCapFullyDiluted;
+});
+</script>
+
 <template>
   <div class="general">
     <div
@@ -50,44 +88,6 @@
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type FlyerConvex } from "@/Services/FlyerService";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  model: FlyerConvex | null;
-}
-
-const { model } = defineProps<Props>();
-
-// Refs
-const crvLockedDollars = computed((): number | undefined => {
-  return model?.crvLockedDollars;
-});
-
-const crvLockedDollarsMonthly = computed((): number | undefined => {
-  return model?.crvLockedDollarsMonthly;
-});
-
-const cvxTvl = computed((): number | undefined => {
-  return model?.cvxTvl;
-});
-
-const cvxVotingPercentage = computed((): number | undefined => {
-  return model?.cvxVotingPercentage;
-});
-
-const cvxMarketCap = computed((): number | undefined => {
-  return model?.cvxMarketCap;
-});
-
-const cvxMarketCapFullyDiluted = computed((): number | undefined => {
-  return model?.cvxMarketCapFullyDiluted;
-});
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

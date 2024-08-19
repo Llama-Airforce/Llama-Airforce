@@ -1,33 +1,3 @@
-<template>
-  <Select
-    class="select"
-    :options="chainInfos"
-    :selected="chainSelected"
-    :open="chainOpen"
-    @open="onChainOpen"
-    @close="chainOpen = false"
-    @input="onChainSelect"
-  >
-    <template #item="props: { item: ChainInfo }">
-      <div
-        v-if="props.item"
-        class="item"
-      >
-        <img
-          v-if="chainIcon(props.item.chain)"
-          :src="chainIcon(props.item.chain)"
-        />
-        <div
-          v-else
-          class="empty"
-        ></div>
-
-        <div class="label">{{ label(props.item) }}</div>
-      </div>
-    </template>
-  </Select>
-</template>
-
 <script setup lang="ts">
 import { type Chain, chainIcon } from "@CM/Models";
 
@@ -91,6 +61,36 @@ const onChainSelect = (option: ChainInfo): void => {
   emit("select-chain", option.chain);
 };
 </script>
+
+<template>
+  <Select
+    class="select"
+    :options="chainInfos"
+    :selected="chainSelected"
+    :open="chainOpen"
+    @open="onChainOpen"
+    @close="chainOpen = false"
+    @input="onChainSelect"
+  >
+    <template #item="props: { item: ChainInfo }">
+      <div
+        v-if="props.item"
+        class="item"
+      >
+        <img
+          v-if="chainIcon(props.item.chain)"
+          :src="chainIcon(props.item.chain)"
+        />
+        <div
+          v-else
+          class="empty"
+        ></div>
+
+        <div class="label">{{ label(props.item) }}</div>
+      </div>
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

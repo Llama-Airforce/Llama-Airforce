@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import ModalSwap from "@LAF/Pages/Pirex/Components/ModalSwap.vue";
+
+const showSwap = ref(false);
+</script>
+
 <template>
   <Card title="Swap">
     <div class="swap-body">
@@ -26,12 +32,6 @@
     ></ModalSwap>
   </Card>
 </template>
-
-<script setup lang="ts">
-import ModalSwap from "@LAF/Pages/Pirex/Components/ModalSwap.vue";
-
-const showSwap = ref(false);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

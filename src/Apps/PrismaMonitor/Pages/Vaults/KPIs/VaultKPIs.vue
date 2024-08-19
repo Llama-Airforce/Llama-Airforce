@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { type TroveManagerDetails } from "@PM/Services";
+
+// Props
+interface Props {
+  vault?: TroveManagerDetails | null;
+}
+const { vault = null } = defineProps<Props>();
+</script>
+
 <template>
   <div class="kpis">
     <KPI
@@ -108,16 +118,6 @@
     </KPI>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services";
-
-// Props
-interface Props {
-  vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

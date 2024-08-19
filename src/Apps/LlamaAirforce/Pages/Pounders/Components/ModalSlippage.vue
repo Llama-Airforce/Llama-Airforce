@@ -1,3 +1,39 @@
+<script setup lang="ts">
+const { t } = useI18n();
+
+// Props
+interface Props {
+  show: boolean;
+  symbolOutput: string;
+  minAmountOutRef: number;
+}
+
+const { show, symbolOutput, minAmountOutRef } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  close: [];
+  yes: [newMinAmountOut: number];
+  no: [];
+}>();
+
+// Refs
+const slippage = ref(0.03);
+const minAmountOut = ref(0);
+
+// Watches
+watch([slippage, () => minAmountOutRef], ([slippage]) => {
+  minAmountOut.value = minAmountOutRef * (1 - slippage);
+});
+
+watch(
+  () => show,
+  () => {
+    slippage.value = 0.03;
+  }
+);
+</script>
+
 <template>
   <ModalYesNo
     :title="t('price-modal-title')"
@@ -45,42 +81,6 @@
     </div>
   </ModalYesNo>
 </template>
-
-<script setup lang="ts">
-const { t } = useI18n();
-
-// Props
-interface Props {
-  show: boolean;
-  symbolOutput: string;
-  minAmountOutRef: number;
-}
-
-const { show, symbolOutput, minAmountOutRef } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  close: [];
-  yes: [newMinAmountOut: number];
-  no: [];
-}>();
-
-// Refs
-const slippage = ref(0.03);
-const minAmountOut = ref(0);
-
-// Watches
-watch([slippage, () => minAmountOutRef], ([slippage]) => {
-  minAmountOut.value = minAmountOutRef * (1 - slippage);
-});
-
-watch(
-  () => show,
-  () => {
-    slippage.value = 0.03;
-  }
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

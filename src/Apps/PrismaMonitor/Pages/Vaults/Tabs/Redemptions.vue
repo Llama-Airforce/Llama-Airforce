@@ -1,9 +1,3 @@
-<template>
-  <div class="redemptions">
-    <TableRedemptions :vault="vault"></TableRedemptions>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services";
 import TableRedemptions from "@PM/Pages/Vaults/Tables/TableRedemptions.vue";
@@ -15,6 +9,12 @@ interface Props {
 
 const { vault } = defineProps<Props>();
 </script>
+
+<template>
+  <div class="redemptions">
+    <TableRedemptions :vault="vault"></TableRedemptions>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

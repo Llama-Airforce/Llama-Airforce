@@ -1,3 +1,61 @@
+<script setup lang="ts">
+import { addressShort, useWallet } from "@/Wallet";
+import { type Proposal, type ProposalDetails } from "@CM/Services/Proposal";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  proposal: Proposal;
+  proposalDetails: ProposalDetails | undefined;
+}
+
+const { proposal, proposalDetails } = defineProps<Props>();
+
+// Refs
+const { address: walletAddress } = useWallet();
+
+const votesFor = computed(() => {
+  if (!proposalDetails) {
+    return null;
+  }
+
+  return proposalDetails.votes
+    .filter((vote) => vote.supports)
+    .orderBy((vote) => vote.votingPower, "desc");
+});
+
+const votesAgainst = computed(() => {
+  if (!proposalDetails) {
+    return null;
+  }
+
+  return proposalDetails.votes
+    .filter((vote) => !vote.supports)
+    .orderBy((vote) => vote.votingPower, "desc");
+});
+
+// Methods
+const address = (address: string): string => {
+  // Hardcoded for now, Convex has no ENS by the looks of it anyway.
+  if (address === "0x989aeb4d175e16225e39e87d0d97a3360524ad80") {
+    return "Convex";
+  } else if (address === "0x52f541764e6e90eebc5c21ff570de0e2d63766b6") {
+    return "StakeDAO";
+  } else if (address === "0xf147b8125d2ef93fb6965db97d6746952a133934") {
+    return "Yearn";
+  }
+
+  return addressShort(address, 12);
+};
+
+const percentage = (voteWeight: number): number => {
+  return (voteWeight / (proposal.votesFor + proposal.votesAgainst)) * 100;
+};
+
+const you = (address: string): boolean => address === walletAddress.value;
+</script>
+
 <template>
   <div class="voters">
     <div class="for">
@@ -71,64 +129,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { addressShort, useWallet } from "@/Wallet";
-import { type Proposal, type ProposalDetails } from "@CM/Services/Proposal";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  proposal: Proposal;
-  proposalDetails: ProposalDetails | undefined;
-}
-
-const { proposal, proposalDetails } = defineProps<Props>();
-
-// Refs
-const { address: walletAddress } = useWallet();
-
-const votesFor = computed(() => {
-  if (!proposalDetails) {
-    return null;
-  }
-
-  return proposalDetails.votes
-    .filter((vote) => vote.supports)
-    .orderBy((vote) => vote.votingPower, "desc");
-});
-
-const votesAgainst = computed(() => {
-  if (!proposalDetails) {
-    return null;
-  }
-
-  return proposalDetails.votes
-    .filter((vote) => !vote.supports)
-    .orderBy((vote) => vote.votingPower, "desc");
-});
-
-// Methods
-const address = (address: string): string => {
-  // Hardcoded for now, Convex has no ENS by the looks of it anyway.
-  if (address === "0x989aeb4d175e16225e39e87d0d97a3360524ad80") {
-    return "Convex";
-  } else if (address === "0x52f541764e6e90eebc5c21ff570de0e2d63766b6") {
-    return "StakeDAO";
-  } else if (address === "0xf147b8125d2ef93fb6965db97d6746952a133934") {
-    return "Yearn";
-  }
-
-  return addressShort(address, 12);
-};
-
-const percentage = (voteWeight: number): number => {
-  return (voteWeight / (proposal.votesFor + proposal.votesAgainst)) * 100;
-};
-
-const you = (address: string): boolean => address === walletAddress.value;
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

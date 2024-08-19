@@ -1,13 +1,3 @@
-<template>
-  <div class="gauges">
-    <TableGauges
-      class="gauges-table"
-      :expanded="expanded"
-      @selected="onSelected"
-    ></TableGauges>
-  </div>
-</template>
-
 <script setup lang="ts">
 import TableGauges from "@CM/Pages/Platform/Gauges/Tables/TableGauges.vue";
 import { type Gauge } from "@CM/Pages/Platform/Gauges/Models/Gauge";
@@ -106,6 +96,16 @@ const onSelected = async (gauge: Gauge): Promise<void> => {
   }
 };
 </script>
+
+<template>
+  <div class="gauges">
+    <TableGauges
+      class="gauges-table"
+      :expanded="expanded"
+      @selected="onSelected"
+    ></TableGauges>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,12 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    title="Debt & Assets per Health Deciles"
-    :options
-    :series
-  ></CardChart>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import { createChartStyles } from "@/Styles/ChartStyles";
@@ -100,6 +91,15 @@ const formatterX = (x: string): string => x;
 const formatterY = (y: number): string =>
   `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    title="Debt & Assets per Health Deciles"
+    :options
+    :series
+  ></CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

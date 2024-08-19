@@ -1,12 +1,3 @@
-<template>
-  <CardChart
-    class="breakdown-revenue"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type RevenueSource } from "@CM/Pages/Convex/Revenue/Models/Revenue";
@@ -102,3 +93,12 @@ const series = computed(() => revenueBreakdown.value.map((x) => x.value));
 const dollarFormatter = (x: number): string =>
   `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    class="breakdown-revenue"
+    :options="options"
+    :series="series"
+  >
+  </CardChart>
+</template>

@@ -1,44 +1,3 @@
-<template>
-  <div class="summary">
-    <KPI
-      class="all-time-revenue"
-      :label="t('all-time-revenue')"
-      :has-value="!!totalRevenue"
-    >
-      <AsyncValue
-        :value="totalRevenue"
-        :precision="2"
-        type="dollar"
-      />
-    </KPI>
-
-    <KPI
-      class="emissions-per-bribe"
-      :label="t('emissions')"
-      :has-value="!!rewardPerDollarBribe"
-      :tooltip="rewardsPerDollarBribeTooltip"
-    >
-      <AsyncValue
-        :value="rewardPerDollarBribe"
-        :precision="2"
-        type="dollar"
-      />
-    </KPI>
-
-    <KPI
-      class="record-earnings"
-      :label="recordEarningsLabel"
-      :has-value="!!recordEarningPerVlAsset"
-    >
-      <AsyncValue
-        :value="recordEarningPerVlAsset"
-        :precision="5"
-        type="dollar"
-      />
-    </KPI>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
@@ -97,6 +56,47 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
   return t("tooltip", [tokens]);
 });
 </script>
+
+<template>
+  <div class="summary">
+    <KPI
+      class="all-time-revenue"
+      :label="t('all-time-revenue')"
+      :has-value="!!totalRevenue"
+    >
+      <AsyncValue
+        :value="totalRevenue"
+        :precision="2"
+        type="dollar"
+      />
+    </KPI>
+
+    <KPI
+      class="emissions-per-bribe"
+      :label="t('emissions')"
+      :has-value="!!rewardPerDollarBribe"
+      :tooltip="rewardsPerDollarBribeTooltip"
+    >
+      <AsyncValue
+        :value="rewardPerDollarBribe"
+        :precision="2"
+        type="dollar"
+      />
+    </KPI>
+
+    <KPI
+      class="record-earnings"
+      :label="recordEarningsLabel"
+      :has-value="!!recordEarningPerVlAsset"
+    >
+      <AsyncValue
+        :value="recordEarningPerVlAsset"
+        :precision="5"
+        type="dollar"
+      />
+    </KPI>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

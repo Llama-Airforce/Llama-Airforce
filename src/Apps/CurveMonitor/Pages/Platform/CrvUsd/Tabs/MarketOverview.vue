@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { type Chain } from "@CM/Models";
+import type { Market } from "@CM/Services/CrvUsd";
+import {
+  ChartMarketVolume,
+  ChartMarketLoans,
+  ChartMarketRates,
+  ChartMarketAvailableCap,
+} from "@CM/Pages/Platform/CrvUsd/Charts";
+import { Properties, Addresses } from "@CM/Pages/Platform/CrvUsd/Components";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  market: Market | undefined;
+  chain: Chain | undefined;
+}
+
+const { market, chain } = defineProps<Props>();
+</script>
+
 <template>
   <div class="market">
     <KPI
@@ -75,28 +97,6 @@
     ></Addresses>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import type { Market } from "@CM/Services/CrvUsd";
-import {
-  ChartMarketVolume,
-  ChartMarketLoans,
-  ChartMarketRates,
-  ChartMarketAvailableCap,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
-import { Properties, Addresses } from "@CM/Pages/Platform/CrvUsd/Components";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  market: Market | undefined;
-  chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

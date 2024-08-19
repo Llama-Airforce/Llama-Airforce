@@ -1,123 +1,3 @@
-<template>
-  <div class="tables">
-    <Recipe title="Table">
-      <template #example>
-        <Table
-          class="example-table"
-          :rows
-          :columns
-          :sorting
-          :expanded="expandedRows"
-          expand-side="right"
-          @sort-column="onSort"
-          @selected="onSelected"
-        >
-          <template #row="props: { item: Round }">
-            <div
-              class="round-number"
-              @click.stop
-            >
-              <a class="vote-link">
-                {{ props.item.round }}
-              </a>
-            </div>
-
-            <div>
-              {{ new Date(Date.now()).toLocaleDateString() }}
-            </div>
-
-            <div class="end">
-              <AsyncValue
-                :value="props.item.value"
-                :precision="5"
-                type="dollar"
-              />
-            </div>
-
-            <div class="end">
-              <AsyncValue
-                :value="props.item.value * 10000"
-                :precision="2"
-                type="dollar"
-              />
-            </div>
-          </template>
-
-          <template #row-details="props: { item: Round }">
-            <div>Additional details for round {{ props.item.round }}</div>
-          </template>
-
-          <template #row-aggregation>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div class="end">
-              <AsyncValue
-                :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
-                :precision="2"
-                type="dollar"
-              />
-            </div>
-          </template>
-
-          <template #no-data>
-            <div>Custom no data message</div>
-          </template>
-        </Table>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="vue"
-          :code="table"
-        ></Code>
-      </template>
-    </Recipe>
-
-    <Recipe title="Table Multiselect">
-      <template #example>
-        <Table
-          class="multiselect-table"
-          :rows="rows"
-          :columns="['', 'Deadline', '']"
-          @selected="onCheck"
-        >
-          <template #row="props: { item: Round }">
-            <div
-              class="round-number"
-              @click.stop
-            >
-              <a class="vote-link">
-                {{ props.item.round }}
-              </a>
-            </div>
-
-            <div>
-              {{ new Date(Date.now()).toLocaleDateString() }}
-            </div>
-
-            <div class="center">
-              <Checkbox
-                :model-value="checked.includes(props.item)"
-                @update:model-value="() => onCheck(props.item)"
-              />
-            </div>
-          </template>
-        </Table>
-
-        <div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="vue"
-          :code="multiselect"
-        ></Code>
-      </template>
-    </Recipe>
-  </div>
-</template>
-
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
 
@@ -350,6 +230,126 @@ const onCheck = (round: Round) => {
 }
 </style>`;
 </script>
+
+<template>
+  <div class="tables">
+    <Recipe title="Table">
+      <template #example>
+        <Table
+          class="example-table"
+          :rows
+          :columns
+          :sorting
+          :expanded="expandedRows"
+          expand-side="right"
+          @sort-column="onSort"
+          @selected="onSelected"
+        >
+          <template #row="props: { item: Round }">
+            <div
+              class="round-number"
+              @click.stop
+            >
+              <a class="vote-link">
+                {{ props.item.round }}
+              </a>
+            </div>
+
+            <div>
+              {{ new Date(Date.now()).toLocaleDateString() }}
+            </div>
+
+            <div class="end">
+              <AsyncValue
+                :value="props.item.value"
+                :precision="5"
+                type="dollar"
+              />
+            </div>
+
+            <div class="end">
+              <AsyncValue
+                :value="props.item.value * 10000"
+                :precision="2"
+                type="dollar"
+              />
+            </div>
+          </template>
+
+          <template #row-details="props: { item: Round }">
+            <div>Additional details for round {{ props.item.round }}</div>
+          </template>
+
+          <template #row-aggregation>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div class="end">
+              <AsyncValue
+                :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
+                :precision="2"
+                type="dollar"
+              />
+            </div>
+          </template>
+
+          <template #no-data>
+            <div>Custom no data message</div>
+          </template>
+        </Table>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="vue"
+          :code="table"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="Table Multiselect">
+      <template #example>
+        <Table
+          class="multiselect-table"
+          :rows="rows"
+          :columns="['', 'Deadline', '']"
+          @selected="onCheck"
+        >
+          <template #row="props: { item: Round }">
+            <div
+              class="round-number"
+              @click.stop
+            >
+              <a class="vote-link">
+                {{ props.item.round }}
+              </a>
+            </div>
+
+            <div>
+              {{ new Date(Date.now()).toLocaleDateString() }}
+            </div>
+
+            <div class="center">
+              <Checkbox
+                :model-value="checked.includes(props.item)"
+                @update:model-value="() => onCheck(props.item)"
+              />
+            </div>
+          </template>
+        </Table>
+
+        <div>Selected: {{ checked.map((x) => x.round).join(", ") }}</div>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="vue"
+          :code="multiselect"
+        ></Code>
+      </template>
+    </Recipe>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

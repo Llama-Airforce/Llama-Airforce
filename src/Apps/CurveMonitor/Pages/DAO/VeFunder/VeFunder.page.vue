@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
+import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";
+
+const { t } = useI18n();
+
+// Refs
+const gauge = ref("");
+
+// Events
+const onGauge = (newGauge: string): void => {
+  gauge.value = newGauge;
+};
+</script>
+
 <template>
   <div class="ve-funder">
     <div class="explanation">
@@ -34,21 +49,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
-import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";
-
-const { t } = useI18n();
-
-// Refs
-const gauge = ref("");
-
-// Events
-const onGauge = (newGauge: string): void => {
-  gauge.value = newGauge;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,26 +1,3 @@
-<template>
-  <Card
-    ref="chartCard"
-    class="chart-card"
-    :title="t('title')"
-  >
-    <template #actions>
-      <div class="actions">
-        <BtnChartLWFullscreen
-          v-model="fullscreen"
-          :chart="chart"
-          :target="chartCard?.$el"
-        />
-      </div>
-    </template>
-
-    <div
-      ref="chartRef"
-      class="chart"
-    ></div>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
@@ -90,6 +67,29 @@ function createSeries(): void {
   chart.value.timeScale().fitContent();
 }
 </script>
+
+<template>
+  <Card
+    ref="chartCard"
+    class="chart-card"
+    :title="t('title')"
+  >
+    <template #actions>
+      <div class="actions">
+        <BtnChartLWFullscreen
+          v-model="fullscreen"
+          :chart="chart"
+          :target="chartCard?.$el"
+        />
+      </div>
+    </template>
+
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

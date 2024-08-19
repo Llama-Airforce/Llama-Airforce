@@ -1,13 +1,3 @@
-<template>
-  <CardChart
-    class="chart"
-    title="crvUSD Price Deviation from $1 Histogram"
-    :loading
-    :options
-    :series
-  ></CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
@@ -98,6 +88,16 @@ const formatterY = (x: number): string => {
   return `${round(y, 0, "dollar")}${unit(y, "percentage")}`;
 };
 </script>
+
+<template>
+  <CardChart
+    class="chart"
+    title="crvUSD Price Deviation from $1 Histogram"
+    :loading
+    :options
+    :series
+  ></CardChart>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,61 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { useSettingsStore } from "@PM/Stores";
+import {
+  TroveService,
+  type Trove,
+  type TroveSnapshotData,
+  type TroveManagerDetails,
+} from "@PM/Services";
+
+type Row = TroveSnapshotData;
+
+const { t } = useI18n();
+
+// Stores
+const storeSettings = useSettingsStore();
+
+// Services
+const troveService = new TroveService(storeSettings.flavor);
+
+// Props
+interface Props {
+  vault?: TroveManagerDetails | null;
+  trove?: Trove | null;
+}
+const { vault = null, trove = null } = defineProps<Props>();
+
+// Refs
+const { relativeTime } = useRelativeTime();
+
+const rows = computed(() => data.value.orderBy((row) => row.timestamp, "desc"));
+
+// Data
+const { isFetching: loading, data } = useQuery({
+  queryKey: [
+    "prisma-trove-snapshots",
+    computed(() => vault?.address),
+    computed(() => trove?.owner),
+  ] as const,
+  queryFn: ({ queryKey: [, vault, owner] }) => {
+    if (vault && owner) {
+      return troveService
+        .getTroveSnapshots("ethereum", vault, owner)
+        .then((x) => x.snapshots);
+    } else {
+      return Promise.resolve([]);
+    }
+  },
+  initialData: [],
+  initialDataUpdatedAt: 0,
+});
+
+const titleCase = (s: string): string =>
+  s.replace(/^_*(.)|_+(.)/g, (_, c: string, d: string) =>
+    c ? c.toUpperCase() : " " + d.toUpperCase()
+  );
+</script>
+
 <template>
   <Card
     :title="t('title')"
@@ -74,64 +132,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { useSettingsStore } from "@PM/Stores";
-import {
-  TroveService,
-  type Trove,
-  type TroveSnapshotData,
-  type TroveManagerDetails,
-} from "@PM/Services";
-
-type Row = TroveSnapshotData;
-
-const { t } = useI18n();
-
-// Stores
-const storeSettings = useSettingsStore();
-
-// Services
-const troveService = new TroveService(storeSettings.flavor);
-
-// Props
-interface Props {
-  vault?: TroveManagerDetails | null;
-  trove?: Trove | null;
-}
-const { vault = null, trove = null } = defineProps<Props>();
-
-// Refs
-const { relativeTime } = useRelativeTime();
-
-const rows = computed(() => data.value.orderBy((row) => row.timestamp, "desc"));
-
-// Data
-const { isFetching: loading, data } = useQuery({
-  queryKey: [
-    "prisma-trove-snapshots",
-    computed(() => vault?.address),
-    computed(() => trove?.owner),
-  ] as const,
-  queryFn: ({ queryKey: [, vault, owner] }) => {
-    if (vault && owner) {
-      return troveService
-        .getTroveSnapshots("ethereum", vault, owner)
-        .then((x) => x.snapshots);
-    } else {
-      return Promise.resolve([]);
-    }
-  },
-  initialData: [],
-  initialDataUpdatedAt: 0,
-});
-
-const titleCase = (s: string): string =>
-  s.replace(/^_*(.)|_+(.)/g, (_, c: string, d: string) =>
-    c ? c.toUpperCase() : " " + d.toUpperCase()
-  );
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

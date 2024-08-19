@@ -1,80 +1,3 @@
-<template>
-  <div class="inputs">
-    <Recipe title="InputText with placeholder">
-      <template #example>
-        <InputText
-          v-model="text1"
-          placeholder="Placeholder goes here"
-        ></InputText>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="inputText"
-        ></Code>
-      </template>
-    </Recipe>
-
-    <Recipe title="InputText with search, options, filter, sorting and slot">
-      <template #example>
-        <InputText
-          v-model="pool"
-          placeholder="Search for a pool: enter a space here"
-          :search="true"
-          :auto-complete="autoComplete"
-          :options="pools"
-          :filter
-          :sort
-          @input="onInput"
-          @select="onSelect"
-        >
-          <template #item="props: { item: Pool, idx: number }">
-            <div
-              v-if="props.item"
-              class="search-item"
-            >
-              <img src="@/Assets/Icons/why.png" />
-              <div class="label">{{ props.item.name }}</div>
-              <div
-                v-if="props.idx === 0"
-                class="description"
-              >
-                Volume
-              </div>
-
-              <div class="volume">
-                <AsyncValue
-                  :value="props.item.volume"
-                  :precision="2"
-                  type="dollar"
-                />
-              </div>
-            </div>
-          </template>
-        </InputText>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="inputTextSearch1"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="inputTextSearch2"
-        ></Code>
-
-        <Code
-          lang="scss"
-          :code="inputTextSearch3"
-        ></Code>
-      </template>
-    </Recipe>
-  </div>
-</template>
-
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
 
@@ -233,6 +156,83 @@ const inputTextSearch3 = `.search-item {
   }
 }`;
 </script>
+
+<template>
+  <div class="inputs">
+    <Recipe title="InputText with placeholder">
+      <template #example>
+        <InputText
+          v-model="text1"
+          placeholder="Placeholder goes here"
+        ></InputText>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="html"
+          :code="inputText"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="InputText with search, options, filter, sorting and slot">
+      <template #example>
+        <InputText
+          v-model="pool"
+          placeholder="Search for a pool: enter a space here"
+          :search="true"
+          :auto-complete="autoComplete"
+          :options="pools"
+          :filter
+          :sort
+          @input="onInput"
+          @select="onSelect"
+        >
+          <template #item="props: { item: Pool, idx: number }">
+            <div
+              v-if="props.item"
+              class="search-item"
+            >
+              <img src="@/Assets/Icons/why.png" />
+              <div class="label">{{ props.item.name }}</div>
+              <div
+                v-if="props.idx === 0"
+                class="description"
+              >
+                Volume
+              </div>
+
+              <div class="volume">
+                <AsyncValue
+                  :value="props.item.volume"
+                  :precision="2"
+                  type="dollar"
+                />
+              </div>
+            </div>
+          </template>
+        </InputText>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="html"
+          :code="inputTextSearch1"
+        ></Code>
+
+        <Code
+          lang="typescript"
+          :code="inputTextSearch2"
+        ></Code>
+
+        <Code
+          lang="scss"
+          :code="inputTextSearch3"
+        ></Code>
+      </template>
+    </Recipe>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

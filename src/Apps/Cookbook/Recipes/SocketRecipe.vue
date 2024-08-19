@@ -1,43 +1,3 @@
-<template>
-  <div class="sockets">
-    <div class="connect">
-      <InputText v-model="url"></InputText>
-
-      <Button
-        value="Ping"
-        :disabled="!isConnected"
-        @click="ping"
-      >
-      </Button>
-
-      <Button
-        value="Labels"
-        :disabled="!isConnected"
-        @click="getLabels"
-      >
-      </Button>
-
-      <Button
-        v-if="!isConnected"
-        :value="connecting ? 'Connecting' : 'Connect'"
-        :disabled="connecting"
-        @click="connect"
-      ></Button>
-
-      <Button
-        v-else
-        value="Disconnect"
-        @click="disconnect"
-      ></Button>
-    </div>
-
-    <div
-      class="output font-mono"
-      v-html="output"
-    ></div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Socket } from "socket.io-client";
 import { type Subscription } from "rxjs";
@@ -133,6 +93,46 @@ watch(isConnected, (isConnected) => {
     output.value;
 });
 </script>
+
+<template>
+  <div class="sockets">
+    <div class="connect">
+      <InputText v-model="url"></InputText>
+
+      <Button
+        value="Ping"
+        :disabled="!isConnected"
+        @click="ping"
+      >
+      </Button>
+
+      <Button
+        value="Labels"
+        :disabled="!isConnected"
+        @click="getLabels"
+      >
+      </Button>
+
+      <Button
+        v-if="!isConnected"
+        :value="connecting ? 'Connecting' : 'Connect'"
+        :disabled="connecting"
+        @click="connect"
+      ></Button>
+
+      <Button
+        v-else
+        value="Disconnect"
+        @click="disconnect"
+      ></Button>
+    </div>
+
+    <div
+      class="output font-mono"
+      v-html="output"
+    ></div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

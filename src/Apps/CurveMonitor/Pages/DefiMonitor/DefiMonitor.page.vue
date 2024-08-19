@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import Transfers from "@CM/Pages/DefiMonitor/Tabs/Transfers.vue";
+
+// Tabs
+const { tabActive, tabActiveIndex } = useTabNavigation(
+  ["transfers"],
+  "defimonitor"
+);
+</script>
+
 <template>
   <div class="monitor">
     <TabView
@@ -12,16 +22,6 @@
     </TabView>
   </div>
 </template>
-
-<script setup lang="ts">
-import Transfers from "@CM/Pages/DefiMonitor/Tabs/Transfers.vue";
-
-// Tabs
-const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["transfers"],
-  "defimonitor"
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

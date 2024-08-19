@@ -1,26 +1,3 @@
-<template>
-  <Select
-    class="select"
-    :options="tokens"
-    :selected="token"
-    :open="selectTokenOpen"
-    @open="onTokenOpen"
-    @close="selectTokenOpen = false"
-    @input="onTokenSelect"
-  >
-    <template #item="{ item: { address, symbol } }: { item: Token }">
-      <div class="item">
-        <TokenIcon
-          class="icon"
-          :address="address"
-        ></TokenIcon>
-
-        <div class="label">{{ symbol ?? "?" }}</div>
-      </div>
-    </template>
-  </Select>
-</template>
-
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 
@@ -67,6 +44,29 @@ watch(
   { immediate: true }
 );
 </script>
+
+<template>
+  <Select
+    class="select"
+    :options="tokens"
+    :selected="token"
+    :open="selectTokenOpen"
+    @open="onTokenOpen"
+    @close="selectTokenOpen = false"
+    @input="onTokenSelect"
+  >
+    <template #item="{ item: { address, symbol } }: { item: Token }">
+      <div class="item">
+        <TokenIcon
+          class="icon"
+          :address="address"
+        ></TokenIcon>
+
+        <div class="label">{{ symbol ?? "?" }}</div>
+      </div>
+    </template>
+  </Select>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

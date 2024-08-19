@@ -1,12 +1,3 @@
-<template>
-  <CardChart
-    class="lp-revenue"
-    :options="options"
-    :series="lpRevenueBreakdown"
-  >
-  </CardChart>
-</template>
-
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type RevenueBreakdown } from "@CM/Pages/Convex/Revenue/Models/Revenue";
@@ -93,3 +84,12 @@ const options = computed(() => {
 const dollarFormatter = (x: number): string =>
   `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
 </script>
+
+<template>
+  <CardChart
+    class="lp-revenue"
+    :options="options"
+    :series="lpRevenueBreakdown"
+  >
+  </CardChart>
+</template>

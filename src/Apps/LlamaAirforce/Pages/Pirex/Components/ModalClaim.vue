@@ -1,102 +1,3 @@
-<template>
-  <Modal @close="emit('close')">
-    <Card title="Convex Rewards">
-      <div class="epochs">
-        <div class="headers">
-          <div>Epoch</div>
-          <div>Total Claimable</div>
-        </div>
-
-        <div
-          v-for="epoch in epochs"
-          :key="epoch.epoch"
-          class="epoch"
-          :class="{ expanded: isExpanded(epoch) }"
-          @click="onToggle(epoch)"
-        >
-          <div class="info">
-            <div class="data">{{ formatDate(epoch.epoch) }}</div>
-
-            <AsyncValue
-              :inline="false"
-              :value="total(epoch)"
-              type="dollar"
-            ></AsyncValue>
-
-            <div class="chevron">
-              <div
-                class="expander"
-                :class="{ expanded: isExpanded(epoch) }"
-              >
-                <i class="fas fa-chevron-up"></i>
-              </div>
-            </div>
-          </div>
-
-          <Collapsible
-            class="rewards-collapsible"
-            :expanded="isExpanded(epoch)"
-            @click.stop
-          >
-            <div class="epoch-details">
-              <div
-                v-if="rewards[epoch.epoch].snapshot.length > 0"
-                class="reward-type"
-              >
-                <div class="title">Snapshot Rewards</div>
-
-                <RewardsTable
-                  :rewards="rewards[epoch.epoch].snapshot"
-                  :can-select="true"
-                  :selected="toClaim[epoch.epoch]"
-                  @select="onRewardToggle(epoch, $event)"
-                ></RewardsTable>
-
-                <Button
-                  :primary="true"
-                  :disabled="claimingSnapshot || !canClaimSnapshot(epoch)"
-                  @click="claimSnapshot(epoch)"
-                >
-                  Claim Snapshot Rewards
-                </Button>
-              </div>
-
-              <div
-                v-if="rewards[epoch.epoch].futures.length > 0"
-                class="reward-type"
-              >
-                <div class="title">Futures Rewards</div>
-
-                <RewardsTable
-                  :rewards="rewards[epoch.epoch].futures"
-                ></RewardsTable>
-
-                <Button
-                  v-if="isApprovedForAll"
-                  :primary="true"
-                  :disabled="claimingFutures || !canClaimFutures()"
-                  @click="claimFutures(epoch)"
-                >
-                  Claim Futures Rewards
-                </Button>
-
-                <Button
-                  v-else
-                  :primary="true"
-                  :disabled="approving"
-                  @click="approve"
-                >
-                  Approve Futures Claim Zap (only once needed)
-                </Button>
-              </div>
-            </div>
-          </Collapsible>
-        </div>
-      </div>
-    </Card>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/Union/Pirex";
@@ -295,6 +196,105 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
     }
   );
 </script>
+
+<template>
+  <Modal @close="emit('close')">
+    <Card title="Convex Rewards">
+      <div class="epochs">
+        <div class="headers">
+          <div>Epoch</div>
+          <div>Total Claimable</div>
+        </div>
+
+        <div
+          v-for="epoch in epochs"
+          :key="epoch.epoch"
+          class="epoch"
+          :class="{ expanded: isExpanded(epoch) }"
+          @click="onToggle(epoch)"
+        >
+          <div class="info">
+            <div class="data">{{ formatDate(epoch.epoch) }}</div>
+
+            <AsyncValue
+              :inline="false"
+              :value="total(epoch)"
+              type="dollar"
+            ></AsyncValue>
+
+            <div class="chevron">
+              <div
+                class="expander"
+                :class="{ expanded: isExpanded(epoch) }"
+              >
+                <i class="fas fa-chevron-up"></i>
+              </div>
+            </div>
+          </div>
+
+          <Collapsible
+            class="rewards-collapsible"
+            :expanded="isExpanded(epoch)"
+            @click.stop
+          >
+            <div class="epoch-details">
+              <div
+                v-if="rewards[epoch.epoch].snapshot.length > 0"
+                class="reward-type"
+              >
+                <div class="title">Snapshot Rewards</div>
+
+                <RewardsTable
+                  :rewards="rewards[epoch.epoch].snapshot"
+                  :can-select="true"
+                  :selected="toClaim[epoch.epoch]"
+                  @select="onRewardToggle(epoch, $event)"
+                ></RewardsTable>
+
+                <Button
+                  :primary="true"
+                  :disabled="claimingSnapshot || !canClaimSnapshot(epoch)"
+                  @click="claimSnapshot(epoch)"
+                >
+                  Claim Snapshot Rewards
+                </Button>
+              </div>
+
+              <div
+                v-if="rewards[epoch.epoch].futures.length > 0"
+                class="reward-type"
+              >
+                <div class="title">Futures Rewards</div>
+
+                <RewardsTable
+                  :rewards="rewards[epoch.epoch].futures"
+                ></RewardsTable>
+
+                <Button
+                  v-if="isApprovedForAll"
+                  :primary="true"
+                  :disabled="claimingFutures || !canClaimFutures()"
+                  @click="claimFutures(epoch)"
+                >
+                  Claim Futures Rewards
+                </Button>
+
+                <Button
+                  v-else
+                  :primary="true"
+                  :disabled="approving"
+                  @click="approve"
+                >
+                  Approve Futures Claim Zap (only once needed)
+                </Button>
+              </div>
+            </div>
+          </Collapsible>
+        </div>
+      </div>
+    </Card>
+  </Modal>
+</template>
 
 <style lang="scss">
 .modal:has(.rewards-collapsible) {

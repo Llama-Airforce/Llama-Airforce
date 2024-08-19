@@ -1,3 +1,68 @@
+<script setup lang="ts">
+import { type Chain } from "@CM/Models";
+import { type Market, tvl } from "@CM/Services/LlamaLend";
+import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
+import {
+  ChartMarketSupply,
+  ChartMarketCollateral,
+  ChartMarketLoans,
+  ChartMarketRates,
+} from "@CM/Pages/Platform/LlamaLend/Charts";
+import {
+  KPIUsage,
+  Addresses,
+  Properties,
+} from "@CM/Pages/Platform/LlamaLend/Components";
+import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  market: Market | undefined;
+  chain: Chain | undefined;
+}
+
+const { market, chain } = defineProps<Props>();
+
+// Data
+const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
+  toRef(() => market),
+  toRef(() => chain)
+);
+
+const collateralRatios = computed(() =>
+  snapshots.value.map(
+    ({
+      timestamp,
+      collateralBalanceUsd,
+      borrowedBalanceUsd,
+      totalDebtUsd,
+    }) => ({
+      timestamp,
+      ratio:
+        totalDebtUsd > 0
+          ? (collateralBalanceUsd + borrowedBalanceUsd) / totalDebtUsd
+          : 0,
+    })
+  )
+);
+
+const equity = computed(() =>
+  snapshots.value.map(
+    ({
+      timestamp,
+      collateralBalanceUsd,
+      borrowedBalanceUsd,
+      totalDebtUsd,
+    }) => ({
+      timestamp,
+      equity: collateralBalanceUsd + borrowedBalanceUsd - totalDebtUsd,
+    })
+  )
+);
+</script>
+
 <template>
   <div class="market">
     <KPI
@@ -94,71 +159,6 @@
     ></KPIUsage>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import { type Market, tvl } from "@CM/Services/LlamaLend";
-import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
-import {
-  ChartMarketSupply,
-  ChartMarketCollateral,
-  ChartMarketLoans,
-  ChartMarketRates,
-} from "@CM/Pages/Platform/LlamaLend/Charts";
-import {
-  KPIUsage,
-  Addresses,
-  Properties,
-} from "@CM/Pages/Platform/LlamaLend/Components";
-import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  market: Market | undefined;
-  chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
-
-// Data
-const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
-  toRef(() => market),
-  toRef(() => chain)
-);
-
-const collateralRatios = computed(() =>
-  snapshots.value.map(
-    ({
-      timestamp,
-      collateralBalanceUsd,
-      borrowedBalanceUsd,
-      totalDebtUsd,
-    }) => ({
-      timestamp,
-      ratio:
-        totalDebtUsd > 0
-          ? (collateralBalanceUsd + borrowedBalanceUsd) / totalDebtUsd
-          : 0,
-    })
-  )
-);
-
-const equity = computed(() =>
-  snapshots.value.map(
-    ({
-      timestamp,
-      collateralBalanceUsd,
-      borrowedBalanceUsd,
-      totalDebtUsd,
-    }) => ({
-      timestamp,
-      equity: collateralBalanceUsd + borrowedBalanceUsd - totalDebtUsd,
-    })
-  )
-);
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

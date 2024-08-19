@@ -1,15 +1,3 @@
-<template>
-  <div class="pools">
-    <div class="dashboard">
-      <TablePools
-        class="pools-table"
-        :expanded="expanded"
-        @selected="onSelected"
-      ></TablePools>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import TablePools from "@CM/Pages/Convex/Pools/Tables/TablePools.vue";
 import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
@@ -104,6 +92,18 @@ const onSelected = async (pool: Pool): Promise<void> => {
   }
 };
 </script>
+
+<template>
+  <div class="pools">
+    <div class="dashboard">
+      <TablePools
+        class="pools-table"
+        :expanded="expanded"
+        @selected="onSelected"
+      ></TablePools>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

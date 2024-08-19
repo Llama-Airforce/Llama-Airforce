@@ -1,3 +1,60 @@
+<script setup lang="ts">
+import { useStorage } from "@vueuse/core";
+import { getColors } from "@/Styles/Themes/CB";
+import { type ThemeId } from "@CB/Models/ThemeId";
+import { useSettingsStore } from "@CB/Stores";
+
+const STORAGE_THEME = "theme";
+
+type ThemeDescription = {
+  id: ThemeId;
+  colors: ReturnType<typeof getColors>;
+};
+
+const themes: ThemeDescription[] = [
+  { id: "chad", colors: getColors("chad") },
+  { id: "dark", colors: getColors("dark") },
+  { id: "light", colors: getColors("light") },
+];
+
+// Refs
+const storeSettings = useSettingsStore();
+
+const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const defaultTheme = browserDark ? "dark" : "light";
+
+const theme = useStorage<ThemeDescription>(
+  STORAGE_THEME,
+  themes.find((t) => t.id === defaultTheme) ?? themes[0],
+  undefined,
+  {
+    serializer: {
+      read: (v: string) => themes.find((t) => t.id === v) ?? themes[0],
+      write: (v: ThemeDescription) => v.id,
+    },
+  }
+);
+
+// Hooks
+onMounted(() => {
+  onThemeSelect(theme.value);
+});
+
+// Select
+const selectThemeOpen = ref(false);
+
+const onThemeOpen = (): void => {
+  selectThemeOpen.value = !selectThemeOpen.value;
+};
+
+const onThemeSelect = (option: ThemeDescription) => {
+  theme.value = option;
+
+  window.document.documentElement.setAttribute("data-theme", option.id);
+  storeSettings.themeId = option.id;
+};
+</script>
+
 <template>
   <Select
     class="select direction-up"
@@ -56,63 +113,6 @@
     </template>
   </Select>
 </template>
-
-<script setup lang="ts">
-import { useStorage } from "@vueuse/core";
-import { getColors } from "@/Styles/Themes/CB";
-import { type ThemeId } from "@CB/Models/ThemeId";
-import { useSettingsStore } from "@CB/Stores";
-
-const STORAGE_THEME = "theme";
-
-type ThemeDescription = {
-  id: ThemeId;
-  colors: ReturnType<typeof getColors>;
-};
-
-const themes: ThemeDescription[] = [
-  { id: "chad", colors: getColors("chad") },
-  { id: "dark", colors: getColors("dark") },
-  { id: "light", colors: getColors("light") },
-];
-
-// Refs
-const storeSettings = useSettingsStore();
-
-const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const defaultTheme = browserDark ? "dark" : "light";
-
-const theme = useStorage<ThemeDescription>(
-  STORAGE_THEME,
-  themes.find((t) => t.id === defaultTheme) ?? themes[0],
-  undefined,
-  {
-    serializer: {
-      read: (v: string) => themes.find((t) => t.id === v) ?? themes[0],
-      write: (v: ThemeDescription) => v.id,
-    },
-  }
-);
-
-// Hooks
-onMounted(() => {
-  onThemeSelect(theme.value);
-});
-
-// Select
-const selectThemeOpen = ref(false);
-
-const onThemeOpen = (): void => {
-  selectThemeOpen.value = !selectThemeOpen.value;
-};
-
-const onThemeSelect = (option: ThemeDescription) => {
-  theme.value = option;
-
-  window.document.documentElement.setAttribute("data-theme", option.id);
-  storeSettings.themeId = option.id;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

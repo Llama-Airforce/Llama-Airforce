@@ -1,48 +1,3 @@
-<template>
-  <div class="market-overview">
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
-
-    <TabView
-      v-if="!loading && market"
-      :active="tabActiveIndex"
-      @tab="tabActiveIndex = $event.index"
-    >
-      <TabItem header="Overview">
-        <KeepAlive>
-          <MarketOverview
-            v-if="tabActive === 'overview'"
-            :market
-            :chain
-          ></MarketOverview>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Trading">
-        <KeepAlive>
-          <Trading
-            v-if="tabActive === 'trading'"
-            :market
-            :chain
-          ></Trading>
-        </KeepAlive>
-      </TabItem>
-
-      <TabItem header="Liquidations">
-        <KeepAlive>
-          <Liquidations
-            v-if="tabActive === 'liquidations'"
-            :market
-            :chain
-          ></Liquidations>
-        </KeepAlive>
-      </TabItem>
-    </TabView>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useQueryMarkets } from "@CM/Services/LlamaLend/Queries";
@@ -97,6 +52,51 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   })
 );
 </script>
+
+<template>
+  <div class="market-overview">
+    <Spinner
+      class="spinner"
+      :class="{ loading }"
+    ></Spinner>
+
+    <TabView
+      v-if="!loading && market"
+      :active="tabActiveIndex"
+      @tab="tabActiveIndex = $event.index"
+    >
+      <TabItem header="Overview">
+        <KeepAlive>
+          <MarketOverview
+            v-if="tabActive === 'overview'"
+            :market
+            :chain
+          ></MarketOverview>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Trading">
+        <KeepAlive>
+          <Trading
+            v-if="tabActive === 'trading'"
+            :market
+            :chain
+          ></Trading>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Liquidations">
+        <KeepAlive>
+          <Liquidations
+            v-if="tabActive === 'liquidations'"
+            :market
+            :chain
+          ></Liquidations>
+        </KeepAlive>
+      </TabItem>
+    </TabView>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

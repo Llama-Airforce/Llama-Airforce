@@ -1,42 +1,3 @@
-<template>
-  <Card
-    class="add-new"
-    title="Gauge Creation"
-  >
-    <div class="form">
-      <div class="field">
-        <div class="label">{{ t("receiver") }}:</div>
-        <div class="value">
-          <InputText
-            v-model="receiver"
-            :placeholder="receiverPlaceholder"
-          ></InputText>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">{{ t("amount") }}:</div>
-        <div class="value">
-          <InputNumber
-            v-model="amount"
-            :min="1"
-            :max="3303030299"
-          ></InputNumber>
-        </div>
-      </div>
-    </div>
-
-    <Button
-      class="action-button request"
-      :value="t('submit')"
-      :disabled="!isValid || deploying"
-      :primary="true"
-      :web3="true"
-      @click="execute"
-    ></Button>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
@@ -88,6 +49,45 @@ async function execute() {
   });
 }
 </script>
+
+<template>
+  <Card
+    class="add-new"
+    title="Gauge Creation"
+  >
+    <div class="form">
+      <div class="field">
+        <div class="label">{{ t("receiver") }}:</div>
+        <div class="value">
+          <InputText
+            v-model="receiver"
+            :placeholder="receiverPlaceholder"
+          ></InputText>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="label">{{ t("amount") }}:</div>
+        <div class="value">
+          <InputNumber
+            v-model="amount"
+            :min="1"
+            :max="3303030299"
+          ></InputNumber>
+        </div>
+      </div>
+    </div>
+
+    <Button
+      class="action-button request"
+      :value="t('submit')"
+      :disabled="!isValid || deploying"
+      :primary="true"
+      :web3="true"
+      @click="execute"
+    ></Button>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

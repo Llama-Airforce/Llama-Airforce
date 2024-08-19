@@ -1,29 +1,3 @@
-<template>
-  <div class="union">
-    <div class="dashboard">
-      <Migrations></Migrations>
-
-      <Documentation :extra="t('pounders-info')"></Documentation>
-
-      <PounderComponent
-        v-for="pounder in poundersUnion"
-        :key="pounder.pounder.id"
-        :pounder-id="pounder.pounder.id"
-      ></PounderComponent>
-
-      <Card class="information">
-        {{ t("pounders-info-deprecated") }}
-      </Card>
-
-      <PounderComponent
-        v-for="pounder in poundersDeprecated"
-        :key="pounder.pounder.id"
-        :pounder-id="pounder.pounder.id"
-      ></PounderComponent>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
@@ -288,6 +262,32 @@ function createUCrvV2Pounder() {
 // Watches
 watch(address, createPounders);
 </script>
+
+<template>
+  <div class="union">
+    <div class="dashboard">
+      <Migrations></Migrations>
+
+      <Documentation :extra="t('pounders-info')"></Documentation>
+
+      <PounderComponent
+        v-for="pounder in poundersUnion"
+        :key="pounder.pounder.id"
+        :pounder-id="pounder.pounder.id"
+      ></PounderComponent>
+
+      <Card class="information">
+        {{ t("pounders-info-deprecated") }}
+      </Card>
+
+      <PounderComponent
+        v-for="pounder in poundersDeprecated"
+        :key="pounder.pounder.id"
+        :pounder-id="pounder.pounder.id"
+      ></PounderComponent>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

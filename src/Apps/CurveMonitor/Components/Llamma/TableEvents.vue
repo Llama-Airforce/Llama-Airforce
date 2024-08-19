@@ -1,3 +1,41 @@
+<script setup lang="ts">
+import { addressShort } from "@/Wallet";
+import { type LlammaEvent } from "@CM/Services/Llamma";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  events: LlammaEvent[];
+  count: number;
+}
+
+const { events, count } = defineProps<Props>();
+
+// Emits
+const emit = defineEmits<{
+  page: [page: number];
+}>();
+
+// Trades
+const { page, onPage } = usePaginationAsync();
+const pageDebounced = refDebounced(page, 200);
+watch(pageDebounced, (page) => {
+  emit("page", page);
+});
+
+const { relativeTime } = useRelativeTime();
+
+const round = (x: number) =>
+  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
+
+const amount = (x: LlammaEvent) =>
+  round(x.deposit?.amount ?? x.withdrawal?.amount_collateral ?? 0);
+
+const type = (x: LlammaEvent) =>
+  x.deposit ? t("deposit") : x.withdrawal ? t("withdrawal") : t("unknown");
+</script>
+
 <template>
   <Card :title="t('title')">
     <template #actions>
@@ -48,44 +86,6 @@
     </Table>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { addressShort } from "@/Wallet";
-import { type LlammaEvent } from "@CM/Services/Llamma";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  events: LlammaEvent[];
-  count: number;
-}
-
-const { events, count } = defineProps<Props>();
-
-// Emits
-const emit = defineEmits<{
-  page: [page: number];
-}>();
-
-// Trades
-const { page, onPage } = usePaginationAsync();
-const pageDebounced = refDebounced(page, 200);
-watch(pageDebounced, (page) => {
-  emit("page", page);
-});
-
-const { relativeTime } = useRelativeTime();
-
-const round = (x: number) =>
-  x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
-
-const amount = (x: LlammaEvent) =>
-  round(x.deposit?.amount ?? x.withdrawal?.amount_collateral ?? 0);
-
-const type = (x: LlammaEvent) =>
-  x.deposit ? t("deposit") : x.withdrawal ? t("withdrawal") : t("unknown");
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import Rewards from "@LAF/Pages/Pirex/Components/Rewards.vue";
+import RedemptionsUser from "@LAF/Pages/Pirex/Components/RedemptionsUser.vue";
+
+const tabs = ["rewards", "redemptions"] as const;
+type Tabs = (typeof tabs)[number];
+const tab = ref(tabs[0] as Tabs);
+
+const onTab = (newTab: Tabs) => {
+  tab.value = newTab;
+};
+</script>
+
 <template>
   <Card title="User Info">
     <template #actions>
@@ -22,19 +35,6 @@
     <RedemptionsUser v-if="tab === 'redemptions'"></RedemptionsUser>
   </Card>
 </template>
-
-<script setup lang="ts">
-import Rewards from "@LAF/Pages/Pirex/Components/Rewards.vue";
-import RedemptionsUser from "@LAF/Pages/Pirex/Components/RedemptionsUser.vue";
-
-const tabs = ["rewards", "redemptions"] as const;
-type Tabs = (typeof tabs)[number];
-const tab = ref(tabs[0] as Tabs);
-
-const onTab = (newTab: Tabs) => {
-  tab.value = newTab;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

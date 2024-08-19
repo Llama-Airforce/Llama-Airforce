@@ -1,27 +1,3 @@
-<template>
-  <Card :title="t('title')">
-    <Table
-      class="distributions-table"
-      :rows
-      :columns
-      :sorting
-      @sort-column="onSort"
-    >
-      <template #row="{ item: { timestamp, feesUsd } }: { item: Row }">
-        <div>{{ formatDate(timestamp) }}</div>
-
-        <div class="end">
-          <AsyncValue
-            :value="feesUsd"
-            :precision="2"
-            type="dollar"
-          />
-        </div>
-      </template>
-    </Table>
-  </Card>
-</template>
-
 <script setup lang="ts">
 import { type Distribution } from "@CM/Services/Revenue";
 
@@ -67,6 +43,30 @@ function formatDate(epoch: number): string {
   });
 }
 </script>
+
+<template>
+  <Card :title="t('title')">
+    <Table
+      class="distributions-table"
+      :rows
+      :columns
+      :sorting
+      @sort-column="onSort"
+    >
+      <template #row="{ item: { timestamp, feesUsd } }: { item: Row }">
+        <div>{{ formatDate(timestamp) }}</div>
+
+        <div class="end">
+          <AsyncValue
+            :value="feesUsd"
+            :precision="2"
+            type="dollar"
+          />
+        </div>
+      </template>
+    </Table>
+  </Card>
+</template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

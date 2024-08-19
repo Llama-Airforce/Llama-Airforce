@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue";
+import ChartChain from "@CM/Pages/Platform/Revenue/Charts/ChartChain.vue";
+import ChartTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartTopPools.vue";
+</script>
+
 <template>
   <div class="revenue-charts">
     <ChartBreakdown
@@ -13,12 +19,6 @@
     <ChartTopPools style="grid-area: top-pools"></ChartTopPools>
   </div>
 </template>
-
-<script setup lang="ts">
-import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue";
-import ChartChain from "@CM/Pages/Platform/Revenue/Charts/ChartChain.vue";
-import ChartTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartTopPools.vue";
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
