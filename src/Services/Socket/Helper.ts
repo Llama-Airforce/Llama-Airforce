@@ -137,8 +137,12 @@ export function createObservable<
   return new Observable<EventData>((subscriber) => {
     const handler = (
       onData
-        ? (data: EventData) => onData(data, subscriber)
-        : (data: EventData) => subscriber.next(data)
+        ? (data: EventData) => {
+            onData(data, subscriber);
+          }
+        : (data: EventData) => {
+            subscriber.next(data);
+          }
     ) as EventData;
 
     socket.on(event, handler);
