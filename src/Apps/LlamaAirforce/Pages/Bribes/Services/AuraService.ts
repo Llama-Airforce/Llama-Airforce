@@ -91,12 +91,12 @@ export default class AuraService extends ServiceBase {
     );
   }
 
-  public async getRound(_epochId: number): Promise<EpochResponse> {
-    if (_epochId < START_ROUND - 1) {
+  public async getRound(_epochId?: number): Promise<EpochResponse> {
+    if (_epochId !== undefined && _epochId < START_ROUND - 1) {
       return Promise.resolve({ statusCode: 400 });
     }
 
-    const epochId = this.latestRound;
+    const epochId = _epochId ?? this.latestRound;
 
     const round = await this.fetchRound(
       START_DATE + (epochId - START_ROUND) * BIWEEKLY
