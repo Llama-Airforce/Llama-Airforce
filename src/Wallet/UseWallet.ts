@@ -1,7 +1,5 @@
 import { type Address } from "@/Framework/Address";
-import { base, mainnet } from "viem/chains";
 import { useAccount, useConnectorClient } from "@wagmi/vue";
-import { type Network } from "@/Wallet/Network";
 
 export function useWallet() {
   // Account info
@@ -15,20 +13,9 @@ export function useWallet() {
       : undefined
   );
 
-  const network = computed((): Network | undefined => {
-    switch (chainId.value) {
-      case mainnet.id:
-        return "ethereum";
-      case base.id:
-        return "base";
-      default:
-        return undefined;
-    }
-  });
-
   return {
     isConnected,
-    network,
+    chainId,
     address: addressOnProvider,
   };
 }

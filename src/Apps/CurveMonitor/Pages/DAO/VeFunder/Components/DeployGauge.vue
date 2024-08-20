@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
 
@@ -83,7 +84,7 @@ async function execute() {
       :value="t('submit')"
       :disabled="!isValid || deploying"
       :primary="true"
-      :web3="true"
+      :chain-id="mainnet.id"
       @click="execute"
     ></Button>
   </Card>

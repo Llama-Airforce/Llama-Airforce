@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mainnet } from "viem/chains";
 import { useWallet } from "@/Wallet";
 
 // Props
@@ -7,14 +6,14 @@ interface Props {
   icon?: string;
   value?: string;
   primary?: boolean;
-  web3?: boolean;
+  chainId?: number;
 }
 
 const {
   icon = "",
   value = "",
   primary = false,
-  web3 = false,
+  chainId,
 } = defineProps<Props>();
 
 // Emits
@@ -23,15 +22,22 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const { network } = useWallet();
+const { chainId: chainIdCurrent } = useWallet();
 const { switchChain } = useSwitchChain();
 
 // Events
 const onClick = (evt: Event) => {
   evt.stopImmediatePropagation();
 
-  if (web3 && network.value !== "ethereum") {
-    switchChain({ chainId: mainnet.id });
+  if (chainId) {
+    if (chainIdCurrent.value === undefined) {
+      notify({ text: "Wallet not connected", type: "error" });
+      return;
+    }
+
+    if (chainIdCurrent.value !== chainId) {
+      switchChain({ chainId });
+    }
   }
 
   emit("click");

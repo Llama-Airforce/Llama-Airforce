@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { type Address } from "@/Framework/Address";
 import { useWallet } from "@/Wallet";
 import { abi as abiLPxCvx } from "@/ABI/Union/PirexLPxCvx";
@@ -216,9 +217,9 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
 
         <Button
           :value="submitLabel"
-          :web3="true"
           :primary="true"
           :disabled="!canSwap || isApproving || isSwapping"
+          :chain-id="mainnet.id"
           @click="onSubmit"
         ></Button>
       </div>

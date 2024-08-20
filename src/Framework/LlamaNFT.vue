@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { useWallet } from "@/Wallet";
 import { abi } from "@/ABI/Tokens/TheLlamas";
 
 // Refs
-const { address, network } = useWallet();
+const { address, chainId } = useWallet();
 
 const uri = ref("");
 
@@ -13,7 +14,7 @@ const { data: tokens } = useReadContract({
   functionName: "tokensForOwner",
   args: computed(() => [address.value!] as const),
   query: {
-    enabled: computed(() => !!address.value && network.value === "ethereum"),
+    enabled: computed(() => !!address.value && chainId.value === mainnet.id),
   },
 });
 

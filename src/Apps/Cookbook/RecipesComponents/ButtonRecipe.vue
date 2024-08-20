@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
+import { mainnet } from "viem/chains";
 import Recipe from "@CB/Recipe.vue";
 
 const btnPrimary = `<Button
@@ -19,7 +19,7 @@ const btnDisabled = `<Button
 
 const btnWeb3 = `<Button
   value="Value"
-  :web3="true"
+  :chain-id="mainnet.id"
 ></Button>`;
 
 const btnIcon = `<Button
@@ -39,15 +39,8 @@ const btnClick1 = `<Button
 
 const btnClick2 = `const showAlert = (msg: string) => alert(msg);`;
 
-const { network } = useWallet();
-const currentNetwork = ref(network.value);
-
 const showAlert = (msg: string) => {
   alert(msg);
-  if (network.value !== currentNetwork.value) {
-    currentNetwork.value = network.value;
-    alert(`Network switched to: ${network.value}`);
-  }
 };
 </script>
 
@@ -105,7 +98,7 @@ const showAlert = (msg: string) => {
       <template #example>
         <Button
           value="Value"
-          :web3="true"
+          :chain-id="mainnet.id"
         ></Button>
       </template>
 
@@ -166,22 +159,6 @@ const showAlert = (msg: string) => {
         <Code
           lang="typescript"
           :code="btnClick2"
-        ></Code>
-      </template>
-    </Recipe>
-
-    <Recipe title="Web3">
-      <template #example>
-        <Button
-          value="Switch to Ethereum"
-          :web3="true"
-        ></Button>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="btnWeb3"
         ></Code>
       </template>
     </Recipe>

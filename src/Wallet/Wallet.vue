@@ -15,13 +15,15 @@ const { labelPleaseConnect } = defineProps<Props>();
 
 // Refs
 const { disconnect } = useDisconnect();
-const { isConnected, network, address } = useWallet();
+const { isConnected, chainId, address } = useWallet();
 const { switchChain } = useSwitchChain();
 
-const supportedNetwork = computed(() => network.value === "ethereum");
+const supportedNetwork = computed(() => chainId.value === mainnet.id);
 
 // Events
-const changeNetwork = () => switchChain({ chainId: mainnet.id });
+const changeNetwork = () => {
+  switchChain({ chainId: mainnet.id });
+};
 </script>
 
 <template>

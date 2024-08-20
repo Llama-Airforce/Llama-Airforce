@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
@@ -333,15 +334,15 @@ const onWithdrawSelect = (zap: Zap): void => {
             <Button
               :value="depositLabel"
               :primary="true"
-              :web3="true"
               :disabled="!canDeposit"
+              :chain-id="mainnet.id"
               @click="onDeposit(false)"
             ></Button>
 
             <Button
               v-if="!!swapDeposit"
               class="swap"
-              :web3="true"
+              :chain-id="mainnet.id"
               @click="showSwapDeposit = true"
             >
               <img :src="cow" />
@@ -372,15 +373,15 @@ const onWithdrawSelect = (zap: Zap): void => {
             <Button
               :value="withdrawLabel"
               :primary="true"
-              :web3="true"
               :disabled="!canWithdraw"
+              :chain-id="mainnet.id"
               @click="onWithdraw(false, false)"
             ></Button>
 
             <Button
               v-if="!!swapWithdraw"
               class="swap"
-              :web3="true"
+              :chain-id="mainnet.id"
               @click="showSwapWithdraw = true"
             >
               <img :src="cow" />

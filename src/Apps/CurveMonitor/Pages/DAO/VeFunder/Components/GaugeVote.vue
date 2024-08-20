@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { encodeFunctionData } from "viem";
+import { mainnet } from "viem/chains";
 import { abi as abiAgent } from "@/ABI/veFunder/AragonAgent";
 import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
 import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
@@ -139,7 +140,7 @@ async function createVote() {
       :value="t('submit')"
       :disabled="!canRequest"
       :primary="true"
-      :web3="true"
+      :chain-id="mainnet.id"
       @click="execute"
     ></Button>
   </Card>

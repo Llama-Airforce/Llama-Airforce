@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { abi as abiLocker } from "@/ABI/Prisma/PrismaLocker";
 import { abi as abiVoting } from "@/ABI/Prisma/VotingPrisma";
 import { useWallet } from "@/Wallet";
@@ -216,7 +217,7 @@ watch(
           :value="t(voteButtonText)"
           :primary="true"
           :disabled="!canVote"
-          :web3="true"
+          :chain-id="mainnet.id"
           @click="vote"
         ></Button>
       </div>

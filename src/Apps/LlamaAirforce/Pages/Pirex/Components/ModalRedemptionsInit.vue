@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { useWallet } from "@/Wallet";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
@@ -198,9 +199,9 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
 
           <Button
             :value="submitLabel"
-            :web3="true"
             :primary="true"
             :disabled="!canRedeem || isApproving || isRedeeming"
+            :chain-id="mainnet.id"
             @click="onSubmit"
           ></Button>
         </div>

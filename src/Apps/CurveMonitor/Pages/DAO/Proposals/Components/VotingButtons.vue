@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mainnet } from "viem/chains";
 import { abi as abiVeCRV } from "@/ABI/Curve/VeCRV";
 import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
 import { useWallet } from "@/Wallet";
@@ -404,7 +405,7 @@ whenever(isConfirmedExecute, () => {
           :value="t(voteButtonText)"
           :primary="true"
           :disabled="!canVote"
-          :web3="true"
+          :chain-id="mainnet.id"
           @click="vote"
         ></Button>
       </div>
