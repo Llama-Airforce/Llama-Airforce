@@ -1,4 +1,5 @@
 import { type LegendItem } from "@/Framework/Monitor/LegendItem";
+
 /**
  * A composable function to manage legend items and their toggle states.
  *
@@ -14,6 +15,23 @@ import { type LegendItem } from "@/Framework/Monitor/LegendItem";
  *          - toggles: A reactive object with keys as item IDs and values as booleans representing
  *                     the toggle state.
  *          - disabled: A computed array of item IDs that are currently disabled (toggled off).
+ *
+ * @example
+ * ```typescript
+ * const { items, toggles, disabled } = useLegend(() => [
+ *   { id: 'sales', label: 'Sales', color: 'blue', togglable: true },
+ *   { id: 'revenue', label: 'Revenue', color: 'green', togglable: true }
+ * ]);
+ *
+ * // Access legend items
+ * console.log(items.value);
+ *
+ * // Toggle an item
+ * toggles.sales.value = false;
+ *
+ * // Check disabled items
+ * console.log(disabled.value); // ['sales']
+ * ```
  */
 export function useLegend<T extends string>(f: () => LegendItem<T>[]) {
   const items = computed(f);
