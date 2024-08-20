@@ -1,3 +1,64 @@
+<script setup lang="ts">
+import { type Connector, useConnect, useConnectors } from "@wagmi/vue";
+
+import injected from "@/Assets/Icons/Wallets/injected.webp";
+import rabby from "@/Assets/Icons/Wallets/rabby.svg";
+import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
+import coinbase from "@/Assets/Icons/Wallets/coinbase.webp";
+import safe from "@/Assets/Icons/Wallets/safe.webp";
+
+const { t } = useI18n();
+
+const { connect } = useConnect();
+
+const connectors = useConnectors();
+const connectorsSupport = [
+  "injected",
+  "walletConnect",
+  "coinbaseWalletSDK",
+  "safe",
+];
+const connectorsFiltered = computed(() =>
+  connectors.value.filter((x) => connectorsSupport.includes(x.id))
+);
+
+const showConnectors = ref(false);
+
+function icon(connector: Connector) {
+  switch (connector.id) {
+    case "injected":
+      return injected;
+    case "walletConnect":
+      return walletconnect;
+    case "coinbaseWalletSDK":
+      return coinbase;
+    case "safe":
+      return safe;
+    case "io.rabby":
+      return rabby;
+    default:
+      return "";
+  }
+}
+
+function name(connector: Connector) {
+  if (connector.id === "injected") {
+    return "Browser Extension";
+  }
+
+  return connector.name;
+}
+
+function onConnect(connector: Connector) {
+  connect({ connector });
+  showConnectors.value = false;
+}
+
+function onClearCache() {
+  console.log("nothing to do yet");
+}
+</script>
+
 <template>
   <div class="buttons">
     <Button
@@ -62,67 +123,6 @@
     </Modal>
   </div>
 </template>
-
-<script setup lang="ts">
-import { type Connector, useConnect, useConnectors } from "@wagmi/vue";
-
-import injected from "@/Assets/Icons/Wallets/injected.webp";
-import rabby from "@/Assets/Icons/Wallets/rabby.svg";
-import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
-import coinbase from "@/Assets/Icons/Wallets/coinbase.webp";
-import safe from "@/Assets/Icons/Wallets/safe.webp";
-
-const { t } = useI18n();
-
-const { connect } = useConnect();
-
-const connectors = useConnectors();
-const connectorsSupport = [
-  "injected",
-  "walletConnect",
-  "coinbaseWalletSDK",
-  "safe",
-];
-const connectorsFiltered = computed(() =>
-  connectors.value.filter((x) => connectorsSupport.includes(x.id))
-);
-
-const showConnectors = ref(false);
-
-function icon(connector: Connector) {
-  switch (connector.id) {
-    case "injected":
-      return injected;
-    case "walletConnect":
-      return walletconnect;
-    case "coinbaseWalletSDK":
-      return coinbase;
-    case "safe":
-      return safe;
-    case "io.rabby":
-      return rabby;
-    default:
-      return "";
-  }
-}
-
-function name(connector: Connector) {
-  if (connector.id === "injected") {
-    return "Browser Extension";
-  }
-
-  return connector.name;
-}
-
-function onConnect(connector: Connector) {
-  connect({ connector });
-  showConnectors.value = false;
-}
-
-function onClearCache() {
-  console.log("nothing to do yet");
-}
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";

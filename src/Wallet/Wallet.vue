@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { mainnet } from "viem/chains";
+import { useDisconnect, useSwitchChain } from "@wagmi/vue";
+import { addressShort, useWallet } from "@/Wallet";
+import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
+
+const { t } = useI18n();
+
+// Props
+interface Props {
+  labelPleaseConnect?: string;
+}
+
+const { labelPleaseConnect } = defineProps<Props>();
+
+// Refs
+const { disconnect } = useDisconnect();
+const { isConnected, network, address } = useWallet();
+const { switchChain } = useSwitchChain();
+
+const supportedNetwork = computed(() => network.value === "ethereum");
+
+// Events
+const changeNetwork = () => switchChain({ chainId: mainnet.id });
+</script>
+
 <template>
   <div class="wallet">
     <div
@@ -41,32 +67,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { mainnet } from "viem/chains";
-import { useDisconnect, useSwitchChain } from "@wagmi/vue";
-import { addressShort, useWallet } from "@/Wallet";
-import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
-
-const { t } = useI18n();
-
-// Props
-interface Props {
-  labelPleaseConnect?: string;
-}
-
-const { labelPleaseConnect } = defineProps<Props>();
-
-// Refs
-const { disconnect } = useDisconnect();
-const { isConnected, network, address } = useWallet();
-const { switchChain } = useSwitchChain();
-
-const supportedNetwork = computed(() => network.value === "ethereum");
-
-// Events
-const changeNetwork = () => switchChain({ chainId: mainnet.id });
-</script>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
