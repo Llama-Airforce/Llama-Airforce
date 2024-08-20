@@ -62,6 +62,7 @@ const rows = computed(() =>
             :value="item.amount"
             :precision="2"
             :show-symbol="false"
+            :show-zero="true"
             type="dollar"
           />
         </div>
@@ -70,6 +71,7 @@ const rows = computed(() =>
           <AsyncValue
             :value="item.amountUsd"
             :precision="2"
+            :show-zero="true"
             type="dollar"
           />
         </div>
