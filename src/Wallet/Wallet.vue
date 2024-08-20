@@ -4,8 +4,6 @@ import { useDisconnect, useSwitchChain } from "@wagmi/vue";
 import { addressShort, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   labelPleaseConnect?: string;
@@ -28,37 +26,24 @@ const changeNetwork = () => {
 
 <template>
   <div class="wallet">
-    <div
-      v-if="isConnected"
-      class="connected"
-    >
-      <div
+    <div v-if="isConnected">
+      <Button
         v-if="!supportedNetwork"
-        class="unsupportedNetwork"
-      >
-        <Button
-          class="changeNetwork"
-          value="Change Network"
-          :primary="true"
-          @click="changeNetwork"
-        ></Button>
-        <span class="info">
-          {{ t("incorrect-network") }}
-        </span>
-      </div>
+        class="change"
+        value="Change Network"
+        :primary="true"
+        @click="changeNetwork"
+      ></Button>
 
       <Button
-        class="disconnect"
+        v-else
         icon="fas fa-check"
         :value="addressShort(address)"
         @click="disconnect"
       ></Button>
     </div>
 
-    <div
-      v-else
-      class="notConnected"
-    >
+    <div v-else>
       <WalletConnectButton></WalletConnectButton>
       <span
         v-if="labelPleaseConnect"
@@ -74,46 +59,25 @@ const changeNetwork = () => {
 @import "@/Styles/Variables.scss";
 
 .wallet {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > .connected {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    width: 100%;
-  }
-
-  .unsupportedNetwork {
-    margin-bottom: 1rem;
+  .info {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #a1a1aa;
+    text-align: center;
 
     @media only screen and (max-width: 1280px) {
-      display: none !important;
+      display: none;
     }
   }
 
-  .notConnected,
-  .unsupportedNetwork {
-    width: 100%;
+  .change {
+    justify-content: center;
+  }
+
+  > div {
     display: flex;
     flex-direction: column;
-
-    > .info {
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      color: #a1a1aa;
-      text-align: center;
-
-      @media only screen and (max-width: 1280px) {
-        display: none;
-      }
-    }
+    width: 100%;
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-incorrect-network: You are not on the correct network; should be Ethereum
-</i18n>
