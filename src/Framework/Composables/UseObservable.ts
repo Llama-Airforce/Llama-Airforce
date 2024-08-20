@@ -34,9 +34,7 @@ export function useObservable<T>(obs: Observable<T>, init: T): Ref<T> {
   });
 
   onUnmounted(() => {
-    if (subscription) {
-      subscription.unsubscribe();
-    }
+    subscription.unsubscribe();
   });
 
   return obsRef;
