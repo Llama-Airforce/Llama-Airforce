@@ -32,7 +32,7 @@ export function useSocketIO<TSocket extends Socket = Socket>(
 
     url.value = typeof urlSource === "function" ? urlSource() : urlSource;
 
-    return io(`${url.value}`, {
+    return io(url.value, {
       autoConnect: false,
       secure: true,
       reconnection: false, // Reconnection is giving all kind of problems atm...
