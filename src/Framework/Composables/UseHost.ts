@@ -59,7 +59,9 @@ export async function useHost(production?: string): Promise<string> {
 
       // Ping the local development server with a timeout.
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 2000);
       const response = await fetch(hostDev, {
         method: "HEAD",
         signal: controller.signal,
@@ -75,7 +77,7 @@ export async function useHost(production?: string): Promise<string> {
 
       // If response is not ok, throw to trigger the catch block
       throw new Error("Local server not available");
-    } catch (error) {
+    } catch {
       // Ignore the error and proceed to use the default or production host.
       if (!hasWarned[hostProduction]) {
         notify({
