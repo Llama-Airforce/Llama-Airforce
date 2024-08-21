@@ -165,8 +165,8 @@ function onClearCache() {
 
         img,
         .empty {
-          width: 35px;
-          height: 35px;
+          width: 30px;
+          height: 30px;
           object-fit: scale-down;
           border-radius: 25%;
         }
