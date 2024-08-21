@@ -10,9 +10,11 @@ import { pageUnion, pageUnionRoutes } from "@LAF/Pages/Union/Page";
 
 import { usePageStore } from "@/Framework/Stores/PageStore";
 import { type PageLAF } from "@LAF/Pages/Page";
-import { setup } from "../setup";
 
-const { app } = setup(App);
+import { setup } from "../setup";
+import { walletConnect } from "@/Wallet/WalletConnect";
+
+const { app } = setup(App, { extraWagmiConnectors: [walletConnect] });
 
 // Configure pages.
 const pages: PageLAF[] = [];

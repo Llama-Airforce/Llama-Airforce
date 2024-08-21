@@ -5,9 +5,11 @@ import createRouter from "@CB/Router";
 
 import { pageMain, pageMainRoutes } from "@CB/PageMain";
 import { usePageStore } from "@/Framework/Stores/PageStore";
-import { setup } from "../setup";
 
-const { app } = setup(App);
+import { setup } from "../setup";
+import { walletConnect } from "@/Wallet/WalletConnect";
+
+const { app } = setup(App, { extraWagmiConnectors: [walletConnect] });
 
 // Configure pages.
 const pages = [pageMain];
