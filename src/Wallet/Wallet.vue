@@ -37,6 +37,7 @@ const changeNetwork = () => {
 
       <Button
         v-else
+        class="disconnect"
         icon="fas fa-check"
         :value="addressShort(address)"
         @click="disconnect"
