@@ -236,6 +236,7 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
 
   .redemptions-init-table {
     max-height: 500px;
+    overflow-y: auto;
   }
 
   .input {
