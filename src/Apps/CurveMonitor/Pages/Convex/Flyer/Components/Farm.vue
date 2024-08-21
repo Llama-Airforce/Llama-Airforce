@@ -2,6 +2,8 @@
 import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { type FlyerConvex } from "@/Services/FlyerService";
+import { useClient } from "@wagmi/vue";
+import { type PublicClient } from "viem";
 
 const llamaService = new DefiLlamaService();
 
@@ -14,7 +16,7 @@ const { model } = defineProps<Props>();
 
 // Refs
 const { address } = useWallet();
-const config = useConfig();
+const client = useClient();
 
 const cvxCrvApr = ref<number | undefined>(undefined);
 
@@ -25,10 +27,12 @@ const cvxApr = computed((): number | undefined => {
 watch(
   address,
   async () => {
-    const client = getPublicClient(config);
-    if (!client) throw Error("Cannot create public viem client");
+    if (!client.value) throw Error("Cannot create public viem client");
 
-    const aprs = await getCvxCrvAprs(client, llamaService);
+    const aprs = await getCvxCrvAprs(
+      client.value as PublicClient,
+      llamaService
+    );
 
     // Take the average APR of gov rewards and stable
     const apr = aprs.reduce((acc, x) => acc + x, 0) / 2;
