@@ -4,7 +4,7 @@ import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getDate } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
-import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
+import type { Overview } from "@LAF/Pages/Bribes/Models";
 
 const { t } = useI18n();
 
@@ -18,7 +18,7 @@ const { overview } = defineProps<Props>();
 // Refs
 const { protocol } = storeToRefs(useBribesStore());
 
-const epochs = computed((): EpochOverview[] => overview?.epochs ?? []);
+const epochs = computed(() => overview?.epochs ?? []);
 
 const options = computed(() => {
   return createChartStylesLAF({
@@ -31,7 +31,7 @@ const options = computed(() => {
     xaxis: {
       categories: [...epochs.value]
         // Duplicate and order from old to new.
-        .sort((x: EpochOverview, y: EpochOverview) => x.round - y.round)
+        .sort((x, y) => x.round - y.round)
         .map((epoch) => getDate(epoch)),
     },
     yaxis: [
@@ -93,7 +93,7 @@ const series = computed(
         type: "column",
         data: [...epochs.value]
           // Duplicate and order from old to new.
-          .sort((x: EpochOverview, y: EpochOverview) => x.round - y.round)
+          .sort((x, y) => x.round - y.round)
           .map((epoch) => ({
             x: getDate(epoch),
             y: epoch.totalAmountDollars,
@@ -104,7 +104,7 @@ const series = computed(
         type: "line",
         data: [...epochs.value]
           // Duplicate and order from old to new.
-          .sort((x: EpochOverview, y: EpochOverview) => x.round - y.round)
+          .sort((x, y) => x.round - y.round)
           .map((epoch) => ({
             x: getDate(epoch),
             y: epoch.dollarPerVlAsset,
