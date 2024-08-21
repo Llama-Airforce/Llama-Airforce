@@ -189,8 +189,6 @@ export default class SnapshotService extends ServiceBaseHost {
         return await this.getScoresCvx(snapshot, voters); // Re-uses existing CVX infra?
       case "aura-bal":
         return await this.getScoresAura(snapshot, voters);
-      default:
-        throw new Error(`Unknown protocol: '${protocol as string}'`);
     }
   }
 

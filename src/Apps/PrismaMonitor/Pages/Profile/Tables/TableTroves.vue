@@ -126,8 +126,6 @@ const rows = computed(() =>
           return row.created_at;
         case "updated":
           return row.last_update;
-        default:
-          return row.last_update;
       }
     }, sorting.value.order)
 );

@@ -39,7 +39,6 @@ const rows = computed(() =>
       case "profitPct":
         return profitPct(settlement);
       case "timestamp":
-      default:
         return settlement.timestamp;
     }
   }, sorting.value.order)

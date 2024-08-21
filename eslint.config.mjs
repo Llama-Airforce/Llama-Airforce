@@ -104,7 +104,7 @@ export default [
       "no-useless-constructor": "off",
       "no-useless-escape": "off",
       "array-callback-return": "error",
-      "default-case": "error",
+      "default-case": "off",
       eqeqeq: "error",
       radix: "error",
       semi: "error",
@@ -117,6 +117,7 @@ export default [
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-indexed-object-style": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
+      "@typescript-eslint/switch-exhaustiveness-check": "error",
 
       "@typescript-eslint/restrict-template-expressions": [
         "error",

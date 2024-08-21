@@ -49,8 +49,6 @@ const bribed = computed((): Bribed[] => {
         return b.dollarPerVlAsset;
       case "total":
         return b.amountDollars.reduce((acc, x) => acc + x, 0);
-      default:
-        return b.dollarPerVlAsset;
     }
   }, sorting.value.order);
 });

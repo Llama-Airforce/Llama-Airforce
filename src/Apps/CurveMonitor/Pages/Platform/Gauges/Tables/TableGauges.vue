@@ -34,18 +34,16 @@ const columns = computed(() => [
 
 const { sorting, onSort } = useSort<typeof columns.value>("tvl");
 
-const gauges = computed((): Gauge[] => {
-  return store.gauges.orderBy((gauge) => {
+const gauges = computed(() =>
+  store.gauges.orderBy((gauge) => {
     switch (sorting.value.column) {
       case "name":
         return shorten(gauge.name);
       case "tvl":
         return gauge.tvl;
-      default:
-        return gauge.tvl;
     }
-  }, sorting.value.order);
-});
+  }, sorting.value.order)
+);
 </script>
 
 <template>

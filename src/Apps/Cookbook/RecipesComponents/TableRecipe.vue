@@ -32,8 +32,6 @@ const rows = computed(() => {
         return row.value;
       case "total":
         return row.value;
-      default:
-        return row.round;
     }
   }, sorting.value.order);
 });

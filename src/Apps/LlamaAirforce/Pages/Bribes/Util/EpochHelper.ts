@@ -47,8 +47,6 @@ export function getLink(epoch: EpochId, proposal: ProposalId): string {
       return `https://snapshot.org/#/aurafinance.eth/${
         proposal ? `proposal/${proposal}` : ``
       }`;
-    default:
-      return "";
   }
 }
 

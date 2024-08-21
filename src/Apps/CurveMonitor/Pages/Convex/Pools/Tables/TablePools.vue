@@ -52,8 +52,6 @@ const pools = computed(() =>
           return totalApr(pool);
         case "tvl":
           return pool.tvl;
-        default:
-          return pool.tvl;
       }
     }, sorting.value.order)
 );

@@ -35,8 +35,6 @@ export function getContractAddress(contract: Contract) {
       return "0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108";
     case "yearn":
       return "0x774a55c3eeb79929fd445ae97191228ab39c4d0f";
-    default:
-      throw new Error("Unknown contract");
   }
 }
 

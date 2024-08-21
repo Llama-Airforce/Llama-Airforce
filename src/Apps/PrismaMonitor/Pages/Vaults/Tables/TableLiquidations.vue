@@ -79,8 +79,6 @@ const rows = computed(() =>
           return row.troves_affected_count;
         case "timestamp":
           return row.timestamp;
-        default:
-          return row.timestamp;
       }
     }, sorting.value.order)
 );

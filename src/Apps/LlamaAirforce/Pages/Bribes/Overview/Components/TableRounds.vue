@@ -50,8 +50,6 @@ const epochs = computed(() =>
         return dollarPerVlAsset(epoch);
       case "total":
         return totalAmountDollars(epoch);
-      default:
-        return epoch.round;
     }
   }, sorting.value.order)
 );

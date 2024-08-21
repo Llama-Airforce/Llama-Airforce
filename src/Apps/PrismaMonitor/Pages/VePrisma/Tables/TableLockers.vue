@@ -43,8 +43,6 @@ const rows = computed(() =>
           return row.unlocked;
         case "frozen":
           return row.frozen;
-        default:
-          return row.weight;
       }
     }, sorting.value.order)
 );

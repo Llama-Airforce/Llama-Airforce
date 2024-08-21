@@ -27,8 +27,6 @@ const rows = computed(() =>
         return distribution.timestamp;
       case "fees":
         return distribution.feesUsd;
-      default:
-        return distribution.timestamp;
     }
   }, sorting.value.order)
 );

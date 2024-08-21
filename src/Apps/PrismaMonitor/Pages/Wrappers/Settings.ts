@@ -30,8 +30,6 @@ export function getPriceSettings(contract: Contract): OHLCRequestSettings {
         start,
         end,
       };
-    default:
-      throw new Error("Unknown contract");
   }
 }
 
@@ -57,7 +55,5 @@ export function getVolumeSettings(contract: Contract): VolumeRequestSettings {
         start,
         end,
       };
-    default:
-      throw new Error("Unknown contract");
   }
 }

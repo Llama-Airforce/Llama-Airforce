@@ -16,8 +16,6 @@ const getPool = () => {
       return "0xF980B4A4194694913Af231De69AB4593f5E0fCDc";
     case "lrt":
       return "0xC03FEF1c425956A3Cd5762022E511e0d4148B3D6";
-    default:
-      return "";
   }
 };
 
@@ -27,8 +25,6 @@ const getReferenceToken = () => {
       return "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28"; // mkUSD
     case "lrt":
       return "0x35282d87011f87508D457F08252Bc5bFa52E10A0"; // ULTRA
-    default:
-      return "";
   }
 };
 

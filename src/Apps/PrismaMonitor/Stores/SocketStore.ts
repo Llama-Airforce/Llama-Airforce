@@ -14,8 +14,6 @@ function getUrl(socket: Sockets): string {
       return wsUrl("lrt");
     case "prices":
       return URL_PRICES;
-    default:
-      throw new Error("Unknown socket type");
   }
 }
 
@@ -25,8 +23,6 @@ export function getApiSocket(flavor: Flavor) {
       return "api-lsd";
     case "lrt":
       return "api-lrt";
-    default:
-      throw new Error("Unknown flavor");
   }
 }
 

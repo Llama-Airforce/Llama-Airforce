@@ -42,8 +42,6 @@ const poolsFiltered = computed(() =>
         return pool.tvlUsd;
       case "util":
         return utilRate(pool);
-      default:
-        return pool.tvlUsd;
     }
   }, sorting.value.order)
 );
