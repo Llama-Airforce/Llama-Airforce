@@ -36,13 +36,11 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
     "kpis llama"
     "articles articles";
 
-  padding-inline: 0;
-  margin-inline: calc(3 * var(--page-margin));
   gap: calc(3 * var(--dashboard-gap));
 
   @media only screen and (max-width: 1280px) {
     display: grid;
-    margin-inline: var(--page-margin);
+    margin-inline: calc(0.5 * var(--page-margin));
     gap: calc(2 * var(--dashboard-gap));
 
     grid-template-areas:
