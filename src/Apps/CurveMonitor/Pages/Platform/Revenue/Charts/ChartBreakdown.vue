@@ -180,7 +180,7 @@ const shadeColor = (hex: string, percent: number) => {
       <div class="actions">
         <Legend :items></Legend>
 
-        <Tooltip placement="left">
+        <Tooltip>
           <div>{{ t("legend-explanation") }}</div>
         </Tooltip>
       </div>

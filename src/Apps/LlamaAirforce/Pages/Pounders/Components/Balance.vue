@@ -67,7 +67,7 @@ const hasUnclaimed = computed(
   <div class="balance">
     <div class="value">
       <Tooltip>
-        <template #item>
+        <template #trigger>
           <div class="value-tooltip">
             <AsyncValue
               :value="balance"

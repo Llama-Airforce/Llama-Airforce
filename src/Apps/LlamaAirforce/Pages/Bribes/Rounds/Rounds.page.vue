@@ -158,31 +158,31 @@ function initFromRouter() {
   <div class="bribes">
     <div class="dashboard">
       <SystemSelect
-        class="system-select"
+        style="grid-area: system-select"
         @select-platform="onSelectPlatform"
         @select-protocol="onSelectProtocol"
       >
       </SystemSelect>
 
       <Summary
-        class="summary"
+        style="grid-area: summary"
         :rounds="rounds"
         :epoch="epoch"
         @select-round="onSelectRound"
       ></Summary>
 
       <ChartBribesRound
-        class="graph-bribes-round"
+        style="grid-area: chart; height: 370px"
         :epoch="epoch"
       ></ChartBribesRound>
 
       <TablePersonal
-        class="personal-table"
+        style="grid-area: table-personal; max-height: 750px"
         :epoch="epoch"
       ></TablePersonal>
 
       <TableBribed
-        class="bribed-table"
+        style="grid-area: table-bribed; max-height: 750px"
         :epoch="epoch"
       ></TableBribed>
     </div>
@@ -196,35 +196,13 @@ function initFromRouter() {
 
 .bribes {
   .dashboard {
-    grid-template-rows: 64px 64px auto 1fr;
+    grid-template-rows: 64px 64px auto auto;
     grid-template-columns: 1fr 1fr;
-
-    --offset: 0;
-
-    .system-select {
-      grid-column: 1 / span 2;
-      grid-row: calc(var(--offset) + 1);
-    }
-
-    .summary {
-      grid-column: 1 / span 2;
-      grid-row: calc(var(--offset) + 2);
-    }
-
-    .graph-bribes-round {
-      grid-column: 1 / span 2;
-      grid-row: calc(var(--offset) + 3);
-      height: 370px;
-    }
-
-    .bribed-table {
-      grid-column: 1;
-    }
-
-    .personal-table {
-      grid-column: 2;
-      grid-row: calc(var(--offset) + 4);
-    }
+    grid-template-areas:
+      "system-select system-select"
+      "summary summary"
+      "chart chart"
+      "table-bribed table-personal";
   }
 }
 </style>

@@ -56,7 +56,7 @@ const statusLabel = computed((): string => {
     :tooltip="statusDetails"
   >
     <Tooltip v-if="statusDetails">
-      <template #item>
+      <template #trigger>
         <span
           class="status-value"
           :class="getStatus(proposal)"

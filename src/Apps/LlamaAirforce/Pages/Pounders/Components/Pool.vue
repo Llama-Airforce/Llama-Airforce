@@ -13,7 +13,7 @@ const { name, logo, symbol, priceUnderlying } = defineProps<Props>();
 <template>
   <div class="pool">
     <Tooltip>
-      <template #item>
+      <template #trigger>
         <div class="pool-data">
           <img
             class="logo"

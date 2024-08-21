@@ -81,8 +81,8 @@ const bribes = (bribed: Bribed): Bribe[] => {
     >
       <template #row="props: { item: Bribed }">
         <Tooltip>
-          <template #item>
-            <div class="tooltip-bribed-columns-data">
+          <template #trigger>
+            <div class="bribe">
               <div>
                 {{ pool(props.item) }}
               </div>
@@ -157,73 +157,51 @@ const bribes = (bribed: Bribed): Bribe[] => {
     object-fit: scale-down;
   }
 
-  :deep(.tooltip) {
-    grid-column: 1 / span 4;
-    display: flex;
-    height: 100%;
-    align-items: center;
+  .tooltip {
+    grid-column: 1 / -1;
 
-    > div {
-      display: flex;
-      flex-grow: 1;
-      height: 100%;
+    .bribe {
+      display: grid;
+      grid-template-columns: var(--columns-data);
+      grid-column-gap: 1rem;
       align-items: center;
 
-      > div {
-        display: flex;
-        flex-grow: 1;
-        height: 100%;
-        align-items: center;
-
-        > .tooltip-bribed-columns-data {
-          flex-grow: 1;
-          display: grid;
-          grid-template-columns: 1.5fr 0.6fr 0.6fr;
-          grid-column-gap: 1rem;
-          align-items: center;
-
-          div {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-        }
+      div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
 
-    > .popper {
-      height: auto;
+    .bribes {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 1rem;
 
-      > .bribes {
+      .end {
+        justify-self: end;
+      }
+
+      > span {
+        font-weight: bold;
+      }
+
+      > ul {
         display: flex;
         flex-direction: column;
-        align-items: start;
-        gap: 1rem;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        min-width: 15rem;
 
-        .end {
-          justify-self: end;
-        }
+        > li {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 1rem;
 
-        > span {
-          font-weight: bold;
-        }
-
-        > ul {
-          display: flex;
-          flex-direction: column;
-          padding: 0;
-          margin: 0;
-          list-style-type: none;
-          min-width: 15rem;
-
-          > li {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-gap: 1rem;
-
-            > div {
-              display: flex;
-            }
+          > div {
+            display: flex;
           }
         }
       }

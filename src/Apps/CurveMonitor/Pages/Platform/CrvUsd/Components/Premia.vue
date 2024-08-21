@@ -15,7 +15,7 @@ const yieldsTop = computed(() => yields.orderBy((x) => x.apy, "desc").take(5));
 
 <template>
   <Tooltip v-if="yieldsMax && market">
-    <template #item>
+    <template #trigger>
       <span
         class="number delta"
         :class="{

@@ -112,7 +112,7 @@ whenever(getFeesTrigger, async () => {
         border-bottom: dotted 2px var(--c-lvl3-active);
       }
 
-      .popper {
+      .tooltip .content {
         display: flex;
         gap: 1rem;
         padding: 1rem;

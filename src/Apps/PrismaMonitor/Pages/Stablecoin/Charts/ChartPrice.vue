@@ -143,7 +143,7 @@ function createSeries() {
     :loading="loading"
   >
     <template #actions>
-      <Tooltip placement="left">
+      <Tooltip>
         <div>{{ tooltip }}</div>
       </Tooltip>
     </template>

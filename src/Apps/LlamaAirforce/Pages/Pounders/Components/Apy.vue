@@ -21,7 +21,7 @@ const emit = defineEmits<{
   <div class="apy">
     <div class="value">
       <Tooltip @show="emit('show', $event)">
-        <template #item>
+        <template #trigger>
           <div class="value-tooltip">
             <AsyncValue
               :value="apy"

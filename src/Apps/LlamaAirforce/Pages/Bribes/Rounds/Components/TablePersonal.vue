@@ -246,8 +246,8 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     >
       <template #row="props: { item: BribedPersonal }">
         <Tooltip>
-          <template #item>
-            <div class="tooltip-personal-columns-data">
+          <template #trigger>
+            <div class="bribe">
               <div>
                 <AsyncValue
                   :value="percentage(props.item)"
@@ -312,41 +312,20 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     align-items: center;
   }
 
-  :deep(.tooltip) {
-    grid-column: 1 / span 5;
-    display: flex;
-    height: 100%;
-    align-items: center;
+  .tooltip {
+    grid-column: 1 / -1;
 
-    > div {
-      display: flex;
-      flex-grow: 1;
-      height: 100%;
+    .bribe {
+      display: grid;
+      grid-template-columns: var(--columns-data);
+      grid-column-gap: 1rem;
       align-items: center;
 
-      > div {
-        display: flex;
-        flex-grow: 1;
-        height: 100%;
-        align-items: center;
-
-        > .tooltip-personal-columns-data {
-          flex-grow: 1;
-          display: grid;
-          grid-template-columns: 1fr 3fr 2fr 2fr;
-          align-items: center;
-
-          div {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-        }
+      div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
-    }
-
-    > .popper {
-      height: auto;
     }
   }
 }

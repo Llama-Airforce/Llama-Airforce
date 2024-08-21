@@ -2,7 +2,7 @@
 import Recipe from "@CB/Recipe.vue";
 
 const defaultTooltip = `<Tooltip>
-  <template #item>
+  <template #trigger>
     <div>Hover over me!</div>
   </template>
 
@@ -14,7 +14,7 @@ const customIconTooltip = `<Tooltip icon="fas fa-info-circle">
 </Tooltip>`;
 
 const eventTooltip = `<Tooltip @show="onTooltipShow">
-  <template #item>
+  <template #trigger>
     <div>Hover to trigger event</div>
   </template>
 
@@ -35,7 +35,7 @@ const onTooltipShow = (isShown: boolean) => {
     <Recipe title="Default Tooltip">
       <template #example>
         <Tooltip>
-          <template #item>
+          <template #trigger>
             <div>Hover over me!</div>
           </template>
 
@@ -69,7 +69,7 @@ const onTooltipShow = (isShown: boolean) => {
     <Recipe title="Event Handling Tooltip">
       <template #example>
         <Tooltip @show="onTooltipShow">
-          <template #item>
+          <template #trigger>
             <div>Hover to trigger event</div>
           </template>
 

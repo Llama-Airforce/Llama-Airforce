@@ -30,7 +30,7 @@ const {
     >
       <slot>
         <Tooltip v-if="tooltip && tooltipType === 'underline'">
-          <template #item>
+          <template #trigger>
             <span
               v-if="hasValue"
               class="value"
@@ -131,7 +131,7 @@ const {
     font-weight: bold;
 
     &.underline {
-      ::after {
+      > ::after {
         content: "";
         position: absolute;
         margin: auto;

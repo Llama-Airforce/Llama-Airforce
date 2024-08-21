@@ -73,7 +73,7 @@ function onClearCache() {
       v-if="false"
       class="tooltip"
     >
-      <template #item>
+      <template #trigger>
         <Button
           class="button clear"
           @click="onClearCache"

@@ -123,24 +123,24 @@ function initFromRouter() {
   <div class="overview">
     <div class="dashboard">
       <SystemSelect
-        class="system-select"
+        style="grid-area: system-select"
         @select-platform="onSelectPlatform"
         @select-protocol="onSelectProtocol"
       >
       </SystemSelect>
 
       <Summary
-        class="summary"
+        style="grid-area: summary"
         :overview="overview"
       ></Summary>
 
       <ChartBribesRevenue
-        class="graph-bribes-revenue"
+        style="grid-area: chart; height: 370px"
         :overview="overview"
       ></ChartBribesRevenue>
 
       <TableRounds
-        class="table-rounds"
+        style="grid-area: table; height: 420px"
         :overview="overview"
       ></TableRounds>
     </div>
@@ -154,33 +154,13 @@ function initFromRouter() {
 
 .overview {
   .dashboard {
-    grid-template-rows: 64px 64px auto 1fr;
-
-    --offset: 0;
-
-    .system-select {
-      grid-column: 1;
-      grid-row: calc(var(--offset) + 1);
-    }
-
-    .summary {
-      grid-column: 1;
-      grid-row: calc(var(--offset) + 2);
-    }
-
-    .graph-bribes-revenue {
-      grid-column: 1;
-      grid-row: calc(var(--offset) + 3);
-
-      height: 370px;
-    }
-
-    .table-rounds {
-      max-height: 420px;
-
-      grid-column: 1;
-      grid-row: calc(var(--offset) + 4);
-    }
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px 64px auto auto;
+    grid-template-areas:
+      "system-select"
+      "summary"
+      "chart"
+      "table";
   }
 }
 </style>
