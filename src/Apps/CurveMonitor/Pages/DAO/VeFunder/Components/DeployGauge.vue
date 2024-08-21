@@ -3,8 +3,6 @@ import { mainnet } from "viem/chains";
 import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
 
-const { t } = useI18n();
-
 // Emits
 const emit = defineEmits<{
   gauge: [gauge: Address];
@@ -58,7 +56,7 @@ async function execute() {
   >
     <div class="form">
       <div class="field">
-        <div class="label">{{ t("receiver") }}:</div>
+        <div class="label">Receiver:</div>
         <div class="value">
           <InputText
             v-model="receiver"
@@ -68,7 +66,7 @@ async function execute() {
       </div>
 
       <div class="field">
-        <div class="label">{{ t("amount") }}:</div>
+        <div class="label">CRV Amount (Max):</div>
         <div class="value">
           <InputNumber
             v-model="amount"
@@ -81,7 +79,7 @@ async function execute() {
 
     <Button
       class="action-button request"
-      :value="t('submit')"
+      value="Create Fundraising Gauge"
       :disabled="!isValid || deploying"
       :primary="true"
       :chain-id="mainnet.id"
@@ -129,9 +127,3 @@ async function execute() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-receiver: Receiver
-amount: CRV Amount (Max)
-submit: Create Fundraising Gauge
-</i18n>

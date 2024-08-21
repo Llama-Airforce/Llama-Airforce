@@ -5,8 +5,6 @@ import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue
 import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
 import type { SandwichDetail } from "@CM/Services/Monitor/SocketMonitorCurve";
 
-const { t } = useI18n();
-
 const swsPerPage = 10;
 
 const page = ref(1);
@@ -51,7 +49,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
 <template>
   <Card
     class="sandwiches-card"
-    :title="t('title')"
+    title="Sandwiches"
     :loading
   >
     <template #actions>
@@ -59,8 +57,8 @@ const sandwichTxs = (sw: SandwichDetail) =>
         <InputText
           v-model="search"
           class="search"
+          placeholder="Search for..."
           :search="true"
-          :placeholder="t('search-placeholder')"
         >
         </InputText>
 
@@ -202,8 +200,3 @@ const sandwichTxs = (sw: SandwichDetail) =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Sandwiches
-search-placeholder: Search for...
-</i18n>

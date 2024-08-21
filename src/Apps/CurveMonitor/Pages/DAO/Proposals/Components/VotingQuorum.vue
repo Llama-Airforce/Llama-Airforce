@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Proposal } from "@CM/Services/Proposal";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -11,23 +9,16 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Methods
-const votesSupport = computed((): number => {
-  return proposal.votesFor;
-});
-
-const votesQuorum = computed((): number => {
-  return proposal.quorum * proposal.totalSupply;
-});
+const votesSupport = computed(() => proposal.votesFor);
+const votesQuorum = computed(() => proposal.quorum * proposal.totalSupply);
 
 /** What's the % of the quorum % that's been reached so far? */
-const reached = computed((): number => {
-  return (votesSupport.value / votesQuorum.value) * 100;
-});
+const reached = computed(() => (votesSupport.value / votesQuorum.value) * 100);
 </script>
 
 <template>
   <div class="quorum">
-    <div class="heading">{{ t("quorum") }}</div>
+    <div class="heading">Quorum</div>
     <div class="amount">
       <AsyncValue
         :value="votesSupport"
@@ -123,7 +114,3 @@ const reached = computed((): number => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-quorum: Quorum
-</i18n>

@@ -4,8 +4,6 @@ import { type Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
 import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
 
-const { t } = useI18n();
-
 type Row = Pool & Keeper;
 
 // Refs
@@ -69,14 +67,14 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 <template>
   <Card
     class="pegkeepers-card"
-    :title="t('title')"
+    title="Pegkeepers"
     :loading
   >
     <template #actions>
       <InputText
         v-model="search"
+        placeholder="Search for.."
         :search="true"
-        :placeholder="t('search-placeholder')"
       >
       </InputText>
     </template>
@@ -239,9 +237,3 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Pegkeepers
-
-search-placeholder: Search for...
-</i18n>

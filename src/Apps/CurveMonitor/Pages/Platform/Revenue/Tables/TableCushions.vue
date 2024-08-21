@@ -5,8 +5,6 @@ import { type Cushion } from "@CM/Services/Revenue";
 import { useQueryCushions } from "@CM/Services/Revenue/Queries";
 import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
 
-const { t } = useI18n();
-
 type Row = Cushion;
 
 // Refs
@@ -45,7 +43,7 @@ const linkAddress = (addr: string): string => {
 <template>
   <Card
     class="cushions-card"
-    :title="t('title')"
+    title="Cushions"
     :loading
   >
     <template #actions>
@@ -59,8 +57,8 @@ const linkAddress = (addr: string): string => {
       <InputText
         v-model="search"
         class="search"
+        placeholder="Search for..."
         :search="true"
-        :placeholder="t('search-placeholder')"
       >
       </InputText>
     </template>
@@ -139,9 +137,3 @@ const linkAddress = (addr: string): string => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Cushions
-
-search-placeholder: Search for...
-</i18n>

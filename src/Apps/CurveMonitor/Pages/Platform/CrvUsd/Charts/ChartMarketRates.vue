@@ -4,8 +4,6 @@ import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -131,7 +129,7 @@ const average = (data: number[], n = 7): number[] =>
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Rates"
     :loading
   >
     <template #actions>
@@ -169,7 +167,3 @@ const average = (data: number[], n = 7): number[] =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Rates
-</i18n>

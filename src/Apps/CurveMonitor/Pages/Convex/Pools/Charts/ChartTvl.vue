@@ -6,8 +6,6 @@ import { useSettingsStore } from "@CM/Stores";
 
 type Serie = { name: string; data: { x: number; y: number }[] };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   poolSelected: Pool;
@@ -61,7 +59,7 @@ const options = computed(() => {
         const tvl =
           x.w.globals.initialSeries[x.seriesIndex].data[x.dataPointIndex].y;
 
-        return `<div><b>${t("tvl")}</b>:</div><div>${formatter(tvl)}</div>`;
+        return `<div><b>TVL</b>:</div><div>${formatter(tvl)}</div>`;
       },
     },
   });
@@ -88,7 +86,7 @@ const formatter = (y: number): string => {
 <template>
   <CardChart
     class="tvl"
-    :title="t('title')"
+    title="Total Value Locked"
     :options="options"
     :series="series"
   >
@@ -107,8 +105,3 @@ const formatter = (y: number): string => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Total Value Locked
-tvl: TVL
-</i18n>

@@ -8,8 +8,6 @@ type ActivityValue = Omit<Activity, "timestamp"> & {
   value: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   type: ActivityValue["type"] | "all";
@@ -22,15 +20,15 @@ const { type, txs, users } = defineProps<Props>();
 const { theme } = storeToRefs(useSettingsStore());
 
 const title = computed(
-  () => `${t("title")} (${type === "all" ? "All Types" : capitalize(type)})`
+  () => `Top Chains (${type === "all" ? "All Types" : capitalize(type)})`
 );
 
 // Legend
 const { items, toggles, disabled } = useLegend(() => {
   const { blue, yellow } = theme.value.colors;
   return [
-    { id: "txs", label: t("txs"), color: blue, togglable: true },
-    { id: "users", label: t("users"), color: yellow, togglable: true },
+    { id: "txs", label: "Transactions", color: blue, togglable: true },
+    { id: "users", label: "Users", color: yellow, togglable: true },
   ];
 });
 
@@ -148,9 +146,3 @@ const formatterY = (x: number): string =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Top Chains
-txs: Transactions
-users: Users
-</i18n>

@@ -7,8 +7,6 @@ type CollateralRatio = {
   ratio: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   ratios: CollateralRatio[];
@@ -70,7 +68,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Collateral Ratio"
   >
     <div
       ref="chartRef"
@@ -89,7 +87,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Collateral Ratio
-</i18n>

@@ -5,8 +5,6 @@ import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
 import { useWallet } from "@/Wallet";
 import { type Proposal, getStatus } from "@CM/Services/Proposal";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -43,22 +41,22 @@ const canVote = computed(
 
 const voteButtonText = computed(() => {
   if (canVote.value) {
-    return "submit";
+    return "Submit";
   }
 
   if (voting.value) {
-    return "voting";
+    return "Voting...";
   }
 
   if (!isVoteOpen.value) {
-    return "voting-closed";
+    return "Voting closed";
   }
 
   if (voterState.value !== 0) {
-    return "voted";
+    return "You've already voted";
   }
 
-  return "not-enough-voting-power";
+  return "Not enough voting power";
 });
 
 const votingPowerNumber = computed(() =>
@@ -292,14 +290,14 @@ whenever(isConfirmedExecute, () => {
 <template>
   <div class="buttons">
     <Button
-      :value="t('vote')"
+      value="Vote"
       :primary="true"
       @click="showVote = true"
     ></Button>
 
     <Button
       v-if="executable"
-      :value="t(executing ? 'executing' : 'execute')"
+      :value="executing ? 'Executing...' : 'Execute'"
       :primary="true"
       :disabled="!canExecute || executing"
       @click="execute"
@@ -311,14 +309,14 @@ whenever(isConfirmedExecute, () => {
     @close="showVote = false"
   >
     <Card
-      :title="t('vote-with-vecrv')"
+      title="Vote with veCRV"
       class="vote-content"
     >
       <div class="vecrv">
         <div class="info">
           <div class="kpis">
             <KPI
-              :label="t('voting-power')"
+              label="Voting power"
               :has-value="true"
             >
               <AsyncValue
@@ -332,7 +330,7 @@ whenever(isConfirmedExecute, () => {
             </KPI>
 
             <KPI
-              :label="t('block')"
+              label="Block"
               :value="proposal.block"
               :has-value="true"
             >
@@ -340,7 +338,7 @@ whenever(isConfirmedExecute, () => {
           </div>
 
           <div class="description">
-            <span class="title">{{ t("description") }}: </span>
+            <span class="title">Description: </span>
             <span>{{ proposal.metadata }}</span>
           </div>
         </div>
@@ -352,7 +350,7 @@ whenever(isConfirmedExecute, () => {
             :disabled="!canVote"
             @click="selectNo"
           >
-            <span class="label"> {{ t("no") }}</span>
+            <span class="label">No</span>
           </Button>
 
           <div class="middle">
@@ -388,7 +386,7 @@ whenever(isConfirmedExecute, () => {
             :disabled="!canVote"
             @click="selectYes"
           >
-            <span class="label"> {{ t("yes") }}</span>
+            <span class="label">Yes</span>
           </Button>
         </div>
 
@@ -402,7 +400,7 @@ whenever(isConfirmedExecute, () => {
 
         <Button
           class="submit"
-          :value="t(voteButtonText)"
+          :value="voteButtonText"
           :primary="true"
           :disabled="!canVote"
           :chain-id="mainnet.id"
@@ -568,20 +566,3 @@ whenever(isConfirmedExecute, () => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-vote: Vote
-vote-with-vecrv: Vote with veCRV
-voting: Voting...
-voting-closed: Voting closed
-voted: You've already voted
-description: Description
-voting-power: Voting power
-block: Block
-yes: Yes
-no: No
-submit: Submit
-not-enough-voting-power: Not enough veCRV voting power
-execute: Execute
-executing: Executing...
-</i18n>

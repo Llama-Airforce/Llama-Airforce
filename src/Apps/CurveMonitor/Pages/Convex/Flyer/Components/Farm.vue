@@ -3,8 +3,6 @@ import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { type FlyerConvex } from "@/Services/FlyerService";
 
-const { t } = useI18n();
-
 const llamaService = new DefiLlamaService();
 
 // Props
@@ -43,7 +41,7 @@ watch(
 
 <template>
   <div class="farm">
-    <div class="title">{{ t("income") }}</div>
+    <div class="title">Income</div>
 
     <div class="values">
       <div class="cvx">
@@ -54,16 +52,16 @@ watch(
               :precision="0"
               type="percentage"
             />
-            {{ t("apr") }}
+            APR
           </span>
           <span class="description">
-            {{ t("apr-1") }}
+            Locked CVX earns
             <AsyncValue
               :value="cvxApr"
               :precision="0"
               type="percentage"
             />
-            {{ t("apr-2") }}
+            APR with incentives.
           </span>
         </div>
 
@@ -86,16 +84,16 @@ watch(
               :precision="0"
               type="percentage"
             />
-            {{ t("apr") }}
+            APR
           </span>
           <span class="description">
-            {{ t("staked") }}
+            Staked cvxCRV earns
             <AsyncValue
               :value="cvxCrvApr"
               :precision="0"
               type="percentage"
             />
-            {{ t("apr") }}.
+            APR
           </span>
         </div>
       </div>
@@ -184,13 +182,3 @@ watch(
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-income: Income
-apr: APR
-
-apr-1: Locked CVX earns
-apr-2: APR with incentives.
-
-staked: Staked cvxCRV earns
-</i18n>

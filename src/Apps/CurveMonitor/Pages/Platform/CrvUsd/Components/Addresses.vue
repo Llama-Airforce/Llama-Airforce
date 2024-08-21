@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Market } from "@CM/Services/CrvUsd";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -13,15 +11,15 @@ const { market } = defineProps<Props>();
 type Row = { description: string; address: string };
 const addresses = computed(() => [
   {
-    description: "controller",
+    description: "Controller",
     address: market?.address,
   },
   {
-    description: "factory",
+    description: "Factory",
     address: market?.factory,
   },
   {
-    description: "llamma",
+    description: "Llamma",
     address: market?.llamma,
   },
 ]);
@@ -38,14 +36,14 @@ const clipboard = async (addr: string) => {
 <template>
   <Card
     class="addresses"
-    :title="t('addresses')"
+    title="Addresses"
   >
     <Table
       class="addresses-table"
       :rows="addresses"
     >
       <template #row="{ item: { description, address } }: { item: Row }">
-        <div>{{ t(description) }}</div>
+        <div>{{ description }}</div>
 
         <div>
           <a
@@ -88,13 +86,3 @@ const clipboard = async (addr: string) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-description: Description
-address: Address
-addresses: Addresses
-
-controller: Controller
-factory: Factory
-llamma: Llamma
-</i18n>

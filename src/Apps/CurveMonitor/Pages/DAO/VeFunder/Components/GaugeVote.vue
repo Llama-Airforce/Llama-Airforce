@@ -6,8 +6,6 @@ import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
 import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
 import { type Address } from "@/Framework/Address";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   gauge?: string;
@@ -23,7 +21,7 @@ const emit = defineEmits<{
 // Refs
 const creating = ref(false);
 const gauge_ = ref("");
-const description = ref(t("placeholder"));
+const description = ref("Add a grant gauge: ");
 
 const gaugePlaceholder = computed((): string => {
   return MultisigAddress;
@@ -118,7 +116,7 @@ async function createVote() {
   >
     <div class="form">
       <div class="field">
-        <div class="label">{{ t("gauge") }}:</div>
+        <div class="label">Gauge Address:</div>
         <div class="value">
           <InputText
             v-model="gauge_"
@@ -128,7 +126,7 @@ async function createVote() {
       </div>
 
       <div class="field">
-        <div class="label">{{ t("description") }}:</div>
+        <div class="label">Vote Description:</div>
         <div class="value">
           <InputText v-model="description"></InputText>
         </div>
@@ -137,7 +135,7 @@ async function createVote() {
 
     <Button
       class="action-button request"
-      :value="t('submit')"
+      value="Create Gauge Addition Vote"
       :disabled="!canRequest"
       :primary="true"
       :chain-id="mainnet.id"
@@ -185,10 +183,3 @@ async function createVote() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-gauge: Gauge Address
-description: Vote Description
-placeholder: "Add a grant gauge: "
-submit: Create Gauge Addition Vote
-</i18n>

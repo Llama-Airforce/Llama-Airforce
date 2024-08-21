@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type ProposalType, proposalTypes } from "@CM/Services/Proposal";
-
-const { t } = useI18n();
+import { capitalize } from "@/Util";
 
 const types = [...proposalTypes].filter((x) => x !== "other");
 
@@ -37,7 +36,7 @@ const onTypeSelect = (option: ProposalType): void => {
   >
     <template #item="props: { item: ProposalType }">
       <div class="item">
-        <div class="label">{{ t(props.item) }}</div>
+        <div class="label">{{ capitalize(props.item) }}</div>
       </div>
     </template>
   </Select>
@@ -57,10 +56,3 @@ const onTypeSelect = (option: ProposalType): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-all: All
-ownership: Ownership
-parameter: Parameter
-other: Other
-</i18n>

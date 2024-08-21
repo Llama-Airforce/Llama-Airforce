@@ -2,7 +2,6 @@ import { resolve } from "path";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
-import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import type { App } from "../../Framework/Apps";
@@ -18,10 +17,6 @@ export default defineConfig(() => {
     plugins: [
       vue({ features: { propsDestructure: true } }),
       vueDevTools({ launchEditor: "cursor" }),
-      VueI18nPlugin({
-        strictMessage: false,
-        escapeHtml: false,
-      }),
       splitVendorChunkPlugin(),
       AutoImport(autoImport),
       Components({ dts: true, dirs: ["../../Framework"] }),

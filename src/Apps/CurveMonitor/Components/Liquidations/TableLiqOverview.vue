@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type LiqOverview } from "@CM/Services/Liquidations";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   overview: LiqOverview | undefined;
@@ -88,7 +86,7 @@ const rows = computed((): Row[] => [
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="General Health Metrics">
     <Table
       class="liq-overview-table"
       :rows
@@ -151,7 +149,3 @@ const rows = computed((): Row[] => [
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: General Health Metrics
-</i18n>

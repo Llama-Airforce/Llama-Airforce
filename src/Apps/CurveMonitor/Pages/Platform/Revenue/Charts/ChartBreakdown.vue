@@ -8,8 +8,6 @@ type Serie = {
   data: { x: string; y: number }[];
 };
 
-const { t } = useI18n();
-
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -171,17 +169,20 @@ const shadeColor = (hex: string, percent: number) => {
 <template>
   <CardChart
     class="chart"
+    title="Revenue breakdown by source"
     :options
     :series
     :loading
-    :title="t('title')"
   >
     <template #actions>
       <div class="actions">
         <Legend :items></Legend>
 
         <Tooltip>
-          <div>{{ t("legend-explanation") }}</div>
+          <div>
+            DAO revenue goes to veCRV lockers, Liquidity Provider revenue goes
+            to people that LP
+          </div>
         </Tooltip>
       </div>
     </template>
@@ -211,10 +212,3 @@ const shadeColor = (hex: string, percent: number) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Revenue breakdown by source
-legend-explanation:
-  DAO revenue goes to veCRV lockers, Liquidity Provider revenue goes
-  to people that LP
-</i18n>

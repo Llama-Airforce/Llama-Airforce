@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Market } from "@CM/Services/LlamaLend";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -16,7 +14,7 @@ const totalCollateralUsd = computed(
 );
 
 const collateralLabel = computed(() => {
-  const collateral = t("collateral");
+  const collateral = "Collateral";
   const symbolCollateral = market?.collateral_token.symbol ?? "?";
   const symbolBorrowed = market?.borrowed_token.symbol ?? "?";
 
@@ -71,7 +69,7 @@ const utilRate = computed(() => {
 
     <KPI
       style="grid-area: kpi2"
-      :label="t('borrowed') + ` (${market?.borrowed_token.symbol ?? '?'})`"
+      :label="'Borrowed' + ` (${market?.borrowed_token.symbol ?? '?'})`"
       :has-value="!!market"
     >
       <div class="two-sides">
@@ -94,7 +92,7 @@ const utilRate = computed(() => {
 
     <KPI
       style="grid-area: kpi3"
-      :label="t('supplied') + ` (${market?.borrowed_token.symbol ?? '?'})`"
+      :label="'Supplied' + ` (${market?.borrowed_token.symbol ?? '?'})`"
       :has-value="!!market"
     >
       <div class="two-sides">
@@ -118,9 +116,9 @@ const utilRate = computed(() => {
     <KPI
       style="grid-area: kpi4"
       tooltip-type="icon"
-      :label="t('util-rate')"
+      label="Utilization Rate"
+      tooltip="Utilization rate is total supplied divided by total borrowed"
       :has-value="!!market"
-      :tooltip="t('util-rate-tooltip')"
     >
       <AsyncValue
         :value="utilRate * 100"
@@ -159,12 +157,3 @@ const utilRate = computed(() => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-collateral: Collateral
-borrowed: Borrowed
-supplied: Supplied
-
-util-rate: Utilization Rate
-util-rate-tooltip: Utilization rate is total supplied divided by total borrowed
-</i18n>

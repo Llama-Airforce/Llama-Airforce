@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useConvexStore } from "@CM/Pages/Convex/Store";
 
-const { t } = useI18n();
-
 // Refs
 const store = useConvexStore();
 
@@ -50,7 +48,7 @@ const liquidRevenue = computed(
   <div class="summary">
     <KPI
       class="all-time-revenue"
-      :label="t('all-time-revenue')"
+      label="All time total revenue"
       :has-value="!!totalRevenue"
     >
       <AsyncValue
@@ -62,7 +60,7 @@ const liquidRevenue = computed(
 
     <KPI
       class="lp-revenue"
-      :label="t('lp-revenue')"
+      label="Revenue for LPs (incl. CVX emissions)"
       :has-value="!!lpRevenue"
     >
       <AsyncValue
@@ -74,7 +72,7 @@ const liquidRevenue = computed(
 
     <KPI
       class="holder"
-      :label="t('holder-revenue')"
+      label="Revenue for CVX lockers"
       :has-value="!!tokenRevenue"
     >
       <AsyncValue
@@ -86,7 +84,7 @@ const liquidRevenue = computed(
 
     <KPI
       class="liquid-revenue"
-      :label="t('liquid-revenue')"
+      label="Revenue for liquid lockers (cvxCRV, cvxFXS)"
       :has-value="!!liquidRevenue"
     >
       <AsyncValue
@@ -98,7 +96,7 @@ const liquidRevenue = computed(
 
     <KPI
       class="protocol-revenue"
-      :label="t('protocol-revenue')"
+      label="Revenue directed to Convex treasury"
       :has-value="!!treasuryRevenue"
     >
       <AsyncValue
@@ -119,11 +117,3 @@ const liquidRevenue = computed(
   gap: 0.5rem;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-all-time-revenue: All time total revenue
-lp-revenue: Revenue for LPs (incl. CVX emissions)
-protocol-revenue: Revenue directed to Convex treasury
-holder-revenue: Revenue for CVX lockers
-liquid-revenue: Revenue for liquid lockers (cvxCRV, cvxFXS)
-</i18n>

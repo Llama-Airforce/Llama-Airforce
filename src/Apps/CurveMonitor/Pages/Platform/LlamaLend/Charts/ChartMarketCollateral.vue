@@ -5,8 +5,6 @@ import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -146,7 +144,7 @@ function formatter(x: number): string {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Collateral"
     :loading
   >
     <template #actions>
@@ -184,7 +182,3 @@ function formatter(x: number): string {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Collateral
-</i18n>

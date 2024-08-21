@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type ActivityType, activityTypes } from "@CM/Services/Chains";
 
-const { t } = useI18n();
-
 const types: (ActivityType | "all")[] = ["all", ...activityTypes];
 
 // Emits
@@ -14,15 +12,32 @@ const emit = defineEmits<{
 const selectTypeOpen = ref(false);
 const type = ref<ActivityType | "all">("all");
 
-// Events
-const onTypeOpen = (): void => {
-  selectTypeOpen.value = !selectTypeOpen.value;
-};
+function label(option: ActivityType | "all") {
+  switch (option) {
+    case "all":
+      return "All Types";
+    case "crvusd":
+      return "crvUSD";
+    case "lending":
+      return "Lending";
+    case "pools":
+      return "Pools";
+    case "router":
+      return "Router";
+    case "dao":
+      return "DAO";
+  }
+}
 
-const onTypeSelect = (option: ActivityType | "all"): void => {
+// Events
+function onTypeOpen() {
+  selectTypeOpen.value = !selectTypeOpen.value;
+}
+
+function onTypeSelect(option: ActivityType | "all") {
   type.value = option;
   emit("select", type.value);
-};
+}
 </script>
 
 <template>
@@ -37,7 +52,7 @@ const onTypeSelect = (option: ActivityType | "all"): void => {
   >
     <template #item="props: { item: ActivityType }">
       <div class="item">
-        <div class="label">{{ t(props.item) }}</div>
+        <div class="label">{{ label(props.item) }}</div>
       </div>
     </template>
   </Select>
@@ -57,12 +72,3 @@ const onTypeSelect = (option: ActivityType | "all"): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-all: All Types
-crvusd: crvUSD
-lending: Lending
-pools: Pools
-router: Router
-dao: DAO
-</i18n>

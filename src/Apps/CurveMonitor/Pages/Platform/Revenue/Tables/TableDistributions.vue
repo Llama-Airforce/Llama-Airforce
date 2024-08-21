@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Distribution } from "@CM/Services/Revenue";
 
-const { t } = useI18n();
-
 type Row = Distribution;
 
 // Props
@@ -43,7 +41,7 @@ function formatDate(epoch: number): string {
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Distributions">
     <Table
       class="distributions-table"
       :rows
@@ -73,7 +71,3 @@ function formatDate(epoch: number): string {
   --columns-data: 1fr 1fr;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Distributions
-</i18n>

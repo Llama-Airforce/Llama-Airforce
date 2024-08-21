@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type FlyerConvex } from "@/Services/FlyerService";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   model: FlyerConvex | null;
@@ -22,7 +20,7 @@ const revenueAnnually = computed((): number | undefined => {
 
 <template>
   <div class="revenue">
-    <div class="title">{{ t("revenue") }}</div>
+    <div class="title">Revenue</div>
 
     <div class="values">
       <div class="monthly">
@@ -33,7 +31,7 @@ const revenueAnnually = computed((): number | undefined => {
             type="dollar"
           />
         </span>
-        <span class="description">{{ t("revenue-monthly") }}</span>
+        <span class="description">Average monthly revenue</span>
       </div>
 
       <div class="yearly">
@@ -44,7 +42,7 @@ const revenueAnnually = computed((): number | undefined => {
             type="dollar"
           />
         </span>
-        <span class="description">{{ t("revenue-annually") }}</span>
+        <span class="description">Annualized revenue</span>
       </div>
     </div>
   </div>
@@ -93,9 +91,3 @@ const revenueAnnually = computed((): number | undefined => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-revenue: Revenue
-revenue-monthly: Average monthly revenue
-revenue-annually: Annualized revenue
-</i18n>

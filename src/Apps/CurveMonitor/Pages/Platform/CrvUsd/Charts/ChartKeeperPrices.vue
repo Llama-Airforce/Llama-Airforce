@@ -9,8 +9,6 @@ import {
   useQueryKeeperPrices,
 } from "@CM/Services/CrvUsd/Queries";
 
-const { t } = useI18n();
-
 const { theme } = storeToRefs(useSettingsStore());
 
 // Legend
@@ -104,7 +102,7 @@ function createSeries(): void {
   <Card
     ref="chartCard"
     class="chart-container"
-    :title="t('title')"
+    title="Stablecoin Prices of Pegkeepers"
     :loading
   >
     <template #actions>
@@ -145,7 +143,3 @@ function createSeries(): void {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Stablecoin Prices of Pegkeepers
-</i18n>

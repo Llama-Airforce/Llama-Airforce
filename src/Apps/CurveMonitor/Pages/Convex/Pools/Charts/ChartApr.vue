@@ -11,8 +11,6 @@ type Serie = {
   data: { x: number; y: number; snapshot: Snapshot }[];
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   poolSelected: Pool;
@@ -70,16 +68,10 @@ const options = computed(() => {
             .snapshot;
 
         const data = [
-          `<div><b>${t("base")}</b>:</div><div>${formatter(
-            snapshot.baseApr
-          )}</div>`,
-          `<div><b>${t("crv")}</b>:</div><div>${formatter(
-            snapshot.crvApr
-          )}</div>`,
-          `<div><b>${t("cvx")}</b>:</div><div>${formatter(
-            snapshot.cvxApr
-          )}</div>`,
-          `<div><b>${t("extra")}</b>:</div><div>${formatter(
+          `<div><b>Base</b>:</div><div>${formatter(snapshot.baseApr)}</div>`,
+          `<div><b>CRV</b>:</div><div>${formatter(snapshot.crvApr)}</div>`,
+          `<div><b>CVX</b>:</div><div>${formatter(snapshot.cvxApr)}</div>`,
+          `<div><b>Extra</b>:</div><div>${formatter(
             snapshot.extraRewardsApr
           )}</div>`,
         ];
@@ -113,7 +105,7 @@ const formatter = (y: number): string => {
 <template>
   <CardChart
     class="apr"
-    :title="t('title')"
+    title="Annual Percentage Rate"
     :options="options"
     :series="series"
   >
@@ -132,11 +124,3 @@ const formatter = (y: number): string => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Annual Percentage Rate
-base: Base
-crv: CRV
-cvx: CVX
-exta: Extra
-</i18n>

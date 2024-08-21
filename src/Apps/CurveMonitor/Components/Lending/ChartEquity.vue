@@ -8,8 +8,6 @@ type Equity = {
   equity: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   equity: Equity[];
@@ -72,11 +70,19 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Equity"
   >
     <template #actions>
       <div class="actions">
-        <Tooltip><span v-html="t('tooltip')"></span></Tooltip>
+        <Tooltip>
+          <span>
+            This chart shows the difference between the value of the collateral
+            and the debt.<br /><br />
+            Positive values indicate net equity (collateral exceeds debt),<br />
+            while negative values indicate a deficit (debt exceeds collateral,
+            also known as bad debt).
+          </span>
+        </Tooltip>
       </div>
     </template>
 
@@ -97,11 +103,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Equity
-tooltip:
-  This chart shows the difference between the value of the collateral and the debt.<br /><br />
-  Positive values indicate net equity (collateral exceeds debt),<br />
-  while negative values indicate a deficit (debt exceeds collateral, also known as bad debt).
-</i18n>

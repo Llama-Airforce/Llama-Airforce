@@ -8,8 +8,6 @@ import { type Market, type MarketPair } from "@CM/Services/LlamaLend";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 
-const { t } = useI18n();
-
 const chainParam = useRouteParams<Chain | undefined | "">("chain");
 const chain = computed({
   get() {
@@ -149,8 +147,8 @@ const totalUtilRate = (type: "long" | "short"): number => {
         <InputText
           v-model="search"
           class="search"
+          placeholder="Search for..."
           :search="true"
-          :placeholder="t('search-placeholder')"
         >
         </InputText>
 
@@ -166,7 +164,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
     <div class="markets">
       <div class="kpis">
         <KPI
-          :label="t('open-interest')"
+          label="Open Interest"
           :has-value="!loadingMarkets"
         >
           <AsyncValue
@@ -177,9 +175,9 @@ const totalUtilRate = (type: "long" | "short"): number => {
 
         <KPI
           tooltip-type="icon"
-          :label="t('avg-util-rate')"
+          label="Average Utilization Rate"
           :has-value="!loadingMarkets"
-          :tooltip="t('avg-util-rate-tooltip')"
+          tooltip="Aggregate debt divided by aggregate assets"
         >
           <AsyncValue
             :value="totalUtilRate('long')"
@@ -201,7 +199,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
     <div class="markets">
       <div class="kpis">
         <KPI
-          :label="t('open-interest')"
+          label="Open Interest"
           :has-value="!loadingMarkets"
         >
           <AsyncValue
@@ -212,9 +210,9 @@ const totalUtilRate = (type: "long" | "short"): number => {
 
         <KPI
           tooltip-type="icon"
-          :label="t('avg-util-rate')"
+          label="Average Utilization Rate"
           :has-value="!loadingMarkets"
-          :tooltip="t('avg-util-rate-tooltip')"
+          tooltip="Aggregate debt divided by aggregate assets"
         >
           <AsyncValue
             :value="totalUtilRate('short')"
@@ -283,11 +281,3 @@ const totalUtilRate = (type: "long" | "short"): number => {
 </style>
 
 <style lang="scss"></style>
-
-<i18n lang="yaml" locale="en">
-search-placeholder: Search for...
-
-open-interest: Open Interest
-avg-util-rate: Average Utilization Rate
-avg-util-rate-tooltip: Aggregate debt divided by aggregate assets
-</i18n>

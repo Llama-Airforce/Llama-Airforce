@@ -4,15 +4,12 @@ import { useQueryProposals } from "@CM/Services/Proposal/Queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 
-const { t } = useI18n();
-
 // Refs
 const tabActive = ref(0);
 
 const { page, onPage } = usePaginationAsync();
 const pageDebounced = refDebounced(page, 200);
 
-const placeholder = ref(t("search-placeholder"));
 const proposalSearch = ref("");
 const proposalSearchDebounced = refDebounced(proposalSearch, 300);
 
@@ -61,18 +58,18 @@ const onTypeSelect = (type: ProposalType): void => {
 <template>
   <div class="proposals">
     <TabView @tab="tabActive = $event.index">
-      <TabItem :header="t('all')"></TabItem>
-      <TabItem :header="t('active')"></TabItem>
-      <TabItem :header="t('passed')"></TabItem>
-      <TabItem :header="t('denied')"></TabItem>
-      <TabItem :header="t('executed')"></TabItem>
+      <TabItem header="All"></TabItem>
+      <TabItem header="Active"></TabItem>
+      <TabItem header="Passed"></TabItem>
+      <TabItem header="Denied"></TabItem>
+      <TabItem header="Executed"></TabItem>
     </TabView>
 
     <div class="filters">
       <InputText
         v-model="proposalSearch"
         class="search"
-        :placeholder="placeholder"
+        placeholder="Search for Curve proposals"
         :search="true"
       >
       </InputText>
@@ -109,7 +106,7 @@ const onTypeSelect = (type: ProposalType): void => {
         @page="onPage"
       ></Pagination>
 
-      <div v-if="proposals.length === 0">{{ t("no-proposals") }}</div>
+      <div v-if="proposals.length === 0">No proposals could be found.</div>
 
       <Spinner
         class="spinner"
@@ -174,14 +171,3 @@ const onTypeSelect = (type: ProposalType): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-search-placeholder: Search for Curve proposals
-no-proposals: No proposals could be found.
-
-all: All
-active: Active
-passed: Passed
-denied: Denied
-executed: Executed
-</i18n>

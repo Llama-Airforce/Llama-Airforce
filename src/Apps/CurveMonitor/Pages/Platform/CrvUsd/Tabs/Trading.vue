@@ -88,8 +88,3 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-oracle: Oracle price
-amm: AMM price
-</i18n>

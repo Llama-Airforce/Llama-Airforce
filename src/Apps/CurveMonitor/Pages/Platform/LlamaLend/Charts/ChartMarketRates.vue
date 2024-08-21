@@ -5,8 +5,6 @@ import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -21,12 +19,12 @@ const { theme } = storeToRefs(useSettingsStore());
 const { items } = useLegend(() => [
   {
     id: "borrow",
-    label: t("borrow-apy"),
+    label: "Borrow APY",
     color: theme.value.colors.red,
   },
   {
     id: "lend",
-    label: t("lend-apy"),
+    label: "Lend APY",
     color: theme.value.colors.green,
   },
 ]);
@@ -137,7 +135,7 @@ function formatter(x: number): string {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Rates"
     :loading
   >
     <template #actions>
@@ -163,9 +161,3 @@ function formatter(x: number): string {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Rates
-borrow-apy: Borrow APY
-lend-apy: Lend APY
-</i18n>

@@ -3,8 +3,6 @@ import { useSettingsStore } from "@CM/Stores";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type LoanDistribution } from "@CM/Services/Lending";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   distribution: LoanDistribution;
@@ -91,7 +89,7 @@ const formatterY = (y: number): string =>
 <template>
   <CardChart
     class="chart"
-    :title="t('title')"
+    title="Loan Distribution"
     :options
     :series
   ></CardChart>
@@ -110,7 +108,3 @@ const formatterY = (y: number): string =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Loan Distribution
-</i18n>

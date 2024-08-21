@@ -8,8 +8,6 @@ type PriceOracle = {
   priceOracle: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   ratios: SoftLiqRatio[];
@@ -129,7 +127,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Soft Liquidations Ratio"
   >
     <template #actions>
       <div class="actions">
@@ -154,7 +152,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Soft Liquidations Ratio
-</i18n>

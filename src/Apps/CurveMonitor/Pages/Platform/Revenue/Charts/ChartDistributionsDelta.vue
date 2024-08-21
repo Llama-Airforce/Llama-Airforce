@@ -4,8 +4,6 @@ import { BtnChartLWFullscreen } from "@CM/Components/";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   distributions: Distribution[];
@@ -85,7 +83,7 @@ function createSeries() {
   <Card
     ref="chartCard"
     class="chart-card"
-    :title="t('title')"
+    title="Distributions Change (1y)"
   >
     <template #actions>
       <div class="actions">
@@ -119,7 +117,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Distributions Change (1y)
-</i18n>

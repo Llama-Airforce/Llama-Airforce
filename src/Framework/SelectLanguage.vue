@@ -6,7 +6,6 @@ const STORAGE_LOCALE = "locale";
 
 type Direction = "up" | "down";
 
-const { t } = useI18n();
 const locale = useStorage<Locale>(STORAGE_LOCALE, "en");
 const { locale: loc } = useI18n({ useScope: "global" });
 
@@ -26,14 +25,25 @@ onMounted(() => {
 // Select
 const selectLocaleOpen = ref(false);
 
-const onLocaleOpen = (): void => {
+function onLocaleOpen() {
   selectLocaleOpen.value = !selectLocaleOpen.value;
-};
+}
 
-const onLocaleSelect = (option: Locale): void => {
+function onLocaleSelect(option: Locale) {
   locale.value = option;
   loc.value = locale.value;
-};
+}
+
+function label(locale: Locale) {
+  switch (locale) {
+    case "en":
+      return "English";
+    case "fr":
+      return "Français";
+    case "zh":
+      return "中文";
+  }
+}
 </script>
 
 <template>
@@ -49,7 +59,7 @@ const onLocaleSelect = (option: Locale): void => {
   >
     <template #item="props: { item: Locale }">
       <div class="item">
-        <div class="label">{{ t(props.item) }}</div>
+        <div class="label">{{ label(props.item) }}</div>
       </div>
     </template>
   </Select>
@@ -78,9 +88,3 @@ const onLocaleSelect = (option: Locale): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-en: English
-zh: 中文
-fr: Français
-</i18n>

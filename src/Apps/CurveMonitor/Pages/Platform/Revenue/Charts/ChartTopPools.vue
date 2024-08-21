@@ -5,8 +5,6 @@ import type { Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useQueryTopPools } from "@CM/Services/Revenue/Queries";
 
-const { t } = useI18n();
-
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -85,10 +83,10 @@ const onSelectChain = (newChain: Chain | "all"): void => {
 <template>
   <CardChart
     class="graph"
+    title="Top 10 pools by revenue (last 7 days)"
     :options
     :series
     :loading
-    :title="t('title')"
   >
     <template #actions>
       <div
@@ -117,7 +115,3 @@ const onSelectChain = (newChain: Chain | "all"): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Top 10 pools by revenue (last 7 days)
-</i18n>

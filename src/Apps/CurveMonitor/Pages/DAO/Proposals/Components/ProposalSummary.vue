@@ -5,8 +5,6 @@ import Type from "@CM/Pages/DAO/Proposals/Components/Type.vue";
 import Proposer from "@CM/Pages/DAO/Proposals/Components/Proposer.vue";
 import Date from "@CM/Pages/DAO/Proposals/Components/Date.vue";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -51,7 +49,7 @@ const proposalToClipboard = async () => {
       </router-link>
 
       <div class="metadata">
-        {{ proposal.metadata || t("no-title") }}
+        {{ proposal.metadata || "< No Title >" }}
       </div>
     </div>
 
@@ -177,7 +175,3 @@ const proposalToClipboard = async () => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-no-title: < No Title >
-</i18n>

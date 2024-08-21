@@ -4,8 +4,6 @@ import ChartDistributions from "@CM/Pages/Platform/Revenue/Charts/ChartDistribut
 import ChartDistributionsDelta from "@CM/Pages/Platform/Revenue/Charts/ChartDistributionsDelta.vue";
 import { useQueryDistributions } from "@CM/Services/Revenue/Queries";
 
-const { t } = useI18n();
-
 const { isFetching: loading, data: distributions } = useQueryDistributions();
 
 // KPIs
@@ -34,7 +32,7 @@ const stdDevWeeklyFees = computed(() => {
   <div class="distributions">
     <KPI
       style="grid-area: kpi1"
-      :label="t('total')"
+      label="Total"
       :has-value="distributions.length > 0"
     >
       <AsyncValue
@@ -45,7 +43,7 @@ const stdDevWeeklyFees = computed(() => {
 
     <KPI
       style="grid-area: kpi2"
-      :label="t('avg')"
+      label="Average (1y)"
       :has-value="distributions.length > 0"
     >
       <AsyncValue
@@ -56,7 +54,7 @@ const stdDevWeeklyFees = computed(() => {
 
     <KPI
       style="grid-area: kpi3"
-      :label="t('stddev')"
+      label="Standard Deviation (1y)"
       :has-value="distributions.length > 0"
     >
       <AsyncValue
@@ -111,11 +109,3 @@ const stdDevWeeklyFees = computed(() => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Distributions
-
-total: Total
-avg: Average (1y)
-stddev: Standard Deviation (1y)
-</i18n>

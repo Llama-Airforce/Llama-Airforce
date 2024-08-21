@@ -3,8 +3,6 @@ import { addressShort } from "@/Wallet";
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
 import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
 
-const { t } = useI18n();
-
 type Row = CowSwapSettlement;
 
 // Props
@@ -70,7 +68,7 @@ function symbol(settlement: CowSwapSettlement) {
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="CowSwap Settlements">
     <template #actions>
       <div class="header-content">
         <Pagination
@@ -211,7 +209,3 @@ function symbol(settlement: CowSwapSettlement) {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: CowSwap Settlements
-</i18n>

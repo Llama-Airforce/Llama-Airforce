@@ -3,8 +3,6 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type OHLC } from "@CM/Services/OHLC";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   ohlc: OHLC[];
@@ -86,7 +84,7 @@ function formatter(x: number): string {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Price"
   >
     <template #actions>
       <div class="controls">
@@ -121,7 +119,3 @@ function formatter(x: number): string {
   gap: 1rem;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Price
-</i18n>

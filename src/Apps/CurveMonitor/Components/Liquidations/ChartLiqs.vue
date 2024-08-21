@@ -4,8 +4,6 @@ import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
 
 type ChartType = "count" | "value";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   liqs: LiquidationAggregate[];
@@ -30,7 +28,7 @@ const onChartType = (type: ChartType) => {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Self & Hard Liquidations"
   >
     <template #actions>
       <div class="actions">
@@ -106,7 +104,3 @@ const onChartType = (type: ChartType) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Self & Hard Liquidations
-</i18n>

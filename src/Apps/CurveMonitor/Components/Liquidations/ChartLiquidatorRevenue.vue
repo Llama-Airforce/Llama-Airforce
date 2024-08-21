@@ -8,8 +8,6 @@ type Discount = {
   discount: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   discounts: Discount[];
@@ -134,7 +132,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Liquidator Revenue"
   >
     <template #actions>
       <div class="actions">
@@ -159,7 +157,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Liquidator Revenue
-</i18n>

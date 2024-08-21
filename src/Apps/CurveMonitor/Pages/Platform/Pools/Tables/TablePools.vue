@@ -4,8 +4,6 @@ import { type Pool } from "@CM/Services/Pools";
 
 type Row = Pool;
 
-const { t } = useI18n();
-
 // Emit
 const emit = defineEmits<{
   selected: [pool: Row];
@@ -55,7 +53,7 @@ function utilRate(pool: Pool) {
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Pools">
     <template #actions>
       <Pagination
         :items-count="pools.length"
@@ -145,7 +143,3 @@ function utilRate(pool: Pool) {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Pools
-</i18n>

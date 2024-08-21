@@ -8,8 +8,6 @@ type Users = {
   count: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   users: Users[];
@@ -72,7 +70,7 @@ function createSeries(): void {
   <Card
     ref="chartCard"
     class="chart-card"
-    :title="t('title')"
+    title="Users"
   >
     <template #actions>
       <div class="actions">
@@ -106,7 +104,3 @@ function createSeries(): void {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Users
-</i18n>

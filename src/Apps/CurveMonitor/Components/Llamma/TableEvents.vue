@@ -2,8 +2,6 @@
 import { addressShort } from "@/Wallet";
 import { type LlammaEvent } from "@CM/Services/Llamma";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   events: LlammaEvent[];
@@ -33,11 +31,11 @@ const amount = (x: LlammaEvent) =>
   round(x.deposit?.amount ?? x.withdrawal?.amount_collateral ?? 0);
 
 const type = (x: LlammaEvent) =>
-  x.deposit ? t("deposit") : x.withdrawal ? t("withdrawal") : t("unknown");
+  x.deposit ? "Deposit" : x.withdrawal ? "Withdrawal" : "Unknown";
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Events">
     <template #actions>
       <Pagination
         :items-count="count"
@@ -94,11 +92,3 @@ const type = (x: LlammaEvent) =>
   --columns-data: 8rem 1fr 1fr 6rem 6rem;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Events
-
-deposit: Deposit
-withdrawal: Withdrawal
-unknown: Unknown
-</i18n>

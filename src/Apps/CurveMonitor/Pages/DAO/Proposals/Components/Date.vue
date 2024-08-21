@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Proposal } from "@CM/Services/Proposal";
 
-const { t } = useI18n();
-
 let deadlineTimer: ReturnType<typeof setTimeout> | undefined;
 
 // Props
@@ -16,18 +14,18 @@ const { proposal, type } = defineProps<Props>();
 // Refs
 const deadlineString = ref("");
 
-const label = computed((): string => {
+const label = computed(() => {
   switch (type) {
     case "start":
-      return t("start");
+      return "Start";
     case "end":
-      return t("end");
+      return "End";
     default:
       return "Unk. Type";
   }
 });
 
-const date = computed((): string => {
+const date = computed(() => {
   switch (type) {
     case "start":
       return new Date(proposal.start * 1000).toLocaleDateString();
@@ -42,7 +40,7 @@ const date = computed((): string => {
   }
 });
 
-const dateWithTime = computed((): string => {
+const dateWithTime = computed(() => {
   switch (type) {
     case "start":
       return (
@@ -67,7 +65,7 @@ onMounted(() => {
 });
 
 // Methods
-const createTimer = (): void => {
+const createTimer = () => {
   const nextDate = new Date(proposal.end * 1000);
 
   if (deadlineTimer) {
@@ -91,8 +89,3 @@ const createTimer = (): void => {
   >
   </KPI>
 </template>
-
-<i18n lang="yaml" locale="en">
-start: Start
-end: End
-</i18n>

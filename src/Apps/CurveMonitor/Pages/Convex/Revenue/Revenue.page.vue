@@ -10,8 +10,6 @@ import HistoricalRevenue from "@CM/Pages/Convex/Revenue/Components/HistoricalRev
 import LiquidRevenue from "@CM/Pages/Convex/Revenue/Components/LiquidRevenue.vue";
 import Summary from "@CM/Pages/Convex/Revenue/Components/Summary.vue";
 
-const { t } = useI18n();
-
 const protocolRevenueService = new ProtocolRevenueService();
 const historicalRevenueService = new HistoricalRevenueService();
 
@@ -65,27 +63,27 @@ onBeforeUnmount((): void => {
         <Summary class="summary"></Summary>
         <RevenueSources
           class="chart-revenue-sources"
-          :title="t('revenue-breakdown')"
+          title="Breakdown of total revenue by source"
         ></RevenueSources>
 
         <HistoricalRevenue
           class="chart-historical-revenue"
-          :title="t('revenue-historical')"
+          title="Historical total revenue breakdown"
         ></HistoricalRevenue>
 
         <LPRevenue
           class="chart-lp-revenue"
-          :title="t('revenue-lp')"
+          title="Liquidity providers rewards breakdown"
         ></LPRevenue>
 
         <HolderRevenue
           class="chart-holder-revenue"
-          :title="t('revenue-holder')"
+          title="CVX holders rewards breakdown"
         ></HolderRevenue>
 
         <LiquidRevenue
           class="chart-liquid-revenue"
-          :title="t('revenue-liquid')"
+          title="Liquid lockers rewards breakdown"
         ></LiquidRevenue>
       </div>
     </div>
@@ -165,11 +163,3 @@ onBeforeUnmount((): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-revenue-breakdown: Breakdown of total revenue by source
-revenue-lp: Liquidity providers rewards breakdown
-revenue-holder: CVX holders rewards breakdown
-revenue-historical: Historical total revenue breakdown
-revenue-liquid: Liquid lockers rewards breakdown
-</i18n>

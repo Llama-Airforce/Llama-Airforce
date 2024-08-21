@@ -3,8 +3,6 @@ import { type Proposal } from "@CM/Services/Proposal";
 import { useQueryProposal } from "@CM/Services/Proposal/Queries";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -53,7 +51,7 @@ const callData = computed(() => {
 <template>
   <div class="technicals">
     <div class="technical">
-      <div class="heading">{{ t("description") }}</div>
+      <div class="heading">Description</div>
       <div class="description">{{ proposal.metadata }}</div>
     </div>
 
@@ -62,7 +60,7 @@ const callData = computed(() => {
         class="heading"
         @click="expandedVoters = !expandedVoters"
       >
-        {{ t("voters") }} ({{ numVoters ?? "?" }})
+        Voters ({{ numVoters ?? "?" }})
         <i
           class="fas fa-chevron-up expander"
           :class="{ expandedVoters }"
@@ -85,7 +83,7 @@ const callData = computed(() => {
         class="heading"
         @click="expandedCallData = !expandedCallData"
       >
-        {{ t("calldata") }}
+        Calldata
         <i
           class="fas fa-chevron-up expander"
           :class="{ expandedCallData }"
@@ -149,9 +147,3 @@ const callData = computed(() => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-description: Description
-calldata: Calldata
-voters: Voters
-</i18n>

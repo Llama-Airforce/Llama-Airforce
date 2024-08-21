@@ -2,8 +2,6 @@
 import { addressShort, useWallet } from "@/Wallet";
 import { type Proposal, type ProposalDetails } from "@CM/Services/Proposal";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -59,7 +57,7 @@ const you = (address: string): boolean => address === walletAddress.value;
 <template>
   <div class="voters">
     <div class="for">
-      <div class="title">{{ t("for") }}</div>
+      <div class="title">For</div>
 
       <div
         v-for="vote in votesFor"
@@ -94,7 +92,7 @@ const you = (address: string): boolean => address === walletAddress.value;
     </div>
 
     <div class="against">
-      <div class="title">{{ t("against") }}</div>
+      <div class="title">Against</div>
 
       <div
         v-for="vote in votesAgainst"
@@ -208,8 +206,3 @@ const you = (address: string): boolean => address === walletAddress.value;
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-for: For
-against: Against
-</i18n>

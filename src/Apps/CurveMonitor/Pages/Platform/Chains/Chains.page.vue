@@ -11,8 +11,6 @@ import {
 } from "@CM/Pages/Platform/Chains/Charts";
 import { ActivityTypeSelect } from "@CM/Pages/Platform/Chains/Components";
 
-const { t } = useI18n();
-
 // Hooks
 const { show: showCrumbs } = storeToRefs(useBreadcrumbStore());
 onMounted(() => {
@@ -171,7 +169,7 @@ const rankTypesUsers = computed(() =>
     <div class="activity">
       <KPI
         style="grid-area: kpi1"
-        :label="t('txs-today')"
+        label="Transactions Today"
         :has-value="!!loadingTxs"
       >
         <AsyncValue
@@ -184,7 +182,7 @@ const rankTypesUsers = computed(() =>
 
       <KPI
         style="grid-area: kpi2"
-        :label="t('txs-avg')"
+        label="Avg Transactions / 7 Days"
         :has-value="!!loadingTxs"
       >
         <AsyncValue
@@ -197,7 +195,7 @@ const rankTypesUsers = computed(() =>
 
       <KPI
         style="grid-area: kpi3"
-        :label="t('users-today')"
+        label="Avg Users / 7 Days"
         :has-value="!!loadingUsers"
       >
         <AsyncValue
@@ -210,7 +208,7 @@ const rankTypesUsers = computed(() =>
 
       <KPI
         style="grid-area: kpi4"
-        :label="t('users-avg')"
+        label="Users Today"
         :has-value="!!loadingUsers"
       >
         <AsyncValue
@@ -300,11 +298,3 @@ const rankTypesUsers = computed(() =>
 </style>
 
 <style lang="scss"></style>
-
-<i18n lang="yaml" locale="en">
-txs-today: Transactions Today
-txs-avg: Avg Transactions / 7 Days
-
-users-today: Users Today
-users-avg: Avg Users / 7 Days
-</i18n>

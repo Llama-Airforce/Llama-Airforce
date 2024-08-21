@@ -5,8 +5,6 @@ import { type Chain } from "@CM/Models";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -77,7 +75,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Loans"
     :loading
   >
     <div
@@ -97,7 +95,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Loans
-</i18n>

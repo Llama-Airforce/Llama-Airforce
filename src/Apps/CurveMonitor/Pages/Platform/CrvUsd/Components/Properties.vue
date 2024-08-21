@@ -2,8 +2,6 @@
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -56,11 +54,11 @@ function getTokenInfo(
 type Row = { description: string; value: unknown };
 const properties = computed(() => [
   {
-    description: "collateral",
+    description: "Collateral",
     value: getTokenInfo("collateral", market),
   },
   {
-    description: "borrowed",
+    description: "Borrowed",
     value: getTokenInfo("borrowed", market),
   },
 ]);
@@ -77,14 +75,14 @@ const clipboard = async (addr: string) => {
 <template>
   <Card
     class="properties"
-    :title="t('properties')"
+    title="Properties"
   >
     <Table
       class="properties-table"
       :rows="properties"
     >
       <template #row="{ item: { description, value } }: { item: Row }">
-        <div>{{ t(description) }}</div>
+        <div>{{ description }}</div>
 
         <div v-if="isTokenInfo(value)">
           <div class="token-info">
@@ -153,11 +151,3 @@ const clipboard = async (addr: string) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-properties: Properties
-
-oracleamm: Oracle / AMM Prices
-collateral: Collateral
-borrowed: Borrowed
-</i18n>

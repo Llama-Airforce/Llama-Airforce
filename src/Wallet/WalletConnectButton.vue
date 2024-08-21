@@ -7,8 +7,6 @@ import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
 import coinbase from "@/Assets/Icons/Wallets/coinbase.webp";
 import safe from "@/Assets/Icons/Wallets/safe.webp";
 
-const { t } = useI18n();
-
 const { connect } = useConnect();
 
 const connectors = useConnectors();
@@ -66,7 +64,7 @@ function onClearCache() {
       :primary="true"
       @click="showConnectors = true"
     >
-      {{ t("connect-your-wallet") }}
+      Connect Wallet
     </Button>
 
     <Tooltip
@@ -82,10 +80,7 @@ function onClearCache() {
         </Button>
       </template>
 
-      <div
-        class="ping"
-        v-html="t('clear-cache')"
-      ></div>
+      Clear Cache
     </Tooltip>
 
     <Modal
@@ -94,9 +89,7 @@ function onClearCache() {
     >
       <Card>
         <div class="connectors-body">
-          <div class="title">
-            {{ t("connect-your-wallet") }}
-          </div>
+          <div class="title">Connect Your Wallet</div>
 
           <div class="connectors">
             <div
@@ -190,11 +183,3 @@ function onClearCache() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-connect-your-wallet: Connect Wallet
-</i18n>
-
-<i18n lang="yaml" locale="zh">
-connect-your-wallet: 连接你的钱包
-</i18n>

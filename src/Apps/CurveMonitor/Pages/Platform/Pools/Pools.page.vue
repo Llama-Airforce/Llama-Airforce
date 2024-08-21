@@ -6,8 +6,6 @@ import { useQueryPools } from "@CM/Services/Pools/Queries";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { TablePools } from "@CM/Pages/Platform/Pools/Tables";
 
-const { t } = useI18n();
-
 const chains: Chain[] = ["ethereum", "arbitrum"];
 const chainParam = useRouteParams<Chain | undefined | "">("chain");
 const chain = computed({
@@ -78,8 +76,8 @@ const onPoolSelect = async (newPool: Pool) => {
         <InputText
           v-model="search"
           class="search"
+          placeholder="Search for..."
           :search="true"
-          :placeholder="t('search-placeholder')"
         >
         </InputText>
 
@@ -94,7 +92,7 @@ const onPoolSelect = async (newPool: Pool) => {
 
     <KPI
       style="grid-area: kpi1"
-      :label="t('tvl')"
+      label="TVL"
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
@@ -105,7 +103,7 @@ const onPoolSelect = async (newPool: Pool) => {
 
     <KPI
       style="grid-area: kpi2"
-      :label="t('volume')"
+      label="Volume (24h)"
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
@@ -116,7 +114,7 @@ const onPoolSelect = async (newPool: Pool) => {
 
     <KPI
       style="grid-area: kpi3"
-      :label="t('fee-trading')"
+      label="Fees Trading (24h)"
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
@@ -127,7 +125,7 @@ const onPoolSelect = async (newPool: Pool) => {
 
     <KPI
       style="grid-area: kpi4"
-      :label="t('fee-liquidity')"
+      label="Fees Liquidity (24h)"
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
@@ -182,12 +180,3 @@ const onPoolSelect = async (newPool: Pool) => {
 </style>
 
 <style lang="scss"></style>
-
-<i18n lang="yaml" locale="en">
-search-placeholder: Search for...
-
-tvl: TVL
-volume: Volume (24h)
-fee-trading: Fees Trading (24h)
-fee-liquidity: Fees Liquidity (24h)
-</i18n>

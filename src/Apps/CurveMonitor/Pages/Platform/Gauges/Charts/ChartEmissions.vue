@@ -18,14 +18,12 @@ interface Props {
 
 const { gaugeSelected } = defineProps<Props>();
 
-const { t } = useI18n();
-
 // Refs
 const store = useCurveStore();
 const { theme } = storeToRefs(useSettingsStore());
 
 const title = computed((): string => {
-  let title = t("title");
+  let title = "Emissions & Revenues";
   title += ` - ${shorten(gaugeSelected.name)}`;
 
   return title;
@@ -110,11 +108,11 @@ const options = computed(() => {
           : 0;
 
         const data = [
-          `<div><b>${t("emissions")}</b>:</div><div>${formatterEmissions(
+          `<div><b>Emissions</b>:</div><div>${formatterEmissions(
             emissions
           )}</div>`,
-          `<div><b>${t("fees")}</b>:</div><div>${formatterFees(fees)}</div>`,
-          `<div><b>${t("ratio")}</b>:</div><div>${formatterRatio(
+          `<div><b>Fees</b>:</div><div>${formatterFees(fees)}</div>`,
+          `<div><b>Ratio</b>:</div><div>${formatterRatio(
             fees / emissions
           )}</div>`,
         ];
@@ -149,7 +147,7 @@ const series = computed((): Serie[] => {
   ) as feeIndex;
   return [
     {
-      name: t("emissions"),
+      name: "Emissions",
       type: "line",
       data: aggregatedEmissions.map((s) => ({
         x: s.timeStamp * 1000,
@@ -157,7 +155,7 @@ const series = computed((): Serie[] => {
       })),
     },
     {
-      name: t("fees"),
+      name: "Fees",
       type: "line",
       data: aggregatedEmissions.map((emissions) => ({
         x: emissions.timeStamp * 1000,
@@ -205,10 +203,3 @@ const formatterRatio = (x: number): string => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Emissions & Revenues
-emissions: Emissions
-fees: Fees
-ratio: Ratio
-</i18n>

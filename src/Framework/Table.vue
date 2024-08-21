@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="TData, TSortingColumn extends string">
 import { type SortOrder } from "@/Framework/SortOrder";
 
-const { t } = useI18n();
-
 type Column = {
   id?: TSortingColumn;
   label: string;
@@ -204,7 +202,7 @@ const sortColumn = (column: Column): void => {
       v-if="!rowsMin && (!rows || rows.length === 0)"
       class="no-data"
     >
-      <slot name="no-data">{{ t("no-data") }}</slot>
+      <slot name="no-data">No data</slot>
     </div>
 
     <!-- Aggregation -->
@@ -302,11 +300,3 @@ const sortColumn = (column: Column): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-no-data: No data :(
-</i18n>
-
-<i18n lang="yaml" locale="zh">
-no-data: 没有数据 :(
-</i18n>

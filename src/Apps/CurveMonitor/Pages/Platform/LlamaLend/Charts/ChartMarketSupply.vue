@@ -6,8 +6,6 @@ import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -22,9 +20,9 @@ const { theme, themeId } = storeToRefs(useSettingsStore());
 const { items, toggles, disabled } = useLegend(() => {
   const { blue, yellow, purple } = theme.value.colors;
   return [
-    { id: "supply", label: t("supply"), color: blue },
-    { id: "debt", label: t("debt"), color: yellow },
-    { id: "util", label: t("util"), color: purple, togglable: true },
+    { id: "supply", label: "Supply", color: blue },
+    { id: "debt", label: "Debt", color: yellow },
+    { id: "util", label: "Util %", color: purple, togglable: true },
   ];
 });
 
@@ -163,7 +161,7 @@ function createSeries(): void {
   <Card
     ref="chartCard"
     class="chart-card"
-    :title="t('title')"
+    title="Supply & Debt"
     :loading
   >
     <template #actions>
@@ -204,10 +202,3 @@ function createSeries(): void {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Supply & Debt
-supply: Supply
-debt: Debt
-util: Util (%)
-</i18n>

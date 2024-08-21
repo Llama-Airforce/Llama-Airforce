@@ -19,9 +19,6 @@ const emit = defineEmits<{
   yes: [];
   no: [];
 }>();
-
-// Methods
-const { t } = useI18n();
 </script>
 
 <template>
@@ -35,14 +32,14 @@ const { t } = useI18n();
       <div class="buttons">
         <Button
           class="no"
-          :value="t('no')"
+          value="No"
           @click="emit('no')"
         ></Button>
 
         <Button
           v-if="ready"
           class="yes"
-          :value="t('yes')"
+          value="Yes"
           @click="emit('yes')"
         ></Button>
 
@@ -89,13 +86,3 @@ const { t } = useI18n();
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-yes: Yes
-no: No
-</i18n>
-
-<i18n lang="yaml" locale="zh">
-yes: 是的
-no: 不是
-</i18n>

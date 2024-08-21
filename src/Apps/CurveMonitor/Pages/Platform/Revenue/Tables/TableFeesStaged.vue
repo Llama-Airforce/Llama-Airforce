@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type FeesStaged } from "@CM/Services/Revenue";
 
-const { t } = useI18n();
-
 type Row = FeesStaged;
 
 // Props
@@ -37,7 +35,7 @@ const rows = computed(() =>
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Fees Staged">
     <Table
       :rows
       :columns
@@ -105,7 +103,3 @@ const rows = computed(() =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Fees Staged
-</i18n>

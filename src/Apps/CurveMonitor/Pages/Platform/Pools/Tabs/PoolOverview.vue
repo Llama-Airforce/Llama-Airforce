@@ -9,8 +9,6 @@ import {
   ChartTvl,
 } from "@CM/Pages/Platform/Pools/Charts";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   pool: Pool | undefined;
@@ -60,7 +58,7 @@ const tvl = computed(() =>
   <div class="pool-overview">
     <KPI
       style="grid-area: kpi1"
-      :label="t('tokens')"
+      label="Tokens"
       :has-value="!!pool"
     >
       <div class="tokens">
@@ -76,7 +74,7 @@ const tvl = computed(() =>
 
     <KPI
       style="grid-area: kpi2"
-      :label="t('tvl')"
+      label="TVL"
       :has-value="!!pool"
     >
       <AsyncValue
@@ -87,7 +85,7 @@ const tvl = computed(() =>
 
     <KPI
       style="grid-area: kpi3"
-      :label="t('volume')"
+      label="Volume (24h)"
       :has-value="!!pool"
     >
       <AsyncValue
@@ -98,7 +96,7 @@ const tvl = computed(() =>
 
     <KPI
       style="grid-area: kpi4"
-      :label="t('fees')"
+      label="Fees (24h)"
       :has-value="!!pool"
     >
       <AsyncValue
@@ -167,10 +165,3 @@ const tvl = computed(() =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-tokens: Tokens
-tvl: TVL
-volume: Volume (24h)
-fees: Fees (24h)
-</i18n>

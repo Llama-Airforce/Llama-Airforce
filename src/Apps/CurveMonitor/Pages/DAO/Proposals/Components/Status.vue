@@ -7,8 +7,6 @@ import {
   hasReachedSupport,
 } from "@CM/Services/Proposal";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -17,30 +15,30 @@ interface Props {
 const { proposal } = defineProps<Props>();
 
 // Refs
-const statusDetails = computed((): string => {
+const statusDetails = computed(() => {
   if (getStatus(proposal) === "denied") {
     if (!hasReachedQuorum(proposal)) {
-      return t("no-quorum");
+      return "Quorum was not reached (yes votes need to pass this number)";
     } else if (!hasWon(proposal)) {
-      return t("no-win");
+      return "More 'against' votes than 'for' votes";
     } else if (!hasReachedSupport(proposal)) {
-      return t("no-support");
+      return "Quorum was reached and 'for' won, but not enough for support";
     }
   }
 
   return "";
 });
 
-const statusLabel = computed((): string => {
+const statusLabel = computed(() => {
   switch (getStatus(proposal)) {
     case "active":
-      return t("active");
+      return "Active";
     case "denied":
-      return t("denied");
+      return "Denied";
     case "passed":
-      return t("passed");
+      return "Passed";
     case "executed":
-      return t("executed");
+      return "Executed";
     default:
       return "Unk. Status";
   }
@@ -51,7 +49,7 @@ const statusLabel = computed((): string => {
   <KPI
     class="status"
     tooltip-type="underline"
-    :label="t('status')"
+    label="Status"
     :has-value="true"
     :tooltip="statusDetails"
   >
@@ -101,15 +99,3 @@ const statusLabel = computed((): string => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-status: Status
-active: Active
-denied: Denied
-passed: Passed
-executed: Executed
-
-no-quorum: Quorum was not reached (yes votes need to pass this number)
-no-support: Quorum was reached and 'for' won, but not enough for support
-no-win: More 'against' votes than 'for' votes
-</i18n>

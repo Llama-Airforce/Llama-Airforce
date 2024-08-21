@@ -5,8 +5,6 @@ import { type Pool } from "@CM/Pages/Convex/Pools/Models/Pool";
 import { totalApr } from "@CM/Pages/Convex/Pools/Util/PoolHelper";
 import { useConvexStore } from "@CM/Pages/Convex/Store";
 
-const { t } = useI18n();
-
 // Emit
 const emit = defineEmits<{
   selected: [market: Pool];
@@ -24,16 +22,16 @@ const store = useConvexStore();
 
 const columns = computed(() => [
   "",
-  { id: "name" as const, label: t("name"), sort: true as const },
+  { id: "name" as const, label: "Name", sort: true as const },
   {
     id: "apr" as const,
-    label: t("apr"),
+    label: "APR",
     sort: true as const,
     align: "end" as const,
   },
   {
     id: "tvl" as const,
-    label: t("tvl"),
+    label: "TVL",
     sort: true as const,
     align: "end" as const,
   },
@@ -58,7 +56,7 @@ const pools = computed(() =>
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Convex Pools">
     <Table
       class="pools-table"
       :rows="pools"
@@ -129,10 +127,3 @@ const pools = computed(() =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Convex Pools
-name: Name
-tvl: TVL
-apr: APR
-</i18n>

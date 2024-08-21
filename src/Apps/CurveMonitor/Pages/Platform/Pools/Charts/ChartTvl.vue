@@ -7,8 +7,6 @@ type Tvl = {
   tvl: number;
 };
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   tvl: Tvl[];
@@ -69,7 +67,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="TVL"
   >
     <div
       ref="chartRef"
@@ -88,7 +86,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: TVL
-</i18n>

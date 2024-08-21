@@ -16,17 +16,15 @@ interface Props {
 
 const { expanded = [] } = defineProps<Props>();
 
-const { t } = useI18n();
-
 // Refs
 const store = useCurveStore();
 
 const columns = computed(() => [
   "",
-  { id: "name" as const, label: t("name"), sort: true as const },
+  { id: "name" as const, label: "Name", sort: true as const },
   {
     id: "tvl" as const,
-    label: t("tvl"),
+    label: "TVL",
     sort: true as const,
     align: "end" as const,
   },
@@ -47,7 +45,7 @@ const gauges = computed(() =>
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Curve Pools">
     <Table
       class="gauges-tables"
       :rows="gauges"
@@ -102,9 +100,3 @@ const gauges = computed(() =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-name: Name
-tvl: TVL
-title: Curve Pools
-</i18n>

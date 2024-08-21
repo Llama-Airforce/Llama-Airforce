@@ -4,8 +4,6 @@ import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 
 type Row = Market | undefined;
 
-const { t } = useI18n();
-
 // Emit
 const emit = defineEmits<{
   selected: [market: Row];
@@ -22,7 +20,9 @@ interface Props {
 const { pairs = [], loading, type, chain } = defineProps<Props>();
 
 // Refs
-const title = computed(() => t(type === "long" ? "title-long" : "title-short"));
+const title = computed(() =>
+  type === "long" ? "Markets - Long" : "Markets - Short"
+);
 
 const markets = computed(() =>
   pairs
@@ -151,8 +151,3 @@ const tokenIcon = (market: Market) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title-long: Markets - Long
-title-short: Markets - Short
-</i18n>

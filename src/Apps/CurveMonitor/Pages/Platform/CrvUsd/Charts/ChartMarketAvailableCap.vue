@@ -4,8 +4,6 @@ import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -72,7 +70,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Borrowable & Debt Ceiling"
     :loading
   >
     <div
@@ -92,7 +90,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Borrowable & Debt Ceiling
-</i18n>

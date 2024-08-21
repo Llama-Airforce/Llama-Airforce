@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
+import { capitalize } from "@/Util";
 import {
   TransactionType,
   type TransactionDetail,
 } from "@CM/Services/Monitor/SocketMonitorCurve";
-
-const { t } = useI18n();
 
 // Props
 interface Props {
@@ -107,7 +106,7 @@ const onType = (tabIndex: number) => {
 <template>
   <Card
     class="trades-card"
-    :title="t('title')"
+    title="Transactions"
   >
     <template
       v-if="header"
@@ -129,8 +128,8 @@ const onType = (tabIndex: number) => {
         <InputText
           v-model="search"
           class="search"
+          placeholder="Search for..."
           :search="true"
-          :placeholder="t('search-placeholder')"
         >
         </InputText>
 
@@ -174,7 +173,7 @@ const onType = (tabIndex: number) => {
             class="fas fa-exchange-alt"
           ></i>
 
-          {{ t(props.item.transaction_type) }}
+          {{ capitalize(props.item.transaction_type) }}
         </div>
 
         <div
@@ -341,12 +340,3 @@ const onType = (tabIndex: number) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Transactions
-
-swap: Swap
-deposit: Deposit
-remove: Remove
-search-placeholder: Search for...
-</i18n>

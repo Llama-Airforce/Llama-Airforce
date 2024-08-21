@@ -3,8 +3,6 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LiqLosses } from "@CM/Services/Liquidations";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   losses: LiqLosses[];
@@ -66,7 +64,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Median Loss % Among Loans with Losses"
   >
     <div
       ref="chartRef"
@@ -85,7 +83,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Median Loss % Among Loans with Losses
-</i18n>

@@ -2,8 +2,6 @@
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
-const { t } = useI18n();
-
 type Row = Market;
 
 // Emit
@@ -36,14 +34,14 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 <template>
   <Card
     class="markets-card"
-    :title="t('title')"
+    title="Markets"
     :loading
   >
     <template #actions>
       <InputText
         v-model="search"
+        placeholder="Search for..."
         :search="true"
-        :placeholder="t('search-placeholder')"
       >
       </InputText>
     </template>
@@ -173,9 +171,3 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     minmax(var(--col-width), 0.75fr);
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Markets
-
-search-placeholder: Search for...
-</i18n>

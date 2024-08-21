@@ -4,8 +4,6 @@ import { addressShort, addressLeft } from "@/Wallet";
 import { type CleanedTransfer } from "@CM/Services/Monitor/Transfers";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfers/Queries";
 
-const { t } = useI18n();
-
 // Options
 const tokens = [
   {
@@ -63,15 +61,15 @@ const clipboard = async (addr: string) => {
 <template>
   <Card
     class="transfers-card"
-    :title="t('title')"
+    title="Transfers"
     :loading
   >
     <template #actions>
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
+          placeholder="Search for..."
           :search="true"
-          :placeholder="t('search-placeholder')"
         >
         </InputText>
 
@@ -268,8 +266,3 @@ const clipboard = async (addr: string) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Transfers
-search-placeholder: Search for...
-</i18n>

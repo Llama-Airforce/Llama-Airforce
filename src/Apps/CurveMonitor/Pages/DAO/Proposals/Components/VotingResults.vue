@@ -3,8 +3,6 @@ import { type Proposal } from "@CM/Services/Proposal";
 
 const MIN_WIDTH = 4;
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -28,11 +26,11 @@ const againstPercentage = computed(() => {
 
 <template>
   <div class="results">
-    <div class="heading">{{ t("results") }}</div>
+    <div class="heading">Results</div>
 
     <!-- For -->
     <div class="choice">
-      <div class="label">{{ t("for") }}</div>
+      <div class="label">For</div>
 
       <div class="amount">
         <div class="left">
@@ -67,7 +65,7 @@ const againstPercentage = computed(() => {
 
     <!-- Against -->
     <div class="choice">
-      <div class="label">{{ t("against") }}</div>
+      <div class="label">Against</div>
 
       <div class="amount">
         <div class="left">
@@ -139,9 +137,3 @@ const againstPercentage = computed(() => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-results: Results
-for: For
-against: Against
-</i18n>

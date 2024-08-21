@@ -15,8 +15,6 @@ import {
 } from "@CM/Pages/Platform/LlamaLend/Components";
 import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -67,7 +65,7 @@ const equity = computed(() =>
   <div class="market">
     <KPI
       style="grid-area: kpi1"
-      :label="t('borrow-apy')"
+      label="Borrow APY"
       :has-value="!!market"
     >
       <AsyncValue
@@ -78,7 +76,7 @@ const equity = computed(() =>
 
     <KPI
       style="grid-area: kpi2"
-      :label="t('lend-apy')"
+      label="Lend APY"
       :has-value="!!market"
     >
       <AsyncValue
@@ -89,7 +87,7 @@ const equity = computed(() =>
 
     <KPI
       style="grid-area: kpi3"
-      :label="t('loans')"
+      label="Loans"
       :has-value="!!market"
     >
       {{ market?.n_loans ?? 0 }}
@@ -97,7 +95,7 @@ const equity = computed(() =>
 
     <KPI
       style="grid-area: kpi4"
-      :label="t('tvl')"
+      label="TVL"
       :has-value="!!market"
     >
       <AsyncValue
@@ -194,10 +192,3 @@ const equity = computed(() =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-borrow-apy: Borrow APY
-lend-apy: Lend APY
-loans: Loans
-tvl: TVL
-</i18n>

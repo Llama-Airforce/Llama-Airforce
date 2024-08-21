@@ -3,8 +3,6 @@ import { addressShort } from "@/Wallet";
 import { type Chain } from "@CM/Models";
 import { type LlammaTrade } from "@CM/Services/Llamma";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   trades: LlammaTrade[];
@@ -32,7 +30,7 @@ const round = (x: number) =>
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Trades">
     <template #actions>
       <Pagination
         :items-count="count"
@@ -119,7 +117,3 @@ const round = (x: number) =>
     26px minmax(5rem, 1fr) 6rem 6rem;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Trades
-</i18n>

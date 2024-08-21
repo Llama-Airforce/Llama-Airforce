@@ -2,8 +2,6 @@
 import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
 import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";
 
-const { t } = useI18n();
-
 // Refs
 const gauge = ref("");
 
@@ -18,26 +16,35 @@ const onGauge = (newGauge: string): void => {
     <div class="explanation">
       <Card>
         <div class="step-one">
-          <span v-html="t('process')"></span>
+          <span><strong>veFunder</strong> process:</span>
           <ol>
-            <li>{{ t("process-1") }}</li>
-            <li v-html="t('process-2')"></li>
+            <li>
+              Create a fundraising gauge contract that allows a receiver to get
+              a certain amount of CRV.
+            </li>
+
+            <li>
+              Request a vote to add the gauge to the controller.<br />When
+              passed, the newly created gauge can be voted on during gauge votes
+              and can then receive gauge emissions.
+            </li>
           </ol>
         </div>
 
         <div class="step-two">
-          <span v-html="t('requirements')"></span>
+          <span><strong>Gauge vote requirements:</strong></span>
           <ol>
             <li>
-              {{ t("requirements-1a") }}
+              New gauge votes must have a vote on the governance forum
               <a
                 href="https://gov.curve.fi/"
                 target="_blank"
               >
-                {{ t("requirements-1b") }}
+                at this address
               </a>
             </li>
-            <li>{{ t("requirements-2") }}</li>
+
+            <li>You must have a minimum of 2,500 veCRV to create this vote</li>
           </ol>
         </div>
       </Card>
@@ -76,20 +83,3 @@ const onGauge = (newGauge: string): void => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-process: >-
-  <strong>veFunder</strong> process:
-
-process-1: Create a fundraising gauge contract that allows a receiver to get a certain amount of CRV.
-process-2: Request a vote to add the gauge to the controller.<br />When
-  passed, the newly created gauge can be voted on during gauge
-  votes and can then receive gauge emissions.
-
-requirements: >-
-  <strong>Gauge vote requirements:</strong>
-
-requirements-1a: New gauge votes must have a vote on the governance forum
-requirements-1b: at this address
-requirements-2: You must have a minimum of 2,500 veCRV to create this vote
-</i18n>

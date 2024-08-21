@@ -3,8 +3,6 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LlammaOHLC } from "@CM/Services/Llamma";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   ohlc: LlammaOHLC[];
@@ -130,7 +128,7 @@ const formatter = (x: number): string => {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Price"
   >
     <template #actions>
       <div class="controls">
@@ -172,7 +170,3 @@ const formatter = (x: number): string => {
   gap: 1rem;
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Price
-</i18n>

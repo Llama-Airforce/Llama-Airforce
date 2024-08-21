@@ -2,8 +2,6 @@
 import { addressShort } from "@/Wallet";
 import { type Proposal } from "@CM/Services/Proposal";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   proposal: Proposal;
@@ -15,7 +13,7 @@ const { proposal } = defineProps<Props>();
 <template>
   <KPI
     class="proposer"
-    :label="t('proposer')"
+    label="Proposer"
     :has-value="true"
   >
     <a
@@ -26,7 +24,3 @@ const { proposal } = defineProps<Props>();
     </a>
   </KPI>
 </template>
-
-<i18n lang="yaml" locale="en">
-proposer: Proposer
-</i18n>

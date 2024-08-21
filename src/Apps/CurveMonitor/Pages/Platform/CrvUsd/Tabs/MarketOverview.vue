@@ -9,8 +9,6 @@ import {
 } from "@CM/Pages/Platform/CrvUsd/Charts";
 import { Properties, Addresses } from "@CM/Pages/Platform/CrvUsd/Components";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -24,7 +22,7 @@ const { market, chain } = defineProps<Props>();
   <div class="market">
     <KPI
       style="grid-area: kpi1"
-      :label="t('borrow-rate')"
+      label="Borrow Rate"
       :has-value="!!market"
     >
       <AsyncValue
@@ -35,7 +33,7 @@ const { market, chain } = defineProps<Props>();
 
     <KPI
       style="grid-area: kpi2"
-      :label="t('borrowed')"
+      label="Borrowed"
       :has-value="!!market"
     >
       <AsyncValue
@@ -46,7 +44,7 @@ const { market, chain } = defineProps<Props>();
 
     <KPI
       style="grid-area: kpi3"
-      :label="t('borrowable')"
+      label="Borrowable"
       :has-value="!!market"
     >
       <AsyncValue
@@ -57,7 +55,7 @@ const { market, chain } = defineProps<Props>();
 
     <KPI
       style="grid-area: kpi4"
-      :label="t('loans')"
+      label="Loans"
       :has-value="!!market"
     >
       {{ market?.loans ?? 0 }}
@@ -127,10 +125,3 @@ const { market, chain } = defineProps<Props>();
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-borrow-rate: Borrow Rate
-borrowed: Borrowed
-borrowable: Borrowable
-loans: Loans
-</i18n>

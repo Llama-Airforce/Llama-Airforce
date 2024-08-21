@@ -8,8 +8,6 @@ import {
 
 type ChartType = "line" | "breakdown";
 
-const { t } = useI18n();
-
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 const chartType = ref<ChartType>("line");
@@ -45,7 +43,7 @@ const onChartType = (type: ChartType) => {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="crvUSD Supply"
     :loading
   >
     <template #actions>
@@ -133,7 +131,3 @@ const onChartType = (type: ChartType) => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: crvUSD Supply
-</i18n>

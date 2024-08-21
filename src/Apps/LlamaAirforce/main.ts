@@ -1,3 +1,4 @@
+import { createI18n } from "vue-i18n";
 import { type RouteRecordRaw } from "vue-router";
 import "@/Util/llamadash";
 import App from "@LAF/App.vue";
@@ -14,7 +15,16 @@ import { type PageLAF } from "@LAF/Pages/Page";
 import { setup } from "../setup";
 import { walletConnect } from "@/Wallet/WalletConnect";
 
-const { app } = setup(App, { extraWagmiConnectors: [walletConnect] });
+const { app } = setup(App, {
+  extraWagmiConnectors: [walletConnect],
+  plugins: [
+    createI18n({
+      legacy: false,
+      locale: "en",
+      fallbackLocale: "en",
+    }),
+  ],
+});
 
 // Configure pages.
 const pages: PageLAF[] = [];

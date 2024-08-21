@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const { t } = useI18n();
-
 type Network = "ethereum" | "arbitrum";
 
 type Contract = {
@@ -32,11 +30,11 @@ const vefunder: Bundle = {
   contracts: [
     {
       contract: veFunderGaugeFactoryAddress,
-      description: "gauge-factory",
+      description: "Gauge Factory",
     },
     {
       contract: veFunderGaugeController,
-      description: "gauge-controller",
+      description: "Gauge Controller",
     },
   ],
 };
@@ -47,7 +45,7 @@ const repositories: Repository[] = [
   {
     name: "Llama Airforce",
     url: "https://github.com/Llama-Airforce/Llama-Airforce",
-    description: "repo-laf",
+    description: "This website's front-end, excluding the Union",
   },
   {
     name: "Phil's CurveMonitor",
@@ -57,7 +55,8 @@ const repositories: Repository[] = [
   {
     name: "Subgraphs",
     url: "https://github.com/convex-community/convex-subgraph",
-    description: "repo-graphs",
+    description:
+      "The Graph subgraphs related to Curve, Convex, Votium and more",
   },
   {
     name: "Tickets",
@@ -96,11 +95,11 @@ const linkContract = (contract: Contract): string => {
 
 <template>
   <div class="code">
-    <Card :title="t('repositories')">
+    <Card title="Repositories">
       <Table
         class="repositories-table"
         :rows="repositories"
-        :columns="[t('repository'), t('description')]"
+        :columns="['Repository', 'Description']"
         title="Yolo"
       >
         <template #row="props: { item: Repository }">
@@ -113,17 +112,17 @@ const linkContract = (contract: Contract): string => {
             </a>
           </div>
 
-          <div>{{ t(props.item.description) }}</div>
+          <div>{{ props.item.description }}</div>
         </template>
       </Table>
     </Card>
 
-    <Card :title="t('apis')">
+    <Card title="APIs">
       <Table
         class="apis-table"
         columns-data="apis-columns-data"
         :rows="apis"
-        :columns="[t('api'), t('description')]"
+        :columns="['API', 'Description']"
       >
         <template #row="props: { item: API }">
           <div>
@@ -135,7 +134,7 @@ const linkContract = (contract: Contract): string => {
             </a>
           </div>
 
-          <div>{{ t(props.item.description) }}</div>
+          <div>{{ props.item.description }}</div>
         </template>
       </Table>
     </Card>
@@ -143,14 +142,14 @@ const linkContract = (contract: Contract): string => {
     <Card
       v-for="(bundle, i) in bundles"
       :key="i"
-      :title="t(bundle.name)"
+      :title="bundle.name"
     >
       <Table
         class="contracts-table"
         columns-header="1fr"
         columns-data="contracts-columns-data"
         :rows="bundle.contracts"
-        :columns="[t('contract'), t('description')]"
+        :columns="['Contract', 'Description']"
       >
         <template #row="props: { item: Contract }">
           <div>
@@ -162,7 +161,7 @@ const linkContract = (contract: Contract): string => {
             </a>
           </div>
 
-          <div>{{ t(props.item.description) }}</div>
+          <div>{{ props.item.description }}</div>
         </template>
       </Table>
     </Card>
@@ -214,23 +213,3 @@ const linkContract = (contract: Contract): string => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-repositories: Repositories
-repository: Repository
-apis: APIs
-api: API
-description: Description
-contract: Contract
-other: Other
-
-repo-laf: This website's front-end, excluding the Union
-repo-graphs: The Graph subgraphs related to Curve, Convex, Votium and more
-
-multisig: Multisig
-treasury: Treasury
-treasury-arbitrum: Treasury Arbitrum
-
-gauge-factory: Gauge Factory
-gauge-controller: Gauge Controller
-</i18n>

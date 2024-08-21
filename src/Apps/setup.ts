@@ -1,6 +1,5 @@
-import { createApp } from "vue";
+import { createApp, type Plugin } from "vue";
 import { createPinia } from "pinia";
-import { createI18n } from "vue-i18n";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
@@ -12,6 +11,7 @@ import { createConfig as createConfigWagmi } from "@/Wallet/Wagmi";
 type Options = {
   /** Additional Wagmi connectors to be included in the configuration */
   extraWagmiConnectors?: CreateConnectorFn[];
+  plugins?: Plugin[];
 };
 
 /**
@@ -26,13 +26,10 @@ export function setup(
 ) {
   const app = createApp(appRoot);
 
-  // Add i18n for internationalization
-  const i18n = createI18n({
-    legacy: false,
-    locale: "en",
-    fallbackLocale: "en",
-  });
-  app.use(i18n);
+  // Add custom plugins.
+  for (const plugin of options?.plugins ?? []) {
+    app.use(plugin);
+  }
 
   // Add Pinia for state management
   const pinia = createPinia();

@@ -8,8 +8,6 @@ import {
   useQueryTrades,
 } from "@CM/Services/Llamma/Queries";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   market: Market | undefined;
@@ -48,7 +46,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
   <div class="trading">
     <KPI
       style="grid-area: oracle"
-      :label="t('oracle')"
+      label="Oracle Price"
       :has-value="!!market"
     >
       <AsyncValue
@@ -59,7 +57,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
 
     <KPI
       style="grid-area: amm"
-      :label="t('amm')"
+      label="AMM Price"
       :has-value="!!market"
     >
       <AsyncValue
@@ -113,8 +111,3 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-oracle: Oracle price
-amm: AMM price
-</i18n>

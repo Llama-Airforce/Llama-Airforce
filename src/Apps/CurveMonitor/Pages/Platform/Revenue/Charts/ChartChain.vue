@@ -3,8 +3,6 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@CM/Stores";
 import { useQueryRevenueChains } from "@CM/Services/Revenue/Queries";
 
-const { t } = useI18n();
-
 // Refs
 const { theme } = storeToRefs(useSettingsStore());
 
@@ -65,10 +63,10 @@ const formatter = (x: number): string =>
 <template>
   <CardChart
     class="chart"
+    title="Total revenue by chain"
     :options
     :series
     :loading
-    :title="t('title')"
   >
   </CardChart>
 </template>
@@ -84,7 +82,3 @@ const formatter = (x: number): string =>
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Total revenue by chain
-</i18n>

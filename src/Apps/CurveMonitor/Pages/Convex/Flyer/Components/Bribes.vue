@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type FlyerConvex } from "@/Services/FlyerService";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   model: FlyerConvex | null;
@@ -22,26 +20,31 @@ const bribesIncomeBiWeekly = computed((): number | undefined => {
 
 <template>
   <div class="bribes">
-    <div class="title">{{ t("incentives") }}</div>
+    <div class="title">Incentives</div>
     <ul>
-      <li>{{ t("description") }}</li>
       <li>
-        {{ t("annual-1") }}
+        CVX acts as a union controlling CRV rewards for Curve LP pools. To
+        receive rewards, incentives must be paid to locked CVX holders.
+      </li>
+
+      <li>
+        CVX holders will potentially earn over
         <AsyncValue
           :value="bribesIncomeAnnually"
           :precision="0"
           type="dollar"
         />
-        {{ t("annual-2") }}
+        in incentives over a 1 year period.
       </li>
+
       <li>
-        {{ t("biweek-1") }}
+        Incentives to CVX holders are very likely to reach
         <AsyncValue
           :value="bribesIncomeBiWeekly"
           :precision="0"
           type="dollar"
         />
-        {{ t("biweek-2") }}
+        biweekly in the coming weeks (based on total rewards paid by Votium app)
       </li>
     </ul>
   </div>
@@ -68,15 +71,3 @@ const bribesIncomeBiWeekly = computed((): number | undefined => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-incentives: Incentives
-description: CVX acts as a union controlling CRV rewards for Curve LP pools. To
-  receive rewards, incentives must be paid to locked CVX holders.
-
-annual-1: CVX holders will potentially earn over
-annual-2: in incentives over a 1 year period.
-
-biweek-1: Incentives to CVX holders are very likely to reach
-biweek-2: biweekly in the coming weeks (based on total rewards paid by Votium app)
-</i18n>

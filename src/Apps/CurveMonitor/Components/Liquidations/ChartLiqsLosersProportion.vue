@@ -3,8 +3,6 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LiqLosses } from "@CM/Services/Liquidations";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   losses: LiqLosses[];
@@ -69,7 +67,7 @@ function createSeries() {
 <template>
   <Card
     class="chart-container"
-    :title="t('title')"
+    title="Proportion of Loans with Losses"
   >
     <div
       ref="chartRef"
@@ -88,7 +86,3 @@ function createSeries() {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Proportion of Loans with Losses
-</i18n>

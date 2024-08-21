@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type FlyerConvex } from "@/Services/FlyerService";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   model: FlyerConvex | null;
@@ -38,10 +36,7 @@ const cvxMarketCapFullyDiluted = computed((): number | undefined => {
 
 <template>
   <div class="general">
-    <div
-      class="title"
-      v-html="t('description')"
-    ></div>
+    <div class="title">Total locked value, incentives &amp; market cap</div>
     <ul>
       <li>
         <AsyncValue
@@ -49,36 +44,38 @@ const cvxMarketCapFullyDiluted = computed((): number | undefined => {
           :precision="0"
           type="dollar"
         />
-        {{ t("locked-1") }}
+        worth of CRV permanently locked in its contract, and is continuing to
+        see a rate of about
         <AsyncValue
           :value="crvLockedDollarsMonthly"
           :precision="0"
           type="dollar"
         />
-        {{ t("locked-2") }}
+        worth of CRV permanently locked in its contract per month.
       </li>
+      Convex currently has about
       <li>
         <AsyncValue
           :value="cvxTvl"
           :precision="0"
           type="dollar"
         />
-        {{ t("locked-2") }}
+        TVL and controls close to
         <AsyncValue
           :value="cvxVotingPercentage"
           :precision="0"
           type="percentage"
         />
-        {{ t("locked-3") }}
+        of the voting power of Curve.
       </li>
       <li>
-        {{ t("mcap-1") }}
+        Convex's market cap is just
         <AsyncValue
           :value="cvxMarketCap"
           :precision="0"
           type="dollar"
         />
-        {{ t("mcap-2") }}
+        with a fully diluted valuation of
         <AsyncValue
           :value="cvxMarketCapFullyDiluted"
           :precision="0"
@@ -110,19 +107,3 @@ const cvxMarketCapFullyDiluted = computed((): number | undefined => {
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-description: Total locked value, incentives &amp; market cap
-
-locked-1: worth of CRV permanently locked in its contract, and is continuing to
-  see a rate of about
-locked-2: worth of CRV permanently locked in its contract per month.
-locked-3: of the voting power of Curve.
-
-tvl-1: Convex currently has about
-tvl-2: TVL and controls close to
-tvl-3: of the voting power of Curve.
-
-mcap-1: Convex's market cap is just
-mcap-2: with a fully diluted valuation of
-</i18n>

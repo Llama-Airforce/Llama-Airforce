@@ -2,8 +2,6 @@
 import { addressShort } from "@/Wallet";
 import { type LiquidationDetails } from "@CM/Services/Liquidations";
 
-const { t } = useI18n();
-
 // Props
 interface Props {
   liqs: LiquidationDetails[];
@@ -32,7 +30,7 @@ const rows = computed((): Liquidator[] =>
 </script>
 
 <template>
-  <Card :title="t('title')">
+  <Card title="Top Liquidators">
     <Table
       class="liquidators-table"
       :rows
@@ -79,7 +77,3 @@ const rows = computed((): Liquidator[] =>
   --columns-data: 1fr repeat(2, var(--col-width));
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-title: Top Liquidators
-</i18n>

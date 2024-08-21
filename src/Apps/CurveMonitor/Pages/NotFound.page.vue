@@ -1,11 +1,10 @@
-<script setup lang="ts">
-const { t } = useI18n();
-</script>
-
 <template>
   <div class="not-found">
     <div class="not-found-container">
-      <Card>{{ t("404") }}</Card>
+      <Card>
+        Where are you going, pilot? Page not found, please return home fren.
+      </Card>
+
       <img src="@/Assets/404.png" />
     </div>
   </div>
@@ -38,7 +37,3 @@ const { t } = useI18n();
   }
 }
 </style>
-
-<i18n lang="yaml" locale="en">
-404: Where are you going, pilot? Page not found, please return home fren.
-</i18n>
