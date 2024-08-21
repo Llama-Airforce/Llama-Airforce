@@ -1,14 +1,8 @@
 import { createConfig, fallback, http, unstable_connector } from "@wagmi/core";
 import { mainnet } from "@wagmi/core/chains";
-import {
-  injected,
-  walletConnect,
-  coinbaseWallet,
-  safe,
-} from "@wagmi/connectors";
+import { injected, walletConnect, safe } from "@wagmi/connectors";
 
 // Alternative: https://eth.llamarpc.com
-// eslint-disable-next-line prefer-const
 let rpc: string | undefined = "http://localhost:8545";
 rpc = undefined;
 
@@ -25,7 +19,6 @@ export const config = createConfig({
       },
     }),
 
-    coinbaseWallet(),
     safe(),
   ],
   transports: {
