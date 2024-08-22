@@ -77,7 +77,19 @@ const onClickNode = (): void => {
 </script>
 
 <template>
-  <li v-if="isNode(item)">
+  <li v-if="isExternal(item)">
+    <a
+      class="nav-link node"
+      :href="item.url"
+      target="_blank"
+    >
+      <div class="nav-link-container">
+        {{ item.label }}
+      </div>
+    </a>
+  </li>
+
+  <li v-else-if="isNode(item)">
     <a
       class="nav-link node"
       @click="onClickNode"
@@ -92,19 +104,8 @@ const onClickNode = (): void => {
     </a>
   </li>
 
-  <li v-if="isExternal(item)">
-    <a
-      class="nav-link node"
-      :href="item.url"
-      target="_blank"
-    >
-      <div class="nav-link-container">
-        {{ item.label }}
-      </div>
-    </a>
-  </li>
-
   <Collapsible
+    v-if="isNode(item)"
     class="items"
     :expanded="expanded"
   >
