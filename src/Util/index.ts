@@ -4,7 +4,6 @@ export * from "./DateHelper";
 export * from "./NumberHelper";
 export * from "./ObjectHelper";
 export * from "./PaginationHelper";
-export * from "./PoolHelper";
 export * from "./PromiseHelper";
 export * from "./RouterHelper";
 export * from "./StringHelper";

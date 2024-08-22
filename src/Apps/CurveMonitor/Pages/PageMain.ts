@@ -5,7 +5,6 @@ import Home from "@CM/Pages/Home/Home.page.vue";
 import Chains from "@CM/Pages/Platform/Chains/Chains.page.vue";
 import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
 import Pool from "@CM/Pages/Platform/Pools/Pool.page.vue";
-import Gauges from "@CM/Pages/Platform/Gauges/Gauges.page.vue";
 import Revenue from "@CM/Pages/Platform/Revenue/Revenue.page.vue";
 
 import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.page.vue";
@@ -19,10 +18,6 @@ import Monitor from "@CM/Pages/Platform/Monitor/Monitor.page.vue";
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
 import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
 import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.page.vue";
-
-import ConvexFlyer from "@CM/Pages/Convex/Flyer/Flyer.page.vue";
-import ConvexPools from "@CM/Pages/Convex/Pools/Pools.page.vue";
-import ConvexRevenue from "@CM/Pages/Convex/Revenue/Revenue.page.vue";
 
 import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
 
@@ -44,7 +39,6 @@ export const pageMainRoutes = [
     component: Pool,
   },
 
-  { path: "/platform/gauges/old", component: Gauges },
   {
     path: "/platform/revenue/:tab?",
     name: "revenue",
@@ -86,19 +80,6 @@ export const pageMainRoutes = [
     component: Proposal,
   },
   { path: "/dao/vefunder", component: VeFunder },
-
-  { path: "/convex", redirect: { name: "flyer" } },
-  { path: "/convex/flyer", name: "flyer", component: ConvexFlyer },
-  {
-    path: "/convex/pools/:pool?",
-    name: "convexpools",
-    component: ConvexPools,
-  },
-  {
-    path: "/convex/revenue",
-    name: "convexrevenue",
-    component: ConvexRevenue,
-  },
 
   {
     path: "/defimonitor",
@@ -155,24 +136,6 @@ export const pageMain: Page = {
         {
           to: "/dao/vefunder",
           label: "VeFunder",
-        },
-      ],
-    },
-    {
-      label: "Convex",
-      initCollapsed: true,
-      children: [
-        {
-          to: "/convex/flyer",
-          label: "Flyer",
-        },
-        {
-          to: "/convex/pools",
-          label: "Pools",
-        },
-        {
-          to: "/convex/revenue",
-          label: "Revenue",
         },
       ],
     },
