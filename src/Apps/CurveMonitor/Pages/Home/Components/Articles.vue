@@ -110,7 +110,7 @@ function go(url: string) {
   gap: var(--dashboard-gap);
 
   > .title {
-    font-size: 1.875rem;
+    font-size: 1.75rem;
     font-weight: bolder;
 
     @media only screen and (max-width: 825px) {
@@ -120,16 +120,16 @@ function go(url: string) {
 
   > .articles-cards {
     display: grid;
-    gap: var(--dashboard-gap);
+    gap: calc(1.25 * var(--dashboard-gap));
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
     > .card {
       .article {
-        min-height: 300px;
+        min-height: 250px;
         line-height: 1.5;
 
         display: grid;
-        gap: var(--dashboard-gap);
+        gap: calc(0.5 * var(--dashboard-gap));
         grid-template-rows: 4em 1fr auto;
         grid-template-columns: 1fr auto;
         grid-template-areas:
@@ -145,13 +145,13 @@ function go(url: string) {
         > .title {
           grid-area: title;
 
-          font-size: 1.375rem;
+          font-size: 1.125rem;
           font-weight: bold;
           text-wrap: balance;
           overflow: hidden;
 
           @media only screen and (max-width: 825px) {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
           }
         }
 

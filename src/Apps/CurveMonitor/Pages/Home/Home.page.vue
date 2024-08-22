@@ -63,7 +63,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
 
     display: flex;
     flex-direction: column;
-    gap: 2ch;
+    gap: 1ch;
 
     > .title {
       font-size: 3.5rem;
@@ -93,7 +93,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--dashboard-gap);
+    gap: calc(1.25 * var(--dashboard-gap));
   }
 
   > .llama {
