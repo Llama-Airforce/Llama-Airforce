@@ -4,10 +4,7 @@ const router = useRouter();
 
 <template>
   <div class="telegram">
-    <Card
-      :compact="true"
-      @click="router.push('/telegram')"
-    >
+    <Card @click="router.push('/telegram')">
       <div class="telegram-card">
         <picture>
           <img
@@ -38,7 +35,7 @@ const router = useRouter();
   display: grid;
   grid-template-columns: auto 1fr;
   gap: calc(2 * var(--dashboard-gap));
-  margin: calc(2 * var(--card-margin-block)) calc(2 * var(--card-margin-inline));
+  margin: var(--card-margin-block) var(--card-margin-inline);
 
   place-content: center;
   place-items: center;
@@ -80,9 +77,7 @@ const router = useRouter();
       position: absolute;
       width: 100%;
       height: 100%;
-      top: 50%;
-      left: calc(50%);
-      translate: -50% -50%;
+      inset: 0;
       z-index: -1;
       border-radius: 50%;
 
@@ -99,46 +94,23 @@ const router = useRouter();
       animation: 2s spin linear infinite,
         3s shimmer ease-in-out infinite alternate;
     }
-
-    @keyframes float {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-      33% {
-        transform: translate(5px, -8px) rotate(2deg);
-      }
-      66% {
-        transform: translate(-5px, -4px) rotate(-1deg);
-      }
-      100% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-    }
   }
 }
 
 .telegram {
-  :deep(> .card) {
-    .card-body {
-      position: relative;
-      padding: var(--card-margin-inline) var(--card-margin-block);
+  position: relative;
 
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: var(--c-blue);
-        border-radius: var(--border-radius);
-        opacity: 0.2; // Adjust this value to control the intensity of the overlay
-        pointer-events: none;
-      }
-    }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--c-blue);
+    border-radius: var(--border-radius);
+    opacity: 0.2; // Adjust this value to control the intensity of the overlay
+    pointer-events: none;
   }
 
-  > .card {
+  .card {
     height: 100%;
     cursor: pointer;
 
@@ -204,6 +176,21 @@ const router = useRouter();
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(5px, -8px) rotate(2deg);
+  }
+  66% {
+    transform: translate(-5px, -4px) rotate(-1deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
   }
 }
 </style>
