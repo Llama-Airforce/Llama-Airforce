@@ -43,6 +43,15 @@ const router = useRouter();
   place-content: center;
   place-items: center;
 
+  @container (width < 1000px) {
+    grid-template-columns: 1fr;
+    margin: var(--card-margin-block) var(--card-margin-inline);
+  }
+
+  @media only screen and (max-width: 1280px) {
+    gap: calc(1.5 * var(--dashboard-gap));
+  }
+
   > .info {
     font-size: 1.25rem;
     text-align: center;
@@ -52,11 +61,16 @@ const router = useRouter();
     position: relative;
     animation: float 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 
-    width: 80px;
-    height: 80px;
+    --size: 80px;
+    width: var(--size);
+    height: var(--size);
+
+    @media only screen and (max-width: 1280px) {
+      --size: 60px;
+    }
 
     > img {
-      height: 80px;
+      height: var(--size);
       object-fit: cover;
       align-self: center;
     }

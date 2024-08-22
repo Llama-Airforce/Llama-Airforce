@@ -91,9 +91,16 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
   > .highlights {
     grid-area: highlights;
 
+    container-type: inline-size;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: calc(1.25 * var(--dashboard-gap));
+
+    @media only screen and (max-width: 825px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   > .llama {
