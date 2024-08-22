@@ -1,10 +1,12 @@
 <script setup lang="ts">
-const router = useRouter();
+import TelegramModal from "@CM/Pages/Home/Components/TelegramModal.vue";
+
+const showModal = ref(false);
 </script>
 
 <template>
   <div class="telegram">
-    <Card @click="router.push('/telegram')">
+    <Card @click="showModal = true">
       <div class="telegram-card">
         <picture>
           <img
@@ -19,6 +21,11 @@ const router = useRouter();
         </div>
       </div>
     </Card>
+
+    <TelegramModal
+      :show="showModal"
+      @close="showModal = false"
+    ></TelegramModal>
   </div>
 </template>
 
