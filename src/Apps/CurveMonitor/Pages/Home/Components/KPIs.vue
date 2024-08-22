@@ -87,7 +87,7 @@ const { data: price } = useQuery({
 
 .kpis {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--dashboard-gap);
 
   .kpi {

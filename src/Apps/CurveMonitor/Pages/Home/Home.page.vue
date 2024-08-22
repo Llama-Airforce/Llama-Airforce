@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import KPIs from "@CM/Pages/Home/Components/KPIs.vue";
+import Telegram from "@CM/Pages/Home/Components/Telegram.vue";
 import Articles from "@CM/Pages/Home/Components/Articles.vue";
 </script>
 
@@ -17,7 +18,11 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
       src="@/Assets/llama-cloud-transparant.png"
     />
 
-    <KPIs style="grid-area: kpis"></KPIs>
+    <div class="highlights">
+      <KPIs></KPIs>
+      <Telegram></Telegram>
+    </div>
+
     <Articles style="grid-area: articles"></Articles>
   </div>
 </template>
@@ -33,7 +38,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
   grid-template-columns: 3fr 1fr;
   grid-template-areas:
     "description llama"
-    "kpis llama"
+    "highlights llama"
     "articles articles";
 
   gap: calc(3 * var(--dashboard-gap));
@@ -45,7 +50,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
 
     grid-template-areas:
       "description description"
-      "kpis kpis"
+      "highlights highlights"
       "articles articles";
 
     > .description {
@@ -81,6 +86,14 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
         max-width: 300px;
       }
     }
+  }
+
+  > .highlights {
+    grid-area: highlights;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--dashboard-gap);
   }
 
   > .llama {
