@@ -1,5 +1,6 @@
 import { createI18n } from "vue-i18n";
 import { type RouteRecordRaw } from "vue-router";
+import { safe } from "@wagmi/connectors";
 import "@/Util/llamadash";
 import App from "@CB/App.vue";
 import createRouter from "@CB/Router";
@@ -11,7 +12,7 @@ import { setup } from "../setup";
 import { walletConnect } from "@/Wallet/WalletConnect";
 
 const { app } = setup(App, {
-  extraWagmiConnectors: [walletConnect],
+  extraWagmiConnectors: [walletConnect, safe()],
   plugins: [
     createI18n({
       legacy: false,
