@@ -174,6 +174,8 @@ function go(url: string) {
 
       &::before,
       &::after {
+        --padding: 3px;
+
         content: "";
         position: absolute;
         width: 100%;
@@ -182,8 +184,8 @@ function go(url: string) {
         left: 50%;
         translate: -50% -50%;
         z-index: -1;
-        padding: 3px;
-        border-radius: calc(var(--border-radius) + 3px);
+        padding: var(--padding);
+        border-radius: calc(var(--border-radius) + var(--padding));
 
         background-image: conic-gradient(
           from var(--angle),
