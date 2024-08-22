@@ -87,7 +87,7 @@ nav {
           }
         }
 
-        &.node {
+        &.root {
           cursor: pointer;
 
           &:not(:hover) {
@@ -95,7 +95,7 @@ nav {
           }
         }
 
-        &:not(.node) {
+        &:not(.root) {
           &.router-link-active {
             background: var(--c-lvl3);
           }

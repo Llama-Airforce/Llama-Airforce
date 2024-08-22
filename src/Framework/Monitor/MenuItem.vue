@@ -79,7 +79,7 @@ const onClickNode = (): void => {
 <template>
   <li v-if="isExternal(item)">
     <a
-      class="nav-link node"
+      class="nav-link root"
       :href="item.url"
       target="_blank"
     >
@@ -89,9 +89,37 @@ const onClickNode = (): void => {
     </a>
   </li>
 
+  <li v-else-if="isLeaf(item)">
+    <router-link
+      :to="item.to"
+      class="nav-link root"
+      :class="{ 'router-link-active': subIsActive(item.to, route) }"
+      @click="emit('navigated')"
+    >
+      <div class="nav-link-container">
+        <div class="left">
+          <div
+            v-if="item.icon"
+            class="icon"
+          >
+            <i :class="item.icon"></i>
+          </div>
+          {{ menuLabel(item) }}
+        </div>
+
+        <div class="right">
+          <Badge
+            v-if="item.tag"
+            :label="item.tag"
+          ></Badge>
+        </div>
+      </div>
+    </router-link>
+  </li>
+
   <li v-else-if="isNode(item)">
     <a
-      class="nav-link node"
+      class="nav-link root"
       @click="onClickNode"
     >
       <div class="nav-link-container">
@@ -117,7 +145,7 @@ const onClickNode = (): void => {
         <router-link
           v-if="isLeaf(menuItem)"
           :to="menuItem.to"
-          class="nav-link leaf"
+          class="nav-link"
           :class="{ 'router-link-active': subIsActive(menuItem.to, route) }"
           @click="emit('navigated')"
         >
@@ -175,7 +203,7 @@ const onClickNode = (): void => {
     }
   }
 
-  &.node {
+  &.root {
     color: var(--c-text) !important;
     font-weight: 600;
 
