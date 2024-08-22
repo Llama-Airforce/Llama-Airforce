@@ -104,7 +104,6 @@ watch(
   }
 
   .modal-popup {
-    border: solid var(--border-thickness) var(--c-lvl4);
     z-index: 2;
     overflow: hidden;
   }
