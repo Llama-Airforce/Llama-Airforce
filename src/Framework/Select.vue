@@ -43,7 +43,7 @@ const open = ref(false);
 
     <div
       class="items"
-      :class="{ selectHide: !open }"
+      :class="{ open }"
     >
       <div
         v-for="(option, i) of options"
@@ -120,6 +120,10 @@ const open = ref(false);
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
 
+    &:not(.open) {
+      display: none;
+    }
+
     > div {
       color: var(--c-text);
       cursor: pointer;
@@ -138,10 +142,6 @@ const open = ref(false);
       border-bottom-left-radius: var(--border-radius);
       border-bottom-right-radius: var(--border-radius);
     }
-  }
-
-  .selectHide {
-    display: none;
   }
 
   .chevrons {
