@@ -62,6 +62,8 @@ const pools = computed(() =>
 
 // Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
+const tokenAddress = (x: Row) =>
+  x.pair.filter((x) => x.address !== CrvUsdAddress)[0].address;
 </script>
 
 <template>
@@ -83,6 +85,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       class="pegkeepers-table"
       :rows
       :columns="[
+        '',
         'Name',
         { label: 'Debt', align: 'end' },
         { label: 'TVL', align: 'end' },
@@ -90,12 +93,17 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         { label: 'Fees', align: 'end' },
       ]"
     >
-      <template #row="props: { item: Row }">
-        <div>{{ name(props.item) }}</div>
+      <template #row="{ item }: { item: Row }">
+        <TokenIcon
+          chain="ethereum"
+          :address="tokenAddress(item)"
+        ></TokenIcon>
+
+        <div>{{ name(item) }}</div>
 
         <div class="end">
           <AsyncValue
-            :value="props.item.total_debt"
+            :value="item.total_debt"
             :precision="decimals"
             :show-zero="true"
             type="dollar"
@@ -104,7 +112,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.tvlUsd"
+            :value="item.tvlUsd"
             :precision="decimals"
             :show-zero="true"
             type="dollar"
@@ -113,7 +121,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.tradingVolume24h"
+            :value="item.tradingVolume24h"
             :precision="decimals"
             :show-zero="true"
             type="dollar"
@@ -122,7 +130,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.total_profit"
+            :value="item.total_profit"
             :precision="decimals"
             :show-zero="true"
             type="dollar"
@@ -131,6 +139,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       </template>
 
       <template #row-aggregation>
+        <div></div>
         <div></div>
 
         <div class="end">
@@ -182,58 +191,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
 .pegkeepers-table {
   --col-width: 12ch;
-  --columns-data: 1fr repeat(4, var(--col-width));
-
-  container-type: inline-size;
-
-  :deep(.row-data) {
-    --columns-data: 1fr repeat(4, var(--col-width));
-
-    // Non mobile
-    @media only screen and (min-width: 1280px) {
-      @container (max-width: 750px) {
-        --col-width: 11ch;
-      }
-
-      @container (max-width: 650px) {
-        --col-width: 10ch;
-      }
-
-      @container (max-width: 600px) {
-        --col-width: 9ch;
-      }
-
-      @container (max-width: 575px) {
-        --col-width: 8ch;
-      }
-    }
-
-    // Mobile
-    @media only screen and (max-width: 1280px) {
-      @container (max-width: 575px) {
-        --col-width: 11ch;
-      }
-
-      @container (max-width: 525px) {
-        --col-width: 10ch;
-      }
-
-      @container (max-width: 500px) {
-        --col-width: 9ch;
-      }
-
-      @container (max-width: 475px) {
-        --col-width: 8ch;
-      }
-
-      @container (max-width: 450px) {
-        --col-width: 7ch;
-      }
-
-      @container (max-width: 425px) {
-        --col-width: 6ch;
-      }
-    }
-  }
+  --columns-data: 26px minmax(7rem, 1fr) repeat(4, var(--col-width));
 }
 </style>

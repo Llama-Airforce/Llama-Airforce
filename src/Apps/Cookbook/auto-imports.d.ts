@@ -15,6 +15,7 @@ declare global {
   const ColorType: typeof import('lightweight-charts')['ColorType']
   const CrosshairMode: typeof import('lightweight-charts')['CrosshairMode']
   const CrvAddress: typeof import('../../Util/Addresses')['CrvAddress']
+  const CrvUsdAddress: typeof import('../../Util/Addresses')['CrvUsdAddress']
   const CurveVotingAddress: typeof import('../../Util/Addresses')['CurveVotingAddress']
   const CvxAddress: typeof import('../../Util/Addresses')['CvxAddress']
   const CvxCrvAddress: typeof import('../../Util/Addresses')['CvxCrvAddress']

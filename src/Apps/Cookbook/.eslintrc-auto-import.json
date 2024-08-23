@@ -516,6 +516,7 @@
     "capitalize": true,
     "deepMerge": true,
     "mapKeys": true,
-    "uniqueId": true
+    "uniqueId": true,
+    "CrvUsdAddress": true
   }
 }
