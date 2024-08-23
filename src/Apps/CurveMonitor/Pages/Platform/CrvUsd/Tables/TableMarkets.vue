@@ -28,6 +28,7 @@ const rows = computed(() =>
 // Data
 const { isFetching: loading, data: markets } = useQueryMarkets();
 
+// Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 </script>
 
@@ -52,6 +53,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       :rows
       :columns="[
         '',
+        '',
         'Name',
         { label: 'Loans', align: 'end' },
         { label: 'Rate', align: 'end' },
@@ -62,13 +64,18 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       ]"
       @selected="emit('selected', $event)"
     >
-      <template #row="props: { item: Row }">
-        <div>{{ props.item.name }}</div>
-        <div class="end">{{ props.item.loans }}</div>
+      <template #row="{ item }: { item: Row }">
+        <TokenIcon
+          chain="ethereum"
+          :address="item.collateral_token.address"
+        ></TokenIcon>
+
+        <div>{{ item.name }}</div>
+        <div class="end">{{ item.loans }}</div>
 
         <div class="end">
           <AsyncValue
-            :value="props.item.rate * 100"
+            :value="item.rate * 100"
             :precision="2"
             type="percentage"
           />
@@ -76,7 +83,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.borrowed"
+            :value="item.borrowed"
             :precision="decimals"
             :show-symbol="false"
             type="dollar"
@@ -85,7 +92,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.collateralUsd"
+            :value="item.collateralUsd"
             :precision="decimals"
             type="dollar"
           />
@@ -93,7 +100,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.fees.pending"
+            :value="item.fees.pending"
             :precision="decimals"
             type="dollar"
           />
@@ -101,7 +108,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
-            :value="props.item.fees.collected"
+            :value="item.fees.collected"
             :precision="decimals"
             :show-zero="true"
             type="dollar"
@@ -110,6 +117,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       </template>
 
       <template #row-aggregation>
+        <div></div>
         <div></div>
         <div></div>
         <div class="end">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
@@ -165,7 +173,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
 .markets-table {
   --col-width: 11ch;
-  --columns-data: 1rem minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
+  --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr);
