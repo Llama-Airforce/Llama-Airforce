@@ -5,7 +5,7 @@ import ChartTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartTopPools.vue";
 </script>
 
 <template>
-  <div class="revenue-charts">
+  <div class="overview">
     <ChartBreakdown
       style="grid-area: breakdown"
       class="breakdown"
@@ -23,7 +23,7 @@ import ChartTopPools from "@CM/Pages/Platform/Revenue/Charts/ChartTopPools.vue";
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.revenue-charts {
+.overview {
   margin: var(--dashboard-gap) 0;
 
   @include dashboard-grid;

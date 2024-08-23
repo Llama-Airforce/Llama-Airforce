@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Dashboard from "@CM/Pages/Platform/Revenue/Tabs/Dashboard.vue";
+import Overview from "@CM/Pages/Platform/Revenue/Tabs/Overview.vue";
 import Distributions from "@CM/Pages/Platform/Revenue/Tabs/Distributions.vue";
 import Cushions from "@CM/Pages/Platform/Revenue/Tabs/Cushions.vue";
 import Settlements from "@CM/Pages/Platform/Revenue/Tabs/Settlements.vue";
@@ -19,7 +19,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
     >
       <TabItem header="Revenue">
         <KeepAlive>
-          <Dashboard v-if="tabActive === 'overview'"></Dashboard>
+          <Overview v-if="tabActive === 'overview'"></Overview>
         </KeepAlive>
       </TabItem>
 
