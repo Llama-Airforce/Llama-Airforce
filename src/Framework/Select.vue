@@ -144,11 +144,11 @@ const open = ref(false);
     }
   }
 
-  .chevrons {
+  > .chevrons {
     position: absolute;
     display: flex;
     flex-direction: column;
-    font-size: 0.75rem;
+    font-size: 0.625rem;
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);

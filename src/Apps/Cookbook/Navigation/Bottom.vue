@@ -106,10 +106,6 @@ const copyUrl = async () => {
       margin-left: 0.25rem;
     }
 
-    .chevrons {
-      font-size: 0.5rem;
-    }
-
     .themes {
       .selected {
         .theme {

@@ -77,10 +77,6 @@ const router = useRouter();
       margin-left: 0.25rem;
     }
 
-    .chevrons {
-      font-size: 0.5rem;
-    }
-
     .selected {
       .theme {
         .colors {

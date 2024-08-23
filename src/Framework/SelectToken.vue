@@ -76,10 +76,4 @@ watch(
     margin-left: 0.75rem;
   }
 }
-
-.select {
-  :deep(.chevrons) {
-    font-size: 0.5rem;
-  }
-}
 </style>
