@@ -1,4 +1,3 @@
-export { default as ChartCrvUsdPriceHistogram } from "./ChartCrvUsdPriceHistogram.vue";
 export { default as ChartCrvUsdSupply } from "./ChartCrvUsdSupply.vue";
 export { default as ChartCrvUsdSupplyBreakdown } from "./ChartCrvUsdSupplyBreakdown.vue";
 export { default as ChartCrvUsdSupplyLine } from "./ChartCrvUsdSupplyLine.vue";

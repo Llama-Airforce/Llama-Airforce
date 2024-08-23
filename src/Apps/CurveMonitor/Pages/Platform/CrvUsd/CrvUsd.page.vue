@@ -6,7 +6,6 @@ import {
 import {
   ChartKeeperPrices,
   ChartCrvUsdSupply,
-  ChartCrvUsdPriceHistogram,
 } from "@CM/Pages/Platform/CrvUsd/Charts";
 import type { Market } from "@CM/Services/CrvUsd";
 
@@ -56,7 +55,6 @@ const onMarketSelect = async (newMarket: Market) => {
 
     <div class="col">
       <ChartCrvUsdSupply></ChartCrvUsdSupply>
-      <ChartCrvUsdPriceHistogram></ChartCrvUsdPriceHistogram>
     </div>
   </div>
 </template>

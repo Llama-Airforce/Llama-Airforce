@@ -1,10 +1,8 @@
 import { ServiceBase } from "@/Services";
 import { type Chain } from "@CM/Models";
 import type * as ApiTypes from "@CM/Services/CrvUsd/ApiTypes";
-import type * as Models from "@CM/Services/CrvUsd/Models";
 import * as Parsers from "@CM/Services/CrvUsd/Parsers";
 
-const API_URL_OLD = "https://api-py.llama.airforce/curve";
 const API_URL = "https://prices.curve.fi";
 
 export default class CrvUsdService extends ServiceBase {
@@ -22,12 +20,6 @@ export default class CrvUsdService extends ServiceBase {
     );
 
     return resp.data.map(Parsers.parseSnapshot);
-  }
-
-  public async getCrvUsdPriceHistogram() {
-    return this.fetch<Models.PriceHistogram>(
-      `${API_URL_OLD}/v1/crvusd/prices/hist`
-    );
   }
 
   public async getCrvUsdSupply(chain: Chain) {

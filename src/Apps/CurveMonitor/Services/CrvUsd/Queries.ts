@@ -33,15 +33,6 @@ export function useQueryCrvUsdSupply() {
   });
 }
 
-export function useQueryPriceDeviation() {
-  return useQuery({
-    queryKey: ["crvusd-price-deviation"],
-    queryFn: () => service.getCrvUsdPriceHistogram(),
-    initialData: { x: [], y: [] },
-    initialDataUpdatedAt: 0,
-  });
-}
-
 export function useQuerySnapshots(market: Ref<Market | undefined>) {
   return useQuery({
     queryKey: ["crvusd-market-snapshots", useMarketAddress(market)] as const,
