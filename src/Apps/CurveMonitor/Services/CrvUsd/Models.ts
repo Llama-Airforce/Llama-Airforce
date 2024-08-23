@@ -69,9 +69,3 @@ export type Keeper = {
   total_debt: number;
   total_profit: number;
 };
-
-export type Yield = {
-  platform: string;
-  pool: string;
-  apy: number;
-};

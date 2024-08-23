@@ -45,10 +45,4 @@ export default class CrvUsdService extends ServiceBase {
 
     return resp.keepers.map(Parsers.parseKeeper);
   }
-
-  public async getYield() {
-    return this.fetch<{ yields: Models.Yield[] }>(
-      `${API_URL_OLD}/v1/crvusd/yield`
-    ).then((resp) => resp.yields);
-  }
 }

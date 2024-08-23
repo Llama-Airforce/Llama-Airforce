@@ -106,14 +106,6 @@ export function useQueryMarkets() {
   });
 }
 
-export function useQueryYields() {
-  return useQuery({
-    queryKey: ["crvusd-yields"],
-    queryFn: () => service.getYield(),
-    ...initEmptyArray(),
-  });
-}
-
 export function useQueryKeepers() {
   return useQuery({
     queryKey: ["crvusd-keepers"],
