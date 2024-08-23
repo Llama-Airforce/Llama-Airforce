@@ -40,7 +40,7 @@ function onTypeSelect(option: ActivityType | "all") {
     :selected="type"
     @input="onTypeSelect"
   >
-    <template #item="props: { item: ActivityType }">
+    <template #item="props: { item: ActivityType | 'all' }">
       <div class="item">
         <div class="label">{{ label(props.item) }}</div>
       </div>
