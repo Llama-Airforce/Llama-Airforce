@@ -23,9 +23,7 @@ const emit = defineEmits<{
   "select-chain": [chain: Chain | "all"];
 }>();
 
-// Refs
-const chainOpen = ref(false);
-
+// Select
 const chainInfos = computed(() =>
   [
     ...(all ? [{ chain: "all" as const, label: "All Chains" }] : []),
@@ -49,13 +47,7 @@ const chainSelected = computed(
     chainInfos.value.find((p) => p.chain === chain) ?? null
 );
 
-// Methods
 const label = (item: SelectItem): string => item.label;
-
-// Events
-const onChainOpen = (): void => {
-  chainOpen.value = !chainOpen.value;
-};
 
 const onChainSelect = (option: ChainInfo): void => {
   emit("select-chain", option.chain);
@@ -64,12 +56,8 @@ const onChainSelect = (option: ChainInfo): void => {
 
 <template>
   <Select
-    class="select"
     :options="chainInfos"
     :selected="chainSelected"
-    :open="chainOpen"
-    @open="onChainOpen"
-    @close="chainOpen = false"
     @input="onChainSelect"
   >
     <template #item="props: { item: ChainInfo }">
@@ -95,22 +83,20 @@ const onChainSelect = (option: ChainInfo): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.select) {
-  .item {
-    display: flex;
-    align-items: center;
+.item {
+  display: flex;
+  align-items: center;
 
-    img,
-    .empty {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
+  img,
+  .empty {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
+  }
 
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
   }
 }
 </style>

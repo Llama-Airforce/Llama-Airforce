@@ -2,73 +2,66 @@
 // Props
 interface Props<T> {
   options?: T[];
-  open?: boolean;
   selected?: T | null;
   label?: string;
 }
 
-const {
-  options = [],
-  open = false,
-  selected = null,
-  label,
-} = defineProps<Props<T>>();
+const { options = [], selected = null, label } = defineProps<Props<T>>();
 
 // Emits
 const emit = defineEmits<{
-  open: [];
-  close: [];
   input: [option: T];
 }>();
+
+// Refs
+const open = ref(false);
 </script>
 
 <template>
   <div
-    class="select-container"
     tabindex="0"
-    @click.stop="emit('open')"
-    @blur="emit('close')"
+    class="select"
+    :class="{ open }"
+    @blur="open = false"
+    @click.stop="open = !open"
   >
-    <!-- Selector -->
-    <div class="select">
-      <div
-        class="selected"
-        :class="{ open: open }"
+    <div class="selected">
+      <slot
+        name="item"
+        :item="(selected as never)"
       >
-        <slot
-          name="item"
-          :item="(selected as never)"
-        >
-          <div class="item">{{ selected }}</div>
-        </slot>
-        <div
-          v-if="label"
-          class="label"
-        >
-          {{ label }}
-        </div>
-      </div>
+        <div class="item">{{ selected }}</div>
+      </slot>
 
       <div
-        class="items"
-        :class="{ selectHide: !open }"
+        v-if="label"
+        class="label"
       >
-        <div
-          v-for="(option, i) of options"
-          :key="i"
-          @click="emit('input', option)"
-        >
-          <slot
-            name="item"
-            :item="(option as never)"
-          >
-            {{ option }}
-          </slot>
-        </div>
+        {{ label }}
       </div>
     </div>
 
-    <!-- Chevrons -->
+    <div
+      class="items"
+      :class="{ selectHide: !open }"
+    >
+      <div
+        v-for="(option, i) of options"
+        :key="i"
+        @click.stop="
+          open = false;
+          emit('input', option);
+        "
+      >
+        <slot
+          name="item"
+          :item="(option as never)"
+        >
+          {{ option }}
+        </slot>
+      </div>
+    </div>
+
     <div class="chevrons">
       <i class="fas fa-chevron-up"></i>
       <i class="fas fa-chevron-down"></i>
@@ -79,23 +72,76 @@ const emit = defineEmits<{
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.select-container {
+.select {
   position: relative;
-  display: flex;
 
-  position: relative;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-  transition: background-color 125ms ease;
 
+  transition: background-color 125ms ease;
   background: var(--c-lvl1-hover);
   border-radius: var(--border-radius);
   box-shadow: var(--select-box-shadow);
-  padding: 0.5rem 0.75rem;
+
+  outline-color: transparent;
+  line-height: 1.5rem;
+
+  &.open {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
 
   &:hover {
     background: var(--c-lvl1-active);
+  }
+
+  > .selected {
+    padding: 0.5rem 0.75rem;
+
+    > .label {
+      color: var(--c-lvl5);
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+  }
+
+  > .items {
+    color: var(--c-text);
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    font-size: 1rem;
+
+    background: var(--c-lvl1);
+    box-shadow: var(--select-items-box-shadow);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+
+    > div {
+      color: var(--c-text);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+      user-select: none;
+      border-bottom: 1px solid var(--c-lvl3);
+      padding: 0.5rem 0.75rem;
+
+      &:hover {
+        background-color: var(--c-primary);
+      }
+    }
+
+    > div:last-child {
+      border-bottom: 0;
+      border-bottom-left-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
+    }
+  }
+
+  .selectHide {
+    display: none;
   }
 
   .chevrons {
@@ -106,68 +152,6 @@ const emit = defineEmits<{
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-  }
-
-  .select {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-
-    text-align: left;
-    outline-color: transparent;
-    line-height: 1.5rem;
-
-    > .selected {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      justify-content: center;
-
-      > .label {
-        color: var(--c-lvl5);
-        font-size: 0.75rem;
-      }
-    }
-
-    > .items {
-      color: var(--c-text);
-      overflow: hidden;
-      position: absolute;
-      left: 0;
-      right: 10px;
-      z-index: 15;
-      line-height: 1.5rem;
-      margin-top: 2rem;
-      width: 100%;
-      font-size: 1rem;
-
-      background: var(--c-lvl1);
-      box-shadow: var(--select-items-box-shadow);
-      border-radius: var(--border-radius);
-
-      > div {
-        color: var(--c-text);
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
-        user-select: none;
-        border-bottom: 1px solid var(--c-lvl3);
-        padding: 0.5rem 0.75rem;
-
-        &:hover {
-          background-color: var(--c-primary);
-        }
-      }
-
-      > div:last-child {
-        border-bottom: 0;
-        border-bottom-left-radius: var(--border-radius);
-        border-bottom-right-radius: var(--border-radius);
-      }
-    }
-
-    .selectHide {
-      display: none;
-    }
   }
 }
 </style>

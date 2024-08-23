@@ -20,7 +20,6 @@ const pageStore = usePageStore<PageLAF>();
 const route = useRoute();
 const router = useRouter();
 const page = ref("Curve");
-const pageOpen = ref(false);
 
 const titleRoute = computed(() => {
   const titleRoute = pageStore.pages.find(
@@ -41,10 +40,6 @@ const pages = computed((): string[] => {
 });
 
 // Events
-const onPageOpen = (): void => {
-  pageOpen.value = !pageOpen.value;
-};
-
 const onPageSelect = async (option: string) => {
   page.value = option;
 
@@ -84,9 +79,6 @@ watch(
         class="select-menu"
         :options="pages"
         :selected="page"
-        :open="pageOpen"
-        @open="onPageOpen"
-        @close="pageOpen = false"
         @input="onPageSelect"
       ></Select>
 
@@ -174,7 +166,6 @@ watch(
     :deep(> .select-menu) {
       .chevrons {
         font-size: 1rem;
-        top: 2.5rem;
         right: 1.75rem;
       }
 

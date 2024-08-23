@@ -41,12 +41,6 @@ onMounted(() => {
 });
 
 // Select
-const selectThemeOpen = ref(false);
-
-const onThemeOpen = (): void => {
-  selectThemeOpen.value = !selectThemeOpen.value;
-};
-
 const onThemeSelect = (option: ThemeDescription) => {
   theme.value = option;
 
@@ -57,12 +51,9 @@ const onThemeSelect = (option: ThemeDescription) => {
 
 <template>
   <Select
-    class="select direction-up"
+    class="direction-up"
     :options="themes.map((x) => x)"
     :selected="theme"
-    :open="selectThemeOpen"
-    @open="onThemeOpen"
-    @close="selectThemeOpen = false"
     @input="onThemeSelect"
   >
     <template #item="props: { item: ThemeDescription }">
@@ -117,50 +108,45 @@ const onThemeSelect = (option: ThemeDescription) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.select) {
-  .theme {
+.theme {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  border: solid 1px transparent;
+
+  &.active {
+    border: solid 1px var(--c-primary);
+  }
+
+  > .label {
+    margin-left: 0.75rem;
+    text-transform: capitalize;
+  }
+
+  > .colors {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
+    margin-right: 0.75rem;
 
-    height: auto;
-    border: solid 1px transparent;
+    > .color {
+      height: 0.75rem;
+      width: 0.75rem;
+      border: solid 1.5px black;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 -0.125rem;
 
-    &.active {
-      border: solid 1px var(--c-primary);
-    }
-
-    > .label {
-      margin-left: 0.75rem;
-      text-transform: capitalize;
-    }
-
-    > .colors {
-      display: flex;
-      margin-right: 0.75rem;
-
-      > .color {
-        height: 0.75rem;
-        width: 0.75rem;
-        border: solid 1.5px black;
-        border-radius: 50%;
-        display: inline-block;
-        margin: 0 -0.125rem;
-
-        &:first-child {
-          margin: 0 -0.125rem 0 0;
-        }
+      &:first-child {
+        margin: 0 -0.125rem 0 0;
       }
     }
   }
 }
 
 .direction-up {
-  :deep(.select) {
-    > .items {
-      bottom: 120%; // Items will move upwards.
-    }
+  :deep(.items) {
+    bottom: 120%; // Items will move upwards.
   }
 }
 </style>

@@ -32,8 +32,6 @@ const emit = defineEmits<{
 // Refs
 const { product } = storeToRefs(useBribesStore());
 
-const roundOpen = ref(false);
-const roundSelected = ref(false);
 const countdownString = ref("");
 
 const roundsOrdered = computed(() => rounds.orderBy((x) => x, "desc"));
@@ -68,19 +66,8 @@ watch(
   }
 );
 
-// Events
-const onRoundOpen = (): void => {
-  if (roundSelected.value) {
-    roundSelected.value = false;
-    return;
-  }
-
-  roundOpen.value = !roundOpen.value;
-};
-
+// Select
 const onRoundSelect = (round: number): void => {
-  roundOpen.value = false;
-  roundSelected.value = true;
   emit("select-round", round);
 };
 </script>
@@ -92,9 +79,6 @@ const onRoundSelect = (round: number): void => {
       :label="t('round-number')"
       :options="roundsOrdered"
       :selected="epoch?.round"
-      :open="roundOpen"
-      @open="onRoundOpen"
-      @close="roundOpen = false"
       @input="onRoundSelect"
     ></Select>
 
@@ -143,14 +127,11 @@ const onRoundSelect = (round: number): void => {
 @import "@/Styles/Variables.scss";
 
 .summary {
-  display: flex;
-  justify-content: space-evenly;
-  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1.5rem;
 
   @media only screen and (max-width: 1280px) {
-    display: grid;
-    grid-template-rows: auto auto;
     grid-template-columns: 1fr 1fr 1fr;
 
     > .select-summary {
@@ -160,20 +141,10 @@ const onRoundSelect = (round: number): void => {
   }
 
   :deep(.select-summary) {
-    flex-grow: 1;
-    flex-basis: 0;
-
-    .select {
-      > .selected > .item,
-      > .items {
-        font-size: 1.25rem;
-        font-weight: 700;
-      }
-
-      > .items {
-        margin-top: 3.75rem;
-        line-height: 1.75rem;
-      }
+    > .selected > .item,
+    > .items {
+      font-size: 1.25rem;
+      font-weight: 700;
     }
   }
 

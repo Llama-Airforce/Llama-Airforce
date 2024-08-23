@@ -25,8 +25,6 @@ const emit = defineEmits<{
 const storeSettings = useSettingsStore();
 
 // Refs
-const vaultOpen = ref(false);
-
 const vaults: (Vault | "all")[] = [
   ...(all ? ["all" as const] : []),
   ...(storeSettings.flavor === "lsd" ? vaultsLsd : vaultsLrt),
@@ -37,11 +35,7 @@ onMounted((): void => {
   onVaultSelect(vaults[0]);
 });
 
-// Events
-const onVaultOpen = (): void => {
-  vaultOpen.value = !vaultOpen.value;
-};
-
+// Select
 const onVaultSelect = (option: Vault | "all"): void => {
   emit("select-vault", option);
 };
@@ -49,12 +43,8 @@ const onVaultSelect = (option: Vault | "all"): void => {
 
 <template>
   <Select
-    class="select"
     :options="vaults"
     :selected="vault"
-    :open="vaultOpen"
-    @open="onVaultOpen"
-    @close="vaultOpen = false"
     @input="onVaultSelect"
   >
     <template #item="props: { item: Vault | 'all' }">
@@ -82,22 +72,20 @@ const onVaultSelect = (option: Vault | "all"): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.select) {
-  .item {
-    display: flex;
-    align-items: center;
+.item {
+  display: flex;
+  align-items: center;
 
-    img,
-    .empty {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
+  img,
+  .empty {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
+  }
 
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
   }
 }
 </style>

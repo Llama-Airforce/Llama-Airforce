@@ -22,7 +22,6 @@ const options: SelectItem[] = [
   },
 ];
 
-const selectOpen = ref(false);
 const selected = ref<SelectItem | null>(null);
 
 // Hooks
@@ -31,10 +30,6 @@ onMounted((): void => {
 });
 
 // Events
-const onSelectOpen = (): void => {
-  selectOpen.value = !selectOpen.value;
-};
-
 const onSelect = (option: SelectItem): void => {
   selected.value = option;
 };
@@ -43,9 +38,6 @@ const select1 = `<Select
   class="select-component"
   :options="options"
   :selected="selected"
-  :open="selectOpen"
-  @open="onSelectOpen"
-  @close="selectOpen = false"
   @input="onSelect"
 >
   <template #item="props: { item: SelectItem }">
@@ -79,7 +71,6 @@ const options: SelectItem[] = [
   },
 ];
 
-const selectOpen = ref(false);
 const selected = ref<SelectItem | null>;
 
 // Hooks
@@ -88,15 +79,11 @@ onMounted((): void => {
 });
 
 // Events
-const onSelectOpen = (): void => {
-  selectOpen.value = !selectOpen.value;
-};
-
 const onSelect = (option: SelectItem): void => {
   selected.value = option;
 };`;
 
-const select3 = `:deep(.select-component) {
+const select3 = `.select-component {
   width: 20rem;
 
   .item {
@@ -125,9 +112,6 @@ const select3 = `:deep(.select-component) {
           class="select-component"
           :options="options"
           :selected="selected"
-          :open="selectOpen"
-          @open="onSelectOpen"
-          @close="selectOpen = false"
           @input="onSelect"
         >
           <template #item="props: { item: SelectItem }">
@@ -167,7 +151,7 @@ const select3 = `:deep(.select-component) {
 
 @include dashboard("selects");
 
-:deep(.select-component) {
+.select-component {
   width: 20rem;
 
   .item {

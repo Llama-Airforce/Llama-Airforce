@@ -9,14 +9,8 @@ const emit = defineEmits<{
   select: [type: ProposalType];
 }>();
 
-// Refs
-const selectTypeOpen = ref(false);
+// Select
 const type = ref<ProposalType>("all");
-
-// Events
-const onTypeOpen = (): void => {
-  selectTypeOpen.value = !selectTypeOpen.value;
-};
 
 const onTypeSelect = (option: ProposalType): void => {
   type.value = option;
@@ -26,12 +20,8 @@ const onTypeSelect = (option: ProposalType): void => {
 
 <template>
   <Select
-    class="select"
     :options="types.map((x) => x)"
     :selected="type"
-    :open="selectTypeOpen"
-    @open="onTypeOpen"
-    @close="selectTypeOpen = false"
     @input="onTypeSelect"
   >
     <template #item="props: { item: ProposalType }">
@@ -44,15 +34,14 @@ const onTypeSelect = (option: ProposalType): void => {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-:deep(.select) {
-  .item {
-    display: flex;
-    align-items: center;
 
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+.item {
+  display: flex;
+  align-items: center;
+
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
   }
 }
 </style>

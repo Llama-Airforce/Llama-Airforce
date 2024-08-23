@@ -18,18 +18,13 @@ const zap = defineModel<Zap | undefined>({
   required: true,
   default: undefined,
 });
-const selectZapOpen = ref(false);
 
 // Methods
 const icon = (logo: string): string => {
   return logo;
 };
 
-// Events
-const onZapOpen = (): void => {
-  selectZapOpen.value = !selectZapOpen.value;
-};
-
+// Select
 const onZapSelect = (option: Zap): void => {
   emit("select", option);
 };
@@ -48,12 +43,8 @@ watch(
 
 <template>
   <Select
-    class="select"
     :options="zaps"
     :selected="zap"
-    :open="selectZapOpen"
-    @open="onZapOpen"
-    @close="selectZapOpen = false"
     @input="onZapSelect"
   >
     <template #item="props: { item: Zap | undefined }">
@@ -67,21 +58,20 @@ watch(
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-:deep(.select) {
-  .item {
-    display: flex;
-    align-items: center;
 
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
+.item {
+  display: flex;
+  align-items: center;
 
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+  img {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
+  }
+
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
   }
 }
 </style>

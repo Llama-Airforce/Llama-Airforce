@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SystemSelect from "@LAF/Pages/Bribes/Components/SystemSelect.vue";
+import SelectSystem from "@LAF/Pages/Bribes/Components/SelectSystem.vue";
 import ChartBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/ChartBribesRevenue.vue";
 import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
 import Summary from "@LAF/Pages/Bribes/Overview/Components/Summary.vue";
@@ -122,12 +122,12 @@ function initFromRouter() {
 <template>
   <div class="overview">
     <div class="dashboard">
-      <SystemSelect
-        style="grid-area: system-select"
+      <SelectSystem
+        style="grid-area: select-system"
         @select-platform="onSelectPlatform"
         @select-protocol="onSelectProtocol"
       >
-      </SystemSelect>
+      </SelectSystem>
 
       <Summary
         style="grid-area: summary"
@@ -155,9 +155,9 @@ function initFromRouter() {
 .overview {
   .dashboard {
     grid-template-columns: 1fr;
-    grid-template-rows: 64px 64px auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
-      "system-select"
+      "select-system"
       "summary"
       "chart"
       "table";

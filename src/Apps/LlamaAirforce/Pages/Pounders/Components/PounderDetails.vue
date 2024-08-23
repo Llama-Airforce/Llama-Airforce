@@ -3,7 +3,7 @@ import { mainnet } from "viem/chains";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
-import ZapSelect from "@Pounders/Components/ZapSelect.vue";
+import SelectZap from "@Pounders/Components/SelectZap.vue";
 import { useUnionStore } from "@Pounders/Store";
 import type { PounderId, Zap, ZapWithdraw, ZapDeposit } from "@Pounders/Models";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
@@ -323,12 +323,12 @@ const onWithdrawSelect = (zap: Zap): void => {
         ></PounderInput>
 
         <div class="actions">
-          <ZapSelect
+          <SelectZap
             v-model="zapDeposit"
             :class="{ expanded }"
             :zaps="zapsDeposit"
             @select="onDepositSelect"
-          ></ZapSelect>
+          ></SelectZap>
 
           <div class="buttons">
             <Button
@@ -362,12 +362,12 @@ const onWithdrawSelect = (zap: Zap): void => {
         ></PounderInput>
 
         <div class="actions">
-          <ZapSelect
+          <SelectZap
             v-model="zapWithdraw"
             :class="{ expanded }"
             :zaps="zapsWithdraw"
             @select="onWithdrawSelect"
-          ></ZapSelect>
+          ></SelectZap>
 
           <div class="buttons">
             <Button
@@ -474,10 +474,6 @@ const onWithdrawSelect = (zap: Zap): void => {
 
       > .select {
         align-self: start;
-
-        &:not(.expanded) {
-          display: none;
-        }
       }
 
       > .buttons {

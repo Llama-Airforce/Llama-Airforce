@@ -13,22 +13,16 @@ interface Props {
 
 const { tokens } = defineProps<Props>();
 
+const token = defineModel<Token>({
+  required: true,
+});
+
 // Emits
 const emit = defineEmits<{
   select: [token: Token];
 }>();
 
-// Refs
-const token = defineModel<Token>({
-  required: true,
-});
-const selectTokenOpen = ref(false);
-
-// Events
-const onTokenOpen = (): void => {
-  selectTokenOpen.value = !selectTokenOpen.value;
-};
-
+// Select
 const onTokenSelect = (option: Token): void => {
   emit("select", option);
 };
@@ -47,12 +41,8 @@ watch(
 
 <template>
   <Select
-    class="select"
     :options="tokens"
     :selected="token"
-    :open="selectTokenOpen"
-    @open="onTokenOpen"
-    @close="selectTokenOpen = false"
     @input="onTokenSelect"
   >
     <template #item="{ item: { address, symbol } }: { item: Token }">
@@ -71,25 +61,25 @@ watch(
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.select) {
-  .chevrons {
-    font-size: 0.5rem;
+.item {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
   }
 
-  .item {
-    display: flex;
-    align-items: center;
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
+  }
+}
 
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
-
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+.select {
+  :deep(.chevrons) {
+    font-size: 0.5rem;
   }
 }
 </style>

@@ -8,8 +8,7 @@ const emit = defineEmits<{
   select: [type: ActivityType | "all"];
 }>();
 
-// Refs
-const selectTypeOpen = ref(false);
+// Select
 const type = ref<ActivityType | "all">("all");
 
 function label(option: ActivityType | "all") {
@@ -29,11 +28,6 @@ function label(option: ActivityType | "all") {
   }
 }
 
-// Events
-function onTypeOpen() {
-  selectTypeOpen.value = !selectTypeOpen.value;
-}
-
 function onTypeSelect(option: ActivityType | "all") {
   type.value = option;
   emit("select", type.value);
@@ -42,12 +36,8 @@ function onTypeSelect(option: ActivityType | "all") {
 
 <template>
   <Select
-    class="select"
     :options="types.map((x) => x)"
     :selected="type"
-    :open="selectTypeOpen"
-    @open="onTypeOpen"
-    @close="selectTypeOpen = false"
     @input="onTypeSelect"
   >
     <template #item="props: { item: ActivityType }">
@@ -60,15 +50,14 @@ function onTypeSelect(option: ActivityType | "all") {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-:deep(.select) {
-  .item {
-    display: flex;
-    align-items: center;
 
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+.item {
+  display: flex;
+  align-items: center;
+
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
   }
 }
 </style>

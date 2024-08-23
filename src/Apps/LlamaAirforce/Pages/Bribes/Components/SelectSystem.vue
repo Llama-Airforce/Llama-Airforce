@@ -26,12 +26,6 @@ const emit = defineEmits<{
 // Refs
 const store = useBribesStore();
 
-const platformOpen = ref(false);
-const protocolOpen = ref(false);
-
-const platformSelected = ref(false);
-const protocolSelected = ref(false);
-
 import votium from "@/Assets/Icons/Tokens/votium.png";
 import redacted from "@/Assets/Icons/Tokens/redacted.png";
 
@@ -64,47 +58,18 @@ const protocols = computed((): ProtocolInfo[] => {
   ];
 });
 
-// Hooks
-onMounted((): void => {
-  platformSelected.value = false;
-  protocolSelected.value = false;
-});
-
-// Events
-const onPlatformOpen = (): void => {
-  if (platformSelected.value) {
-    platformSelected.value = false;
-    return;
-  }
-
-  platformOpen.value = !platformOpen.value;
-};
-
+// Select
 const onPlatformSelect = (option: PlatformInfo): void => {
   const { platform } = option;
 
-  platformOpen.value = false;
-  platformSelected.value = true;
   emit("select-platform", platform);
 
   onProtocolSelect(protocols.value[0]);
-  protocolSelected.value = false;
-};
-
-const onProtocolOpen = (): void => {
-  if (protocolSelected.value) {
-    protocolSelected.value = false;
-    return;
-  }
-
-  protocolOpen.value = !protocolOpen.value;
 };
 
 const onProtocolSelect = (option: ProtocolInfo): void => {
   const { protocol } = option;
 
-  protocolOpen.value = false;
-  protocolSelected.value = true;
   emit("select-protocol", protocol);
 };
 </script>
@@ -116,9 +81,6 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
       :label="t('platform')"
       :options="platforms"
       :selected="platform"
-      :open="platformOpen"
-      @open="onPlatformOpen"
-      @close="platformOpen = false"
       @input="onPlatformSelect"
     >
       <template #item="props: { item: PlatformInfo }">
@@ -137,9 +99,6 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
       :label="t('protocol')"
       :options="protocols"
       :selected="protocol"
-      :open="protocolOpen"
-      @open="onProtocolOpen"
-      @close="protocolOpen = false"
       @input="onProtocolSelect"
     >
       <template #item="props: { item: SelectItem }">
@@ -159,43 +118,27 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
 @import "@/Styles/Variables.scss";
 
 .system-selector {
-  display: flex;
-  justify-content: space-evenly;
-  flex-grow: 1;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 
-  @media only screen and (max-width: 1280px) {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 1fr 1fr;
+  > .platform {
+    grid-row: 1;
+    grid-column: 1;
+  }
 
-    > .platform {
-      grid-row: 1;
-      grid-column: 1;
-    }
-
-    > .protocol {
-      grid-row: 1;
-      grid-column: 2;
-    }
+  > .protocol {
+    grid-row: 1;
+    grid-column: 2;
   }
 
   :deep(.platform),
   :deep(.protocol) {
-    flex-grow: 1;
-    flex-basis: 0;
-
-    .select {
-      > .selected > .item,
-      > .items {
-        font-size: 1.25rem;
-        font-weight: 700;
-      }
-
-      > .items {
-        margin-top: 3.75rem;
-        line-height: 1.75rem;
-      }
+    > .selected > .item,
+    > .items {
+      font-size: 1.25rem;
+      font-weight: 700;
     }
 
     .item {

@@ -23,12 +23,6 @@ onMounted(() => {
 });
 
 // Select
-const selectLocaleOpen = ref(false);
-
-function onLocaleOpen() {
-  selectLocaleOpen.value = !selectLocaleOpen.value;
-}
-
 function onLocaleSelect(option: Locale) {
   locale.value = option;
   loc.value = locale.value;
@@ -48,13 +42,9 @@ function label(locale: Locale) {
 
 <template>
   <Select
-    class="select"
     :class="{ 'direction-up': direction === 'up' }"
     :options="locales.map((x) => x)"
     :selected="locale"
-    :open="selectLocaleOpen"
-    @open="onLocaleOpen"
-    @close="selectLocaleOpen = false"
     @input="onLocaleSelect"
   >
     <template #item="props: { item: Locale }">
@@ -68,23 +58,19 @@ function label(locale: Locale) {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-:deep(.select) {
-  .item {
-    display: flex;
-    align-items: center;
+.item {
+  display: flex;
+  align-items: center;
 
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
-    }
+  > .label {
+    font-size: 0.875rem;
+    margin-left: 0.75rem;
   }
 }
 
 .direction-up {
-  :deep(.select) {
-    > .items {
-      bottom: 120%; // Items will move upwards.
-    }
+  :deep(.items) {
+    bottom: 120%; // Items will move upwards.
   }
 }
 </style>
