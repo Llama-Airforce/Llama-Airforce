@@ -28,7 +28,7 @@ const open = ref(false);
     <div class="selected">
       <slot
         name="item"
-        :item="(selected as never)"
+        :item="selected"
       >
         <div class="item">{{ selected }}</div>
       </slot>
@@ -55,7 +55,7 @@ const open = ref(false);
       >
         <slot
           name="item"
-          :item="(option as never)"
+          :item="option"
         >
           {{ option }}
         </slot>
