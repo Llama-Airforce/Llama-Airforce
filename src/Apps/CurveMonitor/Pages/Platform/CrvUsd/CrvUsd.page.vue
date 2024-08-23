@@ -50,11 +50,11 @@ const onMarketSelect = async (newMarket: Market) => {
 
     <div class="col">
       <TablePegkeepers></TablePegkeepers>
-      <ChartKeeperPrices></ChartKeeperPrices>
     </div>
 
     <div class="col">
       <ChartCrvUsdSupply></ChartCrvUsdSupply>
+      <ChartKeeperPrices></ChartKeeperPrices>
     </div>
   </div>
 </template>
