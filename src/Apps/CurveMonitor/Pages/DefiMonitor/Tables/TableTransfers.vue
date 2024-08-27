@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { addressShort, addressLeft } from "@/Wallet";
-import { type CleanedTransfer } from "@CM/Services/Monitor/Transfers";
-import { useQueryTransfers } from "@CM/Services/Monitor/Transfers/Queries";
+import { type CleanedTransfer } from "@CM/Services/Monitor/Transfer";
+import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
 
 // Options
 const tokens = [
@@ -206,6 +206,7 @@ const clipboard = async (addr: string) => {
   --header-columns: 3fr 4fr;
 
   .transfers-card-body {
+    width: 100%;
     display: flex;
     gap: var(--card-margin-inline);
   }

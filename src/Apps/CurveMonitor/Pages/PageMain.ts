@@ -82,7 +82,7 @@ export const pageMainRoutes = [
   { path: "/dao/vefunder", component: VeFunder },
 
   {
-    path: "/defimonitor",
+    path: "/defimonitor/:tab?",
     name: "defimonitor",
     component: DefiMonitor,
   },
