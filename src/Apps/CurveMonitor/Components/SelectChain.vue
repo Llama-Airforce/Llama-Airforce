@@ -11,12 +11,12 @@ type ChainInfo = SelectItem & {
 
 // Props
 interface Props {
-  chain: Chain | "all" | null;
+  chain: Chain | "all";
   chains?: (Chain | "all")[];
   all?: boolean;
 }
 
-const { chain = null, chains = null, all = false } = defineProps<Props>();
+const { chain = "all", chains = null, all = false } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
@@ -43,8 +43,8 @@ const chainInfos = computed(() =>
 );
 
 const chainSelected = computed(
-  (): ChainInfo | null =>
-    chainInfos.value.find((p) => p.chain === chain) ?? null
+  (): ChainInfo =>
+    chainInfos.value.find((p) => p.chain === chain) ?? chainInfos.value[0]
 );
 
 const label = (item: SelectItem): string => item.label;

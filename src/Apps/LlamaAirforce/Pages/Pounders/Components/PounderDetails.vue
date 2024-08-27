@@ -324,6 +324,7 @@ const onWithdrawSelect = (zap: Zap): void => {
 
         <div class="actions">
           <SelectZap
+            v-if="zapDeposit"
             v-model="zapDeposit"
             :class="{ expanded }"
             :zaps="zapsDeposit"
@@ -363,6 +364,7 @@ const onWithdrawSelect = (zap: Zap): void => {
 
         <div class="actions">
           <SelectZap
+            v-if="zapWithdraw"
             v-model="zapWithdraw"
             :class="{ expanded }"
             :zaps="zapsWithdraw"

@@ -75,12 +75,14 @@ const onRoundSelect = (round: number): void => {
 <template>
   <div class="summary">
     <Select
+      v-if="epoch"
       class="select-summary"
       :label="t('round-number')"
       :options="roundsOrdered"
-      :selected="epoch?.round"
+      :selected="epoch.round"
       @input="onRoundSelect"
     ></Select>
+    <KPI v-else></KPI>
 
     <KPI
       :label="'$/' + vlAssetSymbol(product?.protocol)"

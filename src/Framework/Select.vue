@@ -2,11 +2,11 @@
 // Props
 interface Props<T> {
   options: T[];
-  selected?: T | null;
+  selected: T;
   label?: string;
 }
 
-const { options, selected = null, label } = defineProps<Props<T>>();
+const { options, selected, label } = defineProps<Props<T>>();
 
 // Emits
 const emit = defineEmits<{

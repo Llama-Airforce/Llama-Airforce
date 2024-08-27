@@ -22,7 +22,7 @@ const options: SelectItem[] = [
   },
 ];
 
-const selected = ref<SelectItem | null>(null);
+const selected = ref<SelectItem>(options[0]);
 
 // Hooks
 onMounted((): void => {
@@ -71,7 +71,7 @@ const options: SelectItem[] = [
   },
 ];
 
-const selected = ref<SelectItem | null>;
+const selected = ref<SelectItem>(options[0]);
 
 // Hooks
 onMounted((): void => {

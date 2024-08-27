@@ -10,11 +10,11 @@ import {
 
 // Props
 interface Props {
-  vault: Vault | "all" | null;
+  vault: Vault | "all";
   all?: boolean;
 }
 
-const { vault = null, all = false } = defineProps<Props>();
+const { vault, all = false } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{

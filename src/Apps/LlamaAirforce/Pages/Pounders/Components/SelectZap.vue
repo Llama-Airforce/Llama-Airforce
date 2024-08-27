@@ -14,9 +14,8 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const zap = defineModel<Zap | undefined>({
+const zap = defineModel<Zap>({
   required: true,
-  default: undefined,
 });
 
 // Methods
@@ -47,7 +46,7 @@ watch(
     :selected="zap"
     @input="onZapSelect"
   >
-    <template #item="props: { item: Zap | undefined }">
+    <template #item="props: { item: Zap }">
       <div class="item">
         <img :src="icon(props.item?.logo ?? '')" />
         <div class="label">{{ props.item?.label ?? "?" }}</div>

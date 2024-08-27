@@ -29,20 +29,22 @@ const store = useBribesStore();
 import votium from "@/Assets/Icons/Tokens/votium.png";
 import redacted from "@/Assets/Icons/Tokens/redacted.png";
 
-const platforms = computed((): PlatformInfo[] => {
-  return [
-    { platform: "votium", label: "Votium", logo: votium },
-    { platform: "hh", label: "Hidden Hand", logo: redacted },
-  ];
-});
+const platforms = computed((): PlatformInfo[] => [
+  { platform: "votium", label: "Votium", logo: votium },
+  { platform: "hh", label: "Hidden Hand", logo: redacted },
+]);
 
-const platform = computed((): PlatformInfo | null => {
-  return platforms.value.find((p) => p.platform === store.platform) ?? null;
-});
+const platform = computed(
+  () =>
+    platforms.value.find((p) => p.platform === store.platform) ??
+    platforms.value[0]
+);
 
-const protocol = computed((): ProtocolInfo | null => {
-  return protocols.value.find((p) => p.protocol === store.protocol) ?? null;
-});
+const protocol = computed(
+  () =>
+    protocols.value.find((p) => p.protocol === store.protocol) ??
+    protocols.value[0]
+);
 
 import crv from "@/Assets/Icons/Tokens/crv.svg";
 import prisma from "@/Assets/Icons/Tokens/prisma.svg";
