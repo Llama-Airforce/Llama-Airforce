@@ -1,5 +1,10 @@
 import { uniqueId } from "@/Util";
-import { type Observable, type Subscription, BehaviorSubject } from "rxjs";
+import {
+  type Observable,
+  type Subscription,
+  BehaviorSubject,
+  filter,
+} from "rxjs";
 
 /** Options for useQueryRx function */
 type UseQueryRxOptions<T, U = T> = {
@@ -36,9 +41,9 @@ type SubscriptionRecord = {
 const subscriptions = new Map<string, SubscriptionRecord>();
 
 /** Event emitter in case a refetch has created a new sub, use it to increase usage counts */
-const subscriptionSubject = new BehaviorSubject<SubscriptionRecord | undefined>(
-  undefined
-);
+const subscriptionSubject = new BehaviorSubject<
+  { queryKeyString: string; record: SubscriptionRecord } | undefined
+>(undefined);
 
 const queryKeySerialize = (queryKey: readonly unknown[]) =>
   JSON.stringify(queryKey);
@@ -121,7 +126,7 @@ export function useQueryRx<T, U = T>({
         };
 
         subscriptions.set(queryKeyString, record);
-        subscriptionSubject.next(record);
+        subscriptionSubject.next({ queryKeyString, record });
 
         queryFn();
       }),
@@ -163,11 +168,15 @@ function useCleanup(
   const userId = uniqueId();
 
   // Subscribe to new subscription records and update the usage set.
-  const newSubRecordSub = subscriptionSubject.subscribe((sub) => {
-    if (sub && queryEnabled.value) {
-      sub.users.add(userId);
-    }
-  });
+  const newSubRecordSub = subscriptionSubject
+    .pipe(
+      filter(() => queryEnabled.value),
+      filter((x) => x !== undefined),
+      filter((x) => x.queryKeyString === queryKeySerialize(queryKey.value))
+    )
+    .subscribe((sub) => {
+      sub.record.users.add(userId);
+    });
 
   // Clean up on query disable to prevent bandwidth consumption, add usage on re-enable.
   watch(queryEnabled, async (queryEnabled) => {
