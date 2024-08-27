@@ -1,8 +1,15 @@
 <script setup lang="ts" generic="T extends readonly unknown[]">
+/*
+ * For some reason in Bun 1.1.26 if T[number] is placed directly in
+ * the Props interface, websites that use this component get stuck
+ * on a white screen for unknown reason.
+ */
+type Value = T[number];
+
 // Props
 interface Props<T extends readonly unknown[]> {
   values: T;
-  value: T[number];
+  value: Value;
   name: string;
 }
 
