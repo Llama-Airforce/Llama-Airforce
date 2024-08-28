@@ -62,13 +62,13 @@ const table = `<template>
     @sort-column="onSort"
     @selected="onSelected"
   >
-    <template #row="props: { item: Round }">
+    <template #row="{ item }">
       <div
         class="round-number"
         @click.stop
       >
         <a class="vote-link">
-          {{ props.item.round }}
+          {{ item.round }}
         </a>
       </div>
 
@@ -78,7 +78,7 @@ const table = `<template>
 
       <div class="end">
         <AsyncValue
-          :value="props.item.value"
+          :value="item.value"
           :precision="5"
           type="dollar"
         />
@@ -86,7 +86,7 @@ const table = `<template>
 
       <div class="end">
         <AsyncValue
-          :value="props.item.value * 10000"
+          :value="item.value * 10000"
           :precision="2"
           type="dollar"
         />
@@ -186,15 +186,15 @@ const multiselect = `<template>
     :columns="['', 'Deadline', '']"
     @selected="onCheck"
   >
-    <template #row="props: { item: Round }">
+    <template #row="{ item }">
       <div class="round-number" @click.stop>
-        <a class="vote-link">{{ props.item.round }}</a>
+        <a class="vote-link">{{ item.round }}</a>
       </div>
       <div>{{ new Date(Date.now()).toLocaleDateString() }}</div>
       <div>
         <Checkbox
-          :model-value="checked.includes(props.item)"
-          @update:model-value="() => onCheck(props.item)"
+          :model-value="checked.includes(item)"
+          @update:model-value="() => onCheck(item)"
         />
       </div>
     </template>
@@ -243,13 +243,13 @@ const onCheck = (round: Round) => {
           @sort-column="onSort"
           @selected="onSelected"
         >
-          <template #row="props: { item: Round }">
+          <template #row="{ item }">
             <div
               class="round-number"
               @click.stop
             >
               <a class="vote-link">
-                {{ props.item.round }}
+                {{ item.round }}
               </a>
             </div>
 
@@ -259,7 +259,7 @@ const onCheck = (round: Round) => {
 
             <div class="end">
               <AsyncValue
-                :value="props.item.value"
+                :value="item.value"
                 :precision="5"
                 type="dollar"
               />
@@ -267,15 +267,15 @@ const onCheck = (round: Round) => {
 
             <div class="end">
               <AsyncValue
-                :value="props.item.value * 10000"
+                :value="item.value * 10000"
                 :precision="2"
                 type="dollar"
               />
             </div>
           </template>
 
-          <template #row-details="props: { item: Round }">
-            <div>Additional details for round {{ props.item.round }}</div>
+          <template #row-details="{ item }">
+            <div>Additional details for round {{ item.round }}</div>
           </template>
 
           <template #row-aggregation>
@@ -313,13 +313,13 @@ const onCheck = (round: Round) => {
           :columns="['', 'Deadline', '']"
           @selected="onCheck"
         >
-          <template #row="props: { item: Round }">
+          <template #row="{ item }">
             <div
               class="round-number"
               @click.stop
             >
               <a class="vote-link">
-                {{ props.item.round }}
+                {{ item.round }}
               </a>
             </div>
 
@@ -329,8 +329,8 @@ const onCheck = (round: Round) => {
 
             <div class="center">
               <Checkbox
-                :model-value="checked.includes(props.item)"
-                @update:model-value="() => onCheck(props.item)"
+                :model-value="checked.includes(item)"
+                @update:model-value="() => onCheck(item)"
               />
             </div>
           </template>

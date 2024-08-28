@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import VePrismaService, {
-  type VoteIncentive,
-} from "@PM/Pages/VePrisma/VePrismaService";
-
-type Row = VoteIncentive;
+import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();
 
@@ -31,7 +27,7 @@ const columns = computed(() => {
   ];
 });
 
-const rows = computed((): Row[] => data.value);
+const rows = computed(() => data.value);
 
 const rowsPerPage = 20;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
@@ -57,33 +53,33 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       :rows="rowsPage"
       :columns="columns"
     >
-      <template #row="props: { item: Row }">
+      <template #row="{ item }">
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.voter}`"
+            :href="`https://etherscan.io/address/${item.voter}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.voter) }}
+            {{ addressShort(item.voter) }}
           </a>
         </div>
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.recipient}`"
+            :href="`https://etherscan.io/tx/${item.recipient}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.recipient) }}
+            {{ addressShort(item.recipient) }}
           </a>
         </div>
 
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.points)"
+            :value="Math.round(item.points)"
             :precision="2"
             :show-symbol="false"
             :show-zero="true"
@@ -93,16 +89,16 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <div class="end">
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            :href="`https://etherscan.io/tx/${item.transaction}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.transaction) }}
+            {{ addressShort(item.transaction) }}
           </a>
         </div>
 
         <div class="end">
-          {{ relativeTime(props.item.timestamp) }}
+          {{ relativeTime(item.timestamp) }}
         </div>
       </template>
     </Table>

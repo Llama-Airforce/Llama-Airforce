@@ -94,35 +94,38 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
       @sort-column="onSort"
       @selected="onSelected"
     >
-      <template #row="props: { item: EpochOverview }">
+      <template #row="{ item }">
         <div
           class="round-number"
           @click.stop
         >
           <a
-            :href="voteLink(props.item)"
+            :href="voteLink(item)"
             target="_blank"
             class="vote-link"
           >
-            <span v-if="isFinished(props.item)">{{ round(props.item) }}</span>
+            <span v-if="isFinished(item)">{{ round(item) }}</span>
             <span v-else>
               <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
             </span>
           </a>
         </div>
+
         <div>
-          {{ date(props.item) }}
+          {{ date(item) }}
         </div>
+
         <div class="end">
           <AsyncValue
-            :value="dollarPerVlAsset(props.item)"
+            :value="dollarPerVlAsset(item)"
             :precision="5"
             type="dollar"
           />
         </div>
+
         <div class="end">
           <AsyncValue
-            :value="totalAmountDollars(props.item)"
+            :value="totalAmountDollars(item)"
             :precision="2"
             type="dollar"
           />

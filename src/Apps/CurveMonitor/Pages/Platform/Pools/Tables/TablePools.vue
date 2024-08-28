@@ -2,11 +2,9 @@
 import { type Chain } from "@CM/Models";
 import { type Pool } from "@CM/Services/Pools";
 
-type Row = Pool;
-
 // Emit
 const emit = defineEmits<{
-  selected: [pool: Row];
+  selected: [pool: Pool];
 }>();
 
 // Props
@@ -72,7 +70,7 @@ function utilRate(pool: Pool) {
       @sort-column="onSort"
       @selected="emit('selected', $event)"
     >
-      <template #row="{ item: pool }: { item: Row }">
+      <template #row="{ item: pool }">
         <div class="tokens">
           <TokenIcon
             v-for="token of pool.coins"

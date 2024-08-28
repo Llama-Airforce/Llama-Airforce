@@ -36,18 +36,18 @@ const colors: Color[] = [
         :rows="colors"
         :columns="['Variable', 'Value', 'Preview']"
       >
-        <template #row="props: { item: Color }">
-          <div>{{ props.item.variable }}</div>
-          <div>{{ props.item.value }}</div>
+        <template #row="{ item }">
+          <div>{{ item.variable }}</div>
+          <div>{{ item.value }}</div>
           <div class="preview-container">
             <div
               class="preview"
-              :style="{ 'background-color': props.item.value }"
+              :style="{ 'background-color': item.value }"
             ></div>
 
             <span
               class="preview-text"
-              :style="{ color: props.item.value }"
+              :style="{ color: item.value }"
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </span>

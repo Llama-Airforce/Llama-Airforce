@@ -24,17 +24,17 @@ const repositories: Repository[] = [
         :rows="repositories"
         :columns="[t('repository'), t('description')]"
       >
-        <template #row="props: { item: Repository }">
+        <template #row="{ item }">
           <div>
             <a
-              :href="props.item.url"
+              :href="item.url"
               target="_blank"
             >
-              {{ props.item.name }}
+              {{ item.name }}
             </a>
           </div>
 
-          <div>{{ t(props.item.description) }}</div>
+          <div>{{ t(item.description) }}</div>
         </template>
       </Table>
     </Card>

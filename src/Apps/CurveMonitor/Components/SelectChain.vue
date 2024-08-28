@@ -60,21 +60,18 @@ const onChainSelect = (option: ChainInfo): void => {
     :selected="chainSelected"
     @input="onChainSelect"
   >
-    <template #item="props: { item: ChainInfo }">
-      <div
-        v-if="props.item"
-        class="item"
-      >
+    <template #item="{ item }">
+      <div class="item">
         <img
-          v-if="chainIcon(props.item.chain)"
-          :src="chainIcon(props.item.chain)"
+          v-if="chainIcon(item.chain)"
+          :src="chainIcon(item.chain)"
         />
         <div
           v-else
           class="empty"
         ></div>
 
-        <div class="label">{{ label(props.item) }}</div>
+        <div class="label">{{ label(item) }}</div>
       </div>
     </template>
   </Select>

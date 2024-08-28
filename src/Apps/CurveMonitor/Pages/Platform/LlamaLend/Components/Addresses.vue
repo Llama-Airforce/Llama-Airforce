@@ -8,7 +8,6 @@ interface Props {
 
 const { market } = defineProps<Props>();
 
-type Row = { description: string; address: string };
 const addresses = computed(() => [
   {
     description: "Controller",
@@ -50,7 +49,7 @@ const clipboard = async (addr: string) => {
       class="addresses-table"
       :rows="addresses"
     >
-      <template #row="{ item: { description, address } }: { item: Row }">
+      <template #row="{ item: { description, address } }">
         <div>{{ description }}</div>
 
         <div>
@@ -67,6 +66,7 @@ const clipboard = async (addr: string) => {
 
         <div>
           <Button
+            v-if="address"
             icon="fas fa-link"
             @click="clipboard(address)"
           ></Button>

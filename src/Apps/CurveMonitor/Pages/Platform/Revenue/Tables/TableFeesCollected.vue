@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { type FeesCollected } from "@CM/Services/Revenue";
 
-type Row = FeesCollected;
-
 // Props
 interface Props {
-  fees: Row[];
+  fees: FeesCollected[];
 }
 
 const { fees } = defineProps<Props>();
@@ -42,7 +40,7 @@ const rows = computed(() =>
       :sorting
       @sort-column="onSort"
     >
-      <template #row="{ item }: { item: Row }">
+      <template #row="{ item }">
         <TokenIcon :address="item.coin.address"></TokenIcon>
 
         <div>

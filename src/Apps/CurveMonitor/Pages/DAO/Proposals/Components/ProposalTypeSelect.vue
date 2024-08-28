@@ -24,9 +24,9 @@ const onTypeSelect = (option: ProposalType): void => {
     :selected="type"
     @input="onTypeSelect"
   >
-    <template #item="props: { item: ProposalType }">
+    <template #item="{ item }">
       <div class="item">
-        <div class="label">{{ capitalize(props.item) }}</div>
+        <div class="label">{{ capitalize(item) }}</div>
       </div>
     </template>
   </Select>

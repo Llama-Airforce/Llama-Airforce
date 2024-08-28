@@ -56,48 +56,48 @@ const onThemeSelect = (option: ThemeDescription) => {
     :selected="theme"
     @input="onThemeSelect"
   >
-    <template #item="props: { item: ThemeDescription }">
+    <template #item="{ item }">
       <div class="theme">
-        <div class="label">{{ props.item.id }}</div>
+        <div class="label">{{ item.id }}</div>
         <div class="colors">
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.backgroundColor }"
+            :style="{ 'background-color': item.colors.backgroundColor }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.level1 }"
+            :style="{ 'background-color': item.colors.level1 }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.level2 }"
+            :style="{ 'background-color': item.colors.level2 }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.blue }"
+            :style="{ 'background-color': item.colors.blue }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.yellow }"
+            :style="{ 'background-color': item.colors.yellow }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.green }"
+            :style="{ 'background-color': item.colors.green }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.red }"
+            :style="{ 'background-color': item.colors.red }"
           ></div>
 
           <div
             class="color"
-            :style="{ 'background-color': props.item.colors.purple }"
+            :style="{ 'background-color': item.colors.purple }"
           ></div>
         </div>
       </div>

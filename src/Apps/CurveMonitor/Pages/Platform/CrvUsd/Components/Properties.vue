@@ -51,7 +51,6 @@ function getTokenInfo(
 }
 
 // Rows
-type Row = { description: string; value: unknown };
 const properties = computed(() => [
   {
     description: "Collateral",
@@ -81,7 +80,7 @@ const clipboard = async (addr: string) => {
       class="properties-table"
       :rows="properties"
     >
-      <template #row="{ item: { description, value } }: { item: Row }">
+      <template #row="{ item: { description, value } }">
         <div>{{ description }}</div>
 
         <div v-if="isTokenInfo(value)">

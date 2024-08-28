@@ -40,13 +40,10 @@ const select1 = `<Select
   :selected="selected"
   @input="onSelect"
 >
-  <template #item="props: { item: SelectItem }">
-    <div
-      v-if="props.item"
-      class="item"
-    >
-      <img :src="props.item.logo" />
-      <div class="label">{{ props.item.label }}</div>
+  <template #item="{ item }">
+    <div class="item">
+      <img :src="item.logo" />
+      <div class="label">{{ item.label }}</div>
     </div>
   </template>
 </Select>`;
@@ -114,13 +111,10 @@ const select3 = `.select-component {
           :selected="selected"
           @input="onSelect"
         >
-          <template #item="props: { item: SelectItem }">
-            <div
-              v-if="props.item"
-              class="item"
-            >
-              <img :src="props.item.logo" />
-              <div class="label">{{ props.item.label }}</div>
+          <template #item="{ item }">
+            <div class="item">
+              <img :src="item.logo" />
+              <div class="label">{{ item.label }}</div>
             </div>
           </template>
         </Select>

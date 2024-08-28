@@ -16,8 +16,6 @@ const storeSettings = useSettingsStore();
 // Services
 const liquidationService = new LiquidationService(storeSettings.flavor);
 
-type Row = Liquidation;
-
 const { t } = useI18n();
 
 // Props
@@ -52,7 +50,7 @@ const { relativeTime } = useRelativeTime();
 
 const search = ref("");
 const vault = ref<Vault | "all">("all");
-const showDetails = ref<Row | null>(null);
+const showDetails = ref<Liquidation | null>(null);
 
 const columns = [
   "",
@@ -140,43 +138,43 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       @sort-column="onSort"
       @selected="showDetails = $event"
     >
-      <template #row="props: { item: Row }">
-        <img :src="icon(props.item.vault)" />
+      <template #row="{ item }">
+        <img :src="icon(item.vault)" />
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.liquidator}`"
+            :href="`https://etherscan.io/address/${item.liquidator}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.liquidator) }}
+            {{ addressShort(item.liquidator) }}
           </a>
         </div>
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            :href="`https://etherscan.io/tx/${item.transaction}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.transaction) }}
+            {{ addressShort(item.transaction) }}
           </a>
         </div>
 
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.liquidated_debt)"
+            :value="Math.round(item.liquidated_debt)"
             :precision="Infinity"
           ></AsyncValue>
         </div>
 
-        <div class="end">{{ props.item.troves_affected_count }}</div>
+        <div class="end">{{ item.troves_affected_count }}</div>
 
         <div class="end">
-          {{ relativeTime(props.item.timestamp) }}
+          {{ relativeTime(item.timestamp) }}
         </div>
       </template>
 

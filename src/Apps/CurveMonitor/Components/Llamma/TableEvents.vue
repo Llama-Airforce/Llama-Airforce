@@ -56,7 +56,7 @@ const type = (x: LlammaEvent) =>
         { label: 'Time', align: 'end' },
       ]"
     >
-      <template #row="{ item: event }: { item: LlammaEvent }">
+      <template #row="{ item: event }">
         <div>{{ type(event) }}</div>
         <div class="end">{{ amount(event) }}</div>
         <div></div>

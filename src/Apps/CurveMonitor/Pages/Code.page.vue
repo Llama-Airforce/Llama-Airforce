@@ -102,17 +102,17 @@ const linkContract = (contract: Contract): string => {
         :columns="['Repository', 'Description']"
         title="Yolo"
       >
-        <template #row="props: { item: Repository }">
+        <template #row="{ item }">
           <div>
             <a
-              :href="props.item.url"
+              :href="item.url"
               target="_blank"
             >
-              {{ props.item.name }}
+              {{ item.name }}
             </a>
           </div>
 
-          <div>{{ props.item.description }}</div>
+          <div>{{ item.description }}</div>
         </template>
       </Table>
     </Card>
@@ -124,17 +124,17 @@ const linkContract = (contract: Contract): string => {
         :rows="apis"
         :columns="['API', 'Description']"
       >
-        <template #row="props: { item: API }">
+        <template #row="{ item }">
           <div>
             <a
-              :href="props.item.url"
+              :href="item.url"
               target="_blank"
             >
-              {{ props.item.name }}
+              {{ item.name }}
             </a>
           </div>
 
-          <div>{{ props.item.description }}</div>
+          <div>{{ item.description }}</div>
         </template>
       </Table>
     </Card>
@@ -151,17 +151,17 @@ const linkContract = (contract: Contract): string => {
         :rows="bundle.contracts"
         :columns="['Contract', 'Description']"
       >
-        <template #row="props: { item: Contract }">
+        <template #row="{ item }">
           <div>
             <a
-              :href="linkContract(props.item)"
+              :href="linkContract(item)"
               target="_blank"
             >
-              {{ props.item.contract }}
+              {{ item.contract }}
             </a>
           </div>
 
-          <div>{{ props.item.description }}</div>
+          <div>{{ item.description }}</div>
         </template>
       </Table>
     </Card>

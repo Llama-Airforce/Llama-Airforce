@@ -47,9 +47,9 @@ function label(locale: Locale) {
     :selected="locale"
     @input="onLocaleSelect"
   >
-    <template #item="props: { item: Locale }">
+    <template #item="{ item }">
       <div class="item">
-        <div class="label">{{ label(props.item) }}</div>
+        <div class="label">{{ label(item) }}</div>
       </div>
     </template>
   </Select>

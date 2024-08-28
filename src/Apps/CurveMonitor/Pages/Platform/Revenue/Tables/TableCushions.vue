@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { type Chain } from "@CM/Models";
-import { type Cushion } from "@CM/Services/Revenue";
 import { useQueryCushions } from "@CM/Services/Revenue/Queries";
 import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
-
-type Row = Cushion;
 
 // Refs
 const search = ref("");
@@ -68,22 +65,22 @@ const linkAddress = (addr: string): string => {
       :rows
       :columns="['Name', 'Address', { label: 'Fees ($)', align: 'end' }]"
     >
-      <template #row="props: { item: Row }">
-        <div>{{ props.item.name }}</div>
+      <template #row="{ item }">
+        <div>{{ item.name }}</div>
 
         <div>
           <a
             class="font-mono"
-            :href="linkAddress(props.item.pool)"
+            :href="linkAddress(item.pool)"
             target="_blank"
           >
-            {{ props.item.pool }}
+            {{ item.pool }}
           </a>
         </div>
 
         <div class="end">
           <AsyncValue
-            :value="props.item.usdValue"
+            :value="item.usdValue"
             :precision="2"
             type="dollar"
           />

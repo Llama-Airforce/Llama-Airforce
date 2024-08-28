@@ -77,17 +77,17 @@ const bribes = (bribed: Bribed): Bribe[] => {
       :sorting
       @sort-column="onSort"
     >
-      <template #row="props: { item: Bribed }">
+      <template #row="{ item }">
         <Tooltip>
           <template #trigger>
             <div class="bribe">
               <div>
-                {{ pool(props.item) }}
+                {{ pool(item) }}
               </div>
 
               <div class="end">
                 <AsyncValue
-                  :value="dollarPerVlAsset(props.item)"
+                  :value="dollarPerVlAsset(item)"
                   :precision="5"
                   type="dollar"
                 />
@@ -95,7 +95,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
 
               <div class="end">
                 <AsyncValue
-                  :value="amountDollars(props.item)"
+                  :value="amountDollars(item)"
                   :precision="2"
                   type="dollar"
                 />
@@ -104,10 +104,10 @@ const bribes = (bribed: Bribed): Bribe[] => {
           </template>
 
           <div class="bribes">
-            <span>{{ pool(props.item) }}</span>
+            <span>{{ pool(item) }}</span>
             <ul>
               <li
-                v-for="(bribe, i) in bribes(props.item)"
+                v-for="(bribe, i) in bribes(item)"
                 :key="i"
               >
                 <div>{{ bribe.token }}</div>

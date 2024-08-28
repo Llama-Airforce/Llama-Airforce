@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
-type Row = AccountData;
-
 const { t } = useI18n();
 
 // Props
@@ -81,25 +79,25 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       :sorting
       @sort-column="onSort"
     >
-      <template #row="props: { item: Row }">
+      <template #row="{ item }">
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.id}`"
+            :href="`https://etherscan.io/address/${item.id}`"
             target="_blank"
             @click.stop
           >
-            {{ props.item.id }}
+            {{ item.id }}
           </a>
         </div>
 
         <div
           class="end"
-          :class="{ zero: props.item.weight === 0 }"
+          :class="{ zero: item.weight === 0 }"
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.weight)"
+            :value="Math.round(item.weight)"
             :precision="2"
             :show-symbol="false"
             :show-zero="true"
@@ -108,11 +106,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
         <div
           class="end"
-          :class="{ zero: props.item.locked === 0 }"
+          :class="{ zero: item.locked === 0 }"
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.locked)"
+            :value="Math.round(item.locked)"
             :precision="2"
             :show-symbol="false"
             :show-zero="true"
@@ -121,11 +119,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
         <div
           class="end"
-          :class="{ zero: props.item.unlocked === 0 }"
+          :class="{ zero: item.unlocked === 0 }"
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.unlocked)"
+            :value="Math.round(item.unlocked)"
             :precision="2"
             :show-symbol="false"
             :show-zero="true"
@@ -134,11 +132,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
         <div
           class="end"
-          :class="{ zero: props.item.frozen === 0 }"
+          :class="{ zero: item.frozen === 0 }"
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.frozen)"
+            :value="Math.round(item.frozen)"
             :precision="2"
             :show-symbol="false"
             :show-zero="true"

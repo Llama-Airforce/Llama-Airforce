@@ -61,22 +61,19 @@ const inputTextSearch1 = `<InputText
   @input="onInput"
   @select="onSelect"
 >
-  <template #item="props: { item: Pool, idx: number }">
-    <div
-      v-if="props.item"
-      class="search-item"
-    >
+  <template #item="{ item, idx }">
+    <div class="search-item">
       <img src="@/Asset/Icons/why.png" />
-      <div class="label">{{ props.item.name }}</div>
+      <div class="label">{{ item.name }}</div>
       <div
-        v-if="props.idx === 0"
+        v-if="idx === 0"
         class="description"
       >
         Volume
       </div>
       <div class="volume">
         <AsyncValue
-          :value="props.item.volume"
+          :value="item.volume"
           :precision="2"
           type="dollar"
         />
@@ -188,15 +185,12 @@ const inputTextSearch3 = `.search-item {
           @input="onInput"
           @select="onSelect"
         >
-          <template #item="props: { item: Pool, idx: number }">
-            <div
-              v-if="props.item"
-              class="search-item"
-            >
+          <template #item="{ item, idx }">
+            <div class="search-item">
               <img src="@/Assets/Icons/why.png" />
-              <div class="label">{{ props.item.name }}</div>
+              <div class="label">{{ item.name }}</div>
               <div
-                v-if="props.idx === 0"
+                v-if="idx === 0"
                 class="description"
               >
                 Volume
@@ -204,7 +198,7 @@ const inputTextSearch3 = `.search-item {
 
               <div class="volume">
                 <AsyncValue
-                  :value="props.item.volume"
+                  :value="item.volume"
                   :precision="2"
                   type="dollar"
                 />

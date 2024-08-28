@@ -325,17 +325,17 @@ const { t } = useI18n();
           :rows="repositories"
           :columns="[t('repository'), t('description')]"
         >
-          <template #row="props: { item: Repository }">
+          <template #row="{ item }">
             <div>
               <a
-                :href="props.item.url"
+                :href="item.url"
                 target="_blank"
               >
-                {{ props.item.name }}
+                {{ item.name }}
               </a>
             </div>
 
-            <div>{{ t(props.item.description) }}</div>
+            <div>{{ t(item.description) }}</div>
           </template>
         </Table>
       </Card>
@@ -349,17 +349,17 @@ const { t } = useI18n();
           :rows="other"
           :columns="[t('other'), t('description')]"
         >
-          <template #row="props: { item: Other }">
+          <template #row="{ item }">
             <div>
               <a
-                :href="props.item.url"
+                :href="item.url"
                 target="_blank"
               >
-                {{ props.item.name }}
+                {{ item.name }}
               </a>
             </div>
 
-            <div>{{ t(props.item.description) }}</div>
+            <div>{{ t(item.description) }}</div>
           </template>
         </Table>
       </Card>
@@ -375,18 +375,18 @@ const { t } = useI18n();
           :rows="bundle.contracts"
           :columns="[t('contract'), t('description')]"
         >
-          <template #row="props: { item: Contract }">
+          <template #row="{ item }">
             <div>
               <a
                 class="font-mono"
                 target="_blank"
-                :href="linkContract(props.item)"
+                :href="linkContract(item)"
               >
-                {{ props.item.contract }}
+                {{ item.contract }}
               </a>
             </div>
 
-            <div>{{ t(props.item.description) }}</div>
+            <div>{{ t(item.description) }}</div>
           </template>
         </Table>
       </Card>

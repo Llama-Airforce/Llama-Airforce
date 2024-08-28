@@ -244,25 +244,25 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
       :sorting
       @sort-column="onSort"
     >
-      <template #row="props: { item: BribedPersonal }">
+      <template #row="{ item }">
         <Tooltip>
           <template #trigger>
             <div class="bribe">
               <div>
                 <AsyncValue
-                  :value="percentage(props.item)"
+                  :value="percentage(item)"
                   :precision="0"
                   type="percentage"
                 />
               </div>
 
               <div>
-                {{ pool(props.item) }}
+                {{ pool(item) }}
               </div>
 
               <div class="end">
                 <AsyncValue
-                  :value="dollarPerVlAsset(props.item)"
+                  :value="dollarPerVlAsset(item)"
                   :precision="5"
                   type="dollar"
                 />
@@ -270,7 +270,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 
               <div class="end">
                 <AsyncValue
-                  :value="amountDollars(props.item)"
+                  :value="amountDollars(item)"
                   :precision="2"
                   type="dollar"
                 />
@@ -279,7 +279,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
           </template>
 
           <div class="tooltip-hover">
-            {{ pool(props.item) }}
+            {{ pool(item) }}
           </div>
         </Tooltip>
       </template>

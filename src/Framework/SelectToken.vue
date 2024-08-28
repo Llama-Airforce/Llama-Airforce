@@ -45,7 +45,7 @@ watch(
     :selected="token"
     @input="onTokenSelect"
   >
-    <template #item="{ item: { address, symbol } }: { item: Token }">
+    <template #item="{ item: { address, symbol } }">
       <div class="item">
         <TokenIcon
           class="icon"

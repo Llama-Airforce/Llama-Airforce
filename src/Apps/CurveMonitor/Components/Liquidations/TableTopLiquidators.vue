@@ -40,18 +40,18 @@ const rows = computed((): Liquidator[] =>
         { label: 'Value', align: 'end' },
       ]"
     >
-      <template #row="props: { item: Liquidator }">
+      <template #row="{ item }">
         <div class="address">
           <a
-            :href="`https://etherscan.io/address/${props.item.liquidator}`"
+            :href="`https://etherscan.io/address/${item.liquidator}`"
             target="_blank"
           >
-            {{ addressShort(props.item.liquidator, 8) }}
+            {{ addressShort(item.liquidator, 8) }}
           </a>
         </div>
         <div class="end">
           <AsyncValue
-            :value="props.item.count"
+            :value="item.count"
             :precision="0"
             :show-zero="true"
           />
@@ -59,7 +59,7 @@ const rows = computed((): Liquidator[] =>
 
         <div class="end">
           <AsyncValue
-            :value="props.item.value"
+            :value="item.value"
             :precision="1"
             type="dollar"
           />

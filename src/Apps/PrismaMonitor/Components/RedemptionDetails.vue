@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Redemption } from "@PM/Services";
 
-type Row = string;
-
 const { t } = useI18n();
 
 // Props
@@ -75,15 +73,15 @@ const rows = computed(() =>
           :rows="rows"
           :columns="['Trove']"
         >
-          <template #row="props: { item: Row }">
+          <template #row="{ item }">
             <div>
               <a
                 class="font-mono"
                 target="_blank"
-                :href="`#/vault/${vaultAddr}/trove/${props.item}`"
+                :href="`#/vault/${vaultAddr}/trove/${item}`"
                 @click.stop
               >
-                {{ props.item }}
+                {{ item }}
               </a>
             </div>
           </template>

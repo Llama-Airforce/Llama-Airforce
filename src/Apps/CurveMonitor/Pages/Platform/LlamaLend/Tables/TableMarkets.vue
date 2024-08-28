@@ -2,11 +2,9 @@
 import { type Chain } from "@CM/Models";
 import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 
-type Row = Market | undefined;
-
 // Emit
 const emit = defineEmits<{
-  selected: [market: Row];
+  selected: [market?: Market];
 }>();
 
 // Props
@@ -69,7 +67,7 @@ const tokenIcon = (market: Market) => {
       ]"
       @selected="emit('selected', $event)"
     >
-      <template #row="{ item: market }: { item: Market }">
+      <template #row="{ item: market }">
         <template v-if="market">
           <TokenIcon
             :chain

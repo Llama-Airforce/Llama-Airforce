@@ -16,8 +16,6 @@ const storeSettings = useSettingsStore();
 // Services
 const redemptionService = new RedemptionService(storeSettings.flavor);
 
-type Row = Redemption;
-
 const { t } = useI18n();
 
 // Props
@@ -53,7 +51,7 @@ const { relativeTime } = useRelativeTime();
 
 const search = ref("");
 const vault = ref<Vault | "all">("all");
-const showDetails = ref<Row | null>(null);
+const showDetails = ref<Redemption | null>(null);
 
 const columns = [
   "",
@@ -137,43 +135,43 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       @sort-column="onSort"
       @selected="showDetails = $event"
     >
-      <template #row="props: { item: Row }">
-        <img :src="icon(props.item.vault)" />
+      <template #row="{ item }">
+        <img :src="icon(item.vault)" />
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.redeemer}`"
+            :href="`https://etherscan.io/address/${item.redeemer}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.redeemer) }}
+            {{ addressShort(item.redeemer) }}
           </a>
         </div>
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            :href="`https://etherscan.io/tx/${item.transaction}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.transaction) }}
+            {{ addressShort(item.transaction) }}
           </a>
         </div>
 
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.actual_debt_amount)"
+            :value="Math.round(item.actual_debt_amount)"
             :precision="Infinity"
           ></AsyncValue>
         </div>
 
-        <div class="end">{{ props.item.troves_affected_count }}</div>
+        <div class="end">{{ item.troves_affected_count }}</div>
 
         <div class="end">
-          {{ relativeTime(props.item.timestamp) }}
+          {{ relativeTime(item.timestamp) }}
         </div>
       </template>
 

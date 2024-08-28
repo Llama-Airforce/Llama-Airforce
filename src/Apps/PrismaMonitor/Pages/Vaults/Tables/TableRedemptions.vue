@@ -8,8 +8,6 @@ import {
   type TroveManagerDetails,
 } from "@PM/Services";
 
-type Row = Redemption;
-
 const { t } = useI18n();
 
 // Stores
@@ -119,41 +117,41 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       @sort-column="onSort"
       @selected="showDetails = $event"
     >
-      <template #row="props: { item: Row }">
+      <template #row="{ item }">
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.redeemer}`"
+            :href="`https://etherscan.io/address/${item.redeemer}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.redeemer) }}
+            {{ addressShort(item.redeemer) }}
           </a>
         </div>
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.transaction}`"
+            :href="`https://etherscan.io/tx/${item.transaction}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.transaction) }}
+            {{ addressShort(item.transaction) }}
           </a>
         </div>
 
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.actual_debt_amount)"
+            :value="Math.round(item.actual_debt_amount)"
             :precision="Infinity"
           ></AsyncValue>
         </div>
 
-        <div class="end">{{ props.item.troves_affected_count }}</div>
+        <div class="end">{{ item.troves_affected_count }}</div>
 
         <div class="end">
-          {{ relativeTime(props.item.timestamp) }}
+          {{ relativeTime(item.timestamp) }}
         </div>
       </template>
 

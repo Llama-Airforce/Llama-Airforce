@@ -85,14 +85,14 @@ const sandwichTxs = (sw: SandwichDetail) =>
       :expanded
       @selected="toggleExpansion($event)"
     >
-      <template #row="props: { item: SandwichDetail }">
+      <template #row="{ item }">
         <div>
           <a
             class="vote-link"
-            :href="`https://etherscan.io/address/${props.item.poolAddress}`"
+            :href="`https://etherscan.io/address/${item.poolAddress}`"
             target="_blank"
           >
-            {{ props.item.poolName }}
+            {{ item.poolName }}
           </a>
         </div>
 
@@ -107,43 +107,39 @@ const sandwichTxs = (sw: SandwichDetail) =>
             <a
               class="vote-link font-mono"
               target="_blank"
-              :href="`https://etherscan.io/address/${props.item.center[0].trader}`"
+              :href="`https://etherscan.io/address/${item.center[0].trader}`"
             >
-              {{ addressShort(props.item.center[0].trader) }}
+              {{ addressShort(item.center[0].trader) }}
             </a>
             <span>
               lost
               {{
                 roundPhil(
-                  props.item.user_losses_details.reduce(
-                    (acc, x) => acc + x.amount,
-                    0
-                  )
+                  item.user_losses_details.reduce((acc, x) => acc + x.amount, 0)
                 )
               }}
-              {{ props.item.user_losses_details[0].unit }}
+              {{ item.user_losses_details[0].unit }}
             </span>
             <span>
-              {{
-                roundPhil(-props.item.user_losses_details[0].lossInPercentage)
-              }}% slippage, or ${{ roundPhil(props.item.lossInUsd) }}
+              {{ roundPhil(-item.user_losses_details[0].lossInPercentage) }}%
+              slippage, or ${{ roundPhil(item.lossInUsd) }}
             </span>
           </div>
         </div>
 
         <div>
-          {{ props.item.label }}
+          {{ item.label }}
         </div>
 
         <div class="end">
-          {{ relativeTime(props.item.frontrun.block_unixtime) }}
+          {{ relativeTime(item.frontrun.block_unixtime) }}
         </div>
       </template>
 
-      <template #row-details="props: { item: SandwichDetail }">
+      <template #row-details="{ item }">
         <Transactions
           class="transactions"
-          :txs="sandwichTxs(props.item)"
+          :txs="sandwichTxs(item)"
           :header="false"
           :compact="true"
           :time="false"

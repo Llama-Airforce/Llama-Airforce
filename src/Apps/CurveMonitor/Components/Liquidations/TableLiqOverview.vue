@@ -91,7 +91,7 @@ const rows = computed((): Row[] => [
       class="liq-overview-table"
       :rows
     >
-      <template #row="{ item: { description, value, type } }: { item: Row }">
+      <template #row="{ item: { description, value, type } }">
         <div>{{ description }}</div>
 
         <div

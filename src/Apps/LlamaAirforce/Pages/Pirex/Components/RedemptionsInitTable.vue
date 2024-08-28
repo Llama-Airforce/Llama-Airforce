@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Redemption } from "@LAF/Pages/Pirex/Services";
 
-type Row = Redemption;
-
 // Props
 interface Props {
   redemptions: Redemption[];
@@ -54,7 +52,7 @@ watch(selected, (newRedemption) => {
     :rows="redemptions"
     @selected="selected = $event.lockIndex"
   >
-    <template #row="{ item: redemption }: { item: Row }">
+    <template #row="{ item: redemption }">
       <div>{{ formatDate(redemption.unlockTime) }}</div>
 
       <div class="end">{{ formatCvxAvailable(redemption.cvxAvailable) }}</div>

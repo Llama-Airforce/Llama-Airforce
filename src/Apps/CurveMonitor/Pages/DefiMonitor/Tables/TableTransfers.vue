@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { addressShort, addressLeft } from "@/Wallet";
-import { type CleanedTransfer } from "@CM/Services/Monitor/Transfer";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
 
 // Options
@@ -100,7 +99,7 @@ const clipboard = async (addr: string) => {
             :selected
             @input="selected = $event"
           >
-            <template #item="{ item: { address, symbol } }: { item: Option }">
+            <template #item="{ item: { address, symbol } }">
               <div class="item">
                 <TokenIcon
                   v-if="!Array.isArray(address)"
@@ -138,7 +137,7 @@ const clipboard = async (addr: string) => {
           { label: 'Age', align: 'end' },
         ]"
       >
-        <template #row="{ item }: { item: CleanedTransfer }">
+        <template #row="{ item }">
           <div class="hash">
             <a
               class="font-mono"

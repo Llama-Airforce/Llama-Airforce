@@ -4,8 +4,6 @@ import { abi } from "@/ABI/Union/Pirex";
 import { useWallet } from "@/Wallet";
 import { type RedemptionPending } from "@LAF/Pages/Pirex/Services";
 
-type Row = RedemptionPending;
-
 // Props
 interface Props {
   redemptions: RedemptionPending[];
@@ -83,7 +81,7 @@ function balance(redemption: RedemptionPending) {
     ]"
     :rows="redemptions"
   >
-    <template #row="{ item: redemption }: { item: Row }">
+    <template #row="{ item: redemption }">
       <div class="end">{{ date(redemption) }}</div>
 
       <div class="end">

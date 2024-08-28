@@ -149,22 +149,22 @@ const onType = (tabIndex: number) => {
       :rows="rowsPage"
       :columns
     >
-      <template #row="props: { item: TransactionDetail }">
+      <template #row="{ item }">
         <div
           class="type"
           :class="{
-            deposit: props.item.transaction_type === 'deposit',
-            remove: props.item.transaction_type === 'remove',
-            swap: props.item.transaction_type === 'swap',
+            deposit: item.transaction_type === 'deposit',
+            remove: item.transaction_type === 'remove',
+            swap: item.transaction_type === 'swap',
           }"
         >
           <i
-            v-if="props.item.transaction_type === 'deposit'"
+            v-if="item.transaction_type === 'deposit'"
             class="fas fa-arrow-up"
           ></i>
 
           <i
-            v-else-if="props.item.transaction_type === 'remove'"
+            v-else-if="item.transaction_type === 'remove'"
             class="fas fa-arrow-down"
           ></i>
 
@@ -173,7 +173,7 @@ const onType = (tabIndex: number) => {
             class="fas fa-exchange-alt"
           ></i>
 
-          {{ capitalize(props.item.transaction_type) }}
+          {{ capitalize(item.transaction_type) }}
         </div>
 
         <div
@@ -182,48 +182,48 @@ const onType = (tabIndex: number) => {
         >
           <a
             class="vote-link"
-            :href="`https://etherscan.io/block/${props.item.block_number}`"
+            :href="`https://etherscan.io/block/${item.block_number}`"
             target="_blank"
           >
-            {{ props.item.block_number }}
+            {{ item.block_number }}
           </a>
         </div>
 
         <div>
           <a
             class="vote-link"
-            :href="`https://etherscan.io/tx/${props.item.tx_hash}`"
+            :href="`https://etherscan.io/tx/${item.tx_hash}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.tx_hash) }}
+            {{ addressShort(item.tx_hash) }}
           </a>
         </div>
 
         <div>
           <a
             class="vote-link"
-            :href="`https://etherscan.io/address/${props.item.trader}`"
+            :href="`https://etherscan.io/address/${item.trader}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.trader) }}
+            {{ addressShort(item.trader) }}
           </a>
         </div>
 
         <div
           class="assets"
           :class="{
-            swap: props.item.transaction_type === 'swap',
+            swap: item.transaction_type === 'swap',
           }"
-          v-html="getAssetsString(props.item)"
+          v-html="getAssetsString(item)"
         ></div>
 
         <div
           v-if="time"
           class="end"
         >
-          {{ relativeTime(props.item.block_unixtime) }}
+          {{ relativeTime(item.block_unixtime) }}
         </div>
       </template>
     </Table>

@@ -5,11 +5,9 @@ import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 
 const { t } = useI18n();
 
-type Row = TroveManagerDetails;
-
 // Emit
 const emit = defineEmits<{
-  selected: [vault: Row];
+  selected: [vault: TroveManagerDetails];
 }>();
 
 // Stores
@@ -70,18 +68,18 @@ const loading = computed(() => rowsRaw.value.length === 0);
       ]"
       @selected="emit('selected', $event)"
     >
-      <template #row="props: { item: Row }">
-        <img :src="icon(props.item.address)" />
-        <div :class="{ deprecated: isDeprecated(props.item.address) }">
-          {{ label(props.item.address) ?? props.item.name }}
+      <template #row="{ item }">
+        <img :src="icon(item.address)" />
+        <div :class="{ deprecated: isDeprecated(item.address) }">
+          {{ label(item.address) ?? item.name }}
         </div>
 
         <div
           class="end"
-          :class="{ deprecated: isDeprecated(props.item.address) }"
+          :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
-            :value="props.item.tvl"
+            :value="item.tvl"
             :precision="0"
             :show-symbol="false"
             type="dollar"
@@ -90,10 +88,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
         <div
           class="end"
-          :class="{ deprecated: isDeprecated(props.item.address) }"
+          :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
-            :value="props.item.debt"
+            :value="item.debt"
             :precision="0"
             :show-symbol="false"
             type="dollar"
@@ -102,10 +100,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
         <div
           class="end"
-          :class="{ deprecated: isDeprecated(props.item.address) }"
+          :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
-            :value="props.item.cr * 100"
+            :value="item.cr * 100"
             :precision="2"
             type="percentage"
           />
@@ -113,10 +111,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
         <div
           class="end"
-          :class="{ deprecated: isDeprecated(props.item.address) }"
+          :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
-            :value="props.item.mcr * 100"
+            :value="item.mcr * 100"
             :precision="2"
             type="percentage"
           />
@@ -124,18 +122,18 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
         <div
           class="end"
-          :class="{ deprecated: isDeprecated(props.item.address) }"
+          :class="{ deprecated: isDeprecated(item.address) }"
         >
-          {{ props.item.open_troves }}
+          {{ item.open_troves }}
         </div>
 
         <div
           class="end"
-          :class="{ deprecated: isDeprecated(props.item.address) }"
+          :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.price)"
+            :value="Math.round(item.price)"
             :precision="Infinity"
           ></AsyncValue>
         </div>

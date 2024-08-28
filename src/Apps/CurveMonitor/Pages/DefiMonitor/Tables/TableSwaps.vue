@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type Address } from "@/Framework/Address";
 import { addressLeft } from "@/Wallet";
-import type { Swap } from "@CM/Services/Monitor/Swap";
 import { useQuerySwaps } from "@CM/Services/Monitor/Swap/Queries";
 
 // Options
@@ -127,7 +126,7 @@ const round = (x: number) =>
           { label: 'Age', align: 'end' },
         ]"
       >
-        <template #row="{ item }: { item: Swap }">
+        <template #row="{ item }">
           <div class="hash">
             <a
               class="font-mono"

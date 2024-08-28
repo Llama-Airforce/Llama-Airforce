@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Reward } from "@LAF/Pages/Pirex/Services";
 
-type Row = Reward;
-
 // Props
 interface Props {
   rewards: Reward[];
@@ -40,7 +38,7 @@ function isSelected(reward: Reward) {
     :rows="rewards"
     @selected="emit('select', $event)"
   >
-    <template #row="{ item: reward }: { item: Row }">
+    <template #row="{ item: reward }">
       <TokenIcon :address="reward.address"></TokenIcon>
       <div>{{ reward.symbol }}</div>
 

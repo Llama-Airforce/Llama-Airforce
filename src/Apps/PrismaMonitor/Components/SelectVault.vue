@@ -47,14 +47,11 @@ const onVaultSelect = (option: Vault | "all"): void => {
     :selected="vault"
     @input="onVaultSelect"
   >
-    <template #item="props: { item: Vault | 'all' }">
-      <div
-        v-if="props.item"
-        class="item"
-      >
+    <template #item="{ item }">
+      <div class="item">
         <img
-          v-if="props.item !== 'all'"
-          :src="icon(props.item)"
+          v-if="item !== 'all'"
+          :src="icon(item)"
         />
         <div
           v-else
@@ -62,7 +59,7 @@ const onVaultSelect = (option: Vault | "all"): void => {
         ></div>
 
         <div class="label">
-          {{ props.item === "all" ? "All" : label(props.item) }}
+          {{ item === "all" ? "All" : label(item) }}
         </div>
       </div>
     </template>

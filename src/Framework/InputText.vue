@@ -78,7 +78,7 @@ const onInput = (evt: Event): void => {
       >
         <slot
           name="item"
-          :item="(option as never)"
+          :item="option"
           :idx="i"
         >
           {{ option }}

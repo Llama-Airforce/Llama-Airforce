@@ -2,11 +2,9 @@
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
-type Row = Market;
-
 // Emit
 const emit = defineEmits<{
-  selected: [market: Row];
+  selected: [market: Market];
 }>();
 
 // Refs
@@ -64,7 +62,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       ]"
       @selected="emit('selected', $event)"
     >
-      <template #row="{ item }: { item: Row }">
+      <template #row="{ item }">
         <TokenIcon
           chain="ethereum"
           :address="item.collateral_token.address"

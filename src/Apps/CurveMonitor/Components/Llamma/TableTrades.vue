@@ -54,7 +54,7 @@ const round = (x: number) =>
         { label: 'Time', align: 'end' },
       ]"
     >
-      <template #row="{ item: trade }: { item: LlammaTrade }">
+      <template #row="{ item: trade }">
         <div class="end">{{ round(trade.amount_bought) }}</div>
         <TokenIcon
           :chain="chain"

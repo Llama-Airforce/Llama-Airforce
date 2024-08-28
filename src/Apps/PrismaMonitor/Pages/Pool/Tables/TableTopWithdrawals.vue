@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { type PoolStableOperation, StabilityPoolService } from "@PM/Services";
+import { StabilityPoolService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
@@ -41,19 +41,19 @@ const { isFetching: loading, data } = useQuery({
         { label: 'Tx', align: 'end' },
       ]"
     >
-      <template #row="props: { item: PoolStableOperation }">
+      <template #row="{ item }">
         <div class="address font-mono">
           <a
-            :href="`https://etherscan.io/address/${props.item.user}`"
+            :href="`https://etherscan.io/address/${item.user}`"
             target="_blank"
           >
-            {{ addressShort(props.item.user, 8) }}
+            {{ addressShort(item.user, 8) }}
           </a>
         </div>
 
         <div class="end">
           <AsyncValue
-            :value="props.item.amount"
+            :value="item.amount"
             :precision="2"
             :show-zero="true"
             type="dollar"
@@ -61,15 +61,15 @@ const { isFetching: loading, data } = useQuery({
         </div>
 
         <div class="end">
-          {{ new Date(props.item.timestamp * 1000).toLocaleDateString() }}
+          {{ new Date(item.timestamp * 1000).toLocaleDateString() }}
         </div>
 
         <div class="address end font-mono">
           <a
-            :href="`https://etherscan.io/tx/${props.item.hash}`"
+            :href="`https://etherscan.io/tx/${item.hash}`"
             target="_blank"
           >
-            {{ addressShort(props.item.hash, 8) }}
+            {{ addressShort(item.hash, 8) }}
           </a>
         </div>
       </template>

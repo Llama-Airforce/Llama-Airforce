@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Distribution } from "@CM/Services/Revenue";
 
-type Row = Distribution;
-
 // Props
 interface Props {
   distributions: Distribution[];
@@ -49,7 +47,7 @@ function formatDate(epoch: number): string {
       :sorting
       @sort-column="onSort"
     >
-      <template #row="{ item: { timestamp, feesUsd } }: { item: Row }">
+      <template #row="{ item: { timestamp, feesUsd } }">
         <div>{{ formatDate(timestamp) }}</div>
 
         <div class="end">

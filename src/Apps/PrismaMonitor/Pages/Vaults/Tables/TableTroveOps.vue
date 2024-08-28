@@ -4,11 +4,8 @@ import { useSettingsStore } from "@PM/Stores";
 import {
   TroveService,
   type Trove,
-  type TroveSnapshotData,
   type TroveManagerDetails,
 } from "@PM/Services";
-
-type Row = TroveSnapshotData;
 
 const { t } = useI18n();
 
@@ -74,13 +71,13 @@ const titleCase = (s: string): string =>
         { label: 'Time', align: 'end' },
       ]"
     >
-      <template #row="props: { item: Row }">
-        <div>{{ titleCase(props.item.operation) }}</div>
+      <template #row="{ item }">
+        <div>{{ titleCase(item.operation) }}</div>
 
         <div class="end">
           <AsyncValue
-            v-if="props.item.collateral"
-            :value="props.item.collateral"
+            v-if="item.collateral"
+            :value="item.collateral"
             :precision="3"
             :show-symbol="false"
             type="dollar"
@@ -90,15 +87,15 @@ const titleCase = (s: string): string =>
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.debt)"
+            :value="Math.round(item.debt)"
             :precision="Infinity"
           ></AsyncValue>
         </div>
 
         <div class="end">
           <AsyncValue
-            v-if="props.item.cr"
-            :value="props.item.cr * 100"
+            v-if="item.cr"
+            :value="item.cr * 100"
             :precision="2"
             type="percentage"
           />
@@ -106,8 +103,8 @@ const titleCase = (s: string): string =>
 
         <div class="end">
           <AsyncValue
-            v-if="props.item.stake"
-            :value="props.item.stake"
+            v-if="item.stake"
+            :value="item.stake"
             :precision="2"
             :show-symbol="false"
             type="dollar"
@@ -117,16 +114,16 @@ const titleCase = (s: string): string =>
         <div class="end">
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${props.item.hash}`"
+            :href="`https://etherscan.io/tx/${item.hash}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.hash) }}
+            {{ addressShort(item.hash) }}
           </a>
         </div>
 
         <div class="end">
-          {{ relativeTime(props.item.timestamp) }}
+          {{ relativeTime(item.timestamp) }}
         </div>
       </template>
     </Table>

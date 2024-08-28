@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
-import { type SolverCompetition } from "@CM/Services/Solver";
 import { useQuerySolverCompetition } from "@CM/Services/Solver/Queries";
-
-type Row = SolverCompetition["solutions"][number];
 
 // Props
 interface Props {
@@ -131,13 +128,7 @@ const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
           class="solvers-table col"
           :rows="solutions"
         >
-          <template
-            #row="{
-              item: { solver, solverAddress, ranking, score },
-            }: {
-              item: Row,
-            }"
-          >
+          <template #row="{ item: { solver, solverAddress, ranking, score } }">
             <div
               class="trophy"
               :class="rankClass(ranking)"

@@ -178,14 +178,14 @@ const sortColumn = (column: Column): void => {
       <template #row>
         <slot
           name="row"
-          :item="(row as never)"
+          :item="row"
         ></slot>
       </template>
 
       <template #row-details>
         <slot
           name="row-details"
-          :item="(row as never)"
+          :item="row"
         ></slot>
       </template>
     </TableRow>

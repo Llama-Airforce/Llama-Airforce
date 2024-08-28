@@ -3,8 +3,6 @@ import { addressShort } from "@/Wallet";
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
 import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
 
-type Row = CowSwapSettlement;
-
 // Props
 interface Props {
   settlements: CowSwapSettlement[];
@@ -45,7 +43,8 @@ const rows = computed(() =>
 const rowsPerPage = 15;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
-const { expanded, toggleExpansion } = useExpansion<Row>();
+const { expanded, toggleExpansion } =
+  useExpansion<(typeof rows.value)[number]>();
 const { relativeTime } = useRelativeTime();
 
 // Formatters
@@ -90,7 +89,7 @@ function symbol(settlement: CowSwapSettlement) {
       @sort-column="onSort"
       @selected="toggleExpansion"
     >
-      <template #row="{ item }: { item: Row }">
+      <template #row="{ item }">
         <div class="token">
           <TokenIcon :address="item.coin.address"></TokenIcon>
 
@@ -157,7 +156,7 @@ function symbol(settlement: CowSwapSettlement) {
         </div>
       </template>
 
-      <template #row-details="{ item }: { item: Row }">
+      <template #row-details="{ item }">
         <div class="empty"></div>
         <SettlementDetails
           v-if="expanded.includes(item)"

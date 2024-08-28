@@ -46,10 +46,10 @@ watch(
     :selected="zap"
     @input="onZapSelect"
   >
-    <template #item="props: { item: Zap }">
+    <template #item="{ item }">
       <div class="item">
-        <img :src="icon(props.item?.logo ?? '')" />
-        <div class="label">{{ props.item?.label ?? "?" }}</div>
+        <img :src="icon(item.logo ?? '')" />
+        <div class="label">{{ item.label ?? "?" }}</div>
       </div>
     </template>
   </Select>

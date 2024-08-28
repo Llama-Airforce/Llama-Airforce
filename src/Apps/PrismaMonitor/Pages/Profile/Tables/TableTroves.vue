@@ -9,8 +9,6 @@ import {
   TroveService,
 } from "@PM/Services";
 
-type Row = Trove & { vault: Vault };
-
 const { t } = useI18n();
 
 // Stores
@@ -28,7 +26,7 @@ const { vaults = [], user } = defineProps<Props>();
 
 // Emits
 const emit = defineEmits<{
-  troves: [troves: Row[]];
+  troves: [troves: (Trove & { vault: Vault })[]];
 }>();
 
 // Data
@@ -192,17 +190,17 @@ const onType = (tabIndex: number) => {
       :sorting
       @sort-column="onSort"
     >
-      <template #row="props: { item: Row }">
-        <img :src="icon(props.item.vault)" />
+      <template #row="{ item }">
+        <img :src="icon(item.vault)" />
 
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${props.item.owner}`"
+            :href="`https://etherscan.io/address/${item.owner}`"
             target="_blank"
             @click.stop
           >
-            {{ addressShort(props.item.owner) }}
+            {{ addressShort(item.owner) }}
           </a>
         </div>
 
@@ -212,7 +210,7 @@ const onType = (tabIndex: number) => {
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.debt)"
+            :value="Math.round(item.debt)"
             :precision="Infinity"
           ></AsyncValue>
         </div>
@@ -223,7 +221,7 @@ const onType = (tabIndex: number) => {
         >
           <AsyncValue
             type="dollar"
-            :value="Math.round(props.item.collateral_usd)"
+            :value="Math.round(item.collateral_usd)"
             :precision="Infinity"
           ></AsyncValue>
         </div>
@@ -233,18 +231,18 @@ const onType = (tabIndex: number) => {
           :class="{ hide: type === 'Closed' }"
         >
           <AsyncValue
-            :value="props.item.collateral_ratio * 100"
+            :value="item.collateral_ratio * 100"
             :precision="2"
             type="percentage"
           />
         </div>
 
         <div class="end">
-          {{ relativeTime(props.item.created_at) }}
+          {{ relativeTime(item.created_at) }}
         </div>
 
         <div class="end">
-          {{ relativeTime(props.item.last_update) }}
+          {{ relativeTime(item.last_update) }}
         </div>
       </template>
 

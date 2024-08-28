@@ -4,8 +4,6 @@ import { type Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
 import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
 
-type Row = Pool & Keeper;
-
 // Refs
 const search = ref("");
 
@@ -62,7 +60,7 @@ const pools = computed(() =>
 
 // Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
-const tokenAddress = (x: Row) =>
+const tokenAddress = (x: Pool & Keeper) =>
   x.pair.filter((x) => x.address !== CrvUsdAddress)[0].address;
 </script>
 
@@ -93,7 +91,7 @@ const tokenAddress = (x: Row) =>
         { label: 'Fees', align: 'end' },
       ]"
     >
-      <template #row="{ item }: { item: Row }">
+      <template #row="{ item }">
         <TokenIcon
           chain="ethereum"
           :address="tokenAddress(item)"
