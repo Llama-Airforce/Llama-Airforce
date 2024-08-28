@@ -163,6 +163,11 @@ const {
     &:has(.chart) {
       display: block;
     }
+
+    &:has(.vue-apexcharts) {
+      margin-top: -1rem !important;
+      overflow-x: clip;
+    }
   }
 }
 </style>

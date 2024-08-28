@@ -29,15 +29,3 @@ const { title = "", loading = false, options, series } = defineProps<Props>();
     <slot></slot>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.cart-chart {
-  :deep(.card-body) {
-    display: block !important;
-    margin-top: -1rem !important;
-    overflow-x: clip;
-  }
-}
-</style>
