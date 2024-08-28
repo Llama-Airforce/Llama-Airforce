@@ -5,11 +5,17 @@ import type { GeneralSwapAddressSpecificBlockSummary } from "@CM/Services/Monito
 
 export type ClientToServerEvents = {
   connectToGeneralErc20Livestream: (tokenAddress: string) => void;
+  connectToGeneralErc20ArrayLivestream: (tokenAddresses: string[]) => void;
+
   connectToGeneralErc20SwapLivestream: (observedAddress: string) => void;
 };
 
 export type ServerToClientEvents = {
   NewTransfersForToken: (
+    blockSummary: GeneralErc20TokenSpecificBlockSummary
+  ) => void;
+
+  NewTransfersForTokenArray: (
     blockSummary: GeneralErc20TokenSpecificBlockSummary
   ) => void;
 

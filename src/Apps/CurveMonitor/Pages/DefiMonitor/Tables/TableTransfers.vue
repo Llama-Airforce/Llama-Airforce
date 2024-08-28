@@ -5,17 +5,25 @@ import { type CleanedTransfer } from "@CM/Services/Monitor/Transfer";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
 
 // Options
-const tokens = [
+type Option = { address: Address | Address[]; symbol: string };
+const options: Option[] = [
   {
-    address: "0xdAC17F958D2ee523a2206206994597C13D831ec7" as Address,
+    address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
     symbol: "USDT",
   },
   {
-    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" as Address,
+    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     symbol: "USDC",
   },
+  {
+    address: [
+      "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    ],
+    symbol: "Both",
+  },
 ];
-const token = ref(tokens[0]);
+const selected = ref(options[0]);
 
 const minAmount = ref<number | null | string>(0);
 const minAmountParsed = computed(() => {
@@ -25,7 +33,7 @@ const minAmountParsed = computed(() => {
 
 // Data
 const { data: transfersRaw, isFetching: loading } = useQueryTransfers(
-  computed(() => token.value.address)
+  computed(() => selected.value.address)
 );
 const { relativeTime } = useRelativeTime();
 
@@ -87,11 +95,23 @@ const clipboard = async (addr: string) => {
       <div class="transfers-options">
         <div class="option">
           <div class="label">Token</div>
-          <SelectToken
-            v-model="token"
-            :tokens
-            @select="token = $event"
-          ></SelectToken>
+          <Select
+            :options
+            :selected
+            @input="selected = $event"
+          >
+            <template #item="{ item: { address, symbol } }: { item: Option }">
+              <div class="item">
+                <TokenIcon
+                  v-if="!Array.isArray(address)"
+                  class="icon"
+                  :address="address"
+                ></TokenIcon>
+
+                <div class="label">{{ symbol ?? "?" }}</div>
+              </div>
+            </template>
+          </Select>
         </div>
 
         <div class="option">
@@ -229,6 +249,22 @@ const clipboard = async (addr: string) => {
 
     .label {
       font-weight: bolder;
+    }
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: scale-down;
+    }
+
+    > .label {
+      font-size: 0.875rem;
+      margin-left: 0.75rem;
     }
   }
 }
