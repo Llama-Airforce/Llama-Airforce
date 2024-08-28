@@ -31,7 +31,7 @@ const pageButtons = computed(() => {
   const middle = page !== 1 && page !== pages.value ? [page] : [];
 
   let j = 1;
-  // eslint-disable-next-line no-constant-condition
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
     const l = range[i - j];
     if (l && l !== 1) {
@@ -85,9 +85,17 @@ const clamp = (x: number, min: number, max: number): number => {
   return Math.min(Math.max(x, min), max);
 };
 
-const prev = () => emit("page", clamp(page - 1, 1, pages.value));
-const next = () => emit("page", clamp(page + 1, 1, pages.value));
-const onPage = (p: number) => emit("page", clamp(p, 1, pages.value));
+const prev = () => {
+  emit("page", clamp(page - 1, 1, pages.value));
+};
+
+const next = () => {
+  emit("page", clamp(page + 1, 1, pages.value));
+};
+
+const onPage = (p: number) => {
+  emit("page", clamp(p, 1, pages.value));
+};
 </script>
 
 <template>
