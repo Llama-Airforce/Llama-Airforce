@@ -365,8 +365,8 @@ const { t } = useI18n();
       </Card>
 
       <Card
-        v-for="(bundle, i) in bundles"
-        :key="i"
+        v-for="bundle in bundles"
+        :key="bundle.name"
         :title="t(bundle.name)"
         class="contracts-card"
       >

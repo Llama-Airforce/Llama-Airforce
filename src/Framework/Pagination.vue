@@ -109,8 +109,8 @@ const onPage = (p: number) => emit("page", clamp(p, 1, pages.value));
     </li>
 
     <li
-      v-for="(p, i) in pageButtons"
-      :key="i"
+      v-for="p in pageButtons"
+      :key="p"
       :class="{ active: p === page }"
       @click="onPage(p)"
     >

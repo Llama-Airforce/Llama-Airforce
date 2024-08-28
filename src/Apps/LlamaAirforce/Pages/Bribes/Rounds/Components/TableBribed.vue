@@ -107,8 +107,8 @@ const bribes = (bribed: Bribed): Bribe[] => {
             <span>{{ pool(item) }}</span>
             <ul>
               <li
-                v-for="(bribe, i) in bribes(item)"
-                :key="i"
+                v-for="bribe in bribes(item)"
+                :key="bribe.pool"
               >
                 <div>{{ bribe.token }}</div>
 

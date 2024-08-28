@@ -140,8 +140,8 @@ const linkContract = (contract: Contract): string => {
     </Card>
 
     <Card
-      v-for="(bundle, i) in bundles"
-      :key="i"
+      v-for="bundle in bundles"
+      :key="bundle.name"
       :title="bundle.name"
     >
       <Table
