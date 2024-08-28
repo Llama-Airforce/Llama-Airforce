@@ -82,7 +82,6 @@ function createSeries() {
 <template>
   <Card
     ref="chartCard"
-    class="chart-card"
     title="Distributions Change (1y)"
   >
     <template #actions>
@@ -105,15 +104,8 @@ function createSeries() {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-card {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .actions {
-    display: flex;
-    gap: 1rem;
-  }
+.actions {
+  display: flex;
+  gap: 1rem;
 }
 </style>

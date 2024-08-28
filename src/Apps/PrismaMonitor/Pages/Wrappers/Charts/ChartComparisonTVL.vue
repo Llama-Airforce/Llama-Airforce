@@ -135,7 +135,6 @@ function formatter(y: number): string {
 
 <template>
   <Card
-    class="chart-container"
     :title="t('title')"
     :loading="loading"
   >
@@ -150,17 +149,6 @@ function formatter(y: number): string {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>
 
 <i18n lang="yaml" locale="en">
 title: TVL

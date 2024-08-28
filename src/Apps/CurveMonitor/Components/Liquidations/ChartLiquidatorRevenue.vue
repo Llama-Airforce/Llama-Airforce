@@ -130,10 +130,7 @@ function createSeries() {
 </script>
 
 <template>
-  <Card
-    class="chart-container"
-    title="Liquidator Revenue"
-  >
+  <Card title="Liquidator Revenue">
     <template #actions>
       <div class="actions">
         <Legend :items></Legend>
@@ -146,14 +143,3 @@ function createSeries() {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>

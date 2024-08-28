@@ -84,7 +84,6 @@ function createSeries() {
 
 <template>
   <Card
-    class="chart-container"
     :title="t('title')"
     :loading="loading"
   >
@@ -94,17 +93,6 @@ function createSeries() {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>
 
 <i18n lang="yaml" locale="en">
 title: Number of open troves

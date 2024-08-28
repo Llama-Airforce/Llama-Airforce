@@ -65,24 +65,10 @@ function createSeries() {
 </script>
 
 <template>
-  <Card
-    class="chart-container"
-    title="Volume"
-  >
+  <Card title="Volume">
     <div
       ref="chartRef"
       class="chart"
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>

@@ -117,24 +117,12 @@ const series = computed(
 
 <template>
   <CardChart
-    class="revenue"
     :title="t('title')"
     :options="options"
     :series="series"
   >
   </CardChart>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.revenue {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>
 
 <i18n lang="yaml" locale="en">
 title: Round by Round

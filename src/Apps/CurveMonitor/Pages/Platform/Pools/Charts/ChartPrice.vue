@@ -82,10 +82,7 @@ function formatter(x: number): string {
 </script>
 
 <template>
-  <Card
-    class="chart-container"
-    title="Price"
-  >
+  <Card title="Price">
     <template #actions>
       <div class="controls">
         <ButtonToggle
@@ -106,13 +103,6 @@ function formatter(x: number): string {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
 
 .controls {
   display: flex;

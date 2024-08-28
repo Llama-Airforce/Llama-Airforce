@@ -160,7 +160,6 @@ function createSeries(): void {
 <template>
   <Card
     ref="chartCard"
-    class="chart-card"
     title="Supply & Debt"
     :loading
   >
@@ -190,15 +189,8 @@ function createSeries(): void {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-card {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .actions {
-    display: flex;
-    gap: 1rem;
-  }
+.actions {
+  display: flex;
+  gap: 1rem;
 }
 </style>

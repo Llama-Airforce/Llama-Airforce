@@ -183,7 +183,6 @@ whenever(
 
 <template>
   <Card
-    class="chart-container"
     :title="dynamicTitle"
     :loading="loading"
   >
@@ -215,18 +214,6 @@ whenever(
     ></ChartApex>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    overflow-x: clip;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>
 
 <i18n lang="yaml" locale="en">
 title: "Trove Relative Position (Risk rank: {rank} / {total_positions})"

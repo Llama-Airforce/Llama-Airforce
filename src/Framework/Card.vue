@@ -159,6 +159,10 @@ const {
     &:has(.table) {
       overflow-y: auto;
     }
+
+    &:has(.chart) {
+      display: block;
+    }
   }
 }
 </style>

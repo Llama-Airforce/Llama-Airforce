@@ -73,9 +73,7 @@ const categories = computed(() => data.map((x) => x.label));
 
 .graph {
   :deep(.card-body) {
-    @media only screen and (max-width: 1280px) {
-      height: 300px;
-    }
+    height: 300px;
 
     .apexcharts-tooltip {
       grid-template-rows: auto auto;

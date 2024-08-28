@@ -68,10 +68,7 @@ function createSeries() {
 </script>
 
 <template>
-  <Card
-    class="chart-container"
-    title="Equity"
-  >
+  <Card title="Equity">
     <template #actions>
       <div class="actions">
         <Tooltip>
@@ -92,14 +89,3 @@ function createSeries() {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>

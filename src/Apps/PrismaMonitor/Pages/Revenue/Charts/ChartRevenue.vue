@@ -53,7 +53,6 @@ const onChartType = (type: ChartType) => {
 
 <template>
   <Card
-    class="chart-container"
     :title="t('title')"
     :loading="loading"
   >
@@ -113,54 +112,47 @@ const onChartType = (type: ChartType) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
+.actions {
+  flex-grow: 1;
+
+  display: grid;
+  grid-template-columns: 1fr 10rem auto auto;
+  gap: 1rem;
+
+  .legend {
+    grid-column: 1;
+    justify-self: center;
   }
 
-  .actions {
-    flex-grow: 1;
+  .chart-input {
+    grid-column: 2;
 
-    display: grid;
-    grid-template-columns: 1fr 10rem auto auto;
-    gap: 1rem;
+    display: flex;
 
-    .legend {
-      grid-column: 1;
-      justify-self: center;
+    input {
+      flex-grow: 1;
     }
+  }
 
-    .chart-input {
-      grid-column: 2;
+  .chart-toggles {
+    grid-column: 3;
+  }
 
-      display: flex;
+  .chart-types {
+    grid-column: 4;
 
-      input {
-        flex-grow: 1;
+    display: flex;
+    font-size: 0.875rem;
+
+    button {
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
-    }
 
-    .chart-toggles {
-      grid-column: 3;
-    }
-
-    .chart-types {
-      grid-column: 4;
-
-      display: flex;
-      font-size: 0.875rem;
-
-      button {
-        &:not(:last-child) {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-
-        &:not(:first-child) {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
     }
   }

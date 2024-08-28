@@ -62,24 +62,10 @@ function createSeries() {
 </script>
 
 <template>
-  <Card
-    class="chart-container"
-    title="Median Loss % Among Loans with Losses"
-  >
+  <Card title="Median Loss % Among Loans with Losses">
     <div
       ref="chartRef"
       class="chart"
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-</style>

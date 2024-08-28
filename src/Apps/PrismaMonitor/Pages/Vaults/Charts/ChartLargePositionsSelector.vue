@@ -45,7 +45,6 @@ const { isFetching: loading, data } = useQuery({
 
 <template>
   <Card
-    class="chart-container"
     :title="t('title')"
     :loading="loading"
   >
@@ -74,27 +73,19 @@ const { isFetching: loading, data } = useQuery({
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-container {
-  :deep(.card-body) {
-    height: 300px;
-    flex-direction: column;
-    justify-content: center;
-  }
+.actions {
+  display: flex;
+  font-size: 0.875rem;
 
-  .actions {
-    display: flex;
-    font-size: 0.875rem;
+  button {
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-    button {
-      &:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      &:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

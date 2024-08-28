@@ -143,7 +143,6 @@ function formatter(x: number): string {
 
 <template>
   <Card
-    class="chart-container"
     title="Collateral"
     :loading
   >
@@ -170,15 +169,8 @@ function formatter(x: number): string {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .actions {
-    display: flex;
-    gap: 1rem;
-  }
+.actions {
+  display: flex;
+  gap: 1rem;
 }
 </style>

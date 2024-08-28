@@ -128,7 +128,6 @@ const average = (data: number[], n = 7): number[] =>
 
 <template>
   <Card
-    class="chart-container"
     title="Rates"
     :loading
   >
@@ -154,16 +153,9 @@ const average = (data: number[], n = 7): number[] =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.chart-container {
-  :deep(.card-body) {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .actions {
-    > .avg-span {
-      width: 8rem;
-    }
+.actions {
+  > .avg-span {
+    width: 8rem;
   }
 }
 </style>
