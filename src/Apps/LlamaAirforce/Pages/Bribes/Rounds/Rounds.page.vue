@@ -196,7 +196,6 @@ function initFromRouter() {
 
 .bribes {
   .dashboard {
-    grid-template-rows: auto 68px auto auto;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "select-system select-system"

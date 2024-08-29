@@ -155,7 +155,6 @@ function initFromRouter() {
 .overview {
   .dashboard {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "select-system"
       "summary"

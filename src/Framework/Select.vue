@@ -48,6 +48,7 @@ const open = ref(false);
       <div
         v-for="(option, i) of options"
         :key="i"
+        class="item"
         @click.stop="
           open = false;
           emit('input', option);
@@ -97,12 +98,21 @@ const open = ref(false);
   }
 
   > .selected {
-    padding: 0.5rem 0.75rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    :deep(> div:first-child) {
+      margin: 0.5rem 0.75rem;
+    }
 
     > .label {
       color: var(--c-lvl5);
       font-size: 0.75rem;
       line-height: 1.5;
+      margin-inline: 0.75rem;
+      margin-bottom: 0.5rem;
     }
   }
 
@@ -124,7 +134,7 @@ const open = ref(false);
       display: none;
     }
 
-    > div {
+    > .item {
       color: var(--c-text);
       cursor: pointer;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
