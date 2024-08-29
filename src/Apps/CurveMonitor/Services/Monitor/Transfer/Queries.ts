@@ -40,7 +40,7 @@ export function useQueryTransfers(tokens: Ref<Address | Address[]>) {
               .includes(x.coinAddress.toLocaleLowerCase())
           ),
       ].takeRight(200),
-    resetOnSubscribe: true,
+    keepData: false,
   });
 
   return query;

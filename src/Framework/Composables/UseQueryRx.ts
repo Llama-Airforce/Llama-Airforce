@@ -27,8 +27,8 @@ type UseQueryRxOptions<T, U = T> = {
   /** Function to merge new data with existing query data */
   setQueryData: (oldData: U | undefined, data: T) => U;
 
-  /** Clear old data on resubscription during a refetch */
-  resetOnSubscribe: boolean;
+  /** Clear old data on resubscription during a refetch or cleanup */
+  keepData: boolean;
 };
 
 /** Represents a record of an RxJS subscription with all its usages. */
@@ -73,7 +73,7 @@ const queryKeySerialize = (queryKey: readonly unknown[]) =>
  *   enabled: computed(() => !!socket),
  *   observable: computed(() => transfersService.value?.transfers$),
  *   setQueryData: (oldData, newData) => [...(oldData ?? []), ...newData],
- *   resetOnSubscribe: true,
+ *   keepData: true,
  * });
  */
 export function useQueryRx<T, U = T>({
@@ -82,7 +82,7 @@ export function useQueryRx<T, U = T>({
   enabled,
   observable,
   setQueryData,
-  resetOnSubscribe,
+  keepData,
 }: UseQueryRxOptions<T, U>) {
   const queryClient = useQueryClient();
   const queryEnabled = computed(() => enabled.value && !!observable.value);
@@ -93,7 +93,7 @@ export function useQueryRx<T, U = T>({
       // This promise won't resolve until the subscription receives its first data.
       new Promise<U>((resolve, reject) => {
         // Clear old data from cache if we're refetching and resubscribing.
-        if (resetOnSubscribe) {
+        if (!keepData) {
           queryClient.setQueryData(queryKey.value, null);
         }
 
@@ -134,22 +134,7 @@ export function useQueryRx<T, U = T>({
     staleTime: Infinity,
   });
 
-  /**
-   * When the observable changes, invalidate the query to trigger a refetch
-   * and resubscription to the new observable. This is not done when the
-   * observable is first set from undefined, as the query enablement will
-   * trigger the initial fetch.
-   */
-  watch(observable, async (newObservable, oldObservable) => {
-    if (oldObservable && newObservable !== oldObservable) {
-      await queryClient.cancelQueries({ queryKey });
-      await queryClient.invalidateQueries({
-        queryKey,
-      });
-    }
-  });
-
-  useCleanup(queryKey, queryEnabled);
+  useCleanup({ queryKey, enabled: queryEnabled, keepData, observable });
 
   return query;
 }
@@ -158,13 +143,19 @@ export function useQueryRx<T, U = T>({
  * Handles cleanup of RxJS subscriptions and query cache for a specific query.
  *
  * @param queryKey - Ref containing the query key array
- * @param queryEnabled - Ref indicating if the query is enabled
- * @returns A cleanup function to be called when the query is disabled or the component unmounts
+ * @param enabled - Ref indicating if the query is enabled
+ * @param observable - Ref containing the RxJS Observable
+ * @param keepData - Boolean indicating whether to keep data on cleanup
  */
-function useCleanup(
-  queryKey: Ref<readonly unknown[]>,
-  queryEnabled: Ref<boolean>
-) {
+function useCleanup<T, U = T>({
+  queryKey,
+  enabled: queryEnabled,
+  observable,
+  keepData,
+}: Pick<
+  UseQueryRxOptions<T, U>,
+  "queryKey" | "enabled" | "observable" | "keepData"
+>) {
   const queryClient = useQueryClient();
   const userId = uniqueId();
 
@@ -201,6 +192,18 @@ function useCleanup(
     await cleanup(oldQueryKey);
   });
 
+  /**
+   * When the observable changes, invalidate the query to trigger a refetch
+   * and resubscription to the new observable. This is not done when the
+   * observable is first set from undefined, as the query enablement will
+   * trigger the initial fetch.
+   */
+  watch(observable, async (newObservable, oldObservable) => {
+    if (oldObservable && newObservable !== oldObservable) {
+      await cleanQuery(queryKey.value);
+    }
+  });
+
   // Ensure cleanup is performed when the component unmounts to prevent memory leaks.
   onUnmounted(async () => {
     await cleanup(queryKey.value);
@@ -227,10 +230,22 @@ function useCleanup(
        * just in case the query does not get refetched and unsubscribed there.
        */
       subRecord.subscription.unsubscribe();
-
       subscriptions.delete(queryKeyString);
-      await queryClient.cancelQueries({ queryKey });
-      await queryClient.invalidateQueries({ queryKey });
+      await cleanQuery(queryKey);
+    }
+  }
+
+  /**
+   * Cleans up a query by canceling, invalidating, and optionally clearing its data.
+   * @param queryKey - The key identifying the query to clean
+   */
+  async function cleanQuery(queryKey: readonly unknown[]) {
+    await queryClient.cancelQueries({ queryKey });
+    await queryClient.invalidateQueries({ queryKey });
+
+    // Clear old data from cache if we're refetching and resubscribing.
+    if (!keepData) {
+      queryClient.setQueryData(queryKey, null);
     }
   }
 

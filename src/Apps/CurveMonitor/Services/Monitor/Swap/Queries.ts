@@ -25,7 +25,7 @@ export function useQuerySwaps(observedAddress: Ref<Address>) {
       oldData: Swap[] | undefined,
       blockSummary: GeneralSwapAddressSpecificBlockSummary
     ) => [...(oldData ?? []), ...blockSummary.swaps.flat()].takeRight(200),
-    resetOnSubscribe: true,
+    keepData: false,
   });
 
   return query;
