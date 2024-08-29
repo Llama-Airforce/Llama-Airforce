@@ -1,5 +1,3 @@
-import { type Ref } from "vue";
-
 const TIME_UNITS = [
   { unit: "year", seconds: 365 * 24 * 60 * 60 },
   { unit: "month", seconds: 30 * 24 * 60 * 60 },

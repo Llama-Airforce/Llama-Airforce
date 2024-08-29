@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
-import { ref } from "vue";
 
 const darkMode = ref(false);
 const notifications = ref(true);

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
 import RadioButton from "@/Framework/RadioButton.vue";
-import { ref } from "vue";
 
 const values = ["option1", "option2"] as const;
 const selectedOption1 = ref("option1" as (typeof values)[number]);

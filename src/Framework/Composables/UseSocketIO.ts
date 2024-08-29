@@ -1,4 +1,4 @@
-import { type ShallowRef } from "vue";
+import type { ShallowRef } from "vue";
 import { io, type Socket } from "socket.io-client";
 
 type SocketOptions = {

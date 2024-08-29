@@ -1,4 +1,3 @@
-import { type Ref } from "vue";
 import { notify } from "@kyvg/vue3-notification";
 
 /**

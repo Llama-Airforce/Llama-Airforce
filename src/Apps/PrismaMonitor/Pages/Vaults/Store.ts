@@ -1,5 +1,3 @@
-import { ref } from "vue";
-import { defineStore } from "pinia";
 import { type TroveManagerDetails, type Trove } from "@PM/Services";
 
 export const useVaultStore = defineStore("vaultStore", () => {

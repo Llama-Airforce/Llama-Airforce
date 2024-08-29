@@ -1,7 +1,5 @@
-import { ref } from "vue";
-import { type RouteRecordRaw } from "vue-router";
-import { defineStore } from "pinia";
-import { type Page } from "@/Framework/Monitor/Page";
+import type { RouteRecordRaw } from "vue-router";
+import type { Page } from "@/Framework/Monitor/Page";
 
 export const usePageStore = <TPage extends Page>() =>
   defineStore("pageStore", () => {
