@@ -28,7 +28,7 @@
     "deploy": "bun run Deploy.ts"
   },
   "dependencies": {
-    "@cowprotocol/widget-lib": "0.13.2",
+    "@cowprotocol/widget-lib": "0.14.0",
     "@kyvg/vue3-notification": "^3.3.0",
     "@tanstack/vue-query": "5.52.2",
     "@tanstack/vue-query-devtools": "5.52.2",
