@@ -150,7 +150,7 @@ const formatterRatio = (x: number): string => {
 <template>
   <Card
     :title="t('title')"
-    :options
+    :loading
   >
     <ChartApex
       :options
