@@ -1,28 +1,11 @@
 <script setup lang="ts">
-import { type Address } from "@/Framework/Address";
 import { addressShort, addressLeft } from "@/Wallet";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
+import WatchlistTokens from "../Components/WatchlistTokens.vue";
+import { type Token } from "../Models";
 
 // Options
-type Option = { address: Address | Address[]; symbol: string };
-const options: Option[] = [
-  {
-    address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-    symbol: "USDT",
-  },
-  {
-    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    symbol: "USDC",
-  },
-  {
-    address: [
-      "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    ],
-    symbol: "Both",
-  },
-];
-const selected = ref(options[0]);
+const tokens = ref<Token[]>([]);
 
 const minAmount = ref<number | null | string>(0);
 const minAmountParsed = computed(() => {
@@ -30,10 +13,20 @@ const minAmountParsed = computed(() => {
   return typeof value === "string" ? parseFloat(value) || 0 : value ? value : 0;
 });
 
-// Data
+/**
+ * Data
+ *
+ * TODO: When 'tokens' changes and data is refetched, the old data is discarded.
+ * Setting resetOnSubscribe to false won't help because the key changes and is highly volatile.
+ * It's best to keep resetOnSubscribe set to true and track the history in this component.
+ * Consider creating a composable that watches a ref and appends data whenever new data is added.
+ * The composable would take a Ref<T[]> and output a new Ref<T[]>, essentially maintaining
+ * a history of all values.
+ */
 const { data: transfersRaw, isFetching: loading } = useQueryTransfers(
-  computed(() => selected.value.address)
+  computed(() => tokens.value.map((token) => token.address))
 );
+
 const { relativeTime } = useRelativeTime();
 
 const search = ref("");
@@ -69,7 +62,6 @@ const clipboard = async (addr: string) => {
   <Card
     class="transfers-card"
     title="Transfers"
-    :loading
   >
     <template #actions>
       <div style="display: flex; gap: 1rem">
@@ -93,28 +85,14 @@ const clipboard = async (addr: string) => {
     <div class="transfers-card-body">
       <div class="transfers-options">
         <div class="option">
-          <div class="label">Token</div>
-          <Select
-            :options
-            :selected
-            @input="selected = $event"
-          >
-            <template #item="{ item: { address, symbol } }">
-              <div class="item">
-                <TokenIcon
-                  v-if="!Array.isArray(address)"
-                  class="icon"
-                  :address="address"
-                ></TokenIcon>
+          <div class="label">Watchlist</div>
 
-                <div class="label">{{ symbol ?? "?" }}</div>
-              </div>
-            </template>
-          </Select>
+          <WatchlistTokens @tokens="tokens = $event"></WatchlistTokens>
         </div>
 
         <div class="option">
           <div class="label">Min Amount</div>
+
           <InputNumber
             v-model="minAmount"
             :min="0"
@@ -136,6 +114,7 @@ const clipboard = async (addr: string) => {
           'Token',
           { label: 'Age', align: 'end' },
         ]"
+        :loading
       >
         <template #row="{ item }">
           <div class="hash">
@@ -247,22 +226,6 @@ const clipboard = async (addr: string) => {
 
     .label {
       font-weight: bolder;
-    }
-  }
-
-  .item {
-    display: flex;
-    align-items: center;
-
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
-
-    > .label {
-      font-size: 0.875rem;
-      margin-left: 0.75rem;
     }
   }
 }
