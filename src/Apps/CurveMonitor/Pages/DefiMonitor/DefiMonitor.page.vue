@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Transfers from "@CM/Pages/DefiMonitor/Tabs/Transfers.vue";
 import Swaps from "@CM/Pages/DefiMonitor/Tabs/Swaps.vue";
+import CrvUsd from "@CM/Pages/DefiMonitor/Tabs/CrvUsd.vue";
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["transfers", "swaps"],
+  ["transfers", "swaps", "crvusd"],
   "defimonitor"
 );
 </script>
@@ -24,6 +25,12 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
       <TabItem header="Swaps">
         <KeepAlive>
           <Swaps v-if="tabActive === 'swaps'"></Swaps>
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="crvUSD">
+        <KeepAlive>
+          <CrvUsd v-if="tabActive === 'crvusd'"></CrvUsd>
         </KeepAlive>
       </TabItem>
     </TabView>
