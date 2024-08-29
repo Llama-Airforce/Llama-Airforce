@@ -142,6 +142,7 @@ export function useQueryRx<T, U = T>({
    */
   watch(observable, async (newObservable, oldObservable) => {
     if (oldObservable && newObservable !== oldObservable) {
+      await queryClient.cancelQueries({ queryKey });
       await queryClient.invalidateQueries({
         queryKey,
       });
@@ -228,6 +229,7 @@ function useCleanup(
       subRecord.subscription.unsubscribe();
 
       subscriptions.delete(queryKeyString);
+      await queryClient.cancelQueries({ queryKey });
       await queryClient.invalidateQueries({ queryKey });
     }
   }
