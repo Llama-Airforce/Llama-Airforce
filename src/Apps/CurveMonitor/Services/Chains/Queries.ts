@@ -14,7 +14,8 @@ export function useQueryChainsSupported() {
   return useQuery({
     queryKey: ["chains-supported"] as const,
     queryFn: () => service.getSupportedChains(),
-    ...initEmptyArray(),
+    initialData: ["ethereum"] as Chain[],
+    initialDataUpdatedAt: 0,
   });
 }
 

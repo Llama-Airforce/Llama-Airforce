@@ -18,7 +18,7 @@ export function useQueryChains() {
   return useQuery({
     queryKey: ["llama-markets-chains"] as const,
     queryFn: () => service.getChains(),
-    initialData: ["ethereum"] as Chain[],
+    initialData: ["ethereum", "arbitrum"] as Chain[],
     initialDataUpdatedAt: 0,
   });
 }

@@ -92,7 +92,8 @@ const onSelectChain = (newChain: Chain | "all"): void => {
         :class="{ loading }"
       >
         <SelectChain
-          :chain="chain"
+          :chain
+          :chains="['ethereum']"
           @select-chain="onSelectChain"
         >
         </SelectChain>
