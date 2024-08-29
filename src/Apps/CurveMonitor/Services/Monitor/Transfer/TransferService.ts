@@ -41,7 +41,7 @@ export default class TransferService {
   subTransfers(tokens: Address | Address[]) {
     if (!Array.isArray(tokens)) {
       this.socket.emit("connectToGeneralErc20Livestream", tokens);
-    } else {
+    } else if (tokens.length > 0) {
       this.socket.emit("connectToGeneralErc20ArrayLivestream", tokens);
     }
   }
