@@ -163,11 +163,8 @@ const series = computed((): Serie[] => {
 </script>
 
 <template>
-  <CardChart
-    class="chart"
+  <Card
     title="Revenue breakdown by source"
-    :options
-    :series
     :loading
   >
     <template #actions>
@@ -175,20 +172,23 @@ const series = computed((): Serie[] => {
         <Legend :items></Legend>
       </div>
     </template>
-  </CardChart>
+
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .chart {
-  :deep(.card-body) {
-    .apexcharts-tooltip {
-      .apexcharts-tooltip-title {
-        color: var(--c-text);
-        background: transparent;
-        border-bottom: 0;
-      }
+  :deep(.apexcharts-tooltip) {
+    .apexcharts-tooltip-title {
+      color: var(--c-text);
+      background: transparent;
+      border-bottom: 0;
     }
   }
 

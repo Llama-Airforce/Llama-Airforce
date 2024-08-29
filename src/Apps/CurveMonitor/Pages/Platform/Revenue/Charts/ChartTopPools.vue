@@ -81,11 +81,9 @@ const onSelectChain = (newChain: Chain | "all"): void => {
 </script>
 
 <template>
-  <CardChart
+  <Card
     class="graph"
     title="Top 10 pools by revenue (last 7 days)"
-    :options
-    :series
     :loading
   >
     <template #actions>
@@ -100,7 +98,12 @@ const onSelectChain = (newChain: Chain | "all"): void => {
         </SelectChain>
       </div>
     </template>
-  </CardChart>
+
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>

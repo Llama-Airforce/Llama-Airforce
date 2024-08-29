@@ -151,6 +151,7 @@ function formatterPrice(x: number): string {
         <Legend :items></Legend>
       </div>
     </template>
+
     <div
       ref="chartRef"
       class="chart"

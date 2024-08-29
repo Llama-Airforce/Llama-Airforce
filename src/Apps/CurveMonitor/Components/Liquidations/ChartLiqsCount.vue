@@ -117,7 +117,6 @@ const formatterY = (y: number): string =>
 
 <template>
   <ChartApex
-    class="chart"
     :options
     :series
   ></ChartApex>
@@ -128,10 +127,5 @@ const formatterY = (y: number): string =>
 
 .chart {
   height: 300px;
-  z-index: 0;
-
-  &:deep(.apexcharts-tooltip-title) {
-    display: none;
-  }
 }
 </style>

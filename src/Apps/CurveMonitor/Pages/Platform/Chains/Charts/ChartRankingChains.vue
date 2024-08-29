@@ -117,12 +117,7 @@ const formatterY = (x: number): string =>
 </script>
 
 <template>
-  <CardChart
-    class="chart"
-    :title
-    :options="options"
-    :series="series"
-  >
+  <Card :title>
     <template #actions>
       <div class="actions">
         <Legend
@@ -132,17 +127,18 @@ const formatterY = (x: number): string =>
         ></Legend>
       </div>
     </template>
-  </CardChart>
+
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.cart-chart {
-  :deep(.card-body) {
-    .chart {
-      height: 300px;
-    }
-  }
+.chart {
+  height: 300px;
 }
 </style>

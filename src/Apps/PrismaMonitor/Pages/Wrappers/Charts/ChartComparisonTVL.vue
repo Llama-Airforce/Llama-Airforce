@@ -143,6 +143,7 @@ function formatter(y: number): string {
         <Legend :items></Legend>
       </div>
     </template>
+
     <div
       ref="chartRef"
       class="chart"

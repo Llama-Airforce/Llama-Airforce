@@ -124,12 +124,9 @@ const onPeriod = (newPeriod: Period) => {
 </script>
 
 <template>
-  <CardChart
-    class="chart"
+  <Card
     :title="t('title')"
-    :loading="loading"
-    :options="options"
-    :series="series"
+    :loading
   >
     <template #actions>
       <div class="actions">
@@ -157,7 +154,12 @@ const onPeriod = (newPeriod: Period) => {
         </div>
       </div>
     </template>
-  </CardChart>
+
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>

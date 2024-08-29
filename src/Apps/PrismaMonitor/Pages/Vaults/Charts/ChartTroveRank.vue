@@ -208,9 +208,8 @@ whenever(
     </template>
 
     <ChartApex
-      class="chart"
-      :options="options"
-      :series="series"
+      :options
+      :series
     ></ChartApex>
   </Card>
 </template>

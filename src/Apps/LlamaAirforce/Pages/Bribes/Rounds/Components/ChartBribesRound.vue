@@ -139,23 +139,20 @@ const optimalColumnWidthPercent = (numBars: number): number => {
 </script>
 
 <template>
-  <CardChart
-    class="bribes"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
+  <Card :title="t('title')">
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.bribes {
-  :deep(.card-body) {
-    .apexcharts-tooltip {
-      grid-template-columns: 1fr auto;
-    }
+.chart {
+  :deep(.apexcharts-tooltip) {
+    grid-template-columns: 1fr auto;
   }
 }
 </style>

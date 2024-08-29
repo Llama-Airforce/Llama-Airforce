@@ -116,12 +116,12 @@ const series = computed(
 </script>
 
 <template>
-  <CardChart
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
+  <Card :title="t('title')">
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <i18n lang="yaml" locale="en">

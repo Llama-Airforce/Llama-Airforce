@@ -61,24 +61,23 @@ const formatter = (x: number): string =>
 </script>
 
 <template>
-  <CardChart
-    class="chart"
+  <Card
     title="Total revenue by chain"
-    :options
-    :series
     :loading
   >
-  </CardChart>
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
 .chart {
-  :deep(.card-body) {
-    .apexcharts-tooltip {
-      grid-template-rows: auto auto;
-    }
+  :deep(.apexcharts-tooltip) {
+    grid-template-rows: auto auto;
   }
 }
 </style>

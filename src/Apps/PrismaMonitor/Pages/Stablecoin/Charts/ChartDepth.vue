@@ -141,23 +141,22 @@ const formatter = (x: number): string => {
 </script>
 
 <template>
-  <CardChart
-    class="chart"
-    :title="title"
-    :loading="loading"
-    :options="options"
-    :series="series"
+  <Card
+    :title
+    :loading
   >
-  </CardChart>
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.cart-chart {
-  :deep(.card-body) {
-    height: 300px;
-  }
+.chart {
+  height: 300px;
 }
 </style>
 

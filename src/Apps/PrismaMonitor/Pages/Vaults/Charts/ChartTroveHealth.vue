@@ -148,25 +148,24 @@ const formatterRatio = (x: number): string => {
 </script>
 
 <template>
-  <CardChart
-    class="health"
+  <Card
     :title="t('title')"
-    :options="options"
-    :series="series"
-    :loading="loading"
+    :options
   >
-  </CardChart>
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.health {
-  :deep(.card-body) {
-    .apexcharts-tooltip {
-      grid-template-rows: auto auto;
-      grid-template-columns: auto auto;
-    }
+.chart {
+  :deep(.apexcharts-tooltip) {
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
   }
 }
 </style>

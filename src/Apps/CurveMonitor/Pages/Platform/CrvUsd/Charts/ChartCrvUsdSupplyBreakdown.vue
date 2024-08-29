@@ -115,7 +115,6 @@ const formatterY = (y: number): string =>
 
 <template>
   <ChartApex
-    class="chart"
     :options
     :series
   ></ChartApex>

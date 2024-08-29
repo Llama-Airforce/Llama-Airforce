@@ -13,7 +13,6 @@ declare module 'vue' {
     Button: typeof import('./../../Framework/Button.vue')['default']
     ButtonToggle: typeof import('./../../Framework/ButtonToggle.vue')['default']
     Card: typeof import('./../../Framework/Card.vue')['default']
-    CardChart: typeof import('./../../Framework/CardChart.vue')['default']
     ChartApex: typeof import('./../../Framework/ChartApex.vue')['default']
     Checkbox: typeof import('./../../Framework/Checkbox.vue')['default']
     Code: typeof import('./../../Framework/Code.vue')['default']

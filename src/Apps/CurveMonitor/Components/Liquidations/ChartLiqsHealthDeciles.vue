@@ -93,24 +93,10 @@ const formatterY = (y: number): string =>
 </script>
 
 <template>
-  <CardChart
-    class="chart"
-    title="Debt & Assets per Health Deciles"
-    :options
-    :series
-  ></CardChart>
+  <Card title="Debt & Assets per Health Deciles">
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.cart-chart {
-  :deep(.card-body) {
-    height: 300px;
-
-    @media only screen and (max-width: 1280px) {
-      height: 300px;
-    }
-  }
-}
-</style>

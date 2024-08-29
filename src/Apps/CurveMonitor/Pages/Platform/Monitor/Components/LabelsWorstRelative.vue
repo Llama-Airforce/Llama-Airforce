@@ -65,26 +65,21 @@ const formatter = (x: number): string => `${x}%`;
 </script>
 
 <template>
-  <CardChart
-    class="mevLabels"
+  <Card
     title="Worst relative offenders"
-    :options
-    :series
     :loading
   >
-  </CardChart>
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.mevLabels {
+.chart {
   height: 400px;
-
-  :deep(.card-body) {
-    .apexcharts-tooltip {
-      grid-template-rows: auto auto;
-    }
-  }
 }
 </style>

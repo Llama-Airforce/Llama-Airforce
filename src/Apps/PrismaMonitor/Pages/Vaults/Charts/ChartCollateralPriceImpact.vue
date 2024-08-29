@@ -124,25 +124,22 @@ const pctFormatter = (y: number): string => {
 </script>
 
 <template>
-  <CardChart
-    class="chart"
+  <Card
     :title="t('title')"
-    :loading="loading"
-    :options="options"
-    :series="series"
+    :loading
   >
-  </CardChart>
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.cart-chart {
-  :deep(.card-body) {
-    @media only screen and (max-width: 1280px) {
-      height: 300px;
-    }
-  }
+.chart {
+  height: 300px;
 }
 </style>
 

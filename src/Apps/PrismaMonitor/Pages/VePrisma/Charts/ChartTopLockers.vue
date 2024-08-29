@@ -85,28 +85,19 @@ const formatterPct = (x: number): string =>
 </script>
 
 <template>
-  <CardChart
-    class="graph"
-    :title="t('title')"
-    :options="options"
-    :series="series"
-  >
-  </CardChart>
+  <Card :title="t('title')">
+    <ChartApex
+      :options
+      :series
+    ></ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.graph {
-  :deep(.card-body) {
-    @media only screen and (max-width: 1280px) {
-      height: 300px;
-    }
-
-    .apexcharts-tooltip {
-      grid-template-rows: auto auto;
-    }
-  }
+.chart {
+  height: 300px;
 }
 </style>
 
