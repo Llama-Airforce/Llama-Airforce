@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const VueApexCharts = defineAsyncComponent(() => import("vue3-apexcharts"));
+
 // Props
 interface Props {
   options: unknown;
@@ -9,12 +11,12 @@ const { options, series } = defineProps<Props>();
 </script>
 
 <template>
-  <apexchart
+  <VueApexCharts
     class="chart"
     height="100%"
     :options="options"
     :series="series"
-  ></apexchart>
+  ></VueApexCharts>
 </template>
 
 <style lang="scss" scoped>

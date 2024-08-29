@@ -1,7 +1,6 @@
 import { createApp, type Plugin } from "vue";
 import { createPinia } from "pinia";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
-import VueApexCharts from "vue3-apexcharts";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 import { hashFn } from "@wagmi/core/query";
 import { type CreateConnectorFn, WagmiPlugin } from "@wagmi/vue";
@@ -64,7 +63,6 @@ export function setup(
 
   // Setup router and other plugins
   app
-    .use(VueApexCharts)
     .use(VueQueryPlugin, { queryClient })
     .use(Notifications)
     .use(WagmiPlugin, {
