@@ -135,8 +135,9 @@ const formatterY = (y: number): string =>
     <ChartApex
       :options
       :series
-    ></ChartApex
-  ></Card>
+    >
+    </ChartApex>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
