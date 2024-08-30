@@ -94,7 +94,7 @@ export function useQueryRx<T, U = T>({
       new Promise<U>((resolve, reject) => {
         // Clear old data from cache if we're refetching and resubscribing.
         if (!keepData) {
-          queryClient.setQueryData(queryKey.value, null);
+          queryClient.setQueryData(queryKey.value, undefined);
         }
 
         // Unsubscribe from any previous subscription to prevent leaks.
@@ -245,7 +245,7 @@ function useCleanup<T, U = T>({
 
     // Clear old data from cache if we're refetching and resubscribing.
     if (!keepData) {
-      queryClient.setQueryData(queryKey, null);
+      queryClient.setQueryData(queryKey, undefined);
     }
   }
 
