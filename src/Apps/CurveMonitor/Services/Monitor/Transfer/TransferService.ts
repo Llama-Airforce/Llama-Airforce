@@ -38,11 +38,19 @@ export default class TransferService {
     }
   }
 
-  subTransfers(tokens: Address | Address[]) {
+  sub(tokens: Address | Address[]) {
     if (!Array.isArray(tokens)) {
       this.socket.emit("connectToGeneralErc20Livestream", tokens);
     } else if (tokens.length > 0) {
       this.socket.emit("connectToGeneralErc20ArrayLivestream", tokens);
+    }
+  }
+
+  unsub(tokens: Address | Address[]) {
+    const tokensArray = Array.isArray(tokens) ? tokens : [tokens];
+
+    for (const token of tokensArray) {
+      this.socket.emit("disconnectFromGeneralErc20Livestream", token);
     }
   }
 }

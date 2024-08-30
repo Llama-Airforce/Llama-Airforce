@@ -4,9 +4,11 @@ import type { GeneralErc20TokenSpecificBlockSummary } from "@CM/Services/Monitor
 import type { GeneralSwapAddressSpecificBlockSummary } from "@CM/Services/Monitor/Swap";
 
 export type ClientToServerEvents = {
+  disconnectFromGeneralErc20Livestream: (tokenAddress: string) => void;
   connectToGeneralErc20Livestream: (tokenAddress: string) => void;
   connectToGeneralErc20ArrayLivestream: (tokenAddresses: string[]) => void;
 
+  disconnectFromGeneralErc20SwapLivestream: (observedAddress: string) => void;
   connectToGeneralErc20SwapLivestream: (observedAddress: string) => void;
 };
 

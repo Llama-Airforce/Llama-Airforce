@@ -20,26 +20,24 @@ export function useQueryTransfers(tokens: Ref<Address | Address[]>) {
     () => ["defimonitor-transfers", url.value, ...tokensArray.value] as const
   );
 
+  // Unsubscribe from tokens no longer watched.
+  watchArray(
+    tokensArray,
+    (_newTokens, _oldTokens, _added, removed) => {
+      service.value?.unsub(removed);
+    },
+    { deep: true }
+  );
+
   const query = useQueryRx({
     queryKey,
-    queryFn: () => service.value?.subTransfers(tokens.value),
+    queryFn: () => service.value?.sub(tokens.value),
     enabled: isConnected,
     observable: computed(() => service.value?.transfers$),
     setQueryData: (
       oldData: CleanedTransfer[] | undefined,
       blockSummary: GeneralErc20TokenSpecificBlockSummary
-    ) =>
-      [
-        ...(oldData ?? []),
-        ...blockSummary.transfers
-          .flat()
-          // Only needed because it's not possible yet to unsubscribe from streams.
-          .filter((x) =>
-            tokensArray.value
-              .map((y) => y.toLocaleLowerCase())
-              .includes(x.coinAddress.toLocaleLowerCase())
-          ),
-      ].takeRight(200),
+    ) => [...(oldData ?? []), ...blockSummary.transfers.flat()].takeRight(200),
     keepData: false,
   });
 
