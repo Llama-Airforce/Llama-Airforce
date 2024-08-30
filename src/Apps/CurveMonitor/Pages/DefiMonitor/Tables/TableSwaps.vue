@@ -154,20 +154,20 @@ const round = (x: number) =>
           <div>
             <a
               class="font-mono"
-              :href="`https://etherscan.io/address/${item.coinBeforeAddress}`"
+              :href="`https://etherscan.io/address/${item.senderAddress}`"
               target="_blank"
             >
-              {{ addressLeft(item.coinBeforeAddress, 5) }}
+              {{ addressLeft(item.senderAddress, 5) }}
             </a>
           </div>
 
           <div>
             <a
               class="font-mono"
-              :href="`https://etherscan.io/address/${item.coinAfterAddress}`"
+              :href="`https://etherscan.io/address/${item.receiverAddress}`"
               target="_blank"
             >
-              {{ addressLeft(item.coinAfterAddress, 5) }}
+              {{ addressLeft(item.receiverAddress, 5) }}
             </a>
           </div>
 
