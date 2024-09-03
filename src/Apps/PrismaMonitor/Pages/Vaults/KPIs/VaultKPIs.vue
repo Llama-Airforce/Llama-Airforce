@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { type TroveManagerDetails } from "@PM/Services";
 
-// Props
-interface Props {
+const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
+}>();
 </script>
 
 <template>

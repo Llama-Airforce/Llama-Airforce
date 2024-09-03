@@ -6,12 +6,9 @@ import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
 import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
 import { type Address } from "@/Framework/Address";
 
-// Props
-interface Props {
+const { gauge = "" } = defineProps<{
   gauge?: string;
-}
-
-const { gauge = "" } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -9,14 +9,15 @@ type ChainInfo = SelectItem & {
   chain: Chain | "all";
 };
 
-// Props
-interface Props {
+const {
+  chain,
+  chains,
+  all = false,
+} = defineProps<{
   chain: Chain | "all";
   chains: (Chain | "all")[];
   all?: boolean;
-}
-
-const { chain, chains, all = false } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

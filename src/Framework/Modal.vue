@@ -1,10 +1,7 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { show = false } = defineProps<{
   show?: boolean;
-}
-
-const { show = false } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

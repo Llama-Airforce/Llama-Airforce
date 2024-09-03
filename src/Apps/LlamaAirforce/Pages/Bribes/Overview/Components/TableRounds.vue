@@ -10,12 +10,9 @@ import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { overview } = defineProps<{
   overview?: Overview;
-}
-
-const { overview } = defineProps<Props>();
+}>();
 
 // Refs
 const { protocol } = storeToRefs(useBribesStore());

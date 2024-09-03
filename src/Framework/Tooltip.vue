@@ -1,10 +1,7 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { icon = "" } = defineProps<{
   icon?: string;
-}
-
-const { icon = "" } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -7,12 +7,9 @@ import {
 } from "@/Framework/Monitor/Menu";
 import { subIsActive } from "@/Util";
 
-// Props
-interface Props {
+const { item } = defineProps<{
   item: MenuItem;
-}
-
-const { item } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

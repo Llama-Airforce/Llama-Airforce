@@ -2,12 +2,9 @@
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
 import { useQuerySolverCompetition } from "@CM/Services/Solver/Queries";
 
-// Props
-interface Props {
+const { settlement } = defineProps<{
   settlement: CowSwapSettlement;
-}
-
-const { settlement } = defineProps<Props>();
+}>();
 
 // Data
 const { data: competition, isPending: isLoading } = useQuerySolverCompetition(

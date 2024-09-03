@@ -15,13 +15,10 @@ import {
 } from "@CM/Pages/Platform/LlamaLend/Components";
 import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
 
-// Props
-interface Props {
+const { market, chain } = defineProps<{
   market: Market | undefined;
   chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
+}>();
 
 // Data
 const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(

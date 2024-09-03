@@ -21,13 +21,10 @@ import {
   TableLiqOverview,
 } from "@CM/Components/Liquidations";
 
-// Props
-interface Props {
+const { market, chain } = defineProps<{
   market: Market | undefined;
   chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
+}>();
 
 const controller = computed(() => market?.controller);
 

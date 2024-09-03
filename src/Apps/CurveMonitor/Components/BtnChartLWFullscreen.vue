@@ -1,11 +1,8 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { chart, target } = defineProps<{
   chart: IChartApi | undefined;
   target: HTMLElement | undefined;
-}
-
-const { chart, target } = defineProps<Props>();
+}>();
 
 // Toggle
 const showFullscreen = defineModel<boolean>({ required: true });

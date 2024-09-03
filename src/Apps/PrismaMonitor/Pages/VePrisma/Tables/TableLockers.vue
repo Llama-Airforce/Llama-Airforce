@@ -3,11 +3,9 @@ import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { lockers = [] } = defineProps<{
   lockers: AccountData[];
-}
-const { lockers = [] } = defineProps<Props>();
+}>();
 
 const search = ref("");
 

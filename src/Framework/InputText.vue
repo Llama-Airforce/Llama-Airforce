@@ -2,16 +2,6 @@
 // Model
 const modelValue = defineModel<string>({ required: true });
 
-// Props
-interface Props {
-  placeholder?: string;
-  options?: T[];
-  search?: boolean;
-  autoComplete?: boolean;
-  filter?: (input: string, option: T) => boolean;
-  sort?: (a: T, b: T) => number;
-}
-
 const {
   placeholder = "",
   options = [],
@@ -19,7 +9,14 @@ const {
   autoComplete = false,
   filter = () => () => true,
   sort = null,
-} = defineProps<Props>();
+} = defineProps<{
+  placeholder?: string;
+  options?: T[];
+  search?: boolean;
+  autoComplete?: boolean;
+  filter?: (input: string, option: T) => boolean;
+  sort?: (a: T, b: T) => number;
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -1,14 +1,4 @@
 <script setup lang="ts">
-// Props
-interface Props {
-  label?: string;
-  labelSecond?: string;
-  tooltip?: string;
-  tooltipType?: "icon" | "underline";
-  value?: string | number;
-  hasValue?: boolean;
-}
-
 const {
   label = "",
   labelSecond = "",
@@ -16,7 +6,14 @@ const {
   tooltipType = "icon",
   value,
   hasValue = false,
-} = defineProps<Props>();
+} = defineProps<{
+  label?: string;
+  labelSecond?: string;
+  tooltip?: string;
+  tooltipType?: "icon" | "underline";
+  value?: string | number;
+  hasValue?: boolean;
+}>();
 </script>
 
 <template>

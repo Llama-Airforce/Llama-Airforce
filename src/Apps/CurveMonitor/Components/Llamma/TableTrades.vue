@@ -3,14 +3,11 @@ import { addressShort } from "@/Wallet";
 import { type Chain } from "@CM/Models";
 import { type LlammaTrade } from "@CM/Services/Llamma";
 
-// Props
-interface Props {
+const { trades, count, chain } = defineProps<{
   trades: LlammaTrade[];
   count: number;
   chain: Chain | undefined;
-}
-
-const { trades, count, chain } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

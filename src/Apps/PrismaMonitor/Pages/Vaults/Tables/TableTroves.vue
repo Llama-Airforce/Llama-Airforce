@@ -21,11 +21,9 @@ const storeSettings = useSettingsStore();
 // Services
 const troveService = new TroveService(storeSettings.flavor);
 
-// Props
-interface Props {
+const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
+}>();
 
 // Data
 const { isFetching: loading, data } = useQuery({

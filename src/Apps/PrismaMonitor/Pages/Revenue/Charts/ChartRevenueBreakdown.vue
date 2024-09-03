@@ -5,12 +5,9 @@ import { type SnapshotRevenue } from "@PM/Services";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
-// Props
-interface Props {
+const { data = [] } = defineProps<{
   data: SnapshotRevenue[];
-}
-
-const { data = [] } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

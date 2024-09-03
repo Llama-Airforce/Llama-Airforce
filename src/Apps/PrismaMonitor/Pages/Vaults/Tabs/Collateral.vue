@@ -4,12 +4,9 @@ import ChartCollateralPrices from "@PM/Pages/Vaults/Charts/ChartCollateralPrices
 import ChartCollateralPriceImpact from "@PM/Pages/Vaults/Charts/ChartCollateralPriceImpact.vue";
 import CollateralKPIs from "@PM/Pages/Vaults/KPIs/CollateralKPIs.vue";
 
-// Props
-interface Props {
+const { vault } = defineProps<{
   vault: TroveManagerDetails | null;
-}
-
-const { vault } = defineProps<Props>();
+}>();
 </script>
 
 <template>

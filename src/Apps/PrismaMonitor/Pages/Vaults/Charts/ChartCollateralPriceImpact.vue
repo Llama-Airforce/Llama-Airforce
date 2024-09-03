@@ -11,11 +11,9 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 // Services
 const collateralService = new CollateralService(flavor.value);
 
-// Props
-interface Props {
+const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
+}>();
 
 // Data
 const { isFetching: loading, data } = useQuery({

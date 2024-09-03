@@ -2,13 +2,10 @@
 import { addressShort } from "@/Wallet";
 import { type LlammaEvent } from "@CM/Services/Llamma";
 
-// Props
-interface Props {
+const { events, count } = defineProps<{
   events: LlammaEvent[];
   count: number;
-}
-
-const { events, count } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -8,12 +8,9 @@ type Users = {
   count: number;
 };
 
-// Props
-interface Props {
+const { users } = defineProps<{
   users: Users[];
-}
-
-const { users } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

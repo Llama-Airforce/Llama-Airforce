@@ -7,15 +7,17 @@ const emit = defineEmits<{
   selected: [market?: Market];
 }>();
 
-// Props
-interface Props {
+const {
+  pairs = [],
+  loading,
+  type,
+  chain,
+} = defineProps<{
   pairs: MarketPair[];
   loading: boolean;
   type: "long" | "short";
   chain: Chain;
-}
-
-const { pairs = [], loading, type, chain } = defineProps<Props>();
+}>();
 
 // Refs
 const title = computed(() =>

@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { type Proposal } from "@CM/Services/Proposal";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Methods
 const votesSupport = computed(() => proposal.votesFor);

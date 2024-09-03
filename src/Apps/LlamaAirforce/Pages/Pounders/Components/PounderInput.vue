@@ -1,22 +1,19 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-// Props
-interface Props {
-  balance?: bigint | null;
-  decimals: bigint;
-  token: string;
-  modelValue: bigint;
-  price?: number;
-}
-
 const {
   balance = null,
   decimals,
   token,
   modelValue,
   price = 0,
-} = defineProps<Props>();
+} = defineProps<{
+  balance?: bigint | null;
+  decimals: bigint;
+  token: string;
+  modelValue: bigint;
+  price?: number;
+}>();
 
 // Emits
 const emit = defineEmits<{

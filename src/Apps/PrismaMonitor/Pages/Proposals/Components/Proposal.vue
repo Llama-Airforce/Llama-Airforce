@@ -3,12 +3,9 @@ import ProposalSummary from "@PM/Pages/Proposals/Components/ProposalSummary.vue"
 import ProposalDetails from "@PM/Pages/Proposals/Components/ProposalDetails.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 const expanded = ref(false);
 </script>

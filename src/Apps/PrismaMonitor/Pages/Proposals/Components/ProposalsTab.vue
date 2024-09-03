@@ -4,12 +4,9 @@ import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { proposals } = defineProps<{
   proposals: Proposal[];
-}
-
-const { proposals } = defineProps<Props>();
+}>();
 
 // Refs
 const proposalSearch = ref("");

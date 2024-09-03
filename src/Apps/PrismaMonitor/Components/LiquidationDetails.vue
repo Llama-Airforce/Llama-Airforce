@@ -3,13 +3,10 @@ import { type Liquidation } from "@PM/Services";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { liquidation } = defineProps<{
   vaultAddr: string;
   liquidation: Liquidation;
-}
-
-const { liquidation } = defineProps<Props>();
+}>();
 
 // Refs
 const search = ref("");

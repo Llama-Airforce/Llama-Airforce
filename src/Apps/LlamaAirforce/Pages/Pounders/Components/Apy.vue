@@ -3,13 +3,10 @@ import { type Fees } from "@Pounders/Models";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { apy, fees } = defineProps<{
   apy: number | undefined;
   fees: Fees | undefined;
-}
-
-const { apy, fees } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

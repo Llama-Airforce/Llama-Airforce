@@ -1,18 +1,15 @@
 <script setup lang="ts">
-// Props
-interface Props {
-  show?: boolean;
-  title?: string;
-  ready?: boolean;
-  readyMsg?: string;
-}
-
 const {
   show = false,
   title = "",
   ready = true,
   readyMsg = "",
-} = defineProps<Props>();
+} = defineProps<{
+  show?: boolean;
+  title?: string;
+  ready?: boolean;
+  readyMsg?: string;
+}>();
 
 // Emits
 const emit = defineEmits<{

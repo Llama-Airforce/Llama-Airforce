@@ -3,12 +3,9 @@ import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import VotingQuorum from "@PM/Pages/Proposals/Components/VotingQuorum.vue";
 import VotingButtons from "@PM/Pages/Proposals/Components/VotingButtons.vue";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 </script>
 
 <template>

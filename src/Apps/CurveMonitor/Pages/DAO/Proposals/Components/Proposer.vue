@@ -2,12 +2,9 @@
 import { addressShort } from "@/Wallet";
 import { type Proposal } from "@CM/Services/Proposal";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 </script>
 
 <template>

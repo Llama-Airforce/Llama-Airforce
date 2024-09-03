@@ -3,16 +3,13 @@ import { type Trove, type TroveManagerDetails } from "@PM/Services";
 import TableTroves from "@PM/Pages/Vaults/Tables/TableTroves.vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 
-// Props
-interface Props {
+const { vault } = defineProps<{
   vault: TroveManagerDetails | null;
-}
+}>();
 
 // Refs
 const storeVault = useVaultStore();
 const router = useRouter();
-
-const { vault } = defineProps<Props>();
 
 // Events
 const onTroveSelect = async (trove: Trove) => {

@@ -5,12 +5,9 @@ import { ManagerService, type TroveManagerDetails } from "@PM/Services";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;
-}
-
-const { vault = null } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme, flavor } = storeToRefs(useSettingsStore());

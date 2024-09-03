@@ -7,12 +7,9 @@ import {
   hasReachedSupport,
 } from "@CM/Services/Proposal";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Refs
 const statusDetails = computed(() => {

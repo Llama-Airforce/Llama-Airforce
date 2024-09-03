@@ -4,12 +4,9 @@ import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
-// Props
-interface Props {
+const { market } = defineProps<{
   market: Market | undefined;
-}
-
-const { market } = defineProps<Props>();
+}>();
 
 // Data
 const { isFetching: loading, data: snapshots } = useQuerySnapshots(

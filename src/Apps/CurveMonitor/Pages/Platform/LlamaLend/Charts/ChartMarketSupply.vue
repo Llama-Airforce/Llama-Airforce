@@ -6,13 +6,10 @@ import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
-// Props
-interface Props {
+const { market, chain } = defineProps<{
   market: Market | undefined;
   chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
+}>();
 
 // Legend
 const { theme, themeId } = storeToRefs(useSettingsStore());

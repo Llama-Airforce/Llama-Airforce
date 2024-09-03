@@ -5,13 +5,10 @@ const { t } = useI18n();
 
 let deadlineTimer: ReturnType<typeof setTimeout> | undefined;
 
-// Props
-interface Props {
+const { proposal, type } = defineProps<{
   proposal: Proposal;
   type: "start" | "end";
-}
-
-const { proposal, type } = defineProps<Props>();
+}>();
 
 // Refs
 const deadlineString = ref("");

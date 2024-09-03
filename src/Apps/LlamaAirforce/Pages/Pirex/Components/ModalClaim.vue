@@ -15,14 +15,11 @@ import {
 } from "@LAF/Pages/Pirex/Services";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 
-// Props
-interface Props {
+const { snapshots, futures, prices } = defineProps<{
   snapshots: SnapshotReward[];
   futures: FuturesReward[];
   prices: Record<Address, Price | undefined>;
-}
-
-const { snapshots, futures, prices } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

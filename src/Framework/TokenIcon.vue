@@ -1,12 +1,13 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const {
+  chain = "ethereum",
+  address,
+  clickable = false,
+} = defineProps<{
   chain?: string;
   address: string;
   clickable?: boolean;
-}
-
-const { chain = "ethereum", address, clickable = false } = defineProps<Props>();
+}>();
 
 // Icon
 const icon = ref("");

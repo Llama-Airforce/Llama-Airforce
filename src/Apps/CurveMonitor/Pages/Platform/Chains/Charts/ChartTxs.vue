@@ -8,12 +8,9 @@ type Transactions = {
   count: number;
 };
 
-// Props
-interface Props {
+const { txs } = defineProps<{
   txs: Transactions[];
-}
-
-const { txs } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

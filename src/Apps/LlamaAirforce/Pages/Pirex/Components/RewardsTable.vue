@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { type Reward } from "@LAF/Pages/Pirex/Services";
 
-// Props
-interface Props {
+const {
+  rewards,
+  canSelect = false,
+  selected = [],
+} = defineProps<{
   rewards: Reward[];
   canSelect?: boolean;
   selected?: Reward[];
-}
-
-const { rewards, canSelect = false, selected = [] } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

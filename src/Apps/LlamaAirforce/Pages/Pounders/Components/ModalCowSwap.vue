@@ -4,12 +4,9 @@ import CowSwap from "@LAF/Components/CowSwap.vue";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { swap } = defineProps<{
   swap: Swap | null;
-}
-
-const { swap } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -3,13 +3,10 @@ import { type Proposal } from "@CM/Services/Proposal";
 import Voting from "@CM/Pages/DAO/Proposals/Components/Voting.vue";
 import Technicals from "@CM/Pages/DAO/Proposals/Components/Technicals.vue";
 
-// Props
-interface Props {
+const { proposal, expanded = false } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
-}
-
-const { proposal, expanded = false } = defineProps<Props>();
+}>();
 
 // Refs
 </script>

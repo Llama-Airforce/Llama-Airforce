@@ -4,20 +4,18 @@
  * The selected and expanded states of a single row are controlled by the table itself.
  * For this reason the toggles are simply an event emission.
  */
-// Props
-interface Props<T> {
-  data?: T;
-  selected?: boolean;
-  expanded?: boolean;
-  expandSide?: "left" | "right";
-}
 
 const {
   data,
   selected = false,
   expanded = false,
   expandSide = "right",
-} = defineProps<Props<T>>();
+} = defineProps<{
+  data?: T;
+  selected?: boolean;
+  expanded?: boolean;
+  expandSide?: "left" | "right";
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -7,12 +7,9 @@ type CollateralRatio = {
   ratio: number;
 };
 
-// Props
-interface Props {
+const { ratios } = defineProps<{
   ratios: CollateralRatio[];
-}
-
-const { ratios } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

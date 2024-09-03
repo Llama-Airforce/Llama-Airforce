@@ -6,12 +6,9 @@ import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { epoch } = defineProps<{
   epoch?: Epoch;
-}
-
-const { epoch } = defineProps<Props>();
+}>();
 
 // Refs
 const { protocol } = storeToRefs(useBribesStore());

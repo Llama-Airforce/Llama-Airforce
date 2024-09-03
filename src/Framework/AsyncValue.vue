@@ -5,17 +5,6 @@ const rodChars = "|/-\\";
 let rodIndex = 0;
 let rodTimer = 0;
 
-// Props
-interface Props {
-  value?: number | null;
-  type?: "dollar" | "percentage";
-  precision?: number | ((x: number) => number);
-  showUnit?: boolean;
-  showSymbol?: boolean;
-  showZero?: boolean;
-  inline?: boolean;
-}
-
 const {
   value = null,
   type = null,
@@ -24,7 +13,15 @@ const {
   showSymbol = true,
   showZero = false,
   inline = true,
-} = defineProps<Props>();
+} = defineProps<{
+  value?: number | null;
+  type?: "dollar" | "percentage";
+  precision?: number | ((x: number) => number);
+  showUnit?: boolean;
+  showSymbol?: boolean;
+  showZero?: boolean;
+  inline?: boolean;
+}>();
 
 // Refs
 const rod = ref("|");

@@ -7,12 +7,9 @@ const { t } = useI18n();
 
 const prismaService = new WrapperService();
 
-// Props
-interface Props {
+const { contract } = defineProps<{
   contract: Contract;
-}
-
-const { contract } = defineProps<Props>();
+}>();
 
 // Data
 const { isFetching: loading, data } = useQuery({

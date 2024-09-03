@@ -4,12 +4,9 @@ import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
 
 type ChartType = "count" | "value";
 
-// Props
-interface Props {
+const { liqs = [] } = defineProps<{
   liqs: LiquidationAggregate[];
-}
-
-const { liqs = [] } = defineProps<Props>();
+}>();
 
 // Refs
 const chartType = ref<ChartType>("count");

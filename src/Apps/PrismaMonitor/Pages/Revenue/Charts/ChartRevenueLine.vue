@@ -3,12 +3,9 @@ import { useSettingsStore } from "@PM/Stores";
 import createChartStyles from "@PM/Util/ChartStyles";
 import { type SnapshotRevenue } from "@PM/Services";
 
-// Props
-interface Props {
+const { data = [] } = defineProps<{
   data: SnapshotRevenue[];
-}
-
-const { data = [] } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

@@ -2,12 +2,9 @@
 import { addressShort } from "@/Wallet";
 import { type LiquidationDetails } from "@CM/Services/Liquidations";
 
-// Props
-interface Props {
+const { liqs } = defineProps<{
   liqs: LiquidationDetails[];
-}
-
-const { liqs } = defineProps<Props>();
+}>();
 
 type Liquidator = {
   liquidator: string;

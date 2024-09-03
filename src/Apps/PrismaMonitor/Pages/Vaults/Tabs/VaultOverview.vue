@@ -6,12 +6,9 @@ import VaultKPIs from "@PM/Pages/Vaults/KPIs/VaultKPIs.vue";
 import ChartSingleVaultCollateralRatio from "@PM/Pages/Vaults/Charts/ChartSingleVaultCollateralRatio.vue";
 import ChartSingleVaultOpenTroves from "@PM/Pages/Vaults/Charts/ChartSingleVaultOpenTroves.vue";
 
-// Props
-interface Props {
+const { vault } = defineProps<{
   vault: TroveManagerDetails | null;
-}
-
-const { vault } = defineProps<Props>();
+}>();
 </script>
 
 <template>

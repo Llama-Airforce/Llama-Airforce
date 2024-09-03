@@ -5,13 +5,10 @@ import Type from "@CM/Pages/DAO/Proposals/Components/Type.vue";
 import Proposer from "@CM/Pages/DAO/Proposals/Components/Proposer.vue";
 import Date from "@CM/Pages/DAO/Proposals/Components/Date.vue";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

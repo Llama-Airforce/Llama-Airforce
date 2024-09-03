@@ -13,11 +13,9 @@ const storeSettings = useSettingsStore();
 // Services
 const managerService = new ManagerService(storeSettings.flavor);
 
-// Props
-interface Props {
+const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
+}>();
 
 // Refs
 const chartType = ref<ChartType>("collateral");

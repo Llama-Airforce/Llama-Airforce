@@ -13,13 +13,10 @@ const createHighlighter = makeSingletonHighlighterCore(createHighlighterCore)({
   loadWasm: import("shiki/wasm"),
 });
 
-// Props
-interface Props {
+const { lang, code } = defineProps<{
   lang: "vue" | "html" | "scss" | "typescript";
   code: string;
-}
-
-const { lang, code } = defineProps<Props>();
+}>();
 
 // Refs
 const html = computedAsync(async () => {

@@ -4,12 +4,9 @@ import { abi } from "@/ABI/Union/Pirex";
 import { useWallet } from "@/Wallet";
 import { type RedemptionPending } from "@LAF/Pages/Pirex/Services";
 
-// Props
-interface Props {
+const { redemptions } = defineProps<{
   redemptions: RedemptionPending[];
-}
-
-const { redemptions } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

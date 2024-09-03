@@ -8,12 +8,9 @@ import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Refs
 const { address } = useWallet();

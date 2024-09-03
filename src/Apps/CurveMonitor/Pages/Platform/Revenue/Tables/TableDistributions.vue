@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { type Distribution } from "@CM/Services/Revenue";
 
-// Props
-interface Props {
+const { distributions } = defineProps<{
   distributions: Distribution[];
-}
-
-const { distributions } = defineProps<Props>();
+}>();
 
 // Data
 const columns = [

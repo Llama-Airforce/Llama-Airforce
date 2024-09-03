@@ -3,12 +3,9 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type OHLC } from "@CM/Services/OHLC";
 
-// Props
-interface Props {
+const { ohlc } = defineProps<{
   ohlc: OHLC[];
-}
-
-const { ohlc } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

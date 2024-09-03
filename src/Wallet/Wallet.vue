@@ -4,12 +4,9 @@ import { useDisconnect, useSwitchChain } from "@wagmi/vue";
 import { addressShort, useWallet } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 
-// Props
-interface Props {
+const { labelPleaseConnect } = defineProps<{
   labelPleaseConnect?: string;
-}
-
-const { labelPleaseConnect } = defineProps<Props>();
+}>();
 
 // Refs
 const { disconnect } = useDisconnect();

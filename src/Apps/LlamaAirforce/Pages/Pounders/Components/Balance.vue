@@ -3,13 +3,10 @@ import { type PounderState } from "@Pounders/Models";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { symbol, state } = defineProps<{
   symbol: string;
   state: PounderState;
-}
-
-const { symbol, state } = defineProps<Props>();
+}>();
 
 /** The total withdrawable balance in dollars, including unclaimed amount. */
 const balance = computed(() => {

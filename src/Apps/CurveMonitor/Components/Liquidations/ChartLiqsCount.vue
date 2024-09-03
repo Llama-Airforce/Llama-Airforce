@@ -5,12 +5,9 @@ import { type LiquidationAggregate } from "@CM/Services/Liquidations";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
-// Props
-interface Props {
+const { liqs = [] } = defineProps<{
   liqs: LiquidationAggregate[];
-}
-
-const { liqs = [] } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

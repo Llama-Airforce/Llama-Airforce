@@ -3,12 +3,9 @@ import { type Page } from "@/Framework/Monitor/Page";
 import { type MenuItem as MenuItemT } from "@/Framework/Monitor/Menu";
 import MenuItem from "@/Framework/Monitor/MenuItem.vue";
 
-// Props
-interface Props {
+const { pages = [] } = defineProps<{
   pages: Page[];
-}
-
-const { pages = [] } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

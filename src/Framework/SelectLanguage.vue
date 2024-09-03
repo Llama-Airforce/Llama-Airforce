@@ -9,13 +9,10 @@ type Direction = "up" | "down";
 const locale = useStorage<Locale>(STORAGE_LOCALE, "en");
 const { locale: loc } = useI18n({ useScope: "global" });
 
-// Props
-interface Props {
+const { locales = localesAll, direction = "up" } = defineProps<{
   locales?: Locale[];
   direction?: Direction;
-}
-
-const { locales = localesAll, direction = "up" } = defineProps<Props>();
+}>();
 
 // Hooks
 onMounted(() => {

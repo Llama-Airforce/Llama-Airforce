@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { type LiqOverview } from "@CM/Services/Liquidations";
 
-// Props
-interface Props {
+const { overview } = defineProps<{
   overview: LiqOverview | undefined;
-}
-
-const { overview } = defineProps<Props>();
+}>();
 
 type RowBase = {
   description: string;

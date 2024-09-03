@@ -8,14 +8,11 @@ import {
   createCowSwapWidget,
 } from "@cowprotocol/widget-lib";
 
-// Props
-interface Props {
+const { buy, sell, level } = defineProps<{
   buy?: string; // Token Symbol
   sell?: string; // Token Symbol
   level: 1 | 2;
-}
-
-const { buy, sell, level } = defineProps<Props>();
+}>();
 
 // Cowswap
 const { connector } = useAccount();

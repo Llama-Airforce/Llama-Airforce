@@ -2,13 +2,10 @@
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
 
-// Props
-interface Props {
+const { market, chain } = defineProps<{
   market: Market | undefined;
   chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
+}>();
 
 // TokenInfo
 type TokenInfo = {

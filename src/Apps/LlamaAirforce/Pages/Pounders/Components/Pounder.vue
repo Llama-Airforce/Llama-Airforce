@@ -5,12 +5,9 @@ import type { PounderId } from "@Pounders/Models";
 import PounderSummary from "@Pounders/Components/PounderSummary.vue";
 import PounderDetails from "@Pounders/Components/PounderDetails.vue";
 
-// Props
-interface Props {
+const { pounderId } = defineProps<{
   pounderId: PounderId;
-}
-
-const { pounderId } = defineProps<Props>();
+}>();
 
 // Refs
 const { address } = useWallet();

@@ -1,12 +1,9 @@
 <script setup lang="ts" generic="T">
-// Props
-interface Props<T> {
+const { options, selected, label } = defineProps<{
   options: T[];
   selected: T;
   label?: string;
-}
-
-const { options, selected, label } = defineProps<Props<T>>();
+}>();
 
 // Emits
 const emit = defineEmits<{

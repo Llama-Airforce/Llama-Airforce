@@ -2,12 +2,9 @@
 import { addressShort, useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Refs
 const { address: walletAddress } = useWallet();

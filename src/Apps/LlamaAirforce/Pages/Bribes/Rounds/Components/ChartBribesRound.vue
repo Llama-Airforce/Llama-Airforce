@@ -7,12 +7,9 @@ type Serie = { name: string; data: number[] };
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { epoch } = defineProps<{
   epoch?: Epoch;
-}
-
-const { epoch } = defineProps<Props>();
+}>();
 
 // Refs
 const { protocol } = storeToRefs(useBribesStore());

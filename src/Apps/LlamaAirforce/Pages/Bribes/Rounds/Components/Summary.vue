@@ -16,13 +16,10 @@ const { t } = useI18n();
 
 let countdownTimer: ReturnType<typeof setTimeout>;
 
-// Props
-interface Props {
+const { rounds = [], epoch } = defineProps<{
   rounds: number[];
   epoch?: Epoch;
-}
-
-const { rounds = [], epoch } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -1,13 +1,10 @@
 <script setup lang="ts">
 const VueApexCharts = defineAsyncComponent(() => import("vue3-apexcharts"));
 
-// Props
-interface Props {
+const { options, series } = defineProps<{
   options: unknown;
   series: unknown;
-}
-
-const { options, series } = defineProps<Props>();
+}>();
 </script>
 
 <template>

@@ -8,12 +8,9 @@ type Equity = {
   equity: number;
 };
 
-// Props
-interface Props {
+const { equity } = defineProps<{
   equity: Equity[];
-}
-
-const { equity } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

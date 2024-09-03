@@ -3,13 +3,10 @@ import { type Redemption } from "@PM/Services";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { redemption } = defineProps<{
   vaultAddr: string;
   redemption: Redemption;
-}
-
-const { redemption } = defineProps<Props>();
+}>();
 
 // Refs
 const search = ref("");

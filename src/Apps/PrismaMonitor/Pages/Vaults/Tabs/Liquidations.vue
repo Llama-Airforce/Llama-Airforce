@@ -2,12 +2,9 @@
 import { type TroveManagerDetails } from "@PM/Services";
 import TableLiquidations from "@PM/Pages/Vaults/Tables/TableLiquidations.vue";
 
-// Props
-interface Props {
+const { vault } = defineProps<{
   vault: TroveManagerDetails | null;
-}
-
-const { vault } = defineProps<Props>();
+}>();
 </script>
 
 <template>

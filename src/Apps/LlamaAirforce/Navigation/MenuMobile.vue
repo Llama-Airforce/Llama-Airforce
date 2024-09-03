@@ -2,12 +2,9 @@
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import { type PageLAF } from "@LAF/Pages/Page";
 
-// Props
-interface Props {
+const { open = false } = defineProps<{
   open?: boolean;
-}
-
-const { open = false } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

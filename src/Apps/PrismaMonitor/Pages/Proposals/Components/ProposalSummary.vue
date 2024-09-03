@@ -6,13 +6,10 @@ import Date from "@PM/Pages/Proposals/Components/Date.vue";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

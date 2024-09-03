@@ -10,12 +10,9 @@ import {
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { contract } = defineProps<{
   contract: Contract;
-}
-
-const { contract } = defineProps<Props>();
+}>();
 
 // Data
 const priceSettings = getPriceSettings(contract);

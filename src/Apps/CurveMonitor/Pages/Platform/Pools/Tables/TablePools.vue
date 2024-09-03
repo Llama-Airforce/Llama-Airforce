@@ -7,13 +7,10 @@ const emit = defineEmits<{
   selected: [pool: Pool];
 }>();
 
-// Props
-interface Props {
+const { pools } = defineProps<{
   chain: Chain;
   pools: Pool[];
-}
-
-const { pools } = defineProps<Props>();
+}>();
 
 // Data
 const columns = [

@@ -7,12 +7,9 @@ type Volume = {
   volume: number;
 };
 
-// Props
-interface Props {
+const { volume } = defineProps<{
   volume: Volume[];
-}
-
-const { volume } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

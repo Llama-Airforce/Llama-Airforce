@@ -5,12 +5,9 @@ import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
 import { useWallet } from "@/Wallet";
 import { type Proposal, getStatus } from "@CM/Services/Proposal";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Refs
 const { address } = useWallet();

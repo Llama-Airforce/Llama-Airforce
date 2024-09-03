@@ -8,11 +8,9 @@ const storeSettings = useSettingsStore();
 // Services
 const collateralService = new CollateralService(storeSettings.flavor);
 
-// Props
-interface Props {
+const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;
-}
-const { vault = null } = defineProps<Props>();
+}>();
 
 // Data
 const { data } = useQuery({

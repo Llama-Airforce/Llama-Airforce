@@ -3,13 +3,10 @@ import { type Proposal } from "@CM/Services/Proposal";
 import { useQueryProposal } from "@CM/Services/Proposal/Queries";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
 
-// Props
-interface Props {
+const { proposal, expanded = false } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
-}
-
-const { proposal, expanded = false } = defineProps<Props>();
+}>();
 
 // Refs
 const expandedCallData = ref(true);

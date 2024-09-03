@@ -3,12 +3,9 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 import { useSettingsStore } from "@PM/Stores";
 import { type DecimalLabelledSeries } from "@PM/Services";
 
-// Props
-interface Props {
+const { data = [] } = defineProps<{
   data: DecimalLabelledSeries[];
-}
-
-const { data = [] } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

@@ -1,14 +1,11 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { show, symbolOutput, minAmountOutRef } = defineProps<{
   show: boolean;
   symbolOutput: string;
   minAmountOutRef: number;
-}
-
-const { show, symbolOutput, minAmountOutRef } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -8,13 +8,10 @@ type PriceOracle = {
   priceOracle: number;
 };
 
-// Props
-interface Props {
+const { ratios, pricesOracle } = defineProps<{
   ratios: SoftLiqRatio[];
   pricesOracle: PriceOracle[];
-}
-
-const { ratios, pricesOracle } = defineProps<Props>();
+}>();
 
 // Legend
 const { theme } = storeToRefs(useSettingsStore());

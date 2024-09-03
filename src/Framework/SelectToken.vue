@@ -6,12 +6,9 @@ type Token = {
   symbol: string;
 };
 
-// Props
-interface Props {
+const { tokens } = defineProps<{
   tokens: Token[];
-}
-
-const { tokens } = defineProps<Props>();
+}>();
 
 const token = defineModel<Token>({
   required: true,

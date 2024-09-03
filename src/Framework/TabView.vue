@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import type TabItem from "@/Framework/TabItem.vue";
 
-// Props
-interface Props {
+const { active = 0 } = defineProps<{
   active?: number;
-}
-
-const { active = 0 } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

@@ -3,12 +3,9 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
-// Props
-interface Props {
+const { data = [] } = defineProps<{
   data: CrvUsdSupply[];
-}
-
-const { data = [] } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

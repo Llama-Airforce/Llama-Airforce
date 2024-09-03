@@ -3,12 +3,9 @@ import { useSettingsStore } from "@CM/Stores";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type LiqHealthDecile } from "@CM/Services/Liquidations";
 
-// Props
-interface Props {
+const { deciles } = defineProps<{
   deciles: LiqHealthDecile[];
-}
-
-const { deciles } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

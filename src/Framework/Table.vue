@@ -14,8 +14,19 @@ type Sorting = {
   order: SortOrder;
 };
 
-// Props
-interface Props {
+const {
+  columns = [],
+  rows = [],
+  rowsMin = null,
+  selectedRow = null,
+
+  expanded = [],
+  expandSide = "right",
+
+  sorting = {
+    order: "asc",
+  },
+} = defineProps<{
   columns?: Columns;
   rows?: TData[];
 
@@ -34,21 +45,7 @@ interface Props {
 
   /** Icon shown to the left of the header title. */
   icon?: string;
-}
-
-const {
-  columns = [],
-  rows = [],
-  rowsMin = null,
-  selectedRow = null,
-
-  expanded = [],
-  expandSide = "right",
-
-  sorting = {
-    order: "asc",
-  },
-} = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

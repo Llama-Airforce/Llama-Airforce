@@ -1,14 +1,11 @@
 <script setup lang="ts">
-// Model
-const modelValue = defineModel<boolean>({ default: false });
-
-// Props
-interface Props {
+const { icon = "", value = "" } = defineProps<{
   icon?: string;
   value?: string;
-}
+}>();
 
-const { icon = "", value = "" } = defineProps<Props>();
+// Model
+const modelValue = defineModel<boolean>({ default: false });
 
 // Emits
 const emit = defineEmits<{

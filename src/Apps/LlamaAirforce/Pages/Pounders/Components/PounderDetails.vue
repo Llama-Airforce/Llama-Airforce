@@ -13,13 +13,10 @@ import cow from "@/Assets/Icons/Tokens/cow.webp";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { pounderId, expanded } = defineProps<{
   pounderId: PounderId;
   expanded: boolean;
-}
-
-const { pounderId, expanded } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

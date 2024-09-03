@@ -6,13 +6,10 @@ import Balance from "@Pounders/Components/Balance.vue";
 import Apy from "@Pounders/Components/Apy.vue";
 import Tvl from "@Pounders/Components/Tvl.vue";
 
-// Props
-interface Props {
+const { pounderId } = defineProps<{
   pounderId: PounderId;
   expanded: boolean;
-}
-
-const { pounderId } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

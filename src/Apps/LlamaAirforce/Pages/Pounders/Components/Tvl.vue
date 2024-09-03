@@ -3,12 +3,9 @@ import { type PounderState } from "@Pounders/Models";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { state } = defineProps<{
   state: PounderState;
-}
-
-const { state } = defineProps<Props>();
+}>();
 
 const tvl = computed(() => {
   const { tvl, priceUnderlying, priceShare, decimalsWithdraw } = state;

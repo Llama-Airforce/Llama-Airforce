@@ -1,10 +1,7 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { label = "" } = defineProps<{
   label: string;
-}
-
-const { label = "" } = defineProps<Props>();
+}>();
 </script>
 
 <template>

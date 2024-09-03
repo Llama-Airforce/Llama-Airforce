@@ -8,14 +8,11 @@ type ActivityValue = Omit<Activity, "timestamp"> & {
   value: number;
 };
 
-// Props
-interface Props {
+const { chain, txs, users } = defineProps<{
   chain: ActivityValue["chain"] | "all";
   txs: ActivityValue[];
   users: ActivityValue[];
-}
-
-const { chain, txs, users } = defineProps<Props>();
+}>();
 
 const { theme } = storeToRefs(useSettingsStore());
 

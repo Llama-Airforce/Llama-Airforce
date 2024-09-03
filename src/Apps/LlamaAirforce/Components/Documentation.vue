@@ -1,12 +1,9 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { extra = "" } = defineProps<{
   extra?: string;
-}
-
-const { extra = "" } = defineProps<Props>();
+}>();
 </script>
 
 <template>

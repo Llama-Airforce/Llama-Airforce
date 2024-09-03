@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 
-// Props
-interface Props {
-  icon?: string;
-  value?: string;
-  primary?: boolean;
-  chainId?: number;
-}
-
 const {
   icon = "",
   value = "",
   primary = false,
   chainId,
-} = defineProps<Props>();
+} = defineProps<{
+  icon?: string;
+  value?: string;
+  primary?: boolean;
+  chainId?: number;
+}>();
 
 // Emits
 const emit = defineEmits<{

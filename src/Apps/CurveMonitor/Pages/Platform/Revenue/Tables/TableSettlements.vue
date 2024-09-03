@@ -3,12 +3,9 @@ import { addressShort } from "@/Wallet";
 import { type CowSwapSettlement } from "@CM/Services/Revenue";
 import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
 
-// Props
-interface Props {
+const { settlements } = defineProps<{
   settlements: CowSwapSettlement[];
-}
-
-const { settlements } = defineProps<Props>();
+}>();
 
 // Data
 const columns = [

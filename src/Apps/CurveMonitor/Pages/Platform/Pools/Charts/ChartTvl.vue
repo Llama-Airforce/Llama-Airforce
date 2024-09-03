@@ -7,12 +7,9 @@ type Tvl = {
   tvl: number;
 };
 
-// Props
-interface Props {
+const { tvl } = defineProps<{
   tvl: Tvl[];
-}
-
-const { tvl } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

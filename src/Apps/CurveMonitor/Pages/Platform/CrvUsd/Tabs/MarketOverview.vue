@@ -9,13 +9,10 @@ import {
 } from "@CM/Pages/Platform/CrvUsd/Charts";
 import { Properties, Addresses } from "@CM/Pages/Platform/CrvUsd/Components";
 
-// Props
-interface Props {
+const { market, chain } = defineProps<{
   market: Market | undefined;
   chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
+}>();
 </script>
 
 <template>

@@ -1,6 +1,12 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const {
+  title = "",
+  icon = "",
+  compact = false,
+  collapsible = false,
+  collapsed = false,
+  loading = false,
+} = defineProps<{
   title?: string;
   icon?: string;
   compact?: boolean;
@@ -9,16 +15,7 @@ interface Props {
   collapsed?: boolean;
 
   loading?: boolean;
-}
-
-const {
-  title = "",
-  icon = "",
-  compact = false,
-  collapsible = false,
-  collapsed = false,
-  loading = false,
-} = defineProps<Props>();
+}>();
 </script>
 
 <template>

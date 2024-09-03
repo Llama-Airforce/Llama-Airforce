@@ -17,12 +17,10 @@ const storeSettings = useSettingsStore();
 // Services
 const troveService = new TroveService(storeSettings.flavor);
 
-// Props
-interface Props {
+const { vaults = [], user } = defineProps<{
   vaults: TroveManagerDetails[];
   user?: string;
-}
-const { vaults = [], user } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

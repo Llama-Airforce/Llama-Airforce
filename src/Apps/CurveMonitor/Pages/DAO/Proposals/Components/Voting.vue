@@ -4,12 +4,9 @@ import VotingResults from "@CM/Pages/DAO/Proposals/Components/VotingResults.vue"
 import VotingQuorum from "@CM/Pages/DAO/Proposals/Components/VotingQuorum.vue";
 import VotingButtons from "@CM/Pages/DAO/Proposals/Components/VotingButtons.vue";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 </script>
 
 <template>

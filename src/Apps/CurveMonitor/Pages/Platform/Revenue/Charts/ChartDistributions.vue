@@ -4,12 +4,9 @@ import { BtnChartLWFullscreen } from "@CM/Components/";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
 
-// Props
-interface Props {
+const { distributions } = defineProps<{
   distributions: Distribution[];
-}
-
-const { distributions } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

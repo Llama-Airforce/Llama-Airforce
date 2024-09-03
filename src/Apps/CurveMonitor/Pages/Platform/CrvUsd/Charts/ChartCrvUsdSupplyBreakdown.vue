@@ -5,12 +5,9 @@ import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
-// Props
-interface Props {
+const { data = [] } = defineProps<{
   data: CrvUsdSupply[];
-}
-
-const { data = [] } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

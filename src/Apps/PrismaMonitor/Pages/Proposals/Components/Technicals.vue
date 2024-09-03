@@ -4,13 +4,10 @@ import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Refs
 const expandedCallData = ref(true);

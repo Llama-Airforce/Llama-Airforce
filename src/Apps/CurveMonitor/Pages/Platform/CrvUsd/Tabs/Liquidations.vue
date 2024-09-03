@@ -22,13 +22,10 @@ import {
 } from "@CM/Components/Liquidations";
 import { ChartCollateralRatio } from "@CM/Components/Lending";
 
-// Props
-interface Props {
+const { market, chain } = defineProps<{
   market: Market | undefined;
   chain: Chain | undefined;
-}
-
-const { market, chain } = defineProps<Props>();
+}>();
 
 const marketAddr = computed(() => market?.address);
 

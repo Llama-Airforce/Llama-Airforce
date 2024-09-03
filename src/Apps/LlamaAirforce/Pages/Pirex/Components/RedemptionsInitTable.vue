@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { type Redemption } from "@LAF/Pages/Pirex/Services";
 
-// Props
-interface Props {
+const { redemptions } = defineProps<{
   redemptions: Redemption[];
-}
-
-const { redemptions } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

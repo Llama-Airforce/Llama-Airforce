@@ -6,20 +6,17 @@ import {
   type TransactionDetail,
 } from "@CM/Services/Monitor/SocketMonitorCurve";
 
-// Props
-interface Props {
-  txs?: TransactionDetail[];
-  header?: boolean;
-  compact?: boolean;
-  time?: boolean;
-}
-
 const {
   txs = null,
   header = true,
   compact = false,
   time = true,
-} = defineProps<Props>();
+} = defineProps<{
+  txs?: TransactionDetail[];
+  header?: boolean;
+  compact?: boolean;
+  time?: boolean;
+}>();
 
 // Refs
 const { relativeTime } = useRelativeTime();

@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { type FeesCollected } from "@CM/Services/Revenue";
 
-// Props
-interface Props {
+const { fees } = defineProps<{
   fees: FeesCollected[];
-}
-
-const { fees } = defineProps<Props>();
+}>();
 
 // Data
 const columns = [

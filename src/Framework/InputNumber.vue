@@ -1,11 +1,8 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { min = -Infinity, max = Infinity } = defineProps<{
   min: number;
   max: number;
-}
-
-const { min = -Infinity, max = Infinity } = defineProps<Props>();
+}>();
 
 const modelValue = defineModel<number | null | string>({
   required: true,

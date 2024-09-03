@@ -1,13 +1,10 @@
 <script setup lang="ts" generic="T extends string">
 import { type LegendItem } from "@/Framework/Monitor/LegendItem";
 
-// Props
-interface Props<T extends string> {
+const { items, disabled = [] } = defineProps<{
   items: LegendItem<T>[];
   disabled?: T[];
-}
-
-const { items, disabled = [] } = defineProps<Props<T>>();
+}>();
 
 // Emits
 const emit = defineEmits<{

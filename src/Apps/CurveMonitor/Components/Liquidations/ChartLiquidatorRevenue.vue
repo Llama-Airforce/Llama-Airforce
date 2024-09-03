@@ -8,13 +8,10 @@ type Discount = {
   discount: number;
 };
 
-// Props
-interface Props {
+const { discounts, liqs } = defineProps<{
   discounts: Discount[];
   liqs: LiquidationDetails[];
-}
-
-const { discounts, liqs } = defineProps<Props>();
+}>();
 
 // Legend
 const { theme } = storeToRefs(useSettingsStore());

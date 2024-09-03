@@ -1,10 +1,7 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { expanded = true } = defineProps<{
   expanded: boolean;
-}
-
-const { expanded = true } = defineProps<Props>();
+}>();
 </script>
 
 <template>

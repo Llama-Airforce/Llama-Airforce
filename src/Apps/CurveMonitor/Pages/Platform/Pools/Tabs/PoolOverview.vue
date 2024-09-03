@@ -9,13 +9,10 @@ import {
   ChartTvl,
 } from "@CM/Pages/Platform/Pools/Charts";
 
-// Props
-interface Props {
+const { pool, chain } = defineProps<{
   pool: Pool | undefined;
   chain: Chain | undefined;
-}
-
-const { pool, chain } = defineProps<Props>();
+}>();
 
 const poolAddr = computed(() => pool?.address);
 const coin0 = computed(() => pool?.coins[0].address);

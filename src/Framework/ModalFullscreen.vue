@@ -5,12 +5,9 @@
  * returned to its original position in the DOM.
  */
 
-// Props
-interface Props {
+const { target } = defineProps<{
   target: HTMLElement | undefined;
-}
-
-const { target } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

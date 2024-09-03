@@ -5,13 +5,10 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { depth = null, loading } = defineProps<{
   depth?: PoolDepth | null;
   loading: boolean;
-}
-
-const { depth = null, loading } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

@@ -13,12 +13,9 @@ type TooltipParams = {
 
 const prismaService = new WrapperService();
 
-// Props
-interface Props {
+const { contract } = defineProps<{
   contract: Contract;
-}
-
-const { contract } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

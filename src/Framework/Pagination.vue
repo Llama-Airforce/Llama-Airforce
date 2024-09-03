@@ -1,12 +1,9 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { page, itemsCount, itemsPerPage } = defineProps<{
   page: number;
   itemsCount: number;
   itemsPerPage: number;
-}
-
-const { page, itemsCount, itemsPerPage } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

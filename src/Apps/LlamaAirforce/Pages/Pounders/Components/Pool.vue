@@ -1,13 +1,10 @@
 <script setup lang="ts">
-// Props
-interface Props {
+const { name, logo, symbol, priceUnderlying } = defineProps<{
   name: string;
   logo: string;
   symbol: string;
   priceUnderlying: number | undefined;
-}
-
-const { name, logo, symbol, priceUnderlying } = defineProps<Props>();
+}>();
 </script>
 
 <template>

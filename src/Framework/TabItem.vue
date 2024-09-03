@@ -1,12 +1,9 @@
 <script setup lang="ts">
-// Props
-interface Props {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { header = "", disabled = false } = defineProps<{
   header?: string;
   disabled?: boolean;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { header = "", disabled = false } = defineProps<Props>();
+}>();
 </script>
 
 <template>

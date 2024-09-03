@@ -3,25 +3,16 @@ import { type Proposal } from "@CM/Services/Proposal";
 
 const MIN_WIDTH = 4;
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 
 // Methods
-const total = computed(() => {
-  return proposal.votesFor + proposal.votesAgainst;
-});
-
-const forPercentage = computed((): number => {
-  return (proposal.votesFor / total.value) * 100;
-});
-
-const againstPercentage = computed(() => {
-  return (proposal.votesAgainst / total.value) * 100;
-});
+const total = computed(() => proposal.votesFor + proposal.votesAgainst);
+const forPercentage = computed(() => (proposal.votesFor / total.value) * 100);
+const againstPercentage = computed(
+  () => (proposal.votesAgainst / total.value) * 100
+);
 </script>
 
 <template>

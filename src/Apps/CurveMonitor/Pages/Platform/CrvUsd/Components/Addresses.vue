@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { type Market } from "@CM/Services/CrvUsd";
 
-// Props
-interface Props {
+const { market } = defineProps<{
   market: Market | undefined;
-}
-
-const { market } = defineProps<Props>();
+}>();
 
 const addresses = computed(() => [
   {

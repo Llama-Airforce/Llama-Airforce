@@ -3,12 +3,9 @@ import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type LiqLosses } from "@CM/Services/Liquidations";
 
-// Props
-interface Props {
+const { losses } = defineProps<{
   losses: LiqLosses[];
-}
-
-const { losses } = defineProps<Props>();
+}>();
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());

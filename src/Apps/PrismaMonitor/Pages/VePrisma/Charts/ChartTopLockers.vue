@@ -5,12 +5,10 @@ import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { totalWeight = 0, lockers = [] } = defineProps<{
   totalWeight: number;
   lockers: AccountData[];
-}
-const { totalWeight = 0, lockers = [] } = defineProps<Props>();
+}>();
 
 // Refs
 const { theme } = storeToRefs(useSettingsStore());

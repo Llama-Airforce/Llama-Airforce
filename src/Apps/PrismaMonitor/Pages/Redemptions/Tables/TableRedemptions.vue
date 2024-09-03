@@ -18,11 +18,9 @@ const redemptionService = new RedemptionService(storeSettings.flavor);
 
 const { t } = useI18n();
 
-// Props
-interface Props {
+const { vaults = [] } = defineProps<{
   vaults: TroveManagerDetails[];
-}
-const { vaults = [] } = defineProps<Props>();
+}>();
 
 // Data
 const { isFetching: loading, data } = useQuery({

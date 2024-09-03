@@ -16,12 +16,10 @@ const { theme, flavor } = storeToRefs(useSettingsStore());
 // Services
 const troveService = new TroveService(flavor.value);
 
-// Props
-interface Props {
+const { vault = null, trove = null } = defineProps<{
   vault?: TroveManagerDetails | null;
   trove?: Trove | null;
-}
-const { vault = null, trove = null } = defineProps<Props>();
+}>();
 
 // Refs
 const dynamicTitle = ref("Trove Relative Position");

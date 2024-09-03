@@ -2,12 +2,9 @@
 import { subIsActive } from "@/Util";
 import { type MenuItem, isNode, isLeaf } from "@LAF/Pages/Page";
 
-// Props
-interface Props {
+const { item } = defineProps<{
   item: MenuItem;
-}
-
-const { item } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

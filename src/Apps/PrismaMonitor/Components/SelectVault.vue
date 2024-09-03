@@ -8,13 +8,10 @@ import {
   label,
 } from "@PM/Models/Vault";
 
-// Props
-interface Props {
+const { vault, all = false } = defineProps<{
   vault: Vault | "all";
   all?: boolean;
-}
-
-const { vault, all = false } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

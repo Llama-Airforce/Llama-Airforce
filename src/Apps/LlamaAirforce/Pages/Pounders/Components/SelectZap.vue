@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import type { Zap } from "@Pounders/Models";
 
-// Props
-interface Props {
+const { zaps } = defineProps<{
   zaps: Zap[];
-}
-
-const { zaps } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

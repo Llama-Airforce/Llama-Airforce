@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { type Crumb } from "@/Framework/Crumb";
 
-// Props
-interface Props {
+const { crumbs, active } = defineProps<{
   crumbs: Crumb[];
   active?: Crumb;
-}
-
-const { crumbs, active } = defineProps<Props>();
+}>();
 
 // Emits
 const emit = defineEmits<{

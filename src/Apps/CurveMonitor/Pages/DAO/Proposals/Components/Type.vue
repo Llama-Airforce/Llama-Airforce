@@ -2,12 +2,9 @@
 import { type Proposal } from "@CM/Services/Proposal";
 import { capitalize } from "@/Util";
 
-// Props
-interface Props {
+const { proposal } = defineProps<{
   proposal: Proposal;
-}
-
-const { proposal } = defineProps<Props>();
+}>();
 </script>
 
 <template>

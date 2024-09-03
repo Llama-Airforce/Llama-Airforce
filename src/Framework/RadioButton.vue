@@ -1,19 +1,9 @@
 <script setup lang="ts" generic="T extends readonly unknown[]">
-/*
- * For some reason in Bun 1.1.26 if T[number] is placed directly in
- * the Props interface, websites that use this component get stuck
- * on a white screen for unknown reason.
- */
-type Value = T[number];
-
-// Props
-interface Props<T extends readonly unknown[]> {
+const { value, name } = defineProps<{
   values: T;
-  value: Value;
+  value: T[number];
   name: string;
-}
-
-const { value, name } = defineProps<Props<T>>();
+}>();
 
 // Model
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
