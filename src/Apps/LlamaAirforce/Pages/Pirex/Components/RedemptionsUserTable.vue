@@ -8,7 +8,6 @@ const { redemptions } = defineProps<{
   redemptions: RedemptionPending[];
 }>();
 
-// Emits
 const emit = defineEmits<{
   redeemed: [redemption: RedemptionPending];
 }>();

@@ -6,7 +6,6 @@ const { items, disabled = [] } = defineProps<{
   disabled?: T[];
 }>();
 
-// Emits
 const emit = defineEmits<{
   toggle: [item: T];
 }>();

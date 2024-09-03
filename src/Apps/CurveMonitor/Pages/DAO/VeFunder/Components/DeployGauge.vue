@@ -3,7 +3,6 @@ import { mainnet } from "viem/chains";
 import { type Address } from "@/Framework/Address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
 
-// Emits
 const emit = defineEmits<{
   gauge: [gauge: Address];
 }>();

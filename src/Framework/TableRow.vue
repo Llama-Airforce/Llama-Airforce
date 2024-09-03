@@ -17,7 +17,6 @@ const {
   expandSide?: "left" | "right";
 }>();
 
-// Emits
 const emit = defineEmits<{
   click: [data?: T];
 }>();
@@ -30,7 +29,7 @@ const expandable = computed((): boolean => {
   if (slot) {
     const children = slot()[0]?.children;
     if (children) {
-      return (children as []).length > 0;
+      return Array.isArray(children) && children.length > 0;
     }
   }
 

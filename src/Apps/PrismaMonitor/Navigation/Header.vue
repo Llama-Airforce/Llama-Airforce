@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Logo from "@PM/Navigation/Logo.vue";
 
-// Emits
 const emit = defineEmits<{
   "toggle-expansion": [];
   navigated: [];

@@ -5,7 +5,6 @@ const { redemptions } = defineProps<{
   redemptions: Redemption[];
 }>();
 
-// Emits
 const emit = defineEmits<{
   redemption: [redemption: Redemption];
 }>();

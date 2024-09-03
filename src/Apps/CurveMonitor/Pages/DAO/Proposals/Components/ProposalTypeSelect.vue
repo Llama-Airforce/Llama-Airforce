@@ -2,14 +2,12 @@
 import { type ProposalType, proposalTypes } from "@CM/Services/Proposal";
 import { capitalize } from "@/Util";
 
-const types = [...proposalTypes].filter((x) => x !== "other");
-
-// Emits
 const emit = defineEmits<{
   select: [type: ProposalType];
 }>();
 
 // Select
+const types = [...proposalTypes].filter((x) => x !== "other");
 const type = ref<ProposalType>("all");
 
 const onTypeSelect = (option: ProposalType): void => {

@@ -10,7 +10,6 @@ const { proposal } = defineProps<{
   expanded: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   toggleExpand: [];
 }>();

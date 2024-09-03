@@ -11,7 +11,6 @@ const { item } = defineProps<{
   item: MenuItem;
 }>();
 
-// Emits
 const emit = defineEmits<{
   navigated: [];
 }>();

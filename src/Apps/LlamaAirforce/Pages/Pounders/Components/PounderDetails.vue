@@ -18,7 +18,6 @@ const { pounderId, expanded } = defineProps<{
   expanded: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   deposit: [];
   withdraw: [];

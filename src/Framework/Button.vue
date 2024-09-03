@@ -13,7 +13,6 @@ const {
   chainId?: number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   click: [];
 }>();

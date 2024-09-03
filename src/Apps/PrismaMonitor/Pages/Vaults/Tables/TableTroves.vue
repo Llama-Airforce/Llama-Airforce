@@ -10,7 +10,6 @@ import {
 
 const { t } = useI18n();
 
-// Emit
 const emit = defineEmits<{
   selected: [trove: Trove];
 }>();

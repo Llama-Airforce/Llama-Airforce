@@ -14,25 +14,22 @@ import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 
 const { t } = useI18n();
 
-let countdownTimer: ReturnType<typeof setTimeout>;
-
 const { rounds = [], epoch } = defineProps<{
   rounds: number[];
   epoch?: Epoch;
 }>();
 
-// Emits
 const emit = defineEmits<{
   "select-round": [round: number];
 }>();
 
 // Refs
+let countdownTimer: ReturnType<typeof setTimeout>;
+
 const { product } = storeToRefs(useBribesStore());
 
 const countdownString = ref("");
-
 const roundsOrdered = computed(() => rounds.orderBy((x) => x, "desc"));
-
 const voteLink = computed(() => (epoch ? getLink(epoch, epoch.proposal) : ""));
 
 const dollarPerVlAsset = computed(() =>

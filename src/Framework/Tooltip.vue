@@ -3,7 +3,6 @@ const { icon = "" } = defineProps<{
   icon?: string;
 }>();
 
-// Emits
 const emit = defineEmits<{
   show: [boolean];
 }>();

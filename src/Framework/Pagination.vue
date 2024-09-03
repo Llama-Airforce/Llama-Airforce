@@ -5,7 +5,6 @@ const { page, itemsCount, itemsPerPage } = defineProps<{
   itemsPerPage: number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   page: [page: number];
 }>();

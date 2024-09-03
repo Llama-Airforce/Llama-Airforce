@@ -10,7 +10,6 @@ const { gauge = "" } = defineProps<{
   gauge?: string;
 }>();
 
-// Emits
 const emit = defineEmits<{
   request: [];
 }>();

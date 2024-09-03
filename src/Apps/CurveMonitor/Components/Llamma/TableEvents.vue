@@ -7,7 +7,6 @@ const { events, count } = defineProps<{
   count: number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   page: [page: number];
 }>();

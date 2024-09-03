@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const { min, max } = defineProps<{
-  min: number;
-  max: number;
-}>();
-
 const modelValue = defineModel<number>({
   required: true,
   set(value: string | number) {
     return Number(value);
   },
 });
+
+const { min, max } = defineProps<{
+  min: number;
+  max: number;
+}>();
 </script>
 
 <template>

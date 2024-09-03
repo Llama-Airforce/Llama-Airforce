@@ -9,7 +9,6 @@ const { trades, count, chain } = defineProps<{
   chain: Chain | undefined;
 }>();
 
-// Emits
 const emit = defineEmits<{
   page: [page: number];
 }>();

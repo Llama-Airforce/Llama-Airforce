@@ -7,7 +7,6 @@ const { show, symbolOutput, minAmountOutRef } = defineProps<{
   minAmountOutRef: number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   close: [];
   yes: [newMinAmountOut: number];

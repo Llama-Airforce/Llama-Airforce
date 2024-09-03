@@ -17,7 +17,6 @@ type ProtocolInfo = SelectItem & {
   protocol: Protocol;
 };
 
-// Emits
 const emit = defineEmits<{
   "select-platform": [platform: Platform];
   "select-protocol": [protocol: Protocol];

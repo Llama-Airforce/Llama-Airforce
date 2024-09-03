@@ -8,7 +8,6 @@ const { apy, fees } = defineProps<{
   fees: Fees | undefined;
 }>();
 
-// Emits
 const emit = defineEmits<{
   show: [boolean];
 }>();

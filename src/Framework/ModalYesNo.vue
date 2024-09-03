@@ -11,7 +11,6 @@ const {
   readyMsg?: string;
 }>();
 
-// Emits
 const emit = defineEmits<{
   yes: [];
   no: [];

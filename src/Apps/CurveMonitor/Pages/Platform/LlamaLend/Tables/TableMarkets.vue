@@ -2,11 +2,6 @@
 import { type Chain } from "@CM/Models";
 import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 
-// Emit
-const emit = defineEmits<{
-  selected: [market?: Market];
-}>();
-
 const {
   pairs = [],
   loading,
@@ -17,6 +12,10 @@ const {
   loading: boolean;
   type: "long" | "short";
   chain: Chain;
+}>();
+
+const emit = defineEmits<{
+  selected: [market?: Market];
 }>();
 
 // Refs

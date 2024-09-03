@@ -47,7 +47,6 @@ const {
   icon?: string;
 }>();
 
-// Emits
 const emit = defineEmits<{
   selected: [data: TData];
 

@@ -6,15 +6,14 @@ type Token = {
   symbol: string;
 };
 
-const { tokens } = defineProps<{
-  tokens: Token[];
-}>();
-
 const token = defineModel<Token>({
   required: true,
 });
 
-// Emits
+const { tokens } = defineProps<{
+  tokens: Token[];
+}>();
+
 const emit = defineEmits<{
   select: [token: Token];
 }>();

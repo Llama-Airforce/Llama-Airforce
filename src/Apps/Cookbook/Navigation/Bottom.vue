@@ -2,7 +2,6 @@
 import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@CB/Navigation/SelectTheme.vue";
 
-// Emits
 const emit = defineEmits<{
   navigated: [];
 }>();

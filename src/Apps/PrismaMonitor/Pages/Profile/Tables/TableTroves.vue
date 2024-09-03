@@ -22,7 +22,6 @@ const { vaults = [], user } = defineProps<{
   user?: string;
 }>();
 
-// Emits
 const emit = defineEmits<{
   troves: [troves: (Trove & { vault: Vault })[]];
 }>();

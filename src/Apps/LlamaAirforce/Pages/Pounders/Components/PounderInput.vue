@@ -15,7 +15,6 @@ const {
   price?: number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   "update:modelValue": [value: bigint];
 }>();

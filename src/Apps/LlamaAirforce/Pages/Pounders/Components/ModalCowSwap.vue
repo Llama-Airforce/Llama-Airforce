@@ -8,7 +8,6 @@ const { swap } = defineProps<{
   swap: Swap | null;
 }>();
 
-// Emits
 const emit = defineEmits<{
   close: [];
 }>();

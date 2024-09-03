@@ -11,7 +11,6 @@ const {
   selected?: Reward[];
 }>();
 
-// Emits
 const emit = defineEmits<{
   select: [rewards: Reward];
 }>();

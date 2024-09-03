@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Emits
 const emit = defineEmits<{
   close: [];
 }>();

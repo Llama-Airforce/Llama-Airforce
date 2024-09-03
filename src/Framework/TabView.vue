@@ -5,7 +5,6 @@ const { active = 0 } = defineProps<{
   active?: number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   tab: [params: { tab: typeof TabItem; index: number }];
 }>();

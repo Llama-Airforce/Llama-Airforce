@@ -2,14 +2,13 @@
 import { type Chain } from "@CM/Models";
 import { type Pool } from "@CM/Services/Pools";
 
-// Emit
-const emit = defineEmits<{
-  selected: [pool: Pool];
-}>();
-
 const { pools } = defineProps<{
   chain: Chain;
   pools: Pool[];
+}>();
+
+const emit = defineEmits<{
+  selected: [pool: Pool];
 }>();
 
 // Data

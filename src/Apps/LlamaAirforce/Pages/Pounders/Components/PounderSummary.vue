@@ -11,7 +11,6 @@ const { pounderId } = defineProps<{
   expanded: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   toggleExpand: [];
 }>();

@@ -5,7 +5,6 @@ import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 
 const { t } = useI18n();
 
-// Emit
 const emit = defineEmits<{
   selected: [vault: TroveManagerDetails];
 }>();

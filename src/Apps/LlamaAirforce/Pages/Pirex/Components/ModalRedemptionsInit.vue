@@ -6,7 +6,6 @@ import { abi as abiPirex } from "@/ABI/Union/Pirex";
 import RedemptionsTableInit from "@LAF/Pages/Pirex/Components/RedemptionsInitTable.vue";
 import { type Redemption } from "@LAF/Pages/Pirex/Services";
 
-// Emits
 const emit = defineEmits<{
   close: [];
 }>();

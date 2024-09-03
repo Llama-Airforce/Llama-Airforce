@@ -2,7 +2,6 @@
 import Header from "@CM/Navigation/Header.vue";
 import Bottom from "@CM/Navigation/Bottom.vue";
 
-// Emits
 const emit = defineEmits<{
   navigated: [];
 }>();

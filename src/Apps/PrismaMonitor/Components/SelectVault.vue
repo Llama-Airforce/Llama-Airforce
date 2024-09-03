@@ -13,7 +13,6 @@ const { vault, all = false } = defineProps<{
   all?: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   "select-vault": [vault: Vault | "all"];
 }>();

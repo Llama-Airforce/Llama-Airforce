@@ -6,7 +6,6 @@ const { open = false } = defineProps<{
   open?: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   closed: [];
   navigated: [];

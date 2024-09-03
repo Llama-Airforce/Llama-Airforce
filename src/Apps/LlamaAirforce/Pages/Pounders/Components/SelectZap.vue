@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import type { Zap } from "@Pounders/Models";
 
+const zap = defineModel<Zap>({
+  required: true,
+});
+
 const { zaps } = defineProps<{
   zaps: Zap[];
 }>();
 
-// Emits
 const emit = defineEmits<{
   select: [zap: Zap];
 }>();
-
-// Refs
-const zap = defineModel<Zap>({
-  required: true,
-});
 
 // Methods
 const icon = (logo: string): string => {

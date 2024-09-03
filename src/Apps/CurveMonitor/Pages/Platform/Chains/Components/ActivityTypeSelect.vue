@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { type ActivityType, activityTypes } from "@CM/Services/Chains";
 
-const types: (ActivityType | "all")[] = ["all", ...activityTypes];
-
-// Emits
 const emit = defineEmits<{
   select: [type: ActivityType | "all"];
 }>();
 
 // Select
+const types: (ActivityType | "all")[] = ["all", ...activityTypes];
 const type = ref<ActivityType | "all">("all");
 
 function label(option: ActivityType | "all") {

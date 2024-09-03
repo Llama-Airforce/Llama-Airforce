@@ -5,7 +5,6 @@ const { options, selected, label } = defineProps<{
   label?: string;
 }>();
 
-// Emits
 const emit = defineEmits<{
   input: [option: T];
 }>();

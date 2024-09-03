@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const { min = -Infinity, max = Infinity } = defineProps<{
-  min: number;
-  max: number;
-}>();
-
 const modelValue = defineModel<number | null | string>({
   required: true,
   default: null,
 });
+
+const { min = -Infinity, max = Infinity } = defineProps<{
+  min: number;
+  max: number;
+}>();
 
 watch(modelValue, (value) => {
   if (value === "") {

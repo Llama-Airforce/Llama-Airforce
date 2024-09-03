@@ -19,7 +19,6 @@ const {
   all?: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   "select-chain": [chain: Chain | "all"];
 }>();

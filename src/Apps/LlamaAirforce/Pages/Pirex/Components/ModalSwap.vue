@@ -7,7 +7,6 @@ import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
 
 const { t } = useI18n();
 
-// Emits
 const emit = defineEmits<{
   close: [];
   yes: [newMinAmountOut: number];

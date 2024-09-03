@@ -3,7 +3,6 @@ const { show = false } = defineProps<{
   show?: boolean;
 }>();
 
-// Emits
 const emit = defineEmits<{
   close: [];
 }>();

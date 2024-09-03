@@ -9,7 +9,6 @@ const { target } = defineProps<{
   target: HTMLElement | undefined;
 }>();
 
-// Emits
 const emit = defineEmits<{
   enterBefore: [modal: HTMLElement];
   enter: [modal: HTMLElement];

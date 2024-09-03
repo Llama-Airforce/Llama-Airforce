@@ -1,11 +1,10 @@
 <script setup lang="ts">
+const showFullscreen = defineModel<boolean>({ required: true });
+
 const { chart, target } = defineProps<{
   chart: IChartApi | undefined;
   target: HTMLElement | undefined;
 }>();
-
-// Toggle
-const showFullscreen = defineModel<boolean>({ required: true });
 
 // Fullscreen
 let originalHeight = 0;

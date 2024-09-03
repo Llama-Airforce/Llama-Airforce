@@ -7,7 +7,6 @@ const { pages = [] } = defineProps<{
   pages: Page[];
 }>();
 
-// Emits
 const emit = defineEmits<{
   navigated: [];
 }>();

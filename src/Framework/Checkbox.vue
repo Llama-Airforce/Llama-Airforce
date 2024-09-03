@@ -1,8 +1,6 @@
 <script setup lang="ts">
-// Model
 const modelValue = defineModel<boolean>({ required: true });
 
-// Emits
 const emit = defineEmits<{
   change: [checked: boolean];
 }>();

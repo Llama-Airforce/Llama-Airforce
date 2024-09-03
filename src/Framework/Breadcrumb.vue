@@ -6,7 +6,6 @@ const { crumbs, active } = defineProps<{
   active?: Crumb;
 }>();
 
-// Emits
 const emit = defineEmits<{
   crumb: [crumb: Crumb];
 }>();

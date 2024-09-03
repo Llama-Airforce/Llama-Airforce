@@ -15,16 +15,15 @@ import {
 } from "@LAF/Pages/Pirex/Services";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 
+const emit = defineEmits<{
+  close: [];
+  claimed: [claims: Claim[]];
+}>();
+
 const { snapshots, futures, prices } = defineProps<{
   snapshots: SnapshotReward[];
   futures: FuturesReward[];
   prices: Record<Address, Price | undefined>;
-}>();
-
-// Emits
-const emit = defineEmits<{
-  close: [];
-  claimed: [claims: Claim[]];
 }>();
 
 const { address } = useWallet();

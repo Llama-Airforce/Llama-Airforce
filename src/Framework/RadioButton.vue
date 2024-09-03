@@ -1,15 +1,14 @@
 <script setup lang="ts" generic="T extends readonly unknown[]">
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+const modelValue = defineModel<T[number] | undefined>({ required: true });
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const { value, name } = defineProps<{
   values: T;
   value: T[number];
   name: string;
 }>();
 
-// Model
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-const modelValue = defineModel<T[number] | undefined>({ required: true });
-
-// Emits
 const emit = defineEmits<{
   change: [value: T[number]];
 }>();

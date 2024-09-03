@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="T">
-// Model
 const modelValue = defineModel<string>({ required: true });
 
 const {
@@ -18,7 +17,6 @@ const {
   sort?: (a: T, b: T) => number;
 }>();
 
-// Emits
 const emit = defineEmits<{
   input: [val: string];
   select: [option: T];

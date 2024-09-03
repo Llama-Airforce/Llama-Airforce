@@ -2,7 +2,6 @@
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
-// Emit
 const emit = defineEmits<{
   selected: [market: Market];
 }>();

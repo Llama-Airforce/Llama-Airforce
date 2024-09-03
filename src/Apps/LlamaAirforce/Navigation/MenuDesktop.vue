@@ -5,7 +5,6 @@ import { type PageLAF } from "@LAF/Pages/Page";
 
 const { t } = useI18n();
 
-// Emits
 const emit = defineEmits<{
   navigated: [];
 }>();
