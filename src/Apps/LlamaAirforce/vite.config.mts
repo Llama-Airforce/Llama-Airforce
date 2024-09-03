@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       "import.meta.env.VITE_APP": JSON.stringify(app),
     },
     plugins: [
-      vue({ features: { propsDestructure: true } }),
+      vue(),
       vueDevTools({ launchEditor: "cursor" }),
       VueI18nPlugin({
         include: resolve(__dirname, "../../src/locales/**"),
