@@ -517,6 +517,7 @@
     "uniqueId": true,
     "deepMerge": true,
     "mapKeys": true,
-    "CrvUsdAddress": true
+    "CrvUsdAddress": true,
+    "useTemplateRef": true
   }
 }

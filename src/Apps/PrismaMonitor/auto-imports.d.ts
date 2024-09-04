@@ -444,6 +444,7 @@ declare global {
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
   const useSwitchChain: typeof import('@wagmi/vue')['useSwitchChain']
   const useTabNavigation: typeof import('../../Framework/Composables/UseTabNavigation')['useTabNavigation']
+  const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('@vueuse/core')['useTextDirection']
   const useTextSelection: typeof import('@vueuse/core')['useTextSelection']

@@ -15,7 +15,7 @@ const { address } = useWallet();
 const showVote = ref(false);
 const yeaPct = ref(50);
 
-const editor = ref<HTMLElement | null>(null);
+const editor = useTemplateRef<HTMLSpanElement>("editor");
 const endsWithDot = ref(false);
 
 const yeaPctStr = computed(() => {

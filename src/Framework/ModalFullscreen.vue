@@ -6,7 +6,7 @@
  */
 
 const { target } = defineProps<{
-  target: HTMLElement | undefined;
+  target: HTMLElement | null;
 }>();
 
 const emit = defineEmits<{
@@ -17,9 +17,9 @@ const emit = defineEmits<{
 }>();
 
 // Fullscreen handling
-const modalRef = ref<HTMLElement | undefined>(undefined);
+const modalRef = useTemplateRef<HTMLElement>("modal");
 
-let targetParent: HTMLElement | undefined = undefined;
+let targetParent: HTMLElement | null = null;
 let targetNextSibling: Node | null = null;
 
 // Watch for changes in the modal rendering to handle the element's transition to and from fullscreen.
@@ -41,7 +41,7 @@ watch(modalRef, (newModal, oldModal) => {
 });
 
 function enterFullscreen(target: Node, modal: HTMLElement) {
-  targetParent = target.parentNode as HTMLElement;
+  targetParent = target.parentNode as HTMLElement | null;
   targetNextSibling = target.nextSibling;
 
   // Remove the target element from its original container.
@@ -81,7 +81,7 @@ function exitFullscreen(
 <template>
   <Modal>
     <div
-      ref="modalRef"
+      ref="modal"
       class="fullscreen-content"
     ></div>
   </Modal>

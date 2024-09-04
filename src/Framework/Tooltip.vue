@@ -10,8 +10,8 @@ const emit = defineEmits<{
 // Refs
 const show = ref(false);
 
-const triggerRef = ref<HTMLElement | null>(null);
-const contentRef = ref<HTMLElement | null>(null);
+const triggerRef = useTemplateRef<HTMLElement>("trigger");
+const contentRef = useTemplateRef<HTMLElement>("content");
 
 watch(show, (show) => {
   emit("show", show);
@@ -94,7 +94,7 @@ function adjustPosition() {
     :class="{ show }"
   >
     <div
-      ref="triggerRef"
+      ref="trigger"
       class="trigger"
       @mouseover="showTooltip"
       @mouseleave="hideTooltip"
@@ -115,7 +115,7 @@ function adjustPosition() {
     </div>
 
     <div
-      ref="contentRef"
+      ref="content"
       class="content"
       @mouseover="showTooltip"
       @mouseleave="hideTooltip"

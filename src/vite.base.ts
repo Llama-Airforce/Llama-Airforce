@@ -11,6 +11,8 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     "@vueuse/core",
     "pinia",
     { "@vueuse/router": ["useRouteHash", "useRouteParams", "useRouteQuery"] },
+    // New in Vue 3.5
+    { vue: ["useTemplateRef"] },
     // Vue plugins
     { "@tanstack/vue-query": ["useQuery", "useQueries", "useQueryClient"] },
     { "@kyvg/vue3-notification": ["notify"] },

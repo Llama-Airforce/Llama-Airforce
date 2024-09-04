@@ -21,7 +21,7 @@ const provider = computedAsync(async () => {
   return prov;
 });
 
-const cow = ref<HTMLElement | undefined>(undefined);
+const cow = useTemplateRef<HTMLElement>("cow");
 let cowHandler: CowSwapWidgetHandler | undefined = undefined;
 
 onUnmounted(() => {
