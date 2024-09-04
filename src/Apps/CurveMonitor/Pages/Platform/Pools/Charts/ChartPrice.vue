@@ -15,8 +15,7 @@ let max = 1;
 let min = 0;
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartStyles(),
   series: {
     type: "Candlestick",
     name: "ohlc" as const,

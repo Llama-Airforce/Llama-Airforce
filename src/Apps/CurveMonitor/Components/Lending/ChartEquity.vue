@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type BaselineSeriesPartialOptions } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 
 type Equity = {
   timestamp: number;
@@ -16,8 +16,7 @@ const { equity } = defineProps<{
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: {
     type: "Baseline",
     name: "equity" as const,
@@ -27,7 +26,7 @@ const { chart, series } = useLightweightChart({
       return {
         priceFormat: {
           type: "custom",
-          formatter: (x: number): string =>
+          formatter: (x: number) =>
             `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
           minMove: 0.01,
         },

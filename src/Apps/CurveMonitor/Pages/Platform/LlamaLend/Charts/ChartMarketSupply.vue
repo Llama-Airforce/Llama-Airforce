@@ -3,7 +3,7 @@ import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
 const { market, chain } = defineProps<{
@@ -34,14 +34,13 @@ const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        leftPriceScale: {
-          visible: toggles.util.value,
-        },
-      })
-    ),
+  createChartOptions: createChartOptions(
+    computed(() => ({
+      leftPriceScale: {
+        visible: toggles.util.value,
+      },
+    }))
+  ),
   series: [
     {
       type: "Line",
@@ -49,7 +48,7 @@ const { chart, series } = useLightweightChart({
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
           type: "custom",
-          formatter: (x: number): string =>
+          formatter: (x: number) =>
             `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
           minMove: 0.01,
         },

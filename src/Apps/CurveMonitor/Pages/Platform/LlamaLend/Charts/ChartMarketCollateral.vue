@@ -2,7 +2,7 @@
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
 const { market, chain } = defineProps<{
@@ -43,8 +43,7 @@ const { items } = useLegend(() => [
 const denomDollars = ref(true);
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: [
     {
       type: "Line",

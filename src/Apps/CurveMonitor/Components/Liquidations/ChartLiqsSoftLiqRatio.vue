@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type SoftLiqRatio } from "@CM/Services/Liquidations";
 
 type PriceOracle = {
@@ -31,14 +31,11 @@ const { items } = useLegend(() => [
 
 // Chart
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        leftPriceScale: {
-          visible: true,
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    leftPriceScale: {
+      visible: true,
+    },
+  }),
   series: [
     {
       type: "Area",
@@ -46,7 +43,7 @@ const { chart, series } = useLightweightChart({
       options: computed<AreaSeriesPartialOptions>(() => ({
         priceFormat: {
           type: "custom",
-          formatter: (x: number): string =>
+          formatter: (x: number) =>
             `$${round(x, 2, "dollar")}${unit(x, "dollar")}`,
         },
         lineWidth: 2,

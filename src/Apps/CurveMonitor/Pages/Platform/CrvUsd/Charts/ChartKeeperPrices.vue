@@ -2,7 +2,7 @@
 import { type AutoscaleInfo } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type PoolPrice } from "@CM/Services/CrvUsd";
 import {
   useQueryKeepers,
@@ -36,8 +36,7 @@ const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: coins.map((coin, i) => ({
     type: "Line",
     name: coin,

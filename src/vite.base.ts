@@ -66,6 +66,12 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       imports: ["DataPoint"],
       type: true,
     },
+    // Vue Types
+    {
+      from: "vue",
+      imports: ["MaybeRef"],
+      type: true,
+    },
   ],
   dirs: ["../../Framework/**", "../../Util/**"],
   eslintrc: {

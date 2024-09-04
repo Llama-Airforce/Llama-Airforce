@@ -2,7 +2,7 @@
 import { useSettingsStore } from "@CM/Stores";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import { type Chain } from "@CM/Models";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
 const { market, chain } = defineProps<{
@@ -20,15 +20,12 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          // Needed to fix weird right margin wtf.
-          priceFormatter: (y: number): string => Math.round(y).toString(),
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      // Needed to fix weird right margin wtf.
+      priceFormatter: (y: number) => Math.round(y).toString(),
+    },
+  }),
   series: {
     type: "Histogram",
     name: "loans" as const,

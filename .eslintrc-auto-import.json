@@ -518,6 +518,7 @@
     "deepMerge": true,
     "mapKeys": true,
     "CrvUsdAddress": true,
-    "useTemplateRef": true
+    "useTemplateRef": true,
+    "MaybeRef": true
   }
 }

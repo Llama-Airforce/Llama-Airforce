@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
 import { type Endpoint } from "@CM/Services/Llamma";
@@ -22,15 +22,14 @@ const { isFetching: loading, data: ohlc } = useQueryOHLC(
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: {
     type: "Area",
     name: "volume" as const,
     options: computed<AreaSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (y: number): string =>
+        formatter: (y: number) =>
           `$${round(y, 0, "dollar")}${unit(y, "dollar")}`,
       },
       lineWidth: 2,

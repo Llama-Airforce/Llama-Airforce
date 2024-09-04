@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
 const { data = [] } = defineProps<{
@@ -11,8 +11,7 @@ const { data = [] } = defineProps<{
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: [
     {
       type: "Area",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/CrvUsd";
 import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
 
@@ -18,8 +18,7 @@ const { theme } = storeToRefs(useSettingsStore());
 const avgLength = ref<number | null>(null);
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: [
     {
       type: "Area",

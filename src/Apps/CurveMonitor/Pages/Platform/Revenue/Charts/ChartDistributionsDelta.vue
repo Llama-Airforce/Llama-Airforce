@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWFullscreen } from "@CM/Components/";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
 
 const { distributions } = defineProps<{
@@ -15,15 +15,14 @@ const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: {
     type: "Histogram",
     name: "deltas" as const,
     options: computed<HistogramSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (x: number): string =>
+        formatter: (x: number) =>
           `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
         minMove: 0.01,
       },

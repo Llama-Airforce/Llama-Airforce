@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 
 type Volume = {
   timestamp: number;
@@ -15,15 +15,14 @@ const { volume } = defineProps<{
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: {
     type: "Area",
     name: "volume" as const,
     options: computed<AreaSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (y: number): string =>
+        formatter: (y: number) =>
           `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
       },
       lineWidth: 2,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 import { type LlammaOHLC } from "@CM/Services/Llamma";
 
 const { ohlc } = defineProps<{
@@ -16,14 +16,11 @@ let max = 1;
 let min = 0;
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          priceFormatter: (price: number) => formatter(price),
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      priceFormatter: (price: number) => formatter(price),
+    },
+  }),
   series: [
     {
       type: "Candlestick",

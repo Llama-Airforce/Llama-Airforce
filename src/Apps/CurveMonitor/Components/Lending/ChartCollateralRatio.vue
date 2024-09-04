@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import createChartStyles from "@CM/Util/ChartStyles";
+import createChartOptions from "@CM/Util/ChartStyles";
 
 type CollateralRatio = {
   timestamp: number;
@@ -15,15 +15,14 @@ const { ratios } = defineProps<{
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: {
     type: "Area",
     name: "ratios" as const,
     options: computed<AreaSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (x: number): string =>
+        formatter: (x: number) =>
           `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
         minMove: 0.1,
       },
