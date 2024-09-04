@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
-import createChartStyles from "@PM/Util/ChartStyles";
+import createChartOptions from "@PM/Util/ChartStyles";
 import { CurvePriceService } from "@/Services";
 import { stableSymbol } from "@PM/Models/Flavor";
 
@@ -72,15 +72,12 @@ const tooltip = computed(() => {
 
 // Chart
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          priceFormatter: (y: number): string =>
-            `$${round(y, 4, "dollar")}${unit(y, "dollar")}`,
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      priceFormatter: (y: number) =>
+        `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+    },
+  }),
   series: {
     type: "Candlestick",
     name: "price" as const,

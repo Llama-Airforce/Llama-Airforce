@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
-import createChartStyles from "@PM/Util/ChartStyles";
+import createChartOptions from "@PM/Util/ChartStyles";
 import { type Contract } from "@PM/Services";
 import { CurvePriceService, CurveVolumeService } from "@/Services";
 import {
@@ -38,14 +38,11 @@ let min = 0;
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          priceFormatter: (price: number) => formatterPrice(price),
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      priceFormatter: (price: number) => formatterPrice(price),
+    },
+  }),
   series: [
     {
       type: "Candlestick",

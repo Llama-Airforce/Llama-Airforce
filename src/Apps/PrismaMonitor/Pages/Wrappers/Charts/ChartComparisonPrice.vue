@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
-import createChartStyles from "@PM/Util/ChartStyles";
+import createChartOptions from "@PM/Util/ChartStyles";
 import { CurvePriceService, type OHLC } from "@/Services";
 import { getPriceSettings } from "@PM/Pages/Wrappers/Settings";
 import { type Contract } from "@PM/Services";
@@ -46,14 +46,11 @@ let min = 0;
 
 // Chart
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          priceFormatter: (price: number) => formatterPrice(price),
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      priceFormatter: (price: number) => formatterPrice(price),
+    },
+  }),
   series: [
     {
       type: "Line",

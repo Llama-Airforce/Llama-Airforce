@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
-import createChartStyles from "@PM/Util/ChartStyles";
+import createChartOptions from "@PM/Util/ChartStyles";
 import {
   CollateralService,
   type TroveManagerDetails,
@@ -100,8 +100,7 @@ const processSeries = (
 
 // Chart
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() => createChartStyles(chartRef, theme.value)),
+  createChartOptions: createChartOptions(),
   series: [
     {
       type: "Area",

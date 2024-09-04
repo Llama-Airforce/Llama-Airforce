@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
-import createChartStyles from "@PM/Util/ChartStyles";
+import createChartOptions from "@PM/Util/ChartStyles";
 import { WrapperService, type Contract } from "@PM/Services";
 
 const { t } = useI18n();
@@ -24,15 +24,12 @@ const { isFetching: loading, data } = useQuery({
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          priceFormatter: (y: number): string =>
-            `$${round(y, 0, "dollar")}${unit(y, "dollar")}`,
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      priceFormatter: (y: number) =>
+        `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+    },
+  }),
   series: {
     type: "Area",
     name: "tvl" as const,

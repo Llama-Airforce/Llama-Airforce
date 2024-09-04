@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
-import createChartStyles from "@PM/Util/ChartStyles";
+import createChartOptions from "@PM/Util/ChartStyles";
 import {
   WrapperService,
   type Contract,
@@ -46,14 +46,11 @@ const { isFetching: loadingYearn, data: dataYearn } = useQuery({
 
 // Chart
 const { chart, series } = useLightweightChart({
-  createChartOptions: (chartRef) =>
-    computed(() =>
-      createChartStyles(chartRef, theme.value, {
-        localization: {
-          priceFormatter: (price: number) => formatter(price),
-        },
-      })
-    ),
+  createChartOptions: createChartOptions({
+    localization: {
+      priceFormatter: (price: number) => formatter(price),
+    },
+  }),
   series: [
     {
       type: "Line",
