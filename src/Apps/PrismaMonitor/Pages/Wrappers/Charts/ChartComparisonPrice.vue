@@ -58,38 +58,34 @@ const { chart, series } = useLightweightChart({
     {
       type: "Line",
       name: "convex" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "price",
-            precision: 6,
-            minMove: 0.000001,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          color: theme.value.colors.blue,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "price",
+          precision: 6,
+          minMove: 0.000001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        color: theme.value.colors.blue,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Line",
       name: "yearn" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "price",
-            precision: 6,
-            minMove: 0.000001,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          color: theme.value.colors.yellow,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "price",
+          precision: 6,
+          minMove: 0.000001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        color: theme.value.colors.yellow,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

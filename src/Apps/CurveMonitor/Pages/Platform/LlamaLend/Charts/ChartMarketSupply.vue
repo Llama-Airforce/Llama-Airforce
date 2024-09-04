@@ -46,56 +46,50 @@ const { chart, series } = useLightweightChart({
     {
       type: "Line",
       name: "supply" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter: (x: number): string =>
-              `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
-            minMove: 0.01,
-          },
-          lineWidth: 2,
-          color: theme.value.colors.blue,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          minMove: 0.01,
+        },
+        lineWidth: 2,
+        color: theme.value.colors.blue,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Line",
       name: "debt" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter: (x: number): string =>
-              `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
-            minMove: 0.01,
-          },
-          lineWidth: 2,
-          color: theme.value.colors.yellow,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          minMove: 0.01,
+        },
+        lineWidth: 2,
+        color: theme.value.colors.yellow,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Line",
       name: "util" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter: (x: number): string => `${Math.round(x * 100)}%`,
-            minMove: 0.01,
-          },
-          priceScaleId: "left",
-          lineWidth: 2,
-          color: theme.value.colors.purple,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string => `${Math.round(x * 100)}%`,
+          minMove: 0.01,
+        },
+        priceScaleId: "left",
+        lineWidth: 2,
+        color: theme.value.colors.purple,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

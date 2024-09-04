@@ -43,43 +43,39 @@ const { chart, series } = useLightweightChart({
     {
       type: "Area",
       name: "revenue" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "price",
-            precision: 0,
-            minMove: 1,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lineColor: theme.value.colors.blue,
-          topColor: "rgb(32, 129, 240, 0.2)",
-          bottomColor: "rgba(32, 129, 240, 0)",
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "price",
+          precision: 0,
+          minMove: 1,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.blue,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Area",
       name: "discount" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "percent",
-            precision: 6,
-            minMove: 0.000001,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lineColor: theme.value.colors.yellow,
-          priceScaleId: "left",
-          topColor: "rgb(32, 129, 240, 0.2)",
-          bottomColor: "rgba(32, 129, 240, 0)",
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "percent",
+          precision: 6,
+          minMove: 0.000001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.yellow,
+        priceScaleId: "left",
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

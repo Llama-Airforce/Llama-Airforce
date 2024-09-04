@@ -17,38 +17,34 @@ const { chart, series } = useLightweightChart({
     {
       type: "Area",
       name: "supply" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lineColor: theme.value.colors.blue,
-          topColor: "rgb(32, 129, 240, 0.2)",
-          bottomColor: "rgba(32, 129, 240, 0)",
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.blue,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Line",
       name: "debt" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          color: theme.value.colors.yellow,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        color: theme.value.colors.yellow,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

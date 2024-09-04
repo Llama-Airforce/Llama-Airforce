@@ -32,16 +32,14 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Histogram",
     name: "loans" as const,
-    options: computed(
-      (): HistogramSeriesPartialOptions => ({
-        color: theme.value.colors.yellow,
-        lastValueVisible: false,
-        priceFormat: {
-          type: "volume",
-        },
-        priceLineVisible: false,
-      })
-    ),
+    options: computed<HistogramSeriesPartialOptions>(() => ({
+      color: theme.value.colors.yellow,
+      lastValueVisible: false,
+      priceFormat: {
+        type: "volume",
+      },
+      priceLineVisible: false,
+    })),
   },
 });
 

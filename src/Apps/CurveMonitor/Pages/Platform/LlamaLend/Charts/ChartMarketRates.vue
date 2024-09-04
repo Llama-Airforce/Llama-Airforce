@@ -46,34 +46,30 @@ const { chart, series } = useLightweightChart({
     {
       type: "Line",
       name: "borrowApy" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter,
-          },
-          lineWidth: 2,
-          color: theme.value.colors.red,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        lineWidth: 2,
+        color: theme.value.colors.red,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Line",
       name: "lendApy" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter,
-          },
-          lineWidth: 2,
-          color: theme.value.colors.green,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        lineWidth: 2,
+        color: theme.value.colors.green,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

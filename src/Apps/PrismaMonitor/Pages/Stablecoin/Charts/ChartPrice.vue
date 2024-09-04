@@ -84,7 +84,7 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Candlestick",
     name: "price" as const,
-    options: computed((): CandlestickSeriesPartialOptions => {
+    options: computed<CandlestickSeriesPartialOptions>(() => {
       const { colors } = theme.value;
 
       return {

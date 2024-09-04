@@ -49,34 +49,30 @@ const { chart, series } = useLightweightChart({
     {
       type: "Line",
       name: "collateral" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter,
-          },
-          lineWidth: 2,
-          color: theme.value.colors.blue,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        lineWidth: 2,
+        color: theme.value.colors.blue,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Line",
       name: "borrowed" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter,
-          },
-          lineWidth: 2,
-          color: theme.value.colors.yellow,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter,
+        },
+        lineWidth: 2,
+        color: theme.value.colors.yellow,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

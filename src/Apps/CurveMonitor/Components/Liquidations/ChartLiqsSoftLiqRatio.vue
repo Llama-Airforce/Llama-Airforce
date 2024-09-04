@@ -43,43 +43,39 @@ const { chart, series } = useLightweightChart({
     {
       type: "Area",
       name: "price" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter: (x: number): string =>
-              `$${round(x, 2, "dollar")}${unit(x, "dollar")}`,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lineColor: theme.value.colors.yellow,
-          topColor: "rgb(32, 129, 240, 0.2)",
-          bottomColor: "rgba(32, 129, 240, 0)",
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `$${round(x, 2, "dollar")}${unit(x, "dollar")}`,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.yellow,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
     {
       type: "Area",
       name: "ratio" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "custom",
-            formatter: (x: number): string =>
-              `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lineColor: theme.value.colors.blue,
-          priceScaleId: "left",
-          topColor: "rgb(32, 129, 240, 0.2)",
-          bottomColor: "rgba(32, 129, 240, 0)",
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number): string =>
+            `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.blue,
+        priceScaleId: "left",
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

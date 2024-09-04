@@ -21,7 +21,7 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Baseline",
     name: "equity" as const,
-    options: computed((): BaselineSeriesPartialOptions => {
+    options: computed<BaselineSeriesPartialOptions>(() => {
       const { colors } = theme.value;
 
       return {

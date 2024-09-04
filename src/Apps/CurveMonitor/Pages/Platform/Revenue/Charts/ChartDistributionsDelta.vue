@@ -20,19 +20,17 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Histogram",
     name: "deltas" as const,
-    options: computed(
-      (): HistogramSeriesPartialOptions => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (x: number): string =>
-            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
-          minMove: 0.01,
-        },
-        color: theme.value.colors.blue,
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })
-    ),
+    options: computed<HistogramSeriesPartialOptions>(() => ({
+      priceFormat: {
+        type: "custom",
+        formatter: (x: number): string =>
+          `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+        minMove: 0.01,
+      },
+      color: theme.value.colors.blue,
+      lastValueVisible: false,
+      priceLineVisible: false,
+    })),
   },
 });
 

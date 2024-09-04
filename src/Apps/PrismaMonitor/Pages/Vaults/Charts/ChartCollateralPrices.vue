@@ -106,40 +106,36 @@ const { chart, series } = useLightweightChart({
     {
       type: "Area",
       name: "oracle" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "price",
-            precision: 2,
-            minMove: 0.001,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lastValueVisible: false,
-          priceLineVisible: false,
-          ...theme.value.lineChartColors,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "price",
+          precision: 2,
+          minMove: 0.001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lastValueVisible: false,
+        priceLineVisible: false,
+        ...theme.value.lineChartColors,
+      })),
     },
     {
       type: "Area",
       name: "market" as const,
-      options: computed(
-        (): AreaSeriesPartialOptions => ({
-          priceFormat: {
-            type: "price",
-            precision: 2,
-            minMove: 0.001,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          lineColor: theme.value.colors.yellow,
-          topColor: "rgb(32, 129, 240, 0.2)",
-          bottomColor: "rgba(32, 129, 240, 0)",
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<AreaSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "price",
+          precision: 2,
+          minMove: 0.001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        lineColor: theme.value.colors.yellow,
+        topColor: "rgb(32, 129, 240, 0.2)",
+        bottomColor: "rgba(32, 129, 240, 0)",
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

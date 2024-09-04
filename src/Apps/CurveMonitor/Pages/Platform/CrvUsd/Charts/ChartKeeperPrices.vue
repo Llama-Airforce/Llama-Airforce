@@ -41,30 +41,28 @@ const { chart, series } = useLightweightChart({
   series: coins.map((coin, i) => ({
     type: "Line",
     name: coin,
-    options: computed(
-      (): LineSeriesPartialOptions => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (y: number) =>
-            `${round(y, 3, "dollar")}${unit(y, "dollar")}`,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        color: theme.value.colorsArray[i],
-        lastValueVisible: false,
-        priceLineVisible: false,
-        autoscaleInfoProvider: (original: () => AutoscaleInfo | null) => {
-          const res = original();
+    options: computed<LineSeriesPartialOptions>(() => ({
+      priceFormat: {
+        type: "custom",
+        formatter: (y: number) =>
+          `${round(y, 3, "dollar")}${unit(y, "dollar")}`,
+      },
+      lineWidth: 2,
+      lineType: LineType.WithSteps,
+      color: theme.value.colorsArray[i],
+      lastValueVisible: false,
+      priceLineVisible: false,
+      autoscaleInfoProvider: (original: () => AutoscaleInfo | null) => {
+        const res = original();
 
-          if (res !== null) {
-            res.priceRange.minValue = Math.max(0.98, res.priceRange.minValue);
-            res.priceRange.maxValue = Math.min(1.02, res.priceRange.maxValue);
-          }
+        if (res !== null) {
+          res.priceRange.minValue = Math.max(0.98, res.priceRange.minValue);
+          res.priceRange.maxValue = Math.min(1.02, res.priceRange.maxValue);
+        }
 
-          return res;
-        },
-      })
-    ),
+        return res;
+      },
+    })),
   })),
 });
 

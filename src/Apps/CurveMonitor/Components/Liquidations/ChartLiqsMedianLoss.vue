@@ -16,23 +16,21 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Area",
     name: "losses" as const,
-    options: computed(
-      (): AreaSeriesPartialOptions => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (x: number): string =>
-            `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
-          minMove: 0.1,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })
-    ),
+    options: computed<AreaSeriesPartialOptions>(() => ({
+      priceFormat: {
+        type: "custom",
+        formatter: (x: number): string =>
+          `${round(x, 0, "percentage")}${unit(x, "percentage")}`,
+        minMove: 0.1,
+      },
+      lineWidth: 2,
+      lineType: LineType.WithSteps,
+      lineColor: theme.value.colors.blue,
+      topColor: "rgb(32, 129, 240, 0.2)",
+      bottomColor: "rgba(32, 129, 240, 0)",
+      lastValueVisible: false,
+      priceLineVisible: false,
+    })),
   },
 });
 

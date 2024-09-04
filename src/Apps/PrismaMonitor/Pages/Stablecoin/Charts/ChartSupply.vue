@@ -33,20 +33,18 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Area",
     name: "supply" as const,
-    options: computed(
-      (): AreaSeriesPartialOptions => ({
-        priceFormat: {
-          type: "price",
-          precision: 2,
-          minMove: 0.001,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lastValueVisible: false,
-        priceLineVisible: false,
-        ...theme.value.lineChartColors,
-      })
-    ),
+    options: computed<AreaSeriesPartialOptions>(() => ({
+      priceFormat: {
+        type: "price",
+        precision: 2,
+        minMove: 0.001,
+      },
+      lineWidth: 2,
+      lineType: LineType.WithSteps,
+      lastValueVisible: false,
+      priceLineVisible: false,
+      ...theme.value.lineChartColors,
+    })),
   },
 });
 

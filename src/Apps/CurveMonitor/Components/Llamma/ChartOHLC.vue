@@ -28,7 +28,7 @@ const { chart, series } = useLightweightChart({
     {
       type: "Candlestick",
       name: "ohlc" as const,
-      options: computed((): CandlestickSeriesPartialOptions => {
+      options: computed<CandlestickSeriesPartialOptions>(() => {
         const { colors } = theme.value;
 
         return {
@@ -49,20 +49,18 @@ const { chart, series } = useLightweightChart({
     {
       type: "Line",
       name: "oracle" as const,
-      options: computed(
-        (): LineSeriesPartialOptions => ({
-          priceFormat: {
-            type: "price",
-            precision: 6,
-            minMove: 0.000001,
-          },
-          lineWidth: 2,
-          lineType: LineType.WithSteps,
-          color: theme.value.colors.blue,
-          lastValueVisible: false,
-          priceLineVisible: false,
-        })
-      ),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "price",
+          precision: 6,
+          minMove: 0.000001,
+        },
+        lineWidth: 2,
+        lineType: LineType.WithSteps,
+        color: theme.value.colors.blue,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
     },
   ],
 });

@@ -22,22 +22,20 @@ const { chart, series } = useLightweightChart({
   series: {
     type: "Area",
     name: "available" as const,
-    options: computed(
-      (): AreaSeriesPartialOptions => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (y: number): string =>
-            `$${round(y, 0, "dollar")}${unit(y, "dollar")}`,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })
-    ),
+    options: computed<AreaSeriesPartialOptions>(() => ({
+      priceFormat: {
+        type: "custom",
+        formatter: (y: number): string =>
+          `$${round(y, 0, "dollar")}${unit(y, "dollar")}`,
+      },
+      lineWidth: 2,
+      lineType: LineType.WithSteps,
+      lineColor: theme.value.colors.blue,
+      topColor: "rgb(32, 129, 240, 0.2)",
+      bottomColor: "rgba(32, 129, 240, 0)",
+      lastValueVisible: false,
+      priceLineVisible: false,
+    })),
   },
 });
 
