@@ -153,75 +153,66 @@ export function useLightweightChart<
 
   let resizeObserver: ResizeObserver | null = null;
 
-  onMounted(async () => {
-    if (!chartRef.value) return;
+  // Create a new lightweight chart instance the moment the div is mounted
+  whenever(chartRef, (newChartRef) => {
+    cleanup();
 
-    /*
-     * There were some cases in the past where graphs
-     * wouldn't load until a next tick happened
-     * for some reason. Added just to be sure.
-     */
-    await nextTick();
-
-    // Create chart and invoke creation event
-    const newChart = createChart(
-      chartRef.value,
-      createChartOptions(chartRef.value)
-    );
-    chart.value = newChart;
+    chart.value = createChart(newChartRef, createChartOptions(newChartRef));
 
     // Create series
     for (const serieDef of serieDefsArray) {
-      const serie = createSerie(newChart, serieDef);
+      const serie = createSerie(chart.value, serieDef);
       series[serieDef.name as keyof typeof series] =
         serie as Series<T>[keyof Series<T>];
     }
 
     // Create a ResizeObserver to observe the chart's parent element
-    resizeObserver = new ResizeObserver((observers) => {
-      const parent = observers[0].target;
+    const parent = newChartRef.parentElement;
+    if (parent) {
+      resizeObserver = new ResizeObserver((observers) => {
+        const parent = observers[0].target;
 
-      if (chart.value && chartRef.value) {
-        chart.value.applyOptions({
+        chart.value?.applyOptions({
           width: parent.clientWidth,
           height: parent.clientHeight,
         });
 
-        chart.value.timeScale().fitContent();
-      }
-    });
+        chart.value?.timeScale().fitContent();
+      });
 
-    // Start observing the chart's parent element
-    if (chartRef.value.parentElement) {
-      resizeObserver.observe(chartRef.value.parentElement);
+      resizeObserver.observe(parent);
     }
   });
 
   onUnmounted(() => {
-    if (chart.value) {
-      chart.value.remove();
-      chart.value = undefined;
-    }
-
-    if (resizeObserver) {
-      resizeObserver.disconnect();
-      resizeObserver = null;
-    }
+    cleanup();
   });
 
-  // Recreating trigger for chart options.
+  // Recreating trigger for chart options
   watch(recreateChartTrigger, () => {
     if (chartRef.value && chart.value) {
       chart.value.applyOptions(createChartOptions(chartRef.value));
     }
   });
 
-  // Apply new options when serie options change.
+  // Apply new options when serie options change
   for (const { name, options } of serieDefsArray) {
     watch(options, (newOptions) => {
       const serie = series[name as keyof Series<T>];
       serie?.applyOptions(newOptions);
     });
+  }
+
+  function cleanup() {
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = null;
+    }
+
+    if (chart.value) {
+      chart.value.remove();
+      chart.value = undefined;
+    }
   }
 
   return { chart, chartRef, series };
