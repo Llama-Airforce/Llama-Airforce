@@ -36,8 +36,8 @@ const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
-  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
+  createChartOptions: (chartRef) =>
+    computed(() => createChartStyles(chartRef, theme.value)),
   series: coins.map((coin, i) => ({
     type: "Line",
     name: coin,

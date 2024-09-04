@@ -46,13 +46,14 @@ const { isFetching: loadingYearn, data: dataYearn } = useQuery({
 
 // Chart
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (price: number) => formatter(price),
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (price: number) => formatter(price),
+        },
+      })
+    ),
   series: [
     {
       type: "Line",

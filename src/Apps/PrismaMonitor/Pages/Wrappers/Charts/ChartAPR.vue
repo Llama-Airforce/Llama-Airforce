@@ -24,13 +24,14 @@ const { isFetching: loading, data } = useQuery({
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (price: number) => formatter(price),
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (price: number) => formatter(price),
+        },
+      })
+    ),
   series: {
     type: "Area",
     name: "apr" as const,

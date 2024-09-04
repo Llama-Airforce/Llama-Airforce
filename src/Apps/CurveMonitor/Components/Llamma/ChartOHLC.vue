@@ -16,13 +16,14 @@ let max = 1;
 let min = 0;
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (price: number) => formatter(price),
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (price: number) => formatter(price),
+        },
+      })
+    ),
   series: [
     {
       type: "Candlestick",

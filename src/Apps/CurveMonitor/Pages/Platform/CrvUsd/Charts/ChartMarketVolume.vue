@@ -22,8 +22,8 @@ const { isFetching: loading, data: ohlc } = useQueryOHLC(
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
-  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
+  createChartOptions: (chartRef) =>
+    computed(() => createChartStyles(chartRef, theme.value)),
   series: {
     type: "Area",
     name: "volume" as const,

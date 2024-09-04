@@ -23,14 +23,15 @@ const { isFetching: loading, data } = useQuery({
 
 // Chart
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (y: number): string =>
-          `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (y: number): string =>
+            `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+        },
+      })
+    ),
   series: {
     type: "Area",
     name: "withdrawals" as const,

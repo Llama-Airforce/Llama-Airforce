@@ -12,7 +12,7 @@ const { market, chain } = defineProps<{
 }>();
 
 // Legend
-const { theme, themeId } = storeToRefs(useSettingsStore());
+const { theme } = storeToRefs(useSettingsStore());
 
 const { items, toggles, disabled } = useLegend(() => {
   const { blue, yellow, purple } = theme.value.colors;
@@ -34,15 +34,14 @@ const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: computed(
-    () => `${themeId.value}-${toggles.util.value}`
-  ),
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      leftPriceScale: {
-        visible: toggles.util.value,
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        leftPriceScale: {
+          visible: toggles.util.value,
+        },
+      })
+    ),
   series: [
     {
       type: "Line",

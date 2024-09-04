@@ -72,10 +72,8 @@ type Series<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
  * @template T - SerieDef or SerieDefs
  */
 type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
-  /** Ref that triggers chart recreation when its value changes */
-  recreateChartTrigger: Ref<unknown>;
-  /** Function to create chart options */
-  createChartOptions: (chartRef: HTMLElement) => DeepPartial<ChartOptions>;
+  /** Function to create reactive chart options */
+  createChartOptions: (chartRef: HTMLElement) => Ref<DeepPartial<ChartOptions>>;
   /** Single series definition or array of series definitions */
   series: T;
 };
@@ -93,10 +91,9 @@ type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
  *
  * @example
  * const { chartRef, chart, series } = useLightweightChart({
- *   recreateChartTrigger: theme,
- *   createChartOptions: (chartRef) => ({
+ *   createChartOptions: (chartRef) => computed(() => ({
  *     height: chartRef.clientHeight,
- *   }),
+ *   })),
  *   series: [
  *     {
  *       name: 'volume' as const,
@@ -135,11 +132,7 @@ type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
 export function useLightweightChart<
   T extends SerieDef<SeriesType> | SerieDefs<SeriesType>
 >(options: Options<T>) {
-  const {
-    recreateChartTrigger,
-    createChartOptions,
-    series: serieDefs,
-  } = options;
+  const { createChartOptions, series: serieDefs } = options;
 
   const series = {} as Series<T>;
   const serieDefsArray: SerieDefs<SeriesType> = Array.isArray(serieDefs)
@@ -152,9 +145,9 @@ export function useLightweightChart<
   >;
 
   // Create a new lightweight chart instance the moment the div is mounted
-  whenever(chartRef, (newChartRef) => {
-    chart.value?.remove();
-    chart.value = createChart(newChartRef, createChartOptions(newChartRef));
+  whenever(chartRef, (newChartRef, _, onCleanup) => {
+    const chartOptions = createChartOptions(newChartRef);
+    chart.value = createChart(newChartRef, chartOptions.value);
 
     // Create series
     for (const serieDef of serieDefsArray) {
@@ -162,12 +155,18 @@ export function useLightweightChart<
       series[serieDef.name as keyof typeof series] =
         serie as Series<T>[keyof Series<T>];
     }
-  });
 
-  // Clean up by removing chart
-  onUnmounted(() => {
-    chart.value?.remove();
-    chart.value = undefined;
+    // Watch and apply new options coming in.
+    const watchOptions = watch(chartOptions, (chartOptions) => {
+      chart.value?.applyOptions(chartOptions);
+    });
+
+    // Cleanup inner watch and remove existing chart.
+    onCleanup(() => {
+      watchOptions();
+      chart.value?.remove();
+      chart.value = undefined;
+    });
   });
 
   // Make sure to resize the chart whenever the parent resizes as well.
@@ -184,13 +183,6 @@ export function useLightweightChart<
       chart.value?.timeScale().fitContent();
     }
   );
-
-  // Recreating trigger for chart options
-  watch(recreateChartTrigger, () => {
-    if (chartRef.value && chart.value) {
-      chart.value.applyOptions(createChartOptions(chartRef.value));
-    }
-  });
 
   // Apply new options when serie options change
   for (const { name, options } of serieDefsArray) {

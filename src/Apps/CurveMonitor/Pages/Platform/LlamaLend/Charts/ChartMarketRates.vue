@@ -34,13 +34,14 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 
 // Chart
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (apy: number) => formatter(apy),
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (apy: number) => formatter(apy),
+        },
+      })
+    ),
   series: [
     {
       type: "Line",

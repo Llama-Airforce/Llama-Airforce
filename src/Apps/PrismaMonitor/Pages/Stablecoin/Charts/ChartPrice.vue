@@ -72,14 +72,15 @@ const tooltip = computed(() => {
 
 // Chart
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (y: number): string =>
-          `$${round(y, 4, "dollar")}${unit(y, "dollar")}`,
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (y: number): string =>
+            `$${round(y, 4, "dollar")}${unit(y, "dollar")}`,
+        },
+      })
+    ),
   series: {
     type: "Candlestick",
     name: "price" as const,

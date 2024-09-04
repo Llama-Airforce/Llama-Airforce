@@ -38,13 +38,14 @@ let min = 0;
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (price: number) => formatterPrice(price),
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (price: number) => formatterPrice(price),
+        },
+      })
+    ),
   series: [
     {
       type: "Candlestick",

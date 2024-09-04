@@ -46,13 +46,14 @@ let min = 0;
 
 // Chart
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      localization: {
-        priceFormatter: (price: number) => formatterPrice(price),
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        localization: {
+          priceFormatter: (price: number) => formatterPrice(price),
+        },
+      })
+    ),
   series: [
     {
       type: "Line",

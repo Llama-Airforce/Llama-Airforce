@@ -31,13 +31,14 @@ const { items } = useLegend(() => [
 
 // Chart
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
-    createChartStyles(chartRef, theme.value, {
-      leftPriceScale: {
-        visible: true,
-      },
-    }),
+    computed(() =>
+      createChartStyles(chartRef, theme.value, {
+        leftPriceScale: {
+          visible: true,
+        },
+      })
+    ),
   series: [
     {
       type: "Area",

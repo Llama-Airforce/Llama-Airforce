@@ -15,8 +15,8 @@ const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
-  recreateChartTrigger: theme,
-  createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
+  createChartOptions: (chartRef) =>
+    computed(() => createChartStyles(chartRef, theme.value)),
   series: {
     type: "Histogram",
     name: "deltas" as const,
