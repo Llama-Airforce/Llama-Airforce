@@ -164,7 +164,6 @@ export function useLightweightChart<
     // Cleanup inner watch and remove existing chart.
     onCleanup(() => {
       watchOptions();
-      chart.value?.remove();
       chart.value = undefined;
     });
   });
