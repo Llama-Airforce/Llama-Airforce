@@ -70,7 +70,7 @@ function createSeries() {
 
   // OHLC
   const invertMultiplier = invert.value ? -1 : 1;
-  const newOHLCSerie: CandlestickData[] = ohlc
+  const newOHLCSerie = ohlc
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -88,7 +88,7 @@ function createSeries() {
   }
 
   // Price Oracle
-  const newOracleSerie: LineData[] = ohlc
+  const newOracleSerie = ohlc
     .map((x) => ({
       time: x.time as UTCTimestamp,
       value: Math.pow(x.oracle_price, invertMultiplier),
@@ -108,14 +108,14 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 
-const formatter = (x: number): string => {
+function formatter(x: number) {
   // Count number of leading zeroes after the decimal.
   const delta = max - min;
   const y = delta > 1 ? delta - Math.floor(delta) : delta;
   const m = -Math.floor(Math.log10(y) + 1) + 2;
 
   return `${round(x, m, "dollar")}${unit(x, "dollar")}`;
-};
+}
 </script>
 
 <template>

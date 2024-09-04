@@ -61,7 +61,7 @@ function createSeries() {
     return;
   }
 
-  const newRatesSerie: LineData[] = snapshots.value
+  const newRatesSerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.rate,
@@ -74,7 +74,7 @@ function createSeries() {
     avgLength.value ?? 31
   );
 
-  const newRatesEMASerie: LineData[] = averages.zip(newRatesSerie).map((x) => ({
+  const newRatesEMASerie = averages.zip(newRatesSerie).map((x) => ({
     time: x[1].time,
     value: x[0],
   }));
@@ -95,7 +95,7 @@ function createSeries() {
   }
 }
 
-function formatter(x: number): string {
+function formatter(x: number) {
   return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
 }
 

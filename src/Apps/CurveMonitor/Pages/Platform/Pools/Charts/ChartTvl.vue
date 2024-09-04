@@ -42,7 +42,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = tvl
+  const newSerie = tvl
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.tvl,

@@ -77,7 +77,7 @@ function createSeries() {
     return;
   }
 
-  const newBorrowApySerie: LineData[] = snapshots.value
+  const newBorrowApySerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.borrowApy,
@@ -85,7 +85,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newLendApySerie: LineData[] = snapshots.value
+  const newLendApySerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.lendApy,
@@ -105,13 +105,13 @@ function createSeries() {
 
   if (newBorrowApySerie.length > 0 || newLendApySerie.length > 0) {
     const from = Math.min(
-      (newBorrowApySerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity,
-      (newLendApySerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity
+      newBorrowApySerie.at(0)?.time ?? Infinity,
+      newLendApySerie.at(0)?.time ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newBorrowApySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity,
-      (newLendApySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
+      newBorrowApySerie.at(-1)?.time ?? -Infinity,
+      newLendApySerie.at(-1)?.time ?? -Infinity
     ) as UTCTimestamp;
 
     chart.value.timeScale().setVisibleRange({ from, to });

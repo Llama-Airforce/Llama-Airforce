@@ -83,7 +83,7 @@ function createSeries() {
     return;
   }
 
-  const newRevenueSerie: LineData[] = liqs
+  const newRevenueSerie = liqs
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.debt,
@@ -99,7 +99,7 @@ function createSeries() {
   const minTime =
     newRevenueSerie.length > 0 ? (newRevenueSerie[0].time as number) : 0;
 
-  const newDiscountSerie: LineData[] = discounts
+  const newDiscountSerie = discounts
     .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,

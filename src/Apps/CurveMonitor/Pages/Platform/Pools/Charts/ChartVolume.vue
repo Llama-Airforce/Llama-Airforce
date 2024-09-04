@@ -42,7 +42,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = volume
+  const newSerie = volume
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.volume,

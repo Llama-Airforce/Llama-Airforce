@@ -39,7 +39,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = losses
+  const newSerie = losses
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.pctLossMedian,

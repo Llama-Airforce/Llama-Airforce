@@ -41,7 +41,7 @@ function createSeries() {
     return;
   }
 
-  const newLoansSeries: HistogramData[] = snapshots.value
+  const newLoansSeries = snapshots.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.numLoans,

@@ -111,7 +111,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: CandlestickData[] = data.value
+  const newSerie = data.value
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: c.open,

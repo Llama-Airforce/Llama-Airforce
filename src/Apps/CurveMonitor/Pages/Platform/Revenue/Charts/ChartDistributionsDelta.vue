@@ -41,7 +41,7 @@ function createSeries() {
 
   const { colors } = theme.value;
 
-  const newDistributionsSeries: HistogramData[] = distributions
+  const newDistributionsSeries = distributions
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.feesUsd,

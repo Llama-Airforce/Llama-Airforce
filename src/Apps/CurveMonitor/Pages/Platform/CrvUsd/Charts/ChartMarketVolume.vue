@@ -49,7 +49,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = (ohlc.value ?? [])
+  const newSerie = (ohlc.value ?? [])
     .map((x) => ({
       time: x.time as UTCTimestamp,
       value: x.volume,

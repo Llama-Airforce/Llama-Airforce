@@ -63,7 +63,7 @@ function createSeries() {
     return;
   }
 
-  const newGlobalCrSerie: LineData[] = data.value
+  const newGlobalCrSerie = data.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,

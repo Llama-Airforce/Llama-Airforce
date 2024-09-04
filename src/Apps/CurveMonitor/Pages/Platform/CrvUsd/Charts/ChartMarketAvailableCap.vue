@@ -44,7 +44,7 @@ function createSeries() {
     return;
   }
 
-  const newAvailSerie: LineData[] = snapshots.value
+  const newAvailSerie = snapshots.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.borrowable,

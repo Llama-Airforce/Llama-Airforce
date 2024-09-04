@@ -83,7 +83,7 @@ function createSeries() {
     return;
   }
 
-  const newProportionSerie: LineData[] = ratios
+  const newProportionSerie = ratios
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.proportion,
@@ -94,7 +94,7 @@ function createSeries() {
   const minTime =
     newProportionSerie.length > 0 ? (newProportionSerie[0].time as number) : 0;
 
-  const newPriceSerie: LineData[] = pricesOracle
+  const newPriceSerie = pricesOracle
     .filter((x) => x.timestamp >= minTime)
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,

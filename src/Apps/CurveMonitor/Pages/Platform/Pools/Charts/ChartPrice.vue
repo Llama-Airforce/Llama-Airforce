@@ -46,7 +46,7 @@ function createSeries() {
 
   // OHLC
   const invertMultiplier = invert.value ? -1 : 1;
-  const newOHLCSerie: CandlestickData[] = ohlc
+  const newOHLCSerie = ohlc
     .map((c) => ({
       time: c.time as UTCTimestamp,
       open: Math.pow(c.open, invertMultiplier),
@@ -66,8 +66,7 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 
-// Methods
-function formatter(x: number): string {
+function formatter(x: number) {
   // Count number of leading zeroes after the decimal.
   const delta = max - min;
   const y = delta > 1 ? delta - Math.floor(delta) : delta;

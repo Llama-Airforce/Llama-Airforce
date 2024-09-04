@@ -83,7 +83,7 @@ function createSeries() {
   }
 
   const denom = denomDollars.value;
-  const newCollateralSerie: LineData[] = snapshots.value
+  const newCollateralSerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: denom ? c.collateralBalanceUsd : c.collateralBalance,
@@ -91,7 +91,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newBorrowedSerie: LineData[] = snapshots.value
+  const newBorrowedSerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: denom ? c.borrowedBalanceUsd : c.borrowedBalance,
@@ -111,21 +111,20 @@ function createSeries() {
 
   if (newCollateralSerie.length > 0 || newBorrowedSerie.length > 0) {
     const from = Math.min(
-      (newCollateralSerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity,
-      (newBorrowedSerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity
+      newCollateralSerie.at(0)?.time ?? Infinity,
+      newBorrowedSerie.at(0)?.time ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newCollateralSerie.at(-1)?.time as UTCTimestamp | undefined) ??
-        -Infinity,
-      (newBorrowedSerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
+      newCollateralSerie.at(-1)?.time ?? -Infinity,
+      newBorrowedSerie.at(-1)?.time ?? -Infinity
     ) as UTCTimestamp;
 
     chart.value.timeScale().setVisibleRange({ from, to });
   }
 }
 
-function formatter(x: number): string {
+function formatter(x: number) {
   return `${denomDollars.value ? "$" : ""}${round(x, 0, "dollar")}${unit(
     x,
     "dollar"

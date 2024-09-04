@@ -145,7 +145,7 @@ function createSeries() {
     return;
   }
 
-  const newOracleSerie: LineData[] = data.value.oracle
+  const newOracleSerie = data.value.oracle
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,
@@ -153,7 +153,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newMarketSerie: LineData[] = data.value.market
+  const newMarketSerie = data.value.market
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,

@@ -94,12 +94,12 @@ const { chart, series } = useLightweightChart({
 });
 
 watchEffect(createSeries);
-function createSeries(): void {
+function createSeries() {
   if (!chart.value || !series.supply || !series.debt || !series.util) {
     return;
   }
 
-  const newSupplySerie: LineData[] = snapshots.value
+  const newSupplySerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.totalAssetsUsd,
@@ -107,7 +107,7 @@ function createSeries(): void {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newDebtSerie: LineData[] = snapshots.value
+  const newDebtSerie = snapshots.value
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.totalDebtUsd,
@@ -115,10 +115,10 @@ function createSeries(): void {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newUtilSerie: LineData[] = (toggles.util.value ? newSupplySerie : [])
+  const newUtilSerie = (toggles.util.value ? newSupplySerie : [])
     .zip(newDebtSerie)
     .map(([supply, debt]) => ({
-      time: debt.time as UTCTimestamp,
+      time: debt.time,
       value: supply.value > 0 ? debt.value / supply.value : 0,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -132,13 +132,13 @@ function createSeries(): void {
 
   if (newSupplySerie.length > 0 || newDebtSerie.length > 0) {
     const from = Math.min(
-      (newSupplySerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity,
-      (newDebtSerie.at(0)?.time as UTCTimestamp | undefined) ?? Infinity
+      newSupplySerie.at(0)?.time ?? Infinity,
+      newDebtSerie.at(0)?.time ?? Infinity
     ) as UTCTimestamp;
 
     const to = Math.max(
-      (newSupplySerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity,
-      (newDebtSerie.at(-1)?.time as UTCTimestamp | undefined) ?? -Infinity
+      newSupplySerie.at(-1)?.time ?? -Infinity,
+      newDebtSerie.at(-1)?.time ?? -Infinity
     ) as UTCTimestamp;
 
     chart.value.timeScale().setVisibleRange({ from, to });

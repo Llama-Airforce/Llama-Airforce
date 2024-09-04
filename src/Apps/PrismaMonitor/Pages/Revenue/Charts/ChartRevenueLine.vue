@@ -41,7 +41,7 @@ function createSeries() {
     return;
   }
 
-  const newRevenueSerie: LineData[] = data
+  const newRevenueSerie = data
     .groupBy((x) => x.timestamp)
     .entries()
     .map(([, x]) => ({

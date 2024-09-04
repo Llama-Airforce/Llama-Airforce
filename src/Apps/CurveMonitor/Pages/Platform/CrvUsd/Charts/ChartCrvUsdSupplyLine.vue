@@ -54,7 +54,7 @@ function createSeries() {
     return;
   }
 
-  const newSupplySerie: (LineData & { debt: number })[] = data
+  const newSupplySerie = data
     .groupBy((x) => x.timestamp)
     .entries()
     .map(([, x]) => ({
@@ -65,7 +65,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newDebtSerie: LineData[] = newSupplySerie.map((x) => ({
+  const newDebtSerie = newSupplySerie.map((x) => ({
     time: x.time,
     value: x.value - x.debt,
   }));
@@ -81,7 +81,7 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 
-function formatter(y: number): string {
+function formatter(y: number) {
   return `${round(y, 0, "dollar")}${unit(y, "dollar")}`;
 }
 </script>

@@ -53,7 +53,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = data.value
+  const newSerie = data.value
     // Filter super high APR at the start.
     .filter((x) => x.timestamp >= 1699630610)
     .map((x) => ({
@@ -70,9 +70,9 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 }
 
-const formatter = (y: number): string => {
+function formatter(y: number) {
   return `${round(y, 0, "percentage")}${unit(y, "percentage")}`;
-};
+}
 </script>
 
 <template>

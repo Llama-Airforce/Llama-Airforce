@@ -66,7 +66,7 @@ const { chart, series } = useLightweightChart({
 });
 
 watchEffect(createSeries);
-function createSeries(): void {
+function createSeries() {
   if (!chart.value || Object.values(series).length < 0) {
     return;
   }
@@ -78,7 +78,7 @@ function createSeries(): void {
       continue;
     }
 
-    const newLineSerie: LineData[] = (prices.value as PoolPrice[])
+    const newLineSerie = (prices.value as PoolPrice[])
       .map((x) => ({
         time: x.timestamp as UTCTimestamp,
         value: x[coin],

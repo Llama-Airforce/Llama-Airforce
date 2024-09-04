@@ -51,7 +51,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = data.value
+  const newSerie = data.value
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.value,

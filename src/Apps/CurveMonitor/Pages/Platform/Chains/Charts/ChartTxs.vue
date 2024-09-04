@@ -42,12 +42,12 @@ const { chart, series } = useLightweightChart({
 });
 
 watchEffect(createSeries);
-function createSeries(): void {
+function createSeries() {
   if (!chart.value || !series.txs) {
     return;
   }
 
-  const newTxsSerie: LineData[] = txs
+  const newTxsSerie = txs
     .map((c) => ({
       time: c.timestamp as UTCTimestamp,
       value: c.count,

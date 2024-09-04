@@ -43,7 +43,7 @@ function createSeries() {
     return;
   }
 
-  const newSerie: LineData[] = ratios
+  const newSerie = ratios
     .map((x) => ({
       time: x.timestamp as UTCTimestamp,
       value: x.ratio * 100,
