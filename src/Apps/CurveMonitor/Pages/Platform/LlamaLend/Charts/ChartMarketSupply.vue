@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
-import { BtnChartLWFullscreen } from "@CM/Components/";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
@@ -160,11 +160,15 @@ function createSeries() {
           @toggle="toggles[$event].value = !toggles[$event].value"
         ></Legend>
 
-        <BtnChartLWFullscreen
-          v-model="fullscreen"
-          :chart="chart"
-          :target="card?.$el"
-        />
+        <div class="buttons">
+          <BtnChartLWExport :series></BtnChartLWExport>
+
+          <BtnChartLWFullscreen
+            v-model="fullscreen"
+            :chart="chart"
+            :target="card?.$el"
+          />
+        </div>
       </div>
     </template>
 
@@ -181,5 +185,9 @@ function createSeries() {
 .actions {
   display: flex;
   gap: 1rem;
+
+  .buttons {
+    display: flex;
+  }
 }
 </style>
