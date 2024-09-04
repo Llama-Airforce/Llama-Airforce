@@ -58,7 +58,7 @@ function rankClass(ranking: number) {
 
 // Fullscreen
 const fullscreen = ref(false);
-const cardJson = ref<ComponentPublicInstance | undefined>(undefined);
+const cardJson = useTemplateRef("cardJson");
 </script>
 
 <template>

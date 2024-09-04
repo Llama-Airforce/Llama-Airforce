@@ -12,7 +12,7 @@ const { distributions } = defineProps<{
 const { theme } = storeToRefs(useSettingsStore());
 
 const fullscreen = ref(false);
-const chartCard = ref<ComponentPublicInstance | undefined>(undefined);
+const card = useTemplateRef("card");
 
 const { chart, chartRef, series } = useLightweightChart({
   recreateChartTrigger: theme,
@@ -78,7 +78,7 @@ function createSeries() {
 
 <template>
   <Card
-    ref="chartCard"
+    ref="card"
     title="Distributions Change (1y)"
   >
     <template #actions>
@@ -86,7 +86,7 @@ function createSeries() {
         <BtnChartLWFullscreen
           v-model="fullscreen"
           :chart="chart"
-          :target="chartCard?.$el"
+          :target="card?.$el"
         />
       </div>
     </template>
