@@ -17,7 +17,7 @@ const { theme } = storeToRefs(useSettingsStore());
 const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
-const { chart, chartRef, series } = useLightweightChart({
+const { chart, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: {

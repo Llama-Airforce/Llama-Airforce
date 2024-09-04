@@ -37,7 +37,7 @@ let min = 0;
 
 const { theme, flavor } = storeToRefs(useSettingsStore());
 
-const { chart, chartRef, series } = useLightweightChart({
+const { chart, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) =>
     createChartStyles(chartRef, theme.value, {

@@ -33,7 +33,7 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
-const { chart, chartRef, series } = useLightweightChart({
+const { chart, series } = useLightweightChart({
   recreateChartTrigger: computed(
     () => `${themeId.value}-${toggles.util.value}`
   ),

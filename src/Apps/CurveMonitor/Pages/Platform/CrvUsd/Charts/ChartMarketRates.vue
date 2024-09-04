@@ -17,7 +17,7 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 const { theme } = storeToRefs(useSettingsStore());
 const avgLength = ref<number | null>(null);
 
-const { chart, chartRef, series } = useLightweightChart({
+const { chart, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: [

@@ -35,7 +35,7 @@ const { isFetching: loading, data } = useQuery({
 });
 
 // Chart
-const { chart, chartRef, series } = useLightweightChart({
+const { chart, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: {

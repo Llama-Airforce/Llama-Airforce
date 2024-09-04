@@ -146,7 +146,7 @@ export function useLightweightChart<
     ? serieDefs
     : [serieDefs];
 
-  const chartRef = shallowRef<HTMLElement | undefined>(undefined);
+  const chartRef = useTemplateRef<HTMLElement>("chartRef");
   const chart = shallowRef<IChartApi | undefined>(undefined) as Ref<
     IChartApi | undefined
   >;

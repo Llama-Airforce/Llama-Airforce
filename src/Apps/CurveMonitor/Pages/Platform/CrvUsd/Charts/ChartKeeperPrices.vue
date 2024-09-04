@@ -35,7 +35,7 @@ const { isFetching: loadingKeeperPrices, data: prices } =
 const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
-const { chart, chartRef, series } = useLightweightChart({
+const { chart, series } = useLightweightChart({
   recreateChartTrigger: theme,
   createChartOptions: (chartRef) => createChartStyles(chartRef, theme.value),
   series: coins.map((coin, i) => ({
