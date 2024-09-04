@@ -151,12 +151,9 @@ export function useLightweightChart<
     IChartApi | undefined
   >;
 
-  let resizeObserver: ResizeObserver | null = null;
-
   // Create a new lightweight chart instance the moment the div is mounted
   whenever(chartRef, (newChartRef) => {
-    cleanup();
-
+    chart.value?.remove();
     chart.value = createChart(newChartRef, createChartOptions(newChartRef));
 
     // Create series
@@ -165,28 +162,28 @@ export function useLightweightChart<
       series[serieDef.name as keyof typeof series] =
         serie as Series<T>[keyof Series<T>];
     }
+  });
 
-    // Create a ResizeObserver to observe the chart's parent element
-    const parent = newChartRef.parentElement;
-    if (parent) {
-      resizeObserver = new ResizeObserver((observers) => {
-        const parent = observers[0].target;
+  // Clean up by removing chart
+  onUnmounted(() => {
+    chart.value?.remove();
+    chart.value = undefined;
+  });
 
-        chart.value?.applyOptions({
-          width: parent.clientWidth,
-          height: parent.clientHeight,
-        });
+  // Make sure to resize the chart whenever the parent resizes as well.
+  useResizeObserver(
+    computed(() => chartRef.value?.parentElement),
+    (observers) => {
+      const parent = observers[0].target;
 
-        chart.value?.timeScale().fitContent();
+      chart.value?.applyOptions({
+        width: parent.clientWidth,
+        height: parent.clientHeight,
       });
 
-      resizeObserver.observe(parent);
+      chart.value?.timeScale().fitContent();
     }
-  });
-
-  onUnmounted(() => {
-    cleanup();
-  });
+  );
 
   // Recreating trigger for chart options
   watch(recreateChartTrigger, () => {
@@ -201,18 +198,6 @@ export function useLightweightChart<
       const serie = series[name as keyof Series<T>];
       serie?.applyOptions(newOptions);
     });
-  }
-
-  function cleanup() {
-    if (resizeObserver) {
-      resizeObserver.disconnect();
-      resizeObserver = null;
-    }
-
-    if (chart.value) {
-      chart.value.remove();
-      chart.value = undefined;
-    }
   }
 
   return { chart, chartRef, series };
