@@ -17,12 +17,7 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 const { theme } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
-  createChartOptions: createChartOptions({
-    localization: {
-      // Needed to fix weird right margin wtf.
-      priceFormatter: (y: number) => Math.round(y).toString(),
-    },
-  }),
+  createChartOptions: createChartOptions(),
   series: {
     type: "Histogram",
     name: "loans" as const,
