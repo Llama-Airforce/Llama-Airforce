@@ -101,7 +101,7 @@ const cardCollapsible3 = `:deep(.card-header) {
           <template #actions>
             <i
               class="expander fas fa-chevron-up"
-              :class="{ expanded: collapsed }"
+              :class="{ expanded: !collapsed }"
             ></i>
           </template>
 
