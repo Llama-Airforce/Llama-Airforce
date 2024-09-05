@@ -109,7 +109,7 @@ function createSeries() {
         ></Legend>
 
         <BtnChartLWFullscreen
-          :chart="chart"
+          :chart
           :target="card?.$el"
         />
       </div>

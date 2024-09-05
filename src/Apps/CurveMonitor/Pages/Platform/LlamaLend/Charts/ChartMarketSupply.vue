@@ -156,7 +156,7 @@ function createSeries() {
         <BtnChartLWExport :series></BtnChartLWExport>
 
         <BtnChartLWFullscreen
-          :chart="chart"
+          :chart
           :target="card?.$el"
         />
       </div>

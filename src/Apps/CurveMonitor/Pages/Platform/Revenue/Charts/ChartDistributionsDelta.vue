@@ -79,7 +79,7 @@ function createSeries() {
   >
     <template #actions>
       <BtnChartLWFullscreen
-        :chart="chart"
+        :chart
         :target="card?.$el"
       />
     </template>
