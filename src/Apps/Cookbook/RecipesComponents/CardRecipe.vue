@@ -157,14 +157,12 @@ const cardCollapsible3 = `:deep(.card-header) {
   column-gap: var(--dashboard-gap, 1.5rem);
   grid-template-columns: 1fr 1fr;
 
-  :deep(.card-header) {
-    .expander {
-      transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
-      transform: rotate(90deg);
+  .expander {
+    transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
+    transform: rotate(90deg);
 
-      &.expanded {
-        transform: rotate(180deg);
-      }
+    &.expanded {
+      transform: rotate(180deg);
     }
   }
 }
