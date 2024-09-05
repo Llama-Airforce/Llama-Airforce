@@ -3,16 +3,14 @@ import Recipe from "@CB/Recipe.vue";
 
 const collapsed = ref(false);
 
-const card = `<ButtonToggle
-  v-model="toggle"
-  value="Value"
-  icon="fas fa-plane"
-></ButtonToggle>`;
-
-const cardCompact = `<Card
+const card = `<Card
   title="Card Title"
   icon="fas fa-plane"
 >
+  Content goes here
+</Card>`;
+
+const cardCompact = `<Card :compact="true">
   Content goes here
 </Card>`;
 
@@ -24,27 +22,55 @@ const cardLoading = `<Card
   Content goes here
 </Card>`;
 
-const cardCollapsible1 = `<Card
-  title="Card Title"
+const cardWithActions = `<template>
+<Card
+  title="Card with Actions"
   icon="fas fa-plane"
-  :collapsible="true"
-  :collapsed="collapsed"
-  @click="collapsed = !collapsed"
 >
   <template #actions>
-    <i
-      class="expander fas fa-chevron-up"
-      :class="{ expanded: collapsed }"
-    ></i>
+    <div style="display: flex; gap: 1rem">
+      <Button :primary="true">Export</Button>
+      <Button :primary="true">Fullscreen</Button>
+    </div>
   </template>
 
-  <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>
-</Card>`;
+  <template #actions-secondary>
+    <div>Secondary Actions</div>
+  </template>
 
-const cardCollapsible2 = `const collapsed = ref(false);
-`;
+  Content goes here
+</Card>
+</template>`;
 
-const cardCollapsible3 = `:deep(.card-header) {
+const cardCollapsible = `<template>
+  <Card
+    title="Card Title"
+    icon="fas fa-plane"
+    :collapsible="true"
+    :collapsed="collapsed"
+    @click="collapsed = !collapsed"
+  >
+    <template #actions>
+      <i
+        class="expander fas fa-chevron-up"
+        :class="{ expanded: !collapsed }"
+      ></i>
+    </template>
+
+    <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>
+  </Card>
+</template>
+
+<script setup lang="ts">
+const collapsed = ref(false);
+
+const handleToggle = (event) => {
+  // Toggle logic here
+};
+<\/script>
+
+<style lang="scss" scoped>
+.card {
   .expander {
     transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
     transform: rotate(90deg);
@@ -53,12 +79,14 @@ const cardCollapsible3 = `:deep(.card-header) {
       transform: rotate(180deg);
     }
   }
-}`;
+}
+</style>
+`;
 </script>
 
 <template>
   <div class="cards">
-    <Recipe title="Card">
+    <Recipe title="Basic Card">
       <template #example>
         <Card
           title="Card Title"
@@ -70,26 +98,26 @@ const cardCollapsible3 = `:deep(.card-header) {
 
       <template #snippets>
         <Code
-          lang="html"
+          lang="vue"
           :code="card"
         ></Code>
       </template>
     </Recipe>
 
-    <Recipe title="Compact / no padding">
+    <Recipe title="Compact Card">
       <template #example>
         <Card :compact="true"> Content goes here </Card>
       </template>
 
       <template #snippets>
         <Code
-          lang="html"
+          lang="vue"
           :code="cardCompact"
         ></Code>
       </template>
     </Recipe>
 
-    <Recipe title="Collapsible">
+    <Recipe title="Collapsible Card">
       <template #example>
         <Card
           title="Card Title"
@@ -111,23 +139,43 @@ const cardCollapsible3 = `:deep(.card-header) {
 
       <template #snippets>
         <Code
-          lang="html"
-          :code="cardCollapsible1"
-        ></Code>
-
-        <Code
-          lang="typescript"
-          :code="cardCollapsible2"
-        ></Code>
-
-        <Code
-          lang="scss"
-          :code="cardCollapsible3"
+          lang="vue"
+          :code="cardCollapsible"
         ></Code>
       </template>
     </Recipe>
 
-    <Recipe title="Loading">
+    <Recipe title="Card with Actions">
+      <template #example>
+        <Card
+          class="card-with-actions"
+          title="Card with Actions"
+          icon="fas fa-plane"
+        >
+          <template #actions>
+            <div style="display: flex; gap: 1rem">
+              <Button :primary="true">Export</Button>
+              <Button :primary="true">Fullscreen</Button>
+            </div>
+          </template>
+
+          <template #actions-secondary>
+            <div>Secondary Actions</div>
+          </template>
+
+          Content goes here
+        </Card>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="vue"
+          :code="cardWithActions"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="Loading Card">
       <template #example>
         <Card
           title="Card Loading"
@@ -140,7 +188,7 @@ const cardCollapsible3 = `:deep(.card-header) {
 
       <template #snippets>
         <Code
-          lang="html"
+          lang="vue"
           :code="cardLoading"
         ></Code>
       </template>
