@@ -30,7 +30,6 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 );
 
 // Chart
-const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
@@ -157,7 +156,6 @@ function createSeries() {
         <BtnChartLWExport :series></BtnChartLWExport>
 
         <BtnChartLWFullscreen
-          v-model="fullscreen"
           :chart="chart"
           :target="card?.$el"
         />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const showFullscreen = defineModel<boolean>({ required: true });
+const fullscreen = ref(false);
 
 const { chart, target = null } = defineProps<{
   chart: IChartApi | undefined;
@@ -27,14 +27,14 @@ function onExit() {
 <template>
   <Button
     :disabled="!chart"
-    @click="showFullscreen = !showFullscreen"
+    @click="fullscreen = !fullscreen"
   >
     <i class="fas fa-expand"></i>
 
     <ModalFullscreen
       :target
-      :show="showFullscreen"
-      @close="showFullscreen = false"
+      :show="fullscreen"
+      @close="fullscreen = false"
       @enter-before="onEnterBefore"
       @exit="onExit"
     >

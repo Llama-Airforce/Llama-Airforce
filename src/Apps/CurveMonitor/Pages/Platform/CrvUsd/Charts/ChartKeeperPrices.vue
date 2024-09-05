@@ -32,7 +32,6 @@ const { isFetching: loadingKeeperPrices, data: prices } =
   useQueryKeeperPrices(keepers);
 
 // Chart
-const fullscreen = ref(false);
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
@@ -110,7 +109,6 @@ function createSeries() {
         ></Legend>
 
         <BtnChartLWFullscreen
-          v-model="fullscreen"
           :chart="chart"
           :target="card?.$el"
         />
