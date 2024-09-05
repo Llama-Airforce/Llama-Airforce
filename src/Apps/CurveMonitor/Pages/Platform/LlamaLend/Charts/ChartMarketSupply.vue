@@ -154,22 +154,22 @@ function createSeries() {
   >
     <template #actions>
       <div class="actions">
-        <Legend
-          :items
-          :disabled
-          @toggle="toggles[$event].value = !toggles[$event].value"
-        ></Legend>
+        <BtnChartLWExport :series></BtnChartLWExport>
 
-        <div class="buttons">
-          <BtnChartLWExport :series></BtnChartLWExport>
-
-          <BtnChartLWFullscreen
-            v-model="fullscreen"
-            :chart="chart"
-            :target="card?.$el"
-          />
-        </div>
+        <BtnChartLWFullscreen
+          v-model="fullscreen"
+          :chart="chart"
+          :target="card?.$el"
+        />
       </div>
+    </template>
+
+    <template #actions-secondary>
+      <Legend
+        :items
+        :disabled
+        @toggle="toggles[$event].value = !toggles[$event].value"
+      ></Legend>
     </template>
 
     <div
@@ -184,10 +184,5 @@ function createSeries() {
 
 .actions {
   display: flex;
-  gap: 1rem;
-
-  .buttons {
-    display: flex;
-  }
 }
 </style>

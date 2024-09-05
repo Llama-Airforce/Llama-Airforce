@@ -111,7 +111,7 @@ const onSelectChain = (newChain: Chain | "all"): void => {
 @import "@/Styles/Variables.scss";
 
 .graph {
-  --header-columns: auto auto;
+  --header-column-title: auto;
 
   .selector {
     padding-left: 10px;

@@ -231,7 +231,7 @@ const onType = (tabIndex: number) => {
 @import "@/Styles/Variables.scss";
 
 .trades-card {
-  --header-columns: 1fr 2fr;
+  --header-column-actions: 2fr;
 
   :deep(.types) {
     margin: 0 1rem;

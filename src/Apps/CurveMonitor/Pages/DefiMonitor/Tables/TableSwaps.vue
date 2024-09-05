@@ -222,7 +222,8 @@ const round = (x: number) =>
 @import "@/Styles/Variables.scss";
 
 .swaps-card {
-  --header-columns: 3fr 4fr;
+  --header-column-title: 3fr
+  --header-column-actions: 4fr;
 
   .swaps-card-body {
     width: 100%;

@@ -253,7 +253,8 @@ const onType = (tabIndex: number) => {
 @import "@/Styles/Variables.scss";
 
 .troves-card {
-  --header-columns: auto 1fr;
+  --header-column-title: auto;
+  --header-column-actions: 1fr;
 
   :deep(.types) {
     margin: 0 1rem;

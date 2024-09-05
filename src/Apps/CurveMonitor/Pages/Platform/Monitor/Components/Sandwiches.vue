@@ -153,7 +153,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
 @import "@/Styles/Variables.scss";
 
 .sandwiches-card {
-  --header-columns: 1fr 2fr;
+  --header-column-actions: 2fr;
 
   :deep(.pagination) {
     li {

@@ -222,7 +222,8 @@ const clipboard = async (addr: string) => {
 @import "@/Styles/Variables.scss";
 
 .transfers-card {
-  --header-columns: 3fr 4fr;
+  --header-column-title: 3fr;
+  --header-column-actions: 4fr;
 
   .transfers-card-body {
     width: 100%;

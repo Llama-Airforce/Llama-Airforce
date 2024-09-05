@@ -107,7 +107,7 @@ const linkAddress = (addr: string): string => {
 @import "@/Styles/Variables.scss";
 
 .cushions-card {
-  --header-columns: 1fr 14rem minmax(auto, 25rem);
+  --header-column-actions: 14rem minmax(auto, 25rem);
 }
 
 .cushions-table {

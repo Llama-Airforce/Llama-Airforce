@@ -208,7 +208,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 <template>
   <Card>
     <template #title>
-      <div class="title">
+      <div class="card-title">
         {{ t("title") }}
         <span v-if="bribedAmount">
           -

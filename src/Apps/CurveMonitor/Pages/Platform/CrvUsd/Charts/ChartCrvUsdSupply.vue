@@ -90,7 +90,8 @@ const onChartType = (type: ChartType) => {
 @import "@/Styles/Variables.scss";
 
 .card {
-  --header-columns: auto 1fr;
+  --header-column-title: auto;
+  --header-column-actions: 1fr;
 }
 
 .actions {

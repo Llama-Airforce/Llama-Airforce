@@ -165,7 +165,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 @import "@/Styles/Variables.scss";
 
 .markets-card {
-  --header-columns: minmax(7rem, 1fr) minmax(auto, 25rem);
+  --header-column-title: minmax(7rem, 1fr);
+  --header-column-actions: minmax(auto, 25rem);
 }
 
 .markets-table {

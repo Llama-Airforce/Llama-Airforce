@@ -16,6 +16,15 @@ const {
 
   loading?: boolean;
 }>();
+
+const slots = useSlots();
+
+const hasActions = computed(() => slots["actions"]);
+const hasActionsSecondary = computed(() => slots["actions-secondary"]);
+
+const showHeader = computed(
+  () => title || slots.title || hasActions.value || hasActionsSecondary.value
+);
 </script>
 
 <template>
@@ -31,14 +40,14 @@ const {
     ></Spinner>
 
     <div
-      v-if="title || $slots.title || $slots.actions"
+      v-if="showHeader"
       class="card-header"
       :class="{ collapsible }"
     >
       <slot name="title">
         <div
           v-if="title"
-          class="title"
+          class="card-title"
         >
           <i
             v-if="icon"
@@ -49,7 +58,19 @@ const {
         </div>
       </slot>
 
-      <slot name="actions"></slot>
+      <div
+        v-if="hasActionsSecondary"
+        class="card-actions-secondary"
+      >
+        <slot name="actions-secondary"></slot>
+      </div>
+
+      <div
+        v-if="hasActions"
+        class="card-actions"
+      >
+        <slot name="actions"></slot>
+      </div>
     </div>
 
     <!-- Just for margin reasons -->
@@ -82,7 +103,9 @@ const {
   border-radius: var(--border-radius);
   box-shadow: var(--container-box-shadow);
 
-  --header-columns: 1fr auto;
+  --header-column-title: 1fr;
+  --header-column-actions: auto;
+  --header-column-actions-secondary: auto;
 
   @include loading-backdrop();
 
@@ -95,16 +118,57 @@ const {
     @include loading-spinner();
   }
 
-  :deep(.card-header) {
+  .card-header {
     display: grid;
-    grid-template-columns: var(--header-columns);
+    grid-template-columns:
+      var(--header-column-title)
+      var(--header-column-actions);
+
     gap: 1rem;
     align-items: center;
 
     font-size: 0.875rem;
-    height: 2.5rem;
+    min-height: 2.5rem;
     margin-block: var(--card-margin-block);
     margin-inline: var(--card-margin-inline);
+
+    /*
+     * Can't use subgrids as they require grid-column: span N; inside wrapper divs,
+     * where N is the number of action slot divs. While possible with JavaScript
+     * (e.g., setting var(--num-actions)), using display: content; is simpler.
+     */
+    > .card-actions,
+    > .card-actions-secondary {
+      display: contents;
+    }
+
+    &:has(.card-actions-secondary) {
+      grid-template-columns:
+        var(--header-column-title)
+        var(--header-column-actions-secondary)
+        var(--header-column-actions);
+
+      /*
+       * In mobile view:
+       * 1. Secondary action columns are removed from the parent grid.
+       * 2. The secondary action div occupies its own row.
+       * 3. It uses the columns that were removed from the parent grid.
+       */
+      @media only screen and (max-width: 1280px) {
+        row-gap: 0.5rem;
+        grid-template-columns:
+          var(--header-column-title)
+          var(--header-column-actions);
+
+        .card-actions-secondary {
+          display: grid;
+          grid-row: 2;
+          grid-column: 1 / -1;
+
+          grid-template-columns: var(--header-column-actions-secondary);
+        }
+      }
+    }
 
     &.collapsible {
       margin-bottom: var(--card-margin-block);
@@ -116,7 +180,7 @@ const {
       padding-right: 0.5rem;
     }
 
-    > .title {
+    :deep(> .card-title) {
       font-size: 1.125rem;
       font-weight: bold;
       color: var(--c-text);

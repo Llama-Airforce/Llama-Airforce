@@ -109,7 +109,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 @import "@/Styles/Variables.scss";
 
 .votes-incentives-card {
-  --header-columns: 1fr minmax(auto, 25rem) auto;
+  --header-column-actions: minmax(auto, 25rem) auto;
 }
 
 .votes-incentives-table {

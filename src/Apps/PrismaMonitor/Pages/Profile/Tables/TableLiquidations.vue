@@ -184,7 +184,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 @import "@/Styles/Variables.scss";
 
 .liquidations-card {
-  --header-columns: 1fr 14rem 2fr;
+  --header-column-actions: 14rem 2fr;
 }
 
 .liquidations-table {

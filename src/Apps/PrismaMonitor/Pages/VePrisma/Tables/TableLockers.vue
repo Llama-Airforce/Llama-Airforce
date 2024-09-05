@@ -149,7 +149,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 @import "@/Styles/Variables.scss";
 
 .lockers-card {
-  --header-columns: 1fr 3fr;
+  --header-column-actions: 3fr;
 }
 
 .lockers-table {
