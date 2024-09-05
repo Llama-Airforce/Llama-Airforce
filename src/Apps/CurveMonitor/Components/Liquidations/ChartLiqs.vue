@@ -25,22 +25,20 @@ const onChartType = (type: ChartType) => {
 <template>
   <Card title="Self & Hard Liquidations">
     <template #actions>
-      <div class="actions">
-        <div class="chart-types">
-          <ButtonToggle
-            value="Count"
-            :model-value="chartType === 'count'"
-            @click="onChartType('count')"
-          >
-          </ButtonToggle>
+      <div class="chart-types">
+        <ButtonToggle
+          value="Count"
+          :model-value="chartType === 'count'"
+          @click="onChartType('count')"
+        >
+        </ButtonToggle>
 
-          <ButtonToggle
-            value="Value"
-            :model-value="chartType === 'value'"
-            @click="onChartType('value')"
-          >
-          </ButtonToggle>
-        </div>
+        <ButtonToggle
+          value="Value"
+          :model-value="chartType === 'value'"
+          @click="onChartType('value')"
+        >
+        </ButtonToggle>
       </div>
     </template>
 
@@ -59,34 +57,21 @@ const onChartType = (type: ChartType) => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.actions {
-  flex-grow: 1;
+.chart-types {
+  grid-column: 2;
 
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
+  display: flex;
+  font-size: 0.875rem;
 
-  .legend {
-    grid-column: 1;
-    justify-self: center;
-  }
+  button {
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-  .chart-types {
-    grid-column: 2;
-
-    display: flex;
-    font-size: 0.875rem;
-
-    button {
-      &:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      &:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

@@ -116,13 +116,11 @@ const formatterY = (x: number): string =>
 <template>
   <Card :title>
     <template #actions>
-      <div class="actions">
-        <Legend
-          :items
-          :disabled
-          @toggle="toggles[$event].value = !toggles[$event].value"
-        ></Legend>
-      </div>
+      <Legend
+        :items
+        :disabled
+        @toggle="toggles[$event].value = !toggles[$event].value"
+      ></Legend>
     </template>
 
     <ChartApex

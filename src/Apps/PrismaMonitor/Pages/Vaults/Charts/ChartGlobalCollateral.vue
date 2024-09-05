@@ -122,29 +122,27 @@ const onPeriod = (newPeriod: Period) => {
     :loading
   >
     <template #actions>
-      <div class="actions">
-        <div class="periods">
-          <ButtonToggle
-            value="1m"
-            :model-value="period === '1m'"
-            @click="onPeriod('1m')"
-          >
-          </ButtonToggle>
+      <div class="periods">
+        <ButtonToggle
+          value="1m"
+          :model-value="period === '1m'"
+          @click="onPeriod('1m')"
+        >
+        </ButtonToggle>
 
-          <ButtonToggle
-            value="3m"
-            :model-value="period === '3m'"
-            @click="onPeriod('3m')"
-          >
-          </ButtonToggle>
+        <ButtonToggle
+          value="3m"
+          :model-value="period === '3m'"
+          @click="onPeriod('3m')"
+        >
+        </ButtonToggle>
 
-          <ButtonToggle
-            value="6m"
-            :model-value="period === '6m'"
-            @click="onPeriod('6m')"
-          >
-          </ButtonToggle>
-        </div>
+        <ButtonToggle
+          value="6m"
+          :model-value="period === '6m'"
+          @click="onPeriod('6m')"
+        >
+        </ButtonToggle>
       </div>
     </template>
 
@@ -162,21 +160,19 @@ const onPeriod = (newPeriod: Period) => {
   height: 300px;
 }
 
-.actions {
-  .periods {
-    display: flex;
-    font-size: 0.875rem;
+.periods {
+  display: flex;
+  font-size: 0.875rem;
 
-    button {
-      &:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
+  button {
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-      &:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

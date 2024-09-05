@@ -67,13 +67,11 @@ function createSeries() {
     title="Transactions"
   >
     <template #actions>
-      <div class="actions">
-        <BtnChartLWFullscreen
-          v-model="fullscreen"
-          :chart="chart"
-          :target="card?.$el"
-        />
-      </div>
+      <BtnChartLWFullscreen
+        v-model="fullscreen"
+        :chart="chart"
+        :target="card?.$el"
+      />
     </template>
 
     <div
@@ -82,12 +80,3 @@ function createSeries() {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.actions {
-  display: flex;
-  gap: 1rem;
-}
-</style>

@@ -66,17 +66,15 @@ function createSeries() {
 <template>
   <Card title="Equity">
     <template #actions>
-      <div class="actions">
-        <Tooltip>
-          <span>
-            This chart shows the difference between the value of the collateral
-            and the debt.<br /><br />
-            Positive values indicate net equity (collateral exceeds debt),<br />
-            while negative values indicate a deficit (debt exceeds collateral,
-            also known as bad debt).
-          </span>
-        </Tooltip>
-      </div>
+      <Tooltip>
+        <span>
+          This chart shows the difference between the value of the collateral
+          and the debt.<br /><br />
+          Positive values indicate net equity (collateral exceeds debt),<br />
+          while negative values indicate a deficit (debt exceeds collateral,
+          also known as bad debt).
+        </span>
+      </Tooltip>
     </template>
 
     <div

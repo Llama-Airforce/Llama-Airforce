@@ -124,15 +124,13 @@ const average = (data: number[], n = 7): number[] =>
     :loading
   >
     <template #actions>
-      <div class="actions">
-        <InputNumber
-          v-model="avgLength"
-          class="avg-span"
-          placeholder="Avg span (days)"
-          :min="1"
-          :max="Infinity"
-        ></InputNumber>
-      </div>
+      <InputNumber
+        v-model="avgLength"
+        class="avg-span"
+        placeholder="Avg span (days)"
+        :min="1"
+        :max="Infinity"
+      ></InputNumber>
     </template>
 
     <div
@@ -145,9 +143,7 @@ const average = (data: number[], n = 7): number[] =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.actions {
-  > .avg-span {
-    width: 8rem;
-  }
+.avg-span {
+  width: 8rem;
 }
 </style>

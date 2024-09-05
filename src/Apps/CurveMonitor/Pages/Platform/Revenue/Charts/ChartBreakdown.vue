@@ -168,9 +168,7 @@ const series = computed((): Serie[] => {
     :loading
   >
     <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-      </div>
+      <Legend :items></Legend>
     </template>
 
     <ChartApex
@@ -190,11 +188,6 @@ const series = computed((): Serie[] => {
       background: transparent;
       border-bottom: 0;
     }
-  }
-
-  .actions {
-    display: flex;
-    gap: 2rem;
   }
 }
 </style>

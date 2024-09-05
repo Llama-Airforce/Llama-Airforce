@@ -118,9 +118,7 @@ function createSeries() {
 <template>
   <Card title="Soft Liquidations Ratio">
     <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-      </div>
+      <Legend :items></Legend>
     </template>
 
     <div

@@ -179,9 +179,7 @@ function createSeries() {
     :loading="loading"
   >
     <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
-      </div>
+      <Legend :items></Legend>
     </template>
 
     <div
