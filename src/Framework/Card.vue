@@ -119,8 +119,6 @@ const showHeader = computed(
   }
 
   .card-header {
-    container-type: inline-size;
-
     display: grid;
     grid-template-columns:
       var(--header-column-title)
@@ -156,7 +154,7 @@ const showHeader = computed(
        * 2. The secondary action div occupies its own row.
        * 3. It uses the columns that were removed from the parent grid.
        */
-      @container (width < 550px) {
+      @media only screen and (max-width: 1280px) {
         row-gap: 0.5rem;
         grid-template-columns:
           var(--header-column-title)
