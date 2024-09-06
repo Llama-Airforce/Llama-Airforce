@@ -4,7 +4,7 @@ import type { ISeriesApi, UTCTimestamp, Time } from "lightweight-charts";
 // We only support series whose data is of type SingleValueData.
 type Series = Record<
   string,
-  ISeriesApi<"Area" | "Histogram" | "Line"> | undefined
+  ISeriesApi<"Area" | "Histogram" | "Line" | "Baseline"> | undefined
 >;
 
 const { series } = defineProps<{
