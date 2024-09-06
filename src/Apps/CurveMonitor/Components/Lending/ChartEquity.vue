@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type BaselineSeriesPartialOptions } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 
 type Equity = {
@@ -14,6 +15,8 @@ const { equity } = defineProps<{
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());
+
+const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
@@ -64,17 +67,29 @@ function createSeries() {
 </script>
 
 <template>
-  <Card title="Equity">
+  <Card
+    ref="card"
+    title="Equity"
+  >
     <template #actions>
-      <Tooltip>
-        <span>
-          This chart shows the difference between the value of the collateral
-          and the debt.<br /><br />
-          Positive values indicate net equity (collateral exceeds debt),<br />
-          while negative values indicate a deficit (debt exceeds collateral,
-          also known as bad debt).
-        </span>
-      </Tooltip>
+      <div style="display: flex; align-items: center">
+        <Tooltip style="margin-right: 1rem">
+          <span>
+            This chart shows the difference between the value of the collateral
+            and the debt.<br /><br />
+            Positive values indicate net equity (collateral exceeds debt),<br />
+            while negative values indicate a deficit (debt exceeds collateral,
+            also known as bad debt).
+          </span>
+        </Tooltip>
+
+        <BtnChartLWExport :series></BtnChartLWExport>
+
+        <BtnChartLWFullscreen
+          :chart
+          :target="card?.$el"
+        />
+      </div>
     </template>
 
     <div

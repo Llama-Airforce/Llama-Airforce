@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
@@ -41,6 +42,8 @@ const { items } = useLegend(() => [
 
 // Chart
 const denomDollars = ref(true);
+
+const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
@@ -134,16 +137,27 @@ function formatter(x: number) {
 
 <template>
   <Card
+    ref="card"
     title="Collateral"
     :loading
   >
     <template #actions>
-      <ButtonToggle
-        value="Dollars"
-        :model-value="denomDollars"
-        @click="denomDollars = !denomDollars"
-      >
-      </ButtonToggle>
+      <div style="display: flex">
+        <ButtonToggle
+          style="margin-right: 1rem"
+          value="Dollars"
+          :model-value="denomDollars"
+          @click="denomDollars = !denomDollars"
+        >
+        </ButtonToggle>
+
+        <BtnChartLWExport :series></BtnChartLWExport>
+
+        <BtnChartLWFullscreen
+          :chart
+          :target="card?.$el"
+        />
+      </div>
     </template>
 
     <template #actions-secondary>

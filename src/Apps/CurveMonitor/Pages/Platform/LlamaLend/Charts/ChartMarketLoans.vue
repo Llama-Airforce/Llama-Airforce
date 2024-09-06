@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import { type Chain } from "@CM/Models";
 import createChartOptions from "@CM/Util/ChartStyles";
@@ -18,6 +19,8 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 
 // Chart
 const { theme } = storeToRefs(useSettingsStore());
+
+const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
@@ -62,9 +65,21 @@ function createSeries() {
 
 <template>
   <Card
+    ref="card"
     title="Loans"
     :loading
   >
+    <template #actions>
+      <div style="display: flex">
+        <BtnChartLWExport :series></BtnChartLWExport>
+
+        <BtnChartLWFullscreen
+          :chart
+          :target="card?.$el"
+        />
+      </div>
+    </template>
+
     <div
       ref="chartRef"
       class="chart"

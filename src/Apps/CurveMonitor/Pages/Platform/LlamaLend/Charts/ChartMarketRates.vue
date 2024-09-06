@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
 import { useSettingsStore } from "@CM/Stores";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
@@ -33,6 +34,8 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 );
 
 // Chart
+const card = useTemplateRef("card");
+
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions({
     localization: {
@@ -125,9 +128,21 @@ function formatter(x: number): string {
 
 <template>
   <Card
+    ref="card"
     title="Rates"
     :loading
   >
+    <template #actions>
+      <div style="display: flex">
+        <BtnChartLWExport :series></BtnChartLWExport>
+
+        <BtnChartLWFullscreen
+          :chart
+          :target="card?.$el"
+        />
+      </div>
+    </template>
+
     <template #actions-secondary>
       <Legend :items></Legend>
     </template>
