@@ -152,7 +152,7 @@ function createSeries() {
     :loading
   >
     <template #actions>
-      <div class="actions">
+      <div style="display: flex">
         <BtnChartLWExport :series></BtnChartLWExport>
 
         <BtnChartLWFullscreen
@@ -176,11 +176,3 @@ function createSeries() {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.actions {
-  display: flex;
-}
-</style>

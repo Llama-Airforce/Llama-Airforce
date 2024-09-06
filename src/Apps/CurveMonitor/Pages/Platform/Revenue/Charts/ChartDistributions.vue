@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@CM/Stores";
-import { BtnChartLWFullscreen } from "@CM/Components/";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
 
@@ -63,10 +63,14 @@ function createSeries() {
     title="Distributions (1y)"
   >
     <template #actions>
-      <BtnChartLWFullscreen
-        :chart
-        :target="card?.$el"
-      />
+      <div style="display: flex">
+        <BtnChartLWExport :series></BtnChartLWExport>
+
+        <BtnChartLWFullscreen
+          :chart
+          :target="card?.$el"
+        />
+      </div>
     </template>
 
     <div

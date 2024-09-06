@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type AutoscaleInfo } from "lightweight-charts";
 import { useSettingsStore } from "@CM/Stores";
-import { BtnChartLWFullscreen } from "@CM/Components/";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type PoolPrice } from "@CM/Services/CrvUsd";
 import {
@@ -101,12 +101,8 @@ function createSeries() {
     :loading
   >
     <template #actions>
-      <div class="actions">
-        <Legend
-          :items
-          :disabled
-          @toggle="toggles[$event].value = !toggles[$event].value"
-        ></Legend>
+      <div style="display: flex">
+        <BtnChartLWExport :series></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart
@@ -115,18 +111,17 @@ function createSeries() {
       </div>
     </template>
 
+    <template #actions-secondary>
+      <Legend
+        :items
+        :disabled
+        @toggle="toggles[$event].value = !toggles[$event].value"
+      ></Legend>
+    </template>
+
     <div
       ref="chartRef"
       class="chart"
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.actions {
-  display: flex;
-  gap: 1rem;
-}
-</style>
