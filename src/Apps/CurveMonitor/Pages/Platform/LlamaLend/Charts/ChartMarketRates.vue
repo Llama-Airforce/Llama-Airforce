@@ -134,7 +134,10 @@ function formatter(x: number): string {
   >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="rates"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart

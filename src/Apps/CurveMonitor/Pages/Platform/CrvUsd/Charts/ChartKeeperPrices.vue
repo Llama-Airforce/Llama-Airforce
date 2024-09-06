@@ -102,7 +102,10 @@ function createSeries() {
   >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="keeper_prices"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart

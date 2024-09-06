@@ -83,7 +83,10 @@ function createSeries() {
           </span>
         </Tooltip>
 
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="equity"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart

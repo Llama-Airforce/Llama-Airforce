@@ -7,7 +7,8 @@ type Series = Record<
   ISeriesApi<"Area" | "Histogram" | "Line" | "Baseline"> | undefined
 >;
 
-const { series } = defineProps<{
+const { filename, series } = defineProps<{
+  filename: string;
   series: Series;
 }>();
 
@@ -123,7 +124,7 @@ function exportData() {
 
   const link = document.createElement("a");
   link.href = url;
-  link.download = "market_supply_data.csv";
+  link.download = `${filename}.csv`;
   link.style.display = "none";
   document.body.appendChild(link);
   link.click();

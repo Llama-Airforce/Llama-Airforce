@@ -69,7 +69,10 @@ function createSeries() {
   >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="collateral_ratio"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart

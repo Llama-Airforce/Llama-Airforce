@@ -151,7 +151,10 @@ function formatter(x: number) {
         >
         </ButtonToggle>
 
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="collateral"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart

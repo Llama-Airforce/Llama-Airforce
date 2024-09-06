@@ -71,7 +71,10 @@ function createSeries() {
   >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="loans"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart

@@ -79,7 +79,10 @@ function createSeries() {
   >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport :series></BtnChartLWExport>
+        <BtnChartLWExport
+          filename="distributions_delta"
+          :series
+        ></BtnChartLWExport>
 
         <BtnChartLWFullscreen
           :chart
