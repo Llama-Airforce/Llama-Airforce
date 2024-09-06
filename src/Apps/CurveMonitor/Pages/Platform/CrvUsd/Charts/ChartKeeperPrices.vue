@@ -97,7 +97,7 @@ function createSeries() {
 <template>
   <Card
     ref="card"
-    title="Stablecoin Prices of Pegkeepers"
+    title="Pegkeepers Coin Prices"
     :loading
   >
     <template #actions>
