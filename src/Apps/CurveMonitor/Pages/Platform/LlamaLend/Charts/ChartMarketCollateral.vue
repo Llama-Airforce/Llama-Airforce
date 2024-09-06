@@ -138,16 +138,16 @@ function formatter(x: number) {
     :loading
   >
     <template #actions>
-      <div class="actions">
-        <Legend :items></Legend>
+      <ButtonToggle
+        value="Dollars"
+        :model-value="denomDollars"
+        @click="denomDollars = !denomDollars"
+      >
+      </ButtonToggle>
+    </template>
 
-        <ButtonToggle
-          value="Dollars"
-          :model-value="denomDollars"
-          @click="denomDollars = !denomDollars"
-        >
-        </ButtonToggle>
-      </div>
+    <template #actions-secondary>
+      <Legend :items></Legend>
     </template>
 
     <div
@@ -156,12 +156,3 @@ function formatter(x: number) {
     ></div>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.actions {
-  display: flex;
-  gap: 1rem;
-}
-</style>

@@ -167,7 +167,7 @@ const series = computed((): Serie[] => {
     title="Revenue breakdown by source"
     :loading
   >
-    <template #actions>
+    <template #actions-secondary>
       <Legend :items></Legend>
     </template>
 

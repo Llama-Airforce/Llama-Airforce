@@ -136,7 +136,7 @@ function formatter(y: number): string {
     :title="t('title')"
     :loading="loading"
   >
-    <template #actions>
+    <template #actions-secondary>
       <Legend :items></Legend>
     </template>
 

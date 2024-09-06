@@ -128,7 +128,7 @@ function formatter(x: number): string {
     title="Rates"
     :loading
   >
-    <template #actions>
+    <template #actions-secondary>
       <Legend :items></Legend>
     </template>
 

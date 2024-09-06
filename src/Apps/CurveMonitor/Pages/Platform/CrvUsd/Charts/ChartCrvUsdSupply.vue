@@ -46,28 +46,28 @@ const onChartType = (type: ChartType) => {
     :loading
   >
     <template #actions>
-      <div class="actions">
-        <Legend
-          v-if="chartType === 'line'"
-          :items
-        ></Legend>
+      <div class="chart-types">
+        <ButtonToggle
+          value="Line"
+          :model-value="chartType === 'line'"
+          @click="onChartType('line')"
+        >
+        </ButtonToggle>
 
-        <div class="chart-types">
-          <ButtonToggle
-            value="Line"
-            :model-value="chartType === 'line'"
-            @click="onChartType('line')"
-          >
-          </ButtonToggle>
-
-          <ButtonToggle
-            value="Breakdown"
-            :model-value="chartType === 'breakdown'"
-            @click="onChartType('breakdown')"
-          >
-          </ButtonToggle>
-        </div>
+        <ButtonToggle
+          value="Breakdown"
+          :model-value="chartType === 'breakdown'"
+          @click="onChartType('breakdown')"
+        >
+        </ButtonToggle>
       </div>
+    </template>
+
+    <template #actions-secondary>
+      <Legend
+        v-if="chartType === 'line'"
+        :items
+      ></Legend>
     </template>
 
     <KeepAlive>
@@ -94,34 +94,21 @@ const onChartType = (type: ChartType) => {
   --header-column-actions: 1fr;
 }
 
-.actions {
-  flex-grow: 1;
+.chart-types {
+  grid-column: 2;
 
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
+  display: flex;
+  font-size: 0.875rem;
 
-  .legend {
-    grid-column: 1;
-    justify-self: center;
-  }
+  button {
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-  .chart-types {
-    grid-column: 2;
-
-    display: flex;
-    font-size: 0.875rem;
-
-    button {
-      &:not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      &:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

@@ -178,7 +178,7 @@ function createSeries() {
     :title="t('title')"
     :loading="loading"
   >
-    <template #actions>
+    <template #actions-secondary>
       <Legend :items></Legend>
     </template>
 

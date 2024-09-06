@@ -115,7 +115,7 @@ const formatterY = (x: number): string =>
 
 <template>
   <Card :title>
-    <template #actions>
+    <template #actions-secondary>
       <Legend
         :items
         :disabled
