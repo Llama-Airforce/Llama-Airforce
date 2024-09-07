@@ -3,7 +3,7 @@ const fullscreen = ref(false);
 
 const { chart, target = null } = defineProps<{
   chart: IChartApi | undefined;
-  target: HTMLElement | null;
+  target: ComponentPublicInstance | null;
 }>();
 
 // Fullscreen
@@ -32,7 +32,7 @@ function onExit() {
     <i class="fas fa-expand"></i>
 
     <ModalFullscreen
-      :target
+      :target="target?.$el"
       :show="fullscreen"
       @close="fullscreen = false"
       @enter-before="onEnterBefore"

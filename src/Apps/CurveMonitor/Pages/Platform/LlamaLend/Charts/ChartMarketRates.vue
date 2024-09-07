@@ -141,7 +141,7 @@ function formatter(x: number): string {
 
         <BtnChartLWFullscreen
           :chart
-          :target="card?.$el"
+          :target="card"
         />
       </div>
     </template>
