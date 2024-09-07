@@ -40,7 +40,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
 </script>
 
 <template>
-  <div class="trading">
+  <div class="dashboard-grid">
     <ChartOHLC
       style="grid-area: ohlc"
       :ohlc="ohlc ?? []"
@@ -67,12 +67,8 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.trading {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas:

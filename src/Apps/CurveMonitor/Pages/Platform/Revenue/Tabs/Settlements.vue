@@ -6,7 +6,7 @@ const { isFetching: loading, data: settlements } = useQueryCowSwapSettlements();
 </script>
 
 <template>
-  <div class="settlements">
+  <div class="dashboard-grid">
     <TableSettlements
       style="grid-area: table"
       :settlements
@@ -16,12 +16,8 @@ const { isFetching: loading, data: settlements } = useQueryCowSwapSettlements();
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.settlements {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-areas: "table";
 }

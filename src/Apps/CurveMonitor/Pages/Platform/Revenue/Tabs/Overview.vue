@@ -3,7 +3,7 @@ import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue
 </script>
 
 <template>
-  <div class="overview">
+  <div class="dashboard-grid">
     <ChartBreakdown
       style="grid-area: breakdown"
       class="breakdown"
@@ -12,13 +12,9 @@ import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.overview {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
 
-  @include dashboard-grid;
-  grid-template-columns: 1fr;
   grid-template-rows: 600px;
   grid-template-areas: "breakdown";
 

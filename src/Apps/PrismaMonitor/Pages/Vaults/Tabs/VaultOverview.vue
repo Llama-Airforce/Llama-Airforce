@@ -12,7 +12,7 @@ const { vault } = defineProps<{
 </script>
 
 <template>
-  <div class="vault-overview">
+  <div class="dashboard-grid">
     <VaultKPIs
       style="grid-column: 1 / -1"
       :vault="vault"
@@ -27,12 +27,9 @@ const { vault } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.vault-overview {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
 
-  @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
 }
 </style>

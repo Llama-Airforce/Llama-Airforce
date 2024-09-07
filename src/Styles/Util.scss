@@ -16,3 +16,12 @@
     padding: 1.5rem 1rem;
   }
 }
+
+.dashboard-grid {
+  display: grid;
+  gap: var(--dashboard-gap);
+  grid-gap: var(--dashboard-gap);
+
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+}

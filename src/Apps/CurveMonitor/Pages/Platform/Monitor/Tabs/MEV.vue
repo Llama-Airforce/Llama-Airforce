@@ -5,7 +5,7 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 </script>
 
 <template>
-  <div class="mev">
+  <div class="dashboard-grid">
     <Sandwiches style="grid-area: sws"></Sandwiches>
 
     <LabelsWorstRelative style="grid-area: relative"></LabelsWorstRelative>
@@ -14,12 +14,8 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.mev {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;

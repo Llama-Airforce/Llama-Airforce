@@ -3,21 +3,16 @@ import TableSwaps from "@CM/Pages/DefiMonitor/Tables/TableSwaps.vue";
 </script>
 
 <template>
-  <div class="swaps">
+  <div class="dashboard-grid">
     <TableSwaps style="grid-area: swaps"></TableSwaps>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.swaps {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
 
-  @include dashboard-grid;
-
   grid-template-rows: auto;
-  grid-template-columns: 1fr;
   grid-template-areas: "swaps";
 }
 </style>

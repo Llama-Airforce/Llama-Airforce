@@ -29,7 +29,7 @@ const stdDevWeeklyFees = computed(() => {
 </script>
 
 <template>
-  <div class="distributions">
+  <div class="dashboard-grid">
     <KPI
       style="grid-area: kpi1"
       label="Total"
@@ -84,12 +84,8 @@ const stdDevWeeklyFees = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.distributions {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-columns: 0.3fr 0.33fr 0.33fr 0.33fr;
   grid-template-rows: 5rem 400px 400px;

@@ -166,7 +166,7 @@ const rankTypesUsers = computed(() =>
       </div>
     </Teleport>
 
-    <div class="activity">
+    <div class="activity dashboard-grid">
       <KPI
         style="grid-area: kpi1"
         label="Transactions Today"
@@ -251,14 +251,10 @@ const rankTypesUsers = computed(() =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 
   .activity {
-    @include dashboard-grid;
-
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
       "kpi1 kpi2 kpi3 kpi4"
@@ -294,5 +290,3 @@ const rankTypesUsers = computed(() =>
   }
 }
 </style>
-
-<style lang="scss"></style>

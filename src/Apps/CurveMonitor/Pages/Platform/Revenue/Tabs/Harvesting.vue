@@ -13,7 +13,7 @@ const { isFetching: loadingStaged, data: feesStaged } = useQueryFeesStaged();
 </script>
 
 <template>
-  <div class="harvesting">
+  <div class="dashboard-grid">
     <TableFeesCollected
       style="grid-area: collected"
       :fees="feesCollected"
@@ -29,12 +29,8 @@ const { isFetching: loadingStaged, data: feesStaged } = useQueryFeesStaged();
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.harvesting {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 900px;

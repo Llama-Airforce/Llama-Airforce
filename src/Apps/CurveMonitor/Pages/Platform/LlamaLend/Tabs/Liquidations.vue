@@ -95,7 +95,7 @@ const { isFetching: loadingDeciles, data: deciles } = useQueryLiqHealthDeciles(
 </script>
 
 <template>
-  <div class="liquidations">
+  <div class="dashboard-grid">
     <TableLiqOverview
       :overview
       :loading="loadingOverview"
@@ -141,12 +141,9 @@ const { isFetching: loadingDeciles, data: deciles } = useQueryLiqHealthDeciles(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.liquidations {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
 
-  @include dashboard-grid;
   grid-template-columns: 1fr 1fr;
 
   @media only screen and (max-width: 1280px) {

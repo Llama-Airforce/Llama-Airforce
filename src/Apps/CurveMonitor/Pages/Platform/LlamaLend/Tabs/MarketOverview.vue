@@ -59,7 +59,7 @@ const equity = computed(() =>
 </script>
 
 <template>
-  <div class="market">
+  <div class="dashboard-grid">
     <KPI
       style="grid-area: kpi1"
       label="Borrow APY"
@@ -156,12 +156,8 @@ const equity = computed(() =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.market {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:

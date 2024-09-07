@@ -52,7 +52,7 @@ const tvl = computed(() =>
 </script>
 
 <template>
-  <div class="pool-overview">
+  <div class="dashboard-grid">
     <KPI
       style="grid-area: kpi1"
       label="Tokens"
@@ -123,12 +123,8 @@ const tvl = computed(() =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.pool-overview {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:

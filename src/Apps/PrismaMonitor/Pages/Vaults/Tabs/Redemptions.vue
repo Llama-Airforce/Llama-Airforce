@@ -8,7 +8,7 @@ const { vault } = defineProps<{
 </script>
 
 <template>
-  <div class="redemptions">
+  <div class="dashboard-grid">
     <TableRedemptions :vault="vault"></TableRedemptions>
   </div>
 </template>
@@ -16,11 +16,7 @@ const { vault } = defineProps<{
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-.redemptions {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
 }
 </style>

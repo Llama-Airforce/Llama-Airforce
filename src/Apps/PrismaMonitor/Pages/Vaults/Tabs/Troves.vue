@@ -28,7 +28,7 @@ const onTroveSelect = async (trove: Trove) => {
 </script>
 
 <template>
-  <div class="troves">
+  <div class="dashboard-grid">
     <TableTroves
       :vault="vault"
       @selected="onTroveSelect"
@@ -37,13 +37,7 @@ const onTroveSelect = async (trove: Trove) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.troves {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
 }
 </style>

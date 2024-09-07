@@ -3,21 +3,16 @@ import TableTransfers from "@CM/Pages/DefiMonitor/Tables/TableTransfers.vue";
 </script>
 
 <template>
-  <div class="transfers">
+  <div class="dashboard-grid">
     <TableTransfers style="grid-area: transfers"></TableTransfers>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.transfers {
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
 
-  @include dashboard-grid;
-
   grid-template-rows: auto;
-  grid-template-columns: 1fr;
   grid-template-areas: "transfers";
 }
 </style>
