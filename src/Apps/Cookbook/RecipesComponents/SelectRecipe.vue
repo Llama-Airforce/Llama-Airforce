@@ -102,7 +102,7 @@ const select3 = `.select-component {
 </script>
 
 <template>
-  <div class="selects">
+  <div class="dashboard">
     <Recipe title="Select">
       <template #example>
         <Select
@@ -141,10 +141,6 @@ const select3 = `.select-component {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("selects");
-
 .select-component {
   width: 20rem;
 

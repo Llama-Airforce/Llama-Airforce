@@ -45,7 +45,7 @@ const showAlert = (msg: string) => {
 </script>
 
 <template>
-  <div class="buttons">
+  <div class="dashboard">
     <Recipe title="Primary">
       <template #example>
         <Button
@@ -182,11 +182,7 @@ const showAlert = (msg: string) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("buttons");
-
-.buttons {
+.dashboard {
   grid-template-columns: 1fr 1fr 1fr;
 }
 </style>

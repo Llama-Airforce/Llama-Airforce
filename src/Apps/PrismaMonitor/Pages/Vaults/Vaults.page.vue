@@ -39,7 +39,7 @@ const onVaultSelect = async (vault: TroveManagerDetails) => {
 </script>
 
 <template>
-  <div class="vaults">
+  <div class="dashboard">
     <TableVaults
       style="grid-column: 1 / -1"
       @selected="onVaultSelect"
@@ -52,11 +52,7 @@ const onVaultSelect = async (vault: TroveManagerDetails) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("vaults");
-
-.vaults {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;

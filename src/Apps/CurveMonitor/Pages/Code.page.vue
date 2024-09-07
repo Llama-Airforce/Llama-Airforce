@@ -94,7 +94,7 @@ const linkContract = (contract: Contract): string => {
 </script>
 
 <template>
-  <div class="code">
+  <div class="dashboard">
     <Card title="Repositories">
       <Table
         class="repositories-table"
@@ -183,11 +183,7 @@ const linkContract = (contract: Contract): string => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("code");
-
-.code {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   display: flex;

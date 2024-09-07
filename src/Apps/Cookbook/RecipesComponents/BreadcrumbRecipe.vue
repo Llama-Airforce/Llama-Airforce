@@ -39,7 +39,7 @@ const onCrumb = (crumb: Crumb) => {
 </script>
 
 <template>
-  <div class="breadcrumbs">
+  <div class="dashboard">
     <Recipe title="Breadcrumb">
       <template #example>
         <Breadcrumb
@@ -63,9 +63,3 @@ const onCrumb = (crumb: Crumb) => {
     </Recipe>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("breadcrumbs");
-</style>

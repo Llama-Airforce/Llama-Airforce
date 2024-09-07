@@ -95,7 +95,7 @@ watch(isConnected, (isConnected) => {
 </script>
 
 <template>
-  <div class="sockets">
+  <div class="dashboard">
     <div class="connect">
       <InputText v-model="url"></InputText>
 
@@ -135,12 +135,7 @@ watch(isConnected, (isConnected) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("sockets");
-
-.sockets {
-  display: grid;
+.dashboard {
   grid-template-rows: auto auto;
 
   .connect {

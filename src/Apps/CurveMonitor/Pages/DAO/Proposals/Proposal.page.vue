@@ -15,7 +15,7 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
 </script>
 
 <template>
-  <div class="proposal-container">
+  <div class="dashboard">
     <Spinner
       class="spinner"
       :class="{ loading }"
@@ -32,9 +32,7 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("proposal-container");
-
-.proposal-container {
+.dashboard {
   position: relative;
   max-width: calc(1920px - 18.125rem);
 

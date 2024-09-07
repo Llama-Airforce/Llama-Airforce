@@ -155,7 +155,7 @@ const inputTextSearch3 = `.search-item {
 </script>
 
 <template>
-  <div class="inputs">
+  <div class="dashboard">
     <Recipe title="InputText with placeholder">
       <template #example>
         <InputText
@@ -229,11 +229,7 @@ const inputTextSearch3 = `.search-item {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("inputs");
-
-.inputs {
+.dashboard {
   .search-item {
     display: flex;
     align-items: center;

@@ -8,7 +8,7 @@ import TableTopWithdrawals from "@PM/Pages/Pool/Tables/TableTopWithdrawals.vue";
 </script>
 
 <template>
-  <div class="pool">
+  <div class="dashboard">
     <ChartPoolTvl></ChartPoolTvl>
     <ChartStableFlow></ChartStableFlow>
     <ChartDepositDistribution></ChartDepositDistribution>
@@ -19,11 +19,7 @@ import TableTopWithdrawals from "@PM/Pages/Pool/Tables/TableTopWithdrawals.vue";
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("pool");
-
-.pool {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;

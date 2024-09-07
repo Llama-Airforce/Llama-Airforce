@@ -60,7 +60,7 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
 </script>
 
 <template>
-  <div class="async-values">
+  <div class="dashboard">
     <Recipe title="AsyncValue">
       <template #example>
         <AsyncValue :value="50000"></AsyncValue>
@@ -238,11 +238,7 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("async-values");
-
-.async-values {
+.dashboard {
   grid-template-columns: 1fr 1fr 1fr;
 }
 </style>

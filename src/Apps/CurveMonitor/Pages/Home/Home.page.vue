@@ -5,7 +5,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
 </script>
 
 <template>
-  <div class="home">
+  <div class="dashboard">
     <div class="description">
       <span class="title">Curve Monitor</span>
       <span class="tag">
@@ -28,11 +28,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("home");
-
-.home {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 3fr 1fr;

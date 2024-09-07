@@ -91,9 +91,6 @@ const proposalsExecuted = computed((): Proposal[] => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-// For some reason this fucks up the width.
-// @include dashboard("proposals");
-
 .proposals {
   position: relative;
   max-width: calc(1920px - 18.125rem);

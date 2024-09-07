@@ -78,7 +78,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 </script>
 
 <template>
-  <div class="vault-manager">
+  <div class="dashboard">
     <TabView
       :active="tabActiveIndex"
       @tab="tabActiveIndex = $event.index"
@@ -132,11 +132,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("vault-manager");
-
-.vault-manager {
+.dashboard {
   position: relative;
   max-width: calc(1920px - 18.125rem);
 }

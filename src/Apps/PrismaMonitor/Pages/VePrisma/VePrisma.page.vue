@@ -21,7 +21,7 @@ const totalWeight = computed(() => data.value.totalWeight);
 </script>
 
 <template>
-  <div class="veprisma">
+  <div class="dashboard">
     <TableLockers
       style="grid-row: 1; grid-column: 1"
       :loading="loading"
@@ -42,11 +42,7 @@ const totalWeight = computed(() => data.value.totalWeight);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("veprisma");
-
-.veprisma {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 2fr 1fr;

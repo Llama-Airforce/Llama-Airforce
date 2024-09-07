@@ -85,7 +85,7 @@ const handleToggle = (event) => {
 </script>
 
 <template>
-  <div class="cards">
+  <div class="dashboard">
     <Recipe title="Basic Card">
       <template #example>
         <Card
@@ -197,11 +197,7 @@ const handleToggle = (event) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("cards");
-
-.cards {
+.dashboard {
   column-gap: var(--dashboard-gap, 1.5rem);
   grid-template-columns: 1fr 1fr;
 

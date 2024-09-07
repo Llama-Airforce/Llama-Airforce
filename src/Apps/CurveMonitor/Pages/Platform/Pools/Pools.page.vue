@@ -70,7 +70,7 @@ const onPoolSelect = async (newPool: Pool) => {
 </script>
 
 <template>
-  <div class="pools">
+  <div class="dashboard">
     <Teleport to="#toolbar">
       <div class="toolbar">
         <InputText
@@ -145,11 +145,7 @@ const onPoolSelect = async (newPool: Pool) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("pools");
-
-.pools {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:

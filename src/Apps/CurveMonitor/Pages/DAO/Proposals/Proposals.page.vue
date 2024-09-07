@@ -56,7 +56,7 @@ const onTypeSelect = (type: ProposalType): void => {
 </script>
 
 <template>
-  <div class="proposals">
+  <div class="dashboard">
     <TabView @tab="tabActive = $event.index">
       <TabItem header="All"></TabItem>
       <TabItem header="Active"></TabItem>
@@ -119,10 +119,7 @@ const onTypeSelect = (type: ProposalType): void => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-// For some reason this fucks up the width.
-@include dashboard("proposals");
-
-.proposals {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   display: flex;

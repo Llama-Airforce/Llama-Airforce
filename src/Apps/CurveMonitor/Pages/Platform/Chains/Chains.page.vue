@@ -147,7 +147,7 @@ const rankTypesUsers = computed(() =>
 </script>
 
 <template>
-  <div class="chains">
+  <div class="dashboard">
     <Teleport to="#toolbar">
       <div class="toolbar">
         <ActivityTypeSelect
@@ -253,9 +253,7 @@ const rankTypesUsers = computed(() =>
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("chains");
-
-.chains {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   .activity {

@@ -16,7 +16,7 @@ const pagination = `<Pagination
 </script>
 
 <template>
-  <div class="paginations">
+  <div class="dashboard">
     <Recipe title="Pagination">
       <template #example>
         <Pagination
@@ -36,9 +36,3 @@ const pagination = `<Pagination
     </Recipe>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("paginations");
-</style>

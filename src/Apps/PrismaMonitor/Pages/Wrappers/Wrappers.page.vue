@@ -10,7 +10,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 </script>
 
 <template>
-  <div class="wrappers">
+  <div class="dashboard">
     <TabView
       :active="tabActiveIndex"
       @tab="tabActiveIndex = $event.index"
@@ -31,11 +31,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("wrappers");
-
-.wrappers {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 }
 </style>

@@ -59,27 +59,6 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
   grid-template-columns: 1fr;
 }
 
-@mixin dashboard-grid-mobile($padding: false) {
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
-
-    @if $padding {
-      padding: 1.5rem 1rem;
-    }
-  }
-}
-
-@mixin dashboard($root) {
-  .#{$root} {
-    margin: auto;
-    padding: var(--page-margin);
-
-    @include dashboard-grid();
-    @include dashboard-grid-mobile(true);
-  }
-}
-
 @mixin dashboardLAF($root) {
   .#{$root} {
     display: flex;
@@ -90,7 +69,12 @@ $ease-out: cubic-bezier(0.4, 0, 1, 1);
       padding: var(--page-margin);
 
       @include dashboard-grid();
-      @include dashboard-grid-mobile(true);
+
+      @media only screen and (max-width: 1280px) {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+      }
     }
   }
 }

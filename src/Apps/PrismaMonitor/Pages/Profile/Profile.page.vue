@@ -64,7 +64,7 @@ whenever(addr, (addr) => {
 </script>
 
 <template>
-  <div class="profile">
+  <div class="dashboard">
     <h2 style="grid-column: 1 / -1; margin-bottom: -0.5rem">
       Profile: {{ user ?? "?" }}
     </h2>
@@ -83,11 +83,7 @@ whenever(addr, (addr) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("profile");
-
-.profile {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr;

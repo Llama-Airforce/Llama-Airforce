@@ -17,7 +17,7 @@ const notificationsExample = `<ButtonToggle v-model="notifications" value="Notif
 </script>
 
 <template>
-  <div class="button-toggles">
+  <div class="dashboard">
     <Recipe title="Dark Mode Toggle">
       <template #description>
         Use ButtonToggle to switch between dark and light modes in your
@@ -68,11 +68,7 @@ const notificationsExample = `<ButtonToggle v-model="notifications" value="Notif
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("button-toggles");
-
-.button-toggles {
+.dashboard {
   p {
     margin-top: 0.5rem;
     margin-bottom: 1rem;

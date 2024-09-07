@@ -230,7 +230,7 @@ const onCheck = (round: Round) => {
 </script>
 
 <template>
-  <div class="tables">
+  <div class="dashboard">
     <Recipe title="Table">
       <template #example>
         <Table
@@ -350,10 +350,6 @@ const onCheck = (round: Round) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("tables");
-
 .example-table {
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 

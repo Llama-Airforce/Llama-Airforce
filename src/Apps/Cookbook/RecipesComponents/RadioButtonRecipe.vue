@@ -73,7 +73,7 @@ const onRadioChange = (value: (typeof values)[number]) => {
 </script>
 
 <template>
-  <div class="radio-buttons">
+  <div class="dashboard">
     <Recipe title="Basic Radio Button">
       <template #example>
         <RadioButton
@@ -171,11 +171,7 @@ const onRadioChange = (value: (typeof values)[number]) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("radio-buttons");
-
-.radio-buttons {
+.dashboard {
   grid-template-columns: 1fr 1fr;
 }
 </style>

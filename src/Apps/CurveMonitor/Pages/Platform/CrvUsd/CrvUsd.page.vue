@@ -42,7 +42,7 @@ const onMarketSelect = async (newMarket: Market) => {
 </script>
 
 <template>
-  <div class="crvusd">
+  <div class="dashboard">
     <TableMarkets
       style="grid-column: 1 / -1"
       @selected="onMarketSelect"
@@ -60,11 +60,7 @@ const onMarketSelect = async (newMarket: Market) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("crvusd");
-
-.crvusd {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 5fr 4fr;

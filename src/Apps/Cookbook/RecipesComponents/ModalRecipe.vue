@@ -33,7 +33,7 @@ const modalYesNo3 = `.my-modal {
 </script>
 
 <template>
-  <div class="modals">
+  <div class="dashboard">
     <Recipe title="ModalYesNo">
       <template #example>
         <Button @click="openModal = true">Open Modal</Button>
@@ -70,10 +70,6 @@ const modalYesNo3 = `.my-modal {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("modals");
-
 .content {
   width: 40rem;
 }

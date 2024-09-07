@@ -12,17 +12,13 @@ const vaults = useObservable(prismaService.overview$, []);
 </script>
 
 <template>
-  <div class="liquidations">
+  <div class="dashboard">
     <TableLiquidations :vaults="vaults"></TableLiquidations>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("liquidations");
-
-.liquidations {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr;

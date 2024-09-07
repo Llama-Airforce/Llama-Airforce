@@ -12,7 +12,7 @@ const onGauge = (newGauge: string): void => {
 </script>
 
 <template>
-  <div class="ve-funder">
+  <div class="dashboard">
     <div class="explanation">
       <Card>
         <div class="step-one">
@@ -58,11 +58,7 @@ const onGauge = (newGauge: string): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("ve-funder");
-
-.ve-funder {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   > .explanation {

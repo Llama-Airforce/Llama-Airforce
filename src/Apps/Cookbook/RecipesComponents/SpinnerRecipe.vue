@@ -5,7 +5,7 @@ const spinner = `<Spinner></Spinner>`;
 </script>
 
 <template>
-  <div class="spinners">
+  <div class="dashboard">
     <Recipe title="Spinner">
       <template #example>
         <Spinner></Spinner>
@@ -20,9 +20,3 @@ const spinner = `<Spinner></Spinner>`;
     </Recipe>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("spinners");
-</style>

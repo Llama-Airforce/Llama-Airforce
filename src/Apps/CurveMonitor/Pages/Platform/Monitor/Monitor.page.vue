@@ -6,7 +6,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(["mev"], "monitor");
 </script>
 
 <template>
-  <div class="monitor">
+  <div class="dashboard">
     <TabView
       :active="tabActiveIndex"
       @tab="tabActiveIndex = $event.index"
@@ -21,11 +21,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(["mev"], "monitor");
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("monitor");
-
-.monitor {
+.dashboard {
   position: relative;
   max-width: calc(1920px - 18.125rem);
 }

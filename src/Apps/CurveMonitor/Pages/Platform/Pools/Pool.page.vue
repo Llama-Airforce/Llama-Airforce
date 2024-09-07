@@ -49,7 +49,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 </script>
 
 <template>
-  <div class="pool">
+  <div class="dashboard">
     <Spinner
       class="spinner"
       :class="{ loading }"
@@ -86,9 +86,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("pool");
-
-.pool {
+.dashboard {
   position: relative;
   max-width: calc(1920px - 18.125rem);
 

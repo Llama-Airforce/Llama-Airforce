@@ -12,7 +12,7 @@ const inputNumber = `<InputNumber
 </script>
 
 <template>
-  <div class="inputs">
+  <div class="dashboard">
     <Recipe title="InputNumber">
       <template #example>
         <InputNumber
@@ -32,9 +32,3 @@ const inputNumber = `<InputNumber
     </Recipe>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("inputs");
-</style>

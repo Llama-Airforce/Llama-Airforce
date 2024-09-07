@@ -29,7 +29,7 @@ const colors: Color[] = [
 </script>
 
 <template>
-  <div class="colors">
+  <div class="dashboard">
     <Card title="Colors">
       <Table
         class="colors-table"
@@ -59,10 +59,6 @@ const colors: Color[] = [
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("colors");
-
 .colors-table {
   --columns-data: 0.2fr 0.2fr 0.6fr;
 

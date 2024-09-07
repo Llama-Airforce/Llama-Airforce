@@ -35,7 +35,7 @@ const onCheckboxChange = (checked: boolean) => {
 </script>
 
 <template>
-  <div class="checkboxes">
+  <div class="dashboard">
     <Recipe title="Basic Checkbox">
       <template #example>
         <Checkbox v-model="isChecked1">Accept terms and conditions</Checkbox>
@@ -109,11 +109,7 @@ const onCheckboxChange = (checked: boolean) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("checkboxes");
-
-.checkboxes {
+.dashboard {
   grid-template-columns: 1fr 1fr;
 }
 </style>

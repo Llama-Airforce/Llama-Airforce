@@ -118,7 +118,7 @@ watch(trove, (trove) => {
 </script>
 
 <template>
-  <div class="trove">
+  <div class="dashboard">
     <ChartTroveRank
       class="graph-rank"
       :vault="vault"
@@ -142,11 +142,7 @@ watch(trove, (trove) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("trove");
-
-.trove {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 1fr 1fr;

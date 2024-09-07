@@ -141,7 +141,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
 </script>
 
 <template>
-  <div class="llamalend">
+  <div class="dashboard">
     <Teleport to="#toolbar">
       <div class="toolbar">
         <InputText
@@ -236,9 +236,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
 
-@include dashboard("llamalend");
-
-.llamalend {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
   grid-template-columns: 1fr 1fr;
 

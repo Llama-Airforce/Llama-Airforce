@@ -4,18 +4,14 @@ import ChartBreakdown from "@PM/Pages/Revenue/Charts/ChartBreakdown.vue";
 </script>
 
 <template>
-  <div class="revenue">
+  <div class="dashboard">
     <ChartRevenue style="grid-column: 1"></ChartRevenue>
     <ChartBreakdown style="grid-column: 2"></ChartBreakdown>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("revenue");
-
-.revenue {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   grid-template-columns: 2fr 1fr;

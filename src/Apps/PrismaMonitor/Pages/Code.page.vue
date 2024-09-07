@@ -17,7 +17,7 @@ const repositories: Repository[] = [
 </script>
 
 <template>
-  <div class="code">
+  <div class="dashboard">
     <Card :title="t('repositories')">
       <Table
         class="repositories-table"
@@ -56,11 +56,7 @@ const repositories: Repository[] = [
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("code");
-
-.code {
+.dashboard {
   max-width: calc(1920px - 18.125rem);
 
   display: flex;

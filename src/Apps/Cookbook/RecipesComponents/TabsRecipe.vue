@@ -23,7 +23,7 @@ const onTabChange = (event: { tab: any; index: number }) => {
 </script>
 
 <template>
-  <div class="tabs">
+  <div class="dashboard">
     <Recipe title="Tabs">
       <template #example>
         <div class="active">Active tab is index {{ tabActive }}</div>
@@ -52,9 +52,3 @@ const onTabChange = (event: { tab: any; index: number }) => {
     </Recipe>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("tabs");
-</style>

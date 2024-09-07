@@ -25,7 +25,7 @@ const onInput = (newVal: string) => {
 </script>
 
 <template>
-  <div class="sliders">
+  <div class="dashboard">
     <Recipe title="Slider">
       <template #example>
         <div class="value">{{ value }}</div>
@@ -52,9 +52,3 @@ const onInput = (newVal: string) => {
     </Recipe>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("sliders");
-</style>

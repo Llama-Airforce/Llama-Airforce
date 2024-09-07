@@ -31,7 +31,7 @@ const onTooltipShow = (isShown: boolean) => {
 </script>
 
 <template>
-  <div class="tooltips">
+  <div class="dashboard">
     <Recipe title="Default Tooltip">
       <template #example>
         <Tooltip>
@@ -95,11 +95,7 @@ const onTooltipShow = (isShown: boolean) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("tooltips");
-
-.tooltips {
+.dashboard {
   grid-template-columns: 1fr 1fr;
 }
 </style>

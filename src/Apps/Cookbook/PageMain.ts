@@ -1,7 +1,6 @@
 import { type Page } from "@/Framework/Monitor/Page";
 
 import Colors from "@CB/Recipes/ColorsRecipe.vue";
-import Dashboard from "@CB/Recipes/DashboardRecipe.vue";
 import Socket from "@CB/Recipes/SocketRecipe.vue";
 
 import AsyncValue from "@CB/RecipesComponents/AsyncValueRecipe.vue";
@@ -30,11 +29,6 @@ export const pageMainRoutes = [
     path: "/colors",
     name: "colors",
     component: Colors,
-  },
-  {
-    path: "/dashboard",
-    name: "dashboard",
-    component: Dashboard,
   },
   {
     path: "/socket",
@@ -143,10 +137,6 @@ export const pageMain: Page = {
     {
       to: "/colors",
       label: "Colors",
-    },
-    {
-      to: "/dashboard",
-      label: "Dashboard",
     },
     {
       to: "/socket",

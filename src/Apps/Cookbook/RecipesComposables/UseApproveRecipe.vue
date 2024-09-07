@@ -35,7 +35,7 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
 </script>
 
 <template>
-  <div class="use-approve">
+  <div class="dashboard">
     <Recipe title="Approval">
       <template #example>
         <div class="approval">
@@ -87,11 +87,7 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboard("use-approve");
-
-.use-approve {
+.dashboard {
   grid-template-columns: 1fr 1fr;
 
   .approval {
