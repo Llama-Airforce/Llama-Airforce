@@ -34,7 +34,6 @@ const expanded = ref(false);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .proposal {
   :deep(.card-body) {
     flex-direction: column;

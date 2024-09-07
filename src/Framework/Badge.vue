@@ -11,8 +11,6 @@ const { label = "" } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .badge {
   color: var(--c-text);
   font-size: 0.625rem;

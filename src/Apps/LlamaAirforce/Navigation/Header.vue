@@ -20,8 +20,6 @@ const hasHeader = computed((): boolean => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .headers {
   display: none;
 

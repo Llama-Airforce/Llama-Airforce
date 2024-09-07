@@ -34,8 +34,6 @@ const showRedemptionsInit = ref(false);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .redemptions-init-body {
   display: flex;
   flex-direction: column;

@@ -18,7 +18,6 @@ const { proposal } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .voting {
   display: flex;
   flex-direction: column;

@@ -54,8 +54,6 @@ const changeNetwork = () => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .wallet {
   .info {
     margin-top: 1rem;

@@ -106,8 +106,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .votes-incentives-card {
   --header-column-actions: minmax(auto, 25rem) auto;
 }

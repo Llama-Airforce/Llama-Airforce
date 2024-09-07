@@ -181,8 +181,6 @@ const tokenAddress = (x: Pool & Keeper) =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .pegkeepers-card {
   --header-column-title: minmax(7rem, 1fr);
   --header-column-actions: minmax(auto, 25rem);

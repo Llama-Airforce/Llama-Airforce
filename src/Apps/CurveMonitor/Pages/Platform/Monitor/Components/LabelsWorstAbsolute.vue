@@ -79,8 +79,6 @@ const formatter = (x: number): string => `${x}`;
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart {
   height: 400px;
 }

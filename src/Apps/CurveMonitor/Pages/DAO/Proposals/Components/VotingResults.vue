@@ -91,7 +91,6 @@ const againstPercentage = computed(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .results {
   display: flex;
   flex-direction: column;

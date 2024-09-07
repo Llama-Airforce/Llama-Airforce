@@ -165,8 +165,6 @@ function symbol(settlement: CowSwapSettlement) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .header-content {
   display: flex;
   gap: 1rem;

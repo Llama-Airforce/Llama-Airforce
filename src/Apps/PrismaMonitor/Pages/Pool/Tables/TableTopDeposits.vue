@@ -78,8 +78,6 @@ const rows = computed(() => data.value.map((x) => x));
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .deposits-table {
   --columns-data: 1fr 1fr 1fr 1fr;
 }

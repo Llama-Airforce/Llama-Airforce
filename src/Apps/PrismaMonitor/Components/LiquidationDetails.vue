@@ -90,8 +90,6 @@ const rows = computed(() =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .liquidation-details {
   width: 640px;
 

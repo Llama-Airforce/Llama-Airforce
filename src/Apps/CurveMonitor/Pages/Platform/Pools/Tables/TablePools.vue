@@ -113,8 +113,6 @@ function utilRate(pool: Pool) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .pools-table {
   --col-width: 11ch;
   --columns-data: 1rem calc(4 * (26px + 1ch)) minmax(var(--col-width), 0.75fr)

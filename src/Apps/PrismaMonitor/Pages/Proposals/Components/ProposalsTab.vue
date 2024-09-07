@@ -67,8 +67,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .proposals-tab {
   display: flex;
   flex-direction: column;

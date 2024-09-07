@@ -146,8 +146,6 @@ function formatter(x: number) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .controls {
   display: flex;
   gap: 1rem;

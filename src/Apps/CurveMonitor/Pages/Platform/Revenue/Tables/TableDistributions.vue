@@ -60,8 +60,6 @@ function formatDate(epoch: number): string {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .distributions-table {
   --columns-data: 1fr 1fr;
 }

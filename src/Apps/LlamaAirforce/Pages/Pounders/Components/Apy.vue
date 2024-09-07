@@ -72,7 +72,6 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .apy {
   width: 10rem;
 

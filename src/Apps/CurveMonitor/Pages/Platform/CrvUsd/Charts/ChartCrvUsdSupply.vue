@@ -87,8 +87,6 @@ const onChartType = (type: ChartType) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .card {
   --header-column-title: auto;
   --header-column-actions: 1fr;

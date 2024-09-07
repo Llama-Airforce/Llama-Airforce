@@ -50,8 +50,6 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.75s ease;

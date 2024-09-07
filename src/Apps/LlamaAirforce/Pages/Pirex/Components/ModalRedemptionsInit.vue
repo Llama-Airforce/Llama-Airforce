@@ -219,8 +219,6 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
 </style>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .redemptions-init-body {
   width: 33vw;
   max-height: 75dvh;

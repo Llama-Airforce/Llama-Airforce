@@ -89,8 +89,6 @@ const rows = computed(() =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .redemption-details {
   width: 640px;
 

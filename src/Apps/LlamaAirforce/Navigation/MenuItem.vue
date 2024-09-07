@@ -97,8 +97,6 @@ const onClickNode = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 i {
   display: flex;
   justify-content: center;

@@ -182,8 +182,6 @@ const loading = computed(() => rowsRaw.value.length === 0);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .vaults-card {
   --header-column-title: minmax(7rem, 1fr);
   --header-column-actions: minmax(auto, 25rem);

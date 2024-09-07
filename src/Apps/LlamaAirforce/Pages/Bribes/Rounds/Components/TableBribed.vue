@@ -135,8 +135,6 @@ const bribes = (bribed: Bribed): Bribe[] => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .bribed-table {
   --columns-data: 1.5fr 0.6fr 0.6fr;
 

@@ -37,7 +37,6 @@ const tvl = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .tvl {
   width: 10rem;
 

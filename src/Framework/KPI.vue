@@ -83,8 +83,6 @@ const {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .kpi {
   display: flex;
   flex-direction: column;

@@ -214,8 +214,6 @@ const sortColumn = (column: Column): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .table {
   position: relative;
 

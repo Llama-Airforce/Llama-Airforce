@@ -27,8 +27,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .strategy {
   display: flex;
   flex-direction: column;

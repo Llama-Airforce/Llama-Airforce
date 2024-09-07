@@ -82,8 +82,6 @@ const type = (x: LlammaEvent) =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .events-table {
   --columns-data: 8rem 1fr 1fr 6rem 6rem;
 }

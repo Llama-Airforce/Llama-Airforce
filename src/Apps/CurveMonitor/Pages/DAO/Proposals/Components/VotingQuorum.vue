@@ -59,7 +59,6 @@ const reached = computed(() => (votesSupport.value / votesQuorum.value) * 100);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .quorum {
   display: flex;
   flex-direction: column;

@@ -6,13 +6,13 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .lds-ripple {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 80px;
 }
+
 .lds-ripple div {
   position: absolute;
   border: 4px solid var(--spinner-color);
@@ -20,9 +20,11 @@
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
+
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
 }
+
 @keyframes lds-ripple {
   0% {
     top: 36px;

@@ -106,8 +106,6 @@ const round = (x: number) =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .trades-table {
   --columns-data: minmax(5rem, 1fr) 26px minmax(5rem, 1fr) minmax(5rem, 1fr)
     26px minmax(5rem, 1fr) 6rem 6rem;

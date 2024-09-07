@@ -23,7 +23,6 @@ const { proposal, expanded = false } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .proposal-details {
   display: flex;
   flex-grow: 1;

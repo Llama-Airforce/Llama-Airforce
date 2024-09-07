@@ -73,8 +73,6 @@ function isSelected(reward: Reward) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .rewards-table {
   --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
 

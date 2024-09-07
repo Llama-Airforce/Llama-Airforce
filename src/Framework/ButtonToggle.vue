@@ -36,8 +36,6 @@ const onClick = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 button {
   all: unset;
   display: flex;

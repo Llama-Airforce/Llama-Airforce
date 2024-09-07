@@ -34,8 +34,6 @@ const showSwap = ref(false);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .swap-body {
   display: flex;
   flex-direction: column;

@@ -35,7 +35,6 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .content {
   width: 33vw;
   display: flex;

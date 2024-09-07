@@ -68,7 +68,6 @@ const reached = computed((): number => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .quorum {
   display: flex;
   flex-direction: column;

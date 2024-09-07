@@ -179,8 +179,6 @@ const series = computed((): Serie[] => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart {
   :deep(.apexcharts-tooltip) {
     .apexcharts-tooltip-title {

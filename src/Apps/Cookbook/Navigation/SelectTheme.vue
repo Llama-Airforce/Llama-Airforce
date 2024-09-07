@@ -106,8 +106,6 @@ const onThemeSelect = (option: ThemeDescription) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .theme {
   display: flex;
   justify-content: space-between;

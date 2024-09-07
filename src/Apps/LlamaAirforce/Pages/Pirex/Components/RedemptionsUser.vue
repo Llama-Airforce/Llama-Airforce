@@ -69,8 +69,6 @@ function onRedeemed(redemption: RedemptionPending) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .redemptions-user {
   display: grid;
   gap: var(--dashboard-gap);

@@ -123,7 +123,6 @@ const onMax = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .pounder-input {
   display: flex;
   flex-direction: column;

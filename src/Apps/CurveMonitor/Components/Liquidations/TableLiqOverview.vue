@@ -136,8 +136,6 @@ const rows = computed((): Row[] => [
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .liq-overview-table {
   --columns-data: 1fr auto;
 

@@ -51,8 +51,6 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .modal-card {
   :deep(.card-body) {
     display: flex;

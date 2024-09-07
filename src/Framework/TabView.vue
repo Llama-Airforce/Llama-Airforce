@@ -73,8 +73,6 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .tab-view {
   > ul {
     display: flex;

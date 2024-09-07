@@ -110,8 +110,6 @@ const onChartType = (type: ChartType) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .actions {
   flex-grow: 1;
 

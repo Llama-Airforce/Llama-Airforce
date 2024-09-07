@@ -115,8 +115,6 @@ const clipboard = async (addr: string) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .properties-table {
   --columns-data: 2fr 6fr;
 

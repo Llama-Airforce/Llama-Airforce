@@ -55,8 +55,6 @@ const onChartType = (type: ChartType) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart-types {
   grid-column: 2;
 

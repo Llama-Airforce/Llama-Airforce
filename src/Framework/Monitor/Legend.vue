@@ -38,8 +38,6 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .legend {
   display: flex;
   gap: 1.5rem;

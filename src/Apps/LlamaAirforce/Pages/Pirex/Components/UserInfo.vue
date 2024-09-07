@@ -37,8 +37,6 @@ const onTab = (newTab: Tabs) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .tabs {
   display: flex;
   gap: var(--dashboard-gap);

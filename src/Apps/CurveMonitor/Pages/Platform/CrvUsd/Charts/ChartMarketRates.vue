@@ -141,8 +141,6 @@ const average = (data: number[], n = 7): number[] =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .avg-span {
   width: 8rem;
 }

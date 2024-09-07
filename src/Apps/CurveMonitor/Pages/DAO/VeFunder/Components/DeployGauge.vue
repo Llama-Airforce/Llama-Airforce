@@ -88,7 +88,6 @@ async function execute() {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .add-new {
   :deep(.card-body) {
     display: flex;

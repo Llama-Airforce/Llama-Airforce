@@ -129,8 +129,6 @@ const titleCase = (s: string): string =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .trove-ops-table {
   --col-width: 12ch;
   --columns-data: minmax(14ch, 0.75fr)

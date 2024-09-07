@@ -74,8 +74,6 @@ const statusLabel = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .status {
   .status-value {
     &.active {

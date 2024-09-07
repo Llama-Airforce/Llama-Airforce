@@ -50,8 +50,6 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 @keyframes fadeOpacity {
   from {
     opacity: 0;

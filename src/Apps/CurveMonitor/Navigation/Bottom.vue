@@ -28,8 +28,6 @@ const router = useRouter();
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .bottom {
   display: grid;
   gap: 1rem;

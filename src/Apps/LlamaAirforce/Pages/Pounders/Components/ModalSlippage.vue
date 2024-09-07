@@ -79,7 +79,6 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .content {
   min-width: 30rem;
   width: 33vw;

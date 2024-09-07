@@ -191,8 +191,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .redemptions-card {
   --header-column-actions: 14rem 2fr;
 }

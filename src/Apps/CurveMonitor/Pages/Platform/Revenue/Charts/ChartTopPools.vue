@@ -108,8 +108,6 @@ const onSelectChain = (newChain: Chain | "all"): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .graph {
   --header-column-title: auto;
 

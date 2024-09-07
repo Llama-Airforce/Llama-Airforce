@@ -123,8 +123,6 @@ function onClaimed(claims: Claim[]) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .rewards {
   display: grid;
   gap: var(--dashboard-gap);

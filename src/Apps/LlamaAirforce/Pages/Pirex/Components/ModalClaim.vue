@@ -302,8 +302,6 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
 </style>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .epochs {
   width: 33vw;
   max-height: 75dvh;

@@ -35,7 +35,6 @@ const { name, logo, symbol, priceUnderlying } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .pool {
   flex-direction: row !important;
   justify-content: flex-start !important;

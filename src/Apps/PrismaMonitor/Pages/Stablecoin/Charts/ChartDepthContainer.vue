@@ -27,7 +27,3 @@ const { isFetching: loading, data } = useQuery({
     :depth="poolDepth"
   ></ChartDepth>
 </template>
-
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-</style>

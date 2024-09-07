@@ -127,8 +127,6 @@ const utilRate = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .usage {
   display: grid;
   gap: var(--dashboard-gap);

@@ -161,8 +161,6 @@ const onPeriod = (newPeriod: Period) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .periods {
   display: flex;
   font-size: 0.875rem;

@@ -50,8 +50,6 @@ watch(tokenUri, async (tokenUri) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 img {
   width: 100%;
   max-width: 100%;

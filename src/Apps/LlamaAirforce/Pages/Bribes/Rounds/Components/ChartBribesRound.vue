@@ -145,8 +145,6 @@ const optimalColumnWidthPercent = (numBars: number): number => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart {
   :deep(.apexcharts-tooltip) {
     grid-template-columns: 1fr auto;

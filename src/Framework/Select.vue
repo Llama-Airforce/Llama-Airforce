@@ -67,8 +67,6 @@ const open = ref(false);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .select {
   position: relative;
 

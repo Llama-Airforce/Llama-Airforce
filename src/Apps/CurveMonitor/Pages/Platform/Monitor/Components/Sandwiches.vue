@@ -150,8 +150,6 @@ const sandwichTxs = (sw: SandwichDetail) =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .sandwiches-card {
   --header-column-actions: 2fr;
 

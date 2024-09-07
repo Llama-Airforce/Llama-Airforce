@@ -36,7 +36,6 @@ const expanded = ref(initExpanded);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .proposal {
   overflow: hidden;
 

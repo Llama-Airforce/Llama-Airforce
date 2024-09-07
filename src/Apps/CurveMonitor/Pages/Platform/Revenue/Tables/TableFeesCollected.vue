@@ -88,8 +88,6 @@ const rows = computed(() =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .table {
   --columns-data: 26px minmax(5rem, 1fr) minmax(5rem, 1fr) minmax(5rem, 1fr);
 

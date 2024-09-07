@@ -11,8 +11,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 @keyframes pulse {
   0% {
     transform: scale(0.9);

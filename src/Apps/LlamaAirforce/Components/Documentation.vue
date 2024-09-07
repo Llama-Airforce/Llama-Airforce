@@ -28,8 +28,6 @@ const { extra = "" } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .docs {
   width: 100%;
   display: grid;

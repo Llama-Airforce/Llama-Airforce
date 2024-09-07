@@ -96,8 +96,6 @@ const formatLabel = (label: string): string => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart {
   height: 300px;
 }

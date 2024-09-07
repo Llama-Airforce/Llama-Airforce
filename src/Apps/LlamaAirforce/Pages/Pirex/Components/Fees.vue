@@ -28,8 +28,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .fees {
   display: grid;
   width: 100%;

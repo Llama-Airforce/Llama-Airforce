@@ -409,8 +409,6 @@ whenever(isConfirmedExecute, () => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .buttons {
   display: flex;
   flex-direction: column;

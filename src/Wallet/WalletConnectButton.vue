@@ -118,8 +118,6 @@ function onClearCache() {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .connectors-body {
   width: 20rem;
   display: flex;

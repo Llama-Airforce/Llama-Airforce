@@ -120,8 +120,6 @@ const onRoundSelect = (round: number): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .summary {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -34,8 +34,6 @@ const { title } = defineProps<{ title: string }>();
 </style>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .recipe-card {
   .recipe-body {
     display: flex;

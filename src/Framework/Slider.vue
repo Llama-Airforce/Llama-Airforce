@@ -22,7 +22,6 @@ const { min, max } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 input {
   -webkit-appearance: none;
   height: 0.75rem;

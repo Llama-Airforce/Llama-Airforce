@@ -67,8 +67,6 @@ const rows = computed((): Liquidator[] =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .liquidators-table {
   --col-width: 12ch;
   --columns-data: 1fr repeat(2, var(--col-width));

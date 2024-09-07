@@ -47,8 +47,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .audits {
   display: grid;
   width: 100%;

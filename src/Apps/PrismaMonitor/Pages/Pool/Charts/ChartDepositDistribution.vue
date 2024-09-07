@@ -79,8 +79,6 @@ const categories = computed(() => data.value.map((x) => x.label));
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart {
   height: 300px;
 }

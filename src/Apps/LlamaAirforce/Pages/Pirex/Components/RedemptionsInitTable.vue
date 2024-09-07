@@ -73,8 +73,6 @@ watch(selected, (newRedemption) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .redemptions-init-table {
   --columns-data: 1fr 1fr 1fr 3rem;
 

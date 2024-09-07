@@ -170,8 +170,6 @@ const onClickNode = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .nav-link {
   font-weight: 500;
   -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.

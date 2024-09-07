@@ -78,8 +78,6 @@ const { isFetching: loading, data } = useQuery({
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .withdrawals-table {
   --columns-data: 1fr 1fr 1fr 1fr;
 }

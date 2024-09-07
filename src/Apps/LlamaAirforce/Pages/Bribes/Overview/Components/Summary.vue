@@ -96,8 +96,6 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .summary {
   display: flex;
   justify-content: space-evenly;

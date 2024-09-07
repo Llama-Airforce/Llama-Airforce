@@ -224,8 +224,6 @@ const onType = (tabIndex: number) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .troves-card {
   :deep(.types) {
     margin: 0 1rem;

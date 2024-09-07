@@ -146,8 +146,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .lockers-card {
   --header-column-actions: 3fr;
 }

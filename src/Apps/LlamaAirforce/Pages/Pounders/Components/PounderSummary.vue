@@ -73,7 +73,6 @@ whenever(getFeesTrigger, async () => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr auto;

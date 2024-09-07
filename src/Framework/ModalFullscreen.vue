@@ -88,8 +88,6 @@ function exitFullscreen(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .fullscreen-content {
   display: flex;
 

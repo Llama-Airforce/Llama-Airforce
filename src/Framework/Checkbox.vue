@@ -47,8 +47,6 @@ const onChange = (evt: Event): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .checkbox {
   display: flex;
   align-items: center;

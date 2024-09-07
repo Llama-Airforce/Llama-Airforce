@@ -17,8 +17,6 @@ const { options, series } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .chart {
   &:deep(.apexcharts-tooltip) {
     background-color: var(--c-lvl1);

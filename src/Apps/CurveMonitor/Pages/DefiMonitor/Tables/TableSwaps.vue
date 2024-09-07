@@ -219,8 +219,6 @@ const round = (x: number) =>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .swaps-card {
   --header-column-title: 3fr
   --header-column-actions: 4fr;

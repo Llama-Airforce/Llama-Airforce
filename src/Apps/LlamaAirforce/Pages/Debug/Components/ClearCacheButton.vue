@@ -15,8 +15,6 @@ const onClearCache = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .button {
   font-size: 1rem;
 }

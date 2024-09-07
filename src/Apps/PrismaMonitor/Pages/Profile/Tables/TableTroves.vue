@@ -250,8 +250,6 @@ const onType = (tabIndex: number) => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .troves-card {
   --header-column-title: auto;
   --header-column-actions: 1fr;
