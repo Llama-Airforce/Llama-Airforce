@@ -30,9 +30,6 @@
       width: 100%;
       max-width: 100%;
       object-fit: scale-down;
-
-      @media only screen and (max-width: 1280px) {
-      }
     }
   }
 }
