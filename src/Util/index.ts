@@ -10,7 +10,6 @@ export * from "./StringHelper";
 export * from "./Types";
 export * from "./PriceHelper";
 export * from "./ApyHelper";
-export * from "./NotificationHelper";
 
 /** Used to generate unique IDs. */
 const idCounter: Record<string, number> = {};
