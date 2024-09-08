@@ -88,7 +88,6 @@ const noMenu = computed((): boolean => {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Styles/Hamburger.scss";
 
 footer {
   display: flex;

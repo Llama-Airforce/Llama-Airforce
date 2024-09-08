@@ -29,16 +29,11 @@ const onNavigated = (): void => {
         <LlamaNFT></LlamaNFT>
       </div>
 
-      <button
-        class="hamburger hamburger--spin"
+      <i
+        class="hamburger fas fa-bars"
         :class="{ 'is-active': menuOpen, open: menuOpen, closed: !menuOpen }"
-        type="button"
         @click="toggleMenu"
-      >
-        <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
-        </span>
-      </button>
+      ></i>
     </div>
 
     <MenuMobile
@@ -51,7 +46,6 @@ const onNavigated = (): void => {
 
 <style lang="scss" scoped>
 @import "@/Styles/Variables.scss";
-@import "@/Styles/Hamburger.scss";
 
 header {
   width: 100%;
@@ -114,9 +108,13 @@ header {
       grid-row: 1;
       grid-column: 3;
 
-      padding-top: 5px;
-      padding-left: 1.25rem;
-      padding-right: 1rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      color: white;
+      font-size: 1.5rem;
+      padding-inline: 1rem;
+
       z-index: 21;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
 
