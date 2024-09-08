@@ -29,7 +29,7 @@ const showHeader = computed(
 
 <template>
   <div
-    class="card"
+    class="card loading-backdrop"
     :class="{ loading }"
     :inert="!!loading"
   >
@@ -106,8 +106,6 @@ const showHeader = computed(
   --header-column-title: 1fr;
   --header-column-actions: auto;
   --header-column-actions-secondary: auto;
-
-  @include loading-backdrop();
 
   > .loader {
     position: absolute;

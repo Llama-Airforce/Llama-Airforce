@@ -94,6 +94,7 @@ const onTypeSelect = (type: ProposalType): void => {
       <ProposalComponent
         v-for="proposal in proposals"
         :key="proposal.id"
+        class="loading-backdrop"
         :proposal="proposal"
         :class="{ loading }"
       ></ProposalComponent>
@@ -150,12 +151,6 @@ const onTypeSelect = (type: ProposalType): void => {
     display: flex;
     flex-direction: column;
     gap: var(--dashboard-gap);
-
-    > .proposal {
-      &.loading {
-        @include loading-backdrop();
-      }
-    }
   }
 
   .spinner {

@@ -25,3 +25,13 @@
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
 }
+
+.loading-backdrop {
+  &:not(&.loading) {
+    opacity: 1;
+  }
+
+  &.loading {
+    opacity: 0.33;
+  }
+}
