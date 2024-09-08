@@ -97,7 +97,7 @@ function onDepositAuraBal() {
 <template>
   <Card
     v-if="canMigrate"
-    class="migrations"
+    class="migrations border-flash"
   >
     <h1 v-html="migrationUBalMsg"></h1>
     <span class="actions">
@@ -118,10 +118,8 @@ function onDepositAuraBal() {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .migrations {
-  @include border(var(--c-red-rgb), true);
+  --flash-color: var(--c-red-rgb);
 
   h1 {
     font-size: 1rem;

@@ -61,7 +61,7 @@ function onMigrate() {
 <template>
   <Card
     v-if="canMigrate"
-    class="migration"
+    class="migration border-flash"
   >
     <h1 v-html="migrationMsg"></h1>
     <span class="actions">
@@ -76,10 +76,8 @@ function onMigrate() {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .migration {
-  @include border(var(--c-yellow-rgb), true);
+  --flash-color: var(--c-yellow-rgb);
 
   h1 {
     font-size: 1rem;

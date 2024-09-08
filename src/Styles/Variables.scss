@@ -18,31 +18,3 @@ $table-hover-duration: $hover-duration;
 $content-show-duration: 75ms;
 $ease-in: cubic-bezier(0, 0, 0.2, 1);
 $ease-out: cubic-bezier(0.4, 0, 1, 1);
-
-// Border
-@mixin border-flash($rgb) {
-  $name: flash-#{unique-id()};
-  animation: $name 1.5s 3 ease-in-out;
-
-  @keyframes #{$name} {
-    0% {
-      border-color: rgba($rgb, 0.5);
-    }
-
-    50% {
-      border-color: rgba($rgb, 0.9);
-    }
-
-    100% {
-      border-color: rgba($rgb, 0.5);
-    }
-  }
-}
-
-@mixin border($rgb, $flash: false) {
-  border: solid 1px rgba($rgb, 0.5);
-
-  @if $flash {
-    @include border-flash($rgb);
-  }
-}

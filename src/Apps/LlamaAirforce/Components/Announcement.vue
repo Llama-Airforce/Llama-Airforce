@@ -3,7 +3,7 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <Card class="announcement-card">
+  <Card class="announcement-card border-flash">
     <div class="announcements">
       <h1 v-html="t('announcement-discord')"></h1>
       <span>
@@ -19,13 +19,11 @@ const { t } = useI18n();
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .announcement-card {
   margin: var(--dashboard-gap);
   margin-bottom: 0;
 
-  @include border(var(--c-yellow-rgb), true);
+  --flash-color: var(--c-yellow-rgb);
 
   .announcements {
     flex-grow: 1;
