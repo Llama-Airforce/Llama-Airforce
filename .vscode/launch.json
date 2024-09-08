@@ -4,18 +4,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug Nitro - LAF",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nitropack",
-      "runtimeArgs": ["dev", "src/Apps/LlamaAirforce"],
-      "outputCapture": "std",
-      "restart": true,
-      "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"],
-      "envFile": "${workspaceFolder}/.env"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Debug Union Script",
       "runtimeArgs": [
         "--env-file=.env",
