@@ -9,79 +9,73 @@ function goto(card: "union" | "pirex" | "incentives") {
 </script>
 
 <template>
-  <div class="home">
-    <div class="dashboard">
-      <Card
-        style="grid-area: pirex"
-        class="topic-card"
-        @click="goto('pirex')"
-      >
-        <div class="topic">
-          <img src="@/Assets/Menu/pirex.webp" />
+  <div class="dashboard">
+    <Card
+      style="grid-area: pirex"
+      class="topic-card"
+      @click="goto('pirex')"
+    >
+      <div class="topic">
+        <img src="@/Assets/Menu/pirex.webp" />
 
-          <div class="description">{{ t("description-pirex") }}</div>
+        <div class="description">{{ t("description-pirex") }}</div>
 
-          <div class="points">
-            <ul>
-              <li>{{ t("point-pirex-1") }}</li>
-              <li>{{ t("point-pirex-2") }}</li>
-              <li>{{ t("point-pirex-3") }}</li>
-              <li>{{ t("point-pirex-4") }}</li>
-            </ul>
-          </div>
+        <div class="points">
+          <ul>
+            <li>{{ t("point-pirex-1") }}</li>
+            <li>{{ t("point-pirex-2") }}</li>
+            <li>{{ t("point-pirex-3") }}</li>
+            <li>{{ t("point-pirex-4") }}</li>
+          </ul>
         </div>
-      </Card>
+      </div>
+    </Card>
 
-      <Card
-        style="grid-area: union"
-        class="topic-card"
-        @click="goto('union')"
-      >
-        <div class="topic">
-          <img src="@/Assets/Menu/union.png" />
+    <Card
+      style="grid-area: union"
+      class="topic-card"
+      @click="goto('union')"
+    >
+      <div class="topic">
+        <img src="@/Assets/Menu/union.png" />
 
-          <div class="description">{{ t("description-union") }}</div>
+        <div class="description">{{ t("description-union") }}</div>
 
-          <div class="points">
-            <ul>
-              <li>{{ t("point-union-1") }}</li>
-              <li>{{ t("point-union-2") }}</li>
-              <li>{{ t("point-union-3") }}</li>
-              <li>{{ t("point-union-4") }}</li>
-            </ul>
-          </div>
+        <div class="points">
+          <ul>
+            <li>{{ t("point-union-1") }}</li>
+            <li>{{ t("point-union-2") }}</li>
+            <li>{{ t("point-union-3") }}</li>
+            <li>{{ t("point-union-4") }}</li>
+          </ul>
         </div>
-      </Card>
+      </div>
+    </Card>
 
-      <Card
-        style="grid-area: votium"
-        class="topic-card"
-        @click="goto('incentives')"
-      >
-        <div class="topic">
-          <img src="@/Assets/Menu/votium.png" />
+    <Card
+      style="grid-area: votium"
+      class="topic-card"
+      @click="goto('incentives')"
+    >
+      <div class="topic">
+        <img src="@/Assets/Menu/votium.png" />
 
-          <div class="description">{{ t("description-votium") }}</div>
+        <div class="description">{{ t("description-votium") }}</div>
 
-          <div class="points">
-            <ul>
-              <li>{{ t("point-votium-1") }}</li>
-              <li>{{ t("point-votium-2") }}</li>
-              <li>{{ t("point-votium-3") }}</li>
-              <li>{{ t("point-votium-4") }}</li>
-            </ul>
-          </div>
+        <div class="points">
+          <ul>
+            <li>{{ t("point-votium-1") }}</li>
+            <li>{{ t("point-votium-2") }}</li>
+            <li>{{ t("point-votium-3") }}</li>
+            <li>{{ t("point-votium-4") }}</li>
+          </ul>
         </div>
-      </Card>
-    </div>
+      </div>
+    </Card>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboardLAF("home");
-
 @keyframes pulse {
   0% {
     transform: scale(0.9);
@@ -96,81 +90,79 @@ function goto(card: "union" | "pirex" | "incentives") {
   }
 }
 
-.home {
-  .dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: "pirex union votium";
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "pirex union votium";
+
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topic-card {
+    &:hover {
+      cursor: pointer;
+
+      background-color: var(--c-lvl2);
+
+      .topic {
+        > img {
+          animation: pulse 0.5s infinite;
+        }
+      }
+    }
+  }
+
+  .topic {
+    margin: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
+      gap: 2rem;
     }
 
-    .topic-card {
-      &:hover {
-        cursor: pointer;
+    > img {
+      grid-row: 1;
+      grid-column: 1;
 
-        background-color: var(--c-lvl2);
-
-        .topic {
-          > img {
-            animation: pulse 0.5s infinite;
-          }
-        }
-      }
+      place-self: center;
+      margin-bottom: 1rem;
     }
 
-    .topic {
-      margin: 1rem;
+    > .description {
+      grid-row: 1;
+      grid-column: 2;
 
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      text-wrap: pretty;
 
       @media only screen and (max-width: 1280px) {
-        gap: 2rem;
+        font-size: 1rem;
       }
+    }
 
-      > img {
-        grid-row: 1;
-        grid-column: 1;
+    > .points {
+      grid-row: 2;
+      grid-column: 1 / -1;
 
-        place-self: center;
-        margin-bottom: 1rem;
-      }
+      ul {
+        display: flex;
+        flex-direction: column;
 
-      > .description {
-        grid-row: 1;
-        grid-column: 2;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        padding-inline-start: 0rem;
 
-        text-wrap: pretty;
+        li {
+          text-wrap: pretty;
+          margin: 0.5rem 1rem;
+          list-style-type: square;
 
-        @media only screen and (max-width: 1280px) {
-          font-size: 1rem;
-        }
-      }
-
-      > .points {
-        grid-row: 2;
-        grid-column: 1 / -1;
-
-        ul {
-          display: flex;
-          flex-direction: column;
-
-          margin-block-start: 0;
-          margin-block-end: 0;
-          padding-inline-start: 0rem;
-
-          li {
-            text-wrap: pretty;
-            margin: 0.5rem 1rem;
-            list-style-type: square;
-
-            &::marker {
-              color: var(--c-primary);
-            }
+          &::marker {
+            color: var(--c-primary);
           }
         }
       }

@@ -120,46 +120,38 @@ function initFromRouter() {
 </script>
 
 <template>
-  <div class="overview">
-    <div class="dashboard">
-      <SelectSystem
-        style="grid-area: select-system"
-        @select-platform="onSelectPlatform"
-        @select-protocol="onSelectProtocol"
-      >
-      </SelectSystem>
+  <div class="dashboard">
+    <SelectSystem
+      style="grid-area: select-system"
+      @select-platform="onSelectPlatform"
+      @select-protocol="onSelectProtocol"
+    >
+    </SelectSystem>
 
-      <Summary
-        style="grid-area: summary"
-        :overview="overview"
-      ></Summary>
+    <Summary
+      style="grid-area: summary"
+      :overview="overview"
+    ></Summary>
 
-      <ChartBribesRevenue
-        style="grid-area: chart; height: 370px"
-        :overview="overview"
-      ></ChartBribesRevenue>
+    <ChartBribesRevenue
+      style="grid-area: chart; height: 370px"
+      :overview="overview"
+    ></ChartBribesRevenue>
 
-      <TableRounds
-        style="grid-area: table; height: 420px"
-        :overview="overview"
-      ></TableRounds>
-    </div>
+    <TableRounds
+      style="grid-area: table; height: 420px"
+      :overview="overview"
+    ></TableRounds>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboardLAF("overview");
-
-.overview {
-  .dashboard {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "select-system"
-      "summary"
-      "chart"
-      "table";
-  }
+.dashboard {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "select-system"
+    "summary"
+    "chart"
+    "table";
 }
 </style>

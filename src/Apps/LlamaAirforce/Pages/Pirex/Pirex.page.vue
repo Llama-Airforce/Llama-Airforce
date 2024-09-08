@@ -65,60 +65,52 @@ function createUCvxPounder() {
 </script>
 
 <template>
-  <div class="pirex">
-    <div class="dashboard">
-      <PounderComponent
-        v-if="store.pounders.ucvx"
-        style="grid-area: pounder"
-        pounder-id="ucvx"
-      ></PounderComponent>
+  <div class="dashboard">
+    <PounderComponent
+      v-if="store.pounders.ucvx"
+      style="grid-area: pounder"
+      pounder-id="ucvx"
+    ></PounderComponent>
 
-      <div
-        style="grid-area: left"
-        class="col"
-      >
-        <VaultInfo></VaultInfo>
-        <UserInfo v-if="isConnected"></UserInfo>
-      </div>
+    <div
+      style="grid-area: left"
+      class="col"
+    >
+      <VaultInfo></VaultInfo>
+      <UserInfo v-if="isConnected"></UserInfo>
+    </div>
 
-      <div
-        style="grid-area: right"
-        class="col"
-      >
-        <RedemptionsInit></RedemptionsInit>
-        <Swap></Swap>
-      </div>
+    <div
+      style="grid-area: right"
+      class="col"
+    >
+      <RedemptionsInit></RedemptionsInit>
+      <Swap></Swap>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
+.dashboard {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 
-@include dashboardLAF("pirex");
+  grid-template-areas:
+    "pounder pounder"
+    "left right";
 
-.pirex {
-  .dashboard {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
 
-    grid-template-areas:
-      "pounder pounder"
-      "left right";
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--dashboard-gap);
 
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .col {
-      display: flex;
-      flex-direction: column;
-      gap: var(--dashboard-gap);
-
-      > * {
-        flex-grow: 0;
-      }
+    > * {
+      flex-grow: 0;
     }
   }
 }

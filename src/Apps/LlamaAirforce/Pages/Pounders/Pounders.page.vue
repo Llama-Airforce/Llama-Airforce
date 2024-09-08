@@ -264,42 +264,34 @@ watch(address, createPounders);
 </script>
 
 <template>
-  <div class="union">
-    <div class="dashboard">
-      <Migrations></Migrations>
+  <div class="dashboard">
+    <Migrations></Migrations>
 
-      <Documentation :extra="t('pounders-info')"></Documentation>
+    <Documentation :extra="t('pounders-info')"></Documentation>
 
-      <PounderComponent
-        v-for="pounder in poundersUnion"
-        :key="pounder.pounder.id"
-        :pounder-id="pounder.pounder.id"
-      ></PounderComponent>
+    <PounderComponent
+      v-for="pounder in poundersUnion"
+      :key="pounder.pounder.id"
+      :pounder-id="pounder.pounder.id"
+    ></PounderComponent>
 
-      <Card class="information">
-        {{ t("pounders-info-deprecated") }}
-      </Card>
+    <Card class="information">
+      {{ t("pounders-info-deprecated") }}
+    </Card>
 
-      <PounderComponent
-        v-for="pounder in poundersDeprecated"
-        :key="pounder.pounder.id"
-        :pounder-id="pounder.pounder.id"
-      ></PounderComponent>
-    </div>
+    <PounderComponent
+      v-for="pounder in poundersDeprecated"
+      :key="pounder.pounder.id"
+      :pounder-id="pounder.pounder.id"
+    ></PounderComponent>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-@include dashboardLAF("union");
-
-.union {
-  .dashboard {
-    > .information {
-      font-size: 0.875rem;
-      margin-top: 3rem;
-    }
+.dashboard {
+  > .information {
+    font-size: 0.875rem;
+    margin-top: 3rem;
   }
 }
 </style>

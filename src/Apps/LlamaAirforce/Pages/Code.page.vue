@@ -314,117 +314,109 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div class="contracts">
-    <div class="dashboard">
-      <Card
-        class="repositories-card"
-        :title="t('repositories')"
+  <div class="dashboard">
+    <Card
+      class="repositories-card"
+      :title="t('repositories')"
+    >
+      <Table
+        class="repositories-table"
+        :rows="repositories"
+        :columns="[t('repository'), t('description')]"
       >
-        <Table
-          class="repositories-table"
-          :rows="repositories"
-          :columns="[t('repository'), t('description')]"
-        >
-          <template #row="{ item }">
-            <div>
-              <a
-                :href="item.url"
-                target="_blank"
-              >
-                {{ item.name }}
-              </a>
-            </div>
+        <template #row="{ item }">
+          <div>
+            <a
+              :href="item.url"
+              target="_blank"
+            >
+              {{ item.name }}
+            </a>
+          </div>
 
-            <div>{{ t(item.description) }}</div>
-          </template>
-        </Table>
-      </Card>
+          <div>{{ t(item.description) }}</div>
+        </template>
+      </Table>
+    </Card>
 
-      <Card
-        class="other-card"
-        :title="t('other')"
+    <Card
+      class="other-card"
+      :title="t('other')"
+    >
+      <Table
+        class="other-table"
+        :rows="other"
+        :columns="[t('other'), t('description')]"
       >
-        <Table
-          class="other-table"
-          :rows="other"
-          :columns="[t('other'), t('description')]"
-        >
-          <template #row="{ item }">
-            <div>
-              <a
-                :href="item.url"
-                target="_blank"
-              >
-                {{ item.name }}
-              </a>
-            </div>
+        <template #row="{ item }">
+          <div>
+            <a
+              :href="item.url"
+              target="_blank"
+            >
+              {{ item.name }}
+            </a>
+          </div>
 
-            <div>{{ t(item.description) }}</div>
-          </template>
-        </Table>
-      </Card>
+          <div>{{ t(item.description) }}</div>
+        </template>
+      </Table>
+    </Card>
 
-      <Card
-        v-for="bundle in bundles"
-        :key="bundle.name"
-        :title="t(bundle.name)"
-        class="contracts-card"
+    <Card
+      v-for="bundle in bundles"
+      :key="bundle.name"
+      :title="t(bundle.name)"
+      class="contracts-card"
+    >
+      <Table
+        class="contracts-table"
+        :rows="bundle.contracts"
+        :columns="[t('contract'), t('description')]"
       >
-        <Table
-          class="contracts-table"
-          :rows="bundle.contracts"
-          :columns="[t('contract'), t('description')]"
-        >
-          <template #row="{ item }">
-            <div>
-              <a
-                class="font-mono"
-                target="_blank"
-                :href="linkContract(item)"
-              >
-                {{ item.contract }}
-              </a>
-            </div>
+        <template #row="{ item }">
+          <div>
+            <a
+              class="font-mono"
+              target="_blank"
+              :href="linkContract(item)"
+            >
+              {{ item.contract }}
+            </a>
+          </div>
 
-            <div>{{ t(item.description) }}</div>
-          </template>
-        </Table>
-      </Card>
-    </div>
+          <div>{{ t(item.description) }}</div>
+        </template>
+      </Table>
+    </Card>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
+.dashboard {
+  grid-template-columns: 6fr 4fr;
 
-@include dashboardLAF("contracts");
+  .contracts-card {
+    grid-column: 1 / -1;
 
-.contracts {
-  .dashboard {
-    grid-template-columns: 6fr 4fr;
-
-    .contracts-card {
-      grid-column: 1 / -1;
-
-      .contracts-table {
-        --columns-data: 3fr 4fr;
-      }
+    .contracts-table {
+      --columns-data: 3fr 4fr;
     }
+  }
 
-    .repositories-card {
-      grid-column: 1;
+  .repositories-card {
+    grid-column: 1;
 
-      .repositories-table {
-        --columns-data: 2fr 6fr;
-      }
+    .repositories-table {
+      --columns-data: 2fr 6fr;
     }
+  }
 
-    .other-card {
-      grid-column: 2;
+  .other-card {
+    grid-column: 2;
 
-      .other-table {
-        --columns-data: 3fr 4fr;
-      }
+    .other-table {
+      --columns-data: 3fr 4fr;
     }
   }
 }
