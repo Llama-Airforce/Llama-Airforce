@@ -39,7 +39,6 @@ import Announcement from "@LAF/Components/Announcement.vue";
 
 <style lang="scss">
 @import "@/Styles/Themes/LAF/Dark.scss";
-@import "@/Styles/Variables.scss";
 
 :root {
   @include themeDark();
