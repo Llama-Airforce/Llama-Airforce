@@ -35,7 +35,6 @@ const showHeader = computed(
   >
     <Spinner
       v-if="loading !== null"
-      class="loader"
       :class="{ loading }"
     ></Spinner>
 
@@ -107,13 +106,11 @@ const showHeader = computed(
   --header-column-actions: auto;
   --header-column-actions-secondary: auto;
 
-  > .loader {
+  > .spinner {
     position: absolute;
     inset: 0;
     margin: auto auto;
     z-index: 2;
-
-    @include loading-spinner();
   }
 
   .card-header {

@@ -55,10 +55,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 
 <template>
   <div class="dashboard">
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
+    <Spinner :class="{ loading }"></Spinner>
 
     <TabView
       v-if="!loading && market"
@@ -111,8 +108,6 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
     top: 50dvh;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-
-    @include loading-spinner();
   }
 }
 </style>

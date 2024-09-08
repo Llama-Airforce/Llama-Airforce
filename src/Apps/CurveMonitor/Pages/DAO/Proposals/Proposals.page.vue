@@ -109,10 +109,7 @@ const onTypeSelect = (type: ProposalType): void => {
 
       <div v-if="proposals.length === 0">No proposals could be found.</div>
 
-      <Spinner
-        class="spinner"
-        :class="{ loading }"
-      ></Spinner>
+      <Spinner :class="{ loading }"></Spinner>
     </div>
   </div>
 </template>
@@ -158,8 +155,6 @@ const onTypeSelect = (type: ProposalType): void => {
     top: 3.5rem;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-
-    @include loading-spinner();
   }
 }
 </style>

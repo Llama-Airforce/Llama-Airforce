@@ -16,10 +16,7 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
 
 <template>
   <div class="dashboard">
-    <Spinner
-      class="spinner"
-      :class="{ loading }"
-    ></Spinner>
+    <Spinner :class="{ loading }"></Spinner>
 
     <ProposalComponent
       v-if="!loading && proposal"
@@ -42,8 +39,6 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
     top: 50dvh;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-
-    @include loading-spinner();
   }
 }
 </style>
