@@ -59,7 +59,6 @@ const onCrumb = async (crumb: Crumb) => {
 
 <style lang="scss">
 @import "@/Styles/Variables.scss";
-@import "@/Styles/Classes.scss";
 
 html {
   ::-webkit-scrollbar {

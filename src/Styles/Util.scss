@@ -26,6 +26,10 @@
   grid-template-columns: 1fr;
 }
 
+.font-mono {
+  font-family: var(--font-mono);
+}
+
 .loading-backdrop {
   &:not(&.loading) {
     opacity: 1;
