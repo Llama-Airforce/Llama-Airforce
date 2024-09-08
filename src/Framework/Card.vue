@@ -5,7 +5,7 @@ const {
   compact = false,
   collapsible = false,
   collapsed = false,
-  loading = false,
+  loading = null,
 } = defineProps<{
   title?: string;
   icon?: string;
@@ -14,7 +14,7 @@ const {
   collapsible?: boolean;
   collapsed?: boolean;
 
-  loading?: boolean;
+  loading?: boolean | null;
 }>();
 
 const slots = useSlots();
@@ -29,8 +29,8 @@ const showHeader = computed(
 
 <template>
   <div
-    class="card loading-backdrop"
-    :class="{ loading }"
+    class="card"
+    :class="{ loading, 'loading-backdrop': loading !== null }"
     :inert="!!loading"
   >
     <Spinner
