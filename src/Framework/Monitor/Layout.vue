@@ -148,11 +148,40 @@ p {
     grid-area: main;
     overflow-y: auto;
 
-    @include toolbar;
-
     @media only screen and (max-width: 1280px) {
       grid-row: 2;
       grid-column: 1;
+    }
+
+    > .toolbar-container {
+      display: flex;
+      justify-content: end;
+      gap: var(--dashboard-gap);
+
+      max-width: calc(1920px - 18.125rem);
+      margin: auto;
+      margin-top: var(--page-margin);
+      margin-bottom: calc(var(--page-margin) * -1 + var(--dashboard-gap));
+      padding-left: var(--page-margin);
+      padding-right: var(--page-margin);
+
+      @media only screen and (max-width: 1280px) {
+        padding: 0 1rem;
+        margin-top: var(--dashboard-gap);
+        margin-bottom: 0;
+
+        flex-direction: column;
+      }
+
+      // Don't display toolbar-container any of its underlying divs are empty.
+      &:not(:has(:not(:empty))),
+      > .toolbar-teleport:empty {
+        display: none;
+      }
+
+      > .breadcrumb {
+        flex-grow: 1;
+      }
     }
   }
 }
