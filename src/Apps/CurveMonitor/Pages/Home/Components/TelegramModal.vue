@@ -43,8 +43,8 @@ function go(url: string) {
           Health Monitoring bot for Curve LlamaLend positions:
 
           <ul>
-            <li>/add <emph>address</emph> - Add an Ethereum address</li>
-            <li>/remove <emph>address</emph> - Remove an Ethereum address</li>
+            <li>/add <em>address</em> - Add an Ethereum address</li>
+            <li>/remove <em>address</em> - Remove an Ethereum address</li>
             <li>/list - List all your Ethereum addresses</li>
             <li>/removeAll - Remove all your Ethereum addresses</li>
             <li>/gib - Prints all your health stats</li>
