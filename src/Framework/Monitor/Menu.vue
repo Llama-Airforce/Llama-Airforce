@@ -44,8 +44,6 @@ const menuLabel = (item: MenuItemT): string => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 nav {
   display: flex;
   flex-direction: column;
@@ -68,7 +66,7 @@ nav {
         display: flex;
         text-decoration: none;
         color: var(--c-text);
-        transition: all $header-hover-duration;
+        transition: all var(--hover-duration);
         margin: 0.125rem 1.125rem;
 
         &:hover {
@@ -111,7 +109,7 @@ nav {
           align-items: center;
           padding: 0.75rem 0.75rem;
 
-          transition: all $header-hover-duration;
+          transition: all var(--hover-duration);
         }
       }
     }

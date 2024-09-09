@@ -97,8 +97,6 @@ a {
 </style>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .root {
   width: 1440px;
 
@@ -137,7 +135,7 @@ a {
     > .content {
       .fade-enter-active,
       .fade-leave-active {
-        transition: opacity $content-show-duration $ease-out;
+        transition: opacity var(--hover-duration) cubic-bezier(0.4, 0, 1, 1);
       }
 
       .fade-enter-from,

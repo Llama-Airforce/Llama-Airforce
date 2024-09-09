@@ -87,8 +87,6 @@ const noMenu = computed((): boolean => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 footer {
   display: flex;
   margin: 0rem 1rem 2rem 1.5rem;
@@ -130,8 +128,8 @@ footer {
           justify-content: center;
           text-decoration: none;
           color: var(--c-text);
-          border-bottom: $header-highlight-size solid $header-background;
-          transition: all $header-hover-duration;
+          border-bottom: 1px solid var(--c-lvl0);
+          transition: all var(--hover-duration);
 
           .icon {
             color: var(--c-lvl5);
@@ -144,8 +142,8 @@ footer {
             align-items: center;
             padding: 0 0.5rem;
 
-            border-bottom: $header-highlight-size solid transparent; // Empty bar to prevent stuff jumping around.
-            transition: all $header-hover-duration;
+            border-bottom: 1px solid transparent; // Empty bar to prevent stuff jumping around.
+            transition: all var(--hover-duration);
           }
 
           &.disabled {
@@ -154,18 +152,18 @@ footer {
           }
 
           &:hover:not(.disabled) {
-            border-bottom: $header-highlight-size solid $header-primary;
+            border-bottom: 1px solid var(--c-lvl0);
 
             .nav-link-container {
-              background-color: $header-button-hover;
-              border-bottom: 1px solid $header-primary;
-              color: $header-primary;
+              background-color: var(--c-lvl6);
+              border-bottom: 1px solid var(--c-lvl0);
+              color: var(--c-lvl0);
             }
           }
 
           &:active:not(.disabled) {
             .nav-link-container {
-              background-color: $header-button-focus;
+              background-color: var(--c-lvl6);
             }
           }
         }

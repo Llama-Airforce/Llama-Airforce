@@ -234,8 +234,6 @@ const totalUtilRate = (type: "long" | "short"): number => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .dashboard {
   max-width: calc(1920px - 18.125rem);
   grid-template-columns: 1fr 1fr;

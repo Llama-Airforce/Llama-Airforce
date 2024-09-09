@@ -67,7 +67,7 @@
     "primary-active": lighten($primary, 15%),
     "primary-disabled": lighten($primary, 20%),
     "card-special-1": $blue,
-    "card-special-2": $purple
+    "card-special-2": $purple,
   );
 
   --page-margin: 2.375rem;
@@ -116,6 +116,8 @@
   --gutter-color: var(--c-primary);
 
   --spinner-color: var(--c-text);
+
+  --hover-duration: 75ms;
 
   @include themeChadFont();
 

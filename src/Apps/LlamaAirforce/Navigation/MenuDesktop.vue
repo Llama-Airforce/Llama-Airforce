@@ -69,29 +69,27 @@ const hasMenu = computed((): boolean => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .menu-desktop {
-  background: $header-background;
+  background: var(--c-lvl0);
   user-select: none;
 
-  $menu-width: 223px;
+  --menu-width: 223px;
   width: 0;
 
   margin: 1.5rem 0;
   font-size: 1rem;
 
   &.hasMenu {
-    width: $menu-width;
-    transition: width $content-show-duration $ease-out;
+    width: var(--menu-width);
+    transition: width var(--hover-duration) cubic-bezier(0.4, 0, 1, 1);
 
     padding: 0 1.5rem 0 2.5rem;
     border-right: 1px solid var(--c-lvl2);
 
     > .sticky-wrapper {
       > .bottom {
-        width: $menu-width;
-        transition: width $content-show-duration $ease-out;
+        width: var(--menu-width);
+        transition: width var(--hover-duration) cubic-bezier(0.4, 0, 1, 1);
         overflow: visible;
       }
     }
@@ -122,7 +120,7 @@ const hasMenu = computed((): boolean => {
       bottom: 2rem;
       overflow: hidden;
       width: 0px;
-      transition: width $content-show-duration $ease-in;
+      transition: width var(--hover-duration) cubic-bezier(0, 0, 0.2, 1);
     }
 
     > .navigation {
@@ -151,7 +149,7 @@ const hasMenu = computed((): boolean => {
             display: flex;
             text-decoration: none;
             color: var(--c-text);
-            transition: all $header-hover-duration;
+            transition: all var(--hover-duration);
 
             &.router-link-active {
               background: var(--c-lvl2);
@@ -176,7 +174,7 @@ const hasMenu = computed((): boolean => {
               align-items: center;
               padding: 0.66rem 1rem;
 
-              transition: all $header-hover-duration;
+              transition: all var(--hover-duration);
 
               &:active {
                 background: var(--c-lvl2-hover);

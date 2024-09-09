@@ -96,8 +96,6 @@ function go(url: string) {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -196,7 +194,7 @@ function go(url: string) {
 
         animation: 2s spin linear infinite;
 
-        transition: opacity $hover-duration linear;
+        transition: opacity var(--hover-duration) linear;
         opacity: 0;
 
         @keyframes spin {
@@ -213,7 +211,7 @@ function go(url: string) {
       &::after {
         filter: blur(5px);
 
-        transition: opacity $hover-duration linear;
+        transition: opacity var(--hover-duration) linear;
         opacity: 0;
       }
 

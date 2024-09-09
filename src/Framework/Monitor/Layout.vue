@@ -58,8 +58,6 @@ const onCrumb = async (crumb: Crumb) => {
 </template>
 
 <style lang="scss">
-@import "@/Styles/Variables.scss";
-
 html {
   ::-webkit-scrollbar {
     width: 0.5rem;
@@ -115,11 +113,9 @@ p {
 </style>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity $content-show-duration $ease-out;
+  transition: opacity var(--hover-duration) cubic-bezier(0.4, 0, 1, 1);
 }
 
 .fade-enter-from,

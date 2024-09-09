@@ -100,8 +100,6 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .menu-mobile {
   > .overlay {
     position: fixed;
@@ -112,9 +110,10 @@ watch(
     background: black;
     z-index: 20;
 
-    transition: opacity 2 * $content-show-duration
+    transition: opacity calc(2 * var(--hover-duration))
         cubic-bezier(0.65, 0.05, 0.36, 1),
-      visibility 2 * $content-show-duration cubic-bezier(0.65, 0.05, 0.36, 1);
+      visibility calc(2 * var(--hover-duration))
+        cubic-bezier(0.65, 0.05, 0.36, 1);
 
     &.closed {
       visibility: hidden;
@@ -135,17 +134,18 @@ watch(
     height: 100%;
     right: 0;
     z-index: 20;
-    background: $header-background;
+    background: var(--c-lvl0);
     padding: 1.25rem;
     visibility: hidden;
     overflow-y: auto;
 
     width: 300px;
 
-    transition: visibility 2 * $content-show-duration
+    transition: visibility calc(2 * var(--hover-duration))
         cubic-bezier(0.65, 0.05, 0.36, 1),
-      transform 2 * $content-show-duration cubic-bezier(0.65, 0.05, 0.36, 1),
-      opacity 2 * $content-show-duration cubic-bezier(0.65, 0.05, 0.36, 1);
+      transform calc(2 * var(--hover-duration))
+        cubic-bezier(0.65, 0.05, 0.36, 1),
+      opacity calc(2 * var(--hover-duration)) cubic-bezier(0.65, 0.05, 0.36, 1);
 
     &.closed {
       visibility: hidden;
@@ -208,7 +208,7 @@ watch(
             display: flex;
             text-decoration: none;
             color: var(--c-text);
-            transition: all $header-hover-duration;
+            transition: all var(--hover-duration);
             height: 50px;
             font-size: 1.75rem;
 
@@ -235,7 +235,7 @@ watch(
               align-items: center;
               padding: 0.66rem 1rem;
 
-              transition: all $header-hover-duration;
+              transition: all var(--hover-duration);
 
               &:active {
                 background: var(--c-lvl2-hover);

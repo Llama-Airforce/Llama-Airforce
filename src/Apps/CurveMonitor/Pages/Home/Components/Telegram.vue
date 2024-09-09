@@ -30,8 +30,6 @@ const showModal = ref(false);
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -150,7 +148,7 @@ const showModal = ref(false);
     &::after {
       filter: blur(5px);
 
-      transition: opacity $hover-duration linear, filter 0.3s ease;
+      transition: opacity var(--hover-duration) linear, filter 0.3s ease;
       opacity: 0;
     }
 

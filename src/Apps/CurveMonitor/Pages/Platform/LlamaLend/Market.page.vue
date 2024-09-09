@@ -96,8 +96,6 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .dashboard {
   position: relative;
   max-width: calc(1920px - 18.125rem);

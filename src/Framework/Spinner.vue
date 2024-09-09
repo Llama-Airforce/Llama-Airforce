@@ -12,8 +12,6 @@
   width: 80px;
   height: 80px;
 
-  --hover-duration: 75ms;
-
   div {
     position: absolute;
     border: 4px solid var(--spinner-color);

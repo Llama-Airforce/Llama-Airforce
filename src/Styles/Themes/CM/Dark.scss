@@ -67,7 +67,7 @@
     "primary-active": lighten($primary, 12%),
     "primary-disabled": lighten($primary, 12%),
     "card-special-1": $blue,
-    "card-special-2": $purple
+    "card-special-2": $purple,
   );
 
   --page-margin: 2.375rem;
@@ -115,6 +115,8 @@
 
   --spinner-color: var(--c-text);
 
+  --hover-duration: 75ms;
+
   @include themeDarkFont();
 
   @each $colorName, $colorValue in $colors {
@@ -127,7 +129,7 @@
 }
 
 @mixin themeDarkFont() {
-  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
 }

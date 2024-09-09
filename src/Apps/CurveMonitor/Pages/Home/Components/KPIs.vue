@@ -77,8 +77,6 @@ const { data: price } = useQuery({
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;

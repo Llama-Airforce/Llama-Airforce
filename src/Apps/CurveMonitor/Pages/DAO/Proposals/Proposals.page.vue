@@ -115,8 +115,6 @@ const onTypeSelect = (type: ProposalType): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 

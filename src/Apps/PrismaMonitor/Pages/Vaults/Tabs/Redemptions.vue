@@ -14,8 +14,6 @@ const { vault } = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .dashboard-grid {
   margin: var(--dashboard-gap) 0;
 }

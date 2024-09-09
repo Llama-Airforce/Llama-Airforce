@@ -10,8 +10,6 @@ const { t } = useI18n();
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .not-found {
   display: flex;
   flex-direction: column;

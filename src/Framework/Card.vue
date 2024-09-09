@@ -89,8 +89,6 @@ const showHeader = computed(
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 .card {
   position: relative;
 

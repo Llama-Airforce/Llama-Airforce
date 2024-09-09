@@ -67,7 +67,7 @@
     "primary-active": lighten($primary, 30%),
     "primary-disabled": lighten($primary, 30%),
     "card-special-1": lighten($blue, 20%),
-    "card-special-2": lighten($blue, 8%)
+    "card-special-2": lighten($blue, 8%),
   );
 
   --page-margin: 2.375rem;
@@ -115,6 +115,8 @@
 
   --spinner-color: var(--c-text);
 
+  --hover-duration: 75ms;
+
   @include themeLightFont();
 
   @each $colorName, $colorValue in $colors {
@@ -139,7 +141,7 @@
 }
 
 @mixin themeLightFont() {
-  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
 }

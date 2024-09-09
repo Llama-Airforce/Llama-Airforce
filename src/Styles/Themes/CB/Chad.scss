@@ -115,6 +115,8 @@
 
   --spinner-color: var(--c-text);
 
+  --hover-duration: 75ms;
+
   @include themeChadFont();
 
   @each $colorName, $colorValue in $colors {

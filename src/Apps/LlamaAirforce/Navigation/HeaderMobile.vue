@@ -45,12 +45,10 @@ const onNavigated = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 header {
   width: 100%;
 
-  background: $header-background;
+  background: var(--c-lvl0);
   user-select: none;
 
   > .header-mobile {
@@ -118,7 +116,7 @@ header {
       z-index: 21;
       -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
 
-      transition: transform 2 * $content-show-duration
+      transition: transform calc(2 * var(--hover-duration))
         cubic-bezier(0.65, 0.05, 0.36, 1);
 
       &.closed {

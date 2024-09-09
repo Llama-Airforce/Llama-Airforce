@@ -81,8 +81,6 @@ const onClick = (): void => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -142,7 +140,7 @@ const onClick = (): void => {
     min-height: 3rem;
     //border-bottom: var(--border-thickness) solid var(--c-lvl4);
     align-items: center;
-    transition: background $table-hover-duration;
+    transition: background var(--hover-duration);
 
     // These direct divs are most likely your individual cells.
     :deep(> div) {
@@ -179,7 +177,7 @@ const onClick = (): void => {
       text-align: center;
       animation: pulse 1000ms 2;
 
-      transition: scale $hover-duration ease-in-out; // For hover scaling.
+      transition: scale var(--hover-duration) ease-in-out; // For hover scaling.
 
       > i {
         transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
