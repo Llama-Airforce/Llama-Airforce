@@ -150,13 +150,13 @@ watch(
     &.closed {
       visibility: hidden;
       opacity: 0;
-      //transform: translateX(calc(200px + 1.25rem));
+      /* transform: translateX(calc(200px + 1.25rem)); */
     }
 
     &.open {
       visibility: visible;
       opacity: 1;
-      //transform: translateX(0);
+      /* transform: translateX(0); */
     }
 
     :deep(> .select-menu) {

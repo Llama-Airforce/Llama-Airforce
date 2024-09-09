@@ -168,7 +168,7 @@ p {
         flex-direction: column;
       }
 
-      // Don't display toolbar-container any of its underlying divs are empty.
+      /* Don't display toolbar-container any of its underlying divs are empty. */
       &:not(:has(:not(:empty))),
       > .toolbar-teleport:empty {
         display: none;

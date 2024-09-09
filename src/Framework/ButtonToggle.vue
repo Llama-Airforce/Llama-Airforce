@@ -46,7 +46,9 @@ button {
   background: var(--c-lvl1);
   user-select: none;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+  /* Disable blue highlight because of pointer. */
+  -webkit-tap-highlight-color: transparent;
   height: calc(40px - 1rem);
 
   border-radius: var(--border-radius);

@@ -142,7 +142,8 @@ footer {
             align-items: center;
             padding: 0 0.5rem;
 
-            border-bottom: 1px solid transparent; // Empty bar to prevent stuff jumping around.
+            /* Empty bar to prevent stuff jumping around. */
+            border-bottom: 1px solid transparent;
             transition: all var(--hover-duration);
           }
 

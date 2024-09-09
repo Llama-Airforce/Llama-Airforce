@@ -111,7 +111,7 @@ const showModal = ref(false);
     inset: 0;
     background-color: var(--c-blue);
     border-radius: var(--border-radius);
-    opacity: 0.2; // Adjust this value to control the intensity of the overlay
+    opacity: 0.2; /* Adjust this value to control the intensity of the overlay */
     pointer-events: none;
   }
 

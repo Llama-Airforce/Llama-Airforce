@@ -144,7 +144,7 @@ const onThemeSelect = (option: ThemeDescription) => {
 
 .direction-up {
   :deep(.items) {
-    bottom: 120%; // Items will move upwards.
+    bottom: 120%; /* Items will move upwards. */
   }
 }
 </style>

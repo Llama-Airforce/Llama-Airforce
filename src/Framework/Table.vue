@@ -224,7 +224,8 @@ const sortColumn = (column: Column): void => {
 
   background: var(--c-lvl1);
 
-  min-height: 80px; // Size of the loader, hardcoded, dunno how to make dynamic.
+  /* Size of the loader, hardcoded, dunno how to make dynamic. */
+  min-height: 80px;
 
   --columns-data: auto;
 
@@ -242,7 +243,9 @@ const sortColumn = (column: Column): void => {
 
     &.sortable {
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+      /* Disable blue highlight because of pointer. */
+      -webkit-tap-highlight-color: transparent;
       user-select: none;
 
       gap: 1ch;

@@ -55,7 +55,7 @@ const onChange = (evt: Event): void => {
   cursor: pointer;
   user-select: none;
 
-  // We hide the native display as we have our custom implementation.
+  /* We hide the native display as we have our custom implementation. */
   input {
     display: none;
   }
@@ -74,7 +74,7 @@ const onChange = (evt: Event): void => {
     transition: all 0.2s ease-in-out;
 
     svg {
-      margin-top: 1px; // Half the SVG stroke width.
+      margin-top: 1px; /* Half the SVG stroke width. */
       width: 1rem;
       height: 1rem;
       opacity: 0;

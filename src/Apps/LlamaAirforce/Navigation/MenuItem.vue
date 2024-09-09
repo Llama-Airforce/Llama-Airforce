@@ -106,7 +106,9 @@ i {
 
 .nav-link {
   font-weight: 500;
-  -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+  /* Disable blue highlight because of pointer. */
+  -webkit-tap-highlight-color: transparent;
 
   &.node {
     color: var(--c-primary) !important;

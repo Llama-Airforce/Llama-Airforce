@@ -282,7 +282,7 @@ const onType = (tabIndex: number) => {
   :deep(.row-data) {
     grid-column-gap: 4rem;
 
-    // Right adjust number columns.
+    /* Right adjust number columns. */
     div:nth-child(6),
     div:nth-child(7),
     div:nth-child(8) {
@@ -296,7 +296,7 @@ const onType = (tabIndex: number) => {
     :deep(.row-data) {
       grid-column-gap: 4rem;
 
-      // Right adjust number columns.
+      /* Right adjust number columns. */
       div:nth-child(5) {
         justify-content: start;
       }
@@ -325,9 +325,9 @@ const onType = (tabIndex: number) => {
       div:nth-child(2),
       div:nth-child(3),
       div:nth-child(4),
-      //div:nth-child(5),
+      /* div:nth-child(5), */
       div:nth-child(6),
-      //div:nth-child(7),
+      /* div:nth-child(7), */
       div:nth-child(8) {
         display: none;
       }

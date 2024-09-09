@@ -76,7 +76,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 .tab-view {
   > ul {
     display: flex;
-    flex-wrap: wrap; // Scrolling kinda sucks for discoverabiliy and UX.
+    flex-wrap: wrap; /* Scrolling kinda sucks for discoverabiliy and UX. */
 
     padding: 0;
     margin: 0;

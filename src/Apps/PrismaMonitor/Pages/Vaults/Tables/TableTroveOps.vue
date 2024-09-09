@@ -143,7 +143,7 @@ const titleCase = (s: string): string =>
   :deep(.row-data) {
     --col-width: 12ch;
 
-    // Mobile
+    /* Mobile */
     @media only screen and (max-width: 1280px) {
       gap: 0.25rem;
 

@@ -114,7 +114,9 @@ header {
       padding-inline: 1rem;
 
       z-index: 21;
-      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+      /* Disable blue highlight because of pointer. */
+      -webkit-tap-highlight-color: transparent;
 
       transition: transform calc(2 * var(--hover-duration))
         cubic-bezier(0.65, 0.05, 0.36, 1);

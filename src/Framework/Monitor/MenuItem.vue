@@ -172,7 +172,9 @@ const onClickNode = (): void => {
 <style lang="scss" scoped>
 .nav-link {
   font-weight: 500;
-  -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+  /* Disable blue highlight because of pointer. */
+  -webkit-tap-highlight-color: transparent;
   border-radius: var(--border-radius);
 
   .nav-link-container {

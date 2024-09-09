@@ -252,7 +252,7 @@ const onType = (tabIndex: number) => {
       visibility: hidden;
     }
 
-    // Non mobile
+    /* Non mobile */
     @media only screen and (min-width: 1280px) {
       @container (max-width: 1100px) {
         --columns-data: minmax(12ch, 0.5fr)
@@ -261,7 +261,7 @@ const onType = (tabIndex: number) => {
       }
     }
 
-    // Mobile
+    /* Mobile */
     @media only screen and (max-width: 1280px) {
       gap: 0.25rem;
 

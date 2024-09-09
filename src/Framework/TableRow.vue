@@ -138,11 +138,11 @@ const onClick = (): void => {
     padding: 0 1rem;
     grid-column-gap: 1rem;
     min-height: 3rem;
-    //border-bottom: var(--border-thickness) solid var(--c-lvl4);
+    /* border-bottom: var(--border-thickness) solid var(--c-lvl4); */
     align-items: center;
     transition: background var(--hover-duration);
 
-    // These direct divs are most likely your individual cells.
+    /* These direct divs are most likely your individual cells. */
     :deep(> div) {
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -177,7 +177,7 @@ const onClick = (): void => {
       text-align: center;
       animation: pulse 1000ms 2;
 
-      transition: scale var(--hover-duration) ease-in-out; // For hover scaling.
+      transition: scale var(--hover-duration) ease-in-out; /* For hover scaling. */
 
       > i {
         transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);

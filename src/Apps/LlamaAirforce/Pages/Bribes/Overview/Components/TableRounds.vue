@@ -150,7 +150,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
       justify-content: center;
     }
 
-    // Fix text in tooltip having link color.
+    /* Fix text in tooltip having link color. */
     .popper {
       color: var(--c-text);
     }

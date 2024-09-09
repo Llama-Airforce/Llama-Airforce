@@ -72,7 +72,9 @@ const open = ref(false);
 
   cursor: pointer;
   user-select: none;
-  -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+  /* Disable blue highlight because of pointer. */
+  -webkit-tap-highlight-color: transparent;
 
   transition: background-color 125ms ease;
   background: var(--c-lvl1-hover);
@@ -131,7 +133,9 @@ const open = ref(false);
     > .item {
       color: var(--c-text);
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+      /* Disable blue highlight because of pointer. */
+      -webkit-tap-highlight-color: transparent;
       user-select: none;
       border-bottom: 1px solid var(--c-lvl3);
       padding: 0.5rem 0.75rem;

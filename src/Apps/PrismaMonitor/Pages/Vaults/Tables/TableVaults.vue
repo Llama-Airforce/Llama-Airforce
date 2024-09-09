@@ -205,7 +205,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
   }
 
   :deep(.row-data) {
-    // Mobile
+    /* Mobile */
     @media only screen and (max-width: 1280px) {
       @container (max-width: 800px) {
         --columns-data: 20px minmax(12ch, 1fr)

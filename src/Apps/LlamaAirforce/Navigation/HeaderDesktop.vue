@@ -106,7 +106,8 @@ header {
     border-bottom: 1px solid var(--c-lvl2);
 
     > .title {
-      z-index: 1; // Needed because the menu is rendered on top, otherwise breaking clicking the logo.
+      /* Needed because the menu is rendered on top, otherwise breaking clicking the logo. */
+      z-index: 1;
 
       grid-row: 1;
       grid-column: 1;
@@ -241,7 +242,8 @@ header {
               align-items: center;
               padding: 0 0.5rem;
 
-              border-bottom: 1px solid transparent; // Empty bar to prevent stuff jumping around.
+              /* Empty bar to prevent stuff jumping around. */
+              border-bottom: 1px solid transparent;
               transition: all var(--hover-duration);
             }
 

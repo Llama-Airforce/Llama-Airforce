@@ -106,7 +106,7 @@ const onInput = (evt: Event): void => {
     padding: 0rem 0.875rem;
     text-align: start;
     min-height: 2.5rem;
-    width: calc(100% - 1rem - 4px); // minus padding and border twice.
+    width: calc(100% - 1rem - 4px); /* Minus padding and border twice. */
     cursor: text;
 
     &::placeholder {
@@ -155,7 +155,9 @@ const onInput = (evt: Event): void => {
     > div {
       color: var(--c-text);
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent; // Disable blue highlight because of pointer.
+
+      /* Disable blue highlight because of pointer. */
+      -webkit-tap-highlight-color: transparent;
       user-select: none;
       border-bottom: 1px solid var(--c-lvl3);
       padding: 0.5rem 0.75rem;

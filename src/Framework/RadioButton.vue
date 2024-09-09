@@ -55,7 +55,7 @@ const onChange = (evt: Event): void => {
   cursor: pointer;
   user-select: none;
 
-  // We hide the native display as we have our custom implementation.
+  /* We hide the native display as we have our custom implementation. */
   input {
     display: none;
   }
