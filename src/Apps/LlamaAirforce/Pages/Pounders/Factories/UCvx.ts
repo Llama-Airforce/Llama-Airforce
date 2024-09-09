@@ -27,7 +27,7 @@ export default function createCvxPounder(
     id: "ucvx",
     name: "Convex (Pirex)",
     logo,
-    symbol: "pCVX",
+    symbol: "pxCVX",
     description: "description-ucvx",
     asset: PxCvxAddress,
     contract,
