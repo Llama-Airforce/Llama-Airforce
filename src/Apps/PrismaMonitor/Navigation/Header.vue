@@ -43,7 +43,7 @@ const emit = defineEmits<{
       margin-right: 1.75rem;
       display: flex !important;
 
-      @mixin button-bg() {
+      button {
         background: var(--c-lvl1);
 
         &:hover {
@@ -53,10 +53,6 @@ const emit = defineEmits<{
         &:active {
           background: var(--c-lvl1-active);
         }
-      }
-
-      button {
-        @include button-bg();
       }
     }
   }

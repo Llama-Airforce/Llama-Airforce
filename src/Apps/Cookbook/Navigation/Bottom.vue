@@ -75,21 +75,17 @@ const copyUrl = async () => {
     }
   }
 
-  @mixin button-bg() {
-    background: var(--c-lvl2);
-
-    &:hover {
-      background: var(--c-lvl2-hover);
-    }
-
-    &:active {
-      background: var(--c-lvl2-active);
-    }
-  }
-
   > :deep(.buttons) {
     button {
-      @include button-bg();
+      background: var(--c-lvl2);
+
+      &:hover {
+        background: var(--c-lvl2-hover);
+      }
+
+      &:active {
+        background: var(--c-lvl2-active);
+      }
     }
   }
 
@@ -125,7 +121,15 @@ const copyUrl = async () => {
   > :deep(.wallet) {
     .clear,
     .disconnect {
-      @include button-bg();
+      background: var(--c-lvl2);
+
+      &:hover {
+        background: var(--c-lvl2-hover);
+      }
+
+      &:active {
+        background: var(--c-lvl2-active);
+      }
     }
   }
 }

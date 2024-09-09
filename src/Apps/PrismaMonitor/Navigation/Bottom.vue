@@ -38,25 +38,21 @@ const router = useRouter();
 
   margin: 1.125rem;
 
-  @mixin button-bg() {
-    background: var(--c-lvl2);
-
-    &:hover {
-      background: var(--c-lvl2-hover);
-    }
-
-    &:active {
-      background: var(--c-lvl2-active);
-    }
-  }
-
   .buttons {
     grid-area: buttons;
     display: flex;
     gap: 1rem;
 
     button {
-      @include button-bg();
+      background: var(--c-lvl2);
+
+      &:hover {
+        background: var(--c-lvl2-hover);
+      }
+
+      &:active {
+        background: var(--c-lvl2-active);
+      }
     }
 
     a {
@@ -96,7 +92,15 @@ const router = useRouter();
     grid-area: wallet;
 
     .disconnect {
-      @include button-bg();
+      background: var(--c-lvl2);
+
+      &:hover {
+        background: var(--c-lvl2-hover);
+      }
+
+      &:active {
+        background: var(--c-lvl2-active);
+      }
     }
   }
 }
