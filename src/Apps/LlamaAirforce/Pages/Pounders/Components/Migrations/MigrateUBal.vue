@@ -97,51 +97,54 @@ function onDepositAuraBal() {
 <template>
   <Card
     v-if="canMigrate"
-    class="migrations border-flash"
+    class="border-flash"
   >
-    <h1 v-html="migrationUBalMsg"></h1>
-    <span class="actions">
-      <a
-        :class="{ disabled: !canWithdraw || migrating }"
-        @click="onWithdrawUBal"
-      >
-        {{ t("withdraw") }}
-      </a>
-      <a
-        :class="{ disabled: !canDeposit || migrating }"
-        @click="onDepositAuraBal"
-      >
-        {{ t("deposit") }}
-      </a>
-    </span>
+    <div class="migrations">
+      <h1 v-html="migrationUBalMsg"></h1>
+      <span class="actions">
+        <a
+          :class="{ disabled: !canWithdraw || migrating }"
+          @click="onWithdrawUBal"
+        >
+          {{ t("withdraw") }}
+        </a>
+        <a
+          :class="{ disabled: !canDeposit || migrating }"
+          @click="onDepositAuraBal"
+        >
+          {{ t("deposit") }}
+        </a>
+      </span>
+    </div>
   </Card>
 </template>
 
 <style lang="scss" scoped>
-.migrations {
+.card {
   --flash-color: var(--c-red-rgb);
+}
+
+.migrations {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
 
   h1 {
     font-size: 1rem;
   }
 
-  :deep(.card-body) {
+  .actions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-evenly;
 
-    .actions {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
+    a {
+      align-self: center;
+      cursor: pointer;
 
-      a {
-        align-self: center;
-        cursor: pointer;
-
-        &.disabled {
-          color: var(--c-lvl5);
-          cursor: not-allowed;
-        }
+      &.disabled {
+        color: var(--c-lvl5);
+        cursor: not-allowed;
       }
     }
   }
