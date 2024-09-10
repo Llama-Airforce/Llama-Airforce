@@ -230,20 +230,6 @@ const onType = (tabIndex: number) => {
 <style lang="scss" scoped>
 .trades-card {
   --header-column-actions: 2fr;
-
-  :deep(.types) {
-    margin: 0 1rem;
-    font-size: 0.875rem;
-
-    ul {
-      width: auto;
-      border-bottom: 0;
-    }
-
-    .tab-header {
-      padding: 0.5rem 1rem;
-    }
-  }
 }
 
 .trades-table {
