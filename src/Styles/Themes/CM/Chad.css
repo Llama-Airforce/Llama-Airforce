@@ -1,0 +1,101 @@
+[data-theme="chad"] {
+  color-scheme: light dark;
+
+  --c-text: black;
+  --c-text-invert: #ffffff;
+  --c-lvl0: #e6e4f6;
+  --c-lvl0-hint: #f0f0f0;
+  --c-lvl0-hover: #d1cdee;
+  --c-lvl0-active: #bcb6e7;
+  --c-lvl1: #f4f4f6;
+  --c-lvl1-hover: #e3e3e8;
+  --c-lvl1-active: #d2d2da;
+  --c-lvl2: #d9d8df;
+  --c-lvl2-hover: #c9c7d1;
+  --c-lvl2-active: #b8b6c3;
+  --c-lvl3: #e3e3e8;
+  --c-lvl3-hover: #d2d2da;
+  --c-lvl3-active: #c2c2cd;
+  --c-lvl4: #a1a1a1;
+  --c-lvl4-hover: #919191;
+  --c-lvl4-active: #828282;
+  --c-lvl5: #7d7d86;
+  --c-lvl5-hover: #6e6e77;
+  --c-lvl5-active: #5f5f67;
+  --c-lvl6: #212124;
+  --c-lvl6-hover: #121214;
+  --c-lvl6-active: #040404;
+  --c-red: hsl(7, 95%, 54%);
+  --c-red-rgb: 249, 52, 26;
+  --c-green: hsl(122, 95%, 35%);
+  --c-green-rgb: 4, 174, 10;
+  --c-blue: hsl(209, 95%, 54%);
+  --c-blue-rgb: 26, 141, 249;
+  --c-yellow: hsl(39, 95%, 54%);
+  --c-yellow-rgb: 249, 171, 26;
+  --c-purple: hsl(284, 95%, 54%);
+  --c-purple-rgb: 190, 26, 249;
+  --c-primary: #9d93dc;
+  --c-primary-hover: #aba3e1;
+  --c-primary-active: #c4beea;
+  --c-primary-disabled: #d5d1f0;
+  --c-card-special-1: hsl(209, 95%, 54%);
+  --c-card-special-2: hsl(284, 95%, 54%);
+
+  --page-margin: 2.375rem;
+  --dashboard-gap: 1.5rem;
+
+  --font-weight: normal;
+  --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --border-radius: 0px;
+  --border-thickness: 2px;
+
+  --header-background: #4637a9;
+  --header-font-family: monospace;
+  --header-font-color: white;
+
+  --table-border-aggregation: calc(var(--border-thickness) + 1px) solid
+    var(--c-primary);
+
+  --card-margin-block: 0.875rem;
+  --card-margin-inline: 1.125rem;
+
+  --container-background: var(--c-lvl0);
+  --container-background-hint: var(--c-lvl0-hint);
+  --container-background-hover: var(--c-lvl0-hover);
+  --container-background-active: var(--c-lvl0-active);
+  --container-box-shadow: 0 0 0 0;
+
+  --select-box-shadow: 3px 3px 0 #0d0a1f;
+  --select-items-box-shadow: 3px 3px 0 #0d0a1f;
+
+  --input-background: var(--c-lvl2);
+  --input-background-hover: var(--c-lvl2);
+  --input-background-active: var(--c-lvl2);
+  --input-border-color-hover: var(--c-primary-hover);
+  --input-border-color-active: var(--c-primary-active);
+  --input-box-shadow: inset 0.5px 0.5px 0 0.5px;
+  --input-items-box-shadow: inset 0.5px 0.5px 0 0.5px;
+
+  --tooltip-box-shadow: 0;
+
+  --tab-text-color: var(--c-lvl5);
+  --tab-text-color-hover: var(--c-lvl5);
+  --tab-text-color-active: var(--c-text);
+
+  --gutter-color: var(--c-primary);
+
+  --spinner-color: var(--c-text);
+
+  --hover-duration: 75ms;
+
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+}

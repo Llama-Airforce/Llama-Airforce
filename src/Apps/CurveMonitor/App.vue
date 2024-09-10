@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Navigation from "@CM/Navigation/Navigation.vue";
 
+import "@/Styles/Themes/CM/Chad.css";
+import "@/Styles/Themes/CM/Dark.css";
+import "@/Styles/Themes/CM/Light.css";
+
 // Refs
 const storeBreadcrumb = useBreadcrumbStore();
 const route = useRoute();
@@ -25,24 +29,6 @@ watch(
     </template>
   </Layout>
 </template>
-
-<style lang="scss">
-@import "@/Styles/Themes/CM/Chad.scss";
-@import "@/Styles/Themes/CM/Light.scss";
-@import "@/Styles/Themes/CM/Dark.scss";
-
-[data-theme="chad"] {
-  @include themeChad();
-}
-
-[data-theme="light"] {
-  @include themeLight();
-}
-
-[data-theme="dark"] {
-  @include themeDark();
-}
-</style>
 
 <style scoped>
 .navigation {
