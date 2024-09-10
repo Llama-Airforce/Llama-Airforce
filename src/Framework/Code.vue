@@ -4,17 +4,16 @@ import { createHighlighterCore, makeSingletonHighlighterCore } from "shiki";
 const createHighlighter = makeSingletonHighlighterCore(createHighlighterCore)({
   themes: [import("shiki/themes/dark-plus.mjs")],
   langs: [
-    import("shiki/langs/vue.mjs"),
-    import("shiki/langs/html.mjs"),
-    import("shiki/langs/scss.mjs"),
-    import("shiki/langs/typescript.mjs"),
+    () => import("shiki/langs/vue.mjs"),
+    () => import("shiki/langs/html.mjs"),
     () => import("shiki/langs/css.mjs"),
+    () => import("shiki/langs/typescript.mjs"),
   ],
   loadWasm: import("shiki/wasm"),
 });
 
 const { lang, code } = defineProps<{
-  lang: "vue" | "html" | "scss" | "typescript";
+  lang: "vue" | "html" | "css" | "typescript";
   code: string;
 }>();
 

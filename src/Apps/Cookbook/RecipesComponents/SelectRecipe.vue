@@ -132,7 +132,7 @@ const select3 = `.select-component {
         ></Code>
 
         <Code
-          lang="scss"
+          lang="css"
           :code="select3"
         ></Code>
       </template>

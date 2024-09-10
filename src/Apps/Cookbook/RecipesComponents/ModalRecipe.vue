@@ -59,7 +59,7 @@ const modalYesNo3 = `.content
         ></Code>
 
         <Code
-          lang="scss"
+          lang="css"
           :code="modalYesNo3"
         ></Code>
       </template>

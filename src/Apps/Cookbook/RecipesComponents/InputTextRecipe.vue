@@ -220,7 +220,7 @@ const inputTextSearch3 = `.search-item {
         ></Code>
 
         <Code
-          lang="scss"
+          lang="css"
           :code="inputTextSearch3"
         ></Code>
       </template>
