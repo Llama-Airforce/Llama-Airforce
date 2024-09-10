@@ -57,62 +57,6 @@ nav {
     padding: 0;
     margin: 0;
     list-style-type: none;
-
-    :deep(li) {
-      display: flex;
-      flex-direction: column;
-
-      .nav-link {
-        display: flex;
-        text-decoration: none;
-        color: var(--c-text);
-        transition: all var(--hover-duration);
-        margin: 0.125rem 1.125rem;
-
-        &:hover {
-          background: var(--c-lvl2-hover);
-        }
-
-        &:active {
-          background: var(--c-lvl2-active);
-
-          &:not(.router-link-active) {
-            color: var(--c-text) !important;
-          }
-        }
-
-        &.root {
-          cursor: pointer;
-
-          &:not(:hover) {
-            background: var(--c-lvl1);
-          }
-        }
-
-        &:not(.root) {
-          &.router-link-active {
-            background: var(--c-lvl3);
-          }
-
-          &:not(.router-link-active) {
-            color: var(--c-lvl5);
-          }
-
-          .nav-link-container {
-            margin-left: 0.75rem;
-          }
-        }
-
-        .nav-link-container {
-          display: flex;
-          flex-grow: 1;
-          align-items: center;
-          padding: 0.75rem 0.75rem;
-
-          transition: all var(--hover-duration);
-        }
-      }
-    }
   }
 }
 </style>

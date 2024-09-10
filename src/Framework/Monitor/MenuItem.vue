@@ -171,15 +171,26 @@ const onClickNode = (): void => {
 
 <style scoped>
 .nav-link {
+  display: flex;
   font-weight: 500;
+  text-decoration: none;
+  color: var(--c-text);
+  transition: all var(--hover-duration);
+  margin: 0.125rem 1.125rem;
 
   /* Disable blue highlight because of pointer. */
   -webkit-tap-highlight-color: transparent;
   border-radius: var(--border-radius);
 
   .nav-link-container {
+    display: flex;
     justify-content: space-between;
+    flex-grow: 1;
+    align-items: center;
     margin-right: 1rem;
+    padding: 0.75rem 0.75rem;
+
+    transition: all var(--hover-duration);
 
     > .left {
       display: flex;
@@ -199,9 +210,27 @@ const onClickNode = (): void => {
     }
   }
 
+  &:hover {
+    background: var(--c-lvl2-hover);
+  }
+
+  &:active {
+    background: var(--c-lvl2-active);
+
+    &:not(.router-link-active) {
+      color: var(--c-text) !important;
+    }
+  }
+
   &.root {
     color: var(--c-text) !important;
     font-weight: 600;
+
+    cursor: pointer;
+
+    &:not(:hover) {
+      background: var(--c-lvl1);
+    }
 
     .nav-link-container .expander {
       font-size: 0.75rem;
@@ -211,6 +240,20 @@ const onClickNode = (): void => {
       &.expanded {
         transform: rotate(180deg);
       }
+    }
+  }
+
+  &:not(.root) {
+    &.router-link-active {
+      background: var(--c-lvl3);
+    }
+
+    &:not(.router-link-active) {
+      color: var(--c-lvl5);
+    }
+
+    .nav-link-container {
+      margin-left: 0.75rem;
     }
   }
 }
