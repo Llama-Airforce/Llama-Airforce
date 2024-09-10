@@ -151,7 +151,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 }
 
 .lockers-table {
-  --col-width: 11ch;
   --columns-data: 1fr repeat(4, minmax(12ch, 0.33fr));
 
   .zero {

@@ -252,15 +252,12 @@ const round = (x: number) =>
 }
 
 .swaps-table {
+  --columns-gap: 2rem;
   --columns-data: minmax(3rem, 7rem) minmax(3rem, 5rem) minmax(2rem, 3rem)
     minmax(3rem, 5rem) minmax(3rem, 5rem) minmax(calc(26px + 8rem), 1fr)
     minmax(calc(26px + 8rem), 1fr) minmax(5rem, 9rem);
 
   width: 100%;
-
-  :deep(.row-data) {
-    grid-column-gap: 2rem;
-  }
 
   .hash {
     display: flex;

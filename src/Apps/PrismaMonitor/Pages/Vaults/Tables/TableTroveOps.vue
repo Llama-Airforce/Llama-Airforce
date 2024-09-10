@@ -130,50 +130,10 @@ const titleCase = (s: string): string =>
 
 <style lang="scss" scoped>
 .trove-ops-table {
-  --col-width: 12ch;
-  --columns-data: minmax(14ch, 0.75fr)
-    repeat(5, minmax(var(--col-width), 0.75fr)) 1fr;
-
-  container-type: inline-size;
+  --columns-data: minmax(14ch, 0.75fr) repeat(5, minmax(12ch, 0.75fr)) 1fr;
 
   .title {
     margin-right: 1rem;
-  }
-
-  :deep(.row-data) {
-    --col-width: 12ch;
-
-    /* Mobile */
-    @media only screen and (max-width: 1280px) {
-      gap: 0.25rem;
-
-      @container (max-width: 800px) {
-        --columns-data: minmax(14ch, 0.75fr)
-          repeat(4, minmax(var(--col-width), 0.75fr)) 1fr;
-
-        div:nth-child(5) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 650px) {
-        --columns-data: minmax(14ch, 0.75fr)
-          repeat(3, minmax(var(--col-width), 0.75fr)) 1fr;
-
-        div:nth-child(6) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 520px) {
-        --columns-data: minmax(14ch, 0.75fr)
-          repeat(3, minmax(var(--col-width), 0.75fr));
-
-        div:nth-child(7) {
-          display: none;
-        }
-      }
-    }
   }
 }
 </style>

@@ -188,11 +188,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
 }
 
 .vaults-table {
-  --col-width: 11ch;
-  --columns-data: 20px minmax(12ch, 1fr)
-    repeat(6, minmax(var(--col-width), 0.75fr)) 1rem;
-
-  container-type: inline-size;
+  --columns-data: 20px minmax(12ch, 1fr) repeat(6, minmax(11ch, 0.75fr)) 1rem;
 
   .deprecated {
     opacity: 0.5;
@@ -202,40 +198,6 @@ const loading = computed(() => rowsRaw.value.length === 0);
     width: 20px;
     height: 20px;
     object-fit: scale-down;
-  }
-
-  :deep(.row-data) {
-    /* Mobile */
-    @media only screen and (max-width: 1280px) {
-      @container (max-width: 800px) {
-        --columns-data: 20px minmax(12ch, 1fr)
-          repeat(5, minmax(var(--col-width), 0.75fr)) 1rem;
-
-        div:nth-child(8) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 650px) {
-        --columns-data: 20px minmax(12ch, 1fr)
-          repeat(4, minmax(var(--col-width), 0.75fr)) 1rem;
-
-        div:nth-child(6) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 550px) {
-        --col-width: 10ch;
-
-        --columns-data: 20px minmax(12ch, 1fr)
-          repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
-
-        div:nth-child(7) {
-          display: none;
-        }
-      }
-    }
   }
 }
 </style>

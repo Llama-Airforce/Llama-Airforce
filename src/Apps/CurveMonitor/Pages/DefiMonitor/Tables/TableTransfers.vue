@@ -268,12 +268,9 @@ const clipboard = async (addr: string) => {
 }
 
 .transfers-table {
+  --columns-gap: 2rem;
   --columns-data: minmax(6rem, 1fr) minmax(5rem, 1fr) 5rem minmax(5rem, 1fr)
     minmax(5rem, 1fr) minmax(5rem, 1fr) calc(26px + 8rem) minmax(5rem, 1fr);
-
-  :deep(.row-data) {
-    grid-column-gap: 2rem;
-  }
 
   button {
     background: transparent;

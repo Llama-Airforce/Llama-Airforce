@@ -176,9 +176,8 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 }
 
 .liquidations-table {
-  --col-width: 11ch;
   --columns-data: minmax(12ch, 1fr) minmax(12ch, 1fr)
-    repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
+    repeat(3, minmax(11ch, 0.75fr)) 1rem;
 }
 </style>
 

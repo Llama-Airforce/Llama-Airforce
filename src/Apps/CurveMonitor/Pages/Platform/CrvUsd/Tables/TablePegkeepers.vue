@@ -187,7 +187,6 @@ const tokenAddress = (x: Pool & Keeper) =>
 }
 
 .pegkeepers-table {
-  --col-width: 12ch;
-  --columns-data: 26px minmax(7rem, 1fr) repeat(4, var(--col-width));
+  --columns-data: 26px minmax(7rem, 1fr) repeat(4, 12ch);
 }
 </style>

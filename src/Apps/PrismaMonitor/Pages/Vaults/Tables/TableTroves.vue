@@ -241,55 +241,8 @@ const onType = (tabIndex: number) => {
 }
 
 .troves-table {
-  --col-width: 11ch;
-  --columns-data: minmax(12ch, 1fr) repeat(3, minmax(var(--col-width), 0.75fr))
+  --columns-data: minmax(12ch, 1fr) repeat(3, minmax(11ch, 0.75fr))
     minmax(12ch, 1fr) minmax(12ch, 1fr) 1rem;
-
-  container-type: inline-size;
-
-  :deep(.row-data) {
-    .hide {
-      visibility: hidden;
-    }
-
-    /* Non mobile */
-    @media only screen and (min-width: 1280px) {
-      @container (max-width: 1100px) {
-        --columns-data: minmax(12ch, 0.5fr)
-          repeat(3, minmax(var(--col-width), 0.75fr)) minmax(12ch, 1fr)
-          minmax(12ch, 1fr) 1rem;
-      }
-    }
-
-    /* Mobile */
-    @media only screen and (max-width: 1280px) {
-      gap: 0.25rem;
-
-      @container (max-width: 1000px) {
-        --columns-data: minmax(12ch, 1fr)
-          repeat(3, minmax(var(--col-width), 0.75fr)) minmax(12ch, 1fr)
-          minmax(12ch, 1fr) 1rem;
-      }
-
-      @container (max-width: 900px) {
-        --columns-data: minmax(12ch, 1fr)
-          repeat(3, minmax(var(--col-width), 0.75fr)) minmax(12ch, 1fr) 1rem;
-
-        div:nth-child(6) {
-          display: none;
-        }
-      }
-
-      @container (max-width: 600px) {
-        --columns-data: minmax(12ch, 1fr)
-          repeat(3, minmax(var(--col-width), 0.75fr)) 1rem;
-
-        div:nth-child(5) {
-          display: none;
-        }
-      }
-    }
-  }
 }
 </style>
 

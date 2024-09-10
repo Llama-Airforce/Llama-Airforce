@@ -68,7 +68,6 @@ const rows = computed((): Liquidator[] =>
 
 <style scoped>
 .liquidators-table {
-  --col-width: 12ch;
-  --columns-data: 1fr repeat(2, var(--col-width));
+  --columns-data: 1fr repeat(2, 12ch);
 }
 </style>

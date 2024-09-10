@@ -247,8 +247,11 @@ const onType = (tabIndex: number) => {
 }
 
 .trades-table {
+  --columns-gap: 4rem;
   --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
     minmax(10rem, 0.75fr);
+
+  --row-background: var(--container-background-hint);
 
   .type {
     &.swap {
@@ -279,62 +282,9 @@ const onType = (tabIndex: number) => {
     text-align: center;
   }
 
-  :deep(.row-data) {
-    border-bottom-width: 0;
-    background-color: var(--container-background-hint);
-
-    grid-column-gap: 4rem;
-
-    /* Right adjust number columns. */
-    div:nth-child(6),
-    div:nth-child(7),
-    div:nth-child(8) {
-      justify-content: end;
-    }
-  }
-
   :not(&.time) {
+    --columns-gap: 4rem;
     --columns-data: 6rem 7rem 7rem minmax(5rem, 1fr) minmax(6rem, 0.75fr);
-
-    :deep(.row-data) {
-      grid-column-gap: 4rem;
-
-      /* Right adjust number columns. */
-      div:nth-child(5) {
-        justify-content: start;
-      }
-    }
-  }
-
-  @media only screen and (max-width: 1280px) {
-    --columns-data: 1fr auto;
-
-    :deep(.header),
-    :deep(.header .header-content) {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 1rem;
-
-      .search {
-        margin-right: 0;
-      }
-    }
-
-    :deep(.row-data) {
-      grid-column-gap: 2rem;
-
-      div:nth-child(1),
-      div:nth-child(2),
-      div:nth-child(3),
-      div:nth-child(4),
-      /* div:nth-child(5), */
-      div:nth-child(6),
-      /* div:nth-child(7), */
-      div:nth-child(8) {
-        display: none;
-      }
-    }
   }
 }
 </style>

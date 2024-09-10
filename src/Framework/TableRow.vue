@@ -110,7 +110,7 @@ const onClick = (): void => {
 
   &.expanded {
     > .row-data {
-      background: var(--c-lvl1);
+      background: var(--row-background, --c-lvl1);
       border-bottom-width: 0;
 
       > .expander {
@@ -121,33 +121,16 @@ const onClick = (): void => {
     }
   }
 
-  /** Utility classes for row cells. */
-  :deep(.row-data) {
-    .center {
-      justify-self: center;
-    }
-
-    .end {
-      justify-self: end;
-    }
-  }
-
   > .row-data {
     display: grid;
     grid-template-columns: var(--columns-data);
     padding: 0 1rem;
-    grid-column-gap: 1rem;
+    grid-column-gap: var(--columns-gap, 1rem);
     min-height: 3rem;
     /* border-bottom: var(--border-thickness) solid var(--c-lvl4); */
     align-items: center;
+    background: var(--row-background);
     transition: background var(--hover-duration);
-
-    /* These direct divs are most likely your individual cells. */
-    :deep(> div) {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
 
     &:last-child {
       border-bottom-width: 0;
@@ -188,6 +171,30 @@ const onClick = (): void => {
 
   .row-details {
     border-bottom: var(--border-thickness) solid var(--c-lvl4);
+  }
+}
+</style>
+
+<style>
+/** Utility classes for row cells. */
+.row .row-data {
+  .center {
+    justify-self: center;
+  }
+
+  .end {
+    justify-self: end;
+  }
+
+  .hide {
+    visibility: hidden;
+  }
+
+  /* These direct divs are most likely your individual cells. */
+  > div {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 </style>
