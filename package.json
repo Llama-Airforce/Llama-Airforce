@@ -70,7 +70,7 @@
     "shiki": "1.16.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.5.4",
+    "typescript": "5.6.2",
     "unplugin-auto-import": "0.18.2",
     "unplugin-vue-components": "0.27.4",
     "vite": "5.4.3",
