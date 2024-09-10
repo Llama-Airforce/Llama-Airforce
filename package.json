@@ -67,7 +67,6 @@
     "eslint-plugin-promise": "7.1.0",
     "eslint-plugin-vue": "9.28.0",
     "globals": "^15.9.0",
-    "sass": "1.78.0",
     "shiki": "1.16.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
