@@ -19,6 +19,7 @@ const {
 
 const slots = useSlots();
 
+const hasTitle = computed(() => title || slots["title"]);
 const hasActions = computed(() => slots["actions"]);
 const hasActionsSecondary = computed(() => slots["actions-secondary"]);
 
@@ -43,19 +44,19 @@ const showHeader = computed(
       class="card-header"
       :class="{ collapsible }"
     >
-      <slot name="title">
-        <div
-          v-if="title"
-          class="card-title"
-        >
+      <div
+        v-if="hasTitle"
+        class="card-title"
+      >
+        <slot name="title">
           <i
             v-if="icon"
             class="icon"
             :class="icon"
           ></i>
           {{ title }}
-        </div>
-      </slot>
+        </slot>
+      </div>
 
       <div
         v-if="hasActionsSecondary"
@@ -173,7 +174,7 @@ const showHeader = computed(
       padding-right: 0.5rem;
     }
 
-    :deep(> .card-title) {
+    > .card-title {
       font-size: 1.125rem;
       font-weight: bold;
       color: var(--c-text);
