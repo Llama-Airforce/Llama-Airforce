@@ -87,14 +87,7 @@ const onChartType = (type: ChartType) => {
 </template>
 
 <style scoped>
-.card {
-  --header-column-title: auto;
-  --header-column-actions: 1fr;
-}
-
 .chart-types {
-  grid-column: 2;
-
   display: flex;
   font-size: 0.875rem;
 
