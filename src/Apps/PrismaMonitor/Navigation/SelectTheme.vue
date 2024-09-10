@@ -58,7 +58,11 @@ const onThemeSelect = (option: ThemeDescription) => {
     <template #item="{ item }">
       <div class="theme">
         <div class="label">{{ item.id }}</div>
-        <div class="colors">
+
+        <div
+          v-if="theme !== item"
+          class="colors"
+        >
           <div
             class="color"
             :style="{ 'background-color': item.colors.backgroundColor }"
