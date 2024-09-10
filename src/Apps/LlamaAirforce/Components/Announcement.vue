@@ -26,8 +26,6 @@ const { t } = useI18n();
   --flash-color: var(--c-yellow-rgb);
 
   .announcements {
-    flex-grow: 1;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1ch;

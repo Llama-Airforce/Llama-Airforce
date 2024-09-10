@@ -37,7 +37,6 @@ const showSwap = ref(false);
 .swap-body {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   gap: var(--dashboard-gap);
 
   a {

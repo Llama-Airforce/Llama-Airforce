@@ -125,7 +125,6 @@ function onDepositAuraBal() {
 }
 
 .migrations {
-  flex-grow: 1;
   display: flex;
   justify-content: space-between;
 

@@ -38,7 +38,6 @@ const { title } = defineProps<{ title: string }>();
   .recipe-body {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     gap: 2rem;
     margin-top: 0.5rem;
 

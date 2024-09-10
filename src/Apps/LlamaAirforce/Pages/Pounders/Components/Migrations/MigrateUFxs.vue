@@ -129,7 +129,6 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
 }
 
 .migration {
-  flex-grow: 1;
   display: flex;
   justify-content: space-between;
 

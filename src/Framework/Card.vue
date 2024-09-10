@@ -192,7 +192,6 @@ const showHeader = computed(
   }
 
   > .card-body {
-    display: flex;
     flex-grow: 1;
     margin: 0 var(--card-margin-inline) var(--card-margin-block)
       var(--card-margin-inline);
@@ -212,10 +211,6 @@ const showHeader = computed(
 
     &:has(.table) {
       overflow-y: auto;
-    }
-
-    &:has(.chart) {
-      display: block;
     }
 
     &:has(.vue-apexcharts) {

@@ -59,7 +59,6 @@ const onTab = (newTab: Tabs) => {
 
 .vault-info-body {
   display: flex;
-  flex-grow: 1;
   align-items: center;
   height: 8rem;
 }
