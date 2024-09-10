@@ -280,6 +280,9 @@ const onType = (tabIndex: number) => {
   }
 
   :deep(.row-data) {
+    border-bottom-width: 0;
+    background-color: var(--container-background-hint);
+
     grid-column-gap: 4rem;
 
     /* Right adjust number columns. */

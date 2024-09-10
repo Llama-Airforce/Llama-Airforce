@@ -75,7 +75,7 @@ const copyUrl = async () => {
     }
   }
 
-  > :deep(.buttons) {
+  > .buttons {
     button {
       background: var(--c-lvl2);
 

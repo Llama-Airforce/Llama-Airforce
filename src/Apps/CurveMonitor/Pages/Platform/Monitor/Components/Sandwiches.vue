@@ -153,15 +153,6 @@ const sandwichTxs = (sw: SandwichDetail) =>
 .sandwiches-card {
   --header-column-actions: 2fr;
 
-  :deep(.pagination) {
-    li {
-      button {
-        height: 2rem;
-        width: 2rem;
-      }
-    }
-  }
-
   .search {
     width: 600px;
 
@@ -176,21 +167,6 @@ const sandwichTxs = (sw: SandwichDetail) =>
 
   .title {
     margin-right: 1rem;
-  }
-
-  :deep(.row-data) {
-    grid-column-gap: 2.5rem;
-  }
-
-  :deep(.transactions) {
-    .row-data {
-      border-bottom-width: 0;
-      background-color: var(--container-background-hint);
-    }
-  }
-
-  :deep(.collapsible-outside) {
-    transition: grid-template-rows 200ms ease-out;
   }
 }
 </style>
