@@ -89,31 +89,16 @@ const copyUrl = async () => {
     }
   }
 
-  > :deep(.selectors) {
+  > .selectors {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
 
-    .label {
-      font-size: 1rem;
-      margin-left: 0.25rem;
-    }
-
     .themes {
-      .selected {
-        .theme {
-          .colors {
-            display: none;
-          }
-        }
-      }
+      --select-items-min-width: 220%;
 
-      .items {
-        width: 220%;
-
-        @media only screen and (max-width: 1280px) {
-          width: 125%;
-        }
+      @media only screen and (max-width: 1280px) {
+        --select-items-min-width: 125%;
       }
     }
   }

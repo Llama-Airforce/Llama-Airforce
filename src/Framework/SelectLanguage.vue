@@ -51,15 +51,3 @@ function label(locale: Locale) {
     </template>
   </Select>
 </template>
-
-<style lang="scss" scoped>
-.item {
-  display: flex;
-  align-items: center;
-
-  > .label {
-    font-size: 0.875rem;
-    margin-left: 0.75rem;
-  }
-}
-</style>

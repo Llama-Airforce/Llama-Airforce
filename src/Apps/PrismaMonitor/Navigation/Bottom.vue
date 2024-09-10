@@ -63,28 +63,13 @@ const router = useRouter();
     }
   }
 
-  :deep(.themes) {
+  .themes {
     grid-area: themes;
 
-    .label {
-      font-size: 1rem;
-      margin-left: 0.25rem;
-    }
+    --select-items-min-width: 210%;
 
-    .selected {
-      .theme {
-        .colors {
-          display: none;
-        }
-      }
-    }
-
-    .items {
-      width: 210%;
-
-      @media only screen and (max-width: 1280px) {
-        width: 130%;
-      }
+    @media only screen and (max-width: 1280px) {
+      --select-items-min-width: 130%;
     }
   }
 

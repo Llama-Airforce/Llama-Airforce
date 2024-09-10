@@ -124,7 +124,7 @@ const open = ref(false);
     position: absolute;
     left: 0;
     z-index: 1;
-    width: 100%;
+    min-width: var(--select-items-min-width, 100%);
     font-size: 1rem;
 
     background: var(--c-lvl1);
