@@ -159,7 +159,7 @@ const proposalToClipboard = async () => {
 
 <style lang="scss" scoped>
 .proposal-summary {
-  :deep(.item) {
+  &:deep(.item) {
     display: flex;
     flex-direction: column;
     align-items: center;

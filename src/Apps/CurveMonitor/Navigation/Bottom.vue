@@ -73,7 +73,7 @@ const router = useRouter();
     }
   }
 
-  > :deep(.wallet) {
+  &:deep(.wallet) {
     grid-area: wallet;
 
     .disconnect {

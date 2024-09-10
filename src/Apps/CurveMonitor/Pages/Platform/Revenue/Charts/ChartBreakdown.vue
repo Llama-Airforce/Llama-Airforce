@@ -180,7 +180,7 @@ const series = computed((): Serie[] => {
 
 <style lang="scss" scoped>
 .chart {
-  :deep(.apexcharts-tooltip) {
+  &:deep(.apexcharts-tooltip) {
     .apexcharts-tooltip-title {
       color: var(--c-text);
       background: transparent;

@@ -74,7 +74,7 @@ const formatter = (x: number): string =>
 
 <style lang="scss" scoped>
 .chart {
-  :deep(.apexcharts-tooltip) {
+  &:deep(.apexcharts-tooltip) {
     grid-template-rows: auto auto;
   }
 }

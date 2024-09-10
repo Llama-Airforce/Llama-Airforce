@@ -103,7 +103,7 @@ const copyUrl = async () => {
     }
   }
 
-  > :deep(.wallet) {
+  &:deep(.wallet) {
     .clear,
     .disconnect {
       background: var(--c-lvl2);

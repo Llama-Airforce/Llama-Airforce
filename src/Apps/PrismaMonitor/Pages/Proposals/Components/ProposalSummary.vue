@@ -133,7 +133,7 @@ const emit = defineEmits<{
   gap: 1rem;
   padding: 0.875rem 1.125rem;
 
-  :deep(.item) {
+  &:deep(.item) {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -88,7 +88,7 @@ const { data: price } = useQuery({
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: calc(1.25 * var(--dashboard-gap));
 
-  :deep(> .kpi) {
+  &:deep(> .kpi) {
     .label {
       font-size: 0.9rem;
     }
