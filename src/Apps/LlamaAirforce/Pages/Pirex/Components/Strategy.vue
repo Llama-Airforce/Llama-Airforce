@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .strategy {
   display: flex;
   flex-direction: column;

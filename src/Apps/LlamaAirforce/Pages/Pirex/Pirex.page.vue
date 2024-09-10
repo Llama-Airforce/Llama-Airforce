@@ -90,7 +90,7 @@ function createUCvxPounder() {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   display: grid;
   grid-template-columns: 2fr 1fr;

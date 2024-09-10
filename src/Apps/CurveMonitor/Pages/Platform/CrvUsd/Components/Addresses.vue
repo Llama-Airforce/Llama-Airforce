@@ -65,7 +65,7 @@ const clipboard = async (addr: string) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .addresses-table {
   --columns-data: 2fr 6fr auto;
 

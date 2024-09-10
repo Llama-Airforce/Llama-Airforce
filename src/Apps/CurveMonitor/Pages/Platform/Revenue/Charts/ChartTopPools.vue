@@ -107,7 +107,7 @@ const onSelectChain = (newChain: Chain | "all"): void => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .graph {
   --header-column-title: auto;
 

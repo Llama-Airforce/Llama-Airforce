@@ -50,7 +50,7 @@ watch(
   </Select>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .item {
   display: flex;
   align-items: center;

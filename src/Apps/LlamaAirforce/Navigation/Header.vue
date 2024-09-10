@@ -19,7 +19,7 @@ const hasHeader = computed((): boolean => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .headers {
   display: none;
 

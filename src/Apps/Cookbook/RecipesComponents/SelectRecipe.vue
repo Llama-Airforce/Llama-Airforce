@@ -140,7 +140,7 @@ const select3 = `.select-component {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .select-component {
   width: 20rem;
 

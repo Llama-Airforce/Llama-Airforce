@@ -127,7 +127,7 @@ function adjustPosition() {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .tooltip {
   img {
     object-fit: scale-down;

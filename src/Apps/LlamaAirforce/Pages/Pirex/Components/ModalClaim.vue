@@ -292,7 +292,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
   </Modal>
 </template>
 
-<style lang="scss">
+<style>
 .modal:has(.rewards-collapsible) {
   .modal-popup {
     position: absolute;
@@ -301,7 +301,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .epochs {
   width: 33vw;
   max-height: 75dvh;

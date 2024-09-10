@@ -145,7 +145,7 @@ function formatter(x: number) {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .controls {
   display: flex;
   gap: 1rem;

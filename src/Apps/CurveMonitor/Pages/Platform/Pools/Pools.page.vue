@@ -144,7 +144,7 @@ const onPoolSelect = async (newPool: Pool) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   max-width: calc(1920px - 18.125rem);
   grid-template-columns: repeat(4, 1fr);
@@ -174,5 +174,3 @@ const onPoolSelect = async (newPool: Pool) => {
   }
 }
 </style>
-
-<style lang="scss"></style>

@@ -27,7 +27,7 @@ watch(modelValue, (value) => {
   />
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 input {
   all: unset;
 

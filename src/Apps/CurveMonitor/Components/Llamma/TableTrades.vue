@@ -105,7 +105,7 @@ const round = (x: number) =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .trades-table {
   --columns-data: minmax(5rem, 1fr) 26px minmax(5rem, 1fr) minmax(5rem, 1fr)
     26px minmax(5rem, 1fr) 6rem 6rem;

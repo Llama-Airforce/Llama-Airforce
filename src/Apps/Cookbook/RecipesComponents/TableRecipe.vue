@@ -151,7 +151,7 @@ const onSelected = (round: Round): void => {
 };
 <\/script>
 
-<style lang="scss" scoped>
+<style scoped>
 .example-table {
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 
@@ -216,7 +216,7 @@ const onCheck = (round: Round) => {
 };
 <\/script>
 
-<style lang="scss" scoped>
+<style scoped>
 .multiselect-table {
   --columns-data: 1.5rem 1fr auto;
 
@@ -349,7 +349,7 @@ const onCheck = (round: Round) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .example-table {
   --columns-data: 1.5rem 1fr 1fr 1fr 20px;
 

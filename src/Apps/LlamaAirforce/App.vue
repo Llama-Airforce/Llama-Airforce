@@ -96,7 +96,7 @@ a {
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .root {
   width: 1440px;
 

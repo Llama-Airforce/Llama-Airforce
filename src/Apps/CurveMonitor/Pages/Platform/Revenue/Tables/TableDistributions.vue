@@ -59,7 +59,7 @@ function formatDate(epoch: number): string {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .distributions-table {
   --columns-data: 1fr 1fr;
 }

@@ -88,7 +88,7 @@ const rows = computed(() =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .redemption-details {
   width: 640px;
 

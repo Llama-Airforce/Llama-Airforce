@@ -80,7 +80,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   position: relative;
   max-width: calc(1920px - 18.125rem);

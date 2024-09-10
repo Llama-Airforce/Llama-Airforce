@@ -8,7 +8,7 @@ import TableCushions from "@CM/Pages/Platform/Revenue/Tables/TableCushions.vue";
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .cushions {
   margin: var(--dashboard-gap) 0;
 }

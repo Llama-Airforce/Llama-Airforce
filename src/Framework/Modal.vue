@@ -49,7 +49,7 @@ watch(
   </Teleport>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 @keyframes fadeOpacity {
   from {
     opacity: 0;

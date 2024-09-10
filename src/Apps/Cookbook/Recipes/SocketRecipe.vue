@@ -134,7 +134,7 @@ watch(isConnected, (isConnected) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   grid-template-rows: auto auto;
 

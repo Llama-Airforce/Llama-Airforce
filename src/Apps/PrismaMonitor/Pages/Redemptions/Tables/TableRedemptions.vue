@@ -190,7 +190,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .redemptions-card {
   --header-column-actions: 14rem 2fr;
 }

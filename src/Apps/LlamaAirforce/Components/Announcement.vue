@@ -18,7 +18,7 @@ const { t } = useI18n();
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .announcement-card {
   margin: var(--dashboard-gap);
   margin-bottom: 0;

@@ -44,7 +44,7 @@ const onNavigated = (): void => {
   </header>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 header {
   width: 100%;
 

@@ -22,7 +22,7 @@ const { proposal, expanded = false } = defineProps<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .proposal-details {
   display: flex;
   flex-grow: 1;

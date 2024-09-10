@@ -90,7 +90,7 @@ const againstPercentage = computed(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .results {
   display: flex;
   flex-direction: column;

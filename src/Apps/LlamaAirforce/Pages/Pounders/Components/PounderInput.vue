@@ -122,7 +122,7 @@ const onMax = (): void => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .pounder-input {
   display: flex;
   flex-direction: column;

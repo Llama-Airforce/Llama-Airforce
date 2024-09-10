@@ -17,7 +17,7 @@ const vaults = useObservable(prismaService.overview$, []);
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 

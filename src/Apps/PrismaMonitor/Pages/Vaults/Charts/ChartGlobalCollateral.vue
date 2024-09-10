@@ -153,7 +153,7 @@ const onPeriod = (newPeriod: Period) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart {
   height: 300px;
 }

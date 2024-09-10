@@ -14,7 +14,7 @@ const onClearCache = (): void => {
   </Button>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .button {
   font-size: 1rem;
 }

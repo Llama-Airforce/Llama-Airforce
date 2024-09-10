@@ -160,7 +160,7 @@ const onPeriod = (newPeriod: Period) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .periods {
   display: flex;
   font-size: 0.875rem;

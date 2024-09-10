@@ -97,7 +97,7 @@ const callData = computed(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .technicals {
   display: flex;
   flex-direction: column;

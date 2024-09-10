@@ -61,7 +61,7 @@ const link = computed(() => {
   </a>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 a {
   all: initial;
 

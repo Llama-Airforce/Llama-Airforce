@@ -46,7 +46,7 @@ const onChange = (evt: Event): void => {
   </label>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .radio {
   display: flex;
   align-items: center;

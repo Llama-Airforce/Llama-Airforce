@@ -15,7 +15,7 @@ const { expanded = true } = defineProps<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .collapsible-outside {
   display: grid;
   grid-template-rows: 0fr;

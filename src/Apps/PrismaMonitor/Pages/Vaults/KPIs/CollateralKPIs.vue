@@ -93,7 +93,7 @@ const { data } = useQuery({
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .kpis {
   display: flex;
   gap: var(--dashboard-gap);

@@ -86,7 +86,7 @@ const noMenu = computed((): boolean => {
   </footer>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 footer {
   display: flex;
   margin: 0rem 1rem 2rem 1.5rem;

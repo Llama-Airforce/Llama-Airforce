@@ -9,7 +9,7 @@ const { t } = useI18n();
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .not-found {
   display: flex;
   flex-direction: column;

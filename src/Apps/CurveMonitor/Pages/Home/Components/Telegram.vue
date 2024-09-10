@@ -29,7 +29,7 @@ const showModal = ref(false);
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;

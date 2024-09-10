@@ -4,7 +4,7 @@
   <div class="dashboard-grid">MEV goes here</div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard-grid {
   margin: var(--dashboard-gap) 0;
 }

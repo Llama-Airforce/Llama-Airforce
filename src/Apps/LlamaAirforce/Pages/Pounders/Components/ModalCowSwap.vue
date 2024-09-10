@@ -34,7 +34,7 @@ const emit = defineEmits<{
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .content {
   width: 33vw;
   display: flex;

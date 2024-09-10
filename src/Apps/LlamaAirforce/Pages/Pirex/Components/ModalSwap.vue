@@ -226,7 +226,7 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .swap-body {
   width: 33vw;
   max-height: 75dvh;

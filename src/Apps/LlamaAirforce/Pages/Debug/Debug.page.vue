@@ -8,7 +8,7 @@ import ClearCacheButton from "@LAF/Pages/Debug/Components/ClearCacheButton.vue";
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   width: 25%;
 }

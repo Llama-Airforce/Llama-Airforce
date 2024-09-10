@@ -71,7 +71,7 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .apy {
   width: 10rem;
 

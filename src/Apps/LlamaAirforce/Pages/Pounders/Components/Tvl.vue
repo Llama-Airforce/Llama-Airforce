@@ -36,7 +36,7 @@ const tvl = computed(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .tvl {
   width: 10rem;
 

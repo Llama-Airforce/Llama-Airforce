@@ -180,7 +180,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .liquidations-card {
   --header-column-actions: 14rem 2fr;
 }

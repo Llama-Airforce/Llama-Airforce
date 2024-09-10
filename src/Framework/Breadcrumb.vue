@@ -49,7 +49,7 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.75s ease;

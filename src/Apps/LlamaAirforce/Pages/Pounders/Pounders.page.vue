@@ -287,7 +287,7 @@ watch(address, createPounders);
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   > .information {
     font-size: 0.875rem;

@@ -134,7 +134,7 @@ const bribes = (bribed: Bribed): Bribe[] => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .bribed-table {
   --columns-data: 1.5fr 0.6fr 0.6fr;
 

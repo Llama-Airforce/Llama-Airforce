@@ -138,7 +138,7 @@ const onPage = (p: number) => {
   </ul>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 ul {
   display: flex;
   gap: 0.25rem;

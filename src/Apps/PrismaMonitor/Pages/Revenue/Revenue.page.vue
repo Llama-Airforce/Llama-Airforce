@@ -10,7 +10,7 @@ import ChartBreakdown from "@PM/Pages/Revenue/Charts/ChartBreakdown.vue";
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 

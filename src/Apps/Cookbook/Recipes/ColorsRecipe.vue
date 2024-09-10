@@ -58,7 +58,7 @@ const colors: Color[] = [
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .colors-table {
   --columns-data: 0.2fr 0.2fr 0.6fr;
 

@@ -83,7 +83,7 @@ const onInput = (evt: Event): void => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .input-text {
   display: flex;
   flex-grow: 1;

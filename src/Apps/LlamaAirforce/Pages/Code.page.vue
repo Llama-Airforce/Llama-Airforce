@@ -392,7 +392,7 @@ const { t } = useI18n();
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   grid-template-columns: 6fr 4fr;
 

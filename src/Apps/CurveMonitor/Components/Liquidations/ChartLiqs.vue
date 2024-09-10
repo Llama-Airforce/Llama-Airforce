@@ -54,7 +54,7 @@ const onChartType = (type: ChartType) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart-types {
   grid-column: 2;
 

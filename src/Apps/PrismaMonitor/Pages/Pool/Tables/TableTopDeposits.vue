@@ -77,7 +77,7 @@ const rows = computed(() => data.value.map((x) => x));
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .deposits-table {
   --columns-data: 1fr 1fr 1fr 1fr;
 }

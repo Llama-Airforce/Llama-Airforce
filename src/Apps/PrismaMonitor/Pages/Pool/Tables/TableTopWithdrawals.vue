@@ -77,7 +77,7 @@ const { isFetching: loading, data } = useQuery({
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .withdrawals-table {
   --columns-data: 1fr 1fr 1fr 1fr;
 }

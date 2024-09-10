@@ -53,7 +53,7 @@ const changeNetwork = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .wallet {
   .info {
     margin-top: 1rem;

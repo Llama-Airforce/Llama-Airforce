@@ -11,7 +11,7 @@ import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard-grid {
   margin: var(--dashboard-gap) 0;
 

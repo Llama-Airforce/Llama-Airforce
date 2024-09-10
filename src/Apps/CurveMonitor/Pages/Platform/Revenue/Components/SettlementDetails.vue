@@ -164,7 +164,7 @@ const cardJson = useTemplateRef("cardJson");
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .card-json {
   .buttons {
     display: flex;

@@ -47,7 +47,7 @@ const onTab = (newTab: Tabs) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .tabs {
   display: flex;
   gap: var(--dashboard-gap);

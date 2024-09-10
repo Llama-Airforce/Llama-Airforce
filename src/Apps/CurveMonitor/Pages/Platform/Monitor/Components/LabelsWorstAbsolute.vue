@@ -78,7 +78,7 @@ const formatter = (x: number): string => `${x}`;
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart {
   height: 400px;
 }

@@ -135,7 +135,7 @@ const rows = computed((): Row[] => [
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .liq-overview-table {
   --columns-data: 1fr auto;
 

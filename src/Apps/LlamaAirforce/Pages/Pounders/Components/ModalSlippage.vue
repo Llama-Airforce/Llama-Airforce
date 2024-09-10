@@ -78,7 +78,7 @@ watch(
   </ModalYesNo>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .content {
   min-width: 30rem;
   width: 33vw;

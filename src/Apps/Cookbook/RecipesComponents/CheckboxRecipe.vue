@@ -108,7 +108,7 @@ const onCheckboxChange = (checked: boolean) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   grid-template-columns: 1fr 1fr;
 }

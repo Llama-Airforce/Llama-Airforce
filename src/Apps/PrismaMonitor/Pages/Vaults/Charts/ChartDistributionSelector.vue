@@ -68,7 +68,7 @@ const { isFetching: loading, data } = useQuery({
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .actions {
   display: flex;
   font-size: 0.875rem;

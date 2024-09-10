@@ -140,7 +140,7 @@ const average = (data: number[], n = 7): number[] =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .avg-span {
   width: 8rem;
 }

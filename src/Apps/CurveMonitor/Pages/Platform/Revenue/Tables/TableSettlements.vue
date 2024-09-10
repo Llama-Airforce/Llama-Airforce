@@ -164,7 +164,7 @@ function symbol(settlement: CowSwapSettlement) {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .header-content {
   display: flex;
   gap: 1rem;

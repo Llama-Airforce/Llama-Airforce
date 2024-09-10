@@ -72,7 +72,7 @@ function isSelected(reward: Reward) {
   </Table>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .rewards-table {
   --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr);
 

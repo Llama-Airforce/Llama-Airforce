@@ -83,7 +83,7 @@ const planeX = computed((): string => {
   </header>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 header {
   width: 100%;
   display: flex;

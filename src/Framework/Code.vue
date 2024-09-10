@@ -30,7 +30,7 @@ const html = computedAsync(async () => {
   <div v-html="html"></div>
 </template>
 
-<style lang="scss">
+<style>
 pre {
   padding: 1.5rem;
 }

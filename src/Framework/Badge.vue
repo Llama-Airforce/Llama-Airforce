@@ -10,7 +10,7 @@ const { label = "" } = defineProps<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .badge {
   color: var(--c-text);
   font-size: 0.625rem;

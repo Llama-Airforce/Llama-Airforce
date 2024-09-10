@@ -73,7 +73,7 @@ const statusLabel = computed(() => {
   </KPI>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .status {
   .status-value {
     &.active {

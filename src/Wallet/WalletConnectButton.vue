@@ -117,7 +117,7 @@ function onClearCache() {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .connectors-body {
   width: 20rem;
   display: flex;

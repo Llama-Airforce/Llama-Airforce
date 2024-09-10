@@ -69,7 +69,7 @@ const modalYesNo3 = `.my-modal {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .content {
   width: 40rem;
 }

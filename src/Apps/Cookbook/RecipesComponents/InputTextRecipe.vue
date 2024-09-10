@@ -228,7 +228,7 @@ const inputTextSearch3 = `.search-item {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   .search-item {
     display: flex;

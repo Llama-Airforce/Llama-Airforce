@@ -114,7 +114,7 @@ const clipboard = async (addr: string) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .properties-table {
   --columns-data: 2fr 6fr;
 

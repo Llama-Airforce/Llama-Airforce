@@ -408,7 +408,7 @@ whenever(isConfirmedExecute, () => {
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .buttons {
   display: flex;
   flex-direction: column;

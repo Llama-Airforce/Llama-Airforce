@@ -89,7 +89,7 @@ const rows = computed(() =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .liquidation-details {
   width: 640px;
 

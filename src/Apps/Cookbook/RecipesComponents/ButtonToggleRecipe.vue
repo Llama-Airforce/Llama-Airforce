@@ -67,7 +67,7 @@ const notificationsExample = `<ButtonToggle v-model="notifications" value="Notif
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   p {
     margin-top: 0.5rem;

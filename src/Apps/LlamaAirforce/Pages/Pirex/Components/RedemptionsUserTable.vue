@@ -102,7 +102,7 @@ function balance(redemption: RedemptionPending) {
   </Table>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .redemptions-user-table {
   --columns-data: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
   padding: 0;

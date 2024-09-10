@@ -81,7 +81,7 @@ const type = (x: LlammaEvent) =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .events-table {
   --columns-data: 8rem 1fr 1fr 6rem 6rem;
 }

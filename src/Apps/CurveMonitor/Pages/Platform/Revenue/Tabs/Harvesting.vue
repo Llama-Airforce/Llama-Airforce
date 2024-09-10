@@ -28,7 +28,7 @@ const { isFetching: loadingStaged, data: feesStaged } = useQueryFeesStaged();
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard-grid {
   margin: var(--dashboard-gap) 0;
 

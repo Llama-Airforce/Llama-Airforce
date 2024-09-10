@@ -213,7 +213,7 @@ const sortColumn = (column: Column): void => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .table {
   position: relative;
 

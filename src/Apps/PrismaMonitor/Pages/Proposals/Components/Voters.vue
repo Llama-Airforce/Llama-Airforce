@@ -69,7 +69,7 @@ const you = (address: string): boolean => address === walletAddress.value;
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .voters {
   display: grid;
   grid-template-columns: 1fr;

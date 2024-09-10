@@ -131,7 +131,7 @@ const hasUnclaimed = computed(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .balance {
   width: 10rem;
 

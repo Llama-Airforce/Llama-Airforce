@@ -100,7 +100,7 @@ function createParams(
   ></div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .cow {
   color-scheme: initial;
 }

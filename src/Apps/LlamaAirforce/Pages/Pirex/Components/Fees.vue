@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .fees {
   display: grid;
   width: 100%;

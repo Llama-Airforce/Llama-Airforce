@@ -119,7 +119,7 @@ const formatterY = (y: number): string =>
   ></ChartApex>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart {
   height: 300px;
 }

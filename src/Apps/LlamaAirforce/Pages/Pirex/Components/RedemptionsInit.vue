@@ -33,7 +33,7 @@ const showRedemptionsInit = ref(false);
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .redemptions-init-body {
   display: flex;
   flex-direction: column;

@@ -428,7 +428,7 @@ const onWithdrawSelect = (zap: Zap): void => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .details {
   display: flex;
   flex-direction: column;

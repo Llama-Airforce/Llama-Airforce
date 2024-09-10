@@ -37,7 +37,7 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .legend {
   display: flex;
   gap: 1.5rem;

@@ -161,7 +161,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .markets-card {
   --header-column-title: minmax(7rem, 1fr);
   --header-column-actions: minmax(auto, 25rem);

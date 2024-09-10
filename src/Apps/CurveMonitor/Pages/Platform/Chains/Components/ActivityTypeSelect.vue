@@ -46,7 +46,7 @@ function onTypeSelect(option: ActivityType | "all") {
   </Select>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .item {
   display: flex;
   align-items: center;

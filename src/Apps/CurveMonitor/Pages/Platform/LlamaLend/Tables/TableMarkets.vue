@@ -133,7 +133,7 @@ const tokenIcon = (market: Market) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .markets-table {
   --col-width: 10ch;
   --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)

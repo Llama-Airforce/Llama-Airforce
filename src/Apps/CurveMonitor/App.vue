@@ -44,7 +44,7 @@ watch(
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .navigation {
   grid-area: navigation;
 }

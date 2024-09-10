@@ -82,7 +82,7 @@ const {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .kpi {
   display: flex;
   flex-direction: column;

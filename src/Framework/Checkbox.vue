@@ -46,7 +46,7 @@ const onChange = (evt: Event): void => {
   </label>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .checkbox {
   display: flex;
   align-items: center;

@@ -49,7 +49,7 @@ watch(tokenUri, async (tokenUri) => {
   />
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 img {
   width: 100%;
   max-width: 100%;

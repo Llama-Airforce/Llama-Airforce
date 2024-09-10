@@ -237,7 +237,7 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard {
   grid-template-columns: 1fr 1fr 1fr;
 }

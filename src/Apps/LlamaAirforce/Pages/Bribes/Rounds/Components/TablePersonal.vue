@@ -291,7 +291,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .personalDollarPerVlAsset {
   color: #a1a1aa;
   font-size: 0.75rem;

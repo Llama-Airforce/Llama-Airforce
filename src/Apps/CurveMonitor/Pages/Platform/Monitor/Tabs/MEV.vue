@@ -13,7 +13,7 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard-grid {
   margin: var(--dashboard-gap) 0;
 

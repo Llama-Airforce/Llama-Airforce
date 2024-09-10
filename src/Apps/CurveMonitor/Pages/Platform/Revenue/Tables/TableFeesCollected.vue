@@ -87,7 +87,7 @@ const rows = computed(() =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .table {
   --columns-data: 26px minmax(5rem, 1fr) minmax(5rem, 1fr) minmax(5rem, 1fr);
 

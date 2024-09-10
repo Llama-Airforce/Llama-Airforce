@@ -155,7 +155,7 @@ const equity = computed(() =>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard-grid {
   margin: var(--dashboard-gap) 0;
 

@@ -33,7 +33,7 @@ const showSwap = ref(false);
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .swap-body {
   display: flex;
   flex-direction: column;

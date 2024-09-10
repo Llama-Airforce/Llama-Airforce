@@ -96,7 +96,7 @@ const onClickNode = (): void => {
   </li>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 i {
   display: flex;
   justify-content: center;

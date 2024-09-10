@@ -209,7 +209,7 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
   </Modal>
 </template>
 
-<style lang="scss">
+<style>
 .modal:has(.redemptions-init-table) {
   .modal-popup {
     position: absolute;
@@ -218,7 +218,7 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .redemptions-init-body {
   width: 33vw;
   max-height: 75dvh;

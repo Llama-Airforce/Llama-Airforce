@@ -21,7 +21,7 @@ const { title } = defineProps<{ title: string }>();
   </Card>
 </template>
 
-<style lang="scss">
+<style>
 .recipe-card {
   > .card-container:has(.recipe-body) {
     > .card-header {
@@ -33,7 +33,7 @@ const { title } = defineProps<{ title: string }>();
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .recipe-card {
   .recipe-body {
     display: flex;

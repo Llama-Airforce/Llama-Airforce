@@ -132,7 +132,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .bribe-rounds-table {
   --columns-data: 1.5rem 1fr 1fr 1fr;
 

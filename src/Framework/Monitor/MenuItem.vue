@@ -169,7 +169,7 @@ const onClickNode = (): void => {
   </Collapsible>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .nav-link {
   font-weight: 500;
 

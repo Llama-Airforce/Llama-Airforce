@@ -109,7 +109,7 @@ const onChartType = (type: ChartType) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .actions {
   flex-grow: 1;
 
