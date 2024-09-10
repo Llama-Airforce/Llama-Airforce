@@ -87,7 +87,7 @@ function exitFullscreen(
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .fullscreen-content {
   display: flex;
 

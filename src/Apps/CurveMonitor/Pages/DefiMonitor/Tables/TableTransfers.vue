@@ -218,7 +218,7 @@ const clipboard = async (addr: string) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .transfers-card {
   --header-column-title: 3fr;
   --header-column-actions: 4fr;

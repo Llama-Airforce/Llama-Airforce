@@ -16,7 +16,7 @@ const { options, series } = defineProps<{
   ></VueApexCharts>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart {
   &:deep(.apexcharts-tooltip) {
     background-color: var(--c-lvl1);

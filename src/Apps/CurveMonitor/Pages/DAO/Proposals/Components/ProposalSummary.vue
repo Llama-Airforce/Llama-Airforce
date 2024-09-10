@@ -87,7 +87,7 @@ const proposalToClipboard = async () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .proposal-summary {
   display: flex;
   flex-grow: 1;
@@ -157,7 +157,7 @@ const proposalToClipboard = async () => {
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .proposal-summary {
   &:deep(.item) {
     display: flex;

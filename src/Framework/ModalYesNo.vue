@@ -52,7 +52,7 @@ const emit = defineEmits<{
   </Modal>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .modal-card {
   display: flex;
   flex-direction: column;

@@ -64,7 +64,7 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .proposal-summary {
   display: flex;
   flex-grow: 1;
@@ -125,7 +125,7 @@ const emit = defineEmits<{
 }
 </style>
 
-<style lang="scss" scoped>
+<style scoped>
 .proposal-summary {
   display: flex;
   flex-grow: 1;

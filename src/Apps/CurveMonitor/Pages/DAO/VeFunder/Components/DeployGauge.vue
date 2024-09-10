@@ -86,7 +86,7 @@ async function execute() {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .add-new {
   display: flex;
   flex-direction: column;

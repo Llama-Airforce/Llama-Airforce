@@ -227,7 +227,7 @@ const onType = (tabIndex: number) => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .trades-card {
   --header-column-actions: 2fr;
 

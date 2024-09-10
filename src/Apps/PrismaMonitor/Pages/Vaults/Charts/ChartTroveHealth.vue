@@ -157,7 +157,7 @@ const formatterRatio = (x: number): string => {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart {
   &:deep(.apexcharts-tooltip) {
     grid-template-rows: auto auto;

@@ -145,7 +145,7 @@ const snakeToPascal = (str: string): string =>
   ></ChartApex>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .chart {
   height: 300px;
   z-index: 0;

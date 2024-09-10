@@ -119,7 +119,7 @@ function onDepositAuraBal() {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .card {
   --flash-color: var(--c-red-rgb);
 }

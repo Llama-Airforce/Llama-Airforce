@@ -27,7 +27,7 @@ const { extra = "" } = defineProps<{
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .docs {
   width: 100%;
   display: grid;

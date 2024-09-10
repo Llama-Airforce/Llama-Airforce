@@ -33,7 +33,7 @@ const expanded = ref(false);
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .proposal-details-collapsible {
   transition: grid-template-rows 125ms ease-out;
 }

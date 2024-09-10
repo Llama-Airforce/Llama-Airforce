@@ -55,7 +55,7 @@ const copyUrl = async () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .bottom {
   display: flex;
   flex-direction: column;

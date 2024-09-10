@@ -72,7 +72,7 @@ whenever(getFeesTrigger, async () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr auto;

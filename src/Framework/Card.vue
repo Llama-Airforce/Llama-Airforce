@@ -89,7 +89,7 @@ const showHeader = computed(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .card {
   position: relative;
 

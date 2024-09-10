@@ -43,7 +43,7 @@ const menuLabel = (item: MenuItemT): string => {
   </nav>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 nav {
   display: flex;
   flex-direction: column;

@@ -99,7 +99,7 @@ watch(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .menu-mobile {
   > .overlay {
     position: fixed;

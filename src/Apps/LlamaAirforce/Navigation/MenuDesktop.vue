@@ -68,7 +68,7 @@ const hasMenu = computed((): boolean => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .menu-desktop {
   background: var(--c-lvl0);
   user-select: none;

@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 @keyframes pulse {
   0% {
     transform: scale(0.9);

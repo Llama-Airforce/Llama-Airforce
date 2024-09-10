@@ -128,7 +128,7 @@ const titleCase = (s: string): string =>
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .trove-ops-table {
   --columns-data: minmax(14ch, 0.75fr) repeat(5, minmax(12ch, 0.75fr)) 1fr;
 

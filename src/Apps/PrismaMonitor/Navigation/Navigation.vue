@@ -42,7 +42,7 @@ const onNavigated = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .menu-desktop {
   height: 100vh;
   height: 100dvh;

@@ -108,7 +108,7 @@ const onThemeSelect = (option: ThemeDescription) => {
   </Select>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .theme {
   display: flex;
   justify-content: space-between;

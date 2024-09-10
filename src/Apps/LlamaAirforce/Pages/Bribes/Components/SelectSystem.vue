@@ -109,7 +109,7 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .system-selector {
   display: grid;
   grid-template-rows: auto;

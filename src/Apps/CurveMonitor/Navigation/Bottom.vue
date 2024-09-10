@@ -27,7 +27,7 @@ const router = useRouter();
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .bottom {
   display: grid;
   gap: 1rem;

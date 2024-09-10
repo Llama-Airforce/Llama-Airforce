@@ -77,7 +77,7 @@ function onMigrate() {
   </Card>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .card {
   --flash-color: var(--c-yellow-rgb);
 }

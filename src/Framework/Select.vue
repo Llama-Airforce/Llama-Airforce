@@ -68,7 +68,7 @@ const open = ref(false);
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .select {
   position: relative;
 
