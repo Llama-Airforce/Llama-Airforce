@@ -37,10 +37,11 @@ const showModal = ref(false);
 }
 
 .telegram-card {
+  height: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: calc(2 * var(--dashboard-gap));
-  margin: var(--card-margin-block) var(--card-margin-inline);
+  margin-inline: var(--card-margin-inline);
 
   place-content: center;
   place-items: center;
