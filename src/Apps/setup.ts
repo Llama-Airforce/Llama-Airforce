@@ -5,7 +5,7 @@ import Notifications, { notify } from "@kyvg/vue3-notification";
 import { hashFn } from "@wagmi/core/query";
 import { type CreateConnectorFn, WagmiPlugin } from "@wagmi/vue";
 import { createConfig as createConfigWagmi } from "@/Wallet/Wagmi";
-import "@/Styles/Util.scss";
+import "@/Styles/Util.css";
 
 /** Options for configuring the setup function */
 type Options = {

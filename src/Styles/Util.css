@@ -40,7 +40,7 @@
   }
 }
 
-// Border
+/* Border */
 .border-flash {
   --flash-enabled: 1;
   --flash-duration: calc(1.5s * var(--flash-enabled));
