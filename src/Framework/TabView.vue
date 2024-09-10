@@ -82,7 +82,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
     margin: 0;
     list-style-type: none;
     align-self: flex-start;
-    border-bottom: 2px solid var(--c-lvl2);
+    border-bottom: var(--border-bottom, 2px solid var(--c-lvl2));
 
     > li {
       display: flex;
