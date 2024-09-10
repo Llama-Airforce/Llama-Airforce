@@ -22,12 +22,14 @@ const open = ref(false);
     @click.stop="open = !open"
   >
     <div class="selected">
-      <slot
-        name="item"
-        :item="selected"
-      >
-        <div class="item">{{ selected }}</div>
-      </slot>
+      <div class="item-wrapper">
+        <slot
+          name="item"
+          :item="selected"
+        >
+          {{ selected }}
+        </slot>
+      </div>
 
       <div
         v-if="label"
@@ -44,7 +46,7 @@ const open = ref(false);
       <div
         v-for="(option, i) of options"
         :key="i"
-        class="item"
+        class="item-wrapper"
         @click.stop="
           open = false;
           emit('input', option);
@@ -105,7 +107,7 @@ const open = ref(false);
     flex-direction: column;
     justify-content: center;
 
-    :deep(> div:first-child) {
+    > .item-wrapper {
       margin: 0.5rem 0.75rem;
     }
 
@@ -136,7 +138,7 @@ const open = ref(false);
       display: none;
     }
 
-    > .item {
+    > .item-wrapper {
       color: var(--c-text);
       cursor: pointer;
 

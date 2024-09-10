@@ -126,17 +126,14 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
     grid-column: 2;
   }
 
-  :deep(.platform),
-  :deep(.protocol) {
-    > .selected > .item,
-    > .items {
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-
+  .platform,
+  .protocol {
     .item {
       display: flex;
       align-items: center;
+
+      font-size: 1.25rem;
+      font-weight: 700;
 
       img {
         width: 20px;

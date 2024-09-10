@@ -70,12 +70,17 @@ const onRoundSelect = (round: number): void => {
   <div class="summary">
     <Select
       v-if="epoch"
-      class="select-summary"
+      class="select-round"
       :label="t('round-number')"
       :options="roundsOrdered"
       :selected="epoch.round"
       @input="onRoundSelect"
-    ></Select>
+    >
+      <template #item="{ item }">
+        <div class="item">{{ item }}</div>
+      </template>
+    </Select>
+
     <KPI v-else></KPI>
 
     <KPI
@@ -128,18 +133,15 @@ const onRoundSelect = (round: number): void => {
   @media only screen and (max-width: 1280px) {
     grid-template-columns: 1fr 1fr 1fr;
 
-    > .select-summary {
+    > .select-round {
       grid-row: 1;
       grid-column: 1 / span 3;
     }
   }
 
-  :deep(.select-summary) {
-    > .selected > .item,
-    > .items {
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
+  .item {
+    font-size: 1.25rem;
+    font-weight: 700;
   }
 
   .vote-link {
