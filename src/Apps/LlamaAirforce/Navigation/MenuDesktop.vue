@@ -138,50 +138,6 @@ const hasMenu = computed((): boolean => {
         padding: 0;
         margin: 0;
         list-style-type: none;
-
-        &:deep(li) {
-          display: flex;
-          flex-direction: column;
-          margin: 0.25rem 0;
-          width: 100%;
-
-          .nav-link {
-            display: flex;
-            text-decoration: none;
-            color: var(--c-text);
-            transition: all var(--hover-duration);
-
-            &.router-link-active {
-              background: var(--c-lvl2);
-            }
-
-            &:not(.router-link-active) {
-              color: var(--c-lvl5);
-
-              &:hover {
-                color: var(--c-lvl5-hover);
-                background: #1e1e21;
-              }
-
-              &:active {
-                color: var(--c-lvl5-active);
-              }
-            }
-
-            .nav-link-container {
-              display: flex;
-              flex-grow: 1;
-              align-items: center;
-              padding: 0.66rem 1rem;
-
-              transition: all var(--hover-duration);
-
-              &:active {
-                background: var(--c-lvl2-hover);
-              }
-            }
-          }
-        }
       }
     }
   }

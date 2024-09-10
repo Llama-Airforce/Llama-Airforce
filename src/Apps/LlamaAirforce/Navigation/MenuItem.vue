@@ -97,6 +97,13 @@ const onClickNode = (): void => {
 </template>
 
 <style scoped>
+li {
+  display: flex;
+  flex-direction: column;
+  margin: 0.25rem 0;
+  width: 100%;
+}
+
 i {
   display: flex;
   justify-content: center;
@@ -107,11 +114,55 @@ i {
 .nav-link {
   font-weight: 500;
 
+  display: flex;
+  text-decoration: none;
+  color: var(--c-text);
+  transition: all var(--hover-duration);
+
   /* Disable blue highlight because of pointer. */
   -webkit-tap-highlight-color: transparent;
 
   &.node {
-    color: var(--c-primary) !important;
+    color: var(--c-primary);
+  }
+
+  &.router-link-active {
+    background: var(--c-lvl2);
+  }
+
+  &:not(.router-link-active) {
+    color: var(--c-lvl5) !important;
+
+    &:hover {
+      color: var(--c-lvl5-hover);
+      background: #1e1e21;
+    }
+
+    &:active {
+      color: var(--c-lvl5-active);
+    }
+  }
+
+  .nav-link-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    padding: 0.66rem 1rem;
+
+    transition: all var(--hover-duration);
+
+    &:active {
+      background: var(--c-lvl2-hover);
+    }
+
+    @media only screen and (max-width: 1280px) {
+      height: 50px;
+      font-size: 1.75rem;
+
+      > i {
+        min-width: 2rem;
+      }
+    }
   }
 }
 </style>
