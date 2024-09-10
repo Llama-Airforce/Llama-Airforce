@@ -4,6 +4,8 @@ import Header from "@LAF/Navigation/Header.vue";
 import Footer from "@LAF/Navigation/Footer.vue";
 import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 import Announcement from "@LAF/Components/Announcement.vue";
+
+import "@/Styles/Themes/LAF/Dark.css";
 </script>
 
 <template>
@@ -37,13 +39,7 @@ import Announcement from "@LAF/Components/Announcement.vue";
   </div>
 </template>
 
-<style lang="scss">
-@import "@/Styles/Themes/LAF/Dark.scss";
-
-:root {
-  @include themeDark();
-}
-
+<style>
 html {
   overflow-y: scroll;
 
@@ -52,7 +48,7 @@ html {
   }
 
   ::-webkit-scrollbar-track {
-    background: lighten(rgb(20, 20, 20), 25%);
+    background: #545454;
   }
 
   ::-webkit-scrollbar-thumb {

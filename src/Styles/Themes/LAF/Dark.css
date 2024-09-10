@@ -1,72 +1,44 @@
-@mixin register($colorName, $colorValue) {
-  --c-#{"" + $colorName}: #{$colorValue};
-}
-
-@function hexToRGB($hex) {
-  @return red($hex), green($hex), blue($hex);
-}
-
-@mixin themeDark() {
+:root {
   color-scheme: dark;
 
-  $text: #fafafa;
-
-  $lvl0: #18181b;
-  $lvl1: #212124;
-  $lvl2: #27272a;
-  $lvl3: #303034;
-  $lvl4: #35353b;
-  $lvl5: #71717a;
-  $lvl6: #aea8af;
-
-  $red: #ff5757;
-  $green: #7ed957;
-  $blue: #2081f0;
-  $yellow: #ffcc00;
-  $purple: #905ff2;
-
-  $primary: $blue;
-
-  $colors: (
-    "text": $text,
-    "text-invert": invert($text),
-    "lvl0": $lvl0,
-    "lvl0-hint": lighten($lvl0, 1.5%),
-    "lvl0-hover": lighten($lvl0, 6%),
-    "lvl0-active": lighten($lvl0, 12%),
-    "lvl1": $lvl1,
-    "lvl1-hover": lighten($lvl1, 6%),
-    "lvl1-active": lighten($lvl1, 12%),
-    "lvl2": $lvl2,
-    "lvl2-hover": lighten($lvl2, 6%),
-    "lvl2-active": lighten($lvl2, 12%),
-    "lvl3": $lvl3,
-    "lvl3-hover": lighten($lvl3, 6%),
-    "lvl3-active": lighten($lvl3, 12%),
-    "lvl4": $lvl4,
-    "lvl4-hover": lighten($lvl4, 6%),
-    "lvl4-active": lighten($lvl4, 12%),
-    "lvl5": $lvl5,
-    "lvl5-hover": lighten($lvl5, 6%),
-    "lvl5-active": lighten($lvl5, 12%),
-    "lvl6": $lvl6,
-    "lvl6-hover": lighten($lvl6, 6%),
-    "lvl6-active": lighten($lvl6, 12%),
-    red: $red,
-    "red-rgb": hexToRGB($red),
-    green: $green,
-    "green-rgb": hexToRGB($green),
-    blue: $blue,
-    "blue-rgb": hexToRGB($blue),
-    yellow: $yellow,
-    "yellow-rgb": hexToRGB($yellow),
-    purple: $purple,
-    "purple-rgb": hexToRGB($purple),
-    primary: $primary,
-    "primary-hover": lighten($primary, 10%),
-    "primary-active": lighten($primary, 20%),
-    "primary-disabled": lighten($primary, 15%),
-  );
+  --c-text: #fafafa;
+  --c-text-invert: #050505;
+  --c-lvl0: #18181b;
+  --c-lvl0-hint: #1c1c1f;
+  --c-lvl0-hover: #26262b;
+  --c-lvl0-active: #35353b;
+  --c-lvl1: #212124;
+  --c-lvl1-hover: #303034;
+  --c-lvl1-active: #3e3e44;
+  --c-lvl2: #27272a;
+  --c-lvl2-hover: #36363a;
+  --c-lvl2-active: #44444a;
+  --c-lvl3: #303034;
+  --c-lvl3-hover: #3f3f44;
+  --c-lvl3-active: #4d4d54;
+  --c-lvl4: #35353b;
+  --c-lvl4-hover: #43434b;
+  --c-lvl4-active: #52525b;
+  --c-lvl5: #71717a;
+  --c-lvl5-hover: #808089;
+  --c-lvl5-active: #909098;
+  --c-lvl6: #aea8af;
+  --c-lvl6-hover: #bdb8be;
+  --c-lvl6-active: #ccc8cc;
+  --c-red: #ff5757;
+  --c-red-rgb: 255, 87, 87;
+  --c-green: #7ed957;
+  --c-green-rgb: 126, 217, 87;
+  --c-blue: #2081f0;
+  --c-blue-rgb: 32, 129, 240;
+  --c-yellow: #ffcc00;
+  --c-yellow-rgb: 255, 204, 0;
+  --c-purple: #905ff2;
+  --c-purple-rgb: 144, 95, 242;
+  --c-primary: #2081f0;
+  --c-primary-hover: #509cf3;
+  --c-primary-active: #80b7f6;
+  --c-primary-disabled: #68aaf5;
 
   --page-margin: 1.5rem;
   --dashboard-gap: 1.5rem;
@@ -113,23 +85,6 @@
 
   --hover-duration: 75ms;
 
-  @each $colorName, $colorValue in $colors {
-    @include register($colorName, $colorValue);
-  }
-
-  @include themeDarkFont();
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 14px;
-  }
-
-  .card-body {
-    line-height: 1.4rem;
-    color: darken(#fafafa, 15%);
-  }
-}
-
-@mixin themeDarkFont() {
   font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 17px;
@@ -160,5 +115,14 @@
     font-style: normal;
     font-weight: bold;
     src: url("@/Assets/Fonts/SF-Mono-Bold.otf") format("opentype");
+  }
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+
+  .card-body {
+    line-height: 1.4rem;
+    color: darken(#fafafa, 15%);
   }
 }
