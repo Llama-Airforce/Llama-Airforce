@@ -13,8 +13,8 @@ const onGauge = (newGauge: string): void => {
 
 <template>
   <div class="dashboard">
-    <div class="explanation">
-      <Card>
+    <Card>
+      <div class="explanation">
         <div class="step-one">
           <span><strong>veFunder</strong> process:</span>
           <ol>
@@ -47,8 +47,8 @@ const onGauge = (newGauge: string): void => {
             <li>You must have a minimum of 2,500 veCRV to create this vote</li>
           </ol>
         </div>
-      </Card>
-    </div>
+      </div>
+    </Card>
 
     <div class="forms">
       <DeployGauge @gauge="onGauge"></DeployGauge>
@@ -62,11 +62,9 @@ const onGauge = (newGauge: string): void => {
   max-width: calc(1920px - 18.125rem);
 
   > .explanation {
-    :deep(.card-body) {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   > .forms {

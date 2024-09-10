@@ -34,12 +34,6 @@ const expanded = ref(false);
 </template>
 
 <style lang="scss" scoped>
-.proposal {
-  :deep(.card-body) {
-    flex-direction: column;
-  }
-}
-
 .proposal-details-collapsible {
   transition: grid-template-rows 125ms ease-out;
 }

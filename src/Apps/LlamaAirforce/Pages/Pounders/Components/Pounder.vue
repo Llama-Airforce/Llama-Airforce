@@ -69,11 +69,3 @@ watch(
     </Collapsible>
   </Card>
 </template>
-
-<style lang="scss" scoped>
-.pounder {
-  :deep(.card-body) {
-    flex-direction: column;
-  }
-}
-</style>

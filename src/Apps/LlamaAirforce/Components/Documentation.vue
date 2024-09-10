@@ -49,13 +49,6 @@ const { extra = "" } = defineProps<{
     font-size: 1rem;
     color: var(--c-text);
   }
-
-  :deep(.card-body) {
-    a {
-      align-self: center;
-      cursor: pointer;
-    }
-  }
 }
 </style>
 

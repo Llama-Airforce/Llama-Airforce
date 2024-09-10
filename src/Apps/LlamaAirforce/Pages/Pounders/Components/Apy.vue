@@ -67,6 +67,7 @@ const emit = defineEmits<{
         </ul>
       </Tooltip>
     </div>
+
     <div class="label">{{ t("apy") }}</div>
   </div>
 </template>

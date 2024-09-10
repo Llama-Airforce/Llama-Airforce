@@ -25,10 +25,8 @@ const onYes = () => {
   openModal.value = false;
 };`;
 
-const modalYesNo3 = `.my-modal {
-  :deep(.content) {
-    width: 40rem;
-  }
+const modalYesNo3 = `.content
+  width: 40rem;
 }`;
 </script>
 

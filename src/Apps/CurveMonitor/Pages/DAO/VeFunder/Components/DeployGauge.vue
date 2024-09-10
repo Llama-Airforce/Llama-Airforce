@@ -49,79 +49,76 @@ async function execute() {
 </script>
 
 <template>
-  <Card
-    class="add-new"
-    title="Gauge Creation"
-  >
-    <div class="form">
-      <div class="field">
-        <div class="label">Receiver:</div>
-        <div class="value">
-          <InputText
-            v-model="receiver"
-            :placeholder="receiverPlaceholder"
-          ></InputText>
+  <Card title="Gauge Creation">
+    <div class="add-new">
+      <div class="form">
+        <div class="field">
+          <div class="label">Receiver:</div>
+          <div class="value">
+            <InputText
+              v-model="receiver"
+              :placeholder="receiverPlaceholder"
+            ></InputText>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">CRV Amount (Max):</div>
+          <div class="value">
+            <InputNumber
+              v-model="amount"
+              :min="1"
+              :max="3303030299"
+            ></InputNumber>
+          </div>
         </div>
       </div>
 
-      <div class="field">
-        <div class="label">CRV Amount (Max):</div>
-        <div class="value">
-          <InputNumber
-            v-model="amount"
-            :min="1"
-            :max="3303030299"
-          ></InputNumber>
-        </div>
-      </div>
+      <Button
+        class="action-button request"
+        value="Create Fundraising Gauge"
+        :disabled="!isValid || deploying"
+        :primary="true"
+        :chain-id="mainnet.id"
+        @click="execute"
+      ></Button>
     </div>
-
-    <Button
-      class="action-button request"
-      value="Create Fundraising Gauge"
-      :disabled="!isValid || deploying"
-      :primary="true"
-      :chain-id="mainnet.id"
-      @click="execute"
-    ></Button>
   </Card>
 </template>
 
 <style lang="scss" scoped>
 .add-new {
-  :deep(.card-body) {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+
+  > .form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin-top: 0.75rem !important;
-    margin-bottom: 1.5rem !important;
 
-    > .form {
+    > .field {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 0.5rem;
 
-      > .field {
+      > .label {
+        display: flex;
+        margin-left: 0.1rem;
+      }
+
+      > .value {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-
-        > .label {
-          display: flex;
-          margin-left: 0.1rem;
-        }
-
-        > .value {
-          display: flex;
-          flex-direction: column;
-          flex-grow: 1;
-        }
+        flex-grow: 1;
       }
     }
+  }
 
-    .request {
-      justify-content: center;
-    }
+  .request {
+    justify-content: center;
   }
 }
 </style>

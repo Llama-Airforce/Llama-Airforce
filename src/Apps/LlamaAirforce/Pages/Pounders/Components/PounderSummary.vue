@@ -37,7 +37,7 @@ whenever(getFeesTrigger, async () => {
     @click="emit('toggleExpand')"
   >
     <Pool
-      class="item"
+      class="pounder-item"
       :name="pounder.name"
       :logo="pounder.logo"
       :symbol="pounder.symbol"
@@ -46,25 +46,25 @@ whenever(getFeesTrigger, async () => {
     </Pool>
 
     <Balance
-      class="item"
+      class="pounder-item"
       :symbol="pounder.symbol"
       :state="state"
     ></Balance>
 
     <Apy
-      class="item"
+      class="pounder-item"
       :apy="state.apy"
       :fees
       @show="getFeesTrigger = true"
     ></Apy>
 
     <Tvl
-      class="item"
+      class="pounder-item"
       :state="state"
     ></Tvl>
 
     <div
-      class="item expander"
+      class="pounder-item expander"
       :class="{ expanded }"
     >
       <i class="fas fa-chevron-up"></i>
@@ -82,66 +82,68 @@ whenever(getFeesTrigger, async () => {
     grid-template-columns: auto 1fr 1fr 1fr auto;
   }
 
-  > .item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.5rem;
-
-    :deep(.label) {
-      color: #a1a1aa;
-      font-size: 0.75rem;
-    }
-
-    :deep(.value) {
-      color: white;
-      font-size: 1.25rem;
-      font-weight: bold;
-
-      @media only screen and (max-width: 400px) {
-        font-size: 1rem;
-      }
-
-      .value-tooltip {
-        border-bottom: dotted 2px var(--c-lvl3-active);
-      }
-
-      .tooltip .content {
-        display: flex;
-        gap: 1rem;
-        padding: 1rem;
-
-        .fees,
-        .underlying {
-          padding: 0;
-          margin: 0;
-
-          li {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 20ch;
-            gap: 0.5rem;
-
-            div:first-child {
-              font-weight: bold;
-            }
-
-            div:nth-child(2) {
-              justify-self: end;
-            }
-          }
-        }
-      }
-    }
-  }
-
   > .expander {
     transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
     transform: rotate(90deg);
 
     &.expanded {
       transform: rotate(180deg);
+    }
+  }
+}
+</style>
+
+<style>
+.pounder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5rem;
+
+  .label {
+    color: #a1a1aa;
+    font-size: 0.75rem;
+  }
+
+  .value {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 1rem;
+    }
+
+    .value-tooltip {
+      border-bottom: dotted 2px var(--c-lvl3-active);
+    }
+
+    .tooltip .content {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+
+      .fees,
+      .underlying {
+        padding: 0;
+        margin: 0;
+
+        li {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 1fr 20ch;
+          gap: 0.5rem;
+
+          div:first-child {
+            font-weight: bold;
+          }
+
+          div:nth-child(2) {
+            justify-self: end;
+          }
+        }
+      }
     }
   }
 }

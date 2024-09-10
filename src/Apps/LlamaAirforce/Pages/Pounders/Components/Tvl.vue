@@ -32,6 +32,7 @@ const tvl = computed(() => {
         type="dollar"
       />
     </div>
+
     <div class="label">{{ t("tvl") }}</div>
   </div>
 </template>

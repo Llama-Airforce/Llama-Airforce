@@ -23,27 +23,29 @@ const emit = defineEmits<{
       class="modal-card"
       :title="title"
     >
-      <slot></slot>
+      <div class="modal-card">
+        <slot></slot>
 
-      <div class="buttons">
-        <Button
-          class="no"
-          value="No"
-          @click="emit('no')"
-        ></Button>
+        <div class="buttons">
+          <Button
+            class="no"
+            value="No"
+            @click="emit('no')"
+          ></Button>
 
-        <Button
-          v-if="ready"
-          class="yes"
-          value="Yes"
-          @click="emit('yes')"
-        ></Button>
+          <Button
+            v-if="ready"
+            class="yes"
+            value="Yes"
+            @click="emit('yes')"
+          ></Button>
 
-        <div
-          v-else
-          class="not-ready"
-        >
-          {{ readyMsg }}
+          <div
+            v-else
+            class="not-ready"
+          >
+            {{ readyMsg }}
+          </div>
         </div>
       </div>
     </Card>
@@ -52,30 +54,28 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 .modal-card {
-  :deep(.card-body) {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  .buttons {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    margin-top: 2rem;
 
-    .buttons {
+    button {
+      &.no {
+        color: var(--c-red);
+      }
+
+      &.yes {
+        color: var(--c-green);
+      }
+    }
+
+    .not-ready {
       display: flex;
-      justify-content: space-between;
-      margin-top: 2rem;
-
-      button {
-        &.no {
-          color: var(--c-red);
-        }
-
-        &.yes {
-          color: var(--c-green);
-        }
-      }
-
-      .not-ready {
-        display: flex;
-        align-items: center;
-      }
+      align-items: center;
     }
   }
 }

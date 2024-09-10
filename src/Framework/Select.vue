@@ -93,6 +93,12 @@ const open = ref(false);
     background: var(--c-lvl1-active);
   }
 
+  &.direction-up {
+    > .items {
+      bottom: 120%; /* Items will move upwards. */
+    }
+  }
+
   > .selected {
     height: 100%;
     display: flex;

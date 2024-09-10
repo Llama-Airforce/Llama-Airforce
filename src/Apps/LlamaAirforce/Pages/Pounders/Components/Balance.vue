@@ -127,6 +127,7 @@ const hasUnclaimed = computed(
         </ul>
       </Tooltip>
     </div>
+
     <div class="label">{{ t("your-balance") }}</div>
   </div>
 </template>
