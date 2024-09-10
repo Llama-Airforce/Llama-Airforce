@@ -108,20 +108,6 @@ const emit = defineEmits<{
       grid-template-columns: 1fr 1fr 1fr;
     }
 
-    > :deep(.item) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      > .value-container {
-        span,
-        a {
-          font-size: 1rem;
-        }
-      }
-    }
-
     > .expander {
       transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
       transform: rotate(90deg);
@@ -134,6 +120,30 @@ const emit = defineEmits<{
     > .kpi {
       padding: 0;
       box-shadow: unset;
+    }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.proposal-summary {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.875rem 1.125rem;
+
+  :deep(.item) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    > .value-container {
+      span,
+      a {
+        font-size: 1rem;
+      }
     }
   }
 }
