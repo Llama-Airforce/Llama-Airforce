@@ -27,6 +27,9 @@ const { expanded = true } = defineProps<{
   }
 
   > .collapsible-inside {
+    display: flex;
+    flex-direction: column;
+
     min-height: 0;
     overflow-x: auto;
     overflow-y: hidden;

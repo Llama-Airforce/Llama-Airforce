@@ -73,12 +73,6 @@ const onNavigated = () => {
     @media not screen and (max-width: 1280px) {
       grid-template-rows: 1fr;
     }
-
-    :deep(.collapsible-inside) {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
   }
 }
 </style>
