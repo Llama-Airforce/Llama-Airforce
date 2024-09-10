@@ -2,6 +2,9 @@
 import Navigation from "@PM/Navigation/Navigation.vue";
 import { useSettingsStore } from "@PM/Stores";
 
+import "@/Styles/Themes/PM/Dark.css";
+import "@/Styles/Themes/PM/Light.css";
+
 // Stores
 const settingStore = useSettingsStore();
 const storeBreadcrumb = useBreadcrumbStore();
@@ -45,27 +48,6 @@ watch(
     </template>
   </Layout>
 </template>
-
-<style lang="scss">
-@import "@/Styles/Themes/PM/Light.scss";
-@import "@/Styles/Themes/PM/Dark.scss";
-
-[data-theme="light"] {
-  @include themeLight();
-}
-
-[data-theme="dark"] {
-  @include themeDark();
-}
-
-[data-theme="light"][data-flavor="lrt"] {
-  @include themeLightLrt();
-}
-
-[data-theme="dark"][data-flavor="lrt"] {
-  @include themeDarkLrt();
-}
-</style>
 
 <style scoped>
 .navigation {

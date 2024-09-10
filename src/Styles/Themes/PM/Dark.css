@@ -1,0 +1,104 @@
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --c-text: #ffffff;
+  --c-text-invert: black;
+  --c-lvl0: hsl(240, 4%, 5%);
+  --c-lvl0-hint: #101011;
+  --c-lvl0-hover: #2a2a2d;
+  --c-lvl0-active: #3d3d42;
+  --c-lvl1: hsl(225, 0%, 13%);
+  --c-lvl1-hover: #303030;
+  --c-lvl1-active: #404040;
+  --c-lvl2: hsl(226, 0%, 17%);
+  --c-lvl2-hover: #3b3b3b;
+  --c-lvl2-active: #4a4a4a;
+  --c-lvl3: hsl(225, 0%, 25%);
+  --c-lvl3-hover: #4f4f4f;
+  --c-lvl3-active: #5e5e5e;
+  --c-lvl4: hsl(0, 0%, 33%);
+  --c-lvl4-hover: #636363;
+  --c-lvl4-active: #737373;
+  --c-lvl5: hsl(226, 0%, 47%);
+  --c-lvl5-hover: #878787;
+  --c-lvl5-active: #969696;
+  --c-lvl6: hsl(225, 0%, 62%);
+  --c-lvl6-hover: #adadad;
+  --c-lvl6-active: #bdbdbd;
+  --c-red: hsl(0, 90%, 66%);
+  --c-red-rgb: 246, 90, 90;
+  --c-green: hsl(123, 90%, 66%);
+  --c-green-rgb: 90, 246, 98;
+  --c-blue: hsl(222, 100%, 60%);
+  --c-blue-rgb: 51, 112, 255;
+  --c-yellow: hsl(58, 90%, 66%);
+  --c-yellow-rgb: 246, 241, 90;
+  --c-purple: hsl(278, 90%, 66%);
+  --c-purple-rgb: 189, 90, 246;
+  --c-primary: hsl(222, 100%, 60%);
+  --c-primary-hover: #5286ff;
+  --c-primary-active: #709bff;
+  --c-primary-disabled: #709bff;
+
+  --page-margin: 2.375rem;
+  --dashboard-gap: 1.5rem;
+
+  --font-weight: normal;
+  --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --border-radius: 4px;
+  --border-thickness: 0px;
+
+  --header-background: #2c2c2c;
+
+  --table-border-aggregation: calc(var(--border-thickness) + 2px) solid
+    var(--c-lvl2);
+
+  --card-margin-block: 0.875rem;
+  --card-margin-inline: 1.125rem;
+
+  --container-background: var(--c-lvl0);
+  --container-background-hint: var(--c-lvl0-hint);
+  --container-background-hover: var(--c-lvl0-hover);
+  --container-background-active: var(--c-lvl0-active);
+  --container-box-shadow: 0 0 0 0;
+
+  --select-box-shadow: 0;
+  --select-items-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+
+  --input-background: var(--c-lvl2);
+  --input-background-hover: var(--container-background-hover);
+  --input-background-active: var(--container-background-active);
+  --input-border-color-hover: var(--c-lvl4-hover);
+  --input-border-color-active: var(--c-lvl4-active);
+  --input-box-shadow: 0;
+  --input-items-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+
+  --tooltip-box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+
+  --tab-text-color: var(--c-lvl5);
+  --tab-text-color-hover: var(--c-primary-active);
+  --tab-text-color-active: var(--c-text);
+
+  --gutter-color: var(--c-primary);
+
+  --spinner-color: var(--c-text);
+
+  --hover-duration: 75ms;
+
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+}
+
+[data-theme="dark"][data-flavor="lrt"] {
+  --c-primary: rgb(121, 77, 236);
+  --c-primary-hover: #8e69ef;
+  --c-primary-active: #a384f2;
+  --c-primary-disabled: #a384f2;
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+}
