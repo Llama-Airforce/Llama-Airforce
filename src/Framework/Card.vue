@@ -93,6 +93,8 @@ const showHeader = computed(
 .card {
   position: relative;
 
+  width: var(--card-width);
+
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -193,6 +195,9 @@ const showHeader = computed(
   }
 
   > .card-body {
+    height: var(--card-body-height);
+    overflow: var(--card-body-overflow);
+
     flex-grow: 1;
     margin: 0 var(--card-margin-inline) var(--card-margin-block)
       var(--card-margin-inline);

@@ -97,13 +97,8 @@ function exitFullscreen(
   height: 80vh;
 
   /** Helpful style in conjuction with ModalFullscreen, esp for charts. */
-  :deep(.card) {
-    width: 100%;
-
-    .card-body {
-      height: 100%;
-      overflow: hidden;
-    }
-  }
+  --card-width: 100%;
+  --card-body-height: 100%;
+  --card-body-overflow: hidden;
 }
 </style>
