@@ -150,7 +150,7 @@ const {
   &.disabled {
     > .label,
     > .value {
-      color: lighten(rgb(20, 20, 20), 60%);
+      color: #adadad;
     }
   }
 }

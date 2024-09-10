@@ -65,7 +65,7 @@ html {
   }
 
   ::-webkit-scrollbar-track {
-    background: lighten(rgb(20, 20, 20), 25%);
+    background: #545454;
   }
 
   ::-webkit-scrollbar-thumb {
