@@ -7,6 +7,7 @@ import {
   ChartPrice,
   ChartVolume,
   ChartTvl,
+  ChartBalances,
 } from "@CM/Pages/Platform/Pools/Charts";
 
 const { pool, chain } = defineProps<{
@@ -49,6 +50,21 @@ const tvl = computed(() =>
     tvl: x.tvlUSD,
   }))
 );
+
+const balances = computed(() => {
+  if (!pool) {
+    return [];
+  }
+  console.log(pool);
+
+  return pool.coins.map((coin) => ({
+    symbol: coin.symbol,
+    balances: tvlRaw.value.map((tvl) => ({
+      timestamp: tvl.timestamp,
+      balance: tvl.balances[coin.poolIndex],
+    })),
+  }));
+});
 </script>
 
 <template>
@@ -119,6 +135,12 @@ const tvl = computed(() =>
       :tvl
       :loading="loadingTvl"
     ></ChartTvl>
+
+    <ChartBalances
+      style="grid-area: balances"
+      :balances
+      :loading="loadingTvl"
+    ></ChartBalances>
   </div>
 </template>
 
@@ -129,8 +151,8 @@ const tvl = computed(() =>
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     "kpi1 kpi2 kpi3 kpi4"
-    "price price price price"
-    "volume volume tvl tvl";
+    "price price tvl tvl"
+    "volume volume balances balances";
 
   @media only screen and (max-width: 1280px) {
     & {
@@ -140,7 +162,8 @@ const tvl = computed(() =>
         "kpi3 kpi4"
         "price price"
         "volume volume"
-        "tvl tvl";
+        "tvl tvl"
+        "balances balances";
     }
   }
 

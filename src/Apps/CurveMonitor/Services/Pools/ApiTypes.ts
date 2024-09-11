@@ -46,5 +46,6 @@ export type GetTvlResponse = {
   data: {
     timestamp: number;
     tvl_usd?: number;
+    balances: number[];
   }[];
 };

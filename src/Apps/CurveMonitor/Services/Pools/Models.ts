@@ -37,4 +37,5 @@ export type Volume = {
 export type Tvl = {
   timestamp: number;
   tvlUSD: number;
+  balances: number[];
 };
