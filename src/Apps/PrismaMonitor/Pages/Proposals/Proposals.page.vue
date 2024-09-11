@@ -93,7 +93,9 @@ const proposalsExecuted = computed((): Proposal[] => {
   padding: var(--page-margin);
 
   @media only screen and (max-width: 1280px) {
-    padding: 1.5rem 1rem;
+    & {
+      padding: 1.5rem 1rem;
+    }
   }
 
   .spinner {

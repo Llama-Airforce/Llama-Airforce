@@ -112,7 +112,9 @@ function go(url: string) {
     font-weight: bolder;
 
     @media only screen and (max-width: 825px) {
-      font-size: 1.75rem;
+      & {
+        font-size: 1.75rem;
+      }
     }
   }
 
@@ -136,8 +138,10 @@ function go(url: string) {
           "date read";
 
         @media only screen and (max-width: 825px) {
-          grid-template-rows: auto 1fr auto;
-          min-height: unset;
+          & {
+            grid-template-rows: auto 1fr auto;
+            min-height: unset;
+          }
         }
 
         > .title {
@@ -149,7 +153,9 @@ function go(url: string) {
           overflow: hidden;
 
           @media only screen and (max-width: 825px) {
-            font-size: 1.125rem;
+            & {
+              font-size: 1.125rem;
+            }
           }
         }
 

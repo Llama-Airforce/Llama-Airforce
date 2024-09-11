@@ -161,7 +161,9 @@ const onPoolSelect = async (newPool: Pool) => {
   gap: var(--dashboard-gap);
 
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: 1fr 14rem;
+    & {
+      grid-template-columns: 1fr 14rem;
+    }
   }
 
   .search {

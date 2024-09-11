@@ -137,7 +137,9 @@ function adjustPosition() {
     height: 24px;
 
     @media only screen and (max-width: 1280px) {
-      height: 20px;
+      & {
+        height: 20px;
+      }
     }
   }
 
@@ -162,7 +164,9 @@ function adjustPosition() {
     transition: opacity 0.15s ease, visibility 0s 0.15s;
 
     @media only screen and (max-width: 1280px) {
-      white-space: normal;
+      & {
+        white-space: normal;
+      }
     }
   }
 

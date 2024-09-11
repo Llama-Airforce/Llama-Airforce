@@ -96,8 +96,10 @@ function goto(card: "union" | "pirex" | "incentives") {
   grid-template-areas: "pirex union votium";
 
   @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
+    & {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .topic-card {
@@ -122,7 +124,9 @@ function goto(card: "union" | "pirex" | "incentives") {
     gap: 1rem;
 
     @media only screen and (max-width: 1280px) {
-      gap: 2rem;
+      & {
+        gap: 2rem;
+      }
     }
 
     > img {
@@ -140,7 +144,9 @@ function goto(card: "union" | "pirex" | "incentives") {
       text-wrap: pretty;
 
       @media only screen and (max-width: 1280px) {
-        font-size: 1rem;
+        & {
+          font-size: 1rem;
+        }
       }
     }
 

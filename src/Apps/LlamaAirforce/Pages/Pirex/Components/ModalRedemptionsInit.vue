@@ -228,7 +228,9 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
   overflow-y: auto;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    & {
+      width: 80vw;
+    }
   }
 
   .redemptions-init-table {
@@ -243,9 +245,11 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
     align-items: center;
 
     @media only screen and (max-width: 500px) {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      & {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
 
     img {
@@ -255,7 +259,9 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
       border-radius: 50%;
 
       @media only screen and (max-width: 500px) {
-        display: none;
+        & {
+          display: none;
+        }
       }
     }
 
@@ -270,7 +276,9 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
       margin-right: 1rem;
 
       @media only screen and (max-width: 500px) {
-        display: none;
+        & {
+          display: none;
+        }
       }
     }
 

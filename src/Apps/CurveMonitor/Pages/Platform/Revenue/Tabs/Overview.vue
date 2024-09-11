@@ -19,7 +19,9 @@ import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue
   grid-template-areas: "breakdown";
 
   @media only screen and (max-width: 1280px) {
-    grid-auto-flow: row;
+    & {
+      grid-auto-flow: row;
+    }
   }
 }
 </style>

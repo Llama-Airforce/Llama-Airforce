@@ -98,7 +98,9 @@ const copyUrl = async () => {
       --select-items-min-width: 220%;
 
       @media only screen and (max-width: 1280px) {
-        --select-items-min-width: 125%;
+        & {
+          --select-items-min-width: 125%;
+        }
       }
     }
   }

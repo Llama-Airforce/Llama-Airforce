@@ -22,9 +22,6 @@ const { t } = useI18n();
     max-width: 100%;
     margin: 4rem;
     object-fit: scale-down;
-
-    @media only screen and (max-width: 1280px) {
-    }
   }
 }
 </style>

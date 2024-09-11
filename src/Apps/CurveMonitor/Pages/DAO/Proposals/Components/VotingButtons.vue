@@ -419,7 +419,9 @@ whenever(isConfirmedExecute, () => {
   width: 33vw;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    & {
+      width: 80vw;
+    }
   }
 
   .vecrv {

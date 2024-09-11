@@ -151,8 +151,10 @@ const { isFetching: loadingLosses, data: losses } = useQueryLiqLosses(
   grid-template-columns: 1fr 1fr;
 
   @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
+    & {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 </style>

@@ -133,13 +133,15 @@ const tvl = computed(() =>
     "volume volume tvl tvl";
 
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "kpi1 kpi2"
-      "kpi3 kpi4"
-      "price price"
-      "volume volume"
-      "tvl tvl";
+    & {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "kpi1 kpi2"
+        "kpi3 kpi4"
+        "price price"
+        "volume volume"
+        "tvl tvl";
+    }
   }
 
   .tokens {

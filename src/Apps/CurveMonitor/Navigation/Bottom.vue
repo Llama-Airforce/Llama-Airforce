@@ -69,7 +69,9 @@ const router = useRouter();
     --select-items-min-width: 210%;
 
     @media only screen and (max-width: 1280px) {
-      --select-items-min-width: 130%;
+      & {
+        --select-items-min-width: 130%;
+      }
     }
   }
 

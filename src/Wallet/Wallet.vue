@@ -62,7 +62,9 @@ const changeNetwork = () => {
     text-align: center;
 
     @media only screen and (max-width: 1280px) {
-      display: none;
+      & {
+        display: none;
+      }
     }
   }
 

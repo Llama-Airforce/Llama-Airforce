@@ -443,7 +443,9 @@ const onWithdrawSelect = (zap: Zap): void => {
     gap: 2rem;
 
     @media only screen and (max-width: 1280px) {
-      flex-direction: column;
+      & {
+        flex-direction: column;
+      }
     }
 
     > .deposit {
@@ -466,7 +468,9 @@ const onWithdrawSelect = (zap: Zap): void => {
       gap: 1rem;
 
       @media only screen and (max-width: 1280px) {
-        grid-template-columns: 1fr;
+        & {
+          grid-template-columns: 1fr;
+        }
       }
 
       > .select {

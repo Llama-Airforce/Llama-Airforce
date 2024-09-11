@@ -131,11 +131,13 @@ const onRoundSelect = (round: number): void => {
   gap: 1.5rem;
 
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    & {
+      grid-template-columns: 1fr 1fr 1fr;
 
-    > .select-round {
-      grid-row: 1;
-      grid-column: 1 / span 3;
+      > .select-round {
+        grid-row: 1;
+        grid-column: 1 / span 3;
+      }
     }
   }
 

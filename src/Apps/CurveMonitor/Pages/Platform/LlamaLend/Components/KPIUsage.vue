@@ -134,10 +134,12 @@ const utilRate = computed(() => {
   grid-template-areas: "kpi1 kpi2 kpi3 kpi4";
 
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "kpi1 kpi2"
-      "kpi3 kpi4";
+    & {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "kpi1 kpi2"
+        "kpi3 kpi4";
+    }
   }
 
   .two-sides {

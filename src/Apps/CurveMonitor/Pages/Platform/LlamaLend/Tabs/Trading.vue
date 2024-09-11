@@ -99,8 +99,10 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
     "trades events";
 
   @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
+    & {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 </style>

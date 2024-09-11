@@ -236,7 +236,9 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
   overflow-y: auto;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    & {
+      width: 80vw;
+    }
   }
 
   > h3 {
@@ -262,8 +264,10 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
       gap: 1rem;
 
       @media only screen and (max-width: 1280px) {
-        display: flex;
-        flex-direction: column;
+        & {
+          display: flex;
+          flex-direction: column;
+        }
       }
 
       > .explanation {
@@ -297,9 +301,11 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
     align-items: center;
 
     @media only screen and (max-width: 500px) {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      & {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
 
     a {

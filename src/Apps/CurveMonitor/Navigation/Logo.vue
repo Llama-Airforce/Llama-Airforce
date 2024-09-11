@@ -55,7 +55,9 @@
       transform: translateY(var(--translate-mobile, 0rem));
 
       @media only screen and (max-width: 1280px) {
-        --translate-mobile: 0.5rem;
+        & {
+          --translate-mobile: 0.5rem;
+        }
       }
 
       &:nth-child(2) {

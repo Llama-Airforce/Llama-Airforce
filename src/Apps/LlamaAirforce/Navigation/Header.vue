@@ -31,12 +31,14 @@ const hasHeader = computed((): boolean => {
     }
 
     @media only screen and (max-width: 1280px) {
-      > .desktop {
-        display: none;
-      }
+      & {
+        > .desktop {
+          display: none;
+        }
 
-      > .mobile {
-        display: flex;
+        > .mobile {
+          display: flex;
+        }
       }
     }
   }

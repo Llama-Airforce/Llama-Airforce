@@ -30,8 +30,10 @@ const { proposal, expanded = false } = defineProps<{
   margin: 0 0.875rem 1.125rem 0.875rem;
 
   @media only screen and (max-width: 1280px) {
-    display: flex;
-    flex-direction: column;
+    & {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   > .proposal-details-container {
@@ -42,8 +44,10 @@ const { proposal, expanded = false } = defineProps<{
     gap: var(--dashboard-gap);
 
     @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
+      & {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 }

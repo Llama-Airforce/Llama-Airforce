@@ -136,8 +136,10 @@ const proposalToClipboard = async () => {
     gap: 1rem;
 
     @media only screen and (max-width: 1280px) {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      & {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
     }
 
     > .expander {
