@@ -121,7 +121,7 @@ function onDepositAuraBal() {
 
 <style scoped>
 .card {
-  --flash-color: var(--c-red-rgb);
+  --flash-color: var(--c-red);
 }
 
 .migrations {

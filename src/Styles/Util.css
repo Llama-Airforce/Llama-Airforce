@@ -46,22 +46,20 @@
   --flash-duration: calc(1.5s * var(--flash-enabled));
 
   animation: flash var(--flash-duration) 3 ease-in-out;
-  border: solid 1px rgba(var(--flash-color), 0.5);
+  border: solid 1px rgba(from var(--flash-color) r g b / 0.5);
 }
 
 @keyframes flash {
   0%,
   100% {
     border-color: rgba(
-      var(--flash-color),
-      max(0.5, calc(1 - var(--flash-enabled)))
+      from var(--flash-color) r g b / max(0.5, calc(1 - var(--flash-enabled)))
     );
   }
 
   50% {
     border-color: rgba(
-      var(--flash-color),
-      max(0.9, calc(1 - var(--flash-enabled)))
+      from var(--flash-color) r g b / max(0.9, calc(1 - var(--flash-enabled)))
     );
   }
 }

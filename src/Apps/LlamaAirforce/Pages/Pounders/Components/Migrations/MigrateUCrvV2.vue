@@ -79,7 +79,7 @@ function onMigrate() {
 
 <style scoped>
 .card {
-  --flash-color: var(--c-red-rgb);
+  --flash-color: var(--c-red);
 }
 
 .migration {

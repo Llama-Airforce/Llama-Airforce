@@ -125,7 +125,7 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
 
 <style scoped>
 .card {
-  --flash-color: var(--c-red-rgb);
+  --flash-color: var(--c-red);
 }
 
 .migration {

@@ -23,7 +23,7 @@ const { t } = useI18n();
   margin: var(--dashboard-gap);
   margin-bottom: 0;
 
-  --flash-color: var(--c-yellow-rgb);
+  --flash-color: var(--c-yellow);
 
   .announcements {
     display: grid;
