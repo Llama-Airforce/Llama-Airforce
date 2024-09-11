@@ -2,6 +2,10 @@
 import Wallet from "@/Wallet/Wallet.vue";
 import SelectTheme from "@PM/Navigation/SelectTheme.vue";
 
+const emit = defineEmits<{
+  navigated: [];
+}>();
+
 const router = useRouter();
 </script>
 
@@ -17,7 +21,10 @@ const router = useRouter();
 
       <Button
         icon="fas fa-code"
-        @click="router.push('/code')"
+        @click="
+          router.push('/code');
+          emit('navigated');
+        "
       ></Button>
     </div>
 
