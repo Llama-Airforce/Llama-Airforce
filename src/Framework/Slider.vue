@@ -25,7 +25,7 @@ const { min, max } = defineProps<{
 input {
   -webkit-appearance: none;
   height: 0.75rem;
-  background: var(--c-lvl1-hover);
+  background: var(--c-lvl2);
   border-radius: var(--border-radius);
   outline-color: transparent;
   opacity: 0.7;
