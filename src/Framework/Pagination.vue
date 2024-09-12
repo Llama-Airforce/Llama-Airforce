@@ -96,44 +96,33 @@ const onPage = (p: number) => {
 
 <template>
   <ul v-if="pages > 1">
-    <li
-      :class="{ active: page === 1 }"
-      @click="onPage(1)"
-    >
-      <button>1</button>
+    <li :class="{ active: page === 1 }">
+      <Button @click="onPage(1)">1</Button>
     </li>
 
-    <li
-      v-if="pages > 2"
-      @click="prev"
-    >
-      <button>
+    <li v-if="pages > 2">
+      <Button @click="prev">
         <i class="fas fa-chevron-left"></i>
-      </button>
+      </Button>
     </li>
 
     <li
       v-for="p in pageButtons"
       :key="p"
       :class="{ active: p === page }"
-      @click="onPage(p)"
     >
-      <button>{{ p }}</button>
+      <Button @click="onPage(p)">{{ p }}</Button>
     </li>
 
-    <li
-      v-if="pages > 2"
-      @click="next"
-    >
-      <button><i class="fas fa-chevron-right"></i></button>
+    <li v-if="pages > 2">
+      <Button @click="next"><i class="fas fa-chevron-right"></i></Button>
     </li>
 
     <li
       v-if="pages > 1"
       :class="{ active: page === pages }"
-      @click="onPage(pages)"
     >
-      <button>{{ pages }}</button>
+      <Button @click="onPage(pages)">{{ pages }}</Button>
     </li>
   </ul>
 </template>
@@ -153,45 +142,24 @@ ul {
     align-items: center;
 
     &.active {
-      button {
-        background-color: var(--c-primary);
+      > button {
+        --c-variant: var(--c-primary);
       }
     }
 
     > button {
-      all: unset;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
       height: 2.5rem;
       width: 2.5rem;
+      justify-content: center;
+      padding: 0;
 
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      border-radius: var(--border-radius);
-
-      transition: background-color 125ms ease;
-
-      &:hover {
-        background-color: var(--c-primary-hover);
-      }
-
-      &:active {
-        background-color: var(--c-primary-active);
-      }
+      --c-states: var(--c-primary);
     }
   }
 
-  > li:nth-child(2) {
-    background: var(--c-lvl3);
-    border-radius: var(--border-radius);
-  }
-
+  > li:nth-child(2),
   > li:nth-last-child(2) {
-    background: var(--c-lvl3);
-    border-radius: var(--border-radius);
+    --c-variant: var(--c-lvl3);
   }
 }
 </style>
