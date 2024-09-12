@@ -128,10 +128,9 @@ async function createVote() {
       </div>
 
       <Button
-        class="action-button request"
+        class="action-button request primary"
         value="Create Gauge Addition Vote"
         :disabled="!canRequest"
-        :primary="true"
         :chain-id="mainnet.id"
         @click="execute"
       ></Button>

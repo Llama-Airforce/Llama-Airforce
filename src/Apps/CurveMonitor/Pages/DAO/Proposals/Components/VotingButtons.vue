@@ -287,15 +287,15 @@ whenever(isConfirmedExecute, () => {
 <template>
   <div class="buttons">
     <Button
+      class="primary"
       value="Vote"
-      :primary="true"
       @click="showVote = true"
     ></Button>
 
     <Button
       v-if="executable"
+      class="primary"
       :value="executing ? 'Executing...' : 'Execute'"
-      :primary="true"
       :disabled="!canExecute || executing"
       @click="execute"
     ></Button>
@@ -396,9 +396,8 @@ whenever(isConfirmedExecute, () => {
         ></Slider>
 
         <Button
-          class="submit"
+          class="submit primary"
           :value="voteButtonText"
-          :primary="true"
           :disabled="!canVote"
           :chain-id="mainnet.id"
           @click="vote"

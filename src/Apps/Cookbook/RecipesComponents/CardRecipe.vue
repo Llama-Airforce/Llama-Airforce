@@ -29,8 +29,8 @@ const cardWithActions = `<template>
 >
   <template #actions>
     <div style="display: flex; gap: 1rem">
-      <Button :primary="true">Export</Button>
-      <Button :primary="true">Fullscreen</Button>
+      <Button class="primary">Export</Button>
+      <Button class="primary">Fullscreen</Button>
     </div>
   </template>
 
@@ -154,8 +154,8 @@ const handleToggle = (event) => {
         >
           <template #actions>
             <div style="display: flex; gap: 1rem">
-              <Button :primary="true">Export</Button>
-              <Button :primary="true">Fullscreen</Button>
+              <Button class="primary">Export</Button>
+              <Button class="primary">Fullscreen</Button>
             </div>
           </template>
 

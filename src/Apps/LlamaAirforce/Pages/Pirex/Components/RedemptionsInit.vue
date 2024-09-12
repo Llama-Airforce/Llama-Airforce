@@ -20,8 +20,8 @@ const showRedemptionsInit = ref(false);
       </a>
 
       <Button
+        class="primary"
         value="Initiate Redemption"
-        :primary="true"
         @click="showRedemptionsInit = true"
       ></Button>
     </div>

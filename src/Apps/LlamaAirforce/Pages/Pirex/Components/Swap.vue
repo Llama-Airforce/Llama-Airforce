@@ -20,8 +20,8 @@ const showSwap = ref(false);
       </a>
 
       <Button
+        class="primary"
         value="Swap"
-        :primary="true"
         @click="showSwap = true"
       ></Button>
     </div>

@@ -215,8 +215,8 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
         </div>
 
         <Button
+          class="primary"
           :value="submitLabel"
-          :primary="true"
           :disabled="!canSwap || isApproving || isSwapping"
           :chain-id="mainnet.id"
           @click="onSubmit"

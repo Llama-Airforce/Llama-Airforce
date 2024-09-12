@@ -197,8 +197,8 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
           <a @click="balanceRedeem = balanceNum">Max</a>
 
           <Button
+            class="primary"
             :value="submitLabel"
-            :primary="true"
             :disabled="!canRedeem || isApproving || isRedeeming"
             :chain-id="mainnet.id"
             @click="onSubmit"

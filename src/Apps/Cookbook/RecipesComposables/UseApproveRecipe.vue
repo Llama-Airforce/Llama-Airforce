@@ -68,8 +68,8 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
           ></Slider>
 
           <Button
+            class="primary"
             :value="isApproving ? 'Approving...' : 'Approve'"
-            :primary="true"
             :disabled="!needsApprove || isApproving"
             @click="approve"
           ></Button>

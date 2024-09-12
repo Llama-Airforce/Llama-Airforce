@@ -91,9 +91,9 @@ function balance(redemption: RedemptionPending) {
 
       <div class="end">
         <Button
+          class="primary"
           value="Redeem"
           :disabled="redeeming || !canRedeem(redemption)"
-          :primary="true"
           :chain-id="mainnet.id"
           @click="redeem(redemption)"
         ></Button>

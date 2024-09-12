@@ -4,12 +4,10 @@ import { useWallet } from "@/Wallet";
 const {
   icon = "",
   value = "",
-  primary = false,
   chainId,
 } = defineProps<{
   icon?: string;
   value?: string;
-  primary?: boolean;
   chainId?: number;
 }>();
 
@@ -41,10 +39,7 @@ const onClick = (evt: Event) => {
 </script>
 
 <template>
-  <button
-    :class="{ primary: primary }"
-    @click="onClick"
-  >
+  <button @click="onClick">
     <slot>
       <i
         v-if="icon"
@@ -59,12 +54,17 @@ const onClick = (evt: Event) => {
 
 <style scoped>
 button {
+  --c-background: var(--c-variant, var(--c-lvl1));
+
+  /* Base color to derive states like hover from */
+  --c-states: var(--c-background);
+
   all: unset;
   display: flex;
   align-items: center;
   line-height: 1;
   padding: 0.5rem 1rem;
-  background: var(--c-lvl1);
+  background-color: var(--c-background);
   color: var(--c-text);
   user-select: none;
   cursor: pointer;
@@ -88,27 +88,21 @@ button {
 
   &:disabled {
     pointer-events: none;
-    background: var(--c-primary-disabled);
+    background-color: hsl(
+      from var(--c-primary) h s calc(l + 12 * var(--color-scheme-dark))
+    );
   }
 
   &:hover:not(:disabled) {
-    background: var(--container-background-hover);
+    background-color: hsl(
+      from var(--c-states) h s calc(l + 6 * var(--color-scheme-dark))
+    );
   }
 
   &:active:not(:disabled) {
-    background: var(--container-background-active);
-  }
-
-  &.primary:not(:disabled) {
-    background-color: var(--c-primary);
-
-    &:hover {
-      background-color: var(--c-primary-hover);
-    }
-
-    &:active {
-      background-color: var(--c-primary-active);
-    }
+    background-color: hsl(
+      from var(--c-states) h s calc(l + 12 * var(--color-scheme-dark))
+    );
   }
 }
 </style>

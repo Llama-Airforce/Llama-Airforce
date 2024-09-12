@@ -63,3 +63,56 @@
     );
   }
 }
+
+/* Variants */
+.lvl0 {
+  --c-variant: var(--c-lvl0);
+}
+
+.lvl1 {
+  --c-variant: var(--c-lvl1);
+}
+
+.lvl2 {
+  --c-variant: var(--c-lvl2);
+}
+
+.lvl3 {
+  --c-variant: var(--c-lvl3);
+}
+
+.lvl4 {
+  --c-variant: var(--c-lvl4);
+}
+
+.lvl5 {
+  --c-variant: var(--c-lvl5);
+}
+
+.lvl6 {
+  --c-variant: var(--c-lvl6);
+}
+
+.red {
+  --c-variant: var(--c-red);
+}
+
+.green {
+  --c-variant: var(--c-green);
+}
+
+.blue {
+  --c-variant: var(--c-blue);
+}
+
+.yellow {
+  --c-variant: var(--c-yellow);
+}
+
+.purple {
+  --c-variant: var(--c-purple);
+}
+
+.primary {
+  --c-variant: var(--c-primary);
+}

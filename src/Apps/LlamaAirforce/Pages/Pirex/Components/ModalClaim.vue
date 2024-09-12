@@ -248,7 +248,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
                 ></RewardsTable>
 
                 <Button
-                  :primary="true"
+                  class="primary"
                   :disabled="claimingSnapshot || !canClaimSnapshot(epoch)"
                   @click="claimSnapshot(epoch)"
                 >
@@ -268,7 +268,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
 
                 <Button
                   v-if="isApprovedForAll"
-                  :primary="true"
+                  class="primary"
                   :disabled="claimingFutures || !canClaimFutures()"
                   @click="claimFutures(epoch)"
                 >
@@ -277,7 +277,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
 
                 <Button
                   v-else
-                  :primary="true"
+                  class="primary"
                   :disabled="approving"
                   @click="approve"
                 >

@@ -97,8 +97,8 @@ function onClaimed(claims: Claim[]) {
       ></RewardsTable>
 
       <Button
+        class="primary"
         value="Show Claims"
-        :primary="true"
         @click="showClaims = true"
       ></Button>
     </div>

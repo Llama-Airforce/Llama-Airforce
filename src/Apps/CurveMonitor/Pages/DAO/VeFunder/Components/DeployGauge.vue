@@ -75,10 +75,9 @@ async function execute() {
       </div>
 
       <Button
-        class="action-button request"
+        class="action-button request primary"
         value="Create Fundraising Gauge"
         :disabled="!isValid || deploying"
-        :primary="true"
         :chain-id="mainnet.id"
         @click="execute"
       ></Button>

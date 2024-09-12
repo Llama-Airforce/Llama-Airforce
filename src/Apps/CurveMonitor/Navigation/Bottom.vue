@@ -16,10 +16,14 @@ const router = useRouter();
         href="https://twitter.com/0xAlunara"
         target="_blank"
       >
-        <Button icon="fab fa-twitter"></Button>
+        <Button
+          class="lvl2"
+          icon="fab fa-twitter"
+        ></Button>
       </a>
 
       <Button
+        class="lvl2"
         icon="fas fa-code"
         @click="
           router.push('/code');
@@ -30,7 +34,7 @@ const router = useRouter();
 
     <SelectTheme class="themes"></SelectTheme>
 
-    <Wallet></Wallet>
+    <Wallet class="lvl2"></Wallet>
   </div>
 </template>
 
@@ -49,18 +53,6 @@ const router = useRouter();
     grid-area: buttons;
     display: flex;
     gap: 1rem;
-
-    button {
-      background: var(--c-lvl2);
-
-      &:hover {
-        background: var(--c-lvl2-hover);
-      }
-
-      &:active {
-        background: var(--c-lvl2-active);
-      }
-    }
 
     a {
       &:hover,
@@ -82,20 +74,8 @@ const router = useRouter();
     }
   }
 
-  &:deep(.wallet) {
+  .wallet {
     grid-area: wallet;
-
-    .disconnect {
-      background: var(--c-lvl2);
-
-      &:hover {
-        background: var(--c-lvl2-hover);
-      }
-
-      &:active {
-        background: var(--c-lvl2-active);
-      }
-    }
   }
 }
 </style>

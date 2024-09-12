@@ -156,15 +156,15 @@ watch(
 <template>
   <div class="buttons">
     <Button
+      class="primary"
       :value="t('vote')"
-      :primary="true"
       @click="showVote = true"
     ></Button>
 
     <Button
       v-if="executable"
+      class="primary"
       :value="t(executing ? 'executing' : 'execute')"
-      :primary="true"
       :disabled="!canExecute || executing"
       @click="execute"
     ></Button>
@@ -210,9 +210,8 @@ watch(
         </div>
 
         <Button
-          class="submit"
+          class="submit primary"
           :value="t(voteButtonText)"
-          :primary="true"
           :disabled="!canVote"
           :chain-id="mainnet.id"
           @click="vote"

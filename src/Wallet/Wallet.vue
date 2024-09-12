@@ -26,9 +26,8 @@ const changeNetwork = () => {
     <div v-if="isConnected">
       <Button
         v-if="!supportedNetwork"
-        class="change"
+        class="change primary"
         value="Change Network"
-        :primary="true"
         @click="changeNetwork"
       ></Button>
 

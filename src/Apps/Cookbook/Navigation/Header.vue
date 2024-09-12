@@ -19,6 +19,7 @@ const emit = defineEmits<{
 
     <div class="buttons">
       <Button
+        class="lvl1"
         icon="fas fa-bars"
         @click="emit('toggle-expansion')"
       ></Button>
@@ -45,18 +46,6 @@ const emit = defineEmits<{
       > .buttons {
         margin-right: 1.75rem;
         display: flex !important;
-
-        button {
-          background: var(--c-lvl1);
-
-          &:hover {
-            background: var(--c-lvl1-hover);
-          }
-
-          &:active {
-            background: var(--c-lvl1-active);
-          }
-        }
       }
     }
   }

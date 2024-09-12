@@ -16,7 +16,7 @@ const copyUrl = async () => {
   <div class="bottom">
     <div class="buttons">
       <Button
-        class="copy"
+        class="copy lvl2"
         icon="fas fa-link"
         @click="copyUrl"
       ></Button>
@@ -25,18 +25,25 @@ const copyUrl = async () => {
         href="https://twitter.com/0xAlunara"
         target="_blank"
       >
-        <Button icon="fab fa-twitter"></Button>
+        <Button
+          class="lvl2"
+          icon="fab fa-twitter"
+        ></Button>
       </a>
 
       <a
         href="https://github.com/Llama-Airforce/Llama-Airforce"
         target="_blank"
       >
-        <Button icon="fab fa-github"></Button>
+        <Button
+          class="lvl2"
+          icon="fab fa-github"
+        ></Button>
       </a>
 
       <router-link to="/code">
         <Button
+          class="lvl2"
           icon="fas fa-code"
           @click="emit('navigated')"
         ></Button>
@@ -51,7 +58,7 @@ const copyUrl = async () => {
       ></SelectLanguage>
     </div>
 
-    <Wallet></Wallet>
+    <Wallet class="lvl2"></Wallet>
   </div>
 </template>
 
@@ -75,20 +82,6 @@ const copyUrl = async () => {
     }
   }
 
-  > .buttons {
-    button {
-      background: var(--c-lvl2);
-
-      &:hover {
-        background: var(--c-lvl2-hover);
-      }
-
-      &:active {
-        background: var(--c-lvl2-active);
-      }
-    }
-  }
-
   > .selectors {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -101,21 +94,6 @@ const copyUrl = async () => {
         & {
           --select-items-min-width: 125%;
         }
-      }
-    }
-  }
-
-  &:deep(.wallet) {
-    .clear,
-    .disconnect {
-      background: var(--c-lvl2);
-
-      &:hover {
-        background: var(--c-lvl2-hover);
-      }
-
-      &:active {
-        background: var(--c-lvl2-active);
       }
     }
   }

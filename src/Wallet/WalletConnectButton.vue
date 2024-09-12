@@ -60,8 +60,7 @@ function onClearCache() {
 <template>
   <div class="buttons">
     <Button
-      class="button"
-      :primary="true"
+      class="button primary"
       @click="showConnectors = true"
     >
       Connect Wallet

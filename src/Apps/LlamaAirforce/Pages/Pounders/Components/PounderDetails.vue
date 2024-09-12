@@ -329,8 +329,8 @@ const onWithdrawSelect = (zap: Zap): void => {
 
           <div class="buttons">
             <Button
+              class="primary"
               :value="depositLabel"
-              :primary="true"
               :disabled="!canDeposit"
               :chain-id="mainnet.id"
               @click="onDeposit(false)"
@@ -369,8 +369,8 @@ const onWithdrawSelect = (zap: Zap): void => {
 
           <div class="buttons">
             <Button
+              class="primary"
               :value="withdrawLabel"
-              :primary="true"
               :disabled="!canWithdraw"
               :chain-id="mainnet.id"
               @click="onWithdraw(false, false)"

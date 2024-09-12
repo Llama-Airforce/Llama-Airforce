@@ -1,4 +1,5 @@
 [data-theme="dark"] {
+  --color-scheme-dark: 1;
   color-scheme: dark;
 
   --c-text: #ffffff;

@@ -6,8 +6,7 @@ const onClearCache = (): void => {
 
 <template>
   <Button
-    class="button"
-    :primary="true"
+    class="button primary"
     @click="onClearCache"
   >
     Clear Cache

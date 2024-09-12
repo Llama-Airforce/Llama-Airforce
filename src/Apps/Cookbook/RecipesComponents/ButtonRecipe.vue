@@ -2,14 +2,23 @@
 import { mainnet } from "viem/chains";
 import Recipe from "@CB/Recipe.vue";
 
-const btnPrimary = `<Button
+const btnDefault = `<Button
   value="Value"
-  :primary="true"
 ></Button>`;
 
-const btnPrimaryNon = `<Button
+const btnVariant1 = `<Button
+  class="variant"
   value="Value"
-  :primary="false"
+></Button>`;
+
+const btnVariant2 = `.variant {
+  --c-background: var(--c-primary);
+  --c-states: var(--c-purple);
+}`;
+
+const btnVariantClass = `<Button
+  class="primary"
+  value="Value"
 ></Button>`;
 
 const btnDisabled = `<Button
@@ -28,7 +37,9 @@ const btnIcon = `<Button
 ></Button>`;
 
 const btnSlot = `<Button>
-  <div style="margin-right: 1rem">Content goes here</div>
+  <div style="margin-right: 1rem">
+    Content goes here
+  </div>
   <i class="fas fa-plane"></i>
 </Button>`;
 
@@ -46,34 +57,52 @@ const showAlert = (msg: string) => {
 
 <template>
   <div class="dashboard">
-    <Recipe title="Primary">
+    <Recipe title="Default">
       <template #example>
-        <Button
-          value="Value"
-          :primary="true"
-        ></Button>
+        <Button value="Value"></Button>
       </template>
 
       <template #snippets>
         <Code
           lang="html"
-          :code="btnPrimary"
+          :code="btnDefault"
         ></Code>
       </template>
     </Recipe>
 
-    <Recipe title="Not Primary">
+    <Recipe title="Variant">
       <template #example>
         <Button
+          class="variant"
           value="Value"
-          :primary="false"
         ></Button>
       </template>
 
       <template #snippets>
         <Code
           lang="html"
-          :code="btnPrimaryNon"
+          :code="btnVariant1"
+        ></Code>
+
+        <Code
+          lang="css"
+          :code="btnVariant2"
+        ></Code>
+      </template>
+    </Recipe>
+
+    <Recipe title="Variant (class)">
+      <template #example>
+        <Button
+          class="primary"
+          value="Value"
+        ></Button>
+      </template>
+
+      <template #snippets>
+        <Code
+          lang="html"
+          :code="btnVariantClass"
         ></Code>
       </template>
     </Recipe>
@@ -162,27 +191,16 @@ const showAlert = (msg: string) => {
         ></Code>
       </template>
     </Recipe>
-
-    <Recipe title="Disabled">
-      <template #example>
-        <Button
-          value="Disabled Button"
-          disabled
-        ></Button>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="btnDisabled"
-        ></Code>
-      </template>
-    </Recipe>
   </div>
 </template>
 
 <style scoped>
 .dashboard {
   grid-template-columns: 1fr 1fr 1fr;
+
+  .variant {
+    --c-background: var(--c-primary);
+    --c-states: var(--c-purple);
+  }
 }
 </style>
