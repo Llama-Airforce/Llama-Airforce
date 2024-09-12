@@ -241,6 +241,9 @@ const onType = (tabIndex: number) => {
   --columns-data: 6rem 4rem 7rem 7rem minmax(5rem, 2fr) 6rem
     minmax(10rem, 0.75fr);
 
+  --container-background-hint: hls(
+    from var(--container-background) h s calc(l + 2)
+  );
   --row-background: var(--container-background-hint);
 
   .type {

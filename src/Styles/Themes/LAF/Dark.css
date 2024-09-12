@@ -4,7 +4,6 @@
   --c-text: #fafafa;
   --c-text-invert: #050505;
   --c-lvl0: #18181b;
-  --c-lvl0-hint: #1c1c1f;
   --c-lvl0-hover: #26262b;
   --c-lvl0-active: #35353b;
   --c-lvl1: #212124;
@@ -52,7 +51,6 @@
   --card-margin-inline: 1.125rem;
 
   --container-background: var(--c-lvl0);
-  --container-background-hint: var(--c-lvl0-hint);
   --container-background-hover: var(--c-lvl0-hover);
   --container-background-active: var(--c-lvl0-active);
   --container-box-shadow: 0 0 0 0;
