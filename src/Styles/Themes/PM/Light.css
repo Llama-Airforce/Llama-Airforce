@@ -61,11 +61,6 @@
   --select-box-shadow: 0;
   --select-items-box-shadow: var(--container-box-shadow);
 
-  --input-background: var(--c-lvl2);
-  --input-background-hover: var(--c-lvl2);
-  --input-background-active: var(--c-lvl2);
-  --input-border-color-hover: var(--c-primary-hover);
-  --input-border-color-active: var(--c-primary-active);
   --input-box-shadow: 0;
   --input-items-box-shadow: var(--container-box-shadow);
 

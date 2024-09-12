@@ -96,7 +96,7 @@ const onInput = (evt: Event): void => {
   > input {
     all: unset;
 
-    background-color: var(--input-background);
+    background-color: var(--c-lvl2);
     border: solid var(--border-thickness) var(--c-lvl4);
     border-radius: var(--border-radius);
     box-shadow: var(--input-box-shadow);
@@ -118,17 +118,6 @@ const onInput = (evt: Event): void => {
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
-    }
-
-    &:hover,
-    &:focus-visible {
-      background-color: var(--input-background-hover);
-      border-color: var(--input-border-color-hover);
-    }
-
-    &:active {
-      background-color: var(--input-background-active);
-      border-color: var(--input-border-color-active);
     }
   }
 

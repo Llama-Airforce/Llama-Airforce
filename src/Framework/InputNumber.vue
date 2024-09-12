@@ -31,7 +31,7 @@ watch(modelValue, (value) => {
 input {
   all: unset;
 
-  background-color: var(--input-background);
+  background-color: var(--c-lvl2);
   border: solid var(--border-thickness) var(--c-lvl4);
   border-radius: var(--border-radius);
   box-shadow: var(--input-box-shadow);
@@ -57,17 +57,6 @@ input {
   /* Firefox */
   input[type="number"] {
     -moz-appearance: textfield;
-  }
-
-  &:hover,
-  &:focus-visible {
-    background-color: var(--input-background-hover);
-    border-color: var(--c-lvl4-hover);
-  }
-
-  &:active {
-    background-color: var(--input-background-active);
-    border-color: var(--c-lvl4-active);
   }
 }
 </style>

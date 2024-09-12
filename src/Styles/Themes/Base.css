@@ -1,0 +1,22 @@
+input {
+  &:hover,
+  &:focus-visible {
+    background-color: hsl(
+      from var(--c-lvl2) h s calc(l + 6 * var(--color-scheme-dark))
+    );
+
+    border-color: hsl(
+      from var(--c-primary) h s calc(l + 6 * var(--color-scheme-dark))
+    );
+  }
+
+  &:active {
+    background-color: hsl(
+      from var(--c-lvl2) h s calc(l + 12 * var(--color-scheme-dark))
+    );
+
+    border-color: hsl(
+      from var(--c-primary) h s calc(l + 12 * var(--color-scheme-dark))
+    );
+  }
+}

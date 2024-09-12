@@ -65,10 +65,12 @@ const onChange = (evt: Event): void => {
     justify-content: center;
     align-items: center;
 
-    height: 1rem;
-    width: 1rem;
-    background-color: var(--input-background);
-    border: solid var(--border-thickness) var(--c-lvl4);
+    --check-border-thickness: max(1px, var(--border-thickness));
+
+    height: calc(1.125rem - var(--check-border-thickness));
+    width: calc(1.125rem - var(--check-border-thickness));
+    background-color: var(--c-lvl2);
+    border: solid max(1px, var(--check-border-thickness)) var(--c-lvl4);
     border-radius: min(var(--border-radius), 25%);
 
     transition: all 0.2s ease-in-out;
@@ -83,8 +85,13 @@ const onChange = (evt: Event): void => {
   }
 
   &:hover input ~ .checkmark {
-    background-color: var(--input-background-hover);
-    border-color: var(--input-border-color-hover);
+    background-color: hsl(
+      from var(--c-lvl2) h s calc(l + 6 * var(--color-scheme-dark))
+    );
+
+    border-color: hsl(
+      from var(--c-lvl4) h s calc(l + 6 * var(--color-scheme-dark))
+    );
   }
 
   input:checked ~ .checkmark {

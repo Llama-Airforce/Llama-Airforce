@@ -6,6 +6,7 @@ import { hashFn } from "@wagmi/core/query";
 import { type CreateConnectorFn, WagmiPlugin } from "@wagmi/vue";
 import { createConfig as createConfigWagmi } from "@/Wallet/Wagmi";
 import "@/Styles/Util.css";
+import "@/Styles/Themes/Base.css";
 
 /** Options for configuring the setup function */
 type Options = {
