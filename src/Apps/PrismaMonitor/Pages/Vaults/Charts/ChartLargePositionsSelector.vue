@@ -47,7 +47,7 @@ const { isFetching: loading, data } = useQuery({
     :loading="loading"
   >
     <template #actions>
-      <div class="actions">
+      <div class="button-group">
         <ButtonToggle
           value="Coll."
           :model-value="chartType === 'collateral'"
@@ -67,25 +67,6 @@ const { isFetching: loading, data } = useQuery({
     <ChartLargePositions :data="data"></ChartLargePositions>
   </Card>
 </template>
-
-<style scoped>
-.actions {
-  display: flex;
-  font-size: 0.875rem;
-
-  button {
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-}
-</style>
 
 <i18n lang="yaml" locale="en">
 title: 5 Largest Troves vs Others

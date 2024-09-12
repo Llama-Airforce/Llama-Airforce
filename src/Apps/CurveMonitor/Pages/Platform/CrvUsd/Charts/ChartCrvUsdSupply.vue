@@ -46,7 +46,7 @@ const onChartType = (type: ChartType) => {
     :loading
   >
     <template #actions>
-      <div class="chart-types">
+      <div class="chart-types button-group">
         <ButtonToggle
           value="Line"
           :model-value="chartType === 'line'"
@@ -90,17 +90,5 @@ const onChartType = (type: ChartType) => {
 .chart-types {
   display: flex;
   font-size: 0.875rem;
-
-  button {
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
 }
 </style>

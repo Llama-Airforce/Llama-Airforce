@@ -122,7 +122,7 @@ const onPeriod = (newPeriod: Period) => {
     :loading
   >
     <template #actions>
-      <div class="periods">
+      <div class="button-group">
         <ButtonToggle
           value="1m"
           :model-value="period === '1m'"
@@ -156,23 +156,6 @@ const onPeriod = (newPeriod: Period) => {
 <style scoped>
 .chart {
   height: 300px;
-}
-
-.periods {
-  display: flex;
-  font-size: 0.875rem;
-
-  button {
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
 }
 </style>
 

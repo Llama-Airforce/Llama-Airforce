@@ -40,6 +40,23 @@
   }
 }
 
+/* Glues buttons together. */
+.button-group {
+  display: flex;
+
+  button {
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
 /* Border */
 .border-flash {
   --flash-enabled: 1;

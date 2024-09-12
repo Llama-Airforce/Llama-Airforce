@@ -69,21 +69,8 @@ const { isFetching: loading, data } = useQuery({
 </template>
 
 <style scoped>
-.actions {
-  display: flex;
+.button-group {
   font-size: 0.875rem;
-
-  button {
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
 }
 </style>
 

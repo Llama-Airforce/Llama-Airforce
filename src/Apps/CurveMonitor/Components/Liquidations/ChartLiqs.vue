@@ -25,7 +25,7 @@ const onChartType = (type: ChartType) => {
 <template>
   <Card title="Self & Hard Liquidations">
     <template #actions>
-      <div class="chart-types">
+      <div class="button-group">
         <ButtonToggle
           value="Count"
           :model-value="chartType === 'count'"
@@ -53,24 +53,3 @@ const onChartType = (type: ChartType) => {
     ></ChartLiqsValue>
   </Card>
 </template>
-
-<style scoped>
-.chart-types {
-  grid-column: 2;
-
-  display: flex;
-  font-size: 0.875rem;
-
-  button {
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-}
-</style>

@@ -340,7 +340,7 @@ whenever(isConfirmedExecute, () => {
           </div>
         </div>
 
-        <div class="options">
+        <div class="options button-group">
           <Button
             class="no"
             :class="{ winning: yeaPct < 50 }"
@@ -479,18 +479,12 @@ whenever(isConfirmedExecute, () => {
         }
 
         &.no {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-
           &.winning {
             background: var(--c-red);
           }
         }
 
         &.yes {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-
           justify-content: end;
 
           &.winning {
