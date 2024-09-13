@@ -76,6 +76,6 @@
 
   .card-body {
     line-height: 1.4rem;
-    color: darken(#fafafa, 15%);
+    color: hsl(from #fafafa h s calc(l - 15));
   }
 }
