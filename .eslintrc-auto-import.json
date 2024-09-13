@@ -519,6 +519,9 @@
     "mapKeys": true,
     "CrvUsdAddress": true,
     "useTemplateRef": true,
-    "MaybeRef": true
+    "MaybeRef": true,
+    "onWatcherCleanup": true,
+    "useId": true,
+    "useModel": true
   }
 }
