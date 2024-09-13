@@ -23,8 +23,6 @@
   --c-lvl5-hover: #808089;
   --c-lvl5-active: #909098;
   --c-lvl6: #aea8af;
-  --c-lvl6-hover: #bdb8be;
-  --c-lvl6-active: #ccc8cc;
   --c-red: #ff5757;
   --c-green: #7ed957;
   --c-blue: #2081f0;
@@ -48,8 +46,6 @@
   --card-margin-inline: 1.125rem;
 
   --container-background: var(--c-lvl0);
-  --container-background-hover: var(--c-lvl0-hover);
-  --container-background-active: var(--c-lvl0-active);
   --container-box-shadow: 0 0 0 0;
 
   --select-box-shadow: 0;
