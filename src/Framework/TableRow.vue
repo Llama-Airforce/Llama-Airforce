@@ -110,7 +110,7 @@ const onClick = (): void => {
 
   &.expanded {
     > .row-data {
-      background: var(--row-background, --c-lvl1);
+      background-color: var(--row-background, --c-lvl1);
       border-bottom-width: 0;
 
       > .expander {
@@ -127,10 +127,9 @@ const onClick = (): void => {
     padding: 0 1rem;
     grid-column-gap: var(--columns-gap, 1rem);
     min-height: 3rem;
-    /* border-bottom: var(--border-thickness) solid var(--c-lvl4); */
     align-items: center;
-    background: var(--row-background);
-    transition: background var(--hover-duration);
+    background-color: var(--row-background, --c-lvl1);
+    transition: background-color var(--hover-duration);
 
     &:last-child {
       border-bottom-width: 0;
@@ -146,12 +145,16 @@ const onClick = (): void => {
 
     &.has-data {
       &:hover {
-        background: var(--container-background-hover);
+        background-color: hsl(
+          from var(--c-lvl1) h s calc(l + 6 * var(--color-scheme-dark))
+        );
       }
 
       &:active,
       &.active {
-        background: var(--container-background-active);
+        background-color: hsl(
+          from var(--c-lvl1) h s calc(l + 12 * var(--color-scheme-dark))
+        );
       }
     }
 
