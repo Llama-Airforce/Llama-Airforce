@@ -60,9 +60,6 @@
 
   --tooltip-box-shadow: 0;
 
-  --gutter-color: var(--c-primary);
-  --spinner-color: var(--c-text);
-
   --hover-duration: 75ms;
 
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
