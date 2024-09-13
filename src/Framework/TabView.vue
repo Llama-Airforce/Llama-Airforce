@@ -82,7 +82,8 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
     margin: 0;
     list-style-type: none;
     align-self: flex-start;
-    border-bottom: var(--border-bottom, 2px solid var(--c-lvl2));
+
+    --border-thickness: 2px;
 
     > li {
       display: flex;
@@ -93,9 +94,13 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       padding: 1rem;
 
       user-select: none;
-      color: var(--tab-text-color);
+      color: var(--c-lvl5);
       font-weight: 500;
 
+      border-bottom: var(
+        --border-bottom,
+        var(--border-thickness) solid var(--c-lvl2)
+      );
       transition: border, color 125ms ease;
 
       &:not(.active) {
@@ -103,16 +108,18 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
       }
 
       &:hover:not(.disabled) {
-        border-bottom: 2px solid var(--c-primary-active);
-        margin: 0 0 -2px 0;
-        color: var(--tab-text-color-hover);
+        border-bottom: var(--border-thickness) solid
+          hsl(from var(--c-lvl2) h s calc(l + 6 * var(--color-scheme-dark)));
+
+        color: hsl(
+          from var(--c-lvl5) h s calc(l + 6 * var(--color-scheme-dark))
+        );
       }
 
       &:active:not(.disabled),
       &.active:not(.disabled) {
-        border-bottom: 2px solid var(--c-primary);
-        margin: 0 0 -2px 0;
-        color: var(--tab-text-color-active);
+        border-bottom: var(--border-thickness) solid var(--c-primary);
+        color: var(--c-text);
       }
 
       &.disabled {

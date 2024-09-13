@@ -66,14 +66,9 @@
 
   --tooltip-box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
 
-  --tab-text-color: var(--c-lvl5);
-  --tab-text-color-hover: var(--c-primary-active);
-  --tab-text-color-active: var(--c-text);
-
   --gutter-color: var(--c-primary);
 
   --spinner-color: var(--c-text);
-
   --hover-duration: 75ms;
 
   font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
