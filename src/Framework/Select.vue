@@ -88,7 +88,7 @@ const open = ref(false);
   outline-color: transparent;
   line-height: 1.5rem;
 
-  &.open {
+  &.open:not(&.direction-up) {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
