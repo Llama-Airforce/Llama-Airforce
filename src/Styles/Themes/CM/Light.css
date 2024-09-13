@@ -63,8 +63,8 @@
   --tooltip-box-shadow: var(--container-box-shadow);
 
   --gutter-color: var(--c-primary);
-
   --spinner-color: var(--c-text);
+
   --hover-duration: 75ms;
 
   font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
