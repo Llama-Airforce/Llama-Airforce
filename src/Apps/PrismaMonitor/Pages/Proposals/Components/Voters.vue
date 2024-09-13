@@ -39,7 +39,7 @@ const you = (address: string): boolean => address === walletAddress.value;
     <div
       v-for="vote in votes"
       :key="vote.voter"
-      class="vote"
+      class="vote font-mono"
     >
       <div class="address">
         <a
@@ -85,8 +85,6 @@ const you = (address: string): boolean => address === walletAddress.value;
   }
 
   .vote {
-    font-family: var(--font-mono);
-
     .address {
       a {
         &.you {

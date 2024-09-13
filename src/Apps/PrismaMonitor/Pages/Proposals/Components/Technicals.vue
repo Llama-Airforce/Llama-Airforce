@@ -108,7 +108,7 @@ const callData = computed(() => {
       </div>
       <Collapsible :expanded="expandedCallData">
         <div
-          class="calldata"
+          class="calldata font-mono"
           v-html="callData"
         ></div>
       </Collapsible>
@@ -147,10 +147,6 @@ const callData = computed(() => {
       &.expandedVoters {
         transform: rotate(180deg);
       }
-    }
-
-    .calldata {
-      font-family: var(--font-mono);
     }
 
     .calldata,
