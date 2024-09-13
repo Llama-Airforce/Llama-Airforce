@@ -45,8 +45,6 @@
   --border-radius: 10px;
   --border-thickness: 0px;
 
-  --header-background: var(--c-lvl0);
-
   --table-border-aggregation: calc(var(--border-thickness) + 2px) solid
     var(--c-lvl3);
 

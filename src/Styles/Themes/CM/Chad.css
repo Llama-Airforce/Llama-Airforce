@@ -47,10 +47,6 @@
   --border-radius: 0px;
   --border-thickness: 2px;
 
-  --header-background: #4637a9;
-  --header-font-family: monospace;
-  --header-font-color: white;
-
   --table-border-aggregation: calc(var(--border-thickness) + 1px) solid
     var(--c-primary);
 
