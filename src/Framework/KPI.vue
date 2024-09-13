@@ -138,7 +138,8 @@ const {
         width: 100%;
         height: 1px;
         background-color: transparent;
-        border-bottom: 2px dotted var(--c-lvl3-active);
+        border-bottom: 2px dotted
+          hsl(from var(--c-lvl3) h s calc(l + 12 * var(--color-scheme-dark)));
       }
     }
 

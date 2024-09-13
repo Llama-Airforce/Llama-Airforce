@@ -1,3 +1,23 @@
+:root {
+  --page-margin: 2.375rem;
+  --dashboard-gap: 1.5rem;
+
+  --card-margin-block: 0.875rem;
+  --card-margin-inline: 1.125rem;
+
+  --container-background: var(--c-lvl0);
+
+  --hover-duration: 75ms;
+
+  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+}
+
 input {
   &:hover,
   &:focus-visible {

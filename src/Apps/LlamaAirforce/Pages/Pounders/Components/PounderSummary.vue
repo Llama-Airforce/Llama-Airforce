@@ -120,7 +120,8 @@ whenever(getFeesTrigger, async () => {
     }
 
     .value-tooltip {
-      border-bottom: dotted 2px var(--c-lvl3-active);
+      border-bottom: dotted 2px
+        hsl(from var(--c-lvl3) h s calc(l + 12 * var(--color-scheme-dark)));
     }
 
     .tooltip .content {

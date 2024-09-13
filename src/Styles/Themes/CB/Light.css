@@ -1,27 +1,15 @@
-[data-theme="light"] {
+:root[data-theme="light"] {
   --color-scheme-dark: -1;
   color-scheme: light;
 
   --c-text: #333333;
   --c-text-invert: #ffffff;
   --c-lvl0: #fafcff;
-  --c-lvl0-hover: #dbeaff;
-  --c-lvl0-active: #bdd7ff;
   --c-lvl1: #f7f7f7;
-  --c-lvl1-hover: #e8e8e8;
-  --c-lvl1-active: #d8d8d8;
   --c-lvl2: #efefef;
-  --c-lvl2-hover: #e0e0e0;
-  --c-lvl2-active: #d1d1d1;
   --c-lvl3: #e8e8e8;
-  --c-lvl3-hover: #d8d8d8;
-  --c-lvl3-active: #c9c9c9;
   --c-lvl4: #d8d8d8;
-  --c-lvl4-hover: #c9c9c9;
-  --c-lvl4-active: #bababa;
   --c-lvl5: #6e6e77;
-  --c-lvl5-hover: #5f5f67;
-  --c-lvl5-active: #515157;
   --c-lvl6: #212124;
   --c-red: hsl(7, 95%, 54%);
   --c-green: hsl(122, 95%, 35%);
@@ -29,12 +17,6 @@
   --c-yellow: hsl(39, 95%, 54%);
   --c-purple: hsl(284, 95%, 54%);
   --c-primary: #5baefb;
-  --c-primary-hover: #7ebffc;
-  --c-primary-active: #afd7fd;
-  --c-primary-disabled: #afd7fd;
-
-  --page-margin: 2.375rem;
-  --dashboard-gap: 1.5rem;
 
   --border-radius: 10px;
   --border-thickness: 0px;
@@ -42,10 +24,6 @@
   --table-border-aggregation: calc(var(--border-thickness) + 2px) solid
     var(--c-lvl3);
 
-  --card-margin-block: 0.875rem;
-  --card-margin-inline: 1.125rem;
-
-  --container-background: var(--c-lvl0);
   --container-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   --select-box-shadow: 0;
@@ -55,16 +33,6 @@
   --input-items-box-shadow: var(--container-box-shadow);
 
   --tooltip-box-shadow: var(--container-box-shadow);
-
-  --hover-duration: 75ms;
-
-  font-family: "Nunito", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 16px;
-
-  @media only screen and (max-width: 1280px) {
-    font-size: 14px;
-  }
 
   body {
     background-color: transparent;

@@ -1,27 +1,15 @@
-[data-theme="chad"] {
+:root[data-theme="chad"] {
   --color-scheme-dark: -1;
   color-scheme: light dark;
 
   --c-text: black;
   --c-text-invert: #ffffff;
   --c-lvl0: #e6e4f6;
-  --c-lvl0-hover: #d1cdee;
-  --c-lvl0-active: #bcb6e7;
   --c-lvl1: #f4f4f6;
-  --c-lvl1-hover: #e3e3e8;
-  --c-lvl1-active: #d2d2da;
   --c-lvl2: #d9d8df;
-  --c-lvl2-hover: #c9c7d1;
-  --c-lvl2-active: #b8b6c3;
   --c-lvl3: #e3e3e8;
-  --c-lvl3-hover: #d2d2da;
-  --c-lvl3-active: #c2c2cd;
   --c-lvl4: #a1a1a1;
-  --c-lvl4-hover: #919191;
-  --c-lvl4-active: #828282;
   --c-lvl5: #7d7d86;
-  --c-lvl5-hover: #6e6e77;
-  --c-lvl5-active: #5f5f67;
   --c-lvl6: #212124;
   --c-red: hsl(7, 95%, 54%);
   --c-green: hsl(122, 95%, 35%);
@@ -29,12 +17,6 @@
   --c-yellow: hsl(39, 95%, 54%);
   --c-purple: hsl(284, 95%, 54%);
   --c-primary: #9d93dc;
-  --c-primary-hover: #aba3e1;
-  --c-primary-active: #c4beea;
-  --c-primary-disabled: #d5d1f0;
-
-  --page-margin: 2.375rem;
-  --dashboard-gap: 1.5rem;
 
   --border-radius: 0px;
   --border-thickness: 2px;
@@ -42,10 +24,6 @@
   --table-border-aggregation: calc(var(--border-thickness) + 1px) solid
     var(--c-primary);
 
-  --card-margin-block: 0.875rem;
-  --card-margin-inline: 1.125rem;
-
-  --container-background: var(--c-lvl0);
   --container-box-shadow: 0 0 0 0;
 
   --select-box-shadow: 3px 3px 0 #0d0a1f;
@@ -55,8 +33,6 @@
   --input-items-box-shadow: inset 0.5px 0.5px 0 0.5px;
 
   --tooltip-box-shadow: 0;
-
-  --hover-duration: 75ms;
 
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

@@ -134,12 +134,14 @@ i {
     color: var(--c-lvl5) !important;
 
     &:hover {
-      color: var(--c-lvl5-hover);
+      color: hsl(from var(--c-lvl5) h s calc(l + 6 * var(--color-scheme-dark)));
       background: #1e1e21;
     }
 
     &:active {
-      color: var(--c-lvl5-active);
+      color: hsl(
+        from var(--c-lvl5) h s calc(l + 12 * var(--color-scheme-dark))
+      );
     }
   }
 
@@ -152,7 +154,9 @@ i {
     transition: all var(--hover-duration);
 
     &:active {
-      background: var(--c-lvl2-hover);
+      background: hsl(
+        from var(--c-lvl2) h s calc(l + 6 * var(--color-scheme-dark))
+      );
     }
 
     @media only screen and (max-width: 1280px) {

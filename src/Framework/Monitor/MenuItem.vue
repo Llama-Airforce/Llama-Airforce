@@ -211,11 +211,15 @@ const onClickNode = (): void => {
   }
 
   &:hover {
-    background: var(--c-lvl2-hover);
+    background: hsl(
+      from var(--c-lvl2) h s calc(l + 6 * var(--color-scheme-dark))
+    );
   }
 
   &:active {
-    background: var(--c-lvl2-active);
+    background: hsl(
+      from var(--c-lvl2) h s calc(l + 12 * var(--color-scheme-dark))
+    );
 
     &:not(.router-link-active) {
       color: var(--c-text) !important;

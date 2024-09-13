@@ -531,7 +531,9 @@ whenever(isConfirmedExecute, () => {
           transition: background-color 125ms ease;
 
           &:hover:not(.disabled) {
-            background: var(--c-lvl1-hover);
+            background: hsl(
+              from var(--c-lvl1) h s calc(l + 6 * var(--color-scheme-dark))
+            );
             cursor: text;
           }
 

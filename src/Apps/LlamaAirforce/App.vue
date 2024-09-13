@@ -56,7 +56,9 @@ html {
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--c-primary-hover);
+    background: hsl(
+      from var(--c-primary) h s calc(l + 6 * var(--color-scheme-dark))
+    );
   }
 }
 

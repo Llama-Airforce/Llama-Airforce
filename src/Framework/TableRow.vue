@@ -102,7 +102,9 @@ const onClick = (): void => {
   &:hover {
     > .row-data {
       > .expander {
-        color: var(--c-primary-hover);
+        color: hsl(
+          from var(--c-primary) h s calc(l + 6 * var(--color-scheme-dark))
+        );
         scale: 1.25;
       }
     }

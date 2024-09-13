@@ -105,8 +105,13 @@ const onChange = (evt: Event): void => {
   }
 
   input:checked:hover ~ .checkmark {
-    background-color: var(--c-primary-hover);
-    border-color: var(--c-primary-hover);
+    background-color: hsl(
+      from var(--c-primary) h s calc(l + 6 * var(--color-scheme-dark))
+    );
+
+    border-color: hsl(
+      from var(--c-primary) h s calc(l + 6 * var(--color-scheme-dark))
+    );
   }
 
   .checkmark-label {

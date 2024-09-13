@@ -79,7 +79,9 @@ const open = ref(false);
   -webkit-tap-highlight-color: transparent;
 
   transition: background-color 125ms ease;
-  background: var(--c-lvl1-hover);
+  background: hsl(
+    from var(--c-lvl1) h s calc(l + 6 * var(--color-scheme-dark))
+  );
   border-radius: var(--border-radius);
   box-shadow: var(--select-box-shadow);
 
@@ -92,7 +94,9 @@ const open = ref(false);
   }
 
   &:hover {
-    background: var(--c-lvl1-active);
+    background: hsl(
+      from var(--c-lvl1) h s calc(l + 12 * var(--color-scheme-dark))
+    );
   }
 
   &.direction-up {
