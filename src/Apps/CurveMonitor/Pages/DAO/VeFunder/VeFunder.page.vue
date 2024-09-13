@@ -72,9 +72,7 @@ const onGauge = (newGauge: string): void => {
     gap: var(--dashboard-gap);
 
     @media only screen and (max-width: 1280px) {
-      & {
-        flex-direction: column;
-      }
+      flex-direction: column;
     }
   }
 }

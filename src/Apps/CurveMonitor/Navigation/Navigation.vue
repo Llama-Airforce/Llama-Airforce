@@ -55,17 +55,15 @@ const onNavigated = () => {
   user-select: none;
 
   @media only screen and (max-width: 1280px) {
-    & {
-      width: 100vw;
-      width: 100dvw;
-      height: auto;
-      grid-template-columns: 1fr;
-      grid-template-rows: 4rem 1fr auto;
+    width: 100vw;
+    width: 100dvw;
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 4rem 1fr auto;
 
-      &.expanded {
-        height: 100vh;
-        height: 100dvh;
-      }
+    &.expanded {
+      height: 100vh;
+      height: 100dvh;
     }
   }
 
@@ -73,9 +71,7 @@ const onNavigated = () => {
     transition: grid-template-rows 125ms ease-out;
 
     @media not screen and (max-width: 1280px) {
-      & {
-        grid-template-rows: 1fr;
-      }
+      grid-template-rows: 1fr;
     }
   }
 }

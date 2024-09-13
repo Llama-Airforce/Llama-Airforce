@@ -46,10 +46,8 @@ const { name, logo, symbol, priceUnderlying } = defineProps<{
     font-size: 1rem;
 
     @media only screen and (max-width: 800px) {
-      & {
-        > .name {
-          display: none;
-        }
+      > .name {
+        display: none;
       }
     }
 

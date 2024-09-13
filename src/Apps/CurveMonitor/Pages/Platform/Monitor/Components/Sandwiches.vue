@@ -157,9 +157,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
     width: 600px;
 
     @media only screen and (max-width: 1280px) {
-      & {
-        width: auto;
-      }
+      width: auto;
     }
   }
 }

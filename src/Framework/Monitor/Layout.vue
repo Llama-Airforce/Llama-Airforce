@@ -137,10 +137,8 @@ p {
   grid-template-areas: "navigation main";
 
   @media only screen and (max-width: 1280px) {
-    & {
-      grid-template-rows: auto 1fr;
-      grid-template-columns: 1fr;
-    }
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
   }
 
   > main {
@@ -148,10 +146,8 @@ p {
     overflow-y: auto;
 
     @media only screen and (max-width: 1280px) {
-      & {
-        grid-row: 2;
-        grid-column: 1;
-      }
+      grid-row: 2;
+      grid-column: 1;
     }
 
     > .toolbar-container {
@@ -167,13 +163,11 @@ p {
       padding-right: var(--page-margin);
 
       @media only screen and (max-width: 1280px) {
-        & {
-          padding: 0 1rem;
-          margin-top: var(--dashboard-gap);
-          margin-bottom: 0;
+        padding: 0 1rem;
+        margin-top: var(--dashboard-gap);
+        margin-bottom: 0;
 
-          flex-direction: column;
-        }
+        flex-direction: column;
       }
 
       /* Don't display toolbar-container any of its underlying divs are empty. */

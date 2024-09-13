@@ -123,12 +123,10 @@ const linkAddress = (addr: string): string => {
     }
 
     @media only screen and (max-width: 1280px) {
-      & {
-        justify-content: center;
+      justify-content: center;
 
-        .label {
-          display: none;
-        }
+      .label {
+        display: none;
       }
     }
   }

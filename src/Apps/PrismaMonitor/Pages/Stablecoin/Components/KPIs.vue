@@ -74,11 +74,9 @@ const { data } = useQuery({
   gap: var(--dashboard-gap);
 
   @media only screen and (max-width: 1280px) {
-    & {
-      display: grid;
-      grid-template-columns: auto auto;
-      grid-template-rows: 1fr 1fr;
-    }
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr;
   }
 }
 </style>

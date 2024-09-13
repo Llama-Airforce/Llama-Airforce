@@ -248,9 +248,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
       gap: var(--dashboard-gap);
 
       @media only screen and (max-width: 1280px) {
-        & {
-          flex-direction: column;
-        }
+        flex-direction: column;
       }
     }
   }
@@ -264,9 +262,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
   gap: var(--dashboard-gap);
 
   @media only screen and (max-width: 1280px) {
-    & {
-      grid-template-columns: 1fr 14rem;
-    }
+    grid-template-columns: 1fr 14rem;
   }
 
   .search {

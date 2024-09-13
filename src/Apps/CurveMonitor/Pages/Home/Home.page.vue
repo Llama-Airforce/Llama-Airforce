@@ -40,19 +40,17 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
   gap: calc(3 * var(--dashboard-gap));
 
   @media only screen and (max-width: 1280px) {
-    & {
-      display: grid;
-      margin-inline: calc(0.5 * var(--page-margin));
-      gap: calc(2 * var(--dashboard-gap));
+    display: grid;
+    margin-inline: calc(0.5 * var(--page-margin));
+    gap: calc(2 * var(--dashboard-gap));
 
-      grid-template-areas:
-        "description description"
-        "highlights highlights"
-        "articles articles";
+    grid-template-areas:
+      "description description"
+      "highlights highlights"
+      "articles articles";
 
-      > .description {
-        justify-content: center;
-      }
+    > .description {
+      justify-content: center;
     }
   }
 
@@ -68,9 +66,7 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
       font-weight: bold;
 
       @media only screen and (max-width: 825px) {
-        & {
-          font-size: 2.5rem;
-        }
+        font-size: 2.5rem;
       }
     }
 
@@ -79,15 +75,11 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
       opacity: 0.9;
 
       @media only screen and (max-width: 825px) {
-        & {
-          max-width: 400px;
-        }
+        max-width: 400px;
       }
 
       @media only screen and (max-width: 600px) {
-        & {
-          max-width: 300px;
-        }
+        max-width: 300px;
       }
     }
   }
@@ -102,10 +94,8 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
     gap: calc(1.25 * var(--dashboard-gap));
 
     @media only screen and (max-width: 825px) {
-      & {
-        display: flex;
-        flex-direction: column;
-      }
+      display: flex;
+      flex-direction: column;
     }
   }
 
@@ -124,25 +114,19 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
     animation: float 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 
     @media only screen and (max-width: 1280px) {
-      & {
-        grid-area: description;
-        justify-self: end;
-        z-index: -1;
-        min-width: min-content;
-        max-height: 200px;
-      }
+      grid-area: description;
+      justify-self: end;
+      z-index: -1;
+      min-width: min-content;
+      max-height: 200px;
     }
 
     @media only screen and (max-width: 825px) {
-      & {
-        opacity: 0.25;
-      }
+      opacity: 0.25;
     }
 
     @media only screen and (max-width: 600px) {
-      & {
-        max-height: 150px;
-      }
+      max-height: 150px;
     }
 
     @keyframes float {

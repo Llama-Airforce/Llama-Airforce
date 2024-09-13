@@ -122,9 +122,7 @@ const onTypeSelect = (type: ProposalType): void => {
   flex-direction: column;
 
   @media only screen and (max-width: 1280px) {
-    & {
-      padding: 1.5rem 1rem;
-    }
+    padding: 1.5rem 1rem;
   }
 
   > .filters {
@@ -133,10 +131,8 @@ const onTypeSelect = (type: ProposalType): void => {
     gap: 1rem;
 
     @media only screen and (max-width: 1280px) {
-      & {
-        display: flex;
-        flex-direction: column;
-      }
+      display: flex;
+      flex-direction: column;
     }
   }
 

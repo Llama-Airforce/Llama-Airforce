@@ -100,10 +100,8 @@ function createUCvxPounder() {
     "left right";
 
   @media only screen and (max-width: 1280px) {
-    & {
-      display: flex;
-      flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
   }
 
   .col {

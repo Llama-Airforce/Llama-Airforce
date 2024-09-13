@@ -105,18 +105,16 @@ const { market, chain } = defineProps<{
     "properties properties addresses addresses";
 
   @media only screen and (max-width: 1280px) {
-    & {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-areas:
-        "kpi1 kpi2"
-        "kpi3 kpi4"
-        "rates rates"
-        "cap cap"
-        "loans loans"
-        "volume volume"
-        "properties properties"
-        "addresses addresses";
-    }
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "kpi1 kpi2"
+      "kpi3 kpi4"
+      "rates rates"
+      "cap cap"
+      "loans loans"
+      "volume volume"
+      "properties properties"
+      "addresses addresses";
   }
 }
 </style>

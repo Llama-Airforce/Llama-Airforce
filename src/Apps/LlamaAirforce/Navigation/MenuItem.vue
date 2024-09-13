@@ -160,13 +160,11 @@ i {
     }
 
     @media only screen and (max-width: 1280px) {
-      & {
-        height: 50px;
-        font-size: 1.75rem;
+      height: 50px;
+      font-size: 1.75rem;
 
-        > i {
-          min-width: 2rem;
-        }
+      > i {
+        min-width: 2rem;
       }
     }
   }

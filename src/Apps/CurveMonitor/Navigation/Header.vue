@@ -29,24 +29,20 @@ const emit = defineEmits<{
 
 <style scoped>
 @media only screen and (max-width: 1280px) {
-  & {
-    .header > .logo {
-      transform: scale(0.75);
-    }
+  .header > .logo {
+    transform: scale(0.75);
   }
 }
 
 .header {
   @media only screen and (max-width: 1280px) {
-    & {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-      > .buttons {
-        margin-right: 1.75rem;
-        display: flex !important;
-      }
+    > .buttons {
+      margin-right: 1.75rem;
+      display: flex !important;
     }
   }
 

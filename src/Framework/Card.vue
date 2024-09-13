@@ -151,19 +151,17 @@ const showHeader = computed(
        * 3. It uses the columns that were removed from the parent grid.
        */
       @media only screen and (max-width: 1280px) {
-        & {
-          row-gap: 0.5rem;
-          grid-template-columns:
-            var(--header-column-title)
-            var(--header-column-actions);
+        row-gap: 0.5rem;
+        grid-template-columns:
+          var(--header-column-title)
+          var(--header-column-actions);
 
-          .card-actions-secondary {
-            display: grid;
-            grid-row: 2;
-            grid-column: 1 / -1;
+        .card-actions-secondary {
+          display: grid;
+          grid-row: 2;
+          grid-column: 1 / -1;
 
-            grid-template-columns: var(--header-column-actions-secondary);
-          }
+          grid-template-columns: var(--header-column-actions-secondary);
         }
       }
     }
@@ -205,10 +203,8 @@ const showHeader = computed(
       var(--card-margin-inline);
 
     @media only screen and (max-width: 1280px) {
-      & {
-        margin: 0 var(--card-margin-inline) var(--card-margin-block)
-          var(--card-margin-inline);
-      }
+      margin: 0 var(--card-margin-inline) var(--card-margin-block)
+        var(--card-margin-inline);
     }
 
     &.compact {

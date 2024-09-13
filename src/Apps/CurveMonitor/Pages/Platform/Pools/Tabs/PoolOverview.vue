@@ -155,16 +155,14 @@ const balances = computed(() => {
     "volume volume balances balances";
 
   @media only screen and (max-width: 1280px) {
-    & {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-areas:
-        "kpi1 kpi2"
-        "kpi3 kpi4"
-        "price price"
-        "volume volume"
-        "tvl tvl"
-        "balances balances";
-    }
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "kpi1 kpi2"
+      "kpi3 kpi4"
+      "price price"
+      "volume volume"
+      "tvl tvl"
+      "balances balances";
   }
 
   .tokens {

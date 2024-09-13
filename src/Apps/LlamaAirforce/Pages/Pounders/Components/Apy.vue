@@ -77,9 +77,7 @@ const emit = defineEmits<{
   width: 10rem;
 
   @media only screen and (max-width: 1280px) {
-    & {
-      width: auto;
-    }
+    width: auto;
   }
 }
 </style>

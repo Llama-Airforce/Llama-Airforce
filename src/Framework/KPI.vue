@@ -98,9 +98,7 @@ const {
   box-shadow: var(--container-box-shadow);
 
   @media only screen and (max-width: 1280px) {
-    & {
-      padding: 0.75rem 1rem;
-    }
+    padding: 0.75rem 1rem;
   }
 
   > .labels {

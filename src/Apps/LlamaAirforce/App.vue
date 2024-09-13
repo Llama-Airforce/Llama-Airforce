@@ -112,14 +112,12 @@ a {
     grid-column: 2;
 
     @media only screen and (max-width: 1280px) {
-      & {
-        display: flex;
+      display: flex;
 
-        grid-row: 3;
-        grid-column: 1 / span 2;
+      grid-row: 3;
+      grid-column: 1 / span 2;
 
-        justify-self: center;
-      }
+      justify-self: center;
     }
   }
 
@@ -146,13 +144,11 @@ a {
   }
 
   @media only screen and (max-width: 1280px) {
-    & {
-      display: flex;
-      flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-      > .menu {
-        display: none;
-      }
+    > .menu {
+      display: none;
     }
   }
 }

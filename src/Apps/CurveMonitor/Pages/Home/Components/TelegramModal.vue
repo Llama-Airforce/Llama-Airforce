@@ -77,14 +77,12 @@ emph {
   font-size: 1rem;
 
   @media only screen and (max-width: 1280px) {
-    & {
-      max-width: 80vw;
-      overflow-y: auto;
-      max-height: 80dvh;
+    max-width: 80vw;
+    overflow-y: auto;
+    max-height: 80dvh;
 
-      grid-template-columns: 1fr;
-      gap: calc(0.5 * var(--dashboard-gap));
-    }
+    grid-template-columns: 1fr;
+    gap: calc(0.5 * var(--dashboard-gap));
   }
 
   .item {

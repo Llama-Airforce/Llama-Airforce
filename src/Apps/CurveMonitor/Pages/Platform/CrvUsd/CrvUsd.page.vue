@@ -80,10 +80,8 @@ const onMarketSelect = async (newMarket: Market) => {
     gap: var(--dashboard-gap);
 
     @media only screen and (max-width: 1280px) {
-      & {
-        display: flex;
-        flex-direction: column;
-      }
+      display: flex;
+      flex-direction: column;
     }
   }
 

@@ -133,11 +133,9 @@ const you = (address: string): boolean => address === walletAddress.value;
   gap: 2rem;
 
   @media only screen and (max-width: 1280px) {
-    & {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .vote {

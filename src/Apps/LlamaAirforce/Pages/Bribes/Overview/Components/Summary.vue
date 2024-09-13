@@ -103,25 +103,23 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
   gap: 1.5rem;
 
   @media only screen and (max-width: 1280px) {
-    & {
-      display: grid;
-      grid-template-rows: auto auto;
-      grid-template-columns: 1fr 1fr;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
 
-      > .emissions-per-bribe {
-        grid-row: 1;
-        grid-column: 1 / span 2;
-      }
+    > .emissions-per-bribe {
+      grid-row: 1;
+      grid-column: 1 / span 2;
+    }
 
-      > .all-time-revenue {
-        grid-row: 2;
-        grid-column: 1;
-      }
+    > .all-time-revenue {
+      grid-row: 2;
+      grid-column: 1;
+    }
 
-      .emissions-per-bribe > .record-earnings {
-        grid-row: 2;
-        grid-column: 2;
-      }
+    .emissions-per-bribe > .record-earnings {
+      grid-row: 2;
+      grid-column: 2;
     }
   }
 }

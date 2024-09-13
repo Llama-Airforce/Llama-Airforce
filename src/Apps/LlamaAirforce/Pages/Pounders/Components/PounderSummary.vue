@@ -79,9 +79,7 @@ whenever(getFeesTrigger, async () => {
   margin: 1rem 2rem;
 
   @media only screen and (max-width: 800px) {
-    & {
-      grid-template-columns: auto 1fr 1fr 1fr auto;
-    }
+    grid-template-columns: auto 1fr 1fr 1fr auto;
   }
 
   > .expander {
@@ -114,9 +112,7 @@ whenever(getFeesTrigger, async () => {
     font-weight: bold;
 
     @media only screen and (max-width: 400px) {
-      & {
-        font-size: 1rem;
-      }
+      font-size: 1rem;
     }
 
     .value-tooltip {

@@ -47,16 +47,12 @@ const showModal = ref(false);
   place-items: center;
 
   @container (width < 1000px) {
-    & {
-      grid-template-columns: 1fr;
-      margin: var(--card-margin-block) var(--card-margin-inline);
-    }
+    grid-template-columns: 1fr;
+    margin: var(--card-margin-block) var(--card-margin-inline);
   }
 
   @media only screen and (max-width: 1280px) {
-    & {
-      gap: calc(1.5 * var(--dashboard-gap));
-    }
+    gap: calc(1.5 * var(--dashboard-gap));
   }
 
   > .info {
@@ -73,9 +69,7 @@ const showModal = ref(false);
     height: var(--size);
 
     @media only screen and (max-width: 1280px) {
-      & {
-        --size: 60px;
-      }
+      --size: 60px;
     }
 
     > img {

@@ -29,42 +29,38 @@ const emit = defineEmits<{
 
 <style scoped>
 @media only screen and (max-width: 1280px) {
-  & {
-    .header > .logo {
-      transform: scale(0.75);
-    }
+  .header > .logo {
+    transform: scale(0.75);
   }
 }
 
 .header {
   @media only screen and (max-width: 1280px) {
-    & {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      > .buttons {
-        margin-right: 1.75rem;
-        display: flex !important;
-      }
-    }
-  }
-
-  > .buttons {
-    display: none;
-  }
-
-  > .logo {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    height: 100%;
-    cursor: pointer;
-    color: var(--c-text);
 
-    &:hover {
-      background: unset;
+    > .buttons {
+      margin-right: 1.75rem;
+      display: flex !important;
     }
+  }
+}
+
+> .buttons {
+  display: none;
+}
+
+> .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  color: var(--c-text);
+
+  &:hover {
+    background: unset;
   }
 }
 </style>
