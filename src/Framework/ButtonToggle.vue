@@ -19,7 +19,7 @@ const onClick = (): void => {
 </script>
 
 <template>
-  <button
+  <Button
     :class="{ toggled: modelValue }"
     @click="onClick"
   >
@@ -32,58 +32,20 @@ const onClick = (): void => {
       </i>
       {{ value }}
     </slot>
-  </button>
+  </Button>
 </template>
 
 <style scoped>
 button {
-  all: unset;
-  display: flex;
-  align-items: center;
-  line-height: 1;
-  padding: 0.5rem 1rem;
-  color: var(--c-text);
-  background: var(--c-lvl1);
-  user-select: none;
-  cursor: pointer;
-
-  /* Disable blue highlight because of pointer. */
-  -webkit-tap-highlight-color: transparent;
-  height: calc(40px - 1rem);
-
-  border-radius: var(--border-radius);
-
-  transition: background-color 125ms ease;
-
   .icon {
     display: flex;
     align-items: center;
     margin-right: 1rem;
   }
 
-  &:disabled {
-    pointer-events: none;
-    background: var(--c-primary-disabled);
-  }
-
-  &:hover:not(:disabled) {
-    background: var(--container-background-hover);
-  }
-
-  &:active:not(:disabled) {
-    background: var(--container-background-active);
-  }
-
   &.toggled:not(:disabled) {
-    background-color: var(--c-primary);
-
-    &:hover {
-      background-color: var(--c-primary-hover);
-    }
-
-    &:active {
-      background-color: var(--c-primary-active);
-    }
+    --c-background: var(--c-variant, var(--c-primary));
+    --c-states: var(--c-variant, var(--c-primary));
   }
 }
 </style>
