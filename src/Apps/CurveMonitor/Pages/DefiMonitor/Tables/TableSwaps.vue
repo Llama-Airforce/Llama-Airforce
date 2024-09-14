@@ -1,20 +1,11 @@
 <script setup lang="ts">
-import { type Address } from "@/Framework/Address";
 import { addressLeft } from "@/Wallet";
 import { useQuerySwaps } from "@CM/Services/Monitor/Swap/Queries";
+import WatchlistSwappers from "../Components/WatchlistSwappers.vue";
+import { type Swapper } from "../Models";
 
 // Options
-const swappers = [
-  {
-    address: "0x111111125421ca6dc452d289314280a0f8842a65" as Address,
-    name: "1inch V6",
-  },
-  {
-    address: "0x1111111254eeb25477b68fb85ed929f73a960582" as Address,
-    name: "1inch V5",
-  },
-];
-const swapper = ref(swappers[0]);
+const swappers = ref<Swapper[]>([]);
 
 const minAmount = ref<number | null | string>(0);
 const minAmountParsed = computed(() => {
@@ -22,9 +13,18 @@ const minAmountParsed = computed(() => {
   return typeof value === "string" ? parseFloat(value) || 0 : value ? value : 0;
 });
 
-// Data
+/**
+ * Data
+ *
+ * TODO: When 'swappers' changes and data is refetched, the old data is discarded.
+ * Setting resetOnSubscribe to false won't help because the key changes and is highly volatile.
+ * It's best to keep resetOnSubscribe set to true and track the history in this component.
+ * Consider creating a composable that watches a ref and appends data whenever new data is added.
+ * The composable would take a Ref<T[]> and output a new Ref<T[]>, essentially maintaining
+ * a history of all values.
+ */
 const { data: swapsRaw, isFetching: loading } = useQuerySwaps(
-  computed(() => swapper.value.address)
+  computed(() => swappers.value.map((swapper) => swapper.address))
 );
 const { relativeTime } = useRelativeTime();
 
@@ -88,18 +88,9 @@ const round = (x: number) =>
     <div class="swaps-card-body">
       <div class="swaps-options">
         <div class="option">
-          <div class="label">Token</div>
-          <Select
-            :options="swappers"
-            :selected="swapper"
-            @input="swapper = $event"
-          >
-            <template #item="{ item: { name } }">
-              <div class="item">
-                <div class="label">{{ name ?? "?" }}</div>
-              </div>
-            </template>
-          </Select>
+          <div class="label">Watchlist</div>
+
+          <WatchlistSwappers @swappers="swappers = $event"></WatchlistSwappers>
         </div>
 
         <div class="option">
@@ -220,7 +211,7 @@ const round = (x: number) =>
 
 <style scoped>
 .swaps-card {
-  --header-column-title: 3fr
+  --header-column-title: 3fr;
   --header-column-actions: 4fr;
 
   .swaps-card-body {

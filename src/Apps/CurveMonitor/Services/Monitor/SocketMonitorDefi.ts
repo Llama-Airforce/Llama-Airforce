@@ -8,8 +8,9 @@ export type ClientToServerEvents = {
   connectToGeneralErc20Livestream: (tokenAddress: string) => void;
   connectToGeneralErc20ArrayLivestream: (tokenAddresses: string[]) => void;
 
-  disconnectFromGeneralErc20SwapLivestream: (observedAddress: string) => void;
-  connectToGeneralErc20SwapLivestream: (observedAddress: string) => void;
+  disconnectFromGeneralErc20SwapLivestream: (swapperAddress: string) => void;
+  connectToGeneralErc20SwapLivestream: (swapperAddress: string) => void;
+  connectToGeneralErc20SwapArrayLivestream: (swapperAddress: string[]) => void;
 };
 
 export type ServerToClientEvents = {

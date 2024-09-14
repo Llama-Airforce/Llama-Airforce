@@ -7,18 +7,31 @@ import {
   SwapService,
 } from "./";
 
-export function useQuerySwaps(observedAddress: Ref<Address>) {
+export function useQuerySwaps(swappers: Ref<Address | Address[]>) {
+  const swappersArray = computed(() =>
+    Array.isArray(swappers.value) ? swappers.value : [swappers.value]
+  );
+
   const { socket, isConnected, url } = useSocketMonitorDefi();
   const service = computed(() =>
     socket.value ? new SwapService(socket.value) : null
   );
   const queryKey = computed(
-    () => ["defimonitor-swaps", url.value, observedAddress.value] as const
+    () => ["defimonitor-swaps", url.value, swappersArray.value] as const
+  );
+
+  // Unsubscribe from tokens no longer watched.
+  watchArray(
+    swappersArray,
+    (_newSwappers, _oldSwappers, _added, removed) => {
+      service.value?.unsub(removed);
+    },
+    { deep: true }
   );
 
   const query = useQueryRx({
     queryKey,
-    queryFn: () => service.value?.subSwaps(observedAddress.value),
+    queryFn: () => service.value?.sub(swappers.value),
     enabled: isConnected,
     observable: computed(() => service.value?.swaps$),
     setQueryData: (

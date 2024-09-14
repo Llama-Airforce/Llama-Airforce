@@ -1,3 +1,4 @@
+import type { Address } from "@/Framework/Address";
 import { createObservable } from "@/Services/Socket";
 import type {
   SocketMonitorDefi,
@@ -20,7 +21,19 @@ export default class SwapService {
       observables?.swaps$ ?? createObservable(socket, "NewSwapDataForAddress");
   }
 
-  subSwaps(observedAddress: string) {
-    this.socket.emit("connectToGeneralErc20SwapLivestream", observedAddress);
+  sub(swappers: Address | Address[]) {
+    if (!Array.isArray(swappers)) {
+      this.socket.emit("connectToGeneralErc20SwapLivestream", swappers);
+    } else if (swappers.length > 0) {
+      this.socket.emit("connectToGeneralErc20SwapArrayLivestream", swappers);
+    }
+  }
+
+  unsub(swappers: Address | Address[]) {
+    const swappersArray = Array.isArray(swappers) ? swappers : [swappers];
+
+    for (const swapper of swappersArray) {
+      this.socket.emit("disconnectFromGeneralErc20SwapLivestream", swapper);
+    }
   }
 }
