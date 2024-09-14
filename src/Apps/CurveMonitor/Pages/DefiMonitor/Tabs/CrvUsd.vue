@@ -22,7 +22,7 @@ const transferBlocks = computed(() =>
 </script>
 
 <template>
-  <div class="crvusd">
+  <div class="dashboard-grid">
     <div class="transfers">
       <div class="title">Latest crvUSD transactions</div>
 
@@ -71,13 +71,9 @@ const transferBlocks = computed(() =>
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import "@/Styles/Variables.scss";
-
-.crvusd {
+<style scoped>
+.dashboard-grid {
   margin: var(--dashboard-gap) 0;
-
-  @include dashboard-grid;
 
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas: "transfers . . .";
