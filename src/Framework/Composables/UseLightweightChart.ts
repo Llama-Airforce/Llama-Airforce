@@ -140,9 +140,7 @@ export function useLightweightChart<
     : [serieDefs];
 
   const chartRef = useTemplateRef<HTMLElement>("chartRef");
-  const chart = shallowRef<IChartApi | undefined>(undefined) as Ref<
-    IChartApi | undefined
-  >;
+  const chart = shallowRef<IChartApi | undefined>(undefined);
 
   // Create a new lightweight chart instance the moment the div is mounted
   whenever(chartRef, (newChartRef, _, onCleanup) => {
