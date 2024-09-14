@@ -1,40 +1,26 @@
-import { merge } from "rxjs";
+import type { Address } from "@/Framework/Address";
 import { createObservable } from "@/Services/Socket";
 import type {
   SocketMonitorDefi,
   ServerToClientEvents,
 } from "../SocketMonitorDefi";
-import type { Address } from "@/Framework/Address";
 
 type SocketObservable<T extends keyof ServerToClientEvents> = ReturnType<
   typeof createObservable<ServerToClientEvents, T>
 >;
 
 type Observables = {
-  transfers$?: SocketObservable<
-    "NewTransfersForToken" | "NewTransfersForTokenArray"
-  >;
+  transfers$?: SocketObservable<"NewTransfersForToken">;
 };
 
 export default class TransferService {
-  public readonly transfers$: SocketObservable<
-    "NewTransfersForToken" | "NewTransfersForTokenArray"
-  >;
+  public readonly transfers$: SocketObservable<"NewTransfersForToken">;
 
   constructor(private socket: SocketMonitorDefi, observables?: Observables) {
     if (observables?.transfers$) {
       this.transfers$ = observables.transfers$;
     } else {
-      const transfersForToken = createObservable(
-        socket,
-        "NewTransfersForToken"
-      );
-      const transfersForTokenArray = createObservable(
-        socket,
-        "NewTransfersForTokenArray"
-      );
-
-      this.transfers$ = merge(transfersForToken, transfersForTokenArray);
+      this.transfers$ = createObservable(socket, "NewTransfersForToken");
     }
   }
 

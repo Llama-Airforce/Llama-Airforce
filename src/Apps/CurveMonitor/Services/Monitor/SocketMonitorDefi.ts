@@ -17,10 +17,6 @@ export type ServerToClientEvents = {
     blockSummary: GeneralErc20TokenSpecificBlockSummary
   ) => void;
 
-  NewTransfersForTokenArray: (
-    blockSummary: GeneralErc20TokenSpecificBlockSummary
-  ) => void;
-
   NewSwapDataForAddress: (
     generalSwapAddressSpecificBlockSummary: GeneralSwapAddressSpecificBlockSummary
   ) => void;
