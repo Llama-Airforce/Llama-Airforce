@@ -26,6 +26,7 @@ const open = ref(false);
         <slot
           name="item"
           :item="selected"
+          :is-selected="true"
         >
           {{ selected }}
         </slot>
@@ -55,6 +56,7 @@ const open = ref(false);
         <slot
           name="item"
           :item="option"
+          :is-selected="false"
         >
           {{ option }}
         </slot>
