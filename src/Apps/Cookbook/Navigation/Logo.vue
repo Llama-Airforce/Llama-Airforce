@@ -48,18 +48,4 @@
     align-items: center;
   }
 }
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.9);
-  }
-
-  70% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(0.9);
-  }
-}
 </style>
