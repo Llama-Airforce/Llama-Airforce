@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="TData, TSortingColumn extends string">
+<script setup lang="ts" generic="TData, const TSortingColumn extends string">
 import { type SortOrder } from "@/Framework/SortOrder";
 
 type Column = {

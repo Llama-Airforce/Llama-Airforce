@@ -33,7 +33,7 @@ import { type LegendItem } from "@/Framework/Monitor/LegendItem";
  * console.log(disabled.value); // ['sales']
  * ```
  */
-export function useLegend<T extends string>(f: () => LegendItem<T>[]) {
+export function useLegend<const T extends string>(f: () => LegendItem<T>[]) {
   const items = computed(f);
 
   const toggles = toRefs(

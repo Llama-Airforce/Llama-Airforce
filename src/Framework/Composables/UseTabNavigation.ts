@@ -20,7 +20,7 @@
  * @param routeParams An optional function that returns additional route params to include in the navigation
  * @returns An object containing `tabActive` and `tabActiveIndex` refs
  */
-export function useTabNavigation<T extends string>(
+export function useTabNavigation<const T extends string>(
   tabs: readonly T[],
   routeName: string,
   routeParams?: () => Record<string, unknown>
