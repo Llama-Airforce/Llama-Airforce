@@ -96,7 +96,7 @@ const redemptions = computedAsync(async () => {
   );
 
   return Promise.all(redemptionData);
-});
+}, []);
 
 // Input
 const pxCvxAddress = PxCvxAddress;
