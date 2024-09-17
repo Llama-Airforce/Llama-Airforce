@@ -31,6 +31,7 @@ const { data: price } = useQuery({
 <template>
   <div class="kpis">
     <KPI
+      class="border-special"
       label="CRV Price"
       :has-value="!!price"
     >
@@ -42,6 +43,7 @@ const { data: price } = useQuery({
     </KPI>
 
     <KPI
+      class="border-special"
       label="crvUSD Borrowed"
       :has-value="!!borrowed"
     >
@@ -53,6 +55,7 @@ const { data: price } = useQuery({
     </KPI>
 
     <KPI
+      class="border-special"
       label="Total Value Locked"
       :has-value="!!tvl"
     >
@@ -64,6 +67,7 @@ const { data: price } = useQuery({
     </KPI>
 
     <KPI
+      class="border-special"
       label="24h Volume"
       :has-value="!!volume"
     >
@@ -77,22 +81,6 @@ const { data: price } = useQuery({
 </template>
 
 <style scoped>
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes spin {
-  from {
-    --angle: 0deg;
-  }
-
-  to {
-    --angle: 360deg;
-  }
-}
-
 .kpis {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -105,39 +93,9 @@ const { data: price } = useQuery({
   }
 
   .kpi {
-    position: relative;
     box-shadow: none;
-    flex-grow: 0;
 
-    &::before,
-    &::after {
-      --padding: 3px;
-
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      z-index: -1;
-      padding: var(--padding);
-      border-radius: calc(var(--border-radius) + var(--padding));
-
-      background-image: conic-gradient(
-        from var(--angle),
-        var(--c-card-special-1),
-        var(--c-card-special-2),
-        var(--c-card-special-1)
-      );
-
-      animation: 10s spin linear infinite;
-    }
-
-    &::after {
-      filter: blur(5px);
-      opacity: 0.5;
-    }
+    --border-special-time: 10s;
   }
 }
 </style>

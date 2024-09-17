@@ -82,6 +82,82 @@
   }
 }
 
+/* Border special */
+.border-special,
+.border-special-hover {
+  position: relative;
+
+  &::before,
+  &::after {
+    --padding: 3px;
+
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: var(--padding);
+    border-radius: calc(var(--border-radius) + var(--padding));
+
+    background-image: conic-gradient(
+      from var(--angle),
+      var(--c-card-special-1),
+      var(--c-card-special-2),
+      var(--c-card-special-1)
+    );
+
+    animation: var(--border-special-time, 2s) spin linear infinite;
+
+    transition: opacity var(--hover-duration) linear;
+    opacity: 0;
+  }
+
+  &::after {
+    filter: blur(5px);
+  }
+}
+
+.border-special {
+  &::before {
+    opacity: 1;
+  }
+
+  &::after {
+    opacity: 0.5;
+  }
+}
+
+.border-special-hover:hover {
+  cursor: pointer;
+
+  &::before {
+    opacity: 1;
+  }
+
+  &::after {
+    opacity: 0.5;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
+}
+
 /* Variants */
 .lvl0 {
   --c-variant: var(--c-lvl0);

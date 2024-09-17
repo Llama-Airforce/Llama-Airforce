@@ -15,6 +15,7 @@ function go(url: string) {
   <Modal @close="emit('close')">
     <div class="telegram-body">
       <Card
+        class="border-special-hover"
         title="Curve Monitor"
         @click.prevent="go(linkCurve)"
       >
@@ -32,6 +33,7 @@ function go(url: string) {
       </Card>
 
       <Card
+        class="border-special-hover"
         title="crvUSD"
         @click.prevent="go(linkCrvUsd)"
       >
@@ -57,12 +59,6 @@ function go(url: string) {
 </template>
 
 <style scoped>
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 emph {
   color: var(--c-lvl6);
 }
@@ -117,60 +113,7 @@ emph {
   .card {
     --padding: 6px;
 
-    position: relative;
-
-    cursor: pointer;
     margin: calc(2 * var(--padding));
-
-    &::before,
-    &::after {
-      --padding: 3px;
-
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      z-index: -1;
-      padding: var(--padding);
-      border-radius: calc(var(--border-radius) + var(--padding));
-      opacity: 0;
-
-      transition: opacity 0.3s ease;
-      animation: 2s spin linear infinite;
-    }
-
-    &::after {
-      filter: blur(5px);
-    }
-
-    &:hover {
-      &::before,
-      &::after {
-        --padding: 6px;
-
-        opacity: 1;
-
-        background-image: conic-gradient(
-          from var(--angle),
-          var(--c-card-special-1),
-          var(--c-card-special-2),
-          var(--c-card-special-1)
-        );
-      }
-    }
-  }
-}
-
-@keyframes spin {
-  from {
-    --angle: 0deg;
-  }
-
-  to {
-    --angle: 360deg;
   }
 }
 </style>

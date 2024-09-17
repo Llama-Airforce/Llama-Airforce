@@ -11,7 +11,10 @@ function go(url: string) {
     <div class="title">Articles</div>
 
     <div class="articles-cards">
-      <Card @click="go('https://blog.curvemonitor.com/posts/curve-users/')">
+      <Card
+        class="border-special-hover"
+        @click="go('https://blog.curvemonitor.com/posts/curve-users/')"
+      >
         <div class="article">
           <div class="title">Who are Curve's Users?</div>
           <div class="description">
@@ -30,6 +33,7 @@ function go(url: string) {
       </Card>
 
       <Card
+        class="border-special-hover"
         @click="go('https://blog.curvemonitor.com/posts/exchange-received/')"
       >
         <div class="article">
@@ -51,7 +55,10 @@ function go(url: string) {
         </div>
       </Card>
 
-      <Card @click="go('https://blog.curvemonitor.com/posts/ng-mev/')">
+      <Card
+        class="border-special-hover"
+        @click="go('https://blog.curvemonitor.com/posts/ng-mev/')"
+      >
         <div class="article">
           <div class="title">Impact of Dynamic Fees on MEV Activity</div>
           <div class="description">
@@ -72,6 +79,7 @@ function go(url: string) {
       </Card>
 
       <Card
+        class="border-special-hover"
         @click="go('https://blog.curvemonitor.com/posts/parameter-ramping/')"
       >
         <div class="article">
@@ -96,12 +104,6 @@ function go(url: string) {
 </template>
 
 <style scoped>
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .articles {
   display: flex;
   flex-direction: column;
@@ -169,64 +171,7 @@ function go(url: string) {
           grid-area: read;
         }
       }
-
-      &::before,
-      &::after {
-        --padding: 3px;
-
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 50%;
-        left: 50%;
-        translate: -50% -50%;
-        z-index: -1;
-        padding: var(--padding);
-        border-radius: calc(var(--border-radius) + var(--padding));
-
-        background-image: conic-gradient(
-          from var(--angle),
-          var(--c-card-special-1),
-          var(--c-card-special-2),
-          var(--c-card-special-1)
-        );
-
-        animation: 2s spin linear infinite;
-
-        transition: opacity var(--hover-duration) linear;
-        opacity: 0;
-      }
-
-      &::after {
-        filter: blur(5px);
-
-        transition: opacity var(--hover-duration) linear;
-        opacity: 0;
-      }
-
-      &:hover {
-        cursor: pointer;
-
-        &::before {
-          opacity: 1;
-        }
-
-        &::after {
-          opacity: 0.5;
-        }
-      }
     }
-  }
-}
-
-@keyframes spin {
-  from {
-    --angle: 0deg;
-  }
-
-  to {
-    --angle: 360deg;
   }
 }
 </style>

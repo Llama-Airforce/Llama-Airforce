@@ -6,7 +6,10 @@ const showModal = ref(false);
 
 <template>
   <div class="telegram">
-    <Card @click="showModal = true">
+    <Card
+      class="border-special"
+      @click="showModal = true"
+    >
       <div class="telegram-card">
         <picture>
           <img
@@ -30,12 +33,6 @@ const showModal = ref(false);
 </template>
 
 <style scoped>
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .telegram-card {
   height: 100%;
   display: grid;
@@ -118,23 +115,9 @@ const showModal = ref(false);
 
   .card {
     height: 100%;
-    cursor: pointer;
 
     &::before,
     &::after {
-      --padding: 3px;
-
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 50%;
-      left: calc(50% + 0.5px);
-      translate: -50% -50%;
-      z-index: -1;
-      padding: var(--padding);
-      border-radius: calc(var(--border-radius) + var(--padding));
-
       background-image: conic-gradient(
         from var(--angle),
         #7ebffc,
@@ -147,10 +130,7 @@ const showModal = ref(false);
     }
 
     &::after {
-      filter: blur(5px);
-
       transition: opacity var(--hover-duration) linear, filter 0.3s ease;
-      opacity: 0;
     }
 
     &:hover {
@@ -163,16 +143,6 @@ const showModal = ref(false);
         transition: filter 0.3s ease;
       }
     }
-  }
-}
-
-@keyframes spin {
-  from {
-    --angle: 0deg;
-  }
-
-  to {
-    --angle: 360deg;
   }
 }
 
