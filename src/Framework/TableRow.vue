@@ -81,20 +81,6 @@ const onClick = (): void => {
 </template>
 
 <style scoped>
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0.8);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
 .row {
   display: flex;
   flex-direction: column;
@@ -176,6 +162,20 @@ const onClick = (): void => {
 
   .row-details {
     border-bottom: var(--border-thickness) solid var(--c-lvl4);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 </style>

@@ -50,24 +50,6 @@ watch(
 </template>
 
 <style scoped>
-@keyframes fadeOpacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.6;
-  }
-}
-
-@keyframes fadeBlur {
-  from {
-    backdrop-filter: blur(0px);
-  }
-  to {
-    backdrop-filter: blur(10px);
-  }
-}
-
 .modal {
   display: flex;
   justify-content: center;
@@ -100,6 +82,24 @@ watch(
   .modal-popup {
     z-index: 2;
     overflow: hidden;
+  }
+}
+
+@keyframes fadeOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+
+@keyframes fadeBlur {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(10px);
   }
 }
 </style>

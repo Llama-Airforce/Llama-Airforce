@@ -128,21 +128,21 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
     @media only screen and (max-width: 600px) {
       max-height: 150px;
     }
+  }
+}
 
-    @keyframes float {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-      33% {
-        transform: translate(5px, -8px) rotate(2deg);
-      }
-      66% {
-        transform: translate(-5px, -4px) rotate(-1deg);
-      }
-      100% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-    }
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(5px, -8px) rotate(2deg);
+  }
+  66% {
+    transform: translate(-5px, -4px) rotate(-1deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
   }
 }
 </style>

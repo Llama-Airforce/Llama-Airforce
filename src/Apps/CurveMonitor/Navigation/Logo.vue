@@ -11,20 +11,6 @@
 </template>
 
 <style scoped>
-@keyframes pulse {
-  0% {
-    transform: scale(0.9);
-  }
-
-  70% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(0.9);
-  }
-}
-
 .logo {
   display: flex;
   align-items: center;
@@ -70,6 +56,20 @@
     display: flex;
     font-size: 1.75rem;
     align-items: center;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.9);
   }
 }
 </style>

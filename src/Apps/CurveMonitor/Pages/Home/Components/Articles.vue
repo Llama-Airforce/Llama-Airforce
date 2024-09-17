@@ -196,16 +196,6 @@ function go(url: string) {
 
         transition: opacity var(--hover-duration) linear;
         opacity: 0;
-
-        @keyframes spin {
-          from {
-            --angle: 0deg;
-          }
-
-          to {
-            --angle: 360deg;
-          }
-        }
       }
 
       &::after {
@@ -227,6 +217,16 @@ function go(url: string) {
         }
       }
     }
+  }
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
   }
 }
 </style>

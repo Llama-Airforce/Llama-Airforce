@@ -140,16 +140,6 @@ emph {
 
       transition: opacity 0.3s ease;
       animation: 2s spin linear infinite;
-
-      @keyframes spin {
-        from {
-          --angle: 0deg;
-        }
-
-        to {
-          --angle: 360deg;
-        }
-      }
     }
 
     &::after {
@@ -171,6 +161,16 @@ emph {
         );
       }
     }
+  }
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
   }
 }
 </style>

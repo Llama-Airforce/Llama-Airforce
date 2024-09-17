@@ -83,6 +83,16 @@ const { data: price } = useQuery({
   inherits: false;
 }
 
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
+}
+
 .kpis {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -122,16 +132,6 @@ const { data: price } = useQuery({
       );
 
       animation: 10s spin linear infinite;
-
-      @keyframes spin {
-        from {
-          --angle: 0deg;
-        }
-
-        to {
-          --angle: 360deg;
-        }
-      }
     }
 
     &::after {
