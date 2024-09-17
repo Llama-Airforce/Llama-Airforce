@@ -168,6 +168,12 @@ const open = ref(false);
     }
   }
 
+  &.no-chevrons {
+    > .chevrons {
+      display: none;
+    }
+  }
+
   > .chevrons {
     position: absolute;
     display: flex;
