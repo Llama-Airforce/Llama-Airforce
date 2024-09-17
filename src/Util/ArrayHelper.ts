@@ -1,11 +1,11 @@
-export function toRecord<TArray, TKey extends string | number | symbol, TValue>(
+export function toRecord<TArray, TValue>(
   xs: TArray[],
-  keySelector: (x: TArray) => TKey,
+  keySelector: (x: TArray) => PropertyKey,
   valueSelector: (x: TArray) => TValue
 ) {
-  return xs.reduce(
+  return xs.reduce<Record<PropertyKey, TValue>>(
     (acc, x) => ({ ...acc, [keySelector(x)]: valueSelector(x) }),
-    {} as Record<TKey, TValue>
+    {}
   );
 }
 
