@@ -144,7 +144,7 @@ const clipboard = async (addr: string) => {
             {{ item.gasInGwei }}
           </div>
 
-          <div>
+          <div class="no-ellipsis">
             <a
               class="font-mono"
               :href="`https://etherscan.io/address/${item.transferFrom}`"
@@ -154,7 +154,7 @@ const clipboard = async (addr: string) => {
             </a>
           </div>
 
-          <div>
+          <div class="no-ellipsis">
             <a
               class="font-mono"
               :href="`https://etherscan.io/addr ess/${item.transferTo}`"
@@ -240,6 +240,10 @@ const clipboard = async (addr: string) => {
     &:active {
       background: transparent;
     }
+  }
+
+  .no-ellipsis {
+    text-overflow: clip;
   }
 
   .hash {
