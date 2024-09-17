@@ -215,7 +215,6 @@ const round = (x: number) =>
   --header-column-actions: 4fr;
 
   .swaps-card-body {
-    width: 100%;
     display: flex;
     gap: var(--card-margin-inline);
   }
@@ -226,6 +225,7 @@ const round = (x: number) =>
   flex-direction: column;
   gap: var(--dashboard-gap);
 
+  min-width: 250px;
   margin-top: 1.125rem;
   padding-right: calc(1.5 * var(--card-margin-inline));
 

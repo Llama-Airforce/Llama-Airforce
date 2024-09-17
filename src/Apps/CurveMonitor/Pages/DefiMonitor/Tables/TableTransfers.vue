@@ -201,7 +201,6 @@ const clipboard = async (addr: string) => {
   --header-column-actions: 4fr;
 
   .transfers-card-body {
-    width: 100%;
     display: flex;
     gap: var(--card-margin-inline);
   }
@@ -212,6 +211,7 @@ const clipboard = async (addr: string) => {
   flex-direction: column;
   gap: var(--dashboard-gap);
 
+  min-width: 250px;
   margin-top: 1.125rem;
   padding-right: calc(1.5 * var(--card-margin-inline));
 
