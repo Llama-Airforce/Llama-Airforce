@@ -180,10 +180,7 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
         ></RedemptionsTableInit>
 
         <div class="input">
-          <TokenIcon
-            class="icon"
-            :address="pxCvxAddress"
-          ></TokenIcon>
+          <TokenIcon :address="pxCvxAddress"></TokenIcon>
 
           <div class="symbol">pxCVX</div>
 
@@ -249,11 +246,6 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
     }
 
     img {
-      aspect-ratio: 1;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-
       @media only screen and (max-width: 500px) {
         display: none;
       }

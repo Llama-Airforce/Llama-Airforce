@@ -138,18 +138,6 @@ const bribes = (bribed: Bribed): Bribe[] => {
 .bribed-table {
   --columns-data: 1.5fr 0.6fr 0.6fr;
 
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-img {
-    width: 20px;
-    height: 20px;
-    object-fit: scale-down;
-  }
-
   .tooltip {
     grid-column: 1 / -1;
 

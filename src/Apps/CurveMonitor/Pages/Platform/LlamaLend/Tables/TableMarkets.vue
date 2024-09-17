@@ -139,12 +139,5 @@ const tokenIcon = (market: Market) => {
   --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.25fr);
-
-  img {
-    aspect-ratio: 1;
-    max-width: 100%;
-    object-fit: contain;
-    border-radius: 50%;
-  }
 }
 </style>

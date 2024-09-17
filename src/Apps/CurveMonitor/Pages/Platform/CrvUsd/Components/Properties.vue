@@ -126,13 +126,6 @@ const clipboard = async (addr: string) => {
     grid-template-columns: 26px 2fr 8fr auto;
     justify-content: space-between;
     align-items: center;
-
-    img {
-      aspect-ratio: 1;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-    }
   }
 
   button {

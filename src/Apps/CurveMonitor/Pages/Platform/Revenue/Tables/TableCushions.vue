@@ -116,12 +116,6 @@ const linkAddress = (addr: string): string => {
     gap: 1rem;
     text-transform: capitalize;
 
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
-
     @media only screen and (max-width: 1280px) {
       justify-content: center;
 

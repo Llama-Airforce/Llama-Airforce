@@ -115,7 +115,7 @@ const clipboard = async (addr: string) => {
         :loading
       >
         <template #row="{ item }">
-          <div class="hash">
+          <div class="center-vert">
             <a
               class="font-mono"
               :href="`https://etherscan.io/tx/${item.txHash}`"
@@ -166,8 +166,9 @@ const clipboard = async (addr: string) => {
 
           <div>{{ round(item.parsedAmount) }}</div>
 
-          <div class="token">
+          <div class="center-vert">
             <TokenIcon
+              class="token"
               chain="ethereum"
               :address="item.coinAddress"
             ></TokenIcon>
@@ -246,20 +247,10 @@ const clipboard = async (addr: string) => {
     text-overflow: clip;
   }
 
-  .hash {
+  .center-vert {
     display: flex;
     align-items: center;
     gap: 1ch;
-  }
-
-  .token {
-    display: flex;
-    align-items: center;
-    gap: 1ch;
-
-    img {
-      height: 26px;
-    }
   }
 }
 </style>

@@ -146,12 +146,6 @@ function addToken(token: Token) {
     --columns-data: 26px 1fr auto;
 
     font-size: 1rem;
-
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
   }
 }
 </style>

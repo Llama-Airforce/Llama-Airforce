@@ -81,12 +81,5 @@ function isSelected(reward: Reward) {
   &.can-select {
     --columns-data: 26px 2fr minmax(4rem, 1fr) minmax(4rem, 1fr) 3rem;
   }
-
-  img {
-    aspect-ratio: 1;
-    max-width: 100%;
-    object-fit: contain;
-    border-radius: 50%;
-  }
 }
 </style>

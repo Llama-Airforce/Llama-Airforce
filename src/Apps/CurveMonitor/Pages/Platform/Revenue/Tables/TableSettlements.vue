@@ -180,10 +180,6 @@ function symbol(settlement: CowSwapSettlement) {
     display: flex;
     gap: 1rem;
     align-items: center;
-
-    img {
-      width: 26px;
-    }
   }
 
   .profit {

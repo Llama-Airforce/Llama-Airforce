@@ -195,6 +195,11 @@ const onClick = (): void => {
     visibility: hidden;
   }
 
+  img.token {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   /* These direct divs are most likely your individual cells. */
   > div {
     text-overflow: ellipsis;

@@ -171,13 +171,6 @@ const balances = computed(() => {
     grid-template-columns: repeat(4, 26px);
     justify-content: space-between;
     align-items: center;
-
-    img {
-      aspect-ratio: 1;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-    }
   }
 }
 </style>

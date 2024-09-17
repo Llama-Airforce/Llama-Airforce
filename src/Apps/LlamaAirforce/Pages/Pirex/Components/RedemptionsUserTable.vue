@@ -106,12 +106,5 @@ function balance(redemption: RedemptionPending) {
 .redemptions-user-table {
   --columns-data: minmax(4rem, 1fr) minmax(4rem, 1fr) 6rem;
   padding: 0;
-
-  img {
-    aspect-ratio: 1;
-    max-width: 100%;
-    object-fit: contain;
-    border-radius: 50%;
-  }
 }
 </style>

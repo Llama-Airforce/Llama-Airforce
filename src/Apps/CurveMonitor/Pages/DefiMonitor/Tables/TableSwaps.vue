@@ -118,7 +118,7 @@ const round = (x: number) =>
         ]"
       >
         <template #row="{ item }">
-          <div class="hash">
+          <div class="center-vert">
             <a
               class="font-mono"
               :href="`https://etherscan.io/tx/${item.txHash}`"
@@ -162,7 +162,7 @@ const round = (x: number) =>
             </a>
           </div>
 
-          <div class="token">
+          <div class="center-vert">
             <TokenIcon
               chain="ethereum"
               :address="item.coinBeforeAddress"
@@ -178,7 +178,7 @@ const round = (x: number) =>
             </a>
           </div>
 
-          <div class="token">
+          <div class="center-vert">
             <TokenIcon
               chain="ethereum"
               :address="item.coinAfterAddress"
@@ -250,20 +250,10 @@ const round = (x: number) =>
 
   width: 100%;
 
-  .hash {
+  .center-vert {
     display: flex;
     align-items: center;
     gap: 1ch;
-  }
-
-  .token {
-    display: flex;
-    align-items: center;
-    gap: 1ch;
-
-    img {
-      height: 26px;
-    }
   }
 }
 </style>

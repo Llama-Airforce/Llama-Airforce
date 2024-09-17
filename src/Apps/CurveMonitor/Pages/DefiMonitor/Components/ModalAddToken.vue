@@ -51,12 +51,6 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
 
   .table {
     --columns-data: 26px minmax(10ch, 20ch) 1fr;
-
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
   }
 }
 </style>

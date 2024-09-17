@@ -45,6 +45,7 @@ const link = computed(() => {
 <template>
   <img
     v-if="!clickable"
+    class="token"
     :src="icon"
     @error="onIconError"
   />
@@ -55,6 +56,7 @@ const link = computed(() => {
     :href="link"
   >
     <img
+      class="token"
       :src="icon"
       @error="onIconError"
     />
@@ -79,7 +81,7 @@ a {
 img {
   aspect-ratio: 1;
   max-width: 100%;
-  object-fit: contain;
+  object-fit: scale-down;
   border-radius: 50%;
 }
 </style>
