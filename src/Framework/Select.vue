@@ -72,9 +72,10 @@ const open = ref(false);
 
 <style scoped>
 .select {
+  --c-background: var(--c-lvl1);
+
   position: relative;
 
-  cursor: pointer;
   user-select: none;
 
   /* Disable blue highlight because of pointer. */
@@ -82,7 +83,7 @@ const open = ref(false);
 
   transition: background-color 125ms ease;
   background: hsl(
-    from var(--c-lvl1) h s calc(l + 6 * var(--color-scheme-dark))
+    from var(--c-background) h s calc(l + 6 * var(--color-scheme-dark))
   );
   border-radius: var(--border-radius);
   box-shadow: var(--select-box-shadow);
@@ -93,12 +94,6 @@ const open = ref(false);
   &.open:not(&.direction-up) {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-  }
-
-  &:hover {
-    background: hsl(
-      from var(--c-lvl1) h s calc(l + 12 * var(--color-scheme-dark))
-    );
   }
 
   &.direction-up {
@@ -112,6 +107,13 @@ const open = ref(false);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background: hsl(
+        from var(--c-background) h s calc(l + 12 * var(--color-scheme-dark))
+      );
+    }
 
     > .item-wrapper {
       margin: 0.5rem 0.75rem;
