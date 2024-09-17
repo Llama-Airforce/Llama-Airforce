@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { Address } from "@/Framework/Address";
+import ModalAddToken from "./ModalAddToken.vue";
 import { type Token, initWatchlistTokens } from "../Models";
 
 const emit = defineEmits<{
   tokens: [Token[]];
 }>();
 
-const watchlists = [initWatchlistTokens()];
+const showAddToken = ref(false);
+
+const watchlists = initWatchlistTokens();
 const watchlist = ref(watchlists[0]);
 
 const tokens = computed(() => watchlist.value.items);
@@ -34,19 +37,48 @@ watch(
 watch(watchlist, () => {
   selected.value = new Set(tokens.value.map((x) => x.address));
 });
+
+function addToken(token: Token) {
+  const alreadyInList = watchlist.value.items.some(
+    (item) => item.address === token.address
+  );
+
+  if (!alreadyInList) {
+    watchlist.value.items.push(token);
+  }
+
+  showAddToken.value = false;
+}
 </script>
 
 <template>
   <div class="watchlist">
     <Select
+      class="menu no-chevrons"
       :options="watchlists"
       :selected="watchlist"
       @input="watchlist = $event"
     >
-      <template #item="{ item: { name } }">
-        <div class="item">{{ name }}</div>
+      <template #item="{ item: { name }, isSelected }">
+        <div class="item">
+          {{ name }}
+          <i
+            v-if="isSelected"
+            class="fas fa-chevron-down"
+          ></i>
+        </div>
       </template>
     </Select>
+
+    <div class="toolbar">
+      <Button @click="showAddToken = true">+</Button>
+
+      <ModalAddToken
+        :show="showAddToken"
+        @close="showAddToken = false"
+        @token="addToken"
+      ></ModalAddToken>
+    </div>
 
     <Table
       :rows="tokens"
@@ -72,12 +104,48 @@ watch(watchlist, () => {
 
 <style scoped>
 .watchlist {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+
   gap: 1ch;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "menu toolbar"
+    "table table";
+
+  .menu {
+    grid-area: menu;
+
+    --c-background: var(--c-lvl0);
+
+    &:deep(.selected) {
+      width: min-content;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .fas {
+        font-size: 0.625rem;
+      }
+    }
+  }
+
+  .toolbar {
+    grid-area: toolbar;
+
+    font-size: 1.125rem;
+    margin-right: 0.25rem;
+  }
 
   .table {
+    grid-area: table;
+
     --columns-data: 26px 1fr auto;
+
+    font-size: 1rem;
 
     img {
       width: 20px;

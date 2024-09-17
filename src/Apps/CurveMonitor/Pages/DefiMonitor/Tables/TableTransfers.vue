@@ -85,8 +85,6 @@ const clipboard = async (addr: string) => {
     <div class="transfers-card-body">
       <div class="transfers-options">
         <div class="option">
-          <div class="label">Watchlist</div>
-
           <WatchlistTokens @tokens="tokens = $event"></WatchlistTokens>
         </div>
 
