@@ -34,6 +34,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('./../../Framework/Select.vue')['default']
     SelectLanguage: typeof import('./../../Framework/SelectLanguage.vue')['default']
+    SelectTheme: typeof import('./../../Framework/SelectTheme.vue')['default']
     SelectToken: typeof import('./../../Framework/SelectToken.vue')['default']
     Slider: typeof import('./../../Framework/Slider.vue')['default']
     Spinner: typeof import('./../../Framework/Spinner.vue')['default']

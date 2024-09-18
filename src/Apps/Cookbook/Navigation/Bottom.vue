@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Wallet from "@/Wallet/Wallet.vue";
-import SelectTheme from "@CB/Navigation/SelectTheme.vue";
 
 const emit = defineEmits<{
   navigated: [];
@@ -51,7 +50,11 @@ const copyUrl = async () => {
     </div>
 
     <div class="selectors">
-      <SelectTheme class="themes"></SelectTheme>
+      <SelectTheme
+        class="themes"
+        :themes="['dark', 'light', 'chad']"
+      ></SelectTheme>
+
       <SelectLanguage
         class="langs"
         :locales="['en']"

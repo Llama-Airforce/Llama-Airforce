@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Wallet from "@/Wallet/Wallet.vue";
-import SelectTheme from "@PM/Navigation/SelectTheme.vue";
 
 const emit = defineEmits<{
   navigated: [];
@@ -32,7 +31,10 @@ const router = useRouter();
       ></Button>
     </div>
 
-    <SelectTheme class="themes"></SelectTheme>
+    <SelectTheme
+      class="themes"
+      :themes="['dark', 'light']"
+    ></SelectTheme>
 
     <Wallet class="lvl2"></Wallet>
   </div>
