@@ -102,18 +102,18 @@ const open = ref(false);
     }
   }
 
+  &:has(.selected:hover) {
+    background-color: hsl(
+      from var(--c-background) h s calc(l + 12 * var(--color-scheme-dark))
+    );
+  }
+
   > .selected {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
-
-    &:hover {
-      background: hsl(
-        from var(--c-background) h s calc(l + 12 * var(--color-scheme-dark))
-      );
-    }
 
     > .item-wrapper {
       margin: 0.5rem 0.75rem;
