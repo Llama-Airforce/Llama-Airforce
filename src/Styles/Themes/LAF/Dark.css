@@ -1,4 +1,4 @@
-:root:root {
+:root[data-theme="dark"] {
   --color-scheme-dark: 1;
   color-scheme: dark;
 
@@ -17,6 +17,8 @@
   --c-yellow: #ffcc00;
   --c-purple: #905ff2;
   --c-primary: #2081f0;
+
+  --c-chart-purple: rgb(140, 82, 255);
 
   --page-margin: 1.5rem;
 

@@ -1,4 +1,11 @@
 :root {
+  --c-chart-red: var(--c-red);
+  --c-chart-green: var(--c-green);
+  --c-chart-blue: var(--c-blue);
+  --c-chart-yellow: var(--c-yellow);
+  --c-chart-purple: var(--c-purple);
+  --c-chart-text: var(--c-text);
+
   --page-margin: 2.375rem;
   --dashboard-gap: 1.5rem;
 

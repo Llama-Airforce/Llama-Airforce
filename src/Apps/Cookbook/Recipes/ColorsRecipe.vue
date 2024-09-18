@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
+import { colors as themeColors } from "@/Styles/ChartTheme";
 
 type Color = {
   variable: string;
@@ -8,23 +8,23 @@ type Color = {
 
 const colors: Color[] = [
   // Base colors
-  { variable: "var(--c-blue)", value: ColorsLAFDark.blue },
-  { variable: "var(--c-yellow)", value: ColorsLAFDark.yellow },
-  { variable: "var(--c-green)", value: ColorsLAFDark.green },
-  { variable: "var(--c-red)", value: ColorsLAFDark.red },
-  { variable: "var(--c-purple)", value: ColorsLAFDark.purple },
+  { variable: "var(--c-blue)", value: themeColors.value.blue },
+  { variable: "var(--c-yellow)", value: themeColors.value.yellow },
+  { variable: "var(--c-green)", value: themeColors.value.green },
+  { variable: "var(--c-red)", value: themeColors.value.red },
+  { variable: "var(--c-purple)", value: themeColors.value.purple },
 
   // Background and levels
-  { variable: "var(--c-lvl0)", value: ColorsLAFDark.backgroundColor },
-  { variable: "var(--c-lvl1)", value: ColorsLAFDark.level1 },
-  { variable: "var(--c-lvl2)", value: ColorsLAFDark.level2 },
-  { variable: "var(--c-lvl3)", value: ColorsLAFDark.level3 },
-  { variable: "var(--c-lvl4)", value: ColorsLAFDark.level4 },
-  { variable: "var(--c-lvl5)", value: ColorsLAFDark.level5 },
-  { variable: "var(--c-lvl6)", value: ColorsLAFDark.level6 },
+  { variable: "var(--c-lvl0)", value: themeColors.value.backgroundColor },
+  { variable: "var(--c-lvl1)", value: themeColors.value.level1 },
+  { variable: "var(--c-lvl2)", value: themeColors.value.level2 },
+  { variable: "var(--c-lvl3)", value: themeColors.value.level3 },
+  { variable: "var(--c-lvl4)", value: themeColors.value.level4 },
+  { variable: "var(--c-lvl5)", value: themeColors.value.level5 },
+  { variable: "var(--c-lvl6)", value: themeColors.value.level6 },
 
   // Text
-  { variable: "var(--c-text)", value: ColorsLAFDark.text },
+  { variable: "var(--c-text)", value: themeColors.value.text },
 ];
 </script>
 

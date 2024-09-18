@@ -1,5 +1,4 @@
 import { deepMerge } from "@/Util";
-import { ColorsLAFDark, ColorsLAFDarkArray } from "@/Styles/Themes/LAF/Dark";
 import type { Theme } from "@/Styles/Theme";
 
 const createDefault = (theme: Theme): Record<string, unknown> => ({
@@ -67,15 +66,6 @@ const createDefault = (theme: Theme): Record<string, unknown> => ({
     },
   },
 });
-
-export function createChartStylesLAF(options?: Record<string, unknown>) {
-  const _default = createDefault({
-    colors: ColorsLAFDark,
-    colorsArray: ColorsLAFDarkArray,
-  });
-
-  return options ? deepMerge(_default, options) : _default;
-}
 
 export function createChartStyles(
   theme: Theme,

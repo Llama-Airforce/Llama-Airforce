@@ -18,6 +18,10 @@
   --c-purple: hsl(284, 95%, 54%);
   --c-primary: #5baefb;
 
+  --c-chart-blue: #5baefb;
+  --c-chart-green: #05c70c;
+  --c-chart-text: #000000;
+
   --border-radius: 10px;
   --border-thickness: 0px;
 
@@ -49,4 +53,6 @@
 
 [data-theme="light"][data-flavor="lrt"] {
   --c-primary: #a689f2;
+
+  --c-chart-purple: var(--c-primary);
 }

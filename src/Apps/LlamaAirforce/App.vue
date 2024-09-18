@@ -6,6 +6,8 @@ import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
 import Announcement from "@LAF/Components/Announcement.vue";
 
 import "@/Styles/Themes/LAF/Dark.css";
+
+window.document.documentElement.setAttribute("data-theme", "dark");
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { createChartStylesLAF } from "@/Styles/ChartStyles";
-import { ColorsLAFDark } from "@/Styles/Themes/LAF/Dark";
+import { createChartStyles } from "@/Styles/ChartStyles";
+import { colors } from "@/Styles/ChartTheme";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getDate } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
@@ -18,7 +18,18 @@ const { protocol } = storeToRefs(useBribesStore());
 const epochs = computed(() => overview?.epochs ?? []);
 
 const options = computed(() => {
-  return createChartStylesLAF({
+  const theme = {
+    colors: colors.value,
+    colorsArray: [
+      colors.value.blue,
+      colors.value.yellow,
+      colors.value.green,
+      colors.value.red,
+      colors.value.purple,
+    ],
+  };
+
+  return createChartStyles(theme, {
     chart: {
       id: "votium-bribe-revenue",
     },
@@ -37,7 +48,7 @@ const options = computed(() => {
         labels: {
           formatter: (y: number): string =>
             `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
-          style: { colors: [ColorsLAFDark.blue] },
+          style: { colors: [colors.value.blue] },
         },
       },
       {
@@ -50,7 +61,7 @@ const options = computed(() => {
               protocol.value === "cvx-prisma" ? 5 : 2,
               "dollar"
             )}${unit(y, "dollar")}`,
-          style: { colors: [ColorsLAFDark.yellow] },
+          style: { colors: [colors.value.yellow] },
         },
       },
     ],

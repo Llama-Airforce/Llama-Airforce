@@ -17,6 +17,11 @@
   --c-yellow: hsl(39, 95%, 54%);
   --c-purple: hsl(284, 95%, 54%);
   --c-primary: #9d93dc;
+  --c-card-special-1: hsl(209, 95%, 54%);
+  --c-card-special-2: hsl(284, 95%, 54%);
+
+  --c-chart-green: #05c70c;
+  --c-chart-text: #333333;
 
   --border-radius: 0px;
   --border-thickness: 2px;
