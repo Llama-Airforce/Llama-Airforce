@@ -85,6 +85,7 @@ function createSeries() {
 <template>
   <Card
     ref="card"
+    class="stack-actions"
     title="Balances"
   >
     <template #actions>

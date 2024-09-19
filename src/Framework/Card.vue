@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * Note: The component automatically applies a 'stack-actions' class for
+ * responsive layout when window width <= 1280px. This stacks secondary
+ * actions below the main header.
+ */
 const {
   title = "",
   icon = "",
@@ -26,12 +31,20 @@ const hasActionsSecondary = computed(() => slots["actions-secondary"]);
 const showHeader = computed(
   () => title || slots.title || hasActions.value || hasActionsSecondary.value
 );
+
+// Imitate a media query which can't be combined with a normal CSS selector.
+const { width } = useWindowSize();
+const stackActions = computed(() => width.value <= 1280);
 </script>
 
 <template>
   <div
     class="card"
-    :class="{ loading, 'loading-backdrop': loading !== null }"
+    :class="{
+      loading,
+      'loading-backdrop': loading !== null,
+      'stack-actions': stackActions,
+    }"
     :inert="!!loading"
   >
     <Spinner
@@ -143,27 +156,6 @@ const showHeader = computed(
         var(--header-column-title)
         var(--header-column-actions-secondary)
         var(--header-column-actions);
-
-      /*
-       * In mobile view:
-       * 1. Secondary action columns are removed from the parent grid.
-       * 2. The secondary action div occupies its own row.
-       * 3. It uses the columns that were removed from the parent grid.
-       */
-      @media only screen and (max-width: 1280px) {
-        row-gap: 0.5rem;
-        grid-template-columns:
-          var(--header-column-title)
-          var(--header-column-actions);
-
-        .card-actions-secondary {
-          display: grid;
-          grid-row: 2;
-          grid-column: 1 / -1;
-
-          grid-template-columns: var(--header-column-actions-secondary);
-        }
-      }
     }
 
     &.collapsible {
@@ -222,6 +214,27 @@ const showHeader = computed(
     &:has(.vue-apexcharts) {
       margin-top: -1rem !important;
       overflow-x: clip;
+    }
+  }
+
+  /*
+   * In mobile view or forced stack mode:
+   * 1. Secondary action columns are removed from the parent grid.
+   * 2. The secondary action div occupies its own row.
+   * 3. It uses the columns that were removed from the parent grid.
+   */
+  &.stack-actions .card-header:has(.card-actions-secondary) {
+    row-gap: 0.5rem;
+    grid-template-columns:
+      var(--header-column-title)
+      var(--header-column-actions);
+
+    .card-actions-secondary {
+      display: grid;
+      grid-row: 2;
+      grid-column: 1 / -1;
+
+      grid-template-columns: var(--header-column-actions-secondary);
     }
   }
 }
