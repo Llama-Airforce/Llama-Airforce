@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@CM/Util/ChartStyles";
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
 import { type Endpoint } from "@CM/Services/Llamma";

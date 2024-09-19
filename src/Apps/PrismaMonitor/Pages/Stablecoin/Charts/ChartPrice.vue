@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useSettingsStore, useSocketStore } from "@PM/Stores";
-import createChartOptions from "@PM/Util/ChartStyles";
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { CurvePriceService } from "@/Services";
+import { useSettingsStore, useSocketStore } from "@PM/Stores";
 import { stableSymbol } from "@PM/Models/Flavor";
 
 const { t } = useI18n();

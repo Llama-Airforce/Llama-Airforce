@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { capitalize } from "@/Util";
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import type { Activity } from "@CM/Services/Chains";
 
 type ActivityValue = Omit<Activity, "timestamp"> & {

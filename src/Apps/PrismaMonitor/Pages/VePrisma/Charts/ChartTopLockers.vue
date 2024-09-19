@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();

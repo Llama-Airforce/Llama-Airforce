@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { useSettingsStore } from "@PM/Stores";
 import { StableService } from "@PM/Services";
 import { addressShort } from "@/Wallet";

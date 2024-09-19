@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { useSettingsStore, useSocketStore } from "@PM/Stores";
-import createChartOptions from "@PM/Util/ChartStyles";
 import { type Contract } from "@PM/Services";
 import { CurvePriceService, CurveVolumeService } from "@/Services";
 import {

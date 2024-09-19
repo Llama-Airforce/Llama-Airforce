@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@PM/Util/ChartStyles";
+import createChartOptions from "@/Styles/ChartStylesLW";
 import {
   WrapperService,
   type Contract,

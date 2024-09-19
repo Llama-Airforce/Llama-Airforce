@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { useSettingsStore } from "@PM/Stores";
 import { StabilityPoolService } from "@PM/Services";
 import { stableSymbol } from "@PM/Models/Flavor";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { colors } from "@/Styles/ChartTheme";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getDate } from "@LAF/Pages/Bribes/Util/EpochHelper";

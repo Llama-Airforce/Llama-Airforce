@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { useSettingsStore } from "@PM/Stores";
-import createChartOptions from "@PM/Util/ChartStyles";
 import { ManagerService, type TroveManagerDetails } from "@PM/Services";
 
 const { t } = useI18n();

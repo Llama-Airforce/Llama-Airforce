@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@CM/Util/ChartStyles";
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
 const { data = [] } = defineProps<{

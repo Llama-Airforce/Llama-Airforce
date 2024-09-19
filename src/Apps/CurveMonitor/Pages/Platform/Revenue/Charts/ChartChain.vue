@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { useQueryRevenueChains } from "@CM/Services/Revenue/Queries";
 
 // Data

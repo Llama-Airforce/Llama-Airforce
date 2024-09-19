@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import type { Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useQueryTopPools } from "@CM/Services/Revenue/Queries";

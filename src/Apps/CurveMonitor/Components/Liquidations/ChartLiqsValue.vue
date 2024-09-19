@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { type LiquidationAggregate } from "@CM/Services/Liquidations";
 
 type Serie = { name: string; data: { x: string; y: number }[] };

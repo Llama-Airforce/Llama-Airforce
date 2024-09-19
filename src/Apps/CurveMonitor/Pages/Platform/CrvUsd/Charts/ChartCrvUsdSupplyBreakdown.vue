@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
 type Serie = { name: string; data: { x: string; y: number }[] };

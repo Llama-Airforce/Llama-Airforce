@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import createChartOptions from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
 
 const { distributions } = defineProps<{

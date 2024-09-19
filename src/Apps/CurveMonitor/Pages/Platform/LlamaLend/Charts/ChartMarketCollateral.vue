@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import createChartOptions from "@/Styles/ChartStylesLW";
 import { type Chain } from "@CM/Models";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
-import createChartOptions from "@CM/Util/ChartStyles";
 import { type Market } from "@CM/Services/LlamaLend";
 
 const { market, chain } = defineProps<{

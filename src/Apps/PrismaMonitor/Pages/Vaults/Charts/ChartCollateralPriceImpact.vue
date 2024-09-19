@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
 import { CollateralService, type TroveManagerDetails } from "@PM/Services";
-import { createChartStyles } from "@/Styles/ChartStyles";
+import { createChartStyles } from "@/Styles/ChartStylesApex";
 
 const { t } = useI18n();
 
