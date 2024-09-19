@@ -1,10 +1,7 @@
 import { type Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
-import type { ThemeId } from "@CB/Models/ThemeId";
 
 export const useSettingsStore = defineStore("settingsStore", () => {
-  const themeId = ref<ThemeId>("light");
-
   const theme = computed<Theme>(() => ({
     colors: colors.value,
     colorsArray: [
@@ -17,7 +14,6 @@ export const useSettingsStore = defineStore("settingsStore", () => {
   }));
 
   return {
-    themeId,
     theme,
   };
 });

@@ -1,6 +1,5 @@
 import { type Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
-import type { ThemeId } from "@PM/Models/ThemeId";
 import type { Flavor } from "@PM/Models/Flavor";
 
 type ThemePrisma = Theme & {
@@ -12,7 +11,6 @@ type ThemePrisma = Theme & {
 };
 
 export const useSettingsStore = defineStore("settingsStore", () => {
-  const themeId = ref<ThemeId>("light");
   const flavor = ref<Flavor>("lsd");
 
   const theme = computed<ThemePrisma>(() => ({
@@ -39,7 +37,6 @@ export const useSettingsStore = defineStore("settingsStore", () => {
   }));
 
   return {
-    themeId,
     theme,
     flavor,
   };
