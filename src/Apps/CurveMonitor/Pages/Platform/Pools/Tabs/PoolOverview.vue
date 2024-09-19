@@ -55,7 +55,6 @@ const balances = computed(() => {
   if (!pool) {
     return [];
   }
-  console.log(pool);
 
   return pool.coins.map((coin) => ({
     symbol: coin.symbol,
