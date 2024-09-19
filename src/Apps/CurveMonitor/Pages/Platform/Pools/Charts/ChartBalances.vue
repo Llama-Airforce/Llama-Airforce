@@ -31,7 +31,12 @@ const { items, toggles, disabled } = useLegend(() =>
 
 // Chart
 const card = useTemplateRef("card");
-const dollars = ref(false);
+
+const STORAGE_DOLLARS = "chart_pool_balances_dollars";
+const dollars = useStorage<boolean>(
+  STORAGE_DOLLARS,
+  false
+);
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
