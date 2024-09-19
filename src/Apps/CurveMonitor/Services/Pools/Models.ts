@@ -38,4 +38,5 @@ export type Tvl = {
   timestamp: number;
   tvlUSD: number;
   balances: number[];
+  tokenPrices: number[];
 };

@@ -6,6 +6,7 @@ import createChartOptions from "@CM/Util/ChartStyles";
 type Balance = {
   timestamp: number;
   balance: number;
+  tokenPrice: number;
 };
 
 type Balances = {
@@ -31,6 +32,7 @@ const { items, toggles, disabled } = useLegend(() =>
 
 // Chart
 const card = useTemplateRef("card");
+const dollars = ref(false);
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
@@ -65,10 +67,12 @@ function createSeries() {
       continue;
     }
 
+    const toDollars = dollars.value;
+
     const newSerie = bs
       .map((x) => ({
         time: x.timestamp as UTCTimestamp,
-        value: x.balance,
+        value: toDollars ? x.balance * x.tokenPrice : x.balance,
       }))
       .uniqWith((x, y) => x.time === y.time)
       .orderBy((c) => c.time, "asc");
@@ -90,6 +94,13 @@ function createSeries() {
   >
     <template #actions>
       <div style="display: flex">
+        <ButtonToggle
+          :model-value="dollars"
+          @click="dollars = !dollars"
+        >
+          <i class="fas fa-dollar-sign"></i>
+        </ButtonToggle>
+
         <BtnChartLWExport
           filename="balances"
           :series

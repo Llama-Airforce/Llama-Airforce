@@ -62,6 +62,7 @@ const balances = computed(() => {
     balances: tvlRaw.value.map((tvl) => ({
       timestamp: tvl.timestamp,
       balance: tvl.balances[coin.poolIndex],
+      tokenPrice: tvl.tokenPrices[coin.poolIndex],
     })),
   }));
 });

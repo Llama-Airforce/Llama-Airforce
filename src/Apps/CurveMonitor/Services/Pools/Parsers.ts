@@ -54,6 +54,7 @@ export const parseTvl = (
   return {
     timestamp: x.timestamp,
     tvlUSD: x.tvl_usd ?? 0,
-    balances: x.balances,
+    balances: [...x.balances],
+    tokenPrices: [...x.token_prices],
   };
 };
