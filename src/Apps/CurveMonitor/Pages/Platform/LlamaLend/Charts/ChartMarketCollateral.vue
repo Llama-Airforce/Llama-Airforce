@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartOptions from "@CM/Util/ChartStyles";
@@ -18,7 +17,7 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 );
 
 // Legend
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const symbolCollateral = computed(() =>
   market ? market.collateral_token.symbol : "?"

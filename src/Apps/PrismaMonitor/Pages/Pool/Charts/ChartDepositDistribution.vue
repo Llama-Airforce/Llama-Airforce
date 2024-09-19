@@ -6,7 +6,7 @@ import { StabilityPoolService } from "@PM/Services";
 const { t } = useI18n();
 
 // Stores
-const { theme, flavor } = storeToRefs(useSettingsStore());
+const { flavor } = storeToRefs(useSettingsStore());
 
 // Services
 const sbService = new StabilityPoolService(flavor.value);
@@ -21,7 +21,7 @@ const { isFetching: loading, data } = useQuery({
 });
 
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       id: "distribution",
       type: "bar",

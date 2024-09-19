@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type LiquidationDetails } from "@CM/Services/Liquidations";
 
@@ -14,7 +13,7 @@ const { discounts, liqs } = defineProps<{
 }>();
 
 // Legend
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const { items } = useLegend(() => [
   {

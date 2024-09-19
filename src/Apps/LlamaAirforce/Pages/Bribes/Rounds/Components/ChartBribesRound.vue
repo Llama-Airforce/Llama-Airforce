@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { colors } from "@/Styles/ChartTheme";
 import type { Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 
@@ -43,18 +42,7 @@ const categories = computed(() =>
 );
 
 const options = computed(() => {
-  const theme = {
-    colors: colors.value,
-    colorsArray: [
-      colors.value.blue,
-      colors.value.yellow,
-      colors.value.green,
-      colors.value.red,
-      colors.value.purple,
-    ],
-  };
-
-  return createChartStyles(theme, {
+  return createChartStyles({
     chart: {
       id: "votium-bribe-round",
       type: "bar",

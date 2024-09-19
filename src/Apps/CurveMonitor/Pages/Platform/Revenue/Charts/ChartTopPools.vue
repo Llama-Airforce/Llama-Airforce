@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@CM/Stores";
 import type { Chain } from "@CM/Models";
 import SelectChain from "@CM/Components/SelectChain.vue";
 import { useQueryTopPools } from "@CM/Services/Revenue/Queries";
-
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
 
 const chain = ref<Chain>("ethereum");
 
@@ -15,7 +11,7 @@ const { isFetching: loading, data: topPools } = useQueryTopPools(chain);
 
 // Chart
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       id: "chainRevenues",
       type: "bar",

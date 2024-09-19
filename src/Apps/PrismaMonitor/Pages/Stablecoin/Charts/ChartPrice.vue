@@ -7,7 +7,8 @@ import { stableSymbol } from "@PM/Models/Flavor";
 const { t } = useI18n();
 
 // Refs
-const { theme, flavor } = storeToRefs(useSettingsStore());
+const theme = useTheme();
+const { flavor } = storeToRefs(useSettingsStore());
 
 // Price settings specifics.
 const getPool = () => {

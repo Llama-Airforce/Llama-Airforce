@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type LiqLosses } from "@CM/Services/Liquidations";
 
@@ -8,7 +7,7 @@ const { losses } = defineProps<{
 }>();
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),

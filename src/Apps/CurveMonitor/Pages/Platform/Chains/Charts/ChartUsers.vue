@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 
@@ -13,7 +12,7 @@ const { users } = defineProps<{
 }>();
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({

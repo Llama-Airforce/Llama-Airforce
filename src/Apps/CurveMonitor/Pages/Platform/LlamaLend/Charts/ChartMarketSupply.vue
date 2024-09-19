@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type Chain } from "@CM/Models";
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import createChartOptions from "@CM/Util/ChartStyles";
@@ -12,7 +11,7 @@ const { market, chain } = defineProps<{
 }>();
 
 // Legend
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const { items, toggles, disabled } = useLegend(() => {
   const { blue, yellow, purple } = theme.value.colors;

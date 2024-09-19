@@ -39,6 +39,9 @@ watch(
     }
   }
 );
+
+// Theme
+provideTheme(toRef(() => settingStore.theme));
 </script>
 
 <template>

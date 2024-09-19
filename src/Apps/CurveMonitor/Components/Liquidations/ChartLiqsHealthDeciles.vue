@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { type LiqHealthDecile } from "@CM/Services/Liquidations";
 
@@ -7,11 +6,8 @@ const { deciles } = defineProps<{
   deciles: LiqHealthDecile[];
 }>();
 
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
-
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "bar",
       animations: {

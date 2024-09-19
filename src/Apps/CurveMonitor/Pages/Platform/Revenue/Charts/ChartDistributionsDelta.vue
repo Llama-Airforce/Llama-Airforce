@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type Distribution } from "@CM/Services/Revenue";
@@ -9,7 +8,7 @@ const { distributions } = defineProps<{
 }>();
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const card = useTemplateRef("card");
 

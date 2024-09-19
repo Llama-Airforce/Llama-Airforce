@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { capitalize } from "@/Util";
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@CM/Stores";
 import type { Activity } from "@CM/Services/Chains";
 
 type ActivityValue = Omit<Activity, "timestamp"> & {
@@ -14,7 +13,7 @@ const { type, txs, users } = defineProps<{
   users: ActivityValue[];
 }>();
 
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const title = computed(
   () => `Top Chains (${type === "all" ? "All Types" : capitalize(type)})`
@@ -48,7 +47,7 @@ function getData(xs: ActivityValue[]) {
 const options = computed(() => {
   const { colors } = theme.value;
 
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "bar",
       animations: {

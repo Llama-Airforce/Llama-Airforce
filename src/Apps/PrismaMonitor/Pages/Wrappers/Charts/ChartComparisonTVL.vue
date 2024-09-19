@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@PM/Stores";
 import createChartOptions from "@PM/Util/ChartStyles";
 import {
   WrapperService,
@@ -12,7 +11,7 @@ const { t } = useI18n();
 const prismaService = new WrapperService();
 
 // Legend
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const { items } = useLegend(() => [
   {

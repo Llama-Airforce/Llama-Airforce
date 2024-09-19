@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type LlammaOHLC } from "@CM/Services/Llamma";
 
@@ -8,7 +7,7 @@ const { ohlc } = defineProps<{
 }>();
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const invert = ref(false);
 const oracle = ref(false);

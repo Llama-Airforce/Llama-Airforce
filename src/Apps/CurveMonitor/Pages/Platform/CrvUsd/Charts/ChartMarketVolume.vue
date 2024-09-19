@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type Chain } from "@CM/Models";
 import { type Market } from "@CM/Services/CrvUsd";
@@ -19,7 +18,7 @@ const { isFetching: loading, data: ohlc } = useQueryOHLC(
 );
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 
@@ -18,7 +17,7 @@ const { balances } = defineProps<{
   balances: Balances;
 }>();
 
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 // Legend
 const { items, toggles, disabled } = useLegend(() =>

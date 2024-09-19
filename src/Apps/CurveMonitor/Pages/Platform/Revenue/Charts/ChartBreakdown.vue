@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@CM/Stores";
 import {
   useQueryCrvUsdWeekly,
   useQueryPoolsWeekly,
@@ -12,7 +11,7 @@ type Serie = {
 };
 
 // Refs
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 // Legend
 const { items } = useLegend(() => [
@@ -42,7 +41,6 @@ const options = computed(() => {
   };
 
   return createChartStyles(
-    { colors, colorsArray },
     {
       chart: {
         type: "bar",
@@ -90,7 +88,8 @@ const options = computed(() => {
         followCursor: false,
         enabled: true,
       },
-    }
+    },
+    ref({ colors, colorsArray })
   );
 });
 

@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@PM/Stores";
 import { type DecimalLabelledSeries } from "@PM/Services";
 
 const { data = [] } = defineProps<{
   data: DecimalLabelledSeries[];
 }>();
 
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
-
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       id: "distribution",
       type: "bar",

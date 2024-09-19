@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@PM/Stores";
 import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();
@@ -10,13 +9,10 @@ const { totalWeight = 0, lockers = [] } = defineProps<{
   lockers: AccountData[];
 }>();
 
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
-
 const data = computed(() => lockers.slice(0, 10));
 
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       id: "topLockers",
       type: "donut",

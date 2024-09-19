@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
+import type { Theme } from "@/Styles/Theme";
+import { colors } from "@/Styles/ChartTheme";
 import Header from "@LAF/Navigation/Header.vue";
 import Footer from "@LAF/Navigation/Footer.vue";
 import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
@@ -7,7 +9,21 @@ import Announcement from "@LAF/Components/Announcement.vue";
 
 import "@/Styles/Themes/LAF/Dark.css";
 
+// Theme
 window.document.documentElement.setAttribute("data-theme", "dark");
+
+const theme = computed<Theme>(() => ({
+  colors: colors.value,
+  colorsArray: [
+    colors.value.blue,
+    colors.value.yellow,
+    colors.value.green,
+    colors.value.red,
+    colors.value.purple,
+  ],
+}));
+
+provideTheme(theme);
 </script>
 
 <template>

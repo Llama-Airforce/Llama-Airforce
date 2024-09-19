@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@CM/Stores";
 import { useQueryLabels } from "@CM/Services/Monitor/MEV/Queries";
-
-const { theme } = storeToRefs(useSettingsStore());
 
 const { data: labelsRaw, isFetching: loading } = useQueryLabels();
 
@@ -26,7 +23,7 @@ const series = computed(() =>
 );
 
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       id: "chainRevenues",
       type: "donut",

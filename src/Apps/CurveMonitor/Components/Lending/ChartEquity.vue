@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type BaselineSeriesPartialOptions } from "lightweight-charts";
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 
@@ -14,7 +13,7 @@ const { equity } = defineProps<{
 }>();
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const card = useTemplateRef("card");
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import { useQueryCrvUsdSupply } from "@CM/Services/CrvUsd/Queries";
 import {
   ChartCrvUsdSupplyLine,
@@ -9,7 +8,7 @@ import {
 type ChartType = "line" | "breakdown";
 
 // Refs
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 const chartType = ref<ChartType>("line");
 
 // Legend

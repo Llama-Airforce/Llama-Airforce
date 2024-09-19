@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import { type Chain } from "@CM/Models";
@@ -18,7 +17,7 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 );
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const card = useTemplateRef("card");
 

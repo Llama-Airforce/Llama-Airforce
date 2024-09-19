@@ -68,10 +68,12 @@ const createDefault = (theme: Theme): Record<string, unknown> => ({
 });
 
 export function createChartStyles(
-  theme: Theme,
-  options?: Record<string, unknown>
+  options?: Record<string, unknown>,
+  theme?: Ref<Theme>
 ) {
-  const _default = createDefault(theme);
+  theme ??= useTheme();
+
+  const _default = createDefault(theme.value);
 
   return options ? deepMerge(_default, options) : _default;
 }

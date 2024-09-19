@@ -522,6 +522,8 @@
     "MaybeRef": true,
     "onWatcherCleanup": true,
     "useId": true,
-    "useModel": true
+    "useModel": true,
+    "provideTheme": true,
+    "useTheme": true
   }
 }

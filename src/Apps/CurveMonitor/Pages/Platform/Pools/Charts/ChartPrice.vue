@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@CM/Stores";
 import createChartStyles from "@CM/Util/ChartStyles";
 import { type OHLC } from "@CM/Services/OHLC";
 
@@ -8,7 +7,7 @@ const { ohlc } = defineProps<{
 }>();
 
 // Chart
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const invert = ref(false);
 let max = 1;

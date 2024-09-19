@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
 import { WrapperService, type Contract } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
 
 const { t } = useI18n();
 
@@ -17,8 +16,7 @@ const { contract } = defineProps<{
   contract: Contract;
 }>();
 
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 // Data
 const { isFetching: loading, data } = useQuery({
@@ -34,7 +32,7 @@ const { isFetching: loading, data } = useQuery({
 const options = computed(() => {
   const { colors } = theme.value;
 
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "bar",
       stacked: "true",

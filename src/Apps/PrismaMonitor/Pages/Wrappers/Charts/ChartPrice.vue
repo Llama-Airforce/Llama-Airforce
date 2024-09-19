@@ -35,7 +35,8 @@ const loading = computed(
 let max = 1;
 let min = 0;
 
-const { theme, flavor } = storeToRefs(useSettingsStore());
+const theme = useTheme();
+const { flavor } = storeToRefs(useSettingsStore());
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions({

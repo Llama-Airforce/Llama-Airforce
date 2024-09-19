@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@CM/Stores";
 import { type CrvUsdSupply } from "@CM/Services/CrvUsd";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
@@ -9,11 +8,8 @@ const { data = [] } = defineProps<{
   data: CrvUsdSupply[];
 }>();
 
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
-
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "bar",
       stacked: true,

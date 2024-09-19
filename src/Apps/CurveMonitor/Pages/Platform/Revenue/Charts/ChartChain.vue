@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStyles";
-import { useSettingsStore } from "@CM/Stores";
 import { useQueryRevenueChains } from "@CM/Services/Revenue/Queries";
-
-// Refs
-const { theme } = storeToRefs(useSettingsStore());
 
 // Data
 const { isFetching: loading, data: chainRevenues } = useQueryRevenueChains();
 
 // Chart
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       id: "chainRevenues",
       type: "donut",

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type AutoscaleInfo } from "lightweight-charts";
-import { useSettingsStore } from "@CM/Stores";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import createChartOptions from "@CM/Util/ChartStyles";
 import { type PoolPrice } from "@CM/Services/CrvUsd";
@@ -9,7 +8,7 @@ import {
   useQueryKeeperPrices,
 } from "@CM/Services/CrvUsd/Queries";
 
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 // Legend
 const coins = ["USDC", "USDT", "TUSD", "USDP"] as const;

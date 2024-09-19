@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSettingsStore, useSocketStore } from "@PM/Stores";
+import { useSocketStore } from "@PM/Stores";
 import createChartOptions from "@PM/Util/ChartStyles";
 import { CurvePriceService, type OHLC } from "@/Services";
 import { getPriceSettings } from "@PM/Pages/Wrappers/Settings";
@@ -8,7 +8,7 @@ import { type Contract } from "@PM/Services";
 const { t } = useI18n();
 
 // Legend
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const { items } = useLegend(() => [
   {

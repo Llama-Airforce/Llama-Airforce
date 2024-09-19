@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@PM/Stores";
 import { type PoolDepth } from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStyles";
 
@@ -11,12 +10,12 @@ const { depth = null, loading } = defineProps<{
 }>();
 
 // Refs
-const { theme } = storeToRefs(useSettingsStore());
+const theme = useTheme();
 
 const options = computed(() => {
   const { colors } = theme.value;
 
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "area",
       animations: {

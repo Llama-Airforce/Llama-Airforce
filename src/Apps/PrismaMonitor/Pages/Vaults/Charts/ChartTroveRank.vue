@@ -11,7 +11,8 @@ import { createChartStyles } from "@/Styles/ChartStyles";
 const { t } = useI18n();
 
 // Stores
-const { theme, flavor } = storeToRefs(useSettingsStore());
+const theme = useTheme();
+const { flavor } = storeToRefs(useSettingsStore());
 
 // Services
 const troveService = new TroveService(flavor.value);
@@ -71,7 +72,7 @@ const options = computed(() => {
     },
   };
 
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "area",
       animations: {

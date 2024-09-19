@@ -6,7 +6,7 @@ import { useSettingsStore } from "@PM/Stores";
 const { t } = useI18n();
 
 // Stores
-const { theme, flavor } = storeToRefs(useSettingsStore());
+const { flavor } = storeToRefs(useSettingsStore());
 
 // Services
 const managerService = new ManagerService(flavor.value);
@@ -26,7 +26,7 @@ const { isFetching: loading, data } = useQuery({
 });
 
 const options = computed(() => {
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "area",
       stacked: "true",

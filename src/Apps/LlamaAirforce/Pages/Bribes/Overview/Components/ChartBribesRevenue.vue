@@ -18,18 +18,7 @@ const { protocol } = storeToRefs(useBribesStore());
 const epochs = computed(() => overview?.epochs ?? []);
 
 const options = computed(() => {
-  const theme = {
-    colors: colors.value,
-    colorsArray: [
-      colors.value.blue,
-      colors.value.yellow,
-      colors.value.green,
-      colors.value.red,
-      colors.value.purple,
-    ],
-  };
-
-  return createChartStyles(theme, {
+  return createChartStyles({
     chart: {
       id: "votium-bribe-revenue",
     },

@@ -13,7 +13,8 @@ type TooltipParams = {
 };
 
 // Stores
-const { theme, flavor } = storeToRefs(useSettingsStore());
+const theme = useTheme();
+const { flavor } = storeToRefs(useSettingsStore());
 
 // Services
 const sbService = new StabilityPoolService(flavor.value);
@@ -29,7 +30,7 @@ const { isFetching: loading, data } = useQuery({
 const options = computed(() => {
   const { colors } = theme.value;
 
-  return createChartStyles(theme.value, {
+  return createChartStyles({
     chart: {
       type: "bar",
       stacked: "true",

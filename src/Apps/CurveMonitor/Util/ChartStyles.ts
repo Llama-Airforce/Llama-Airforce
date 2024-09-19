@@ -6,7 +6,6 @@ import {
 } from "lightweight-charts";
 import { deepMerge } from "@/Util";
 import type { Theme } from "@/Styles/Theme";
-import { useSettingsStore } from "@CM/Stores";
 
 const createDefault = (
   chartRef: HTMLElement,
@@ -62,7 +61,7 @@ const createDefault = (
 export default function createChartOptions(
   options?: MaybeRef<DeepPartial<ChartOptions>>
 ) {
-  const { theme } = storeToRefs(useSettingsStore());
+  const theme = useTheme();
 
   return (chartRef: HTMLElement) =>
     computed(() => {
