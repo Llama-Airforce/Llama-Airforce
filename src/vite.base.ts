@@ -66,6 +66,11 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       imports: ["DataPoint"],
       type: true,
     },
+    {
+      from: "@/Util/Types",
+      imports: ["Tail", "Flatten", "MaybeArray"],
+      type: true,
+    },
     // Vue Types
     {
       from: "vue",

@@ -524,6 +524,9 @@
     "useId": true,
     "useModel": true,
     "provideTheme": true,
-    "useTheme": true
+    "useTheme": true,
+    "Flatten": true,
+    "MaybeArray": true,
+    "Tail": true
   }
 }

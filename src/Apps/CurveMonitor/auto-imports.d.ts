@@ -521,4 +521,7 @@ declare global {
   // @ts-ignore
   export type { DataPoint } from '@/Util'
   import('@/Util')
+  // @ts-ignore
+  export type { Tail, Flatten, MaybeArray } from '@/Util/Types'
+  import('@/Util/Types')
 }
