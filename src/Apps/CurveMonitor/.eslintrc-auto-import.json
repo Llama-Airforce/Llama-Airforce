@@ -527,6 +527,9 @@
     "useTheme": true,
     "Flatten": true,
     "Tail": true,
-    "MaybeArray": true
+    "MaybeArray": true,
+    "StackedAreaSeries": true,
+    "StackedAreaSeriesRenderer": true,
+    "defaultOptions": true
   }
 }

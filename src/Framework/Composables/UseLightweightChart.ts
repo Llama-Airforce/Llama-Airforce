@@ -2,68 +2,72 @@ import { createChart } from "lightweight-charts";
 import type {
   DeepPartial,
   ChartOptions,
-  SeriesType as SeriesTypeAll,
+  SeriesType as SeriesTypeOriginal,
   ISeriesApi,
   SeriesPartialOptionsMap,
+  SeriesOptionsCommon,
 } from "lightweight-charts";
+import type { StackedAreaSeriesPartialOptions } from "../Series/StackedAreaSeries/Options";
+import { StackedAreaSeries } from "../Series/StackedAreaSeries/StackedAreaSeries";
 
-// Custom series are excluded due to their complexity
-type SeriesType = Exclude<SeriesTypeAll, "Custom">;
+// Custom series are not supported to their ambiguity, but we support more specific ones
+type SeriesTypeCustom = "StackedArea";
+type SeriesType = Exclude<SeriesTypeOriginal, "Custom"> | SeriesTypeCustom;
+
+/** Map any custom SeriesType extension to 'Custom' so it maps to a key of ISeriesApi */
+type SeriesApiType<T extends SeriesType> = T extends SeriesTypeCustom
+  ? "Custom"
+  : T;
+
+/** The defaalt options map extended with our own custom types */
+type SeriesOptions = SeriesPartialOptionsMap & {
+  StackedArea: StackedAreaSeriesPartialOptions;
+};
 
 /**
  * Defines a series for the chart
- * @template T - The type of series (e.g., 'Line', 'Candlestick', 'Area')
+ * @template T - The type of series (e.g., 'Line', 'Candlestick', 'Area', 'StackedArea')
  * @property {string} name - Unique identifier for the series
  * @property {T} type - The type of series
- * @property {Ref<SeriesPartialOptionsMap[T]>} options - Reactive options for the series
+ * @property {Ref<SeriesOptions[T]>} options - Reactive options for the series
  *
  * @example
- * const lineSeries: SerieDef<'Line'> = {
+ * const lineSeries: Serie<'Line'> = {
  *   name: 'price',
  *   type: 'Line',
  *   options: ref({ color: 'blue' })
  * };
  */
-type SerieDef<T extends SeriesType> = {
+type Serie<T extends SeriesType> = {
   name: string;
   type: T;
-  options: Ref<SeriesPartialOptionsMap[T]>;
+  options: Ref<SeriesOptions[T]>;
 };
 
-/**
- * Array of SerieDef objects
- * @template T - The type of series
- */
-type SerieDefs<T extends SeriesType> = SerieDef<T>[];
-
-/**
- * Extracts the SerieDef type from either a single SerieDef or an array of SerieDefs
- * @template T - SerieDef or SerieDefs
- */
-type ExtractSerieDef<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> =
-  T extends SerieDefs<SeriesType> ? T[number] : T;
+/** Represents a single series or an array of series for the chart */
+type Series = MaybeArray<Serie<SeriesType>>;
 
 /**
  * Maps series names to their API instances
- * @template T - SerieDef or SerieDefs
+ * @template T - Series type (single series or array of series)
  *
- * Allows accessing series by name after chart creation
+ * Provides type-safe access to series instances after chart creation
  *
  * @example
- * const serieDefs = [
- *   { name: 'price', type: 'Line' as const, options: ref({}) },
- *   { name: 'volume', type: 'Area' as const, options: ref({}) }
- * ];
- * type ChartSeries = Series<typeof serieDefs>;
+ * const series = {
+ *   price: { type: 'Line' as const, options: ref({}) },
+ *   volume: { type: 'Area' as const, options: ref({}) }
+ * };
+ * type ChartSeries = SeriesMap<typeof series>;
  * // ChartSeries will be:
  * // {
  * //   price: ISeriesApi<'Line'> | undefined;
  * //   volume: ISeriesApi<'Area'> | undefined;
  * // }
  */
-type Series<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
-  [K in ExtractSerieDef<T>["name"]]:
-    | ISeriesApi<ExtractSerieDef<T>["type"]>
+type SeriesMap<T extends Series> = {
+  [K in Flatten<T>["name"]]:
+    | ISeriesApi<SeriesApiType<Flatten<T>["type"]>>
     | undefined;
 };
 
@@ -71,7 +75,7 @@ type Series<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
  * Options for the useLightweightChart composable
  * @template T - SerieDef or SerieDefs
  */
-type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
+type Options<T extends Series> = {
   /** Function to create reactive chart options */
   createChartOptions: (chartRef: HTMLElement) => Ref<DeepPartial<ChartOptions>>;
   /** Single series definition or array of series definitions */
@@ -82,12 +86,12 @@ type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
  * Vue composable that creates and manages a lightweight chart using the 'lightweight-charts' library.
  * The chart will automatically resize if its parent element resizes, thanks to a ResizeObserver.
  *
- * @template T - SerieDef or SerieDefs
- * @param options - An object containing chart configuration
- * @returns An object containing:
- *   - chartRef: A ref to the HTML element that will contain the chart.
- *   - chart: A ref to the created chart instance.
- *   - series: An object mapping series names to their API instances.
+ * @template T - Series type (single or array)
+ * @param options - Chart configuration object
+ * @returns Object with:
+ *   - chartRef: Ref to chart container element
+ *   - chart: Ref to chart instance
+ *   - series: Object mapping series names to API instances
  *
  * @example
  * const { chartRef, chart, series } = useLightweightChart({
@@ -129,13 +133,11 @@ type Options<T extends SerieDef<SeriesType> | SerieDefs<SeriesType>> = {
  *   { time: '2021-01-02', value: 110 },
  * ]);
  */
-export function useLightweightChart<
-  T extends SerieDef<SeriesType> | SerieDefs<SeriesType>
->(options: Options<T>) {
+export function useLightweightChart<T extends Series>(options: Options<T>) {
   const { createChartOptions, series: serieDefs } = options;
 
-  const series = {} as Series<T>;
-  const serieDefsArray: SerieDefs<SeriesType> = Array.isArray(serieDefs)
+  const series = {} as SeriesMap<T>;
+  const seriesArray: Serie<SeriesType>[] = Array.isArray(serieDefs)
     ? serieDefs
     : [serieDefs];
 
@@ -148,10 +150,10 @@ export function useLightweightChart<
     chart.value = createChart(newChartRef, chartOptions.value);
 
     // Create series
-    for (const serieDef of serieDefsArray) {
+    for (const serieDef of seriesArray) {
       const serie = createSerie(chart.value, serieDef);
       series[serieDef.name as keyof typeof series] =
-        serie as Series<T>[keyof Series<T>];
+        serie as SeriesMap<T>[keyof SeriesMap<T>];
     }
 
     // Watch and apply new options coming in.
@@ -182,10 +184,12 @@ export function useLightweightChart<
   );
 
   // Apply new options when serie options change
-  for (const { name, options } of serieDefsArray) {
+  for (const { name, options } of seriesArray) {
     watch(options, (newOptions) => {
-      const serie = series[name as keyof Series<T>];
-      serie?.applyOptions(newOptions);
+      const serie = series[name as keyof SeriesMap<T>];
+
+      // Cast options to the common denominator between custom and native series.
+      serie?.applyOptions(newOptions as SeriesOptionsCommon);
     });
   }
 
@@ -196,15 +200,14 @@ export function useLightweightChart<
  * Creates a new series on the given chart.
  *
  * @param {IChartApi} chart - The chart instance to add the series to.
- * @param {SerieDef<SeriesType>} param1 - An object containing the type of series and its options.
+ * @param {Serie<SeriesType>} param1 - An object containing the type of series and its options.
  * @returns {ISeriesApi<SeriesType>} The created series instance.
  */
-function createSerie(
-  chart: IChartApi,
-  { type, options }: SerieDef<SeriesType>
-) {
+function createSerie(chart: IChartApi, { type, options }: Serie<SeriesType>) {
   const serieFactories: {
-    [K in SeriesType]: (options: SeriesPartialOptionsMap[K]) => ISeriesApi<K>;
+    [K in SeriesType]: (
+      options: SeriesOptions[K]
+    ) => ISeriesApi<SeriesApiType<K>>;
   } = {
     Area: chart.addAreaSeries.bind(chart),
     Bar: chart.addBarSeries.bind(chart),
@@ -212,7 +215,8 @@ function createSerie(
     Line: chart.addLineSeries.bind(chart),
     Candlestick: chart.addCandlestickSeries.bind(chart),
     Histogram: chart.addHistogramSeries.bind(chart),
+    StackedArea: chart.addCustomSeries.bind(chart, new StackedAreaSeries()),
   };
 
-  return serieFactories[type](options.value);
+  return serieFactories[type](options.value as SeriesOptionsCommon);
 }

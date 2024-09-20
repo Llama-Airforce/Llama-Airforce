@@ -58,6 +58,8 @@ declare global {
   const PxCvxFactoryAddress: typeof import('../../Util/Addresses')['PxCvxFactoryAddress']
   const RPxCvxAddress: typeof import('../../Util/Addresses')['RPxCvxAddress']
   const SnapshotRegistryAddress: typeof import('../../Util/Addresses')['SnapshotRegistryAddress']
+  const StackedAreaSeries: typeof import('../../Framework/Series/StackedAreaSeries/StackedAreaSeries')['StackedAreaSeries']
+  const StackedAreaSeriesRenderer: typeof import('../../Framework/Series/StackedAreaSeries/Renderer')['StackedAreaSeriesRenderer']
   const StkCvxPrismaAddress: typeof import('../../Util/Addresses')['StkCvxPrismaAddress']
   const TheLlamas: typeof import('../../Util/Addresses')['TheLlamas']
   const TreasuryAddress: typeof import('../../Util/Addresses')['TreasuryAddress']
@@ -149,6 +151,7 @@ declare global {
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
   const deepMerge: typeof import('../../Util/ObjectHelper')['deepMerge']
+  const defaultOptions: typeof import('../../Framework/Series/StackedAreaSeries/Options')['defaultOptions']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
@@ -518,6 +521,12 @@ declare global {
   // @ts-ignore
   export type { IChartApi, ISeriesApi, UTCTimestamp, LineData, CandlestickData, CandlestickSeriesPartialOptions, HistogramData, HistogramSeriesPartialOptions, AreaSeriesPartialOptions, LineSeriesPartialOptions } from 'lightweight-charts'
   import('lightweight-charts')
+  // @ts-ignore
+  export type { StackedAreaSeriesOptions, StackedAreaSeriesPartialOptions } from '@/Framework/Series/StackedAreaSeries/Options'
+  import('@/Framework/Series/StackedAreaSeries/Options')
+  // @ts-ignore
+  export type { StackedAreaData } from '@/Framework/Series/StackedAreaSeries/Data'
+  import('@/Framework/Series/StackedAreaSeries/Data')
   // @ts-ignore
   export type { DataPoint } from '@/Util'
   import('@/Util')

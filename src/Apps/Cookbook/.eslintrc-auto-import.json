@@ -524,6 +524,15 @@
     "useId": true,
     "useModel": true,
     "provideTheme": true,
-    "useTheme": true
+    "useTheme": true,
+    "StackedAreaSeries": true,
+    "StackedAreaSeriesRenderer": true,
+    "defaultOptions": true,
+    "Flatten": true,
+    "MaybeArray": true,
+    "StackedAreaData": true,
+    "StackedAreaSeriesOptions": true,
+    "StackedAreaSeriesPartialOptions": true,
+    "Tail": true
   }
 }

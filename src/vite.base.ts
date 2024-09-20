@@ -60,6 +60,16 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       ],
       type: true,
     },
+    {
+      from: "@/Framework/Series/StackedAreaSeries/Options",
+      imports: ["StackedAreaSeriesOptions", "StackedAreaSeriesPartialOptions"],
+      type: true,
+    },
+    {
+      from: "@/Framework/Series/StackedAreaSeries/Data",
+      imports: ["StackedAreaData"],
+      type: true,
+    },
     // Util
     {
       from: "@/Util",
