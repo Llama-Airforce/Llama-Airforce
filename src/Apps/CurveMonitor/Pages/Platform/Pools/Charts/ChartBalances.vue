@@ -35,7 +35,16 @@ const card = useTemplateRef("card");
 const STORAGE_DOLLARS = "chart_pool_balances_dollars";
 const dollars = useStorage<boolean>(STORAGE_DOLLARS, false);
 
-const stacked = ref(false);
+const STORAGE_TYPE = "chart_pool_balances_type";
+const types = ["unstacked", "stacked", "100%"] as const;
+type Types = (typeof types)[number];
+type SelectType = { id: Types; label: string };
+const typeOptions: SelectType[] = [
+  { id: "unstacked", label: "Unstacked" },
+  { id: "stacked", label: "Stacked" },
+  { id: "100%", label: "Stacked (100%)" },
+] as const;
+const type = useStorage<Types>(STORAGE_TYPE, types[0]);
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
@@ -91,10 +100,10 @@ function createSeries() {
     serie?.setData([]);
   }
 
-  if (stacked.value) {
-    createSeriesStacked();
-  } else {
+  if (type.value === "unstacked") {
     createSeriesUnstacked();
+  } else {
+    createSeriesStacked(type.value === "100%");
   }
 
   chart.value.timeScale().fitContent();
@@ -124,7 +133,7 @@ function createSeriesUnstacked() {
   }
 }
 
-function createSeriesStacked() {
+function createSeriesStacked(normalize: boolean) {
   if (!series.stacked) {
     return;
   }
@@ -147,10 +156,20 @@ function createSeriesStacked() {
     .groupBy((x) => x.timestamp)
     .entries()
     // One stacked datapoint is basically all points at a certain time.
-    .map(([time, values]) => ({
-      time: Number(time) as UTCTimestamp,
-      values: values.orderBy((x) => x.symbol).map((x) => x.balance),
-    }))
+    .map(([time, values]) => {
+      const total = normalize
+        ? values.reduce((sum, v) => sum + v.balance, 0)
+        : 1;
+
+      const calculatedValues = values.map((x) =>
+        normalize ? (x.balance / total) * 100 : x.balance
+      );
+
+      return {
+        time: Number(time) as UTCTimestamp,
+        values: calculatedValues,
+      };
+    })
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
@@ -168,18 +187,22 @@ function createSeriesStacked() {
   >
     <template #actions>
       <div style="display: flex">
+        <Select
+          :options="typeOptions"
+          :selected="typeOptions.find((x) => x.id === type) ?? typeOptions[0]"
+          @input="type = $event.id"
+        >
+          <template #item="{ item }">
+            {{ item.label }}
+          </template>
+        </Select>
+
         <ButtonToggle
+          style="margin-right: 1rem"
           :model-value="dollars"
           @click="dollars = !dollars"
         >
           <i class="fas fa-dollar-sign"></i>
-        </ButtonToggle>
-
-        <ButtonToggle
-          :model-value="stacked"
-          @click="stacked = !stacked"
-        >
-          <i class="fas fa-layer-group"></i>
         </ButtonToggle>
 
         <!-- Temp disabled because no support for stacked areas
@@ -210,3 +233,20 @@ function createSeriesStacked() {
     ></div>
   </Card>
 </template>
+
+<style scoped>
+.select {
+  z-index: 2;
+  width: 10rem;
+  margin-right: 1rem;
+}
+
+.chart {
+  /*
+    Needed to make sure the select component doesn't get its
+    mouse events hijacked by the chart, even when it's rendered below
+  */
+  position: relative;
+  z-index: 1;
+}
+</style>
