@@ -197,13 +197,19 @@ function createSeriesStacked(normalize: boolean) {
           </template>
         </Select>
 
-        <ButtonToggle
-          style="margin-right: 1rem"
-          :model-value="dollars"
-          @click="dollars = !dollars"
-        >
-          <i class="fas fa-dollar-sign"></i>
-        </ButtonToggle>
+        <Tooltip>
+          <template #trigger>
+            <ButtonToggle
+              style="margin-right: 1rem"
+              :model-value="dollars"
+              @click="dollars = !dollars"
+            >
+              <i class="fas fa-dollar-sign"></i>
+            </ButtonToggle>
+          </template>
+
+          Show token balances in USD.
+        </Tooltip>
 
         <!-- Temp disabled because no support for stacked areas
         <BtnChartLWExport
