@@ -20,8 +20,7 @@ const { chart, series } = useLightweightChart({
     options: computed<HistogramSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (x: number) =>
-          `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+        formatter: (x: number) => `$${round(x, 0, "dollar")}${unit(x)}`,
         minMove: 0.01,
       },
       color: theme.value.colors.blue,

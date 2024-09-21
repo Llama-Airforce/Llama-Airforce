@@ -131,8 +131,8 @@ const title = computed(() => {
   return `${t("title")} - ${tokensString} (Curve)`;
 });
 
-const formatter = (x: number): string => {
-  return `$${round(Math.abs(x), 2, "dollar")}${unit(x, "dollar")}`;
+const formatter = (x: number) => {
+  return `$${round(Math.abs(x), 2, "dollar")}${unit(x)}`;
 };
 </script>
 

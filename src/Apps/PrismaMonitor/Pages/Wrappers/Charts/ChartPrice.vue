@@ -145,7 +145,7 @@ const formatterPrice = (x: number): string => {
   const y = delta > 1 ? delta - Math.floor(delta) : delta;
   const m = -Math.floor(Math.log10(y) + 1) + 2;
 
-  return `${round(x, m, "dollar")}${unit(x, "dollar")}`;
+  return `${round(x, m, "dollar")}${unit(x)}`;
 };
 </script>
 

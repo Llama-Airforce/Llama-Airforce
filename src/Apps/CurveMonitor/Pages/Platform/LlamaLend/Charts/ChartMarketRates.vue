@@ -121,7 +121,7 @@ function createSeries() {
 }
 
 function formatter(x: number): string {
-  return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
+  return `${round(x * 100, 0, "percentage")}%`;
 }
 </script>
 

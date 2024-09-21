@@ -76,31 +76,49 @@ export function formatNumber(
   return s.join(dec);
 }
 
-export function unit(
-  value: number,
-  type: "" | "dollar" | "percentage"
-): string {
+/**
+ * Returns the appropriate unit suffix for a given number value.
+ *
+ * @param value - The number to determine the unit for.
+ * @returns The unit suffix as a string ('t' for trillion, 'b' for billion, 'm' for million, 'k' for thousand, or '' for smaller values).
+ *
+ * @example
+ * unit(1500000000000) // Returns 't'
+ * unit(2000000000) // Returns 'b'
+ * unit(3000000) // Returns 'm'
+ * unit(4000) // Returns 'k'
+ * unit(500) // Returns ''
+ */
+export function unit(value: number): string {
   const valueAbs = Math.abs(value);
 
-  if (type === "percentage") {
-    return "%";
-  } else if (type === "dollar") {
-    if (valueAbs >= 1 * 10 ** 12) {
-      return "t";
-    } else if (valueAbs >= 1 * 10 ** 9) {
-      return "b";
-    } else if (valueAbs >= 1 * 10 ** 6) {
-      return "m";
-    } else if (valueAbs >= 1 * 10 ** 3) {
-      return "k";
-    } else {
-      return "";
-    }
+  if (valueAbs >= 1 * 10 ** 12) {
+    return "t";
+  } else if (valueAbs >= 1 * 10 ** 9) {
+    return "b";
+  } else if (valueAbs >= 1 * 10 ** 6) {
+    return "m";
+  } else if (valueAbs >= 1 * 10 ** 3) {
+    return "k";
   } else {
     return "";
   }
 }
 
+/**
+ * Rounds a number to a specified precision and formats it based on the given type.
+ *
+ * @param value - The number to round and format.
+ * @param precision - The number of decimal places to round to. Use Infinity for locale-specific formatting.
+ * @param type - The type of formatting to apply: "" for no special formatting, "dollar" for currency-like formatting, or "percentage" for percentage formatting.
+ * @returns A string representation of the rounded and formatted number.
+ *
+ * @example
+ * round(1234.5678, 2, "dollar") // Returns "1.23k"
+ * round(0.1234, 2, "percentage") // Returns "12.34"
+ * round(1000000, 1, "dollar") // Returns "1.0m"
+ * round(123.456, Infinity, "") // Returns locale-specific formatting, e.g., "123.456" or "123,456"
+ */
 export function round(
   value: number,
   precision: number,

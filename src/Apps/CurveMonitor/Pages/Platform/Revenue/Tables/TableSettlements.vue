@@ -120,7 +120,6 @@ function symbol(settlement: CowSwapSettlement) {
             v-if="item.routerReceived > 1"
             :value="profit(item)"
             :precision="2"
-            :inline="false"
             type="dollar"
           />
         </div>
@@ -131,7 +130,6 @@ function symbol(settlement: CowSwapSettlement) {
             class="pct"
             :value="profitPct(item)"
             :precision="2"
-            :inline="false"
             :class="{ green: profitPct(item) > 0 }"
             type="percentage"
           />

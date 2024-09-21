@@ -12,15 +12,13 @@ const {
   showUnit = true,
   showSymbol = true,
   showZero = false,
-  inline = true,
 } = defineProps<{
-  value?: number | null;
+  value?: number | null | undefined;
   type?: "dollar" | "percentage";
   precision?: number | ((x: number) => number);
   showUnit?: boolean;
   showSymbol?: boolean;
   showZero?: boolean;
-  inline?: boolean;
 }>();
 
 // Refs
@@ -33,7 +31,7 @@ const presentation = computed((): string => {
       return "0";
     }
 
-    if (value === null || value === undefined) {
+    if (value === null || (value as unknown) === undefined) {
       return rod.value;
     }
 
@@ -52,11 +50,11 @@ const unit = computed((): string => {
     return "";
   }
 
-  if (!value || !type || !isFinite(value)) {
-    return showUnit && type ? unitF(0, type) : "";
+  if (!value || !isFinite(value)) {
+    return showUnit ? unitF(0) : "";
   }
 
-  return unitF(value, type);
+  return unitF(value);
 });
 
 // Watches
@@ -81,16 +79,56 @@ watch(
 </script>
 
 <template>
-  <div
-    v-if="!inline"
-    class="async-value"
-  >
-    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
-    }}{{ showUnit ? unit : "" }}
-  </div>
+  <div class="async-value">
+    <span
+      v-if="showSymbol && type === 'dollar'"
+      class="symbol"
+    >
+      $
+    </span>
 
-  <template v-else>
-    {{ showSymbol && type === "dollar" ? "$" : "" }}{{ presentation
-    }}{{ showUnit ? unit : "" }}
-  </template>
+    <span class="value">{{ presentation }}</span>
+
+    <span
+      v-if="showUnit"
+      class="unit"
+    >
+      {{ unit }}
+    </span>
+
+    <span
+      v-if="showSymbol && type === 'percentage'"
+      class="symbol"
+    >
+      %
+    </span>
+  </div>
 </template>
+
+<style scoped>
+.async-value {
+  display: flex;
+}
+
+.symbol {
+  margin-right: 0.25ch;
+}
+
+.unit {
+  margin-left: 0.2ch;
+}
+
+.symbol {
+  --mix-color: calc((1 - var(--color-scheme-dark, 0)) * 255);
+  --mix-intensity: calc(
+    var(--color-scheme-dark, 0) * 33% + (1 - var(--color-scheme-dark, 0)) * 42%
+  );
+
+  color: color-mix(
+    in srgb,
+    currentColor,
+    rgb(var(--mix-color), var(--mix-color), var(--mix-color))
+      var(--mix-intensity)
+  );
+}
+</style>

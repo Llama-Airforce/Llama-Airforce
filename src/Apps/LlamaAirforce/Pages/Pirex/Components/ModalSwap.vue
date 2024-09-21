@@ -182,7 +182,6 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
               <AsyncValue
                 type="percentage"
                 :value="discount"
-                :inline="false"
               ></AsyncValue>
             </div>
           </div>

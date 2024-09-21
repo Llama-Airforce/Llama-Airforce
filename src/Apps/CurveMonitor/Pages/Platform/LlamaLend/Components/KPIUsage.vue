@@ -58,7 +58,6 @@ const utilRate = computed(() => {
         <AsyncValue
           :value="totalCollateralUsd"
           :show-zero="true"
-          :inline="false"
           type="dollar"
         ></AsyncValue>
       </div>
@@ -74,14 +73,12 @@ const utilRate = computed(() => {
           :value="market?.total_debt"
           :show-symbol="false"
           :show-zero="true"
-          :inline="false"
           type="dollar"
         ></AsyncValue>
 
         <AsyncValue
           :value="market?.total_debt_usd"
           :show-zero="true"
-          :inline="false"
           type="dollar"
         ></AsyncValue>
       </div>
@@ -97,14 +94,12 @@ const utilRate = computed(() => {
           :value="market?.total_assets"
           :show-symbol="false"
           :show-zero="true"
-          :inline="false"
           type="dollar"
         ></AsyncValue>
 
         <AsyncValue
           :value="market?.total_assets_usd"
           :show-zero="true"
-          :inline="false"
           type="dollar"
         ></AsyncValue>
       </div>

@@ -152,6 +152,9 @@ const onMax = (): void => {
       }
 
       > .dollars {
+        display: flex;
+        gap: 0.5ch;
+
         &.hide {
           visibility: hidden;
         }

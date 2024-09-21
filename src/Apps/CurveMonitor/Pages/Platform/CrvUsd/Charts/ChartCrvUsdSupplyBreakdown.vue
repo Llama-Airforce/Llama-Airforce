@@ -100,10 +100,8 @@ const max = computed(
     ) * 1.1
 );
 
-const formatterX = (x: string): string => x;
-
-const formatterY = (y: number): string =>
-  `${round(y, 1, "dollar")}${unit(y, "dollar")}`;
+const formatterX = (x: string) => x;
+const formatterY = (y: number) => `${round(y, 1, "dollar")}${unit(y)}`;
 </script>
 
 <template>

@@ -157,13 +157,9 @@ const series = computed((): { name: string; data: number[] }[] => [
 const categories = computed(() => data.value.positions.map((x) => x.ratio));
 
 // Methods
-const formatter = (x: number): string => {
-  return `${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
-};
-
-const pctFormatter = (y: number, decimals = 0): string => {
-  return `${round(y, decimals, "percentage")}${unit(y, "percentage")}`;
-};
+const formatter = (x: number) => `${round(Math.abs(x), 1, "dollar")}${unit(x)}`;
+const pctFormatter = (y: number, decimals = 0) =>
+  `${round(y, decimals, "percentage")}%`;
 
 // Watches
 whenever(

@@ -53,8 +53,7 @@ const options = computed(() => {
     },
     yaxis: {
       labels: {
-        formatter: (y: number): string =>
-          `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
+        formatter: (y: number) => `$${round(y, 2, "dollar")}${unit(y)}`,
       },
     },
     plotOptions: {
@@ -84,7 +83,7 @@ const options = computed(() => {
           .filter((x) => x.sum > 0)
           .map((x) => ({
             token: x.token,
-            sum: `$${round(x.sum, 2, "dollar")}${unit(x.sum, "dollar")}`,
+            sum: `$${round(x.sum, 2, "dollar")}${unit(x.sum)}`,
           }))
           .orderBy((x) => x.sum, "desc")
           .map((x) => `<div><b>${x.token}</b>:</div><div>${x.sum}</div>`);
@@ -97,7 +96,7 @@ const options = computed(() => {
       formatter: (_value: number, x: DataPoint<Serie>) => {
         if (x.seriesIndex === x.w.config.series.length - 1) {
           const sum = x.w.globals.stackedSeriesTotals[x.dataPointIndex];
-          return `$${round(sum, 2, "dollar")}${unit(sum, "dollar")}`;
+          return `$${round(sum, 2, "dollar")}${unit(sum)}`;
         }
         return "";
       },

@@ -213,7 +213,6 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
             <div class="data">{{ formatDate(epoch.epoch) }}</div>
 
             <AsyncValue
-              :inline="false"
               :value="total(epoch)"
               type="dollar"
             ></AsyncValue>

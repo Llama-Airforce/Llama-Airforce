@@ -57,8 +57,8 @@ const series = computed(() => data.map((x) => x.value));
 const categories = computed(() => data.map((x) => x.label));
 
 // Methods
-const formatter = (x: number): string =>
-  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
+const formatter = (x: number) =>
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x)}`;
 </script>
 
 <template>

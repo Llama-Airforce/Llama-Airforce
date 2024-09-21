@@ -65,7 +65,7 @@ const options = computed(() => {
       yaxis: {
         labels: {
           formatter: (y: number): string =>
-            `$${round(y, 0, "dollar")}${unit(y, "dollar")}`,
+            `$${round(y, 0, "dollar")}${unit(y)}`,
         },
         min: 0,
       },

@@ -35,8 +35,7 @@ const options = computed(() => {
       {
         tickAmount: 4,
         labels: {
-          formatter: (y: number): string =>
-            `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
+          formatter: (y: number) => `$${round(y, 2, "dollar")}${unit(y)}`,
           style: { colors: [colors.value.blue] },
         },
       },
@@ -44,12 +43,12 @@ const options = computed(() => {
         opposite: true,
         tickAmount: 4,
         labels: {
-          formatter: (y: number): string =>
+          formatter: (y: number) =>
             `$${round(
               y,
               protocol.value === "cvx-prisma" ? 5 : 2,
               "dollar"
-            )}${unit(y, "dollar")}`,
+            )}${unit(y)}`,
           style: { colors: [colors.value.yellow] },
         },
       },
@@ -66,8 +65,7 @@ const options = computed(() => {
     markers: { size: 3 },
     dataLabels: {
       enabled: false,
-      formatter: (y: number): string =>
-        `$${round(y, 2, "dollar")}${unit(y, "dollar")}`,
+      formatter: (y: number): string => `$${round(y, 2, "dollar")}${unit(y)}`,
       offsetY: -25,
       style: {
         fontSize: "12px",

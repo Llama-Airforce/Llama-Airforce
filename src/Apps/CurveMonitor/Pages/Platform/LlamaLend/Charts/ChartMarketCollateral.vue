@@ -127,10 +127,7 @@ function createSeries() {
 }
 
 function formatter(x: number) {
-  return `${denomDollars.value ? "$" : ""}${round(x, 0, "dollar")}${unit(
-    x,
-    "dollar"
-  )}`;
+  return `${denomDollars.value ? "$" : ""}${round(x, 0, "dollar")}${unit(x)}`;
 }
 </script>
 

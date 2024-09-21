@@ -41,8 +41,7 @@ const { chart, series } = useLightweightChart({
     options: computed<LineSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (y: number) =>
-          `${round(y, 3, "dollar")}${unit(y, "dollar")}`,
+        formatter: (y: number) => `${round(y, 3, "dollar")}${unit(y)}`,
       },
       lineWidth: 2,
       lineType: LineType.WithSteps,

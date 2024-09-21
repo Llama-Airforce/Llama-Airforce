@@ -46,8 +46,7 @@ const { chart, series } = useLightweightChart({
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
           type: "custom",
-          formatter: (x: number) =>
-            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          formatter: (x: number) => `$${round(x, 0, "dollar")}${unit(x)}`,
           minMove: 0.01,
         },
         lineWidth: 2,
@@ -62,8 +61,7 @@ const { chart, series } = useLightweightChart({
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
           type: "custom",
-          formatter: (x: number): string =>
-            `$${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+          formatter: (x: number) => `$${round(x, 0, "dollar")}${unit(x)}`,
           minMove: 0.01,
         },
         lineWidth: 2,

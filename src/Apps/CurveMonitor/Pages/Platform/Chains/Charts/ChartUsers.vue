@@ -23,8 +23,7 @@ const { chart, series } = useLightweightChart({
     options: computed<AreaSeriesPartialOptions>(() => ({
       priceFormat: {
         type: "custom",
-        formatter: (x: number) =>
-          `${round(x, 0, "dollar")}${unit(x, "dollar")}`,
+        formatter: (x: number) => `${round(x, 0, "dollar")}${unit(x)}`,
         minMove: 0.01,
       },
       lineWidth: 2,

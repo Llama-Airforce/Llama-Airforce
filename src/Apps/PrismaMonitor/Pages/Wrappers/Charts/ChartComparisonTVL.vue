@@ -125,8 +125,8 @@ function createSeries(
   }
 }
 
-function formatter(y: number): string {
-  return `$${round(y, 0, "dollar")}${unit(y, "dollar")}`;
+function formatter(y: number) {
+  return `$${round(y, 0, "dollar")}${unit(y)}`;
 }
 </script>
 

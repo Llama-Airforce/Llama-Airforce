@@ -55,8 +55,7 @@ const { chart, series } = useLightweightChart({
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
           type: "custom",
-          formatter: (y: number) =>
-            `${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+          formatter: (y: number) => `${round(y, 1, "dollar")}${unit(y)}`,
         },
         lineWidth: 2,
         lineType: LineType.WithSteps,
@@ -71,8 +70,7 @@ const { chart, series } = useLightweightChart({
       options: computed<StackedAreaSeriesPartialOptions>(() => ({
         priceFormat: {
           type: "custom",
-          formatter: (y: number) =>
-            `${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+          formatter: (y: number) => `${round(y, 1, "dollar")}${unit(y)}`,
         },
         // Color array is based directly on toggled legend items to maintain consistent colors
         colors: items.value

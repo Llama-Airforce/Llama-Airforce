@@ -210,14 +210,13 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     <template #title>
       <div class="card-title">
         {{ t("title") }}
-        <span v-if="bribedAmount">
-          -
-          <AsyncValue
-            :value="bribedAmount"
-            :precision="2"
-            type="dollar"
-          />
-        </span>
+        <span v-if="bribedAmount"> - </span>
+        <AsyncValue
+          v-if="bribedAmount"
+          :value="bribedAmount"
+          :precision="2"
+          type="dollar"
+        />
       </div>
     </template>
 
@@ -292,7 +291,13 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 </template>
 
 <style scoped>
+.card-title {
+  display: flex;
+  gap: 0.5ch;
+}
+
 .personalDollarPerVlAsset {
+  display: flex;
   color: #a1a1aa;
   font-size: 0.75rem;
   margin-right: 1rem;

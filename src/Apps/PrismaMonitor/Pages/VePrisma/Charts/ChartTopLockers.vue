@@ -71,11 +71,8 @@ const categories = computed(() =>
 );
 
 // Methods
-const formatter = (x: number): string =>
-  `${round(x, 2, "dollar")}${unit(x, "dollar")}`;
-
-const formatterPct = (x: number): string =>
-  `${round(x, 2, "percentage")}${unit(x, "percentage")}`;
+const formatter = (x: number) => `${round(x, 2, "dollar")}${unit(x)}`;
+const formatterPct = (x: number) => `${round(x, 2, "percentage")}%`;
 </script>
 
 <template>

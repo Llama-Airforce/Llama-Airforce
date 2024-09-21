@@ -110,7 +110,7 @@ const series = computed(() => {
 });
 
 // Methods
-const formatterX = (x: string): string => x;
+const formatterX = (x: string) => x;
 
 // Events
 const onPeriod = (newPeriod: Period) => {

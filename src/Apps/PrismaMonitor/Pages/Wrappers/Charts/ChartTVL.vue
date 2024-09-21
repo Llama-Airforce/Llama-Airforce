@@ -26,8 +26,7 @@ const { theme } = storeToRefs(useSettingsStore());
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions({
     localization: {
-      priceFormatter: (y: number) =>
-        `$${round(y, 1, "dollar")}${unit(y, "dollar")}`,
+      priceFormatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}`,
     },
   }),
   series: {

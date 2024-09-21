@@ -107,9 +107,8 @@ const series = computed((): { data: number[] }[] => {
 });
 
 // Methods
-const formatterX = (x: string): string => x;
-const formatterY = (x: number): string =>
-  `${round(x, 0, "dollar")}${unit(x, "dollar")}`;
+const formatterX = (x: string) => x;
+const formatterY = (x: number) => `${round(x, 0, "dollar")}${unit(x)}`;
 </script>
 
 <template>

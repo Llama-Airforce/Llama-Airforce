@@ -53,7 +53,7 @@ const series = computed(() =>
 
 // Methods
 const formatter = (x: number): string =>
-  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x)}`;
 </script>
 
 <template>

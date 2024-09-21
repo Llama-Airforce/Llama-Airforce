@@ -65,8 +65,8 @@ const series = computed((): { data: number[] }[] => [
 ]);
 
 // Methods
-const formatter = (x: number): string =>
-  `$${round(Math.abs(x), 1, "dollar")}${unit(x, "dollar")}`;
+const formatter = (x: number) =>
+  `$${round(Math.abs(x), 1, "dollar")}${unit(x)}`;
 
 // Events
 const onSelectChain = (newChain: Chain | "all"): void => {

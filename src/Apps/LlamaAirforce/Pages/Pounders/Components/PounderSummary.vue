@@ -101,12 +101,12 @@ whenever(getFeesTrigger, async () => {
   justify-content: center;
   line-height: 1.5rem;
 
-  .label {
+  > .label {
     color: #a1a1aa;
     font-size: 0.75rem;
   }
 
-  .value {
+  > .value {
     color: white;
     font-size: 1.25rem;
     font-weight: bold;

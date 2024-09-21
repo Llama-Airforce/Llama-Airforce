@@ -93,7 +93,7 @@ const rows = computed((): Row[] => [
 
         <div
           v-if="type === 'collateral'"
-          class="end"
+          class="collateral end"
         >
           <AsyncValue
             :value="value[0]"
@@ -119,7 +119,6 @@ const rows = computed((): Row[] => [
             class="red"
             :value="value"
             :show-zero="true"
-            :inline="false"
             type="dollar"
           />
           <AsyncValue
@@ -138,6 +137,11 @@ const rows = computed((): Row[] => [
 <style scoped>
 .liq-overview-table {
   --columns-data: 1fr auto;
+
+  .collateral {
+    display: flex;
+    gap: 0.5ch;
+  }
 
   .red {
     color: var(--c-red);

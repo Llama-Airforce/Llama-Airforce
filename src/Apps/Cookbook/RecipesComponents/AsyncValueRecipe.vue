@@ -46,10 +46,6 @@ const asyncUnit = `<AsyncValue
   type="dollar"
 ></AsyncValue>`;
 
-const asyncInline = `<p>This is an inline AsyncValue:
-  <AsyncValue :value="50000" :inline="true" />
-</p>`;
-
 const asyncCustomPrecision = `<AsyncValue
   :value="50000"
   :precision="(x) => x > 10000 ? 0 : 2"
@@ -195,25 +191,6 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
         <Code
           lang="html"
           :code="asyncUnit"
-        ></Code>
-      </template>
-    </Recipe>
-
-    <Recipe title="Inline">
-      <template #example>
-        <p>
-          This is an inline AsyncValue:
-          <AsyncValue
-            :value="50000"
-            :inline="true"
-          />
-        </p>
-      </template>
-
-      <template #snippets>
-        <Code
-          lang="html"
-          :code="asyncInline"
         ></Code>
       </template>
     </Recipe>

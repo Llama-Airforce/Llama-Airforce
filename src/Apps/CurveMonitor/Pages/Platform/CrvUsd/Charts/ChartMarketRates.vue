@@ -95,7 +95,7 @@ function createSeries() {
 }
 
 function formatter(x: number) {
-  return `${round(x * 100, 0, "percentage")}${unit(x, "percentage")}`;
+  return `${round(x * 100, 0, "percentage")}%`;
 }
 
 /**
