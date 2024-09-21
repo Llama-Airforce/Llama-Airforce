@@ -530,6 +530,9 @@
     "MaybeArray": true,
     "StackedAreaSeries": true,
     "StackedAreaSeriesRenderer": true,
-    "defaultOptions": true
+    "defaultOptions": true,
+    "StackedAreaData": true,
+    "StackedAreaSeriesOptions": true,
+    "StackedAreaSeriesPartialOptions": true
   }
 }
