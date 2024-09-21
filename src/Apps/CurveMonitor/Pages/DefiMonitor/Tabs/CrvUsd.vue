@@ -56,7 +56,6 @@ const transferBlocks = computed(() =>
                 <AsyncValue
                   type="dollar"
                   :value="block.amount"
-                  :inline="true"
                 ></AsyncValue>
               </div>
               <div class="label">crvUSD transfered</div>
