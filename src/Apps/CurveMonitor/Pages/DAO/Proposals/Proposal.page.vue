@@ -29,7 +29,9 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
 <style scoped>
 .dashboard {
   position: relative;
-  max-width: calc(1920px - 18.125rem);
+
+  display: flex;
+  flex-direction: column;
 
   .spinner {
     position: absolute;
