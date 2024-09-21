@@ -1,5 +1,5 @@
 :root[data-theme="chad"] {
-  --color-scheme-dark: 1;
+  --color-scheme-dark: -1;
   color-scheme: light dark;
 
   --c-text: black;
