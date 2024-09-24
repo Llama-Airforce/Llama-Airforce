@@ -38,6 +38,7 @@
     "hono": "4.6.3",
     "lightweight-charts": "4.2.0",
     "lru-cache": "^11.0.1",
+    "lucide-vue-next": "^0.445.0",
     "pinia": "2.2.2",
     "rxjs": "^7.8.1",
     "socket.io-client": "^4.8.0",
