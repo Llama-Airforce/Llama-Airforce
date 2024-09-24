@@ -20,9 +20,10 @@ const emit = defineEmits<{
     <div class="buttons">
       <Button
         class="lvl1"
-        icon="fas fa-bars"
         @click="emit('toggle-expansion')"
-      ></Button>
+      >
+        <i class="fas fa-bars"></i>
+      </Button>
     </div>
   </div>
 </template>

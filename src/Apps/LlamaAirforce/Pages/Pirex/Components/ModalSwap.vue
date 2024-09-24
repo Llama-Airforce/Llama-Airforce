@@ -215,11 +215,12 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
 
         <Button
           class="primary"
-          :value="submitLabel"
           :disabled="!canSwap || isApproving || isSwapping"
           :chain-id="mainnet.id"
           @click="onSubmit"
-        ></Button>
+        >
+          {{ submitLabel }}
+        </Button>
       </div>
     </Card>
   </Modal>

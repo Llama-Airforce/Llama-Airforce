@@ -56,9 +56,10 @@ const clipboard = async (addr: string) => {
         <div>
           <Button
             v-if="address"
-            icon="fas fa-link"
             @click="clipboard(address)"
-          ></Button>
+          >
+            <i class="fas fa-link"></i>
+          </Button>
         </div>
       </template>
     </Table>

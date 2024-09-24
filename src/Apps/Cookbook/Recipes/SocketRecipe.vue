@@ -100,31 +100,33 @@ watch(isConnected, (isConnected) => {
       <InputText v-model="url"></InputText>
 
       <Button
-        value="Ping"
         :disabled="!isConnected"
         @click="ping"
       >
+        Ping
       </Button>
 
       <Button
-        value="Labels"
         :disabled="!isConnected"
         @click="getLabels"
       >
+        Labels
       </Button>
 
       <Button
         v-if="!isConnected"
-        :value="connecting ? 'Connecting' : 'Connect'"
         :disabled="connecting"
         @click="connect"
-      ></Button>
+      >
+        {{ connecting ? "Connecting" : "Connect" }}
+      </Button>
 
       <Button
         v-else
-        value="Disconnect"
         @click="disconnect"
-      ></Button>
+      >
+        Disconnect
+      </Button>
     </div>
 
     <div

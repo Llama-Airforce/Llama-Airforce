@@ -98,9 +98,10 @@ function onClaimed(claims: Claim[]) {
 
       <Button
         class="primary"
-        value="Show Claims"
         @click="showClaims = true"
-      ></Button>
+      >
+        Show Claims
+      </Button>
     </div>
 
     <div

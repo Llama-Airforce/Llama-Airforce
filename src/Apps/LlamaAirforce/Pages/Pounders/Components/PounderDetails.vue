@@ -330,11 +330,12 @@ const onWithdrawSelect = (zap: Zap): void => {
           <div class="buttons">
             <Button
               class="primary"
-              :value="depositLabel"
               :disabled="!canDeposit"
               :chain-id="mainnet.id"
               @click="onDeposit(false)"
-            ></Button>
+            >
+              {{ depositLabel }}
+            </Button>
 
             <Button
               v-if="!!swapDeposit"
@@ -370,11 +371,12 @@ const onWithdrawSelect = (zap: Zap): void => {
           <div class="buttons">
             <Button
               class="primary"
-              :value="withdrawLabel"
               :disabled="!canWithdraw"
               :chain-id="mainnet.id"
               @click="onWithdraw(false, false)"
-            ></Button>
+            >
+              {{ withdrawLabel }}
+            </Button>
 
             <Button
               v-if="!!swapWithdraw"

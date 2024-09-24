@@ -27,17 +27,18 @@ const changeNetwork = () => {
       <Button
         v-if="!supportedNetwork"
         class="change primary"
-        value="Change Network"
         @click="changeNetwork"
-      ></Button>
+      >
+        Change Network
+      </Button>
 
       <Button
         v-else
         class="disconnect"
-        icon="fas fa-check"
-        :value="addressShort(address)"
         @click="disconnect"
-      ></Button>
+      >
+        <i class="fas fa-check"></i> {{ addressShort(address) }}
+      </Button>
     </div>
 
     <div v-else>
@@ -67,6 +68,10 @@ const changeNetwork = () => {
 
   .change {
     justify-content: center;
+  }
+
+  .disconnect {
+    justify-content: start;
   }
 
   > div {

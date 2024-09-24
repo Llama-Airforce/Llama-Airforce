@@ -93,10 +93,9 @@ const cardJson = useTemplateRef("cardJson");
         >
           <template #actions>
             <div class="buttons">
-              <Button
-                icon="fas fa-link"
-                @click="clipboardJson()"
-              ></Button>
+              <Button @click="clipboardJson()">
+                <i class="fas fa-link"></i>
+              </Button>
 
               <Button @click="fullscreen = !fullscreen">
                 <i class="fas fa-expand"></i>
@@ -152,10 +151,9 @@ const cardJson = useTemplateRef("cardJson");
             </div>
 
             <div>
-              <Button
-                icon="fas fa-link"
-                @click="clipboard(solverAddress)"
-              ></Button>
+              <Button @click="clipboard(solverAddress)">
+                <i class="fas fa-link"></i>
+              </Button>
             </div>
           </template>
         </Table>

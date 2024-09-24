@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
 
-const {
-  icon = "",
-  value = "",
-  chainId,
-} = defineProps<{
-  icon?: string;
-  value?: string;
+const { chainId } = defineProps<{
   chainId?: number;
 }>();
 
@@ -40,15 +34,7 @@ const onClick = (evt: Event) => {
 
 <template>
   <button @click="onClick">
-    <slot>
-      <i
-        v-if="icon"
-        class="icon"
-        :class="[icon, { noValue: !!value }]"
-      >
-      </i>
-      {{ value }}
-    </slot>
+    <slot></slot>
   </button>
 </template>
 
@@ -62,6 +48,8 @@ button {
   all: unset;
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 1rem;
   line-height: 1;
   padding: 0.5rem 1rem;
   background-color: var(--c-background);
@@ -76,15 +64,6 @@ button {
   border-radius: var(--border-radius);
 
   transition: background-color 125ms ease;
-
-  .icon {
-    display: flex;
-    align-items: center;
-
-    &.noValue {
-      margin-right: 1rem;
-    }
-  }
 
   &:disabled {
     pointer-events: none;

@@ -195,11 +195,12 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
 
           <Button
             class="primary"
-            :value="submitLabel"
             :disabled="!canRedeem || isApproving || isRedeeming"
             :chain-id="mainnet.id"
             @click="onSubmit"
-          ></Button>
+          >
+            {{ submitLabel }}
+          </Button>
         </div>
       </div>
     </Card>

@@ -37,12 +37,6 @@ const onClick = (): void => {
 
 <style scoped>
 button {
-  .icon {
-    display: flex;
-    align-items: center;
-    margin-right: 1rem;
-  }
-
   &.toggled:not(:disabled) {
     --c-background: var(--c-variant, var(--c-primary));
     --c-states: var(--c-variant, var(--c-primary));

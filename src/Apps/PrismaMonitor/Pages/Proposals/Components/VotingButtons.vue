@@ -157,17 +157,19 @@ watch(
   <div class="buttons">
     <Button
       class="primary"
-      :value="t('vote')"
       @click="showVote = true"
-    ></Button>
+    >
+      {{ t("vote") }}
+    </Button>
 
     <Button
       v-if="executable"
       class="primary"
-      :value="t(executing ? 'executing' : 'execute')"
       :disabled="!canExecute || executing"
       @click="execute"
-    ></Button>
+    >
+      {{ t(executing ? "executing" : "execute") }}
+    </Button>
   </div>
 
   <Modal
@@ -211,11 +213,12 @@ watch(
 
         <Button
           class="submit primary"
-          :value="t(voteButtonText)"
           :disabled="!canVote"
           :chain-id="mainnet.id"
           @click="vote"
-        ></Button>
+        >
+          {{ t(voteButtonText) }}
+        </Button>
       </div>
     </Card>
   </Modal>

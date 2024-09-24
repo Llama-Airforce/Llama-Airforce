@@ -29,16 +29,18 @@ const emit = defineEmits<{
         <div class="buttons">
           <Button
             class="no"
-            value="No"
             @click="emit('no')"
-          ></Button>
+          >
+            No
+          </Button>
 
           <Button
             v-if="ready"
             class="yes"
-            value="Yes"
             @click="emit('yes')"
-          ></Button>
+          >
+            Yes
+          </Button>
 
           <div
             v-else

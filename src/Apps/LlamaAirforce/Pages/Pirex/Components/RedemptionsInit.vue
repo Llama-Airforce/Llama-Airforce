@@ -21,9 +21,10 @@ const showRedemptionsInit = ref(false);
 
       <Button
         class="primary"
-        value="Initiate Redemption"
         @click="showRedemptionsInit = true"
-      ></Button>
+      >
+        Initiate Redemption
+      </Button>
     </div>
 
     <ModalRedemptionsInit

@@ -2,39 +2,34 @@
 import { mainnet } from "viem/chains";
 import Recipe from "@CB/Recipe.vue";
 
-const btnDefault = `<Button
-  value="Value"
-></Button>`;
+const btnDefault = `<Button>
+  Value
+</Button>`;
 
-const btnVariant1 = `<Button
-  class="variant"
-  value="Value"
-></Button>`;
+const btnVariant1 = `<Button class="variant">
+  Value
+</Button>`;
 
 const btnVariant2 = `.variant {
   --c-background: var(--c-primary);
   --c-states: var(--c-purple);
 }`;
 
-const btnVariantClass = `<Button
-  class="primary"
-  value="Value"
-></Button>`;
+const btnVariantClass = `<Button class="primary">
+  Value
+</Button>`;
 
-const btnDisabled = `<Button
-  value="Value"
-  :disabled="true"
-></Button>`;
+const btnDisabled = `<Button :disabled="true">
+  Value
+</Button>`;
 
-const btnWeb3 = `<Button
-  value="Value"
-  :chain-id="mainnet.id"
-></Button>`;
+const btnWeb3 = `<Button :chain-id="mainnet.id">
+  Value
+</Button>`;
 
-const btnIcon = `<Button
-  value="Value"
-  icon="fas fa-plane"
-></Button>`;
+const btnIcon = `<Button>
+  <i class="fas fa-plane"></i> Value
+</Button>`;
 
 const btnSlot = `<Button>
   <div style="margin-right: 1rem">
@@ -43,10 +38,9 @@ const btnSlot = `<Button>
   <i class="fas fa-plane"></i>
 </Button>`;
 
-const btnClick1 = `<Button
-  value="Click me!"
-  @click="showAlert('You clicked me!')"
-></Button>`;
+const btnClick1 = `<Button @click="showAlert('You clicked me!')">
+  Click me!
+</Button>`;
 
 const btnClick2 = `const showAlert = (msg: string) => alert(msg);`;
 
@@ -59,7 +53,7 @@ const showAlert = (msg: string) => {
   <div class="dashboard">
     <Recipe title="Default">
       <template #example>
-        <Button value="Value"></Button>
+        <Button>Value</Button>
       </template>
 
       <template #snippets>
@@ -72,10 +66,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Variant">
       <template #example>
-        <Button
-          class="variant"
-          value="Value"
-        ></Button>
+        <Button class="variant">Value</Button>
       </template>
 
       <template #snippets>
@@ -93,10 +84,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Variant (class)">
       <template #example>
-        <Button
-          class="primary"
-          value="Value"
-        ></Button>
+        <Button class="primary">Value</Button>
       </template>
 
       <template #snippets>
@@ -109,10 +97,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Disabled">
       <template #example>
-        <Button
-          value="Value"
-          :disabled="true"
-        ></Button>
+        <Button :disabled="true">Value</Button>
       </template>
 
       <template #snippets>
@@ -125,10 +110,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Web3">
       <template #example>
-        <Button
-          value="Value"
-          :chain-id="mainnet.id"
-        ></Button>
+        <Button :chain-id="mainnet.id">Value</Button>
       </template>
 
       <template #snippets>
@@ -141,10 +123,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Icon">
       <template #example>
-        <Button
-          value="Value"
-          icon="fas fa-plane"
-        ></Button>
+        <Button><i class="fas fa-plane"></i> Value</Button>
       </template>
 
       <template #snippets>
@@ -173,10 +152,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Event - Click">
       <template #example>
-        <Button
-          value="Click me!"
-          @click="showAlert('You clicked me!')"
-        ></Button>
+        <Button @click="showAlert('You clicked me!')">Click me!</Button>
       </template>
 
       <template #snippets>

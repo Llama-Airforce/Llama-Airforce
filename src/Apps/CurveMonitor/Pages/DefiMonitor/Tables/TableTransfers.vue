@@ -124,10 +124,9 @@ const clipboard = async (addr: string) => {
               {{ addressLeft(item.txHash, 10) }}
             </a>
 
-            <Button
-              icon="fas fa-link"
-              @click="clipboard(item.txHash)"
-            ></Button>
+            <Button @click="clipboard(item.txHash)">
+              <i class="fas fa-link"></i>
+            </Button>
           </div>
 
           <div>

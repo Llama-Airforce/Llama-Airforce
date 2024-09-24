@@ -15,20 +15,20 @@ const router = useRouter();
         href="https://twitter.com/0xAlunara"
         target="_blank"
       >
-        <Button
-          class="lvl2"
-          icon="fab fa-twitter"
-        ></Button>
+        <Button class="lvl2">
+          <i class="fab fa-twitter"></i>
+        </Button>
       </a>
 
       <Button
         class="lvl2"
-        icon="fas fa-code"
         @click="
           router.push('/code');
           emit('navigated');
         "
-      ></Button>
+      >
+        <i class="fas fa-code"></i>
+      </Button>
     </div>
 
     <SelectTheme

@@ -288,17 +288,19 @@ whenever(isConfirmedExecute, () => {
   <div class="buttons">
     <Button
       class="primary"
-      value="Vote"
       @click="showVote = true"
-    ></Button>
+    >
+      Vote
+    </Button>
 
     <Button
       v-if="executable"
       class="primary"
-      :value="executing ? 'Executing...' : 'Execute'"
       :disabled="!canExecute || executing"
       @click="execute"
-    ></Button>
+    >
+      {{ executing ? "Executing..." : "Execute" }}
+    </Button>
   </div>
 
   <Modal
@@ -397,11 +399,12 @@ whenever(isConfirmedExecute, () => {
 
         <Button
           class="submit primary"
-          :value="voteButtonText"
           :disabled="!canVote"
           :chain-id="mainnet.id"
           @click="vote"
-        ></Button>
+        >
+          {{ voteButtonText }}
+        </Button>
       </div>
     </Card>
   </Modal>

@@ -69,10 +69,11 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
 
           <Button
             class="primary"
-            :value="isApproving ? 'Approving...' : 'Approve'"
             :disabled="!needsApprove || isApproving"
             @click="approve"
-          ></Button>
+          >
+            {{ isApproving ? "Approving..." : "Approve" }}
+          </Button>
         </div>
       </template>
 

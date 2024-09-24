@@ -21,9 +21,10 @@ const showSwap = ref(false);
 
       <Button
         class="primary"
-        value="Swap"
         @click="showSwap = true"
-      ></Button>
+      >
+        Swap
+      </Button>
     </div>
 
     <ModalSwap
