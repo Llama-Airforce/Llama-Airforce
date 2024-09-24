@@ -49,17 +49,17 @@ const { isFetching: loading, data } = useQuery({
     <template #actions>
       <div class="actions">
         <ButtonToggle
-          value="Coll."
           :model-value="chartType === 'collateral'"
           @click="chartType = 'collateral'"
         >
+          Coll.
         </ButtonToggle>
 
         <ButtonToggle
-          value="Debt"
           :model-value="chartType === 'debt'"
           @click="chartType = 'debt'"
         >
+          Debt
         </ButtonToggle>
       </div>
     </template>

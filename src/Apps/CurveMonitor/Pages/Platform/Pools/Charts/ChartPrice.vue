@@ -80,10 +80,10 @@ function formatter(x: number) {
     <template #actions>
       <div class="controls">
         <ButtonToggle
-          value="Invert"
           :model-value="invert"
           @click="invert = !invert"
         >
+          Invert
         </ButtonToggle>
       </div>
     </template>

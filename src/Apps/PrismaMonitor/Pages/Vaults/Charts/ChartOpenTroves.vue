@@ -131,24 +131,24 @@ const onPeriod = (newPeriod: Period) => {
     <template #actions>
       <div class="button-group">
         <ButtonToggle
-          value="1m"
           :model-value="period === '1m'"
           @click="onPeriod('1m')"
         >
+          1m
         </ButtonToggle>
 
         <ButtonToggle
-          value="3m"
           :model-value="period === '3m'"
           @click="onPeriod('3m')"
         >
+          3m
         </ButtonToggle>
 
         <ButtonToggle
-          value="6m"
           :model-value="period === '6m'"
           @click="onPeriod('6m')"
         >
+          6m
         </ButtonToggle>
       </div>
     </template>

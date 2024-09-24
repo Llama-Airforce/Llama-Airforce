@@ -13,7 +13,10 @@ const darkModeExample = `<ButtonToggle v-model="darkMode" @change="toggleDarkMod
   {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
 </ButtonToggle>`;
 
-const notificationsExample = `<ButtonToggle v-model="notifications" value="Notifications" icon="fas fa-bell"></ButtonToggle>`;
+const notificationsExample = `<ButtonToggle v-model="notifications">
+  <i :class="fas fa-bell"></i>
+  Notifications
+</ButtonToggle>`;
 </script>
 
 <template>
@@ -49,11 +52,10 @@ const notificationsExample = `<ButtonToggle v-model="notifications" value="Notif
       </template>
 
       <template #example>
-        <ButtonToggle
-          v-model="notifications"
-          value="Notifications"
-          icon="fas fa-bell"
-        ></ButtonToggle>
+        <ButtonToggle v-model="notifications">
+          <i class="fas fa-bell"></i>
+          Notifications
+        </ButtonToggle>
         <p>Notifications are {{ notifications ? "enabled" : "disabled" }}</p>
       </template>
 

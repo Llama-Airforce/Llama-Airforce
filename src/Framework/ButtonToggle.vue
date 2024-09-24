@@ -1,11 +1,6 @@
 <script setup lang="ts">
 const modelValue = defineModel<boolean>({ default: false });
 
-const { icon = "", value = "" } = defineProps<{
-  icon?: string;
-  value?: string;
-}>();
-
 const emit = defineEmits<{
   change: [toggled: boolean];
 }>();
@@ -23,15 +18,7 @@ const onClick = (): void => {
     :class="{ toggled: modelValue }"
     @click="onClick"
   >
-    <slot>
-      <i
-        v-if="icon"
-        class="icon"
-        :class="icon"
-      >
-      </i>
-      {{ value }}
-    </slot>
+    <slot></slot>
   </Button>
 </template>
 

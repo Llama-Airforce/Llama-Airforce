@@ -27,17 +27,17 @@ const onChartType = (type: ChartType) => {
     <template #actions>
       <div class="button-group">
         <ButtonToggle
-          value="Count"
           :model-value="chartType === 'count'"
           @click="onChartType('count')"
         >
+          Count
         </ButtonToggle>
 
         <ButtonToggle
-          value="Value"
           :model-value="chartType === 'value'"
           @click="onChartType('value')"
         >
+          Value
         </ButtonToggle>
       </div>
     </template>

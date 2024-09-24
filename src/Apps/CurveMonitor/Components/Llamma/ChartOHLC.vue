@@ -122,17 +122,17 @@ function formatter(x: number) {
     <template #actions>
       <div class="controls">
         <ButtonToggle
-          value="Oracle Price"
           :model-value="oracle"
           @click="oracle = !oracle"
         >
+          Oracle Price
         </ButtonToggle>
 
         <ButtonToggle
-          value="Invert"
           :model-value="invert"
           @click="invert = !invert"
         >
+          Invert
         </ButtonToggle>
       </div>
     </template>

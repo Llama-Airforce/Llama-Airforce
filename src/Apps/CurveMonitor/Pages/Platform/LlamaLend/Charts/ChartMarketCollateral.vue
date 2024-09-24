@@ -141,10 +141,10 @@ function formatter(x: number) {
       <div style="display: flex">
         <ButtonToggle
           style="margin-right: 1rem"
-          value="Dollars"
           :model-value="denomDollars"
           @click="denomDollars = !denomDollars"
         >
+          Dollars
         </ButtonToggle>
 
         <BtnChartLWExport

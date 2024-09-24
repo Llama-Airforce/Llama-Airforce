@@ -81,17 +81,17 @@ const onChartType = (type: ChartType) => {
 
         <div class="chart-types button-group">
           <ButtonToggle
-            value="Line"
             :model-value="chartType === 'line'"
             @click="onChartType('line')"
           >
+            Line
           </ButtonToggle>
 
           <ButtonToggle
-            value="Breakdown"
             :model-value="chartType === 'breakdown'"
             @click="onChartType('breakdown')"
           >
+            Breakdown
           </ButtonToggle>
         </div>
       </div>

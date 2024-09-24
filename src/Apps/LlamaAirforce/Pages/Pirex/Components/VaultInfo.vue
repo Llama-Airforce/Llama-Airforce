@@ -17,24 +17,24 @@ const onTab = (newTab: Tabs) => {
     <template #actions>
       <div class="tabs">
         <ButtonToggle
-          value="Strategy"
           :model-value="tab === 'strategy'"
           @click="onTab('strategy')"
         >
+          Strategy
         </ButtonToggle>
 
         <ButtonToggle
-          value="Fees"
           :model-value="tab === 'fees'"
           @click="onTab('fees')"
         >
+          Fees
         </ButtonToggle>
 
         <ButtonToggle
-          value="Audits"
           :model-value="tab === 'audits'"
           @click="onTab('audits')"
         >
+          Audits
         </ButtonToggle>
       </div>
     </template>
