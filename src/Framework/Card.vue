@@ -6,14 +6,12 @@
  */
 const {
   title = "",
-  icon = "",
   compact = false,
   collapsible = false,
   collapsed = false,
   loading = null,
 } = defineProps<{
   title?: string;
-  icon?: string;
   compact?: boolean;
 
   collapsible?: boolean;
@@ -62,11 +60,6 @@ const stackActions = computed(() => width.value <= 1280);
         class="card-title"
       >
         <slot name="title">
-          <i
-            v-if="icon"
-            class="icon"
-            :class="icon"
-          ></i>
           {{ title }}
         </slot>
       </div>
@@ -160,12 +153,6 @@ const stackActions = computed(() => width.value <= 1280);
 
     &.collapsible {
       margin-bottom: var(--card-margin-block);
-    }
-
-    > .icon {
-      font-size: 1.125rem;
-      color: var(--c-primary);
-      padding-right: 0.5rem;
     }
 
     > .card-title {

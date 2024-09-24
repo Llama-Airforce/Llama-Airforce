@@ -3,10 +3,7 @@ import Recipe from "@CB/Recipe.vue";
 
 const collapsed = ref(false);
 
-const card = `<Card
-  title="Card Title"
-  icon="fas fa-plane"
->
+const card = `<Card title="Card Title">
   Content goes here
 </Card>`;
 
@@ -16,17 +13,13 @@ const cardCompact = `<Card :compact="true">
 
 const cardLoading = `<Card
   title="Card Loading"
-  icon="fas fa-plane"
   :loading="true"
 >
   Content goes here
 </Card>`;
 
 const cardWithActions = `<template>
-<Card
-  title="Card with Actions"
-  icon="fas fa-plane"
->
+<Card title="Card with Actions">
   <template #actions>
     <div style="display: flex; gap: 1rem">
       <Button class="primary">Export</Button>
@@ -45,7 +38,6 @@ const cardWithActions = `<template>
 const cardCollapsible = `<template>
   <Card
     title="Card Title"
-    icon="fas fa-plane"
     :collapsible="true"
     :collapsed="collapsed"
     @click="collapsed = !collapsed"
@@ -88,12 +80,7 @@ const handleToggle = (event) => {
   <div class="dashboard">
     <Recipe title="Basic Card">
       <template #example>
-        <Card
-          title="Card Title"
-          icon="fas fa-plane"
-        >
-          Content goes here
-        </Card>
+        <Card title="Card Title"> Content goes here </Card>
       </template>
 
       <template #snippets>
@@ -121,7 +108,6 @@ const handleToggle = (event) => {
       <template #example>
         <Card
           title="Card Title"
-          icon="fas fa-plane"
           :collapsible="true"
           :collapsed="collapsed"
           @click="collapsed = !collapsed"
@@ -150,7 +136,6 @@ const handleToggle = (event) => {
         <Card
           class="card-with-actions"
           title="Card with Actions"
-          icon="fas fa-plane"
         >
           <template #actions>
             <div style="display: flex; gap: 1rem">
@@ -179,7 +164,6 @@ const handleToggle = (event) => {
       <template #example>
         <Card
           title="Card Loading"
-          icon="fas fa-plane"
           :loading="true"
         >
           Content goes here
