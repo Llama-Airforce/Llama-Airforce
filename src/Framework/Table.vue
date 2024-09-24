@@ -42,9 +42,6 @@ const {
 
   /** Current sorting state. */
   sorting?: Sorting;
-
-  /** Icon shown to the left of the header title. */
-  icon?: string;
 }>();
 
 const emit = defineEmits<{
