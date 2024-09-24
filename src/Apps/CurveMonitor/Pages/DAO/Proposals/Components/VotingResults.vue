@@ -117,6 +117,11 @@ const againstPercentage = computed(
       justify-content: space-between;
 
       font-size: 0.875rem;
+
+      > .left,
+      > .right {
+        display: flex;
+      }
     }
 
     > .bar {
