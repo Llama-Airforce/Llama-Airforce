@@ -102,6 +102,7 @@ const showModal = ref(false);
 
 .telegram {
   position: relative;
+  cursor: pointer;
 
   &::after {
     content: "";
