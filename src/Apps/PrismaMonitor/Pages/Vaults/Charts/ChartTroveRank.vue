@@ -132,13 +132,13 @@ const options = computed(() => {
             : pctFormatter(amount);
 
         const tooltip = `
-          <div><b>Collateral ratio:</b>:</div>
+          <div><b>Collateral ratio:</b></div>
           <div>${pct}</div>
 
-          <div><b>Troves with lower or equal ratio:</b>:</div>
+          <div><b>Troves with lower or equal ratio:</b></div>
           <div>${data.value.positions[x.dataPointIndex].trove_count}</div>
 
-          <div><b>Collateral value at lower or equal ratio:</b>:</div>
+          <div><b>Collateral value at lower or equal ratio:</b></div>
           <div>$${formatter(x.series[0][x.dataPointIndex])}</div>
           `;
         return tooltip;
@@ -208,6 +208,15 @@ whenever(
     ></ChartApex>
   </Card>
 </template>
+
+<style scoped>
+.chart {
+  &:deep(.apexcharts-tooltip) {
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+  }
+}
+</style>
 
 <i18n lang="yaml" locale="en">
 title: "Trove Relative Position (Risk rank: {rank} / {total_positions})"
