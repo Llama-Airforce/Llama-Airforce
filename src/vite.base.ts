@@ -106,6 +106,8 @@ export const vueImport: Parameters<typeof Components>[0] = {
           from: "lucide-vue-next",
         };
       }
+
+      return;
     },
   ],
 };
