@@ -43,10 +43,10 @@ const cardCollapsible = `<template>
     @click="collapsed = !collapsed"
   >
     <template #actions>
-      <i
-        class="expander fas fa-chevron-up"
+      <LucideChevronUp
+        class="expander"
         :class="{ expanded: !collapsed }"
-      ></i>
+      ></LucideChevronUp>
     </template>
 
     <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>
@@ -113,10 +113,10 @@ const handleToggle = (event) => {
           @click="collapsed = !collapsed"
         >
           <template #actions>
-            <i
-              class="expander fas fa-chevron-up"
+            <LucideChevronUp
+              class="expander"
               :class="{ expanded: !collapsed }"
-            ></i>
+            />
           </template>
 
           <Collapsible :expanded="!collapsed"> Content goes here </Collapsible>

@@ -75,7 +75,7 @@ function onClearCache() {
           class="button clear"
           @click="onClearCache"
         >
-          <i class="fas fa-trash"></i>
+          <LucideTrash />
         </Button>
       </template>
 

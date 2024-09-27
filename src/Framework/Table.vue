@@ -145,14 +145,14 @@ const sortColumn = (column: Column): void => {
         >
           <span>{{ column.label }}</span>
 
-          <i
+          <LucideChevronRight
             v-if="column.sort"
-            class="sorting-arrow fa fa-caret-right"
+            class="sorting-arrow"
             :class="{
               asc: isSortAscending(column),
               desc: isSortDescending(column),
             }"
-          ></i>
+          />
         </div>
       </template>
     </TableRow>

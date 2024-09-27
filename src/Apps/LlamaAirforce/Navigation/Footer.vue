@@ -30,7 +30,7 @@ const noMenu = computed((): boolean => {
             target="_blank"
           >
             <div class="nav-link-container icon">
-              <i class="fas fa-book"></i>
+              <LucideBook />
             </div>
           </a>
         </li>
@@ -42,7 +42,7 @@ const noMenu = computed((): boolean => {
             target="_blank"
           >
             <div class="nav-link-container icon">
-              <i class="fas fa-bullhorn"></i>
+              <LucideMegaphone />
             </div>
           </a>
         </li>
@@ -66,7 +66,7 @@ const noMenu = computed((): boolean => {
             target="_blank"
           >
             <div class="nav-link-container icon">
-              <i class="fab fa-twitter"></i>
+              <LucideTwitter />
             </div>
           </a>
         </li>
@@ -77,7 +77,7 @@ const noMenu = computed((): boolean => {
             class="nav-link"
           >
             <div class="nav-link-container icon">
-              <i class="fas fa-code"></i>
+              <LucideCode />
             </div>
           </router-link>
         </li>

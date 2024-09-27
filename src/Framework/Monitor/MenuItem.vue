@@ -120,10 +120,10 @@ const onClickNode = (): void => {
     >
       <div class="nav-link-container">
         {{ item.label }}
-        <i
-          class="expander fas fa-chevron-up"
+        <LucideChevronUp
+          class="expander"
           :class="{ expanded }"
-        ></i>
+        />
       </div>
     </a>
   </li>

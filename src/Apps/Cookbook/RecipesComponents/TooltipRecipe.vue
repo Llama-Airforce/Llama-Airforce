@@ -11,7 +11,7 @@ const defaultTooltip = `<Tooltip>
 
 const customIconTooltip = `<Tooltip>
   <template #trigger>
-    <i class="fas fa-info-circle"></i>
+    <LucideInfo />
   </template>
 
   <div>Tooltip with custom icon</div>
@@ -59,7 +59,7 @@ const onTooltipShow = (isShown: boolean) => {
       <template #example>
         <Tooltip>
           <template #trigger>
-            <i class="fas fa-info-circle"></i>
+            <LucideInfo />
           </template>
 
           <div>Tooltip with custom icon</div>

@@ -29,7 +29,7 @@ function onExit() {
     :disabled="!chart"
     @click="fullscreen = !fullscreen"
   >
-    <i class="fas fa-expand"></i>
+    <LucideMaximize />
 
     <ModalFullscreen
       :target="target?.$el"

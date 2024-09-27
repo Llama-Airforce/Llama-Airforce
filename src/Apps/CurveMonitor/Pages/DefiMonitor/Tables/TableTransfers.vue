@@ -125,7 +125,7 @@ const clipboard = async (addr: string) => {
             </a>
 
             <Button @click="clipboard(item.txHash)">
-              <i class="fas fa-link"></i>
+              <LucideLink />
             </Button>
           </div>
 

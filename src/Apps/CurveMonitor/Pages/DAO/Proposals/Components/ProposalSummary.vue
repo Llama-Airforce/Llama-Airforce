@@ -41,7 +41,7 @@ const proposalToClipboard = async () => {
         class="id"
         @click="proposalToClipboard"
       >
-        <i class="fas fa-link"></i> {{ proposal.id }}
+        <LucideLink /> {{ proposal.id }}
       </router-link>
 
       <div class="metadata">
@@ -81,7 +81,7 @@ const proposalToClipboard = async () => {
         class="item expander"
         :class="{ expanded }"
       >
-        <i class="fas fa-chevron-up"></i>
+        <LucideChevronUp />
       </div>
     </div>
   </div>
@@ -124,8 +124,8 @@ const proposalToClipboard = async () => {
         background: unset;
       }
 
-      i {
-        font-size: 0.75rem;
+      .lucide {
+        width: 0.75rem;
       }
     }
   }

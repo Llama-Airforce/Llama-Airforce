@@ -18,7 +18,7 @@ const copyUrl = async () => {
         class="copy lvl2"
         @click="copyUrl"
       >
-        <i class="fas fa-link"></i>
+        <LucideLink />
       </Button>
 
       <a
@@ -26,7 +26,7 @@ const copyUrl = async () => {
         target="_blank"
       >
         <Button class="lvl2">
-          <i class="fab fa-twitter"></i>
+          <LucideTwitter />
         </Button>
       </a>
 
@@ -35,7 +35,7 @@ const copyUrl = async () => {
         target="_blank"
       >
         <Button class="lvl2">
-          <i class="fab fa-github"></i>
+          <LucideGithub />
         </Button>
       </a>
 
@@ -44,7 +44,7 @@ const copyUrl = async () => {
           class="lvl2"
           @click="emit('navigated')"
         >
-          <i class="fas fa-code"></i>
+          <LucideCode />
         </Button>
       </router-link>
     </div>

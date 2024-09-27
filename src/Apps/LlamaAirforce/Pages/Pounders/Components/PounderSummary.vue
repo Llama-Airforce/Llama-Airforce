@@ -67,7 +67,7 @@ whenever(getFeesTrigger, async () => {
       class="pounder-item expander"
       :class="{ expanded }"
     >
-      <i class="fas fa-chevron-up"></i>
+      <LucideChevronUp />
     </div>
   </div>
 </template>

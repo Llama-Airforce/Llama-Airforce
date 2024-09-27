@@ -10,7 +10,7 @@ const { extra = "" } = defineProps<{
   <Card>
     <div class="docs">
       <div class="icon">
-        <i class="fas fa-book"></i>
+        <LucideBook />
       </div>
 
       <h1>
@@ -32,14 +32,14 @@ const { extra = "" } = defineProps<{
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 1.5rem;
+  gap: 1rem;
 
   > .icon {
     grid-column: 1;
     display: flex;
     align-items: center;
 
-    i {
+    .lucide {
       color: var(--c-primary);
     }
   }

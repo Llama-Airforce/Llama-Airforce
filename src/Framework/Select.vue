@@ -64,8 +64,7 @@ const open = ref(false);
     </div>
 
     <div class="chevrons">
-      <i class="fas fa-chevron-up"></i>
-      <i class="fas fa-chevron-down"></i>
+      <LucideChevronsLeftRight />
     </div>
   </div>
 </template>
@@ -176,12 +175,16 @@ const open = ref(false);
 
   > .chevrons {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    font-size: 0.625rem;
-    right: 1rem;
+    pointer-events: none;
+    right: 1.25rem;
     top: 50%;
-    transform: translateY(-50%);
+
+    .lucide {
+      width: 1.125rem;
+      height: 1.125rem;
+      rotate: 90deg;
+      translate: 50% -50%;
+    }
   }
 }
 </style>

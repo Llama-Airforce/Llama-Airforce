@@ -9,7 +9,7 @@ const route = useRoute();
 const pages = computed(() => pageStore.pages.filter((p) => p.visible));
 
 const planeX = computed((): string => {
-  let x = 15;
+  let x = 12;
 
   for (const page of pageStore.pages) {
     if (subIsActive(page.titleRoute, route)) {
@@ -18,7 +18,7 @@ const planeX = computed((): string => {
     }
   }
 
-  return `transform: scale(0.75) translateX(${x}px);`;
+  return `transform: translateX(${x}px) rotate(45deg);`;
 });
 </script>
 
@@ -36,11 +36,7 @@ const planeX = computed((): string => {
         <ul>
           <!-- Vroooom -->
           <span class="plane">
-            <i
-              class="fas fa-plane"
-              :style="planeX"
-            >
-            </i>
+            <LucidePlane :style="planeX" />
           </span>
 
           <img src="@/Assets/Menu/header-edge.png" />
@@ -177,9 +173,10 @@ header {
         align-items: center;
         width: 0;
 
-        > i {
+        > .lucide {
           position: absolute;
           color: white;
+          fill: white;
           z-index: 1;
           transition: 0.55s cubic-bezier(0.65, 0.05, 0.36, 1);
         }

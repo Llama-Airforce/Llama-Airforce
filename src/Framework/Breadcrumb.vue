@@ -40,10 +40,7 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
           {{ crumb.label }}
         </component>
 
-        <i
-          v-if="!isLast(crumb) || crumbs.length === 1"
-          class="fas fa-chevron-right"
-        ></i>
+        <LucideChevronRight v-if="!isLast(crumb) || crumbs.length === 1" />
       </li>
     </TransitionGroup>
   </Card>
@@ -61,7 +58,7 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 }
 
 ul {
-  --crumb-gap: 0.75rem;
+  --crumb-gap: 0.5rem;
 
   display: flex;
   gap: var(--crumb-gap);
@@ -107,8 +104,8 @@ ul {
       }
     }
 
-    > i {
-      font-size: 0.625rem;
+    > .lucide {
+      width: 1rem;
       padding-top: 0.125rem;
       opacity: 50%;
     }

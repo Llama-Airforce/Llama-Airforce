@@ -106,7 +106,10 @@ const onRoundSelect = (round: number): void => {
           class="vote-link"
         >
           <span v-if="isFinished">{{ t("voting-ended") }}</span>
-          <span v-else><i class="far fa-clock"></i> {{ countdownString }}</span>
+          <span v-else>
+            <LucideClock style="vertical-align: top" />
+            {{ countdownString }}
+          </span>
         </a>
       </template>
     </KPI>
@@ -146,6 +149,10 @@ const onRoundSelect = (round: number): void => {
 
   .vote-link {
     font-size: 0.75rem;
+
+    .lucide {
+      width: 0.75rem;
+    }
   }
 }
 </style>

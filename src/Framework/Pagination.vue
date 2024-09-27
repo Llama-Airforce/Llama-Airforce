@@ -102,7 +102,7 @@ const onPage = (p: number) => {
 
     <li v-if="pages > 2">
       <Button @click="prev">
-        <i class="fas fa-chevron-left"></i>
+        <LucideChevronLeft />
       </Button>
     </li>
 
@@ -115,7 +115,9 @@ const onPage = (p: number) => {
     </li>
 
     <li v-if="pages > 2">
-      <Button @click="next"><i class="fas fa-chevron-right"></i></Button>
+      <Button @click="next">
+        <LucideChevronRight />
+      </Button>
     </li>
 
     <li
@@ -154,6 +156,11 @@ ul {
       padding: 0;
 
       --c-states: var(--c-primary);
+
+      .lucide {
+        width: 1.125rem;
+        height: 1.125rem;
+      }
     }
   }
 

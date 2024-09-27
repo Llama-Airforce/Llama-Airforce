@@ -28,14 +28,14 @@ const btnWeb3 = `<Button :chain-id="mainnet.id">
 </Button>`;
 
 const btnIcon = `<Button>
-  <i class="fas fa-plane"></i> Value
+  <LucidePlane /> Value
 </Button>`;
 
 const btnSlot = `<Button>
   <div style="margin-right: 1rem">
     Content goes here
   </div>
-  <i class="fas fa-plane"></i>
+  <LucidePlane />
 </Button>`;
 
 const btnClick1 = `<Button @click="showAlert('You clicked me!')">
@@ -123,7 +123,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Icon">
       <template #example>
-        <Button><i class="fas fa-plane"></i> Value</Button>
+        <Button><LucidePlane /> Value</Button>
       </template>
 
       <template #snippets>
@@ -138,7 +138,7 @@ const showAlert = (msg: string) => {
       <template #example>
         <Button>
           <div style="margin-right: 1rem">Content goes here</div>
-          <i class="fas fa-plane"></i>
+          <LucidePlane />
         </Button>
       </template>
 

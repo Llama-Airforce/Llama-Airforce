@@ -62,10 +62,7 @@ function addToken(token: Token) {
       <template #item="{ item: { name }, isSelected }">
         <div class="item">
           {{ name }}
-          <i
-            v-if="isSelected"
-            class="fas fa-chevron-down"
-          ></i>
+          <LucideChevronDown v-if="isSelected" />
         </div>
       </template>
     </Select>
@@ -126,10 +123,6 @@ function addToken(token: Token) {
       display: flex;
       align-items: center;
       gap: 1rem;
-
-      .fas {
-        font-size: 0.625rem;
-      }
     }
   }
 

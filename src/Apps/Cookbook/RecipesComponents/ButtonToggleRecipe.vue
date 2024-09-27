@@ -9,12 +9,13 @@ const toggleDarkMode = (value: boolean) => {
 };
 
 const darkModeExample = `<ButtonToggle v-model="darkMode" @change="toggleDarkMode">
-  <i :class="darkMode ? 'fas fa-moon' : 'fas fa-sun'"></i>
+  <LucideMoon v-if="darkMode" />
+  <LucideSun v-else />
   {{ darkMode ? 'Dark Mode' : 'Light Mode' }}
 </ButtonToggle>`;
 
 const notificationsExample = `<ButtonToggle v-model="notifications">
-  <i :class="fas fa-bell"></i>
+  <LucideBell />
   Notifications
 </ButtonToggle>`;
 </script>
@@ -32,7 +33,8 @@ const notificationsExample = `<ButtonToggle v-model="notifications">
           v-model="darkMode"
           @change="toggleDarkMode"
         >
-          <i :class="darkMode ? 'fas fa-moon' : 'fas fa-sun'"></i>
+          <LucideMoon v-if="darkMode" />
+          <LucideSun v-else />
           {{ darkMode ? "Dark Mode" : "Light Mode" }}
         </ButtonToggle>
         <p>Current theme: {{ darkMode ? "Dark" : "Light" }}</p>
@@ -53,7 +55,7 @@ const notificationsExample = `<ButtonToggle v-model="notifications">
 
       <template #example>
         <ButtonToggle v-model="notifications">
-          <i class="fas fa-bell"></i>
+          <LucideBell />
           Notifications
         </ButtonToggle>
         <p>Notifications are {{ notifications ? "enabled" : "disabled" }}</p>

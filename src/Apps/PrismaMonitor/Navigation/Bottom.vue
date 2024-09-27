@@ -16,7 +16,7 @@ const router = useRouter();
         target="_blank"
       >
         <Button class="lvl2">
-          <i class="fab fa-twitter"></i>
+          <LucideTwitter />
         </Button>
       </a>
 
@@ -27,7 +27,7 @@ const router = useRouter();
           emit('navigated');
         "
       >
-        <i class="fas fa-code"></i>
+        <LucideCode />
       </Button>
     </div>
 

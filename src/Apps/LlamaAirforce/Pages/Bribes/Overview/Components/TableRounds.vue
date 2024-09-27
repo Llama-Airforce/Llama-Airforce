@@ -105,7 +105,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
             <span v-else>
               <Tooltip>
                 <template #trigger>
-                  <i class="far fa-clock"></i>
+                  <LucideClock style="vertical-align: middle" />
                 </template>
 
                 <span class="content">{{ t("ongoing") }}</span>

@@ -63,7 +63,7 @@ const getAssetsString = (tx: TransactionDetail): string => {
     const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
 
     const from = `<span>${amountIn} ${coinIn.name}</span>`;
-    const arrow = `<i class='fas fa-arrow-right'></i>`;
+    const arrow = `<span>-></span>`;
     const to = `<span style='justify-self: end;'>${amountOut} ${coinOut.name}</span>`;
 
     return `${from}${arrow}${to}`;
@@ -155,20 +155,9 @@ const onType = (tabIndex: number) => {
             swap: item.transaction_type === 'swap',
           }"
         >
-          <i
-            v-if="item.transaction_type === 'deposit'"
-            class="fas fa-arrow-up"
-          ></i>
-
-          <i
-            v-else-if="item.transaction_type === 'remove'"
-            class="fas fa-arrow-down"
-          ></i>
-
-          <i
-            v-else
-            class="fas fa-exchange-alt"
-          ></i>
+          <LucideArrowUp v-if="item.transaction_type === 'deposit'" />
+          <LucideArrowDown v-else-if="item.transaction_type === 'remove'" />
+          <LucideArrowRightLeft v-else />
 
           {{ capitalize(item.transaction_type) }}
         </div>

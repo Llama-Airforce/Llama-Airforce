@@ -29,11 +29,11 @@ const onNavigated = (): void => {
         <LlamaNFT></LlamaNFT>
       </div>
 
-      <i
-        class="hamburger fas fa-bars"
+      <LucideMenu
+        class="hamburger"
         :class="{ 'is-active': menuOpen, open: menuOpen, closed: !menuOpen }"
         @click="toggleMenu"
-      ></i>
+      />
     </div>
 
     <MenuMobile

@@ -58,7 +58,7 @@ const emit = defineEmits<{
         class="item expander"
         :class="{ expanded }"
       >
-        <i class="fas fa-chevron-up"></i>
+        <LucideChevronUp />
       </div>
     </div>
   </div>

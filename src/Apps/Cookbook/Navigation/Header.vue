@@ -22,7 +22,7 @@ const emit = defineEmits<{
         class="lvl1"
         @click="emit('toggle-expansion')"
       >
-        <i class="fas fa-bars"></i>
+        <LucideMenu />
       </Button>
     </div>
   </div>

@@ -14,7 +14,7 @@ const checkboxCustom = `<Checkbox v-model="isChecked2">
 </Checkbox>`;
 
 const checkboxIcon = `<Checkbox v-model="isChecked3">
-  <i class="fas fa-star" style="margin-right: 0.5rem;"></i>
+  <LucideStar style="margin-right: 0.5rem;" />
   Star this repository
 </Checkbox>`;
 
@@ -67,10 +67,7 @@ const onCheckboxChange = (checked: boolean) => {
     <Recipe title="Checkbox with icon">
       <template #example>
         <Checkbox v-model="isChecked3">
-          <i
-            class="fas fa-star"
-            style="margin-right: 0.5rem"
-          ></i>
+          <LucideStar style="margin-right: 0.5rem" />
           Star this repository
         </Checkbox>
       </template>

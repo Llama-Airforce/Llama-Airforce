@@ -52,21 +52,17 @@ const onClick = (): void => {
       :class="{ active: selected, expandable, 'has-data': !!data }"
       @click="onClick"
     >
-      <div
+      <LucideChevronUp
         v-if="data && expandable && expandSide === 'left'"
         class="expander"
-      >
-        <i class="fas fa-chevron-up"></i>
-      </div>
+      />
 
       <slot name="row"></slot>
 
-      <div
+      <LucideChevronUp
         v-if="data && expandable && expandSide !== 'left'"
         class="expander"
-      >
-        <i class="fas fa-chevron-up"></i>
-      </div>
+      />
     </div>
 
     <Collapsible
@@ -102,9 +98,7 @@ const onClick = (): void => {
       border-bottom-width: 0;
 
       > .expander {
-        > i {
-          transform: rotate(180deg);
-        }
+        rotate: 180deg;
       }
     }
   }
@@ -148,15 +142,13 @@ const onClick = (): void => {
 
     > .expander {
       color: var(--c-primary);
-      text-align: center;
       animation: pulse 1000ms 2;
 
-      transition: scale var(--hover-duration) ease-in-out; /* For hover scaling. */
+      transition: scale var(--hover-duration) ease-in-out,
+        rotate 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
 
-      > i {
-        transition: transform 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
-        transform: rotate(90deg);
-      }
+      vertical-align: middle;
+      rotate: 90deg;
     }
   }
 

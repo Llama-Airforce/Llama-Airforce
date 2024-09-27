@@ -58,10 +58,10 @@ const callData = computed(() => {
         @click="expandedVoters = !expandedVoters"
       >
         Voters ({{ numVoters ?? "?" }})
-        <i
-          class="fas fa-chevron-up expander"
+        <LucideChevronUp
+          class="expander"
           :class="{ expandedVoters }"
-        ></i>
+        />
       </div>
 
       <!-- Make scroll, not collapsible -->
@@ -81,10 +81,10 @@ const callData = computed(() => {
         @click="expandedCallData = !expandedCallData"
       >
         Calldata
-        <i
-          class="fas fa-chevron-up expander"
+        <LucideChevronUp
+          class="expander"
           :class="{ expandedCallData }"
-        ></i>
+        />
       </div>
       <Collapsible :expanded="expandedCallData">
         <div
@@ -115,7 +115,7 @@ const callData = computed(() => {
 
     > .heading {
       display: flex;
-      align-items: end;
+      align-items: center;
       gap: 0.5rem;
       color: var(--c-lvl6);
     }

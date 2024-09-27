@@ -136,6 +136,6 @@ function exportData() {
 
 <template>
   <Button @click="exportData">
-    <i class="fas fa-download"></i>
+    <LucideDownload />
   </Button>
 </template>

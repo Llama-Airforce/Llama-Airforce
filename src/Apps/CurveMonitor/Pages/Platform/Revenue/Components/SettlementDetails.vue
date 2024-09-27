@@ -94,11 +94,11 @@ const cardJson = useTemplateRef("cardJson");
           <template #actions>
             <div class="buttons">
               <Button @click="clipboardJson()">
-                <i class="fas fa-link"></i>
+                <LucideLink />
               </Button>
 
               <Button @click="fullscreen = !fullscreen">
-                <i class="fas fa-expand"></i>
+                <LucideMaximize />
 
                 <ModalFullscreen
                   :target="cardJson?.$el"
@@ -129,10 +129,7 @@ const cardJson = useTemplateRef("cardJson");
               class="trophy"
               :class="rankClass(ranking)"
             >
-              <i
-                v-if="ranking <= 3"
-                class="fas fa-trophy"
-              ></i>
+              <LucideTrophy v-if="ranking <= 3" />
               <span v-else>{{ ranking }}</span>
             </div>
 
@@ -152,7 +149,7 @@ const cardJson = useTemplateRef("cardJson");
 
             <div>
               <Button @click="clipboard(solverAddress)">
-                <i class="fas fa-link"></i>
+                <LucideLink />
               </Button>
             </div>
           </template>

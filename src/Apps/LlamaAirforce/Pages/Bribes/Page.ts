@@ -37,7 +37,7 @@ export const pageBribes: PageLAF = {
   title: "Bribes",
   titleRoute: ["/incentives", "/bribes"],
   visible: true,
-  planeX: 545,
+  planeX: 410,
   menuHeader,
   menuItems: [
     {

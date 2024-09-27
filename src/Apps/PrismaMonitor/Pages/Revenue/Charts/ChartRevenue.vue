@@ -71,7 +71,7 @@ const onChartType = (type: ChartType) => {
           <Tooltip>
             <template #trigger>
               <ButtonToggle v-model="includeUnlockPenalty">
-                <i class="fas fa-burn"></i>
+                <LucideFlame />
               </ButtonToggle>
             </template>
 

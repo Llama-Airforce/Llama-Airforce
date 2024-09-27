@@ -101,7 +101,7 @@ const clipboard = async (addr: string) => {
 
             <div>
               <Button @click="clipboard(value.address)">
-                <i class="fas fa-link"></i>
+                <LucideLink />
               </Button>
             </div>
           </div>

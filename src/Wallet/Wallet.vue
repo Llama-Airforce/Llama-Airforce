@@ -37,7 +37,7 @@ const changeNetwork = () => {
         class="disconnect"
         @click="disconnect"
       >
-        <i class="fas fa-check"></i> {{ addressShort(address) }}
+        <LucideCheck /> {{ addressShort(address) }}
       </Button>
     </div>
 

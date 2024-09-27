@@ -202,7 +202,7 @@ function createSeriesStacked(normalize: boolean) {
               :model-value="dollars"
               @click="dollars = !dollars"
             >
-              <i class="fas fa-dollar-sign"></i>
+              $
             </ButtonToggle>
           </template>
 

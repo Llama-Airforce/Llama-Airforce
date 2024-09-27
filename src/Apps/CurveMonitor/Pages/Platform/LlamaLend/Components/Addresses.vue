@@ -66,7 +66,7 @@ const clipboard = async (addr: string) => {
             v-if="address"
             @click="clipboard(address)"
           >
-            <i class="fas fa-link"></i>
+            <LucideLink />
           </Button>
         </div>
       </template>

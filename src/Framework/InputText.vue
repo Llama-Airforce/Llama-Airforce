@@ -49,7 +49,7 @@ const onInput = (evt: Event): void => {
       v-if="search"
       class="icon"
     >
-      <i class="fas fa-search"></i>
+      <LucideSearch />
     </span>
 
     <input
@@ -174,7 +174,6 @@ const onInput = (evt: Event): void => {
     justify-content: center;
     position: relative;
     left: 0.875rem;
-    font-size: 0.875rem;
     color: var(--c-lvl5);
   }
 }

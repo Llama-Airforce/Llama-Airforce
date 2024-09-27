@@ -15,7 +15,7 @@ export const pagePounders: PageLAF = {
   title: "Pounders",
   titleRoute: "/pounders",
   visible: true,
-  planeX: 365,
+  planeX: 270,
   menuHeader,
   menuItems: [],
   forceShowMenu: false,

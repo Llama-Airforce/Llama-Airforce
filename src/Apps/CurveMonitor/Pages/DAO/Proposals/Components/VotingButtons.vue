@@ -353,10 +353,7 @@ whenever(isConfirmedExecute, () => {
           </Button>
 
           <div class="middle">
-            <i
-              class="fas fa-times"
-              :class="{ winning: yeaPct < 50 }"
-            ></i>
+            <LucideX :class="{ winning: yeaPct < 50 }" />
 
             <div
               class="value"
@@ -373,10 +370,7 @@ whenever(isConfirmedExecute, () => {
               %
             </div>
 
-            <i
-              class="fas fa-check"
-              :class="{ winning: yeaPct > 50 }"
-            ></i>
+            <LucideCheck :class="{ winning: yeaPct > 50 }" />
           </div>
 
           <Button
