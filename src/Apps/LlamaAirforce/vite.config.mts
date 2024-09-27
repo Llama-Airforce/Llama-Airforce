@@ -6,7 +6,7 @@ import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import type { App } from "../../Framework/Apps";
-import { autoImport } from "../../vite.base";
+import { autoImport, vueImport } from "../../vite.base";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
       }),
       splitVendorChunkPlugin(),
       AutoImport(autoImport),
-      Components({ dts: true, dirs: ["../../Framework"] }),
+      Components(vueImport),
     ],
     server: {
       port: 8080,

@@ -5,7 +5,7 @@ import vueDevTools from "vite-plugin-vue-devtools";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import type { App } from "../../Framework/Apps";
-import { autoImport } from "../../vite.base";
+import { autoImport, vueImport } from "../../vite.base";
 
 export default defineConfig(() => {
   const app: App = "cm";
@@ -19,7 +19,7 @@ export default defineConfig(() => {
       vueDevTools({ launchEditor: "cursor" }),
       splitVendorChunkPlugin(),
       AutoImport(autoImport),
-      Components({ dts: true, dirs: ["../../Framework"] }),
+      Components(vueImport),
     ],
     server: {
       port: 8080,

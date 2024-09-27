@@ -1,4 +1,5 @@
 import type AutoImport from "unplugin-auto-import/vite";
+import type Components from "unplugin-vue-components/vite";
 
 export const autoImport: Parameters<typeof AutoImport>[0] = {
   include: [/\.vue$/, /\.ts$/],
@@ -92,4 +93,19 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
   eslintrc: {
     enabled: true,
   },
+};
+
+export const vueImport: Parameters<typeof Components>[0] = {
+  dts: true,
+  dirs: ["../../Framework"],
+  resolvers: [
+    (componentName) => {
+      if (componentName.startsWith("Lucide")) {
+        return {
+          name: componentName.slice(6),
+          from: "lucide-vue-next",
+        };
+      }
+    },
+  ],
 };
