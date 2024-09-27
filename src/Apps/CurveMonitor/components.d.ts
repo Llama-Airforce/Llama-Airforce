@@ -36,7 +36,6 @@ declare module 'vue' {
     LucideDownload: typeof import('lucide-vue-next')['Download']
     LucideLink: typeof import('lucide-vue-next')['Link']
     LucideMaximize: typeof import('lucide-vue-next')['Maximize']
-    LucideMaximize2: typeof import('lucide-vue-next')['Maximize2']
     LucideMenu: typeof import('lucide-vue-next')['Menu']
     LucideSearch: typeof import('lucide-vue-next')['Search']
     LucideTrash: typeof import('lucide-vue-next')['Trash']
