@@ -54,7 +54,7 @@ const noMenu = computed((): boolean => {
             target="_blank"
           >
             <div class="nav-link-container icon">
-              <i class="fab fa-discord"></i>
+              <div class="discord"></div>
             </div>
           </a>
         </li>
@@ -133,6 +133,13 @@ footer {
 
           .icon {
             color: var(--c-lvl5);
+
+            .discord {
+              width: 1rem;
+              height: 1rem;
+              background-color: var(--c-lvl5);
+              mask: url("@/Assets/Icons/discord.svg") no-repeat center;
+            }
           }
 
           .nav-link-container {
@@ -159,6 +166,10 @@ footer {
               background-color: var(--c-lvl6);
               border-bottom: 1px solid var(--c-lvl0);
               color: var(--c-lvl0);
+
+              .discord {
+                background-color: var(--c-lvl0);
+              }
             }
           }
 
