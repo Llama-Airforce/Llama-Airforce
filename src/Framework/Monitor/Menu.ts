@@ -1,9 +1,11 @@
+import type { Component } from "vue";
+
 export type Tag = "alpha" | "beta";
 
 export type MenuItem = {
   label: string | (() => string);
   tag?: Tag;
-  icon?: string;
+  icon?: Component;
 };
 
 export type MenuNode = MenuItem & {

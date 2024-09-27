@@ -16,6 +16,18 @@ import Profile from "@PM/Pages/Profile/Profile.page.vue";
 import { useSettingsStore } from "@PM/Stores";
 import { stableSymbol } from "@/Apps/PrismaMonitor/Models/Flavor";
 
+import {
+  PiggyBank,
+  DollarSign,
+  Scale,
+  Cross,
+  Skull,
+  Lock,
+  Landmark,
+  Droplet,
+  UserRound,
+} from "lucide-vue-next";
+
 export const pageMainRoutes = [
   { path: "/", redirect: { name: "vaults" } },
 
@@ -47,7 +59,7 @@ export const pageMain: Page = {
     {
       to: "/vaults",
       label: "Vaults",
-      icon: "fas fa-piggy-bank",
+      icon: PiggyBank,
     },
     {
       to: "/stable",
@@ -55,42 +67,42 @@ export const pageMain: Page = {
         const storeSettings = useSettingsStore();
         return stableSymbol(storeSettings.flavor);
       },
-      icon: "fas fa-dollar-sign",
+      icon: DollarSign,
     },
     {
       to: "/pool",
       label: "Stability pool",
-      icon: "fas fa-balance-scale",
+      icon: Scale,
     },
     {
       to: "/redemptions",
       label: "Redemptions",
-      icon: "fas fa-bible",
+      icon: Cross,
     },
     {
       to: "/liquidations",
       label: "Liquidations",
-      icon: "fas fa-book-dead",
+      icon: Skull,
     },
     {
       to: "/veprisma",
       label: "vePRISMA",
-      icon: "fas fa-lock",
+      icon: Lock,
     },
     {
       to: "/proposals",
       label: "Proposals",
-      icon: "fas fa-landmark",
+      icon: Landmark,
     },
     {
       to: "/wrappers",
       label: "ve Wrappers",
-      icon: "fas fa-tint",
+      icon: Droplet,
     },
     {
       to: "/profile",
       label: "Profile",
-      icon: "fas fa-user",
+      icon: UserRound,
     },
   ],
 };

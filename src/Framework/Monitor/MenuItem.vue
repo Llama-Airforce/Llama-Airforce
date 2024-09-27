@@ -94,12 +94,11 @@ const onClickNode = (): void => {
     >
       <div class="nav-link-container">
         <div class="left">
-          <div
+          <component
+            :is="item.icon"
             v-if="item.icon"
             class="icon"
-          >
-            <i :class="item.icon"></i>
-          </div>
+          />
           {{ menuLabel(item) }}
         </div>
 
@@ -147,12 +146,11 @@ const onClickNode = (): void => {
         >
           <div class="nav-link-container">
             <div class="left">
-              <div
+              <component
+                :is="menuItem.icon"
                 v-if="menuItem.icon"
                 class="icon"
-              >
-                <i :class="menuItem.icon"></i>
-              </div>
+              />
               {{ menuLabel(menuItem) }}
             </div>
 
@@ -194,11 +192,11 @@ const onClickNode = (): void => {
 
     > .left {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
 
       > .icon {
         width: 3ch;
-        text-align: center;
         color: var(--c-primary);
       }
     }

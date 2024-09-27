@@ -5,6 +5,8 @@ import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.page.vue";
 
 import menuHeader from "@/Assets/Menu/votium.png";
 
+import { ChartNoAxesColumn, BookOpen } from "lucide-vue-next";
+
 export const pageBribesRoutes = [
   { path: "/votium", redirect: { name: "rounds-incentives" } },
   { path: "/votium/bribes/:round?", redirect: { name: "rounds-incentives" } },
@@ -42,13 +44,13 @@ export const pageBribes: PageLAF = {
   menuItems: [
     {
       to: "/incentives/rounds",
-      icon: "far fa-chart-bar",
       label: "Rounds",
+      icon: ChartNoAxesColumn,
     },
     {
       to: "/incentives/overview",
-      icon: "fas fa-file-alt",
       label: "Overview",
+      icon: BookOpen,
     },
   ],
   forceShowMenu: false,

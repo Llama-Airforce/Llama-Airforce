@@ -71,11 +71,10 @@ const onClickNode = (): void => {
       @click="emit('navigated')"
     >
       <div class="nav-link-container">
-        <i
+        <component
+          :is="menuItem.icon"
           v-if="menuItem.icon"
-          :class="menuItem.icon"
-        ></i>
-        <i v-else></i>
+        />
         {{ menuItem.label }}
       </div>
     </router-link>
@@ -86,10 +85,10 @@ const onClickNode = (): void => {
       @click="onClickNode"
     >
       <div class="nav-link-container">
-        <i
+        <component
+          :is="menuItem.icon"
           v-if="menuItem.icon"
-          :class="menuItem.icon"
-        ></i>
+        />
         {{ menuItem.label }}
       </div>
     </a>
@@ -150,6 +149,7 @@ i {
     flex-grow: 1;
     align-items: center;
     padding: 0.66rem 1rem;
+    gap: 1rem;
 
     transition: all var(--hover-duration);
 
