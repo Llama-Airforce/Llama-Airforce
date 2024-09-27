@@ -91,24 +91,23 @@ function onClearCache() {
           <div class="title">Connect Your Wallet</div>
 
           <div class="connectors">
-            <div
+            <Button
               v-for="connector in connectorsFiltered"
               :key="connector.id"
               class="connector"
+              @click="onConnect(connector)"
             >
-              <Button @click="onConnect(connector)">
-                <img
-                  v-if="icon(connector)"
-                  :src="icon(connector)"
-                />
-                <div
-                  v-else
-                  class="empty"
-                ></div>
+              <img
+                v-if="icon(connector)"
+                :src="icon(connector)"
+              />
+              <div
+                v-else
+                class="empty"
+              ></div>
 
-                <div class="name">{{ name(connector) }}</div>
-              </Button>
-            </div>
+              <div class="name">{{ name(connector) }}</div>
+            </Button>
           </div>
         </div>
       </Card>
@@ -134,32 +133,24 @@ function onClearCache() {
   .connectors {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 1rem;
 
     .connector {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: start;
+      height: 2rem;
+      gap: 1rem;
+      background-color: var(--c-lvl2);
 
-      button {
-        height: 2rem;
-        display: flex;
-        gap: 1rem;
-        flex-grow: 1;
-        background-color: var(--c-lvl2);
+      &:hover {
+        background-color: var(--c-lvl3);
+      }
 
-        &:hover {
-          background-color: var(--c-lvl3);
-        }
-
-        img,
-        .empty {
-          width: 30px;
-          height: 30px;
-          object-fit: scale-down;
-          border-radius: 25%;
-        }
+      img,
+      .empty {
+        width: 30px;
+        height: 30px;
+        object-fit: scale-down;
+        border-radius: 25%;
       }
     }
   }
