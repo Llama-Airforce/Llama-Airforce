@@ -9,7 +9,11 @@ const defaultTooltip = `<Tooltip>
   <div>Default tooltip content</div>
 </Tooltip>`;
 
-const customIconTooltip = `<Tooltip icon="fas fa-info-circle">
+const customIconTooltip = `<Tooltip>
+  <template #trigger>
+    <i class="fas fa-info-circle"></i>
+  </template>
+
   <div>Tooltip with custom icon</div>
 </Tooltip>`;
 
@@ -53,7 +57,11 @@ const onTooltipShow = (isShown: boolean) => {
 
     <Recipe title="Custom Icon Tooltip">
       <template #example>
-        <Tooltip icon="fas fa-info-circle">
+        <Tooltip>
+          <template #trigger>
+            <i class="fas fa-info-circle"></i>
+          </template>
+
           <div>Tooltip with custom icon</div>
         </Tooltip>
       </template>

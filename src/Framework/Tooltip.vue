@@ -1,8 +1,4 @@
 <script setup lang="ts">
-const { icon = "" } = defineProps<{
-  icon?: string;
-}>();
-
 const emit = defineEmits<{
   show: [boolean];
 }>();
@@ -102,15 +98,7 @@ function adjustPosition() {
       @touchend="hideTooltip"
     >
       <slot name="trigger">
-        <i
-          v-if="icon"
-          :class="icon"
-        ></i>
-
-        <img
-          v-else
-          src="@/Assets/Icons/question.png"
-        />
+        <img src="@/Assets/Icons/question.png" />
       </slot>
     </div>
 

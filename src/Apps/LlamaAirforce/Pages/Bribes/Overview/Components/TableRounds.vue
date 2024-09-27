@@ -103,7 +103,13 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
           >
             <span v-if="isFinished(item)">{{ round(item) }}</span>
             <span v-else>
-              <Tooltip icon="far fa-clock">{{ t("ongoing") }}</Tooltip>
+              <Tooltip>
+                <template #trigger>
+                  <i class="far fa-clock"></i>
+                </template>
+
+                {{ t("ongoing") }}
+              </Tooltip>
             </span>
           </a>
         </div>
