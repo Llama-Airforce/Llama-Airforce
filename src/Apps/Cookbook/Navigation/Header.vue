@@ -46,22 +46,22 @@ const emit = defineEmits<{
       display: flex !important;
     }
   }
-}
 
-> .buttons {
-  display: none;
-}
+  > .buttons {
+    display: none;
+  }
 
-> .logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  cursor: pointer;
-  color: var(--c-text);
+  > .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    color: var(--c-text);
 
-  &:hover {
-    background: unset;
+    &:hover {
+      background: unset;
+    }
   }
 }
 </style>
