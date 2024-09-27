@@ -115,6 +115,8 @@ const onChange = (evt: Event): void => {
   }
 
   .checkmark-label {
+    display: flex;
+    align-items: center;
     margin-top: 1px;
 
     &:empty {
