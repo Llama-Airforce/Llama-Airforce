@@ -108,7 +108,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
                   <i class="far fa-clock"></i>
                 </template>
 
-                {{ t("ongoing") }}
+                <span class="content">{{ t("ongoing") }}</span>
               </Tooltip>
             </span>
           </a>
@@ -154,11 +154,10 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
 
     .tooltip {
       justify-content: center;
-    }
 
-    /* Fix text in tooltip having link color. */
-    .popper {
-      color: var(--c-text);
+      .content {
+        color: var(--c-text);
+      }
     }
   }
 }
