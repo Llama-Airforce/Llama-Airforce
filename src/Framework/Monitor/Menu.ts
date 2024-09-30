@@ -2,6 +2,11 @@ import type { Component } from "vue";
 
 export type Tag = "alpha" | "beta";
 
+export type Menu = {
+  titleRoute: string | string[];
+  items: (MenuNode | MenuLeaf | MenuExternal)[];
+};
+
 export type MenuItem = {
   label: string | (() => string);
   tag?: Tag;

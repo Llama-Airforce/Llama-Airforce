@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Wallet from "@/Wallet/Wallet.vue";
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
-import { type PageLAF } from "@LAF/Pages/Page";
+import { usePageStore } from "@LAF/Pages/PageStore";
 
 const { t } = useI18n();
 
@@ -10,24 +10,19 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const pageStore = usePageStore<PageLAF>();
+const pageStore = usePageStore();
 const route = useRoute();
 
-const page = computed((): PageLAF | undefined => {
-  return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
-});
+const page = computed(() =>
+  pageStore.pages.find((p) => subIsActive(p.titleRoute, route))
+);
 
-const menuHeader = computed(() => {
-  return page.value?.menuHeader ?? "";
-});
+const menuHeader = computed(() => page.value?.menuHeader ?? "");
+const menuItems = computed(() => page.value?.items ?? []);
 
-const menuItems = computed(() => {
-  return page.value?.menuItems ?? [];
-});
-
-const hasMenu = computed((): boolean => {
-  return menuItems.value.length > 0 || !!page.value?.forceShowMenu;
-});
+const hasMenu = computed(
+  () => menuItems.value.length > 0 || !!page.value?.forceShowMenu
+);
 </script>
 
 <template>

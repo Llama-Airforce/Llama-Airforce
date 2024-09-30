@@ -1,12 +1,12 @@
 import type { Component } from "vue";
-import type { Page } from "@/Framework/Monitor/Page";
+import type { Menu } from "@/Framework/Monitor/Menu";
 
-export type PageLAF = Page & {
+export type Page = Menu & {
   title: string;
   visible: boolean;
   planeX: number;
   menuHeader: string;
-  menuItems: (MenuNode | MenuLeaf)[];
+  items: (MenuNode | MenuLeaf)[];
   forceShowMenu: boolean;
 };
 

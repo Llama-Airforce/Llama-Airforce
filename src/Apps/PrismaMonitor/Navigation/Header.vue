@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Logo from "@PM/Navigation/Logo.vue";
+import Logo from "./Logo.vue";
 
 const emit = defineEmits<{
   "toggle-expansion": [];

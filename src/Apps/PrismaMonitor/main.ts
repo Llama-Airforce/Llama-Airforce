@@ -1,9 +1,7 @@
 import { createI18n } from "vue-i18n";
-import { type RouteRecordRaw } from "vue-router";
 import App from "@PM/App.vue";
-import createRouter from "@PM/Router";
+import { routes } from "@PM/Routes";
 
-import { pageMain, pageMainRoutes } from "@PM/Pages/PageMain";
 import { setup } from "../setup";
 
 const { app } = setup(App, {
@@ -14,16 +12,7 @@ const { app } = setup(App, {
       fallbackLocale: "en",
     }),
   ],
+  routes,
 });
 
-// Configure pages.
-const pages = [pageMain];
-const routes: RouteRecordRaw[][] = [pageMainRoutes];
-
-const pageStore = usePageStore();
-pageStore.pages = pages;
-pageStore.routes = routes;
-
-// Mount the app
-const router = createRouter();
-app.use(router).mount("#app");
+app.mount("#app");

@@ -1,4 +1,4 @@
-import { type PageLAF } from "@LAF/Pages/Page";
+import { type Page } from "@LAF/Pages/Page";
 
 import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.page.vue";
 import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.page.vue";
@@ -35,13 +35,13 @@ export const pageBribesRoutes = [
   },
 ];
 
-export const pageBribes: PageLAF = {
+export const pageBribes: Page = {
   title: "Bribes",
   titleRoute: ["/incentives", "/bribes"],
   visible: true,
   planeX: 410,
   menuHeader,
-  menuItems: [
+  items: [
     {
       to: "/incentives/rounds",
       label: "Rounds",

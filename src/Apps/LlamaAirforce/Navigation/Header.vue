@@ -4,9 +4,7 @@ import HeaderMobile from "@LAF/Navigation/HeaderMobile.vue";
 
 const route = useRoute();
 
-const hasHeader = computed((): boolean => {
-  return route.name !== "curvemonitor";
-});
+const hasHeader = computed(() => route.name !== "curvemonitor");
 </script>
 
 <template>

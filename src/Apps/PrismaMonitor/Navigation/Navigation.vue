@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import Header from "@PM/Navigation/Header.vue";
-import Bottom from "@PM/Navigation/Bottom.vue";
+import Header from "./Header.vue";
+import Bottom from "./Bottom.vue";
+import { menu } from "./Menu";
 
 const emit = defineEmits<{
   navigated: [];
 }>();
-
-// Refs
-const storePage = usePageStore();
 
 const expanded = ref(false);
 
@@ -30,10 +28,10 @@ const onNavigated = () => {
 
     <Collapsible
       class="menu-content"
-      :expanded="expanded"
+      :expanded
     >
       <Menu
-        :pages="storePage.pages"
+        :menu
         @navigated="onNavigated"
       ></Menu>
 

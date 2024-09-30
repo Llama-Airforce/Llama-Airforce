@@ -1,4 +1,4 @@
-import { type PageLAF } from "@LAF/Pages/Page";
+import { type Page } from "@LAF/Pages/Page";
 
 import UnionPounders from "@Pounders/Pounders.page.vue";
 
@@ -11,12 +11,12 @@ export const pagePoundersRoutes = [
   },
 ];
 
-export const pagePounders: PageLAF = {
+export const pagePounders: Page = {
   title: "Pounders",
   titleRoute: "/pounders",
   visible: true,
   planeX: 270,
   menuHeader,
-  menuItems: [],
+  items: [],
   forceShowMenu: false,
 };

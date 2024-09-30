@@ -1,11 +1,7 @@
 import { createI18n } from "vue-i18n";
-import { type RouteRecordRaw } from "vue-router";
 import { safe } from "@wagmi/connectors";
 import App from "@CB/App.vue";
-import createRouter from "@CB/Router";
-
-import { pageMain, pageMainRoutes } from "@CB/PageMain";
-import { usePageStore } from "@/Framework/Stores/PageStore";
+import { routes } from "@CB/Routes";
 
 import { setup } from "../setup";
 import { walletConnect } from "@/Wallet/WalletConnect";
@@ -19,16 +15,7 @@ const { app } = setup(App, {
       fallbackLocale: "en",
     }),
   ],
+  routes,
 });
 
-// Configure pages.
-const pages = [pageMain];
-const routes: RouteRecordRaw[][] = [pageMainRoutes];
-
-const pageStore = usePageStore();
-pageStore.pages = pages;
-pageStore.routes = routes;
-
-// Mount the app
-const router = createRouter();
-app.use(router).mount("#app");
+app.mount("#app");

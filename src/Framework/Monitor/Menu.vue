@@ -1,29 +1,16 @@
 <script setup lang="ts">
-import { type Page } from "@/Framework/Monitor/Page";
-import { type MenuItem as MenuItemT } from "@/Framework/Monitor/Menu";
+import type { Menu, MenuItem as MenuItemT } from "@/Framework/Monitor/Menu";
 import MenuItem from "@/Framework/Monitor/MenuItem.vue";
 
-const { pages = [] } = defineProps<{
-  pages: Page[];
+const { menu } = defineProps<{
+  menu: Menu;
 }>();
 
 const emit = defineEmits<{
   navigated: [];
 }>();
 
-// Refs
-const route = useRoute();
-
-const page = computed((): Page | undefined => {
-  return pages.find((p) => subIsActive(p.titleRoute, route));
-});
-
-const menuItems = computed(() => {
-  return page.value?.menuItems ?? [];
-});
-
-// Methods
-const menuLabel = (item: MenuItemT): string => {
+const label = (item: MenuItemT): string => {
   return typeof item.label === "string" ? item.label : item.label();
 };
 </script>
@@ -31,11 +18,11 @@ const menuLabel = (item: MenuItemT): string => {
 <template>
   <nav>
     <ul
-      v-for="menuItem in menuItems"
-      :key="menuLabel(menuItem)"
+      v-for="item in menu.items"
+      :key="label(item)"
     >
       <MenuItem
-        :item="menuItem"
+        :item
         @navigated="emit('navigated')"
       >
       </MenuItem>

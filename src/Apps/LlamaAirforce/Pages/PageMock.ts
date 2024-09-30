@@ -1,13 +1,13 @@
-import { type PageLAF } from "@LAF/Pages/Page";
+import { type Page } from "./Page";
 
 // Mock page, for example when the Union page in the git submodule is not loaded.
-const mockPage: PageLAF = {
+const mockPage: Page = {
   title: "foo",
   titleRoute: "",
   visible: false,
   planeX: 0,
   menuHeader: "",
-  menuItems: [],
+  items: [],
   forceShowMenu: false,
 };
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MenuItem from "@LAF/Navigation/MenuItem.vue";
-import { type PageLAF } from "@LAF/Pages/Page";
+import { usePageStore } from "@LAF/Pages/PageStore";
 
 const { open = false } = defineProps<{
   open?: boolean;
@@ -12,7 +12,7 @@ const emit = defineEmits<{
 }>();
 
 // Refs
-const pageStore = usePageStore<PageLAF>();
+const pageStore = usePageStore();
 const route = useRoute();
 const router = useRouter();
 const page = ref("Curve");
@@ -27,13 +27,13 @@ const titleRoute = computed(() => {
   else return null;
 });
 
-const menuItems = computed(() => {
-  return pageStore.pages.find((p) => p.title === page.value)?.menuItems ?? [];
-});
+const menuItems = computed(
+  () => pageStore.pages.find((p) => p.title === page.value)?.items ?? []
+);
 
-const pages = computed((): string[] => {
-  return pageStore.pages.filter((p) => p.visible).map((p) => p.title);
-});
+const pages = computed(() =>
+  pageStore.pages.filter((p) => p.visible).map((p) => p.title)
+);
 
 // Events
 const onPageSelect = async (option: string) => {

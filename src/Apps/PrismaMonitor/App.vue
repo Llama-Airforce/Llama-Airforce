@@ -5,21 +5,10 @@ import { useSettingsStore } from "@PM/Stores";
 import "@/Styles/Themes/PM/Dark.css";
 import "@/Styles/Themes/PM/Light.css";
 
-// Stores
-const settingStore = useSettingsStore();
+// Breadcrumb hiding
 const storeBreadcrumb = useBreadcrumbStore();
-
-// Refs
 const route = useRoute();
 
-// Hooks
-onMounted(() => {
-  if (settingStore.flavor === "lrt") {
-    window.document.documentElement.setAttribute("data-flavor", "lrt");
-  }
-});
-
-// Watches
 watch(
   () => route.fullPath,
   (route) => {
@@ -41,6 +30,14 @@ watch(
 );
 
 // Theme
+const settingStore = useSettingsStore();
+
+onMounted(() => {
+  if (settingStore.flavor === "lrt") {
+    window.document.documentElement.setAttribute("data-flavor", "lrt");
+  }
+});
+
 provideTheme(toRef(() => settingStore.theme));
 </script>
 

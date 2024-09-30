@@ -1,5 +1,3 @@
-import { type Page } from "@/Framework/Monitor/Page";
-
 import Colors from "@CB/Recipes/ColorsRecipe.vue";
 import Socket from "@CB/Recipes/SocketRecipe.vue";
 
@@ -23,7 +21,7 @@ import Tooltip from "@CB/RecipesComponents/TooltipRecipe.vue";
 
 import UseApprove from "@CB/RecipesComposables/UseApproveRecipe.vue";
 
-export const pageMainRoutes = [
+export const routes = [
   { path: "/", redirect: { name: "colors" } },
   {
     path: "/colors",
@@ -130,101 +128,3 @@ export const pageMainRoutes = [
     component: UseApprove,
   },
 ];
-
-export const pageMain: Page = {
-  titleRoute: "/",
-  menuItems: [
-    {
-      to: "/colors",
-      label: "Colors",
-    },
-    {
-      to: "/socket",
-      label: "Socket.IO",
-    },
-    {
-      label: "Components",
-      initCollapsed: true,
-      children: [
-        {
-          to: "/components/async-value",
-          label: "AsyncValue",
-        },
-        {
-          to: "/components/breadcrumb",
-          label: "Breadcrumb",
-        },
-        {
-          to: "/components/button",
-          label: "Button",
-        },
-        {
-          to: "/components/toggle-button",
-          label: "ButtonToggle",
-        },
-        {
-          to: "/components/card",
-          label: "Card",
-        },
-        {
-          to: "/components/checkbox",
-          label: "Checkbox",
-        },
-        {
-          to: "/components/data-table",
-          label: "DataTable",
-        },
-        {
-          to: "/components/input-text",
-          label: "InputText",
-        },
-        {
-          to: "/components/input-number",
-          label: "InputNumber",
-        },
-        {
-          to: "/components/modal",
-          label: "Modal",
-        },
-        {
-          to: "/components/pagination",
-          label: "Pagination",
-        },
-        {
-          to: "/components/radio-button",
-          label: "RadioButton",
-        },
-        {
-          to: "/components/select",
-          label: "Select",
-        },
-        {
-          to: "/components/slider",
-          label: "Slider",
-        },
-        {
-          to: "/components/spinner",
-          label: "Spinner",
-        },
-        {
-          to: "/components/tabs",
-          label: "Tabs",
-        },
-        {
-          to: "/components/tooltip",
-          label: "Tooltip",
-        },
-      ],
-    },
-    {
-      label: "Composables",
-      initCollapsed: true,
-      children: [
-        {
-          to: "/composables/use-approve",
-          label: "useApprove",
-        },
-      ],
-    },
-  ],
-};

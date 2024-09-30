@@ -2,11 +2,10 @@
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import { type Crumb } from "@/Framework/Crumb";
 
-// Refs
+// Breadcrumb navigation
 const storeBreadcrumb = useBreadcrumbStore();
 const router = useRouter();
 
-// Methods
 const onCrumb = async (crumb: Crumb) => {
   if (crumb.pathName) {
     await router.push({

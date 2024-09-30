@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { subIsActive } from "@/Util";
-import { type PageLAF } from "@LAF/Pages/Page";
 import Wallet from "@/Wallet/Wallet.vue";
+import { usePageStore } from "@LAF/Pages/PageStore";
 
-const pageStore = usePageStore<PageLAF>();
+const pageStore = usePageStore();
 const route = useRoute();
 
 const pages = computed(() => pageStore.pages.filter((p) => p.visible));
 
-const planeX = computed((): string => {
+const planeX = computed(() => {
   let x = 12;
 
   for (const page of pageStore.pages) {

@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { type PageLAF } from "@LAF/Pages/Page";
+import { usePageStore } from "@LAF/Pages/PageStore";
 
-const pageStore = usePageStore<PageLAF>();
+const pageStore = usePageStore();
 const route = useRoute();
 
-const page = computed((): PageLAF | undefined => {
-  return pageStore.pages.find((p) => subIsActive(p.titleRoute, route));
-});
+const page = computed(() =>
+  pageStore.pages.find((p) => subIsActive(p.titleRoute, route))
+);
 
-const menuItems = computed(() => {
-  return page.value?.menuItems ?? [];
-});
+const menuItems = computed(() => page.value?.items ?? []);
 
-const noMenu = computed((): boolean => {
-  return !(menuItems.value.length > 0 || !!page.value?.forceShowMenu);
-});
+const noMenu = computed(
+  () => !(menuItems.value.length > 0 || !!page.value?.forceShowMenu)
+);
 </script>
 
 <template>

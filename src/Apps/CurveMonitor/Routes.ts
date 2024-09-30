@@ -1,6 +1,6 @@
-import { type Page } from "@/Framework/Monitor/Page";
-
 import Home from "@CM/Pages/Home/Home.page.vue";
+import Code from "@CM/Pages/Code.page.vue";
+import NotFound from "@CM/Pages/NotFound.page.vue";
 
 import Chains from "@CM/Pages/Platform/Chains/Chains.page.vue";
 import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
@@ -21,8 +21,9 @@ import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.page.vue";
 
 import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
 
-export const pageMainRoutes = [
+export const routes = [
   { path: "/", component: Home },
+  { path: "/code", component: Code },
 
   { path: "/platform", redirect: { name: "revenue" } },
 
@@ -86,58 +87,6 @@ export const pageMainRoutes = [
     name: "defimonitor",
     component: DefiMonitor,
   },
-];
 
-export const pageMain: Page = {
-  titleRoute: "/",
-  menuItems: [
-    {
-      label: "Articles",
-      url: "https://blog.curvemonitor.com/",
-    },
-    {
-      label: "Platform",
-      children: [
-        {
-          to: "/platform/chains",
-          label: "Chains",
-        },
-        {
-          to: "/platform/pools",
-          label: "Pools",
-          tag: "alpha",
-        },
-        {
-          to: "/platform/revenue",
-          label: "Revenue",
-        },
-        {
-          to: "/platform/crvusd",
-          label: "crvUSD",
-        },
-        {
-          to: "/platform/lending",
-          label: "Lending",
-        },
-        {
-          to: "/platform/monitor",
-          label: "Monitor",
-          tag: "beta",
-        },
-      ],
-    },
-    {
-      label: "DAO",
-      children: [
-        {
-          to: "/dao/proposals",
-          label: "Proposals",
-        },
-        {
-          to: "/dao/vefunder",
-          label: "VeFunder",
-        },
-      ],
-    },
-  ],
-};
+  { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
+];

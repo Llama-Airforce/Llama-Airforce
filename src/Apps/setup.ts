@@ -1,4 +1,9 @@
 import { createApp, type Plugin } from "vue";
+import {
+  createRouter,
+  createWebHistory,
+  type RouteRecordRaw,
+} from "vue-router";
 import { createPinia } from "pinia";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import Notifications, { notify } from "@kyvg/vue3-notification";
@@ -14,6 +19,7 @@ type Options = {
   /** Additional Wagmi connectors to be included in the configuration */
   extraWagmiConnectors?: CreateConnectorFn[];
   plugins?: Plugin[];
+  routes: RouteRecordRaw[];
 };
 
 /**
@@ -24,12 +30,12 @@ type Options = {
  */
 export function setup(
   appRoot: Parameters<typeof createApp>[0],
-  options?: Options
+  options: Options
 ) {
   const app = createApp(appRoot);
 
-  // Add custom plugins.
-  for (const plugin of options?.plugins ?? []) {
+  // Add custom plugins
+  for (const plugin of options.plugins ?? []) {
     app.use(plugin);
   }
 
@@ -64,12 +70,19 @@ export function setup(
     }),
   });
 
-  // Setup router and other plugins
+  // Add router without using a hash in the URL
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: options.routes,
+  });
+
+  // Use all non-custom plugins
   app
+    .use(router)
     .use(VueQueryPlugin, { queryClient })
     .use(Notifications)
     .use(WagmiPlugin, {
-      config: createConfigWagmi(options?.extraWagmiConnectors),
+      config: createConfigWagmi(options.extraWagmiConnectors),
     });
 
   return { app, pinia };

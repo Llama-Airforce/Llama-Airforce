@@ -1,4 +1,4 @@
-import { type PageLAF } from "@LAF/Pages/Page";
+import { type Page } from "@LAF/Pages/Page";
 
 import Pirex from "@LAF/Pages/Pirex/Pirex.page.vue";
 
@@ -12,12 +12,12 @@ export const pagePirexRoutes = [
   },
 ];
 
-export const pagePirex: PageLAF = {
+export const pagePirex: Page = {
   title: "Pirex",
   titleRoute: "/pirex",
   visible: true,
   planeX: 165,
   menuHeader,
-  menuItems: [],
+  items: [],
   forceShowMenu: false,
 };

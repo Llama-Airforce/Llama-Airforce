@@ -6,12 +6,12 @@ import MenuMobile from "@LAF/Navigation/MenuMobile.vue";
 const menuOpen = ref(false);
 
 // Methods
-const toggleMenu = (): void => {
+const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
   document.documentElement.style.overflow = menuOpen.value ? "hidden" : "";
 };
 
-const onNavigated = (): void => {
+const onNavigated = () => {
   menuOpen.value = false;
   document.documentElement.style.overflow = "";
 };

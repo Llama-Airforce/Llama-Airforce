@@ -1,5 +1,3 @@
-import { type Page } from "@/Framework/Monitor/Page";
-
 import Vaults from "@PM/Pages/Vaults/Vaults.page.vue";
 import StabilityPool from "@PM/Pages/Pool/StabilityPool.page.vue";
 import Stablecoin from "@PM/Pages/Stablecoin/Stablecoin.page.vue";
@@ -13,22 +11,7 @@ import VaultManager from "@PM/Pages/Vaults/VaultManager.page.vue";
 import Trove from "@PM/Pages/Vaults/Trove.page.vue";
 import Profile from "@PM/Pages/Profile/Profile.page.vue";
 
-import { useSettingsStore } from "@PM/Stores";
-import { stableSymbol } from "@/Apps/PrismaMonitor/Models/Flavor";
-
-import {
-  PiggyBank,
-  DollarSign,
-  Scale,
-  Cross,
-  Skull,
-  Lock,
-  Landmark,
-  Droplet,
-  UserRound,
-} from "lucide-vue-next";
-
-export const pageMainRoutes = [
+export const routes = [
   { path: "/", redirect: { name: "vaults" } },
 
   { path: "/pool", name: "pool", component: StabilityPool },
@@ -52,57 +35,3 @@ export const pageMainRoutes = [
     component: Trove,
   },
 ];
-
-export const pageMain: Page = {
-  titleRoute: "/",
-  menuItems: [
-    {
-      to: "/vaults",
-      label: "Vaults",
-      icon: PiggyBank,
-    },
-    {
-      to: "/stable",
-      label: () => {
-        const storeSettings = useSettingsStore();
-        return stableSymbol(storeSettings.flavor);
-      },
-      icon: DollarSign,
-    },
-    {
-      to: "/pool",
-      label: "Stability pool",
-      icon: Scale,
-    },
-    {
-      to: "/redemptions",
-      label: "Redemptions",
-      icon: Cross,
-    },
-    {
-      to: "/liquidations",
-      label: "Liquidations",
-      icon: Skull,
-    },
-    {
-      to: "/veprisma",
-      label: "vePRISMA",
-      icon: Lock,
-    },
-    {
-      to: "/proposals",
-      label: "Proposals",
-      icon: Landmark,
-    },
-    {
-      to: "/wrappers",
-      label: "ve Wrappers",
-      icon: Droplet,
-    },
-    {
-      to: "/profile",
-      label: "Profile",
-      icon: UserRound,
-    },
-  ],
-};

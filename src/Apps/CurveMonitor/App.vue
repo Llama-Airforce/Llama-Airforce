@@ -7,11 +7,10 @@ import "@/Styles/Themes/CM/Chad.css";
 import "@/Styles/Themes/CM/Dark.css";
 import "@/Styles/Themes/CM/Light.css";
 
-// Refs
+// Breadcrumb hiding
 const storeBreadcrumb = useBreadcrumbStore();
 const route = useRoute();
 
-// Watches
 watch(
   () => route.fullPath,
   (newRoute) => {
