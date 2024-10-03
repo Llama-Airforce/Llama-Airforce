@@ -16,6 +16,7 @@ export type GetProposalsResponse = {
     min_accept_quorum: string;
     total_supply: string;
     executed: boolean;
+    transaction_hash: string;
   }[];
   count: number;
 };

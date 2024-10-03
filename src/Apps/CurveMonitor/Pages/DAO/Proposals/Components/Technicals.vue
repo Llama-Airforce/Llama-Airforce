@@ -8,16 +8,14 @@ const { proposal, expanded = false } = defineProps<{
   expanded: boolean;
 }>();
 
-// Refs
-const expandedCallData = ref(true);
-const expandedVoters = ref(proposal.voteCount > 0);
-
-// Data
 const { data: proposalDetails } = useQueryProposal(
   toRef(() => proposal.id),
   toRef(() => proposal.type),
   toRef(() => expanded)
 );
+
+const expandedCallData = ref(true);
+const expandedVoters = ref(proposal.voteCount > 0);
 
 const numVoters = computed(() => {
   if (proposalDetails.value) {
@@ -39,7 +37,7 @@ const callData = computed(() => {
     .replace("/\u2500/g", "─")
     .replace(/0x[a-fA-F0-9]{40}/g, (match) =>
       /[A-F]/g.test(match) && isAddress(match)
-        ? `<a href='https://etherscan.io/address/${match}'>${match}</a>`
+        ? `<a target='_blank' href='https://etherscan.io/address/${match}'>${match}</a>`
         : match
     );
 });
@@ -76,6 +74,17 @@ const callData = computed(() => {
     </div>
 
     <div class="technical">
+      <div class="heading">Proposal creation transaction</div>
+      <a
+        style="align-self: start"
+        target="_blank"
+        :href="`https://etherscan.io/tx/${proposal.txCreation}`"
+      >
+        {{ proposal.txCreation }}
+      </a>
+    </div>
+
+    <div class="technical">
       <div
         class="heading"
         @click="expandedCallData = !expandedCallData"
@@ -86,6 +95,7 @@ const callData = computed(() => {
           :class="{ expandedCallData }"
         />
       </div>
+
       <Collapsible :expanded="expandedCallData">
         <div
           v-if="proposalDetails"

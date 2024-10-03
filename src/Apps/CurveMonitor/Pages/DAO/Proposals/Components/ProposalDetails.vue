@@ -7,8 +7,6 @@ const { proposal, expanded = false } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
 }>();
-
-// Refs
 </script>
 
 <template>

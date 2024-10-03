@@ -30,6 +30,7 @@ export type Proposal = {
   votesAgainst: number; // Voting power in veCRV.
   executed: boolean;
   totalSupply: number; // Voting power in veCRV.
+  txCreation: string;
 };
 
 export type ProposalDetails = {

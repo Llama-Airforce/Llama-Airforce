@@ -25,6 +25,7 @@ export const parseProposal = (
   const votesAgainst = bigNumToNumber(BigInt(x.votes_against), 18n);
   const executed = x.executed;
   const totalSupply = bigNumToNumber(BigInt(x.total_supply), 18n);
+  const txCreation = x.transaction_hash;
 
   return {
     id,
@@ -41,6 +42,7 @@ export const parseProposal = (
     votesAgainst,
     executed,
     totalSupply,
+    txCreation,
   };
 };
 
