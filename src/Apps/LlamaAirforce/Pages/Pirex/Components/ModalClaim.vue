@@ -305,7 +305,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
   overflow-y: auto;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    width: 90vw;
   }
 
   > .headers {

@@ -73,7 +73,7 @@ emph {
   font-size: 1rem;
 
   @media only screen and (max-width: 1280px) {
-    max-width: 80vw;
+    max-width: 90vw;
     overflow-y: auto;
     max-height: 80dvh;
 

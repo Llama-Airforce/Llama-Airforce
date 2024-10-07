@@ -91,10 +91,17 @@ function exitFullscreen(
 .fullscreen-content {
   display: flex;
 
-  width: 80dvw;
   width: 80vw;
-  height: 80dvh;
+  width: 80dvw;
   height: 80vh;
+  height: 80dvh;
+
+  @media only screen and (max-width: 1280px) {
+    width: 90vw;
+    width: 90dvw;
+    height: 90vh;
+    height: 90dvh;
+  }
 
   /** Helpful style in conjuction with ModalFullscreen, esp for charts. */
   --card-width: 100%;

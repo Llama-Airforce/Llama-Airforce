@@ -226,7 +226,7 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
   overflow-y: auto;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    width: 90vw;
   }
 
   .redemptions-init-table {

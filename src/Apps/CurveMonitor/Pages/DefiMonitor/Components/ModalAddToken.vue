@@ -46,7 +46,7 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
   gap: 1rem;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    width: 90vw;
   }
 
   .table {

@@ -236,7 +236,7 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
   overflow-y: auto;
 
   @media only screen and (max-width: 1280px) {
-    width: 80vw;
+    width: 90vw;
   }
 
   > h3 {
