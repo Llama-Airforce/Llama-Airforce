@@ -10,7 +10,6 @@ import {
   getCvxPrismaPrice,
   getDefiLlamaPrice,
 } from "@/Util";
-import "@/Util/llamadash";
 import {
   CvxAddress,
   CvxCrvAddress,

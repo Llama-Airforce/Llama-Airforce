@@ -1,6 +1,5 @@
 import { type Address } from "@/Framework/Address";
 import { notEmpty } from "@/Util";
-import "@/Util/llamadash";
 import {
   type Delegation,
   type Proposal as SnapshotProposal,

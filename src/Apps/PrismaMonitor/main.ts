@@ -1,6 +1,5 @@
 import { createI18n } from "vue-i18n";
 import { type RouteRecordRaw } from "vue-router";
-import "@/Util/llamadash";
 import App from "@PM/App.vue";
 import createRouter from "@PM/Router";
 

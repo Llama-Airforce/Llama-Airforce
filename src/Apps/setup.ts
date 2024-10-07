@@ -5,6 +5,7 @@ import Notifications, { notify } from "@kyvg/vue3-notification";
 import { hashFn } from "@wagmi/core/query";
 import { type CreateConnectorFn, WagmiPlugin } from "@wagmi/vue";
 import { createConfig as createConfigWagmi } from "@/Wallet/Wagmi";
+import "@/Util/llamadash";
 import "@/Styles/Util.css";
 import "@/Styles/Themes/Base.css";
 

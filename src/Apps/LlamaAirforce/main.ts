@@ -1,7 +1,6 @@
 import { createI18n } from "vue-i18n";
 import { type RouteRecordRaw } from "vue-router";
 import { safe } from "@wagmi/connectors";
-import "@/Util/llamadash";
 import App from "@LAF/App.vue";
 import createRouter from "@LAF/Router";
 
