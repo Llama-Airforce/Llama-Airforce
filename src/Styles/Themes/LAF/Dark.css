@@ -78,6 +78,5 @@
 
   .card-body {
     line-height: 1.4rem;
-    color: hsl(from #fafafa h s calc(l - 15));
   }
 }
