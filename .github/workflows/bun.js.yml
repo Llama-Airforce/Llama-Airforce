@@ -22,11 +22,11 @@ jobs:
           bun-version: latest
       - run: git config --global url."https://".insteadOf ssh://
       - run: bun install
+      - run: bun run build:laf
+      - run: bun run build:cm
+      - run: bun run build:pm
       - run: bun run typecheck
       - run: bun run lint:laf
       - run: bun run lint:cm
       - run: bun run lint:pm
-      - run: bun run build:laf
-      - run: bun run build:cm
-      - run: bun run build:pm
       - run: bun test
