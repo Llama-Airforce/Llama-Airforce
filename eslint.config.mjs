@@ -21,7 +21,7 @@ export default [
     ignores: ["src/Apps/CurveMonitor/phil/**/*"],
   },
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
   ...eslintPluginVue.configs["flat/recommended"],
   eslintPluginPromise.configs["flat/recommended"],
   {
