@@ -39,10 +39,6 @@ The front-end makes use of the following technologies, frameworks, and libraries
 - [RxJS](https://rxjs.dev/)
 - [Hono](https://hono.dev/) for back-end API
 
-## Bun
-
-It's highly recommended to use Bun if possible, as it acts as a drop-in replacement for Node.js. However, due to VS Code debugging issues with Bun, the debug scripts still rely on Node and require dev dependencies on `dotenv`, `ts-node`, and `tsconfig-paths`. Additionally, Bun's testing framework is not yet sufficient to replace `vitest`. For typechecking, we use `vue-tsc` without the `--bun` flag. We expect to replace these with their Bun counterparts over time.
-
 ## Quick Start
 
 To get started with any of the applications quickly:
