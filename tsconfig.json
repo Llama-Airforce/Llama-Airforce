@@ -51,6 +51,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "auto-imports.d.ts",
+    "components.d.ts",
     "Deploy.ts"
   ],
 
