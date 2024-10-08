@@ -12,25 +12,23 @@ type Options = {
   check: boolean;
 };
 
-void (async () => {
-  // Prompt user for input
-  const app = await consola.prompt("Enter the app (cb, laf, cm, pm, pm-lrt):", {
-    type: "select",
-    options: [...apps],
-  });
+// Prompt user for input
+const app = await consola.prompt("Enter the app (cb, laf, cm, pm, pm-lrt):", {
+  type: "select",
+  options: [...apps],
+});
 
-  // Prompt user for input
-  const check = await consola.prompt("Lint & typecheck?", {
-    type: "confirm",
-    initial: true,
-  });
+// Prompt user for input
+const check = await consola.prompt("Lint & typecheck?", {
+  type: "confirm",
+  initial: true,
+});
 
-  try {
-    deploy({ app, check });
-  } catch (error) {
-    consola.error(error);
-  }
-})();
+try {
+  deploy({ app, check });
+} catch (error) {
+  consola.error(error);
+}
 
 function deploy(opts: Options) {
   const { app, check } = opts;
@@ -42,7 +40,6 @@ function deploy(opts: Options) {
   let dirDist: string;
   let dirOutput: string;
 
-  // eslint-disable-next-line default-case
   switch (app) {
     case "laf":
       dirDist = "src/Apps/LlamaAirforce/dist";
