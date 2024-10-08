@@ -54,12 +54,5 @@
     "Deploy.ts"
   ],
 
-  "exclude": ["node_modules", "src/Apps/CurveMonitor/phil"],
-
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs",
-      "types": ["node"]
-    }
-  }
+  "exclude": ["node_modules", "src/Apps/CurveMonitor/phil"]
 }
