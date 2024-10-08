@@ -6,14 +6,14 @@ import eslintPluginVue from "eslint-plugin-vue";
 
 import parser from "vue-eslint-parser";
 
-import fs from "fs";
-import path from "path";
+import { readFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const autoImportConfig = JSON.parse(
-  fs.readFileSync(
-    path.resolve(process.cwd(), ".eslintrc-auto-import.json"),
-    "utf8"
-  )
+  readFileSync(resolve(__dirname, ".eslintrc-auto-import.json"), "utf8")
 );
 
 export default [

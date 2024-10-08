@@ -50,6 +50,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
+    "auto-imports.d.ts",
     "Deploy.ts"
   ],
 

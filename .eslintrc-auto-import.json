@@ -533,6 +533,8 @@
     "defaultOptions": true,
     "StackedAreaData": true,
     "StackedAreaSeriesOptions": true,
-    "StackedAreaSeriesPartialOptions": true
+    "StackedAreaSeriesPartialOptions": true,
+    "DirectiveBinding": true,
+    "MaybeRefOrGetter": true
   }
 }

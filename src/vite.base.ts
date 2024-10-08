@@ -1,9 +1,15 @@
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+
 import type AutoImport from "unplugin-auto-import/vite";
 import type Components from "unplugin-vue-components/vite";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 export const autoImport: Parameters<typeof AutoImport>[0] = {
   include: [/\.vue$/, /\.ts$/],
-  dts: true,
+  dts: resolve(__dirname, "../auto-imports.d.ts"),
   imports: [
     // Vue
     "vue",
@@ -92,6 +98,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
   dirs: ["../../Framework/**", "../../Util/**"],
   eslintrc: {
     enabled: true,
+    filepath: resolve(__dirname, "../.eslintrc-auto-import.json"),
   },
 };
 
