@@ -29,7 +29,8 @@ function onExit() {
     :disabled="!chart"
     @click="fullscreen = !fullscreen"
   >
-    <LucideMaximize />
+    <LucideMaximize v-if="!fullscreen" />
+    <LucideMinimize v-else />
 
     <ModalFullscreen
       :target="target?.$el"
