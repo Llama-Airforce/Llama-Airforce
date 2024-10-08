@@ -23,6 +23,29 @@
           }
         }
       ]
+    },
+    {
+      "label": "Debug Deploy Script",
+      "type": "shell",
+      "command": "bun --inspect-brk=127.0.0.1:5000/deploy ${workspaceFolder}/Deploy.ts",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "Listening:",
+            "endsPattern": "ws://127.0.0.1:5000/deploy"
+          }
+        }
+      ]
     }
   ]
 }

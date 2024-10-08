@@ -8,6 +8,14 @@
       "url": "ws://127.0.0.1:5000/union",
       "preLaunchTask": "Debug Union Script",
       "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": "Debug Deploy Script",
+      "type": "bun",
+      "request": "attach",
+      "url": "ws://127.0.0.1:5000/deploy",
+      "preLaunchTask": "Debug Deploy Script",
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
