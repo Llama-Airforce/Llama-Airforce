@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
@@ -24,7 +24,6 @@ export default defineConfig(({ mode }) => {
         strictMessage: false,
         escapeHtml: false,
       }),
-      splitVendorChunkPlugin(),
       AutoImport(autoImport),
       Components(vueImport),
     ],
