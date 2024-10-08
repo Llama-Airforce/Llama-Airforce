@@ -1,7 +1,6 @@
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 
 import promise from "eslint-plugin-promise";
-import globals from "globals";
 import parser from "vue-eslint-parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,10 +33,6 @@ export default [
     },
 
     languageOptions: {
-      globals: {
-        ...globals.browser,
-      },
-
       parser: parser,
       ecmaVersion: 2020,
       sourceType: "module",
@@ -157,15 +152,6 @@ export default [
       "vue/no-setup-props-destructure": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-v-html": "off",
-    },
-  },
-  {
-    files: ["**/__tests__/*.{j,t}s?(x)", "**/tests/unit/**/*.spec.{j,t}s?(x)"],
-
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-      },
     },
   },
 ];
