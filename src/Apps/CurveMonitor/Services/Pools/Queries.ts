@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/vue-query";
-import { keepPreviousData } from "@tanstack/vue-query";
-import PoolsService from "@CM/Services/Pools";
+import { useQuery, keepPreviousData } from "@tanstack/vue-query";
 import { type Chain } from "@CM/Models";
+import PoolsService from "./PoolsService";
 
 const service = new PoolsService(useHost());
 

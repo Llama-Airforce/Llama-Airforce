@@ -1,6 +1,6 @@
 import { toUTC } from "@CM/Services";
-import type * as ApiTypes from "@CM/Services/LlamaLend/ApiTypes";
-import type * as Models from "@CM/Services/LlamaLend/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseMarket = (
   x: ApiTypes.GetMarketsResponse["data"][number]

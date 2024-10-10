@@ -1,7 +1,7 @@
 import { toUTC } from "@CM/Services";
 import { type Chain, chains } from "@CM/Models";
-import type * as ApiTypes from "@CM/Services/Chains/ApiTypes";
-import type * as Models from "@CM/Services/Chains/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseSupportedChains = (
   x: ApiTypes.GetSupportedChainsResponse

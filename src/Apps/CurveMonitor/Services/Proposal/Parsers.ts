@@ -1,6 +1,6 @@
 import { bigNumToNumber } from "@/Util";
-import type * as ApiTypes from "@CM/Services/Proposal/ApiTypes";
-import type * as Models from "@CM/Services/Proposal/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseProposal = (
   x: ApiTypes.GetProposalsResponse["proposals"][number]

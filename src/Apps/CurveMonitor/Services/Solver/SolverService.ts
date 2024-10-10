@@ -1,7 +1,7 @@
 import { type Address } from "@/Framework/Address";
 import { ServiceBase } from "@/Services";
-import type * as ApiTypes from "@CM/Services/Solver/ApiTypes";
-import * as Parsers from "@CM/Services/Solver/Parsers";
+import type * as ApiTypes from "./ApiTypes";
+import * as Parsers from "./Parsers";
 
 const API_URL = "https://api.cow.fi";
 

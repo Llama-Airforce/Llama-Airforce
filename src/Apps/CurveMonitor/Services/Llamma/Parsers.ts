@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Services/Llamma/ApiTypes";
-import type * as Models from "@CM/Services/Llamma/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseEvents = (
   x: ApiTypes.GetLlammaEventsResponse["data"][number]

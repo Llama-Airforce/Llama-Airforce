@@ -1,7 +1,7 @@
 import { type Socket } from "socket.io-client";
 import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
-import type { GeneralErc20TokenSpecificBlockSummary } from "@CM/Services/Monitor/Transfer";
-import type { GeneralSwapAddressSpecificBlockSummary } from "@CM/Services/Monitor/Swap";
+import type { GeneralErc20TokenSpecificBlockSummary } from "./Transfer";
+import type { GeneralSwapAddressSpecificBlockSummary } from "./Swap";
 
 export type ClientToServerEvents = {
   disconnectFromGeneralErc20Livestream: (tokenAddress: string) => void;

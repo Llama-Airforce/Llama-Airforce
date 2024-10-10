@@ -1,5 +1,5 @@
-import ChainsService from "@CM/Services/Chains";
 import { type Chain } from "@CM/Models";
+import ChainsService from "./ChainsService";
 
 const service = new ChainsService();
 

@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Services/Lending/ApiTypes";
-import type * as Models from "@CM/Services/Lending/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseLoanDistribution = (
   x: ApiTypes.GetLoanDistributionResponse

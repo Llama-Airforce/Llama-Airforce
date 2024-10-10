@@ -1,7 +1,7 @@
 import { ServiceBase } from "@/Services";
 import { type Chain } from "@CM/Models";
-import type * as ApiTypes from "@CM/Services/Liquidations/ApiTypes";
-import * as Parsers from "@CM/Services/Liquidations/Parsers";
+import type * as ApiTypes from "./ApiTypes";
+import * as Parsers from "./Parsers";
 
 const API_URL = "https://prices.curve.fi";
 

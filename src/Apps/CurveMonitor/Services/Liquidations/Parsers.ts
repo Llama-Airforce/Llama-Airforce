@@ -1,6 +1,6 @@
 import { toUTC } from "@CM/Services";
-import type * as ApiTypes from "@CM/Services/Liquidations/ApiTypes";
-import type * as Models from "@CM/Services/Liquidations/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseSoftLiqRatio = (
   x: ApiTypes.GetSoftLiqRatiosResponse["data"][number]

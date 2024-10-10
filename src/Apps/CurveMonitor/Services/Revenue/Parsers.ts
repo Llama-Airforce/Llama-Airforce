@@ -1,8 +1,8 @@
 import { type Address } from "@/Framework/Address";
 import { type Chain } from "@CM/Models";
 import { toUTC } from "@CM/Services";
-import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
-import type * as Models from "@CM/Services/Revenue/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseChainRevenue = (
   x: ApiTypes.GetByChainResponse["revenue"][number]

@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Services/OHLC/ApiTypes";
-import type * as Models from "@CM/Services/OHLC/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parseOHLC = (
   x: ApiTypes.GetOHLCResponse["data"][number]

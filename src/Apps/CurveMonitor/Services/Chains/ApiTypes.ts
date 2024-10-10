@@ -1,5 +1,5 @@
 import type { Chain } from "@CM/Models";
-import type { ActivityType } from "@CM/Services/Chains/Models";
+import type { ActivityType } from "./Models";
 
 export type GetSupportedChainsResponse = {
   data: { name: string }[];

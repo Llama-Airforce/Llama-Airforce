@@ -1,7 +1,7 @@
 import { ServiceBaseHost } from "@/Services";
 import { paginate } from "@/Util";
-import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
-import * as Parsers from "@CM/Services/Revenue/Parsers";
+import type * as ApiTypes from "./ApiTypes";
+import * as Parsers from "./Parsers";
 
 const API_URL_OLD = "https://api-py.llama.airforce/curve/v1";
 const API_URL = "https://prices.curve.fi";

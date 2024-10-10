@@ -1,5 +1,5 @@
-import OHLCService from "@CM/Services/OHLC";
 import { type Chain } from "@CM/Models";
+import OHLCService from "./OHLCService";
 
 const service = new OHLCService();
 

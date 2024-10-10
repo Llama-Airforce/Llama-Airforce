@@ -1,5 +1,5 @@
-import type * as ApiTypes from "@CM/Services/Pools/ApiTypes";
-import type * as Models from "@CM/Services/Pools/Models";
+import type * as ApiTypes from "./ApiTypes";
+import type * as Models from "./Models";
 
 export const parsePoolTotals = (
   x: ApiTypes.GetPoolsResponse["total"]

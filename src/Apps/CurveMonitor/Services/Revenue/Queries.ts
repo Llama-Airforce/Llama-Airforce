@@ -1,5 +1,5 @@
-import RevenueService from "@CM/Services/Revenue";
 import { type Chain } from "@CM/Models";
+import RevenueService from "./RevenueService";
 
 const service = new RevenueService(useHost());
 

@@ -1,6 +1,7 @@
 import { type Chain } from "@CM/Models";
-import CrvUsdService, { type Market, type Keeper } from "@CM/Services/CrvUsd";
-import OHLCService from "@CM/Services/OHLC";
+import type { Market, Keeper } from "./Models";
+import CrvUsdService from "./CrvUsdService";
+import OHLCService from "../OHLC";
 
 const service = new CrvUsdService();
 const serviceOHLC = new OHLCService();

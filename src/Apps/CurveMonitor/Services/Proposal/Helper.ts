@@ -1,4 +1,4 @@
-import { type Proposal, type ProposalStatus } from "@CM/Services/Proposal";
+import { type Proposal, type ProposalStatus } from "./Models";
 
 export function getStatus(proposal: Proposal): ProposalStatus {
   if (proposal.executed) {

@@ -1,6 +1,6 @@
 import { keepPreviousData } from "@tanstack/vue-query";
-import ProposalService from "@CM/Services/Proposal";
-import type * as Models from "@CM/Services/Proposal/Models";
+import type * as Models from "./Models";
+import ProposalService from "./ProposalService";
 
 const service = new ProposalService();
 
