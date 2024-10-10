@@ -66,3 +66,97 @@ export type GetSnapshotsResponse = {
     }
   ];
 };
+
+export type GetUserMarketsResponse = {
+  user: string;
+  page: number;
+  per_page: number;
+  count: number;
+  markets: {
+    market_name: string;
+    controller: string;
+    first_snapshot: string;
+    last_snapshot: string;
+  }[];
+};
+
+type UserMarketStats = {
+  health: number;
+  health_full: number;
+  n1: number;
+  n2: number;
+  n: number;
+  debt: number;
+  collateral: number;
+  borrowed: number;
+  soft_liquidation: boolean;
+  total_deposited: number;
+  loss: number;
+  loss_pct: number;
+  collateral_up: number;
+  oracle_price: number;
+  block_number: number;
+  timestamp: string;
+};
+
+export type GetUserMarketStatsResponse = UserMarketStats;
+
+export type GetUserMarketSnapshotsResponse = {
+  user: string;
+  page: number;
+  per_page: number;
+  count: number;
+  data: UserMarketStats[];
+};
+
+export type GetUserCollateralEventsResponse = {
+  chain: string;
+  controller: string;
+  user: string;
+  total_deposit: number;
+  total_deposit_from_user: number;
+  total_borrowed: number;
+  total_deposit_precise: string;
+  total_borrowed_precise: string;
+  total_deposit_from_user_precise: string;
+  total_deposit_usd_value: number;
+  count: number;
+  pagination: number;
+  page: number;
+  data: {
+    dt: string;
+    transaction_hash: string;
+    type: "Borrow" | "Deposit";
+    user: string;
+    collateral_change: number;
+    collateral_change_usd: number | null;
+    loan_change: number;
+    loan_change_usd: number | null;
+    liquidation: {
+      user: string;
+      liquidator: string;
+      collateral_received: number;
+      stablecoin_received: number;
+      collateral_received_usd: number;
+      stablecoin_received_usd: number;
+      debt: number;
+      debt_usd: number;
+    } | null;
+    leverage: {
+      event_type: string;
+      user: string;
+      user_borrowed: number;
+      user_collateral: number;
+      user_collateral_from_borrowed: number;
+      user_collateral_used: number;
+      debt: number;
+      leverage_collateral: number;
+      state_collateral_used: number;
+      borrowed_from_state_collateral: number;
+      borrowed_from_user_collateral: number;
+    } | null;
+    n1: number;
+    n2: number;
+    oracle_price: number;
+  }[];
+};

@@ -2,6 +2,8 @@ import Home from "@CM/Pages/Home/Home.page.vue";
 import Code from "@CM/Pages/Code.page.vue";
 import NotFound from "@CM/Pages/NotFound.page.vue";
 
+import Profile from "@CM/Pages/Profile/Profile.page.vue";
+
 import Chains from "@CM/Pages/Platform/Chains/Chains.page.vue";
 import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
 import Pool from "@CM/Pages/Platform/Pools/Pool.page.vue";
@@ -17,6 +19,7 @@ import Monitor from "@CM/Pages/Platform/Monitor/Monitor.page.vue";
 
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
 import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
+import Locks from "@CM/Pages/DAO/Locks/Locks.page.vue";
 import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.page.vue";
 
 import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
@@ -24,6 +27,13 @@ import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
 export const routes = [
   { path: "/", component: Home },
   { path: "/code", component: Code },
+
+  {
+    name: "profile",
+    component: Profile,
+    path: "/profile/:tab?",
+    query: { user: "", chain: "" },
+  },
 
   { path: "/platform", redirect: { name: "revenue" } },
 
@@ -78,8 +88,11 @@ export const routes = [
   },
   {
     path: "/dao/proposal/:proposalType/:proposalId",
+    name: "proposal",
     component: Proposal,
   },
+
+  { path: "/dao/locks", component: Locks },
   { path: "/dao/vefunder", component: VeFunder },
 
   {

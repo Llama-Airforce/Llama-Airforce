@@ -4,10 +4,6 @@ import LlamaLendService from "./LlamaLendService";
 
 const service = new LlamaLendService();
 
-function useController(market: Ref<Market | undefined>) {
-  return computed(() => market.value?.controller);
-}
-
 function initEmptyArray() {
   return {
     initialData: [],
@@ -17,7 +13,7 @@ function initEmptyArray() {
 
 export function useQueryChains() {
   return useQuery({
-    queryKey: ["llama-markets-chains"] as const,
+    queryKey: ["llamalend-chains"] as const,
     queryFn: () => service.getChains(),
     initialData: ["ethereum", "arbitrum"] as Chain[],
     initialDataUpdatedAt: 0,
@@ -26,7 +22,7 @@ export function useQueryChains() {
 
 export function useQueryMarkets(chain: Ref<Chain>) {
   return useQuery({
-    queryKey: ["llama-markets", chain] as const,
+    queryKey: ["llamalend-markets", chain] as const,
     queryFn: ({ queryKey: [, chain] }) => service.getMarkets(chain),
   });
 }
@@ -36,10 +32,85 @@ export function useQuerySnapshots(
   chain: Ref<Chain | undefined>
 ) {
   return useQuery({
-    queryKey: ["llama-market-snapshots", useController(market)] as const,
+    queryKey: [
+      "llamalend-market-snapshots",
+      computed(() => market.value?.controller),
+    ] as const,
     queryFn: ({ queryKey: [, controller] }) =>
       service.getSnapshots(chain.value!, controller!),
     ...initEmptyArray(),
     enabled: computed(() => !!market.value && !!chain.value),
+  });
+}
+
+export function useQueryUserMarkets(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "llamalend-user-markets",
+      computed(() => user.value),
+      computed(() => chain.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain] }) =>
+      service.getUserMarkets(user!, chain!),
+    enabled: computed(() => !!user.value && !!chain.value),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryUserMarketStats(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "llamalend-user-market-stats",
+      computed(() => user.value),
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain, market] }) =>
+      service.getUserMarketStats(user!, chain!, market!),
+    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
+  });
+}
+
+export function useQueryUserMarketSnapshots(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "llamalend-user-market-snapshots",
+      computed(() => user.value),
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain, market] }) =>
+      service.getUserMarketSnapshots(user!, chain!, market!),
+    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryUserMarketCollateralEvents(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "llamalend-user-market-events",
+      computed(() => user.value),
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain, market] }) =>
+      service.getUserMarketCollateralEvents(user!, chain!, market!),
+    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
   });
 }

@@ -69,3 +69,63 @@ export type Keeper = {
   total_debt: number;
   total_profit: number;
 };
+
+/** More specifically, the markets where a user holds a position */
+export type UserMarkets = {
+  collateral: string;
+  controller: string;
+  snapshotFirst: number;
+  snapshotLast: number;
+}[];
+
+export type UserMarketStats = {
+  health: number;
+  healthFull: number;
+  n1: number;
+  n2: number;
+  n: number;
+  debt: number;
+  collateral: number;
+  stablecoin: number;
+  softLiquidation: boolean;
+  totalDeposited: number;
+  loss: number;
+  lossPct: number;
+  collateralUp: number;
+  oraclePrice: number;
+  blockNumber: number;
+  timestamp: number;
+};
+
+export type UserMarketSnapshots = UserMarketStats[];
+
+export type UserCollateralEvents = {
+  controller: string;
+  user: string;
+  totalDeposit: number;
+  totalDepositPrecise: string;
+  totalDepositUsd: number;
+  totalBorrowed: number;
+  totalBorrowedPrecise: string;
+  events: {
+    timestamp: number;
+    txHash: string;
+    type: "Borrow" | "Deposit";
+    user: string;
+    collateralChange: number;
+    collateralChangeUsd?: number;
+    loanChange: number;
+    loanChangeUsd?: number;
+    liquidation?: {
+      user: string;
+      liquidator: string;
+      collateralReceived: number;
+      collateralReceivedUsd: number;
+      stablecoinReceived: number;
+      debt: number;
+    };
+    n1: number;
+    n2: number;
+    oraclePrice: number;
+  }[];
+};

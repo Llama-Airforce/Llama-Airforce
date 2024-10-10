@@ -61,7 +61,10 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
         </li>
       </ul>
 
-      <div v-if="$slots['actions']">
+      <div
+        v-if="$slots['actions']"
+        class="actions"
+      >
         <slot name="actions"></slot>
       </div>
     </div>

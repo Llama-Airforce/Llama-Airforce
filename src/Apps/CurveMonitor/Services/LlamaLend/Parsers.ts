@@ -86,3 +86,104 @@ export const parseSnapshot = (
     discountLoan,
   };
 };
+
+export const parseUserMarkets = (
+  x: ApiTypes.GetUserMarketsResponse
+): Models.UserMarkets => {
+  return x.markets.map((market) => ({
+    name: market.market_name,
+    controller: market.controller,
+    snapshotFirst: toUTC(market.first_snapshot),
+    snapshotLast: toUTC(market.last_snapshot),
+  }));
+};
+
+export const parseUserMarketStats = (
+  x: ApiTypes.GetUserMarketStatsResponse
+) => {
+  return {
+    health: x.health,
+    healthFull: x.health_full,
+    n: x.n,
+    n1: x.n1,
+    n2: x.n2,
+    debt: x.debt,
+    collateral: x.collateral,
+    collateralUp: x.collateral_up,
+    borrowed: x.borrowed,
+    softLiquidation: x.soft_liquidation,
+    totalDeposited: x.total_deposited,
+    loss: x.loss,
+    lossPct: x.loss_pct,
+    oraclePrice: x.oracle_price,
+    blockNumber: x.block_number,
+    timestamp: toUTC(x.timestamp),
+  };
+};
+
+export const parseUserMarketSnapshots = (
+  x: ApiTypes.GetUserMarketSnapshotsResponse
+): Models.UserMarketSnapshots => {
+  return x.data.map(parseUserMarketStats);
+};
+
+export const parseUserCollateralEvents = (
+  x: ApiTypes.GetUserCollateralEventsResponse
+): Models.UserCollateralEvents => {
+  return {
+    controller: x.controller.toLocaleLowerCase(),
+    user: x.user.toLocaleLowerCase(),
+    totalDeposit: x.total_deposit,
+    totalDepositUsd: x.total_deposit_usd_value,
+    totalDepositFromUser: x.total_deposit_from_user,
+    totalDepositFromUserPrecise: x.total_deposit_from_user_precise,
+    totalDepositPrecise: x.total_deposit_precise,
+    totalBorrowed: x.total_borrowed,
+    totalBorrowedPrecise: x.total_borrowed_precise,
+    events: x.data.map((y) => ({
+      timestamp: toUTC(y.dt),
+      txHash: y.transaction_hash,
+      type: y.type,
+      user: y.user.toLocaleLowerCase(),
+      collateralChange: y.collateral_change,
+      collateralChangeUsd: y.collateral_change_usd ?? undefined,
+      loanChange: y.loan_change,
+      loanChangeUsd: y.loan_change_usd ?? undefined,
+      liquidation:
+        y.liquidation === null
+          ? undefined
+          : {
+              user: y.liquidation.user.toLocaleLowerCase(),
+              liquidator: y.liquidation.liquidator.toLocaleLowerCase(),
+              collateralReceived: y.liquidation.collateral_received,
+              collateralReceivedUsd: y.liquidation.collateral_received_usd,
+              stablecoinReceived: y.liquidation.stablecoin_received,
+              stablecoinReceivedUsd: y.liquidation.stablecoin_received_usd,
+              debt: y.liquidation.debt,
+              debtUsd: y.liquidation.debt_usd,
+            },
+      leverage:
+        y.leverage === null
+          ? undefined
+          : {
+              type: y.leverage.event_type,
+              user: y.leverage.user.toLocaleLowerCase(),
+              userCollateral: y.leverage.user_collateral,
+              userCollateralFromBorrowed:
+                y.leverage.user_collateral_from_borrowed,
+              userCollateralUsed: y.leverage.user_collateral_used,
+              userBorrowed: y.leverage.user_borrowed,
+              debt: y.leverage.debt,
+              leverageCollateral: y.leverage.leverage_collateral,
+              stateCollateralUsed: y.leverage.state_collateral_used,
+              borrowedFromStateCollateral:
+                y.leverage.borrowed_from_state_collateral,
+              borrowedFromUserCollateral:
+                y.leverage.borrowed_from_user_collateral,
+            },
+      n1: y.n1,
+      n2: y.n2,
+      oraclePrice: y.oracle_price,
+    })),
+  };
+};

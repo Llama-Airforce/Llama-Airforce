@@ -46,7 +46,7 @@ const presentation = computed((): string => {
 });
 
 const unit = computed((): string => {
-  if (precision === Infinity) {
+  if (precision === Infinity || !type) {
     return "";
   }
 

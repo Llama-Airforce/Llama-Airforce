@@ -8,6 +8,10 @@ export const menu: Menu = {
       url: "https://blog.curvemonitor.com/",
     },
     {
+      label: "Profile",
+      to: "/profile",
+    },
+    {
       label: "Platform",
       children: [
         {
@@ -44,6 +48,10 @@ export const menu: Menu = {
         {
           to: "/dao/proposals",
           label: "Proposals",
+        },
+        {
+          to: "/dao/locks",
+          label: "Locks",
         },
         {
           to: "/dao/vefunder",

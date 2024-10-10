@@ -1,4 +1,4 @@
-import { ServiceBase } from "@/Services";
+import { FetchError, ServiceBase } from "@/Services";
 import type * as ApiTypes from "./ApiTypes";
 import type * as Models from "./Models";
 import * as Parsers from "./Parsers";
@@ -31,5 +31,19 @@ export default class ProposalService extends ServiceBase {
     );
 
     return Parsers.parseProposalDetails(resp);
+  }
+
+  public async getUserProposalVotes(user: string) {
+    try {
+      const resp = await this.fetch<ApiTypes.GetUserProposalVotes>(
+        `${API_URL}/v1/dao/proposals/votes/user/${user}?pagination=100&page=1`
+      );
+
+      return resp.data.map(Parsers.parseUserProposalVote);
+    } catch (err) {
+      if (err instanceof FetchError) {
+        return [];
+      } else throw err;
+    }
   }
 }

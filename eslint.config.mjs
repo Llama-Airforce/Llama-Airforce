@@ -47,6 +47,7 @@ export default [
         {
           SwitchCase: 1,
           offsetTernaryExpressions: true,
+          ignoredNodes: ["CallExpression"],
         },
       ],
 

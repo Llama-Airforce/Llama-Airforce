@@ -6,23 +6,10 @@ import OHLCService from "../OHLC";
 const service = new CrvUsdService();
 const serviceOHLC = new OHLCService();
 
-function useMarketAddress(market: Ref<Market | undefined>) {
-  return computed(() => market.value?.address);
-}
-
 function initEmptyArray() {
   return {
     initialData: [],
     initialDataUpdatedAt: 0,
-  };
-}
-
-function hasMarket(
-  market: Ref<Market | undefined>,
-  chain?: Ref<Chain | undefined>
-) {
-  return {
-    enabled: computed(() => !!market.value && (chain ? !!chain.value : true)),
   };
 }
 
@@ -36,10 +23,13 @@ export function useQueryCrvUsdSupply() {
 
 export function useQuerySnapshots(market: Ref<Market | undefined>) {
   return useQuery({
-    queryKey: ["crvusd-market-snapshots", useMarketAddress(market)] as const,
+    queryKey: [
+      "crvusd-market-snapshots",
+      computed(() => market.value?.address),
+    ] as const,
     queryFn: ({ queryKey: [, market] }) =>
       service.getSnapshots("ethereum", market!),
-    ...hasMarket(market),
+    enabled: computed(() => !!market.value),
     ...initEmptyArray(),
   });
 }
@@ -103,5 +93,77 @@ export function useQueryKeepers() {
     queryKey: ["crvusd-keepers"],
     queryFn: () => service.getKeepers("ethereum"),
     ...initEmptyArray(),
+  });
+}
+
+export function useQueryUserMarkets(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "crvusd-user-markets",
+      computed(() => user.value),
+      computed(() => chain.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain] }) =>
+      service.getUserMarkets(user!, chain!),
+    enabled: computed(() => !!user.value && !!chain.value),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryUserMarketStats(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "crvusd-user-market-stats",
+      computed(() => user.value),
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain, market] }) =>
+      service.getUserMarketStats(user!, chain!, market!),
+    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
+  });
+}
+
+export function useQueryUserMarketSnapshots(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "crvusd-user-market-snapshots",
+      computed(() => user.value),
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain, market] }) =>
+      service.getUserMarketSnapshots(user!, chain!, market!),
+    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
+    ...initEmptyArray(),
+  });
+}
+
+export function useQueryUserMarketCollateralEvents(
+  user: Ref<string | undefined>,
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "crvusd-user-market-events",
+      computed(() => user.value),
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, user, chain, market] }) =>
+      service.getUserMarketCollateralEvents(user!, chain!, market!),
+    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
   });
 }

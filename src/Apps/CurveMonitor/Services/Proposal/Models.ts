@@ -16,6 +16,7 @@ export const proposalStatusses = [
 export type ProposalStatus = (typeof proposalStatusses)[number];
 
 export type Proposal = {
+  timestamp: number;
   id: number;
   type: ProposalType;
   metadata: string;
@@ -39,5 +40,15 @@ export type ProposalDetails = {
     voter: string;
     supports: boolean;
     votingPower: number;
+  }[];
+};
+
+export type UserProposalVote = {
+  proposal: Proposal;
+  votes: {
+    voter: string;
+    supports: boolean;
+    weight: bigint;
+    txHash: string;
   }[];
 };
