@@ -9,12 +9,12 @@ const { title } = defineProps<{ title: string }>();
   >
     <div class="recipe-body">
       <div class="example">
-        <h3>Example</h3>
+        <h3 v-if="$slots['example']">Example</h3>
         <slot name="example"></slot>
       </div>
 
       <div class="snippets">
-        <h3>Code</h3>
+        <h3 v-if="$slots['snippets']">Code</h3>
         <slot name="snippets"></slot>
       </div>
     </div>
