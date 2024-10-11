@@ -111,7 +111,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newUtilSerie = (toggles.util.value ? newSupplySerie : [])
+  const newUtilSerie = newSupplySerie
     .zip(newDebtSerie)
     .map(([supply, debt]) => ({
       time: debt.time,

@@ -70,10 +70,7 @@ function createSeries() {
 
   for (const [, coin] of coins.entries()) {
     // Don't render disabled coins. But keep the serie so colors don't get mixed up.
-    if (!toggles[coin].value) {
-      series[coin]?.setData([]);
-      continue;
-    }
+    series[coin]?.applyOptions({ visible: toggles[coin].value });
 
     const newLineSerie = (prices.value as PoolPrice[])
       .map((x) => ({
