@@ -45,7 +45,7 @@ const utilRate = computed(() => {
             type="dollar"
           ></AsyncValue>
 
-          /
+          <span style="color: var(--c-lvl5)">/</span>
 
           <AsyncValue
             :value="market?.borrowed_balance"
@@ -143,6 +143,7 @@ const utilRate = computed(() => {
 
     .collateral {
       display: flex;
+      gap: 0.5ch;
     }
   }
 }
