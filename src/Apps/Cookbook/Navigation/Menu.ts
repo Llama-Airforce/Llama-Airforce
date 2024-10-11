@@ -52,6 +52,10 @@ export const menu: Menu = {
           label: "InputNumber",
         },
         {
+          to: "/components/legend",
+          label: "Legend",
+        },
+        {
           to: "/components/modal",
           label: "Modal",
         },

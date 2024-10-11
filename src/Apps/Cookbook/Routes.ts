@@ -10,6 +10,7 @@ import Checkbox from "@CB/RecipesComponents/CheckboxRecipe.vue";
 import Table from "@CB/RecipesComponents/TableRecipe.vue";
 import InputText from "@CB/RecipesComponents/InputTextRecipe.vue";
 import InputNumber from "@CB/RecipesComponents/InputNumberRecipe.vue";
+import Legend from "@CB/RecipesComponents/LegendRecipe.vue";
 import Modal from "@CB/RecipesComponents/ModalRecipe.vue";
 import Pagination from "@CB/RecipesComponents/PaginationRecipe.vue";
 import RadioButton from "@CB/RecipesComponents/RadioButtonRecipe.vue";
@@ -79,6 +80,11 @@ export const routes = [
     path: "/components/input-number",
     name: "input-number",
     component: InputNumber,
+  },
+  {
+    path: "/components/legend",
+    name: "legend",
+    component: Legend,
   },
   {
     path: "/components/modal",
