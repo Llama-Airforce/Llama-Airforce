@@ -17,12 +17,17 @@ const { lang, code } = defineProps<{
   code: string;
 }>();
 
-// Refs
-const html = computedAsync(async () => {
-  const highlighter = await createHighlighter;
+const html = ref("");
 
-  return highlighter.codeToHtml(code, { lang, theme: "dark-plus" });
-});
+watch(
+  [() => code, () => lang],
+  async ([code, lang]) => {
+    const highlighter = await createHighlighter;
+
+    html.value = highlighter.codeToHtml(code, { lang, theme: "dark-plus" });
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
