@@ -126,19 +126,7 @@ function createSeries() {
 
   series.util.applyOptions({ visible: toggles.util.value });
 
-  if (newSupplySerie.length > 0 || newDebtSerie.length > 0) {
-    const from = Math.min(
-      newSupplySerie.at(0)?.time ?? Infinity,
-      newDebtSerie.at(0)?.time ?? Infinity
-    ) as UTCTimestamp;
-
-    const to = Math.max(
-      newSupplySerie.at(-1)?.time ?? -Infinity,
-      newDebtSerie.at(-1)?.time ?? -Infinity
-    ) as UTCTimestamp;
-
-    chart.value.timeScale().setVisibleRange({ from, to });
-  }
+  chart.value.timeScale().fitContent();
 }
 </script>
 

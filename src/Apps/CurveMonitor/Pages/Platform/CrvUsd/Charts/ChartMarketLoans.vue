@@ -47,10 +47,7 @@ function createSeries() {
 
   if (newLoansSeries.length > 0) {
     series.loans.setData(newLoansSeries);
-
-    const from = newLoansSeries[0].time;
-    const to = newLoansSeries[newLoansSeries.length - 1].time;
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().fitContent();
   }
 }
 </script>

@@ -106,17 +106,7 @@ function createSeries() {
   }
 
   if (newBorrowApySerie.length > 0 || newLendApySerie.length > 0) {
-    const from = Math.min(
-      newBorrowApySerie.at(0)?.time ?? Infinity,
-      newLendApySerie.at(0)?.time ?? Infinity
-    ) as UTCTimestamp;
-
-    const to = Math.max(
-      newBorrowApySerie.at(-1)?.time ?? -Infinity,
-      newLendApySerie.at(-1)?.time ?? -Infinity
-    ) as UTCTimestamp;
-
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().fitContent();
   }
 }
 

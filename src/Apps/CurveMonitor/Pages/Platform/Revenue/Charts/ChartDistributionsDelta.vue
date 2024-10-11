@@ -62,10 +62,7 @@ function createSeries() {
 
   if (newDistributionsSeries.length > 0) {
     series.deltas.setData(newDistributionsSeries);
-
-    const from = newDistributionsSeries[0].time;
-    const to = newDistributionsSeries[newDistributionsSeries.length - 1].time;
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().fitContent();
   }
 }
 </script>

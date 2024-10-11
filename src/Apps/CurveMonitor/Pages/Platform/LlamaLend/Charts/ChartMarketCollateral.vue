@@ -112,17 +112,7 @@ function createSeries() {
   }
 
   if (newCollateralSerie.length > 0 || newBorrowedSerie.length > 0) {
-    const from = Math.min(
-      newCollateralSerie.at(0)?.time ?? Infinity,
-      newBorrowedSerie.at(0)?.time ?? Infinity
-    ) as UTCTimestamp;
-
-    const to = Math.max(
-      newCollateralSerie.at(-1)?.time ?? -Infinity,
-      newBorrowedSerie.at(-1)?.time ?? -Infinity
-    ) as UTCTimestamp;
-
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().fitContent();
   }
 }
 

@@ -86,11 +86,7 @@ function createSeries() {
   // Normal rates serie.
   if (newRatesSerie.length > 0) {
     series.rates.setData(newRatesSerie);
-
-    const from = newRatesSerie[0].time;
-    const to = newRatesSerie[newRatesSerie.length - 1].time;
-
-    chart.value.timeScale().setVisibleRange({ from, to });
+    chart.value.timeScale().fitContent();
   }
 }
 
