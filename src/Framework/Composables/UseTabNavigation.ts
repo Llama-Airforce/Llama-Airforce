@@ -47,9 +47,12 @@ export function useTabNavigation<const T extends string>(
       const replace =
         oldIndex === -1 || oldIndex === undefined || tabActive.value === "";
 
+      const query = router.currentRoute.value.query;
+
       await router.push({
         name: routeName,
         params: { tab: tabs[tabActiveIndex], ...(routeParams?.() ?? {}) },
+        query,
         replace,
       });
     },
