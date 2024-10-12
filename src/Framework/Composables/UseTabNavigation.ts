@@ -38,16 +38,19 @@ export function useTabNavigation<const T extends string>(
 
   watch(
     tabActiveIndex,
-    async (tabActiveIndex) => {
+    async (tabActiveIndex, oldIndex) => {
       // When tab couldn't be found, default to the first avilable tab.
       if (tabActiveIndex === -1) {
         tabActiveIndex = 0;
       }
 
+      const replace =
+        oldIndex === -1 || oldIndex === undefined || tabActive.value === "";
+
       await router.push({
         name: routeName,
         params: { tab: tabs[tabActiveIndex], ...(routeParams?.() ?? {}) },
-        replace: tabActive.value === "", // If empty, we get rerouted.
+        replace,
       });
     },
     { immediate: true }
