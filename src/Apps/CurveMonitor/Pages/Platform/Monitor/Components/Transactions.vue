@@ -59,8 +59,8 @@ const getAssetsString = (tx: TransactionDetail): string => {
     // TODO: make generic for multiple coins.
     const coinIn = tx.coins_leaving_wallet[0];
     const coinOut = tx.coins_entering_wallet[0];
-    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
-    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
+    const amountIn = round(parseFloat(coinIn.amount.toString()), 2);
+    const amountOut = round(parseFloat(coinOut.amount.toString()), 2);
 
     const from = `<span>${amountIn} ${coinIn.name}</span>`;
     const arrow = `<span>-></span>`;
@@ -69,12 +69,12 @@ const getAssetsString = (tx: TransactionDetail): string => {
     return `${from}${arrow}${to}`;
   } else if (tx.transaction_type === TransactionType.Deposit) {
     const coinIn = tx.coins_entering_wallet[0];
-    const amountIn = roundPhil(parseFloat(coinIn.amount.toString()));
+    const amountIn = round(parseFloat(coinIn.amount.toString()), 2);
 
     return `${amountIn} ${coinIn.name}`;
   } else {
     const coinOut = tx.coins_leaving_wallet[0];
-    const amountOut = roundPhil(parseFloat(coinOut.amount.toString()));
+    const amountOut = round(parseFloat(coinOut.amount.toString()), 2);
 
     return `${amountOut} ${coinOut.name}`;
   }

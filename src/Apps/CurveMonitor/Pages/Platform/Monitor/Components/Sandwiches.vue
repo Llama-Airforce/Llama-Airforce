@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { roundPhil } from "@/Util";
+import { round } from "@/Util";
 import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
 import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
 import type { SandwichDetail } from "@CM/Services/Monitor/SocketMonitorCurve";
@@ -114,15 +114,19 @@ const sandwichTxs = (sw: SandwichDetail) =>
             <span>
               lost
               {{
-                roundPhil(
-                  item.user_losses_details.reduce((acc, x) => acc + x.amount, 0)
+                round(
+                  item.user_losses_details.reduce(
+                    (acc, x) => acc + x.amount,
+                    0
+                  ),
+                  2
                 )
               }}
               {{ item.user_losses_details[0].unit }}
             </span>
             <span>
-              {{ roundPhil(-item.user_losses_details[0].lossInPercentage) }}%
-              slippage, or ${{ roundPhil(item.lossInUsd) }}
+              {{ round(-item.user_losses_details[0].lossInPercentage, 2) }}%
+              slippage, or ${{ round(item.lossInUsd, 2) }}
             </span>
           </div>
         </div>
