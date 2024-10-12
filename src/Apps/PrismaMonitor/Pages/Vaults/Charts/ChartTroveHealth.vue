@@ -139,7 +139,7 @@ const series = computed((): Serie[] => {
 const formatterCollateralUsd = (x: number) =>
   `$${round(x, 1, "dollar")}${unit(x)}`;
 
-const formatterRatio = (x: number) => `${formatNumber(x * 100, 2)}%`;
+const formatterRatio = (x: number) => `${round(x * 100, 2)}%`;
 </script>
 
 <template>
