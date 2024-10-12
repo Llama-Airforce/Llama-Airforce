@@ -251,7 +251,10 @@ const onClickNode = (): void => {
     }
 
     &:not(.router-link-active) {
-      color: var(--c-lvl5);
+      color: hsl(
+        from var(--c-text) h calc(s * 0.5)
+          calc(l - 32 * var(--color-scheme-dark))
+      );
     }
 
     .nav-link-container {
