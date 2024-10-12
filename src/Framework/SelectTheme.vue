@@ -3,7 +3,7 @@ import { useStorage } from "@vueuse/core";
 
 const STORAGE_THEME = "theme";
 
-const { themes = (() => ["dark"])() } = defineProps<{ themes: string[] }>();
+const { themes = ["dark"] } = defineProps<{ themes: string[] }>();
 
 const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 const defaultTheme = browserDark ? "dark" : "light";

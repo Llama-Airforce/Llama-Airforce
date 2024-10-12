@@ -147,6 +147,7 @@ export default [
       "vue/no-setup-props-destructure": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-v-html": "off",
+      "vue/require-valid-default-prop": "off",
     },
   },
 ];
