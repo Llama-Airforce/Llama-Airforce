@@ -14,11 +14,14 @@ const tabActive = ref<number | null>(null);
 
 const slots = useSlots();
 const tabs = computed(() => {
-  const tabs = slots.default
-    ? (slots.default() as unknown as (typeof TabItem)[])
-    : [];
+  if (!slots.default) {
+    return [];
+  }
 
-  return tabs.filter((tab) => (tab as unknown as typeof TabItem).props);
+  return slots
+    .default()
+    .filter((tab) => (tab as unknown as typeof TabItem).props)
+    .map((x) => x as unknown as typeof TabItem);
 });
 
 // Watches
@@ -45,20 +48,24 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 
 <template>
   <div class="tab-view">
-    <!-- Headers -->
-    <ul class="tab-headers">
-      <li
-        v-for="(tab, i) in tabs"
-        :key="i"
-        class="tab-header"
-        :class="{ active: tabActive === i, disabled: (tab as any).props.disabled }"
-        @click="onTabClick(tab, i)"
-      >
-        {{ (tab as any).props.header }}
-      </li>
-    </ul>
+    <div class="tab-controls">
+      <ul class="tab-headers">
+        <li
+          v-for="(tab, i) in tabs"
+          :key="i"
+          class="tab-header"
+          :class="{ active: tabActive === i, disabled: (tab as any).props.disabled }"
+          @click="onTabClick(tab, i)"
+        >
+          {{ (tab as any).props.header }}
+        </li>
+      </ul>
 
-    <!-- Content -->
+      <div v-if="$slots['actions']">
+        <slot name="actions"></slot>
+      </div>
+    </div>
+
     <div class="tabs">
       <div
         v-for="(tab, i) in tabs"
@@ -73,7 +80,13 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
 </template>
 
 <style scoped>
-.tab-view {
+.tab-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
   > ul {
     display: flex;
     flex-wrap: wrap; /* Scrolling kinda sucks for discoverabiliy and UX. */
