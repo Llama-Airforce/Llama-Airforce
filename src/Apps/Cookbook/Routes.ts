@@ -9,6 +9,7 @@ import ButtonToggle from "@CB/RecipesComponents/ButtonToggleRecipe.vue";
 import Card from "@CB/RecipesComponents/CardRecipe.vue";
 import Checkbox from "@CB/RecipesComponents/CheckboxRecipe.vue";
 import Table from "@CB/RecipesComponents/TableRecipe.vue";
+import InputAddress from "@CB/RecipesComponents/InputAddressRecipe.vue";
 import InputText from "@CB/RecipesComponents/InputTextRecipe.vue";
 import InputNumber from "@CB/RecipesComponents/InputNumberRecipe.vue";
 import Legend from "@CB/RecipesComponents/LegendRecipe.vue";
@@ -76,6 +77,11 @@ export const routes = [
     path: "/components/data-table",
     name: "data-table",
     component: Table,
+  },
+  {
+    path: "/components/input-address",
+    name: "input-address",
+    component: InputAddress,
   },
   {
     path: "/components/input-text",

@@ -48,6 +48,10 @@ export const menu: Menu = {
           label: "DataTable",
         },
         {
+          to: "/components/input-address",
+          label: "InputAddress",
+        },
+        {
           to: "/components/input-text",
           label: "InputText",
         },
