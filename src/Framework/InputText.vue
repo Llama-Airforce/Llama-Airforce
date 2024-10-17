@@ -6,7 +6,7 @@ const {
   options = [],
   search = false,
   autoComplete = false,
-  filter = () => () => true,
+  filter = () => true,
   sort = null,
 } = defineProps<{
   placeholder?: string;
@@ -22,25 +22,23 @@ const emit = defineEmits<{
   select: [option: T];
 }>();
 
-// Refs
-const optionsProcessed = computed((): T[] => {
-  const optionsFiltered = options.filter((option) =>
+const optionsProcessed = computed<T[]>(() => {
+  const optionsFiltered = [...options].filter((option) =>
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     filter(modelValue.value, option)
   );
-  const optionsSorted = sort
-    ? [...optionsFiltered].sort(sort)
-    : optionsFiltered;
+
+  const optionsSorted = sort ? optionsFiltered.sort(sort) : optionsFiltered;
 
   return optionsSorted;
 });
 
-// Events
-const onInput = (evt: Event): void => {
+function onInput(evt: Event) {
   const value = (evt.target as HTMLInputElement).value;
 
   modelValue.value = value;
   emit("input", value);
-};
+}
 </script>
 
 <template>
