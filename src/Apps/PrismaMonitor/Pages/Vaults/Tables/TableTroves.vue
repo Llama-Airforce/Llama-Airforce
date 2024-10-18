@@ -141,7 +141,7 @@ const onType = (tabIndex: number) => {
 
         <InputText
           v-model="search"
-          :search="true"
+          search
           :placeholder="t('search-placeholder')"
         >
         </InputText>
@@ -149,7 +149,7 @@ const onType = (tabIndex: number) => {
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>
@@ -167,8 +167,8 @@ const onType = (tabIndex: number) => {
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${item.owner}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.owner}`"
             @click.stop
           >
             {{ addressShort(item.owner) }}
@@ -202,9 +202,9 @@ const onType = (tabIndex: number) => {
           :class="{ hide: type === 'Closed' }"
         >
           <AsyncValue
+            type="percentage"
             :value="item.collateral_ratio * 100"
             :precision="2"
-            type="percentage"
           />
         </div>
 

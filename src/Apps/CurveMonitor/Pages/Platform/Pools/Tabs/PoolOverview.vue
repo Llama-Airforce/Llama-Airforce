@@ -78,9 +78,9 @@ const balances = computed(() => {
         <TokenIcon
           v-for="token of pool?.coins ?? []"
           :key="token.address"
+          clickable
           :chain
           :address="token.address"
-          :clickable="true"
         ></TokenIcon>
       </div>
     </KPI>
@@ -91,8 +91,8 @@ const balances = computed(() => {
       :has-value="!!pool"
     >
       <AsyncValue
-        :value="pool?.tvlUsd ?? 0"
         type="dollar"
+        :value="pool?.tvlUsd ?? 0"
       ></AsyncValue>
     </KPI>
 
@@ -102,8 +102,8 @@ const balances = computed(() => {
       :has-value="!!pool"
     >
       <AsyncValue
-        :value="pool?.tradingVolume24h ?? 0"
         type="dollar"
+        :value="pool?.tradingVolume24h ?? 0"
       ></AsyncValue>
     </KPI>
 
@@ -113,8 +113,8 @@ const balances = computed(() => {
       :has-value="!!pool"
     >
       <AsyncValue
-        :value="pool?.tradingFee24h ?? 0"
         type="dollar"
+        :value="pool?.tradingFee24h ?? 0"
       ></AsyncValue>
     </KPI>
 

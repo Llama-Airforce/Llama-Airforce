@@ -33,7 +33,7 @@ watch(
 <template>
   <ModalYesNo
     :title="t('price-modal-title')"
-    :show="show"
+    :show
     :ready="minAmountOut > 0"
     :ready-msg="t('no-zero')"
     @close="emit('close')"

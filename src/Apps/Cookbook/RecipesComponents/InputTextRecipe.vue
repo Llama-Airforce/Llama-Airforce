@@ -53,8 +53,8 @@ const inputText = `<InputText
 const inputTextSearch1 = `<InputText
   v-model="pool"
   placeholder="Search for a pool: enter a space here"
-  :search="true"
-  :auto-complete="autoComplete"
+  search
+  :auto-complete
   :options="pools"
   :filter
   :sort
@@ -176,9 +176,9 @@ const inputTextSearch3 = `.search-item {
       <template #example>
         <InputText
           v-model="pool"
+          search
           placeholder="Search for a pool: enter a space here"
-          :search="true"
-          :auto-complete="autoComplete"
+          :auto-complete
           :options="pools"
           :filter
           :sort
@@ -198,9 +198,9 @@ const inputTextSearch3 = `.search-item {
 
               <div class="volume">
                 <AsyncValue
+                  type="dollar"
                   :value="item.volume"
                   :precision="2"
-                  type="dollar"
                 />
               </div>
             </div>

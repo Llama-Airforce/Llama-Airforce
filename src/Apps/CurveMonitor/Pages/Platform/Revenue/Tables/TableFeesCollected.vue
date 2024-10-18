@@ -52,20 +52,20 @@ const rows = computed(() =>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.amount"
             :precision="2"
             :show-symbol="false"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.amountUsd"
             :precision="2"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
       </template>
@@ -77,9 +77,9 @@ const rows = computed(() =>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.amountUsd, 0)"
             :precision="2"
-            type="dollar"
           />
         </div>
       </template>

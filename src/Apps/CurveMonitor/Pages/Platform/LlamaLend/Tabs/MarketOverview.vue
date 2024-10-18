@@ -66,8 +66,8 @@ const equity = computed(() =>
       :has-value="!!market"
     >
       <AsyncValue
-        :value="market?.borrow_apy"
         type="percentage"
+        :value="market?.borrow_apy"
       ></AsyncValue>
     </KPI>
 
@@ -77,8 +77,8 @@ const equity = computed(() =>
       :has-value="!!market"
     >
       <AsyncValue
-        :value="market?.lend_apy"
         type="percentage"
+        :value="market?.lend_apy"
       ></AsyncValue>
     </KPI>
 
@@ -96,8 +96,8 @@ const equity = computed(() =>
       :has-value="!!market"
     >
       <AsyncValue
-        :value="tvl(market)"
         type="dollar"
+        :value="tvl(market)"
       ></AsyncValue>
     </KPI>
 

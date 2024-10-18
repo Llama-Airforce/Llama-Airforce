@@ -46,7 +46,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
     <template #actions>
       <InputText
         v-model="search"
-        :search="true"
+        search
         :placeholder="t('search-placeholder')"
       >
       </InputText>
@@ -54,7 +54,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
     <Table
       class="vaults-table"
-      :rows="rows"
+      :rows
       :columns="[
         '',
         'Name',
@@ -78,10 +78,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
           :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
+            type="dollar"
             :value="item.tvl"
             :precision="0"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
@@ -90,10 +90,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
           :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
+            type="dollar"
             :value="item.debt"
             :precision="0"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
@@ -102,9 +102,9 @@ const loading = computed(() => rowsRaw.value.length === 0);
           :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
+            type="percentage"
             :value="item.cr * 100"
             :precision="2"
-            type="percentage"
           />
         </div>
 
@@ -113,9 +113,9 @@ const loading = computed(() => rowsRaw.value.length === 0);
           :class="{ deprecated: isDeprecated(item.address) }"
         >
           <AsyncValue
+            type="percentage"
             :value="item.mcr * 100"
             :precision="2"
-            type="percentage"
           />
         </div>
 
@@ -144,19 +144,19 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.tvl, 0)"
             :precision="0"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.debt, 0)"
             :precision="0"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
@@ -165,10 +165,10 @@ const loading = computed(() => rowsRaw.value.length === 0);
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.open_troves, 0)"
             :precision="0"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 

@@ -9,13 +9,13 @@ const { proposal } = defineProps<{
 
 <template>
   <KPI
+    has-value
     class="proposer"
     label="Proposer"
-    :has-value="true"
   >
     <a
-      :href="`https://etherscan.io/address/${proposal.proposer}`"
       target="_blank"
+      :href="`https://etherscan.io/address/${proposal.proposer}`"
     >
       {{ addressShort(proposal.proposer) }}
     </a>

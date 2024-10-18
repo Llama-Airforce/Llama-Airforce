@@ -68,9 +68,9 @@ const onTypeSelect = (type: ProposalType): void => {
     <div class="filters">
       <InputText
         v-model="proposalSearch"
+        search
         class="search"
         placeholder="Search for Curve proposals"
-        :search="true"
       >
       </InputText>
 
@@ -84,7 +84,7 @@ const onTypeSelect = (type: ProposalType): void => {
           class="pagination"
           :items-count="count"
           :items-per-page="10"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>
@@ -95,7 +95,7 @@ const onTypeSelect = (type: ProposalType): void => {
         v-for="proposal in proposals"
         :key="proposal.id"
         class="loading-backdrop"
-        :proposal="proposal"
+        :proposal
         :class="{ loading }"
       ></ProposalComponent>
 
@@ -103,7 +103,7 @@ const onTypeSelect = (type: ProposalType): void => {
         class="pagination"
         :items-count="count"
         :items-per-page="10"
-        :page="page"
+        :page
         @page="onPage"
       ></Pagination>
 

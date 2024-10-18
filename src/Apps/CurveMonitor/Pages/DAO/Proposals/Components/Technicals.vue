@@ -67,8 +67,8 @@ const callData = computed(() => {
         <Voters
           v-if="proposalDetails"
           class="voters"
-          :proposal="proposal"
-          :proposal-details="proposalDetails"
+          :proposal
+          :proposal-details
         ></Voters>
       </Collapsible>
     </div>

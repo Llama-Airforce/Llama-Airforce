@@ -98,15 +98,15 @@ const linkContract = (contract: Contract): string => {
     <Card title="Repositories">
       <Table
         class="repositories-table"
+        title="Yolo"
         :rows="repositories"
         :columns="['Repository', 'Description']"
-        title="Yolo"
       >
         <template #row="{ item }">
           <div>
             <a
-              :href="item.url"
               target="_blank"
+              :href="item.url"
             >
               {{ item.name }}
             </a>
@@ -127,8 +127,8 @@ const linkContract = (contract: Contract): string => {
         <template #row="{ item }">
           <div>
             <a
-              :href="item.url"
               target="_blank"
+              :href="item.url"
             >
               {{ item.name }}
             </a>
@@ -154,8 +154,8 @@ const linkContract = (contract: Contract): string => {
         <template #row="{ item }">
           <div>
             <a
-              :href="linkContract(item)"
               target="_blank"
+              :href="linkContract(item)"
             >
               {{ item.contract }}
             </a>

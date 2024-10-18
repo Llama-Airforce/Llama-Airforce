@@ -327,8 +327,8 @@ const { t } = useI18n();
         <template #row="{ item }">
           <div>
             <a
-              :href="item.url"
               target="_blank"
+              :href="item.url"
             >
               {{ item.name }}
             </a>
@@ -351,8 +351,8 @@ const { t } = useI18n();
         <template #row="{ item }">
           <div>
             <a
-              :href="item.url"
               target="_blank"
+              :href="item.url"
             >
               {{ item.name }}
             </a>
@@ -366,8 +366,8 @@ const { t } = useI18n();
     <Card
       v-for="bundle in bundles"
       :key="bundle.name"
-      :title="t(bundle.name)"
       class="contracts-card"
+      :title="t(bundle.name)"
     >
       <Table
         class="contracts-table"

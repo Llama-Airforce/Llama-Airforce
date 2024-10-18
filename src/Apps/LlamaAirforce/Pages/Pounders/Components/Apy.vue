@@ -20,9 +20,9 @@ const emit = defineEmits<{
         <template #trigger>
           <div class="value-tooltip">
             <AsyncValue
+              type="percentage"
               :value="apy"
               :precision="2"
-              type="percentage"
             />
           </div>
         </template>
@@ -38,9 +38,9 @@ const emit = defineEmits<{
             <div>{{ t("fee-on-yield") }}</div>
             <div>
               <AsyncValue
+                type="percentage"
                 :value="fees?.platform"
                 :precision="2"
-                type="percentage"
               />
             </div>
           </li>
@@ -48,9 +48,9 @@ const emit = defineEmits<{
             <div>{{ t("caller-incentive") }}</div>
             <div>
               <AsyncValue
+                type="percentage"
                 :value="fees?.caller"
                 :precision="2"
-                type="percentage"
               />
             </div>
           </li>
@@ -58,9 +58,9 @@ const emit = defineEmits<{
             <div>{{ t("withdrawal-fee") }}</div>
             <div>
               <AsyncValue
+                type="percentage"
                 :value="fees?.withdrawal"
                 :precision="2"
-                type="percentage"
               />
             </div>
           </li>

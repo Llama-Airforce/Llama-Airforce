@@ -73,8 +73,8 @@ const tokenAddress = (x: Pool & Keeper) =>
     <template #actions>
       <InputText
         v-model="search"
+        search
         placeholder="Search for.."
-        :search="true"
       >
       </InputText>
     </template>
@@ -101,37 +101,37 @@ const tokenAddress = (x: Pool & Keeper) =>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.total_debt"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.tvlUsd"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.tradingVolume24h"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.total_profit"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
       </template>
@@ -142,37 +142,37 @@ const tokenAddress = (x: Pool & Keeper) =>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.total_debt, 0)"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.tvlUsd, 0)"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.tradingVolume24h, 0)"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
       </template>

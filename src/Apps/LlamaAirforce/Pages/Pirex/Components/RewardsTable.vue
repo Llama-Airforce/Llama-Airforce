@@ -44,17 +44,17 @@ function isSelected(reward: Reward) {
 
       <div class="end">
         <AsyncValue
+          type="dollar"
           :value="reward.amount"
           :precision="4"
           :show-symbol="false"
-          type="dollar"
         ></AsyncValue>
       </div>
 
       <div class="end">
         <AsyncValue
-          :value="reward.amountUsd"
           type="dollar"
+          :value="reward.amountUsd"
         ></AsyncValue>
       </div>
 

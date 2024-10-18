@@ -7,13 +7,13 @@ const card = `<Card title="Card Title">
   Content goes here
 </Card>`;
 
-const cardCompact = `<Card :compact="true">
+const cardCompact = `<Card compact>
   Content goes here
 </Card>`;
 
 const cardLoading = `<Card
   title="Card Loading"
-  :loading="true"
+  loading
 >
   Content goes here
 </Card>`;
@@ -38,8 +38,8 @@ const cardWithActions = `<template>
 const cardCollapsible = `<template>
   <Card
     title="Card Title"
-    :collapsible="true"
-    :collapsed="collapsed"
+    collapsible
+    :collapsed
     @click="collapsed = !collapsed"
   >
     <template #actions>
@@ -93,7 +93,7 @@ const handleToggle = (event) => {
 
     <Recipe title="Compact Card">
       <template #example>
-        <Card :compact="true"> Content goes here </Card>
+        <Card compact> Content goes here </Card>
       </template>
 
       <template #snippets>
@@ -107,9 +107,9 @@ const handleToggle = (event) => {
     <Recipe title="Collapsible Card">
       <template #example>
         <Card
+          collapsible
           title="Card Title"
-          :collapsible="true"
-          :collapsed="collapsed"
+          :collapsed
           @click="collapsed = !collapsed"
         >
           <template #actions>
@@ -163,8 +163,8 @@ const handleToggle = (event) => {
     <Recipe title="Loading Card">
       <template #example>
         <Card
+          loading
           title="Card Loading"
-          :loading="true"
         >
           Content goes here
         </Card>

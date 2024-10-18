@@ -51,19 +51,19 @@ watch(
 
 <template>
   <Card
+    compact
     class="pounder"
-    :compact="true"
   >
     <PounderSummary
-      :pounder-id="pounderId"
-      :expanded="expanded"
+      :pounder-id
+      :expanded
       @toggle-expand="expanded = !expanded"
     ></PounderSummary>
 
-    <Collapsible :expanded="expanded">
+    <Collapsible :expanded>
       <PounderDetails
-        :pounder-id="pounderId"
-        :expanded="expanded"
+        :pounder-id
+        :expanded
       >
       </PounderDetails>
     </Collapsible>

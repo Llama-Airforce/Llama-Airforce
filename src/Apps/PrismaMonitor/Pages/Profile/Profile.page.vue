@@ -71,8 +71,8 @@ whenever(addr, (addr) => {
 
     <TableTroves
       style="z-index: 2"
-      :vaults="vaults"
-      :user="user"
+      :vaults
+      :user
       @troves="onTroves"
     ></TableTroves>
 

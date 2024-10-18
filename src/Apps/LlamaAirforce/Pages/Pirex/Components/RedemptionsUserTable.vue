@@ -82,10 +82,10 @@ function balance(redemption: RedemptionPending) {
 
       <div class="end">
         <AsyncValue
+          type="dollar"
           :value="balance(redemption)"
           :precision="4"
           :show-symbol="false"
-          type="dollar"
         ></AsyncValue>
       </div>
 

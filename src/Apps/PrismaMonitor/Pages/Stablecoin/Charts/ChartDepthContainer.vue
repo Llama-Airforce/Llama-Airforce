@@ -23,7 +23,7 @@ const { isFetching: loading, data } = useQuery({
   <ChartDepth
     v-for="poolDepth in data"
     :key="poolDepth.name"
-    :loading="loading"
+    :loading
     :depth="poolDepth"
   ></ChartDepth>
 </template>

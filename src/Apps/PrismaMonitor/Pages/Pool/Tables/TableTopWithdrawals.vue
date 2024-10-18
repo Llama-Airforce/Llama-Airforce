@@ -33,7 +33,7 @@ const { isFetching: loading, data } = useQuery({
   >
     <Table
       class="withdrawals-table"
-      :rows="rows"
+      :rows
       :columns="[
         'Address',
         { label: 'Amount', align: 'end' },
@@ -44,8 +44,8 @@ const { isFetching: loading, data } = useQuery({
       <template #row="{ item }">
         <div class="address font-mono">
           <a
-            :href="`https://etherscan.io/address/${item.user}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.user}`"
           >
             {{ addressShort(item.user, 8) }}
           </a>
@@ -53,10 +53,10 @@ const { isFetching: loading, data } = useQuery({
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.amount"
             :precision="2"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
@@ -66,8 +66,8 @@ const { isFetching: loading, data } = useQuery({
 
         <div class="address end font-mono">
           <a
-            :href="`https://etherscan.io/tx/${item.hash}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${item.hash}`"
           >
             {{ addressShort(item.hash, 8) }}
           </a>

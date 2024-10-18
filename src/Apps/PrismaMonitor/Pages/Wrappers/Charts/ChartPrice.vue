@@ -152,7 +152,7 @@ const formatterPrice = (x: number): string => {
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <div
       ref="chartRef"

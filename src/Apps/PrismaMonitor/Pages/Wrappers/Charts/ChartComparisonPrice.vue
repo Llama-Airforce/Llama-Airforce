@@ -138,7 +138,7 @@ function formatterPrice(x: number): string {
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <template #actions-secondary>
       <Legend :items></Legend>

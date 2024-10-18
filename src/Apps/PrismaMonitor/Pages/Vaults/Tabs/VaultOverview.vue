@@ -15,14 +15,12 @@ const { vault } = defineProps<{
   <div class="dashboard-grid">
     <VaultKPIs
       style="grid-column: 1 / -1"
-      :vault="vault"
+      :vault
     ></VaultKPIs>
-    <ChartDistributionSelector :vault="vault"></ChartDistributionSelector>
-    <ChartLargePositionsSelector :vault="vault"></ChartLargePositionsSelector>
-    <ChartSingleVaultCollateralRatio
-      :vault="vault"
-    ></ChartSingleVaultCollateralRatio>
-    <ChartSingleVaultOpenTroves :vault="vault"></ChartSingleVaultOpenTroves>
+    <ChartDistributionSelector :vault></ChartDistributionSelector>
+    <ChartLargePositionsSelector :vault></ChartLargePositionsSelector>
+    <ChartSingleVaultCollateralRatio :vault></ChartSingleVaultCollateralRatio>
+    <ChartSingleVaultOpenTroves :vault></ChartSingleVaultOpenTroves>
   </div>
 </template>
 

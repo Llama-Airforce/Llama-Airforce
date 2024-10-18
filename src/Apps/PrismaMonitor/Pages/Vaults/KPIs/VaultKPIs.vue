@@ -15,9 +15,9 @@ const { vault = null } = defineProps<{
       <div class="kpi-body">
         <AsyncValue
           v-if="vault"
+          type="dollar"
           :value="vault.tvl"
           :precision="2"
-          type="dollar"
         ></AsyncValue>
       </div>
     </KPI>
@@ -29,16 +29,16 @@ const { vault = null } = defineProps<{
       <div class="kpi-body">
         <AsyncValue
           v-if="vault"
+          type="dollar"
           :value="vault.debt"
           :precision="1"
-          type="dollar"
         ></AsyncValue>
         /
         <AsyncValue
           v-if="vault"
+          type="dollar"
           :value="vault.debt_cap"
           :precision="1"
-          type="dollar"
         ></AsyncValue>
       </div>
     </KPI>
@@ -50,18 +50,18 @@ const { vault = null } = defineProps<{
       <div class="kpi-body">
         <AsyncValue
           v-if="vault"
+          type="percentage"
           :value="vault.cr * 100"
           :precision="0"
-          type="percentage"
         ></AsyncValue>
 
         /
 
         <AsyncValue
           v-if="vault"
+          type="percentage"
           :value="vault.mcr * 100"
           :precision="0"
-          type="percentage"
         ></AsyncValue>
       </div>
     </KPI>
@@ -73,10 +73,10 @@ const { vault = null } = defineProps<{
       <div class="kpi-body">
         <AsyncValue
           v-if="vault"
-          :value="vault.rate * 100"
-          :show-zero="true"
-          :precision="1"
+          show-zero
           type="percentage"
+          :value="vault.rate * 100"
+          :precision="1"
         ></AsyncValue>
       </div>
     </KPI>
@@ -88,8 +88,8 @@ const { vault = null } = defineProps<{
       <div class="kpi-body">
         <AsyncValue
           v-if="vault"
+          show-zero
           :value="vault.open_troves"
-          :show-zero="true"
           :precision="0"
         ></AsyncValue>
 
@@ -97,8 +97,8 @@ const { vault = null } = defineProps<{
 
         <AsyncValue
           v-if="vault"
+          show-zero
           :value="vault.open_troves + vault.closed_troves"
-          :show-zero="true"
           :precision="0"
         ></AsyncValue>
       </div>
@@ -111,8 +111,8 @@ const { vault = null } = defineProps<{
       <div class="kpi-body">
         <AsyncValue
           v-if="vault"
+          show-zero
           :value="vault.liq_troves"
-          :show-zero="true"
           :precision="0"
         ></AsyncValue>
 
@@ -120,8 +120,8 @@ const { vault = null } = defineProps<{
 
         <AsyncValue
           v-if="vault"
+          show-zero
           :value="vault.red_troves"
-          :show-zero="true"
           :precision="0"
         ></AsyncValue>
       </div>

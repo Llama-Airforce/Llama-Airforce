@@ -29,9 +29,9 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     <div class="filters">
       <InputText
         v-model="proposalSearch"
+        search
         class="search"
-        :placeholder="placeholder"
-        :search="true"
+        :placeholder
       >
       </InputText>
 
@@ -41,7 +41,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           class="pagination"
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>
@@ -50,7 +50,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     <ProposalComponent
       v-for="proposal in rowsPage"
       :key="proposal.id"
-      :proposal="proposal"
+      :proposal
     ></ProposalComponent>
 
     <Pagination
@@ -58,7 +58,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       class="pagination"
       :items-count="rows.length"
       :items-per-page="rowsPerPage"
-      :page="page"
+      :page
       @page="onPage"
     ></Pagination>
 

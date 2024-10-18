@@ -79,11 +79,11 @@ const createTimer = (): void => {
 
 <template>
   <KPI
+    has-value
     class="date"
     tooltip-type="underline"
-    :label="label"
+    :label
     :value="date"
-    :has-value="true"
     :tooltip="dateWithTime"
   >
   </KPI>

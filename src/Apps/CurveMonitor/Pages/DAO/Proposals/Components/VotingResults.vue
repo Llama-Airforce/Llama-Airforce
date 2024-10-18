@@ -26,11 +26,11 @@ const againstPercentage = computed(
       <div class="amount">
         <div class="left">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="proposal.votesFor"
             :precision="0"
             :show-symbol="false"
-            :show-zero="true"
-            type="dollar"
           />
 
           <span>&nbsp;veCRV</span>
@@ -39,10 +39,10 @@ const againstPercentage = computed(
         <div class="right">
           <span>(</span>
           <AsyncValue
+            show-zero
+            type="percentage"
             :value="forPercentage"
             :precision="2"
-            :show-zero="true"
-            type="percentage"
           />
           <span>)</span>
         </div>
@@ -61,11 +61,11 @@ const againstPercentage = computed(
       <div class="amount">
         <div class="left">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="proposal.votesAgainst"
             :precision="0"
             :show-symbol="false"
-            :show-zero="true"
-            type="dollar"
           />
           <span>&nbsp;veCRV</span>
         </div>
@@ -73,10 +73,10 @@ const againstPercentage = computed(
         <div class="right">
           <span>(</span>
           <AsyncValue
+            show-zero
+            type="percentage"
             :value="againstPercentage"
             :precision="2"
-            :show-zero="true"
-            type="percentage"
           />
           <span>)</span>
         </div>

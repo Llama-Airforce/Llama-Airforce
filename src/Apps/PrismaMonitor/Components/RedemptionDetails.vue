@@ -29,37 +29,37 @@ const rows = computed(() =>
       <div class="kpis">
         <KPI :label="t('withdrawal')">
           <AsyncValue
+            type="dollar"
             :value="redemption.attempted_debt_amount"
             :precision="2"
-            type="dollar"
           ></AsyncValue>
 
           /
 
           <AsyncValue
+            type="dollar"
             :value="redemption.collateral_sent_to_redeemer_usd"
             :precision="2"
-            type="dollar"
           ></AsyncValue>
         </KPI>
 
         <KPI :label="t('fee')">
           <AsyncValue
+            type="dollar"
             :value="redemption.collateral_fee_usd"
             :precision="2"
-            type="dollar"
           ></AsyncValue>
         </KPI>
       </div>
 
       <Card
+        compact
         :title="t('troves-affected')"
-        :compact="true"
       >
         <template #actions>
           <InputText
             v-model="search"
-            :search="true"
+            search
             :placeholder="t('search-placeholder')"
           >
           </InputText>
@@ -67,7 +67,7 @@ const rows = computed(() =>
 
         <Table
           class="troves-affected-table"
-          :rows="rows"
+          :rows
           :columns="['Trove']"
         >
           <template #row="{ item }">

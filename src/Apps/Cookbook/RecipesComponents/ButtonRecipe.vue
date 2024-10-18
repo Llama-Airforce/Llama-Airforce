@@ -19,7 +19,7 @@ const btnVariantClass = `<Button class="primary">
   Value
 </Button>`;
 
-const btnDisabled = `<Button :disabled="true">
+const btnDisabled = `<Button disabled>
   Value
 </Button>`;
 
@@ -97,7 +97,7 @@ const showAlert = (msg: string) => {
 
     <Recipe title="Disabled">
       <template #example>
-        <Button :disabled="true">Value</Button>
+        <Button disabled>Value</Button>
       </template>
 
       <template #snippets>

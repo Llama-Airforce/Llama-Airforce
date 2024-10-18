@@ -52,17 +52,17 @@ const you = (address: string): boolean => address === walletAddress.value;
       </div>
       <div class="amount">
         <AsyncValue
+          type="dollar"
           :value="vote.weight"
           :precision="2"
           :show-symbol="false"
-          type="dollar"
         />
       </div>
       <div class="percentage">
         <AsyncValue
+          type="percentage"
           :value="percentage(vote.weight)"
           :precision="0"
-          type="percentage"
         />
       </div>
     </div>

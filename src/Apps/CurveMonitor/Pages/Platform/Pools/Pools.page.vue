@@ -75,9 +75,9 @@ const onPoolSelect = async (newPool: Pool) => {
       <div class="toolbar">
         <InputText
           v-model="search"
+          search
           class="search"
           placeholder="Search for..."
-          :search="true"
         >
         </InputText>
 
@@ -96,8 +96,8 @@ const onPoolSelect = async (newPool: Pool) => {
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
-        :value="chainInfo?.total.tvl ?? 0"
         type="dollar"
+        :value="chainInfo?.total.tvl ?? 0"
       ></AsyncValue>
     </KPI>
 
@@ -107,8 +107,8 @@ const onPoolSelect = async (newPool: Pool) => {
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
-        :value="chainInfo?.total.tradingVolume24h ?? 0"
         type="dollar"
+        :value="chainInfo?.total.tradingVolume24h ?? 0"
       ></AsyncValue>
     </KPI>
 
@@ -118,8 +118,8 @@ const onPoolSelect = async (newPool: Pool) => {
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
-        :value="chainInfo?.total.tradingFee24h ?? 0"
         type="dollar"
+        :value="chainInfo?.total.tradingFee24h ?? 0"
       ></AsyncValue>
     </KPI>
 
@@ -129,8 +129,8 @@ const onPoolSelect = async (newPool: Pool) => {
       :has-value="!loadingChainInfo"
     >
       <AsyncValue
-        :value="chainInfo?.total.liquidityFee24h ?? 0"
         type="dollar"
+        :value="chainInfo?.total.liquidityFee24h ?? 0"
       ></AsyncValue>
     </KPI>
 

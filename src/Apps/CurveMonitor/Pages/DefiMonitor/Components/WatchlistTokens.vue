@@ -82,7 +82,7 @@ function addToken(token: Token) {
       @selected="onSelect($event.address)"
     >
       <template #row="{ item: { address, symbol } }">
-        <TokenIcon :address="address"></TokenIcon>
+        <TokenIcon :address></TokenIcon>
         <div>{{ symbol ?? "?" }}</div>
 
         <div

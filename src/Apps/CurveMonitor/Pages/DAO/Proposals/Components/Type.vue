@@ -9,10 +9,10 @@ const { proposal } = defineProps<{
 
 <template>
   <KPI
+    has-value
     class="type"
     label="Type"
     :value="capitalize(proposal.type)"
-    :has-value="true"
   >
   </KPI>
 </template>

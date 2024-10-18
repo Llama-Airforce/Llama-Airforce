@@ -80,24 +80,24 @@ const tokenIcon = (market: Market) => {
           <div class="end">
             <AsyncValue
               v-if="market.borrow_apy"
-              :value="market.borrow_apy"
               type="percentage"
+              :value="market.borrow_apy"
             />
           </div>
 
           <div class="end">
             <AsyncValue
               v-if="market.lend_apy"
-              :value="market.lend_apy"
               type="percentage"
+              :value="market.lend_apy"
             />
           </div>
 
           <div class="end">
             <AsyncValue
               v-if="tvl(market)"
-              :value="tvl(market)"
               type="dollar"
+              :value="tvl(market)"
             />
           </div>
 
@@ -113,8 +113,8 @@ const tokenIcon = (market: Market) => {
         <div></div>
         <div class="end">
           <AsyncValue
-            :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
             type="dollar"
+            :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
           />
         </div>
         <div class="end">

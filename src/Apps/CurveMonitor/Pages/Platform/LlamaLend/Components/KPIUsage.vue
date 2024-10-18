@@ -39,26 +39,26 @@ const utilRate = computed(() => {
       <div class="two-sides">
         <div class="collateral">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="market?.collateral_balance"
             :show-symbol="false"
-            :show-zero="true"
-            type="dollar"
           ></AsyncValue>
 
           <span style="color: var(--c-lvl5)">/</span>
 
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="market?.borrowed_balance"
             :show-symbol="false"
-            :show-zero="true"
-            type="dollar"
           ></AsyncValue>
         </div>
 
         <AsyncValue
-          :value="totalCollateralUsd"
-          :show-zero="true"
+          show-zero
           type="dollar"
+          :value="totalCollateralUsd"
         ></AsyncValue>
       </div>
     </KPI>
@@ -70,16 +70,16 @@ const utilRate = computed(() => {
     >
       <div class="two-sides">
         <AsyncValue
+          show-zero
+          type="dollar"
           :value="market?.total_debt"
           :show-symbol="false"
-          :show-zero="true"
-          type="dollar"
         ></AsyncValue>
 
         <AsyncValue
-          :value="market?.total_debt_usd"
-          :show-zero="true"
+          show-zero
           type="dollar"
+          :value="market?.total_debt_usd"
         ></AsyncValue>
       </div>
     </KPI>
@@ -91,16 +91,16 @@ const utilRate = computed(() => {
     >
       <div class="two-sides">
         <AsyncValue
+          show-zero
+          type="dollar"
           :value="market?.total_assets"
           :show-symbol="false"
-          :show-zero="true"
-          type="dollar"
         ></AsyncValue>
 
         <AsyncValue
-          :value="market?.total_assets_usd"
-          :show-zero="true"
+          show-zero
           type="dollar"
+          :value="market?.total_assets_usd"
         ></AsyncValue>
       </div>
     </KPI>
@@ -113,9 +113,9 @@ const utilRate = computed(() => {
       :has-value="!!market"
     >
       <AsyncValue
-        :value="utilRate * 100"
-        :show-zero="true"
+        show-zero
         type="percentage"
+        :value="utilRate * 100"
       ></AsyncValue>
     </KPI>
   </div>

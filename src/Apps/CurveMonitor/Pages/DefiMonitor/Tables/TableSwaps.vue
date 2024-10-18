@@ -70,8 +70,8 @@ const round = (x: number) =>
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
+          search
           placeholder="Search for..."
-          :search="true"
         >
         </InputText>
 
@@ -121,8 +121,8 @@ const round = (x: number) =>
           <div class="center-vert">
             <a
               class="font-mono"
-              :href="`https://etherscan.io/tx/${item.txHash}`"
               target="_blank"
+              :href="`https://etherscan.io/tx/${item.txHash}`"
             >
               {{ addressLeft(item.txHash, 10) }}
             </a>
@@ -131,8 +131,8 @@ const round = (x: number) =>
           <div>
             <a
               class="font-mono"
-              :href="`https://etherscan.io/block/${item.blockNumber}`"
               target="_blank"
+              :href="`https://etherscan.io/block/${item.blockNumber}`"
             >
               {{ item.blockNumber }}
             </a>
@@ -145,8 +145,8 @@ const round = (x: number) =>
           <div>
             <a
               class="font-mono"
-              :href="`https://etherscan.io/address/${item.senderAddress}`"
               target="_blank"
+              :href="`https://etherscan.io/address/${item.senderAddress}`"
             >
               {{ addressLeft(item.senderAddress, 5) }}
             </a>
@@ -155,8 +155,8 @@ const round = (x: number) =>
           <div>
             <a
               class="font-mono"
-              :href="`https://etherscan.io/address/${item.receiverAddress}`"
               target="_blank"
+              :href="`https://etherscan.io/address/${item.receiverAddress}`"
             >
               {{ addressLeft(item.receiverAddress, 5) }}
             </a>
@@ -196,8 +196,8 @@ const round = (x: number) =>
 
           <div class="end">
             <a
-              :href="`https://etherscan.io/tx/${item.txHash}`"
               target="_blank"
+              :href="`https://etherscan.io/tx/${item.txHash}`"
               @click.stop
             >
               {{ relativeTime(item.blockUnixtime) }}

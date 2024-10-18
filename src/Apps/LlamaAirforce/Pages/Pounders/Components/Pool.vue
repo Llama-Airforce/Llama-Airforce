@@ -24,10 +24,10 @@ const { name, logo, symbol, priceUnderlying } = defineProps<{
       <span v-if="priceUnderlying">
         {{ symbol }}:
         <AsyncValue
+          show-zero
+          type="dollar"
           :value="priceUnderlying"
           :precision="3"
-          :show-zero="true"
-          type="dollar"
         />
       </span>
     </Tooltip>

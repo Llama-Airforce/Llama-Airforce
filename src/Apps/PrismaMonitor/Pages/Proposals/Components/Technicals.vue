@@ -43,8 +43,8 @@ const callData = computed(() => {
       <div class="heading">{{ t("author") }}</div>
       <div class="description">
         <a
-          :href="authorUrl"
           target="_blank"
+          :href="authorUrl"
         >
           {{ proposal.metadata.author }}
         </a>
@@ -58,8 +58,8 @@ const callData = computed(() => {
       <div class="heading">{{ t("link") }}</div>
       <div class="description">
         <a
-          :href="proposal.metadata.link"
           target="_blank"
+          :href="proposal.metadata.link"
         >
           {{ proposal.metadata.link }}
         </a>
@@ -90,7 +90,7 @@ const callData = computed(() => {
       <Collapsible :expanded="expandedVoters">
         <Voters
           class="voters"
-          :proposal="proposal"
+          :proposal
         ></Voters>
       </Collapsible>
     </div>

@@ -52,7 +52,7 @@ function utilRate(pool: Pool) {
       <Pagination
         :items-count="pools.length"
         :items-per-page="rowsPerPage"
-        :page="page"
+        :page
         @page="onPage"
       ></Pagination>
     </template>
@@ -80,28 +80,28 @@ function utilRate(pool: Pool) {
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="pool.tradingVolume24h"
             :precision="2"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="pool.tvlUsd"
             :precision="2"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="percentage"
             :value="utilRate(pool)"
             :precision="2"
-            :show-zero="true"
-            type="percentage"
           />
         </div>
       </template>

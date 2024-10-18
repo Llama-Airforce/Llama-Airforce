@@ -20,8 +20,8 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
 
     <ProposalComponent
       v-if="!loading && proposal"
-      :proposal="proposal"
-      :init-expanded="true"
+      init-expanded
+      :proposal
     ></ProposalComponent>
   </div>
 </template>

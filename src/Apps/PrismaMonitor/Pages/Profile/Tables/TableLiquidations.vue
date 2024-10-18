@@ -93,15 +93,15 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
   >
     <template #actions>
       <SelectVault
-        :vault="vault"
-        :all="true"
+        all
+        :vault
         @select-vault="vault = $event"
       ></SelectVault>
 
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
-          :search="true"
+          search
           :placeholder="t('search-placeholder')"
         >
         </InputText>
@@ -109,7 +109,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>
@@ -129,8 +129,8 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${item.liquidator}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.liquidator}`"
             @click.stop
           >
             {{ addressShort(item.liquidator) }}
@@ -140,8 +140,8 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${item.transaction}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${item.transaction}`"
             @click.stop
           >
             {{ addressShort(item.transaction) }}

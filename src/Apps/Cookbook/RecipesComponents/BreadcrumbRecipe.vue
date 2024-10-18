@@ -16,7 +16,7 @@ const onCrumb = (crumb: Crumb) => {
 };
 
 const breadcrumb1 = `<Breadcrumb
-  :crumbs="crumbs"
+  :crumbs
   :active="crumbActive"
   @crumb="onCrumb"
 ></Breadcrumb>`;
@@ -43,7 +43,7 @@ const onCrumb = (crumb: Crumb) => {
     <Recipe title="Breadcrumb">
       <template #example>
         <Breadcrumb
-          :crumbs="crumbs"
+          :crumbs
           :active="crumbActive"
           @crumb="onCrumb"
         ></Breadcrumb>

@@ -52,7 +52,7 @@ const onGauge = (newGauge: string): void => {
 
     <div class="forms">
       <DeployGauge @gauge="onGauge"></DeployGauge>
-      <GaugeVote :gauge="gauge"></GaugeVote>
+      <GaugeVote :gauge></GaugeVote>
     </div>
   </div>
 </template>

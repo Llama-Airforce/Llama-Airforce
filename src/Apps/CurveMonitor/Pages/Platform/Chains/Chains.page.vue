@@ -156,11 +156,11 @@ const rankTypesUsers = computed(() =>
         ></ActivityTypeSelect>
 
         <SelectChain
+          all
           style="grid-area: chain"
           class="chain-select"
           :chain
           :chains
-          :all="true"
           @select-chain="chain = $event"
         ></SelectChain>
       </div>
@@ -173,10 +173,10 @@ const rankTypesUsers = computed(() =>
         :has-value="!!loadingTxs"
       >
         <AsyncValue
+          show-zero
           type="dollar"
           :value="txsToday"
           :show-symbol="false"
-          :show-zero="true"
         ></AsyncValue>
       </KPI>
 
@@ -186,10 +186,10 @@ const rankTypesUsers = computed(() =>
         :has-value="!!loadingTxs"
       >
         <AsyncValue
+          show-zero
           type="dollar"
           :value="txsAvg"
           :show-symbol="false"
-          :show-zero="true"
         ></AsyncValue>
       </KPI>
 
@@ -199,10 +199,10 @@ const rankTypesUsers = computed(() =>
         :has-value="!!loadingUsers"
       >
         <AsyncValue
+          show-zero
           type="dollar"
           :value="usersToday"
           :show-symbol="false"
-          :show-zero="true"
         ></AsyncValue>
       </KPI>
 
@@ -212,10 +212,10 @@ const rankTypesUsers = computed(() =>
         :has-value="!!loadingUsers"
       >
         <AsyncValue
+          show-zero
           type="dollar"
           :value="usersAvg"
           :show-symbol="false"
-          :show-zero="true"
         ></AsyncValue>
       </KPI>
 

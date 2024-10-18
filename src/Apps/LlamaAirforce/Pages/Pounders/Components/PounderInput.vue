@@ -97,10 +97,10 @@ const onMax = (): void => {
         >
           {{ t("dollars") }}
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="valueDollar"
             :precision="2"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
       </div>
@@ -117,7 +117,7 @@ const onMax = (): void => {
       class="slider"
       :min="0"
       :max="balanceNumber"
-      :step="step"
+      :step
     ></Slider>
   </div>
 </template>

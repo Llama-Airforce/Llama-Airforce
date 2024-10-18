@@ -72,14 +72,14 @@ const onChartType = (type: ChartType) => {
     <KeepAlive>
       <ChartCrvUsdSupplyLine
         v-if="chartType === 'line'"
-        :data="data"
+        :data
       ></ChartCrvUsdSupplyLine>
     </KeepAlive>
 
     <KeepAlive>
       <ChartCrvUsdSupplyBreakdown
         v-if="chartType === 'breakdown'"
-        :data="data"
+        :data
       ></ChartCrvUsdSupplyBreakdown>
     </KeepAlive>
   </Card>

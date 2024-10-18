@@ -315,23 +315,23 @@ whenever(isConfirmedExecute, () => {
         <div class="info">
           <div class="kpis">
             <KPI
+              has-value
               label="Voting power"
-              :has-value="true"
             >
               <AsyncValue
+                show-zero
+                type="dollar"
                 :value="votingPowerNumber"
                 :precision="2"
-                type="dollar"
                 :show-symbol="false"
-                :show-zero="true"
               />
               veCRV
             </KPI>
 
             <KPI
+              has-value
               label="Block"
               :value="proposal.block"
-              :has-value="true"
             >
             </KPI>
           </div>

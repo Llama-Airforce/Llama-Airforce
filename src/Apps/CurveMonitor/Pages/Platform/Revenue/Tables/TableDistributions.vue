@@ -49,9 +49,9 @@ function formatDate(epoch: number): string {
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="feesUsd"
             :precision="2"
-            type="dollar"
           />
         </div>
       </template>

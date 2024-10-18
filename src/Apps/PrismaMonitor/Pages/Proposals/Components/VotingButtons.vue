@@ -177,30 +177,30 @@ watch(
     @close="showVote = false"
   >
     <Card
-      :title="t('vote-with-veprisma')"
       class="vote-content"
+      :title="t('vote-with-veprisma')"
     >
       <div class="veprisma">
         <div class="info">
           <div class="kpis">
             <KPI
+              has-value
               :label="t('voting-power')"
-              :has-value="true"
             >
               <AsyncValue
+                show-zero
+                type="dollar"
                 :value="votingPowerNumber"
                 :precision="2"
-                type="dollar"
                 :show-symbol="false"
-                :show-zero="true"
               />
               vePRISMA
             </KPI>
 
             <KPI
+              has-value
               :label="t('block')"
               :value="proposal.block"
-              :has-value="true"
             >
             </KPI>
           </div>

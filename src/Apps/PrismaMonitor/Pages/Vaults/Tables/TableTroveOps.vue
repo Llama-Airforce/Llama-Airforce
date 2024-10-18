@@ -58,7 +58,7 @@ const titleCase = (s: string): string =>
   >
     <Table
       class="trove-ops-table"
-      :rows="rows"
+      :rows
       :columns="[
         'Operation',
         { label: 'Collateral', align: 'end' },
@@ -75,10 +75,10 @@ const titleCase = (s: string): string =>
         <div class="end">
           <AsyncValue
             v-if="item.collateral"
+            type="dollar"
             :value="item.collateral"
             :precision="3"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
@@ -93,27 +93,27 @@ const titleCase = (s: string): string =>
         <div class="end">
           <AsyncValue
             v-if="item.cr"
+            type="percentage"
             :value="item.cr * 100"
             :precision="2"
-            type="percentage"
           />
         </div>
 
         <div class="end">
           <AsyncValue
             v-if="item.stake"
+            type="dollar"
             :value="item.stake"
             :precision="2"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${item.hash}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${item.hash}`"
             @click.stop
           >
             {{ addressShort(item.hash) }}

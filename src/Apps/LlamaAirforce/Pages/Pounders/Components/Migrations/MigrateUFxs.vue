@@ -114,7 +114,7 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
       <ModalSlippage
         symbol-output="cvxFXS"
         :show="modalSlippage"
-        :min-amount-out-ref="minAmountOutRef"
+        :min-amount-out-ref
         @close="modalSlippage = false"
         @no="modalSlippage = false"
         @yes="onYesModalSlippage"

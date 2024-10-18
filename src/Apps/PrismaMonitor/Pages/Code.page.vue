@@ -27,8 +27,8 @@ const repositories: Repository[] = [
         <template #row="{ item }">
           <div>
             <a
-              :href="item.url"
               target="_blank"
+              :href="item.url"
             >
               {{ item.name }}
             </a>

@@ -8,8 +8,8 @@
       tooltip="Fee accessed on bribes earned from vlCVX"
     >
       <AsyncValue
-        :value="4"
         type="percentage"
+        :value="4"
       ></AsyncValue>
     </KPI>
 
@@ -19,8 +19,8 @@
       tooltip="Linearly scales with time depending on redemption time. Can be avoided swapping through curve pool depending on slippage"
     >
       <AsyncValue
-        :value="5"
         type="percentage"
+        :value="5"
       >
       </AsyncValue>
     </KPI>

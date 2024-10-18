@@ -13,11 +13,11 @@ const { proposal, expanded = false } = defineProps<{
   <div class="proposal-details">
     <div class="proposal-details-container">
       <Technicals
-        :proposal="proposal"
-        :expanded="expanded"
+        :proposal
+        :expanded
       ></Technicals>
 
-      <Voting :proposal="proposal"></Voting>
+      <Voting :proposal></Voting>
     </div>
   </div>
 </template>

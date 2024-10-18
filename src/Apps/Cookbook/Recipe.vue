@@ -4,8 +4,8 @@ const { title } = defineProps<{ title: string }>();
 
 <template>
   <Card
-    :title="title"
     class="recipe-card"
+    :title
   >
     <div class="recipe-body">
       <div class="example">

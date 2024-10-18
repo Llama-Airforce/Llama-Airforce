@@ -124,9 +124,9 @@ const onType = (tabIndex: number) => {
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
+          search
           class="search"
           placeholder="Search for..."
-          :search="true"
         >
         </InputText>
 
@@ -168,8 +168,8 @@ const onType = (tabIndex: number) => {
         >
           <a
             class="vote-link"
-            :href="`https://etherscan.io/block/${item.block_number}`"
             target="_blank"
+            :href="`https://etherscan.io/block/${item.block_number}`"
           >
             {{ item.block_number }}
           </a>
@@ -178,8 +178,8 @@ const onType = (tabIndex: number) => {
         <div>
           <a
             class="vote-link"
-            :href="`https://etherscan.io/tx/${item.tx_hash}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${item.tx_hash}`"
             @click.stop
           >
             {{ addressShort(item.tx_hash) }}
@@ -189,8 +189,8 @@ const onType = (tabIndex: number) => {
         <div>
           <a
             class="vote-link"
-            :href="`https://etherscan.io/address/${item.trader}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.trader}`"
             @click.stop
           >
             {{ addressShort(item.trader) }}

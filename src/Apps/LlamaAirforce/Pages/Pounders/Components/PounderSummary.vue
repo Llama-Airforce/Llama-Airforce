@@ -48,7 +48,7 @@ whenever(getFeesTrigger, async () => {
     <Balance
       class="pounder-item"
       :symbol="pounder.symbol"
-      :state="state"
+      :state
     ></Balance>
 
     <Apy
@@ -60,7 +60,7 @@ whenever(getFeesTrigger, async () => {
 
     <Tvl
       class="pounder-item"
-      :state="state"
+      :state
     ></Tvl>
 
     <div

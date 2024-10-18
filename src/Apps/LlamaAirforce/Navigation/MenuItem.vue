@@ -65,8 +65,8 @@ const onClickNode = (): void => {
   >
     <router-link
       v-if="isLeaf(menuItem)"
-      :to="menuItem.to"
       class="nav-link leaf"
+      :to="menuItem.to"
       :class="{ 'router-link-active': subIsActive(menuItem.to, route) }"
       @click="emit('navigated')"
     >

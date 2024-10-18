@@ -165,24 +165,24 @@ function initFromRouter() {
 
     <Summary
       style="grid-area: summary"
-      :rounds="rounds"
-      :epoch="epoch"
+      :rounds
+      :epoch
       @select-round="onSelectRound"
     ></Summary>
 
     <ChartBribesRound
       style="grid-area: chart; height: 370px"
-      :epoch="epoch"
+      :epoch
     ></ChartBribesRound>
 
     <TablePersonal
       style="grid-area: table-personal; max-height: 750px"
-      :epoch="epoch"
+      :epoch
     ></TablePersonal>
 
     <TableBribed
       style="grid-area: table-bribed; max-height: 750px"
-      :epoch="epoch"
+      :epoch
     ></TableBribed>
   </div>
 </template>

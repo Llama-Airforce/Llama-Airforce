@@ -23,8 +23,8 @@ const { market, chain } = defineProps<{
       :has-value="!!market"
     >
       <AsyncValue
-        :value="100 * (market?.rate ?? 0)"
         type="percentage"
+        :value="100 * (market?.rate ?? 0)"
       ></AsyncValue>
     </KPI>
 
@@ -34,8 +34,8 @@ const { market, chain } = defineProps<{
       :has-value="!!market"
     >
       <AsyncValue
-        :value="market?.borrowed"
         type="dollar"
+        :value="market?.borrowed"
       ></AsyncValue>
     </KPI>
 
@@ -45,8 +45,8 @@ const { market, chain } = defineProps<{
       :has-value="!!market"
     >
       <AsyncValue
-        :value="market?.borrowable"
         type="dollar"
+        :value="market?.borrowable"
       ></AsyncValue>
     </KPI>
 

@@ -179,7 +179,7 @@ whenever(
 <template>
   <Card
     :title="dynamicTitle"
-    :loading="loading"
+    :loading
   >
     <template #actions>
       <Tooltip>

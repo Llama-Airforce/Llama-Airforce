@@ -45,8 +45,8 @@ const clipboard = async (addr: string) => {
           <a
             v-if="address"
             class="font-mono"
-            :href="linkAddress(address)"
             target="_blank"
+            :href="linkAddress(address)"
           >
             {{ address }}
           </a>

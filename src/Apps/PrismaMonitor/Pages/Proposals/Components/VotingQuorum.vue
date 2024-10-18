@@ -27,17 +27,17 @@ const reached = computed((): number => {
     <div class="heading">{{ t("quorum") }}</div>
     <div class="amount">
       <AsyncValue
+        type="dollar"
         :value="votesSupport"
         :precision="0"
         :show-symbol="false"
-        type="dollar"
       />
       /
       <AsyncValue
+        type="dollar"
         :value="votesQuorum"
         :precision="0"
         :show-symbol="false"
-        type="dollar"
       />
       vePRISMA
     </div>
@@ -58,9 +58,9 @@ const reached = computed((): number => {
       <div class="zero">0%</div>
       <div class="quorum">
         <AsyncValue
+          type="percentage"
           :value="Math.min(reached, 100)"
           :precision="0"
-          type="percentage"
         ></AsyncValue>
       </div>
     </div>

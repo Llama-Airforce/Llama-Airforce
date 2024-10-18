@@ -97,9 +97,9 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
           @click.stop
         >
           <a
-            :href="voteLink(item)"
-            target="_blank"
             class="vote-link"
+            target="_blank"
+            :href="voteLink(item)"
           >
             <span v-if="isFinished(item)">{{ round(item) }}</span>
             <span v-else>
@@ -120,17 +120,17 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="dollarPerVlAsset(item)"
             :precision="5"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="totalAmountDollars(item)"
             :precision="2"
-            type="dollar"
           />
         </div>
       </template>

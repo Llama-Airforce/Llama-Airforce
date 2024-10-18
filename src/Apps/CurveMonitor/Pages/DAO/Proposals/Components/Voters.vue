@@ -72,17 +72,17 @@ const you = (address: string): boolean => address === walletAddress.value;
         </div>
         <div class="amount">
           <AsyncValue
+            type="dollar"
             :value="vote.votingPower"
             :precision="2"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
         <div class="percentage">
           <AsyncValue
+            type="percentage"
             :value="percentage(vote.votingPower)"
             :precision="0"
-            type="percentage"
           />
         </div>
       </div>
@@ -98,17 +98,17 @@ const you = (address: string): boolean => address === walletAddress.value;
       >
         <div class="percentage">
           <AsyncValue
+            type="percentage"
             :value="percentage(vote.votingPower)"
             :precision="0"
-            type="percentage"
           />
         </div>
         <div class="amount">
           <AsyncValue
+            type="dollar"
             :value="vote.votingPower"
             :precision="2"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
         <div class="address">

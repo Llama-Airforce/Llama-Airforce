@@ -421,8 +421,8 @@ const onWithdrawSelect = (zap: Zap): void => {
 
     <ModalSlippage
       :show="modalSlippage"
-      :symbol-output="symbolOutput"
-      :min-amount-out-ref="minAmountOutRef"
+      :symbol-output
+      :min-amount-out-ref
       @close="modalSlippage = false"
       @no="modalSlippage = false"
       @yes="onYesModalSlippage"

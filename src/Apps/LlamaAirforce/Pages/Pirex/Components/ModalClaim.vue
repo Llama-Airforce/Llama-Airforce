@@ -213,8 +213,8 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
             <div class="data">{{ formatDate(epoch.epoch) }}</div>
 
             <AsyncValue
-              :value="total(epoch)"
               type="dollar"
+              :value="total(epoch)"
             ></AsyncValue>
 
             <div class="chevron">
@@ -235,8 +235,8 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
                 <div class="title">Snapshot Rewards</div>
 
                 <RewardsTable
+                  can-select
                   :rewards="rewards[epoch.epoch].snapshot"
-                  :can-select="true"
                   :selected="toClaim[epoch.epoch]"
                   @select="onRewardToggle(epoch, $event)"
                 ></RewardsTable>

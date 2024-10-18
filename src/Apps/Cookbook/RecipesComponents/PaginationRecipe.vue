@@ -10,7 +10,7 @@ const onPage = (pageNew: number): void => {
 const pagination = `<Pagination
   :items-count="96"
   :items-per-page="10"
-  :page="page"
+  :page
   @page="onPage"
 ></Pagination>`;
 </script>
@@ -22,7 +22,7 @@ const pagination = `<Pagination
         <Pagination
           :items-count="96"
           :items-per-page="10"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </template>

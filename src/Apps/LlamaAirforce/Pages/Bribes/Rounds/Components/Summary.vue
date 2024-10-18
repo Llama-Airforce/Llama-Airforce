@@ -88,9 +88,9 @@ const onRoundSelect = (round: number): void => {
       :has-value="!!dollarPerVlAsset"
     >
       <AsyncValue
+        type="dollar"
         :value="dollarPerVlAsset"
         :precision="5"
-        type="dollar"
       />
     </KPI>
 
@@ -101,9 +101,9 @@ const onRoundSelect = (round: number): void => {
     >
       <template #label-second>
         <a
-          :href="voteLink"
-          target="_blank"
           class="vote-link"
+          target="_blank"
+          :href="voteLink"
         >
           <span v-if="isFinished">{{ t("voting-ended") }}</span>
           <span v-else>
@@ -119,9 +119,9 @@ const onRoundSelect = (round: number): void => {
       :has-value="!!totalAmountDollars"
     >
       <AsyncValue
+        type="dollar"
         :value="totalAmountDollars"
         :precision="2"
-        type="dollar"
       />
     </KPI>
   </div>

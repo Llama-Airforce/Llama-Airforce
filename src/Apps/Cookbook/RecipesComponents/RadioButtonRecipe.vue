@@ -78,18 +78,18 @@ const onRadioChange = (value: (typeof values)[number]) => {
       <template #example>
         <RadioButton
           v-model="selectedOption1"
-          :values
           name="radio1"
           value="option1"
+          :values
         >
           Option 1
         </RadioButton>
 
         <RadioButton
           v-model="selectedOption1"
-          :values
           name="radio1"
           value="option2"
+          :values
         >
           Option 2
         </RadioButton>
@@ -107,18 +107,18 @@ const onRadioChange = (value: (typeof values)[number]) => {
       <template #example>
         <RadioButton
           v-model="selectedOption2"
-          :values
           name="radio2"
           value="option1"
+          :values
         >
           <span style="color: var(--c-primary)">Custom styled content 1</span>
         </RadioButton>
 
         <RadioButton
           v-model="selectedOption2"
-          :values
           name="radio2"
           value="option2"
+          :values
         >
           <span style="color: var(--c-secondary)">Custom styled content 2</span>
         </RadioButton>
@@ -136,9 +136,9 @@ const onRadioChange = (value: (typeof values)[number]) => {
       <template #example>
         <RadioButton
           v-model="selectedOption3"
-          :values
           name="radio3"
           value="option1"
+          :values
           @change="onRadioChange"
         >
           Option 1 (Click me and check the console)
@@ -146,9 +146,9 @@ const onRadioChange = (value: (typeof values)[number]) => {
 
         <RadioButton
           v-model="selectedOption3"
-          :values
           name="radio3"
           value="option2"
+          :values
           @change="onRadioChange"
         >
           Option 2 (Click me and check the console)

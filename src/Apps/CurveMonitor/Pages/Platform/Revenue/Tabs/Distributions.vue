@@ -36,8 +36,8 @@ const stdDevWeeklyFees = computed(() => {
       :has-value="distributions.length > 0"
     >
       <AsyncValue
-        :value="totalFees"
         type="dollar"
+        :value="totalFees"
       ></AsyncValue>
     </KPI>
 
@@ -47,8 +47,8 @@ const stdDevWeeklyFees = computed(() => {
       :has-value="distributions.length > 0"
     >
       <AsyncValue
-        :value="averageWeeklyFees"
         type="dollar"
+        :value="averageWeeklyFees"
       ></AsyncValue>
     </KPI>
 
@@ -58,8 +58,8 @@ const stdDevWeeklyFees = computed(() => {
       :has-value="distributions.length > 0"
     >
       <AsyncValue
-        :value="stdDevWeeklyFees"
         type="dollar"
+        :value="stdDevWeeklyFees"
       ></AsyncValue>
     </KPI>
 

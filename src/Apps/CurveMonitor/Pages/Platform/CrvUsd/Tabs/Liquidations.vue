@@ -102,7 +102,7 @@ const { isFetching: loadingLosses, data: losses } = useQueryLiqLosses(
 
     <ChartLiqsSoftLiqRatio
       :ratios="softLiqRatios"
-      :prices-oracle="pricesOracle"
+      :prices-oracle
       :loading="loadingSoftLiqs || loadingSnapshots"
     ></ChartLiqsSoftLiqRatio>
 

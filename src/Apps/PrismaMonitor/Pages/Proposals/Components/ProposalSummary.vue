@@ -34,24 +34,24 @@ const emit = defineEmits<{
     <div class="row">
       <Status
         class="item"
-        :proposal="proposal"
+        :proposal
       ></Status>
 
       <Proposer
         class="item"
-        :proposal="proposal"
+        :proposal
       ></Proposer>
 
       <Date
         class="item"
-        :proposal="proposal"
         type="start"
+        :proposal
       ></Date>
 
       <Date
         class="item"
-        :proposal="proposal"
         type="end"
+        :proposal
       ></Date>
 
       <div

@@ -181,7 +181,7 @@ const onCheck = (round: Round) => {
 const multiselect = `<template>
   <Table
     class="multiselect-table"
-    :rows="rows"
+    :rows
     :columns="['', 'Deadline', '']"
     @selected="onCheck"
   >
@@ -234,11 +234,11 @@ const onCheck = (round: Round) => {
       <template #example>
         <Table
           class="example-table"
+          expand-side="right"
           :rows
           :columns
           :sorting
           :expanded="expandedRows"
-          expand-side="right"
           @sort-column="onSort"
           @selected="onSelected"
         >
@@ -258,17 +258,17 @@ const onCheck = (round: Round) => {
 
             <div class="end">
               <AsyncValue
+                type="dollar"
                 :value="item.value"
                 :precision="5"
-                type="dollar"
               />
             </div>
 
             <div class="end">
               <AsyncValue
+                type="dollar"
                 :value="item.value * 10000"
                 :precision="2"
-                type="dollar"
               />
             </div>
           </template>
@@ -283,9 +283,9 @@ const onCheck = (round: Round) => {
             <div></div>
             <div class="end">
               <AsyncValue
+                type="dollar"
                 :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
                 :precision="2"
-                type="dollar"
               />
             </div>
           </template>
@@ -308,7 +308,7 @@ const onCheck = (round: Round) => {
       <template #example>
         <Table
           class="multiselect-table"
-          :rows="rows"
+          :rows
           :columns="['', 'Deadline', '']"
           @selected="onCheck"
         >

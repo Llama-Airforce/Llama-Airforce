@@ -62,9 +62,9 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
       :has-value="!!totalRevenue"
     >
       <AsyncValue
+        type="dollar"
         :value="totalRevenue"
         :precision="2"
-        type="dollar"
       />
     </KPI>
 
@@ -75,9 +75,9 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
       :tooltip="rewardsPerDollarBribeTooltip"
     >
       <AsyncValue
+        type="dollar"
         :value="rewardPerDollarBribe"
         :precision="2"
-        type="dollar"
       />
     </KPI>
 
@@ -87,9 +87,9 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
       :has-value="!!recordEarningPerVlAsset"
     >
       <AsyncValue
+        type="dollar"
         :value="recordEarningPerVlAsset"
         :precision="5"
-        type="dollar"
       />
     </KPI>
   </div>

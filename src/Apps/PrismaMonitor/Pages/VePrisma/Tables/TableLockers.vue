@@ -56,7 +56,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
-          :search="true"
+          search
           :placeholder="t('search-placeholder')"
         >
         </InputText>
@@ -64,7 +64,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>
@@ -81,8 +81,8 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${item.id}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.id}`"
             @click.stop
           >
             {{ item.id }}
@@ -94,11 +94,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           :class="{ zero: item.weight === 0 }"
         >
           <AsyncValue
+            show-zero
             type="dollar"
             :value="Math.round(item.weight)"
             :precision="2"
             :show-symbol="false"
-            :show-zero="true"
           ></AsyncValue>
         </div>
 
@@ -107,11 +107,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           :class="{ zero: item.locked === 0 }"
         >
           <AsyncValue
+            show-zero
             type="dollar"
             :value="Math.round(item.locked)"
             :precision="2"
             :show-symbol="false"
-            :show-zero="true"
           ></AsyncValue>
         </div>
 
@@ -120,11 +120,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           :class="{ zero: item.unlocked === 0 }"
         >
           <AsyncValue
+            show-zero
             type="dollar"
             :value="Math.round(item.unlocked)"
             :precision="2"
             :show-symbol="false"
-            :show-zero="true"
           ></AsyncValue>
         </div>
 
@@ -133,11 +133,11 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           :class="{ zero: item.frozen === 0 }"
         >
           <AsyncValue
+            show-zero
             type="dollar"
             :value="Math.round(item.frozen)"
             :precision="2"
             :show-symbol="false"
-            :show-zero="true"
           ></AsyncValue>
         </div>
       </template>

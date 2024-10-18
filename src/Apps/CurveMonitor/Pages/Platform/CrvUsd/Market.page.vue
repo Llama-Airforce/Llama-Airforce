@@ -60,8 +60,8 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
         <KeepAlive>
           <MarketOverview
             v-if="tabActive === 'overview'"
-            :market
             chain="ethereum"
+            :market
           ></MarketOverview>
         </KeepAlive>
       </TabItem>
@@ -70,8 +70,8 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
         <KeepAlive>
           <Trading
             v-if="tabActive === 'trading'"
-            :market
             chain="ethereum"
+            :market
           ></Trading>
         </KeepAlive>
       </TabItem>
@@ -80,8 +80,8 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 'liquidations'"
-            :market
             chain="ethereum"
+            :market
           ></Liquidations>
         </KeepAlive>
       </TabItem>

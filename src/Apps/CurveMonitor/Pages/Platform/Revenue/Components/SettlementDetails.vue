@@ -136,8 +136,8 @@ const cardJson = useTemplateRef("cardJson");
             <div>
               <a
                 class="font-mono"
-                :href="linkAddress(solverAddress)"
                 target="_blank"
+                :href="linkAddress(solverAddress)"
               >
                 {{ solver }}
               </a>

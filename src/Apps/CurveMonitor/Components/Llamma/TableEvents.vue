@@ -36,7 +36,7 @@ const type = (x: LlammaEvent) =>
       <Pagination
         :items-count="count"
         :items-per-page="10"
-        :page="page"
+        :page
         @page="onPage"
       ></Pagination>
     </template>
@@ -59,8 +59,8 @@ const type = (x: LlammaEvent) =>
 
         <div>
           <a
-            :href="`https://etherscan.io/address/${event.provider}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${event.provider}`"
             @click.stop
           >
             {{ addressShort(event.provider) }}
@@ -69,8 +69,8 @@ const type = (x: LlammaEvent) =>
 
         <div class="end">
           <a
-            :href="`https://etherscan.io/tx/${event.transaction_hash}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${event.transaction_hash}`"
             @click.stop
           >
             {{ relativeTime(event.timestamp) }}

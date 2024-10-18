@@ -18,17 +18,17 @@ const reached = computed(() => (votesSupport.value / votesQuorum.value) * 100);
     <div class="heading">Quorum</div>
     <div class="amount">
       <AsyncValue
+        type="dollar"
         :value="votesSupport"
         :precision="0"
         :show-symbol="false"
-        type="dollar"
       />
       /
       <AsyncValue
+        type="dollar"
         :value="votesQuorum"
         :precision="0"
         :show-symbol="false"
-        type="dollar"
       />
       veCRV
     </div>
@@ -49,9 +49,9 @@ const reached = computed(() => (votesSupport.value / votesQuorum.value) * 100);
       <div class="zero">0%</div>
       <div class="quorum">
         <AsyncValue
+          type="percentage"
           :value="proposal.quorum * 100"
           :precision="0"
-          type="percentage"
         ></AsyncValue>
       </div>
     </div>

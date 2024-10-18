@@ -38,8 +38,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
     <template #actions>
       <InputText
         v-model="search"
+        search
         placeholder="Search for..."
-        :search="true"
       >
       </InputText>
     </template>
@@ -72,43 +72,43 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
+            type="percentage"
             :value="item.rate * 100"
             :precision="2"
-            type="percentage"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.borrowed"
             :precision="decimals"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.collateralUsd"
             :precision="decimals"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.fees.pending"
             :precision="decimals"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="item.fees.collected"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
       </template>
@@ -122,35 +122,35 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
             :precision="decimals"
             :show-symbol="false"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.collateralUsd, 0)"
             :precision="decimals"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.fees.pending, 0)"
             :precision="decimals"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            show-zero
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.fees.collected, 0)"
             :precision="decimals"
-            :show-zero="true"
-            type="dollar"
           />
         </div>
       </template>

@@ -14,22 +14,22 @@ const expanded = ref(initExpanded);
 
 <template>
   <Card
+    compact
     class="proposal"
-    :compact="true"
   >
     <ProposalSummary
-      :proposal="proposal"
-      :expanded="expanded"
+      :proposal
+      :expanded
       @toggle-expand="expanded = !expanded"
     ></ProposalSummary>
 
     <Collapsible
       class="proposal-details-collapsible"
-      :expanded="expanded"
+      :expanded
     >
       <ProposalDetails
-        :proposal="proposal"
-        :expanded="expanded"
+        :proposal
+        :expanded
       ></ProposalDetails>
     </Collapsible>
   </Card>

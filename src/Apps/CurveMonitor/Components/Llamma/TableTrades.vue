@@ -31,7 +31,7 @@ const round = (x: number) =>
       <Pagination
         :items-count="count"
         :items-per-page="10"
-        :page="page"
+        :page
         @page="onPage"
       ></Pagination>
     </template>
@@ -53,7 +53,7 @@ const round = (x: number) =>
       <template #row="{ item: trade }">
         <div class="end">{{ round(trade.amount_bought) }}</div>
         <TokenIcon
-          :chain="chain"
+          :chain
           :address="trade.token_bought.address"
         ></TokenIcon>
         <div>
@@ -68,7 +68,7 @@ const round = (x: number) =>
 
         <div class="end">{{ round(trade.amount_sold) }}</div>
         <TokenIcon
-          :chain="chain"
+          :chain
           :address="trade.token_sold.address"
         ></TokenIcon>
         <div>
@@ -83,8 +83,8 @@ const round = (x: number) =>
 
         <div>
           <a
-            :href="`https://etherscan.io/address/${trade.buyer}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${trade.buyer}`"
             @click.stop
           >
             {{ addressShort(trade.buyer) }}
@@ -93,8 +93,8 @@ const round = (x: number) =>
 
         <div class="end">
           <a
-            :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
             @click.stop
           >
             {{ relativeTime(trade.timestamp) }}

@@ -37,8 +37,8 @@ const proposalToClipboard = async () => {
       :class="{ 'no-title': !proposal.metadata }"
     >
       <router-link
-        :to="proposalLink"
         class="id"
+        :to="proposalLink"
         @click="proposalToClipboard"
       >
         <LucideLink /> {{ proposal.id }}
@@ -52,29 +52,29 @@ const proposalToClipboard = async () => {
     <div class="row">
       <Status
         class="item"
-        :proposal="proposal"
+        :proposal
       ></Status>
 
       <Type
         class="item"
-        :proposal="proposal"
+        :proposal
       ></Type>
 
       <Proposer
         class="item"
-        :proposal="proposal"
+        :proposal
       ></Proposer>
 
       <Date
         class="item"
-        :proposal="proposal"
         type="start"
+        :proposal
       ></Date>
 
       <Date
         class="item"
-        :proposal="proposal"
         type="end"
+        :proposal
       ></Date>
 
       <div

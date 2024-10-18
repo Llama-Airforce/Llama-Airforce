@@ -53,9 +53,9 @@ const linkAddress = (addr: string): string => {
 
       <InputText
         v-model="search"
+        search
         class="search"
         placeholder="Search for..."
-        :search="true"
       >
       </InputText>
     </template>
@@ -71,8 +71,8 @@ const linkAddress = (addr: string): string => {
         <div>
           <a
             class="font-mono"
-            :href="linkAddress(item.pool)"
             target="_blank"
+            :href="linkAddress(item.pool)"
           >
             {{ item.pool }}
           </a>
@@ -80,9 +80,9 @@ const linkAddress = (addr: string): string => {
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.usdValue"
             :precision="2"
-            type="dollar"
           />
         </div>
       </template>
@@ -93,9 +93,9 @@ const linkAddress = (addr: string): string => {
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="rows.reduce((acc, x) => acc + x.usdValue, 0)"
             :precision="2"
-            type="dollar"
           />
         </div>
       </template>

@@ -36,8 +36,8 @@ const onSelect = (option: SelectItem): void => {
 
 const select1 = `<Select
   class="select-component"
-  :options="options"
-  :selected="selected"
+  :options
+  :selected
   @input="onSelect"
 >
   <template #item="{ item }">
@@ -107,8 +107,8 @@ const select3 = `.select-component {
       <template #example>
         <Select
           class="select-component"
-          :options="options"
-          :selected="selected"
+          :options
+          :selected
           @input="onSelect"
         >
           <template #item="{ item }">

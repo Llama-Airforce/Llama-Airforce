@@ -146,9 +146,9 @@ const totalUtilRate = (type: "long" | "short"): number => {
       <div class="toolbar">
         <InputText
           v-model="search"
+          search
           class="search"
           placeholder="Search for..."
-          :search="true"
         >
         </InputText>
 
@@ -168,20 +168,20 @@ const totalUtilRate = (type: "long" | "short"): number => {
           :has-value="!loadingMarkets"
         >
           <AsyncValue
-            :value="totalBorrowed('long')"
             type="dollar"
+            :value="totalBorrowed('long')"
           ></AsyncValue>
         </KPI>
 
         <KPI
           tooltip-type="icon"
           label="Average Utilization Rate"
-          :has-value="!loadingMarkets"
           tooltip="Aggregate debt divided by aggregate assets"
+          :has-value="!loadingMarkets"
         >
           <AsyncValue
-            :value="totalUtilRate('long')"
             type="percentage"
+            :value="totalUtilRate('long')"
           ></AsyncValue>
         </KPI>
       </div>
@@ -191,7 +191,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
         type="long"
         :pairs="marketPairsFiltered"
         :loading="loadingMarkets"
-        :chain="chain"
+        :chain
         @selected="onMarketSelect"
       ></TableMarkets>
     </div>
@@ -203,20 +203,20 @@ const totalUtilRate = (type: "long" | "short"): number => {
           :has-value="!loadingMarkets"
         >
           <AsyncValue
-            :value="totalBorrowed('short')"
             type="dollar"
+            :value="totalBorrowed('short')"
           ></AsyncValue>
         </KPI>
 
         <KPI
           tooltip-type="icon"
           label="Average Utilization Rate"
-          :has-value="!loadingMarkets"
           tooltip="Aggregate debt divided by aggregate assets"
+          :has-value="!loadingMarkets"
         >
           <AsyncValue
-            :value="totalUtilRate('short')"
             type="percentage"
+            :value="totalUtilRate('short')"
           ></AsyncValue>
         </KPI>
       </div>

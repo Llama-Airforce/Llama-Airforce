@@ -43,7 +43,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       <Pagination
         :items-count="rows.length"
         :items-per-page="rowsPerPage"
-        :page="page"
+        :page
         @page="onPage"
       ></Pagination>
     </template>
@@ -51,14 +51,14 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     <Table
       class="votes-incentives-table"
       :rows="rowsPage"
-      :columns="columns"
+      :columns
     >
       <template #row="{ item }">
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/address/${item.voter}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.voter}`"
             @click.stop
           >
             {{ addressShort(item.voter) }}
@@ -68,8 +68,8 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <div>
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${item.recipient}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${item.recipient}`"
             @click.stop
           >
             {{ addressShort(item.recipient) }}
@@ -78,19 +78,19 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
         <div class="end">
           <AsyncValue
+            show-zero
             type="dollar"
             :value="Math.round(item.points)"
             :precision="2"
             :show-symbol="false"
-            :show-zero="true"
           ></AsyncValue>
         </div>
 
         <div class="end">
           <a
             class="font-mono"
-            :href="`https://etherscan.io/tx/${item.transaction}`"
             target="_blank"
+            :href="`https://etherscan.io/tx/${item.transaction}`"
             @click.stop
           >
             {{ addressShort(item.transaction) }}

@@ -40,8 +40,8 @@ const transferBlocks = computed(() =>
               Block
               <a
                 class="font-mono"
-                :href="`https://etherscan.io/block/${block.blockNumber}`"
                 target="_blank"
+                :href="`https://etherscan.io/block/${block.blockNumber}`"
               >
                 {{ block.blockNumber }}
               </a>

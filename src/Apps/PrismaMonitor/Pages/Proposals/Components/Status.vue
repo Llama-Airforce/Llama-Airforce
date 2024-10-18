@@ -35,10 +35,10 @@ const statusLabel = computed((): string => {
 
 <template>
   <KPI
+    has-value
     class="status"
     tooltip-type="underline"
     :label="t('status')"
-    :has-value="true"
     :tooltip="statusDetails"
   >
     <Tooltip v-if="statusDetails">

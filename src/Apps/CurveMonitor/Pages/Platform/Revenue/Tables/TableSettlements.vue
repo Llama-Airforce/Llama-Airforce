@@ -70,7 +70,7 @@ function symbol(settlement: CowSwapSettlement) {
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
-          :page="page"
+          :page
           @page="onPage"
         ></Pagination>
       </div>
@@ -78,11 +78,11 @@ function symbol(settlement: CowSwapSettlement) {
 
     <Table
       class="settlements-table"
+      expand-side="right"
       :rows="rowsPage"
       :columns
       :sorting
       :expanded
-      expand-side="right"
       @sort-column="onSort"
       @selected="toggleExpansion"
     >
@@ -101,26 +101,26 @@ function symbol(settlement: CowSwapSettlement) {
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.amountReceived"
             :precision="2"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.routerReceived"
             :precision="2"
-            type="dollar"
           />
         </div>
 
         <div class="end">
           <AsyncValue
             v-if="item.routerReceived > 1"
+            type="dollar"
             :value="profit(item)"
             :precision="2"
-            type="dollar"
           />
         </div>
 
@@ -128,18 +128,18 @@ function symbol(settlement: CowSwapSettlement) {
           <AsyncValue
             v-if="item.routerReceived > 1"
             class="pct"
+            type="percentage"
             :value="profitPct(item)"
             :precision="2"
             :class="{ green: profitPct(item) > 0 }"
-            type="percentage"
           />
         </div>
 
         <div class="end">
           <a
             class="font-mono"
-            :href="`https://explorer.cow.fi/tx/${item.txHash}`"
             target="_blank"
+            :href="`https://explorer.cow.fi/tx/${item.txHash}`"
             @click.stop
           >
             {{ addressShort(item.txHash) }}

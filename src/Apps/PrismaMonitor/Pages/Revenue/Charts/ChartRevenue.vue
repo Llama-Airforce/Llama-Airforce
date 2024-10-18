@@ -54,7 +54,7 @@ const onChartType = (type: ChartType) => {
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <template #actions>
       <div class="actions">

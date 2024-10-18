@@ -204,8 +204,8 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
 
           <InputNumber
             v-model="minAmountOutSafe"
-            style="grid-area: input"
             disabled
+            style="grid-area: input"
             :min="0"
             :max="Infinity"
           ></InputNumber>

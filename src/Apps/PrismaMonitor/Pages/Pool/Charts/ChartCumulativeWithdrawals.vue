@@ -71,7 +71,7 @@ function createSeries() {
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <div
       ref="chartRef"

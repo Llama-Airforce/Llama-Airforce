@@ -26,10 +26,10 @@ const tvl = computed(() => {
   <div class="tvl">
     <div class="value">
       <AsyncValue
+        show-zero
+        type="dollar"
         :value="tvl"
         :precision="1"
-        :show-zero="true"
-        type="dollar"
       />
     </div>
 

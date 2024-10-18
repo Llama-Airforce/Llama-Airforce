@@ -44,7 +44,7 @@ const { isFetching: loading, data } = useQuery({
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <template #actions>
       <div class="button-group">
@@ -64,7 +64,7 @@ const { isFetching: loading, data } = useQuery({
       </div>
     </template>
 
-    <ChartLargePositions :data="data"></ChartLargePositions>
+    <ChartLargePositions :data></ChartLargePositions>
   </Card>
 </template>
 

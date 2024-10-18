@@ -213,9 +213,9 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
         <span v-if="bribedAmount"> - </span>
         <AsyncValue
           v-if="bribedAmount"
+          type="dollar"
           :value="bribedAmount"
           :precision="2"
-          type="dollar"
         />
       </div>
     </template>
@@ -226,9 +226,9 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
         class="personalDollarPerVlAsset"
       >
         <AsyncValue
+          type="dollar"
           :value="personalDollarPerVlAsset"
           :precision="4"
-          type="dollar"
         />/{{ vlAssetSymbol(protocol) }}
       </div>
     </template>
@@ -246,9 +246,9 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
             <div class="bribe">
               <div>
                 <AsyncValue
+                  type="percentage"
                   :value="percentage(item)"
                   :precision="0"
-                  type="percentage"
                 />
               </div>
 
@@ -258,17 +258,17 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 
               <div class="end">
                 <AsyncValue
+                  type="dollar"
                   :value="dollarPerVlAsset(item)"
                   :precision="5"
-                  type="dollar"
                 />
               </div>
 
               <div class="end">
                 <AsyncValue
+                  type="dollar"
                   :value="amountDollars(item)"
                   :precision="2"
-                  type="dollar"
                 />
               </div>
             </div>

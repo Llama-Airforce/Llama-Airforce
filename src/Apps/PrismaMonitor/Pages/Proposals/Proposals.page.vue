@@ -48,7 +48,7 @@ const proposalsExecuted = computed((): Proposal[] => {
       <TabItem :header="t('all')">
         <ProposalsTab
           v-if="tabActive === 0"
-          :proposals="proposals"
+          :proposals
         ></ProposalsTab>
       </TabItem>
 

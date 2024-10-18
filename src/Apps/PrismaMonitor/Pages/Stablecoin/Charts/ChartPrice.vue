@@ -133,7 +133,7 @@ function createSeries() {
 <template>
   <Card
     :title="t('title', { stable: stableSymbol(flavor) })"
-    :loading="loading"
+    :loading
   >
     <template #actions>
       <Tooltip>

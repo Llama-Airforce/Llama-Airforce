@@ -36,9 +36,9 @@ const { data: price } = useQuery({
       :has-value="!!price"
     >
       <AsyncValue
+        type="dollar"
         :value="price"
         :precision="3"
-        type="dollar"
       ></AsyncValue>
     </KPI>
 
@@ -48,9 +48,9 @@ const { data: price } = useQuery({
       :has-value="!!borrowed"
     >
       <AsyncValue
+        type="dollar"
         :value="borrowed"
         :precision="2"
-        type="dollar"
       ></AsyncValue>
     </KPI>
 
@@ -60,9 +60,9 @@ const { data: price } = useQuery({
       :has-value="!!tvl"
     >
       <AsyncValue
+        type="dollar"
         :value="tvl"
         :precision="1"
-        type="dollar"
       ></AsyncValue>
     </KPI>
 
@@ -72,9 +72,9 @@ const { data: price } = useQuery({
       :has-value="!!volume"
     >
       <AsyncValue
+        type="dollar"
         :value="volume"
         :precision="1"
-        type="dollar"
       ></AsyncValue>
     </KPI>
   </div>

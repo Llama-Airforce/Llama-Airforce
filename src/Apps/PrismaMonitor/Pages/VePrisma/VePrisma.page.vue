@@ -24,15 +24,15 @@ const totalWeight = computed(() => data.value.totalWeight);
   <div class="dashboard">
     <TableLockers
       style="grid-row: 1; grid-column: 1"
-      :loading="loading"
-      :lockers="lockers"
+      :loading
+      :lockers
     ></TableLockers>
 
     <ChartTopLockers
       style="grid-row: 1; grid-column: 2"
-      :loading="loading"
-      :lockers="lockers"
-      :total-weight="totalWeight"
+      :loading
+      :lockers
+      :total-weight
     ></ChartTopLockers>
 
     <TableVotesIncentives

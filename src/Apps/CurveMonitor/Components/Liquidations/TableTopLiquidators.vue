@@ -40,25 +40,25 @@ const rows = computed((): Liquidator[] =>
       <template #row="{ item }">
         <div class="address">
           <a
-            :href="`https://etherscan.io/address/${item.liquidator}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.liquidator}`"
           >
             {{ addressShort(item.liquidator, 8) }}
           </a>
         </div>
         <div class="end">
           <AsyncValue
+            show-zero
             :value="item.count"
             :precision="0"
-            :show-zero="true"
           />
         </div>
 
         <div class="end">
           <AsyncValue
+            type="dollar"
             :value="item.value"
             :precision="1"
-            type="dollar"
           />
         </div>
       </template>

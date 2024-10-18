@@ -30,7 +30,7 @@ const onTroveSelect = async (trove: Trove) => {
 <template>
   <div class="dashboard-grid">
     <TableTroves
-      :vault="vault"
+      :vault
       @selected="onTroveSelect"
     ></TableTroves>
   </div>

@@ -67,8 +67,8 @@ const clipboard = async (addr: string) => {
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
+          search
           placeholder="Search for..."
-          :search="true"
         >
         </InputText>
 
@@ -118,8 +118,8 @@ const clipboard = async (addr: string) => {
           <div class="center-vert">
             <a
               class="font-mono"
-              :href="`https://etherscan.io/tx/${item.txHash}`"
               target="_blank"
+              :href="`https://etherscan.io/tx/${item.txHash}`"
             >
               {{ addressLeft(item.txHash, 10) }}
             </a>
@@ -132,8 +132,8 @@ const clipboard = async (addr: string) => {
           <div>
             <a
               class="font-mono"
-              :href="`https://etherscan.io/block/${item.blockNumber}`"
               target="_blank"
+              :href="`https://etherscan.io/block/${item.blockNumber}`"
             >
               {{ item.blockNumber }}
             </a>
@@ -146,8 +146,8 @@ const clipboard = async (addr: string) => {
           <div class="no-ellipsis">
             <a
               class="font-mono"
-              :href="`https://etherscan.io/address/${item.transferFrom}`"
               target="_blank"
+              :href="`https://etherscan.io/address/${item.transferFrom}`"
             >
               {{ addressShort(item.transferFrom, 10) }}
             </a>
@@ -156,8 +156,8 @@ const clipboard = async (addr: string) => {
           <div class="no-ellipsis">
             <a
               class="font-mono"
-              :href="`https://etherscan.io/addr ess/${item.transferTo}`"
               target="_blank"
+              :href="`https://etherscan.io/addr ess/${item.transferTo}`"
             >
               {{ addressShort(item.transferTo, 10) }}
             </a>
@@ -182,8 +182,8 @@ const clipboard = async (addr: string) => {
 
           <div class="end">
             <a
-              :href="`https://etherscan.io/tx/${item.txHash}`"
               target="_blank"
+              :href="`https://etherscan.io/tx/${item.txHash}`"
               @click.stop
             >
               {{ relativeTime(item.blockUnixtime) }}

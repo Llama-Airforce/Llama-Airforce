@@ -17,9 +17,9 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
       <div class="add-token">
         <InputText
           v-model="search"
+          search
           class="search"
           placeholder="Search for tokens"
-          :search="true"
         >
         </InputText>
 
@@ -28,7 +28,7 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
           @selected="emit('token', $event)"
         >
           <template #row="{ item: { address, symbol } }">
-            <TokenIcon :address="address"></TokenIcon>
+            <TokenIcon :address></TokenIcon>
             <div>{{ symbol ?? "?" }}</div>
           </template>
         </Table>

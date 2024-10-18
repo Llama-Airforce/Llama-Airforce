@@ -13,7 +13,7 @@ const vaults = useObservable(prismaService.overview$, []);
 
 <template>
   <div class="dashboard">
-    <TableLiquidations :vaults="vaults"></TableLiquidations>
+    <TableLiquidations :vaults></TableLiquidations>
   </div>
 </template>
 

@@ -96,17 +96,17 @@ const rows = computed((): Row[] => [
           class="collateral end"
         >
           <AsyncValue
-            :value="value[0]"
-            :show-zero="true"
+            show-zero
             type="dollar"
+            :value="value[0]"
           />
 
           /
 
           <AsyncValue
-            :value="value[1]"
-            :show-zero="true"
+            show-zero
             type="dollar"
+            :value="value[1]"
           />
         </div>
 
@@ -116,15 +116,15 @@ const rows = computed((): Row[] => [
         >
           <AsyncValue
             v-if="type === 'bad-debt'"
+            show-zero
             class="red"
-            :value="value"
-            :show-zero="true"
             type="dollar"
+            :value
           />
           <AsyncValue
             v-else-if="type !== 'number'"
-            :value="value"
-            :show-zero="true"
+            show-zero
+            :value
             :type
           />
           <span v-else>{{ value }}</span>

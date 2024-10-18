@@ -24,8 +24,8 @@ const asyncUnknown = `<AsyncValue
 </AsyncValue>`;
 
 const asyncZero = ` <AsyncValue
+  show-zero
   :value="0"
-  :show-zero="true"
 ></AsyncValue>`;
 
 const asyncPrecision = `<AsyncValue
@@ -73,8 +73,8 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="Dollar">
       <template #example>
         <AsyncValue
-          :value="50000"
           type="dollar"
+          :value="50000"
         ></AsyncValue>
       </template>
 
@@ -89,8 +89,8 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="Percentage">
       <template #example>
         <AsyncValue
-          :value="50000"
           type="percentage"
+          :value="50000"
         ></AsyncValue>
       </template>
 
@@ -131,8 +131,8 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="Zero">
       <template #example>
         <AsyncValue
+          show-zero
           :value="0"
-          :show-zero="true"
         ></AsyncValue>
       </template>
 
@@ -147,9 +147,9 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="Precision">
       <template #example>
         <AsyncValue
+          type="dollar"
           :value="50000"
           :precision="5"
-          type="dollar"
         ></AsyncValue>
       </template>
 
@@ -164,9 +164,9 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="No Symbol">
       <template #example>
         <AsyncValue
+          type="dollar"
           :value="50000"
           :show-symbol="false"
-          type="dollar"
         ></AsyncValue>
       </template>
 
@@ -181,9 +181,9 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="No Unit">
       <template #example>
         <AsyncValue
+          type="dollar"
           :value="50000"
           :show-unit="false"
-          type="dollar"
         ></AsyncValue>
       </template>
 
@@ -198,9 +198,9 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
     <Recipe title="Custom Precision Function">
       <template #example>
         <AsyncValue
+          type="dollar"
           :value="50000"
           :precision="customPrecision"
-          type="dollar"
         ></AsyncValue>
       </template>
 

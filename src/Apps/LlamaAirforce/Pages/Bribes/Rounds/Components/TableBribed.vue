@@ -84,17 +84,17 @@ const bribes = (bribed: Bribed): Bribe[] => {
 
               <div class="end">
                 <AsyncValue
+                  type="dollar"
                   :value="dollarPerVlAsset(item)"
                   :precision="5"
-                  type="dollar"
                 />
               </div>
 
               <div class="end">
                 <AsyncValue
+                  type="dollar"
                   :value="amountDollars(item)"
                   :precision="2"
-                  type="dollar"
                 />
               </div>
             </div>
@@ -111,18 +111,18 @@ const bribes = (bribed: Bribed): Bribe[] => {
 
                 <div class="end">
                   <AsyncValue
+                    type="dollar"
                     :value="bribe.amountDollars"
                     :precision="2"
-                    type="dollar"
                   />
                 </div>
 
                 <div class="end">
                   <AsyncValue
+                    type="dollar"
                     :value="bribe.amount"
                     :precision="2"
                     :show-symbol="false"
-                    type="dollar"
                   />
                 </div>
               </li>

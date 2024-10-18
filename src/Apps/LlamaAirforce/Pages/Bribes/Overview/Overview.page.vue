@@ -130,17 +130,17 @@ function initFromRouter() {
 
     <Summary
       style="grid-area: summary"
-      :overview="overview"
+      :overview
     ></Summary>
 
     <ChartBribesRevenue
       style="grid-area: chart; height: 370px"
-      :overview="overview"
+      :overview
     ></ChartBribesRevenue>
 
     <TableRounds
       style="grid-area: table; height: 420px"
-      :overview="overview"
+      :overview
     ></TableRounds>
   </div>
 </template>

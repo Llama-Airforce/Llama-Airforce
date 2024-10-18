@@ -56,9 +56,9 @@ const sandwichTxs = (sw: SandwichDetail) =>
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
+          search
           class="search"
           placeholder="Search for..."
-          :search="true"
         >
         </InputText>
 
@@ -89,8 +89,8 @@ const sandwichTxs = (sw: SandwichDetail) =>
         <div>
           <a
             class="vote-link"
-            :href="`https://etherscan.io/address/${item.poolAddress}`"
             target="_blank"
+            :href="`https://etherscan.io/address/${item.poolAddress}`"
           >
             {{ item.poolName }}
           </a>
@@ -142,10 +142,10 @@ const sandwichTxs = (sw: SandwichDetail) =>
 
       <template #row-details="{ item }">
         <Transactions
+          compact
           class="transactions"
           :txs="sandwichTxs(item)"
           :header="false"
-          :compact="true"
           :time="false"
         ></Transactions>
       </template>

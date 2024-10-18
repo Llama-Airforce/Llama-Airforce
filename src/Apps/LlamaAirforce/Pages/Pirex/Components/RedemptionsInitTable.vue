@@ -55,8 +55,8 @@ watch(selected, (newRedemption) => {
 
       <div class="end">
         <AsyncValue
-          :value="redemption.fee"
           type="percentage"
+          :value="redemption.fee"
         ></AsyncValue>
       </div>
 

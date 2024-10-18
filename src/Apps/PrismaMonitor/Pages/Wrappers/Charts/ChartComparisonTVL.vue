@@ -133,7 +133,7 @@ function formatter(y: number) {
 <template>
   <Card
     :title="t('title')"
-    :loading="loading"
+    :loading
   >
     <template #actions-secondary>
       <Legend :items></Legend>

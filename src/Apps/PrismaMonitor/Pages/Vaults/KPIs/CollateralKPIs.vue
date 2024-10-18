@@ -37,9 +37,9 @@ const { data } = useQuery({
     >
       <AsyncValue
         v-if="data"
+        type="dollar"
         :value="data.price"
         :precision="2"
-        type="dollar"
       ></AsyncValue>
     </KPI>
 
@@ -49,9 +49,9 @@ const { data } = useQuery({
     >
       <AsyncValue
         v-if="data"
+        type="dollar"
         :value="data.supply"
         :precision="2"
-        type="dollar"
       ></AsyncValue>
     </KPI>
 
@@ -61,9 +61,9 @@ const { data } = useQuery({
     >
       <AsyncValue
         v-if="data"
+        type="dollar"
         :value="data.tvl"
         :precision="1"
-        type="dollar"
       ></AsyncValue>
     </KPI>
 
@@ -73,9 +73,9 @@ const { data } = useQuery({
     >
       <AsyncValue
         v-if="data"
+        type="percentage"
         :value="data.share"
         :precision="1"
-        type="percentage"
       ></AsyncValue>
     </KPI>
 

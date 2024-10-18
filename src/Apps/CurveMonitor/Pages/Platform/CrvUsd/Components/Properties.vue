@@ -92,8 +92,8 @@ const clipboard = async (addr: string) => {
             <div>
               <a
                 class="font-mono"
-                :href="linkAddress(value.address)"
                 target="_blank"
+                :href="linkAddress(value.address)"
               >
                 {{ value.address }}
               </a>

@@ -47,15 +47,15 @@ const planeX = computed(() => {
           >
             <li>
               <router-link
+                class="nav-link"
+                :class="{
+                  'router-link-active': subIsActive(page.titleRoute, route),
+                }"
                 :to="
                   Array.isArray(page.titleRoute)
                     ? page.titleRoute[0]
                     : page.titleRoute
                 "
-                class="nav-link"
-                :class="{
-                  'router-link-active': subIsActive(page.titleRoute, route),
-                }"
               >
                 <div class="nav-link-container">{{ page.title }}</div>
               </router-link>
