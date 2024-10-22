@@ -5,14 +5,12 @@ const {
   placeholder = "",
   options = [],
   search = false,
-  autoComplete = false,
   filter = () => true,
   sort = null,
 } = defineProps<{
   placeholder?: string;
   options?: T[];
   search?: boolean;
-  autoComplete?: boolean;
   filter?: (input: string, option: T) => boolean;
   sort?: (a: T, b: T) => number;
 }>();
@@ -21,6 +19,8 @@ const emit = defineEmits<{
   input: [val: string];
   select: [option: T];
 }>();
+
+const showOptions = ref(false);
 
 const optionsProcessed = computed<T[]>(() => {
   const optionsFiltered = [...options].filter((option) =>
@@ -37,7 +37,15 @@ function onInput(evt: Event) {
   const value = (evt.target as HTMLInputElement).value;
 
   modelValue.value = value;
+  showOptions.value = !!value;
+
   emit("input", value);
+}
+
+function onSelect(option: T) {
+  showOptions.value = false;
+
+  emit("select", option);
 }
 </script>
 
@@ -63,14 +71,14 @@ function onInput(evt: Event) {
 
     <!-- Auto-complete -->
     <div
-      v-if="options && autoComplete"
+      v-if="options && showOptions"
       class="items"
-      :class="{ selectHide: !autoComplete }"
+      :class="{ 'no-options': !(options && showOptions) }"
     >
       <div
         v-for="(option, i) of optionsProcessed"
         :key="i"
-        @click="emit('select', option)"
+        @click="onSelect(option)"
       >
         <slot
           name="item"
@@ -164,7 +172,7 @@ function onInput(evt: Event) {
     }
   }
 
-  .selectHide {
+  .no-options {
     display: none;
   }
 

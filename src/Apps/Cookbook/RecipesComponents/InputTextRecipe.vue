@@ -3,7 +3,6 @@ import Recipe from "@CB/Recipe.vue";
 
 const text1 = ref("");
 const pool = ref("");
-const autoComplete = ref(false);
 
 type Pool = {
   name: string;
@@ -32,20 +31,11 @@ const filter = (input: string, pool: Pool) =>
 const sort = (a: Pool, b: Pool) => b.volume - a.volume;
 
 // Events
-const onInput = (input: string): void => {
-  autoComplete.value = !!input;
-};
-
-const toggleExpansion = (newPool: Pool): void => {
+const onSelect = (newPool: Pool): void => {
   pool.value = newPool.name;
-  autoComplete.value = false;
 };
 
-const onSelect = (pool: Pool): void => {
-  toggleExpansion(pool);
-};
-
-const inputText = `<
+const inputText = `<InputText
   v-model="text1"
   placeholder="Placeholder goes here" />`;
 
@@ -53,11 +43,9 @@ const inputTextSearch1 = `<InputText
   v-model="pool"
   placeholder="Search for a pool: enter a space here"
   search
-  :auto-complete
   :options="pools"
   :filter
   :sort
-  @input="onInput"
   @select="onSelect"
 >
   <template #item="{ item, idx }">
@@ -82,7 +70,6 @@ const inputTextSearch1 = `<InputText
 </InputText>`;
 
 const inputTextSearch2 = `const pool = ref("");
-const autoComplete = ref(false);
 
 type Pool = {
   name: string;
@@ -112,17 +99,8 @@ const sort = (a: Pool, b: Pool) =>
   b.volume - a.volume;
 
 // Events
-const onInput = (input: string): void => {
-  autoComplete.value = !!input;
-};
-
-const toggleExpansion = (newPool: Pool): void => {
+const onSelect = (newPool: Pool): void => {
   pool.value = newPool.name;
-  autoComplete.value = false;
-};
-
-const onSelect = (pool: Pool): void => {
-  toggleExpansion(pool);
 };`;
 
 const inputTextSearch3 = `.search-item {
@@ -177,11 +155,9 @@ const inputTextSearch3 = `.search-item {
           v-model="pool"
           search
           placeholder="Search for a pool: enter a space here"
-          :auto-complete
           :options="pools"
           :filter
           :sort
-          @input="onInput"
           @select="onSelect"
         >
           <template #item="{ item, idx }">
