@@ -73,7 +73,7 @@ const onTabClick = (_tab: typeof TabItem, index: number): void => {
         :key="i"
         class="tab"
       >
-        <component :is="tab"></component>
+        <component :is="tab" />
       </div>
     </div>
   </div>

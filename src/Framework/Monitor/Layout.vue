@@ -23,7 +23,7 @@ const onCrumb = async (crumb: Crumb) => {
       :duration="-1"
     />
 
-    <VueQueryDevtools></VueQueryDevtools>
+    <VueQueryDevtools />
 
     <slot name="navigation"></slot>
 
@@ -34,7 +34,7 @@ const onCrumb = async (crumb: Crumb) => {
           class="breadcrumb"
           :crumbs="storeBreadcrumb.crumbs"
           @crumb="onCrumb"
-        ></Breadcrumb>
+        />
 
         <div
           id="toolbar"

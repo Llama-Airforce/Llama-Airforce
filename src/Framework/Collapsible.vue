@@ -10,7 +10,7 @@ const { expanded = true } = defineProps<{
     :class="{ expanded }"
   >
     <div class="collapsible-inside">
-      <slot />
+      <slot></slot>
     </div>
   </div>
 </template>

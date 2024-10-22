@@ -18,10 +18,10 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Modal :show="show">
+  <Modal :show>
     <Card
       class="modal-card"
-      :title="title"
+      :title
     >
       <div class="modal-card">
         <slot></slot>

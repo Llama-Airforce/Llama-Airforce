@@ -11,9 +11,9 @@ const { options, series } = defineProps<{
   <VueApexCharts
     class="chart"
     height="100%"
-    :options="options"
-    :series="series"
-  ></VueApexCharts>
+    :options
+    :series
+  />
 </template>
 
 <style scoped>

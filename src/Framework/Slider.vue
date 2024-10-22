@@ -16,14 +16,15 @@ const { min, max } = defineProps<{
   <input
     v-model="modelValue"
     type="range"
-    :min="min"
-    :max="max"
+    :min
+    :max
   />
 </template>
 
 <style scoped>
 input {
   -webkit-appearance: none;
+  appearance: none;
   height: 0.75rem;
   background: var(--c-lvl2);
   border-radius: var(--border-radius);

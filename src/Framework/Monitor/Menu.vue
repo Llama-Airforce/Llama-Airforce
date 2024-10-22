@@ -24,8 +24,7 @@ const label = (item: MenuItemT): string => {
       <MenuItem
         :item
         @navigated="emit('navigated')"
-      >
-      </MenuItem>
+      />
     </ul>
   </nav>
 </template>

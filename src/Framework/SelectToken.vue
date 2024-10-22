@@ -45,8 +45,8 @@ watch(
       <div class="item">
         <TokenIcon
           class="icon"
-          :address="address"
-        ></TokenIcon>
+          :address
+        />
 
         <div class="label">{{ symbol ?? "?" }}</div>
       </div>

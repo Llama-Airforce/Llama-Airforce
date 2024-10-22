@@ -23,8 +23,8 @@ const onChange = (evt: Event): void => {
 
     <span
       class="checkmark"
-      :class="{ checked: modelValue }"
       role="checkbox"
+      :class="{ checked: modelValue }"
       :aria-checked="modelValue"
     >
       <svg

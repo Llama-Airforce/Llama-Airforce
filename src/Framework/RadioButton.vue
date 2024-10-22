@@ -35,8 +35,8 @@ const onChange = (evt: Event): void => {
 
     <span
       class="radio-mark"
-      :class="{ checked: modelValue === value }"
       role="radio"
+      :class="{ checked: modelValue === value }"
       :aria-checked="modelValue === value"
     >
       <span class="inner-circle"></span>

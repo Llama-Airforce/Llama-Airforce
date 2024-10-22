@@ -48,7 +48,7 @@ const stackActions = computed(() => width.value <= 1280);
     <Spinner
       v-if="loading !== null"
       :class="{ loading }"
-    ></Spinner>
+    />
 
     <div
       v-if="showHeader"

@@ -22,8 +22,8 @@ watch(modelValue, (value) => {
   <input
     v-model="modelValue"
     type="number"
-    :min="min"
-    :max="max"
+    :min
+    :max
   />
 </template>
 

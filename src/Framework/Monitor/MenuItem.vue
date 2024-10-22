@@ -76,8 +76,8 @@ const onClickNode = (): void => {
   <li v-if="isExternal(item)">
     <a
       class="nav-link root"
-      :href="item.url"
       target="_blank"
+      :href="item.url"
     >
       <div class="nav-link-container">
         {{ item.label }}
@@ -87,8 +87,8 @@ const onClickNode = (): void => {
 
   <li v-else-if="isLeaf(item)">
     <router-link
-      :to="item.to"
       class="nav-link root"
+      :to="item.to"
       :class="{ 'router-link-active': subIsActive(item.to, route) }"
       @click="emit('navigated')"
     >
@@ -106,7 +106,7 @@ const onClickNode = (): void => {
           <Badge
             v-if="item.tag"
             :label="item.tag"
-          ></Badge>
+          />
         </div>
       </div>
     </router-link>
@@ -130,7 +130,7 @@ const onClickNode = (): void => {
   <Collapsible
     v-if="isNode(item)"
     class="items"
-    :expanded="expanded"
+    :expanded
   >
     <ul>
       <li
@@ -139,8 +139,8 @@ const onClickNode = (): void => {
       >
         <router-link
           v-if="isLeaf(menuItem)"
-          :to="menuItem.to"
           class="nav-link"
+          :to="menuItem.to"
           :class="{ 'router-link-active': subIsActive(menuItem.to, route) }"
           @click="emit('navigated')"
         >
@@ -158,7 +158,7 @@ const onClickNode = (): void => {
               <Badge
                 v-if="menuItem.tag"
                 :label="menuItem.tag"
-              ></Badge>
+              />
             </div>
           </div>
         </router-link>

@@ -67,7 +67,7 @@ const onClick = (): void => {
 
     <Collapsible
       v-if="data"
-      :expanded="expanded"
+      :expanded
     >
       <div class="row-details">
         <slot name="row-details"></slot>

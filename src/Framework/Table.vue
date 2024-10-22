@@ -165,7 +165,7 @@ const sortColumn = (column: Column): void => {
       :class="{ 'selected-below': selectedBelow(i) }"
       :selected="selectedRow === row"
       :expanded="expanded.includes(row)"
-      :expand-side="expandSide"
+      :expand-side
       @click="onSelect"
     >
       <template #row>
@@ -187,8 +187,7 @@ const sortColumn = (column: Column): void => {
     <TableRow
       v-for="row in rowsEmpty"
       :key="row"
-    >
-    </TableRow>
+    />
 
     <!-- No data to show. -->
     <div

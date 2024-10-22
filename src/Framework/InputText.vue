@@ -58,7 +58,7 @@ const onInput = (evt: Event): void => {
     <input
       :type="search ? 'search' : 'text'"
       :value="modelValue"
-      :placeholder="placeholder"
+      :placeholder
       @input.stop="onInput"
       @select.stop=""
     />
