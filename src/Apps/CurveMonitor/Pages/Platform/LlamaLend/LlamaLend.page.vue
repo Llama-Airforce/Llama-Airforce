@@ -149,15 +149,14 @@ const totalUtilRate = (type: "long" | "short"): number => {
           search
           class="search"
           placeholder="Search for..."
-        >
-        </InputText>
+        />
 
         <SelectChain
           class="chain-select"
           :chain
           :chains
           @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-        ></SelectChain>
+        />
       </div>
     </Teleport>
 
@@ -170,7 +169,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
           <AsyncValue
             type="dollar"
             :value="totalBorrowed('long')"
-          ></AsyncValue>
+          />
         </KPI>
 
         <KPI
@@ -182,7 +181,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
           <AsyncValue
             type="percentage"
             :value="totalUtilRate('long')"
-          ></AsyncValue>
+          />
         </KPI>
       </div>
 
@@ -193,7 +192,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
         :loading="loadingMarkets"
         :chain
         @selected="onMarketSelect"
-      ></TableMarkets>
+      />
     </div>
 
     <div class="markets">
@@ -205,7 +204,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
           <AsyncValue
             type="dollar"
             :value="totalBorrowed('short')"
-          ></AsyncValue>
+          />
         </KPI>
 
         <KPI
@@ -217,7 +216,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
           <AsyncValue
             type="percentage"
             :value="totalUtilRate('short')"
-          ></AsyncValue>
+          />
         </KPI>
       </div>
 
@@ -228,7 +227,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
         :loading="loadingMarkets"
         :chain
         @selected="onMarketSelect"
-      ></TableMarkets>
+      />
     </div>
   </div>
 </template>

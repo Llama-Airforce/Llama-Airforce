@@ -45,7 +45,7 @@ const onCheckboxChange = (checked: boolean) => {
         <Code
           lang="html"
           :code="checkboxBasic"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -60,7 +60,7 @@ const onCheckboxChange = (checked: boolean) => {
         <Code
           lang="html"
           :code="checkboxCustom"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -76,7 +76,7 @@ const onCheckboxChange = (checked: boolean) => {
         <Code
           lang="html"
           :code="checkboxIcon"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -99,7 +99,7 @@ const onCheckboxChange = (checked: boolean) => {
         <Code
           lang="typescript"
           :code="checkboxEvent2"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

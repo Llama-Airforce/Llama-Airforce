@@ -45,11 +45,11 @@ const onChartType = (type: ChartType) => {
     <ChartLiqsCount
       v-if="chartType === 'count'"
       :liqs
-    ></ChartLiqsCount>
+    />
 
     <ChartLiqsValue
       v-else
       :liqs
-    ></ChartLiqsValue>
+    />
   </Card>
 </template>

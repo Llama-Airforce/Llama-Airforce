@@ -31,8 +31,8 @@ const onTab = (newTab: Tabs) => {
       </div>
     </template>
 
-    <Rewards v-if="tab === 'rewards'"></Rewards>
-    <RedemptionsUser v-if="tab === 'redemptions'"></RedemptionsUser>
+    <Rewards v-if="tab === 'rewards'" />
+    <RedemptionsUser v-if="tab === 'redemptions'" />
   </Card>
 </template>
 

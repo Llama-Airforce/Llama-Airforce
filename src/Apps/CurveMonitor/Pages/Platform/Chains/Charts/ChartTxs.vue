@@ -68,7 +68,7 @@ function createSeries() {
         <BtnChartLWExport
           filename="txs"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart

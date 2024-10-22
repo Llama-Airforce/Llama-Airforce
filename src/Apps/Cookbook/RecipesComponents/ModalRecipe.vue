@@ -51,17 +51,17 @@ const modalYesNo3 = `.content
         <Code
           lang="html"
           :code="modalYesNo1"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="modalYesNo2"
-        ></Code>
+        />
 
         <Code
           lang="css"
           :code="modalYesNo3"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

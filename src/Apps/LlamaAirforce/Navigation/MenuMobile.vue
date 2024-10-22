@@ -76,7 +76,7 @@ watch(
         :options="pages"
         :selected="page"
         @input="onPageSelect"
-      ></Select>
+      />
 
       <nav class="navigation">
         <ul
@@ -86,15 +86,14 @@ watch(
           <MenuItem
             :item="menuItem"
             @navigated="emit('navigated')"
-          >
-          </MenuItem>
+          />
         </ul>
       </nav>
 
       <SelectLanguage
         class="language"
         direction="up"
-      ></SelectLanguage>
+      />
     </div>
   </div>
 </template>

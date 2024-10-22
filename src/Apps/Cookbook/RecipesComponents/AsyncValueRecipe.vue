@@ -2,55 +2,45 @@
 import Recipe from "@CB/Recipe.vue";
 
 const async = `<AsyncValue
-  :value="50000">
-</AsyncValue>`;
+  :value="50000" />`;
 
 const asyncDollar = `<AsyncValue
   :value="50000"
-  type="dollar"
-></AsyncValue>`;
+  type="dollar" />`;
 
-const asyncPercentage = `<AsyncValue
+const asyncPercentage = `<
   :value="50000"
-  type="percentage"
-></AsyncValue>`;
+  type="percentage" />`;
 
-const asyncLoading = `<AsyncValue
-  :value="null">
-</AsyncValue>`;
+const asyncLoading = `<
+  :value="null" />`;
 
 const asyncUnknown = `<AsyncValue
-  :value="0">
-</AsyncValue>`;
+  :value="0" />`;
 
 const asyncZero = ` <AsyncValue
   show-zero
-  :value="0"
-></AsyncValue>`;
+  :value="0" />`;
 
 const asyncPrecision = `<AsyncValue
   :value="50000"
   :precision="5"
-  type="dollar"
-></AsyncValue>`;
+  type="dollar" />`;
 
-const asyncSymbol = `<AsyncValue
+const asyncSymbol = `<
   :value="50000"
   :show-symbol="false"
-  type="dollar"
-></AsyncValue>`;
+  type="dollar" />`;
 
-const asyncUnit = `<AsyncValue
+const asyncUnit = `<
   :value="50000"
   :show-unit="false"
-  type="dollar"
-></AsyncValue>`;
+  type="dollar" />`;
 
 const asyncCustomPrecision = `<AsyncValue
   :value="50000"
   :precision="(x) => x > 10000 ? 0 : 2"
-  type="dollar"
-></AsyncValue>`;
+  type="dollar" />`;
 
 const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
 </script>
@@ -59,14 +49,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
   <div class="dashboard">
     <Recipe title="AsyncValue">
       <template #example>
-        <AsyncValue :value="50000"></AsyncValue>
+        <AsyncValue :value="50000" />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="async"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -75,14 +65,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
         <AsyncValue
           type="dollar"
           :value="50000"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncDollar"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -91,40 +81,40 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
         <AsyncValue
           type="percentage"
           :value="50000"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncPercentage"
-        ></Code>
+        />
       </template>
     </Recipe>
 
     <Recipe title="Loading">
       <template #example>
-        <AsyncValue :value="null"></AsyncValue>
+        <AsyncValue :value="null" />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncLoading"
-        ></Code>
+        />
       </template>
     </Recipe>
 
     <Recipe title="Unknown">
       <template #example>
-        <AsyncValue :value="0"></AsyncValue>
+        <AsyncValue :value="0" />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncUnknown"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -133,14 +123,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
         <AsyncValue
           show-zero
           :value="0"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncZero"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -150,14 +140,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
           type="dollar"
           :value="50000"
           :precision="5"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncPrecision"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -167,14 +157,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
           type="dollar"
           :value="50000"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncSymbol"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -184,14 +174,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
           type="dollar"
           :value="50000"
           :show-unit="false"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncUnit"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -201,14 +191,14 @@ const customPrecision = (x: number) => (x > 10000 ? 0 : 2);
           type="dollar"
           :value="50000"
           :precision="customPrecision"
-        ></AsyncValue>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="asyncCustomPrecision"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

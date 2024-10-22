@@ -72,7 +72,7 @@ function symbol(settlement: CowSwapSettlement) {
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -88,7 +88,7 @@ function symbol(settlement: CowSwapSettlement) {
     >
       <template #row="{ item }">
         <div class="token">
-          <TokenIcon :address="item.coin.address"></TokenIcon>
+          <TokenIcon :address="item.coin.address" />
 
           <a
             class="font-mono"
@@ -156,7 +156,7 @@ function symbol(settlement: CowSwapSettlement) {
         <SettlementDetails
           v-if="expanded.includes(item)"
           :settlement="item"
-        ></SettlementDetails>
+        />
       </template>
     </Table>
   </Card>

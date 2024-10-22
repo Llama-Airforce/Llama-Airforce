@@ -48,8 +48,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
         v-model="search"
         search
         :placeholder="t('search-placeholder')"
-      >
-      </InputText>
+      />
     </template>
 
     <Table
@@ -134,7 +133,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
             type="dollar"
             :value="Math.round(item.price)"
             :precision="Infinity"
-          ></AsyncValue>
+          />
         </div>
       </template>
 

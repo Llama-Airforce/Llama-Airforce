@@ -177,10 +177,10 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
           class="redemptions-init-table"
           :redemptions
           @redemption="redemption = $event"
-        ></RedemptionsTableInit>
+        />
 
         <div class="input">
-          <TokenIcon :address="pxCvxAddress"></TokenIcon>
+          <TokenIcon :address="pxCvxAddress" />
 
           <div class="symbol">pxCVX</div>
 
@@ -189,7 +189,7 @@ const { execute: redeem, isExecuting: isRedeeming } = useExecuteContract(
             :min="0"
             :max="Infinity"
             :placeholder="balanceNum"
-          ></InputNumber>
+          />
 
           <a @click="balanceRedeem = balanceNum">Max</a>
 

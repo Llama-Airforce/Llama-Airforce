@@ -118,7 +118,7 @@ const onYesModalSlippage = async (newMinAmountOut: number) => {
         @close="modalSlippage = false"
         @no="modalSlippage = false"
         @yes="onYesModalSlippage"
-      ></ModalSlippage>
+      />
     </div>
   </Card>
 </template>

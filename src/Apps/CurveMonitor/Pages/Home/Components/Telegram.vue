@@ -28,7 +28,7 @@ const showModal = ref(false);
     <TelegramModal
       :show="showModal"
       @close="showModal = false"
-    ></TelegramModal>
+    />
   </div>
 </template>
 

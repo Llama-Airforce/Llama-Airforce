@@ -17,7 +17,7 @@ const noMenu = computed(
 
 <template>
   <footer :class="{ 'no-language': !noMenu }">
-    <SelectLanguage v-if="noMenu"></SelectLanguage>
+    <SelectLanguage v-if="noMenu" />
 
     <nav>
       <ul>

@@ -12,8 +12,8 @@ const hasHeader = computed(() => route.name !== "curvemonitor");
     class="headers"
     :class="{ hasHeader }"
   >
-    <HeaderDesktop class="desktop"></HeaderDesktop>
-    <HeaderMobile class="mobile"></HeaderMobile>
+    <HeaderDesktop class="desktop" />
+    <HeaderMobile class="mobile" />
   </div>
 </template>
 

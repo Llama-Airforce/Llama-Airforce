@@ -70,7 +70,7 @@ function createSeries() {
         <BtnChartLWExport
           filename="collateral_ratio"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart

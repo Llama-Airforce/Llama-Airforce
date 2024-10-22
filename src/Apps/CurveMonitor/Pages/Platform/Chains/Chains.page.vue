@@ -153,7 +153,7 @@ const rankTypesUsers = computed(() =>
         <ActivityTypeSelect
           style="grid-area: type"
           @select="onTypeSelect"
-        ></ActivityTypeSelect>
+        />
 
         <SelectChain
           all
@@ -162,7 +162,7 @@ const rankTypesUsers = computed(() =>
           :chain
           :chains
           @select-chain="chain = $event"
-        ></SelectChain>
+        />
       </div>
     </Teleport>
 
@@ -177,7 +177,7 @@ const rankTypesUsers = computed(() =>
           type="dollar"
           :value="txsToday"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </KPI>
 
       <KPI
@@ -190,7 +190,7 @@ const rankTypesUsers = computed(() =>
           type="dollar"
           :value="txsAvg"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </KPI>
 
       <KPI
@@ -203,7 +203,7 @@ const rankTypesUsers = computed(() =>
           type="dollar"
           :value="usersToday"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </KPI>
 
       <KPI
@@ -216,20 +216,20 @@ const rankTypesUsers = computed(() =>
           type="dollar"
           :value="usersAvg"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </KPI>
 
       <ChartTxs
         style="grid-area: txs"
         :txs
         :loading="loadingTxs"
-      ></ChartTxs>
+      />
 
       <ChartUsers
         style="grid-area: users"
         :users
         :loading="loadingUsers"
-      ></ChartUsers>
+      />
 
       <ChartRankingChains
         style="grid-area: top-chains"
@@ -237,7 +237,7 @@ const rankTypesUsers = computed(() =>
         :txs="rankChainsTxs"
         :users="rankChainsUsers"
         :loading="loadingTxs || loadingUsers"
-      ></ChartRankingChains>
+      />
 
       <ChartRankingTypes
         style="grid-area: top-types"
@@ -245,7 +245,7 @@ const rankTypesUsers = computed(() =>
         :txs="rankTypesTxs"
         :users="rankTypesUsers"
         :loading="loadingTxs || loadingUsers"
-      ></ChartRankingTypes>
+      />
     </div>
   </div>
 </template>

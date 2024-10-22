@@ -9,12 +9,12 @@ import TableTopWithdrawals from "@PM/Pages/Pool/Tables/TableTopWithdrawals.vue";
 
 <template>
   <div class="dashboard">
-    <ChartPoolTvl></ChartPoolTvl>
-    <ChartStableFlow></ChartStableFlow>
-    <ChartDepositDistribution></ChartDepositDistribution>
-    <ChartCumulativeWithdrawals></ChartCumulativeWithdrawals>
-    <TableTopDeposits></TableTopDeposits>
-    <TableTopWithdrawals></TableTopWithdrawals>
+    <ChartPoolTvl />
+    <ChartStableFlow />
+    <ChartDepositDistribution />
+    <ChartCumulativeWithdrawals />
+    <TableTopDeposits />
+    <TableTopWithdrawals />
   </div>
 </template>
 

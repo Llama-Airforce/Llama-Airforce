@@ -27,7 +27,7 @@ const { data } = useQuery({
         type="dollar"
         :value="data.price"
         :precision="4"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -39,7 +39,7 @@ const { data } = useQuery({
         type="dollar"
         :value="data.supply"
         :precision="2"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -51,7 +51,7 @@ const { data } = useQuery({
         type="dollar"
         :value="data.volume"
         :precision="1"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -63,7 +63,7 @@ const { data } = useQuery({
         type="dollar"
         :value="data.depth"
         :precision="1"
-      ></AsyncValue>
+      />
     </KPI>
   </div>
 </template>

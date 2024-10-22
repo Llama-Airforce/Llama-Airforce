@@ -42,26 +42,25 @@ whenever(getFeesTrigger, async () => {
       :logo="pounder.logo"
       :symbol="pounder.symbol"
       :price-underlying="state.priceUnderlying"
-    >
-    </Pool>
+    />
 
     <Balance
       class="pounder-item"
       :symbol="pounder.symbol"
       :state
-    ></Balance>
+    />
 
     <Apy
       class="pounder-item"
       :apy="state.apy"
       :fees
       @show="getFeesTrigger = true"
-    ></Apy>
+    />
 
     <Tvl
       class="pounder-item"
       :state
-    ></Tvl>
+    />
 
     <div
       class="pounder-item expander"

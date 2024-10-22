@@ -13,7 +13,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(["mev"], "monitor");
     >
       <TabItem header="MEV">
         <KeepAlive>
-          <MEV v-if="tabActive === 'mev'"></MEV>
+          <MEV v-if="tabActive === 'mev'" />
         </KeepAlive>
       </TabItem>
     </TabView>

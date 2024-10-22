@@ -3,12 +3,11 @@ import Recipe from "@CB/Recipe.vue";
 
 const value = ref(0);
 
-const inputNumber = `<InputNumber
+const inputNumber = `<
   v-model="value"
   placeholder="Number goes here"
   :min="-5"
-  :max="Infinity"
-></InputNumber>`;
+  :max="Infinity" />`;
 </script>
 
 <template>
@@ -20,14 +19,14 @@ const inputNumber = `<InputNumber
           placeholder="Number goes here"
           :min="-5"
           :max="Infinity"
-        ></InputNumber>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="inputNumber"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

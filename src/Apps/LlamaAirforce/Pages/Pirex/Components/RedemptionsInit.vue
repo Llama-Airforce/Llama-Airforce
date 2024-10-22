@@ -30,7 +30,7 @@ const showRedemptionsInit = ref(false);
     <ModalRedemptionsInit
       :show="showRedemptionsInit"
       @close="showRedemptionsInit = false"
-    ></ModalRedemptionsInit>
+    />
   </Card>
 </template>
 

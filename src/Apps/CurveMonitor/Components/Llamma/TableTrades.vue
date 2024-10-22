@@ -33,7 +33,7 @@ const round = (x: number) =>
         :items-per-page="10"
         :page
         @page="onPage"
-      ></Pagination>
+      />
     </template>
 
     <Table
@@ -55,7 +55,7 @@ const round = (x: number) =>
         <TokenIcon
           :chain
           :address="trade.token_bought.address"
-        ></TokenIcon>
+        />
         <div>
           <a
             class="font-mono"
@@ -70,7 +70,7 @@ const round = (x: number) =>
         <TokenIcon
           :chain
           :address="trade.token_sold.address"
-        ></TokenIcon>
+        />
         <div>
           <a
             class="font-mono"

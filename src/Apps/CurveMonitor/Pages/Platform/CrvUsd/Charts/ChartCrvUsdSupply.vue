@@ -66,21 +66,21 @@ const onChartType = (type: ChartType) => {
       <Legend
         v-if="chartType === 'line'"
         :items
-      ></Legend>
+      />
     </template>
 
     <KeepAlive>
       <ChartCrvUsdSupplyLine
         v-if="chartType === 'line'"
         :data
-      ></ChartCrvUsdSupplyLine>
+      />
     </KeepAlive>
 
     <KeepAlive>
       <ChartCrvUsdSupplyBreakdown
         v-if="chartType === 'breakdown'"
         :data
-      ></ChartCrvUsdSupplyBreakdown>
+      />
     </KeepAlive>
   </Card>
 </template>

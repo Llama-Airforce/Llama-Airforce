@@ -49,15 +49,14 @@ const linkAddress = (addr: string): string => {
         :chain="networkChain"
         :chains
         @select-chain="networkChain = $event === 'all' ? 'ethereum' : $event"
-      ></SelectChain>
+      />
 
       <InputText
         v-model="search"
         search
         class="search"
         placeholder="Search for..."
-      >
-      </InputText>
+      />
     </template>
 
     <Table

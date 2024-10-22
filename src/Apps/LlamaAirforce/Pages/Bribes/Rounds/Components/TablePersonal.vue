@@ -282,9 +282,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
 
       <template #no-data>
         <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
-        <WalletConnectButton
-          v-if="!isConnected && isSupported"
-        ></WalletConnectButton>
+        <WalletConnectButton v-if="!isConnected && isSupported" />
       </template>
     </Table>
   </Card>

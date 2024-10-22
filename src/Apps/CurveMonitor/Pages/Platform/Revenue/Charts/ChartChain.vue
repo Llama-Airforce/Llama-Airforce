@@ -64,7 +64,7 @@ const formatter = (x: number): string =>
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

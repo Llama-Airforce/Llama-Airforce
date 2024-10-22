@@ -53,29 +53,29 @@ const proposalToClipboard = async () => {
       <Status
         class="item"
         :proposal
-      ></Status>
+      />
 
       <Type
         class="item"
         :proposal
-      ></Type>
+      />
 
       <Proposer
         class="item"
         :proposal
-      ></Proposer>
+      />
 
       <Date
         class="item"
         type="start"
         :proposal
-      ></Date>
+      />
 
       <Date
         class="item"
         type="end"
         :proposal
-      ></Date>
+      />
 
       <div
         class="item expander"

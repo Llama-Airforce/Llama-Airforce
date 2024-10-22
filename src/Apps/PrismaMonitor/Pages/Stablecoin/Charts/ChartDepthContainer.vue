@@ -25,5 +25,5 @@ const { isFetching: loading, data } = useQuery({
     :key="poolDepth.name"
     :loading
     :depth="poolDepth"
-  ></ChartDepth>
+  />
 </template>

@@ -98,49 +98,49 @@ const { isFetching: loadingLosses, data: losses } = useQueryLiqLosses(
     <TableLiqOverview
       :overview
       :loading="loadingOverview"
-    ></TableLiqOverview>
+    />
 
     <ChartLiqsSoftLiqRatio
       :ratios="softLiqRatios"
       :prices-oracle
       :loading="loadingSoftLiqs || loadingSnapshots"
-    ></ChartLiqsSoftLiqRatio>
+    />
 
     <ChartLiqsMedianLoss
       :losses
       :loading="loadingLosses"
-    ></ChartLiqsMedianLoss>
+    />
 
     <ChartLiqsLosersProportion
       :losses
       :loading="loadingLosses"
-    ></ChartLiqsLosersProportion>
+    />
 
     <ChartLiqsHealthDeciles
       :deciles
       :loading="loadingDeciles"
-    ></ChartLiqsHealthDeciles>
+    />
 
     <ChartCollateralRatio
       :ratios="collateralRatios"
       :loading="loadingSnapshots"
-    ></ChartCollateralRatio>
+    />
 
     <ChartLiqs
       :liqs="liqsAggregate"
       :loading="loadingLiqsAggregate"
-    ></ChartLiqs>
+    />
 
     <TableTopLiquidators
       :liqs="liqsDetailed"
       :loading="loadingLiqsDetailed"
-    ></TableTopLiquidators>
+    />
 
     <ChartLiquidatorRevenue
       :discounts
       :liqs="liqsDetailed"
       :loading="loadingSnapshots || loadingLiqsDetailed"
-    ></ChartLiquidatorRevenue>
+    />
   </div>
 </template>
 

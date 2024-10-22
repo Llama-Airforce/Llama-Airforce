@@ -15,11 +15,10 @@ const onCrumb = (crumb: Crumb) => {
   crumbActive.value = crumb;
 };
 
-const breadcrumb1 = `<Breadcrumb
+const breadcrumb1 = `<
   :crumbs
   :active="crumbActive"
-  @crumb="onCrumb"
-></Breadcrumb>`;
+  @crumb="onCrumb" />`;
 
 const breadcrumb2 = `import { ref } from 'vue';
 import { type Crumb } from "@/Framework/Crumb";
@@ -46,19 +45,19 @@ const onCrumb = (crumb: Crumb) => {
           :crumbs
           :active="crumbActive"
           @crumb="onCrumb"
-        ></Breadcrumb>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="breadcrumb1"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="breadcrumb2"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

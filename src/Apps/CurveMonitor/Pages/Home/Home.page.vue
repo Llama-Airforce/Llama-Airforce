@@ -19,11 +19,11 @@ import Articles from "@CM/Pages/Home/Components/Articles.vue";
     />
 
     <div class="highlights">
-      <KPIs></KPIs>
-      <Telegram></Telegram>
+      <KPIs />
+      <Telegram />
     </div>
 
-    <Articles style="grid-area: articles"></Articles>
+    <Articles style="grid-area: articles" />
   </div>
 </template>
 

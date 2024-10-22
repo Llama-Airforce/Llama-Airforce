@@ -58,11 +58,11 @@ const onTypeSelect = (type: ProposalType): void => {
 <template>
   <div class="dashboard">
     <TabView @tab="tabActive = $event.index">
-      <TabItem header="All"></TabItem>
-      <TabItem header="Active"></TabItem>
-      <TabItem header="Passed"></TabItem>
-      <TabItem header="Denied"></TabItem>
-      <TabItem header="Executed"></TabItem>
+      <TabItem header="All" />
+      <TabItem header="Active" />
+      <TabItem header="Passed" />
+      <TabItem header="Denied" />
+      <TabItem header="Executed" />
     </TabView>
 
     <div class="filters">
@@ -71,14 +71,13 @@ const onTypeSelect = (type: ProposalType): void => {
         search
         class="search"
         placeholder="Search for Curve proposals"
-      >
-      </InputText>
+      />
 
       <div style="display: flex; gap: 1rem">
         <ProposalTypeSelect
           style="flex-grow: 1"
           @select="onTypeSelect"
-        ></ProposalTypeSelect>
+        />
 
         <Pagination
           class="pagination"
@@ -86,7 +85,7 @@ const onTypeSelect = (type: ProposalType): void => {
           :items-per-page="10"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </div>
 
@@ -97,7 +96,7 @@ const onTypeSelect = (type: ProposalType): void => {
         class="loading-backdrop"
         :proposal
         :class="{ loading }"
-      ></ProposalComponent>
+      />
 
       <Pagination
         class="pagination"
@@ -105,11 +104,11 @@ const onTypeSelect = (type: ProposalType): void => {
         :items-per-page="10"
         :page
         @page="onPage"
-      ></Pagination>
+      />
 
       <div v-if="proposals.length === 0">No proposals could be found.</div>
 
-      <Spinner :class="{ loading }"></Spinner>
+      <Spinner :class="{ loading }" />
     </div>
   </div>
 </template>

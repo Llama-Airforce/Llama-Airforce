@@ -19,31 +19,31 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
     >
       <TabItem header="Revenue">
         <KeepAlive>
-          <Overview v-if="tabActive === 'overview'"></Overview>
+          <Overview v-if="tabActive === 'overview'" />
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Distributions">
         <KeepAlive>
-          <Distributions v-if="tabActive === 'distributions'"></Distributions>
+          <Distributions v-if="tabActive === 'distributions'" />
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Cushions">
         <KeepAlive>
-          <Cushions v-if="tabActive === 'cushions'"></Cushions>
+          <Cushions v-if="tabActive === 'cushions'" />
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Settlements">
         <KeepAlive>
-          <Settlements v-if="tabActive === 'settlements'"></Settlements>
+          <Settlements v-if="tabActive === 'settlements'" />
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Harvesting">
         <KeepAlive>
-          <Harvesting v-if="tabActive === 'harvesting'"></Harvesting>
+          <Harvesting v-if="tabActive === 'harvesting'" />
         </KeepAlive>
       </TabItem>
     </TabView>

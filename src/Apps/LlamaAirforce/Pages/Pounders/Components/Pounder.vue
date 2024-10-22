@@ -58,14 +58,13 @@ watch(
       :pounder-id
       :expanded
       @toggle-expand="expanded = !expanded"
-    ></PounderSummary>
+    />
 
     <Collapsible :expanded>
       <PounderDetails
         :pounder-id
         :expanded
-      >
-      </PounderDetails>
+      />
     </Collapsible>
   </Card>
 </template>

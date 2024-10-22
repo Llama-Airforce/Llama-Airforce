@@ -156,7 +156,7 @@ const onPeriod = (newPeriod: Period) => {
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

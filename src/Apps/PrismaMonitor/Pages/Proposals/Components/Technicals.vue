@@ -91,7 +91,7 @@ const callData = computed(() => {
         <Voters
           class="voters"
           :proposal
-        ></Voters>
+        />
       </Collapsible>
     </div>
 

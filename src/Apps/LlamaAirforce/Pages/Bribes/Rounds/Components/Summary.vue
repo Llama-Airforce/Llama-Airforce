@@ -81,7 +81,7 @@ const onRoundSelect = (round: number): void => {
       </template>
     </Select>
 
-    <KPI v-else></KPI>
+    <KPI v-else />
 
     <KPI
       :label="'$/' + vlAssetSymbol(product?.protocol)"

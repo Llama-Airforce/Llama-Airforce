@@ -122,7 +122,7 @@ function createSeries() {
 <template>
   <Card title="Liquidator Revenue">
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <div

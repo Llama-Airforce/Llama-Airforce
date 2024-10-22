@@ -99,7 +99,7 @@ const onRadioChange = (value: (typeof values)[number]) => {
         <Code
           lang="html"
           :code="radioBasic"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -128,7 +128,7 @@ const onRadioChange = (value: (typeof values)[number]) => {
         <Code
           lang="html"
           :code="radioCustom"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -164,7 +164,7 @@ const onRadioChange = (value: (typeof values)[number]) => {
         <Code
           lang="typescript"
           :code="radioEvent2"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

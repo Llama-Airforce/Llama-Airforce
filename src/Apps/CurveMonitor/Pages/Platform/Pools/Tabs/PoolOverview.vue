@@ -81,7 +81,7 @@ const balances = computed(() => {
           clickable
           :chain
           :address="token.address"
-        ></TokenIcon>
+        />
       </div>
     </KPI>
 
@@ -93,7 +93,7 @@ const balances = computed(() => {
       <AsyncValue
         type="dollar"
         :value="pool?.tvlUsd ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -104,7 +104,7 @@ const balances = computed(() => {
       <AsyncValue
         type="dollar"
         :value="pool?.tradingVolume24h ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -115,32 +115,32 @@ const balances = computed(() => {
       <AsyncValue
         type="dollar"
         :value="pool?.tradingFee24h ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <ChartPrice
       style="grid-area: price"
       :ohlc
       :loading="loadingOHLC"
-    ></ChartPrice>
+    />
 
     <ChartVolume
       style="grid-area: volume"
       :volume
       :loading="loadingVolume"
-    ></ChartVolume>
+    />
 
     <ChartTvl
       style="grid-area: tvl"
       :tvl
       :loading="loadingTvl"
-    ></ChartTvl>
+    />
 
     <ChartBalances
       style="grid-area: balances"
       :balances
       :loading="loadingTvl"
-    ></ChartBalances>
+    />
   </div>
 </template>
 

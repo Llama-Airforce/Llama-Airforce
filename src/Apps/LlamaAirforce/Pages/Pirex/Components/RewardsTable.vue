@@ -39,7 +39,7 @@ function isSelected(reward: Reward) {
     @selected="emit('select', $event)"
   >
     <template #row="{ item: reward }">
-      <TokenIcon :address="reward.address"></TokenIcon>
+      <TokenIcon :address="reward.address" />
       <div>{{ reward.symbol }}</div>
 
       <div class="end">
@@ -48,14 +48,14 @@ function isSelected(reward: Reward) {
           :value="reward.amount"
           :precision="4"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </div>
 
       <div class="end">
         <AsyncValue
           type="dollar"
           :value="reward.amountUsd"
-        ></AsyncValue>
+        />
       </div>
 
       <div

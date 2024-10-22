@@ -106,7 +106,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         class="select-vault"
         :vault
         @select-vault="vault = $event"
-      ></SelectVault>
+      />
 
       <div style="display: flex; gap: 1rem">
         <InputText
@@ -115,8 +115,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           class="search"
           style="flex-grow: 1"
           :placeholder="t('search-placeholder')"
-        >
-        </InputText>
+        />
 
         <Pagination
           class="pagination"
@@ -124,7 +123,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -166,7 +165,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             type="dollar"
             :value="Math.round(item.liquidated_debt)"
             :precision="Infinity"
-          ></AsyncValue>
+          />
         </div>
 
         <div class="end">{{ item.troves_affected_count }}</div>
@@ -189,7 +188,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       v-if="!!showDetails"
       :liquidation="showDetails"
       :vault-addr="showDetails.vault"
-    ></LiquidationDetails>
+    />
   </Modal>
 </template>
 

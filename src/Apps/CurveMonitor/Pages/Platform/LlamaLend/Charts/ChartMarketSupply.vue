@@ -141,7 +141,7 @@ function createSeries() {
         <BtnChartLWExport
           filename="supply_debt_util"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart
@@ -155,7 +155,7 @@ function createSeries() {
         :items
         :disabled
         @toggle="toggles[$event].value = !toggles[$event].value"
-      ></Legend>
+      />
     </template>
 
     <div

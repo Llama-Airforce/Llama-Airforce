@@ -104,8 +104,7 @@ const cardJson = useTemplateRef("cardJson");
                   :target="cardJson?.$el"
                   :show="fullscreen"
                   @close="fullscreen = false"
-                >
-                </ModalFullscreen>
+                />
               </Button>
             </div>
           </template>

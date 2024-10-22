@@ -5,8 +5,8 @@ import ChartComparisonTVL from "@PM/Pages/Wrappers/Charts/ChartComparisonTVL.vue
 
 <template>
   <div class="dashboard-grid">
-    <ChartComparisonPrice></ChartComparisonPrice>
-    <ChartComparisonTVL></ChartComparisonTVL>
+    <ChartComparisonPrice />
+    <ChartComparisonTVL />
   </div>
 </template>
 

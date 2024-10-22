@@ -30,7 +30,7 @@ const showSwap = ref(false);
     <ModalSwap
       :show="showSwap"
       @close="showSwap = false"
-    ></ModalSwap>
+    />
   </Card>
 </template>
 

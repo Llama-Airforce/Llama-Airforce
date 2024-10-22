@@ -201,8 +201,7 @@ watch(
               has-value
               :label="t('block')"
               :value="proposal.block"
-            >
-            </KPI>
+            />
           </div>
 
           <div class="description">

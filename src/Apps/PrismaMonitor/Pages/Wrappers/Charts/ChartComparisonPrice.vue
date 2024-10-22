@@ -141,7 +141,7 @@ function formatterPrice(x: number): string {
     :loading
   >
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <div

@@ -83,6 +83,5 @@ const createTimer = () => {
     :label
     :value="date"
     :tooltip="dateWithTime"
-  >
-  </KPI>
+  />
 </template>

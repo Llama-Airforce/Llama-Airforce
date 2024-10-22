@@ -125,7 +125,7 @@ const average = (data: number[], n = 7): number[] =>
         placeholder="Avg span (days)"
         :min="1"
         :max="Infinity"
-      ></InputNumber>
+      />
     </template>
 
     <div

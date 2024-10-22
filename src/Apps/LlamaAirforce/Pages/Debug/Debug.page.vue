@@ -4,7 +4,7 @@ import ClearCacheButton from "@LAF/Pages/Debug/Components/ClearCacheButton.vue";
 
 <template>
   <div class="dashboard">
-    <ClearCacheButton></ClearCacheButton>
+    <ClearCacheButton />
   </div>
 </template>
 

@@ -57,7 +57,7 @@ const categories = computed(() => data.map((x) => x.label));
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

@@ -64,7 +64,7 @@ const { isFetching: loading, data } = useQuery({
       </div>
     </template>
 
-    <ChartLargePositions :data></ChartLargePositions>
+    <ChartLargePositions :data />
   </Card>
 </template>
 

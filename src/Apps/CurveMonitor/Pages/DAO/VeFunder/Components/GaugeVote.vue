@@ -115,14 +115,14 @@ async function createVote() {
             <InputText
               v-model="gauge_"
               :placeholder="gaugePlaceholder"
-            ></InputText>
+            />
           </div>
         </div>
 
         <div class="field">
           <div class="label">Vote Description:</div>
           <div class="value">
-            <InputText v-model="description"></InputText>
+            <InputText v-model="description" />
           </div>
         </div>
       </div>

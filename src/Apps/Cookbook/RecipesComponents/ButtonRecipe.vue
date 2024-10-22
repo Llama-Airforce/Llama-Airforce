@@ -60,7 +60,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnDefault"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -73,12 +73,12 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnVariant1"
-        ></Code>
+        />
 
         <Code
           lang="css"
           :code="btnVariant2"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -91,7 +91,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnVariantClass"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -104,7 +104,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnDisabled"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -117,7 +117,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnWeb3"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -130,7 +130,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnIcon"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -146,7 +146,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="html"
           :code="btnSlot"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -164,7 +164,7 @@ const showAlert = (msg: string) => {
         <Code
           lang="typescript"
           :code="btnClick2"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

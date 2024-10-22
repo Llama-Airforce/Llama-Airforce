@@ -18,7 +18,7 @@ const { vault = null } = defineProps<{
           type="dollar"
           :value="vault.tvl"
           :precision="2"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -32,14 +32,14 @@ const { vault = null } = defineProps<{
           type="dollar"
           :value="vault.debt"
           :precision="1"
-        ></AsyncValue>
+        />
         /
         <AsyncValue
           v-if="vault"
           type="dollar"
           :value="vault.debt_cap"
           :precision="1"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -53,7 +53,7 @@ const { vault = null } = defineProps<{
           type="percentage"
           :value="vault.cr * 100"
           :precision="0"
-        ></AsyncValue>
+        />
 
         /
 
@@ -62,7 +62,7 @@ const { vault = null } = defineProps<{
           type="percentage"
           :value="vault.mcr * 100"
           :precision="0"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -77,7 +77,7 @@ const { vault = null } = defineProps<{
           type="percentage"
           :value="vault.rate * 100"
           :precision="1"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -91,7 +91,7 @@ const { vault = null } = defineProps<{
           show-zero
           :value="vault.open_troves"
           :precision="0"
-        ></AsyncValue>
+        />
 
         /
 
@@ -100,7 +100,7 @@ const { vault = null } = defineProps<{
           show-zero
           :value="vault.open_troves + vault.closed_troves"
           :precision="0"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -114,7 +114,7 @@ const { vault = null } = defineProps<{
           show-zero
           :value="vault.liq_troves"
           :precision="0"
-        ></AsyncValue>
+        />
 
         /
 
@@ -123,7 +123,7 @@ const { vault = null } = defineProps<{
           show-zero
           :value="vault.red_troves"
           :precision="0"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
   </div>

@@ -42,12 +42,12 @@ const onTabChange = (event: { tab: any; index: number }) => {
         <Code
           lang="html"
           :code="tabs1"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="tabs2"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

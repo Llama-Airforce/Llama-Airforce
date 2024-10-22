@@ -7,12 +7,11 @@ const onPage = (pageNew: number): void => {
   page.value = pageNew;
 };
 
-const pagination = `<Pagination
+const pagination = `<
   :items-count="96"
   :items-per-page="10"
   :page
-  @page="onPage"
-></Pagination>`;
+  @page="onPage" />`;
 </script>
 
 <template>
@@ -24,14 +23,14 @@ const pagination = `<Pagination
           :items-per-page="10"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="pagination"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

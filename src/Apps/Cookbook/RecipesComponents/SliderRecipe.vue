@@ -8,13 +8,12 @@ const onInput = (newVal: number) => {
   value.value = newVal;
 };
 
-const slider1 = `<Slider
+const slider1 = `<
   :min="0"
   :max="5"
   :step="0.2"
   :model-value="value"
-  @update:model-value="onInput"
-></Slider>`;
+  @update:model-value="onInput" />`;
 
 const slider2 = `const value = ref(0);
 
@@ -35,19 +34,19 @@ const onInput = (newVal: string) => {
           :step="0.2"
           :model-value="value"
           @update:model-value="onInput"
-        ></Slider>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="slider1"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="slider2"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

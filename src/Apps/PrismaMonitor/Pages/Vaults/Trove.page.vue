@@ -123,21 +123,19 @@ watch(trove, (trove) => {
       class="graph-rank"
       :vault
       :trove
-    >
-    </ChartTroveRank>
+    />
 
     <ChartTroveHealth
       class="graph-health"
       :vault
       :trove
-    >
-    </ChartTroveHealth>
+    />
 
     <TableTroveOps
       class="table-ops"
       :vault
       :trove
-    ></TableTroveOps>
+    />
   </div>
 </template>
 

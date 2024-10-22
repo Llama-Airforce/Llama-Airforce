@@ -75,8 +75,7 @@ const tokenAddress = (x: Pool & Keeper) =>
         v-model="search"
         search
         placeholder="Search for.."
-      >
-      </InputText>
+      />
     </template>
 
     <Table
@@ -95,7 +94,7 @@ const tokenAddress = (x: Pool & Keeper) =>
         <TokenIcon
           chain="ethereum"
           :address="tokenAddress(item)"
-        ></TokenIcon>
+        />
 
         <div>{{ name(item) }}</div>
 

@@ -11,7 +11,7 @@ const { isFetching: loading, data: settlements } = useQueryCowSwapSettlements();
       style="grid-area: table"
       :settlements
       :loading
-    ></TableSettlements>
+    />
   </div>
 </template>
 

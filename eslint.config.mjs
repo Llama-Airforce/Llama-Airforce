@@ -26,12 +26,12 @@ export default [
   eslintPluginPromise.configs["flat/recommended"],
   {
     languageOptions: {
-      parser: parser,
+      parser,
       sourceType: "module",
 
       parserOptions: {
-        parser: "@typescript-eslint/parser",
-        project: "tsconfig.json",
+        parser: tseslint.parser,
+        projectService: true,
         extraFileExtensions: [".vue"],
       },
 
@@ -124,18 +124,6 @@ export default [
         },
       ],
 
-      "vue/max-attributes-per-line": [
-        "error",
-        {
-          singleline: {
-            max: 2,
-          },
-
-          multiline: {
-            max: 2,
-          },
-        },
-      ],
       "vue/block-order": [
         "error",
         {
@@ -143,17 +131,24 @@ export default [
         },
       ],
       "vue/singleline-html-element-content-newline": "off",
-      "vue/html-self-closing": "off",
-      "vue/no-setup-props-destructure": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-v-html": "off",
-      "vue/require-valid-default-prop": "off",
+      "vue/require-valid-default-prop": "off", // Doesn't work with reactive prop defaults.
       "vue/prefer-true-attribute-shorthand": ["error", "always"],
       "vue/v-bind-style": [
         "error",
         "shorthand",
         {
           sameNameShorthand: "always",
+        },
+      ],
+      "vue/html-self-closing": [
+        "error",
+        {
+          html: {
+            void: "always",
+            normal: "never",
+          },
         },
       ],
       "vue/attributes-order": [

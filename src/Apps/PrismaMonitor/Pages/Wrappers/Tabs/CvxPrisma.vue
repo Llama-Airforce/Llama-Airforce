@@ -8,14 +8,14 @@ import ChartDistribution from "@PM/Pages/Wrappers/Charts/ChartDistribution.vue";
 
 <template>
   <div class="dashboard-grid">
-    <ChartPrice contract="convex"></ChartPrice>
-    <ChartTVL contract="convex"></ChartTVL>
-    <ChartFlow contract="convex"></ChartFlow>
-    <ChartAPR contract="convex"></ChartAPR>
+    <ChartPrice contract="convex" />
+    <ChartTVL contract="convex" />
+    <ChartFlow contract="convex" />
+    <ChartAPR contract="convex" />
     <ChartDistribution
       contract="convex"
       style="grid-column: 1 / -1"
-    ></ChartDistribution>
+    />
   </div>
 </template>
 

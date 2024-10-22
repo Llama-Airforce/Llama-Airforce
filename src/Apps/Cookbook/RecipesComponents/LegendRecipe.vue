@@ -22,7 +22,7 @@ const { items, toggles, disabled } = useLegend(() => {
           :items
           :disabled
           @toggle="toggles[$event].value = !toggles[$event].value"
-        ></Legend>
+        />
 
         <div class="legend-values">
           <Code

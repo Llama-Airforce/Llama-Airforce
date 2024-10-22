@@ -45,7 +45,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
       style="grid-area: ohlc"
       :ohlc="ohlc ?? []"
       :loading="loadingOHLC"
-    ></ChartOHLC>
+    />
 
     <TableTrades
       style="grid-area: trades"
@@ -54,7 +54,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
       :chain
       :loading="loadingTrades"
       @page="pageTrades = $event"
-    ></TableTrades>
+    />
 
     <TableEvents
       style="grid-area: events"
@@ -62,7 +62,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
       :count="events?.count ?? 0"
       :loading="loadingEvents"
       @page="pageEvents = $event"
-    ></TableEvents>
+    />
   </div>
 </template>
 

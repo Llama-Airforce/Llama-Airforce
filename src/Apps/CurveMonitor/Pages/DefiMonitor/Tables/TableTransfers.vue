@@ -69,8 +69,7 @@ const clipboard = async (addr: string) => {
           v-model="search"
           search
           placeholder="Search for..."
-        >
-        </InputText>
+        />
 
         <Pagination
           v-if="transfers.length > rowsPerPage"
@@ -78,14 +77,14 @@ const clipboard = async (addr: string) => {
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
     <div class="transfers-card-body">
       <div class="transfers-options">
         <div class="option">
-          <WatchlistTokens @tokens="tokens = $event"></WatchlistTokens>
+          <WatchlistTokens @tokens="tokens = $event" />
         </div>
 
         <div class="option">
@@ -95,7 +94,7 @@ const clipboard = async (addr: string) => {
             v-model="minAmount"
             :min="0"
             :max="Infinity"
-          ></InputNumber>
+          />
         </div>
       </div>
 
@@ -170,7 +169,7 @@ const clipboard = async (addr: string) => {
               class="token"
               chain="ethereum"
               :address="item.coinAddress"
-            ></TokenIcon>
+            />
 
             <a
               target="_blank"

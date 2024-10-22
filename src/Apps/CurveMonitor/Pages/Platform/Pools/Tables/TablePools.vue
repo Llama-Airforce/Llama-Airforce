@@ -54,7 +54,7 @@ function utilRate(pool: Pool) {
         :items-per-page="rowsPerPage"
         :page
         @page="onPage"
-      ></Pagination>
+      />
     </template>
 
     <Table
@@ -73,7 +73,7 @@ function utilRate(pool: Pool) {
             :key="token.address"
             :chain
             :address="token.address"
-          ></TokenIcon>
+          />
         </div>
 
         <div>{{ pool.name }}</div>

@@ -40,8 +40,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         v-model="search"
         search
         placeholder="Search for..."
-      >
-      </InputText>
+      />
     </template>
 
     <Table
@@ -65,7 +64,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         <TokenIcon
           chain="ethereum"
           :address="item.collateral_token.address"
-        ></TokenIcon>
+        />
 
         <div>{{ item.name }}</div>
         <div class="end">{{ item.loans }}</div>

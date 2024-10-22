@@ -114,10 +114,10 @@ const onType = (tabIndex: number) => {
           class="types"
           @tab="onType($event.index)"
         >
-          <TabItem header="All"></TabItem>
-          <TabItem header="Swaps"></TabItem>
-          <TabItem header="Deposits"></TabItem>
-          <TabItem header="Removals"></TabItem>
+          <TabItem header="All" />
+          <TabItem header="Swaps" />
+          <TabItem header="Deposits" />
+          <TabItem header="Removals" />
         </TabView>
       </div>
 
@@ -127,8 +127,7 @@ const onType = (tabIndex: number) => {
           search
           class="search"
           placeholder="Search for..."
-        >
-        </InputText>
+        />
 
         <Pagination
           class="pagination"
@@ -136,7 +135,7 @@ const onType = (tabIndex: number) => {
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 

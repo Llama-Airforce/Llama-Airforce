@@ -125,23 +125,22 @@ function initFromRouter() {
       style="grid-area: select-system"
       @select-platform="onSelectPlatform"
       @select-protocol="onSelectProtocol"
-    >
-    </SelectSystem>
+    />
 
     <Summary
       style="grid-area: summary"
       :overview
-    ></Summary>
+    />
 
     <ChartBribesRevenue
       style="grid-area: chart; height: 370px"
       :overview
-    ></ChartBribesRevenue>
+    />
 
     <TableRounds
       style="grid-area: table; height: 420px"
       :overview
-    ></TableRounds>
+    />
   </div>
 </template>
 

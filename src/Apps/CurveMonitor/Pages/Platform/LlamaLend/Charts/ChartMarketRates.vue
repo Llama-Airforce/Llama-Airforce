@@ -126,7 +126,7 @@ function formatter(x: number): string {
         <BtnChartLWExport
           filename="rates"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart
@@ -136,7 +136,7 @@ function formatter(x: number): string {
     </template>
 
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <div

@@ -4,7 +4,7 @@ import TableTransfers from "@CM/Pages/DefiMonitor/Tables/TableTransfers.vue";
 
 <template>
   <div class="dashboard-grid">
-    <TableTransfers style="grid-area: transfers"></TableTransfers>
+    <TableTransfers style="grid-area: transfers" />
   </div>
 </template>
 

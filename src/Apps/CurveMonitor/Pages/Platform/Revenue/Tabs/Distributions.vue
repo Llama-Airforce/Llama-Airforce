@@ -38,7 +38,7 @@ const stdDevWeeklyFees = computed(() => {
       <AsyncValue
         type="dollar"
         :value="totalFees"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -49,7 +49,7 @@ const stdDevWeeklyFees = computed(() => {
       <AsyncValue
         type="dollar"
         :value="averageWeeklyFees"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -60,26 +60,26 @@ const stdDevWeeklyFees = computed(() => {
       <AsyncValue
         type="dollar"
         :value="stdDevWeeklyFees"
-      ></AsyncValue>
+      />
     </KPI>
 
     <ChartDistributions
       style="grid-area: chart"
       :distributions
       :loading
-    ></ChartDistributions>
+    />
 
     <ChartDistributionsDelta
       style="grid-area: delta"
       :distributions
       :loading
-    ></ChartDistributionsDelta>
+    />
 
     <TableDistributions
       style="grid-area: table"
       :distributions
       :loading
-    ></TableDistributions>
+    />
   </div>
 </template>
 

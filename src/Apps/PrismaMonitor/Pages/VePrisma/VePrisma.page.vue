@@ -26,18 +26,16 @@ const totalWeight = computed(() => data.value.totalWeight);
       style="grid-row: 1; grid-column: 1"
       :loading
       :lockers
-    ></TableLockers>
+    />
 
     <ChartTopLockers
       style="grid-row: 1; grid-column: 2"
       :loading
       :lockers
       :total-weight
-    ></ChartTopLockers>
+    />
 
-    <TableVotesIncentives
-      style="grid-row: 2; grid-column: 1 / -1"
-    ></TableVotesIncentives>
+    <TableVotesIncentives style="grid-row: 2; grid-column: 1 / -1" />
   </div>
 </template>
 

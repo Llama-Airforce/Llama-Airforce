@@ -57,7 +57,7 @@ watch(
           :min="0.001"
           :max="0.2"
           :step="0.001"
-        ></Slider>
+        />
 
         <span style="grid-area: percentage">
           {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
@@ -70,7 +70,7 @@ watch(
           style="grid-area: input"
           :min="0"
           :max="Infinity"
-        ></InputNumber>
+        />
 
         <span style="grid-area: symbol">{{ symbolOutput }}</span>
       </div>

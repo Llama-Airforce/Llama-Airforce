@@ -8,14 +8,14 @@ import ChartDistribution from "@PM/Pages/Wrappers/Charts/ChartDistribution.vue";
 
 <template>
   <div class="dashboard-grid">
-    <ChartPrice contract="yearn"></ChartPrice>
-    <ChartTVL contract="yearn"></ChartTVL>
-    <ChartFlow contract="yearn"></ChartFlow>
-    <ChartAPR contract="yearn"></ChartAPR>
+    <ChartPrice contract="yearn" />
+    <ChartTVL contract="yearn" />
+    <ChartFlow contract="yearn" />
+    <ChartAPR contract="yearn" />
     <ChartDistribution
       contract="yearn"
       style="grid-column: 1 / -1"
-    ></ChartDistribution>
+    />
   </div>
 </template>
 

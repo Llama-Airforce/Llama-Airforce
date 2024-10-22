@@ -179,7 +179,7 @@ function createSeries() {
     :loading
   >
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <div

@@ -43,7 +43,7 @@ const utilRate = computed(() => {
             type="dollar"
             :value="market?.collateral_balance"
             :show-symbol="false"
-          ></AsyncValue>
+          />
 
           <span style="color: var(--c-lvl5)">/</span>
 
@@ -52,14 +52,14 @@ const utilRate = computed(() => {
             type="dollar"
             :value="market?.borrowed_balance"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </div>
 
         <AsyncValue
           show-zero
           type="dollar"
           :value="totalCollateralUsd"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -74,13 +74,13 @@ const utilRate = computed(() => {
           type="dollar"
           :value="market?.total_debt"
           :show-symbol="false"
-        ></AsyncValue>
+        />
 
         <AsyncValue
           show-zero
           type="dollar"
           :value="market?.total_debt_usd"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -95,13 +95,13 @@ const utilRate = computed(() => {
           type="dollar"
           :value="market?.total_assets"
           :show-symbol="false"
-        ></AsyncValue>
+        />
 
         <AsyncValue
           show-zero
           type="dollar"
           :value="market?.total_assets_usd"
-        ></AsyncValue>
+        />
       </div>
     </KPI>
 
@@ -116,7 +116,7 @@ const utilRate = computed(() => {
         show-zero
         type="percentage"
         :value="utilRate * 100"
-      ></AsyncValue>
+      />
     </KPI>
   </div>
 </template>

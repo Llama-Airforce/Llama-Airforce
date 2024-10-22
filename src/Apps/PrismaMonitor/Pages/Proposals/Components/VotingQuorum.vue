@@ -61,7 +61,7 @@ const reached = computed((): number => {
           type="percentage"
           :value="Math.min(reached, 100)"
           :precision="0"
-        ></AsyncValue>
+        />
       </div>
     </div>
   </div>

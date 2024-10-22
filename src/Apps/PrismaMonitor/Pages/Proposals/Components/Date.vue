@@ -85,8 +85,7 @@ const createTimer = (): void => {
     :label
     :value="date"
     :tooltip="dateWithTime"
-  >
-  </KPI>
+  />
 </template>
 
 <i18n lang="yaml" locale="en">

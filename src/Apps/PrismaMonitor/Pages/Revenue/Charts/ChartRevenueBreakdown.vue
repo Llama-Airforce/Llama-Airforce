@@ -136,7 +136,7 @@ const snakeToPascal = (str: string): string =>
   <ChartApex
     :options
     :series
-  ></ChartApex>
+  />
 </template>
 
 <style scoped>

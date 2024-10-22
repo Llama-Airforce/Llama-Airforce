@@ -11,9 +11,9 @@ const { proposal } = defineProps<{
 
 <template>
   <div class="voting">
-    <VotingQuorum :proposal></VotingQuorum>
-    <VotingResults :proposal></VotingResults>
-    <VotingButtons :proposal></VotingButtons>
+    <VotingQuorum :proposal />
+    <VotingResults :proposal />
+    <VotingButtons :proposal />
   </div>
 </template>
 

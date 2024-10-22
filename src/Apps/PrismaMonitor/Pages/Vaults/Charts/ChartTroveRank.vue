@@ -205,7 +205,7 @@ whenever(
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

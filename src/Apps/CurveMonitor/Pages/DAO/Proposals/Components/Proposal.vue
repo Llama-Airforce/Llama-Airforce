@@ -21,7 +21,7 @@ const expanded = ref(initExpanded);
       :proposal
       :expanded
       @toggle-expand="expanded = !expanded"
-    ></ProposalSummary>
+    />
 
     <Collapsible
       class="proposal-details-collapsible"
@@ -30,7 +30,7 @@ const expanded = ref(initExpanded);
       <ProposalDetails
         :proposal
         :expanded
-      ></ProposalDetails>
+      />
     </Collapsible>
   </Card>
 </template>

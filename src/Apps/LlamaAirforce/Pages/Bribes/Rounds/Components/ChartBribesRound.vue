@@ -139,7 +139,7 @@ const optimalColumnWidthPercent = (numBars: number): number => {
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

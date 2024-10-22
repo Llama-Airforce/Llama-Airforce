@@ -50,7 +50,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 
 <template>
   <div class="dashboard">
-    <Spinner :class="{ loading }"></Spinner>
+    <Spinner :class="{ loading }" />
 
     <TabView
       v-if="!loading && pool"
@@ -63,7 +63,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
             v-if="tabActive === 'overview'"
             :pool
             :chain
-          ></PoolOverview>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -73,7 +73,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
             v-if="tabActive === 'mev'"
             :pool
             :chain
-          ></MEV>
+          />
         </KeepAlive>
       </TabItem>
     </TabView>

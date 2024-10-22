@@ -74,7 +74,7 @@ function addToken(token: Token) {
         :show="showAddToken"
         @close="showAddToken = false"
         @token="addToken"
-      ></ModalAddToken>
+      />
     </div>
 
     <Table
@@ -82,7 +82,7 @@ function addToken(token: Token) {
       @selected="onSelect($event.address)"
     >
       <template #row="{ item: { address, symbol } }">
-        <TokenIcon :address></TokenIcon>
+        <TokenIcon :address />
         <div>{{ symbol ?? "?" }}</div>
 
         <div

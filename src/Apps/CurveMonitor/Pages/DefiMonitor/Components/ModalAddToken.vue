@@ -20,15 +20,14 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
           search
           class="search"
           placeholder="Search for tokens"
-        >
-        </InputText>
+        />
 
         <Table
           :rows="tokens"
           @selected="emit('token', $event)"
         >
           <template #row="{ item: { address, symbol } }">
-            <TokenIcon :address></TokenIcon>
+            <TokenIcon :address />
             <div>{{ symbol ?? "?" }}</div>
           </template>
         </Table>

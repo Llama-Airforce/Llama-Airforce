@@ -167,13 +167,13 @@ const series = computed((): Serie[] => {
     :loading
   >
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

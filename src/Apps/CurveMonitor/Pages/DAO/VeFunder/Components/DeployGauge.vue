@@ -58,7 +58,7 @@ async function execute() {
             <InputText
               v-model="receiver"
               :placeholder="receiverPlaceholder"
-            ></InputText>
+            />
           </div>
         </div>
 
@@ -69,7 +69,7 @@ async function execute() {
               v-model="amount"
               :min="1"
               :max="3303030299"
-            ></InputNumber>
+            />
           </div>
         </div>
       </div>

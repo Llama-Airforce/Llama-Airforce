@@ -86,7 +86,7 @@ function balance(redemption: RedemptionPending) {
           :value="balance(redemption)"
           :precision="4"
           :show-symbol="false"
-        ></AsyncValue>
+        />
       </div>
 
       <div class="end">

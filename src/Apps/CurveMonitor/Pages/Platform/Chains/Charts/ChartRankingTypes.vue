@@ -118,13 +118,13 @@ const formatterY = (x: number) => `${round(x, 0, "dollar")}${unit(x)}`;
         :items
         :disabled
         @toggle="toggles[$event].value = !toggles[$event].value"
-      ></Legend>
+      />
     </template>
 
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

@@ -100,7 +100,7 @@ function createSeries() {
         <BtnChartLWExport
           filename="keeper_prices"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart
@@ -114,7 +114,7 @@ function createSeries() {
         :items
         :disabled
         @toggle="toggles[$event].value = !toggles[$event].value"
-      ></Legend>
+      />
     </template>
 
     <div

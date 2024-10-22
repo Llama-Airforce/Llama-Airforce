@@ -4,7 +4,7 @@ import TableCushions from "@CM/Pages/Platform/Revenue/Tables/TableCushions.vue";
 
 <template>
   <div class="cushions">
-    <TableCushions></TableCushions>
+    <TableCushions />
   </div>
 </template>
 

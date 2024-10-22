@@ -5,8 +5,8 @@ import ChartBreakdown from "@PM/Pages/Revenue/Charts/ChartBreakdown.vue";
 
 <template>
   <div class="dashboard">
-    <ChartRevenue style="grid-column: 1"></ChartRevenue>
-    <ChartBreakdown style="grid-column: 2"></ChartBreakdown>
+    <ChartRevenue style="grid-column: 1" />
+    <ChartBreakdown style="grid-column: 2" />
   </div>
 </template>
 

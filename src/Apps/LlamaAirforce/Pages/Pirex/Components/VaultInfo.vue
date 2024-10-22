@@ -40,9 +40,9 @@ const onTab = (newTab: Tabs) => {
     </template>
 
     <div class="vault-info-body">
-      <Strategy v-if="tab === 'strategy'"></Strategy>
-      <Fees v-if="tab === 'fees'"></Fees>
-      <Audits v-if="tab === 'audits'"></Audits>
+      <Strategy v-if="tab === 'strategy'" />
+      <Fees v-if="tab === 'fees'" />
+      <Audits v-if="tab === 'audits'" />
     </div>
   </Card>
 </template>

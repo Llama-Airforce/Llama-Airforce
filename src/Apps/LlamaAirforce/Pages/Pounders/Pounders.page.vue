@@ -265,15 +265,15 @@ watch(address, createPounders);
 
 <template>
   <div class="dashboard">
-    <Migrations></Migrations>
+    <Migrations />
 
-    <Documentation :extra="t('pounders-info')"></Documentation>
+    <Documentation :extra="t('pounders-info')" />
 
     <PounderComponent
       v-for="pounder in poundersUnion"
       :key="pounder.pounder.id"
       :pounder-id="pounder.pounder.id"
-    ></PounderComponent>
+    />
 
     <Card class="information">
       {{ t("pounders-info-deprecated") }}
@@ -283,7 +283,7 @@ watch(address, createPounders);
       v-for="pounder in poundersDeprecated"
       :key="pounder.pounder.id"
       :pounder-id="pounder.pounder.id"
-    ></PounderComponent>
+    />
   </div>
 </template>
 

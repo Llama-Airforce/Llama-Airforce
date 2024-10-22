@@ -91,15 +91,14 @@ const onSelectChain = (newChain: Chain | "all"): void => {
           :chain
           :chains="['ethereum']"
           @select-chain="onSelectChain"
-        >
-        </SelectChain>
+        />
       </div>
     </template>
 
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

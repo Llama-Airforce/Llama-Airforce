@@ -87,7 +87,7 @@ const titleCase = (s: string): string =>
             type="dollar"
             :value="Math.round(item.debt)"
             :precision="Infinity"
-          ></AsyncValue>
+          />
         </div>
 
         <div class="end">

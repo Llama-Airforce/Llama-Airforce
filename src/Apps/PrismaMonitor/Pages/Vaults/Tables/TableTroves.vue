@@ -135,23 +135,22 @@ const onType = (tabIndex: number) => {
           class="types"
           @tab="onType($event.index)"
         >
-          <TabItem header="Open"></TabItem>
-          <TabItem header="Closed"></TabItem>
+          <TabItem header="Open" />
+          <TabItem header="Closed" />
         </TabView>
 
         <InputText
           v-model="search"
           search
           :placeholder="t('search-placeholder')"
-        >
-        </InputText>
+        />
 
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -183,7 +182,7 @@ const onType = (tabIndex: number) => {
             type="dollar"
             :value="Math.round(item.debt)"
             :precision="Infinity"
-          ></AsyncValue>
+          />
         </div>
 
         <div
@@ -194,7 +193,7 @@ const onType = (tabIndex: number) => {
             type="dollar"
             :value="Math.round(item.collateral_usd)"
             :precision="Infinity"
-          ></AsyncValue>
+          />
         </div>
 
         <div

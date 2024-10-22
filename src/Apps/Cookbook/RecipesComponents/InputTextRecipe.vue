@@ -45,10 +45,9 @@ const onSelect = (pool: Pool): void => {
   toggleExpansion(pool);
 };
 
-const inputText = `<InputText
+const inputText = `<
   v-model="text1"
-  placeholder="Placeholder goes here"
-></InputText>`;
+  placeholder="Placeholder goes here" />`;
 
 const inputTextSearch1 = `<InputText
   v-model="pool"
@@ -161,14 +160,14 @@ const inputTextSearch3 = `.search-item {
         <InputText
           v-model="text1"
           placeholder="Placeholder goes here"
-        ></InputText>
+        />
       </template>
 
       <template #snippets>
         <Code
           lang="html"
           :code="inputText"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -212,17 +211,17 @@ const inputTextSearch3 = `.search-item {
         <Code
           lang="html"
           :code="inputTextSearch1"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="inputTextSearch2"
-        ></Code>
+        />
 
         <Code
           lang="css"
           :code="inputTextSearch3"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

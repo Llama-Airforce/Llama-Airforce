@@ -46,18 +46,17 @@ const hasMenu = computed(
           <MenuItem
             :item="menuItem"
             @navigated="emit('navigated')"
-          >
-          </MenuItem>
+          />
         </ul>
       </nav>
 
       <div class="bottom">
-        <LlamaNFT></LlamaNFT>
-        <SelectLanguage></SelectLanguage>
+        <LlamaNFT />
+        <SelectLanguage />
         <Wallet
           v-if="hasMenu"
           :label-please-connect="t('please-connect')"
-        ></Wallet>
+        />
       </div>
     </div>
   </div>

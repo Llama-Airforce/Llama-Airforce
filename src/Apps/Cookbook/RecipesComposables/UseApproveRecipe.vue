@@ -53,10 +53,10 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
             <div>{{ allowance }}</div>
 
             <div>Needs approve</div>
-            <Checkbox :model-value="needsApprove"></Checkbox>
+            <Checkbox :model-value="needsApprove" />
 
             <div>Is approving</div>
-            <Checkbox :model-value="isApproving"></Checkbox>
+            <Checkbox :model-value="isApproving" />
           </div>
 
           <div class="value">{{ amount }}</div>
@@ -65,7 +65,7 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
             :min="0"
             :max="5"
             :step="1"
-          ></Slider>
+          />
 
           <Button
             class="primary"
@@ -81,7 +81,7 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
         <Code
           lang="typescript"
           :code
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

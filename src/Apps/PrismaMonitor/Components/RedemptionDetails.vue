@@ -32,7 +32,7 @@ const rows = computed(() =>
             type="dollar"
             :value="redemption.attempted_debt_amount"
             :precision="2"
-          ></AsyncValue>
+          />
 
           /
 
@@ -40,7 +40,7 @@ const rows = computed(() =>
             type="dollar"
             :value="redemption.collateral_sent_to_redeemer_usd"
             :precision="2"
-          ></AsyncValue>
+          />
         </KPI>
 
         <KPI :label="t('fee')">
@@ -48,7 +48,7 @@ const rows = computed(() =>
             type="dollar"
             :value="redemption.collateral_fee_usd"
             :precision="2"
-          ></AsyncValue>
+          />
         </KPI>
       </div>
 
@@ -61,8 +61,7 @@ const rows = computed(() =>
             v-model="search"
             search
             :placeholder="t('search-placeholder')"
-          >
-          </InputText>
+          />
         </template>
 
         <Table

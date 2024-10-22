@@ -136,7 +136,7 @@ function formatter(y: number) {
     :loading
   >
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <div

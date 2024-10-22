@@ -18,19 +18,19 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
     >
       <TabItem header="Transfers">
         <KeepAlive>
-          <Transfers v-if="tabActive === 'transfers'"></Transfers>
+          <Transfers v-if="tabActive === 'transfers'" />
         </KeepAlive>
       </TabItem>
 
       <TabItem header="Swaps">
         <KeepAlive>
-          <Swaps v-if="tabActive === 'swaps'"></Swaps>
+          <Swaps v-if="tabActive === 'swaps'" />
         </KeepAlive>
       </TabItem>
 
       <TabItem header="crvUSD">
         <KeepAlive>
-          <CrvUsd v-if="tabActive === 'crvusd'"></CrvUsd>
+          <CrvUsd v-if="tabActive === 'crvusd'" />
         </KeepAlive>
       </TabItem>
     </TabView>

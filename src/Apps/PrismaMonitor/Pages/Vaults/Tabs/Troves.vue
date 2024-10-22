@@ -32,7 +32,7 @@ const onTroveSelect = async (trove: Trove) => {
     <TableTroves
       :vault
       @selected="onTroveSelect"
-    ></TableTroves>
+    />
   </div>
 </template>
 

@@ -38,7 +38,7 @@ const type = (x: LlammaEvent) =>
         :items-per-page="10"
         :page
         @page="onPage"
-      ></Pagination>
+      />
     </template>
 
     <Table

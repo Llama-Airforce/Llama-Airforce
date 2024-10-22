@@ -32,7 +32,7 @@ const rows = computed(() =>
             type="dollar"
             :value="liquidation.liquidated_debt"
             :precision="2"
-          ></AsyncValue>
+          />
 
           /
 
@@ -41,7 +41,7 @@ const rows = computed(() =>
             :value="liquidation.liquidated_collateral"
             :precision="2"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </KPI>
 
         <KPI :label="t('gas-compensation')">
@@ -49,7 +49,7 @@ const rows = computed(() =>
             type="dollar"
             :value="liquidation.collateral_gas_compensation_usd"
             :precision="2"
-          ></AsyncValue>
+          />
         </KPI>
       </div>
 
@@ -62,8 +62,7 @@ const rows = computed(() =>
             v-model="search"
             search
             :placeholder="t('search-placeholder')"
-          >
-          </InputText>
+          />
         </template>
 
         <Table

@@ -129,8 +129,7 @@ const formatterY = (y: number) => `$${round(y, 0, "dollar")}${unit(y)}`;
     <ChartApex
       :options
       :series
-    >
-    </ChartApex>
+    />
   </Card>
 </template>
 

@@ -52,7 +52,7 @@ const reached = computed(() => (votesSupport.value / votesQuorum.value) * 100);
           type="percentage"
           :value="proposal.quorum * 100"
           :precision="0"
-        ></AsyncValue>
+        />
       </div>
     </div>
   </div>

@@ -85,7 +85,7 @@ const clipboard = async (addr: string) => {
             <TokenIcon
               :chain
               :address="value.address"
-            ></TokenIcon>
+            />
 
             <div>{{ value.symbol }}</div>
 

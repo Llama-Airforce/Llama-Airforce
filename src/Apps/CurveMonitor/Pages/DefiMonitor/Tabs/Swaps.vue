@@ -4,7 +4,7 @@ import TableSwaps from "@CM/Pages/DefiMonitor/Tables/TableSwaps.vue";
 
 <template>
   <div class="dashboard-grid">
-    <TableSwaps style="grid-area: swaps"></TableSwaps>
+    <TableSwaps style="grid-area: swaps" />
   </div>
 </template>
 

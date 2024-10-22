@@ -33,14 +33,14 @@ provideTheme(theme);
       :duration="-1"
     />
 
-    <VueQueryDevtools></VueQueryDevtools>
+    <VueQueryDevtools />
 
-    <Header class="header"></Header>
-    <MenuDesktop class="menu"></MenuDesktop>
+    <Header class="header" />
+    <MenuDesktop class="menu" />
 
     <main class="main">
       <div class="content">
-        <Announcement></Announcement>
+        <Announcement />
 
         <router-view v-slot="{ Component }">
           <transition
@@ -53,7 +53,7 @@ provideTheme(theme);
       </div>
     </main>
 
-    <Footer class="footer"></Footer>
+    <Footer class="footer" />
   </div>
 </template>
 

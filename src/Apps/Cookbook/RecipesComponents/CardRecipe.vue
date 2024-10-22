@@ -87,7 +87,7 @@ const handleToggle = (event) => {
         <Code
           lang="vue"
           :code="card"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -100,7 +100,7 @@ const handleToggle = (event) => {
         <Code
           lang="vue"
           :code="cardCompact"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -127,7 +127,7 @@ const handleToggle = (event) => {
         <Code
           lang="vue"
           :code="cardCollapsible"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -156,7 +156,7 @@ const handleToggle = (event) => {
         <Code
           lang="vue"
           :code="cardWithActions"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -174,7 +174,7 @@ const handleToggle = (event) => {
         <Code
           lang="vue"
           :code="cardLoading"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

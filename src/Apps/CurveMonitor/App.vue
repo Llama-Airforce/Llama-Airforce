@@ -40,7 +40,7 @@ provideTheme(theme);
 <template>
   <Layout>
     <template #navigation>
-      <Navigation class="navigation"></Navigation>
+      <Navigation class="navigation" />
     </template>
   </Layout>
 </template>

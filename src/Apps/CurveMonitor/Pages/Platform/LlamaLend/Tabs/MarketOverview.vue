@@ -68,7 +68,7 @@ const equity = computed(() =>
       <AsyncValue
         type="percentage"
         :value="market?.borrow_apy"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -79,7 +79,7 @@ const equity = computed(() =>
       <AsyncValue
         type="percentage"
         :value="market?.lend_apy"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -98,60 +98,60 @@ const equity = computed(() =>
       <AsyncValue
         type="dollar"
         :value="tvl(market)"
-      ></AsyncValue>
+      />
     </KPI>
 
     <ChartMarketSupply
       style="grid-area: supply"
       :market
       :chain
-    ></ChartMarketSupply>
+    />
 
     <ChartMarketCollateral
       style="grid-area: collateral"
       :market
       :chain
-    ></ChartMarketCollateral>
+    />
 
     <ChartCollateralRatio
       style="grid-area: colratio"
       :ratios="collateralRatios"
       :loading="loadingSnapshots"
-    ></ChartCollateralRatio>
+    />
 
     <ChartEquity
       style="grid-area: equity"
       :equity
       :loading="loadingSnapshots"
-    ></ChartEquity>
+    />
 
     <ChartMarketRates
       style="grid-area: rates"
       :market
       :chain
-    ></ChartMarketRates>
+    />
 
     <ChartMarketLoans
       style="grid-area: loans"
       :market
       :chain
-    ></ChartMarketLoans>
+    />
 
     <Addresses
       style="grid-area: addresses"
       :market
-    ></Addresses>
+    />
 
     <Properties
       style="grid-area: properties"
       :market
       :chain
-    ></Properties>
+    />
 
     <KPIUsage
       style="grid-area: usage"
       :market
-    ></KPIUsage>
+    />
   </div>
 </template>
 

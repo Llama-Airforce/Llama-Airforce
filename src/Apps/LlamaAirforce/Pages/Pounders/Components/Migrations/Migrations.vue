@@ -7,9 +7,9 @@ import MigrateStkCvxPrisma from "@Pounders/Components/Migrations/MigrateStkCvxPr
 </script>
 
 <template>
-  <MigrateUCrvV2></MigrateUCrvV2>
-  <MigrateUCrv></MigrateUCrv>
-  <MigrateUBal></MigrateUBal>
-  <MigrateUFxs></MigrateUFxs>
-  <MigrateStkCvxPrisma></MigrateStkCvxPrisma>
+  <MigrateUCrvV2 />
+  <MigrateUCrv />
+  <MigrateUBal />
+  <MigrateUFxs />
+  <MigrateStkCvxPrisma />
 </template>

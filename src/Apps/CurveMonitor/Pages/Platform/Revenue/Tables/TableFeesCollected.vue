@@ -38,7 +38,7 @@ const rows = computed(() =>
       @sort-column="onSort"
     >
       <template #row="{ item }">
-        <TokenIcon :address="item.coin.address"></TokenIcon>
+        <TokenIcon :address="item.coin.address" />
 
         <div>
           <a

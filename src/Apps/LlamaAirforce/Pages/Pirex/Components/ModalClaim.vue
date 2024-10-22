@@ -215,7 +215,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
             <AsyncValue
               type="dollar"
               :value="total(epoch)"
-            ></AsyncValue>
+            />
 
             <div class="chevron">
               <LucideChevronUp :class="{ expanded: isExpanded(epoch) }" />
@@ -239,7 +239,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
                   :rewards="rewards[epoch.epoch].snapshot"
                   :selected="toClaim[epoch.epoch]"
                   @select="onRewardToggle(epoch, $event)"
-                ></RewardsTable>
+                />
 
                 <Button
                   class="primary"
@@ -256,9 +256,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
               >
                 <div class="title">Futures Rewards</div>
 
-                <RewardsTable
-                  :rewards="rewards[epoch.epoch].futures"
-                ></RewardsTable>
+                <RewardsTable :rewards="rewards[epoch.epoch].futures" />
 
                 <Button
                   v-if="isApprovedForAll"

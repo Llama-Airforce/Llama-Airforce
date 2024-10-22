@@ -38,7 +38,6 @@ function onExit() {
       @close="fullscreen = false"
       @enter-before="onEnterBefore"
       @exit="onExit"
-    >
-    </ModalFullscreen>
+    />
   </Button>
 </template>

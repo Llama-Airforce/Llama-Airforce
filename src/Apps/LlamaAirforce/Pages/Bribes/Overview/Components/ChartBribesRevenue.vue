@@ -115,7 +115,7 @@ const series = computed(
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

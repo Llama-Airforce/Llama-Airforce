@@ -44,7 +44,7 @@ const notificationsExample = `<ButtonToggle v-model="notifications">
         <Code
           lang="html"
           :code="darkModeExample"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -65,7 +65,7 @@ const notificationsExample = `<ButtonToggle v-model="notifications">
         <Code
           lang="typescript"
           :code="notificationsExample"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

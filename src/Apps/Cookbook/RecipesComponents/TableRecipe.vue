@@ -300,7 +300,7 @@ const onCheck = (round: Round) => {
         <Code
           lang="vue"
           :code="table"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -342,7 +342,7 @@ const onCheck = (round: Round) => {
         <Code
           lang="vue"
           :code="multiselect"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

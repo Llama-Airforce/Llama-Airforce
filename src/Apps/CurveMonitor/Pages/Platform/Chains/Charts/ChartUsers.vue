@@ -67,7 +67,7 @@ function createSeries() {
         <BtnChartLWExport
           filename="users"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart

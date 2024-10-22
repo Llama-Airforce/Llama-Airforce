@@ -80,7 +80,7 @@ const formatterPct = (x: number) => `${round(x, 2, "percentage")}%`;
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

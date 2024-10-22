@@ -25,8 +25,8 @@ const onNavigated = () => {
       </div>
 
       <div class="wallet">
-        <Wallet class="wallet"></Wallet>
-        <LlamaNFT></LlamaNFT>
+        <Wallet class="wallet" />
+        <LlamaNFT />
       </div>
 
       <LucideMenu
@@ -40,7 +40,7 @@ const onNavigated = () => {
       :open="menuOpen"
       @closed="onNavigated"
       @navigated="onNavigated"
-    ></MenuMobile>
+    />
   </header>
 </template>
 

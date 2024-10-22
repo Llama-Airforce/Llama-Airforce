@@ -78,15 +78,14 @@ const onPoolSelect = async (newPool: Pool) => {
           search
           class="search"
           placeholder="Search for..."
-        >
-        </InputText>
+        />
 
         <SelectChain
           class="chain-select"
           :chain
           :chains
           @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-        ></SelectChain>
+        />
       </div>
     </Teleport>
 
@@ -98,7 +97,7 @@ const onPoolSelect = async (newPool: Pool) => {
       <AsyncValue
         type="dollar"
         :value="chainInfo?.total.tvl ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -109,7 +108,7 @@ const onPoolSelect = async (newPool: Pool) => {
       <AsyncValue
         type="dollar"
         :value="chainInfo?.total.tradingVolume24h ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -120,7 +119,7 @@ const onPoolSelect = async (newPool: Pool) => {
       <AsyncValue
         type="dollar"
         :value="chainInfo?.total.tradingFee24h ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -131,7 +130,7 @@ const onPoolSelect = async (newPool: Pool) => {
       <AsyncValue
         type="dollar"
         :value="chainInfo?.total.liquidityFee24h ?? 0"
-      ></AsyncValue>
+      />
     </KPI>
 
     <TablePools
@@ -140,7 +139,7 @@ const onPoolSelect = async (newPool: Pool) => {
       :pools
       :loading="loadingPools"
       @selected="onPoolSelect"
-    ></TablePools>
+    />
   </div>
 </template>
 

@@ -7,7 +7,7 @@ import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue
     <ChartBreakdown
       style="grid-area: breakdown"
       class="breakdown"
-    ></ChartBreakdown>
+    />
   </div>
 </template>
 

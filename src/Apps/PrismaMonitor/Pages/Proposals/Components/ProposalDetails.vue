@@ -15,9 +15,9 @@ const { proposal, expanded = false } = defineProps<{
       <Technicals
         :proposal
         :expanded
-      ></Technicals>
+      />
 
-      <Voting :proposal></Voting>
+      <Voting :proposal />
     </div>
   </div>
 </template>

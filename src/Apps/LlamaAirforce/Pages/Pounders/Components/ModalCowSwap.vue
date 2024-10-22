@@ -27,7 +27,7 @@ const emit = defineEmits<{
             :level="1"
             :buy="swap?.buy ?? 'ETH'"
             :sell="swap?.sell ?? 'USDC'"
-          ></CowSwap>
+          />
         </div>
       </div>
     </Card>

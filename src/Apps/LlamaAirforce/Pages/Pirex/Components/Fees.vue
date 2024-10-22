@@ -10,7 +10,7 @@
       <AsyncValue
         type="percentage"
         :value="4"
-      ></AsyncValue>
+      />
     </KPI>
 
     <KPI
@@ -21,8 +21,7 @@
       <AsyncValue
         type="percentage"
         :value="5"
-      >
-      </AsyncValue>
+      />
     </KPI>
   </div>
 </template>

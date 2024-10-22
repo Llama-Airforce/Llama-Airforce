@@ -49,39 +49,39 @@ const proposalsExecuted = computed((): Proposal[] => {
         <ProposalsTab
           v-if="tabActive === 0"
           :proposals
-        ></ProposalsTab>
+        />
       </TabItem>
 
       <TabItem :header="t('active')">
         <ProposalsTab
           v-if="tabActive === 1"
           :proposals="proposalsActive"
-        ></ProposalsTab>
+        />
       </TabItem>
 
       <TabItem :header="t('passed')">
         <ProposalsTab
           v-if="tabActive === 2"
           :proposals="proposalsPassed"
-        ></ProposalsTab>
+        />
       </TabItem>
 
       <TabItem :header="t('denied')">
         <ProposalsTab
           v-if="tabActive === 3"
           :proposals="proposalsDenied"
-        ></ProposalsTab>
+        />
       </TabItem>
 
       <TabItem :header="t('executed')">
         <ProposalsTab
           v-if="tabActive === 4"
           :proposals="proposalsExecuted"
-        ></ProposalsTab>
+        />
       </TabItem>
     </TabView>
 
-    <Spinner :class="{ loading }"></Spinner>
+    <Spinner :class="{ loading }" />
   </div>
 </template>
 

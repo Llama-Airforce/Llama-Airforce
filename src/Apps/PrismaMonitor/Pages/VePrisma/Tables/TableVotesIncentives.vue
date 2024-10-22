@@ -45,7 +45,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         :items-per-page="rowsPerPage"
         :page
         @page="onPage"
-      ></Pagination>
+      />
     </template>
 
     <Table
@@ -83,7 +83,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             :value="Math.round(item.points)"
             :precision="2"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </div>
 
         <div class="end">

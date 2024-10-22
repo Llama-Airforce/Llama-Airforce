@@ -228,7 +228,7 @@ function createSeriesStacked(normalize: boolean) {
         :items
         :disabled
         @toggle="toggles[$event].value = !toggles[$event].value"
-      ></Legend>
+      />
     </template>
 
     <div

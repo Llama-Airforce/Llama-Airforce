@@ -97,7 +97,7 @@ watch(isConnected, (isConnected) => {
 <template>
   <div class="dashboard">
     <div class="connect">
-      <InputText v-model="url"></InputText>
+      <InputText v-model="url" />
 
       <Button
         :disabled="!isConnected"

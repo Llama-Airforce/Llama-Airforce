@@ -16,15 +16,15 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
       @tab="tabActiveIndex = $event.index"
     >
       <TabItem header="Overview">
-        <Overview v-if="tabActive === 'overview'"></Overview>
+        <Overview v-if="tabActive === 'overview'" />
       </TabItem>
 
       <TabItem header="cvxPRISMA">
-        <CvxPrisma v-if="tabActive === 'cvxprisma'"></CvxPrisma>
+        <CvxPrisma v-if="tabActive === 'cvxprisma'" />
       </TabItem>
 
       <TabItem header="yPRISMA">
-        <YPrisma v-if="tabActive === 'yprisma'"></YPrisma>
+        <YPrisma v-if="tabActive === 'yprisma'" />
       </TabItem>
     </TabView>
   </div>

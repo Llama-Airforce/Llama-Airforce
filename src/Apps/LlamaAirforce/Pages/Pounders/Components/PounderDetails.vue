@@ -316,7 +316,7 @@ const onWithdrawSelect = (zap: Zap): void => {
           :token="state.symbolDeposit"
           :balance="state.balanceDeposit"
           :decimals="state.decimalsDeposit"
-        ></PounderInput>
+        />
 
         <div class="actions">
           <SelectZap
@@ -325,7 +325,7 @@ const onWithdrawSelect = (zap: Zap): void => {
             :class="{ expanded }"
             :zaps="zapsDeposit"
             @select="onDepositSelect"
-          ></SelectZap>
+          />
 
           <div class="buttons">
             <Button
@@ -357,7 +357,7 @@ const onWithdrawSelect = (zap: Zap): void => {
           :balance="withdrawable"
           :decimals="state.decimalsWithdraw"
           :price="(state.priceShare ?? 0) * (state.priceUnderlying ?? 0)"
-        ></PounderInput>
+        />
 
         <div class="actions">
           <SelectZap
@@ -366,7 +366,7 @@ const onWithdrawSelect = (zap: Zap): void => {
             :class="{ expanded }"
             :zaps="zapsWithdraw"
             @select="onWithdrawSelect"
-          ></SelectZap>
+          />
 
           <div class="buttons">
             <Button
@@ -411,13 +411,13 @@ const onWithdrawSelect = (zap: Zap): void => {
       :show="showSwapDeposit"
       :swap="swapDeposit"
       @close="showSwapDeposit = false"
-    ></ModalCowSwap>
+    />
 
     <ModalCowSwap
       :show="showSwapWithdraw"
       :swap="swapWithdraw"
       @close="showSwapWithdraw = false"
-    ></ModalCowSwap>
+    />
 
     <ModalSlippage
       :show="modalSlippage"
@@ -426,7 +426,7 @@ const onWithdrawSelect = (zap: Zap): void => {
       @close="modalSlippage = false"
       @no="modalSlippage = false"
       @yes="onYesModalSlippage"
-    ></ModalSlippage>
+    />
   </div>
 </template>
 

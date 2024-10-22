@@ -18,13 +18,13 @@ const { isFetching: loadingStaged, data: feesStaged } = useQueryFeesStaged();
       style="grid-area: collected"
       :fees="feesCollected"
       :loading="loadingCollected"
-    ></TableFeesCollected>
+    />
 
     <TableFeesStaged
       style="grid-area: staged"
       :fees="feesStaged"
       :loading="loadingStaged"
-    ></TableFeesStaged>
+    />
   </div>
 </template>
 

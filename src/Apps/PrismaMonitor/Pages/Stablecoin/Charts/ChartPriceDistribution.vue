@@ -91,7 +91,7 @@ const formatLabel = (label: string): string => {
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

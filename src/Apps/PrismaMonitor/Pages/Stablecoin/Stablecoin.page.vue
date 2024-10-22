@@ -9,12 +9,12 @@ import ChartDepthContainer from "@PM/Pages/Stablecoin/Charts/ChartDepthContainer
 
 <template>
   <div class="dashboard">
-    <KPIs style="grid-column: 1 / -1"></KPIs>
-    <ChartPrice></ChartPrice>
-    <ChartPriceDistribution></ChartPriceDistribution>
-    <ChartSupply></ChartSupply>
-    <ChartHolders></ChartHolders>
-    <ChartDepthContainer></ChartDepthContainer>
+    <KPIs style="grid-column: 1 / -1" />
+    <ChartPrice />
+    <ChartPriceDistribution />
+    <ChartSupply />
+    <ChartHolders />
+    <ChartDepthContainer />
   </div>
 </template>
 

@@ -332,8 +332,7 @@ whenever(isConfirmedExecute, () => {
               has-value
               label="Block"
               :value="proposal.block"
-            >
-            </KPI>
+            />
           </div>
 
           <div class="description">
@@ -389,7 +388,7 @@ whenever(isConfirmedExecute, () => {
           :disabled="!canVote"
           :min="0"
           :max="100"
-        ></Slider>
+        />
 
         <Button
           class="submit primary"

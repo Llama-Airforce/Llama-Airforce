@@ -6,10 +6,10 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 
 <template>
   <div class="dashboard-grid">
-    <Sandwiches style="grid-area: sws"></Sandwiches>
+    <Sandwiches style="grid-area: sws" />
 
-    <LabelsWorstRelative style="grid-area: relative"></LabelsWorstRelative>
-    <LabelsWorstAbsolute style="grid-area: absolute"></LabelsWorstAbsolute>
+    <LabelsWorstRelative style="grid-area: relative" />
+    <LabelsWorstAbsolute style="grid-area: absolute" />
   </div>
 </template>
 

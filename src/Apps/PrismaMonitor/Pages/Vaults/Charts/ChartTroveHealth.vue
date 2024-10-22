@@ -150,7 +150,7 @@ const formatterRatio = (x: number) => `${round(x * 100, 2)}%`;
     <ChartApex
       :options
       :series
-    ></ChartApex>
+    />
   </Card>
 </template>
 

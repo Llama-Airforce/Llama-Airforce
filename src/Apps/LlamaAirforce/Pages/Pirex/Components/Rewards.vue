@@ -94,7 +94,7 @@ function onClaimed(claims: Claim[]) {
       <RewardsTable
         :rewards
         :loading
-      ></RewardsTable>
+      />
 
       <Button
         class="primary"
@@ -119,7 +119,7 @@ function onClaimed(claims: Claim[]) {
       :prices="pricesData!"
       @close="showClaims = false"
       @claimed="onClaimed"
-    ></ModalClaim>
+    />
   </div>
 </template>
 

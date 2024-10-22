@@ -34,9 +34,9 @@ const router = useRouter();
     <SelectTheme
       class="themes"
       :themes="['dark', 'light']"
-    ></SelectTheme>
+    />
 
-    <Wallet class="lvl2"></Wallet>
+    <Wallet class="lvl2" />
   </div>
 </template>
 

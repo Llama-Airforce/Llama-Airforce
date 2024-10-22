@@ -64,7 +64,7 @@ const onChartType = (type: ChartType) => {
             placeholder="Timestamp cut-off"
             :min="0"
             :max="new Date().getTime() / 1000"
-          ></InputNumber>
+          />
         </div>
 
         <div class="chart-toggles">
@@ -100,12 +100,12 @@ const onChartType = (type: ChartType) => {
     <ChartRevenueLine
       v-if="chartType === 'line'"
       :data="dataFiltered"
-    ></ChartRevenueLine>
+    />
 
     <ChartRevenueBreakdown
       v-else
       :data="dataFiltered"
-    ></ChartRevenueBreakdown>
+    />
   </Card>
 </template>
 

@@ -14,9 +14,10 @@ const { vault } = defineProps<{
     <CollateralKPIs
       style="grid-column: 1 / -1"
       :vault
-    ></CollateralKPIs>
-    <ChartCollateralPrices :vault></ChartCollateralPrices>
-    <ChartCollateralPriceImpact :vault></ChartCollateralPriceImpact>
+    />
+
+    <ChartCollateralPrices :vault />
+    <ChartCollateralPriceImpact :vault />
   </div>
 </template>
 

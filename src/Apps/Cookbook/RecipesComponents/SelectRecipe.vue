@@ -124,17 +124,17 @@ const select3 = `.select-component {
         <Code
           lang="html"
           :code="select1"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="select2"
-        ></Code>
+        />
 
         <Code
           lang="css"
           :code="select3"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

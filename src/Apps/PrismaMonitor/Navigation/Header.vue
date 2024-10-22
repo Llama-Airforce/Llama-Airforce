@@ -14,7 +14,7 @@ const emit = defineEmits<{
       to="/"
       @click="emit('navigated')"
     >
-      <Logo class="logo"></Logo>
+      <Logo class="logo" />
     </router-link>
 
     <div class="buttons">

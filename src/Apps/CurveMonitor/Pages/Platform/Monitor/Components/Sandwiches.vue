@@ -1,3 +1,4 @@
+div
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { round } from "@/Util";
@@ -59,8 +60,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
           search
           class="search"
           placeholder="Search for..."
-        >
-        </InputText>
+        />
 
         <Pagination
           v-if="numSandwiches > swsPerPage"
@@ -69,7 +69,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
           :items-per-page="swsPerPage"
           :page
           @page="page = $event"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -147,7 +147,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
           :txs="sandwichTxs(item)"
           :header="false"
           :time="false"
-        ></Transactions>
+        />
       </template>
     </Table>
   </Card>

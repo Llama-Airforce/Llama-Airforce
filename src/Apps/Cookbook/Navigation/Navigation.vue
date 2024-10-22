@@ -24,7 +24,7 @@ const onNavigated = () => {
     <Header
       @toggle-expansion="expanded = !expanded"
       @navigated="onNavigated"
-    ></Header>
+    />
 
     <Collapsible
       class="menu-content"
@@ -33,9 +33,9 @@ const onNavigated = () => {
       <Menu
         :menu
         @navigated="onNavigated"
-      ></Menu>
+      />
 
-      <Bottom @navigated="onNavigated"></Bottom>
+      <Bottom @navigated="onNavigated" />
     </Collapsible>
   </div>
 </template>

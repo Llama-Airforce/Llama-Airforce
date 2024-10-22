@@ -88,7 +88,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
           <VaultOverview
             v-if="tabActive === 'overview'"
             :vault
-          ></VaultOverview>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -97,7 +97,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
           <Collateral
             v-if="tabActive === 'collateral' && vault"
             :vault
-          ></Collateral>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -106,7 +106,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
           <Troves
             v-if="tabActive === 'trove' && vault"
             :vault
-          ></Troves>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -115,7 +115,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
           <Liquidations
             v-if="tabActive === 'liquidations' && vault"
             :vault
-          ></Liquidations>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -124,7 +124,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
           <Redemptions
             v-if="tabActive === 'redemptions' && vault"
             :vault
-          ></Redemptions>
+          />
         </KeepAlive>
       </TabItem>
     </TabView>

@@ -74,11 +74,10 @@ whenever(addr, (addr) => {
       :vaults
       :user
       @troves="onTroves"
-    ></TableTroves>
+    />
 
-    <TableRedemptions :troves="trovesUser"></TableRedemptions>
-
-    <TableLiquidations :troves="trovesUser"></TableLiquidations>
+    <TableRedemptions :troves="trovesUser" />
+    <TableLiquidations :troves="trovesUser" />
   </div>
 </template>
 

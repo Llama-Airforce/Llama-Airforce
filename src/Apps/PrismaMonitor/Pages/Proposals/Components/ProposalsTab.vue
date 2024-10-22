@@ -1,3 +1,4 @@
+div
 <script setup lang="ts">
 import ProposalComponent from "@PM/Pages/Proposals/Components/Proposal.vue";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
@@ -32,8 +33,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         search
         class="search"
         :placeholder
-      >
-      </InputText>
+      />
 
       <div style="display: flex; gap: 1rem; justify-content: end">
         <Pagination
@@ -43,7 +43,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </div>
 
@@ -51,7 +51,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       v-for="proposal in rowsPage"
       :key="proposal.id"
       :proposal
-    ></ProposalComponent>
+    />
 
     <Pagination
       v-if="rows.length > 0"
@@ -60,7 +60,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       :items-per-page="rowsPerPage"
       :page
       @page="onPage"
-    ></Pagination>
+    />
 
     <div v-if="rows.length === 0">{{ t("no-proposals") }}</div>
   </div>

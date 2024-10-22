@@ -9,7 +9,7 @@ const { vault } = defineProps<{
 
 <template>
   <div class="dashboard-grid">
-    <TableRedemptions :vault></TableRedemptions>
+    <TableRedemptions :vault />
   </div>
 </template>
 

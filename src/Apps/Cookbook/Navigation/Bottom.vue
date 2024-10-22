@@ -53,15 +53,15 @@ const copyUrl = async () => {
       <SelectTheme
         class="themes"
         :themes="['dark', 'light', 'chad']"
-      ></SelectTheme>
+      />
 
       <SelectLanguage
         class="langs"
         :locales="['en']"
-      ></SelectLanguage>
+      />
     </div>
 
-    <Wallet class="lvl2"></Wallet>
+    <Wallet class="lvl2" />
   </div>
 </template>
 

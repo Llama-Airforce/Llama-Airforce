@@ -140,7 +140,7 @@ function formatter(x: number) {
         <BtnChartLWExport
           filename="collateral"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart
@@ -150,7 +150,7 @@ function formatter(x: number) {
     </template>
 
     <template #actions-secondary>
-      <Legend :items></Legend>
+      <Legend :items />
     </template>
 
     <div

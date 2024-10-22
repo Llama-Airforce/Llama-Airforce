@@ -157,14 +157,14 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
             class="token-select"
             :tokens
             @select="token = $event"
-          ></SelectToken>
+          />
 
           <InputNumber
             v-model="balanceSwap"
             :min="0"
             :max="Infinity"
             :placeholder="balanceNum"
-          ></InputNumber>
+          />
 
           <a @click="balanceSwap = balanceNum">Max</a>
         </div>
@@ -182,7 +182,7 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
               <AsyncValue
                 type="percentage"
                 :value="discount"
-              ></AsyncValue>
+              />
             </div>
           </div>
 
@@ -194,7 +194,7 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
             :min="0.001"
             :max="0.2"
             :step="0.001"
-          ></Slider>
+          />
 
           <span style="grid-area: percentage">
             {{ (Math.round(slippage * 100 * 1000) / 1000).toFixed(2) }}%
@@ -208,7 +208,7 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
             style="grid-area: input"
             :min="0"
             :max="Infinity"
-          ></InputNumber>
+          />
 
           <span style="grid-area: symbol">{{ swapInfo.to.symbol }}</span>
         </div>

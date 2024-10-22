@@ -72,8 +72,7 @@ const round = (x: number) =>
           v-model="search"
           search
           placeholder="Search for..."
-        >
-        </InputText>
+        />
 
         <Pagination
           v-if="swaps.length > rowsPerPage"
@@ -81,7 +80,7 @@ const round = (x: number) =>
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -90,7 +89,7 @@ const round = (x: number) =>
         <div class="option">
           <div class="label">Watchlist</div>
 
-          <WatchlistSwappers @swappers="swappers = $event"></WatchlistSwappers>
+          <WatchlistSwappers @swappers="swappers = $event" />
         </div>
 
         <div class="option">
@@ -99,7 +98,7 @@ const round = (x: number) =>
             v-model="minAmount"
             :min="0"
             :max="Infinity"
-          ></InputNumber>
+          />
         </div>
       </div>
 
@@ -166,7 +165,7 @@ const round = (x: number) =>
             <TokenIcon
               chain="ethereum"
               :address="item.coinBeforeAddress"
-            ></TokenIcon>
+            />
 
             {{ round(item.parsedBeforeAmount) }}
 
@@ -182,7 +181,7 @@ const round = (x: number) =>
             <TokenIcon
               chain="ethereum"
               :address="item.coinAfterAddress"
-            ></TokenIcon>
+            />
 
             {{ round(item.parsedAfterAmount) }}
 

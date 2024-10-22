@@ -43,11 +43,12 @@ const onVaultSelect = async (vault: TroveManagerDetails) => {
     <TableVaults
       style="grid-column: 1 / -1"
       @selected="onVaultSelect"
-    ></TableVaults>
-    <ChartCollateralRatio></ChartCollateralRatio>
-    <ChartRatioDeciles></ChartRatioDeciles>
-    <ChartGlobalCollateral></ChartGlobalCollateral>
-    <ChartOpenTroves></ChartOpenTroves>
+    />
+
+    <ChartCollateralRatio />
+    <ChartRatioDeciles />
+    <ChartGlobalCollateral />
+    <ChartOpenTroves />
   </div>
 </template>
 

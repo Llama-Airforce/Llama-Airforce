@@ -58,15 +58,14 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
           v-model="search"
           search
           :placeholder="t('search-placeholder')"
-        >
-        </InputText>
+        />
 
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -99,7 +98,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             :value="Math.round(item.weight)"
             :precision="2"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </div>
 
         <div
@@ -112,7 +111,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             :value="Math.round(item.locked)"
             :precision="2"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </div>
 
         <div
@@ -125,7 +124,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             :value="Math.round(item.unlocked)"
             :precision="2"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </div>
 
         <div
@@ -138,7 +137,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             :value="Math.round(item.frozen)"
             :precision="2"
             :show-symbol="false"
-          ></AsyncValue>
+          />
         </div>
       </template>
     </Table>

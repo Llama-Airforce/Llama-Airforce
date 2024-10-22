@@ -13,6 +13,5 @@ const { proposal } = defineProps<{
     class="type"
     label="Type"
     :value="capitalize(proposal.type)"
-  >
-  </KPI>
+  />
 </template>

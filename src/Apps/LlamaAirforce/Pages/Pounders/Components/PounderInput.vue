@@ -109,7 +109,7 @@ const onMax = (): void => {
         v-model="value"
         :min="0"
         :max="balanceNumber"
-      ></InputNumber>
+      />
     </div>
 
     <Slider
@@ -118,7 +118,7 @@ const onMax = (): void => {
       :min="0"
       :max="balanceNumber"
       :step
-    ></Slider>
+    />
   </div>
 </template>
 

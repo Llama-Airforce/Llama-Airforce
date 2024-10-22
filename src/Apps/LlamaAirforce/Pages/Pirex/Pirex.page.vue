@@ -70,22 +70,22 @@ function createUCvxPounder() {
       v-if="store.pounders.ucvx"
       style="grid-area: pounder"
       pounder-id="ucvx"
-    ></PounderComponent>
+    />
 
     <div
       style="grid-area: left"
       class="col"
     >
-      <VaultInfo></VaultInfo>
-      <UserInfo v-if="isConnected"></UserInfo>
+      <VaultInfo />
+      <UserInfo v-if="isConnected" />
     </div>
 
     <div
       style="grid-area: right"
       class="col"
     >
-      <RedemptionsInit></RedemptionsInit>
-      <Swap></Swap>
+      <RedemptionsInit />
+      <Swap />
     </div>
   </div>
 </template>

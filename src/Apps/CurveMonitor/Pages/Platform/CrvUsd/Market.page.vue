@@ -49,7 +49,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 
 <template>
   <div class="dashboard">
-    <Spinner :class="{ loading }"></Spinner>
+    <Spinner :class="{ loading }" />
 
     <TabView
       v-if="!loading && market"
@@ -62,7 +62,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
             v-if="tabActive === 'overview'"
             chain="ethereum"
             :market
-          ></MarketOverview>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -72,7 +72,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
             v-if="tabActive === 'trading'"
             chain="ethereum"
             :market
-          ></Trading>
+          />
         </KeepAlive>
       </TabItem>
 
@@ -82,7 +82,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
             v-if="tabActive === 'liquidations'"
             chain="ethereum"
             :market
-          ></Liquidations>
+          />
         </KeepAlive>
       </TabItem>
     </TabView>

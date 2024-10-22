@@ -51,7 +51,7 @@ const onTooltipShow = (isShown: boolean) => {
         <Code
           lang="html"
           :code="defaultTooltip"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -70,7 +70,7 @@ const onTooltipShow = (isShown: boolean) => {
         <Code
           lang="html"
           :code="customIconTooltip"
-        ></Code>
+        />
       </template>
     </Recipe>
 
@@ -91,12 +91,12 @@ const onTooltipShow = (isShown: boolean) => {
         <Code
           lang="html"
           :code="eventTooltip"
-        ></Code>
+        />
 
         <Code
           lang="typescript"
           :code="eventHandler"
-        ></Code>
+        />
       </template>
     </Recipe>
   </div>

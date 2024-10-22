@@ -77,7 +77,7 @@ function createSeries() {
         <BtnChartLWExport
           filename="distributions_delta"
           :series
-        ></BtnChartLWExport>
+        />
 
         <BtnChartLWFullscreen
           :chart

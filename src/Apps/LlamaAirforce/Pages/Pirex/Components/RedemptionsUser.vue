@@ -56,7 +56,7 @@ function onRedeemed(redemption: RedemptionPending) {
         :redemptions
         :loading
         @redeemed="onRedeemed"
-      ></RedemptionsUserTable>
+      />
     </div>
 
     <div

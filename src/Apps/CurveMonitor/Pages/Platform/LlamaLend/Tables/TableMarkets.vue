@@ -73,7 +73,7 @@ const tokenIcon = (market: Market) => {
           <TokenIcon
             :chain
             :address="tokenIcon(market)"
-          ></TokenIcon>
+          />
 
           <div>{{ name(market) }}</div>
 

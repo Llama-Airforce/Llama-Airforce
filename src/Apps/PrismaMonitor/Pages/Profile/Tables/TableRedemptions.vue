@@ -96,22 +96,21 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         all
         :vault
         @select-vault="vault = $event"
-      ></SelectVault>
+      />
 
       <div style="display: flex; gap: 1rem">
         <InputText
           v-model="search"
           search
           :placeholder="t('search-placeholder')"
-        >
-        </InputText>
+        />
 
         <Pagination
           :items-count="rows.length"
           :items-per-page="rowsPerPage"
           :page
           @page="onPage"
-        ></Pagination>
+        />
       </div>
     </template>
 
@@ -153,7 +152,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             type="dollar"
             :value="Math.round(item.actual_debt_amount)"
             :precision="Infinity"
-          ></AsyncValue>
+          />
         </div>
 
         <div class="end">{{ item.troves_affected_count }}</div>
@@ -176,7 +175,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       v-if="!!showDetails"
       :redemption="showDetails"
       :vault-addr="showDetails.vault"
-    ></RedemptionDetails>
+    />
   </Modal>
 </template>
 

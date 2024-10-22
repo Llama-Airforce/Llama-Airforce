@@ -72,8 +72,8 @@ const planeX = computed(() => {
       </nav>
 
       <nav class="support">
-        <Wallet></Wallet>
-        <LlamaNFT></LlamaNFT>
+        <Wallet />
+        <LlamaNFT />
       </nav>
     </div>
   </header>
