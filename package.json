@@ -7,6 +7,7 @@
     "lint:laf": "eslint \"src/Apps/LlamaAirforce/**/*.{ts,vue}\"",
     "lint:cm": "eslint \"src/Apps/CurveMonitor/**/*.{ts,vue}\"",
     "lint:pm": "eslint \"src/Apps/PrismaMonitor/**/*.{ts,vue}\"",
+    "lint:pm-lrt": "eslint \"src/Apps/PrismaMonitor/**/*.{ts,vue}\"",
     "lint:cb": "eslint \"src/Apps/Cookbook/**/*.{ts,vue}\"",
     "dev:laf": "bun --bun vite src/Apps/LlamaAirforce",
     "dev:laf:server": "bun run --hot src/Apps/LlamaAirforce/Server/main.ts",
