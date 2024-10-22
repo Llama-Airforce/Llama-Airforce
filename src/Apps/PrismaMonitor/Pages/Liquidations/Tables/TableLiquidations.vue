@@ -103,7 +103,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
     <template #actions>
       <SelectVault
         all
-        class="select-vault"
         :vault
         @select-vault="vault = $event"
       />

@@ -35,7 +35,6 @@ const onSelect = (option: SelectItem): void => {
 };
 
 const select1 = `<Select
-  class="select-component"
   :options
   :selected
   @input="onSelect"
@@ -106,7 +105,6 @@ const select3 = `.select-component {
     <Recipe title="Select">
       <template #example>
         <Select
-          class="select-component"
           :options
           :selected
           @input="onSelect"
@@ -141,7 +139,7 @@ const select3 = `.select-component {
 </template>
 
 <style scoped>
-.select-component {
+.select {
   width: 20rem;
 
   .item {

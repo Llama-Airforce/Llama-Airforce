@@ -72,7 +72,6 @@ watch(
       :class="{ open, closed: !open }"
     >
       <Select
-        class="select-menu"
         :options="pages"
         :selected="page"
         @input="onPageSelect"
@@ -158,7 +157,7 @@ watch(
       /* transform: translateX(0); */
     }
 
-    &:deep(> .select-menu) {
+    &:deep(> .select) {
       .chevrons {
         font-size: 1rem;
         right: 1.75rem;

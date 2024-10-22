@@ -70,7 +70,6 @@ const onRoundSelect = (round: number): void => {
   <div class="summary">
     <Select
       v-if="epoch"
-      class="select-round"
       :label="t('round-number')"
       :options="roundsOrdered"
       :selected="epoch.round"
@@ -136,7 +135,7 @@ const onRoundSelect = (round: number): void => {
   @media only screen and (max-width: 1280px) {
     grid-template-columns: 1fr 1fr 1fr;
 
-    > .select-round {
+    > .select {
       grid-row: 1;
       grid-column: 1 / span 3;
     }
