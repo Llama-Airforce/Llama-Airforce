@@ -76,7 +76,6 @@ const onPoolSelect = async (newPool: Pool) => {
         <InputText
           v-model="search"
           search
-          class="search"
           placeholder="Search for..."
         />
 

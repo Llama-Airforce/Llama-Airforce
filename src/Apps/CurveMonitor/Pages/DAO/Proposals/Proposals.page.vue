@@ -69,7 +69,6 @@ const onTypeSelect = (type: ProposalType): void => {
       <InputText
         v-model="proposalSearch"
         search
-        class="search"
         placeholder="Search for Curve proposals"
       />
 

@@ -147,7 +147,6 @@ const totalUtilRate = (type: "long" | "short"): number => {
         <InputText
           v-model="search"
           search
-          class="search"
           placeholder="Search for..."
         />
 
@@ -262,11 +261,6 @@ const totalUtilRate = (type: "long" | "short"): number => {
 
   @media only screen and (max-width: 1280px) {
     grid-template-columns: 1fr 14rem;
-  }
-
-  .search {
-    grid-column: 1;
-    font-size: 0.875rem;
   }
 
   .chain-select {

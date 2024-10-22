@@ -58,7 +58,6 @@ const sandwichTxs = (sw: SandwichDetail) =>
         <InputText
           v-model="search"
           search
-          class="search"
           placeholder="Search for..."
         />
 

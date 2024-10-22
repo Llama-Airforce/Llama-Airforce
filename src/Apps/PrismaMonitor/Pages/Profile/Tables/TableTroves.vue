@@ -165,7 +165,6 @@ const onType = (tabIndex: number) => {
         <InputText
           v-model="search"
           search
-          class="search"
           :placeholder="t('search-placeholder')"
         />
 

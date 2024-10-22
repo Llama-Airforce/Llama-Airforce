@@ -54,7 +54,6 @@ const linkAddress = (addr: string): string => {
       <InputText
         v-model="search"
         search
-        class="search"
         placeholder="Search for..."
       />
     </template>

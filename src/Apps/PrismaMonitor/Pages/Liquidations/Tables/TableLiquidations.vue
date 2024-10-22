@@ -112,7 +112,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <InputText
           v-model="search"
           search
-          class="search"
           style="flex-grow: 1"
           :placeholder="t('search-placeholder')"
         />

@@ -31,7 +31,6 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       <InputText
         v-model="proposalSearch"
         search
-        class="search"
         :placeholder
       />
 

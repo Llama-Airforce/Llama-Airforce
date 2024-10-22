@@ -44,7 +44,10 @@ const onInput = (evt: Event): void => {
 </script>
 
 <template>
-  <div class="input-text">
+  <div
+    class="input-text"
+    :class="{ search }"
+  >
     <span
       v-if="search"
       class="icon"

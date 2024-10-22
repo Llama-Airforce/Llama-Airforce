@@ -18,7 +18,6 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
         <InputText
           v-model="search"
           search
-          class="search"
           placeholder="Search for tokens"
         />
 
