@@ -54,22 +54,24 @@ function onSelect(option: T) {
     class="input-text"
     :class="{ search }"
   >
-    <span
-      v-if="search || $slots['icon']"
-      class="icon"
-    >
-      <slot name="icon">
-        <LucideSearch v-if="search" />
-      </slot>
-    </span>
+    <div class="input-form">
+      <span
+        v-if="search || $slots['icon']"
+        class="icon"
+      >
+        <slot name="icon">
+          <LucideSearch v-if="search" />
+        </slot>
+      </span>
 
-    <input
-      :type="search ? 'search' : 'text'"
-      :value="modelValue"
-      :placeholder
-      @input.stop="onInput"
-      @select.stop=""
-    />
+      <input
+        :type="search ? 'search' : 'text'"
+        :value="modelValue"
+        :placeholder
+        @input.stop="onInput"
+        @select.stop=""
+      />
+    </div>
 
     <!-- Auto-complete -->
     <div
@@ -80,6 +82,7 @@ function onSelect(option: T) {
       <div
         v-for="(option, i) of optionsProcessed"
         :key="i"
+        class="item-wrapper"
         @click="onSelect(option)"
       >
         <slot
@@ -96,15 +99,19 @@ function onSelect(option: T) {
 
 <style scoped>
 .input-text {
-  display: flex;
   flex-grow: 1;
 
   position: relative;
   text-align: left;
+
   outline-color: transparent;
   line-height: 1.5rem;
 
-  > input {
+  .input-form {
+    display: flex;
+  }
+
+  input {
     all: unset;
 
     background-color: var(--c-lvl2);
@@ -132,16 +139,13 @@ function onSelect(option: T) {
     }
   }
 
-  > .items {
+  .items {
     color: var(--c-text);
     overflow: hidden;
     position: absolute;
     left: 0;
-    right: 10px;
-    z-index: 15;
-    line-height: 1.5rem;
-    margin-top: calc(2.5rem - var(--border-radius) / 3);
-    width: 100%;
+    z-index: 1;
+    min-width: 100%;
     font-size: 1rem;
 
     background: var(--c-lvl1);
