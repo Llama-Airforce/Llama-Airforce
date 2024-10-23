@@ -20,18 +20,18 @@ const onTypeSelect = (option: ProposalType): void => {
   <Select
     :options="types.map((x) => x)"
     :selected="type"
-    @input="onTypeSelect"
+    @select="onTypeSelect"
   >
-    <template #item="{ item }">
-      <div class="item">
-        <div class="label">{{ capitalize(item) }}</div>
+    <template #option="{ option }">
+      <div class="option">
+        <div class="label">{{ capitalize(option) }}</div>
       </div>
     </template>
   </Select>
 </template>
 
 <style scoped>
-.item {
+.option {
   display: flex;
   align-items: center;
 

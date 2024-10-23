@@ -41,13 +41,13 @@ const onVaultSelect = (option: Vault | "all"): void => {
   <Select
     :options="vaults"
     :selected="vault"
-    @input="onVaultSelect"
+    @select="onVaultSelect"
   >
-    <template #item="{ item }">
-      <div class="item">
+    <template #option="{ option }">
+      <div class="option">
         <img
-          v-if="item !== 'all'"
-          :src="icon(item)"
+          v-if="option !== 'all'"
+          :src="icon(option)"
         />
         <div
           v-else
@@ -55,7 +55,7 @@ const onVaultSelect = (option: Vault | "all"): void => {
         ></div>
 
         <div class="label">
-          {{ item === "all" ? "All" : label(item) }}
+          {{ option === "all" ? "All" : label(option) }}
         </div>
       </div>
     </template>
@@ -63,7 +63,7 @@ const onVaultSelect = (option: Vault | "all"): void => {
 </template>
 
 <style scoped>
-.item {
+.option {
   display: flex;
   align-items: center;
 

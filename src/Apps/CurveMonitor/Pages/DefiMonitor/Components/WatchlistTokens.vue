@@ -58,10 +58,10 @@ function addToken(token: Token) {
       :chevrons="false"
       :options="watchlists"
       :selected="watchlist"
-      @input="watchlist = $event"
+      @select="watchlist = $event"
     >
-      <template #item="{ item: { name }, isSelected }">
-        <div class="item">
+      <template #option="{ option: { name }, isSelected }">
+        <div class="option">
           {{ name }}
           <LucideChevronDown v-if="isSelected" />
         </div>
@@ -120,7 +120,7 @@ function addToken(token: Token) {
       width: min-content;
     }
 
-    .item {
+    .option {
       display: flex;
       align-items: center;
       gap: 1rem;

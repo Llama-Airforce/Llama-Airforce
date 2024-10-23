@@ -48,10 +48,10 @@ const inputTextSearch1 = `<InputText
   :sort
   @select="onSelect"
 >
-  <template #item="{ item, idx }">
-    <div class="search-item">
+  <template #option="{ option, idx }">
+    <div class="search-option">
       <img src="@/Asset/Icons/why.png" />
-      <div class="label">{{ item.name }}</div>
+      <div class="label">{{ option.name }}</div>
       <div
         v-if="idx === 0"
         class="description"
@@ -60,7 +60,7 @@ const inputTextSearch1 = `<InputText
       </div>
       <div class="volume">
         <AsyncValue
-          :value="item.volume"
+          :value="option.volume"
           :precision="2"
           type="dollar"
         />
@@ -103,7 +103,7 @@ const onSelect = (newPool: Pool): void => {
   pool.value = newPool.name;
 };`;
 
-const inputTextSearch3 = `.search-item {
+const inputTextSearch3 = `.search-option {
   display: flex;
   align-items: center;
 
@@ -160,10 +160,10 @@ const inputTextSearch3 = `.search-item {
           :sort
           @select="onSelect"
         >
-          <template #item="{ item, idx }">
-            <div class="search-item">
+          <template #option="{ option, idx }">
+            <div class="search-option">
               <img src="@/Assets/Icons/why.png" />
-              <div class="label">{{ item.name }}</div>
+              <div class="label">{{ option.name }}</div>
               <div
                 v-if="idx === 0"
                 class="description"
@@ -174,7 +174,7 @@ const inputTextSearch3 = `.search-item {
               <div class="volume">
                 <AsyncValue
                   type="dollar"
-                  :value="item.volume"
+                  :value="option.volume"
                   :precision="2"
                 />
               </div>
@@ -205,7 +205,7 @@ const inputTextSearch3 = `.search-item {
 
 <style scoped>
 .dashboard {
-  .search-item {
+  .search-option {
     display: flex;
     align-items: center;
 

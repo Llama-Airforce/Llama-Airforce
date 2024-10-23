@@ -4,16 +4,16 @@ import { type Protocol, type Platform } from "@LAF/Pages/Bribes/Models";
 
 const { t } = useI18n();
 
-type SelectItem = {
+type SelectOption = {
   label: string;
   logo: string;
 };
 
-type PlatformInfo = SelectItem & {
+type PlatformInfo = SelectOption & {
   platform: Platform;
 };
 
-type ProtocolInfo = SelectItem & {
+type ProtocolInfo = SelectOption & {
   protocol: Protocol;
 };
 
@@ -82,12 +82,12 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
       :label="t('platform')"
       :options="platforms"
       :selected="platform"
-      @input="onPlatformSelect"
+      @select="onPlatformSelect"
     >
-      <template #item="{ item }">
-        <div class="item">
-          <img :src="item.logo" />
-          <div class="label">{{ item.label }}</div>
+      <template #option="{ option }">
+        <div class="option">
+          <img :src="option.logo" />
+          <div class="label">{{ option.label }}</div>
         </div>
       </template>
     </Select>
@@ -97,12 +97,12 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
       :label="t('protocol')"
       :options="protocols"
       :selected="protocol"
-      @input="onProtocolSelect"
+      @select="onProtocolSelect"
     >
-      <template #item="{ item }">
-        <div class="item">
-          <img :src="item.logo" />
-          <div class="label">{{ item.label }}</div>
+      <template #option="{ option }">
+        <div class="option">
+          <img :src="option.logo" />
+          <div class="label">{{ option.label }}</div>
         </div>
       </template>
     </Select>
@@ -128,7 +128,7 @@ const onProtocolSelect = (option: ProtocolInfo): void => {
 
   .platform,
   .protocol {
-    .item {
+    .option {
       display: flex;
       align-items: center;
 

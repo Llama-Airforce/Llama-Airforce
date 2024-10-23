@@ -81,8 +81,8 @@ function onSelect(option: T) {
     >
       <template #option="{ option, idx }">
         <slot
-          name="item"
-          :item="option"
+          name="option"
+          :option
           :idx
         >
           {{ option }}
@@ -104,6 +104,7 @@ function onSelect(option: T) {
 
   .input-form {
     display: flex;
+    align-items: center;
   }
 
   input {

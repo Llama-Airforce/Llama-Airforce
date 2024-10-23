@@ -41,10 +41,10 @@ watch(watchlist, () => {
     <Select
       :options="watchlists"
       :selected="watchlist"
-      @input="watchlist = $event"
+      @select="watchlist = $event"
     >
-      <template #item="{ item: { name } }">
-        <div class="item">{{ name }}</div>
+      <template #option="{ option: { name } }">
+        <div class="option">{{ name }}</div>
       </template>
     </Select>
 

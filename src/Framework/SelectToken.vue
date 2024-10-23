@@ -39,10 +39,10 @@ watch(
   <Select
     :options="tokens"
     :selected="token"
-    @input="onTokenSelect"
+    @select="onTokenSelect"
   >
-    <template #item="{ item: { address, symbol } }">
-      <div class="item">
+    <template #option="{ option: { address, symbol } }">
+      <div class="option">
         <TokenIcon
           class="icon"
           :address
@@ -55,7 +55,7 @@ watch(
 </template>
 
 <style scoped>
-.item {
+.option {
   display: flex;
   align-items: center;
 

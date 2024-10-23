@@ -2,12 +2,12 @@
 import Recipe from "@CB/Recipe.vue";
 import why from "@/Assets/Icons/why.png";
 
-type SelectItem = {
+type SelectOption = {
   label: string;
   logo: string;
 };
 
-const options: SelectItem[] = [
+const options: SelectOption[] = [
   {
     label: "Option 1",
     logo: why,
@@ -22,7 +22,7 @@ const options: SelectItem[] = [
   },
 ];
 
-const selected = ref<SelectItem>(options[0]);
+const selected = ref<SelectOption>(options[0]);
 
 // Hooks
 onMounted((): void => {
@@ -30,29 +30,29 @@ onMounted((): void => {
 });
 
 // Events
-const onSelect = (option: SelectItem): void => {
+const onSelect = (option: SelectOption): void => {
   selected.value = option;
 };
 
 const select1 = `<Select
   :options
   :selected
-  @input="onSelect"
+  @select="onSelect"
 >
-  <template #item="{ item }">
-    <div class="item">
-      <img :src="item.logo" />
-      <div class="label">{{ item.label }}</div>
+  <template #option="{ option }">
+    <div class="option">
+      <img :src="option.logo" />
+      <div class="label">{{ option.label }}</div>
     </div>
   </template>
 </Select>`;
 
-const select2 = `type SelectItem = {
+const select2 = `type SelectOption = {
   label: string;
   logo: string;
 };
 
-const options: SelectItem[] = [
+const options: SelectOption[] = [
   {
     label: "Option 1",
     logo: why,
@@ -67,7 +67,7 @@ const options: SelectItem[] = [
   },
 ];
 
-const selected = ref<SelectItem>(options[0]);
+const selected = ref<SelectOption>(options[0]);
 
 // Hooks
 onMounted((): void => {
@@ -75,14 +75,14 @@ onMounted((): void => {
 });
 
 // Events
-const onSelect = (option: SelectItem): void => {
+const onSelect = (option: SelectOption): void => {
   selected.value = option;
 };`;
 
 const select3 = `.select-component {
   width: 20rem;
 
-  .item {
+  .option {
     display: flex;
     align-items: center;
 
@@ -107,12 +107,12 @@ const select3 = `.select-component {
         <Select
           :options
           :selected
-          @input="onSelect"
+          @select="onSelect"
         >
-          <template #item="{ item }">
-            <div class="item">
-              <img :src="item.logo" />
-              <div class="label">{{ item.label }}</div>
+          <template #option="{ option }">
+            <div class="option">
+              <img :src="option.logo" />
+              <div class="label">{{ option.label }}</div>
             </div>
           </template>
         </Select>
@@ -142,7 +142,7 @@ const select3 = `.select-component {
 .select {
   width: 20rem;
 
-  .item {
+  .option {
     display: flex;
     align-items: center;
 

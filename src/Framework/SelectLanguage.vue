@@ -40,12 +40,10 @@ function label(locale: Locale) {
     :direction
     :options="locales.map((x) => x)"
     :selected="locale"
-    @input="onLocaleSelect"
+    @select="onLocaleSelect"
   >
-    <template #item="{ item }">
-      <div class="item">
-        <div class="label">{{ label(item) }}</div>
-      </div>
+    <template #option="{ option }">
+      <div class="label">{{ label(option) }}</div>
     </template>
   </Select>
 </template>

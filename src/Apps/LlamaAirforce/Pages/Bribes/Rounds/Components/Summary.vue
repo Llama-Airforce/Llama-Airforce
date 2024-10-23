@@ -73,10 +73,10 @@ const onRoundSelect = (round: number): void => {
       :label="t('round-number')"
       :options="roundsOrdered"
       :selected="epoch.round"
-      @input="onRoundSelect"
+      @select="onRoundSelect"
     >
-      <template #item="{ item }">
-        <div class="item">{{ item }}</div>
+      <template #option="{ option }">
+        <div class="option">{{ option }}</div>
       </template>
     </Select>
 
@@ -141,7 +141,7 @@ const onRoundSelect = (round: number): void => {
     }
   }
 
-  .item {
+  .option {
     font-size: 1.25rem;
     font-weight: 700;
   }

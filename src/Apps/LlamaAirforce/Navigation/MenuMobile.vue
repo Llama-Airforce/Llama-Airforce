@@ -74,7 +74,7 @@ watch(
       <Select
         :options="pages"
         :selected="page"
-        @input="onPageSelect"
+        @select="onPageSelect"
       />
 
       <nav class="navigation">

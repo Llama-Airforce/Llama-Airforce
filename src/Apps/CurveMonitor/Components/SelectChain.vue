@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { type Chain, chainIcon } from "@CM/Models";
 
-type SelectItem = {
+type SelectOption = {
   label: string;
 };
 
-type ChainInfo = SelectItem & {
+type ChainInfo = SelectOption & {
   chain: Chain | "all";
 };
 
@@ -46,7 +46,7 @@ const chainSelected = computed(
   () => chainInfos.value.find((p) => p.chain === chain) ?? chainInfos.value[0]
 );
 
-const label = (item: SelectItem): string => item.label;
+const label = (option: SelectOption): string => option.label;
 
 const onChainSelect = (option: ChainInfo): void => {
   emit("select-chain", option.chain);
@@ -57,27 +57,27 @@ const onChainSelect = (option: ChainInfo): void => {
   <Select
     :options="chainInfos"
     :selected="chainSelected"
-    @input="onChainSelect"
+    @select="onChainSelect"
   >
-    <template #item="{ item }">
-      <div class="item">
+    <template #option="{ option }">
+      <div class="option">
         <img
-          v-if="chainIcon(item.chain)"
-          :src="chainIcon(item.chain)"
+          v-if="chainIcon(option.chain)"
+          :src="chainIcon(option.chain)"
         />
         <div
           v-else
           class="empty"
         ></div>
 
-        <div class="label">{{ label(item) }}</div>
+        <div class="label">{{ label(option) }}</div>
       </div>
     </template>
   </Select>
 </template>
 
 <style scoped>
-.item {
+.option {
   display: flex;
   align-items: center;
 

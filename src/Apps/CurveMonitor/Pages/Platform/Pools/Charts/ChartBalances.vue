@@ -188,10 +188,10 @@ function createSeriesStacked(normalize: boolean) {
         <Select
           :options="typeOptions"
           :selected="typeOptions.find((x) => x.id === type) ?? typeOptions[0]"
-          @input="type = $event.id"
+          @select="type = $event.id"
         >
-          <template #item="{ item }">
-            {{ item.label }}
+          <template #option="{ option }">
+            {{ option.label }}
           </template>
         </Select>
 

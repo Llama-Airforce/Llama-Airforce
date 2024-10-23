@@ -27,11 +27,11 @@ watch(
     direction="up"
     :options="themes.map((x) => x)"
     :selected="theme"
-    @input="theme = $event"
+    @select="theme = $event"
   >
-    <template #item="{ item }">
+    <template #option="{ option }">
       <div class="theme">
-        <div class="label">{{ item }}</div>
+        <div class="label">{{ option }}</div>
       </div>
     </template>
   </Select>

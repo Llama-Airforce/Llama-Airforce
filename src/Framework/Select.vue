@@ -14,7 +14,7 @@ const {
 }>();
 
 const emit = defineEmits<{
-  input: [option: T];
+  select: [option: T];
 }>();
 
 const open = ref(false);
@@ -22,7 +22,7 @@ const open = ref(false);
 function onSelect(option: T) {
   open.value = false;
 
-  emit("input", option);
+  emit("select", option);
 }
 </script>
 
@@ -35,10 +35,10 @@ function onSelect(option: T) {
     @click.stop="open = !open"
   >
     <div class="selected">
-      <div class="item-wrapper">
+      <div class="option-wrapper">
         <slot
-          name="item"
-          :item="selected"
+          name="option"
+          :option="selected"
           :is-selected="true"
         >
           {{ selected }}
@@ -61,8 +61,8 @@ function onSelect(option: T) {
     >
       <template #option="{ option }">
         <slot
-          name="item"
-          :item="option"
+          name="option"
+          :option
           :is-selected="false"
         >
           {{ option }}
@@ -115,7 +115,7 @@ function onSelect(option: T) {
     justify-content: center;
     cursor: pointer;
 
-    > .item-wrapper {
+    > .option-wrapper {
       margin: 0.5rem 0.75rem;
     }
 

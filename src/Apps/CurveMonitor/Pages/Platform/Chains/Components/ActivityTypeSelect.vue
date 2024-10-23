@@ -36,18 +36,18 @@ function onTypeSelect(option: ActivityType | "all") {
   <Select
     :options="types"
     :selected="type"
-    @input="onTypeSelect"
+    @select="onTypeSelect"
   >
-    <template #item="{ item }">
-      <div class="item">
-        <div class="label">{{ label(item) }}</div>
+    <template #option="{ option }">
+      <div class="option">
+        <div class="label">{{ label(option) }}</div>
       </div>
     </template>
   </Select>
 </template>
 
 <style scoped>
-.item {
+.option {
   display: flex;
   align-items: center;
 

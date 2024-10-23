@@ -39,19 +39,19 @@ watch(
   <Select
     :options="zaps"
     :selected="zap"
-    @input="onZapSelect"
+    @select="onZapSelect"
   >
-    <template #item="{ item }">
-      <div class="item">
-        <img :src="icon(item.logo ?? '')" />
-        <div class="label">{{ item.label ?? "?" }}</div>
+    <template #option="{ option }">
+      <div class="option">
+        <img :src="icon(option.logo ?? '')" />
+        <div class="label">{{ option.label ?? "?" }}</div>
       </div>
     </template>
   </Select>
 </template>
 
 <style scoped>
-.item {
+.option {
   display: flex;
   align-items: center;
 
