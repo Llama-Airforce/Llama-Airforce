@@ -3,11 +3,13 @@ const {
   options,
   selected,
   label,
+  chevrons = true,
   direction = "down",
 } = defineProps<{
   options: T[];
   selected: T;
   label?: string;
+  chevrons?: boolean;
   direction?: "up" | "down";
 }>();
 
@@ -28,7 +30,7 @@ function onSelect(option: T) {
   <div
     tabindex="0"
     class="select"
-    :class="[{ open }, direction]"
+    :class="[{ open, chevrons }, direction]"
     @blur="open = false"
     @click.stop="open = !open"
   >
@@ -126,7 +128,7 @@ function onSelect(option: T) {
     }
   }
 
-  &.no-chevrons {
+  &:not(.chevrons) {
     > .chevrons {
       display: none;
     }

@@ -54,7 +54,8 @@ function addToken(token: Token) {
 <template>
   <div class="watchlist">
     <Select
-      class="menu no-chevrons"
+      class="menu"
+      :chevrons="false"
       :options="watchlists"
       :selected="watchlist"
       @input="watchlist = $event"
