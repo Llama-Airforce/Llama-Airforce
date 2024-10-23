@@ -7,12 +7,14 @@ const {
   search = false,
   filter = () => true,
   sort = null,
+  direction = "down",
 } = defineProps<{
   placeholder?: string;
   options?: T[];
   search?: boolean;
   filter?: (input: string, option: T) => boolean;
   sort?: (a: T, b: T) => number;
+  direction?: "up" | "down";
 }>();
 
 const emit = defineEmits<{
@@ -65,6 +67,7 @@ function onSelect(option: T) {
       </span>
 
       <input
+        :class="[{ open }, direction]"
         :type="search ? 'search' : 'text'"
         :value="modelValue"
         :placeholder
@@ -75,6 +78,7 @@ function onSelect(option: T) {
 
     <OptionsList
       v-if="optionsProcessed.length > 0"
+      :direction
       :options="optionsProcessed"
       :open
       @select="onSelect"
@@ -132,6 +136,11 @@ function onSelect(option: T) {
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
+    }
+
+    &.open:not(&.up) {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
     }
   }
 
