@@ -1,11 +1,16 @@
 <script setup lang="ts">
-const { loading } = defineProps<{ loading: boolean }>();
+type Size = "small" | "medium" | "large" | "huge";
+
+const { loading, size = "medium" } = defineProps<{
+  loading: boolean;
+  size?: Size;
+}>();
 </script>
 
 <template>
   <div
     class="spinner"
-    :class="{ loading }"
+    :class="[{ loading }, size]"
   >
     <div></div>
     <div></div>
@@ -16,12 +21,32 @@ const { loading } = defineProps<{ loading: boolean }>();
 .spinner {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+
+  --size: 80px;
+
+  &.small {
+    --size: 40px;
+  }
+
+  &.medium {
+    --size: 60px;
+  }
+
+  &.large {
+    --size: 80px;
+  }
+
+  &.huge {
+    --size: 100px;
+  }
+
+  width: var(--size);
+  height: var(--size);
 
   div {
     position: absolute;
     border: 4px solid var(--c-text);
+    border-width: calc(var(--size) * 0.05);
     opacity: 1;
     border-radius: 50%;
     animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
@@ -68,8 +93,8 @@ const { loading } = defineProps<{ loading: boolean }>();
 
 @keyframes lds-ripple {
   0% {
-    top: 36px;
-    left: 36px;
+    top: calc(var(--size) * 0.45);
+    left: calc(var(--size) * 0.45);
     width: 0;
     height: 0;
     opacity: 1;
@@ -77,8 +102,8 @@ const { loading } = defineProps<{ loading: boolean }>();
   100% {
     top: 0px;
     left: 0px;
-    width: 72px;
-    height: 72px;
+    width: calc(var(--size) * 0.9);
+    height: calc(var(--size) * 0.9);
     opacity: 0;
   }
 }
