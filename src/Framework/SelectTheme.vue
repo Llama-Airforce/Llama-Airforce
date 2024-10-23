@@ -24,7 +24,7 @@ watch(
 
 <template>
   <Select
-    class="direction-up"
+    direction="up"
     :options="themes.map((x) => x)"
     :selected="theme"
     @input="theme = $event"

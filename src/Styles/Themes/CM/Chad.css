@@ -32,11 +32,8 @@
   --container-box-shadow: 0 0 0 0;
 
   --select-box-shadow: 3px 3px 0 #0d0a1f;
-  --select-items-box-shadow: 3px 3px 0 #0d0a1f;
-
   --input-box-shadow: inset 0.5px 0.5px 0 0.5px;
-  --input-items-box-shadow: inset 0.5px 0.5px 0 0.5px;
-
+  --options-box-shadow: 3px 3px 0 #0d0a1f;
   --tooltip-box-shadow: 0;
 
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,

@@ -67,10 +67,10 @@ const router = useRouter();
   .themes {
     grid-area: themes;
 
-    --select-items-min-width: 210%;
+    --options-min-width: 210%;
 
     @media only screen and (max-width: 1280px) {
-      --select-items-min-width: 130%;
+      --options-min-width: 130%;
     }
   }
 

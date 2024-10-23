@@ -91,10 +91,10 @@ const copyUrl = async () => {
     gap: 1.25rem;
 
     .themes {
-      --select-items-min-width: 220%;
+      --options-min-width: 220%;
 
       @media only screen and (max-width: 1280px) {
-        --select-items-min-width: 125%;
+        --options-min-width: 125%;
       }
     }
   }

@@ -4,14 +4,12 @@ import { locales as localesAll, type Locale } from "@/Framework/Locale";
 
 const STORAGE_LOCALE = "locale";
 
-type Direction = "up" | "down";
-
 const locale = useStorage<Locale>(STORAGE_LOCALE, "en");
 const { locale: loc } = useI18n({ useScope: "global" });
 
 const { locales = localesAll, direction = "up" } = defineProps<{
   locales?: Locale[];
-  direction?: Direction;
+  direction?: "up" | "down";
 }>();
 
 // Hooks
@@ -39,7 +37,7 @@ function label(locale: Locale) {
 
 <template>
   <Select
-    :class="{ 'direction-up': direction === 'up' }"
+    :direction
     :options="locales.map((x) => x)"
     :selected="locale"
     @input="onLocaleSelect"

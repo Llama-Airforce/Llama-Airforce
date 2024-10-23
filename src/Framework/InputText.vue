@@ -20,7 +20,7 @@ const emit = defineEmits<{
   select: [option: T];
 }>();
 
-const showOptions = ref(false);
+const open = ref(false);
 
 const optionsProcessed = computed<T[]>(() => {
   const optionsFiltered = [...options].filter((option) =>
@@ -37,13 +37,13 @@ function onInput(evt: Event) {
   const value = (evt.target as HTMLInputElement).value;
 
   modelValue.value = value;
-  showOptions.value = !!value;
+  open.value = !!value;
 
   emit("input", value);
 }
 
 function onSelect(option: T) {
-  showOptions.value = false;
+  open.value = false;
 
   emit("select", option);
 }
@@ -73,27 +73,22 @@ function onSelect(option: T) {
       />
     </div>
 
-    <!-- Auto-complete -->
-    <div
-      v-if="options && showOptions"
-      class="items"
-      :class="{ 'no-options': !(options && showOptions) }"
+    <OptionsList
+      v-if="optionsProcessed.length > 0"
+      :options="optionsProcessed"
+      :open
+      @select="onSelect"
     >
-      <div
-        v-for="(option, i) of optionsProcessed"
-        :key="i"
-        class="item-wrapper"
-        @click="onSelect(option)"
-      >
+      <template #option="{ option, idx }">
         <slot
           name="item"
           :item="option"
-          :idx="i"
+          :idx
         >
           {{ option }}
         </slot>
-      </div>
-    </div>
+      </template>
+    </OptionsList>
   </div>
 </template>
 
@@ -137,45 +132,6 @@ function onSelect(option: T) {
       -webkit-appearance: none;
       margin: 0;
     }
-  }
-
-  .items {
-    color: var(--c-text);
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    z-index: 1;
-    min-width: 100%;
-    font-size: 1rem;
-
-    background: var(--c-lvl1);
-    box-shadow: var(--input-items-box-shadow);
-    border-radius: var(--border-radius);
-
-    > div {
-      color: var(--c-text);
-      cursor: pointer;
-
-      /* Disable blue highlight because of pointer. */
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      border-bottom: 1px solid var(--c-lvl3);
-      padding: 0.5rem 0.75rem;
-
-      &:hover {
-        background-color: var(--c-primary);
-      }
-    }
-
-    > div:last-child {
-      border-bottom: 0;
-      border-bottom-left-radius: var(--border-radius);
-      border-bottom-right-radius: var(--border-radius);
-    }
-  }
-
-  .no-options {
-    display: none;
   }
 
   .icon {

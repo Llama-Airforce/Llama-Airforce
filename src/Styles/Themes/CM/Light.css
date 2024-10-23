@@ -33,11 +33,8 @@
   --container-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   --select-box-shadow: 0;
-  --select-items-box-shadow: var(--container-box-shadow);
-
   --input-box-shadow: 0;
-  --input-items-box-shadow: var(--container-box-shadow);
-
+  --options-box-shadow: var(--container-box-shadow);
   --tooltip-box-shadow: var(--container-box-shadow);
 
   body {

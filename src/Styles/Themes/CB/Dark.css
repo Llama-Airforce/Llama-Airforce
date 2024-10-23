@@ -27,10 +27,7 @@
   --container-box-shadow: 0 0 0 0;
 
   --select-box-shadow: 0;
-  --select-items-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-
   --input-box-shadow: 0;
-  --input-items-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-
+  --options-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   --tooltip-box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
 }

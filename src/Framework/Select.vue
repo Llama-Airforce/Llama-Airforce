@@ -1,23 +1,34 @@
 <script setup lang="ts" generic="T">
-const { options, selected, label } = defineProps<{
+const {
+  options,
+  selected,
+  label,
+  direction = "down",
+} = defineProps<{
   options: T[];
   selected: T;
   label?: string;
+  direction?: "up" | "down";
 }>();
 
 const emit = defineEmits<{
   input: [option: T];
 }>();
 
-// Refs
 const open = ref(false);
+
+function onSelect(option: T) {
+  open.value = false;
+
+  emit("input", option);
+}
 </script>
 
 <template>
   <div
     tabindex="0"
     class="select"
-    :class="{ open }"
+    :class="[{ open }, direction]"
     @blur="open = false"
     @click.stop="open = !open"
   >
@@ -40,19 +51,13 @@ const open = ref(false);
       </div>
     </div>
 
-    <div
-      class="items"
-      :class="{ open }"
+    <OptionsList
+      :direction
+      :options
+      :open
+      @select="onSelect"
     >
-      <div
-        v-for="(option, i) of options"
-        :key="i"
-        class="item-wrapper"
-        @click.stop="
-          open = false;
-          emit('input', option);
-        "
-      >
+      <template #option="{ option }">
         <slot
           name="item"
           :item="option"
@@ -60,8 +65,8 @@ const open = ref(false);
         >
           {{ option }}
         </slot>
-      </div>
-    </div>
+      </template>
+    </OptionsList>
 
     <div class="chevrons">
       <LucideChevronsLeftRight />
@@ -90,15 +95,9 @@ const open = ref(false);
   outline-color: transparent;
   line-height: 1.5rem;
 
-  &.open:not(&.direction-up) {
+  &.open:not(&.up) {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-  }
-
-  &.direction-up {
-    > .items {
-      bottom: 120%; /* Items will move upwards. */
-    }
   }
 
   &:has(.selected:hover) {
@@ -124,46 +123,6 @@ const open = ref(false);
       line-height: 1.5;
       margin-inline: 0.75rem;
       margin-bottom: 0.5rem;
-    }
-  }
-
-  > .items {
-    color: var(--c-text);
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    z-index: 1;
-    min-width: var(--select-items-min-width, 100%);
-    font-size: 1rem;
-
-    background: var(--c-lvl1);
-    box-shadow: var(--select-items-box-shadow);
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-
-    &:not(.open) {
-      display: none;
-    }
-
-    > .item-wrapper {
-      color: var(--c-text);
-      cursor: pointer;
-
-      /* Disable blue highlight because of pointer. */
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      border-bottom: 1px solid var(--c-lvl3);
-      padding: 0.5rem 0.75rem;
-
-      &:hover {
-        background-color: var(--c-primary);
-      }
-    }
-
-    > div:last-child {
-      border-bottom: 0;
-      border-bottom-left-radius: var(--border-radius);
-      border-bottom-right-radius: var(--border-radius);
     }
   }
 
