@@ -20,6 +20,10 @@ export const menu: Menu = {
           label: "AsyncValue",
         },
         {
+          to: "/components/blockie",
+          label: "Blockie",
+        },
+        {
           to: "/components/breadcrumb",
           label: "Breadcrumb",
         },

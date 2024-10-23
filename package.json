@@ -36,6 +36,7 @@
     "@vueuse/router": "11.1.0",
     "@wagmi/vue": "0.0.54",
     "apexcharts": "3.54.1",
+    "ethereum-blockies-base64": "^1.0.2",
     "hono": "4.6.6",
     "lightweight-charts": "4.2.1",
     "lru-cache": "^11.0.1",

@@ -2,6 +2,7 @@ import Colors from "@CB/Recipes/ColorsRecipe.vue";
 import Socket from "@CB/Recipes/SocketRecipe.vue";
 
 import AsyncValue from "@CB/RecipesComponents/AsyncValueRecipe.vue";
+import Blockie from "@CB/RecipesComponents/BlockieRecipe.vue";
 import Breadcrumb from "@CB/RecipesComponents/BreadcrumbRecipe.vue";
 import Button from "@CB/RecipesComponents/ButtonRecipe.vue";
 import ButtonToggle from "@CB/RecipesComponents/ButtonToggleRecipe.vue";
@@ -40,6 +41,11 @@ export const routes = [
     path: "/components/async-value",
     name: "async-value",
     component: AsyncValue,
+  },
+  {
+    path: "/components/blockie",
+    name: "blockie",
+    component: Blockie,
   },
   {
     path: "/components/breadcrumb",
