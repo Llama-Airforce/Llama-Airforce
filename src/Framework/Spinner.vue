@@ -1,5 +1,12 @@
+<script setup lang="ts">
+const { loading } = defineProps<{ loading: boolean }>();
+</script>
+
 <template>
-  <div class="spinner">
+  <div
+    class="spinner"
+    :class="{ loading }"
+  >
     <div></div>
     <div></div>
   </div>

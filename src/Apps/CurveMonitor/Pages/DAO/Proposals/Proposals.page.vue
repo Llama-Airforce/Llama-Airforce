@@ -107,7 +107,7 @@ const onTypeSelect = (type: ProposalType): void => {
 
       <div v-if="proposals.length === 0">No proposals could be found.</div>
 
-      <Spinner :class="{ loading }" />
+      <Spinner :loading />
     </div>
   </div>
 </template>

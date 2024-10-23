@@ -81,7 +81,7 @@ const proposalsExecuted = computed((): Proposal[] => {
       </TabItem>
     </TabView>
 
-    <Spinner :class="{ loading }" />
+    <Spinner :loading />
   </div>
 </template>
 

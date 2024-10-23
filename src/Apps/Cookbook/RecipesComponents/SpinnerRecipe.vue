@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
 
-const spinner = `<Spinner class="loading" />`;
+const spinner = `<Spinner loading />`;
 </script>
 
 <template>
   <div class="dashboard">
     <Recipe title="Spinner">
       <template #example>
-        <Spinner class="loading" />
+        <Spinner loading />
       </template>
 
       <template #snippets>

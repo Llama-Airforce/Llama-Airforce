@@ -16,7 +16,7 @@ const { isFetching: loading, data: proposal } = useQueryProposal(
 
 <template>
   <div class="dashboard">
-    <Spinner :class="{ loading }" />
+    <Spinner :loading />
 
     <ProposalComponent
       v-if="!loading && proposal"

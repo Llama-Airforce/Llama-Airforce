@@ -49,7 +49,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 
 <template>
   <div class="dashboard">
-    <Spinner :class="{ loading }" />
+    <Spinner :loading />
 
     <TabView
       v-if="!loading && market"
