@@ -48,7 +48,15 @@ function name(connector: Connector) {
 }
 
 function onConnect(connector: Connector) {
-  connect({ connector });
+  connect(
+    { connector },
+    {
+      onError: (err) => {
+        notify({ text: prettyError(err), type: "error" });
+      },
+    }
+  );
+
   showConnectors.value = false;
 }
 

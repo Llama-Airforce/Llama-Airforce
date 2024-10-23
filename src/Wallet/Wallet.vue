@@ -8,17 +8,23 @@ const { labelPleaseConnect } = defineProps<{
   labelPleaseConnect?: string;
 }>();
 
-// Refs
 const { disconnect } = useDisconnect();
 const { isConnected, chainId, address } = useWallet();
 const { switchChain } = useSwitchChain();
 
 const supportedNetwork = computed(() => chainId.value === mainnet.id);
 
-// Events
 const changeNetwork = () => {
   switchChain({ chainId: mainnet.id });
 };
+
+function onDisconnect() {
+  disconnect(undefined, {
+    onError: (err) => {
+      notify({ text: prettyError(err), type: "error" });
+    },
+  });
+}
 </script>
 
 <template>
@@ -35,7 +41,7 @@ const changeNetwork = () => {
       <Button
         v-else
         class="disconnect"
-        @click="disconnect"
+        @click="onDisconnect"
       >
         <LucideCheck /> {{ addressShort(address) }}
       </Button>
