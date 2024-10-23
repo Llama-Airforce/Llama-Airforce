@@ -48,7 +48,7 @@ function onDisconnect() {
     </div>
 
     <div v-else>
-      <WalletConnectButton></WalletConnectButton>
+      <WalletConnectButton />
       <span
         v-if="labelPleaseConnect"
         class="info"
