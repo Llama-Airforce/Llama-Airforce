@@ -55,10 +55,12 @@ function onSelect(option: T) {
     :class="{ search }"
   >
     <span
-      v-if="search"
+      v-if="search || $slots['icon']"
       class="icon"
     >
-      <LucideSearch />
+      <slot name="icon">
+        <LucideSearch v-if="search" />
+      </slot>
     </span>
 
     <input
@@ -130,10 +132,6 @@ function onSelect(option: T) {
     }
   }
 
-  > input[type="search"] {
-    padding-left: 2.875rem;
-  }
-
   > .items {
     color: var(--c-text);
     overflow: hidden;
@@ -184,6 +182,10 @@ function onSelect(option: T) {
     position: relative;
     left: 0.875rem;
     color: var(--c-lvl5);
+  }
+
+  &:has(.icon) input {
+    padding-left: 2.875rem;
   }
 }
 </style>
