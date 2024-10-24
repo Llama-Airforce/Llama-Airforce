@@ -234,6 +234,7 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
     </template>
 
     <Table
+      v-if="bribedOrdered.length > 0"
       class="personal-table"
       :rows="bribedOrdered"
       :columns
@@ -279,12 +280,18 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
           </div>
         </Tooltip>
       </template>
-
-      <template #no-data>
-        <div v-if="loading">{{ t("loading") }} {{ addressShort(address) }}</div>
-        <WalletConnectButton v-if="!isConnected && isSupported" />
-      </template>
     </Table>
+
+    <div
+      v-else
+      class="no-data"
+    >
+      <WalletConnectButton v-if="!isConnected && isSupported" />
+      <span v-else-if="loading">
+        {{ t("loading") }} {{ addressShort(address) }}
+      </span>
+      <span v-else>There's no personal rewards yet</span>
+    </div>
   </Card>
 </template>
 

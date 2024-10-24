@@ -194,6 +194,13 @@ const stackActions = computed(() => width.value <= 1280);
       margin: 0 var(--card-margin-inline);
     }
 
+    &:has(.no-data) {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     &:has(.table) {
       overflow-y: auto;
     }

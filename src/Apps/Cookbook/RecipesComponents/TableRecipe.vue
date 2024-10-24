@@ -289,10 +289,6 @@ const onCheck = (round: Round) => {
               />
             </div>
           </template>
-
-          <template #no-data>
-            <div>Custom no data message</div>
-          </template>
         </Table>
       </template>
 

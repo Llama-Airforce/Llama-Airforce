@@ -56,7 +56,6 @@ const emit = defineEmits<{
   sortColumn: [sort: never, sortOrder: SortOrder];
 }>();
 
-// Refs
 const rowsEmpty = computed((): never[] => {
   if (rowsMin === null) {
     return [];
@@ -189,14 +188,6 @@ const sortColumn = (column: Column): void => {
       :key="row"
     />
 
-    <!-- No data to show. -->
-    <div
-      v-if="!rowsMin && (!rows || rows.length === 0)"
-      class="no-data"
-    >
-      <slot name="no-data">No data</slot>
-    </div>
-
     <!-- Aggregation -->
     <TableRow
       v-if="!!$slots['row-aggregation'] && rows.length > 0"
@@ -281,14 +272,6 @@ const sortColumn = (column: Column): void => {
 
   > .aggregation {
     border-top: var(--table-border-aggregation);
-  }
-
-  > .no-data {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0 auto;
   }
 }
 </style>
