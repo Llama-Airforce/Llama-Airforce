@@ -215,7 +215,6 @@ const sortColumn = (column: Column): void => {
 
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   font-size: 0.875rem;
 
   background: var(--c-lvl1);
