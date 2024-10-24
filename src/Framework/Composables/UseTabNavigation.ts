@@ -18,12 +18,17 @@
  * @param tabs An array of tab names
  * @param routeName The name of the route to navigate to when a tab is selected
  * @param routeParams An optional function that returns additional route params to include in the navigation
+ * @param options Optional configuration object
+ * @param options.beforeNavigate Optional callback function executed before navigation with the new tab name
  * @returns An object containing `tabActive` and `tabActiveIndex` refs
  */
 export function useTabNavigation<const T extends string>(
   tabs: readonly T[],
   routeName: string,
-  routeParams?: () => Record<string, unknown>
+  routeParams?: () => Record<string, unknown>,
+  options?: {
+    beforeNavigate?: (tab: T) => void;
+  }
 ) {
   const router = useRouter();
   const tabActive = useRouteParams<T>("tab", tabs[0]);
@@ -48,6 +53,9 @@ export function useTabNavigation<const T extends string>(
         oldIndex === -1 || oldIndex === undefined || tabActive.value === "";
 
       const query = router.currentRoute.value.query;
+
+      const tabName = tabs[tabActiveIndex];
+      options?.beforeNavigate?.(tabName);
 
       await router.push({
         name: routeName,
