@@ -151,6 +151,14 @@ const stackActions = computed(() => width.value <= 1280);
         var(--header-column-actions);
     }
 
+    /*
+     * When card-body overflows it shrinks tab-headers to 2.5rem which is too small
+     * Therefore to make it all fit, we shrink the tab header padding to fit in 2.5rem.
+     */
+    &:has(.tab-view):deep(.tab-header) {
+      padding: calc(0.5rem - 1px) 1rem 0.75rem 1rem;
+    }
+
     &.collapsible {
       margin-bottom: var(--card-margin-block);
     }
