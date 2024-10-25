@@ -17,7 +17,7 @@ const emit = defineEmits<{
 
 const columns = computed(() => [
   "",
-  { label: "Reward", align: "end" } as const,
+  { label: "Reward" } as const,
   { label: "Amount", align: "end" } as const,
   { label: "Value", align: "end" } as const,
   ...(canSelect ? [""] : []),
