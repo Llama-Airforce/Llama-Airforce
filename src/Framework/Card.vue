@@ -45,11 +45,6 @@ const stackActions = computed(() => width.value <= 1280);
     }"
     :inert="!!loading"
   >
-    <Spinner
-      v-if="loading !== null"
-      :loading
-    />
-
     <div
       v-if="showHeader"
       class="card-header"
@@ -90,6 +85,10 @@ const stackActions = computed(() => width.value <= 1280);
       class="card-body"
       :class="{ compact, collapsed }"
     >
+      <Spinner
+        v-if="loading !== null"
+        :loading
+      />
       <slot></slot>
     </div>
   </div>
@@ -97,8 +96,6 @@ const stackActions = computed(() => width.value <= 1280);
 
 <style scoped>
 .card {
-  position: relative;
-
   width: var(--card-width);
 
   display: flex;
@@ -112,13 +109,6 @@ const stackActions = computed(() => width.value <= 1280);
   --header-column-title: 1fr;
   --header-column-actions: auto;
   --header-column-actions-secondary: auto;
-
-  > .spinner {
-    position: absolute;
-    inset: 0;
-    margin: auto auto;
-    z-index: 2;
-  }
 
   .card-header {
     display: grid;
@@ -182,6 +172,8 @@ const stackActions = computed(() => width.value <= 1280);
   }
 
   > .card-body {
+    position: relative;
+
     height: var(--card-body-height);
     overflow: var(--card-body-overflow);
 
@@ -216,6 +208,13 @@ const stackActions = computed(() => width.value <= 1280);
     &:has(.vue-apexcharts) {
       margin-top: -1rem !important;
       overflow-x: clip;
+    }
+
+    > .spinner {
+      position: absolute;
+      inset: 0;
+      margin: auto auto;
+      z-index: 2;
     }
   }
 
