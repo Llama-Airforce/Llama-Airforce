@@ -47,7 +47,8 @@ export function round(
 ): string {
   if (type === "dollar") {
     const exp = Math.floor(Math.log10(Math.abs(value)) / 3) * 3;
-    value /= 10 ** exp || 1;
+    // Only apply the scaling if exp is positive
+    value /= exp > 0 ? 10 ** exp : 1;
   }
 
   const formatOptions =
