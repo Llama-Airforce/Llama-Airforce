@@ -159,96 +159,75 @@ const totalUtilRate = (type: "long" | "short"): number => {
       </div>
     </Teleport>
 
-    <div class="markets">
-      <div class="kpis">
-        <KPI
-          label="Open Interest"
-          :has-value="!loadingMarkets"
-        >
-          <AsyncValue
-            type="dollar"
-            :value="totalBorrowed('long')"
-          />
-        </KPI>
-
-        <KPI
-          tooltip-type="icon"
-          label="Average Utilization Rate"
-          tooltip="Aggregate debt divided by aggregate assets"
-          :has-value="!loadingMarkets"
-        >
-          <AsyncValue
-            type="percentage"
-            :value="totalUtilRate('long')"
-          />
-        </KPI>
-      </div>
-
-      <TableMarkets
-        style="grid-column: 1"
-        type="long"
-        :pairs="marketPairsFiltered"
-        :loading="loadingMarkets"
-        :chain
-        @selected="onMarketSelect"
+    <KPI
+      style="grid-area: kpi1"
+      label="Open Interest (long)"
+      :has-value="!loadingMarkets"
+    >
+      <AsyncValue
+        type="dollar"
+        :value="totalBorrowed('long')"
       />
-    </div>
+    </KPI>
 
-    <div class="markets">
-      <div class="kpis">
-        <KPI
-          label="Open Interest"
-          :has-value="!loadingMarkets"
-        >
-          <AsyncValue
-            type="dollar"
-            :value="totalBorrowed('short')"
-          />
-        </KPI>
-
-        <KPI
-          tooltip-type="icon"
-          label="Average Utilization Rate"
-          tooltip="Aggregate debt divided by aggregate assets"
-          :has-value="!loadingMarkets"
-        >
-          <AsyncValue
-            type="percentage"
-            :value="totalUtilRate('short')"
-          />
-        </KPI>
-      </div>
-
-      <TableMarkets
-        style="grid-column: 2"
-        type="short"
-        :pairs="marketPairsFiltered"
-        :loading="loadingMarkets"
-        :chain
-        @selected="onMarketSelect"
+    <KPI
+      style="grid-area: kpi2"
+      label="Open Interest (short)"
+      :has-value="!loadingMarkets"
+    >
+      <AsyncValue
+        type="dollar"
+        :value="totalBorrowed('short')"
       />
-    </div>
+    </KPI>
+
+    <KPI
+      style="grid-area: kpi3"
+      tooltip-type="icon"
+      label="Average Utilization Rate (long)"
+      tooltip="Aggregate debt divided by aggregate assets"
+      :has-value="!loadingMarkets"
+    >
+      <AsyncValue
+        type="percentage"
+        :value="totalUtilRate('long')"
+      />
+    </KPI>
+
+    <KPI
+      style="grid-area: kpi4"
+      tooltip-type="icon"
+      label="Average Utilization Rate (short)"
+      tooltip="Aggregate debt divided by aggregate assets"
+      :has-value="!loadingMarkets"
+    >
+      <AsyncValue
+        type="percentage"
+        :value="totalUtilRate('short')"
+      />
+    </KPI>
+
+    <TableMarkets
+      style="grid-area: markets"
+      :pairs="marketPairsFiltered"
+      :loading="loadingMarkets"
+      :chain
+      @selected="onMarketSelect"
+    />
   </div>
 </template>
 
 <style scoped>
 .dashboard {
   max-width: calc(1920px - 18.125rem);
-  grid-template-columns: 1fr 1fr;
 
-  .markets {
-    display: flex;
-    flex-direction: column;
-    gap: var(--dashboard-gap);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "kpi1 kpi2 kpi3 kpi4"
+    "markets markets markets markets";
 
-    .kpis {
-      display: flex;
-      gap: var(--dashboard-gap);
-
-      @media only screen and (max-width: 1280px) {
-        flex-direction: column;
-      }
-    }
+  [style*="grid-area: markets"] {
+    max-height: 800px;
   }
 }
 

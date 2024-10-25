@@ -2,15 +2,15 @@
 import { type Chain } from "@CM/Models";
 import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 
+type MarketType = "long" | "short";
+
 const {
   pairs = [],
   loading,
-  type,
   chain,
 } = defineProps<{
   pairs: MarketPair[];
   loading: boolean;
-  type: "long" | "short";
   chain: Chain;
 }>();
 
@@ -18,31 +18,53 @@ const emit = defineEmits<{
   selected: [market?: Market];
 }>();
 
-// Refs
-const title = computed(() =>
-  type === "long" ? "Markets - Long" : "Markets - Short"
-);
+const columns = [
+  "",
+  "",
+  "Name",
+  { id: "borrow", label: "Borrow Rate", align: "end", sort: true } as const,
+  { id: "lend", label: "Lend Rate", align: "end", sort: true } as const,
+  { id: "tvl", label: "TVL", align: "end", sort: true } as const,
+  { id: "loans", label: "Loans", align: "end", sort: true } as const,
+];
 
-const markets = computed(() =>
+const { sorting, onSort } = useSort<typeof columns>("tvl");
+
+const type = ref<MarketType>("long");
+function onType(tabIndex: number) {
+  if (tabIndex === 0) {
+    type.value = "long";
+  } else if (tabIndex === 1) {
+    type.value = "short";
+  } else {
+    type.value = "long";
+  }
+}
+
+const rows = computed(() =>
   pairs
-    .map((pair) => {
-      const count = (pair.long ? 1 : 0) + (pair.short ? 1 : 0);
-      return { count, ...pair };
-    })
-    .orderBy(
-      [(x) => x.count, ({ long, short }) => tvl(long) + tvl(short)],
-      ["desc", "desc"]
-    )
-    .map(({ long, short }) => (type === "long" ? long : short))
+    .map(({ long, short }) => (type.value === "long" ? long : short))
+    .filter((x) => !!x)
+    .orderBy((x) => {
+      switch (sorting.value.column) {
+        case "borrow":
+          return x.borrow_apy;
+        case "lend":
+          return x.lend_apy;
+        case "tvl":
+          return tvl(x);
+        case "loans":
+          return x.n_loans;
+      }
+    }, sorting.value.order)
 );
 
-// Methods
 function name(market: Market) {
   return market.name.replace(/(-long|-short)/i, "");
 }
 
 const tokenIcon = (market: Market) => {
-  return type === "long"
+  return type.value === "long"
     ? market.collateral_token.address
     : market.borrowed_token.address;
 };
@@ -50,22 +72,27 @@ const tokenIcon = (market: Market) => {
 
 <template>
   <Card
-    :title
+    title="Markets"
     :loading
   >
+    <template #actions>
+      <TabView
+        class="types"
+        @tab="onType($event.index)"
+      >
+        <TabItem header="Long" />
+        <TabItem header="Short" />
+      </TabView>
+    </template>
+
     <Table
+      v-if="rows.length > 0"
       class="markets-table"
       expand-side="left"
-      :rows="markets"
-      :columns="[
-        '',
-        '',
-        'Name',
-        { label: 'Borrow Rate', align: 'end' },
-        { label: 'Lend Rate', align: 'end' },
-        { label: 'TVL', align: 'end' },
-        { label: 'Loans', align: 'end' },
-      ]"
+      :rows
+      :columns
+      :sorting
+      @sort-column="onSort"
       @selected="emit('selected', $event)"
     >
       <template #row="{ item: market }">
@@ -114,12 +141,12 @@ const tokenIcon = (market: Market) => {
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="markets.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
+            :value="rows.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
           />
         </div>
         <div class="end">
           {{
-            markets
+            rows
               .filter((market) => market)
               .map((market) => market!)
               .reduce((acc, x) => acc + x.n_loans, 0)
@@ -130,6 +157,11 @@ const tokenIcon = (market: Market) => {
       <!-- Empty for expander arrow and pointer on hover -->
       <template #row-details> &nbsp; </template>
     </Table>
+
+    <NoData
+      v-else
+      :message="`There are no ${type} markets for ${chain}`"
+    />
   </Card>
 </template>
 
@@ -139,5 +171,9 @@ const tokenIcon = (market: Market) => {
   --columns-data: 1rem 26px minmax(12ch, 1fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.25fr);
+}
+
+.types {
+  margin: 0 1rem;
 }
 </style>
