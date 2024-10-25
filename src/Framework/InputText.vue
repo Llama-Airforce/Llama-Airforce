@@ -109,11 +109,13 @@ function onSelect(option: T) {
   .input-form {
     display: flex;
     align-items: center;
+    height: 100%;
   }
 
   input {
     all: unset;
 
+    height: 100%;
     background-color: var(--c-lvl2);
     border: solid var(--border-thickness) var(--c-lvl4);
     border-radius: var(--border-radius);
