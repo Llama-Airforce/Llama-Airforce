@@ -42,7 +42,7 @@ const emit = defineEmits<{
   overflow: hidden;
   position: absolute;
   left: 0;
-  z-index: 1;
+  z-index: 2;
   min-width: var(--options-min-width, 100%);
   font-size: 1rem;
 
