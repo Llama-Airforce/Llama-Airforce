@@ -54,9 +54,9 @@ function onSelect(option: T) {
     </div>
 
     <OptionsList
+      v-model:open="open"
       :direction
       :options
-      :open
       @select="onSelect"
     >
       <template #option="{ option }">

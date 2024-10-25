@@ -1,17 +1,56 @@
 <script setup lang="ts" generic="T">
-const {
-  options,
-  open,
-  direction = "down",
-} = defineProps<{
+const open = defineModel<boolean>("open", { required: true });
+
+const { options, direction = "down" } = defineProps<{
   options: T[];
-  open: boolean;
   direction?: "up" | "down";
 }>();
 
 const emit = defineEmits<{
   select: [option: T];
 }>();
+
+// (internal) keyboard selection
+const selectedIndex = ref(-1);
+watch([options, open], () => {
+  selectedIndex.value = -1;
+});
+
+const handleKeydown = (e: KeyboardEvent) => {
+  if (!open.value) return;
+
+  switch (e.key) {
+    case "ArrowDown":
+      e.preventDefault();
+      selectedIndex.value = (selectedIndex.value + 1) % options.length;
+      break;
+
+    case "ArrowUp":
+      e.preventDefault();
+      selectedIndex.value =
+        selectedIndex.value <= 0 ? options.length - 1 : selectedIndex.value - 1;
+      break;
+
+    case "Enter":
+      if (selectedIndex.value >= 0) {
+        emit("select", options[selectedIndex.value]);
+      }
+      break;
+
+    case "Escape":
+      selectedIndex.value = -1;
+      open.value = false;
+      break;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeydown);
+});
 </script>
 
 <template>
@@ -23,6 +62,7 @@ const emit = defineEmits<{
       v-for="(option, idx) of options"
       :key="idx"
       class="option-wrapper"
+      :class="{ selected: idx === selectedIndex }"
       @click.stop="emit('select', option)"
     >
       <slot
@@ -73,7 +113,8 @@ const emit = defineEmits<{
   border-bottom: 1px solid var(--c-lvl3);
   padding: 0.5rem 0.75rem;
 
-  &:hover {
+  &:hover,
+  &.selected {
     background-color: var(--c-primary);
   }
 

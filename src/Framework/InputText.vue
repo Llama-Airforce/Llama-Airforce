@@ -78,9 +78,9 @@ function onSelect(option: T) {
 
     <OptionsList
       v-if="optionsProcessed.length > 0"
+      v-model:open="open"
       :direction
       :options="optionsProcessed"
-      :open
       @select="onSelect"
     >
       <template #option="{ option, idx }">
