@@ -3,7 +3,7 @@ import type { Chain } from "@/Types/Chain";
 import type { Pool } from "@CM/Services/Pools";
 import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { useQueryPools } from "@CM/Services/Pools/Queries";
-import { TablePools } from "@CM/Pages/Platform/Pools/Tables";
+import TablePools from "./Tables/TablePools.vue";
 
 const chains: Chain[] = ["ethereum", "arbitrum"];
 const chainParam = useRouteParams<Chain | undefined | "">("chain");

@@ -3,15 +3,33 @@ import type {
   LabelRankingShort,
   LabelRankingExtended,
   TransactionDetail,
+  DurationType,
+  DurationInput,
+  IntervalInput,
 } from "@CM/phil/src/utils/Interfaces";
+
 import type { SandwichDetail } from "@CM/phil/src/utils/postgresTables/readFunctions/SandwichDetail";
 import { TransactionType } from "@CM/phil/src/models/TransactionType";
+
+interface AggregatedVolumeData {
+  interval_start: Date;
+  interval_start_unixtime: number;
+  full_volume: number;
+  atomicArbVolume: number;
+  cexDexArbVolume: number;
+  sandwichVolume_LossWithin: number;
+  sandwichVolume_LossOutside: number;
+}
 
 export type {
   LabelRankingShort,
   LabelRankingExtended,
   TransactionDetail,
   SandwichDetail,
+  AggregatedVolumeData,
+  DurationType,
+  DurationInput,
+  IntervalInput,
 };
 
 export { TransactionType };
@@ -28,6 +46,11 @@ export type ClientToServerEvents = {
     timeDuration: TimeDuration,
     page: number
   ) => void;
+  getPoolSpecificAggregatedMevVolume: (
+    poolAddress: string,
+    timeDuration: DurationInput,
+    timeInterval: IntervalInput
+  ) => void;
 };
 
 export type ServerToClientEvents = {
@@ -37,6 +60,9 @@ export type ServerToClientEvents = {
   fullSandwichTableContent: (resp: {
     data: SandwichDetail[];
     totalPages: number;
+  }) => void;
+  poolSpecificAggregatedMevVolume: (aggregatedMevVolumeForPool: {
+    data: AggregatedVolumeData[];
   }) => void;
 };
 

@@ -1,5 +1,10 @@
+import type { Address } from "@/Types/Address";
 import { emitAndListen } from "@/Services/Socket";
-import type { SocketMonitorCurve } from "../SocketMonitorCurve";
+import type {
+  DurationInput,
+  IntervalInput,
+  SocketMonitorCurve,
+} from "../SocketMonitorCurve";
 
 export default class MEVService {
   constructor(private socket: SocketMonitorCurve) {}
@@ -27,6 +32,21 @@ export default class MEVService {
       this.socket,
       "getAbsoluteLabelsRanking",
       "absoluteLabelsRanking"
+    );
+  }
+
+  getPoolSpecificAggregatedMevVolume(
+    poolAddress: Address,
+    timeDuration: DurationInput,
+    timeInterval: IntervalInput
+  ) {
+    return emitAndListen(
+      this.socket,
+      "getPoolSpecificAggregatedMevVolume",
+      "poolSpecificAggregatedMevVolume",
+      poolAddress,
+      timeDuration,
+      timeInterval
     );
   }
 }

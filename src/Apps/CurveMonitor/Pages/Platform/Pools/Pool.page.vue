@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
 import { useQueryPool } from "@CM/Services/Pools/Queries";
-import PoolOverview from "@CM/Pages/Platform/Pools/Tabs/PoolOverview.vue";
-import MEV from "@CM/Pages/Platform/Pools/Tabs/MEV.vue";
+import PoolOverview from "./Tabs/PoolOverview.vue";
+import MEV from "./Tabs/MEV.vue";
 
 // Markets
 const chain = useRouteParams<Chain>("chain");
@@ -61,12 +61,14 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
         </KeepAlive>
       </TabItem>
 
-      <TabItem header="MEV">
+      <TabItem
+        v-if="chain === 'ethereum' && !!pool"
+        header="MEV"
+      >
         <KeepAlive>
           <MEV
             v-if="tabActive === 'mev'"
             :pool
-            :chain
           />
         </KeepAlive>
       </TabItem>

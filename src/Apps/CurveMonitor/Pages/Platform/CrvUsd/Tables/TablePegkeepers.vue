@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Keeper } from "@CM/Services/CrvUsd";
-import type { Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
 import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
 
@@ -23,6 +22,7 @@ const rowsRaw = computed(() =>
       return {
         ...pool,
         ...keeper,
+        pool: pool.address,
       };
     })
     .filter(notEmpty)
@@ -60,7 +60,7 @@ const pools = computed(() =>
 
 // Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
-const tokenAddress = (x: Pool & Keeper) =>
+const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
   x.pair.filter((x) => x.address !== CrvUsdAddress)[0].address;
 </script>
 

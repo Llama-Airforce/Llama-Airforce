@@ -1,3 +1,4 @@
+import type { Address } from "@/Types/Address";
 import type * as ApiTypes from "./ApiTypes";
 import type * as Models from "./Models";
 
@@ -18,7 +19,7 @@ export const parsePool = (
 ): Models.Pool => {
   return {
     name: x.name,
-    address: x.address.toLocaleLowerCase(),
+    address: x.address.toLocaleLowerCase() as Address,
     numCoins: x.n_coins,
     tvlUsd: x.tvl_usd,
     tradingVolume24h: x.trading_volume_24h,

@@ -3,12 +3,10 @@ import type { Chain } from "@/Types/Chain";
 import type { Pool } from "@CM/Services/Pools";
 import { useQueryVolume, useQueryTvl } from "@CM/Services/Pools/Queries";
 import { useQueryOHLC } from "@CM/Services/OHLC/Queries";
-import {
-  ChartPrice,
-  ChartVolume,
-  ChartTvl,
-  ChartBalances,
-} from "@CM/Pages/Platform/Pools/Charts";
+import ChartBalances from "../Charts/ChartBalances.vue";
+import ChartTvl from "../Charts/ChartTvl.vue";
+import ChartVolume from "../Charts/ChartVolume.vue";
+import ChartPrice from "../Charts/ChartPrice.vue";
 
 const { pool, chain } = defineProps<{
   pool: Pool | undefined;

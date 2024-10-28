@@ -1,3 +1,5 @@
+import type { Address } from "@/Types/Address";
+
 type Coin = {
   poolIndex: number;
   symbol: string;
@@ -14,7 +16,7 @@ export type PoolsTotals = {
 
 export type Pool = {
   name: string;
-  address: string;
+  address: Address;
   numCoins: number;
   tvlUsd: number;
   tradingVolume24h: number;
