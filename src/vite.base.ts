@@ -77,6 +77,16 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       imports: ["StackedAreaData"],
       type: true,
     },
+    {
+      from: "@/Framework/Series/StackedBarsSeries/Options",
+      imports: ["StackedBarsSeriesOptions", "StackedBarsSeriesPartialOptions"],
+      type: true,
+    },
+    {
+      from: "@/Framework/Series/StackedBarsSeries/Data",
+      imports: ["StackedBarsData"],
+      type: true,
+    },
     // Util
     {
       from: "@/Util",

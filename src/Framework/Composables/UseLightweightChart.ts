@@ -11,7 +11,7 @@ import type { StackedAreaSeriesPartialOptions } from "../Series/StackedAreaSerie
 import { StackedAreaSeries } from "../Series/StackedAreaSeries/StackedAreaSeries";
 
 // Custom series are not supported to their ambiguity, but we support more specific ones
-type SeriesTypeCustom = "StackedArea";
+type SeriesTypeCustom = "StackedArea" | "StackedBars";
 type SeriesType = Exclude<SeriesTypeOriginal, "Custom"> | SeriesTypeCustom;
 
 /** Map any custom SeriesType extension to 'Custom' so it maps to a key of ISeriesApi */
@@ -19,9 +19,10 @@ type SeriesApiType<T extends SeriesType> = T extends SeriesTypeCustom
   ? "Custom"
   : T;
 
-/** The defaalt options map extended with our own custom types */
+/** The default options map extended with our own custom types */
 type SeriesOptions = SeriesPartialOptionsMap & {
   StackedArea: StackedAreaSeriesPartialOptions;
+  StackedBars: StackedBarsSeriesPartialOptions;
 };
 
 /**
@@ -216,6 +217,7 @@ function createSerie(chart: IChartApi, { type, options }: Serie<SeriesType>) {
     Candlestick: chart.addCandlestickSeries.bind(chart),
     Histogram: chart.addHistogramSeries.bind(chart),
     StackedArea: chart.addCustomSeries.bind(chart, new StackedAreaSeries()),
+    StackedBars: chart.addCustomSeries.bind(chart, new StackedBarsSeries()),
   };
 
   return serieFactories[type](options.value as SeriesOptionsCommon);
