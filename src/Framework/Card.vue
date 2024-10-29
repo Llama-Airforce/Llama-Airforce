@@ -87,7 +87,7 @@ const stackActions = computed(() => width.value <= 1280);
     >
       <Spinner
         v-if="loading !== null"
-        :loading
+        :loading="loading === true"
       />
       <slot></slot>
     </div>

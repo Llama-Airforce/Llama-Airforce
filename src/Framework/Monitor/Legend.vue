@@ -19,11 +19,11 @@ const emit = defineEmits<{
       class="item"
       :class="{
         togglable: item.togglable,
-        disabled: disabled.includes(item.id),
+        disabled: disabled.includes(item.id as T),
       }"
       @click="
         if (item.togglable) {
-          emit('toggle', item.id);
+          emit('toggle', item.id as T);
         }
       "
     >

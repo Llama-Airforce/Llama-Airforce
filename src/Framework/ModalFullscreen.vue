@@ -6,7 +6,7 @@
  */
 
 const { target } = defineProps<{
-  target: HTMLElement | null;
+  target: HTMLElement | undefined;
 }>();
 
 const emit = defineEmits<{

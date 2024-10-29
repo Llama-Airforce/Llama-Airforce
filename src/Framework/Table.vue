@@ -140,7 +140,7 @@ const sortColumn = (column: Column): void => {
             sorting: column.sort && sorting.column === column.id,
             [column.align || '']: !!column.align,
           }"
-          @click="sortColumn(column)"
+          @click="sortColumn(column as Column)"
         >
           <span>{{ column.label }}</span>
 
@@ -148,8 +148,8 @@ const sortColumn = (column: Column): void => {
             v-if="column.sort"
             class="sorting-arrow"
             :class="{
-              asc: isSortAscending(column),
-              desc: isSortDescending(column),
+              asc: isSortAscending(column as Column),
+              desc: isSortDescending(column as Column),
             }"
           />
         </div>
@@ -163,9 +163,9 @@ const sortColumn = (column: Column): void => {
       :data="row"
       :class="{ 'selected-below': selectedBelow(i) }"
       :selected="selectedRow === row"
-      :expanded="expanded.includes(row)"
+      :expanded="expanded.includes(row as TData)"
       :expand-side
-      @click="onSelect"
+      @click="onSelect(row as TData)"
     >
       <template #row>
         <slot
