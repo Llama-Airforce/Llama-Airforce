@@ -12,7 +12,7 @@ const emit = defineEmits<{
 
 // (internal) keyboard selection
 const selectedIndex = ref(-1);
-watch([options, open], () => {
+watch([() => options, open], () => {
   selectedIndex.value = -1;
 });
 
