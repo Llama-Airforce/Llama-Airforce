@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { normalize } from "viem/ens";
 import { useEnsAddress, useEnsName } from "@wagmi/vue";
+import type { Address } from "@/Framework/Address";
 import { addressShort } from "@/Wallet";
 
 type User = typeof user.value;
@@ -15,7 +16,7 @@ const emit = defineEmits<{
 const ensAddress = useEnsAddress({
   name: computed(() =>
     modelValueDebounced.value.endsWith(".eth")
-      ? normalize(modelValueDebounced.value)
+      ? (normalize(modelValueDebounced.value) as Address)
       : undefined
   ),
 });
@@ -23,7 +24,7 @@ const ensAddress = useEnsAddress({
 const ensName = useEnsName({
   address: computed(() =>
     isAddress(modelValueDebounced.value, { strict: false })
-      ? normalize(modelValueDebounced.value)
+      ? (normalize(modelValueDebounced.value) as Address)
       : undefined
   ),
 });
