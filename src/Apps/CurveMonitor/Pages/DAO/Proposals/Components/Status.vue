@@ -36,6 +36,7 @@ const statusLabel = computed(() => {
       return "Passed";
     case "executed":
       return "Executed";
+    case "all":
     default:
       return "Unk. Status";
   }

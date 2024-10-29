@@ -57,8 +57,9 @@ const bribedOrdered = computed(() =>
         return bribed.pool;
       case "vlasset":
         return bribed.dollarPerVlAsset;
-      default:
       case "total":
+      case "percentage":
+      default:
         return bribed.amountDollars;
     }
   }, sorting.value.order)

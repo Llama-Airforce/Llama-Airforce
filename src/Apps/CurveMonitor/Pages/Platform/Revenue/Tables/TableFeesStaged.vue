@@ -22,6 +22,7 @@ const rows = computed(() =>
         return fee.coin.symbol;
       case "amount":
         return fee.amount;
+      case "amountUsd":
       default:
         return fee.amountUsd;
     }

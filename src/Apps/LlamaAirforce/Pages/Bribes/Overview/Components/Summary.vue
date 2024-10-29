@@ -46,6 +46,7 @@ const rewardsPerDollarBribeTooltip = computed((): string => {
     case "aura-bal":
       tokens = "BAL + AURA";
       break;
+    case null:
     default:
       tokens = "???";
   }

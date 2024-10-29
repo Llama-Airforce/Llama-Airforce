@@ -303,6 +303,7 @@ const linkContract = (contract: Contract): string => {
         ? `https://app.safe.global/home?safe=base:${contract.contract}`
         : `https://basescan.org/address/${contract.contract}`;
     case "ethereum":
+    case undefined:
     default:
       return contract.gnosis
         ? `https://app.safe.global/home?safe=eth:${contract.contract}`

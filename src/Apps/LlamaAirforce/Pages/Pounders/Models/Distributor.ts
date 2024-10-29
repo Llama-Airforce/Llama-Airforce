@@ -51,6 +51,7 @@ export function getDistributor(airdropId: AirdropId): Distributor {
       return distUPrisma;
     case "ucvx":
       return distUCvx;
+    case "cvxprisma":
     default:
       throw new Error(`Unknown airdrop id`);
   }

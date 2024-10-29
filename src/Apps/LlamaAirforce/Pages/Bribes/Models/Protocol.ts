@@ -14,6 +14,7 @@ export function getProtocols(platform?: Platform): Protocol[] {
       return ["cvx-crv", "cvx-prisma", "cvx-fxn"];
     case "hh":
       return ["aura-bal"];
+    case undefined:
     default:
       return [];
   }

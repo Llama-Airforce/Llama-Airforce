@@ -37,11 +37,13 @@ const overviewId = computed((): OverviewId | null => {
           return "bribes-overview-prisma";
         case "cvx-fxn":
           return "bribes-overview-fxn";
+        case "aura-bal":
         default:
           throw new Error("Unknown protocol for dashboard");
       }
     case "hh":
       return "bribes-overview-aura";
+    case undefined:
     default:
       throw new Error("Unknown platform for dashboard");
   }

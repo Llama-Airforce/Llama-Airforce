@@ -85,6 +85,7 @@ const linkContract = (contract: Contract): string => {
         ? `https://app.safe.global/home?safe=arb1:${contract.contract}`
         : `https://arbiscan.io/address/${contract.contract}`;
     case "ethereum":
+    case undefined:
     default:
       return contract.gnosis
         ? `https://app.safe.global/home?safe=eth:${contract.contract}`

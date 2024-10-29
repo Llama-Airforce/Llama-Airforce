@@ -8,6 +8,8 @@ export function vlAssetSymbol(protocol: Protocol | null | undefined): string {
       return "vlCVX";
     case "aura-bal":
       return "vlAURA";
+    case undefined:
+    case null:
     default:
       return "vl???";
   }

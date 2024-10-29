@@ -46,6 +46,7 @@ const rows = computed(() =>
 );
 
 function scanUrl(chain: Chain) {
+  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
   switch (chain) {
     case "arbitrum":
       return "arbiscan.io";
