@@ -134,7 +134,6 @@ export default [
       "vue/singleline-html-element-content-newline": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-v-html": "off",
-      "vue/require-valid-default-prop": "off", // Doesn't work with reactive prop defaults.
       "vue/prefer-true-attribute-shorthand": ["error", "always"],
       "vue/v-bind-style": [
         "error",
