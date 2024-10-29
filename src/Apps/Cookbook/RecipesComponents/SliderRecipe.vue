@@ -8,7 +8,7 @@ const onInput = (newVal: number) => {
   value.value = newVal;
 };
 
-const slider1 = `<
+const slider1 = `<Select
   :min="0"
   :max="5"
   :step="0.2"
