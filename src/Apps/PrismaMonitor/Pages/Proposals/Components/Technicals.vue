@@ -131,6 +131,7 @@ const callData = computed(() => {
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
+    overflow-wrap: anywhere;
 
     > .heading {
       display: flex;
@@ -153,7 +154,6 @@ const callData = computed(() => {
     .voters {
       max-height: 20rem;
       overflow-y: auto;
-      overflow-wrap: anywhere;
     }
   }
 }

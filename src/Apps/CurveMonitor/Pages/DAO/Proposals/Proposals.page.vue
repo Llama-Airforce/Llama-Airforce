@@ -72,7 +72,7 @@ const onTypeSelect = (type: ProposalType): void => {
         placeholder="Search for Curve proposals"
       />
 
-      <div style="display: flex; gap: 1rem">
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap">
         <ProposalTypeSelect
           style="flex-grow: 1"
           @select="onTypeSelect"

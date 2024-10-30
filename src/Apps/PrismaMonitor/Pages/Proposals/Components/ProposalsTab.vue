@@ -34,7 +34,9 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         :placeholder
       />
 
-      <div style="display: flex; gap: 1rem; justify-content: end">
+      <div
+        style="display: flex; gap: 1rem; justify-content: end; flex-wrap: wrap"
+      >
         <Pagination
           v-if="rows.length > 0"
           class="pagination"
