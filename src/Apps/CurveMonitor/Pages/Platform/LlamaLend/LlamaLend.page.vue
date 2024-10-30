@@ -78,25 +78,22 @@ const { isFetching: loadingMarkets, data: marketsRaw } = useQueryMarkets(chain);
 const { data: chains } = useQueryChains();
 
 // Hooks
-const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
-onMounted(() => {
-  showCrumbs.value = true;
-  crumbs.value = [
-    {
-      id: "llamalend",
-      label: "Llama Lend",
-      pathName: "llamalend",
-      params: () => ({
-        chain: chain.value,
-      }),
-    },
-    {
-      id: "market",
-      label: "Select market for details",
-      hint: true,
-    },
-  ];
-});
+const { crumbs } = storeToRefs(useBreadcrumbStore());
+crumbs.value = [
+  {
+    id: "llamalend",
+    label: "Llama Lend",
+    pathName: "llamalend",
+    params: () => ({
+      chain: chain.value,
+    }),
+  },
+  {
+    id: "market",
+    label: "Select market for details",
+    hint: true,
+  },
+];
 
 const router = useRouter();
 

@@ -4,8 +4,6 @@ import MarketOverview from "@CM/Pages/Platform/CrvUsd/Tabs/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Tabs/Liquidations.vue";
 import Trading from "@CM/Pages/Platform/CrvUsd/Tabs/Trading.vue";
 
-const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
-
 // Market
 const marketAddr = useRouteParams<string>("marketAddr");
 const { isFetching: loading, data: markets } = useQueryMarkets();
@@ -14,6 +12,7 @@ const market = computed(() =>
   markets.value.find((market) => market.address === marketAddr.value)
 );
 
+const { crumbs } = storeToRefs(useBreadcrumbStore());
 watch(
   market,
   (market) => {
@@ -31,11 +30,6 @@ watch(
   },
   { immediate: true }
 );
-
-// Hooks
-onMounted(() => {
-  showCrumbs.value = true;
-});
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(

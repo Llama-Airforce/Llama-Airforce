@@ -7,32 +7,28 @@ import ChartGlobalCollateral from "@PM/Pages/Vaults/Charts/ChartGlobalCollateral
 import TableVaults from "@PM/Pages/Vaults/Tables/TableVaults.vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 
-// Refs
-const storeBreadcrumb = useBreadcrumbStore();
-const storeVault = useVaultStore();
+// Crumbs
+const { crumbs } = storeToRefs(useBreadcrumbStore());
+crumbs.value = [
+  {
+    id: "vaults",
+    label: "Vaults",
+    pathName: "vaults",
+  },
+];
+
+// Vault selection
+const { vault } = storeToRefs(useVaultStore());
 const router = useRouter();
 
-// Hooks
-onMounted(() => {
-  storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
-    {
-      id: "vaults",
-      label: "Vaults",
-      pathName: "vaults",
-    },
-  ];
-});
-
-// Events
-const onVaultSelect = async (vault: TroveManagerDetails) => {
-  storeVault.vault = vault;
+const onVaultSelect = async (newVault: TroveManagerDetails) => {
+  vault.value = newVault;
 
   await router.push({
     name: "prismavault",
     params: {
       tab: "",
-      vaultAddr: vault.address,
+      vaultAddr: newVault.address,
     },
   });
 };

@@ -1,3 +1,10 @@
+import type { RouteRecordRaw } from "vue-router";
+declare module "vue-router" {
+  interface RouteMeta {
+    crumbs?: boolean;
+  }
+}
+
 import Colors from "@CB/Recipes/ColorsRecipe.vue";
 import Socket from "@CB/Recipes/SocketRecipe.vue";
 
@@ -24,7 +31,7 @@ import Tooltip from "@CB/RecipesComponents/TooltipRecipe.vue";
 
 import UseApprove from "@CB/RecipesComposables/UseApproveRecipe.vue";
 
-export const routes = [
+export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: { name: "colors" } },
   {
     path: "/colors",
@@ -33,116 +40,100 @@ export const routes = [
   },
   {
     path: "/socket",
-    name: "socket",
     component: Socket,
   },
-
-  // Components
   {
-    path: "/components/async-value",
-    name: "async-value",
-    component: AsyncValue,
+    path: "/components",
+    children: [
+      {
+        path: "async-value",
+        component: AsyncValue,
+      },
+      {
+        path: "blockie",
+        component: Blockie,
+      },
+      {
+        path: "breadcrumb",
+        component: Breadcrumb,
+      },
+      {
+        path: "button",
+        component: Button,
+      },
+      {
+        path: "toggle-button",
+        component: ButtonToggle,
+      },
+      {
+        path: "card",
+        component: Card,
+      },
+      {
+        path: "checkbox",
+        component: Checkbox,
+      },
+      {
+        path: "data-table",
+        component: Table,
+      },
+      {
+        path: "input-address",
+        component: InputAddress,
+      },
+      {
+        path: "input-text",
+        component: InputText,
+      },
+      {
+        path: "input-number",
+        component: InputNumber,
+      },
+      {
+        path: "legend",
+        component: Legend,
+      },
+      {
+        path: "modal",
+        component: Modal,
+      },
+      {
+        path: "pagination",
+        component: Pagination,
+      },
+      {
+        path: "radio-button",
+        component: RadioButton,
+      },
+      {
+        path: "select",
+        component: Select,
+      },
+      {
+        path: "slider",
+        component: Slider,
+      },
+      {
+        path: "spinner",
+        component: Spinner,
+      },
+      {
+        path: "tabs",
+        component: Tabs,
+      },
+      {
+        path: "tooltip",
+        component: Tooltip,
+      },
+    ],
   },
   {
-    path: "/components/blockie",
-    name: "blockie",
-    component: Blockie,
-  },
-  {
-    path: "/components/breadcrumb",
-    name: "breadcrumb",
-    component: Breadcrumb,
-  },
-  {
-    path: "/components/button",
-    name: "button",
-    component: Button,
-  },
-  {
-    path: "/components/toggle-button",
-    name: "toggle-button",
-    component: ButtonToggle,
-  },
-  {
-    path: "/components/card",
-    name: "card",
-    component: Card,
-  },
-  {
-    path: "/components/checkbox",
-    name: "checkbox",
-    component: Checkbox,
-  },
-  {
-    path: "/components/data-table",
-    name: "data-table",
-    component: Table,
-  },
-  {
-    path: "/components/input-address",
-    name: "input-address",
-    component: InputAddress,
-  },
-  {
-    path: "/components/input-text",
-    name: "input-text",
-    component: InputText,
-  },
-  {
-    path: "/components/input-number",
-    name: "input-number",
-    component: InputNumber,
-  },
-  {
-    path: "/components/legend",
-    name: "legend",
-    component: Legend,
-  },
-  {
-    path: "/components/modal",
-    name: "modal",
-    component: Modal,
-  },
-  {
-    path: "/components/pagination",
-    name: "pagination",
-    component: Pagination,
-  },
-  {
-    path: "/components/radio-button",
-    name: "radio-button",
-    component: RadioButton,
-  },
-  {
-    path: "/components/select",
-    name: "select",
-    component: Select,
-  },
-  {
-    path: "/components/slider",
-    name: "slider",
-    component: Slider,
-  },
-  {
-    path: "/components/spinner",
-    name: "spinner",
-    component: Spinner,
-  },
-  {
-    path: "/components/tabs",
-    name: "tabs",
-    component: Tabs,
-  },
-  {
-    path: "/components/tooltip",
-    name: "tooltip",
-    component: Tooltip,
-  },
-
-  // Composables
-  {
-    path: "/composables/use-approve",
-    name: "use-approve",
-    component: UseApprove,
+    path: "/composables",
+    children: [
+      {
+        path: "use-approve",
+        component: UseApprove,
+      },
+    ],
   },
 ];

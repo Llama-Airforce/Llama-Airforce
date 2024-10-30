@@ -5,8 +5,6 @@ import MarketOverview from "@CM/Pages/Platform/LlamaLend/Tabs/MarketOverview.vue
 import Trading from "@CM/Pages/Platform/LlamaLend/Tabs/Trading.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Tabs/Liquidations.vue";
 
-const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
-
 // Markets
 const chain = useRouteParams<Chain>("chain");
 const marketAddr = useRouteParams<string>("marketAddr");
@@ -16,6 +14,7 @@ const market = computed(() =>
   markets.value?.find((market) => market.controller === marketAddr.value)
 );
 
+const { crumbs } = storeToRefs(useBreadcrumbStore());
 watch(
   market,
   (market) => {
@@ -36,11 +35,6 @@ watch(
   },
   { immediate: true }
 );
-
-// Hooks
-onMounted(() => {
-  showCrumbs.value = true;
-});
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(

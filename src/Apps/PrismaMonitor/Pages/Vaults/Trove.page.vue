@@ -8,24 +8,18 @@ import ChartTroveHealth from "@PM/Pages/Vaults/Charts/ChartTroveHealth.vue";
 import TableTroveOps from "@PM/Pages/Vaults/Tables/TableTroveOps.vue";
 import { TroveService, TroveOverviewService, type Trove } from "@PM/Services";
 
-// Stores
-const storeSettings = useSettingsStore();
-const storeBreadcrumb = useBreadcrumbStore();
-const storeVault = useVaultStore();
+const { flavor } = storeToRefs(useSettingsStore());
+const { crumbs } = storeToRefs(useBreadcrumbStore());
+const { vault, trove } = storeToRefs(useVaultStore());
 
-// Services
-const troveService = new TroveService(storeSettings.flavor);
+const troveService = new TroveService(flavor.value);
 
-// Refs
-const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
+const socket = useSocketStore().getSocket(getApiSocket(flavor.value));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 
 const vaultAddr = useRouteParams<string>("vaultAddr");
 const troveAddr = useRouteParams<string>("troveAddr");
-
-const vault = computed(() => storeVault.vault);
-const trove = computed(() => storeVault.trove);
 
 // Hooks
 onMounted(async (): Promise<void> => {
@@ -38,14 +32,13 @@ onMounted(async (): Promise<void> => {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (fetchedTrove) {
-    storeVault.trove = fetchedTrove;
+    trove.value = fetchedTrove;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
   const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
 
-  storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
+  crumbs.value = [
     {
       id: "vaults",
       label: "Vaults",
@@ -65,10 +58,10 @@ onMounted(async (): Promise<void> => {
 
 // Watches
 watch(vaults, (vaults) => {
-  const vault = vaults.find((v) => v.address === vaultAddr.value);
+  const newVault = vaults.find((v) => v.address === vaultAddr.value);
 
-  if (vault) {
-    storeVault.vault = vault;
+  if (newVault) {
+    vault.value = newVault;
   }
 });
 
@@ -76,7 +69,7 @@ watch(vault, (vault) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
   const vaultLabel = label(vault?.address!) ?? vault?.name ?? "?";
 
-  storeBreadcrumb.crumbs = [
+  crumbs.value = [
     {
       id: "vaults",
       label: "Vaults",
@@ -98,7 +91,7 @@ watch(trove, (trove) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
   const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
 
-  storeBreadcrumb.crumbs = [
+  crumbs.value = [
     {
       id: "vaults",
       label: "Vaults",

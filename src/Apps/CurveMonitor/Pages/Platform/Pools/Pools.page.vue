@@ -36,27 +36,24 @@ const pools = computed((): Pool[] =>
   })
 );
 
-// Hooks
-const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
-onMounted(() => {
-  showCrumbs.value = true;
-  crumbs.value = [
-    {
-      id: "pools",
-      label: "Pools",
-      pathName: "pools",
-    },
-    {
-      id: "pool",
-      label: "Select pool for details",
-      hint: true,
-    },
-  ];
-});
-
-const router = useRouter();
+// Crumbs
+const { crumbs } = storeToRefs(useBreadcrumbStore());
+crumbs.value = [
+  {
+    id: "pools",
+    label: "Pools",
+    pathName: "pools",
+  },
+  {
+    id: "pool",
+    label: "Select pool for details",
+    hint: true,
+  },
+];
 
 // Market selection
+const router = useRouter();
+
 const onPoolSelect = async (newPool: Pool) => {
   await router.push({
     name: "poolspool",

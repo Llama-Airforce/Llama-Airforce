@@ -4,13 +4,12 @@ import { useQueryPool } from "@CM/Services/Pools/Queries";
 import PoolOverview from "@CM/Pages/Platform/Pools/Tabs/PoolOverview.vue";
 import MEV from "@CM/Pages/Platform/Pools/Tabs/MEV.vue";
 
-const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
-
 // Markets
 const chain = useRouteParams<Chain>("chain");
 const poolAddr = useRouteParams<string>("poolAddr");
 const { isFetching: loading, data: pool } = useQueryPool(chain, poolAddr.value);
 
+const { crumbs } = storeToRefs(useBreadcrumbStore());
 watch(
   pool,
   (pool) => {
@@ -31,11 +30,6 @@ watch(
   },
   { immediate: true }
 );
-
-// Hooks
-onMounted(() => {
-  showCrumbs.value = true;
-});
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(

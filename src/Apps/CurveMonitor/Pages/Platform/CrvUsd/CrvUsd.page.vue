@@ -9,23 +9,19 @@ import {
 } from "@CM/Pages/Platform/CrvUsd/Charts";
 import type { Market } from "@CM/Services/CrvUsd";
 
-const { show: showCrumbs, crumbs } = storeToRefs(useBreadcrumbStore());
-
-onMounted(() => {
-  showCrumbs.value = true;
-  crumbs.value = [
-    {
-      id: "crvusd",
-      label: "crvUSD",
-      pathName: "crvusd",
-    },
-    {
-      id: "market",
-      label: "Select market for details",
-      hint: true,
-    },
-  ];
-});
+const { crumbs } = storeToRefs(useBreadcrumbStore());
+crumbs.value = [
+  {
+    id: "crvusd",
+    label: "crvUSD",
+    pathName: "crvusd",
+  },
+  {
+    id: "market",
+    label: "Select market for details",
+    hint: true,
+  },
+];
 
 // Market selection
 const router = useRouter();

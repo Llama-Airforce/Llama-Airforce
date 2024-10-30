@@ -7,21 +7,6 @@ import "@/Styles/Themes/CM/Chad.css";
 import "@/Styles/Themes/CM/Dark.css";
 import "@/Styles/Themes/CM/Light.css";
 
-// Breadcrumb hiding
-const storeBreadcrumb = useBreadcrumbStore();
-const route = useRoute();
-
-watch(
-  () => route.fullPath,
-  (newRoute) => {
-    const crumbs = ["/platform/crvusd", "/platform/lending", "/platform/pools"];
-
-    if (!crumbs.some((x) => newRoute.startsWith(x))) {
-      storeBreadcrumb.show = false;
-    }
-  }
-);
-
 // Theme
 const theme = computed<Theme>(() => ({
   colors: colors.value,

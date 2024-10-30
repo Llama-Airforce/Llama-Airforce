@@ -11,12 +11,6 @@ import {
 } from "@CM/Pages/Platform/Chains/Charts";
 import { ActivityTypeSelect } from "@CM/Pages/Platform/Chains/Components";
 
-// Hooks
-const { show: showCrumbs } = storeToRefs(useBreadcrumbStore());
-onMounted(() => {
-  showCrumbs.value = false;
-});
-
 // Chain selection
 const chainParam = useRouteParams<Chain | "all" | undefined | "">("chain");
 const chain = computed({

@@ -1,3 +1,10 @@
+import { type RouteRecordRaw } from "vue-router";
+declare module "vue-router" {
+  interface RouteMeta {
+    crumbs?: boolean;
+  }
+}
+
 import Home from "@CM/Pages/Home/Home.page.vue";
 import Code from "@CM/Pages/Code.page.vue";
 import NotFound from "@CM/Pages/NotFound.page.vue";
@@ -24,76 +31,124 @@ import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.page.vue";
 
 import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
 
-export const routes = [
+export const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
   { path: "/code", component: Code },
 
   {
+    path: "/profile/:tab?",
     name: "profile",
     component: Profile,
-    path: "/profile/:tab?",
-    query: { user: "", chain: "" },
-  },
-
-  { path: "/platform", redirect: { name: "revenue" } },
-
-  {
-    path: "/platform/chains/:chain?/:type?",
-    name: "chains",
-    component: Chains,
-  },
-
-  { path: "/platform/pools/:chain?", name: "pools", component: Pools },
-  {
-    path: "/platform/pools/:chain/:poolAddr/:tab?",
-    name: "poolspool",
-    component: Pool,
+    props: (route) => ({
+      user: route.query.user || "",
+      chain: route.query.chain || "",
+    }),
   },
 
   {
-    path: "/platform/revenue/:tab?",
-    name: "revenue",
-    component: Revenue,
+    path: "/platform",
+    redirect: { name: "revenue" },
+
+    children: [
+      {
+        path: "chains/:chain?/:type?",
+        name: "chains",
+        component: Chains,
+      },
+
+      {
+        path: "pools",
+        meta: { crumbs: true },
+
+        children: [
+          {
+            path: ":chain?",
+            name: "pools",
+            component: Pools,
+          },
+          {
+            path: ":chain/:poolAddr/:tab?",
+            name: "poolspool",
+            component: Pool,
+          },
+        ],
+      },
+
+      {
+        path: "revenue/:tab?",
+        name: "revenue",
+        component: Revenue,
+      },
+
+      {
+        path: "crvusd",
+        meta: { crumbs: true },
+
+        children: [
+          {
+            path: "",
+            name: "crvusd-overview",
+            component: CrvUsd,
+          },
+          {
+            path: "market/:marketAddr/:tab?",
+            name: "crvusdmarket",
+            component: CrvUsdMarket,
+          },
+        ],
+      },
+
+      {
+        path: "lending",
+        meta: { crumbs: true },
+
+        children: [
+          {
+            path: ":chain?",
+            name: "llamalend",
+            component: LlamaLend,
+          },
+          {
+            path: ":chain/:marketAddr/:tab?",
+            name: "llamalendmarket",
+            component: LlamaLendMarket,
+          },
+        ],
+      },
+
+      {
+        path: "monitor",
+        name: "monitor",
+        component: Monitor,
+      },
+    ],
   },
 
-  { path: "/platform/crvusd", name: "crvusd", component: CrvUsd },
   {
-    path: "/platform/crvusd/market/:marketAddr/:tab?",
-    name: "crvusdmarket",
-    component: CrvUsdMarket,
-  },
+    path: "/dao",
+    redirect: { name: "proposals" },
 
-  {
-    path: "/platform/lending/:chain?",
-    name: "llamalend",
-    component: LlamaLend,
+    children: [
+      {
+        path: "proposals",
+        name: "proposals",
+        component: Proposals,
+      },
+      {
+        path: "proposal/:proposalType/:proposalId",
+        name: "proposal",
+        component: Proposal,
+      },
+      {
+        path: "locks",
+        component: Locks,
+      },
+      {
+        path: "vefunder",
+        component: VeFunder,
+      },
+    ],
   },
-  {
-    path: "/platform/lending/:chain/:marketAddr/:tab?",
-    name: "llamalendmarket",
-    component: LlamaLendMarket,
-  },
-
-  {
-    path: "/platform/monitor",
-    name: "monitor",
-    component: Monitor,
-  },
-
-  { path: "/dao", redirect: { name: "proposals" } },
-  {
-    path: "/dao/proposals",
-    name: "proposals",
-    component: Proposals,
-  },
-  {
-    path: "/dao/proposal/:proposalType/:proposalId",
-    name: "proposal",
-    component: Proposal,
-  },
-
-  { path: "/dao/locks", component: Locks },
-  { path: "/dao/vefunder", component: VeFunder },
 
   {
     path: "/defimonitor/:tab?",

@@ -9,26 +9,21 @@ import Liquidations from "@PM/Pages/Vaults/Tabs/Liquidations.vue";
 import Redemptions from "@PM/Pages/Vaults/Tabs/Redemptions.vue";
 import Troves from "@PM/Pages/Vaults/Tabs/Troves.vue";
 
-// Stores
-const storeSettings = useSettingsStore();
-const storeBreadcrumb = useBreadcrumbStore();
-const storeVault = useVaultStore();
+const { flavor } = storeToRefs(useSettingsStore());
+const { vault } = storeToRefs(useVaultStore());
+const { crumbs } = storeToRefs(useBreadcrumbStore());
 
-// Refs
-const socket = useSocketStore().getSocket(getApiSocket(storeSettings.flavor));
+const socket = useSocketStore().getSocket(getApiSocket(flavor.value));
 const prismaService = new TroveOverviewService(socket, "ethereum");
 const vaults = useObservable(prismaService.overview$, []);
 
 const vaultAddr = useRouteParams<string>("vaultAddr");
-const vault = computed(() => storeVault.vault);
 
-// Hooks
 onMounted(() => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
   const vaultLabel = label(vault.value?.address!) ?? vault.value?.name ?? "?";
 
-  storeBreadcrumb.show = true;
-  storeBreadcrumb.crumbs = [
+  crumbs.value = [
     {
       id: "vaults",
       label: "Vaults",
@@ -43,10 +38,10 @@ onMounted(() => {
 
 // Watches
 watch(vaults, (vaults) => {
-  const vault = vaults.find((v) => v.address === vaultAddr.value);
+  const newVault = vaults.find((v) => v.address === vaultAddr.value);
 
-  if (vault) {
-    storeVault.vault = vault;
+  if (newVault) {
+    vault.value = newVault;
   }
 });
 
@@ -54,7 +49,7 @@ watch(vault, (vault) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
   const vaultLabel = label(vault?.address!) ?? vault?.name ?? "?";
 
-  storeBreadcrumb.crumbs = [
+  crumbs.value = [
     {
       id: "vaults",
       label: "Vaults",

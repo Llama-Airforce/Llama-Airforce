@@ -1,19 +1,8 @@
 <script setup lang="ts">
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
-import { type Crumb } from "@/Framework/Crumb";
 
-// Breadcrumb navigation
-const storeBreadcrumb = useBreadcrumbStore();
-const router = useRouter();
-
-const onCrumb = async (crumb: Crumb) => {
-  if (crumb.pathName) {
-    await router.push({
-      name: crumb.pathName,
-      ...(crumb.params && { params: crumb.params() }),
-    });
-  }
-};
+const { crumbs, show } = storeToRefs(useBreadcrumbStore());
+const { onCrumb } = useBreadcrumbStore();
 </script>
 
 <template>
@@ -30,9 +19,9 @@ const onCrumb = async (crumb: Crumb) => {
     <main>
       <div class="toolbar-container">
         <Breadcrumb
-          v-if="storeBreadcrumb.show"
+          v-if="show"
           class="breadcrumb"
-          :crumbs="storeBreadcrumb.crumbs"
+          :crumbs
           @crumb="onCrumb"
         />
 

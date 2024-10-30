@@ -5,30 +5,6 @@ import { useSettingsStore } from "@PM/Stores";
 import "@/Styles/Themes/PM/Dark.css";
 import "@/Styles/Themes/PM/Light.css";
 
-// Breadcrumb hiding
-const storeBreadcrumb = useBreadcrumbStore();
-const route = useRoute();
-
-watch(
-  () => route.fullPath,
-  (route) => {
-    const noCrumbs = [
-      "/pool",
-      "/stable",
-      "/redemptions",
-      "/liquidation",
-      "/profile",
-      "/wrappers",
-      "/proposals",
-      "/veprisma",
-    ];
-
-    if (noCrumbs.some((x) => route.startsWith(x))) {
-      storeBreadcrumb.show = false;
-    }
-  }
-);
-
 // Theme
 const settingStore = useSettingsStore();
 
