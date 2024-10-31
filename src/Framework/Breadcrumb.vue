@@ -23,27 +23,25 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
 </script>
 
 <template>
-  <Card>
-    <TransitionGroup
-      name="fade"
-      tag="ul"
+  <TransitionGroup
+    name="fade"
+    tag="ul"
+  >
+    <li
+      v-for="crumb in crumbs"
+      :key="crumb.id"
     >
-      <li
-        v-for="crumb in crumbs"
-        :key="crumb.id"
+      <component
+        :is="isActive(crumb) ? 'span' : 'a'"
+        :class="{ active: isActive(crumb), hint: crumb.hint }"
+        @click="emit('crumb', crumb)"
       >
-        <component
-          :is="isActive(crumb) ? 'span' : 'a'"
-          :class="{ active: isActive(crumb), hint: crumb.hint }"
-          @click="emit('crumb', crumb)"
-        >
-          {{ crumb.label }}
-        </component>
+        {{ crumb.label }}
+      </component>
 
-        <LucideChevronRight v-if="!isLast(crumb) || crumbs.length === 1" />
-      </li>
-    </TransitionGroup>
-  </Card>
+      <LucideChevronRight v-if="!isLast(crumb) || crumbs.length === 1" />
+    </li>
+  </TransitionGroup>
 </template>
 
 <style scoped>
