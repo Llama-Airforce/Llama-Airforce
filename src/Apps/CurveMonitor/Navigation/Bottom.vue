@@ -10,34 +10,38 @@ const router = useRouter();
 
 <template>
   <div class="bottom">
-    <div class="buttons">
-      <a
-        href="https://twitter.com/0xAlunara"
-        target="_blank"
-      >
-        <Button class="lvl2">
-          <LucideTwitter />
-        </Button>
-      </a>
-
-      <Button
-        class="lvl2"
-        @click="
-          router.push('/code');
-          emit('navigated');
-        "
-      >
-        <LucideCode />
+    <a
+      style="grid-area: twitter"
+      href="https://twitter.com/0xAlunara"
+      target="_blank"
+    >
+      <Button class="lvl2">
+        <LucideTwitter />
       </Button>
-    </div>
+    </a>
+
+    <Button
+      style="grid-area: code"
+      class="lvl2"
+      @click="
+        router.push('/code');
+        emit('navigated');
+      "
+    >
+      <LucideCode />
+    </Button>
 
     <SelectTheme
+      style="grid-area: themes"
       direction="up"
       class="themes"
       :themes="['dark', 'light', 'chad']"
     />
 
-    <Wallet class="lvl2" />
+    <Wallet
+      style="grid-area: wallet"
+      class="lvl2"
+    />
   </div>
 </template>
 
@@ -45,38 +49,27 @@ const router = useRouter();
 .bottom {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   grid-template-areas:
-    "themes buttons"
-    "wallet wallet";
+    "themes twitter code"
+    "wallet wallet wallet";
 
   margin: 1.125rem;
 
-  .buttons {
-    grid-area: buttons;
+  @media not screen and (max-width: 1280px) {
     display: flex;
-    gap: 1rem;
 
-    a {
-      &:hover,
-      &:active {
-        background: initial;
-      }
+    .select,
+    .wallet {
+      display: none;
     }
   }
 
-  .themes {
-    grid-area: themes;
-
-    --options-min-width: 210%;
-
-    @media only screen and (max-width: 1280px) {
-      --options-min-width: 100%;
+  a {
+    &:hover,
+    &:active {
+      background: initial;
     }
-  }
-
-  .wallet {
-    grid-area: wallet;
   }
 }
 </style>

@@ -5,6 +5,8 @@ const emit = defineEmits<{
   navigated: [];
 }>();
 
+const router = useRouter();
+
 // Methods
 const copyUrl = async () => {
   await navigator.clipboard.writeText(window.location.href);
@@ -39,66 +41,68 @@ const copyUrl = async () => {
         </Button>
       </a>
 
-      <router-link to="/code">
-        <Button
-          class="lvl2"
-          @click="emit('navigated')"
-        >
-          <LucideCode />
-        </Button>
-      </router-link>
+      <Button
+        class="lvl2"
+        @click="
+          router.push('/code');
+          emit('navigated');
+        "
+      >
+        <LucideCode />
+      </Button>
     </div>
 
-    <div class="selectors">
-      <SelectTheme
-        direction="up"
-        class="themes"
-        :themes="['dark', 'light', 'chad']"
-      />
+    <SelectTheme
+      style="grid-area: themes"
+      direction="up"
+      :themes="['dark', 'light', 'chad']"
+    />
 
-      <SelectLanguage
-        direction="up"
-        class="langs"
-        :locales="['en']"
-      />
-    </div>
+    <SelectLanguage
+      style="grid-area: lang"
+      direction="up"
+      :locales="['en']"
+    />
 
-    <Wallet class="lvl2" />
+    <Wallet
+      style="grid-area: wallet"
+      class="lvl2"
+    />
   </div>
 </template>
 
 <style scoped>
 .bottom {
-  display: flex;
-  flex-direction: column;
-
+  display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "buttons buttons buttons buttons"
+    "themes themes lang lang"
+    "wallet wallet wallet wallet";
+
   margin: 1.125rem;
 
-  .buttons {
+  @media not screen and (max-width: 1280px) {
     display: flex;
-    gap: 1.25rem;
 
-    a {
-      &:hover,
-      &:active {
-        background: initial;
-      }
+    .select,
+    .wallet {
+      display: none;
     }
   }
 
-  > .selectors {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-
-    .themes {
-      --options-min-width: 220%;
-
-      @media only screen and (max-width: 1280px) {
-        --options-min-width: 125%;
-      }
+  a {
+    &:hover,
+    &:active {
+      background: initial;
     }
+  }
+
+  .buttons {
+    grid-area: buttons;
+    display: flex;
+    gap: 1rem;
   }
 }
 </style>
