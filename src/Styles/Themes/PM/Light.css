@@ -35,6 +35,8 @@
   --options-box-shadow: var(--container-box-shadow);
   --tooltip-box-shadow: var(--container-box-shadow);
 
+  --header-background: var(--c-lvl1);
+
   body {
     background-color: transparent;
     background-image: linear-gradient(
