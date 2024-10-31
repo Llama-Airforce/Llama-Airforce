@@ -68,22 +68,20 @@ const onPoolSelect = async (newPool: Pool) => {
 
 <template>
   <div class="dashboard">
-    <Teleport to="#toolbar">
-      <div class="toolbar">
-        <InputText
-          v-model="search"
-          search
-          placeholder="Search for..."
-        />
+    <div class="toolbar">
+      <InputText
+        v-model="search"
+        search
+        placeholder="Search for..."
+      />
 
-        <SelectChain
-          class="chain-select"
-          :chain
-          :chains
-          @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-        />
-      </div>
-    </Teleport>
+      <SelectChain
+        class="chain-select"
+        :chain
+        :chains
+        @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
+      />
+    </div>
 
     <KPI
       style="grid-area: kpi1"
@@ -144,28 +142,25 @@ const onPoolSelect = async (newPool: Pool) => {
   max-width: calc(1920px - 18.125rem);
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
+    "toolbar toolbar toolbar toolbar"
     "kpi1 kpi2 kpi3 kpi4"
     "pools pools pools pools";
 }
 
 .toolbar {
-  height: 100%;
-  display: grid;
-  grid-template-columns: minmax(auto, 25rem) 14rem;
-  grid-template-rows: auto;
-  gap: var(--dashboard-gap);
+  .input-text {
+    min-width: 14rem;
+  }
+
+  .select {
+    min-width: 14rem;
+  }
 
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: 1fr 14rem;
-  }
-
-  .search {
-    grid-column: 1;
-    font-size: 0.875rem;
-  }
-
-  .chain-select {
-    grid-column: 2;
+    > * {
+      flex-basis: 0;
+      flex-grow: 1;
+    }
   }
 }
 </style>

@@ -142,105 +142,101 @@ const rankTypesUsers = computed(() =>
 
 <template>
   <div class="dashboard">
-    <Teleport to="#toolbar">
-      <div class="toolbar">
-        <ActivityTypeSelect
-          style="grid-area: type"
-          @select="onTypeSelect"
-        />
-
-        <SelectChain
-          all
-          style="grid-area: chain"
-          class="chain-select"
-          :chain
-          :chains
-          @select-chain="chain = $event"
-        />
-      </div>
-    </Teleport>
-
-    <div class="activity dashboard-grid">
-      <KPI
-        style="grid-area: kpi1"
-        label="Transactions Today"
-        :has-value="!!loadingTxs"
-      >
-        <AsyncValue
-          show-zero
-          type="dollar"
-          :value="txsToday"
-          :show-symbol="false"
-        />
-      </KPI>
-
-      <KPI
-        style="grid-area: kpi2"
-        label="Avg Transactions / 7 Days"
-        :has-value="!!loadingTxs"
-      >
-        <AsyncValue
-          show-zero
-          type="dollar"
-          :value="txsAvg"
-          :show-symbol="false"
-        />
-      </KPI>
-
-      <KPI
-        style="grid-area: kpi3"
-        label="Avg Users / 7 Days"
-        :has-value="!!loadingUsers"
-      >
-        <AsyncValue
-          show-zero
-          type="dollar"
-          :value="usersToday"
-          :show-symbol="false"
-        />
-      </KPI>
-
-      <KPI
-        style="grid-area: kpi4"
-        label="Users Today"
-        :has-value="!!loadingUsers"
-      >
-        <AsyncValue
-          show-zero
-          type="dollar"
-          :value="usersAvg"
-          :show-symbol="false"
-        />
-      </KPI>
-
-      <ChartTxs
-        style="grid-area: txs"
-        :txs
-        :loading="loadingTxs"
+    <div class="toolbar">
+      <ActivityTypeSelect
+        style="grid-area: type"
+        @select="onTypeSelect"
       />
 
-      <ChartUsers
-        style="grid-area: users"
-        :users
-        :loading="loadingUsers"
-      />
-
-      <ChartRankingChains
-        style="grid-area: top-chains"
-        :type
-        :txs="rankChainsTxs"
-        :users="rankChainsUsers"
-        :loading="loadingTxs || loadingUsers"
-      />
-
-      <ChartRankingTypes
-        style="grid-area: top-types"
+      <SelectChain
+        all
+        style="grid-area: chain"
+        class="chain-select"
         :chain
-        :txs="rankTypesTxs"
-        :users="rankTypesUsers"
-        :loading="loadingTxs || loadingUsers"
+        :chains
+        @select-chain="chain = $event"
       />
     </div>
+
+    <KPI
+      style="grid-area: kpi1"
+      label="Transactions Today"
+      :has-value="!!loadingTxs"
+    >
+      <AsyncValue
+        show-zero
+        type="dollar"
+        :value="txsToday"
+        :show-symbol="false"
+      />
+    </KPI>
+
+    <KPI
+      style="grid-area: kpi2"
+      label="Avg Transactions / 7 Days"
+      :has-value="!!loadingTxs"
+    >
+      <AsyncValue
+        show-zero
+        type="dollar"
+        :value="txsAvg"
+        :show-symbol="false"
+      />
+    </KPI>
+
+    <KPI
+      style="grid-area: kpi3"
+      label="Avg Users / 7 Days"
+      :has-value="!!loadingUsers"
+    >
+      <AsyncValue
+        show-zero
+        type="dollar"
+        :value="usersToday"
+        :show-symbol="false"
+      />
+    </KPI>
+
+    <KPI
+      style="grid-area: kpi4"
+      label="Users Today"
+      :has-value="!!loadingUsers"
+    >
+      <AsyncValue
+        show-zero
+        type="dollar"
+        :value="usersAvg"
+        :show-symbol="false"
+      />
+    </KPI>
+
+    <ChartTxs
+      style="grid-area: txs"
+      :txs
+      :loading="loadingTxs"
+    />
+
+    <ChartUsers
+      style="grid-area: users"
+      :users
+      :loading="loadingUsers"
+    />
+
+    <ChartRankingChains
+      style="grid-area: top-chains"
+      :type
+      :txs="rankChainsTxs"
+      :users="rankChainsUsers"
+      :loading="loadingTxs || loadingUsers"
+    />
+
+    <ChartRankingTypes
+      style="grid-area: top-types"
+      :chain
+      :txs="rankTypesTxs"
+      :users="rankTypesUsers"
+      :loading="loadingTxs || loadingUsers"
+    />
   </div>
 </template>
 
@@ -248,37 +244,34 @@ const rankTypesUsers = computed(() =>
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 
-  .activity {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-areas:
-      "kpi1 kpi2 kpi3 kpi4"
-      "txs txs users users"
-      "top-chains top-chains top-types top-types";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "toolbar toolbar toolbar toolbar"
+    "kpi1 kpi2 kpi3 kpi4"
+    "txs txs users users"
+    "top-chains top-chains top-types top-types";
 
-    @media only screen and (max-width: 1280px) {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-areas:
-        "kpi1 kpi2"
-        "kpi3 kpi4"
-        "txs txs"
-        "users users"
-        "top-chains top-chains"
-        "top-types top-types";
-    }
+  @media only screen and (max-width: 1280px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "toolbar toolbar"
+      "kpi1 kpi2"
+      "kpi3 kpi4"
+      "txs txs"
+      "users users"
+      "top-chains top-chains"
+      "top-types top-types";
   }
 }
 
 .toolbar {
-  height: 100%;
-  display: grid;
-  gap: var(--dashboard-gap);
-  grid-template-columns: 14rem 14rem;
-  grid-template-areas: "type chain";
+  .select {
+    min-width: 14rem;
+  }
 
   @media only screen and (max-width: 1280px) {
-    display: flex;
-
     > * {
+      flex-basis: 0;
       flex-grow: 1;
     }
   }

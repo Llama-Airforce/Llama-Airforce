@@ -26,6 +26,16 @@
   grid-template-columns: 1fr;
 }
 
+.toolbar {
+  grid-area: toolbar;
+
+  min-height: 3rem;
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+  gap: var(--dashboard-gap);
+}
+
 .font-mono {
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;

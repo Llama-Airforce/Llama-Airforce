@@ -17,19 +17,12 @@ const { onCrumb } = useBreadcrumbStore();
     <slot name="navigation"></slot>
 
     <main>
-      <div class="toolbar-container">
-        <Breadcrumb
-          v-if="show"
-          class="breadcrumb"
-          :crumbs
-          @crumb="onCrumb"
-        />
-
-        <div
-          id="toolbar"
-          class="toolbar-teleport"
-        ></div>
-      </div>
+      <Breadcrumb
+        v-if="show"
+        class="breadcrumb"
+        :crumbs
+        @crumb="onCrumb"
+      />
 
       <div class="content">
         <router-view v-slot="{ Component }">
@@ -138,34 +131,14 @@ p {
       grid-column: 1;
     }
 
-    > .toolbar-container {
-      display: flex;
-      justify-content: end;
-      gap: var(--dashboard-gap);
-
-      max-width: calc(1920px - 18.125rem);
-      margin: auto;
-      margin-top: var(--page-margin);
-      margin-bottom: calc(var(--page-margin) * -1 + var(--dashboard-gap));
-      padding-left: var(--page-margin);
-      padding-right: var(--page-margin);
+    > .breadcrumb {
+      margin: var(--page-margin);
+      margin-bottom: calc(-1 * var(--page-margin) + var(--dashboard-gap));
 
       @media only screen and (max-width: 1280px) {
-        padding: 0 1rem;
-        margin-top: var(--dashboard-gap);
-        margin-bottom: 0;
-
-        flex-direction: column;
-      }
-
-      /* Don't display toolbar-container any of its underlying divs are empty. */
-      &:not(:has(:not(:empty))),
-      > .toolbar-teleport:empty {
-        display: none;
-      }
-
-      > .breadcrumb {
-        flex-grow: 1;
+        margin: 1.5rem 1rem;
+        margin-bottom: 0px;
+        display: flex;
       }
     }
   }

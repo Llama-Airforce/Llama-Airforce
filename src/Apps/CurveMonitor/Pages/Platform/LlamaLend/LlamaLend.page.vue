@@ -139,22 +139,20 @@ const totalUtilRate = (type: "long" | "short"): number => {
 
 <template>
   <div class="dashboard">
-    <Teleport to="#toolbar">
-      <div class="toolbar">
-        <InputText
-          v-model="search"
-          search
-          placeholder="Search for..."
-        />
+    <div class="toolbar">
+      <InputText
+        v-model="search"
+        search
+        placeholder="Search for..."
+      />
 
-        <SelectChain
-          class="chain-select"
-          :chain
-          :chains
-          @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
-        />
-      </div>
-    </Teleport>
+      <SelectChain
+        class="chain-select"
+        :chain
+        :chains
+        @select-chain="chain = $event === 'all' ? 'ethereum' : $event"
+      />
+    </div>
 
     <KPI
       style="grid-area: kpi1"
@@ -220,6 +218,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
 
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
+    "toolbar toolbar toolbar toolbar"
     "kpi1 kpi2 kpi3 kpi4"
     "markets markets markets markets";
 
@@ -229,18 +228,19 @@ const totalUtilRate = (type: "long" | "short"): number => {
 }
 
 .toolbar {
-  height: 100%;
-  display: grid;
-  grid-template-columns: minmax(auto, 25rem) 14rem;
-  grid-template-rows: auto;
-  gap: var(--dashboard-gap);
-
-  @media only screen and (max-width: 1280px) {
-    grid-template-columns: 1fr 14rem;
+  .input-text {
+    min-width: 14rem;
   }
 
-  .chain-select {
-    grid-column: 2;
+  .select {
+    min-width: 14rem;
+  }
+
+  @media only screen and (max-width: 1280px) {
+    > * {
+      flex-basis: 0;
+      flex-grow: 1;
+    }
   }
 }
 </style>
