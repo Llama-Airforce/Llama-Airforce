@@ -7,7 +7,6 @@ const emit = defineEmits<{
 
 const router = useRouter();
 
-// Methods
 const copyUrl = async () => {
   await navigator.clipboard.writeText(window.location.href);
 };

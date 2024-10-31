@@ -3,16 +3,13 @@ const { expanded = false } = defineProps<{ expanded: boolean }>();
 </script>
 
 <template>
-  <div
-    class="menu"
-    :class="{ expanded }"
-  >
+  <nav :class="{ expanded }">
     <slot></slot>
-  </div>
+  </nav>
 </template>
 
 <style scoped>
-.menu {
+nav {
   height: 100vh;
   height: 100dvh;
 

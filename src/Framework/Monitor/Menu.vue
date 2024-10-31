@@ -16,7 +16,7 @@ const label = (item: MenuItemT): string => {
 </script>
 
 <template>
-  <nav>
+  <div class="menu">
     <ul
       v-for="item in menu.items"
       :key="label(item)"
@@ -26,11 +26,11 @@ const label = (item: MenuItemT): string => {
         @navigated="emit('navigated')"
       />
     </ul>
-  </nav>
+  </div>
 </template>
 
 <style scoped>
-nav {
+.menu {
   display: flex;
   flex-direction: column;
   flex-grow: 1;

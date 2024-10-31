@@ -15,7 +15,6 @@ const emit = defineEmits<{
   navigated: [];
 }>();
 
-// Refs
 const route = useRoute();
 const expanded = ref(true);
 
@@ -29,7 +28,6 @@ const items = computed(() => {
   }
 });
 
-// Methods
 const expandIfChildActive = () => {
   if (isNode(item)) {
     const isOnChildPage =
@@ -41,12 +39,10 @@ const expandIfChildActive = () => {
   }
 };
 
-// Methods
 const menuLabel = (item: MenuItem): string => {
   return typeof item.label === "string" ? item.label : item.label();
 };
 
-// Watches
 watch(
   () => item,
   (item) => {

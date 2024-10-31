@@ -10,7 +10,6 @@ const emit = defineEmits<{
 
 const expanded = ref(false);
 
-// Events
 const onNavigated = () => {
   expanded.value = false;
   emit("navigated");
