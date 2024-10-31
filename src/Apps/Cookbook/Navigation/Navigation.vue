@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Navigation from "@/Framework/Monitor/Navigation.vue";
 import Top from "./Top.vue";
 import Bottom from "./Bottom.vue";
 import { menu } from "./Menu";
@@ -17,10 +18,7 @@ const onNavigated = () => {
 </script>
 
 <template>
-  <div
-    class="menu"
-    :class="{ expanded }"
-  >
+  <Navigation :expanded>
     <Top
       @toggle-expansion="expanded = !expanded"
       @navigated="onNavigated"
@@ -37,40 +35,15 @@ const onNavigated = () => {
 
       <Bottom @navigated="onNavigated" />
     </Collapsible>
-  </div>
+  </Navigation>
 </template>
 
 <style scoped>
-.menu {
-  height: 100vh;
-  height: 100dvh;
+.menu-content {
+  transition: grid-template-rows 125ms ease-out;
 
-  display: grid;
-  grid-template-columns: 18.125rem;
-  grid-template-rows: 6.25rem 1fr auto;
-
-  background: var(--c-lvl1);
-  user-select: none;
-
-  @media only screen and (max-width: 1280px) {
-    width: 100vw;
-    width: 100dvw;
-    height: auto;
-    grid-template-columns: 1fr;
-    grid-template-rows: 4rem 1fr auto;
-
-    &.expanded {
-      height: 100vh;
-      height: 100dvh;
-    }
-  }
-
-  .menu-content {
-    transition: grid-template-rows 125ms ease-out;
-
-    @media not screen and (max-width: 1280px) {
-      grid-template-rows: 1fr;
-    }
+  @media not screen and (max-width: 1280px) {
+    grid-template-rows: 1fr;
   }
 }
 </style>
