@@ -32,6 +32,7 @@ const router = useRouter();
     </div>
 
     <SelectTheme
+      direction="up"
       class="themes"
       :themes="['dark', 'light', 'chad']"
     />
@@ -70,7 +71,7 @@ const router = useRouter();
     --options-min-width: 210%;
 
     @media only screen and (max-width: 1280px) {
-      --options-min-width: 130%;
+      --options-min-width: 100%;
     }
   }
 

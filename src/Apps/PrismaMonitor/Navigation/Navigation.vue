@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Header from "./Header.vue";
+import Top from "./Header.vue";
 import Bottom from "./Bottom.vue";
 import { menu } from "./Menu";
 
@@ -21,7 +21,7 @@ const onNavigated = () => {
     class="menu"
     :class="{ expanded }"
   >
-    <Header
+    <Top
       @toggle-expansion="expanded = !expanded"
       @navigated="onNavigated"
     />

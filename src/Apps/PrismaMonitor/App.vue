@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Navigation from "@PM/Navigation/Navigation.vue";
 import { useSettingsStore } from "@PM/Stores";
+import Navigation from "@PM/Navigation/Navigation.vue";
+import Header from "@PM/Navigation/Header.vue";
 
 import "@/Styles/Themes/PM/Dark.css";
 import "@/Styles/Themes/PM/Light.css";
@@ -20,13 +21,11 @@ provideTheme(toRef(() => settingStore.theme));
 <template>
   <Layout>
     <template #navigation>
-      <Navigation class="navigation" />
+      <Navigation style="grid-area: navigation" />
+    </template>
+
+    <template #header>
+      <Header style="grid-area: header" />
     </template>
   </Layout>
 </template>
-
-<style scoped>
-.navigation {
-  grid-area: navigation;
-}
-</style>

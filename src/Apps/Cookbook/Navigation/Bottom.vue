@@ -51,11 +51,13 @@ const copyUrl = async () => {
 
     <div class="selectors">
       <SelectTheme
+        direction="up"
         class="themes"
         :themes="['dark', 'light', 'chad']"
       />
 
       <SelectLanguage
+        direction="up"
         class="langs"
         :locales="['en']"
       />

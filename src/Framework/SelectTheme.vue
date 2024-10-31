@@ -3,7 +3,10 @@ import { useStorage } from "@vueuse/core";
 
 const STORAGE_THEME = "theme";
 
-const { themes = ["dark"] } = defineProps<{ themes: string[] }>();
+const { themes = ["dark"], direction = "down" } = defineProps<{
+  themes: string[];
+  direction?: "up" | "down";
+}>();
 
 const browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 const defaultTheme = browserDark ? "dark" : "light";
@@ -24,7 +27,7 @@ watch(
 
 <template>
   <Select
-    direction="up"
+    :direction
     :options="themes.map((x) => x)"
     :selected="theme"
     @select="theme = $event"

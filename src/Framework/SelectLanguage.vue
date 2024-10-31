@@ -7,7 +7,7 @@ const STORAGE_LOCALE = "locale";
 const locale = useStorage<Locale>(STORAGE_LOCALE, "en");
 const { locale: loc } = useI18n({ useScope: "global" });
 
-const { locales = localesAll, direction = "up" } = defineProps<{
+const { locales = localesAll, direction = "down" } = defineProps<{
   locales?: Locale[];
   direction?: "up" | "down";
 }>();

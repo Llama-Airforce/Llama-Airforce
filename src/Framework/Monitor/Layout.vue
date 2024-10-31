@@ -15,6 +15,7 @@ const { onCrumb } = useBreadcrumbStore();
     <VueQueryDevtools />
 
     <slot name="navigation"></slot>
+    <slot name="header"></slot>
 
     <main>
       <Breadcrumb
@@ -113,13 +114,18 @@ p {
   overflow-y: hidden;
 
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   grid-template-columns: auto 1fr;
-  grid-template-areas: "navigation main";
+  grid-template-areas:
+    "navigation header"
+    "navigation main";
 
   @media only screen and (max-width: 1280px) {
-    grid-template-rows: auto 1fr;
     grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "navigation"
+      "main";
   }
 
   > main {

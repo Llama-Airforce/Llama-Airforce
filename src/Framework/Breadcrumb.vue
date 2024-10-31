@@ -39,7 +39,7 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
         {{ crumb.label }}
       </component>
 
-      <LucideChevronRight v-if="!isLast(crumb) || crumbs.length === 1" />
+      <LucideChevronRight v-if="!isLast(crumb)" />
     </li>
   </TransitionGroup>
 </template>

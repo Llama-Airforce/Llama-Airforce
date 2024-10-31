@@ -1,67 +1,38 @@
 <script setup lang="ts">
-import Logo from "./Logo.vue";
+import Header from "@/Framework/Monitor/Header.vue";
+import Wallet from "@/Wallet/Wallet.vue";
 
-const emit = defineEmits<{
-  "toggle-expansion": [];
-  navigated: [];
-}>();
+const { onCrumb } = useBreadcrumbStore();
+const { crumbs } = storeToRefs(useBreadcrumbStore());
+crumbs.value = [
+  {
+    id: "root",
+    label: "Prisma Monitor",
+  },
+];
 </script>
 
 <template>
-  <div class="header">
-    <router-link
-      class="logo"
-      to="/"
-      @click="emit('navigated')"
-    >
-      <Logo class="logo" />
-    </router-link>
+  <Header>
+    <Breadcrumb
+      class="breadcrumb"
+      :crumbs
+      @crumb="onCrumb"
+    />
 
-    <div class="buttons">
-      <Button
-        class="lvl1"
-        @click="emit('toggle-expansion')"
-      >
-        <LucideMenu />
-      </Button>
-    </div>
-  </div>
+    <SelectTheme
+      class="themes"
+      :themes="['dark', 'light', 'chad']"
+    />
+
+    <Wallet class="lvl2" />
+  </Header>
 </template>
 
 <style scoped>
-@media only screen and (max-width: 1280px) {
-  .header > .logo {
-    transform: scale(0.75);
-  }
-}
-
-.header {
-  @media only screen and (max-width: 1280px) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    > .buttons {
-      margin-right: 1.75rem;
-      display: flex !important;
-    }
-  }
-
-  > .buttons {
-    display: none;
-  }
-
-  > .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    cursor: pointer;
-    color: var(--c-text);
-
-    &:hover {
-      background: unset;
-    }
-  }
+header {
+  grid-template-columns: 1fr 8rem auto;
+  grid-template-rows: 2.5rem;
+  grid-template-areas: "breadcrumb themes wallet";
 }
 </style>

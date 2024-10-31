@@ -2,6 +2,7 @@
 import type { Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
 import Navigation from "@CB/Navigation/Navigation.vue";
+import Header from "@CB/Navigation/Header.vue";
 
 import "@/Styles/Themes/CB/Chad.css";
 import "@/Styles/Themes/CB/Dark.css";
@@ -25,13 +26,11 @@ provideTheme(theme);
 <template>
   <Layout>
     <template #navigation>
-      <Navigation class="navigation" />
+      <Navigation style="grid-area: navigation" />
+    </template>
+
+    <template #header>
+      <Header style="grid-area: header" />
     </template>
   </Layout>
 </template>
-
-<style scoped>
-.navigation {
-  grid-area: navigation;
-}
-</style>
