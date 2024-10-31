@@ -59,6 +59,7 @@ ul {
   --crumb-gap: 0.5rem;
 
   display: flex;
+  flex-wrap: wrap;
   gap: var(--crumb-gap);
 
   padding: 0;
