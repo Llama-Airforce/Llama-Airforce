@@ -22,7 +22,7 @@ crumbs.value = [
 
     <SelectTheme
       class="themes"
-      :themes="['dark', 'light', 'chad']"
+      :themes="['dark', 'light']"
     />
 
     <Wallet class="lvl2" />
