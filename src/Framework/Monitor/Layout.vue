@@ -132,8 +132,7 @@ p {
     }
 
     > .breadcrumb {
-      margin: var(--page-margin);
-      margin-bottom: calc(-1 * var(--page-margin) + var(--dashboard-gap));
+      display: none;
 
       @media only screen and (max-width: 1280px) {
         margin: 1.5rem 1rem;
