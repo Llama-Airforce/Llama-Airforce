@@ -18,7 +18,7 @@ const onNavigated = () => {
 
 <template>
   <div
-    class="menu-desktop"
+    class="menu"
     :class="{ expanded }"
   >
     <Header
@@ -41,7 +41,7 @@ const onNavigated = () => {
 </template>
 
 <style scoped>
-.menu-desktop {
+.menu {
   height: 100vh;
   height: 100dvh;
 
