@@ -3,7 +3,7 @@ import Header from "@/Framework/Monitor/Header.vue";
 import Wallet from "@/Wallet/Wallet.vue";
 
 const { onCrumb } = useBreadcrumbStore();
-const { crumbs } = storeToRefs(useBreadcrumbStore());
+const { crumbs, show } = storeToRefs(useBreadcrumbStore());
 crumbs.value = [
   {
     id: "root",
@@ -16,6 +16,7 @@ crumbs.value = [
   <Header>
     <Breadcrumb
       class="breadcrumb"
+      :style="{ visibility: show ? 'visible' : 'hidden' }"
       :crumbs
       @crumb="onCrumb"
     />
