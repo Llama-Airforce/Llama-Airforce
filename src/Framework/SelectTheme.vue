@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
 
+import chad from "@/Assets/Icons/chad.png";
+
 const STORAGE_THEME = "theme";
 
 const { themes = ["dark"], direction = "down" } = defineProps<{
@@ -34,6 +36,13 @@ watch(
   >
     <template #option="{ option }">
       <div class="theme">
+        <LucideMoon v-if="option === 'dark'" />
+        <LucideSun v-else-if="option === 'light'" />
+        <img
+          v-else-if="option === 'chad'"
+          :src="chad"
+        />
+
         <div class="label">{{ option }}</div>
       </div>
     </template>
@@ -43,7 +52,7 @@ watch(
 <style scoped>
 .theme {
   display: flex;
-  justify-content: space-between;
+  gap: 1.5ch;
   align-items: center;
   text-transform: capitalize;
 
@@ -51,6 +60,10 @@ watch(
 
   &.active {
     border: solid 1px var(--c-primary);
+  }
+
+  img {
+    width: 16px;
   }
 }
 </style>
