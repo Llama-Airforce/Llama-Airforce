@@ -43,7 +43,12 @@ function onDisconnect() {
         class="disconnect"
         @click="onDisconnect"
       >
-        <LucideCheck /> {{ addressShort(address) }}
+        <Blockie
+          v-if="address"
+          size="small"
+          :address
+        />
+        {{ addressShort(address) }}
       </Button>
     </div>
 
