@@ -95,7 +95,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     },
     {
       from: "@/Util/Types",
-      imports: ["Tail", "Flatten", "MaybeArray"],
+      imports: ["Tail", "Flatten", "MaybeArray", "TemplateRef"],
       type: true,
     },
     // Vue Types
