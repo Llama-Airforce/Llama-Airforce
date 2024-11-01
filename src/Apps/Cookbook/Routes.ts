@@ -14,6 +14,7 @@ import Breadcrumb from "@CB/RecipesComponents/BreadcrumbRecipe.vue";
 import Button from "@CB/RecipesComponents/ButtonRecipe.vue";
 import ButtonToggle from "@CB/RecipesComponents/ButtonToggleRecipe.vue";
 import Card from "@CB/RecipesComponents/CardRecipe.vue";
+import ChartTV from "@CB/RecipesComponents/ChartTVRecipe.vue";
 import Checkbox from "@CB/RecipesComponents/CheckboxRecipe.vue";
 import Table from "@CB/RecipesComponents/TableRecipe.vue";
 import InputAddress from "@CB/RecipesComponents/InputAddressRecipe.vue";
@@ -68,6 +69,10 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "card",
         component: Card,
+      },
+      {
+        path: "chart-tv",
+        component: ChartTV,
       },
       {
         path: "checkbox",

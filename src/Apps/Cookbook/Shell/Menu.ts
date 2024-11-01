@@ -40,6 +40,10 @@ export const menu: Menu = {
           label: "Card",
         },
         {
+          to: "/components/chart-tv",
+          label: "Chart (TV)",
+        },
+        {
           to: "/components/checkbox",
           label: "Checkbox",
         },
