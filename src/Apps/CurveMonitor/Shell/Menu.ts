@@ -1,4 +1,4 @@
-import type { Menu } from "@/Framework/Monitor/Menu";
+import type { Menu } from "@/Framework/Monitor/Shell/Menu";
 
 export const menu: Menu = {
   titleRoute: "/",

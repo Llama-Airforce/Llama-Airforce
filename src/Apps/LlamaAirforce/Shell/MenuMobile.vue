@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import MenuItem from "@LAF/Navigation/MenuItem.vue";
 import { usePageStore } from "@LAF/Pages/PageStore";
+import MenuItem from "./MenuItem.vue";
 
 const { open = false } = defineProps<{
   open?: boolean;

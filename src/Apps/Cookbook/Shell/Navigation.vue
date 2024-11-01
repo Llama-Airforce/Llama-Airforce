@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Navigation from "@/Framework/Monitor/Navigation.vue";
+import Navigation from "@/Framework/Monitor/Shell/Navigation.vue";
 import Top from "./Top.vue";
 import Bottom from "./Bottom.vue";
 import { menu } from "./Menu";

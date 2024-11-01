@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Menu, MenuItem as MenuItemT } from "@/Framework/Monitor/Menu";
-import MenuItem from "@/Framework/Monitor/MenuItem.vue";
+import type { Menu, MenuItem as MenuItemT } from "./Menu";
+import MenuItem from "./MenuItem.vue";
 
 const { menu } = defineProps<{
   menu: Menu;

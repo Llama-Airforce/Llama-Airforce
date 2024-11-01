@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import HeaderDesktop from "@LAF/Navigation/HeaderDesktop.vue";
-import HeaderMobile from "@LAF/Navigation/HeaderMobile.vue";
+import HeaderDesktop from "./HeaderDesktop.vue";
+import HeaderMobile from "./HeaderMobile.vue";
 
 const route = useRoute();
 

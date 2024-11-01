@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
-import Navigation from "@CB/Navigation/Navigation.vue";
-import Header from "@CB/Navigation/Header.vue";
+import Navigation from "@CB/Shell/Navigation.vue";
+import Header from "@CB/Shell/Header.vue";
 
 import "@/Styles/Themes/CB/Chad.css";
 import "@/Styles/Themes/CB/Dark.css";

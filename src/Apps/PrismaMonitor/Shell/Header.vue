@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Header from "@/Framework/Monitor/Header.vue";
+import Header from "@/Framework/Monitor/Shell/Header.vue";
 import Wallet from "@/Wallet/Wallet.vue";
 
 const { onCrumb } = useBreadcrumbStore();
@@ -17,7 +17,7 @@ const { crumbs, show } = storeToRefs(useBreadcrumbStore());
 
     <SelectTheme
       class="themes"
-      :themes="['dark', 'light', 'chad']"
+      :themes="['dark', 'light']"
     />
 
     <Wallet class="lvl2" />

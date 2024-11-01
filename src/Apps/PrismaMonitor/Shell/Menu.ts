@@ -1,7 +1,7 @@
-import { type Menu } from "@/Framework/Monitor/Menu";
+import { type Menu } from "@/Framework/Monitor/Shell/Menu";
 
 import { useSettingsStore } from "@PM/Stores";
-import { stableSymbol } from "@/Apps/PrismaMonitor/Models/Flavor";
+import { stableSymbol } from "@PM/Models/Flavor";
 
 import {
   PiggyBank,

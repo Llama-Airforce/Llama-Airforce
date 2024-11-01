@@ -2,9 +2,9 @@
 import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 import type { Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
-import Header from "@LAF/Navigation/Header.vue";
-import Footer from "@LAF/Navigation/Footer.vue";
-import MenuDesktop from "@LAF/Navigation/MenuDesktop.vue";
+import Header from "@LAF/Shell/Header.vue";
+import Footer from "@LAF/Shell/Footer.vue";
+import MenuDesktop from "@LAF/Shell/MenuDesktop.vue";
 import Announcement from "@LAF/Components/Announcement.vue";
 
 import "@/Styles/Themes/LAF/Dark.css";

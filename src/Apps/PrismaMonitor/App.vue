@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "@PM/Stores";
-import Navigation from "@PM/Navigation/Navigation.vue";
-import Header from "@PM/Navigation/Header.vue";
+import Navigation from "@PM/Shell/Navigation.vue";
+import Header from "@PM/Shell/Header.vue";
 
 import "@/Styles/Themes/PM/Dark.css";
 import "@/Styles/Themes/PM/Light.css";

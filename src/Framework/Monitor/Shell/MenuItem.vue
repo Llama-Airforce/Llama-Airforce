@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  isNode,
-  isLeaf,
-  isExternal,
-  type MenuItem,
-} from "@/Framework/Monitor/Menu";
+import { isNode, isLeaf, isExternal, type MenuItem } from "./Menu";
 import { subIsActive } from "@/Util";
 
 const { item } = defineProps<{
