@@ -81,6 +81,8 @@ type Options<T extends Series> = {
   createChartOptions: (chartRef: HTMLElement) => Ref<DeepPartial<ChartOptions>>;
   /** Single series definition or array of series definitions */
   series: T;
+  /** Optional reference to the chart container element. Must be provided via useTemplateRef */
+  chartRef?: ReturnType<typeof useTemplateRef<HTMLElement | null>>;
 };
 
 /**
@@ -135,14 +137,17 @@ type Options<T extends Series> = {
  * ]);
  */
 export function useLightweightChart<T extends Series>(options: Options<T>) {
-  const { createChartOptions, series: serieDefs } = options;
+  const {
+    createChartOptions,
+    series: serieDefs,
+    chartRef = useTemplateRef("chartRef"),
+  } = options;
 
   const series = {} as SeriesMap<T>;
   const seriesArray: Serie<SeriesType>[] = Array.isArray(serieDefs)
     ? serieDefs
     : [serieDefs];
 
-  const chartRef = useTemplateRef<HTMLElement>("chartRef");
   const chart = shallowRef<IChartApi | undefined>(undefined);
 
   // Create a new lightweight chart instance the moment the div is mounted
