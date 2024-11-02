@@ -24,6 +24,8 @@ import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
 
 import Monitor from "@CM/Pages/Platform/Monitor/Monitor.page.vue";
 
+import Gauges from "@CM/Pages/DAO/Gauges/Gauges.page.vue";
+import Gauge from "@CM/Pages/DAO/Gauges/Gauge.page.vue";
 import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
 import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
 import Locks from "@CM/Pages/DAO/Locks/Locks.page.vue";
@@ -129,6 +131,18 @@ export const routes: RouteRecordRaw[] = [
     redirect: { name: "proposals" },
 
     children: [
+      {
+        path: "gauges",
+        name: "gauges",
+        component: Gauges,
+        meta: { crumbs: true },
+      },
+      {
+        path: "gauge/:gaugeAddr/:tab?",
+        name: "gauge",
+        component: Gauge,
+        meta: { crumbs: true },
+      },
       {
         path: "proposals",
         name: "proposals",

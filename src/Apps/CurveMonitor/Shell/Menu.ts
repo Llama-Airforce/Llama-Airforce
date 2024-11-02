@@ -46,6 +46,10 @@ export const menu: Menu = {
       label: "DAO",
       children: [
         {
+          to: "/dao/gauges",
+          label: "Gauges",
+        },
+        {
           to: "/dao/proposals",
           label: "Proposals",
         },
