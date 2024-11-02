@@ -1,5 +1,5 @@
 import type { Component } from "vue";
-import type { Menu } from "@/Framework/Monitor/Menu";
+import type { Menu } from "@/Framework/Monitor/Shell/Menu";
 
 export type Page = Menu & {
   title: string;
