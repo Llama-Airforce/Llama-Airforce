@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuerySupply } from "@/Apps/CurveMonitor/Services/Dao/Queries";
+import { useQuerySupply } from "@CM/Services/Dao/Queries";
 import ChartSupply from "./Charts/ChartSupply.vue";
 import ChartSupplyDelta from "./Charts/ChartSupplyDelta.vue";
 import TableLocks from "./Tables/TableLocks.vue";
