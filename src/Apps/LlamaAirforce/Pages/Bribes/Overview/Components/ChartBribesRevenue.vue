@@ -15,7 +15,7 @@ const { overview } = defineProps<{
 // Refs
 const { protocol } = storeToRefs(useBribesStore());
 
-const epochs = computed(() => overview?.epochs ?? []);
+const epochs = computed(() => (overview?.epochs ?? []).takeRight(26));
 
 const options = computed(() => {
   return createChartStyles({
