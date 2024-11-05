@@ -41,7 +41,7 @@ export function getLink(epoch: EpochId, proposal: ProposalId): string {
     case "cvx-crv":
     case "cvx-prisma":
     case "cvx-fxn":
-      return `https://vote.convexfinance.com/#/proposal/${proposal}`;
+      return `https://snapshot.box/#/s:cvx.eth/proposal/${proposal}`;
     case "aura-bal":
       return `https://snapshot.org/#/aurafinance.eth/${
         proposal ? `proposal/${proposal}` : ``
