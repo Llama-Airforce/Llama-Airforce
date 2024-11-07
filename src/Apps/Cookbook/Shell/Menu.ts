@@ -48,10 +48,6 @@ export const menu: Menu = {
           label: "Checkbox",
         },
         {
-          to: "/components/data-table",
-          label: "DataTable",
-        },
-        {
           to: "/components/input-address",
           label: "InputAddress",
         },
@@ -90,6 +86,10 @@ export const menu: Menu = {
         {
           to: "/components/spinner",
           label: "Spinner",
+        },
+        {
+          to: "/components/table",
+          label: "Table",
         },
         {
           to: "/components/tabs",

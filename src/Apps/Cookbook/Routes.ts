@@ -79,7 +79,7 @@ export const routes: RouteRecordRaw[] = [
         component: Checkbox,
       },
       {
-        path: "data-table",
+        path: "table",
         component: Table,
       },
       {
