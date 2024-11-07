@@ -130,30 +130,28 @@ const sortColumn = (column: Column): void => {
       v-if="columns.length > 0"
       :class="{ 'selected-below': selectedBelow(-1) }"
     >
-      <template #row>
-        <div
-          v-for="column in columnsObjects"
-          :key="column.id"
-          class="column-header"
-          :class="{
-            sortable: column.sort,
-            sorting: column.sort && sorting.column === column.id,
-            [column.align || '']: !!column.align,
-          }"
-          @click="sortColumn(column as Column)"
-        >
-          <span>{{ column.label }}</span>
+      <div
+        v-for="column in columnsObjects"
+        :key="column.id"
+        class="column-header"
+        :class="{
+          sortable: column.sort,
+          sorting: column.sort && sorting.column === column.id,
+          [column.align || '']: !!column.align,
+        }"
+        @click="sortColumn(column as Column)"
+      >
+        <span>{{ column.label }}</span>
 
-          <LucideChevronRight
-            v-if="column.sort"
-            class="sorting-arrow"
-            :class="{
-              asc: isSortAscending(column as Column),
-              desc: isSortDescending(column as Column),
-            }"
-          />
-        </div>
-      </template>
+        <LucideChevronRight
+          v-if="column.sort"
+          class="sorting-arrow"
+          :class="{
+            asc: isSortAscending(column as Column),
+            desc: isSortDescending(column as Column),
+          }"
+        />
+      </div>
     </TableRow>
 
     <!-- Table rows -->
@@ -167,12 +165,10 @@ const sortColumn = (column: Column): void => {
       :expand-side
       @click="onSelect(row as TData)"
     >
-      <template #row>
-        <slot
-          name="row"
-          :item="row"
-        ></slot>
-      </template>
+      <slot
+        name="row"
+        :item="row"
+      ></slot>
 
       <template #row-details>
         <slot
@@ -193,9 +189,7 @@ const sortColumn = (column: Column): void => {
       v-if="!!$slots['row-aggregation'] && rows.length > 0"
       class="aggregation"
     >
-      <template #row>
-        <slot name="row-aggregation"></slot>
-      </template>
+      <slot name="row-aggregation"></slot>
     </TableRow>
   </div>
 </template>

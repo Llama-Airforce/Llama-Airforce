@@ -57,7 +57,7 @@ const onClick = (): void => {
         class="expander"
       />
 
-      <slot name="row"></slot>
+      <slot></slot>
 
       <LucideChevronUp
         v-if="data && expandable && expandSide !== 'left'"
