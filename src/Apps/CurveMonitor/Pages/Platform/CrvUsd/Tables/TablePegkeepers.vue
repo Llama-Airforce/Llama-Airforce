@@ -4,13 +4,13 @@ import { type Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
 import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
 
-// Refs
 const search = ref("");
 
 const loading = computed(() => loadingPools.value || loadingKeepers.value);
 
 const rowsRaw = computed(() =>
   keepers.value
+    .filter((keeper) => keeper.active)
     .map((keeper) => {
       const pool = pools.value.find(
         (pool) => keeper.pool_address === pool.address
