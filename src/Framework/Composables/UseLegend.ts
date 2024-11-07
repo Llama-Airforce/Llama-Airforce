@@ -1,4 +1,4 @@
-import { type LegendItem } from "@/Framework/Monitor/LegendItem";
+import type { LegendItem } from "@/Framework/Monitor/LegendItem";
 
 /**
  * A composable function to manage legend items and their toggle states.

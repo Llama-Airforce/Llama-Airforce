@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type FeesStaged } from "@CM/Services/Revenue";
+import type { FeesStaged } from "@CM/Services/Revenue";
 
 const { fees } = defineProps<{
   fees: FeesStaged[];

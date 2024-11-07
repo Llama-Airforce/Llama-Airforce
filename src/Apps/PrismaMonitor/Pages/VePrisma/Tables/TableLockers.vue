@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type AccountData } from "@PM/Pages/VePrisma/VePrismaService";
+import type { AccountData } from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();
 

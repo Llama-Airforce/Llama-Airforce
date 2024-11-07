@@ -1,4 +1,4 @@
-import { type Theme } from "@/Styles/Theme";
+import type { Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
 import type { Flavor } from "@PM/Models/Flavor";
 

@@ -1,4 +1,4 @@
-import { type Page } from "@LAF/Pages/Page";
+import type { Page } from "@LAF/Pages/Page";
 
 import Pirex from "@LAF/Pages/Pirex/Pirex.page.vue";
 

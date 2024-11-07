@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Framework/Chain";
-import { type Market } from "@CM/Services/LlamaLend";
+import type { Market } from "@CM/Services/LlamaLend";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

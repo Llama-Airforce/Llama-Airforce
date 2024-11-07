@@ -1,4 +1,4 @@
-import { type Page } from "./Page";
+import type { Page } from "./Page";
 
 // Mock page, for example when the Union page in the git submodule is not loaded.
 const mockPage: Page = {

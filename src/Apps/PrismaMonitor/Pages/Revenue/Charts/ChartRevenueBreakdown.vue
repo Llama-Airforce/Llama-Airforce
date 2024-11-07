@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import { type SnapshotRevenue } from "@PM/Services";
+import type { SnapshotRevenue } from "@PM/Services";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 

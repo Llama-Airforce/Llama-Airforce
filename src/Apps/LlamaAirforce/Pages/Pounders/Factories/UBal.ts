@@ -1,7 +1,7 @@
 import { abi } from "@/ABI/Union/UnionVault";
 import { getAuraBalPrice, getAuraBalApy } from "@/Util";
 import type FlyerService from "@/Services/FlyerService";
-import { type VaultUnion, type Pounder } from "@Pounders/Models";
+import type { VaultUnion, Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/aurabal.png";
 

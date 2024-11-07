@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Proposal } from "@CM/Services/Proposal";
+import type { Proposal } from "@CM/Services/Proposal";
 
 let deadlineTimer: ReturnType<typeof setTimeout> | undefined;
 

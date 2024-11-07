@@ -1,4 +1,4 @@
-import { type Page } from "@LAF/Pages/Page";
+import type { Page } from "@LAF/Pages/Page";
 
 import UnionPounders from "@Pounders/Pounders.page.vue";
 

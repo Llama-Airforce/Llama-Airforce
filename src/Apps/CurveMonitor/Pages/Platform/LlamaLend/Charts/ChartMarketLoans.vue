@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import type { Chain } from "@/Framework/Chain";
-import { type Market } from "@CM/Services/LlamaLend";
+import type { Market } from "@CM/Services/LlamaLend";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

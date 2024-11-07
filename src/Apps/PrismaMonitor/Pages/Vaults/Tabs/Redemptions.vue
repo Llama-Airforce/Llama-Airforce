@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services";
+import type { TroveManagerDetails } from "@PM/Services";
 import TableRedemptions from "@PM/Pages/Vaults/Tables/TableRedemptions.vue";
 
 const { vault } = defineProps<{

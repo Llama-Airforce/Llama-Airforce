@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Crumb } from "@/Framework/Crumb";
+import type { Crumb } from "@/Framework/Crumb";
 
 const { crumbs, active } = defineProps<{
   crumbs: Crumb[];

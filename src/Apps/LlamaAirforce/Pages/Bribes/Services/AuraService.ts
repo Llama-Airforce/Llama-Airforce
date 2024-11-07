@@ -1,15 +1,15 @@
 import { ServiceBase } from "@/Services/ServiceBase";
-import {
-  type EpochOverview,
-  type DashboardResponse,
-  type Overview,
+import type {
+  EpochOverview,
+  DashboardResponse,
+  Overview,
 } from "@LAF/Pages/Bribes/Models";
 import {
   AuraConstants,
   getEndDateForRound,
   getLatestAuraRound,
 } from "@LAF/Pages/Bribes/Util/AuraHelper";
-import { type Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
+import type { Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
 
 type GaugeResponse = {
   data: GaugeVote[];

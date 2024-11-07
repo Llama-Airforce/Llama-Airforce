@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Trove, type TroveManagerDetails } from "@PM/Services";
+import type { Trove, TroveManagerDetails } from "@PM/Services";
 import TableTroves from "@PM/Pages/Vaults/Tables/TableTroves.vue";
 import { useVaultStore } from "@PM/Pages/Vaults/Store";
 

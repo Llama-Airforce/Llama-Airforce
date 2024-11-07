@@ -1,4 +1,4 @@
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import {
   DistributorUCrvAddress,
   DistributorUCvxAddress,
@@ -9,7 +9,7 @@ import {
   UnionFxsVaultAddress,
   UnionPrismaVaultAddress,
 } from "@/Util/Addresses";
-import { type AirdropId } from "@LAF/Services/UnionService";
+import type { AirdropId } from "@LAF/Services/UnionService";
 
 export type Distributor = {
   address: Address;

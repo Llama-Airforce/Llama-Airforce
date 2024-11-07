@@ -4,7 +4,7 @@ import { useWallet } from "@/Wallet";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
 import RedemptionsTableInit from "@LAF/Pages/Pirex/Components/RedemptionsInitTable.vue";
-import { type Redemption } from "@LAF/Pages/Pirex/Services";
+import type { Redemption } from "@LAF/Pages/Pirex/Services";
 
 const emit = defineEmits<{
   close: [];

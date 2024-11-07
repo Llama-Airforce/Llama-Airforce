@@ -1,4 +1,4 @@
-import { type Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
 import type {
   LabelRankingShort,

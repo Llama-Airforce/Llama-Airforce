@@ -1,4 +1,4 @@
-import { type AirdropId } from "@LAF/Services/UnionService";
+import type { AirdropId } from "@LAF/Services/UnionService";
 import { useCosmosDb } from "@LAF/Server/util/useCosmosDb";
 import { cache } from "@/Framework/Hono";
 

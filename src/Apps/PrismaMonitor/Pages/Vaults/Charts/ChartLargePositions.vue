@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import { type DecimalLabelledSeries } from "@PM/Services";
+import type { DecimalLabelledSeries } from "@PM/Services";
 
 const { data = [] } = defineProps<{
   data: DecimalLabelledSeries[];

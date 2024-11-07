@@ -1,7 +1,7 @@
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
 import { maxApprove } from "@/Wallet";
-import { type Airdrop, type ZapClaim } from "@Pounders/Models";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";

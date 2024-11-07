@@ -1,10 +1,10 @@
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import { notEmpty } from "@/Util";
-import {
-  type Delegation,
-  type Proposal as SnapshotProposal,
-  type Scores,
-  type Vote,
+import type {
+  Delegation,
+  Proposal as SnapshotProposal,
+  Scores,
+  Vote,
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
 import type {
   Bribed,

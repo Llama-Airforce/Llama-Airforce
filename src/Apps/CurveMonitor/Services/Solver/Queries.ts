@@ -1,4 +1,4 @@
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import SolverService from "./SolverService";
 
 const service = new SolverService();

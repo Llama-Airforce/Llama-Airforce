@@ -1,7 +1,7 @@
 import { abi } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPrice, getCvxApy } from "@/Util";
-import { type DefiLlamaService } from "@/Services";
-import { type VaultPirex, type Pounder } from "@Pounders/Models";
+import type { DefiLlamaService } from "@/Services";
+import type { VaultPirex, Pounder } from "@Pounders/Models";
 import type FlyerService from "@/Services/FlyerService";
 
 import logo from "@/Assets/Icons/Tokens/cvx.svg";

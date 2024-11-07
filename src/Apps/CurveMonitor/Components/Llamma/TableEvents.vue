@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { type LlammaEvent } from "@CM/Services/Llamma";
+import type { LlammaEvent } from "@CM/Services/Llamma";
 
 const { events, count } = defineProps<{
   events: LlammaEvent[];

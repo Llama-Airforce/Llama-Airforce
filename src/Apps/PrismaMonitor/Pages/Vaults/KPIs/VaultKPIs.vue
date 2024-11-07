@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services";
+import type { TroveManagerDetails } from "@PM/Services";
 
 const { vault = null } = defineProps<{
   vault?: TroveManagerDetails | null;

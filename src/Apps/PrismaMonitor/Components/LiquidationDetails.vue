@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Liquidation } from "@PM/Services";
+import type { Liquidation } from "@PM/Services";
 
 const { t } = useI18n();
 

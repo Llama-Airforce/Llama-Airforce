@@ -1,7 +1,7 @@
 import { ServiceBase } from "@/Services";
-import {
-  type DecimalLabelledSeries,
-  type DecimalTimeSeries,
+import type {
+  DecimalLabelledSeries,
+  DecimalTimeSeries,
 } from "@PM/Services/Series";
 import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 

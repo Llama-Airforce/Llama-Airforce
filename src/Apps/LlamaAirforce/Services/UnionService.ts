@@ -1,6 +1,6 @@
 import { getAddress } from "viem";
 import { FetchError, ServiceBaseHost } from "@/Services";
-import { type Result as Claim } from "@LAF/Server/routes/airdrop/[airdropId]/[address].get";
+import type { Result as Claim } from "@LAF/Server/routes/airdrop/[airdropId]/[address].get";
 export { type Claim };
 
 export const airdropIds = [

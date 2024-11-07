@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type AutoscaleInfo } from "lightweight-charts";
+import type { AutoscaleInfo } from "lightweight-charts";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { type PoolPrice } from "@CM/Services/CrvUsd";
+import type { PoolPrice } from "@CM/Services/CrvUsd";
 import {
   useQueryKeepers,
   useQueryKeeperPrices,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Reward } from "@LAF/Pages/Pirex/Services";
+import type { Reward } from "@LAF/Pages/Pirex/Services";
 
 const {
   rewards,

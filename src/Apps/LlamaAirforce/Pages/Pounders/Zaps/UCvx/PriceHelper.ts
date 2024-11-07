@@ -1,6 +1,6 @@
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPrice } from "@/Util";
-import { type DefiLlamaService } from "@/Services";
+import type { DefiLlamaService } from "@/Services";
 import { getVirtualPrice } from "@Pounders/Models/Pounder";
 
 export async function getUCvxPrice(

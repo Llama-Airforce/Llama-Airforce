@@ -1,4 +1,4 @@
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 
 export type SnapshotReward = {
   address: Address;

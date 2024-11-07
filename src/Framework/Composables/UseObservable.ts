@@ -1,4 +1,4 @@
-import { type Observable } from "rxjs";
+import type { Observable } from "rxjs";
 
 /**
  * Vue composable that transforms an RxJS Observable into a reactive Vue 3 ref.

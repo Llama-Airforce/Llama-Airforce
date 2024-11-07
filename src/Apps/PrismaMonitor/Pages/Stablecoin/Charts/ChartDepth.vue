@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type PoolDepth } from "@PM/Services";
+import type { PoolDepth } from "@PM/Services";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 
 const { t } = useI18n();

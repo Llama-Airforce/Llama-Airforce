@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Framework/Chain";
-import { type Market } from "@CM/Services/LlamaLend";
+import type { Market } from "@CM/Services/LlamaLend";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import {
   useQuerySoftLiqRatios,

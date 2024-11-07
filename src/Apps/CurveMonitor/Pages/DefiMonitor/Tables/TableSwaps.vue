@@ -2,7 +2,7 @@
 import { addressLeft } from "@/Wallet";
 import { useQuerySwaps } from "@CM/Services/Monitor/Swap/Queries";
 import WatchlistSwappers from "../Components/WatchlistSwappers.vue";
-import { type Swapper } from "../Models";
+import type { Swapper } from "../Models";
 
 // Options
 const swappers = ref<Swapper[]>([]);

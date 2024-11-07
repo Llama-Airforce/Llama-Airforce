@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type BaselineSeriesPartialOptions } from "lightweight-charts";
+import type { BaselineSeriesPartialOptions } from "lightweight-charts";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 

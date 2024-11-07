@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Market } from "@CM/Services/LlamaLend";
+import type { Market } from "@CM/Services/LlamaLend";
 
 const { market } = defineProps<{
   market: Market | undefined;

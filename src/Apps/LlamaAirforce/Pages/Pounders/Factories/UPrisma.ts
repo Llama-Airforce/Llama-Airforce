@@ -1,7 +1,7 @@
 import { abi } from "@/ABI/Union/UnionVault";
 import { getCvxPrismaPrice, getCvxPrismaApy } from "@/Util";
-import { type DefiLlamaService } from "@/Services";
-import { type VaultUnion, type Pounder } from "@Pounders/Models";
+import type { DefiLlamaService } from "@/Services";
+import type { VaultUnion, Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/prisma.svg";
 

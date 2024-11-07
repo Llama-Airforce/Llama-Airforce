@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Framework/Chain";
-import { type Market } from "@CM/Services/CrvUsd";
+import type { Market } from "@CM/Services/CrvUsd";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
 import {
   useQueryOHLC,

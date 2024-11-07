@@ -1,4 +1,4 @@
-import { type TroveManagerDetails, type Trove } from "@PM/Services";
+import type { TroveManagerDetails, Trove } from "@PM/Services";
 
 export const useVaultStore = defineStore("vaultStore", () => {
   const vault = ref<TroveManagerDetails | null>(null);

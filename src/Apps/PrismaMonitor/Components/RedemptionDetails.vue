@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Redemption } from "@PM/Services";
+import type { Redemption } from "@PM/Services";
 
 const { t } = useI18n();
 

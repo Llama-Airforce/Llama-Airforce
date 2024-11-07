@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type LiquidationAggregate } from "@CM/Services/Liquidations";
+import type { LiquidationAggregate } from "@CM/Services/Liquidations";
 import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
 
 type ChartType = "count" | "value";

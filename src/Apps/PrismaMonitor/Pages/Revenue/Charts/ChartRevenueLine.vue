@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { useSettingsStore } from "@PM/Stores";
-import { type SnapshotRevenue } from "@PM/Services";
+import type { SnapshotRevenue } from "@PM/Services";
 
 const { data = [] } = defineProps<{
   data: SnapshotRevenue[];

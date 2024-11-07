@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { type LiquidationDetails } from "@CM/Services/Liquidations";
+import type { LiquidationDetails } from "@CM/Services/Liquidations";
 
 type Discount = {
   timestamp: number;

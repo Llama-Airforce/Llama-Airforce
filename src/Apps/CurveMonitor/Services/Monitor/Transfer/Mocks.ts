@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { type GeneralErc20TokenSpecificBlockSummary } from "./Models";
+import type { GeneralErc20TokenSpecificBlockSummary } from "./Models";
 
 const mockUSDCBlockSummary: GeneralErc20TokenSpecificBlockSummary = {
   blockNumber: 17000000,

@@ -1,7 +1,7 @@
 import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
-import { type DefiLlamaService } from "@/Services";
+import type { DefiLlamaService } from "@/Services";
 import { bigNumToNumber } from "@/Util";
 import {
   getCvxCrvPrice,
@@ -20,7 +20,7 @@ import {
   DistributorUCvxAddress,
 } from "@/Util/Addresses";
 import { type Swap, getVirtualPrice } from "@Pounders/Models";
-import { type AirdropId, type Claim } from "@LAF/Services/UnionService";
+import type { AirdropId, Claim } from "@LAF/Services/UnionService";
 
 export type Airdrop = {
   id: AirdropId;

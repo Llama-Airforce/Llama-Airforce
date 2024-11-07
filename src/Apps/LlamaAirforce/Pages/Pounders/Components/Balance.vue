@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type PounderState } from "@Pounders/Models";
+import type { PounderState } from "@Pounders/Models";
 
 const { t } = useI18n();
 

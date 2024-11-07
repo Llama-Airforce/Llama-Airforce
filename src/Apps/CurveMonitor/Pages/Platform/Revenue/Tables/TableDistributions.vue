@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Distribution } from "@CM/Services/Revenue";
+import type { Distribution } from "@CM/Services/Revenue";
 
 const { distributions } = defineProps<{
   distributions: Distribution[];

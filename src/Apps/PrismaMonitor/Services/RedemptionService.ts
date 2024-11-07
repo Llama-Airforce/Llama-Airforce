@@ -1,6 +1,6 @@
 import { paginate } from "@/Util";
 import { ServiceBase } from "@/Services";
-import { type Vault } from "@PM/Models/Vault";
+import type { Vault } from "@PM/Models/Vault";
 import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type Redemption = {

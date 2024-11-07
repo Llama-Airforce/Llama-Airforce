@@ -1,9 +1,9 @@
 import { getAddress } from "viem";
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import { paginate, mapKeys } from "@/Util";
 import { ServiceBaseHost } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
-import { type Result as DelegationsResponse } from "@LAF/Server/routes/delegations.post";
+import type { Result as DelegationsResponse } from "@LAF/Server/routes/delegations.post";
 
 const SNAPSHOT_URL = "https://hub.snapshot.org/graphql";
 const SNAPSHOT_SCORE_URL = "https://score.snapshot.org/api/scores";

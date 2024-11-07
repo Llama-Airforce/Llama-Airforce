@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Framework/Chain";
-import { type Pool } from "@CM/Services/Pools";
+import type { Pool } from "@CM/Services/Pools";
 
 const { pools } = defineProps<{
   chain: Chain;

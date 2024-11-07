@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type TroveManagerDetails } from "@PM/Services";
+import type { TroveManagerDetails } from "@PM/Services";
 import ChartOpenTroves from "@PM/Pages/Vaults/Charts/ChartOpenTroves.vue";
 import ChartCollateralRatio from "@PM/Pages/Vaults/Charts/ChartCollateralRatio.vue";
 import ChartRatioDeciles from "@PM/Pages/Vaults/Charts/ChartRatioDeciles.vue";

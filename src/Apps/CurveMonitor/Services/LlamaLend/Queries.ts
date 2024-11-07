@@ -1,5 +1,5 @@
 import type { Chain } from "@/Framework/Chain";
-import { type Market } from "./Models";
+import type { Market } from "./Models";
 import LlamaLendService from "./LlamaLendService";
 
 const service = new LlamaLendService();

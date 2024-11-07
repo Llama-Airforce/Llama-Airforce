@@ -1,5 +1,5 @@
 import { erc20Abi as abiERC20 } from "viem";
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
 import { numToBigNumber } from "@/Util";
 import type { Airdrop } from "@Pounders/Models";

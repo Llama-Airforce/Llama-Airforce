@@ -1,12 +1,8 @@
-import {
-  type Address,
-  type PublicClient,
-  type GetContractReturnType,
-} from "viem";
-import { type abi as abiUnionVault } from "@/ABI/Union/UnionVault";
-import { type abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
+import type { Address, PublicClient, GetContractReturnType } from "viem";
+import type { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
+import type { abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
 import { bigNumToNumber } from "@/Util";
-import { type Swap } from "@Pounders/Models/Swap";
+import type { Swap } from "@Pounders/Models/Swap";
 
 export type VaultUnion = GetContractReturnType<
   typeof abiUnionVault,

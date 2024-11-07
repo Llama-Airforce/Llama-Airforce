@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type Keeper } from "@CM/Services/CrvUsd";
-import { type Pool } from "@CM/Services/Pools";
+import type { Keeper } from "@CM/Services/CrvUsd";
+import type { Pool } from "@CM/Services/Pools";
 import { useQueryKeepers } from "@CM/Services/CrvUsd/Queries";
 import { useQueryPoolMultiple } from "@CM/Services/Pools/Queries";
 

@@ -114,19 +114,12 @@ export default [
       "@typescript-eslint/consistent-indexed-object-style": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "error",
+      "@typescript-eslint/no-import-type-side-effects": "error",
 
       "@typescript-eslint/restrict-template-expressions": [
         "error",
         {
           allowNumber: true,
-        },
-      ],
-
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        {
-          prefer: "type-imports",
-          fixStyle: "inline-type-imports",
         },
       ],
 

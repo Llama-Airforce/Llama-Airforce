@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="const T extends string">
-import { type LegendItem } from "@/Framework/Monitor/LegendItem";
+import type { LegendItem } from "@/Framework/Monitor/LegendItem";
 
 const { items, disabled = [] } = defineProps<{
   items: LegendItem<T>[];

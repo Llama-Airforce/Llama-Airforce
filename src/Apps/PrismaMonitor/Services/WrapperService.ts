@@ -1,7 +1,7 @@
 import { ServiceBase } from "@/Services";
-import {
-  type DecimalLabelledSeries,
-  type DecimalTimeSeries,
+import type {
+  DecimalLabelledSeries,
+  DecimalTimeSeries,
 } from "@PM/Services/Series";
 
 const API_URL = "https://api.prismamonitor.com/v1";

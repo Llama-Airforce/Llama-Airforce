@@ -1,8 +1,5 @@
-import {
-  type VolumeRequestSettings,
-  type OHLCRequestSettings,
-} from "@/Services";
-import { type Contract } from "@PM/Services";
+import type { VolumeRequestSettings, OHLCRequestSettings } from "@/Services";
+import type { Contract } from "@PM/Services";
 
 export function getPriceSettings(contract: Contract): OHLCRequestSettings {
   const end = Math.floor(new Date().getTime() / 1000);

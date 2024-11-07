@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { CurvePriceService, type OHLC } from "@/Services";
 import { useSocketStore } from "@PM/Stores";
 import { getPriceSettings } from "@PM/Pages/Wrappers/Settings";
-import { type Contract } from "@PM/Services";
+import type { Contract } from "@PM/Services";
 
 const { t } = useI18n();
 

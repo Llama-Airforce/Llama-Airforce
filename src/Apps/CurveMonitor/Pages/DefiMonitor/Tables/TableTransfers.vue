@@ -2,7 +2,7 @@
 import { addressShort, addressLeft } from "@/Wallet";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
 import WatchlistTokens from "../Components/WatchlistTokens.vue";
-import { type Token } from "../Models";
+import type { Token } from "../Models";
 
 // Options
 const tokens = ref<Token[]>([]);

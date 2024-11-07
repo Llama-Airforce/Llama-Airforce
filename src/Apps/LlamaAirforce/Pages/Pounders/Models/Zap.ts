@@ -1,4 +1,4 @@
-import { type TransactionReceipt } from "viem";
+import type { TransactionReceipt } from "viem";
 
 export type Zap = {
   logo: string;

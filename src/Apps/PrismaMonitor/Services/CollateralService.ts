@@ -1,5 +1,5 @@
 import { ServiceBase } from "@/Services";
-import { type DecimalTimeSeries } from "@PM/Services/Series";
+import type { DecimalTimeSeries } from "@PM/Services/Series";
 import { type Flavor, apiUrl } from "@PM/Models/Flavor";
 
 export type PriceImpact = {

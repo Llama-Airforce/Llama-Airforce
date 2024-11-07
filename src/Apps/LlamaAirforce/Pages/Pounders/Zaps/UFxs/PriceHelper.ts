@@ -1,6 +1,6 @@
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { getCvxFxsPrice } from "@/Util";
-import { type DefiLlamaService } from "@/Services";
+import type { DefiLlamaService } from "@/Services";
 import { getVirtualPrice } from "@Pounders/Models";
 
 export async function getUFxsPrice(

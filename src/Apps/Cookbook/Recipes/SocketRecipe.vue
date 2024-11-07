@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type Socket } from "socket.io-client";
-import { type Subscription } from "rxjs";
+import type { Socket } from "socket.io-client";
+import type { Subscription } from "rxjs";
 import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
 import { emitAndListen, createObservable } from "@/Services/Socket";
 

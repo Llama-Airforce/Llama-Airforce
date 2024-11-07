@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Framework/Chain";
-import { type Pool } from "@CM/Services/Pools";
+import type { Pool } from "@CM/Services/Pools";
 import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { useQueryPools } from "@CM/Services/Pools/Queries";
 import { TablePools } from "@CM/Pages/Platform/Pools/Tables";

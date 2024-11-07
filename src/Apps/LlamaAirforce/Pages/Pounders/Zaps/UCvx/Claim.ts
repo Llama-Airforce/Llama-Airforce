@@ -1,4 +1,4 @@
-import { type Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";

@@ -1,5 +1,5 @@
 import { type Address, formatUnits } from "viem";
-import { type Price } from "@/Services";
+import type { Price } from "@/Services";
 import type {
   Reward,
   SnapshotReward,

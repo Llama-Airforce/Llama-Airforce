@@ -1,4 +1,4 @@
-import { type Menu } from "@/Framework/Monitor/Shell/Menu";
+import type { Menu } from "@/Framework/Monitor/Shell/Menu";
 
 import { useSettingsStore } from "@PM/Stores";
 import { stableSymbol } from "@PM/Models/Flavor";
