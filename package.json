@@ -61,6 +61,7 @@
     "@vitejs/plugin-vue": "5.1.4",
     "consola": "^3.2.3",
     "eslint": "9.14.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-promise": "7.1.0",
     "eslint-plugin-vue": "9.30.0",
     "shiki": "1.22.2",

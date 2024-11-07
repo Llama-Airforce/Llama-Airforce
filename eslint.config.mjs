@@ -1,6 +1,7 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 
+import esLintPluginImport from "eslint-plugin-import";
 import eslintPluginPromise from "eslint-plugin-promise";
 import eslintPluginVue from "eslint-plugin-vue";
 
@@ -21,6 +22,7 @@ export default [
     ignores: ["src/Apps/CurveMonitor/phil/**/*"],
   },
   eslint.configs.recommended,
+  esLintPluginImport.flatConfigs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...eslintPluginVue.configs["flat/recommended"],
   eslintPluginPromise.configs["flat/recommended"],
@@ -99,6 +101,9 @@ export default [
       eqeqeq: "error",
       radix: "error",
       semi: "error",
+
+      "import/no-unresolved": "off",
+
       "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-extra-parens": ["off"],
