@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import SelectChain from "@CM/Components/SelectChain.vue";
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import { useQueryCushions } from "@CM/Services/Revenue/Queries";
 import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
 

@@ -1,4 +1,4 @@
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import OHLCService from "./OHLCService";
 
 const service = new OHLCService();

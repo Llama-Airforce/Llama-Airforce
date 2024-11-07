@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
 import { type Market } from "@CM/Services/LlamaLend";

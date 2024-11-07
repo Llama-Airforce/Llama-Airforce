@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import type { Chain } from "@CM/Models";
-import SelectChain from "@CM/Components/SelectChain.vue";
+import type { Chain } from "@/Framework/Chain";
 import { useQueryTopPools } from "@CM/Services/Revenue/Queries";
 
 const chain = ref<Chain>("ethereum");

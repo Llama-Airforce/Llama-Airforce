@@ -1,4 +1,4 @@
-import type { Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import type { ActivityType } from "./Models";
 
 export type GetSupportedChainsResponse = {

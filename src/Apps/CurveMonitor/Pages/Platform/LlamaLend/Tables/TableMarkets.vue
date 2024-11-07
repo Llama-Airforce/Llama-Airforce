@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import { type Market, type MarketPair, tvl } from "@CM/Services/LlamaLend";
 
 type MarketType = "long" | "short";

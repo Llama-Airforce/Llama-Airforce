@@ -1,5 +1,5 @@
+import { type Chain, chains } from "@/Framework/Chain";
 import { toUTC } from "@CM/Services";
-import { type Chain, chains } from "@CM/Models";
 import type * as ApiTypes from "./ApiTypes";
 import type * as Models from "./Models";
 

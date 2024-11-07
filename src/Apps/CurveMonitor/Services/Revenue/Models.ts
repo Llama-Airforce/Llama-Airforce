@@ -1,5 +1,5 @@
 import { type Address } from "@/Framework/Address";
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 
 export type ChainRevenue = {
   chain: string;

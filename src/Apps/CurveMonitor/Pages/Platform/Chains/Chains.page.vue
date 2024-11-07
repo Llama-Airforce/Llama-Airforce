@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type Chain } from "@CM/Models";
-import SelectChain from "@CM/Components/SelectChain.vue";
+import type { Chain } from "@/Framework/Chain";
 import type { Activity, ActivityType } from "@CM/Services/Chains";
 import { useQueryTxs, useQueryUsers } from "@CM/Services/Chains/Queries";
 import {

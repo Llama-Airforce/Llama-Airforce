@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import { useQueryMarkets } from "@CM/Services/LlamaLend/Queries";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/Tabs/MarketOverview.vue";
 import Trading from "@CM/Pages/Platform/LlamaLend/Tabs/Trading.vue";

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import {
   useQueryMarkets,
   useQueryChains,
 } from "@CM/Services/LlamaLend/Queries";
 import { type Market, type MarketPair } from "@CM/Services/LlamaLend";
-import SelectChain from "@CM/Components/SelectChain.vue";
 import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 
 const chainParam = useRouteParams<Chain | undefined | "">("chain");

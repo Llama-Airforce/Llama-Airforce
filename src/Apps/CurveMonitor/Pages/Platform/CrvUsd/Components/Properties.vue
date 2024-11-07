@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Chain } from "@CM/Models";
+import type { Chain } from "@/Framework/Chain";
 import { type Market } from "@CM/Services/CrvUsd";
 
 const { market, chain } = defineProps<{
