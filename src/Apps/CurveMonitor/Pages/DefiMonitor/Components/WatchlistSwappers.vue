@@ -50,7 +50,7 @@ watch(watchlist, () => {
 
     <Table
       :rows="swappers"
-      @selected="onSelect($event.address)"
+      @select="onSelect($event.address)"
     >
       <template #row="{ item: { address, name } }">
         <div>{{ name ?? "?" }}</div>

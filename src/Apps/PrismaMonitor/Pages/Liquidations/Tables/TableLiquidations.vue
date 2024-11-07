@@ -131,7 +131,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="showDetails = $event"
+      @select="showDetails = $event"
     >
       <template #row="{ item }">
         <img :src="icon(item.vault)" />

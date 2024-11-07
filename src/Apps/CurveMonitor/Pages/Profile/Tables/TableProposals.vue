@@ -55,7 +55,7 @@ async function onSelect({ proposal }: (typeof rows.value)[number]) {
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="onSelect"
+      @select="onSelect"
     >
       <template #row="{ item: { proposal, weight, supports, txHash } }">
         <div>

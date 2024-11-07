@@ -206,7 +206,7 @@ const totalUtilRate = (type: "long" | "short"): number => {
       :pairs="marketPairsFiltered"
       :loading="loadingMarkets"
       :chain
-      @selected="onMarketSelect"
+      @select="onMarketSelect"
     />
   </div>
 </template>

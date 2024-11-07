@@ -89,7 +89,7 @@ const onSelected = async (epoch: EpochOverview): Promise<void> => {
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="onSelected"
+      @select="onSelected"
     >
       <template #row="{ item }">
         <div

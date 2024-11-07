@@ -51,7 +51,7 @@ async function onSelect(row: (typeof data.value)[number]) {
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="onSelect"
+      @select="onSelect"
     >
       <template #row="{ item }">
         <div>

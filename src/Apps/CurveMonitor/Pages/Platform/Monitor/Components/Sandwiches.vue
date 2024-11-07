@@ -82,7 +82,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
         { label: 'Time', align: 'end' },
       ]"
       :expanded
-      @selected="toggleExpansion($event)"
+      @select="toggleExpansion($event)"
     >
       <template #row="{ item }">
         <div>

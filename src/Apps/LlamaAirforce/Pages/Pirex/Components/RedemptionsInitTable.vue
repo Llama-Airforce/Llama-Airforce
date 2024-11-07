@@ -46,7 +46,7 @@ watch(selected, (newRedemption) => {
       '',
     ]"
     :rows="redemptions"
-    @selected="selected = $event.lockIndex"
+    @select="selected = $event.lockIndex"
   >
     <template #row="{ item: redemption }">
       <div>{{ formatDate(redemption.unlockTime) }}</div>

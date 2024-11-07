@@ -6,7 +6,7 @@ import { type TroveManagerDetails, TroveOverviewService } from "@PM/Services";
 const { t } = useI18n();
 
 const emit = defineEmits<{
-  selected: [vault: TroveManagerDetails];
+  select: [vault: TroveManagerDetails];
 }>();
 
 // Stores
@@ -64,7 +64,7 @@ const loading = computed(() => rowsRaw.value.length === 0);
         { label: 'Troves', align: 'end' },
         { label: 'Price', align: 'end' },
       ]"
-      @selected="emit('selected', $event)"
+      @select="emit('select', $event)"
     >
       <template #row="{ item }">
         <img :src="icon(item.address)" />

@@ -84,7 +84,7 @@ function symbol(settlement: CowSwapSettlement) {
       :sorting
       :expanded
       @sort-column="onSort"
-      @selected="toggleExpansion"
+      @select="toggleExpansion"
     >
       <template #row="{ item }">
         <div class="token">

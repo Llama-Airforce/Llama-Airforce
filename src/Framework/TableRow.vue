@@ -8,20 +8,23 @@
 const {
   data,
   selected = false,
+  selectable = false,
+  hoverable = true,
   expanded = false,
   expandSide = "right",
 } = defineProps<{
   data?: T;
   selected?: boolean;
+  selectable?: boolean;
+  hoverable?: boolean;
   expanded?: boolean;
   expandSide?: "left" | "right";
 }>();
 
 const emit = defineEmits<{
-  click: [data?: T];
+  select: [data: T];
 }>();
 
-// Refs
 const slots = useSlots();
 const expandable = computed((): boolean => {
   const slot = slots["row-details"];
@@ -35,11 +38,6 @@ const expandable = computed((): boolean => {
 
   return false;
 });
-
-// Events
-const onClick = (): void => {
-  emit("click", data);
-};
 </script>
 
 <template>
@@ -49,8 +47,8 @@ const onClick = (): void => {
   >
     <div
       class="row-data"
-      :class="{ active: selected, expandable, 'has-data': !!data }"
-      @click="onClick"
+      :class="{ active: selected, selectable, hoverable }"
+      @click="selectable && data && emit('select', data)"
     >
       <LucideChevronUp
         v-if="data && expandable && expandSide === 'left'"
@@ -121,15 +119,18 @@ const onClick = (): void => {
       border-bottom: var(--border-thickness) solid var(--c-primary);
     }
 
-    &.expandable.has-data:hover {
-      cursor: pointer;
-    }
-
-    &.has-data {
+    &.hoverable,
+    &.selectable {
       &:hover {
         background-color: hsl(
           from var(--c-lvl1) h s calc(l + 6 * var(--color-scheme-dark))
         );
+      }
+    }
+
+    &.selectable {
+      &:hover {
+        cursor: pointer;
       }
 
       &:active,

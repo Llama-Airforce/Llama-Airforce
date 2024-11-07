@@ -15,7 +15,7 @@ const {
 }>();
 
 const emit = defineEmits<{
-  selected: [market?: Market];
+  select: [market?: Market];
 }>();
 
 const columns = [
@@ -93,7 +93,7 @@ const tokenIcon = (market: Market) => {
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="emit('selected', $event)"
+      @select="emit('select', $event)"
     >
       <template #row="{ item: market }">
         <template v-if="market">

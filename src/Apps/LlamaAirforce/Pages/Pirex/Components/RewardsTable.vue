@@ -36,7 +36,7 @@ function isSelected(reward: Reward) {
     :class="{ 'can-select': canSelect }"
     :columns
     :rows="rewards"
-    @selected="emit('select', $event)"
+    @select="emit('select', $event)"
   >
     <template #row="{ item: reward }">
       <TokenIcon :address="reward.address" />

@@ -3,7 +3,7 @@ import type { Market } from "@CM/Services/CrvUsd";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
 const emit = defineEmits<{
-  selected: [market: Market];
+  select: [market: Market];
 }>();
 
 // Refs
@@ -58,7 +58,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         { label: 'Fees Pending', align: 'end' },
         { label: 'Fees Collected', align: 'end' },
       ]"
-      @selected="emit('selected', $event)"
+      @select="emit('select', $event)"
     >
       <template #row="{ item }">
         <TokenIcon

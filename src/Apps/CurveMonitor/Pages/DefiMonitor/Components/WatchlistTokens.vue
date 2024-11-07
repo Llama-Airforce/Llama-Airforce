@@ -80,7 +80,7 @@ function addToken(token: Token) {
 
     <Table
       :rows="tokens"
-      @selected="onSelect($event.address)"
+      @select="onSelect($event.address)"
     >
       <template #row="{ item: { address, symbol } }">
         <TokenIcon :address />

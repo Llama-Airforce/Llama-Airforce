@@ -18,6 +18,7 @@ const {
   columns = [],
   rows = [],
   rowsMin = null,
+
   selectedRow = null,
 
   expanded = [],
@@ -45,7 +46,7 @@ const {
 }>();
 
 const emit = defineEmits<{
-  selected: [data: TData];
+  select: [data: TData];
 
   /*
    * I couldn't get the sort parameter type to only be
@@ -75,13 +76,6 @@ const columnsObjects = computed((): Column[] =>
     return column;
   })
 );
-
-// Selecting
-const onSelect = (data?: TData): void => {
-  if (data) {
-    emit("selected", data);
-  }
-};
 
 /** Return whether the row below the given row's index is selected */
 const selectedBelow = (index: number): boolean => {
@@ -121,6 +115,9 @@ const sortColumn = (column: Column): void => {
 
   emit("sortColumn", column.id as never, newOrder);
 };
+
+const instance = getCurrentInstance();
+const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
 </script>
 
 <template>
@@ -129,6 +126,7 @@ const sortColumn = (column: Column): void => {
     <TableRow
       v-if="columns.length > 0"
       :class="{ 'selected-below': selectedBelow(-1) }"
+      :hoverable="false"
     >
       <div
         v-for="column in columnsObjects"
@@ -154,16 +152,20 @@ const sortColumn = (column: Column): void => {
       </div>
     </TableRow>
 
+    <!-- Manual rows -->
+    <slot></slot>
+
     <!-- Table rows -->
     <TableRow
       v-for="(row, i) in rows"
       :key="(row as never)"
       :data="row"
       :class="{ 'selected-below': selectedBelow(i) }"
+      :selectable
       :selected="selectedRow === row"
       :expanded="expanded.includes(row as TData)"
       :expand-side
-      @click="onSelect(row as TData)"
+      @select="row && emit('select', row)"
     >
       <slot
         name="row"
@@ -182,12 +184,14 @@ const sortColumn = (column: Column): void => {
     <TableRow
       v-for="row in rowsEmpty"
       :key="row"
+      :hoverable="false"
     />
 
     <!-- Aggregation -->
     <TableRow
       v-if="!!$slots['row-aggregation'] && rows.length > 0"
       class="aggregation"
+      :hoverable="false"
     >
       <slot name="row-aggregation"></slot>
     </TableRow>

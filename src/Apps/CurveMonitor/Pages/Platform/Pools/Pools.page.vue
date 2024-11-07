@@ -131,7 +131,7 @@ const onPoolSelect = async (newPool: Pool) => {
       :chain
       :pools
       :loading="loadingPools"
-      @selected="onPoolSelect"
+      @select="onPoolSelect"
     />
   </div>
 </template>

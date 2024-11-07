@@ -23,7 +23,7 @@ const tokens = initWatchlistTokens().flatMap((x) => x.items);
 
         <Table
           :rows="tokens"
-          @selected="emit('token', $event)"
+          @select="emit('token', $event)"
         >
           <template #row="{ item: { address, symbol } }">
             <TokenIcon :address />

@@ -8,7 +8,7 @@ const { pools } = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  selected: [pool: Pool];
+  select: [pool: Pool];
 }>();
 
 // Data
@@ -64,7 +64,7 @@ function utilRate(pool: Pool) {
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="emit('selected', $event)"
+      @select="emit('select', $event)"
     >
       <template #row="{ item: pool }">
         <div class="tokens">

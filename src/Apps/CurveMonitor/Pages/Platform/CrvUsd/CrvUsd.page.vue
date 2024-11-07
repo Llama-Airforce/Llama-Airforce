@@ -41,7 +41,7 @@ const onMarketSelect = async (newMarket: Market) => {
   <div class="dashboard">
     <TableMarkets
       style="grid-column: 1 / -1"
-      @selected="onMarketSelect"
+      @select="onMarketSelect"
     />
 
     <div class="col">

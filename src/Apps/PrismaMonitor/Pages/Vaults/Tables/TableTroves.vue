@@ -11,7 +11,7 @@ import {
 const { t } = useI18n();
 
 const emit = defineEmits<{
-  selected: [trove: Trove];
+  select: [trove: Trove];
 }>();
 
 // Stores
@@ -160,7 +160,7 @@ const onType = (tabIndex: number) => {
       :columns
       :sorting
       @sort-column="onSort"
-      @selected="emit('selected', $event)"
+      @select="emit('select', $event)"
     >
       <template #row="{ item }">
         <div>

@@ -66,7 +66,7 @@ const values = computed(() => rows.value.map((x) => x.controller));
       :sorting
       :selected-row="rows.find((x) => x.controller === selected)"
       @sort-column="onSort"
-      @selected="selected = $event.controller"
+      @select="selected = $event.controller"
     >
       <template #row="{ item }">
         <div class="center">
