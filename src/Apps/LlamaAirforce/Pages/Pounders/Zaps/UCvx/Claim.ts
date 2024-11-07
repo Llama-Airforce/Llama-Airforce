@@ -3,9 +3,8 @@ import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
-import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
+import { calcMinAmountOut, claim } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
-import { claim } from "@Pounders/Zaps/Helpers";
 
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { getApiSocket, useSocketStore } from "@PM/Stores";
+import { getApiSocket, useSocketStore, useSettingsStore } from "@PM/Stores";
 import TableLiquidations from "@PM/Pages/Liquidations/Tables/TableLiquidations.vue";
 import { TroveOverviewService } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
 
 // Refs
 const storeSettings = useSettingsStore();

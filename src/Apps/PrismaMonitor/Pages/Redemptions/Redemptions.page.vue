@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { getApiSocket, useSocketStore } from "@PM/Stores";
+import { getApiSocket, useSocketStore, useSettingsStore } from "@PM/Stores";
 import { TroveOverviewService } from "@PM/Services";
-import { useSettingsStore } from "@PM/Stores";
 import TableRedemptions from "@PM/Pages/Redemptions/Tables/TableRedemptions.vue";
 
 // Refs

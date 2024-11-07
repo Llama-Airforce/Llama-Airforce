@@ -4,12 +4,11 @@ import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import {
   dollarPerVlAsset as dollarPerVlAssetFunc,
   totalAmountDollars as totalAmountDollarsFunc,
-} from "@LAF/Pages/Bribes/Util/EpochHelper";
-import {
   getDate,
   getDateRaw,
   getLink,
 } from "@LAF/Pages/Bribes/Util/EpochHelper";
+
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
 
 const { t } = useI18n();
