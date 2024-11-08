@@ -5,7 +5,7 @@ import {
   unstable_connector,
 } from "@wagmi/core";
 import { mainnet } from "@wagmi/core/chains";
-import { type CreateConnectorFn } from "@wagmi/vue";
+import type { CreateConnectorFn } from "@wagmi/vue";
 import { injected } from "@wagmi/connectors";
 
 // Alternative: https://eth.llamarpc.com

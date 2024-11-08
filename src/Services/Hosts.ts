@@ -1,4 +1,4 @@
-import { type App } from "@/Framework/Apps";
+import type { App } from "@/Framework/Apps";
 
 // Default API host endpoints for apps.
 export const hosts: Record<App, string | undefined> = {

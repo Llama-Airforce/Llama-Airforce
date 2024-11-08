@@ -1,10 +1,6 @@
 import { type Observable, filter, map, shareReplay } from "rxjs";
-import { type WebSocketSubject } from "rxjs/webSocket";
-import {
-  type Action,
-  type Payload,
-  type Request,
-} from "@/Services/Socket/Models";
+import type { WebSocketSubject } from "rxjs/webSocket";
+import type { Action, Payload, Request } from "@/Services/Socket/Models";
 
 const OHLC_CHANNEL = "pool_volume";
 

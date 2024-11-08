@@ -22,7 +22,7 @@ import {
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
 } from "@/Util/Addresses";
-import { type DefiLlamaService } from "@/Services";
+import type { DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
 
 type CurveV1FactoryPool = GetContractReturnType<

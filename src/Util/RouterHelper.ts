@@ -1,4 +1,4 @@
-import { type RouteLocationNormalizedLoaded } from "vue-router";
+import type { RouteLocationNormalizedLoaded } from "vue-router";
 
 export function subIsActive(
   input: string | string[],
@@ -7,7 +7,6 @@ export function subIsActive(
   const paths = Array.isArray(input) ? input : [input];
 
   return paths.some((path) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return route.path.startsWith(path); // current path starts with this path string
   });
 }
