@@ -1,4 +1,4 @@
-import { bigNumToNumber } from "@/Utils";
+import { bigNumToNumber } from "@/Utils/Number";
 import { toUTC } from "@CM/Services";
 import type * as ApiTypes from "./ApiTypes";
 import type * as Models from "./Models";

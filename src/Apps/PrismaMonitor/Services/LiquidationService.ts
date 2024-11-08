@@ -1,4 +1,4 @@
-import { paginate } from "@/Utils";
+import { paginate } from "@/Utils/Pagination";
 import { ServiceBase } from "@/Services";
 import type { Vault } from "@PM/Models/Vault";
 import { type Flavor, apiUrl } from "@PM/Models/Flavor";

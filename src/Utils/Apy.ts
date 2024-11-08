@@ -2,14 +2,13 @@ import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiCvxCrvUtil } from "@/ABI/Convex/CvxCrvUtilities";
 import { abi as abiCvxFxsUtil } from "@/ABI/Convex/CvxFxsRewards";
 import { abi as abiCvxPrismaUtil } from "@/ABI/Convex/CvxPrismaRewards";
+import { bigNumToNumber, numToBigNumber } from "@/Utils/Number";
+import { toRecord } from "@/Utils/Array";
 import {
-  bigNumToNumber,
-  numToBigNumber,
-  toRecord,
   getCvxFxsPrice,
   getCvxPrismaPrice,
   getDefiLlamaPrice,
-} from "@/Utils";
+} from "@/Utils/Price";
 import {
   CvxAddress,
   CvxCrvAddress,

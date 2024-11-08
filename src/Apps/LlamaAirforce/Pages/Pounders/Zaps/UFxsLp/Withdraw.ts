@@ -5,7 +5,7 @@ import { maxApprove } from "@/Wallet";
 import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Utils";
+import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Utils/Price";
 
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 

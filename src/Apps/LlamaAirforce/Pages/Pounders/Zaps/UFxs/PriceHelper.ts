@@ -1,5 +1,5 @@
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
-import { getCvxFxsPrice } from "@/Utils";
+import { getCvxFxsPrice } from "@/Utils/Price";
 import type { DefiLlamaService } from "@/Services";
 import { getVirtualPrice } from "@Pounders/Models";
 

@@ -10,7 +10,7 @@ import {
   calcMinAmountOut,
 } from "@Pounders/Zaps/Helpers";
 import { DefiLlamaService } from "@/Services";
-import { getPxCvxPrice } from "@/Utils";
+import { getPxCvxPrice } from "@/Utils/Price";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 

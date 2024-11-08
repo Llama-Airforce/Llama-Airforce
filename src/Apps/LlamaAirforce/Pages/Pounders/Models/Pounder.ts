@@ -1,7 +1,7 @@
 import type { Address, PublicClient, GetContractReturnType } from "viem";
 import type { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import type { abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
-import { bigNumToNumber } from "@/Utils";
+import { bigNumToNumber } from "@/Utils/Number";
 import type { Swap } from "@Pounders/Models/Swap";
 
 export type VaultUnion = GetContractReturnType<

@@ -1,5 +1,6 @@
 import { abi } from "@/ABI/Union/UnionVault";
-import { getCvxPrismaPrice, getCvxPrismaApy } from "@/Utils";
+import { getCvxPrismaApy } from "@/Utils/Apy";
+import { getCvxPrismaPrice } from "@/Utils/Price";
 import type { DefiLlamaService } from "@/Services";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
 

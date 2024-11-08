@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type ProposalType, proposalTypes } from "@CM/Services/Proposal";
-import { capitalize } from "@/Utils";
+import { capitalize } from "@/Utils/String";
 
 const emit = defineEmits<{
   select: [type: ProposalType];

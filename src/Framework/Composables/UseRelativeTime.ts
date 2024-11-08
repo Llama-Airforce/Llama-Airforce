@@ -1,4 +1,4 @@
-import { relativeTime as relativeTimeFunc } from "@/Utils/TimeHelper";
+import { relativeTime as relativeTimeFunc } from "@/Utils/Time";
 
 /**
  * Vue composable that provides a function to get the relative time string from a given Unix timestamp.

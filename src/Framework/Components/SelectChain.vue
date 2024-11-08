@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import chainIcon from "@/Utils/ChainHelper";
+import chainIcon from "@/Utils/Chain";
 
 type SelectOption = {
   label: string;
