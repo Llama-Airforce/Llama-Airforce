@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 import type { Market } from "@CM/Services/LlamaLend";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
 import {

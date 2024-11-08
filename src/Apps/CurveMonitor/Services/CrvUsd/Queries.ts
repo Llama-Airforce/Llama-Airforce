@@ -1,4 +1,4 @@
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 import type { Market, Keeper } from "./Models";
 import CrvUsdService from "./CrvUsdService";
 import OHLCService from "../OHLC";

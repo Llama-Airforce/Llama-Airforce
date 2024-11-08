@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 import { useQueryUserMarkets } from "@CM/Services/CrvUsd/Queries";
 import { addressShort } from "@/Wallet";
 

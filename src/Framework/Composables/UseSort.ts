@@ -1,4 +1,4 @@
-import type { SortOrder } from "@/Framework/Types/SortOrder";
+import type { SortOrder } from "@/Types/SortOrder";
 
 type Column<T> = { id: T; label: string; sort: boolean } | string;
 type ExtractColumnId<T> = T extends { id: infer U; sort: true } ? U : never;

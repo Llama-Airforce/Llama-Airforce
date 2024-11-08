@@ -1,4 +1,4 @@
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 
 export type GetChainsResponse = {
   data: Chain[];

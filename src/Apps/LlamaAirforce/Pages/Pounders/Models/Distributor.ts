@@ -1,4 +1,4 @@
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 import {
   DistributorUCrvAddress,
   DistributorUCvxAddress,

@@ -1,5 +1,5 @@
 import { getAddress } from "viem";
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 import { paginate, mapKeys } from "@/Util";
 import { ServiceBaseHost } from "@/Services";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";

@@ -1,6 +1,6 @@
 import { getAddress } from "viem";
 import { ServiceBase } from "@/Services";
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 import type * as ApiTypes from "./ApiTypes";
 import * as Parsers from "./Parsers";
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 import { useWallet, addressShort } from "@/Wallet";
 import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
 import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";

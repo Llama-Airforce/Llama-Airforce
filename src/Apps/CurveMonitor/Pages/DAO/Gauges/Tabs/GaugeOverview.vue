@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 import type { Gauge } from "@CM/Services/Gauge";
 import TableDeployment from "../Tables/TableDeployment.vue";
 import ChartWeightHistory from "../Charts/ChartWeightHistory.vue";

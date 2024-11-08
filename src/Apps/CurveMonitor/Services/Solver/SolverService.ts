@@ -1,4 +1,4 @@
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 import { ServiceBase } from "@/Services";
 import type * as ApiTypes from "./ApiTypes";
 import * as Parsers from "./Parsers";

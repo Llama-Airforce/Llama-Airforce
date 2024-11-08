@@ -89,12 +89,12 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     },
     // Util
     {
-      from: "@/Framework/Types/DataPoint",
+      from: "@/Types/DataPoint",
       imports: ["DataPoint"],
       type: true,
     },
     {
-      from: "@/Framework/Types/Util",
+      from: "@/Types/Util",
       imports: ["Tail", "Flatten", "MaybeArray", "TemplateRef"],
       type: true,
     },
@@ -105,11 +105,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       type: true,
     },
   ],
-  dirs: [
-    "../../Framework/Types/**",
-    "../../Framework/Composables/**",
-    "../../Util/**",
-  ],
+  dirs: ["../../Framework/Composables/**", "../../Types/**", "../../Util/**"],
   eslintrc: {
     enabled: true,
     filepath: resolve(__dirname, "../.eslintrc-auto-import.json"),

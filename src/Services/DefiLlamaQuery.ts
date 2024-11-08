@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 import DefiLlamaService, { type Price } from "@/Services/DefiLlamaService";
 
 const service = new DefiLlamaService();

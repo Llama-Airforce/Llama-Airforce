@@ -1,4 +1,4 @@
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 import { ServiceBase } from "@/Services";
 
 const THEGRAPH_URL = "https://api.thegraph.com/subgraphs/name/aurafinance/aura";

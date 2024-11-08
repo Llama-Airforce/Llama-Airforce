@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Framework/Types/Chain";
+import type { Chain } from "@/Types/Chain";
 import type { Activity, ActivityType } from "@CM/Services/Chains";
 import { useQueryTxs, useQueryUsers } from "@CM/Services/Chains/Queries";
 import {

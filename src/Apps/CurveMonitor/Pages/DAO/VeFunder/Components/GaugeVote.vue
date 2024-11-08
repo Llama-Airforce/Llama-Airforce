@@ -4,7 +4,7 @@ import { mainnet } from "viem/chains";
 import { abi as abiAgent } from "@/ABI/veFunder/AragonAgent";
 import { abi as abiVoting } from "@/ABI/veFunder/AragonVoting";
 import { abi as abiGauge } from "@/ABI/veFunder/GaugeController";
-import type { Address } from "@/Framework/Types/Address";
+import type { Address } from "@/Types/Address";
 
 const { gauge = "" } = defineProps<{
   gauge?: string;

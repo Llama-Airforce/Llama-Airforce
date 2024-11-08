@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Crumb } from "@/Framework/Types/Crumb";
+import type { Crumb } from "@/Types/Crumb";
 import Recipe from "@CB/Recipe.vue";
 
 const crumbs: Crumb[] = [
