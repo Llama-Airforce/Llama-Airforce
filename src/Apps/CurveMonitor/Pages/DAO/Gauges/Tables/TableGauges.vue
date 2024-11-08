@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import type { Gauge } from "@CM/Services/Gauge";
 import { useQueryGauges } from "@CM/Services/Gauge/Queries";
 

@@ -1,4 +1,4 @@
-import type { Crumb } from "@/Framework/Crumb";
+import type { Crumb } from "@/Framework/Types/Crumb";
 
 export const useBreadcrumbStore = defineStore("breadcrumbStore", () => {
   const route = useRoute();

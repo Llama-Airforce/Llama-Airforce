@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Types/Address";
 import { abi } from "@/ABI/Union/Pirex";
 import { abi as abiERC1155 } from "@/ABI/Standards/ERC1155";
 import { useWallet } from "@/Wallet";

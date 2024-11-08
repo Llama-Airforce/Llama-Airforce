@@ -1,6 +1,6 @@
 import { isAddress } from "viem";
 import { Hono, HTTPException, type HonoResultOutput } from "@/Framework/Hono";
-import type { Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Types/Address";
 import { isAirdropId } from "@LAF/Services/UnionService";
 import { getAirdropClaims } from "@LAF/Server/util/getAirdropClaims";
 

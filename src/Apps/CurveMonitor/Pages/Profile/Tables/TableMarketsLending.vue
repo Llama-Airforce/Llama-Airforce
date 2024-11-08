@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import { useQueryUserMarkets } from "@CM/Services/LlamaLend/Queries";
 import { addressShort } from "@/Wallet";
 

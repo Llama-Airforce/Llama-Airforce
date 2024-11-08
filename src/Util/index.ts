@@ -1,5 +1,4 @@
 export * from "./ArrayHelper";
-export * from "./DataPoint";
 export * from "./DateHelper";
 export * from "./NumberHelper";
 export * from "./ObjectHelper";
@@ -7,7 +6,6 @@ export * from "./PaginationHelper";
 export * from "./PromiseHelper";
 export * from "./RouterHelper";
 export * from "./StringHelper";
-export * from "./Types";
 export * from "./PriceHelper";
 export * from "./ApyHelper";
 

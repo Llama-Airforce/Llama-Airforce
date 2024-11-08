@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="TData, const TSortingColumn extends string">
-import type { SortOrder } from "../SortOrder";
+import type { SortOrder } from "../Types/SortOrder";
 
 type Column = {
   id?: TSortingColumn;

@@ -1,4 +1,4 @@
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import RevenueService from "./RevenueService";
 
 const service = new RevenueService(useHost());

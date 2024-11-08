@@ -1,4 +1,4 @@
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 
 export type ChainInfo = {
   chain: string;

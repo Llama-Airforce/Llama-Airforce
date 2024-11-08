@@ -1,4 +1,4 @@
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 
 import ethereum from "@/Assets/Icons/Chains/ethereum.svg";
 import avalanche from "@/Assets/Icons/Chains/avalanche.svg";

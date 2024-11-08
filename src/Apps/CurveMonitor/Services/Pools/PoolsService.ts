@@ -1,5 +1,5 @@
 import { ServiceBaseHost } from "@/Services";
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import type * as ApiTypes from "./ApiTypes";
 import * as Parsers from "./Parsers";
 

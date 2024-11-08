@@ -2,7 +2,7 @@
 import { normalize } from "viem/ens";
 import { useEnsAddress, useEnsName } from "@wagmi/vue";
 import { addressShort } from "@/Wallet";
-import type { Address } from "../Address";
+import type { Address } from "../Types/Address";
 
 type User = typeof user.value;
 

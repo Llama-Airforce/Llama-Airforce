@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useWallet } from "@/Wallet";
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import TableMarketsLending from "../Tables/TableMarketsLending.vue";
 import TableMarketEvents from "../Tables/TableMarketEvents.vue";
 import ChartSnapshots from "../Charts/ChartSnapshots.vue";

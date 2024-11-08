@@ -1,4 +1,4 @@
-import type { Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Types/Address";
 import { useAccount, useConnectorClient } from "@wagmi/vue";
 
 export function useWallet() {

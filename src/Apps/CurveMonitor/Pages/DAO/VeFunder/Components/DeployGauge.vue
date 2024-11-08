@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import type { Address } from "@/Framework/Address";
+import type { Address } from "@/Framework/Types/Address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
 
 const emit = defineEmits<{

@@ -1,4 +1,4 @@
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import ChainsService from "./ChainsService";
 
 const service = new ChainsService();

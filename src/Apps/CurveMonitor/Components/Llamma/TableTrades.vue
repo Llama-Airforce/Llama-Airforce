@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import type { Chain } from "@/Framework/Chain";
+import type { Chain } from "@/Framework/Types/Chain";
 import type { LlammaTrade } from "@CM/Services/Llamma";
 
 const { trades, count, chain } = defineProps<{
