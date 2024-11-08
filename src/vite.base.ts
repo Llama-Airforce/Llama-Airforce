@@ -105,7 +105,13 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       type: true,
     },
   ],
-  dirs: ["../../Framework/Composables/**", "../../Types/**", "../../Utils/**"],
+  dirs: [
+    "../../Types/**",
+    "../../Utils/**",
+    "../../Framework/Composables/**",
+    "../../Framework/Monitor/**",
+    "../../Framework/Stores/**",
+  ],
   eslintrc: {
     enabled: true,
     filepath: resolve(__dirname, "../.eslintrc-auto-import.json"),
