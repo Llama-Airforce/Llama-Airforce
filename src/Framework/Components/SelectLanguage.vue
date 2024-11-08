@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStorage } from "@vueuse/core";
-import { locales as localesAll, type Locale } from "@/Framework/Locale";
+import { locales as localesAll, type Locale } from "../Locale";
 
 const STORAGE_LOCALE = "locale";
 

@@ -114,7 +114,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
 
 export const vueImport: Parameters<typeof Components>[0] = {
   dts: resolve(__dirname, "../components.d.ts"),
-  dirs: ["../../Framework"],
+  dirs: ["../../Framework/Components", "../../Framework/Monitor"],
   resolvers: [
     (componentName) => {
       if (componentName.startsWith("Lucide")) {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type TabItem from "@/Framework/TabItem.vue";
+import type TabItem from "./TabItem.vue";
 
 const { active = 0 } = defineProps<{
   active?: number;

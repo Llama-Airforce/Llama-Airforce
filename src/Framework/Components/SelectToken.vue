@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Address } from "@/Framework/Address";
+import type { Address } from "../Address";
 
 type Token = {
   address: Address;

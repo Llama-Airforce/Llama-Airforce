@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
-import Checkbox from "@/Framework/Checkbox.vue";
 
 const isChecked1 = ref(false);
 const isChecked2 = ref(false);
