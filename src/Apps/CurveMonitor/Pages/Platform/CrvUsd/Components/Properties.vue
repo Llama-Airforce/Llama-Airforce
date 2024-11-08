@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/no-unnecessary-condition -->
 <script setup lang="ts">
 import type { Chain } from "@/Framework/Chain";
 import type { Market } from "@CM/Services/CrvUsd";
@@ -7,57 +8,17 @@ const { market, chain } = defineProps<{
   chain: Chain | undefined;
 }>();
 
-// TokenInfo
-type TokenInfo = {
-  type: "token";
-  symbol: string;
-  address: string;
-};
+const collateral = computed(() => ({
+  type: "token",
+  symbol: market?.collateral_token?.symbol ?? "?",
+  address: market?.collateral_token?.address ?? "?",
+}));
 
-function isTokenInfo(value: unknown): value is TokenInfo {
-  return (
-    typeof value === "object" && (value as { type: string }).type === "token"
-  );
-}
-
-function getTokenInfo(
-  type: "collateral" | "borrowed",
-  market?: Market
-): TokenInfo {
-  if (!market) {
-    return {
-      type: "token",
-      symbol: "?",
-      address: "?",
-    };
-  }
-
-  if (type === "collateral") {
-    return {
-      type: "token",
-      symbol: market.collateral_token.symbol,
-      address: market.collateral_token.address,
-    };
-  } else {
-    return {
-      type: "token",
-      symbol: market.stablecoin_token.symbol,
-      address: market.stablecoin_token.address,
-    };
-  }
-}
-
-// Rows
-const properties = computed(() => [
-  {
-    description: "Collateral",
-    value: getTokenInfo("collateral", market),
-  },
-  {
-    description: "Borrowed",
-    value: getTokenInfo("borrowed", market),
-  },
-]);
+const borrowed = computed(() => ({
+  type: "token",
+  symbol: market?.stablecoin_token?.symbol ?? "?",
+  address: market?.stablecoin_token?.address ?? "?",
+}));
 
 const linkAddress = (addr: string): string => {
   return `https://etherscan.io/address/${addr}`;
@@ -73,42 +34,62 @@ const clipboard = async (addr: string) => {
     class="properties"
     title="Properties"
   >
-    <Table
-      class="properties-table"
-      :rows="properties"
-    >
-      <template #row="{ item: { description, value } }">
-        <div>{{ description }}</div>
+    <Table class="properties-table">
+      <TableRow>
+        <div>Collateral</div>
+        <div class="token-info">
+          <TokenIcon
+            :chain
+            :address="collateral.address"
+          />
 
-        <div v-if="isTokenInfo(value)">
-          <div class="token-info">
-            <TokenIcon
-              :chain
-              :address="value.address"
-            />
+          <div>{{ collateral.symbol }}</div>
 
-            <div>{{ value.symbol }}</div>
+          <div>
+            <a
+              class="font-mono"
+              target="_blank"
+              :href="linkAddress(collateral.address)"
+            >
+              {{ collateral.address }}
+            </a>
+          </div>
 
-            <div>
-              <a
-                class="font-mono"
-                target="_blank"
-                :href="linkAddress(value.address)"
-              >
-                {{ value.address }}
-              </a>
-            </div>
-
-            <div>
-              <Button @click="clipboard(value.address)">
-                <LucideLink />
-              </Button>
-            </div>
+          <div>
+            <Button @click="clipboard(collateral.address)">
+              <LucideLink />
+            </Button>
           </div>
         </div>
+      </TableRow>
 
-        <div v-else>{{ value }}</div>
-      </template>
+      <TableRow>
+        <div>Borrowed</div>
+        <div class="token-info">
+          <TokenIcon
+            :chain
+            :address="borrowed.address"
+          />
+
+          <div>{{ borrowed.symbol }}</div>
+
+          <div>
+            <a
+              class="font-mono"
+              target="_blank"
+              :href="linkAddress(borrowed.address)"
+            >
+              {{ borrowed.address }}
+            </a>
+          </div>
+
+          <div>
+            <Button @click="clipboard(borrowed.address)">
+              <LucideLink />
+            </Button>
+          </div>
+        </div>
+      </TableRow>
     </Table>
   </Card>
 </template>

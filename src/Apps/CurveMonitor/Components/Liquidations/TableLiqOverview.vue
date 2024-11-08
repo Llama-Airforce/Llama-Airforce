@@ -5,100 +5,72 @@ const { overview } = defineProps<{
   overview: LiqOverview | undefined;
 }>();
 
-type RowBase = {
-  description: string;
-};
-type RowBadDebt = RowBase & {
-  value: number;
-  type: "bad-debt";
-};
-type RowOther = RowBase & {
-  value: number;
-  type: "percentage" | "dollar" | "number";
-};
-type RowCollateral = RowBase & {
-  type: "collateral";
-  value: [number, number];
-};
-type Row = RowOther | RowCollateral | RowBadDebt;
-
-const badDebt = computed((): Row[] => {
+const badDebt = computed((): number => {
   if (!overview) {
-    return [];
+    return 0;
   }
 
   const debt = overview.liqableDebtUsd;
   const collateral = overview.liqableCollatUsd + overview.liqableBorrowedUsd;
   const value = debt - collateral;
 
-  if (value <= 0) {
-    return [];
-  }
-
-  return [
-    {
-      description: "Bad debt",
-      value,
-      type: "bad-debt",
-    },
-  ];
+  return value <= 0 ? 0 : value;
 });
-
-const rows = computed((): Row[] => [
-  {
-    description: "Users in soft liquidation",
-    value: overview?.softLiqUsers ?? 0,
-    type: "number",
-  },
-  {
-    description: "Median health",
-    value: overview?.medianHealth ?? 0,
-    type: "percentage",
-  },
-  {
-    description: "Collaterization ratio",
-    value: overview?.collatRatio ?? 0,
-    type: "percentage",
-  },
-  {
-    description: "Liquidatable positions",
-    value: overview?.liqablePositions ?? 0,
-    type: "number",
-  },
-  {
-    description: "Liquidatable positions' debt",
-    value: overview?.liqableDebtUsd ?? 0,
-    type: "dollar",
-  },
-  {
-    description: "Liquidatable collateral (token / crvUSD)",
-    value: [
-      overview?.liqableCollatUsd ?? 0,
-      overview?.liqableBorrowedUsd ?? 0,
-    ] as const,
-    type: "collateral",
-  },
-  ...badDebt.value,
-]);
 </script>
 
 <template>
   <Card title="General Health Metrics">
-    <Table
-      class="liq-overview-table"
-      :rows
-    >
-      <template #row="{ item: { description, value, type } }">
-        <div>{{ description }}</div>
+    <Table class="liq-overview-table">
+      <TableRow>
+        <div>Users in soft liquidation</div>
+        <div class="end">{{ overview?.softLiqUsers ?? 0 }}</div>
+      </TableRow>
 
-        <div
-          v-if="type === 'collateral'"
-          class="collateral end"
-        >
+      <TableRow>
+        <div>Median health</div>
+        <div class="end">
+          <AsyncValue
+            show-zero
+            type="percentage"
+            :value="overview?.medianHealth ?? 0"
+          />
+        </div>
+      </TableRow>
+
+      <TableRow>
+        <div>Collaterization ratio</div>
+        <div class="end">
+          <AsyncValue
+            show-zero
+            type="percentage"
+            :value="overview?.collatRatio ?? 0"
+          />
+        </div>
+      </TableRow>
+
+      <TableRow>
+        <div>Liquidatable positions</div>
+        <div class="end">{{ overview?.liqablePositions ?? 0 }}</div>
+      </TableRow>
+
+      <TableRow>
+        <div>Liquidatable positions' debt</div>
+        <div class="end">
           <AsyncValue
             show-zero
             type="dollar"
-            :value="value[0]"
+            :value="overview?.liqableDebtUsd ?? 0"
+          />
+        </div>
+      </TableRow>
+
+      <TableRow>
+        <div>Liquidatable collateral (token / crvUSD)</div>
+        <div class="collateral end">
+          <AsyncValue
+            show-zero
+            type="dollar"
+            :value="overview?.liqableCollatUsd ?? 0"
           />
 
           /
@@ -106,30 +78,22 @@ const rows = computed((): Row[] => [
           <AsyncValue
             show-zero
             type="dollar"
-            :value="value[1]"
+            :value="overview?.liqableBorrowedUsd ?? 0"
           />
         </div>
+      </TableRow>
 
-        <div
-          v-else
-          class="end"
-        >
+      <TableRow v-if="badDebt > 0">
+        <div>Bad debt</div>
+        <div class="end">
           <AsyncValue
-            v-if="type === 'bad-debt'"
             show-zero
             class="red"
             type="dollar"
-            :value
+            :value="badDebt"
           />
-          <AsyncValue
-            v-else-if="type !== 'number'"
-            show-zero
-            :value
-            :type
-          />
-          <span v-else>{{ value }}</span>
         </div>
-      </template>
+      </TableRow>
     </Table>
   </Card>
 </template>
