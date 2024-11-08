@@ -1,5 +1,5 @@
 import { notify } from "@kyvg/vue3-notification";
-import { paginate } from "@/Util";
+import { paginate } from "@/Utils";
 import { ServiceBase } from "@/Services";
 import type {
   Proposal,

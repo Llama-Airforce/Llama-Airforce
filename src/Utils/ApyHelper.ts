@@ -9,7 +9,7 @@ import {
   getCvxFxsPrice,
   getCvxPrismaPrice,
   getDefiLlamaPrice,
-} from "@/Util";
+} from "@/Utils";
 import {
   CvxAddress,
   CvxCrvAddress,
@@ -21,7 +21,7 @@ import {
   MkUsdAddress,
   UCrvStrategyAddress,
   UCrvStrategyAddressV2,
-} from "@/Util/Addresses";
+} from "@/Utils/Addresses";
 import { fetchType, type DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
 

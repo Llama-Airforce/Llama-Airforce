@@ -1,5 +1,5 @@
 import type { Address } from "@/Types/Address";
-import { notEmpty } from "@/Util";
+import { notEmpty } from "@/Utils";
 import type {
   Delegation,
   Proposal as SnapshotProposal,

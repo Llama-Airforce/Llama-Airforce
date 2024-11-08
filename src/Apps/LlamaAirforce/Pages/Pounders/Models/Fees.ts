@@ -1,4 +1,4 @@
-import { bigNumToNumber } from "@/Util";
+import { bigNumToNumber } from "@/Utils";
 import { isPirex, type Vault } from "@Pounders/Models";
 
 export type Fees = {

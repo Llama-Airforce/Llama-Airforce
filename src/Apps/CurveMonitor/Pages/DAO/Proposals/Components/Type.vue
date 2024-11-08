@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Proposal } from "@CM/Services/Proposal";
-import { capitalize } from "@/Util";
+import { capitalize } from "@/Utils";
 
 const { proposal } = defineProps<{
   proposal: Proposal;

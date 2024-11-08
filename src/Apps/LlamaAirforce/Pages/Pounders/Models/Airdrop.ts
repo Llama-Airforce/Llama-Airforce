@@ -2,13 +2,13 @@ import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import type { DefiLlamaService } from "@/Services";
-import { bigNumToNumber } from "@/Util";
+import { bigNumToNumber } from "@/Utils";
 import {
   getCvxCrvPrice,
   getCvxFxsPrice,
   getCvxPrismaPrice,
   getPxCvxPrice,
-} from "@/Util/PriceHelper";
+} from "@/Utils/PriceHelper";
 import {
   UnionCrvVaultAddress,
   DistributorUCrvAddress,
@@ -18,7 +18,7 @@ import {
   DistributorUPrismaAddress,
   UnionCvxVaultAddress,
   DistributorUCvxAddress,
-} from "@/Util/Addresses";
+} from "@/Utils/Addresses";
 import { type Swap, getVirtualPrice } from "@Pounders/Models";
 import type { AirdropId, Claim } from "@LAF/Services/UnionService";
 

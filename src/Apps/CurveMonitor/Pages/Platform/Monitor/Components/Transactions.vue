@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { capitalize } from "@/Util";
+import { capitalize } from "@/Utils";
 import {
   TransactionType,
   type TransactionDetail,

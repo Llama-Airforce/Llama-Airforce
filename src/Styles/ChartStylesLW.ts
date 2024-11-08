@@ -4,7 +4,7 @@ import {
   ColorType,
   LineStyle,
 } from "lightweight-charts";
-import { deepMerge } from "@/Util";
+import { deepMerge } from "@/Utils";
 import type { Theme } from "@/Styles/Theme";
 
 const createDefault = (

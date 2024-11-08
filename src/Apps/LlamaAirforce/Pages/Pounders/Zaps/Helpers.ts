@@ -1,7 +1,7 @@
 import { erc20Abi as abiERC20 } from "viem";
 import type { Address } from "@/Types/Address";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
-import { numToBigNumber } from "@/Util";
+import { numToBigNumber } from "@/Utils";
 import type { Airdrop } from "@Pounders/Models";
 
 export async function claim(

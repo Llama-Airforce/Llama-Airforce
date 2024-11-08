@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { capitalize } from "@/Util";
+import { capitalize } from "@/Utils";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 import type { Activity } from "@CM/Services/Chains";
 

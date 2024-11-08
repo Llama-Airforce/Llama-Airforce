@@ -8,7 +8,7 @@ import {
   UnionCvxVaultAddress,
   UnionFxsVaultAddress,
   UnionPrismaVaultAddress,
-} from "@/Util/Addresses";
+} from "@/Utils/Addresses";
 import type { AirdropId } from "@LAF/Services/UnionService";
 
 export type Distributor = {

@@ -2,7 +2,7 @@ import type { Address } from "@/Types/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
-import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Util";
+import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Utils";
 import type { ZapDeposit } from "@Pounders/Models";
 import {
   getBalance,

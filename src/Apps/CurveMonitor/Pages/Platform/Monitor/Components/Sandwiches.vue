@@ -1,7 +1,7 @@
 div
 <script setup lang="ts">
 import { addressShort } from "@/Wallet";
-import { round } from "@/Util";
+import { round } from "@/Utils";
 import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
 import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";
 import type { SandwichDetail } from "@CM/Services/Monitor/SocketMonitorCurve";

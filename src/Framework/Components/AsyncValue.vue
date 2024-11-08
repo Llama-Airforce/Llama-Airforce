@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { unit as unitF } from "@/Util";
+import { unit as unitF } from "@/Utils";
 
 const rodChars = "|/-\\";
 let rodIndex = 0;

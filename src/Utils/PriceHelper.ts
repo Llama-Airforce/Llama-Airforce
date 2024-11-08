@@ -9,7 +9,7 @@ import { abi as abiCurveV1 } from "@/ABI/Curve/CurveV1FactoryPool";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { abi as abiCurveV6 } from "@/ABI/Curve/CurveV6FactoryPool";
 import { abi as abiCvxCrv } from "@/ABI/Curve/CvxCrvFactoryPool";
-import { bigNumToNumber, numToBigNumber } from "@/Util/NumberHelper";
+import { bigNumToNumber, numToBigNumber } from "@/Utils/NumberHelper";
 import {
   CvxAddress,
   LPxCvxFactoryAddress,
@@ -21,7 +21,7 @@ import {
   FxsAddress,
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
-} from "@/Util/Addresses";
+} from "@/Utils/Addresses";
 import type { DefiLlamaService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { subIsActive } from "@/Util";
+import { subIsActive } from "@/Utils";
 import Wallet from "@/Wallet/Wallet.vue";
 import { usePageStore } from "@LAF/Pages/PageStore";
 

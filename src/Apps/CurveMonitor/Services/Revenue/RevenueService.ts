@@ -1,5 +1,5 @@
 import { ServiceBaseHost } from "@/Services";
-import { paginate } from "@/Util";
+import { paginate } from "@/Utils";
 import type * as ApiTypes from "./ApiTypes";
 import * as Parsers from "./Parsers";
 
