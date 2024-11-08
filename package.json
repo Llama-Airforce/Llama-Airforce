@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "typecheck": "vue-tsc --noEmit",
+    "lint:framework": "eslint \"src/{Framework,Services,Wallet,Util}/**/*.{ts,vue}\"",
     "lint:laf": "eslint \"src/Apps/LlamaAirforce/**/*.{ts,vue}\"",
     "lint:cm": "eslint \"src/Apps/CurveMonitor/**/*.{ts,vue}\"",
     "lint:pm": "eslint \"src/Apps/PrismaMonitor/**/*.{ts,vue}\"",
