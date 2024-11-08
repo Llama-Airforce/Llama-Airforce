@@ -1,5 +1,4 @@
 import type { Socket } from "socket.io-client";
-import { useSocketIO } from "@/Framework/Composables/UseSocketIO";
 import type { GeneralErc20TokenSpecificBlockSummary } from "./Transfer";
 import type { GeneralSwapAddressSpecificBlockSummary } from "./Swap";
 

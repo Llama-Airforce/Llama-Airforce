@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { zeroAddress } from "viem";
-import { useApprove } from "@/Framework/Composables/UseApprove";
 import { useWallet } from "@/Wallet";
 import Recipe from "@CB/Recipe.vue";
 
