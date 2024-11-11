@@ -2,7 +2,7 @@ import type { Address } from "@/Types/Address";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
-import { maxApprove } from "@/Wallet";
+import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import {
   getBalance,

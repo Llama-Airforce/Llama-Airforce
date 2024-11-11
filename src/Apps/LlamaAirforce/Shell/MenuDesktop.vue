@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Wallet from "@/Wallet/Wallet.vue";
 import { usePageStore } from "@LAF/Pages/PageStore";
 import MenuItem from "./MenuItem.vue";
 

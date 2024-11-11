@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
 import ChartLocks from "../Charts/ChartLocks.vue";
 
 import TableLocks from "../Tables/TableLocks.vue";

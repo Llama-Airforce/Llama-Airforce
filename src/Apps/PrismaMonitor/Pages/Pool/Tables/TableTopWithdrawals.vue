@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import { StabilityPoolService } from "@PM/Services";
 import { useSettingsStore } from "@PM/Stores";
 

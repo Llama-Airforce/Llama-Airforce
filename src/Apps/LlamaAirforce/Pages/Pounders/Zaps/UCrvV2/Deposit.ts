@@ -1,6 +1,6 @@
 import type { Address } from "@/Types/Address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
-import { maxApprove } from "@/Wallet";
+import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
 

@@ -1,6 +1,6 @@
 div
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import { round } from "@/Utils/Number";
 import Transactions from "@CM/Pages/Platform/Monitor/Components/Transactions.vue";
 import { useQuerySandwiches } from "@CM/Services/Monitor/MEV/Queries";

@@ -9,7 +9,7 @@ import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import Notifications, { notify } from "@kyvg/vue3-notification";
 import { hashFn } from "@wagmi/core/query";
 import { type CreateConnectorFn, WagmiPlugin } from "@wagmi/vue";
-import { createConfig as createConfigWagmi } from "@/Wallet/Wagmi";
+import { createConfig as createConfigWagmi } from "@/Utils/Wagmi";
 import "@/Utils/llamadash";
 import "@/Styles/Util.css";
 import "@/Styles/Themes/Base.css";

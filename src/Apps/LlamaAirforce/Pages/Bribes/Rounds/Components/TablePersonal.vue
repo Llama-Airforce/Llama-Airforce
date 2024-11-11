@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Address } from "@/Types/Address";
-import { useWallet, addressShort } from "@/Wallet";
-import WalletConnectButton from "@/Wallet/WalletConnectButton.vue";
+import { addressShort } from "@/Utils/Wallet";
 import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";
 import SnapshotService, {
   type Scores,

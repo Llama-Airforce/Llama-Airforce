@@ -2,7 +2,6 @@
 import { mainnet } from "viem/chains";
 import { abi as abiVeCRV } from "@/ABI/Curve/VeCRV";
 import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
-import { useWallet } from "@/Wallet";
 import { type Proposal, getStatus } from "@CM/Services/Proposal";
 
 const { proposal } = defineProps<{

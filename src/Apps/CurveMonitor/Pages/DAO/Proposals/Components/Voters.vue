@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort, useWallet } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import type { Proposal, ProposalDetails } from "@CM/Services/Proposal";
 
 const { proposal, proposalDetails } = defineProps<{

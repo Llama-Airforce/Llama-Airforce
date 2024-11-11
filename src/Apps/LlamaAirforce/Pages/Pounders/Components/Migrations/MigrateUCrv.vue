@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUCrv";
-import { useWallet } from "@/Wallet";
 
 const { t } = useI18n();
 

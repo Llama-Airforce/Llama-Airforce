@@ -6,7 +6,10 @@ import {
 } from "@wagmi/core";
 import { mainnet } from "@wagmi/core/chains";
 import type { CreateConnectorFn } from "@wagmi/vue";
-import { injected } from "@wagmi/connectors";
+import {
+  injected,
+  walletConnect as walletConnectConnector,
+} from "@wagmi/connectors";
 
 // Alternative: https://eth.llamarpc.com
 let rpc: string | undefined = "http://localhost:8545";
@@ -25,3 +28,11 @@ export function createConfig(connectorsExtra: CreateConnectorFn[] = []) {
     },
   });
 }
+
+export const walletConnect = walletConnectConnector({
+  projectId: "7a61bbd683f613a5308ca86fd4cb14f7",
+  showQrModal: true,
+  qrModalOptions: {
+    themeMode: "dark",
+  },
+});

@@ -13,7 +13,7 @@ import { usePageStore } from "@LAF/Pages/PageStore";
 import type { Page } from "@LAF/Pages/Page";
 
 import { setup } from "../setup";
-import { walletConnect } from "@/Wallet/WalletConnect";
+import { walletConnect } from "@/Utils/Wagmi";
 
 // Configure pages.
 const pages: Page[] = [];

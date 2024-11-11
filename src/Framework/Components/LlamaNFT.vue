@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { useWallet } from "@/Wallet";
 import { abi } from "@/ABI/Tokens/TheLlamas";
 
 // Refs

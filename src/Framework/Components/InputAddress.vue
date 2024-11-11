@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { normalize } from "viem/ens";
 import { useEnsAddress, useEnsName } from "@wagmi/vue";
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import type { Address } from "@/Types/Address";
 
 type User = typeof user.value;

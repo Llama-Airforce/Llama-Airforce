@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import { type Vault, icon } from "@PM/Models/Vault";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";

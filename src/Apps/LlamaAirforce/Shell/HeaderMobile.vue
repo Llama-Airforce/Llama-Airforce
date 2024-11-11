@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Wallet from "@/Wallet/Wallet.vue";
 import MenuMobile from "./MenuMobile.vue";
 
 // Refs

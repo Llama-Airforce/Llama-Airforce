@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import VePrismaService from "@PM/Pages/VePrisma/VePrismaService";
 
 const { t } = useI18n();

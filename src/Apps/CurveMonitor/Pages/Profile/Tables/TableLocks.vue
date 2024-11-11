@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import { useQueryUserLocks } from "@CM/Services/Dao/Queries";
 
 const { user } = defineProps<{ user: string | undefined }>();

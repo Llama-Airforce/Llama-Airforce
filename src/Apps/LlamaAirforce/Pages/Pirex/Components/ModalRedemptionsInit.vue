@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { useWallet } from "@/Wallet";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
 import RedemptionsTableInit from "@LAF/Pages/Pirex/Components/RedemptionsInitTable.vue";

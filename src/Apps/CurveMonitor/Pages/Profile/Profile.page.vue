@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
 import Lending from "./Tabs/Lending.vue";
 import CrvUsd from "./Tabs/CrvUsd.vue";
 import Governance from "./Tabs/Governance.vue";

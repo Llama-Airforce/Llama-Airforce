@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
-import { useWallet } from "@/Wallet";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import SelectZap from "@Pounders/Components/SelectZap.vue";
 import { useUnionStore } from "@Pounders/Store";

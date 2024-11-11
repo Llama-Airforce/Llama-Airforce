@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWallet, addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import type { RedemptionPending } from "@LAF/Pages/Pirex/Services";
 import { useQueryRedemptions } from "@LAF/Pages/Pirex/Services/Queries";
 import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTable.vue";

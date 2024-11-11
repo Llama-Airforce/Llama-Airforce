@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import type { Chain } from "@/Types/Chain";
 import type { LlammaTrade } from "@CM/Services/Llamma";
 

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
-import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getUFxsPriceV1 } from "@Pounders/Zaps/UFxsLp/PriceHelper";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";

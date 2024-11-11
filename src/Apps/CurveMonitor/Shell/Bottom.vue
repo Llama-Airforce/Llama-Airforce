@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Wallet from "@/Wallet/Wallet.vue";
-
 const emit = defineEmits<{
   navigated: [];
 }>();

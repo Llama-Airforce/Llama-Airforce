@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Header from "@/Framework/Monitor/Shell/Header.vue";
-import Wallet from "@/Wallet/Wallet.vue";
 
 const { onCrumb } = useBreadcrumbStore();
 const { crumbs, show } = storeToRefs(useBreadcrumbStore());

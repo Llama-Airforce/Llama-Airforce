@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
 import type { Chain } from "@/Types/Chain";
 import TableMarketsLending from "../Tables/TableMarketsLending.vue";
 import TableMarketEvents from "../Tables/TableMarketEvents.vue";

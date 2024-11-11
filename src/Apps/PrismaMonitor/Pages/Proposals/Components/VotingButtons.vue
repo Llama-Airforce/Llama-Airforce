@@ -2,7 +2,6 @@
 import { mainnet } from "viem/chains";
 import { abi as abiLocker } from "@/ABI/Prisma/PrismaLocker";
 import { abi as abiVoting } from "@/ABI/Prisma/VotingPrisma";
-import { useWallet } from "@/Wallet";
 import type { Proposal } from "@PM/Pages/Proposals/Models/Proposal";
 import { getStatus } from "@PM/Pages/Proposals/Util/ProposalHelper";
 

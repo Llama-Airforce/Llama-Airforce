@@ -4,7 +4,7 @@ import App from "@CB/App.vue";
 import { routes } from "@CB/Routes";
 
 import { setup } from "../setup";
-import { walletConnect } from "@/Wallet/WalletConnect";
+import { walletConnect } from "@/Utils/Wagmi";
 
 const { app } = setup(App, {
   extraWagmiConnectors: [walletConnect, safe()],

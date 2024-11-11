@@ -1,6 +1,6 @@
 import type { Address } from "@/Types/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
-import { maxApprove } from "@/Wallet";
+import { maxApprove } from "@/Utils/Wallet";
 import { DefiLlamaService } from "@/Services";
 import { getCvxFxsPrice } from "@/Utils/Price";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";

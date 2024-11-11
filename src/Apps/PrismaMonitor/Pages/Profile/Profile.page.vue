@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
 import { useSocketStore, useSettingsStore, getApiSocket } from "@PM/Stores";
 import TableRedemptions from "@PM/Pages/Profile/Tables/TableRedemptions.vue";
 import TableLiquidations from "@PM/Pages/Profile/Tables/TableLiquidations.vue";

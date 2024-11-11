@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addressShort } from "@/Wallet";
+import { addressShort } from "@/Utils/Wallet";
 import type { LiquidationDetails } from "@CM/Services/Liquidations";
 
 const { liqs } = defineProps<{

@@ -2,7 +2,6 @@
 import type { Address } from "@/Types/Address";
 import { abi } from "@/ABI/Union/Pirex";
 import { abi as abiERC1155 } from "@/ABI/Standards/ERC1155";
-import { useWallet } from "@/Wallet";
 import type { Price } from "@/Services";
 import {
   type SnapshotReward,

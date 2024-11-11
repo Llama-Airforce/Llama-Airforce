@@ -1,7 +1,7 @@
 import type { Address } from "@/Types/Address";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
-import { maxApprove } from "@/Wallet";
+import { maxApprove } from "@/Utils/Wallet";
 import { DefiLlamaService } from "@/Services";
 import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";

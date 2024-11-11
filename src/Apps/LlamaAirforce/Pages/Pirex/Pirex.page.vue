@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
-
 import { useUnionStore } from "@Pounders/Store";
 import UnionService from "@LAF/Services/UnionService";
 import { DefiLlamaService } from "@/Services";

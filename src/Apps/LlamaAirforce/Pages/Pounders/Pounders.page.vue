@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
 import { DefiLlamaService } from "@/Services";
 import UnionService from "@LAF/Services/UnionService";
 import Documentation from "@LAF/Components/Documentation.vue";

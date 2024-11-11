@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useWallet } from "@/Wallet";
-
 const { chainId } = defineProps<{
   chainId?: number;
 }>();
