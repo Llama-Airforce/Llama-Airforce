@@ -24,20 +24,6 @@ const {
 const emit = defineEmits<{
   select: [data: T];
 }>();
-
-const slots = useSlots();
-const expandable = computed((): boolean => {
-  const slot = slots["row-details"];
-
-  if (slot) {
-    const children = slot()[0]?.children;
-    if (children) {
-      return Array.isArray(children) && children.length > 0;
-    }
-  }
-
-  return false;
-});
 </script>
 
 <template>
@@ -51,14 +37,14 @@ const expandable = computed((): boolean => {
       @click="selectable && data && emit('select', data)"
     >
       <LucideChevronUp
-        v-if="data && expandable && expandSide === 'left'"
+        v-if="data && selectable && expandSide === 'left'"
         class="expander"
       />
 
       <slot></slot>
 
       <LucideChevronUp
-        v-if="data && expandable && expandSide !== 'left'"
+        v-if="data && selectable && expandSide !== 'left'"
         class="expander"
       />
     </div>
