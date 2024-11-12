@@ -125,13 +125,17 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
     <!-- Table column headers -->
     <TableRow
       v-if="columns.length > 0"
+      class="headers"
       :class="{ 'selected-below': selectedBelow(-1) }"
+      :expand-side
       :hoverable="false"
     >
+      <div v-if="selectable && expandSide === 'left'"></div>
+
       <div
         v-for="column in columnsObjects"
         :key="column.id"
-        class="column-header"
+        class="header"
         :class="{
           sortable: column.sort,
           sorting: column.sort && sorting.column === column.id,
@@ -150,6 +154,8 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
           }"
         />
       </div>
+
+      <div v-if="selectable && expandSide === 'right'"></div>
     </TableRow>
 
     <!-- Manual rows -->
@@ -213,7 +219,14 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
 
   --columns-data: auto;
 
-  .column-header {
+  .headers {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--c-lvl1);
+  }
+
+  .header {
     display: flex;
     align-items: center;
     font-weight: 800;
