@@ -153,9 +153,6 @@ const tokenIcon = (market: Market) => {
           }}
         </div>
       </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
     </Table>
 
     <NoData

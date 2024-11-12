@@ -239,9 +239,6 @@ const onType = (tabIndex: number) => {
           {{ relativeTime(item.last_update) }}
         </div>
       </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
     </Table>
   </Card>
 </template>

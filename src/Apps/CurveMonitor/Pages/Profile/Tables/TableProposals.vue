@@ -93,9 +93,6 @@ async function onSelect({ proposal }: (typeof rows.value)[number]) {
           <LucideX v-else />
         </div>
       </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
     </Table>
 
     <NoData

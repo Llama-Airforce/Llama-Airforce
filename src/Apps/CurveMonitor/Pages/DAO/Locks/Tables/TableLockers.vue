@@ -81,9 +81,6 @@ async function onSelect(row: (typeof data.value)[number]) {
           {{ new Date(item.unlockTime * 1000).toLocaleDateString() }}
         </div>
       </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
     </Table>
   </Card>
 </template>

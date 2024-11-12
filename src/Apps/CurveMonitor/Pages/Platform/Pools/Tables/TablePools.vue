@@ -105,9 +105,6 @@ function utilRate(pool: Pool) {
           />
         </div>
       </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
     </Table>
   </Card>
 </template>

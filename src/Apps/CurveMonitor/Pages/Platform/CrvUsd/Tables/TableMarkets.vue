@@ -153,9 +153,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
           />
         </div>
       </template>
-
-      <!-- Empty for expander arrow and pointer on hover -->
-      <template #row-details> &nbsp; </template>
     </Table>
   </Card>
 </template>
