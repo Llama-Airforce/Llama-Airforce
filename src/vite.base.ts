@@ -116,6 +116,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     enabled: true,
     filepath: resolve(__dirname, "../.eslintrc-auto-import.json"),
   },
+  vueTemplate: true,
 };
 
 export const vueImport: Parameters<typeof Components>[0] = {
