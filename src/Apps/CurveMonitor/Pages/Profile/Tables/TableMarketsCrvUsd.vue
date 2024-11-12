@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
 import { useQueryUserMarkets } from "@CM/Services/CrvUsd/Queries";
-import { addressShort } from "@/Utils/Wallet";
 
 const { user } = defineProps<{ user: string | undefined }>();
 

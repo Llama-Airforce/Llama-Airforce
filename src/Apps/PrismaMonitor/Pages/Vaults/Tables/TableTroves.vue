@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import { useSettingsStore } from "@PM/Stores";
 import {
   TroveService,

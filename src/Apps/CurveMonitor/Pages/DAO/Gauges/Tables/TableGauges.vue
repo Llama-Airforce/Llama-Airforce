@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import type { Chain } from "@/Types/Chain";
 import type { Gauge } from "@CM/Services/Gauge";
 import { useQueryGauges } from "@CM/Services/Gauge/Queries";

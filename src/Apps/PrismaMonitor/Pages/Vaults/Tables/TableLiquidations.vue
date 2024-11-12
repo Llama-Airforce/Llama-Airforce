@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import LiquidationDetails from "@PM/Components/LiquidationDetails.vue";
 import {
   LiquidationService,

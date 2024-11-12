@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressLeft } from "@/Utils/Wallet";
 import { useQuerySwaps } from "@CM/Services/Monitor/Swap/Queries";
 import WatchlistSwappers from "../Components/WatchlistSwappers.vue";
 import type { Swapper } from "../Models";

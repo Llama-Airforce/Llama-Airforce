@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import { useQueryPrices } from "@/Services/DefiLlamaQuery";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 import {

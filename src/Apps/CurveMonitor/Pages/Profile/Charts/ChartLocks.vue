@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { addressShort } from "@/Utils/Wallet";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQueryUserLocks } from "@CM/Services/Dao/Queries";
 

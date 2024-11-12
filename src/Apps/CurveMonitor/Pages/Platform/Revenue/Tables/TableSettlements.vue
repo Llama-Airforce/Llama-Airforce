@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import type { CowSwapSettlement } from "@CM/Services/Revenue";
 import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
 

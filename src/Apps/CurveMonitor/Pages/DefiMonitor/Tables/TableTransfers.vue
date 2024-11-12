@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort, addressLeft } from "@/Utils/Wallet";
 import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
 import WatchlistTokens from "../Components/WatchlistTokens.vue";
 import type { Token } from "../Models";

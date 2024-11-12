@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import { useQueryUserGaugeVotes } from "@CM/Services/Gauge/Queries";
 
 const { user } = defineProps<{ user: string | undefined }>();

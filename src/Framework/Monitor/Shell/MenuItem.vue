@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isNode, isLeaf, isExternal, type MenuItem } from "./Menu";
-import { subIsActive } from "@/Utils/Router";
 
 const { item } = defineProps<{
   item: MenuItem;

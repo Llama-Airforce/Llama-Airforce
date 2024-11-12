@@ -4,7 +4,6 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsCrvUsd } from "@CM/Services/CrvUsd/Queries";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsLending } from "@CM/Services/LlamaLend/Queries";
-import { addressShort } from "@/Utils/Wallet";
 
 export type Serie = "borrowed" | "collateral";
 const serie = ref<Serie>("borrowed");

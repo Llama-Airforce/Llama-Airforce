@@ -2,7 +2,6 @@
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { useSettingsStore } from "@PM/Stores";
 import { StableService } from "@PM/Services";
-import { addressShort } from "@/Utils/Wallet";
 
 const { t } = useI18n();
 

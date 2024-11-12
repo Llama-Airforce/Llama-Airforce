@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import type { Chain } from "@/Types/Chain";
 import { useQueryUserMarketCollateralEvents as useQueryEventsCrvUsd } from "@CM/Services/CrvUsd/Queries";
 import { useQueryUserMarketCollateralEvents as useQueryEventsLending } from "@CM/Services/LlamaLend/Queries";

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addressShort } from "@/Utils/Wallet";
 import { useQueryUserProposalVotes } from "@CM/Services/Proposal/Queries";
 
 const { user } = defineProps<{ user: string | undefined }>();

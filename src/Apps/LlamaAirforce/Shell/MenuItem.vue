@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { subIsActive } from "@/Utils/Router";
 import { type MenuItem, isNode, isLeaf } from "@LAF/Pages/Page";
 
 const { item } = defineProps<{
