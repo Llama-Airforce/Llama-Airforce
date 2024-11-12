@@ -15,7 +15,7 @@ function clean(name: string): string {
     return addressShort(name);
   }
 
-  return (name as string)
+  return (name as unknown as string)
     .replace("Curve.fi", "")
     .replace("Gauge Deposit", "")
     .trim();
