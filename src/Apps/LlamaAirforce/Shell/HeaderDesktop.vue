@@ -63,6 +63,7 @@ const planeX = computed(() => {
 
             <img
               v-if="index < pages.length - 1"
+              class="sep"
               src="@/Assets/Menu/header-separator.png"
             />
           </template>
@@ -165,6 +166,11 @@ header {
         object-fit: scale-down;
         pointer-events: none;
         padding: 0 0.5rem;
+      }
+
+      /* Somehow in firefox this image gets stretched out */
+      .sep {
+        max-width: 32px;
       }
 
       .plane {
