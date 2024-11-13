@@ -92,6 +92,8 @@ async function onSelect({ proposal }: (typeof rows.value)[number]) {
           <LucideCheck v-if="supports" />
           <LucideX v-else />
         </div>
+
+        <IconExpander />
       </template>
     </Table>
 

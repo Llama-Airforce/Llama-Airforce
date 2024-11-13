@@ -88,7 +88,6 @@ const tokenIcon = (market: Market) => {
     <Table
       v-if="rows.length > 0"
       class="markets-table"
-      expand-side="left"
       :rows
       :columns
       :sorting
@@ -97,6 +96,8 @@ const tokenIcon = (market: Market) => {
     >
       <template #row="{ item: market }">
         <template v-if="market">
+          <IconExpander />
+
           <TokenIcon
             :chain
             :address="tokenIcon(market)"

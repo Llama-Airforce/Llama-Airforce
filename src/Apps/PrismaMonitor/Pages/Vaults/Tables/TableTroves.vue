@@ -213,6 +213,8 @@ const onType = (tabIndex: number) => {
         <div class="end">
           {{ relativeTime(item.last_update) }}
         </div>
+
+        <IconExpander />
       </template>
     </Table>
   </Card>

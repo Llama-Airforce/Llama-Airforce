@@ -45,7 +45,6 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
     <Table
       class="markets-table"
-      expand-side="left"
       :rows
       :columns="[
         '',
@@ -61,6 +60,8 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
       @select="emit('select', $event)"
     >
       <template #row="{ item }">
+        <IconExpander />
+
         <TokenIcon
           chain="ethereum"
           :address="item.collateral_token.address"

@@ -59,7 +59,6 @@ const values = computed(() => rows.value.map((x) => x.controller));
 
     <Table
       v-if="rows.length > 0"
-      expand-side="left"
       :rows
       :columns
       :sorting

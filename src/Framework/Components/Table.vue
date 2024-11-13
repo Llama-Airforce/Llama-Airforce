@@ -22,7 +22,6 @@ const {
   selectedRow = null,
 
   expanded = [],
-  expandSide = "right",
 
   sorting = {
     order: "asc",
@@ -39,7 +38,6 @@ const {
 
   /** All currently expanded rows */
   expanded?: TData[];
-  expandSide?: "left" | "right";
 
   /** Current sorting state. */
   sorting?: Sorting;
@@ -127,11 +125,8 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
       v-if="columns.length > 0"
       class="headers"
       :class="{ 'selected-below': selectedBelow(-1) }"
-      :expand-side
       :hoverable="false"
     >
-      <div v-if="selectable && expandSide === 'left'"></div>
-
       <div
         v-for="column in columnsObjects"
         :key="column.id"
@@ -154,8 +149,6 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
           }"
         />
       </div>
-
-      <div v-if="selectable && expandSide === 'right'"></div>
     </TableRow>
 
     <!-- Manual rows -->
@@ -167,15 +160,15 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
       :key="(row as never)"
       :data="row"
       :class="{ 'selected-below': selectedBelow(i) }"
+      :expanded="expanded.includes(row)"
       :selectable
       :selected="selectedRow === row"
-      :expanded="expanded.includes(row as TData)"
-      :expand-side
       @select="row && emit('select', row)"
     >
       <slot
         name="row"
         :item="row"
+        :expanded="expanded.includes(row)"
       ></slot>
 
       <template #row-details>

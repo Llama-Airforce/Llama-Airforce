@@ -75,7 +75,6 @@ const onCheckManual = (round: Round) => {
       <template #example>
         <Table
           class="example-table"
-          expand-side="right"
           :rows
           :columns
           :sorting
@@ -83,7 +82,7 @@ const onCheckManual = (round: Round) => {
           @sort-column="onSort"
           @select="toggleExpand"
         >
-          <template #row="{ item }">
+          <template #row="{ item, expanded }">
             <div
               class="round-number"
               @click.stop
@@ -112,6 +111,8 @@ const onCheckManual = (round: Round) => {
                 :precision="2"
               />
             </div>
+
+            <IconExpander :expanded />
           </template>
 
           <template #row-details="{ item }">

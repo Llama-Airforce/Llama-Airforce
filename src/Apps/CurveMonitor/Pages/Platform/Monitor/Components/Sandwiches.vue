@@ -82,7 +82,7 @@ const sandwichTxs = (sw: SandwichDetail) =>
       :expanded
       @select="toggleExpansion($event)"
     >
-      <template #row="{ item }">
+      <template #row="{ item, expanded }">
         <div>
           <a
             class="vote-link"
@@ -135,6 +135,8 @@ const sandwichTxs = (sw: SandwichDetail) =>
         <div class="end">
           {{ relativeTime(item.frontrun.block_unixtime) }}
         </div>
+
+        <IconExpander :expanded />
       </template>
 
       <template #row-details="{ item }">

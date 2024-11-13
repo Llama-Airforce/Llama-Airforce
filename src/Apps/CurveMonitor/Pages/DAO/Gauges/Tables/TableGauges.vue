@@ -175,6 +175,8 @@ const onSelect = async (newGauge: Gauge) => {
               {{ new Date(item.creationDate * 1000).toLocaleDateString() }}
             </a>
           </div>
+
+          <IconExpander />
         </div>
       </template>
     </Table>

@@ -135,6 +135,8 @@ const loading = computed(() => rowsRaw.value.length === 0);
             :precision="Infinity"
           />
         </div>
+
+        <IconExpander />
       </template>
 
       <template #row-aggregation>

@@ -80,6 +80,8 @@ async function onSelect(row: (typeof data.value)[number]) {
         <div class="end">
           {{ new Date(item.unlockTime * 1000).toLocaleDateString() }}
         </div>
+
+        <IconExpander />
       </template>
     </Table>
   </Card>

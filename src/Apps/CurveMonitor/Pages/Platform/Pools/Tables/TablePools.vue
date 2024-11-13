@@ -59,7 +59,6 @@ function utilRate(pool: Pool) {
 
     <Table
       class="pools-table"
-      expand-side="left"
       :rows="rowsPage"
       :columns
       :sorting
@@ -67,6 +66,8 @@ function utilRate(pool: Pool) {
       @select="emit('select', $event)"
     >
       <template #row="{ item: pool }">
+        <IconExpander />
+
         <div class="tokens">
           <TokenIcon
             v-for="token of pool.coins"

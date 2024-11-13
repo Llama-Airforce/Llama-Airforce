@@ -169,6 +169,8 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
         <div class="end">
           {{ relativeTime(item.timestamp) }}
         </div>
+
+        <IconExpander />
       </template>
     </Table>
   </Card>

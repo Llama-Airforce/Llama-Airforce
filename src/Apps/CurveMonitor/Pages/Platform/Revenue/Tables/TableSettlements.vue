@@ -77,7 +77,6 @@ function symbol(settlement: CowSwapSettlement) {
 
     <Table
       class="settlements-table"
-      expand-side="right"
       :rows="rowsPage"
       :columns
       :sorting
@@ -85,7 +84,7 @@ function symbol(settlement: CowSwapSettlement) {
       @sort-column="onSort"
       @select="toggleExpansion"
     >
-      <template #row="{ item }">
+      <template #row="{ item, expanded }">
         <div class="token">
           <TokenIcon :address="item.coin.address" />
 
@@ -148,6 +147,8 @@ function symbol(settlement: CowSwapSettlement) {
         <div class="end">
           {{ relativeTime(item.timestamp) }}
         </div>
+
+        <IconExpander :expanded />
       </template>
 
       <template #row-details="{ item }">

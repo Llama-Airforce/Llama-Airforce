@@ -11,19 +11,31 @@ const {
   selectable = false,
   hoverable = true,
   expanded = false,
-  expandSide = "right",
 } = defineProps<{
   data?: T;
   selected?: boolean;
   selectable?: boolean;
   hoverable?: boolean;
   expanded?: boolean;
-  expandSide?: "left" | "right";
 }>();
 
 const emit = defineEmits<{
   select: [data: T];
 }>();
+
+const slots = useSlots();
+const expandable = computed((): boolean => {
+  const slot = slots["row-details"];
+
+  if (slot) {
+    const children = slot()[0]?.children;
+    if (children) {
+      return Array.isArray(children) && children.length > 0;
+    }
+  }
+
+  return false;
+});
 </script>
 
 <template>
@@ -36,21 +48,11 @@ const emit = defineEmits<{
       :class="{ active: selected, selectable, hoverable }"
       @click="selectable && data && emit('select', data)"
     >
-      <LucideChevronUp
-        v-if="data && selectable && expandSide === 'left'"
-        class="expander"
-      />
-
       <slot></slot>
-
-      <LucideChevronUp
-        v-if="data && selectable && expandSide !== 'left'"
-        class="expander"
-      />
     </div>
 
     <Collapsible
-      v-if="data"
+      v-if="expandable && data"
       :expanded
     >
       <div class="row-details">
@@ -65,25 +67,10 @@ const emit = defineEmits<{
   display: flex;
   flex-direction: column;
 
-  &:hover {
-    > .row-data {
-      > .expander {
-        color: hsl(
-          from var(--c-primary) h s calc(l + 6 * var(--color-scheme-dark))
-        );
-        scale: 1.25;
-      }
-    }
-  }
-
   &.expanded {
     > .row-data {
       background-color: var(--row-background, --c-lvl1);
       border-bottom-width: 0;
-
-      > .expander {
-        rotate: 180deg;
-      }
     }
   }
 
@@ -125,17 +112,6 @@ const emit = defineEmits<{
           from var(--c-lvl1) h s calc(l + 12 * var(--color-scheme-dark))
         );
       }
-    }
-
-    > .expander {
-      color: var(--c-primary);
-      animation: pulse 1000ms 2;
-
-      transition: scale var(--hover-duration) ease-in-out,
-        rotate 125ms cubic-bezier(0.65, 0.05, 0.36, 1);
-
-      vertical-align: middle;
-      rotate: 90deg;
     }
   }
 
