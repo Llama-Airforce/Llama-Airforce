@@ -129,6 +129,7 @@ export default [
           order: ["script", "template", "style"],
         },
       ],
+      "vue/no-template-shadow": "off",
       "vue/singleline-html-element-content-newline": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-v-html": "off",
