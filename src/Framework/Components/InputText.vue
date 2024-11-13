@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
 const modelValue = defineModel<string>({ required: true });
+const open = defineModel<boolean>("open", { default: false });
 
 const {
   placeholder = "",
@@ -21,8 +22,6 @@ const emit = defineEmits<{
   input: [val: string];
   select: [option: T];
 }>();
-
-const open = ref(false);
 
 const optionsProcessed = computed<T[]>(() => {
   const optionsFiltered = [...options].filter((option) =>

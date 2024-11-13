@@ -54,8 +54,8 @@ const user = computed(() => {
   };
 });
 
-const optionsShow = ref(true);
-const options = computed(() => (optionsShow.value ? [user.value] : []));
+const optionsOpen = ref(false);
+const options = computed(() => [user.value]);
 
 const valid = computed(
   () =>
@@ -66,29 +66,26 @@ const valid = computed(
 );
 
 const selected = ref(modelValue.value);
-const ignoreModelValueWatch = ref(false);
 
 function onUser(user: User) {
-  optionsShow.value = false;
+  if (!valid.value) {
+    optionsOpen.value = true;
+    return;
+  }
+
+  optionsOpen.value = false;
   selected.value = user.address;
 
-  ignoreModelValueWatch.value = true;
   emit("select", user);
-
-  void nextTick(() => {
-    ignoreModelValueWatch.value = false;
-  });
 }
 
-watch(
-  modelValue,
-  () => {
-    if (!ignoreModelValueWatch.value) {
-      optionsShow.value = true;
-    }
-  },
-  { flush: "post" }
-);
+const internalChange = ref(false);
+watch(modelValue, () => {
+  if (internalChange.value) {
+    optionsOpen.value = true;
+    internalChange.value = false;
+  }
+});
 
 defineExpose({ selected });
 </script>
@@ -100,9 +97,11 @@ defineExpose({ selected });
   >
     <InputText
       v-model="modelValue"
+      v-model:open="optionsOpen"
       search
       placeholder="Wallet address"
       :options
+      @update:model-value="internalChange = true"
       @select="onUser"
     >
       <template #icon>
