@@ -62,7 +62,8 @@ const valid = computed(
     !!modelValue.value &&
     options.value.length > 0 &&
     !loading.value &&
-    isAddress(user.value.address, { strict: false })
+    isAddress(user.value.address, { strict: false }) &&
+    user.value.address !== EmptyAddress
 );
 
 const selected = ref(modelValue.value);
