@@ -63,7 +63,7 @@ onUnmounted(() => {
       :key="idx"
       class="option-wrapper"
       :class="{ selected: idx === selectedIndex }"
-      @click.stop="emit('select', option as T)"
+      @click.stop="emit('select', option)"
     >
       <slot
         name="option"
