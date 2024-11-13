@@ -6,7 +6,8 @@ import type { Address } from "@/Types/Address";
 type User = typeof user.value;
 
 const modelValue = defineModel<string>({ required: true, default: "" });
-const modelValueDebounced = refDebounced(modelValue, 300);
+const modelValueTrimmed = computed(() => modelValue.value.trim());
+const modelValueDebounced = refDebounced(modelValueTrimmed, 300);
 
 const emit = defineEmits<{
   select: [option: User];
@@ -30,23 +31,23 @@ const ensName = useEnsName({
 
 const loading = computed(
   () =>
-    modelValue.value !== modelValueDebounced.value ||
+    modelValueTrimmed.value !== modelValueDebounced.value ||
     ensAddress.isFetching.value ||
     ensName.isFetching.value
 );
 
 const user = computed(() => {
   // Determine the address based on input type
-  const address = modelValue.value.startsWith("0x")
-    ? modelValue.value // Use input directly if it starts with '0x' (likely an address)
+  const address = modelValueTrimmed.value.startsWith("0x")
+    ? modelValueTrimmed.value // Use input directly if it starts with '0x' (likely an address)
     : ensAddress.data.value ?? EmptyAddress; // Otherwise, use resolved ENS address or fallback
 
   // Determine the name based on input type
-  const name = modelValue.value.startsWith("0x")
+  const name = modelValueTrimmed.value.startsWith("0x")
     ? ensName.data.value && !isAddress(ensName.data.value, { strict: false })
       ? ensName.data.value // Use resolved ENS name if available and not an address
       : "" // Fallback to empty string if no valid ENS name
-    : modelValue.value; // Use input directly if it doesn't start with '0x' (likely an ENS name)
+    : modelValueTrimmed.value; // Use input directly if it doesn't start with '0x' (likely an ENS name)
 
   return {
     address,
@@ -59,7 +60,7 @@ const options = computed(() => [user.value]);
 
 const valid = computed(
   () =>
-    !!modelValue.value &&
+    !!modelValueTrimmed.value &&
     options.value.length > 0 &&
     !loading.value &&
     isAddress(user.value.address, { strict: false }) &&
@@ -81,7 +82,7 @@ function onUser(user: User) {
 }
 
 const internalChange = ref(false);
-watch(modelValue, () => {
+watch(modelValueTrimmed, () => {
   if (internalChange.value) {
     optionsOpen.value = true;
     internalChange.value = false;
