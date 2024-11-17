@@ -6,6 +6,7 @@ en:
 
   # Allocator.vue
   allocation-changed: Allocation succesfully updated!
+  allocation-deprecated: These allocations are for deprecated pounders. Please set them to zero.
 
   # Member.vue
   allocation: Allocation
@@ -106,6 +107,7 @@ zh:
 
   # Allocator.vue
   allocation-changed: 分配成功更新！
+  allocation-deprecated: 这些分配用于已废弃的自动复合器。请将其设置为零。
 
   # Member.vue
   allocation: 分配
@@ -182,6 +184,7 @@ fr:
 
   # Allocator.vue
   allocation-changed: Allocation mise à jour avec succès !
+  allocation-deprecated: Ces allocations sont destinées à des pounders obsolètes. Veuillez les mettre à zéro.
 
   # Member.vue
   allocation: Allocation
