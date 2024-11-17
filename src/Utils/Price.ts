@@ -14,6 +14,7 @@ import {
   CvxAddress,
   LPxCvxFactoryAddress,
   CrvAddress,
+  CrvUsdAddress,
   CvxCrvFactoryAddress,
   CvxCrvFactoryAddressV1,
   PrismaAddress,
@@ -57,6 +58,12 @@ export function getDefiLlamaPrice(
     .getPrice(address)
     .then((x) => x.price)
     .catch(() => 0);
+}
+
+export function getCrvUsdPrice(
+  llamaService: DefiLlamaService
+): Promise<number> {
+  return getDefiLlamaPrice(llamaService, CrvUsdAddress);
 }
 
 export function getCvxPrice(llamaService: DefiLlamaService): Promise<number> {

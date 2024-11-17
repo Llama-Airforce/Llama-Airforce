@@ -80,6 +80,10 @@ const distributors: Bundle = {
       contract: DistributorUPrismaAddress,
       description: "distributor-uprisma",
     },
+    {
+      contract: DistributorSCrvUsdAddress,
+      description: "distributor-scrvusd",
+    },
   ],
 };
 
@@ -449,6 +453,7 @@ distributor-ucrv: Merkle Distributor - uCRV
 distributor-ufxs: Merkle Distributor - uFXS
 distributor-ucvx: Merkle Distributor - uCVX
 distributor-uprisma: Merkle Distributor - uPRISMA
+distributor-scrvusd: Merkle Distributor - scrvUSD
 
 vault: Vault
 strategy: Strategy

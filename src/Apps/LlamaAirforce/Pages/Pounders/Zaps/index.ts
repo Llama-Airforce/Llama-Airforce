@@ -22,3 +22,5 @@ export { uBalWithdrawZaps } from "./UBal/Withdraw";
 export { uPrismaDepositZaps } from "./UPrisma/Deposit";
 export { uPrismaWithdrawZaps } from "./UPrisma/Withdraw";
 export { uPrismaClaimZaps } from "./UPrisma/Claim";
+
+export { sCrvUsdClaimZaps } from "./SCrvUsd/Claim";

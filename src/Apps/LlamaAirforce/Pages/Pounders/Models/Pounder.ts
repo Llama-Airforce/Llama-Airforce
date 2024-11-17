@@ -1,4 +1,9 @@
-import type { Address, PublicClient, GetContractReturnType } from "viem";
+import type {
+  Address,
+  PublicClient,
+  GetContractReturnType,
+  erc4626Abi as abiERC4626,
+} from "viem";
 import type { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import type { abi as abiUnionPirex } from "@/ABI/Union/UnionVaultPirex";
 import { bigNumToNumber } from "@/Utils/Number";
@@ -12,17 +17,29 @@ export type VaultPirex = GetContractReturnType<
   typeof abiUnionPirex,
   PublicClient
 >;
+export type VaultERC4626 = GetContractReturnType<
+  typeof abiERC4626,
+  PublicClient
+>;
 export type Vault = VaultUnion | VaultPirex;
 
 export function isPirex(vault: Vault): vault is VaultPirex {
+  return vault.abi.some((x) => x.name === "harvest");
+}
+
+export function isERC4626(vault: Vault | VaultERC4626): vault is VaultERC4626 {
   return vault.abi.some((x) => x.name === "totalAssets");
 }
 
-export function getTotalUnderlying(utkn: Vault) {
-  return isPirex(utkn) ? utkn.read.totalAssets() : utkn.read.totalUnderlying();
+export function getTotalUnderlying(utkn: Vault | VaultERC4626) {
+  return isERC4626(utkn) || isPirex(utkn)
+    ? utkn.read.totalAssets()
+    : utkn.read.totalUnderlying();
 }
 
-export async function getVirtualPrice(utkn: Vault): Promise<number> {
+export async function getVirtualPrice(
+  utkn: Vault | VaultERC4626
+): Promise<number> {
   const dec = 10n ** 18n;
   const totalUnderlying = await getTotalUnderlying(utkn);
   const tvl = await utkn.read.totalSupply();
