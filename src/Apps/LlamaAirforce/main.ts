@@ -14,6 +14,7 @@ import type { Page } from "@LAF/Pages/Page";
 
 import { setup } from "../setup";
 import { walletConnect } from "@/Utils/Wagmi";
+import { coinbaseWallet } from "@wagmi/vue/connectors";
 
 // Configure pages.
 const pages: Page[] = [];
@@ -34,7 +35,7 @@ routes.push(...pageBribesRoutes);
 routes.push(...pagePirexRoutes);
 
 const { app } = setup(App, {
-  extraWagmiConnectors: [walletConnect, safe()],
+  extraWagmiConnectors: [walletConnect, coinbaseWallet(), safe()],
   plugins: [
     createI18n({
       legacy: false,
