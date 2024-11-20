@@ -21,7 +21,6 @@ export const menu: Menu = {
         {
           to: "/platform/pools",
           label: "Pools",
-          tag: "alpha",
         },
         {
           to: "/platform/revenue",
