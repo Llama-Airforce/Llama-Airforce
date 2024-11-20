@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import LabelsWorstRelative from "@CM/Pages/Platform/Monitor/Components/LabelsWorstRelative.vue";
-import LabelsWorstAbsolute from "@CM/Pages/Platform/Monitor/Components/LabelsWorstAbsolute.vue";
-import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
+import LabelsWorstRelative from "./Components/LabelsWorstRelative.vue";
+import LabelsWorstAbsolute from "./Components/LabelsWorstAbsolute.vue";
+import Sandwiches from "./Components/Sandwiches.vue";
 </script>
 
 <template>
-  <div class="dashboard-grid">
+  <div class="dashboard">
     <Sandwiches style="grid-area: sws" />
 
     <LabelsWorstRelative style="grid-area: relative" />
@@ -14,8 +14,9 @@ import Sandwiches from "@CM/Pages/Platform/Monitor/Components/Sandwiches.vue";
 </template>
 
 <style scoped>
-.dashboard-grid {
-  margin: var(--dashboard-gap) 0;
+.dashboard {
+  position: relative;
+  max-width: calc(1920px - 18.125rem);
 
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;

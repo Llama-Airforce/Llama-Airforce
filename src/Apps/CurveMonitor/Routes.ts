@@ -22,7 +22,7 @@ import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.page.vue";
 import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue";
 import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
 
-import Monitor from "@CM/Pages/Platform/Monitor/Monitor.page.vue";
+import Sandwiches from "@CM/Pages/Platform/Sandwiches/Sandwiches.page.vue";
 
 import Gauges from "@CM/Pages/DAO/Gauges/Gauges.page.vue";
 import Gauge from "@CM/Pages/DAO/Gauges/Gauge.page.vue";
@@ -119,9 +119,8 @@ export const routes: RouteRecordRaw[] = [
       },
 
       {
-        path: "monitor",
-        name: "monitor",
-        component: Monitor,
+        path: "sandwiches",
+        component: Sandwiches,
       },
     ],
   },

@@ -35,9 +35,8 @@ export const menu: Menu = {
           label: "Lending",
         },
         {
-          to: "/platform/monitor",
-          label: "Monitor",
-          tag: "beta",
+          to: "/platform/sandwiches",
+          label: "Sandwiches",
         },
       ],
     },
