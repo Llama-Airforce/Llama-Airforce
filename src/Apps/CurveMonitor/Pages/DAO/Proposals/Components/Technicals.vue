@@ -74,13 +74,27 @@ const callData = computed(() => {
     </div>
 
     <div class="technical">
-      <div class="heading">Proposal creation transaction</div>
+      <div class="heading">Creation transaction</div>
       <a
         style="align-self: start"
         target="_blank"
         :href="`https://etherscan.io/tx/${proposal.txCreation}`"
       >
         {{ proposal.txCreation }}
+      </a>
+    </div>
+
+    <div
+      v-if="!!proposalDetails?.txExecution"
+      class="technical"
+    >
+      <div class="heading">Execution transaction</div>
+      <a
+        style="align-self: start"
+        target="_blank"
+        :href="`https://etherscan.io/tx/${proposalDetails.txExecution}`"
+      >
+        {{ proposalDetails.txExecution }}
       </a>
     </div>
 

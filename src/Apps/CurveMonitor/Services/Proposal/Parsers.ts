@@ -53,6 +53,9 @@ export const parseProposalDetails = (
   x: ApiTypes.GetProposalDetailsResponse
 ): Models.Proposal & Models.ProposalDetails => {
   const proposal = parseProposal(x);
+  const txExecution = x.execution_tx
+    ? x.execution_tx.toLocaleLowerCase()
+    : undefined;
   const script = x.script;
   const votes = x.votes.map((vote) => ({
     voter: vote.voter.toLocaleLowerCase(),
@@ -62,6 +65,7 @@ export const parseProposalDetails = (
 
   return {
     ...proposal,
+    txExecution,
     script,
     votes,
   };

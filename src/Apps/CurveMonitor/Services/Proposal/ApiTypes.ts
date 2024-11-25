@@ -25,6 +25,7 @@ export type GetProposalsResponse = {
 };
 
 export type GetProposalDetailsResponse = Proposal & {
+  execution_tx: string | null;
   script: string;
   votes: {
     voter: string;

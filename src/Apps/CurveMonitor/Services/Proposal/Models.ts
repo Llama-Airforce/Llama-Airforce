@@ -35,6 +35,7 @@ export type Proposal = {
 };
 
 export type ProposalDetails = {
+  txExecution?: string;
   script: string;
   votes: {
     voter: string;
