@@ -7,6 +7,7 @@ declare module "vue-router" {
 
 import Home from "@CM/Pages/Home/Home.page.vue";
 import Code from "@CM/Pages/Code.page.vue";
+import API from "@CM/Pages/API.page.vue";
 import NotFound from "@CM/Pages/NotFound.page.vue";
 
 import Profile from "@CM/Pages/Profile/Profile.page.vue";
@@ -36,6 +37,7 @@ import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
 export const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
   { path: "/code", component: Code },
+  { path: "/api", component: API },
 
   {
     path: "/profile/:tab?",

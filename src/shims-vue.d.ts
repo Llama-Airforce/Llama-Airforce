@@ -10,6 +10,15 @@ declare module "*.json" {
   export default value;
 }
 
+declare module "swagger-ui-dist/swagger-ui-bundle" {
+  const swaggerUIConstructor: (config: {
+    dom_id: string;
+    url: string;
+    deepLinking?: boolean;
+  }) => void;
+  export default swaggerUIConstructor;
+}
+
 // Shim exists so the app still compiles in case the Union git submodule is not loaded.
 declare module "@LAF/Pages/Union/Page" {
   import { type RouteRecordRaw } from "vue-router";

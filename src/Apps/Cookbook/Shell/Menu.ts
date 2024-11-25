@@ -88,6 +88,10 @@ export const menu: Menu = {
           label: "Spinner",
         },
         {
+          to: "/components/swagger",
+          label: "Swagger",
+        },
+        {
           to: "/components/table",
           label: "Table",
         },

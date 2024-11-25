@@ -27,6 +27,7 @@ import RadioButton from "@CB/RecipesComponents/RadioButtonRecipe.vue";
 import Select from "@CB/RecipesComponents/SelectRecipe.vue";
 import Slider from "@CB/RecipesComponents/SliderRecipe.vue";
 import Spinner from "@CB/RecipesComponents/SpinnerRecipe.vue";
+import Swagger from "@CB/RecipesComponents/SwaggerRecipe.vue";
 import Tabs from "@CB/RecipesComponents/TabsRecipe.vue";
 import Tooltip from "@CB/RecipesComponents/TooltipRecipe.vue";
 
@@ -121,6 +122,10 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "spinner",
         component: Spinner,
+      },
+      {
+        path: "swagger",
+        component: Swagger,
       },
       {
         path: "tabs",

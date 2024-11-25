@@ -29,6 +29,17 @@ const router = useRouter();
       <LucideCode />
     </Button>
 
+    <Button
+      style="grid-area: api"
+      class="lvl2"
+      @click="
+        router.push('/api');
+        emit('navigated');
+      "
+    >
+      <LucideCloud />
+    </Button>
+
     <SelectTheme
       style="grid-area: themes"
       direction="up"
@@ -49,8 +60,8 @@ const router = useRouter();
   gap: 1rem;
   grid-template-columns: 1fr auto auto;
   grid-template-areas:
-    "themes twitter code"
-    "wallet wallet wallet";
+    "themes twitter code api"
+    "wallet wallet wallet wallet";
 
   margin: 1.125rem;
 
