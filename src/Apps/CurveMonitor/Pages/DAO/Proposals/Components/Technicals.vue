@@ -123,6 +123,8 @@ const callData = computed(() => {
 
 <style scoped>
 .technicals {
+  container-type: inline-size;
+
   display: flex;
   flex-direction: column;
   padding: 1rem;

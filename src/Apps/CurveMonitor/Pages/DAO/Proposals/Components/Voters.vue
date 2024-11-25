@@ -137,6 +137,12 @@ const you = (address: string): boolean => address === walletAddress.value;
     gap: 1rem;
   }
 
+  @container (max-width: 45rem) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .vote {
     .address {
       a {
@@ -149,6 +155,8 @@ const you = (address: string): boolean => address === walletAddress.value;
 
   > .for,
   > .against {
+    margin-right: 1rem;
+
     > .title {
       display: flex;
       grid-row: 1 / span 2;
@@ -174,7 +182,7 @@ const you = (address: string): boolean => address === walletAddress.value;
     }
 
     > .vote {
-      grid-template-columns: 0.7fr 0.15fr 0.15fr;
+      grid-template-columns: 1fr 4rem 4rem;
 
       > .amount,
       > .percentage {
@@ -189,7 +197,7 @@ const you = (address: string): boolean => address === walletAddress.value;
     }
 
     > .vote {
-      grid-template-columns: 0.15fr 0.15fr 0.7fr;
+      grid-template-columns: 4rem 4rem 1fr;
 
       > .address {
         justify-content: end;
