@@ -50,7 +50,7 @@ export const DistributorUPrismaAddress =
   "0xf09320ed7db384cab7fce9ea9947436a806754d3";
 
 export const DistributorSCrvUsdAddress =
-  "0x0000000000000000000000000000000000000000";
+  "0x17ac69dd3fb8f22b4f52dbdb8a3a0eb059367efc";
 
 /** This one was for the Pirex airdrop. */
 export const DistributorCvxPrismaAddress =
