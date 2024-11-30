@@ -25,6 +25,7 @@
       "@CB/*": ["src/Apps/Cookbook/*"],
       "@CM/*": ["src/Apps/CurveMonitor/*"],
       "@LAF/*": ["src/Apps/LlamaAirforce/*"],
+      "@HA/*": ["src/Apps/HippoArmy/*"],
       "@Union/*": ["src/Apps/LlamaAirforce/Pages/Union/*"],
       "@Pounders/*": ["src/Apps/LlamaAirforce/Pages/Pounders/*"]
     },

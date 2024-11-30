@@ -24,9 +24,11 @@ jobs:
       - run: bun pm cache rm
       - run: bun install
       - run: bun run --cwd src/Apps/LlamaAirforce build
+      - run: bun run --cwd src/Apps/HippoArmy build
       - run: bun run --cwd src/Apps/CurveMonitor build
       - run: bun run typecheck
       - run: bun run lint:framework
       - run: bun run --cwd src/Apps/LlamaAirforce lint
+      - run: bun run --cwd src/Apps/HippoArmy lint
       - run: bun run --cwd src/Apps/CurveMonitor lint
       - run: bun test

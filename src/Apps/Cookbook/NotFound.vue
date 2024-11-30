@@ -6,7 +6,7 @@ const { t } = useI18n();
   <div class="not-found">
     <div class="not-found-container">
       <Card>{{ t("404") }}</Card>
-      <img src="@/Assets/404.png" />
+      <img src="@/Assets/404-llama.png" />
     </div>
   </div>
 </template>

@@ -2,10 +2,11 @@
   <div class="not-found">
     <div class="not-found-container">
       <Card>
-        Where are you going, pilot? Page not found, please return home fren.
+        Where are you going, river chonk? Page not found, please return home
+        fren.
       </Card>
 
-      <img src="@/Assets/404-llama.png" />
+      <img src="@/Assets/404-hippo.png" />
     </div>
   </div>
 </template>
