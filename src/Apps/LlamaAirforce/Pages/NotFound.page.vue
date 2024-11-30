@@ -5,7 +5,7 @@ const { t } = useI18n();
 <template>
   <div class="not-found">
     {{ t("404") }}
-    <img src="@/Assets/404.png" />
+    <img src="@/Assets/404-llama.png" />
   </div>
 </template>
 

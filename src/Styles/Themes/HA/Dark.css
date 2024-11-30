@@ -1,0 +1,35 @@
+:root[data-theme="dark"] {
+  --color-scheme-dark: 1;
+  color-scheme: dark;
+
+  --c-text: #ffffff;
+  --c-text-invert: black;
+  --c-lvl0: #1a1a1a;
+  --c-lvl1: #292929;
+  --c-lvl2: #3c3c3c;
+  --c-lvl3: #535353;
+  --c-lvl4: #6a6a6a;
+  --c-lvl5: #949494;
+  --c-lvl6: #aea8af;
+  --c-red: hsl(0, 90%, 66%);
+  --c-green: hsl(123, 90%, 66%);
+  --c-blue: hsl(230, 90%, 66%);
+  --c-yellow: hsl(58, 90%, 66%);
+  --c-purple: hsl(278, 90%, 66%);
+  --c-primary: hsl(230, 90%, 66%);
+  --c-card-special-1: hsl(230, 90%, 66%);
+  --c-card-special-2: hsl(278, 90%, 66%);
+
+  --border-radius: 4px;
+  --border-thickness: 0px;
+
+  --table-border-aggregation: calc(var(--border-thickness) + 2px) solid
+    var(--c-lvl2);
+
+  --container-box-shadow: 0 0 0 0;
+
+  --select-box-shadow: 0;
+  --input-box-shadow: 0;
+  --options-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  --tooltip-box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}

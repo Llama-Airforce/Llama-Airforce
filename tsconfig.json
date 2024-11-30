@@ -26,6 +26,7 @@
       "@CM/*": ["src/Apps/CurveMonitor/*"],
       "@PM/*": ["src/Apps/PrismaMonitor/*"],
       "@LAF/*": ["src/Apps/LlamaAirforce/*"],
+      "@HA/*": ["src/Apps/HippoArmy/*"],
       "@Union/*": ["src/Apps/LlamaAirforce/Pages/Union/*"],
       "@Pounders/*": ["src/Apps/LlamaAirforce/Pages/Pounders/*"]
     },
