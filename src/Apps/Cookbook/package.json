@@ -1,0 +1,9 @@
+{
+  "name": "@llama-airforce/cb",
+  "private": true,
+  "scripts": {
+    "lint": "cd ../../../ && eslint \"src/Apps/Cookbook/**/*.{ts,vue}\"",
+    "dev": "bun --cwd=../../../ --bun vite src/Apps/Cookbook",
+    "build": "bun --cwd=../../../ --bun vite build src/Apps/Cookbook"
+  }
+}

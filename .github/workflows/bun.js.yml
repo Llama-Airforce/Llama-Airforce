@@ -17,17 +17,17 @@ jobs:
           git submodule init src/Apps/CurveMonitor/phil
           git submodule update src/Apps/CurveMonitor/phil
       - name: Use Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - run: git config --global url."https://".insteadOf ssh://
       - run: bun install
-      - run: bun run build:laf
-      - run: bun run build:cm
-      - run: bun run build:pm
+      - run: bun --cwd src/Apps/LlamaAirforce build
+      - run: bun --cwd src/Apps/CurveMonitor build
+      - run: bun --cwd src/Apps/PrismaMonitor build
       - run: bun run typecheck
       - run: bun run lint:framework
-      - run: bun run lint:laf
-      - run: bun run lint:cm
-      - run: bun run lint:pm
+      - run: bun --cwd src/Apps/LlamaAirforce lint
+      - run: bun --cwd src/Apps/CurveMonitor lint
+      - run: bun --cwd src/Apps/PrismaMonitor lint
       - run: bun test

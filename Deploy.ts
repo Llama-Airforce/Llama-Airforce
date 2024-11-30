@@ -37,34 +37,34 @@ function deploy(opts: Options) {
     throw new Error(`App '${app}' is not a valid app`);
   }
 
-  let dirDist: string;
+  let dirApp: string;
   let dirOutput: string;
 
   switch (app) {
     case "laf":
-      dirDist = "src/Apps/LlamaAirforce/dist";
+      dirApp = "src/Apps/LlamaAirforce";
       dirOutput = "Llama-Airforce-Web";
       break;
     case "cm":
-      dirDist = "src/Apps/CurveMonitor/dist";
+      dirApp = "src/Apps/CurveMonitor";
       dirOutput = "Curve-Monitor-Web";
       break;
     case "pm":
-      dirDist = "src/Apps/PrismaMonitor/dist";
+      dirApp = "src/Apps/PrismaMonitor";
       dirOutput = "Prisma-Monitor-Web";
       break;
     case "pm-lrt":
-      dirDist = "src/Apps/PrismaMonitor/dist";
+      dirApp = "src/Apps/PrismaMonitor";
       dirOutput = "Prisma-Monitor-Lrt-Web";
       break;
   }
 
   // Build website
   if (check) {
-    execSync(`bun run typecheck`, { stdio: "inherit" });
-    execSync(`bun run lint:${app}`, { stdio: "inherit" });
+    execSync(`bun typecheck`, { stdio: "inherit" });
+    execSync(`bun lint`, { cwd: dirApp, stdio: "inherit" });
   }
-  execSync(`bun run build:${app}`, { stdio: "inherit" });
+  execSync(`bun build`, { cwd: dirApp, stdio: "inherit" });
 
   // Ensure output directory exists
   const outputPath = join("..", dirOutput);
@@ -74,6 +74,7 @@ function deploy(opts: Options) {
   execSync(`git -C ${outputPathFull} rm -rf .`);
 
   // Copy dist contents to git folder
+  const dirDist = `${dirApp}/dist`;
   const distPathFull = join(__dirname, dirDist);
   cpSync(distPathFull, outputPathFull, { recursive: true });
 

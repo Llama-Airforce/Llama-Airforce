@@ -1,0 +1,11 @@
+{
+  "name": "@llama-airforce/cm",
+  "private": true,
+  "scripts": {
+    "lint": "cd ../../../ && eslint \"src/Apps/CurveMonitor/**/*.{ts,vue}\"",
+    "dev": "bun --cwd=../../../ --bun vite src/Apps/CurveMonitor",
+    "dev:server": "bun --cwd=../../../ --hot src/Apps/CurveMonitor/Server/main.ts",
+    "build": "bun --cwd=../../../ --bun vite build src/Apps/CurveMonitor",
+    "run:server": "bun --cwd=../../../ src/Apps/CurveMonitor/Server/main.ts"
+  }
+}
