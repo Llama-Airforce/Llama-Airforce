@@ -36,6 +36,7 @@
     "@safe-global/protocol-kit": "5.0.4",
     "@safe-global/safe-core-sdk-types": "5.1.0",
     "@tanstack/vue-query-devtools": "5.61.5",
+    "@types/bun": "^1.1.14",
     "@vitejs/plugin-vue": "5.2.1",
     "consola": "^3.2.3",
     "eslint": "9.15.0",
