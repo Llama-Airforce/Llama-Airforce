@@ -72,26 +72,6 @@ Start the Nitro server: `bun run dev:laf:server`.
 
 Note: If you start only the Vite server, `useHost()` will fallback to the production server, and you'll see a notification about this.
 
-## NPM / Bun Scripts
-
-| Command            | Description                                               |
-| ------------------ | --------------------------------------------------------- |
-| `typecheck`        | Typechecks the project using the TypeScript compiler.     |
-| `lint:<app>`       | Lints the specified app (laf, cm, pm, cb).                |
-| `dev:<app>`        | Starts a development server for the specified app.        |
-| `dev:<app>:server` | Starts a Hono server for the specified app.               |
-| `build:<app>`      | Builds the specified app.                                 |
-| `run:<app>:server` | Runs the server for the specified app (laf, cm only).     |
-| `test`             | Runs unit tests for the Llama Airforce app.               |
-| `union`            | Runs the Union airdrop generation script (LAF devs only). |
-| `union:allocate`   | Runs the Union allocation script (LAF devs only).         |
-| `union:migrate`    | Runs the Union migration script (LAF devs only).          |
-| `deploy`           | Runs the deployment script.                               |
-
-Replace `<app>` with `laf` (Llama Airforce), `cm` (Curve Monitor), `pm` (Prisma Monitor), or `cb` (Cookbook) for the respective application.
-
-Note: There's an additional build command for Prisma Monitor: `build:pm-lrt`, which builds a specific version of the Prisma Monitor app.
-
 ## Environment Variables
 
 This project uses environment variables for configuration. Create a `.env` file in the root directory and add necessary variables. Refer to `.env.example` (if available) for required variables.
