@@ -21,6 +21,7 @@ jobs:
         with:
           bun-version: latest
       - run: git config --global url."https://".insteadOf ssh://
+      - run: bun pm cache rm
       - run: bun install
       - run: bun --cwd src/Apps/LlamaAirforce build
       - run: bun --cwd src/Apps/CurveMonitor build
