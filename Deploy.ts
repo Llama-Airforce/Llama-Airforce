@@ -61,10 +61,10 @@ function deploy(opts: Options) {
 
   // Build website
   if (check) {
-    execSync(`bun typecheck`, { stdio: "inherit" });
-    execSync(`bun lint`, { cwd: dirApp, stdio: "inherit" });
+    execSync(`bun run typecheck`, { stdio: "inherit" });
+    execSync(`bun run lint`, { cwd: dirApp, stdio: "inherit" });
   }
-  execSync(`bun build`, { cwd: dirApp, stdio: "inherit" });
+  execSync(`bun run build`, { cwd: dirApp, stdio: "inherit" });
 
   // Ensure output directory exists
   const outputPath = join("..", dirOutput);

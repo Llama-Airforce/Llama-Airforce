@@ -23,12 +23,12 @@ jobs:
       - run: git config --global url."https://".insteadOf ssh://
       - run: bun pm cache rm
       - run: bun install
-      - run: bun --cwd src/Apps/LlamaAirforce build
-      - run: bun --cwd src/Apps/CurveMonitor build
-      - run: bun --cwd src/Apps/PrismaMonitor build
+      - run: bun run --cwd src/Apps/LlamaAirforce build
+      - run: bun run --cwd src/Apps/CurveMonitor build
+      - run: bun run --cwd src/Apps/PrismaMonitor build
       - run: bun run typecheck
       - run: bun run lint:framework
-      - run: bun --cwd src/Apps/LlamaAirforce lint
-      - run: bun --cwd src/Apps/CurveMonitor lint
-      - run: bun --cwd src/Apps/PrismaMonitor lint
+      - run: bun run --cwd src/Apps/LlamaAirforce lint
+      - run: bun run --cwd src/Apps/CurveMonitor lint
+      - run: bun run --cwd src/Apps/PrismaMonitor lint
       - run: bun test
