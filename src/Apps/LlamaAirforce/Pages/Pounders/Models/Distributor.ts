@@ -4,10 +4,12 @@ import {
   DistributorUCvxAddress,
   DistributorUFxsAddress,
   DistributorUPrismaAddress,
+  DistributorSCrvUsdAddress,
   UnionCrvVaultAddress,
   UnionCvxVaultAddress,
   UnionFxsVaultAddress,
   UnionPrismaVaultAddress,
+  SCrvUsdAddress,
 } from "@/Utils/Addresses";
 import type { AirdropId } from "@LAF/Services/UnionService";
 
@@ -41,6 +43,12 @@ const distUCvx: Distributor = {
   network: "ethereum",
 };
 
+const distSCrvUsd: Distributor = {
+  address: DistributorSCrvUsdAddress,
+  tokenAddress: SCrvUsdAddress,
+  network: "ethereum",
+};
+
 export function getDistributor(airdropId: AirdropId): Distributor {
   switch (airdropId) {
     case "union":
@@ -51,6 +59,8 @@ export function getDistributor(airdropId: AirdropId): Distributor {
       return distUPrisma;
     case "ucvx":
       return distUCvx;
+    case "scrvusd":
+      return distSCrvUsd;
     case "cvxprisma":
     default:
       throw new Error(`Unknown airdrop id`);

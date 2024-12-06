@@ -49,6 +49,9 @@ export const DistributorUCvxAddress =
 export const DistributorUPrismaAddress =
   "0xf09320ed7db384cab7fce9ea9947436a806754d3";
 
+export const DistributorSCrvUsdAddress =
+  "0x0000000000000000000000000000000000000000";
+
 /** This one was for the Pirex airdrop. */
 export const DistributorCvxPrismaAddress =
   "0x8e6d5cf9b9659d4f8e68ee040bf26e728ef1baa4";
@@ -154,6 +157,7 @@ export const PrismaAddress = "0xda47862a83dac0c112ba89c6abc2159b95afd71c";
 export const MkUsdAddress = "0x4591dbff62656e7859afe5e45f6f47d3669fbb28";
 export const UltraAddress = "0x35282d87011f87508d457f08252bc5bfa52e10a0";
 export const CrvUsdAddress = "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e";
+export const SCrvUsdAddress = "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367";
 
 export const PxCvxAddress = "0xbce0cf87f513102f22232436cca2ca49e815c3ac";
 export const UPxCvxAddress = "0x7a3d81cfc5a942abe9ec656eff818f7dab4e0fe1";

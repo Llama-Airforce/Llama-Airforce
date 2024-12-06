@@ -9,6 +9,7 @@ export const airdropIds = [
   "ucvx",
   "uprisma",
   "cvxprisma",
+  "scrvusd",
 ] as const;
 export type AirdropId = (typeof airdropIds)[number];
 
