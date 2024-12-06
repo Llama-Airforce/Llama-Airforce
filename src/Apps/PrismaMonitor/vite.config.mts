@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { defineConfig } from "vite";
+import { defineConfig, searchForWorkspaceRoot } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
@@ -27,6 +27,9 @@ export default defineConfig(() => {
     ],
     server: {
       port: 8080,
+      fs: {
+        allow: [searchForWorkspaceRoot(process.cwd()), "../../Assets"],
+      },
     },
     resolve: {
       alias: {
