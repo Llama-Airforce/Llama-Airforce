@@ -26,6 +26,14 @@ const rod = ref("|");
 
 // Getters
 const presentation = computed((): string => {
+  if (value === Infinity) {
+    return "∞";
+  }
+
+  if (value === -Infinity) {
+    return "-∞";
+  }
+
   if (!value) {
     if (value === 0 && showZero) {
       return "0";

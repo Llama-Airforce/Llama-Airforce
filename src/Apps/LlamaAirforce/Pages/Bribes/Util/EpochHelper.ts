@@ -74,13 +74,7 @@ export function getBribed(epoch: Epoch): Bribed[] {
         dollarPerVlAsset,
       };
     })
-    .filter(
-      (x) =>
-        isFinite(x.dollarPerVlAsset) &&
-        x.amountDollarsTotal > 100 &&
-        x.dollarPerVlAsset > 0 &&
-        x.dollarPerVlAsset < 100
-    );
+    .filter((x) => x.amountDollarsTotal > 100);
 }
 
 /** Calculate by how much a voter got bribed by. */
@@ -136,7 +130,13 @@ export function getBribedPersonal(
         percentage: allocation.percentage,
       };
     })
-    .filter((x): x is BribedPersonal => x !== undefined);
+    .filter((x): x is BribedPersonal => x !== undefined)
+    .filter(
+      (x) =>
+        isFinite(x.dollarPerVlAsset) &&
+        x.dollarPerVlAsset > 0 &&
+        x.dollarPerVlAsset < 100
+    );
 }
 
 /**
