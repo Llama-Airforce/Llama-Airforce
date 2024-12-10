@@ -15,7 +15,7 @@
     "@wagmi/vue": "0.0.68",
     "apexcharts": "4.1.0",
     "ethereum-blockies-base64": "^1.0.2",
-    "hono": "4.6.12",
+    "hono": "4.6.13",
     "lightweight-charts": "4.2.1",
     "lru-cache": "^11.0.2",
     "lucide-vue-next": "^0.468.0",
