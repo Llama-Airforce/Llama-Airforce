@@ -17,7 +17,7 @@ const statusDetails = computed(() => {
     if (!hasReachedQuorum(proposal)) {
       return "Quorum was not reached (yes votes need to pass this number)";
     } else if (!hasWon(proposal)) {
-      return "More 'against' votes than 'for' votes";
+      return "More 'against' votes than 'for' votes, or 'for' votes did not exceed 51%";
     } else if (!hasReachedSupport(proposal)) {
       return "Quorum was reached and 'for' won, but not enough for support";
     }
