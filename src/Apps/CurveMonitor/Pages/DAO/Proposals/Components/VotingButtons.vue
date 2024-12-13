@@ -287,9 +287,10 @@ whenever(isConfirmedExecute, () => {
   <div class="buttons">
     <Button
       class="primary"
+      :disabled="!isVoteOpen"
       @click="showVote = true"
     >
-      Vote
+      {{ !isVoteOpen ? "Voting closed" : "Vote" }}
     </Button>
 
     <Button
