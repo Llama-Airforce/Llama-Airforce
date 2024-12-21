@@ -52,7 +52,7 @@ export function round(
   }
 
   const formatOptions =
-    type === "" || decimals === Infinity
+    decimals === Infinity
       ? undefined
       : {
           minimumFractionDigits: decimals,

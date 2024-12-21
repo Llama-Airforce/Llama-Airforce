@@ -23,6 +23,7 @@ import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.page.vue";
 import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue";
 import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
 
+import Savings from "@CM/Pages/Platform/Savings/Savings.page.vue";
 import Sandwiches from "@CM/Pages/Platform/Sandwiches/Sandwiches.page.vue";
 
 import Gauges from "@CM/Pages/DAO/Gauges/Gauges.page.vue";
@@ -118,6 +119,11 @@ export const routes: RouteRecordRaw[] = [
             component: LlamaLendMarket,
           },
         ],
+      },
+
+      {
+        path: "savings",
+        component: Savings,
       },
 
       {

@@ -35,6 +35,10 @@ export const menu: Menu = {
           label: "Lending",
         },
         {
+          to: "/platform/savings",
+          label: "Savings",
+        },
+        {
           to: "/platform/sandwiches",
           label: "Sandwiches",
         },
