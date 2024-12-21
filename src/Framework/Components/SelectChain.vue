@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import chainIcon from "@/Utils/Chain";
 
 type SelectOption = {
   label: string;
@@ -63,8 +62,8 @@ const onChainSelect = (option: ChainInfo): void => {
     <template #option="{ option }">
       <div class="option">
         <img
-          v-if="chainIcon(option.chain)"
-          :src="chainIcon(option.chain)"
+          v-if="iconChain(option.chain)"
+          :src="iconChain(option.chain)"
         />
         <div
           v-else

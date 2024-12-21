@@ -14,7 +14,7 @@ import base from "@/Assets/Icons/Chains/base.webp";
 import polygon from "@/Assets/Icons/Chains/polygon.png";
 import fraxtal from "@/Assets/Icons/Chains/fraxtal.png";
 
-export default function icon(chain: Chain | "all"): string {
+export function iconChain(chain: Chain | "all"): string {
   const mapping: Record<Chain | "all", string> = {
     ethereum,
     arbitrum,

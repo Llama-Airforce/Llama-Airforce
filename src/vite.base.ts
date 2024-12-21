@@ -18,8 +18,6 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     "@vueuse/core",
     "pinia",
     { "@vueuse/router": ["useRouteHash", "useRouteParams", "useRouteQuery"] },
-    // New in Vue 3.5
-    { vue: ["useTemplateRef"] },
     // Vue plugins
     { "@tanstack/vue-query": ["useQuery", "useQueries", "useQueryClient"] },
     { "@kyvg/vue3-notification": ["notify"] },
@@ -68,40 +66,21 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
       type: true,
     },
     {
-      from: "@/Framework/Series/StackedAreaSeries/Options",
-      imports: ["StackedAreaSeriesOptions", "StackedAreaSeriesPartialOptions"],
+      from: "@/Framework/Series/StackedAreaSeries",
+      imports: [
+        "StackedAreaSeriesOptions",
+        "StackedAreaSeriesPartialOptions",
+        "StackedAreaData",
+      ],
       type: true,
     },
     {
-      from: "@/Framework/Series/StackedAreaSeries/Data",
-      imports: ["StackedAreaData"],
-      type: true,
-    },
-    {
-      from: "@/Framework/Series/StackedBarsSeries/Options",
-      imports: ["StackedBarsSeriesOptions", "StackedBarsSeriesPartialOptions"],
-      type: true,
-    },
-    {
-      from: "@/Framework/Series/StackedBarsSeries/Data",
-      imports: ["StackedBarsData"],
-      type: true,
-    },
-    // Util
-    {
-      from: "@/Types/DataPoint",
-      imports: ["DataPoint"],
-      type: true,
-    },
-    {
-      from: "@/Types/Util",
-      imports: ["Tail", "Flatten", "MaybeArray", "TemplateRef"],
-      type: true,
-    },
-    // Vue Types
-    {
-      from: "vue",
-      imports: ["MaybeRef"],
+      from: "@/Framework/Series/StackedBarsSeries",
+      imports: [
+        "StackedBarsSeriesOptions",
+        "StackedBarsSeriesPartialOptions",
+        "StackedBarsData",
+      ],
       type: true,
     },
   ],
