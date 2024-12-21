@@ -3,7 +3,7 @@ import { rmSync, cpSync, writeFileSync } from "fs";
 import { join } from "path";
 import consola from "consola";
 
-const apps = ["laf", "cm", "pm", "pm-lrt"] as const;
+const apps = ["laf", "cm"] as const;
 
 type App = (typeof apps)[number];
 
@@ -13,7 +13,7 @@ type Options = {
 };
 
 // Prompt user for input
-const app = await consola.prompt("Enter the app (cb, laf, cm, pm, pm-lrt):", {
+const app = await consola.prompt("Enter the app (cb, laf, cm):", {
   type: "select",
   options: [...apps],
 });
@@ -48,14 +48,6 @@ function deploy(opts: Options) {
     case "cm":
       dirApp = "src/Apps/CurveMonitor";
       dirOutput = "Curve-Monitor-Web";
-      break;
-    case "pm":
-      dirApp = "src/Apps/PrismaMonitor";
-      dirOutput = "Prisma-Monitor-Web";
-      break;
-    case "pm-lrt":
-      dirApp = "src/Apps/PrismaMonitor";
-      dirOutput = "Prisma-Monitor-Lrt-Web";
       break;
   }
 

@@ -18,7 +18,6 @@ This monorepo contains the following applications:
 
 - Llama Airforce (LAF)
 - Curve Monitor (CM)
-- Prisma Monitor (PM)
 
 ## Monorepo Structure
 

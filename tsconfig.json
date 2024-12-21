@@ -24,7 +24,6 @@
       "@/*": ["src/*"],
       "@CB/*": ["src/Apps/Cookbook/*"],
       "@CM/*": ["src/Apps/CurveMonitor/*"],
-      "@PM/*": ["src/Apps/PrismaMonitor/*"],
       "@LAF/*": ["src/Apps/LlamaAirforce/*"],
       "@Union/*": ["src/Apps/LlamaAirforce/Pages/Union/*"],
       "@Pounders/*": ["src/Apps/LlamaAirforce/Pages/Pounders/*"]

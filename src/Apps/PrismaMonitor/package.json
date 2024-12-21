@@ -1,9 +1,0 @@
-{
-  "name": "@llama-airforce/pm",
-  "private": true,
-  "scripts": {
-    "lint": "cd ../../../ && eslint \"src/Apps/PrismaMonitor/**/*.{ts,vue}\"",
-    "dev": "bun --cwd=../../../ --bun vite src/Apps/PrismaMonitor",
-    "build": "bun --cwd=../../../ --bun vite build src/Apps/PrismaMonitor"
-  }
-}
