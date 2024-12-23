@@ -12,14 +12,20 @@ const emit = defineEmits<{
 // Refs
 const tabActive = ref<number | null>(null);
 
-const slots = useSlots();
+const slots = defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?(_: object): any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions?(_: object): any;
+}>();
+
 const tabs = computed(() => {
   if (!slots.default) {
     return [];
   }
 
   return slots
-    .default()
+    .default({})
     .filter((tab) => (tab as unknown as typeof TabItem).props)
     .map((x) => x as unknown as typeof TabItem);
 });
