@@ -111,7 +111,7 @@ export function uFxsLpDepositZaps(
 
       const fxs = await llamaService
         .getPrice(FxsAddress)
-        .then((x) => x.price)
+        .then((x) => x?.price ?? Infinity)
         .catch(() => Infinity);
 
       const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)

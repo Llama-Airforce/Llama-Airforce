@@ -1,7 +1,9 @@
 import { Hono } from "hono";
-import cors from "@CM/Server/middleware/cors";
 
-import index from "@CM/Server/routes/index.head";
+import cors from "@/Framework/Server/middleware/cors";
+import index from "@/Framework/Server/routes/index.head";
+import price from "@/Framework/Server/price/main";
+
 import chain from "@CM/Server/routes/chains/[chain].get";
 
 import crvusdweekly from "@CM/Server/routes/revenue/crvusdweekly.get";
@@ -20,11 +22,17 @@ revenue.route("/fees-collected", feesCollected);
 revenue.route("/fees-staged", feesStaged);
 
 // Root
-app.use(cors());
+const allowedOrigins = [
+  /^http:\/\/localhost(:\d+)?$/,
+  /^https:\/\/(.*\.)?curvemonitor\.com$/,
+];
+
+app.use(cors(allowedOrigins));
 
 app.route("/", index);
 app.route("/chains", chain);
 app.route("/revenue", revenue);
+app.route("/price", price);
 
 export default {
   port: 3001,

@@ -22,7 +22,7 @@ const { data: price } = useQuery({
   queryFn: () =>
     llamaService
       .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
-      .then((x) => x.price),
+      .then((x) => x?.price ?? Infinity),
   initialData: 0,
   initialDataUpdatedAt: 0,
 });

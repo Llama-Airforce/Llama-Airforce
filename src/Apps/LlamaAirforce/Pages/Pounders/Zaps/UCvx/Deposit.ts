@@ -104,7 +104,7 @@ export function uCvxDepositZaps(
 
       const cvx = await llamaService
         .getPrice(CvxAddress)
-        .then((x) => x.price)
+        .then((x) => x?.price ?? Infinity)
         .catch(() => Infinity);
 
       const pxcvx = await getPxCvxPrice(llamaService, client)

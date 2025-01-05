@@ -7,6 +7,7 @@ export { hosts } from "./Hosts";
 
 export * from "./DefiLlamaService";
 export { default as DefiLlamaService } from "./DefiLlamaService";
+export { default as PriceService } from "./PriceService";
 
 export * from "./ServiceBase";
 export * from "./Socket/Models";

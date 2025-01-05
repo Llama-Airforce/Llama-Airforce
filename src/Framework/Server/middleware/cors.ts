@@ -1,14 +1,8 @@
 import { cors } from "hono/cors";
 
-export default function () {
+export default function (allowedOrigins: RegExp[]) {
   return cors({
     origin: (origin) => {
-      const allowedOrigins = [
-        /^https:\/\/(.*\.)?llama\.airforce$/,
-        /^http:\/\/localhost(:\d+)?$/,
-        /^https:\/\/curvemonitor\.com$/,
-      ];
-
       return origin && allowedOrigins.some((pattern) => pattern.test(origin))
         ? origin
         : null;

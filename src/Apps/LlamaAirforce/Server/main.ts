@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import { check as envCheck } from "@LAF/Server/helpers/env";
 
-import cors from "@LAF/Server/middleware/cors";
+import cors from "@/Framework/Server/middleware/cors";
+import index from "@/Framework/Server/routes/index.head";
+import price from "@/Framework/Server/price/main";
 
-import index from "@LAF/Server/routes/index.head";
 import dashboard from "@LAF/Server/routes/dashboard/[id].get";
 import delegations from "@LAF/Server/routes/delegations.post";
 
@@ -37,7 +38,12 @@ pirex.route("/", pirexRedemptions);
 pirex.route("/", pirexRewards);
 
 // Root
-app.use(cors());
+const allowedOrigins = [
+  /^http:\/\/localhost(:\d+)?$/,
+  /^https:\/\/(.*\.)?llama\.airforce$/,
+];
+
+app.use(cors(allowedOrigins));
 
 app.route("/", index);
 app.route("/delegations", delegations);
@@ -45,6 +51,7 @@ app.route("/airdrop", airdrop);
 app.route("/bribes", bribes);
 app.route("/dashboard", dashboard);
 app.route("/pirex", pirex);
+app.route("/price", price);
 
 export default {
   port: 3000,

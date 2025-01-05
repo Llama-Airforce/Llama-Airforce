@@ -56,7 +56,7 @@ export function getDefiLlamaPrice(
 ): Promise<number> {
   return llamaService
     .getPrice(address)
-    .then((x) => x.price)
+    .then((x) => x?.price ?? 0)
     .catch(() => 0);
 }
 
@@ -193,7 +193,7 @@ export async function getCurveV2LpPrice(
   const decimals = 18n;
   const fxsPrice = await llamaService
     .getPrice(tokenAddress)
-    .then((x) => numToBigNumber(x.price, decimals))
+    .then((x) => numToBigNumber(x?.price ?? 0, decimals))
     .catch(() => 0n);
   const dec = 10n ** decimals;
 

@@ -12,7 +12,7 @@ type PriceResponse = {
 };
 
 export default class DefiLlamaService extends ServiceBase {
-  public async getPrice(address: string): Promise<Price> {
+  public async getPrice(address: string): Promise<Price | undefined> {
     const query = `ethereum:${address}`;
 
     return this.fetch<PriceResponse>(

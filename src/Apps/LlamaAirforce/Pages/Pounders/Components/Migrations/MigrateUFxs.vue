@@ -51,7 +51,7 @@ async function onMigrate(skipSlippageModal: boolean) {
 
     const cvxfxs = await llamaService
       .getPrice(FxsAddress)
-      .then((x) => x.price)
+      .then((x) => x?.price ?? Infinity)
       .catch(() => Infinity);
 
     const ufxs = await getUFxsPriceV1(llamaService, config);
