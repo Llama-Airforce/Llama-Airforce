@@ -1,17 +1,27 @@
 <script setup lang="ts">
-import swaggerUIConstructor from "swagger-ui-dist/swagger-ui-bundle";
-import "swagger-ui-dist/swagger-ui.css";
-
 const { url } = defineProps<{
   url: string;
 }>();
 
 onMounted(() => {
-  swaggerUIConstructor({
-    dom_id: "#swagger-ui",
-    url,
-    deepLinking: true,
-  });
+  // Load CSS
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "https://unpkg.com/swagger-ui-dist@5.18.2/swagger-ui.css";
+  document.head.appendChild(link);
+
+  // Load JS
+  const script = document.createElement("script");
+  script.src = "https://unpkg.com/swagger-ui-dist@5.18.2/swagger-ui-bundle.js";
+  script.onload = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+    (window as any).SwaggerUIBundle({
+      dom_id: "#swagger-ui",
+      url,
+      deepLinking: true,
+    });
+  };
+  document.body.appendChild(script);
 });
 </script>
 
