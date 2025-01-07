@@ -26,6 +26,14 @@ const canMigrate = computed(() => {
 
 const migrating = ref(false);
 
+const { needsApprove } = useApprove(
+  UnionCrvVaultAddressV1,
+  address,
+  ZapsUCrvAddressV2,
+  computed(() => BigInt(balance.value)),
+  { maxApprove: false }
+);
+
 // Events
 const config = useConfig();
 function onMigrate() {
@@ -34,14 +42,18 @@ function onMigrate() {
   }
 
   return tryNotifyLoading(migrating, async () => {
-    let hash = await writeContract(config, {
-      abi: abiERC20,
-      address: UnionCrvVaultAddressV1,
-      functionName: "approve",
-      args: [ZapsUCrvAddressV2, balance.value] as const,
-    });
+    let hash: Address = EmptyAddress;
 
-    await waitForTransactionReceipt(config, { hash });
+    if (needsApprove.value) {
+      hash = await writeContract(config, {
+        abi: abiERC20,
+        address: UnionCrvVaultAddressV1,
+        functionName: "approve",
+        args: [ZapsUCrvAddressV2, balance.value] as const,
+      });
+
+      await waitForTransactionReceipt(config, { hash });
+    }
 
     hash = await writeContract(config, {
       abi: abiMigration,
