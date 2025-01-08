@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryPrices } from "@/Services/DefiLlamaQuery";
+import { useQueryPrices } from "@/Services/PriceQuery";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 import {
   type Claim,

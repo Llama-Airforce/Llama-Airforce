@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { Address } from "@/Types/Address";
-import DefiLlamaService, { type Price } from "@/Services/DefiLlamaService";
+import PriceService, { type Price } from "@/Services/PriceService";
 
-const service = new DefiLlamaService();
+const service = new PriceService(useHost());
 
 export function useQueryPrice(address: Ref<Address | undefined>) {
   return useQuery({
     queryKey: ["token-price", address] as const,
     queryFn: async ({ queryKey: [, address] }) => service.getPrice(address!),
     enabled: computed(() => !!address.value),
+    initialDataUpdatedAt: 0,
   });
 }
 
@@ -18,6 +19,7 @@ export function useQueryPrices(addresses: Ref<Address[]>) {
       addresses.value.map((address) => ({
         queryKey: ["token-price", address] as const,
         queryFn: () => service.getPrice(address),
+        initialDataUpdatedAt: 0,
       }))
     ),
   });
