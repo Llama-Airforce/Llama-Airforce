@@ -1,31 +1,18 @@
 <script setup lang="ts">
-import { DefiLlamaService } from "@/Services";
+import { useQueryPrice } from "@/Services/PriceQuery";
 import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
 import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
 
-const llamaService = new DefiLlamaService();
-
-// Borrowed
 const { data: markets } = useQueryMarkets();
 const borrowed = computed(() =>
   markets.value.reduce((acc, x) => acc + x.borrowed, 0)
 );
 
-// ChainInfo
 const { data: chainInfo } = useQueryChainInfo(ref("ethereum"));
 const tvl = computed(() => chainInfo.value?.total.tvl ?? 0);
 const volume = computed(() => chainInfo.value?.total.tradingVolume24h ?? 0);
 
-// CRV Price
-const { data: price } = useQuery({
-  queryKey: ["crv-price"],
-  queryFn: () =>
-    llamaService
-      .getPrice("0xd533a949740bb3306d119cc777fa900ba034cd52")
-      .then((x) => x?.price ?? Infinity),
-  initialData: 0,
-  initialDataUpdatedAt: 0,
-});
+const { data: crvPrice } = useQueryPrice(toRef(() => CrvAddress));
 </script>
 
 <template>
@@ -33,11 +20,11 @@ const { data: price } = useQuery({
     <KPI
       class="border-special"
       label="CRV Price"
-      :has-value="!!price"
+      :has-value="!!crvPrice"
     >
       <AsyncValue
         type="dollar"
-        :value="price"
+        :value="crvPrice?.price ?? Infinity"
         :precision="3"
       />
     </KPI>
