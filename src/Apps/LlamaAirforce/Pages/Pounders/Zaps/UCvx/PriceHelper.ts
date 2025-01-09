@@ -1,16 +1,13 @@
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { getPxCvxPrice } from "@/Utils/Price";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import { getVirtualPrice } from "@Pounders/Models/Pounder";
 
-export async function getUCvxPrice(
-  llamaService: DefiLlamaService,
-  config: Config
-) {
+export async function getUCvxPrice(priceService: PriceService, config: Config) {
   const client = getPublicClient(config);
   if (!client) return 0;
 
-  const pxcvx = await getPxCvxPrice(llamaService, client)
+  const pxcvx = await getPxCvxPrice(priceService, client)
     .then((x) => x)
     .catch(() => Infinity);
 

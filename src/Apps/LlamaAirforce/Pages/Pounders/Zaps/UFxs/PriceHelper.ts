@@ -1,16 +1,13 @@
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { getCvxFxsPrice } from "@/Utils/Price";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import { getVirtualPrice } from "@Pounders/Models";
 
-export async function getUFxsPrice(
-  llamaService: DefiLlamaService,
-  config: Config
-) {
+export async function getUFxsPrice(priceService: PriceService, config: Config) {
   const client = getPublicClient(config);
   if (!client) throw Error("Cannot create public viem client");
 
-  const cvxfxs = await getCvxFxsPrice(llamaService, client)
+  const cvxfxs = await getCvxFxsPrice(priceService, client)
     .then((x) => x)
     .catch(() => Infinity);
 

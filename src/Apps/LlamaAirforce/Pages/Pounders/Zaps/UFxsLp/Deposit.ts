@@ -1,7 +1,7 @@
 import type { Address } from "@/Types/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
 import { maxApprove } from "@/Utils/Wallet";
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Utils/Price";
 import type { ZapDeposit } from "@Pounders/Models";
 import {
@@ -99,22 +99,22 @@ export function uFxsLpDepositZaps(
     depositBalance: () => getBalance(getConfig, getAddress, FxsAddress),
     depositDecimals: () => getDecimals(getConfig, FxsAddress),
     getMinAmountOut: async (
-      _host: string,
+      host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService();
+      const priceService = new PriceService(Promise.resolve(host));
 
       const config = getConfig();
       const client = getPublicClient(config);
       if (!client) throw Error("Cannot create public viem client");
 
-      const fxs = await llamaService
+      const fxs = await priceService
         .getPrice(FxsAddress)
         .then((x) => x?.price ?? Infinity)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(priceService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
@@ -130,21 +130,21 @@ export function uFxsLpDepositZaps(
     depositBalance: () => getBalance(getConfig, getAddress, CvxFxsAddress),
     depositDecimals: () => getDecimals(getConfig, CvxFxsAddress),
     getMinAmountOut: async (
-      _host: string,
+      host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService();
+      const priceService = new PriceService(Promise.resolve(host));
 
       const config = getConfig();
       const client = getPublicClient(config);
       if (!client) throw Error("Cannot create public viem client");
 
-      const cvxfxs = await getCvxFxsPrice(llamaService, client)
+      const cvxfxs = await getCvxFxsPrice(priceService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const cvxfxslp = await getCvxFxsLpPrice(llamaService, client)
+      const cvxfxslp = await getCvxFxsLpPrice(priceService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

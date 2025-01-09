@@ -23,7 +23,7 @@ import {
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
 } from "@/Utils/Addresses";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import type FlyerService from "@/Services/FlyerService";
 
 type CurveV1FactoryPool = GetContractReturnType<
@@ -50,31 +50,29 @@ async function getDiscount(
   return 1 - bigNumToNumber(discount, 18n);
 }
 
-export function getDefiLlamaPrice(
-  llamaService: DefiLlamaService,
+export function getPrice(
+  priceService: PriceService,
   address: string
 ): Promise<number> {
-  return llamaService
+  return priceService
     .getPrice(address)
     .then((x) => x?.price ?? 0)
     .catch(() => 0);
 }
 
-export function getCrvUsdPrice(
-  llamaService: DefiLlamaService
-): Promise<number> {
-  return getDefiLlamaPrice(llamaService, CrvUsdAddress);
+export function getCrvUsdPrice(priceService: PriceService): Promise<number> {
+  return getPrice(priceService, CrvUsdAddress);
 }
 
-export function getCvxPrice(llamaService: DefiLlamaService): Promise<number> {
-  return getDefiLlamaPrice(llamaService, CvxAddress);
+export function getCvxPrice(priceService: PriceService): Promise<number> {
+  return getPrice(priceService, CvxAddress);
 }
 
 export async function getPxCvxPrice(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient
 ): Promise<number> {
-  const cvxPrice = await getDefiLlamaPrice(llamaService, CvxAddress);
+  const cvxPrice = await getPrice(priceService, CvxAddress);
   const price_oracle = await client.readContract({
     abi: abiCurveV2,
     address: LPxCvxFactoryAddress,
@@ -86,10 +84,10 @@ export async function getPxCvxPrice(
 }
 
 export async function getCvxCrvPrice(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient
 ): Promise<number> {
-  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
+  const crvPrice = await getPrice(priceService, CrvAddress);
   const price_oracle = await client.readContract({
     abi: abiCvxCrv,
     address: CvxCrvFactoryAddress,
@@ -101,10 +99,10 @@ export async function getCvxCrvPrice(
 }
 
 export async function getCvxPrismaPrice(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient
 ): Promise<number> {
-  const prismaPrice = await getDefiLlamaPrice(llamaService, PrismaAddress);
+  const prismaPrice = await getPrice(priceService, PrismaAddress);
   const price_oracle = await client.readContract({
     abi: abiCurveV6,
     address: CvxPrismaFactoryAddress,
@@ -116,10 +114,10 @@ export async function getCvxPrismaPrice(
 }
 
 export async function getCvxCrvPriceV2(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient
 ): Promise<number> {
-  const crvPrice = await getDefiLlamaPrice(llamaService, CrvAddress);
+  const crvPrice = await getPrice(priceService, CrvAddress);
 
   // Convert crv price to cvxCrv price.
   const pool = getContract({
@@ -133,10 +131,10 @@ export async function getCvxCrvPriceV2(
 }
 
 export async function getCvxFxsPrice(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient
 ): Promise<number> {
-  const fxsPrice = await getDefiLlamaPrice(llamaService, FxsAddress);
+  const fxsPrice = await getPrice(priceService, FxsAddress);
 
   const price_oracle = await client.readContract({
     abi: abiCurveV2,
@@ -149,7 +147,7 @@ export async function getCvxFxsPrice(
 }
 
 export async function getCurveV2LpPrice(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient,
   tokenAddress: Address,
   factoryAddress: Address,
@@ -191,7 +189,7 @@ export async function getCurveV2LpPrice(
   const supply = multicallResult[3].result!;
 
   const decimals = 18n;
-  const fxsPrice = await llamaService
+  const fxsPrice = await priceService
     .getPrice(tokenAddress)
     .then((x) => numToBigNumber(x?.price ?? 0, decimals))
     .catch(() => 0n);
@@ -205,11 +203,11 @@ export async function getCurveV2LpPrice(
 }
 
 export async function getCvxFxsLpPrice(
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   client: PublicClient
 ): Promise<number> {
   return getCurveV2LpPrice(
-    llamaService,
+    priceService,
     client,
     FxsAddress,
     CvxFxsFactoryAddress,

@@ -1,7 +1,7 @@
 import type { Address } from "@/Types/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
 import { maxApprove } from "@/Utils/Wallet";
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { calcMinAmountOut, claim } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
@@ -59,18 +59,18 @@ export function uCvxClaimZaps(
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
     zap: (minAmountOut?: bigint) => claimAsCvx(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      _host: string,
+      host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService();
+      const priceService = new PriceService(Promise.resolve(host));
 
-      const cvx = await llamaService
+      const cvx = await priceService
         .getPrice(CvxAddress)
         .then((x) => x?.price ?? Infinity)
         .catch(() => Infinity);
 
-      const ucvx = await getUCvxPrice(llamaService, getConfig());
+      const ucvx = await getUCvxPrice(priceService, getConfig());
 
       return calcMinAmountOut(input, ucvx, cvx, slippage);
     },

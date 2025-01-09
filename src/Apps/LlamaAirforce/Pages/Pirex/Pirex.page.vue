@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUnionStore } from "@Pounders/Store";
 import UnionService from "@LAF/Services/UnionService";
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import FlyerService from "@/Services/FlyerService";
 import { useClaim } from "@Pounders/Composables/UseClaim";
 import { create as createPounderState } from "@Pounders/Models/PounderState";
@@ -17,7 +17,7 @@ import RedemptionsInit from "@LAF/Pages/Pirex/Components/RedemptionsInit.vue";
 import Swap from "@LAF/Pages/Pirex/Components/Swap.vue";
 
 const unionService = new UnionService(useHost());
-const llamaService = new DefiLlamaService();
+const priceService = new PriceService(useHost());
 const flyerService = new FlyerService(useHost());
 
 const { isConnected, address } = useWallet();
@@ -36,7 +36,7 @@ onMounted(createUCvxPounder);
 
 const config = useConfig();
 function createUCvxPounder() {
-  const pounder = createCvxPounder(config, llamaService, flyerService);
+  const pounder = createCvxPounder(config, priceService, flyerService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>

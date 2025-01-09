@@ -3,19 +3,19 @@ import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { getCvxFxsLpApy } from "@/Utils/Apy";
 import { getCvxFxsLpPrice } from "@/Utils/Price";
 import { bigNumToNumber } from "@/Utils/Number";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsLpPounder(
   config: Config,
-  llamaService: DefiLlamaService
+  priceService: PriceService
 ): Pounder<VaultUnion> {
   const client = getPublicClient(config);
   if (!client) throw Error("Cannot create public viem client");
 
-  const getPriceUnderlying = () => getCvxFxsLpPrice(llamaService, client);
+  const getPriceUnderlying = () => getCvxFxsLpPrice(priceService, client);
   const getApy = () => getCvxFxsLpApy();
 
   const getOraclePrice = () =>

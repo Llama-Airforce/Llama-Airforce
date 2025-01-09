@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import UnionService from "@LAF/Services/UnionService";
 import Documentation from "@LAF/Components/Documentation.vue";
 import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
@@ -15,7 +15,7 @@ import { useClaim } from "@Pounders/Composables/UseClaim";
 const { t } = useI18n();
 
 const unionService = new UnionService(useHost());
-const llamaService = new DefiLlamaService();
+const priceService = new PriceService(useHost());
 const flyerService = new FlyerService(useHost());
 
 // Refs
@@ -78,7 +78,7 @@ function createPounders() {
 function createUCvxPounder() {
   const pounder = pounderFactories.createCvxPounder(
     config,
-    llamaService,
+    priceService,
     flyerService
   );
 
@@ -106,7 +106,7 @@ function createUCvxPounder() {
 }
 
 function createUCrvPounder() {
-  const pounder = pounderFactories.createCrvPounder(config, llamaService);
+  const pounder = pounderFactories.createCrvPounder(config, priceService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
@@ -132,7 +132,7 @@ function createUCrvPounder() {
 }
 
 function createUFxsPounder() {
-  const pounder = pounderFactories.createFxsPounder(config, llamaService);
+  const pounder = pounderFactories.createFxsPounder(config, priceService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
@@ -158,7 +158,7 @@ function createUFxsPounder() {
 }
 
 function createUPrismaPounder() {
-  const pounder = pounderFactories.createPrismaPounder(config, llamaService);
+  const pounder = pounderFactories.createPrismaPounder(config, priceService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
@@ -184,7 +184,7 @@ function createUPrismaPounder() {
 }
 
 function createUFxsLpPounder() {
-  const pounder = pounderFactories.createFxsLpPounder(config, llamaService);
+  const pounder = pounderFactories.createFxsLpPounder(config, priceService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>
@@ -234,7 +234,7 @@ function createUBalPounder() {
 }
 
 function createUCrvV2Pounder() {
-  const pounder = pounderFactories.createCrvV2Pounder(config, llamaService);
+  const pounder = pounderFactories.createCrvV2Pounder(config, priceService);
 
   const zapsFactories: ZapsFactories = {
     createZapsDeposit: (getInput: () => bigint | undefined) =>

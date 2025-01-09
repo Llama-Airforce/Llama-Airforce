@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import { getUFxsPriceV1 } from "@Pounders/Zaps/UFxsLp/PriceHelper";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 
 const { t } = useI18n();
 
-const llamaService = new DefiLlamaService();
+const priceService = new PriceService(useHost());
 
 // Refs
 const { address } = useWallet();
@@ -49,12 +49,12 @@ async function onMigrate(skipSlippageModal: boolean) {
     modalSlippage.value = true;
     modalAction = () => onMigrate(true);
 
-    const cvxfxs = await llamaService
+    const cvxfxs = await priceService
       .getPrice(FxsAddress)
       .then((x) => x?.price ?? Infinity)
       .catch(() => Infinity);
 
-    const ufxs = await getUFxsPriceV1(llamaService, config);
+    const ufxs = await getUFxsPriceV1(priceService, config);
 
     minAmountOutRef.value = bigNumToNumber(
       calcMinAmountOut(balance.value, ufxs, cvxfxs, 0),

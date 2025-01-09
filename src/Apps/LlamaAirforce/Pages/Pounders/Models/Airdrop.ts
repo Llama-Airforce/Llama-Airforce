@@ -6,7 +6,7 @@ import {
 } from "viem";
 import { abi as abiUnionVault } from "@/ABI/Union/UnionVault";
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import { bigNumToNumber } from "@/Utils/Number";
 import {
   getCvxCrvPrice,
@@ -94,10 +94,10 @@ export function isAirdropSCrvUsd(airdrop: Airdrop): airdrop is AirdropSCrvUsd {
 
 export async function uCrvAirdrop(
   client: PublicClient,
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   claim: Claim | undefined
 ): Promise<AirdropUCrv> {
-  const cvxCrvPrice = await getCvxCrvPrice(llamaService, client);
+  const cvxCrvPrice = await getCvxCrvPrice(priceService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
@@ -129,10 +129,10 @@ export async function uCrvAirdrop(
 
 export async function uFxsAirdrop(
   client: PublicClient,
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   claim: Claim | undefined
 ): Promise<AirdropUFxs> {
-  const cvxFxsPrice = await getCvxFxsPrice(llamaService, client);
+  const cvxFxsPrice = await getCvxFxsPrice(priceService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
@@ -164,10 +164,10 @@ export async function uFxsAirdrop(
 
 export async function uPrismaAirdrop(
   client: PublicClient,
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   claim: Claim | undefined
 ): Promise<AirdropUPrisma> {
-  const cvxPrismaPrice = await getCvxPrismaPrice(llamaService, client);
+  const cvxPrismaPrice = await getCvxPrismaPrice(priceService, client);
 
   const utkn = getContract({
     abi: abiUnionVault,
@@ -199,10 +199,10 @@ export async function uPrismaAirdrop(
 
 export async function uCvxAirdrop(
   client: PublicClient,
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   claim: Claim | undefined
 ): Promise<AirdropUCvx> {
-  const pxCvxPrice = await getPxCvxPrice(llamaService, client);
+  const pxCvxPrice = await getPxCvxPrice(priceService, client);
 
   const utkn = getContract({
     abi: abiUnionVaultPirex,
@@ -234,10 +234,10 @@ export async function uCvxAirdrop(
 
 export async function sCrvUsdAirdrop(
   client: PublicClient,
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   claim: Claim | undefined
 ): Promise<AirdropSCrvUsd> {
-  const crvUsdPrice = await getCrvUsdPrice(llamaService);
+  const crvUsdPrice = await getCrvUsdPrice(priceService);
 
   const scrvusd = getContract({
     abi: abiERC4626,

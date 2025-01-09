@@ -1,7 +1,7 @@
 import { abi } from "@/ABI/Union/UnionVaultPirex";
 import { getCvxApy } from "@/Utils/Apy";
 import { getPxCvxPrice } from "@/Utils/Price";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import type { VaultPirex, Pounder } from "@Pounders/Models";
 import type FlyerService from "@/Services/FlyerService";
 
@@ -9,13 +9,13 @@ import logo from "@/Assets/Icons/Tokens/cvx.svg";
 
 export default function createCvxPounder(
   config: Config,
-  llamaService: DefiLlamaService,
+  priceService: PriceService,
   flyerService: FlyerService
 ): Pounder<VaultPirex> {
   const client = getPublicClient(config);
   if (!client) throw Error("Cannot create public viem client");
 
-  const getPriceUnderlying = () => getPxCvxPrice(llamaService, client);
+  const getPriceUnderlying = () => getPxCvxPrice(priceService, client);
   const getApy = () => getCvxApy(flyerService);
 
   const contract = getContract({

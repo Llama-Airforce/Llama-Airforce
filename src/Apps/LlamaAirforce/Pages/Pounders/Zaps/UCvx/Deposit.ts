@@ -9,7 +9,7 @@ import {
   getDecimals,
   calcMinAmountOut,
 } from "@Pounders/Zaps/Helpers";
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import { getPxCvxPrice } from "@/Utils/Price";
 
 import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
@@ -92,22 +92,22 @@ export function uCvxDepositZaps(
     depositBalance: () => getBalance(getConfig, getAddress, CvxAddress),
     depositDecimals: () => getDecimals(getConfig, CvxAddress),
     getMinAmountOut: async (
-      _host: string,
+      host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService();
+      const priceService = new PriceService(Promise.resolve(host));
 
       const config = getConfig();
       const client = getPublicClient(config);
       if (!client) throw Error("Cannot create public viem client");
 
-      const cvx = await llamaService
+      const cvx = await priceService
         .getPrice(CvxAddress)
         .then((x) => x?.price ?? Infinity)
         .catch(() => Infinity);
 
-      const pxcvx = await getPxCvxPrice(llamaService, client)
+      const pxcvx = await getPxCvxPrice(priceService, client)
         .then((x) => x)
         .catch(() => Infinity);
 

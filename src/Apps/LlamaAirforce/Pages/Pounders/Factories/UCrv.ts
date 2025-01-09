@@ -1,20 +1,20 @@
 import { getCvxCrvApy } from "@/Utils/Apy";
 import { getCvxCrvPrice } from "@/Utils/Price";
 import { abi } from "@/ABI/Union/UnionVault";
-import type { DefiLlamaService } from "@/Services";
+import type { PriceService } from "@/Services";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
 
 import logo from "@/Assets/Icons/Tokens/crv.svg";
 
 export default function createCrvPounder(
   config: Config,
-  llamaService: DefiLlamaService
+  priceService: PriceService
 ): Pounder<VaultUnion> {
   const client = getPublicClient(config);
   if (!client) throw Error("Cannot create public viem client");
 
-  const getPriceUnderlying = () => getCvxCrvPrice(llamaService, client);
-  const getApy = () => getCvxCrvApy(client, llamaService);
+  const getPriceUnderlying = () => getCvxCrvPrice(priceService, client);
+  const getApy = () => getCvxCrvApy(client, priceService);
 
   const contract = getContract({
     abi,

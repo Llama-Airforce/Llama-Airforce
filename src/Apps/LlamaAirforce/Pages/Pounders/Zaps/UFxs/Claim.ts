@@ -1,7 +1,7 @@
 import type { Address } from "@/Types/Address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
 import { maxApprove } from "@/Utils/Wallet";
-import { DefiLlamaService } from "@/Services";
+import { PriceService } from "@/Services";
 import { getCvxFxsPrice } from "@/Utils/Price";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
@@ -69,21 +69,21 @@ export function uFxsClaimZaps(
     claimBalance: () => Promise.resolve(getAirdrop()?.amount ?? 0n),
     zap: (minAmountOut?: bigint) => claimAsCvxFxs(minAmountOut ?? 0n),
     getMinAmountOut: async (
-      _host: string,
+      host: string,
       input: bigint,
       slippage: number
     ): Promise<bigint> => {
-      const llamaService = new DefiLlamaService();
+      const priceService = new PriceService(Promise.resolve(host));
 
       const config = getConfig();
       const client = getPublicClient(config);
       if (!client) throw Error("Cannot create public viem client");
 
-      const cvxfxs = await getCvxFxsPrice(llamaService, client)
+      const cvxfxs = await getCvxFxsPrice(priceService, client)
         .then((x) => x)
         .catch(() => Infinity);
 
-      const ufxs = await getUFxsPrice(llamaService, config);
+      const ufxs = await getUFxsPrice(priceService, config);
 
       return calcMinAmountOut(input, ufxs, cvxfxs, slippage);
     },
