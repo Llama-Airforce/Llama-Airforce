@@ -4,16 +4,23 @@ const modelValue = defineModel<number | null | string>({
   default: null,
 });
 
-const { min = -Infinity, max = Infinity } = defineProps<{
+const {
+  min = -Infinity,
+  max = Infinity,
+  decimals = 12,
+} = defineProps<{
   min: number;
   max: number;
+  decimals?: number;
 }>();
 
 watch(modelValue, (value) => {
   if (value === "") {
     modelValue.value = null;
   } else if (typeof value === "number") {
-    modelValue.value = Math.min(Math.max(value, min), max);
+    const multiplier = Math.pow(10, decimals);
+    const rounded = Math.floor(value * multiplier) / multiplier;
+    modelValue.value = Math.min(Math.max(rounded, min), max);
   }
 });
 </script>
