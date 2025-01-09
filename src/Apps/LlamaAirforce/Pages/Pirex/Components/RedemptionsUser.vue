@@ -18,7 +18,9 @@ const redemptions = computed(() =>
         redemption.tokenId === x.tokenId && redemption.balance === x.balance
     );
 
-    return !isAlreadyRedeemedByFrontEnd;
+    const isDust = x.balance < 1000000000000n;
+
+    return !isAlreadyRedeemedByFrontEnd && !isDust;
   })
 );
 
