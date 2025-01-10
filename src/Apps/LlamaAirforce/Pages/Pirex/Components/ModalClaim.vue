@@ -211,7 +211,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
         </div>
 
         <div
-          v-for="epoch in epochs"
+          v-for="epoch in epochs.filter((epoch) => total(epoch) > 0.1)"
           :key="epoch.epoch"
           class="epoch"
           :class="{ expanded: isExpanded(epoch) }"
