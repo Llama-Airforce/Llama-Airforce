@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Address } from "@/Types/Address";
 import { abi } from "@/ABI/Union/Pirex";
-import { abi as abiERC1155 } from "@/ABI/Standards/ERC1155";
 import type { Price } from "@/Services";
 import {
   type SnapshotReward,
@@ -13,6 +12,7 @@ import {
   isSnapshotReward,
 } from "@LAF/Pages/Pirex/Services";
 import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
+import useApproveForAll from "../Composables/UseApprovalForAll";
 
 const emit = defineEmits<{
   close: [];
@@ -155,35 +155,7 @@ const { execute: claimSnapshot, isExecuting: claimingSnapshot } =
   );
 
 // Claiming futures
-const { data: isApprovedForAll, refetch: refetchIsApprovedForAll } =
-  useReadContract({
-    abi: abiERC1155,
-    address: RPxCvxAddress,
-    functionName: "isApprovedForAll",
-    args: computed(() => [address.value!, PirexCvxAddress] as const),
-    query: {
-      enabled: computed(() => !!address.value),
-      initialData: false,
-      initialDataUpdatedAt: 0,
-    },
-  });
-
-const { execute: approve, isExecuting: approving } = useExecuteContract(
-  (writeContract) => {
-    writeContract({
-      abi: abiERC1155,
-      address: RPxCvxAddress,
-      functionName: "setApprovalForAll",
-      args: [PirexCvxAddress, true] as const,
-    });
-  },
-  {
-    successMessage: `Successfully approved futures claim zap!`,
-    onSuccess: () => {
-      void refetchIsApprovedForAll();
-    },
-  }
-);
+const { isApprovedForAll, approve, approving } = useApproveForAll(address);
 
 const { execute: claimFutures, isExecuting: claimingFutures } =
   useExecuteContract(
