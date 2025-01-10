@@ -395,6 +395,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
           font-size: 1rem;
           font-weight: bold;
           margin-inline: 1rem;
+          margin-block-end: 1rem;
           color: var(--c-text);
         }
 
@@ -405,6 +406,10 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
           margin-bottom: 1rem;
         }
       }
+    }
+
+    &:deep(.headers) {
+      background-color: var(--c-lvl2);
     }
   }
 }
