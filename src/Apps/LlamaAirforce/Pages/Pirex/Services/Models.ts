@@ -44,6 +44,11 @@ export type Redemption = {
   fee: number;
 };
 
+export type FuturePending = {
+  tokenId: bigint;
+  balance: bigint;
+};
+
 export type RedemptionPending = {
   tokenId: bigint;
   balance: bigint;

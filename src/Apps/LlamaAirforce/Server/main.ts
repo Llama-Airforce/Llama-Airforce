@@ -14,6 +14,7 @@ import airdropClearCache from "@LAF/Server/routes/airdrop/clearcache.post";
 import bribesPPRound from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
 import bribesPPRounds from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 
+import pirexFutures from "@LAF/Server/routes/pirex/futures/[address].get";
 import pirexRedemptions from "@LAF/Server/routes/pirex/redemptions/[address].get";
 import pirexRewards from "@LAF/Server/routes/pirex/rewards/[address].get";
 
@@ -34,6 +35,7 @@ bribes.route("/", bribesPPRounds);
 bribes.route("/", bribesPPRound);
 
 // Pirex
+pirex.route("/", pirexFutures);
 pirex.route("/", pirexRedemptions);
 pirex.route("/", pirexRewards);
 

@@ -27,3 +27,13 @@ export function useQueryRedemptions(address: Ref<Address | undefined>) {
     enabled: computed(() => !!address.value),
   });
 }
+
+export function useQueryFutures(address: Ref<Address | undefined>) {
+  return useQuery({
+    queryKey: ["pirex-futures", address] as const,
+    queryFn: async ({ queryKey: [, address] }) => service.getFutures(address!),
+    initialData: [],
+    initialDataUpdatedAt: 0,
+    enabled: computed(() => !!address.value),
+  });
+}

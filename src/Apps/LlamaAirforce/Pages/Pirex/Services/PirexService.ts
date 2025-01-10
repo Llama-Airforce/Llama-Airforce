@@ -30,4 +30,14 @@ export default class PirexService extends ServiceBaseHost {
 
     return resp.map((x) => Parsers.parseRedemption(x));
   }
+
+  public async getFutures(address: Address) {
+    const host = await this.getHost();
+
+    const resp = await this.fetch<ApiTypes.GetFuturesResponse>(
+      `${host}/pirex/futures/${address}`
+    );
+
+    return resp.map((x) => Parsers.parseFuture(x));
+  }
 }

@@ -64,6 +64,19 @@ function createUCvxPounder() {
 
 <template>
   <div class="dashboard">
+    <Card class="announcement border-flash">
+      <div class="announcement-body">
+        <h1>
+          If your future rewards aren't showing up, you can claim them manually
+          here
+        </h1>
+
+        <span>
+          <router-link to="/pirex/futures"> Claim Futures </router-link>
+        </span>
+      </div>
+    </Card>
+
     <PounderComponent
       v-if="store.pounders.ucvx"
       style="grid-area: pounder"
@@ -94,6 +107,7 @@ function createUCvxPounder() {
   grid-template-columns: 2fr 1fr;
 
   grid-template-areas:
+    "announcement announcement"
     "pounder pounder"
     "left right";
 
@@ -109,6 +123,28 @@ function createUCvxPounder() {
 
     > * {
       flex-grow: 0;
+    }
+  }
+}
+
+.announcement {
+  grid-area: announcement;
+
+  --flash-color: var(--c-yellow);
+
+  .announcement-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1ch;
+
+    h1 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    span {
+      display: flex;
+      justify-content: end;
     }
   }
 }

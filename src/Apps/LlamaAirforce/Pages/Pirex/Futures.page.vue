@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { abi } from "@/ABI/Union/Pirex";
 import useApproveForAll from "./Composables/UseApprovalForAll";
+import { useQueryFutures } from "./Services/Queries";
 
 const { address } = useWallet();
 
+const { data: futures } = useQueryFutures(address);
 const { isApprovedForAll, approve, approving } = useApproveForAll(address);
 
 const epoch = ref<number | null>(null);
@@ -47,21 +49,41 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
 
     <Card>
       <div class="claim">
-        Epoch:
-        <InputNumber
-          v-model="epoch"
-          placeholder="1735776000"
-          :min="0"
-          :max="Infinity"
-        />
+        <div class="futures">
+          <div class="epoch header">Epoch</div>
+          <div class="date header">Date</div>
+          <div class="balance header">NFT Balance</div>
 
-        <Button
-          class="primary"
-          :disabled="!isApprovedForAll || claimingFutures || !epoch"
-          @click="claimFutures"
-        >
-          Claim Futures Rewards
-        </Button>
+          <template
+            v-for="future in futures"
+            :key="future.tokenId"
+          >
+            <div class="epoch">{{ future.tokenId }}</div>
+            <div class="date">
+              {{ new Date(Number(future.tokenId) * 1000).toLocaleDateString() }}
+            </div>
+            <div class="balance">{{ Number(future.balance) / 10 ** 16 }}</div>
+          </template>
+        </div>
+
+        <div class="input">
+          Epoch:
+
+          <InputNumber
+            v-model="epoch"
+            placeholder="1735776000"
+            :min="0"
+            :max="Infinity"
+          />
+
+          <Button
+            class="primary"
+            :disabled="!isApprovedForAll || claimingFutures || !epoch"
+            @click="claimFutures"
+          >
+            Claim Futures Rewards
+          </Button>
+        </div>
       </div>
     </Card>
   </div>
@@ -70,7 +92,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
 <style scoped>
 .dashboard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 
   @media only screen and (max-width: 1280px) {
     display: flex;
@@ -81,17 +103,32 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
     height: 100%;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 1rem;
   }
 
   .claim {
-    height: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
+
+    .futures {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      row-gap: 0.25rem;
+      column-gap: 0.25rem;
+
+      .header {
+        font-weight: bold;
+      }
+    }
+
+    .input {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
   }
 }
 </style>

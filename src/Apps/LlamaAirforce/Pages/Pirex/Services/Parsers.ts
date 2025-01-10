@@ -37,3 +37,17 @@ export const parseRedemption = (
     ),
   };
 };
+
+export const parseFuture = (
+  x: ApiTypes.GetFuturesResponse[number]
+): Models.FuturePending => {
+  return {
+    tokenId: BigInt(x.tokenId),
+    balance: BigInt(
+      // Can be with scientific notation.
+      x.balance.includes(".") || x.balance.includes("e")
+        ? parseFloat(x.balance)
+        : x.balance
+    ),
+  };
+};
