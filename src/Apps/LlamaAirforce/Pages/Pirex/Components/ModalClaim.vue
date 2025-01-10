@@ -63,8 +63,17 @@ const rewards = computed(() =>
 );
 
 function total(epoch: Epoch) {
-  const epochRewards = rewards.value[epoch.epoch].snapshot;
-  return epochRewards.reduce((acc, x) => acc + x.amountUsd, 0);
+  const epochRewards = rewards.value[epoch.epoch].snapshot.reduce(
+    (acc, x) => acc + x.amountUsd,
+    0
+  );
+
+  const futuresRewards = rewards.value[epoch.epoch].futures.reduce(
+    (acc, x) => acc + x.amountUsd,
+    0
+  );
+
+  return epochRewards + futuresRewards;
 }
 
 // Expanding
