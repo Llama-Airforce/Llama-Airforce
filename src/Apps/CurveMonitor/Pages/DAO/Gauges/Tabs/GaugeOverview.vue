@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Gauge } from "@CM/Services/Gauge";
+import type { Gauge } from "@CM/Services/gauge";
 import TableDeployment from "../Tables/TableDeployment.vue";
 import ChartWeightHistory from "../Charts/ChartWeightHistory.vue";
 

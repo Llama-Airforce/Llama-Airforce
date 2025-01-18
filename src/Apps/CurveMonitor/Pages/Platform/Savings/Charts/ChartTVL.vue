@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQueryYield } from "@CM/Services/Savings/Queries";
+import { useQueryYield } from "@CM/Services/savings/queries";
 
 // Data
 const { isFetching: loading, data } = useQueryYield();

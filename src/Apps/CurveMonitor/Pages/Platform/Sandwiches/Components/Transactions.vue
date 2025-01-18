@@ -2,7 +2,7 @@
 import {
   TransactionType,
   type TransactionDetail,
-} from "@CM/Services/Monitor/SocketMonitorCurve";
+} from "@CM/Services/monitor/socketMonitorCurve";
 
 const {
   txs = null,

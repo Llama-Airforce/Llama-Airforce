@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Proposal } from "@CM/Services/Proposal";
+import type { Proposal } from "@CM/Services/proposal";
 import Voting from "@CM/Pages/DAO/Proposals/Components/Voting.vue";
 import Technicals from "@CM/Pages/DAO/Proposals/Components/Technicals.vue";
 

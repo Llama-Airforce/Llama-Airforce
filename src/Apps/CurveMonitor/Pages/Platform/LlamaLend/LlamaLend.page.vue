@@ -3,8 +3,8 @@ import type { Chain } from "@/Types/Chain";
 import {
   useQueryMarkets,
   useQueryChains,
-} from "@CM/Services/LlamaLend/Queries";
-import type { Market, MarketPair } from "@CM/Services/LlamaLend";
+} from "@CM/Services/llamalend/queries";
+import type { Market, MarketPair } from "@CM/Services/llamalend";
 import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 
 const chainParam = useRouteParams<Chain | undefined | "">("chain");

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQueryPrice } from "@/Services/PriceQuery";
-import { useQueryChainInfo } from "@CM/Services/Chains/Queries";
-import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
+import { useQueryChainInfo } from "@CM/Services/chains/queries";
+import { useQueryMarkets } from "@CM/Services/crvusd/queries";
 
 const { data: markets } = useQueryMarkets();
 const borrowed = computed(() =>

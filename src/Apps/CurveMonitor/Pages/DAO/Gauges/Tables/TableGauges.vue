@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Gauge } from "@CM/Services/Gauge";
-import { useQueryGauges } from "@CM/Services/Gauge/Queries";
+import type { Gauge } from "@CM/Services/gauge";
+import { useQueryGauges } from "@CM/Services/gauge/queries";
 
 const { isFetching: loading, data: gauges } = useQueryGauges();
 

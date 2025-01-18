@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { LiqLosses } from "@CM/Services/Liquidations";
+import type { LiqLosses } from "@CM/Services/liquidations";
 
 const { losses } = defineProps<{
   losses: LiqLosses[];

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LiqOverview } from "@CM/Services/Liquidations";
+import type { LiqOverview } from "@CM/Services/liquidations";
 
 const { overview } = defineProps<{
   overview: LiqOverview | undefined;

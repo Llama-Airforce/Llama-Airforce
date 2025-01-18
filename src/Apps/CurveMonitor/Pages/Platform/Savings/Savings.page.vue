@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryStatistics } from "@CM/Services/Savings/Queries";
+import { useQueryStatistics } from "@CM/Services/savings/queries";
 import TableEvents from "./Tables/TableEvents.vue";
 import ChartYield from "./Charts/ChartYield.vue";
 import ChartTVL from "./Charts/ChartTVL.vue";

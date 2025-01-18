@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryUserLocks } from "@CM/Services/Dao/Queries";
+import { useQueryUserLocks } from "@CM/Services/dao/queries";
 
 const { user } = defineProps<{ user: string | undefined }>();
 

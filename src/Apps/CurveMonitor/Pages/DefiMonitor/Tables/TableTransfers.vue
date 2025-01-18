@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryTransfers } from "@CM/Services/Monitor/Transfer/Queries";
+import { useQueryTransfers } from "@CM/Services/monitor/transfer/queries";
 import WatchlistTokens from "../Components/WatchlistTokens.vue";
 import type { Token } from "../Models";
 

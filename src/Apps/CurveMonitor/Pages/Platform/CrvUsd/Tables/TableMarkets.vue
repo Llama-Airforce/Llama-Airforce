@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Market } from "@CM/Services/CrvUsd";
-import { useQueryMarkets } from "@CM/Services/CrvUsd/Queries";
+import type { Market } from "@CM/Services/crvusd";
+import { useQueryMarkets } from "@CM/Services/crvusd/queries";
 
 const emit = defineEmits<{
   select: [market: Market];

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Pool } from "@CM/Services/Pools";
+import type { Pool } from "@CM/Services/pools";
 import ChartMEV from "../Charts/ChartMEV.vue";
 
 const { pool } = defineProps<{

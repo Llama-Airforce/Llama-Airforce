@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/CrvUsd";
-import type { Endpoint } from "@CM/Services/Llamma";
-import { useQueryOHLC } from "@CM/Services/Llamma/Queries";
+import type { Market } from "@CM/Services/crvusd";
+import type { Endpoint } from "@CM/Services/llamma";
+import { useQueryOHLC } from "@CM/Services/llamma/queries";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

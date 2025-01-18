@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { LlammaOHLC } from "@CM/Services/Llamma";
+import type { LlammaOHLC } from "@CM/Services/llamma";
 
 const { ohlc } = defineProps<{
   ohlc: LlammaOHLC[];

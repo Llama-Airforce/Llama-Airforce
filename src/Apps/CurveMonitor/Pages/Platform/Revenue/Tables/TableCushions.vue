@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import { useQueryCushions } from "@CM/Services/Revenue/Queries";
-import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
+import { useQueryCushions } from "@CM/Services/revenue/queries";
+import { useQueryChainsSupported } from "@CM/Services/chains/queries";
 
 const search = ref("");
 const loading = computed(

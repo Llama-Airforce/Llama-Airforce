@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryLocksDaily } from "@CM/Services/Dao/Queries";
+import { useQueryLocksDaily } from "@CM/Services/dao/queries";
 
 // Data
 const { isFetching: loading, data } = useQueryLocksDaily();

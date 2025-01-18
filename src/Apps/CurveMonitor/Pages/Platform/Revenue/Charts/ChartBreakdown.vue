@@ -3,7 +3,7 @@ import { createChartStyles } from "@/Styles/ChartStylesApex";
 import {
   useQueryCrvUsdWeekly,
   useQueryPoolsWeekly,
-} from "@CM/Services/Revenue/Queries";
+} from "@CM/Services/revenue/queries";
 
 type Serie = {
   name: string;

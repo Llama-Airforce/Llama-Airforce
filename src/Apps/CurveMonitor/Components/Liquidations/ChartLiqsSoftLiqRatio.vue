@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { SoftLiqRatio } from "@CM/Services/Liquidations";
+import type { SoftLiqRatio } from "@CM/Services/liquidations";
 
 type PriceOracle = {
   timestamp: number;

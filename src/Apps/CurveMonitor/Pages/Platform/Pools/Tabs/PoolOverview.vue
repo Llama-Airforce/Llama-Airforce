@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Pool } from "@CM/Services/Pools";
-import { useQueryVolume, useQueryTvl } from "@CM/Services/Pools/Queries";
-import { useQueryOHLC } from "@CM/Services/OHLC/Queries";
+import type { Pool } from "@CM/Services/pools";
+import { useQueryVolume, useQueryTvl } from "@CM/Services/pools/queries";
+import { useQueryOHLC } from "@CM/Services/ohlc/queries";
 import ChartBalances from "../Charts/ChartBalances.vue";
 import ChartTvl from "../Charts/ChartTvl.vue";
 import ChartVolume from "../Charts/ChartVolume.vue";

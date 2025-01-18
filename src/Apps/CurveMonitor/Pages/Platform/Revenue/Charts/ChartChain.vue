@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import { useQueryRevenueChains } from "@CM/Services/Revenue/Queries";
+import { useQueryRevenueChains } from "@CM/Services/revenue/queries";
 
 // Data
 const { isFetching: loading, data: chainRevenues } = useQueryRevenueChains();

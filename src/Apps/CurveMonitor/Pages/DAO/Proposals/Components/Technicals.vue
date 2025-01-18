@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Proposal } from "@CM/Services/Proposal";
-import { useQueryProposal } from "@CM/Services/Proposal/Queries";
+import type { Proposal } from "@CM/Services/proposal";
+import { useQueryProposal } from "@CM/Services/proposal/queries";
 import Voters from "@CM/Pages/DAO/Proposals/Components/Voters.vue";
 
 const { proposal, expanded = false } = defineProps<{

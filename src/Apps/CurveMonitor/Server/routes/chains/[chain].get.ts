@@ -5,7 +5,7 @@ import {
   cache,
 } from "@/Framework/Hono";
 import { isChain } from "@/Types/Chain";
-import type * as ApiTypes from "@CM/Services/Pools/ApiTypes";
+import type * as ApiTypes from "@CM/Services/pools/apiTypes";
 
 const path = "/:chain";
 

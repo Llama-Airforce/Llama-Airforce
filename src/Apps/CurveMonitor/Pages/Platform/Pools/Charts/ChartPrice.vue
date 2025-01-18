@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartStyles from "@/Styles/ChartStylesLW";
-import type { OHLC } from "@CM/Services/OHLC";
+import type { OHLC } from "@CM/Services/ohlc";
 
 const { ohlc } = defineProps<{
   ohlc: OHLC[];

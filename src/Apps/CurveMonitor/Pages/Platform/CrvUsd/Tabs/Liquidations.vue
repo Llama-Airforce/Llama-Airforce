@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/CrvUsd";
-import { useQuerySnapshots } from "@CM/Services/CrvUsd/Queries";
+import type { Market } from "@CM/Services/crvusd";
+import { useQuerySnapshots } from "@CM/Services/crvusd/queries";
 import {
   useQueryLiqOverview,
   useQueryLiqsAggregate,
@@ -9,7 +9,7 @@ import {
   useQueryLiqHealthDeciles,
   useQueryLiqLosses,
   useQuerySoftLiqRatios,
-} from "@CM/Services/Liquidations/Queries";
+} from "@CM/Services/liquidations/queries";
 import {
   ChartLiqs,
   ChartLiqsSoftLiqRatio,

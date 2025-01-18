@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Proposal, ProposalDetails } from "@CM/Services/Proposal";
+import type { Proposal, ProposalDetails } from "@CM/Services/proposal";
 
 const { proposal, proposalDetails } = defineProps<{
   proposal: Proposal;

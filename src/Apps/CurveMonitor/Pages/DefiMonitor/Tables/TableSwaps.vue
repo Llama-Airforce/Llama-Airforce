@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuerySwaps } from "@CM/Services/Monitor/Swap/Queries";
+import { useQuerySwaps } from "@CM/Services/monitor/swap/queries";
 import WatchlistSwappers from "../Components/WatchlistSwappers.vue";
 import type { Swapper } from "../Models";
 

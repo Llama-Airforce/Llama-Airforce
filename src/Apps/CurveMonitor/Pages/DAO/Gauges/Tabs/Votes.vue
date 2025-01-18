@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Gauge } from "@CM/Services/Gauge";
+import type { Gauge } from "@CM/Services/gauge";
 import TableVotes from "../Tables/TableVotes.vue";
 
 const { gauge } = defineProps<{

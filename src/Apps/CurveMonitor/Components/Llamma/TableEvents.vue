@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LlammaEvent } from "@CM/Services/Llamma";
+import type { LlammaEvent } from "@CM/Services/llamma";
 
 const { events, count } = defineProps<{
   events: LlammaEvent[];

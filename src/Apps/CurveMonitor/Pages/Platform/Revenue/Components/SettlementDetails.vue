@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CowSwapSettlement } from "@CM/Services/Revenue";
-import { useQuerySolverCompetition } from "@CM/Services/Solver/Queries";
+import type { CowSwapSettlement } from "@CM/Services/revenue";
+import { useQuerySolverCompetition } from "@CM/Services/solver/queries";
 
 const { settlement } = defineProps<{
   settlement: CowSwapSettlement;

@@ -7,7 +7,7 @@ import {
   ChartKeeperPrices,
   ChartCrvUsdSupply,
 } from "@CM/Pages/Platform/CrvUsd/Charts";
-import type { Market } from "@CM/Services/CrvUsd";
+import type { Market } from "@CM/Services/crvusd";
 
 const { crumbs } = storeToRefs(useBreadcrumbStore());
 crumbs.value = [

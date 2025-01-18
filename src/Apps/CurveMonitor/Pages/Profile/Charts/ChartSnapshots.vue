@@ -2,8 +2,8 @@
 import type { Chain } from "@/Types/Chain";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQueryUserMarketSnapshots as useQuerySnapshotsCrvUsd } from "@CM/Services/CrvUsd/Queries";
-import { useQueryUserMarketSnapshots as useQuerySnapshotsLending } from "@CM/Services/LlamaLend/Queries";
+import { useQueryUserMarketSnapshots as useQuerySnapshotsCrvUsd } from "@CM/Services/crvusd/queries";
+import { useQueryUserMarketSnapshots as useQuerySnapshotsLending } from "@CM/Services/llamalend/queries";
 
 export type Serie = "borrowed" | "collateral";
 const serie = ref<Serie>("borrowed");

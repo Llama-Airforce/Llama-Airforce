@@ -5,7 +5,7 @@ import {
   hasWon,
   hasReachedQuorum,
   hasReachedSupport,
-} from "@CM/Services/Proposal";
+} from "@CM/Services/proposal";
 
 const { proposal } = defineProps<{
   proposal: Proposal;

@@ -4,7 +4,7 @@ import TableFeesStaged from "@CM/Pages/Platform/Revenue/Tables/TableFeesStaged.v
 import {
   useQueryFeesCollected,
   useQueryFeesStaged,
-} from "@CM/Services/Revenue/Queries";
+} from "@CM/Services/revenue/queries";
 
 const { isFetching: loadingCollected, data: feesCollected } =
   useQueryFeesCollected();

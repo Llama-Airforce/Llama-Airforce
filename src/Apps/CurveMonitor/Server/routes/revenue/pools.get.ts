@@ -4,7 +4,7 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import type * as ApiTypes from "@CM/Services/Revenue/ApiTypes";
+import type * as ApiTypes from "@CM/Services/revenue/apiTypes";
 
 const path = "/";
 

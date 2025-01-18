@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CowSwapSettlement } from "@CM/Services/Revenue";
+import type { CowSwapSettlement } from "@CM/Services/revenue";
 import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
 
 const { settlements } = defineProps<{

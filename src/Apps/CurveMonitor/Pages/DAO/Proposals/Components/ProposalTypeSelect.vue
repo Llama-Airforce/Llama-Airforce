@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type ProposalType, proposalTypes } from "@CM/Services/Proposal";
+import { type ProposalType, proposalTypes } from "@CM/Services/proposal";
 
 const emit = defineEmits<{
   select: [type: ProposalType];

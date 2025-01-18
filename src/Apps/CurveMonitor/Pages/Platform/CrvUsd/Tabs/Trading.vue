@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/CrvUsd";
+import type { Market } from "@CM/Services/crvusd";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
 import {
   useQueryOHLC,
   useQueryEvents,
   useQueryTrades,
-} from "@CM/Services/Llamma/Queries";
+} from "@CM/Services/llamma/queries";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

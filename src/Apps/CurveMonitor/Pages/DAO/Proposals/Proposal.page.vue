@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ProposalType } from "@CM/Services/Proposal";
-import { useQueryProposal } from "@CM/Services/Proposal/Queries";
+import type { ProposalType } from "@CM/Services/proposal";
+import { useQueryProposal } from "@CM/Services/proposal/queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 
 const proposalId = useRouteParams("proposalId", 0, { transform: Number });

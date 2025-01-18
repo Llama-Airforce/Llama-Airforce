@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/CrvUsd";
+import type { Market } from "@CM/Services/crvusd";
 import {
   ChartMarketVolume,
   ChartMarketLoans,

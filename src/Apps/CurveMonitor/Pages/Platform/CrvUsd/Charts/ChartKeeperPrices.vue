@@ -2,11 +2,11 @@
 import type { AutoscaleInfo } from "lightweight-charts";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import type { PoolPrice } from "@CM/Services/CrvUsd";
+import type { PoolPrice } from "@CM/Services/crvusd";
 import {
   useQueryKeepers,
   useQueryKeeperPrices,
-} from "@CM/Services/CrvUsd/Queries";
+} from "@CM/Services/crvusd/queries";
 
 const theme = useTheme();
 

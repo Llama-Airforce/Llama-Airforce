@@ -1,7 +1,7 @@
 <!-- eslint-disable @typescript-eslint/no-unnecessary-condition -->
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/CrvUsd";
+import type { Market } from "@CM/Services/crvusd";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

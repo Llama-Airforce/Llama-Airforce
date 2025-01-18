@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type ActivityType, activityTypes } from "@CM/Services/Chains";
+import { type ActivityType, activityTypes } from "@CM/Services/chains";
 
 const emit = defineEmits<{
   select: [type: ActivityType | "all"];

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ProposalType, ProposalStatus } from "@CM/Services/Proposal";
-import { useQueryProposals } from "@CM/Services/Proposal/Queries";
+import type { ProposalType, ProposalStatus } from "@CM/Services/proposal";
+import { useQueryProposals } from "@CM/Services/proposal/queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 

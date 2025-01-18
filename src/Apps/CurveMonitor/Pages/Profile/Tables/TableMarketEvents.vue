@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import { useQueryUserMarketCollateralEvents as useQueryEventsCrvUsd } from "@CM/Services/CrvUsd/Queries";
-import { useQueryUserMarketCollateralEvents as useQueryEventsLending } from "@CM/Services/LlamaLend/Queries";
+import { useQueryUserMarketCollateralEvents as useQueryEventsCrvUsd } from "@CM/Services/crvusd/queries";
+import { useQueryUserMarketCollateralEvents as useQueryEventsLending } from "@CM/Services/llamalend/queries";
 
 const {
   type,

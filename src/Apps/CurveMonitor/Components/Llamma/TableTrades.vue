@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { LlammaTrade } from "@CM/Services/Llamma";
+import type { LlammaTrade } from "@CM/Services/llamma";
 
 const { trades, count, chain } = defineProps<{
   trades: LlammaTrade[];

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQueryUserLocks } from "@CM/Services/Dao/Queries";
+import { useQueryUserLocks } from "@CM/Services/dao/queries";
 
 export type Type = "locks" | "total";
 const type = ref<Type>("locks");

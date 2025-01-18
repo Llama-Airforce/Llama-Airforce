@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import { type Market, tvl } from "@CM/Services/LlamaLend";
-import { useQuerySnapshots } from "@CM/Services/LlamaLend/Queries";
+import { type Market, tvl } from "@CM/Services/llamalend";
+import { useQuerySnapshots } from "@CM/Services/llamalend/queries";
 import {
   ChartMarketSupply,
   ChartMarketCollateral,

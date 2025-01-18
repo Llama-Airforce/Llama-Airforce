@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import { useQueryUserMarkets } from "@CM/Services/LlamaLend/Queries";
+import { useQueryUserMarkets } from "@CM/Services/llamalend/queries";
 
 const { user } = defineProps<{ user: string | undefined }>();
 

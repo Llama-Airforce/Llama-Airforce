@@ -2,7 +2,7 @@
 import TableDistributions from "@CM/Pages/Platform/Revenue/Tables/TableDistributions.vue";
 import ChartDistributions from "@CM/Pages/Platform/Revenue/Charts/ChartDistributions.vue";
 import ChartDistributionsDelta from "@CM/Pages/Platform/Revenue/Charts/ChartDistributionsDelta.vue";
-import { useQueryDistributions } from "@CM/Services/Revenue/Queries";
+import { useQueryDistributions } from "@CM/Services/revenue/queries";
 
 const { isFetching: loading, data: distributions } = useQueryDistributions();
 

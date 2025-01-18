@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Proposal } from "@CM/Services/Proposal";
+import type { Proposal } from "@CM/Services/proposal";
 
 const MIN_WIDTH = 4;
 
