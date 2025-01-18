@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { useDisconnect, useSwitchChain } from "@wagmi/vue";
+import { useDisconnect, useSwitchChain, useConnectors } from "@wagmi/vue";
 
 const { labelPleaseConnect } = defineProps<{
   labelPleaseConnect?: string;
@@ -9,6 +9,7 @@ const { labelPleaseConnect } = defineProps<{
 const { disconnect } = useDisconnect();
 const { isConnected, chainId, address } = useAccount();
 const { switchChain } = useSwitchChain();
+const connectors = useConnectors();
 
 const supportedNetwork = computed(() => chainId.value === mainnet.id);
 
@@ -17,11 +18,16 @@ const changeNetwork = () => {
 };
 
 function onDisconnect() {
-  disconnect(undefined, {
-    onError: (err) => {
-      notify({ text: prettyError(err), type: "error" });
-    },
-  });
+  for (const connector of connectors.value) {
+    disconnect(
+      { connector },
+      {
+        onError: (err) => {
+          notify({ text: prettyError(err), type: "error" });
+        },
+      }
+    );
+  }
 }
 </script>
 
