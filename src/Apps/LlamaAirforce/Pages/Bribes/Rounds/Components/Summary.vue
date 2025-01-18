@@ -22,7 +22,6 @@ const emit = defineEmits<{
   "select-round": [round: number];
 }>();
 
-// Refs
 let countdownTimer: ReturnType<typeof setTimeout>;
 
 const { product } = storeToRefs(useBribesStore());

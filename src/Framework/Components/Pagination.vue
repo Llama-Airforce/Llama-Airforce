@@ -9,7 +9,6 @@ const emit = defineEmits<{
   page: [page: number];
 }>();
 
-// Refs
 const pages = computed(() => {
   return Math.ceil(itemsCount / itemsPerPage);
 });

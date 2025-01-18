@@ -5,8 +5,8 @@ import TableLocks from "../Tables/TableLocks.vue";
 import TableGauges from "../Tables/TableGauges.vue";
 import TableProposals from "../Tables/TableProposals.vue";
 
-const wallet = useWallet();
-const user = useRouteQuery<string>("user", wallet.address.value ?? "");
+const { address } = useAccount();
+const user = useRouteQuery<string>("user", address.value ?? "");
 </script>
 
 <template>

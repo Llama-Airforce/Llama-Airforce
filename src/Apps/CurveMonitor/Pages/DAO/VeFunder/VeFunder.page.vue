@@ -2,10 +2,8 @@
 import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
 import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";
 
-// Refs
 const gauge = ref("");
 
-// Events
 const onGauge = (newGauge: string): void => {
   gauge.value = newGauge;
 };

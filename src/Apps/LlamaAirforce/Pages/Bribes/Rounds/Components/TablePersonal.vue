@@ -23,9 +23,8 @@ const { epoch } = defineProps<{
   epoch?: Epoch;
 }>();
 
-// Refs
 const { protocol } = storeToRefs(useBribesStore());
-const { isConnected, address } = useWallet();
+const { isConnected, address } = useAccount();
 
 const columns = computed(() => [
   { id: "percentage" as const, label: "%", sort: true as const },
@@ -100,7 +99,8 @@ const bribed = computed(() => {
   // Calculate the voting distribution of a user.
   const distribution = getVoteDistribution(
     proposal.value,
-    address.value,
+    // Snapshot works with lowercase addresses, wagmi returns checksummed address
+    address.value.toLocaleLowerCase() as Address,
     delegate,
     votes.value,
     scores.value

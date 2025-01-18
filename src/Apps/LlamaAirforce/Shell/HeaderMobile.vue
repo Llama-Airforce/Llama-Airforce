@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import MenuMobile from "./MenuMobile.vue";
 
-// Refs
 const menuOpen = ref(false);
 
 // Methods

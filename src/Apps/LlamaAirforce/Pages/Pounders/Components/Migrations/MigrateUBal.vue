@@ -4,8 +4,7 @@ import { abi as abiVault } from "@/ABI/Union/UnionVault";
 
 const { t } = useI18n();
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 
 const migrationUBalMsg = computed(() => {
   return t("migrateUBal", [

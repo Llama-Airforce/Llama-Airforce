@@ -16,7 +16,6 @@ const {
   time?: boolean;
 }>();
 
-// Refs
 const { relativeTime } = useRelativeTime();
 
 const search = ref("");

@@ -6,8 +6,7 @@ const { proposal, proposalDetails } = defineProps<{
   proposalDetails: ProposalDetails | undefined;
 }>();
 
-// Refs
-const { address: walletAddress } = useWallet();
+const { address: walletAddress } = useAccount();
 
 const votesFor = computed(() => {
   if (!proposalDetails) {

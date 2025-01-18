@@ -19,7 +19,6 @@ const emit = defineEmits<{
   "update:modelValue": [value: bigint];
 }>();
 
-// Refs
 const value = ref(0);
 
 const balanceNumber = computed((): number => {

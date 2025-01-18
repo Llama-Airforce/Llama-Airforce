@@ -11,7 +11,6 @@ const emit = defineEmits<{
   navigated: [];
 }>();
 
-// Refs
 const pageStore = usePageStore();
 const route = useRoute();
 const router = useRouter();

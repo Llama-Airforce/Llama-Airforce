@@ -11,7 +11,6 @@ const { epoch } = defineProps<{
   epoch?: Epoch;
 }>();
 
-// Refs
 const { protocol } = storeToRefs(useBribesStore());
 
 const bribes = computed(() => {

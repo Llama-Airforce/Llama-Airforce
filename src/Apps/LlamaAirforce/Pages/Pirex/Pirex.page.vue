@@ -20,7 +20,7 @@ const unionService = new UnionService(useHost());
 const priceService = new PriceService(useHost());
 const flyerService = new FlyerService(useHost());
 
-const { isConnected, address } = useWallet();
+const { isConnected, address } = useAccount();
 
 const store = useUnionStore();
 

@@ -12,7 +12,6 @@ const { overview } = defineProps<{
   overview?: Overview;
 }>();
 
-// Refs
 const { protocol } = storeToRefs(useBribesStore());
 
 const epochs = computed(() => (overview?.epochs ?? []).takeRight(26));

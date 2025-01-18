@@ -9,7 +9,6 @@ const emit = defineEmits<{
   navigated: [];
 }>();
 
-// Refs
 const route = useRoute();
 const expanded = ref(false);
 

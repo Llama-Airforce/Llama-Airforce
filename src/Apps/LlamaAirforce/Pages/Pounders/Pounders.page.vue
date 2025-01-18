@@ -18,8 +18,7 @@ const unionService = new UnionService(useHost());
 const priceService = new PriceService(useHost());
 const flyerService = new FlyerService(useHost());
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 const store = useUnionStore();
 
 const poundersUnion = computed(() =>

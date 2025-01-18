@@ -8,7 +8,6 @@ const { liqs = [] } = defineProps<{
   liqs: LiquidationAggregate[];
 }>();
 
-// Refs
 const chartType = ref<ChartType>("count");
 
 // Events

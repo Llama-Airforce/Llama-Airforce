@@ -15,7 +15,6 @@ const emit = defineEmits<{
   toggleExpand: [];
 }>();
 
-// Refs
 const store = useUnionStore();
 
 const pounderStore = computed(() => store.pounders[pounderId]!);

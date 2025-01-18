@@ -14,7 +14,6 @@ const emit = defineEmits<{
   toggleExpand: [];
 }>();
 
-// Refs
 const proposalLink = computed(
   () => `/dao/proposal/${proposal.type}/${proposal.id}`
 );

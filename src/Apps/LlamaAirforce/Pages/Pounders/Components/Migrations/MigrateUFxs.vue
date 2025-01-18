@@ -10,8 +10,7 @@ const { t } = useI18n();
 
 const priceService = new PriceService(useHost());
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 
 const { data: balanceInfo } = useBalance({
   address,

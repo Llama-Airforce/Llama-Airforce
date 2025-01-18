@@ -4,7 +4,6 @@ import { useQueryProposals } from "@CM/Services/Proposal/Queries";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
 
-// Refs
 const tabActive = ref(0);
 
 const { page, onPage } = usePaginationAsync();

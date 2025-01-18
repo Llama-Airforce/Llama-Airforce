@@ -9,7 +9,6 @@ const { overview } = defineProps<{
   overview?: Overview;
 }>();
 
-// Refs
 const { protocol } = storeToRefs(useBribesStore());
 
 const epochs = computed((): EpochOverview[] => overview?.epochs ?? []);

@@ -12,7 +12,6 @@ const emit = defineEmits<{
   no: [];
 }>();
 
-// Refs
 const submitLabel = computed(() => {
   if (isApproving.value) {
     return "Approving...";
@@ -24,7 +23,7 @@ const submitLabel = computed(() => {
 });
 
 // Input
-const { address } = useWallet();
+const { address } = useAccount();
 
 const tokens = [
   {

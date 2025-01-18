@@ -12,7 +12,7 @@ import ModalClaim from "@LAF/Pages/Pirex/Components/ModalClaim.vue";
 
 const showClaims = ref(false);
 
-const { address } = useWallet();
+const { address } = useAccount();
 
 const { data: rewardsRaw, isFetching: snapshotsLoading } =
   useQueryRewards(address);

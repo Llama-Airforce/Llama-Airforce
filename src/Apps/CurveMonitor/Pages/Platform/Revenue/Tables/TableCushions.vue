@@ -3,7 +3,6 @@ import type { Chain } from "@/Types/Chain";
 import { useQueryCushions } from "@CM/Services/Revenue/Queries";
 import { useQueryChainsSupported } from "@CM/Services/Chains/Queries";
 
-// Refs
 const search = ref("");
 const loading = computed(
   () => isLoadingChains.value || isLoadingCushions.value

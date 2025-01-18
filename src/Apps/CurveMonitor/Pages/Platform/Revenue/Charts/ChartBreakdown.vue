@@ -10,7 +10,6 @@ type Serie = {
   data: { x: string; y: number }[];
 };
 
-// Refs
 const theme = useTheme();
 
 // Legend

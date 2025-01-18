@@ -9,7 +9,6 @@ const emit = defineEmits<{
   tab: [params: { tab: typeof TabItem; index: number }];
 }>();
 
-// Refs
 const tabActive = ref<number | null>(null);
 
 const slots = defineSlots<{

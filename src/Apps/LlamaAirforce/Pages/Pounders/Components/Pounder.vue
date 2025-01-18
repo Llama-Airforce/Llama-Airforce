@@ -8,8 +8,7 @@ const { pounderId } = defineProps<{
   pounderId: PounderId;
 }>();
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 const store = useUnionStore();
 
 const expanded = ref(false);

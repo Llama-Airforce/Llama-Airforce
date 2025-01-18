@@ -22,8 +22,7 @@ const emit = defineEmits<{
   withdraw: [];
 }>();
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 const config = useConfig();
 
 const store = useUnionStore();

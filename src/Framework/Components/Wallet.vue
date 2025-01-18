@@ -7,7 +7,7 @@ const { labelPleaseConnect } = defineProps<{
 }>();
 
 const { disconnect } = useDisconnect();
-const { isConnected, chainId, address } = useWallet();
+const { isConnected, chainId, address } = useAccount();
 const { switchChain } = useSwitchChain();
 
 const supportedNetwork = computed(() => chainId.value === mainnet.id);

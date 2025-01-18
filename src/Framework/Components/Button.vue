@@ -7,8 +7,7 @@ const emit = defineEmits<{
   click: [];
 }>();
 
-// Refs
-const { chainId: chainIdCurrent } = useWallet();
+const { chainId: chainIdCurrent } = useAccount();
 const { switchChain } = useSwitchChain();
 
 // Events

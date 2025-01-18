@@ -14,7 +14,6 @@ const { overview } = defineProps<{
   overview?: Overview;
 }>();
 
-// Refs
 const { protocol } = storeToRefs(useBribesStore());
 
 const router = useRouter();

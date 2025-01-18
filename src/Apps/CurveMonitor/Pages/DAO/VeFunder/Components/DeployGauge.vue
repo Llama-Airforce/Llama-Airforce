@@ -7,7 +7,6 @@ const emit = defineEmits<{
   gauge: [gauge: Address];
 }>();
 
-// Refs
 const deploying = ref(false);
 const receiver = ref("");
 const amount: Ref<number | string> = ref(0);

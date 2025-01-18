@@ -3,7 +3,7 @@ import { abi } from "@/ABI/Union/Pirex";
 import useApproveForAll from "./Composables/UseApprovalForAll";
 import { useQueryFutures } from "./Services/Queries";
 
-const { address } = useWallet();
+const { address } = useAccount();
 
 const { data: futures } = useQueryFutures(address);
 const { isApprovedForAll, approve, approving } = useApproveForAll(address);

@@ -3,7 +3,7 @@ import type { RedemptionPending } from "@LAF/Pages/Pirex/Services";
 import { useQueryRedemptions } from "@LAF/Pages/Pirex/Services/Queries";
 import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTable.vue";
 
-const { address } = useWallet();
+const { address } = useAccount();
 
 // Pending redemptions
 const { data: redemptionsRaw, isLoading: loading } =

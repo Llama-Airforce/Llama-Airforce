@@ -11,7 +11,6 @@ const { proposal } = defineProps<{
   proposal: Proposal;
 }>();
 
-// Refs
 const statusDetails = computed(() => {
   if (getStatus(proposal) === "denied") {
     if (!hasReachedQuorum(proposal)) {

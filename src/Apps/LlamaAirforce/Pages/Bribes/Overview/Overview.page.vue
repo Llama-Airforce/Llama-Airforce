@@ -17,7 +17,6 @@ const dashboardService = new DashboardService(useHost());
 
 let isInitializing = false;
 
-// Refs
 const storeBribe = useBribesStore();
 const { platform, product } = storeToRefs(storeBribe);
 const { setProtocol } = storeBribe;

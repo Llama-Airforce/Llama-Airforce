@@ -8,7 +8,6 @@ const { proposal, type } = defineProps<{
   type: "start" | "end";
 }>();
 
-// Refs
 const deadlineString = ref("");
 
 const label = computed(() => {

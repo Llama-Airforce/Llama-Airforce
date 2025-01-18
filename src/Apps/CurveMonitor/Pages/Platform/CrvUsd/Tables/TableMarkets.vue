@@ -6,7 +6,6 @@ const emit = defineEmits<{
   select: [market: Market];
 }>();
 
-// Refs
 const search = ref("");
 
 const rows = computed(() =>

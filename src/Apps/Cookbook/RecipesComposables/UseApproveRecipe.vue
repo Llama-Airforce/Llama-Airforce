@@ -2,7 +2,7 @@
 import { zeroAddress } from "viem";
 import Recipe from "@CB/Recipe.vue";
 
-const { address } = useWallet();
+const { address } = useAccount();
 
 const token = WEthAddress;
 const spender = TreasuryAddress;
@@ -16,7 +16,7 @@ const { allowance, needsApprove, approve, isApproving } = useApprove(
   { maxApprove: false }
 );
 
-const code = `const { address } = useWallet();
+const code = `const { address } = useAccount();
 
 const token = WEthAddress;
 const spender = TreasuryAddress;

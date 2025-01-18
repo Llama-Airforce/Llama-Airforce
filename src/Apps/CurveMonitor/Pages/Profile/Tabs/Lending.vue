@@ -4,9 +4,8 @@ import TableMarketsLending from "../Tables/TableMarketsLending.vue";
 import TableMarketEvents from "../Tables/TableMarketEvents.vue";
 import ChartSnapshots from "../Charts/ChartSnapshots.vue";
 
-// User
-const wallet = useWallet();
-const user = useRouteQuery<string>("user", wallet.address.value ?? "");
+const { address } = useAccount();
+const user = useRouteQuery<string>("user", address.value ?? "");
 const chain = useRouteQuery<Chain>("chain", "ethereum");
 const controller = useRouteQuery<string | undefined>("controller", undefined);
 </script>

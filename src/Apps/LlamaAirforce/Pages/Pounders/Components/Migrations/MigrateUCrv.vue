@@ -4,8 +4,7 @@ import { abi as abiMigration } from "@/ABI/Union/ZapsUCrv";
 
 const { t } = useI18n();
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 
 const { data: balanceInfo } = useBalance({
   address,

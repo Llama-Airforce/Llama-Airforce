@@ -12,7 +12,6 @@ import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 
 let isInitializing = false;
 
-// Refs
 const storeBribe = useBribesStore();
 const { platform, product } = storeToRefs(storeBribe);
 const { setProtocol } = storeBribe;

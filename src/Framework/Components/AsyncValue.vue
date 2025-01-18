@@ -21,7 +21,6 @@ const {
   showZero?: boolean;
 }>();
 
-// Refs
 const rod = ref("|");
 
 // Getters

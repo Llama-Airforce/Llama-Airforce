@@ -8,8 +8,7 @@ const { proposal } = defineProps<{
   proposal: Proposal;
 }>();
 
-// Refs
-const { address } = useWallet();
+const { address } = useAccount();
 
 const showVote = ref(false);
 const yeaPct = ref(50);

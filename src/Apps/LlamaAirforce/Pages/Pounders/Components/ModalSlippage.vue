@@ -13,7 +13,6 @@ const emit = defineEmits<{
   no: [];
 }>();
 
-// Refs
 const slippage = ref(0.03);
 const minAmountOut = ref(0);
 

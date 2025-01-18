@@ -10,7 +10,6 @@ const { epoch } = defineProps<{
   epoch?: Epoch;
 }>();
 
-// Refs
 const { protocol } = storeToRefs(useBribesStore());
 
 const columns = computed(() => [

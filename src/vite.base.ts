@@ -25,6 +25,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     { viem: ["getAddress", "isAddress", "getContract"] },
     {
       "@wagmi/vue": [
+        "useAccount",
         "useConfig",
         "useReadContract",
         "useWriteContract",

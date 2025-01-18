@@ -12,7 +12,7 @@ const emit = defineEmits<{
 }>();
 
 // Redemption
-const { address } = useWallet();
+const { address } = useAccount();
 
 function redemptionDate(redemption: RedemptionPending) {
   return new Date(Number(redemption.tokenId) * 1000); // Convert seconds to milliseconds

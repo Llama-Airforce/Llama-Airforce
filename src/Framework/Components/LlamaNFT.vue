@@ -2,8 +2,7 @@
 import { mainnet } from "viem/chains";
 import { abi } from "@/ABI/Tokens/TheLlamas";
 
-// Refs
-const { address, chainId } = useWallet();
+const { address, chainId } = useAccount();
 
 const uri = ref("");
 

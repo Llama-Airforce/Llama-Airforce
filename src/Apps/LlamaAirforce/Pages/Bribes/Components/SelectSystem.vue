@@ -22,7 +22,6 @@ const emit = defineEmits<{
   "select-protocol": [protocol: Protocol];
 }>();
 
-// Refs
 const store = useBribesStore();
 
 import votium from "@/Assets/Icons/Tokens/votium.png";

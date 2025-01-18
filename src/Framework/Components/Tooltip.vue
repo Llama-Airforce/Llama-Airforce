@@ -3,7 +3,6 @@ const emit = defineEmits<{
   show: [boolean];
 }>();
 
-// Refs
 const show = ref(false);
 
 const triggerRef = useTemplateRef<HTMLElement>("trigger");

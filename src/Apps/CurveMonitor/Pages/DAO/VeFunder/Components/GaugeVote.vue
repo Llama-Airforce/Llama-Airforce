@@ -14,7 +14,6 @@ const emit = defineEmits<{
   request: [];
 }>();
 
-// Refs
 const creating = ref(false);
 const gauge_ = ref("");
 const description = ref("Add a grant gauge: ");

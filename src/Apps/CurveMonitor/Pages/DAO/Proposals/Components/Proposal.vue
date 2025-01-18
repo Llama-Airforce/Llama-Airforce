@@ -8,7 +8,6 @@ const { proposal, initExpanded = false } = defineProps<{
   initExpanded?: boolean;
 }>();
 
-// Refs
 const expanded = ref(initExpanded);
 </script>
 

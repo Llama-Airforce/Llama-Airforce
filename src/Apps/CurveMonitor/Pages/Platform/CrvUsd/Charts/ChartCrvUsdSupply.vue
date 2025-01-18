@@ -7,7 +7,6 @@ import {
 
 type ChartType = "line" | "breakdown";
 
-// Refs
 const theme = useTheme();
 const chartType = ref<ChartType>("line");
 

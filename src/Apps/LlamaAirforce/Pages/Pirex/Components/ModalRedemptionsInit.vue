@@ -9,7 +9,6 @@ const emit = defineEmits<{
   close: [];
 }>();
 
-// Refs
 const submitLabel = computed(() => {
   if (isApproving.value) {
     return "Approving...";
@@ -99,7 +98,7 @@ const redemptions = computedAsync(async () => {
 
 // Input
 const pxCvxAddress = PxCvxAddress;
-const { address } = useWallet();
+const { address } = useAccount();
 
 const { data: balanceInfo, refetch: refetchBalance } = useBalance({
   address,

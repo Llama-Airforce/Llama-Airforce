@@ -25,7 +25,7 @@ const { snapshots, futures, prices } = defineProps<{
   prices: Record<Address, Price | undefined>;
 }>();
 
-const { address } = useWallet();
+const { address } = useAccount();
 
 // Formatters
 function formatDate(epoch: number): string {

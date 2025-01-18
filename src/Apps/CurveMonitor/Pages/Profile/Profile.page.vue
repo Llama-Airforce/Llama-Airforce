@@ -20,8 +20,8 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
 );
 
 // User
-const wallet = useWallet();
-const user = useRouteQuery<string>("user", wallet.address.value ?? "");
+const { address } = useAccount();
+const user = useRouteQuery<string>("user", address.value ?? "");
 const inputAddressRef = useTemplateRef("inputAddress");
 const inputValue = ref(user.value);
 let initialized = false;
@@ -37,7 +37,7 @@ function onNewUser(address: string) {
 }
 
 // Sync wallet changes to user after initial load
-whenever(wallet.address, (address) => {
+whenever(address, (address) => {
   if (!initialized && !!user.value) {
     initialized = true;
     return;
