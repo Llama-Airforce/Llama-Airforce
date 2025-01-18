@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { type Connector, useConnect, useConnectors } from "@wagmi/vue";
-
 import injected from "@/Assets/Icons/Wallets/injected.webp";
 import rabby from "@/Assets/Icons/Wallets/rabby.svg";
 import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
@@ -21,6 +19,8 @@ const connectorsFiltered = computed(() =>
 );
 
 const showConnectors = ref(false);
+
+type Connector = (typeof connectors.value)[number];
 
 function icon(connector: Connector) {
   switch (connector.id) {

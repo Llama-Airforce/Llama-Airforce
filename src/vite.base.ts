@@ -26,6 +26,9 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     {
       "@wagmi/vue": [
         "useAccount",
+        "useConnectors",
+        "useConnect",
+        "useDisconnect",
         "useConfig",
         "useReadContract",
         "useWriteContract",

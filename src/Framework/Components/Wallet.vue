@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { useDisconnect, useSwitchChain, useConnectors } from "@wagmi/vue";
 
 const { labelPleaseConnect } = defineProps<{
   labelPleaseConnect?: string;
