@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { createHighlighterCore, makeSingletonHighlighterCore } from "shiki";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+
+const jsEngine = createJavaScriptRegexEngine();
 
 const createHighlighter = makeSingletonHighlighterCore(createHighlighterCore)({
   themes: [import("shiki/themes/dark-plus.mjs")],
@@ -9,7 +12,7 @@ const createHighlighter = makeSingletonHighlighterCore(createHighlighterCore)({
     () => import("shiki/langs/css.mjs"),
     () => import("shiki/langs/typescript.mjs"),
   ],
-  loadWasm: import("shiki/wasm"),
+  engine: jsEngine,
 });
 
 const { lang, code } = defineProps<{
