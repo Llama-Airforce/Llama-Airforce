@@ -2,6 +2,7 @@ import { resolve } from "path";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
@@ -26,6 +27,12 @@ export default defineConfig(({ mode }) => {
       }),
       AutoImport(autoImport),
       Components(vueImport),
+      nodePolyfills({
+        include: ["buffer"],
+        globals: {
+          Buffer: true,
+        },
+      }),
     ],
     server: {
       port: 8080,
