@@ -38,7 +38,7 @@ export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
   return useQuery({
     queryKey: [
       "crvusd-keepers-prices",
-      computed(() => keepers.value.map((k) => k.pool_address)),
+      computed(() => [...new Set(keepers.value.map((k) => k.pool_address))]),
     ] as const,
     queryFn: async () => {
       const promises = keepers.value.map(async (keeper) => {

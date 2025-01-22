@@ -11,7 +11,7 @@ import {
 const theme = useTheme();
 
 // Legend
-const coins = ["USDC", "USDT", "TUSD", "USDP"] as const;
+const coins = ["USDC", "USDT"] as const;
 
 const { items, toggles, disabled } = useLegend(() =>
   coins.map((coin, i) => ({
@@ -27,8 +27,20 @@ const loading = computed(
   () => loadingKeepers.value || loadingKeeperPrices.value
 );
 const { isFetching: loadingKeepers, data: keepers } = useQueryKeepers();
+
+// We only care about keepers for our legend coins.
+const keepersForCoins = computed(() =>
+  keepers.value.filter((keeper) =>
+    keeper.pair.some(({ symbol }) =>
+      coins
+        .map((coin) => coin.toLocaleLowerCase())
+        .includes(symbol.toLocaleLowerCase())
+    )
+  )
+);
+
 const { isFetching: loadingKeeperPrices, data: prices } =
-  useQueryKeeperPrices(keepers);
+  useQueryKeeperPrices(keepersForCoins);
 
 // Chart
 const card = useTemplateRef("card");
