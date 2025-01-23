@@ -1,5 +1,4 @@
-import { fetchType as fetch, FetchError } from "@/Services";
-import { getHost, type Options } from "..";
+import { getHost, fetchJson as fetch, FetchError, type Options } from "..";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 import * as Parsers from "./parsers";
