@@ -1,5 +1,5 @@
-import { paginate } from "@/Utils/Pagination";
 import { getHost, fetchJson as fetch, type Options } from "..";
+import { paginate } from "../paginate";
 import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
