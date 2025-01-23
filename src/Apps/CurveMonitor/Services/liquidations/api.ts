@@ -1,7 +1,7 @@
 import { fetchType as fetch } from "@/Services";
 import type { Chain } from "@/Types/Chain";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export type Endpoint = "crvusd" | "lending";
@@ -13,7 +13,7 @@ export async function getSoftLiqRatios(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetSoftLiqRatiosResponse>(
+  const resp = await fetch<Responses.GetSoftLiqRatiosResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/soft_liquidation_ratio`
   );
 
@@ -27,7 +27,7 @@ export async function getLiqsDetailed(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLiqsDetailedResponse>(
+  const resp = await fetch<Responses.GetLiqsDetailedResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/history/detailed`
   );
 
@@ -41,7 +41,7 @@ export async function getLiqsAggregate(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLiqsAggregateResponse>(
+  const resp = await fetch<Responses.GetLiqsAggregateResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/history/aggregated`
   );
 
@@ -55,7 +55,7 @@ export async function getLiqOverview(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLiqOverviewResponse>(
+  const resp = await fetch<Responses.GetLiqOverviewResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/overview?fetch_on_chain=true`
   );
 
@@ -69,7 +69,7 @@ export async function getLiqLosses(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLiqLossesResponse>(
+  const resp = await fetch<Responses.GetLiqLossesResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/losses/history`
   );
 
@@ -83,7 +83,7 @@ export async function getLiqHealthDeciles(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLiqHealthDecilesResponse>(
+  const resp = await fetch<Responses.GetLiqHealthDecilesResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/health/distribution`
   );
 

@@ -1,9 +1,9 @@
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseVotesOverview = (
-  x: ApiTypes.GetVotesOverviewResponse["data"][number]
+  x: Responses.GetVotesOverviewResponse["data"][number]
 ): Models.VotesOverview => {
   return {
     proposals: x.proposals,
@@ -15,7 +15,7 @@ export const parseVotesOverview = (
 };
 
 export const parseLocksDaily = (
-  x: ApiTypes.GetLocksDailyResponse["locks"][number]
+  x: Responses.GetLocksDailyResponse["locks"][number]
 ): Models.LocksDaily => {
   return {
     day: toUTC(x.day),
@@ -24,7 +24,7 @@ export const parseLocksDaily = (
 };
 
 export const parseUserLock = (
-  x: ApiTypes.GetUserLocksResponse["locks"][number]
+  x: Responses.GetUserLocksResponse["locks"][number]
 ): Models.UserLock => {
   return {
     timestamp: toUTC(x.dt),
@@ -37,7 +37,7 @@ export const parseUserLock = (
 };
 
 export const parseSupply = (
-  x: ApiTypes.GetSupplyResponse["supply"][number]
+  x: Responses.GetSupplyResponse["supply"][number]
 ): Models.Supply => {
   return {
     timestamp: toUTC(x.dt),
@@ -56,7 +56,7 @@ export const parseSupply = (
 };
 
 export const parseLockers = (
-  x: ApiTypes.GetLockersResponse["users"][number]
+  x: Responses.GetLockersResponse["users"][number]
 ): Models.Locker => {
   return {
     user: x.user.toLocaleLowerCase(),

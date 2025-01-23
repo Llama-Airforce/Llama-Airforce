@@ -1,7 +1,7 @@
 import { fetchType as fetch } from "@/Services";
 import type { Chain } from "@/Types/Chain";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export type Endpoint = "crvusd" | "lending";
@@ -14,7 +14,7 @@ export async function getEvents(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLlammaEventsResponse>(
+  const resp = await fetch<Responses.GetLlammaEventsResponse>(
     `${host}/v1/${endpoint}/llamma_events/${chain}/${llamma}?page=${page}&per_page=10`
   );
 
@@ -32,7 +32,7 @@ export async function getTrades(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetLlammaTradesResponse>(
+  const resp = await fetch<Responses.GetLlammaTradesResponse>(
     `${host}/v1/${endpoint}/llamma_trades/${chain}/${llamma}?page=${page}&per_page=10`
   );
 
@@ -53,7 +53,7 @@ export async function getOHLC(
   const end = Math.floor(new Date().getTime() / 1000);
   const start = end - 10 * 24 * 60 * 60; // Subtract 1 month worth of seconds.
 
-  const resp = await fetch<ApiTypes.GetLlammaOHLCResponse>(
+  const resp = await fetch<Responses.GetLlammaOHLCResponse>(
     `${host}/v1/${endpoint}/llamma_ohlc/${chain}/${llamma}?agg_number=1&agg_units=hour&start=${start}&end=${end}`
   );
 

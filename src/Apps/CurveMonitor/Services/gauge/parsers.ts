@@ -1,9 +1,9 @@
 import type { Chain } from "@/Types/Chain";
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
-export const parseGauge = (x: ApiTypes.GetGaugeResponse): Models.Gauge => {
+export const parseGauge = (x: Responses.GetGaugeResponse): Models.Gauge => {
   return {
     address: x.address.toLocaleLowerCase(),
     type: x.gauge_type,
@@ -54,7 +54,7 @@ export const parseGauge = (x: ApiTypes.GetGaugeResponse): Models.Gauge => {
 };
 
 export const parseVote = (
-  x: ApiTypes.GetVotesResponse["votes"][number]
+  x: Responses.GetVotesResponse["votes"][number]
 ): Models.GaugeVote => {
   return {
     user: x.user.toLocaleLowerCase(),
@@ -66,7 +66,7 @@ export const parseVote = (
 };
 
 export const parseWeightHistory = (
-  x: ApiTypes.GetWeightHistoryResponse["data"][number]
+  x: Responses.GetWeightHistoryResponse["data"][number]
 ): Models.WeightHistory => {
   return {
     killed: x.is_killed,
@@ -78,7 +78,7 @@ export const parseWeightHistory = (
 };
 
 export const parseDeployment = (
-  x: ApiTypes.GetDeploymentResponse
+  x: Responses.GetDeploymentResponse
 ): Models.Deployment => {
   return {
     addressFrom: x.from_address.toLocaleLowerCase(),
@@ -91,7 +91,7 @@ export const parseDeployment = (
 };
 
 export const parseUserGaugeVote = (
-  x: ApiTypes.GetUserGaugeVotesResponse["votes"][number]
+  x: Responses.GetUserGaugeVotesResponse["votes"][number]
 ): Models.UserGaugeVote => {
   return {
     gauge: x.gauge.toLocaleLowerCase(),

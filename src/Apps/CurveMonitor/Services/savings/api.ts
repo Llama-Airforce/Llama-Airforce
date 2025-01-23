@@ -1,11 +1,11 @@
 import { fetchType as fetch } from "@/Services";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getStatistics(options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetStatisticsResponse>(
+  const resp = await fetch<Responses.GetStatisticsResponse>(
     `${host}/v1/crvusd/savings/statistics`
   );
 
@@ -14,7 +14,7 @@ export async function getStatistics(options: Options = {}) {
 
 export async function getEvents(page: number, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetEventsResponse>(
+  const resp = await fetch<Responses.GetEventsResponse>(
     `${host}/v1/crvusd/savings/events?page=${page}&per_page=10`
   );
 
@@ -30,7 +30,7 @@ export async function getYield(options: Options = {}) {
   const end = Math.floor(new Date().getTime() / 1000);
   const start = end - 10 * 24 * 60 * 60; // Subtract 1 month worth of seconds.
 
-  const resp = await fetch<ApiTypes.GetYieldResponse>(
+  const resp = await fetch<Responses.GetYieldResponse>(
     `${host}/v1/crvusd/savings/yield?agg_number=1&agg_units=hour&start=${start}&end=${end}`
   );
 
@@ -39,7 +39,7 @@ export async function getYield(options: Options = {}) {
 
 export async function getRevenue(page: number, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetRevenueResponse>(
+  const resp = await fetch<Responses.GetRevenueResponse>(
     `${host}/v1/crvusd/savings/revenue${page}&per_page=100`
   );
 

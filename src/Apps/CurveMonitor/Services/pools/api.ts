@@ -1,12 +1,12 @@
 import { fetchType as fetch } from "@/Services";
 import { getHost, type Options } from "..";
 import type { Chain } from "@/Types/Chain";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getPools(chain: Chain, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetPoolsResponse>(
+  const resp = await fetch<Responses.GetPoolsResponse>(
     `${host}/chains/${chain}`
   );
 
@@ -23,7 +23,7 @@ export async function getPool(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetPoolResponse>(
+  const resp = await fetch<Responses.GetPoolResponse>(
     `${host}/v1/pools/${chain}/${poolAddr}`
   );
 
@@ -41,7 +41,7 @@ export async function getVolume(
   const end = Math.floor(new Date().getTime() / 1000);
   const start = Math.floor(end - range);
 
-  const resp = await fetch<ApiTypes.GetVolumeResponse>(
+  const resp = await fetch<Responses.GetVolumeResponse>(
     `${host}/v1/volume/usd/${chain}/${poolAddr}?` +
       `interval=day&` +
       `start=${start}&` +
@@ -62,7 +62,7 @@ export async function getTvl(
   const end = Math.floor(new Date().getTime() / 1000);
   const start = Math.floor(end - range);
 
-  const resp = await fetch<ApiTypes.GetTvlResponse>(
+  const resp = await fetch<Responses.GetTvlResponse>(
     `${host}/v1/snapshots/${chain}/${poolAddr}/tvl?` +
       `interval=day&` +
       `start=${start}&` +

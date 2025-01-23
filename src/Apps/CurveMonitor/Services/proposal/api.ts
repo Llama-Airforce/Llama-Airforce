@@ -1,6 +1,6 @@
 import { fetchType as fetch, FetchError } from "@/Services";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 import * as Parsers from "./parsers";
 
@@ -12,7 +12,7 @@ export async function getProposals(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetProposalsResponse>(
+  const resp = await fetch<Responses.GetProposalsResponse>(
     `${host}/v1/dao/proposals?pagination=10&page=${page}&search_string=${search}&type_filter=${type}&status_filter=${status}`
   );
 
@@ -28,7 +28,7 @@ export async function getProposal(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetProposalDetailsResponse>(
+  const resp = await fetch<Responses.GetProposalDetailsResponse>(
     `${host}/v1/dao/proposals/details/${proposalType}/${proposalId}`
   );
 
@@ -41,7 +41,7 @@ export async function getUserProposalVotes(
 ) {
   try {
     const host = await getHost(options);
-    const resp = await fetch<ApiTypes.GetUserProposalVotes>(
+    const resp = await fetch<Responses.GetUserProposalVotes>(
       `${host}/v1/dao/proposals/votes/user/${user}?pagination=100&page=1`
     );
 

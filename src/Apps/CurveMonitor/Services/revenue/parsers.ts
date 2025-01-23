@@ -1,11 +1,11 @@
 import type { Address } from "@/Types/Address";
 import type { Chain } from "@/Types/Chain";
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseChainRevenue = (
-  x: ApiTypes.GetByChainResponse["revenue"][number]
+  x: Responses.GetByChainResponse["revenue"][number]
 ): Models.ChainRevenue => {
   return {
     chain: x.chain,
@@ -14,7 +14,7 @@ export const parseChainRevenue = (
 };
 
 export const parseTopPools = (
-  x: ApiTypes.GetTopPoolsResponse["revenue"][number]
+  x: Responses.GetTopPoolsResponse["revenue"][number]
 ): Models.ChainTopPoolRevenue => {
   return {
     name: x.name,
@@ -23,7 +23,7 @@ export const parseTopPools = (
 };
 
 export const parseCrvUsdWeekly = (
-  x: ApiTypes.GetCrvUsdWeeklyResponse["fees"][number]
+  x: Responses.GetCrvUsdWeeklyResponse["fees"][number]
 ): Models.CrvUsdWeekly => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -34,7 +34,7 @@ export const parseCrvUsdWeekly = (
 };
 
 export const parsePoolsWeekly = (
-  x: ApiTypes.GetPoolsWeeklyResponse["fees"][number]
+  x: Responses.GetPoolsWeeklyResponse["fees"][number]
 ): Models.PoolsWeekly => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -44,7 +44,7 @@ export const parsePoolsWeekly = (
 };
 
 export const parseCushion = (
-  x: ApiTypes.GetCushionsResponse["data"][number]
+  x: Responses.GetCushionsResponse["data"][number]
 ): Models.Cushion => {
   return {
     pool: x.pool.toLocaleLowerCase() as Address,
@@ -55,7 +55,7 @@ export const parseCushion = (
 };
 
 export const parseDistribution = (
-  x: ApiTypes.GetDistributionsResponse["distributions"][number]
+  x: Responses.GetDistributionsResponse["distributions"][number]
 ): Models.Distribution => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -64,7 +64,7 @@ export const parseDistribution = (
 };
 
 export const parseCowSwapSettlement = (
-  x: ApiTypes.GetCowSwapSettlementsResponse["data"][number]
+  x: Responses.GetCowSwapSettlementsResponse["data"][number]
 ): Models.CowSwapSettlement => {
   return {
     timestamp: toUTC(x.dt),
@@ -85,7 +85,7 @@ export const parseCowSwapSettlement = (
 };
 
 export const parseFeesCollected = (
-  x: ApiTypes.GetFeesCollectedResponse["data"][number]
+  x: Responses.GetFeesCollectedResponse["data"][number]
 ): Models.FeesCollected => {
   return {
     coin: {
@@ -100,7 +100,7 @@ export const parseFeesCollected = (
 };
 
 export const parseFeesStaged = (
-  x: ApiTypes.GetFeesStagedResponse["data"][number]
+  x: Responses.GetFeesStagedResponse["data"][number]
 ): Models.FeesStaged => {
   return {
     coin: {

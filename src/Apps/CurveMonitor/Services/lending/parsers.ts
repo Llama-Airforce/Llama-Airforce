@@ -1,8 +1,8 @@
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseLoanDistribution = (
-  x: ApiTypes.GetLoanDistributionResponse
+  x: Responses.GetLoanDistributionResponse
 ): Models.LoanDistribution => {
   return {
     stablecoin: x.stablecoin.map((x) => ({ value: x.value, label: x.label })),

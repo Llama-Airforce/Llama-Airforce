@@ -1,8 +1,8 @@
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseEvents = (
-  x: ApiTypes.GetLlammaEventsResponse["data"][number]
+  x: Responses.GetLlammaEventsResponse["data"][number]
 ): Models.LlammaEvent => {
   const provider = x.provider.toLocaleLowerCase();
   const deposit = x.deposit
@@ -35,7 +35,7 @@ export const parseEvents = (
 };
 
 export const parseTrades = (
-  x: ApiTypes.GetLlammaTradesResponse["data"][number]
+  x: Responses.GetLlammaTradesResponse["data"][number]
 ): Models.LlammaTrade => {
   return {
     sold_id: x.sold_id,
@@ -61,7 +61,7 @@ export const parseTrades = (
 };
 
 export const parseOHLC = (
-  x: ApiTypes.GetLlammaOHLCResponse["data"][number]
+  x: Responses.GetLlammaOHLCResponse["data"][number]
 ): Models.LlammaOHLC => {
   return {
     time: x.time,

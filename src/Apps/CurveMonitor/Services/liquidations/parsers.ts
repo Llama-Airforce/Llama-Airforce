@@ -1,9 +1,9 @@
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseSoftLiqRatio = (
-  x: ApiTypes.GetSoftLiqRatiosResponse["data"][number]
+  x: Responses.GetSoftLiqRatiosResponse["data"][number]
 ): Models.SoftLiqRatio => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -12,7 +12,7 @@ export const parseSoftLiqRatio = (
 };
 
 export const parseLiqsDetailed = (
-  x: ApiTypes.GetLiqsDetailedResponse["data"][number]
+  x: Responses.GetLiqsDetailedResponse["data"][number]
 ): Models.LiquidationDetails => {
   return {
     timestamp: toUTC(x.dt),
@@ -32,7 +32,7 @@ export const parseLiqsDetailed = (
 };
 
 export const parseLiqsAggregate = (
-  x: ApiTypes.GetLiqsAggregateResponse["data"][number]
+  x: Responses.GetLiqsAggregateResponse["data"][number]
 ): Models.LiquidationAggregate => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -45,7 +45,7 @@ export const parseLiqsAggregate = (
 };
 
 export const parseLiqOverview = (
-  x: ApiTypes.GetLiqOverviewResponse
+  x: Responses.GetLiqOverviewResponse
 ): Models.LiqOverview => {
   return {
     softLiqUsers: x.soft_liquidation_users,
@@ -60,7 +60,7 @@ export const parseLiqOverview = (
 };
 
 export const parseLiqLosses = (
-  x: ApiTypes.GetLiqLossesResponse["data"][number]
+  x: Responses.GetLiqLossesResponse["data"][number]
 ): Models.LiqLosses => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -75,7 +75,7 @@ export const parseLiqLosses = (
 };
 
 export const parseLiqHealthDeciles = (
-  x: ApiTypes.GetLiqHealthDecilesResponse["data"][number]
+  x: Responses.GetLiqHealthDecilesResponse["data"][number]
 ): Models.LiqHealthDecile => {
   return {
     decile: x.health_decile,

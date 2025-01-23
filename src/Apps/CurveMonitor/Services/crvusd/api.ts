@@ -1,7 +1,7 @@
 import { fetchType as fetch } from "@/Services";
 import type { Chain } from "@/Types/Chain";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getMarkets(
@@ -10,7 +10,7 @@ export async function getMarkets(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetMarketsResponse>(
+  const resp = await fetch<Responses.GetMarketsResponse>(
     `${host}/v1/crvusd/markets/${chain}?fetch_on_chain=true&page=${page}&per_page=10`
   );
 
@@ -23,7 +23,7 @@ export async function getSnapshots(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetSnapshotsResponse>(
+  const resp = await fetch<Responses.GetSnapshotsResponse>(
     `${host}/v1/crvusd/markets/${chain}/${marketAddr}/snapshots?fetch_on_chain=true&agg=day`
   );
 
@@ -32,7 +32,7 @@ export async function getSnapshots(
 
 export async function getCrvUsdSupply(chain: Chain, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetSupplyResponse>(
+  const resp = await fetch<Responses.GetSupplyResponse>(
     `${host}/v1/crvusd/markets/${chain}/supply`
   );
 
@@ -41,7 +41,7 @@ export async function getCrvUsdSupply(chain: Chain, options: Options = {}) {
 
 export async function getKeepers(chain: Chain, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetKeepersResponse>(
+  const resp = await fetch<Responses.GetKeepersResponse>(
     `${host}/v1/crvusd/pegkeepers/${chain}`
   );
 
@@ -54,7 +54,7 @@ export async function getUserMarkets(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserMarketsResponse>(
+  const resp = await fetch<Responses.GetUserMarketsResponse>(
     `${host}/v1/crvusd/users/${chain}/${userAddr}?page=1&per_page=100`
   );
 
@@ -68,7 +68,7 @@ export async function getUserMarketStats(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserMarketStatsResponse>(
+  const resp = await fetch<Responses.GetUserMarketStatsResponse>(
     `${host}/v1/crvusd/users/${chain}/${getAddress(userAddr)}/${getAddress(
       marketController
     )}/stats?page=1&per_page=100`
@@ -84,7 +84,7 @@ export async function getUserMarketSnapshots(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserMarketSnapshotsResponse>(
+  const resp = await fetch<Responses.GetUserMarketSnapshotsResponse>(
     `${host}/v1/crvusd/users/${chain}/${getAddress(userAddr)}/${getAddress(
       marketController
     )}/snapshots?page=1&per_page=100`
@@ -100,7 +100,7 @@ export async function getUserMarketCollateralEvents(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserCollateralEventsResponse>(
+  const resp = await fetch<Responses.GetUserCollateralEventsResponse>(
     `${host}/v1/crvusd/collateral_events/${chain}/${marketController}/${userAddr}`
   );
 

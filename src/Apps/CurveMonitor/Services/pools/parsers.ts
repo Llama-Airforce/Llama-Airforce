@@ -1,9 +1,9 @@
 import type { Address } from "@/Types/Address";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parsePoolTotals = (
-  x: ApiTypes.GetPoolsResponse["total"]
+  x: Responses.GetPoolsResponse["total"]
 ): Models.PoolsTotals => {
   return {
     tvl: x.total_tvl,
@@ -15,7 +15,7 @@ export const parsePoolTotals = (
 };
 
 export const parsePool = (
-  x: ApiTypes.GetPoolsResponse["data"][number]
+  x: Responses.GetPoolsResponse["data"][number]
 ): Models.Pool => {
   return {
     name: x.name,
@@ -40,7 +40,7 @@ export const parsePool = (
 };
 
 export const parseVolume = (
-  x: ApiTypes.GetVolumeResponse["data"][number]
+  x: Responses.GetVolumeResponse["data"][number]
 ): Models.Volume => {
   return {
     timestamp: x.timestamp,
@@ -50,7 +50,7 @@ export const parseVolume = (
 };
 
 export const parseTvl = (
-  x: ApiTypes.GetTvlResponse["data"][number]
+  x: Responses.GetTvlResponse["data"][number]
 ): Models.Tvl => {
   return {
     timestamp: x.timestamp,

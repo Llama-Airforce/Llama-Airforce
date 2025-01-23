@@ -1,16 +1,16 @@
 import { type Chain, chains } from "@/Types/Chain";
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseSupportedChains = (
-  x: ApiTypes.GetSupportedChainsResponse
+  x: Responses.GetSupportedChainsResponse
 ): Chain[] => {
   return x.data.map((y) => y.name as Chain).filter((y) => chains.includes(y));
 };
 
 export const parseChainInfo = (
-  x: ApiTypes.GetChainInfoResponse
+  x: Responses.GetChainInfoResponse
 ): Models.ChainInfo => {
   return {
     chain: x.chain,
@@ -25,7 +25,7 @@ export const parseChainInfo = (
 };
 
 export const parseTxs = (
-  x: ApiTypes.GetTransactionsResponse
+  x: Responses.GetTransactionsResponse
 ): Models.Transactions[] => {
   return x.data.flatMap((data) =>
     data.transactions.map((tx) => ({
@@ -37,7 +37,7 @@ export const parseTxs = (
   );
 };
 
-export const parseUsers = (x: ApiTypes.GetUsersResponse): Models.Users[] => {
+export const parseUsers = (x: Responses.GetUsersResponse): Models.Users[] => {
   return x.data.flatMap((data) =>
     data.users.map((tx) => ({
       chain: data.chain,

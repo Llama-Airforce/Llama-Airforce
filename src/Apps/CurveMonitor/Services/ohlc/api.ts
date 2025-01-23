@@ -2,7 +2,7 @@ import { getAddress } from "viem";
 import { fetchType as fetch } from "@/Services";
 import type { Chain } from "@/Types/Chain";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getOHLC(
@@ -29,7 +29,7 @@ export async function getOHLC(
     `start=${start}&` +
     `end=${end}`;
 
-  const resp = await fetch<ApiTypes.GetOHLCResponse>(url);
+  const resp = await fetch<Responses.GetOHLCResponse>(url);
 
   return resp.data.map(Parsers.parseOHLC);
 }

@@ -1,9 +1,9 @@
 import type { Address } from "@/Types/Address";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseSolverCompetition = (
-  x: ApiTypes.GetSolverCompetitionResponse
+  x: Responses.GetSolverCompetitionResponse
 ): Models.SolverCompetition => {
   return {
     auctionStartBlock: x.auctionStartBlock,

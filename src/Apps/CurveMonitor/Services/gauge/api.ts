@@ -1,11 +1,11 @@
 import { fetchType as fetch } from "@/Services";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getGauges(options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetGaugesResponse>(
+  const resp = await fetch<Responses.GetGaugesResponse>(
     `${host}/v1/dao/gauges/overview`
   );
 
@@ -14,7 +14,7 @@ export async function getGauges(options: Options = {}) {
 
 export async function getGauge(gaugeAddress: string, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetGaugeResponse>(
+  const resp = await fetch<Responses.GetGaugeResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/metadata`
   );
 
@@ -23,7 +23,7 @@ export async function getGauge(gaugeAddress: string, options: Options = {}) {
 
 export async function getVotes(gaugeAddress: string, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetVotesResponse>(
+  const resp = await fetch<Responses.GetVotesResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/votes`
   );
 
@@ -35,7 +35,7 @@ export async function getWeightHistory(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetWeightHistoryResponse>(
+  const resp = await fetch<Responses.GetWeightHistoryResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/weight_history`
   );
 
@@ -47,7 +47,7 @@ export async function getDeployment(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetDeploymentResponse>(
+  const resp = await fetch<Responses.GetDeploymentResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/deployment`
   );
 
@@ -56,7 +56,7 @@ export async function getDeployment(
 
 export async function getUserGaugeVotes(user: string, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserGaugeVotesResponse>(
+  const resp = await fetch<Responses.GetUserGaugeVotesResponse>(
     `${host}/v1/dao/gauges/votes/user/${user}`
   );
 

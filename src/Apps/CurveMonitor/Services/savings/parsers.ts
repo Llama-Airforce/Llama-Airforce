@@ -1,9 +1,9 @@
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseEvent = (
-  x: ApiTypes.GetEventsResponse["events"][number]
+  x: Responses.GetEventsResponse["events"][number]
 ): Models.Event => {
   return {
     type: x.action_type,
@@ -19,7 +19,7 @@ export const parseEvent = (
 };
 
 export const parseYield = (
-  x: ApiTypes.GetYieldResponse["data"][number]
+  x: Responses.GetYieldResponse["data"][number]
 ): Models.Yield => {
   return {
     timestamp: toUTC(x.timestamp),
@@ -30,7 +30,7 @@ export const parseYield = (
 };
 
 export const parseRevenue = (
-  x: ApiTypes.GetRevenueResponse["history"][number]
+  x: Responses.GetRevenueResponse["history"][number]
 ): Models.Revenue => {
   return {
     strategy: x.strategy.toLocaleLowerCase(),
@@ -46,7 +46,7 @@ export const parseRevenue = (
 };
 
 export const parseStatistics = (
-  x: ApiTypes.GetStatisticsResponse
+  x: Responses.GetStatisticsResponse
 ): Models.Statistics => {
   return {
     lastUpdated: toUTC(x.last_updated),

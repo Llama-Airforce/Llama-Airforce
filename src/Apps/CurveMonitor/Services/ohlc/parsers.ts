@@ -1,8 +1,8 @@
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseOHLC = (
-  x: ApiTypes.GetOHLCResponse["data"][number]
+  x: Responses.GetOHLCResponse["data"][number]
 ): Models.OHLC => {
   return {
     time: x.time,

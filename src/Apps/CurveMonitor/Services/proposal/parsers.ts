@@ -1,10 +1,10 @@
 import { bigNumToNumber } from "@/Utils/Number";
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseProposal = (
-  x: ApiTypes.GetProposalsResponse["proposals"][number]
+  x: Responses.GetProposalsResponse["proposals"][number]
 ): Models.Proposal => {
   const timestamp = toUTC(x.dt);
   const id = x.vote_id;
@@ -50,7 +50,7 @@ export const parseProposal = (
 };
 
 export const parseProposalDetails = (
-  x: ApiTypes.GetProposalDetailsResponse
+  x: Responses.GetProposalDetailsResponse
 ): Models.Proposal & Models.ProposalDetails => {
   const proposal = parseProposal(x);
   const txExecution = x.execution_tx
@@ -72,7 +72,7 @@ export const parseProposalDetails = (
 };
 
 export const parseUserProposalVote = (
-  x: ApiTypes.GetUserProposalVotes["data"][number]
+  x: Responses.GetUserProposalVotes["data"][number]
 ): Models.UserProposalVote => {
   return {
     proposal: parseProposal(x.proposal),

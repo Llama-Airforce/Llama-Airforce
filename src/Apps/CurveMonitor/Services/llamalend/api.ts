@@ -1,20 +1,20 @@
 import { fetchType as fetch } from "@/Services";
 import type { Chain } from "@/Types/Chain";
 import { getHost, type Options } from "..";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getChains(options: Options = {}): Promise<Chain[]> {
   const host = await getHost(options);
 
-  return fetch<ApiTypes.GetChainsResponse>(`${host}/v1/lending/chains`).then(
+  return fetch<Responses.GetChainsResponse>(`${host}/v1/lending/chains`).then(
     (resp) => resp.data
   );
 }
 
 export async function getMarkets(chain: Chain, options: Options = {}) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetMarketsResponse>(
+  const resp = await fetch<Responses.GetMarketsResponse>(
     `${host}/v1/lending/markets/${chain}?fetch_on_chain=true&page=1&per_page=100`
   );
 
@@ -27,7 +27,7 @@ export async function getSnapshots(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetSnapshotsResponse>(
+  const resp = await fetch<Responses.GetSnapshotsResponse>(
     `${host}/v1/lending/markets/${chain}/${marketController}/snapshots?fetch_on_chain=true&agg=day`
   );
 
@@ -40,7 +40,7 @@ export async function getUserMarkets(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserMarketsResponse>(
+  const resp = await fetch<Responses.GetUserMarketsResponse>(
     `${host}/v1/lending/users/${chain}/${userAddr}?page=1&per_page=100`
   );
 
@@ -54,7 +54,7 @@ export async function getUserMarketStats(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserMarketStatsResponse>(
+  const resp = await fetch<Responses.GetUserMarketStatsResponse>(
     `${host}/v1/lending/users/${chain}/${getAddress(userAddr)}/${getAddress(
       marketController
     )}/stats?page=1&per_page=100`
@@ -70,7 +70,7 @@ export async function getUserMarketSnapshots(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserMarketSnapshotsResponse>(
+  const resp = await fetch<Responses.GetUserMarketSnapshotsResponse>(
     `${host}/v1/lending/users/${chain}/${getAddress(userAddr)}/${getAddress(
       marketController
     )}/snapshots?page=1&per_page=100`
@@ -86,7 +86,7 @@ export async function getUserMarketCollateralEvents(
   options: Options = {}
 ) {
   const host = await getHost(options);
-  const resp = await fetch<ApiTypes.GetUserCollateralEventsResponse>(
+  const resp = await fetch<Responses.GetUserCollateralEventsResponse>(
     `${host}/v1/lending/collateral_events/${chain}/${marketController}/${userAddr}`
   );
 

@@ -1,9 +1,9 @@
 import { toUTC } from "../";
-import type * as ApiTypes from "./apiTypes";
+import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseMarket = (
-  x: ApiTypes.GetMarketsResponse["data"][number]
+  x: Responses.GetMarketsResponse["data"][number]
 ): Models.Market => {
   return {
     name: x.name,
@@ -42,7 +42,7 @@ export const parseMarket = (
 };
 
 export const parseSnapshot = (
-  x: ApiTypes.GetSnapshotsResponse["data"][number]
+  x: Responses.GetSnapshotsResponse["data"][number]
 ): Models.Snapshot => {
   const rate = parseFloat(x.rate);
   const borrowApy = parseFloat(x.borrow_apy) / 100;
@@ -88,7 +88,7 @@ export const parseSnapshot = (
 };
 
 export const parseUserMarkets = (
-  x: ApiTypes.GetUserMarketsResponse
+  x: Responses.GetUserMarketsResponse
 ): Models.UserMarkets => {
   return x.markets.map((market) => ({
     name: market.market_name,
@@ -99,7 +99,7 @@ export const parseUserMarkets = (
 };
 
 export const parseUserMarketStats = (
-  x: ApiTypes.GetUserMarketStatsResponse
+  x: Responses.GetUserMarketStatsResponse
 ) => {
   return {
     health: x.health,
@@ -122,13 +122,13 @@ export const parseUserMarketStats = (
 };
 
 export const parseUserMarketSnapshots = (
-  x: ApiTypes.GetUserMarketSnapshotsResponse
+  x: Responses.GetUserMarketSnapshotsResponse
 ): Models.UserMarketSnapshots => {
   return x.data.map(parseUserMarketStats);
 };
 
 export const parseUserCollateralEvents = (
-  x: ApiTypes.GetUserCollateralEventsResponse
+  x: Responses.GetUserCollateralEventsResponse
 ): Models.UserCollateralEvents => {
   return {
     controller: x.controller.toLocaleLowerCase(),
