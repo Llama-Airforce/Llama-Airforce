@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "..";
 
 type Coin = {
   poolIndex: number;

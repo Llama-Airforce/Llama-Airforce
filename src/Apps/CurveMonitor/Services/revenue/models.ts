@@ -1,5 +1,4 @@
-import type { Address } from "@/Types/Address";
-import type { Chain } from "@/Types/Chain";
+import type { Address, Chain } from "..";
 
 export type ChainRevenue = {
   chain: string;

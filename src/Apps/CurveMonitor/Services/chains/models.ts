@@ -1,4 +1,4 @@
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "..";
 
 export type ChainInfo = {
   chain: string;

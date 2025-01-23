@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "..";
 import * as Api from "./api";
 
 export function useQuerySolverCompetition(tx: Ref<Address>) {

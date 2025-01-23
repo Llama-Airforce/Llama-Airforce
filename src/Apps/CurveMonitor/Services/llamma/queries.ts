@@ -1,5 +1,5 @@
 import { keepPreviousData } from "@tanstack/vue-query";
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "..";
 import type { Endpoint } from "./api";
 import * as Api from "./api";
 

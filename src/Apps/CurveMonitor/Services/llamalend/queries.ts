@@ -1,4 +1,4 @@
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "..";
 import type { Market } from "./models";
 import * as Api from "./api";
 

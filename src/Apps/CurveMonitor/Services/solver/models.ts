@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "..";
 
 export type SolverCompetition = {
   auctionStartBlock: number;

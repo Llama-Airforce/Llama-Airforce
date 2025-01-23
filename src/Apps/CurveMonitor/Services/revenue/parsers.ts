@@ -1,6 +1,4 @@
-import type { Address } from "@/Types/Address";
-import type { Chain } from "@/Types/Chain";
-import { toUTC } from "../";
+import { toUTC, type Chain, type Address } from "..";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 

@@ -1,5 +1,5 @@
 import { bigNumToNumber } from "@/Utils/Number";
-import { toUTC } from "../";
+import { toUTC } from "..";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 

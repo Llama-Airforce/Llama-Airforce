@@ -1,7 +1,6 @@
 import { getAddress } from "viem";
 import { fetchType as fetch } from "@/Services";
-import type { Chain } from "@/Types/Chain";
-import { getHost, type Options } from "..";
+import { getHost, type Options, type Chain } from "..";
 import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 

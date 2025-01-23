@@ -1,7 +1,7 @@
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "..";
+import * as ApiOHLC from "../ohlc";
 import type { Market, Keeper } from "./models";
 import * as Api from "./api";
-import * as ApiOHLC from "../ohlc";
 
 function initEmptyArray() {
   return {
