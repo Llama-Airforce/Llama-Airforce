@@ -1,7 +1,5 @@
 import type { Chain } from "@/Types/Chain";
-import RevenueService from "./service";
-
-const service = new RevenueService(useHost());
+import * as Api from "./api";
 
 function initEmptyArray() {
   return {
@@ -14,9 +12,9 @@ export function useQueryCushions(chain: Ref<Chain>) {
   return useQuery({
     queryKey: ["curve-cushions", chain] as const,
     queryFn: ({ queryKey: [, chain] }) =>
-      service
-        .getCushions(chain)
-        .then((x) => x.sort((a, b) => b.usdValue - a.usdValue)),
+      Api.getCushions(chain).then((x) =>
+        x.sort((a, b) => b.usdValue - a.usdValue)
+      ),
     ...initEmptyArray(),
   });
 }
@@ -24,7 +22,7 @@ export function useQueryCushions(chain: Ref<Chain>) {
 export function useQueryTopPools(chain: Ref<Chain>) {
   return useQuery({
     queryKey: ["curve-revenue-top-pools", chain] as const,
-    queryFn: ({ queryKey: [, chain] }) => service.getTopPools(chain),
+    queryFn: ({ queryKey: [, chain] }) => Api.getTopPools(chain),
     ...initEmptyArray(),
   });
 }
@@ -33,11 +31,9 @@ export function useQueryRevenueChains() {
   return useQuery({
     queryKey: ["curve-revenue-chain"],
     queryFn: () =>
-      service
-        .getByChain()
-        .then((x) =>
-          x.sort((a, b) => b.totalDailyFeesUSD - a.totalDailyFeesUSD)
-        ),
+      Api.getByChain().then((x) =>
+        x.sort((a, b) => b.totalDailyFeesUSD - a.totalDailyFeesUSD)
+      ),
     ...initEmptyArray(),
   });
 }
@@ -45,7 +41,7 @@ export function useQueryRevenueChains() {
 export function useQueryDistributions() {
   return useQuery({
     queryKey: ["curve-revenue-distributions"],
-    queryFn: () => service.getDistributions(),
+    queryFn: () => Api.getDistributions(),
     initialData: [],
     initialDataUpdatedAt: 0,
   });
@@ -54,7 +50,7 @@ export function useQueryDistributions() {
 export function useQueryCowSwapSettlements() {
   return useQuery({
     queryKey: ["curve-revenue-cow-settlements"],
-    queryFn: () => service.getCowSwapSettlements(),
+    queryFn: () => Api.getCowSwapSettlements(),
     ...initEmptyArray(),
   });
 }
@@ -62,7 +58,10 @@ export function useQueryCowSwapSettlements() {
 export function useQueryCrvUsdWeekly() {
   return useQuery({
     queryKey: ["curve-revenue-crvusd-weekly"],
-    queryFn: () => service.getCrvUsdWeekly(),
+    queryFn: () =>
+      Api.getCrvUsdWeekly({
+        host: useHost(),
+      }),
     ...initEmptyArray(),
   });
 }
@@ -70,7 +69,10 @@ export function useQueryCrvUsdWeekly() {
 export function useQueryPoolsWeekly() {
   return useQuery({
     queryKey: ["curve-revenue-pools-weekly"],
-    queryFn: () => service.getPoolsWeekly(),
+    queryFn: () =>
+      Api.getPoolsWeekly({
+        host: useHost(),
+      }),
     ...initEmptyArray(),
   });
 }
@@ -78,7 +80,10 @@ export function useQueryPoolsWeekly() {
 export function useQueryFeesCollected() {
   return useQuery({
     queryKey: ["curve-revenue-fees-collected"],
-    queryFn: () => service.getFeesCollected(),
+    queryFn: () =>
+      Api.getFeesCollected({
+        host: useHost(),
+      }),
     ...initEmptyArray(),
   });
 }
@@ -86,7 +91,10 @@ export function useQueryFeesCollected() {
 export function useQueryFeesStaged() {
   return useQuery({
     queryKey: ["curve-revenue-fees-staged"],
-    queryFn: () => service.getFeesStaged(),
+    queryFn: () =>
+      Api.getFeesStaged({
+        host: useHost(),
+      }),
     ...initEmptyArray(),
   });
 }

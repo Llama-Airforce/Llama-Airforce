@@ -1,6 +1,4 @@
-import GaugeService from "./service";
-
-const service = new GaugeService();
+import * as Api from "./api";
 
 function initEmptyArray() {
   return {
@@ -12,7 +10,7 @@ function initEmptyArray() {
 export function useQueryGauges() {
   return useQuery({
     queryKey: ["gauge-overview"] as const,
-    queryFn: () => service.getGauges(),
+    queryFn: () => Api.getGauges(),
     ...initEmptyArray(),
   });
 }
@@ -20,7 +18,7 @@ export function useQueryGauges() {
 export function useQueryGauge(gaugeAddress: Ref<string | undefined>) {
   return useQuery({
     queryKey: ["gauge-metadata", computed(() => gaugeAddress.value)] as const,
-    queryFn: ({ queryKey: [, gauge] }) => service.getGauge(gauge!),
+    queryFn: ({ queryKey: [, gauge] }) => Api.getGauge(gauge!),
     enabled: computed(() => !!gaugeAddress.value),
   });
 }
@@ -28,7 +26,7 @@ export function useQueryGauge(gaugeAddress: Ref<string | undefined>) {
 export function useQueryVotes(gaugeAddress: Ref<string | undefined>) {
   return useQuery({
     queryKey: ["gauge-votes", computed(() => gaugeAddress.value)] as const,
-    queryFn: ({ queryKey: [, gauge] }) => service.getVotes(gauge!),
+    queryFn: ({ queryKey: [, gauge] }) => Api.getVotes(gauge!),
     enabled: computed(() => !!gaugeAddress.value),
     ...initEmptyArray(),
   });
@@ -40,7 +38,7 @@ export function useQueryWeightHistory(gaugeAddress: Ref<string | undefined>) {
       "gauge-weight-history",
       computed(() => gaugeAddress.value),
     ] as const,
-    queryFn: ({ queryKey: [, gauge] }) => service.getWeightHistory(gauge!),
+    queryFn: ({ queryKey: [, gauge] }) => Api.getWeightHistory(gauge!),
     enabled: computed(() => !!gaugeAddress.value),
     ...initEmptyArray(),
   });
@@ -49,7 +47,7 @@ export function useQueryWeightHistory(gaugeAddress: Ref<string | undefined>) {
 export function useQueryDeployment(gaugeAddress: Ref<string | undefined>) {
   return useQuery({
     queryKey: ["gauge-deployment", computed(() => gaugeAddress.value)] as const,
-    queryFn: ({ queryKey: [, gauge] }) => service.getDeployment(gauge!),
+    queryFn: ({ queryKey: [, gauge] }) => Api.getDeployment(gauge!),
     enabled: computed(() => !!gaugeAddress.value),
   });
 }
@@ -57,7 +55,7 @@ export function useQueryDeployment(gaugeAddress: Ref<string | undefined>) {
 export function useQueryUserGaugeVotes(user: Ref<string | undefined>) {
   return useQuery({
     queryKey: ["gauge-user-votes", computed(() => user.value)] as const,
-    queryFn: ({ queryKey: [, user] }) => service.getUserGaugeVotes(user!),
+    queryFn: ({ queryKey: [, user] }) => Api.getUserGaugeVotes(user!),
     enabled: computed(() => !!user.value),
     ...initEmptyArray(),
   });

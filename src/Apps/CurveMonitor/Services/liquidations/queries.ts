@@ -1,7 +1,6 @@
 import type { Chain } from "@/Types/Chain";
-import LiquidationsService, { type Endpoint } from "./service";
-
-const service = new LiquidationsService();
+import type { Endpoint } from "./api";
+import * as Api from "./api";
 
 function initEmptyArray() {
   return {
@@ -27,7 +26,7 @@ export function useQuerySoftLiqRatios(
   return useQuery({
     queryKey: ["liqs-soft-liqs", market] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getSoftLiqRatios(endpoint.value, chain.value!, market!),
+      Api.getSoftLiqRatios(endpoint.value, chain.value!, market!),
     ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
@@ -40,7 +39,7 @@ export function useQueryLiqsDetailed(
   return useQuery({
     queryKey: ["liqs-detailed", market] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqsDetailed(endpoint.value, chain.value!, market!),
+      Api.getLiqsDetailed(endpoint.value, chain.value!, market!),
     ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
@@ -54,7 +53,7 @@ export function useQueryLiqsAggregate(
   return useQuery({
     queryKey: ["liqs-aggregate", market] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqsAggregate(endpoint.value, chain.value!, market!),
+      Api.getLiqsAggregate(endpoint.value, chain.value!, market!),
     ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
@@ -68,7 +67,7 @@ export function useQueryLiqOverview(
   return useQuery({
     queryKey: ["liqs-overview", market] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqOverview(endpoint.value, chain.value!, market!),
+      Api.getLiqOverview(endpoint.value, chain.value!, market!),
     ...hasMarket(market, chain),
   });
 }
@@ -81,7 +80,7 @@ export function useQueryLiqLosses(
   return useQuery({
     queryKey: ["liqs-losses", market] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqLosses(endpoint.value, chain.value!, market!),
+      Api.getLiqLosses(endpoint.value, chain.value!, market!),
     ...hasMarket(market, chain),
     ...initEmptyArray(),
   });
@@ -95,7 +94,7 @@ export function useQueryLiqHealthDeciles(
   return useQuery({
     queryKey: ["liqs-health-deciles", market] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getLiqHealthDeciles(endpoint.value, chain.value!, market!),
+      Api.getLiqHealthDeciles(endpoint.value, chain.value!, market!),
     ...hasMarket(market, chain),
     ...initEmptyArray(),
   });

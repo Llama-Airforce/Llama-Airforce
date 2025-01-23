@@ -1,2 +1,3 @@
 export * from "./models";
-export { default, type Endpoint } from "./service";
+export type { Endpoint } from "./api";
+export * from "./api";

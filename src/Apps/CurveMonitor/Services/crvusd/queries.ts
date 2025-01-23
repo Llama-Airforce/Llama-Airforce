@@ -1,10 +1,7 @@
 import type { Chain } from "@/Types/Chain";
 import type { Market, Keeper } from "./models";
-import CrvUsdService from "./service";
-import OHLCService from "../ohlc";
-
-const service = new CrvUsdService();
-const serviceOHLC = new OHLCService();
+import * as Api from "./api";
+import * as ApiOHLC from "../ohlc";
 
 function initEmptyArray() {
   return {
@@ -16,7 +13,7 @@ function initEmptyArray() {
 export function useQueryCrvUsdSupply() {
   return useQuery({
     queryKey: ["crvusd-supply"],
-    queryFn: () => service.getCrvUsdSupply("ethereum"),
+    queryFn: () => Api.getCrvUsdSupply("ethereum"),
     ...initEmptyArray(),
   });
 }
@@ -28,7 +25,7 @@ export function useQuerySnapshots(market: Ref<Market | undefined>) {
       computed(() => market.value?.address),
     ] as const,
     queryFn: ({ queryKey: [, market] }) =>
-      service.getSnapshots("ethereum", market!),
+      Api.getSnapshots("ethereum", market!),
     enabled: computed(() => !!market.value),
     ...initEmptyArray(),
   });
@@ -49,7 +46,7 @@ export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
           return [];
         }
 
-        const ohlc = await serviceOHLC.getOHLC(
+        const ohlc = await ApiOHLC.getOHLC(
           "ethereum",
           keeper.pool_address,
           tokenMain.address,
@@ -83,7 +80,7 @@ export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
 export function useQueryMarkets() {
   return useQuery({
     queryKey: ["crvusd-markets"],
-    queryFn: () => service.getMarkets("ethereum", 1),
+    queryFn: () => Api.getMarkets("ethereum", 1),
     ...initEmptyArray(),
   });
 }
@@ -91,7 +88,7 @@ export function useQueryMarkets() {
 export function useQueryKeepers() {
   return useQuery({
     queryKey: ["crvusd-keepers"],
-    queryFn: () => service.getKeepers("ethereum"),
+    queryFn: () => Api.getKeepers("ethereum"),
     ...initEmptyArray(),
   });
 }
@@ -107,7 +104,7 @@ export function useQueryUserMarkets(
       computed(() => chain.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain] }) =>
-      service.getUserMarkets(user!, chain!),
+      Api.getUserMarkets(user!, chain!),
     enabled: computed(() => !!user.value && !!chain.value),
     ...initEmptyArray(),
   });
@@ -126,7 +123,7 @@ export function useQueryUserMarketStats(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      service.getUserMarketStats(user!, chain!, market!),
+      Api.getUserMarketStats(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
   });
 }
@@ -144,7 +141,7 @@ export function useQueryUserMarketSnapshots(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      service.getUserMarketSnapshots(user!, chain!, market!),
+      Api.getUserMarketSnapshots(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
     ...initEmptyArray(),
   });
@@ -163,7 +160,7 @@ export function useQueryUserMarketCollateralEvents(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      service.getUserMarketCollateralEvents(user!, chain!, market!),
+      Api.getUserMarketCollateralEvents(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
   });
 }

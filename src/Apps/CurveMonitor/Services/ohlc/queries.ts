@@ -1,7 +1,5 @@
 import type { Chain } from "@/Types/Chain";
-import OHLCService from "./service";
-
-const service = new OHLCService();
+import * as Api from "./api";
 
 export function useQueryOHLC(
   chain: Ref<Chain | undefined>,
@@ -12,7 +10,7 @@ export function useQueryOHLC(
   return useQuery({
     queryKey: ["curve-token-price", poolAddr, tokenMain, tokenRef] as const,
     queryFn: ({ queryKey: [, poolAddr, tokenMain, tokenRef] }) =>
-      service.getOHLC(chain.value!, poolAddr!, tokenMain!, tokenRef!),
+      Api.getOHLC(chain.value!, poolAddr!, tokenMain!, tokenRef!),
     enabled: computed(
       () =>
         !!chain.value &&

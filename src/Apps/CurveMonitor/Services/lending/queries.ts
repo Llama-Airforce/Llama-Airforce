@@ -1,7 +1,6 @@
 import type { Chain } from "@/Types/Chain";
-import LendingService, { type Endpoint } from "./service";
-
-const service = new LendingService();
+import type { Endpoint } from "./api";
+import * as Api from "./api";
 
 export function useQueryLoanDistribution(
   endpoint: Ref<Endpoint>,
@@ -11,7 +10,7 @@ export function useQueryLoanDistribution(
   return useQuery({
     queryKey: ["lending-loan-distribution", controller] as const,
     queryFn: ({ queryKey: [, controller] }) =>
-      service.getLoanDistribution(endpoint.value, chain.value!, controller!),
+      Api.getLoanDistribution(endpoint.value, chain.value!, controller!),
     initialData: {
       stablecoin: [],
       debt: [],

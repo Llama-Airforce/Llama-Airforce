@@ -1,8 +1,7 @@
 import { keepPreviousData } from "@tanstack/vue-query";
 import type { Chain } from "@/Types/Chain";
-import LlammaService, { type Endpoint } from "./service";
-
-const service = new LlammaService();
+import type { Endpoint } from "./api";
+import * as Api from "./api";
 
 export function useQueryEvents(
   endpoint: Ref<Endpoint>,
@@ -13,7 +12,7 @@ export function useQueryEvents(
   return useQuery({
     queryKey: ["llamma-market-events", llamma, page] as const,
     queryFn: ({ queryKey: [, llamma, page] }) =>
-      service.getEvents(endpoint.value, chain.value!, llamma!, page),
+      Api.getEvents(endpoint.value, chain.value!, llamma!, page),
     placeholderData: keepPreviousData,
     enabled: computed(() => !!llamma.value && !!chain.value),
   });
@@ -28,7 +27,7 @@ export function useQueryTrades(
   return useQuery({
     queryKey: ["llamma-market-trades", llamma, page] as const,
     queryFn: ({ queryKey: [, llamma, page] }) =>
-      service.getTrades(endpoint.value, chain.value!, llamma!, page),
+      Api.getTrades(endpoint.value, chain.value!, llamma!, page),
     placeholderData: keepPreviousData,
     enabled: computed(() => !!llamma.value && !!chain.value),
   });
@@ -42,7 +41,7 @@ export function useQueryOHLC(
   return useQuery({
     queryKey: ["llamma-market-ohlc", llamma] as const,
     queryFn: ({ queryKey: [, llamma] }) =>
-      service.getOHLC(endpoint.value, chain.value!, llamma!),
+      Api.getOHLC(endpoint.value, chain.value!, llamma!),
     enabled: computed(() => !!llamma.value && !!chain.value),
   });
 }

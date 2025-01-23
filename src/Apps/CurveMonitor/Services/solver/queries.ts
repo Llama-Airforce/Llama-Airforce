@@ -1,11 +1,9 @@
 import type { Address } from "@/Types/Address";
-import SolverService from "./service";
-
-const service = new SolverService();
+import * as Api from "./api";
 
 export function useQuerySolverCompetition(tx: Ref<Address>) {
   return useQuery({
     queryKey: ["solver-competition", tx] as const,
-    queryFn: ({ queryKey: [, tx] }) => service.getCompetition(tx),
+    queryFn: ({ queryKey: [, tx] }) => Api.getCompetition(tx),
   });
 }

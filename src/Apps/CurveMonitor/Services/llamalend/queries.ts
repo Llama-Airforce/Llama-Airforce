@@ -1,8 +1,6 @@
 import type { Chain } from "@/Types/Chain";
 import type { Market } from "./models";
-import LlamaLendService from "./service";
-
-const service = new LlamaLendService();
+import * as Api from "./api";
 
 function initEmptyArray() {
   return {
@@ -14,7 +12,7 @@ function initEmptyArray() {
 export function useQueryChains() {
   return useQuery({
     queryKey: ["llamalend-chains"] as const,
-    queryFn: () => service.getChains(),
+    queryFn: () => Api.getChains(),
     initialData: ["ethereum", "arbitrum"] as Chain[],
     initialDataUpdatedAt: 0,
   });
@@ -23,7 +21,7 @@ export function useQueryChains() {
 export function useQueryMarkets(chain: Ref<Chain>) {
   return useQuery({
     queryKey: ["llamalend-markets", chain] as const,
-    queryFn: ({ queryKey: [, chain] }) => service.getMarkets(chain),
+    queryFn: ({ queryKey: [, chain] }) => Api.getMarkets(chain),
   });
 }
 
@@ -37,7 +35,7 @@ export function useQuerySnapshots(
       computed(() => market.value?.controller),
     ] as const,
     queryFn: ({ queryKey: [, controller] }) =>
-      service.getSnapshots(chain.value!, controller!),
+      Api.getSnapshots(chain.value!, controller!),
     ...initEmptyArray(),
     enabled: computed(() => !!market.value && !!chain.value),
   });
@@ -54,7 +52,7 @@ export function useQueryUserMarkets(
       computed(() => chain.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain] }) =>
-      service.getUserMarkets(user!, chain!),
+      Api.getUserMarkets(user!, chain!),
     enabled: computed(() => !!user.value && !!chain.value),
     ...initEmptyArray(),
   });
@@ -73,7 +71,7 @@ export function useQueryUserMarketStats(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      service.getUserMarketStats(user!, chain!, market!),
+      Api.getUserMarketStats(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
   });
 }
@@ -91,7 +89,7 @@ export function useQueryUserMarketSnapshots(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      service.getUserMarketSnapshots(user!, chain!, market!),
+      Api.getUserMarketSnapshots(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
     ...initEmptyArray(),
   });
@@ -110,7 +108,7 @@ export function useQueryUserMarketCollateralEvents(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      service.getUserMarketCollateralEvents(user!, chain!, market!),
+      Api.getUserMarketCollateralEvents(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
   });
 }

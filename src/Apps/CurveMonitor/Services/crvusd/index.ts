@@ -1,2 +1,2 @@
 export * from "./models";
-export { default } from "./service";
+export * from "./api";

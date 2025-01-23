@@ -1,7 +1,5 @@
 import type { Chain } from "@/Types/Chain";
-import ChainsService from "./service";
-
-const service = new ChainsService();
+import * as Api from "./api";
 
 function initEmptyArray() {
   return {
@@ -13,7 +11,7 @@ function initEmptyArray() {
 export function useQueryChainsSupported() {
   return useQuery({
     queryKey: ["chains-supported"] as const,
-    queryFn: () => service.getSupportedChains(),
+    queryFn: () => Api.getSupportedChains(),
     initialData: ["ethereum"] as Chain[],
     initialDataUpdatedAt: 0,
   });
@@ -22,7 +20,7 @@ export function useQueryChainsSupported() {
 export function useQueryChainInfo(chain: Ref<Chain | undefined>) {
   return useQuery({
     queryKey: ["chain-info", chain] as const,
-    queryFn: ({ queryKey: [, chain] }) => service.getChainInfo(chain!),
+    queryFn: ({ queryKey: [, chain] }) => Api.getChainInfo(chain!),
     enabled: computed(() => !!chain.value),
   });
 }
@@ -30,7 +28,7 @@ export function useQueryChainInfo(chain: Ref<Chain | undefined>) {
 export function useQueryTxs() {
   return useQuery({
     queryKey: ["chains-txs"] as const,
-    queryFn: () => service.getTxs(),
+    queryFn: () => Api.getTxs(),
     ...initEmptyArray(),
   });
 }
@@ -38,7 +36,7 @@ export function useQueryTxs() {
 export function useQueryUsers() {
   return useQuery({
     queryKey: ["chains-users"] as const,
-    queryFn: () => service.getUsers(),
+    queryFn: () => Api.getUsers(),
     ...initEmptyArray(),
   });
 }

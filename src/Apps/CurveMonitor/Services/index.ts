@@ -1,3 +1,11 @@
+export type Options = {
+  host?: Promise<string>;
+  signal?: AbortSignal;
+};
+
+export const getHost = (options?: Options): Required<Options>["host"] =>
+  options?.host ?? Promise.resolve("https://prices.curve.fi");
+
 export function toUTC(timestamp: string | number): number {
   if (typeof timestamp === "number") {
     return timestamp;
