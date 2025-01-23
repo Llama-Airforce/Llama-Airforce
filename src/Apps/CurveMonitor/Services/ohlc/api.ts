@@ -1,4 +1,3 @@
-import { getAddress } from "viem";
 import { getHost, fetchJson as fetch, type Options, type Chain } from "..";
 import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
@@ -19,9 +18,9 @@ export async function getOHLC(
   const url =
     `${host}/v1/ohlc` +
     `/${chain}` +
-    `/${getAddress(poolAddr)}?` +
-    `main_token=${getAddress(tokenMain)}&` +
-    `reference_token=${getAddress(tokenRef)}&` +
+    `/${poolAddr}?` +
+    `main_token=${tokenMain}&` +
+    `reference_token=${tokenRef}&` +
     `agg_number=1&` +
     `agg_units=day&` +
     `start=${start}&` +
