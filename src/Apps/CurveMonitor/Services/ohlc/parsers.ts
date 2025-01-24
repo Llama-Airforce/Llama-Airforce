@@ -3,12 +3,10 @@ import type * as Models from "./models";
 
 export const parseOHLC = (
   x: Responses.GetOHLCResponse["data"][number]
-): Models.OHLC => {
-  return {
-    time: x.time,
-    open: x.open,
-    high: x.high,
-    low: x.low,
-    close: x.close,
-  };
-};
+): Models.OHLC => ({
+  time: x.time,
+  open: x.open,
+  high: x.high,
+  low: x.low,
+  close: x.close,
+});
