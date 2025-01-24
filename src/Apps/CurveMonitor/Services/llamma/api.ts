@@ -10,7 +10,7 @@ export async function getEvents(
   chain: Chain,
   llamma: string,
   page: number,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLlammaEventsResponse>(
@@ -28,7 +28,7 @@ export async function getTrades(
   chain: Chain,
   llamma: string,
   page: number,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLlammaTradesResponse>(
@@ -45,7 +45,7 @@ export async function getOHLC(
   endpoint: Endpoint,
   chain: Chain,
   llamma: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
 

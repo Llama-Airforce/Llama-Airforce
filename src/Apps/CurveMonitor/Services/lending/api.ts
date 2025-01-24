@@ -9,7 +9,7 @@ export async function getLoanDistribution(
   endpoint: Endpoint,
   chain: Chain,
   controller: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLoanDistributionResponse>(

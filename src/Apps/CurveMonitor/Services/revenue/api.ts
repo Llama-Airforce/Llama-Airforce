@@ -6,12 +6,12 @@ import * as Parsers from "./parsers";
 
 const API_URL_OLD = Promise.resolve("https://api-py.llama.airforce/curve/v1");
 
-export async function getByChain(options: Options = {}) {
-  const host = await getHost(options.host ? options : { host: API_URL_OLD });
+export async function getByChain(options?: Options) {
+  const host = await getHost(options?.host ? options : { host: API_URL_OLD });
   const resp = await fetch<Responses.GetByChainResponse>(
     `${host}/protocol/revenue/chains`,
     undefined,
-    options.signal
+    options?.signal
   );
 
   return resp.revenue.map(Parsers.parseChainRevenue);
@@ -20,10 +20,10 @@ export async function getByChain(options: Options = {}) {
 export async function getTopPools(
   chain: string,
   numPools = 10,
-  options: Options = {}
+  options?: Options
 ) {
   const chainStr = chain === "ethereum" ? "mainnet" : chain;
-  const host = await getHost(options.host ? options : { host: API_URL_OLD });
+  const host = await getHost(options?.host ? options : { host: API_URL_OLD });
 
   const resp = await fetch<Responses.GetTopPoolsResponse>(
     `${host}/protocol/revenue/${chainStr}/toppools/${numPools}`
@@ -32,7 +32,7 @@ export async function getTopPools(
   return resp.revenue.map(Parsers.parseTopPools);
 }
 
-export async function getCrvUsdWeekly(options: Options = {}) {
+export async function getCrvUsdWeekly(options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetCrvUsdWeeklyResponse>(
     `${host}/v1/dao/fees/crvusd/weekly`
@@ -41,7 +41,7 @@ export async function getCrvUsdWeekly(options: Options = {}) {
   return resp.fees.map(Parsers.parseCrvUsdWeekly);
 }
 
-export async function getPoolsWeekly(options: Options = {}) {
+export async function getPoolsWeekly(options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetPoolsWeeklyResponse>(
     `${host}/v1/dao/fees/pools/weekly`
@@ -50,7 +50,7 @@ export async function getPoolsWeekly(options: Options = {}) {
   return resp.fees.map(Parsers.parsePoolsWeekly);
 }
 
-export async function getCushions(chain: string, options: Options = {}) {
+export async function getCushions(chain: string, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetCushionsResponse>(
     `${host}/v1/dao/fees/${chain}/pending`
@@ -59,7 +59,7 @@ export async function getCushions(chain: string, options: Options = {}) {
   return resp.data.map(Parsers.parseCushion);
 }
 
-export async function getDistributions(options: Options = {}) {
+export async function getDistributions(options?: Options) {
   const host = await getHost(options);
   const fs = (page: number) => {
     return fetch<Responses.GetDistributionsResponse>(
@@ -74,7 +74,7 @@ export async function getDistributions(options: Options = {}) {
 
 export async function getCowSwapSettlements(
   timestamp?: number,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetCowSwapSettlementsResponse>(
@@ -86,7 +86,7 @@ export async function getCowSwapSettlements(
   return resp.data.map(Parsers.parseCowSwapSettlement);
 }
 
-export async function getFeesCollected(options: Options = {}) {
+export async function getFeesCollected(options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetFeesCollectedResponse>(
     `${host}/v1/dao/fees/collected`
@@ -95,7 +95,7 @@ export async function getFeesCollected(options: Options = {}) {
   return resp.data.map(Parsers.parseFeesCollected);
 }
 
-export async function getFeesStaged(options: Options = {}) {
+export async function getFeesStaged(options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetFeesStagedResponse>(
     `${host}/v1/dao/fees/staged`

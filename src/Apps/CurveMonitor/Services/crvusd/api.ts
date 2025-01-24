@@ -6,7 +6,7 @@ import * as Parsers from "./parsers";
 export async function getMarkets(
   chain: Chain,
   page: number,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetMarketsResponse>(
@@ -19,7 +19,7 @@ export async function getMarkets(
 export async function getSnapshots(
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetSnapshotsResponse>(
@@ -29,7 +29,7 @@ export async function getSnapshots(
   return resp.data.map(Parsers.parseSnapshot);
 }
 
-export async function getCrvUsdSupply(chain: Chain, options: Options = {}) {
+export async function getCrvUsdSupply(chain: Chain, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetSupplyResponse>(
     `${host}/v1/crvusd/markets/${chain}/supply`
@@ -38,7 +38,7 @@ export async function getCrvUsdSupply(chain: Chain, options: Options = {}) {
   return resp.data.map(Parsers.parseSupply);
 }
 
-export async function getKeepers(chain: Chain, options: Options = {}) {
+export async function getKeepers(chain: Chain, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetKeepersResponse>(
     `${host}/v1/crvusd/pegkeepers/${chain}`
@@ -50,7 +50,7 @@ export async function getKeepers(chain: Chain, options: Options = {}) {
 export async function getUserMarkets(
   userAddr: string,
   chain: Chain,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserMarketsResponse>(
@@ -64,7 +64,7 @@ export async function getUserMarketStats(
   userAddr: string,
   chain: Chain,
   marketController: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserMarketStatsResponse>(
@@ -80,7 +80,7 @@ export async function getUserMarketSnapshots(
   userAddr: string,
   chain: Chain,
   marketController: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserMarketSnapshotsResponse>(
@@ -96,7 +96,7 @@ export async function getUserMarketCollateralEvents(
   userAddr: string,
   chain: Chain,
   marketController: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserCollateralEventsResponse>(

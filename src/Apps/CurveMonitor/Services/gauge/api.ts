@@ -3,7 +3,7 @@ import { fetchJson as fetch } from "../fetch";
 import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
-export async function getGauges(options: Options = {}) {
+export async function getGauges(options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetGaugesResponse>(
     `${host}/v1/dao/gauges/overview`
@@ -12,7 +12,7 @@ export async function getGauges(options: Options = {}) {
   return resp.gauges.map(Parsers.parseGauge);
 }
 
-export async function getGauge(gaugeAddress: string, options: Options = {}) {
+export async function getGauge(gaugeAddress: string, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetGaugeResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/metadata`
@@ -21,7 +21,7 @@ export async function getGauge(gaugeAddress: string, options: Options = {}) {
   return Parsers.parseGauge(resp);
 }
 
-export async function getVotes(gaugeAddress: string, options: Options = {}) {
+export async function getVotes(gaugeAddress: string, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetVotesResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/votes`
@@ -32,7 +32,7 @@ export async function getVotes(gaugeAddress: string, options: Options = {}) {
 
 export async function getWeightHistory(
   gaugeAddress: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetWeightHistoryResponse>(
@@ -42,10 +42,7 @@ export async function getWeightHistory(
   return resp.data.map(Parsers.parseWeightHistory);
 }
 
-export async function getDeployment(
-  gaugeAddress: string,
-  options: Options = {}
-) {
+export async function getDeployment(gaugeAddress: string, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetDeploymentResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/deployment`
@@ -54,7 +51,7 @@ export async function getDeployment(
   return Parsers.parseDeployment(resp);
 }
 
-export async function getUserGaugeVotes(user: string, options: Options = {}) {
+export async function getUserGaugeVotes(user: string, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserGaugeVotesResponse>(
     `${host}/v1/dao/gauges/votes/user/${user}`

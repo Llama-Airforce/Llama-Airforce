@@ -9,7 +9,7 @@ export async function getSoftLiqRatios(
   endpoint: Endpoint,
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetSoftLiqRatiosResponse>(
@@ -23,7 +23,7 @@ export async function getLiqsDetailed(
   endpoint: Endpoint,
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLiqsDetailedResponse>(
@@ -37,7 +37,7 @@ export async function getLiqsAggregate(
   endpoint: Endpoint,
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLiqsAggregateResponse>(
@@ -51,7 +51,7 @@ export async function getLiqOverview(
   endpoint: Endpoint,
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLiqOverviewResponse>(
@@ -65,7 +65,7 @@ export async function getLiqLosses(
   endpoint: Endpoint,
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLiqLossesResponse>(
@@ -79,7 +79,7 @@ export async function getLiqHealthDeciles(
   endpoint: Endpoint,
   chain: Chain,
   marketAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetLiqHealthDecilesResponse>(

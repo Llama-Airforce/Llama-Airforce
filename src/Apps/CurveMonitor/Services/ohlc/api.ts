@@ -8,7 +8,7 @@ export async function getOHLC(
   poolAddr: string,
   tokenMain: string,
   tokenRef: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
 

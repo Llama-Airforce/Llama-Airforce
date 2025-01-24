@@ -9,7 +9,7 @@ export async function getProposals(
   search: string,
   type: Models.ProposalType,
   status: Models.ProposalStatus,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetProposalsResponse>(
@@ -25,7 +25,7 @@ export async function getProposals(
 export async function getProposal(
   proposalId: number,
   proposalType: Models.ProposalType,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetProposalDetailsResponse>(
@@ -35,10 +35,7 @@ export async function getProposal(
   return Parsers.parseProposalDetails(resp);
 }
 
-export async function getUserProposalVotes(
-  user: string,
-  options: Options = {}
-) {
+export async function getUserProposalVotes(user: string, options?: Options) {
   try {
     const host = await getHost(options);
     const resp = await fetch<Responses.GetUserProposalVotes>(

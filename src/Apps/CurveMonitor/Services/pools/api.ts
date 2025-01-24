@@ -7,7 +7,7 @@ export async function getPools(
   chain: Chain,
   page: number = 1,
   perPage: number = 9999,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetPoolsResponse>(
@@ -24,7 +24,7 @@ export async function getPools(
 export async function getPool(
   chain: Chain,
   poolAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetPoolResponse>(
@@ -37,7 +37,7 @@ export async function getPool(
 export async function getVolume(
   chain: Chain,
   poolAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
 
@@ -58,7 +58,7 @@ export async function getVolume(
 export async function getTvl(
   chain: Chain,
   poolAddr: string,
-  options: Options = {}
+  options?: Options
 ) {
   const host = await getHost(options);
 

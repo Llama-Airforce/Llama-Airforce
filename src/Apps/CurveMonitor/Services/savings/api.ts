@@ -3,7 +3,7 @@ import { fetchJson as fetch } from "../fetch";
 import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
-export async function getStatistics(options: Options = {}) {
+export async function getStatistics(options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetStatisticsResponse>(
     `${host}/v1/crvusd/savings/statistics`
@@ -12,7 +12,7 @@ export async function getStatistics(options: Options = {}) {
   return Parsers.parseStatistics(resp);
 }
 
-export async function getEvents(page: number, options: Options = {}) {
+export async function getEvents(page: number, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetEventsResponse>(
     `${host}/v1/crvusd/savings/events?page=${page}&per_page=10`
@@ -24,7 +24,7 @@ export async function getEvents(page: number, options: Options = {}) {
   };
 }
 
-export async function getYield(options: Options = {}) {
+export async function getYield(options?: Options) {
   const host = await getHost(options);
 
   const end = Math.floor(new Date().getTime() / 1000);
@@ -37,7 +37,7 @@ export async function getYield(options: Options = {}) {
   return resp.data.map(Parsers.parseYield);
 }
 
-export async function getRevenue(page: number, options: Options = {}) {
+export async function getRevenue(page: number, options?: Options) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetRevenueResponse>(
     `${host}/v1/crvusd/savings/revenue${page}&per_page=100`
