@@ -1,4 +1,5 @@
-import { toUTC, type Chain, type Address } from "..";
+import type { Chain, Address } from "..";
+import { toUTC } from "../timestamp";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 

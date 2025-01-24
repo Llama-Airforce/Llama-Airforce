@@ -1,4 +1,5 @@
-import { toUTC, chains, type Chain } from "..";
+import { chains, type Chain } from "..";
+import { toUTC } from "../timestamp";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 
