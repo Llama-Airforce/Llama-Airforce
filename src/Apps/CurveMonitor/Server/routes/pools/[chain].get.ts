@@ -4,19 +4,26 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import type * as Responses from "@CM/Services/revenue/responses";
+import { isChain } from "@/Types/Chain";
+import type * as Responses from "@CM/Services/pools/responses";
 
-const path = "/";
+const path = "/:chain";
 
 const app = new Hono().get(path, async (c) => {
-  const start = c.req.query("start") ?? "1704063600";
+  const chain = c.req.param("chain");
+  const page = c.req.query("page") ?? "1";
+  const perPage = c.req.query("per_page") ?? "9999";
+
+  if (!isChain(chain)) {
+    throw new HTTPException(400, { message: "Invalid chain" });
+  }
 
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
-        `https://prices.curve.fi/v1/dao/fees/crvusd/weekly?start=${start}`
+        `https://prices.curve.fi/v1/chains/${chain}?page=${page}&per_page=${perPage}`
       );
-      const data = (await res.json()) as Responses.GetCrvUsdWeeklyResponse;
+      const data = (await res.json()) as Responses.GetPoolsResponse;
 
       return data;
     } catch (error) {

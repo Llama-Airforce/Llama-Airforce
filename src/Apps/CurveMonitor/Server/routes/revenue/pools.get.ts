@@ -9,10 +9,12 @@ import type * as Responses from "@CM/Services/revenue/responses";
 const path = "/";
 
 const app = new Hono().get(path, async (c) => {
+  const start = c.req.query("start") ?? "1704063600";
+
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
-        "https://prices.curve.fi/v1/dao/fees/pools/weekly?start=1704063600"
+        `https://prices.curve.fi/v1/dao/fees/pools/weekly?start=${start}`
       );
       const data = (await res.json()) as Responses.GetPoolsWeeklyResponse;
 

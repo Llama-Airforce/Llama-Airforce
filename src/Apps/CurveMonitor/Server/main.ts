@@ -16,10 +16,10 @@ const app = new Hono();
 const revenue = new Hono();
 
 // Revenue
-revenue.route("/crvusdweekly", crvusdweekly);
-revenue.route("/pools", pools);
-revenue.route("/fees-collected", feesCollected);
-revenue.route("/fees-staged", feesStaged);
+revenue.route("/crvusd/weekly", crvusdweekly);
+revenue.route("/pools/weekly", pools);
+revenue.route("/collected", feesCollected);
+revenue.route("/staged", feesStaged);
 
 // Root
 const allowedOrigins = [
@@ -30,8 +30,8 @@ const allowedOrigins = [
 app.use(cors(allowedOrigins));
 
 app.route("/", index);
-app.route("/chains", chain);
-app.route("/revenue", revenue);
+app.route("/v1/chains", chain);
+app.route("/v1/dao/fees", revenue);
 app.route("/price", price);
 
 export default {

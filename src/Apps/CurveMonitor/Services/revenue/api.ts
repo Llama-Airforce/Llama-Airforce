@@ -35,7 +35,7 @@ export async function getTopPools(
 export async function getCrvUsdWeekly(options: Options = {}) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetCrvUsdWeeklyResponse>(
-    `${host}/revenue/crvusdweekly`
+    `${host}/v1/dao/fees/crvusd/weekly`
   );
 
   return resp.fees.map(Parsers.parseCrvUsdWeekly);
@@ -44,7 +44,7 @@ export async function getCrvUsdWeekly(options: Options = {}) {
 export async function getPoolsWeekly(options: Options = {}) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetPoolsWeeklyResponse>(
-    `${host}/revenue/pools`
+    `${host}/v1/dao/fees/pools/weekly`
   );
 
   return resp.fees.map(Parsers.parsePoolsWeekly);
@@ -89,7 +89,7 @@ export async function getCowSwapSettlements(
 export async function getFeesCollected(options: Options = {}) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetFeesCollectedResponse>(
-    `${host}/revenue/fees-collected`
+    `${host}/v1/dao/fees/collected`
   );
 
   return resp.data.map(Parsers.parseFeesCollected);
@@ -98,7 +98,7 @@ export async function getFeesCollected(options: Options = {}) {
 export async function getFeesStaged(options: Options = {}) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetFeesStagedResponse>(
-    `${host}/revenue/fees-staged`
+    `${host}/v1/dao/fees/staged`
   );
 
   return resp.data.map(Parsers.parseFeesStaged);
