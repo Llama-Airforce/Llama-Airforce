@@ -54,9 +54,7 @@ export async function getUserMarketStats(
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserMarketStatsResponse>(
-    `${host}/v1/lending/users/${chain}/${getAddress(userAddr)}/${getAddress(
-      marketController
-    )}/stats?page=1&per_page=100`
+    `${host}/v1/lending/users/${chain}/${userAddr}/${marketController}/stats?page=1&per_page=100`
   );
 
   return Parsers.parseUserMarketStats(resp);
@@ -70,9 +68,7 @@ export async function getUserMarketSnapshots(
 ) {
   const host = await getHost(options);
   const resp = await fetch<Responses.GetUserMarketSnapshotsResponse>(
-    `${host}/v1/lending/users/${chain}/${getAddress(userAddr)}/${getAddress(
-      marketController
-    )}/snapshots?page=1&per_page=100`
+    `${host}/v1/lending/users/${chain}/${userAddr}/${marketController}/snapshots?page=1&per_page=100`
   );
 
   return Parsers.parseUserMarketSnapshots(resp);
