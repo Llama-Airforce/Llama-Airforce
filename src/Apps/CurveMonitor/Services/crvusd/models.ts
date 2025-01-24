@@ -10,6 +10,7 @@ export type Market = {
   borrowable: number;
   collateral: number;
   collateralUsd: number;
+  debtCeiling: number;
   loans: number;
   tokenCollateral: {
     symbol: string;

@@ -14,6 +14,7 @@ export const parseMarket = (
   borrowable: x.borrowable,
   collateral: x.collateral_amount,
   collateralUsd: x.collateral_amount_usd,
+  debtCeiling: x.debt_ceiling,
   loans: x.n_loans,
   tokenCollateral: {
     symbol: x.collateral_token.symbol,
