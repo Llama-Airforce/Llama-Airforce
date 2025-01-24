@@ -1,4 +1,4 @@
-import type { Chain } from "..";
+import type { Address, Chain } from "..";
 
 export type GetChainsResponse = {
   data: Chain[];
@@ -6,12 +6,12 @@ export type GetChainsResponse = {
 
 export type GetMarketsResponse = {
   data: {
-    name: string;
-    controller: string;
-    vault: string;
-    llamma: string;
-    policy: string;
-    oracle: string;
+    name: Address;
+    controller: Address;
+    vault: Address;
+    llamma: Address;
+    policy: Address;
+    oracle: Address;
     rate: string;
     borrow_apy: string;
     lend_apy: string;
@@ -32,11 +32,11 @@ export type GetMarketsResponse = {
     borrowed_balance_usd: string;
     collateral_token: {
       symbol: string;
-      address: string;
+      address: Address;
     };
     borrowed_token: {
       symbol: string;
-      address: string;
+      address: Address;
     };
   }[];
 };
@@ -68,13 +68,13 @@ export type GetSnapshotsResponse = {
 };
 
 export type GetUserMarketsResponse = {
-  user: string;
+  user: Address;
   page: number;
   per_page: number;
   count: number;
   markets: {
     market_name: string;
-    controller: string;
+    controller: Address;
     first_snapshot: string;
     last_snapshot: string;
   }[];
@@ -102,7 +102,7 @@ type UserMarketStats = {
 export type GetUserMarketStatsResponse = UserMarketStats;
 
 export type GetUserMarketSnapshotsResponse = {
-  user: string;
+  user: Address;
   page: number;
   per_page: number;
   count: number;
@@ -111,8 +111,8 @@ export type GetUserMarketSnapshotsResponse = {
 
 export type GetUserCollateralEventsResponse = {
   chain: string;
-  controller: string;
-  user: string;
+  controller: Address;
+  user: Address;
   total_deposit: number;
   total_deposit_from_user: number;
   total_borrowed: number;
@@ -125,16 +125,16 @@ export type GetUserCollateralEventsResponse = {
   page: number;
   data: {
     dt: string;
-    transaction_hash: string;
+    transaction_hash: Address;
     type: "Borrow" | "Deposit";
-    user: string;
+    user: Address;
     collateral_change: number;
     collateral_change_usd: number | null;
     loan_change: number;
     loan_change_usd: number | null;
     liquidation: {
-      user: string;
-      liquidator: string;
+      user: Address;
+      liquidator: Address;
       collateral_received: number;
       stablecoin_received: number;
       collateral_received_usd: number;
@@ -144,7 +144,7 @@ export type GetUserCollateralEventsResponse = {
     } | null;
     leverage: {
       event_type: string;
-      user: string;
+      user: Address;
       user_borrowed: number;
       user_collateral: number;
       user_collateral_from_borrowed: number;

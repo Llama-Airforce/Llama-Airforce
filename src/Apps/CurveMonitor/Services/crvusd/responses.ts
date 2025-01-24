@@ -1,8 +1,10 @@
+import type { Address } from "..";
+
 export type GetMarketsResponse = {
   data: {
-    address: string;
-    factory_address: string;
-    llamma: string;
+    address: Address;
+    factory_address: Address;
+    llamma: Address;
     rate: number;
     total_debt: number;
     n_loans: number;
@@ -15,11 +17,11 @@ export type GetMarketsResponse = {
     stablecoin_amount: number;
     collateral_token: {
       symbol: string;
-      address: string;
+      address: Address;
     };
     stablecoin_token: {
       symbol: string;
-      address: string;
+      address: Address;
     };
   }[];
   count: number;
@@ -46,12 +48,12 @@ export type GetSnapshotsResponse = {
 
 export type GetKeepersResponse = {
   keepers: {
-    address: string;
+    address: Address;
     pool: string;
-    pool_address: string;
+    pool_address: Address;
     pair: {
       symbol: string;
-      address: string;
+      address: Address;
     }[];
     active: boolean;
     total_debt: number;
@@ -111,8 +113,8 @@ export type GetUserMarketSnapshotsResponse = {
 };
 
 export type GetUserCollateralEventsResponse = {
-  controller: string;
-  user: string;
+  controller: Address;
+  user: Address;
   total_deposit: number;
   total_borrowed: number;
   total_deposit_precise: string;
@@ -126,14 +128,14 @@ export type GetUserCollateralEventsResponse = {
       dt: string;
       transaction_hash: string;
       type: "Borrow" | "Deposit";
-      user: string;
+      user: Address;
       collateral_change: number;
       collateral_change_usd: number | null;
       loan_change: number;
       loan_change_usd: number | null;
       liquidation: {
-        user: string;
-        liquidator: string;
+        user: Address;
+        liquidator: Address;
         collateral_received: number;
         collateral_received_usd: number;
         stablecoin_received: number;

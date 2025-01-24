@@ -4,14 +4,14 @@ import type * as Responses from "./responses";
 import type * as Models from "./models";
 
 export const parseGauge = (x: Responses.GetGaugeResponse): Models.Gauge => ({
-  address: x.address.toLocaleLowerCase(),
+  address: x.address,
   type: x.gauge_type,
   name: x.name ?? undefined,
   version: x.version ?? undefined,
-  lpToken: x.lp_token ? x.lp_token.toLocaleLowerCase() : undefined,
+  lpToken: x.lp_token ? x.lp_token : undefined,
   pool: x.pool
     ? {
-        address: x.pool.address.toLocaleLowerCase(),
+        address: x.pool.address,
         name: x.pool.name,
         chain: x.pool.chain as Chain,
         tvlUsd: x.pool.tvl_usd,
@@ -20,7 +20,7 @@ export const parseGauge = (x: Responses.GetGaugeResponse): Models.Gauge => ({
     : undefined,
   tokens: (x.tokens ?? []).map((token) => ({
     symbol: token.symbol,
-    address: token.address.toLocaleLowerCase(),
+    address: token.address,
     precision: token.precision,
   })),
   market: x.market
@@ -52,7 +52,7 @@ export const parseGauge = (x: Responses.GetGaugeResponse): Models.Gauge => ({
 export const parseVote = (
   x: Responses.GetVotesResponse["votes"][number]
 ): Models.GaugeVote => ({
-  user: x.user.toLocaleLowerCase(),
+  user: x.user,
   weight: x.weight,
   blockNumber: x.block_number,
   timestamp: toUTC(x.timestamp),
@@ -72,8 +72,8 @@ export const parseWeightHistory = (
 export const parseDeployment = (
   x: Responses.GetDeploymentResponse
 ): Models.Deployment => ({
-  addressFrom: x.from_address.toLocaleLowerCase(),
-  addressTo: x.to_address?.toLocaleLowerCase() ?? undefined,
+  addressFrom: x.from_address,
+  addressTo: x.to_address ?? undefined,
   calldata: x.calldata,
   calldataDecoded: x.decoded_calldata ?? undefined,
   blockNumber: x.block_number,
@@ -83,7 +83,7 @@ export const parseDeployment = (
 export const parseUserGaugeVote = (
   x: Responses.GetUserGaugeVotesResponse["votes"][number]
 ): Models.UserGaugeVote => ({
-  gauge: x.gauge.toLocaleLowerCase(),
+  gauge: x.gauge,
   gaugeName: x.gauge_name,
   weight: x.weight,
   blockNumber: x.block_number,

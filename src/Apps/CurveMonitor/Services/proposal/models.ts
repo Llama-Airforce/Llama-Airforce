@@ -1,3 +1,5 @@
+import type { Address } from "..";
+
 export const proposalTypes = [
   "all",
   "ownership",
@@ -20,7 +22,7 @@ export type Proposal = {
   id: number;
   type: ProposalType;
   metadata: string;
-  proposer: string;
+  proposer: Address;
   block: number;
   start: number;
   end: number;
@@ -31,14 +33,14 @@ export type Proposal = {
   votesAgainst: number; // Voting power in veCRV.
   executed: boolean;
   totalSupply: number; // Voting power in veCRV.
-  txCreation: string;
+  txCreation: Address;
 };
 
 export type ProposalDetails = {
-  txExecution?: string;
+  txExecution?: Address;
   script: string;
   votes: {
-    voter: string;
+    voter: Address;
     supports: boolean;
     votingPower: number;
   }[];
@@ -47,9 +49,9 @@ export type ProposalDetails = {
 export type UserProposalVote = {
   proposal: Proposal;
   votes: {
-    voter: string;
+    voter: Address;
     supports: boolean;
     weight: bigint;
-    txHash: string;
+    txHash: Address;
   }[];
 };

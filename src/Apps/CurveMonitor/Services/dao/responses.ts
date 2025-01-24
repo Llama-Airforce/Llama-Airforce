@@ -1,3 +1,5 @@
+import type { Address } from "..";
+
 export type GetVotesOverviewResponse = {
   data: {
     proposals: number;
@@ -23,14 +25,14 @@ export type GetSupplyResponse = {
     circulating_supply: string;
     locked_supply_details: [
       {
-        address: string;
+        address: Address;
         label: string;
         locked: string;
       }
     ];
     block_number: number;
     dt: string;
-    transaction_hash: string;
+    transaction_hash: Address;
   }[];
 };
 
@@ -47,7 +49,7 @@ export type GetUserLocksResponse = {
 
 export type GetLockersResponse = {
   users: {
-    user: string;
+    user: Address;
     locked: string;
     weight: string;
     weight_ratio: string;

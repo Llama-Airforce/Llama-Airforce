@@ -1,6 +1,8 @@
+import type { Address } from "..";
+
 export type GetCushionsResponse = {
   data: {
-    pool: string;
+    pool: Address;
     name: string;
     admin_fees: number[];
     usd_value: number;
@@ -23,7 +25,7 @@ export type GetTopPoolsResponse = {
 
 export type GetCrvUsdWeeklyResponse = {
   fees: {
-    controller: string;
+    controller: Address;
     collateral: string;
     fees_usd: number;
     timestamp: string;
@@ -50,7 +52,7 @@ export type GetCowSwapSettlementsResponse = {
     coin: {
       lp_token: boolean;
       symbol: string;
-      address: string;
+      address: Address;
       precision: number;
     };
     amount: string;
@@ -58,7 +60,7 @@ export type GetCowSwapSettlementsResponse = {
     amount_received: number;
     router_received: number;
     epoch: number;
-    tx_hash: string;
+    tx_hash: Address;
     block_number: number;
     dt: string;
   }[];
@@ -68,7 +70,7 @@ type GetFeesResponse = {
   coin: {
     lp_token: boolean;
     symbol: string;
-    address: string;
+    address: Address;
     precision: number;
   };
   amount: string;

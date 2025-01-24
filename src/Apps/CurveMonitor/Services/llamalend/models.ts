@@ -1,14 +1,16 @@
+import type { Address } from "..";
+
 /*
  * Note that collateral can be two tokens due to soft-liquidations.
  * You can have a crvUSD borrow (partially) being collateralized by crvUSD.
  */
 export type Market = {
-  name: string;
-  controller: string;
-  vault: string;
-  llamma: string;
-  policy: string;
-  oracle: string;
+  name: Address;
+  controller: Address;
+  vault: Address;
+  llamma: Address;
+  policy: Address;
+  oracle: Address;
   rate: number;
   borrow_apy: number;
   lend_apy: number;
@@ -29,11 +31,11 @@ export type Market = {
   borrowed_balance_usd: number;
   collateral_token: {
     symbol: string;
-    address: string;
+    address: Address;
   };
   borrowed_token: {
     symbol: string;
-    address: string;
+    address: Address;
   };
 };
 
@@ -64,7 +66,7 @@ export type Snapshot = {
 /** More specifically, the markets where a user holds a position */
 export type UserMarkets = {
   name: string;
-  controller: string;
+  controller: Address;
   snapshotFirst: number;
   snapshotLast: number;
 }[];
@@ -91,8 +93,8 @@ export type UserMarketStats = {
 export type UserMarketSnapshots = UserMarketStats[];
 
 export type UserCollateralEvents = {
-  controller: string;
-  user: string;
+  controller: Address;
+  user: Address;
   totalDeposit: number;
   totalDepositUsd: number;
   totalDepositFromUser: number;
@@ -102,16 +104,16 @@ export type UserCollateralEvents = {
   totalBorrowedPrecise: string;
   events: {
     timestamp: number;
-    txHash: string;
+    txHash: Address;
     type: "Borrow" | "Deposit";
-    user: string;
+    user: Address;
     collateralChange: number;
     collateralChangeUsd?: number;
     loanChange: number;
     loanChangeUsd?: number;
     liquidation?: {
-      user: string;
-      liquidator: string;
+      user: Address;
+      liquidator: Address;
       collateralReceived: number;
       collateralReceivedUsd: number;
       stablecoinReceived: number;
@@ -121,7 +123,7 @@ export type UserCollateralEvents = {
     };
     leverage?: {
       type: string;
-      user: string;
+      user: Address;
       userCollateral: number;
       userCollateralFromBorrowed: number;
       userCollateralUsed: number;

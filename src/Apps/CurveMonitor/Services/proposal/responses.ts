@@ -1,9 +1,10 @@
+import type { Address } from "..";
 import type { ProposalType } from "./models";
 
 type Proposal = {
   vote_id: number;
   vote_type: ProposalType;
-  creator: string;
+  creator: Address;
   start_date: number;
   snapshot_block: number;
   ipfs_metadata: string;
@@ -15,7 +16,7 @@ type Proposal = {
   min_accept_quorum: string;
   total_supply: string;
   executed: boolean;
-  transaction_hash: string;
+  transaction_hash: Address;
   dt: string;
 };
 
@@ -25,10 +26,10 @@ export type GetProposalsResponse = {
 };
 
 export type GetProposalDetailsResponse = Proposal & {
-  execution_tx: string | null;
+  execution_tx: Address | null;
   script: string;
   votes: {
-    voter: string;
+    voter: Address;
     supports: boolean;
     voting_power: string;
   }[];
@@ -40,10 +41,10 @@ export type GetUserProposalVotes = {
   data: {
     proposal: Proposal;
     votes: {
-      voter: string;
+      voter: Address;
       supports: boolean;
       voting_power: string;
-      transaction_hash: string;
+      transaction_hash: Address;
     }[];
   }[];
 };

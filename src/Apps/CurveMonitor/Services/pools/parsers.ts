@@ -1,4 +1,3 @@
-import type { Address } from "..";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 
@@ -16,7 +15,7 @@ export const parsePool = (
   x: Responses.GetPoolsResponse["data"][number]
 ): Models.Pool => ({
   name: x.name,
-  address: x.address.toLocaleLowerCase() as Address,
+  address: x.address,
   numCoins: x.n_coins,
   tvlUsd: x.tvl_usd,
   tradingVolume24h: x.trading_volume_24h,
@@ -27,7 +26,7 @@ export const parsePool = (
     x.coins?.map((coin) => ({
       poolIndex: coin.pool_index,
       symbol: coin.symbol,
-      address: coin.address.toLocaleLowerCase(),
+      address: coin.address,
     })) ?? [],
   baseDailyApr: x.base_daily_apr,
   baseWeeklyApr: x.base_weekly_apr,

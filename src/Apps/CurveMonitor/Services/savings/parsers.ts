@@ -6,14 +6,14 @@ export const parseEvent = (
   x: Responses.GetEventsResponse["events"][number]
 ): Models.Event => ({
   type: x.action_type,
-  sender: x.sender.toLocaleLowerCase(),
-  owner: x.owner.toLocaleLowerCase(),
-  receiver: x.receiver ? x.receiver.toLocaleLowerCase() : undefined,
+  sender: x.sender,
+  owner: x.owner,
+  receiver: x.receiver ? x.receiver : undefined,
   assets: BigInt(x.assets),
   supply: BigInt(x.shares),
   blockNumber: x.block_number,
   timestamp: toUTC(x.timestamp),
-  txHash: x.transaction_hash.toLocaleLowerCase(),
+  txHash: x.transaction_hash,
 });
 
 export const parseYield = (
@@ -28,14 +28,14 @@ export const parseYield = (
 export const parseRevenue = (
   x: Responses.GetRevenueResponse["history"][number]
 ): Models.Revenue => ({
-  strategy: x.strategy.toLocaleLowerCase(),
+  strategy: x.strategy,
   gain: BigInt(x.gain),
   loss: BigInt(x.loss),
   currentDebt: BigInt(x.current_debt),
   totalRefunds: BigInt(x.total_refunds),
   feesTotal: BigInt(x.total_fees),
   feesProtocol: BigInt(x.protocol_fees),
-  txHash: x.tx_hash.toLocaleLowerCase(),
+  txHash: x.tx_hash,
   timestamp: toUTC(x.dt),
 });
 

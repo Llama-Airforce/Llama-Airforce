@@ -12,7 +12,7 @@ export const parseProposal = (
   metadata: x.metadata?.startsWith('"') // Remove weird starting quote, if present.
     ? x.metadata.substring(1)
     : x.metadata ?? "",
-  proposer: x.creator.toLocaleLowerCase(),
+  proposer: x.creator,
   block: x.snapshot_block,
   start: x.start_date,
   end: x.start_date + 604800,
@@ -30,10 +30,10 @@ export const parseProposalDetails = (
   x: Responses.GetProposalDetailsResponse
 ): Models.Proposal & Models.ProposalDetails => ({
   ...parseProposal(x),
-  txExecution: x.execution_tx ? x.execution_tx.toLocaleLowerCase() : undefined,
+  txExecution: x.execution_tx ? x.execution_tx : undefined,
   script: x.script,
   votes: x.votes.map((vote) => ({
-    voter: vote.voter.toLocaleLowerCase(),
+    voter: vote.voter,
     supports: vote.supports,
     votingPower: Number(BigInt(vote.voting_power)) / 10 ** 18,
   })),
@@ -44,7 +44,7 @@ export const parseUserProposalVote = (
 ): Models.UserProposalVote => ({
   proposal: parseProposal(x.proposal),
   votes: x.votes.map((vote) => ({
-    voter: vote.voter.toLocaleLowerCase(),
+    voter: vote.voter,
     supports: vote.supports,
     weight: BigInt(Math.round(parseFloat(vote.voting_power))),
     txHash: vote.transaction_hash,

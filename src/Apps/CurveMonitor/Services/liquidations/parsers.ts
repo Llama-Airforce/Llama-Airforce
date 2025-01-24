@@ -13,8 +13,8 @@ export const parseLiqsDetailed = (
   x: Responses.GetLiqsDetailedResponse["data"][number]
 ): Models.LiquidationDetails => ({
   timestamp: toUTC(x.dt),
-  user: x.user.toLocaleLowerCase(),
-  liquidator: x.liquidator.toLocaleLowerCase(),
+  user: x.user,
+  liquidator: x.liquidator,
   self: x.self,
   collateralReceived: x.collateral_received,
   collateralReceivedUsd: x.collateral_received_usd,
@@ -23,7 +23,7 @@ export const parseLiqsDetailed = (
   debt: x.debt,
   n1: x.n1,
   n2: x.n2,
-  tx: x.tx.toLocaleLowerCase(),
+  tx: x.tx,
   block: x.block,
 });
 

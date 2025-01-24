@@ -39,7 +39,7 @@ export const parseSupply = (
   crvSupply: BigInt(x.crv_supply),
   circulatingSupply: BigInt(x.circulating_supply),
   lockedSupplyDetails: x.locked_supply_details.map((y) => ({
-    address: y.address.toLocaleLowerCase(),
+    address: y.address,
     label: y.label,
     locked: BigInt(y.locked),
   })),
@@ -50,7 +50,7 @@ export const parseSupply = (
 export const parseLockers = (
   x: Responses.GetLockersResponse["users"][number]
 ): Models.Locker => ({
-  user: x.user.toLocaleLowerCase(),
+  user: x.user,
   locked: BigInt(Math.round(parseFloat(x.locked))),
   weight: BigInt(Math.round(parseFloat(x.weight))),
   weightRatio: parseFloat(x.weight_ratio.slice(0, -1)),

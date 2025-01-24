@@ -3,7 +3,7 @@ import type { Address } from "..";
 type Coin = {
   poolIndex: number;
   symbol: string;
-  address: string;
+  address: Address;
 };
 
 export type PoolsTotals = {

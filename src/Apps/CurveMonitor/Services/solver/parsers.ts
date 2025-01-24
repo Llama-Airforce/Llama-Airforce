@@ -1,4 +1,3 @@
-import type { Address } from "..";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 
@@ -6,7 +5,7 @@ export const parseSolverCompetition = (
   x: Responses.GetSolverCompetitionResponse
 ): Models.SolverCompetition => ({
   auctionStartBlock: x.auctionStartBlock,
-  orders: x.auction.orders.map((x) => x as Address),
+  orders: x.auction.orders.map((x) => x),
   prices: Object.entries(x.auction.prices).reduce<Record<Address, bigint>>(
     (acc, [key, value]) => {
       acc[key as Address] = BigInt(value);
@@ -16,7 +15,7 @@ export const parseSolverCompetition = (
   ),
   solutions: x.solutions.map((sol) => ({
     solver: sol.solver,
-    solverAddress: sol.solverAddress as Address,
+    solverAddress: sol.solverAddress,
     score: BigInt(sol.score),
     ranking: sol.ranking,
     clearingPrices: Object.entries(sol.clearingPrices).reduce<
@@ -26,7 +25,7 @@ export const parseSolverCompetition = (
       return acc;
     }, {}),
     orders: sol.orders.map((order) => ({
-      id: order.id as Address,
+      id: order.id,
       sellAmount: BigInt(order.sellAmount),
       buyAmount: BigInt(order.buyAmount),
     })),

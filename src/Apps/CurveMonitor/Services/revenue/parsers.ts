@@ -1,4 +1,4 @@
-import type { Chain, Address } from "..";
+import type { Chain } from "..";
 import { toUTC } from "../timestamp";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
@@ -21,7 +21,7 @@ export const parseCrvUsdWeekly = (
   x: Responses.GetCrvUsdWeeklyResponse["fees"][number]
 ): Models.CrvUsdWeekly => ({
   timestamp: toUTC(x.timestamp),
-  controller: x.controller.toLocaleLowerCase() as Address,
+  controller: x.controller,
   collateral: x.collateral,
   feesUsd: x.fees_usd,
 });
@@ -37,7 +37,7 @@ export const parsePoolsWeekly = (
 export const parseCushion = (
   x: Responses.GetCushionsResponse["data"][number]
 ): Models.Cushion => ({
-  pool: x.pool.toLocaleLowerCase() as Address,
+  pool: x.pool,
   name: x.name,
   adminFees: x.admin_fees,
   usdValue: x.usd_value,
@@ -57,7 +57,7 @@ export const parseCowSwapSettlement = (
   coin: {
     lpToken: x.coin.lp_token,
     symbol: x.coin.symbol,
-    address: x.coin.address.toLocaleLowerCase() as Address,
+    address: x.coin.address,
     precision: x.coin.precision,
   },
   amount: BigInt(x.amount),
@@ -65,7 +65,7 @@ export const parseCowSwapSettlement = (
   amountReceived: x.amount_received,
   routerReceived: x.router_received,
   epoch: x.epoch,
-  txHash: x.tx_hash.toLocaleLowerCase() as Address,
+  txHash: x.tx_hash,
   blockNumber: x.block_number,
 });
 
@@ -75,7 +75,7 @@ export const parseFeesCollected = (
   coin: {
     lpToken: x.coin.lp_token,
     symbol: x.coin.symbol,
-    address: x.coin.address.toLocaleLowerCase() as Address,
+    address: x.coin.address,
     decimals: x.coin.precision,
   },
   amount: parseFloat(x.amount),
@@ -88,7 +88,7 @@ export const parseFeesStaged = (
   coin: {
     lpToken: x.coin.lp_token,
     symbol: x.coin.symbol,
-    address: x.coin.address.toLocaleLowerCase() as Address,
+    address: x.coin.address,
     decimals: x.coin.precision,
   },
   amount: parseFloat(x.amount),

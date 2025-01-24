@@ -1,13 +1,13 @@
-import type { Chain } from "..";
+import type { Address, Chain } from "..";
 
 export type Gauge = {
-  address: string;
+  address: Address;
   type: string;
   name?: string;
   version?: string;
-  lpToken?: string;
+  lpToken?: Address;
   pool?: {
-    address: string;
+    address: Address;
     name: string;
     chain: Chain;
     tvlUsd: number;
@@ -15,7 +15,7 @@ export type Gauge = {
   };
   tokens: {
     symbol: string;
-    address: string;
+    address: Address;
     precision: number;
   }[];
   market?: {
@@ -30,18 +30,18 @@ export type Gauge = {
   weightRelative: number;
   weightRelativeDelta7d?: number;
   weightRelativeDelta60d?: number;
-  creationTx: string;
+  creationTx: Address;
   creationDate: number;
-  lastVoteTx?: string;
+  lastVoteTx?: Address;
   lastVoteDate?: number;
 };
 
 export type GaugeVote = {
-  user: string;
+  user: Address;
   weight: number;
   blockNumber: number;
   timestamp: number;
-  tx: string;
+  tx: Address;
 };
 
 export type WeightHistory = {
@@ -53,8 +53,8 @@ export type WeightHistory = {
 };
 
 export type Deployment = {
-  addressFrom: string;
-  addressTo?: string;
+  addressFrom: Address;
+  addressTo?: Address;
   calldata: string;
   calldataDecoded?: string;
   blockNumber: number;
@@ -63,9 +63,9 @@ export type Deployment = {
 
 export type UserGaugeVote = {
   timestamp: number;
-  gauge: string;
+  gauge: Address;
   gaugeName: string;
   weight: number;
   blockNumber: number;
-  txHash: string;
+  txHash: Address;
 };

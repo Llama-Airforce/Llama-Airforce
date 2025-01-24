@@ -1,12 +1,14 @@
+import type { Address } from "..";
+
 type Coin = {
   pool_index: number;
   symbol: string;
-  address: string;
+  address: Address;
 };
 
 type Pool = {
   name: string;
-  address: string;
+  address: Address;
   n_coins: number;
   tvl_usd: number;
   trading_volume_24h: number;

@@ -4,7 +4,7 @@ import type * as Models from "./models";
 export const parseEvents = (
   x: Responses.GetLlammaEventsResponse["data"][number]
 ): Models.LlammaEvent => ({
-  provider: x.provider.toLocaleLowerCase(),
+  provider: x.provider,
   deposit: x.deposit
     ? {
         amount: x.deposit.amount,
@@ -20,7 +20,7 @@ export const parseEvents = (
     : null,
   block_number: x.block_number,
   timestamp: x.timestamp,
-  transaction_hash: x.transaction_hash.toLocaleLowerCase(),
+  transaction_hash: x.transaction_hash,
 });
 
 export const parseTrades = (
@@ -30,16 +30,16 @@ export const parseTrades = (
   bought_id: x.bought_id,
   token_sold: {
     symbol: x.token_sold.symbol,
-    address: x.token_sold.address.toLocaleLowerCase(),
+    address: x.token_sold.address,
   },
   token_bought: {
     symbol: x.token_bought.symbol,
-    address: x.token_bought.address.toLocaleLowerCase(),
+    address: x.token_bought.address,
   },
   amount_sold: x.amount_sold,
   amount_bought: x.amount_bought,
   price: x.price,
-  buyer: x.buyer.toLocaleLowerCase(),
+  buyer: x.buyer,
   fee_x: x.fee_x,
   fee_y: x.fee_y,
   block_number: x.block_number,

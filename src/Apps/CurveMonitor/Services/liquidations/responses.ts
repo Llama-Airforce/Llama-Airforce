@@ -1,3 +1,5 @@
+import type { Address } from "..";
+
 export type GetSoftLiqRatiosResponse = {
   data: {
     timestamp: string;
@@ -7,8 +9,8 @@ export type GetSoftLiqRatiosResponse = {
 
 export type GetLiqsDetailedResponse = {
   data: {
-    user: string;
-    liquidator: string;
+    user: Address;
+    liquidator: Address;
     self: boolean;
     collateral_received: number;
     collateral_received_usd: number;
@@ -18,7 +20,7 @@ export type GetLiqsDetailedResponse = {
     n1: number;
     n2: number;
     dt: string;
-    tx: string;
+    tx: Address;
     block: number;
   }[];
 };

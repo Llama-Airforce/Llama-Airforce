@@ -1,17 +1,17 @@
 export type GetSolverCompetitionResponse = {
   auctionStartBlock: number;
   auction: {
-    orders: string[];
+    orders: Address[];
     prices: Record<string, string>;
   };
   solutions: {
     solver: string;
-    solverAddress: string;
+    solverAddress: Address;
     score: string;
     ranking: number;
     clearingPrices: Record<string, string>;
     orders: {
-      id: string;
+      id: Address;
       sellAmount: number;
       buyAmount: number;
     }[];

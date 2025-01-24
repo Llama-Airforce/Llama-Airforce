@@ -1,3 +1,5 @@
+import type { Address } from "..";
+
 export type VotesOverview = {
   proposals: number;
   votesProposals: number;
@@ -27,16 +29,16 @@ export type Supply = {
   crvSupply: bigint;
   circulatingSupply: bigint;
   lockedSupplyDetails: {
-    address: string;
+    address: Address;
     label: string;
     locked: bigint;
   }[];
   blockNumber: number;
-  txHash: string;
+  txHash: Address;
 };
 
 export type Locker = {
-  user: string;
+  user: Address;
   locked: bigint;
   weight: bigint;
   weightRatio: number;

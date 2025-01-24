@@ -1,13 +1,15 @@
+import type { Address } from "..";
+
 export type Event = {
   type: "deposit" | "withdraw";
-  sender: string;
-  owner: string;
-  receiver?: string;
+  sender: Address;
+  owner: Address;
+  receiver?: Address;
   assets: bigint;
   supply: bigint;
   blockNumber: number;
   timestamp: number;
-  txHash: string;
+  txHash: Address;
 };
 
 export type Yield = {
@@ -18,14 +20,14 @@ export type Yield = {
 };
 
 export type Revenue = {
-  strategy: string;
+  strategy: Address;
   gain: bigint;
   loss: bigint;
   currentDebt: bigint;
   totalRefunds: bigint;
   feesTotal: bigint;
   feesProtocol: bigint;
-  txHash: string;
+  txHash: Address;
   timestamp: number;
 };
 

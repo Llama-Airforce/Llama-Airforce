@@ -6,9 +6,9 @@ export const parseMarket = (
   x: Responses.GetMarketsResponse["data"][number]
 ): Models.Market => ({
   name: x.collateral_token.symbol,
-  address: x.address.toLocaleLowerCase(),
-  factory: x.factory_address.toLocaleLowerCase(),
-  llamma: x.llamma.toLocaleLowerCase(),
+  address: x.address,
+  factory: x.factory_address,
+  llamma: x.llamma,
   rate: x.rate,
   borrowed: x.total_debt,
   borrowable: x.borrowable,
@@ -17,11 +17,11 @@ export const parseMarket = (
   loans: x.n_loans,
   collateral_token: {
     symbol: x.collateral_token.symbol,
-    address: x.collateral_token.address.toLocaleLowerCase(),
+    address: x.collateral_token.address,
   },
   stablecoin_token: {
     symbol: x.stablecoin_token.symbol,
-    address: x.stablecoin_token.address.toLocaleLowerCase(),
+    address: x.stablecoin_token.address,
   },
   fees: {
     pending: x.pending_fees,
@@ -51,12 +51,12 @@ export const parseSnapshot = (
 export const parseKeeper = (
   x: Responses.GetKeepersResponse["keepers"][number]
 ): Models.Keeper => ({
-  address: x.address.toLocaleLowerCase(),
+  address: x.address,
   pool: x.pool,
-  pool_address: x.pool_address.toLocaleLowerCase(),
+  pool_address: x.pool_address,
   pair: x.pair.map((p) => ({
     symbol: p.symbol,
-    address: p.address.toLocaleLowerCase(),
+    address: p.address,
   })),
   active: x.active,
   total_debt: x.total_debt,
@@ -110,8 +110,8 @@ export const parseUserMarketSnapshots = (
 export const parseUserCollateralEvents = (
   x: Responses.GetUserCollateralEventsResponse
 ): Models.UserCollateralEvents => ({
-  controller: x.controller.toLocaleLowerCase(),
-  user: x.user.toLocaleLowerCase(),
+  controller: x.controller,
+  user: x.user,
   totalDeposit: x.total_deposit,
   totalDepositPrecise: x.total_deposit_precise,
   totalDepositUsd: x.total_deposit_usd_value,
@@ -121,7 +121,7 @@ export const parseUserCollateralEvents = (
     timestamp: toUTC(y.dt),
     txHash: y.transaction_hash,
     type: y.type,
-    user: y.user.toLocaleLowerCase(),
+    user: y.user,
     collateralChange: y.collateral_change,
     collateralChangeUsd: y.collateral_change_usd ?? undefined,
     loanChange: y.loan_change,
@@ -130,8 +130,8 @@ export const parseUserCollateralEvents = (
       y.liquidation === null
         ? undefined
         : {
-            user: y.liquidation.user.toLocaleLowerCase(),
-            liquidator: y.liquidation.liquidator.toLocaleLowerCase(),
+            user: y.liquidation.user,
+            liquidator: y.liquidation.liquidator,
             collateralReceived: y.liquidation.collateral_received,
             collateralReceivedUsd: y.liquidation.collateral_received_usd,
             stablecoinReceived: y.liquidation.stablecoin_received,

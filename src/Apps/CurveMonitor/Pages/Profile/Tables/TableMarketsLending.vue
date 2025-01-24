@@ -39,7 +39,7 @@ const rows = computed(() =>
 );
 
 // Selection
-const selected = useRouteQuery<string | undefined>("controller", undefined);
+const selected = useRouteQuery<Address | undefined>("controller", undefined);
 const values = computed(() => rows.value.map((x) => x.controller));
 </script>
 

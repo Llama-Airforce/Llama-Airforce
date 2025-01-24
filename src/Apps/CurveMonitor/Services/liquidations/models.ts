@@ -1,3 +1,5 @@
+import type { Address } from "..";
+
 export type SoftLiqRatio = {
   timestamp: number;
   proportion: number;
@@ -5,8 +7,8 @@ export type SoftLiqRatio = {
 
 export type LiquidationDetails = {
   timestamp: number;
-  user: string;
-  liquidator: string;
+  user: Address;
+  liquidator: Address;
   self: boolean;
   collateralReceived: number;
   collateralReceivedUsd: number;
@@ -15,7 +17,7 @@ export type LiquidationDetails = {
   debt: number;
   n1: number;
   n2: number;
-  tx: string;
+  tx: Address;
   block: number;
 };
 

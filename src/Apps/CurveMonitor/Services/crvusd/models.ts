@@ -1,8 +1,10 @@
+import type { Address } from "..";
+
 export type Market = {
   name: string;
-  address: string;
-  factory: string;
-  llamma: string;
+  address: Address;
+  factory: Address;
+  llamma: Address;
   rate: number;
   borrowed: number;
   borrowable: number;
@@ -11,11 +13,11 @@ export type Market = {
   loans: number;
   collateral_token: {
     symbol: string;
-    address: string;
+    address: Address;
   };
   stablecoin_token: {
     symbol: string;
-    address: string;
+    address: Address;
   };
   fees: {
     pending: number;
@@ -58,12 +60,12 @@ export type CrvUsdSupply = {
 };
 
 export type Keeper = {
-  address: string;
+  address: Address;
   pool: string;
-  pool_address: string;
+  pool_address: Address;
   pair: {
     symbol: string;
-    address: string;
+    address: Address;
   }[];
   active: boolean;
   total_debt: number;
@@ -100,8 +102,8 @@ export type UserMarketStats = {
 export type UserMarketSnapshots = UserMarketStats[];
 
 export type UserCollateralEvents = {
-  controller: string;
-  user: string;
+  controller: Address;
+  user: Address;
   totalDeposit: number;
   totalDepositPrecise: string;
   totalDepositUsd: number;
@@ -111,14 +113,14 @@ export type UserCollateralEvents = {
     timestamp: number;
     txHash: string;
     type: "Borrow" | "Deposit";
-    user: string;
+    user: Address;
     collateralChange: number;
     collateralChangeUsd?: number;
     loanChange: number;
     loanChangeUsd?: number;
     liquidation?: {
-      user: string;
-      liquidator: string;
+      user: Address;
+      liquidator: Address;
       collateralReceived: number;
       collateralReceivedUsd: number;
       stablecoinReceived: number;

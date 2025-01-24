@@ -1,15 +1,17 @@
+import type { Address } from "..";
+
 export type GetEventsResponse = {
   count: number;
   events: {
     action_type: "deposit" | "withdraw";
-    sender: string;
-    owner: string;
-    receiver: string;
+    sender: Address;
+    owner: Address;
+    receiver?: Address;
     assets: string;
     shares: string;
     block_number: number;
     timestamp: string;
-    transaction_hash: string;
+    transaction_hash: Address;
   }[];
 };
 
@@ -26,14 +28,14 @@ export type GetRevenueResponse = {
   count: number;
   total_distributed: string;
   history: {
-    strategy: string;
+    strategy: Address;
     gain: string;
     loss: string;
     current_debt: string;
     total_refunds: string;
     total_fees: string;
     protocol_fees: string;
-    tx_hash: string;
+    tx_hash: Address;
     dt: string;
   }[];
 };
