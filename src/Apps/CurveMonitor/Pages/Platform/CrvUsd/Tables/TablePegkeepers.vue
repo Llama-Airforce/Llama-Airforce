@@ -61,7 +61,8 @@ const pools = computed(() =>
 // Methods
 const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
-  x.pair.filter((x) => x.address !== CrvUsdAddress)[0].address;
+  x.pair.filter((x) => x.address.toLocaleLowerCase() !== CrvUsdAddress)[0]
+    .address;
 </script>
 
 <template>
