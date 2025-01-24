@@ -1,3 +1,4 @@
+import type { Address } from "..";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 

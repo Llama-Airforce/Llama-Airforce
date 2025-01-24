@@ -1,3 +1,5 @@
+import type { Address } from "..";
+
 export type GetSolverCompetitionResponse = {
   auctionStartBlock: number;
   auction: {
