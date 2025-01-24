@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryUserProposalVotes } from "@CM/Services/proposal/queries";
+import { useQueryUserProposalVotes } from "@CM/queries/proposal";
 
 const { user } = defineProps<{ user: string | undefined }>();
 

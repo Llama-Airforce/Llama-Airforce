@@ -1,5 +1,5 @@
-import type { Chain } from "..";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as Api from "@CM/Services/revenue";
 
 function initEmptyArray() {
   return {

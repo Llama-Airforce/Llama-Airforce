@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { Market } from "@CM/Services/crvusd";
-import { useQuerySnapshots } from "@CM/Services/crvusd/queries";
+import { useQuerySnapshots } from "@CM/queries/crvusd";
 
 const { market } = defineProps<{
-  market: Market | undefined;
+  market: Parameters<typeof useQuerySnapshots>[0]["value"];
 }>();
 
 // Data

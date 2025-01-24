@@ -1,7 +1,6 @@
-import type { Chain } from "..";
-import * as ApiOHLC from "../ohlc";
-import type { Market, Keeper } from "./models";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as ApiOHLC from "@CM/Services/ohlc";
+import * as Api from "@CM/Services/crvusd";
 
 function initEmptyArray() {
   return {
@@ -18,7 +17,7 @@ export function useQueryCrvUsdSupply() {
   });
 }
 
-export function useQuerySnapshots(market: Ref<Market | undefined>) {
+export function useQuerySnapshots(market: Ref<Api.Market | undefined>) {
   return useQuery({
     queryKey: [
       "crvusd-market-snapshots",
@@ -31,7 +30,7 @@ export function useQuerySnapshots(market: Ref<Market | undefined>) {
   });
 }
 
-export function useQueryKeeperPrices(keepers: Ref<Keeper[]>) {
+export function useQueryKeeperPrices(keepers: Ref<Api.Keeper[]>) {
   return useQuery({
     queryKey: [
       "crvusd-keepers-prices",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Keeper } from "@CM/Services/crvusd";
-import { useQueryKeepers } from "@CM/Services/crvusd/queries";
-import { useQueryPoolMultiple } from "@CM/Services/pools/queries";
+import { useQueryKeepers } from "@CM/queries/crvusd";
+import { useQueryPoolMultiple } from "@CM/queries/pools";
 
 const search = ref("");
 

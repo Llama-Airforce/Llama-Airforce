@@ -1,5 +1,5 @@
 import { keepPreviousData } from "@tanstack/vue-query";
-import * as Api from ".";
+import * as Api from "@CM/Services/savings";
 
 function initEmptyArray() {
   return {

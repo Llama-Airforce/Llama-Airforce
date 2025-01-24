@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import {
-  useQueryMarkets,
-  useQueryChains,
-} from "@CM/Services/llamalend/queries";
+import { useQueryMarkets, useQueryChains } from "@CM/queries/llamalend";
 import type { Market, MarketPair } from "@CM/Services/llamalend";
 import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 

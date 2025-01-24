@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryCrvUsdSupply } from "@CM/Services/crvusd/queries";
+import { useQueryCrvUsdSupply } from "@CM/queries/crvusd";
 import {
   ChartCrvUsdSupplyLine,
   ChartCrvUsdSupplyBreakdown,

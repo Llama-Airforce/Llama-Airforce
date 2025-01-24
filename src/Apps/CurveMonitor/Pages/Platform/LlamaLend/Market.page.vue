@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import { useQueryMarkets } from "@CM/Services/llamalend/queries";
+import { useQueryMarkets } from "@CM/queries/llamalend";
 import MarketOverview from "@CM/Pages/Platform/LlamaLend/Tabs/MarketOverview.vue";
 import Trading from "@CM/Pages/Platform/LlamaLend/Tabs/Trading.vue";
 import Liquidations from "@CM/Pages/Platform/LlamaLend/Tabs/Liquidations.vue";

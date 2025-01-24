@@ -1,5 +1,5 @@
-import type { Address } from "..";
-import * as Api from "./api";
+import type { Address } from "@CM/Services";
+import * as Api from "@CM/Services/solver";
 
 export function useQuerySolverCompetition(tx: Ref<Address>) {
   return useQuery({

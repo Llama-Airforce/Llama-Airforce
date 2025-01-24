@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import {
-  useQueryCrvUsdWeekly,
-  useQueryPoolsWeekly,
-} from "@CM/Services/revenue/queries";
+import { useQueryCrvUsdWeekly, useQueryPoolsWeekly } from "@CM/queries/revenue";
 
 type Serie = {
   name: string;

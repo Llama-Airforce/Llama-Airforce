@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
 import type { Pool } from "@CM/Services/pools";
-import { useQueryChainInfo } from "@CM/Services/chains/queries";
-import { useQueryPools } from "@CM/Services/pools/queries";
+import { useQueryChainInfo } from "@CM/queries/chains";
+import { useQueryPools } from "@CM/queries/pools";
 import TablePools from "./Tables/TablePools.vue";
 
 const chains: Chain[] = ["ethereum", "arbitrum"];

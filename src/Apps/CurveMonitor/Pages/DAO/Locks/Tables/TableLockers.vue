@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryLockers } from "@CM/Services/dao/queries";
+import { useQueryLockers } from "@CM/queries/dao";
 
 // Data
 const { isFetching: loading, data } = useQueryLockers();

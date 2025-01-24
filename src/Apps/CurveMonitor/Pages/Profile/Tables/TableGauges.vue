@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryUserGaugeVotes } from "@CM/Services/gauge/queries";
+import { useQueryUserGaugeVotes } from "@CM/queries/gauge";
 
 const { user } = defineProps<{ user: string | undefined }>();
 

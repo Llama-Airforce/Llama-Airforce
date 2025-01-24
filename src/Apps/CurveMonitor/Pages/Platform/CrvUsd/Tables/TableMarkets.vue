@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type { Market } from "@CM/Services/crvusd";
-import { useQueryMarkets } from "@CM/Services/crvusd/queries";
+import { useQueryMarkets } from "@CM/queries/crvusd";
 
 const emit = defineEmits<{
-  select: [market: Market];
+  select: [market: ReturnType<typeof useQueryMarkets>["data"]["value"][number]];
 }>();
 
 const search = ref("");

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryDeployment } from "@CM/Services/gauge/queries";
+import { useQueryDeployment } from "@CM/queries/gauge";
 
 const { gaugeAddress } = defineProps<{
   gaugeAddress: string | undefined;

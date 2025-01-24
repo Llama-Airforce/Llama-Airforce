@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/crvusd";
-import { useQuerySnapshots } from "@CM/Services/crvusd/queries";
+import { useQuerySnapshots } from "@CM/queries/crvusd";
 import {
   useQueryLiqOverview,
   useQueryLiqsAggregate,
@@ -9,7 +8,7 @@ import {
   useQueryLiqHealthDeciles,
   useQueryLiqLosses,
   useQuerySoftLiqRatios,
-} from "@CM/Services/liquidations/queries";
+} from "@CM/queries/liquidations";
 import {
   ChartLiqs,
   ChartLiqsSoftLiqRatio,
@@ -23,7 +22,7 @@ import {
 import { ChartCollateralRatio } from "@CM/Components/Lending";
 
 const { market, chain } = defineProps<{
-  market: Market | undefined;
+  market: Parameters<typeof useQuerySnapshots>[0]["value"];
   chain: Chain | undefined;
 }>();
 

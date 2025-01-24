@@ -6,7 +6,7 @@ import {
   useQueryOHLC,
   useQueryEvents,
   useQueryTrades,
-} from "@CM/Services/llamma/queries";
+} from "@CM/queries/llamma";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

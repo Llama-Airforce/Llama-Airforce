@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import { useQueryPool } from "@CM/Services/pools/queries";
+import { useQueryPool } from "@CM/queries/pools";
 import PoolOverview from "./Tabs/PoolOverview.vue";
 import MEV from "./Tabs/MEV.vue";
 

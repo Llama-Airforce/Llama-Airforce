@@ -2,11 +2,10 @@
 import createChartOptions from "@/Styles/ChartStylesLW";
 import type { Chain } from "@/Types/Chain";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQuerySnapshots } from "@CM/Services/llamalend/queries";
-import type { Market } from "@CM/Services/llamalend";
+import { useQuerySnapshots } from "@CM/queries/llamalend";
 
 const { market, chain } = defineProps<{
-  market: Market | undefined;
+  market: Parameters<typeof useQuerySnapshots>[0]["value"];
   chain: Chain | undefined;
 }>();
 

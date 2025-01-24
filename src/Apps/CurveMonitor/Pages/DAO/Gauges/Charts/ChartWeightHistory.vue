@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQueryWeightHistory } from "@CM/Services/gauge/queries";
+import { useQueryWeightHistory } from "@CM/queries/gauge";
 
 const { gaugeAddress } = defineProps<{
   gaugeAddress: string | undefined;

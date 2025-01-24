@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQuerySupply } from "@CM/Services/dao/queries";
+import { useQuerySupply } from "@CM/queries/dao";
 
 export type Period = "1m" | "3m" | "6m" | "1y";
 const period = ref<Period>("1m");

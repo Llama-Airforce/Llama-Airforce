@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryEvents } from "@CM/Services/savings/queries";
+import { useQueryEvents } from "@CM/queries/savings";
 
 const { page, onPage } = usePaginationAsync();
 const pageDebounced = refDebounced(page, 200);

@@ -1,9 +1,8 @@
-import type { Chain } from "..";
-import type { Endpoint } from "./api";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as Api from "@CM/Services/lending";
 
 export function useQueryLoanDistribution(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   controller: Ref<string | undefined>,
   chain: Ref<Chain | undefined>
 ) {

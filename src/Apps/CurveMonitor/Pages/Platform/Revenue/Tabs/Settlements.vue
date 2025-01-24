@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TableSettlements from "@CM/Pages/Platform/Revenue/Tables/TableSettlements.vue";
-import { useQueryCowSwapSettlements } from "@CM/Services/revenue/queries";
+import { useQueryCowSwapSettlements } from "@CM/queries/revenue";
 
 const { isFetching: loading, data: settlements } = useQueryCowSwapSettlements();
 </script>

@@ -1,6 +1,5 @@
-import type { Chain } from "..";
-import type { Endpoint } from "./api";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as Api from "@CM/Services/liquidations";
 
 function initEmptyArray() {
   return {
@@ -19,7 +18,7 @@ function hasMarket(
 }
 
 export function useQuerySoftLiqRatios(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   chain: Ref<Chain | undefined>,
   market: Ref<string | undefined>
 ) {
@@ -32,7 +31,7 @@ export function useQuerySoftLiqRatios(
   });
 }
 export function useQueryLiqsDetailed(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   chain: Ref<Chain | undefined>,
   market: Ref<string | undefined>
 ) {
@@ -46,7 +45,7 @@ export function useQueryLiqsDetailed(
 }
 
 export function useQueryLiqsAggregate(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   chain: Ref<Chain | undefined>,
   market: Ref<string | undefined>
 ) {
@@ -60,7 +59,7 @@ export function useQueryLiqsAggregate(
 }
 
 export function useQueryLiqOverview(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   chain: Ref<Chain | undefined>,
   market: Ref<string | undefined>
 ) {
@@ -73,7 +72,7 @@ export function useQueryLiqOverview(
 }
 
 export function useQueryLiqLosses(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   chain: Ref<Chain | undefined>,
   market: Ref<string | undefined>
 ) {
@@ -87,7 +86,7 @@ export function useQueryLiqLosses(
 }
 
 export function useQueryLiqHealthDeciles(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   chain: Ref<Chain | undefined>,
   market: Ref<string | undefined>
 ) {

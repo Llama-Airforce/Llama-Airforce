@@ -1,6 +1,5 @@
 import { keepPreviousData } from "@tanstack/vue-query";
-import type * as Models from "./models";
-import * as Api from "./api";
+import * as Api from "@CM/Services/proposal";
 
 function initEmptyArray() {
   return {
@@ -11,7 +10,7 @@ function initEmptyArray() {
 
 export function useQueryProposal(
   id: Ref<number>,
-  type: Ref<Models.ProposalType>,
+  type: Ref<Api.ProposalType>,
   enabled?: Ref<boolean>
 ) {
   return useQuery({
@@ -23,8 +22,8 @@ export function useQueryProposal(
 
 export function useQueryProposals(
   page: Ref<number>,
-  type: Ref<Models.ProposalType>,
-  status: Ref<Models.ProposalStatus>,
+  type: Ref<Api.ProposalType>,
+  status: Ref<Api.ProposalStatus>,
   search: Ref<string>
 ) {
   return useQuery({

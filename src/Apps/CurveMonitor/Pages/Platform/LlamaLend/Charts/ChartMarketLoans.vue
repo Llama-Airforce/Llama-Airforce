@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
-import { useQuerySnapshots } from "@CM/Services/llamalend/queries";
 import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/llamalend";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
+import { useQuerySnapshots } from "@CM/queries/llamalend";
 
 const { market, chain } = defineProps<{
-  market: Market | undefined;
+  market: Parameters<typeof useQuerySnapshots>[0]["value"];
   chain: Chain | undefined;
 }>();
 

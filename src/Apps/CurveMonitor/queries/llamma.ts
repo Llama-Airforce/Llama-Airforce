@@ -1,10 +1,9 @@
 import { keepPreviousData } from "@tanstack/vue-query";
-import type { Chain } from "..";
-import type { Endpoint } from "./api";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as Api from "@CM/Services/llamma";
 
 export function useQueryEvents(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   llamma: Ref<string | undefined>,
   chain: Ref<Chain | undefined>,
   page: Ref<number>
@@ -19,7 +18,7 @@ export function useQueryEvents(
 }
 
 export function useQueryTrades(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   llamma: Ref<string | undefined>,
   chain: Ref<Chain | undefined>,
   page: Ref<number>
@@ -34,7 +33,7 @@ export function useQueryTrades(
 }
 
 export function useQueryOHLC(
-  endpoint: Ref<Endpoint>,
+  endpoint: Ref<Api.Endpoint>,
   llamma: Ref<string | undefined>,
   chain: Ref<Chain | undefined>
 ) {

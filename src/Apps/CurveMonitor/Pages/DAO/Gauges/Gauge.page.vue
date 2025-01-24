@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryGauge } from "@CM/Services/gauge/queries";
+import { useQueryGauge } from "@CM/queries/gauge";
 import GaugeOverview from "@CM/Pages/DAO/Gauges/Tabs/GaugeOverview.vue";
 import Votes from "@CM/Pages/DAO/Gauges/Tabs/Votes.vue";
 

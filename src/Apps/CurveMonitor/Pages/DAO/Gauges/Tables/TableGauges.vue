@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@/Types/Chain";
-import type { Gauge } from "@CM/Services/gauge";
-import { useQueryGauges } from "@CM/Services/gauge/queries";
+import { useQueryGauges } from "@CM/queries/gauge";
 
 const { isFetching: loading, data: gauges } = useQueryGauges();
 
@@ -70,7 +69,7 @@ function scanUrl(chain: Chain) {
 
 const router = useRouter();
 
-const onSelect = async (newGauge: Gauge) => {
+const onSelect = async (newGauge: (typeof gauges.value)[number]) => {
   await router.push({
     name: "gauge",
     params: {

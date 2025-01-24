@@ -1,6 +1,6 @@
 import { useQuery, keepPreviousData } from "@tanstack/vue-query";
-import type { Chain } from "..";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as Api from "@CM/Services/pools";
 
 export function useQueryPools(chain: Ref<Chain | undefined>) {
   return useQuery({

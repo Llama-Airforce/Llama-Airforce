@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 import type { Chain } from "@/Types/Chain";
-import { useQueryTopPools } from "@CM/Services/revenue/queries";
+import { useQueryTopPools } from "@CM/queries/revenue";
 
 const chain = ref<Chain>("ethereum");
 

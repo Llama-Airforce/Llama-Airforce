@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryVotes } from "@CM/Services/gauge/queries";
+import { useQueryVotes } from "@CM/queries/gauge";
 
 const { gaugeAddress } = defineProps<{
   gaugeAddress: string | undefined;

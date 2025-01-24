@@ -1,6 +1,5 @@
-import type { Chain } from "..";
-import type { Market } from "./models";
-import * as Api from "./api";
+import type { Chain } from "@CM/Services";
+import * as Api from "@CM/Services/llamalend";
 
 function initEmptyArray() {
   return {
@@ -26,7 +25,7 @@ export function useQueryMarkets(chain: Ref<Chain>) {
 }
 
 export function useQuerySnapshots(
-  market: Ref<Market | undefined>,
+  market: Ref<Api.Market | undefined>,
   chain: Ref<Chain | undefined>
 ) {
   return useQuery({

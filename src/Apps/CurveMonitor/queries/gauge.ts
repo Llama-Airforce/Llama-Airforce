@@ -1,4 +1,4 @@
-import * as Api from "./api";
+import * as Api from "@CM/Services/gauge";
 
 function initEmptyArray() {
   return {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQueryMarkets } from "@CM/Services/crvusd/queries";
+import { useQueryMarkets } from "@CM/queries/crvusd";
 import MarketOverview from "@CM/Pages/Platform/CrvUsd/Tabs/MarketOverview.vue";
 import Liquidations from "@CM/Pages/Platform/CrvUsd/Tabs/Liquidations.vue";
 import Trading from "@CM/Pages/Platform/CrvUsd/Tabs/Trading.vue";

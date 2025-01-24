@@ -3,10 +3,7 @@ import type { AutoscaleInfo } from "lightweight-charts";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import type { PoolPrice } from "@CM/Services/crvusd";
-import {
-  useQueryKeepers,
-  useQueryKeeperPrices,
-} from "@CM/Services/crvusd/queries";
+import { useQueryKeepers, useQueryKeeperPrices } from "@CM/queries/crvusd";
 
 const theme = useTheme();
 
