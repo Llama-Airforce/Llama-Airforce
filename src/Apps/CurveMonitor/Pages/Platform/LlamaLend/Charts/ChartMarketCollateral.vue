@@ -19,10 +19,10 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 const theme = useTheme();
 
 const symbolCollateral = computed(() =>
-  market ? market.collateral_token.symbol : "?"
+  market ? market.tokenCollateral.symbol : "?"
 );
 const symbolBorrowed = computed(() =>
-  market ? market.borrowed_token.symbol : "?"
+  market ? market.tokenBorrowed.symbol : "?"
 );
 
 const { items } = useLegend(() => [

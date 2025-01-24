@@ -90,7 +90,7 @@ function createSeries() {
   const newOracleSerie = ohlc
     .map((x) => ({
       time: x.time as UTCTimestamp,
-      value: Math.pow(x.oracle_price, invertMultiplier),
+      value: Math.pow(x.priceOracle, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");

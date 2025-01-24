@@ -34,7 +34,7 @@ export function useQueryKeeperPrices(keepers: Ref<Api.Keeper[]>) {
   return useQuery({
     queryKey: [
       "crvusd-keepers-prices",
-      computed(() => [...new Set(keepers.value.map((k) => k.pool_address))]),
+      computed(() => [...new Set(keepers.value.map((k) => k.poolAddress))]),
     ] as const,
     queryFn: async () => {
       const promises = keepers.value.map(async (keeper) => {
@@ -47,7 +47,7 @@ export function useQueryKeeperPrices(keepers: Ref<Api.Keeper[]>) {
 
         const ohlc = await ApiOHLC.getOHLC(
           "ethereum",
-          keeper.pool_address,
+          keeper.poolAddress,
           tokenMain.address,
           tokenRef.address
         );

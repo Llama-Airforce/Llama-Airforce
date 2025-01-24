@@ -33,11 +33,9 @@ const marketPairs = computed((): MarketPair[] => {
   const markets = (marketsRaw.value ?? [])
     .map((market) => ({
       market,
-      isLong: stables.includes(
-        market.borrowed_token.symbol.toLocaleLowerCase()
-      ),
+      isLong: stables.includes(market.tokenBorrowed.symbol.toLocaleLowerCase()),
       isShort: stables.includes(
-        market.collateral_token.symbol.toLocaleLowerCase()
+        market.tokenCollateral.symbol.toLocaleLowerCase()
       ),
     }))
     // For now we only care about markets with a specific stable link.
@@ -52,8 +50,8 @@ const marketPairs = computed((): MarketPair[] => {
 
     const counterpart = markets.find(
       (m) =>
-        m.market.borrowed_token.address === market.collateral_token.address &&
-        m.market.collateral_token.address === market.borrowed_token.address
+        m.market.tokenBorrowed.address === market.tokenCollateral.address &&
+        m.market.tokenCollateral.address === market.tokenBorrowed.address
     );
 
     if (counterpart) {
@@ -114,7 +112,7 @@ const totalBorrowed = (type: "long" | "short"): number => {
   return marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))
     .filter((market) => !!market)
-    .reduce((acc, market) => acc + market.total_debt_usd, 0);
+    .reduce((acc, market) => acc + market.totalDebtUsd, 0);
 };
 
 const totalUtilRate = (type: "long" | "short"): number => {
@@ -123,8 +121,8 @@ const totalUtilRate = (type: "long" | "short"): number => {
     .filter((market) => !!market)
     .reduce(
       ({ debt, assets }, market) => ({
-        debt: debt + market.total_debt_usd,
-        assets: assets + market.total_assets_usd,
+        debt: debt + market.totalDebtUsd,
+        assets: assets + market.totalAssetsUsd,
       }),
       { debt: 0, assets: 0 }
     );

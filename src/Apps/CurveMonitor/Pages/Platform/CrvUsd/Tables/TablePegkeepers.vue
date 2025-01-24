@@ -12,7 +12,7 @@ const rowsRaw = computed(() =>
     .filter((keeper) => keeper.active)
     .map((keeper) => {
       const pool = pools.value.find(
-        (pool) => keeper.pool_address === pool.address
+        (pool) => keeper.poolAddress === pool.address
       );
 
       if (!pool) {
@@ -47,7 +47,7 @@ const name = (keeper: Keeper): string =>
 
 // Pools
 const poolAddresses = computed(() =>
-  keepers.value.map((keeper) => keeper.pool_address)
+  keepers.value.map((keeper) => keeper.poolAddress)
 );
 
 const poolQueries = useQueryPoolMultiple(ref("ethereum"), poolAddresses);
@@ -102,7 +102,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="item.total_debt"
+            :value="item.totalDebt"
             :precision="decimals"
           />
         </div>
@@ -129,7 +129,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="item.total_profit"
+            :value="item.totalProfit"
             :precision="decimals"
           />
         </div>
@@ -143,7 +143,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.total_debt, 0)"
+            :value="rows.reduce((acc, x) => acc + x.totalDebt, 0)"
             :precision="decimals"
           />
         </div>
@@ -170,7 +170,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.total_profit, 0)"
+            :value="rows.reduce((acc, x) => acc + x.totalProfit, 0)"
             :precision="decimals"
           />
         </div>

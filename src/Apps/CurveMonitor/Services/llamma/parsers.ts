@@ -14,37 +14,37 @@ export const parseEvents = (
     : null,
   withdrawal: x.withdrawal
     ? {
-        amount_borrowed: x.withdrawal.amount_borrowed,
-        amount_collateral: x.withdrawal.amount_collateral,
+        amountBorrowed: x.withdrawal.amount_borrowed,
+        amountCollateral: x.withdrawal.amount_collateral,
       }
     : null,
-  block_number: x.block_number,
+  blockNumber: x.block_number,
   timestamp: x.timestamp,
-  transaction_hash: x.transaction_hash,
+  txHash: x.transaction_hash,
 });
 
 export const parseTrades = (
   x: Responses.GetLlammaTradesResponse["data"][number]
 ): Models.LlammaTrade => ({
-  sold_id: x.sold_id,
-  bought_id: x.bought_id,
-  token_sold: {
+  idSold: x.sold_id,
+  idBought: x.bought_id,
+  tokenSold: {
     symbol: x.token_sold.symbol,
     address: x.token_sold.address,
   },
-  token_bought: {
+  tokenBought: {
     symbol: x.token_bought.symbol,
     address: x.token_bought.address,
   },
-  amount_sold: x.amount_sold,
-  amount_bought: x.amount_bought,
+  amountSold: x.amount_sold,
+  amountBought: x.amount_bought,
   price: x.price,
   buyer: x.buyer,
-  fee_x: x.fee_x,
-  fee_y: x.fee_y,
-  block_number: x.block_number,
+  feeX: x.fee_x,
+  feeY: x.fee_y,
+  blockNumber: x.block_number,
   timestamp: x.timestamp,
-  transaction_hash: x.transaction_hash,
+  txHash: x.transaction_hash,
 });
 
 export const parseOHLC = (
@@ -55,7 +55,7 @@ export const parseOHLC = (
   close: x.close,
   high: x.high,
   low: x.low,
-  base_price: x.base_price,
-  oracle_price: x.oracle_price,
+  priceBase: x.base_price,
+  priceOracle: x.oracle_price,
   volume: x.volume,
 });

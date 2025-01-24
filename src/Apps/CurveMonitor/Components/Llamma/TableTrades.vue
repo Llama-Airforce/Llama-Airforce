@@ -50,33 +50,33 @@ const round = (x: number) =>
       ]"
     >
       <template #row="{ item: trade }">
-        <div class="end">{{ round(trade.amount_bought) }}</div>
+        <div class="end">{{ round(trade.amountBought) }}</div>
         <TokenIcon
           :chain
-          :address="trade.token_bought.address"
+          :address="trade.tokenBought.address"
         />
         <div>
           <a
             class="font-mono"
             target="_blank"
-            :href="`https://etherscan.io/address/${trade.token_bought.address}`"
+            :href="`https://etherscan.io/address/${trade.tokenBought.address}`"
           >
-            {{ trade.token_bought.symbol }}
+            {{ trade.tokenBought.symbol }}
           </a>
         </div>
 
-        <div class="end">{{ round(trade.amount_sold) }}</div>
+        <div class="end">{{ round(trade.amountSold) }}</div>
         <TokenIcon
           :chain
-          :address="trade.token_sold.address"
+          :address="trade.tokenSold.address"
         />
         <div>
           <a
             class="font-mono"
             target="_blank"
-            :href="`https://etherscan.io/address/${trade.token_sold.address}`"
+            :href="`https://etherscan.io/address/${trade.tokenSold.address}`"
           >
-            {{ trade.token_sold.symbol }}
+            {{ trade.tokenSold.symbol }}
           </a>
         </div>
 
@@ -93,7 +93,7 @@ const round = (x: number) =>
         <div class="end">
           <a
             target="_blank"
-            :href="`https://etherscan.io/tx/${trade.transaction_hash}`"
+            :href="`https://etherscan.io/tx/${trade.txHash}`"
             @click.stop
           >
             {{ relativeTime(trade.timestamp) }}

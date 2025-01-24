@@ -12,28 +12,28 @@ export type Market = {
   policy: Address;
   oracle: Address;
   rate: number;
-  borrow_apy: number;
-  lend_apy: number;
-  n_loans: number;
-  price_oracle: number;
-  amm_price: number;
-  total_debt: number; // Borrowed
-  total_assets: number; // Supplied
-  total_debt_usd: number;
-  total_assets_usd: number;
+  apyBorrow: number;
+  apyLend: number;
+  nLoans: number;
+  priceOracle: number;
+  ammPrice: number;
+  totalDebt: number; // Borrowed
+  totalAssets: number; // Supplied
+  totalDebtUsd: number;
+  totalAssetsUsd: number;
   minted: number;
+  mintedUsd: number;
   redeemed: number;
-  minted_usd: number;
-  redeemed_usd: number;
-  collateral_balance: number; // Collateral (like CRV)
-  borrowed_balance: number; // Collateral (like crvUSD)
-  collateral_balance_usd: number;
-  borrowed_balance_usd: number;
-  collateral_token: {
+  redeemedUsd: number;
+  collateralBalance: number; // Collateral (like CRV)
+  collateralBalanceUsd: number;
+  borrowedBalance: number; // Collateral (like crvUSD)
+  borrowedBalanceUsd: number;
+  tokenCollateral: {
     symbol: string;
     address: Address;
   };
-  borrowed_token: {
+  tokenBorrowed: {
     symbol: string;
     address: Address;
   };

@@ -15,11 +15,11 @@ export const parseMarket = (
   collateral: x.collateral_amount,
   collateralUsd: x.collateral_amount_usd,
   loans: x.n_loans,
-  collateral_token: {
+  tokenCollateral: {
     symbol: x.collateral_token.symbol,
     address: x.collateral_token.address,
   },
-  stablecoin_token: {
+  tokenStablecoin: {
     symbol: x.stablecoin_token.symbol,
     address: x.stablecoin_token.address,
   },
@@ -53,14 +53,14 @@ export const parseKeeper = (
 ): Models.Keeper => ({
   address: x.address,
   pool: x.pool,
-  pool_address: x.pool_address,
+  poolAddress: x.pool_address,
   pair: x.pair.map((p) => ({
     symbol: p.symbol,
     address: p.address,
   })),
   active: x.active,
-  total_debt: x.total_debt,
-  total_profit: x.total_profit,
+  totalDebt: x.total_debt,
+  totalProfit: x.total_profit,
 });
 
 export const parseSupply = (

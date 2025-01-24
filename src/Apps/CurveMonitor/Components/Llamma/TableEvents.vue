@@ -23,7 +23,7 @@ const round = (x: number) =>
   x < 1 ? x.toFixed(4) : x > 1000 ? x.toFixed(0) : x.toFixed(2);
 
 const amount = (x: LlammaEvent) =>
-  round(x.deposit?.amount ?? x.withdrawal?.amount_collateral ?? 0);
+  round(x.deposit?.amount ?? x.withdrawal?.amountCollateral ?? 0);
 
 const type = (x: LlammaEvent) =>
   x.deposit ? "Deposit" : x.withdrawal ? "Withdrawal" : "Unknown";
@@ -69,7 +69,7 @@ const type = (x: LlammaEvent) =>
         <div class="end">
           <a
             target="_blank"
-            :href="`https://etherscan.io/tx/${event.transaction_hash}`"
+            :href="`https://etherscan.io/tx/${event.txHash}`"
             @click.stop
           >
             {{ relativeTime(event.timestamp) }}

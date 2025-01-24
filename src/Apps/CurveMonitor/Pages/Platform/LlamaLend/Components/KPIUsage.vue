@@ -6,14 +6,13 @@ const { market } = defineProps<{
 }>();
 
 const totalCollateralUsd = computed(
-  () =>
-    (market?.collateral_balance_usd ?? 0) + (market?.borrowed_balance_usd ?? 0)
+  () => (market?.collateralBalanceUsd ?? 0) + (market?.borrowedBalanceUsd ?? 0)
 );
 
 const collateralLabel = computed(() => {
   const collateral = "Collateral";
-  const symbolCollateral = market?.collateral_token.symbol ?? "?";
-  const symbolBorrowed = market?.borrowed_token.symbol ?? "?";
+  const symbolCollateral = market?.tokenCollateral.symbol ?? "?";
+  const symbolBorrowed = market?.tokenBorrowed.symbol ?? "?";
 
   return `${collateral} (${symbolCollateral} / ${symbolBorrowed})`;
 });
@@ -23,9 +22,9 @@ const utilRate = computed(() => {
     return 0;
   }
 
-  return market.total_assets_usd === 0
+  return market.totalAssetsUsd === 0
     ? 0
-    : market.total_debt_usd / market.total_assets_usd;
+    : market.totalDebtUsd / market.totalAssetsUsd;
 });
 </script>
 
@@ -41,7 +40,7 @@ const utilRate = computed(() => {
           <AsyncValue
             show-zero
             type="dollar"
-            :value="market?.collateral_balance"
+            :value="market?.collateralBalance"
             :show-symbol="false"
           />
 
@@ -50,7 +49,7 @@ const utilRate = computed(() => {
           <AsyncValue
             show-zero
             type="dollar"
-            :value="market?.borrowed_balance"
+            :value="market?.borrowedBalance"
             :show-symbol="false"
           />
         </div>
@@ -65,42 +64,42 @@ const utilRate = computed(() => {
 
     <KPI
       style="grid-area: kpi2"
-      :label="'Borrowed' + ` (${market?.borrowed_token.symbol ?? '?'})`"
+      :label="'Borrowed' + ` (${market?.tokenBorrowed.symbol ?? '?'})`"
       :has-value="!!market"
     >
       <div class="two-sides">
         <AsyncValue
           show-zero
           type="dollar"
-          :value="market?.total_debt"
+          :value="market?.totalDebt"
           :show-symbol="false"
         />
 
         <AsyncValue
           show-zero
           type="dollar"
-          :value="market?.total_debt_usd"
+          :value="market?.totalDebtUsd"
         />
       </div>
     </KPI>
 
     <KPI
       style="grid-area: kpi3"
-      :label="'Supplied' + ` (${market?.borrowed_token.symbol ?? '?'})`"
+      :label="'Supplied' + ` (${market?.tokenBorrowed.symbol ?? '?'})`"
       :has-value="!!market"
     >
       <div class="two-sides">
         <AsyncValue
           show-zero
           type="dollar"
-          :value="market?.total_assets"
+          :value="market?.totalAssets"
           :show-symbol="false"
         />
 
         <AsyncValue
           show-zero
           type="dollar"
-          :value="market?.total_assets_usd"
+          :value="market?.totalAssetsUsd"
         />
       </div>
     </KPI>

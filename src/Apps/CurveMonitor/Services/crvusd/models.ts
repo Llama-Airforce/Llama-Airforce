@@ -11,11 +11,11 @@ export type Market = {
   collateral: number;
   collateralUsd: number;
   loans: number;
-  collateral_token: {
+  tokenCollateral: {
     symbol: string;
     address: Address;
   };
-  stablecoin_token: {
+  tokenStablecoin: {
     symbol: string;
     address: Address;
   };
@@ -62,14 +62,14 @@ export type CrvUsdSupply = {
 export type Keeper = {
   address: Address;
   pool: string;
-  pool_address: Address;
+  poolAddress: Address;
   pair: {
     symbol: string;
     address: Address;
   }[];
   active: boolean;
-  total_debt: number;
-  total_profit: number;
+  totalDebt: number;
+  totalProfit: number;
 };
 
 /** More specifically, the markets where a user holds a position */

@@ -10,14 +10,14 @@ const { market, chain } = defineProps<{
 
 const collateral = computed(() => ({
   type: "token",
-  symbol: market?.collateral_token?.symbol ?? "?",
-  address: market?.collateral_token?.address ?? "?",
+  symbol: market?.tokenCollateral?.symbol ?? "?",
+  address: market?.tokenCollateral?.address ?? "?",
 }));
 
 const borrowed = computed(() => ({
   type: "token",
-  symbol: market?.borrowed_token?.symbol ?? "?",
-  address: market?.borrowed_token?.address ?? "?",
+  symbol: market?.tokenBorrowed?.symbol ?? "?",
+  address: market?.tokenBorrowed?.address ?? "?",
 }));
 
 const linkAddress = (addr: string): string => {

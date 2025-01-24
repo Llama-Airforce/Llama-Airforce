@@ -62,7 +62,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <TokenIcon
           chain="ethereum"
-          :address="item.collateral_token.address"
+          :address="item.tokenCollateral.address"
         />
 
         <div>{{ item.name }}</div>

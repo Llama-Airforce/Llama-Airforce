@@ -48,7 +48,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
     >
       <AsyncValue
         type="dollar"
-        :value="market?.price_oracle"
+        :value="market?.priceOracle"
       />
     </KPI>
 
@@ -59,7 +59,7 @@ const { isFetching: loadingEvents, data: events } = useQueryEvents(
     >
       <AsyncValue
         type="dollar"
-        :value="market?.amm_price"
+        :value="market?.ammPrice"
       />
     </KPI>
 

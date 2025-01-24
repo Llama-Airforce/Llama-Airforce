@@ -48,13 +48,13 @@ const rows = computed(() =>
     .orderBy((x) => {
       switch (sorting.value.column) {
         case "borrow":
-          return x.borrow_apy;
+          return x.apyBorrow;
         case "lend":
-          return x.lend_apy;
+          return x.apyLend;
         case "tvl":
           return tvl(x);
         case "loans":
-          return x.n_loans;
+          return x.nLoans;
       }
     }, sorting.value.order)
 );
@@ -65,8 +65,8 @@ function name(market: Market) {
 
 const tokenIcon = (market: Market) => {
   return type.value === "long"
-    ? market.collateral_token.address
-    : market.borrowed_token.address;
+    ? market.tokenCollateral.address
+    : market.tokenBorrowed.address;
 };
 </script>
 
@@ -107,17 +107,17 @@ const tokenIcon = (market: Market) => {
 
           <div class="end">
             <AsyncValue
-              v-if="market.borrow_apy"
+              v-if="market.apyBorrow"
               type="percentage"
-              :value="market.borrow_apy"
+              :value="market.apyBorrow"
             />
           </div>
 
           <div class="end">
             <AsyncValue
-              v-if="market.lend_apy"
+              v-if="market.apyLend"
               type="percentage"
-              :value="market.lend_apy"
+              :value="market.apyLend"
             />
           </div>
 
@@ -129,7 +129,7 @@ const tokenIcon = (market: Market) => {
             />
           </div>
 
-          <div class="end">{{ market.n_loans }}</div>
+          <div class="end">{{ market.nLoans }}</div>
         </template>
       </template>
 
@@ -150,7 +150,7 @@ const tokenIcon = (market: Market) => {
             rows
               .filter((market) => market)
               .map((market) => market!)
-              .reduce((acc, x) => acc + x.n_loans, 0)
+              .reduce((acc, x) => acc + x.nLoans, 0)
           }}
         </div>
       </template>
