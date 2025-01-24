@@ -69,14 +69,12 @@ export class StackedBarsSeriesRenderer<TData extends StackedBarsData>
     }
 
     const options = this._options;
-    const bars: StackedBarsBarItem[] = this._data.bars.map((bar) => {
-      return {
-        x: bar.x,
-        ys: cumulativeBuildUp(bar.originalData.values).map(
-          (value) => priceToCoordinate(value) ?? 0
-        ),
-      };
-    });
+    const bars: StackedBarsBarItem[] = this._data.bars.map((bar) => ({
+      x: bar.x,
+      ys: cumulativeBuildUp(bar.originalData.values).map(
+        (value) => priceToCoordinate(value) ?? 0
+      ),
+    }));
 
     calculateColumnPositionsInPlace(
       bars,

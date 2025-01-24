@@ -49,14 +49,12 @@ import prisma from "@/Assets/Icons/Tokens/prisma.svg";
 import fxn from "@/Assets/Icons/Tokens/fxn.svg";
 import aura from "@/Assets/Icons/Tokens/aura.png";
 
-const protocols = computed((): ProtocolInfo[] => {
-  return [
-    { protocol: "cvx-crv", label: "Curve", logo: crv },
-    { protocol: "cvx-prisma", label: "Prisma", logo: prisma },
-    { protocol: "cvx-fxn", label: "f(x) Protocol", logo: fxn },
-    { protocol: "aura-bal", label: "Aura", logo: aura },
-  ];
-});
+const protocols = computed((): ProtocolInfo[] => [
+  { protocol: "cvx-crv", label: "Curve", logo: crv },
+  { protocol: "cvx-prisma", label: "Prisma", logo: prisma },
+  { protocol: "cvx-fxn", label: "f(x) Protocol", logo: fxn },
+  { protocol: "aura-bal", label: "Aura", logo: aura },
+]);
 
 // Select
 const onPlatformSelect = (option: PlatformInfo): void => {

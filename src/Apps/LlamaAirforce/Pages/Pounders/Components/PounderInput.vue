@@ -21,7 +21,7 @@ const emit = defineEmits<{
 
 const value = ref(0);
 
-const balanceNumber = computed((): number => {
+const balanceNumber = computed(() => {
   if (!balance || !decimals) {
     return 0;
   }
@@ -32,7 +32,7 @@ const balanceNumber = computed((): number => {
   return value >= 0.01 ? value : 0;
 });
 
-const valueDollar = computed((): number => {
+const valueDollar = computed(() => {
   if (!value.value || !price) {
     return 0;
   }
@@ -40,9 +40,7 @@ const valueDollar = computed((): number => {
   return value.value * price;
 });
 
-const step = computed((): number => {
-  return 1 / 10 ** 8;
-});
+const step = computed(() => 1 / 10 ** 8);
 
 // Watches
 watch(value, (value) => {

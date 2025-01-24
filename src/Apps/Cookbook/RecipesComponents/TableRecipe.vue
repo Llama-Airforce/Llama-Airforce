@@ -23,8 +23,8 @@ const data: Round[] = [
   { round: 5, value: 3 * Math.random() },
 ];
 
-const rows = computed(() => {
-  return data.orderBy((row) => {
+const rows = computed(() =>
+  data.orderBy((row) => {
     switch (sorting.value.column) {
       case "deadline":
         return row.round;
@@ -33,8 +33,8 @@ const rows = computed(() => {
       case "total":
         return row.value;
     }
-  }, sorting.value.order);
-});
+  }, sorting.value.order)
+);
 
 const expandedRows = ref<Round[]>([]);
 const toggleExpand = (round: Round) => {

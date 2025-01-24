@@ -6,8 +6,8 @@ import { useQueryRevenueChains } from "@CM/queries/revenue";
 const { isFetching: loading, data: chainRevenues } = useQueryRevenueChains();
 
 // Chart
-const options = computed(() => {
-  return createChartStyles({
+const options = computed(() =>
+  createChartStyles({
     chart: {
       id: "chainRevenues",
       type: "donut",
@@ -44,8 +44,8 @@ const options = computed(() => {
       },
     },
     labels: chainRevenues.value.map((x) => x.chain),
-  });
-});
+  })
+);
 
 const series = computed(() =>
   chainRevenues.value.map((x) => x.totalDailyFeesUSD)

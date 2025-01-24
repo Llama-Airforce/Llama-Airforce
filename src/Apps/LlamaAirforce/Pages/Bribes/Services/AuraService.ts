@@ -140,8 +140,8 @@ export default class AuraService extends ServiceBase {
   }
 
   public async getOverview(): Promise<DashboardResponse<Overview>> {
-    const roundOverviewPromise = this.fetchRounds().then((incentives) => {
-      return incentives.map((item, index) => {
+    const roundOverviewPromise = this.fetchRounds().then((incentives) =>
+      incentives.map((item, index) => {
         const mapped = item.map(({ totalValue, voteCount }) => [
           totalValue,
           totalValue > 0 ? voteCount : 0,
@@ -170,8 +170,8 @@ export default class AuraService extends ServiceBase {
           round,
           proposal: "",
         } as EpochOverview;
-      });
-    });
+      })
+    );
 
     const rewardPerDollarBribe = await this.fetchIncentivePerVote().then(
       ({ result }) => result.emissionsPerDollarSpent

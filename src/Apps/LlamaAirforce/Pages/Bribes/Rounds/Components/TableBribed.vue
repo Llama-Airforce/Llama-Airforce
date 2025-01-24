@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Bribe, Bribed, Epoch } from "@LAF/Pages/Bribes/Models";
+import type { Bribed, Epoch } from "@LAF/Pages/Bribes/Models";
 import { useBribesStore } from "@LAF/Pages/Bribes/Store";
 import { getBribed } from "@LAF/Pages/Bribes/Util/EpochHelper";
 import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
@@ -57,11 +57,10 @@ const amountDollars = (bribed: Bribed): number =>
 
 const dollarPerVlAsset = (bribed: Bribed): number => bribed.dollarPerVlAsset;
 
-const bribes = (bribed: Bribed): Bribe[] => {
-  return (epoch?.bribes ?? [])
+const bribes = (bribed: Bribed) =>
+  (epoch?.bribes ?? [])
     .filter((bribe) => bribe.pool === bribed.pool)
     .orderBy((bribe) => bribe.amountDollars, "desc");
-};
 </script>
 
 <template>

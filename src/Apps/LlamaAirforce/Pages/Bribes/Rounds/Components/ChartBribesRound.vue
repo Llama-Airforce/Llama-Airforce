@@ -40,8 +40,8 @@ const categories = computed(() =>
     .take(20)
 );
 
-const options = computed(() => {
-  return createChartStyles({
+const options = computed(() =>
+  createChartStyles({
     chart: {
       id: "votium-bribe-round",
       type: "bar",
@@ -106,8 +106,8 @@ const options = computed(() => {
           "ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace",
       },
     },
-  });
-});
+  })
+);
 
 const series = computed((): Serie[] =>
   bribes.value
@@ -128,9 +128,8 @@ const series = computed((): Serie[] =>
 );
 
 // Methods
-const optimalColumnWidthPercent = (numBars: number): number => {
-  return 20 + 60 / (1 + 30 * Math.exp(-numBars / 3));
-};
+const optimalColumnWidthPercent = (numBars: number) =>
+  20 + 60 / (1 + 30 * Math.exp(-numBars / 3));
 </script>
 
 <template>

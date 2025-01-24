@@ -33,9 +33,8 @@ const expandIfChildActive = () => {
   }
 };
 
-const menuLabel = (item: MenuItem): string => {
-  return typeof item.label === "string" ? item.label : item.label();
-};
+const menuLabel = (item: MenuItem) =>
+  typeof item.label === "string" ? item.label : item.label();
 
 watch(
   () => item,

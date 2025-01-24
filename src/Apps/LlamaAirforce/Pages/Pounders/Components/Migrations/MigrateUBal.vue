@@ -6,13 +6,13 @@ const { t } = useI18n();
 
 const { address } = useAccount();
 
-const migrationUBalMsg = computed(() => {
-  return t("migrateUBal", [
+const migrationUBalMsg = computed(() =>
+  t("migrateUBal", [
     (Math.round(bigNumToNumber(balanceUBal.value, 18n) * 1000) / 1000).toFixed(
       3
     ),
-  ]);
-});
+  ])
+);
 
 const canWithdraw = computed(() => balanceUBal.value > 0n && !migrating.value);
 

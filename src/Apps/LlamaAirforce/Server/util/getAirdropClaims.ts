@@ -21,8 +21,8 @@ type MerkleDistributorInfo = { id: string } & {
 // Cache prefix key.
 export const GET_AIRDROP_CLAIM = "airdropClaims";
 
-export const getAirdropClaims = async (airdropId: AirdropId) => {
-  return cache(
+export const getAirdropClaims = async (airdropId: AirdropId) =>
+  cache(
     `${GET_AIRDROP_CLAIM}:${airdropId}`,
     async () => {
       const { getItem } = useCosmosDb("Airdrops");
@@ -30,4 +30,3 @@ export const getAirdropClaims = async (airdropId: AirdropId) => {
     },
     { ttl: 1000 * 60 * 60 * 24 * 14 } // 14 days
   );
-};

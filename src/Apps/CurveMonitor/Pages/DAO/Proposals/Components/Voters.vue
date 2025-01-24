@@ -29,7 +29,7 @@ const votesAgainst = computed(() => {
 });
 
 // Methods
-const address = (address: string): string => {
+const address = (address: string) => {
   const addressLowercase = address.toLocaleLowerCase();
 
   // Hardcoded for now, Convex has no ENS by the looks of it anyway.
@@ -48,11 +48,10 @@ const address = (address: string): string => {
   return addressShort(address, 12);
 };
 
-const percentage = (voteWeight: number): number => {
-  return (voteWeight / (proposal.votesFor + proposal.votesAgainst)) * 100;
-};
+const percentage = (voteWeight: number) =>
+  (voteWeight / (proposal.votesFor + proposal.votesAgainst)) * 100;
 
-const you = (address: string): boolean => address === walletAddress.value;
+const you = (address: string) => address === walletAddress.value;
 </script>
 
 <template>

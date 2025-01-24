@@ -22,8 +22,8 @@ const series = computed(() =>
   topWorstPerformingLabels(labelsRaw.value).map((x) => x.ratio)
 );
 
-const options = computed(() => {
-  return createChartStyles({
+const options = computed(() =>
+  createChartStyles({
     chart: {
       id: "chainRevenues",
       type: "donut",
@@ -54,11 +54,10 @@ const options = computed(() => {
       },
     },
     labels: labels.value,
-  });
-});
+  })
+);
 
-// Methods
-const formatter = (x: number): string => `${x}%`;
+const formatter = (x: number) => `${x}%`;
 </script>
 
 <template>

@@ -63,11 +63,10 @@ function name(market: Market) {
   return market.name.replace(/(-long|-short)/i, "");
 }
 
-const tokenIcon = (market: Market) => {
-  return type.value === "long"
+const tokenIcon = (market: Market) =>
+  type.value === "long"
     ? market.tokenCollateral.address
     : market.tokenBorrowed.address;
-};
 </script>
 
 <template>

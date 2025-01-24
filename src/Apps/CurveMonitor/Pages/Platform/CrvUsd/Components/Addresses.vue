@@ -20,9 +20,7 @@ const addresses = computed(() => [
   },
 ]);
 
-const linkAddress = (addr: string): string => {
-  return `https://etherscan.io/address/${addr}`;
-};
+const linkAddress = (addr: string) => `https://etherscan.io/address/${addr}`;
 
 const clipboard = async (addr: string) => {
   await navigator.clipboard.writeText(addr);

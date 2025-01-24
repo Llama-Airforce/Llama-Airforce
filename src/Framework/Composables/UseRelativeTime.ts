@@ -21,9 +21,7 @@ export function useRelativeTime() {
     });
   });
 
-  const relativeTime = (unixtime: number): string => {
-    return relativeTimeFunc(now, unixtime);
-  };
+  const relativeTime = (unixtime: number) => relativeTimeFunc(now, unixtime);
 
   return { relativeTime };
 }

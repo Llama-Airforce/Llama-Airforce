@@ -10,9 +10,8 @@ const emit = defineEmits<{
   navigated: [];
 }>();
 
-const label = (item: MenuItemT): string => {
-  return typeof item.label === "string" ? item.label : item.label();
-};
+const label = (item: MenuItemT) =>
+  typeof item.label === "string" ? item.label : item.label();
 </script>
 
 <template>

@@ -9,9 +9,7 @@ const emit = defineEmits<{
   page: [page: number];
 }>();
 
-const pages = computed(() => {
-  return Math.ceil(itemsCount / itemsPerPage);
-});
+const pages = computed(() => Math.ceil(itemsCount / itemsPerPage));
 
 const pageButtons = computed(() => {
   const rangeSize = 5;

@@ -13,9 +13,9 @@ const { min, max, step, disabled } = defineProps<{
   disabled?: boolean;
 }>();
 
-const percentage = computed(() => {
-  return ((modelValue.value - min) / (max - min)) * 100;
-});
+const percentage = computed(
+  () => ((modelValue.value - min) / (max - min)) * 100
+);
 
 // Thumb expansion
 const isNearThumb = ref(false);

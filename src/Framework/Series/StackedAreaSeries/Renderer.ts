@@ -75,14 +75,12 @@ export class StackedAreaSeriesRenderer<TData extends StackedAreaData>
     }
 
     const options = this._options;
-    const bars: StackedAreaBarItem[] = this._data.bars.map((bar) => {
-      return {
-        x: bar.x,
-        ys: cumulativeBuildUp(bar.originalData.values).map(
-          (value) => priceToCoordinate(value) ?? 0
-        ),
-      };
-    });
+    const bars: StackedAreaBarItem[] = this._data.bars.map((bar) => ({
+      x: bar.x,
+      ys: cumulativeBuildUp(bar.originalData.values).map(
+        (value) => priceToCoordinate(value) ?? 0
+      ),
+    }));
 
     const zeroY = priceToCoordinate(0) ?? 0;
     const linesMeshed = this._createLinePaths(

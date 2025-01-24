@@ -8,8 +8,8 @@ const { liqs = [] } = defineProps<{
   liqs: LiquidationAggregate[];
 }>();
 
-const options = computed(() => {
-  return createChartStyles({
+const options = computed(() =>
+  createChartStyles({
     chart: {
       type: "bar",
       stacked: true,
@@ -56,8 +56,8 @@ const options = computed(() => {
       followCursor: false,
       enabled: true,
     },
-  });
-});
+  })
+);
 
 const categories = computed((): string[] =>
   liqs

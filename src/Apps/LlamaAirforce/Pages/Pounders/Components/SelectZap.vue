@@ -14,12 +14,10 @@ const emit = defineEmits<{
 }>();
 
 // Methods
-const icon = (logo: string): string => {
-  return logo;
-};
+const icon = (logo: string) => logo;
 
 // Select
-const onZapSelect = (option: Zap): void => {
+const onZapSelect = (option: Zap) => {
   emit("select", option);
 };
 

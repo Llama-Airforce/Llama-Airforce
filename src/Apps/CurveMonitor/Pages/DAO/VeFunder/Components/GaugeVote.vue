@@ -18,17 +18,10 @@ const creating = ref(false);
 const gauge_ = ref("");
 const description = ref("Add a grant gauge: ");
 
-const gaugePlaceholder = computed((): string => {
-  return MultisigAddress;
-});
+const gaugePlaceholder = MultisigAddress;
 
-const isValid = computed(
-  (): boolean => isAddress(gauge_.value) && !!description.value
-);
-
-const canRequest = computed((): boolean => {
-  return isValid.value && !creating.value;
-});
+const isValid = computed(() => isAddress(gauge_.value) && !!description.value);
+const canRequest = computed(() => isValid.value && !creating.value);
 
 // Watches
 watch(

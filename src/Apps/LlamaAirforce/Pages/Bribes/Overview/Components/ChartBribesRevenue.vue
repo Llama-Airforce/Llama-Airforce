@@ -16,8 +16,8 @@ const { protocol } = storeToRefs(useBribesStore());
 
 const epochs = computed(() => (overview?.epochs ?? []).takeRight(26));
 
-const options = computed(() => {
-  return createChartStyles({
+const options = computed(() =>
+  createChartStyles({
     chart: {
       id: "votium-bribe-revenue",
     },
@@ -72,40 +72,38 @@ const options = computed(() => {
           "ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace",
       },
     },
-  });
-});
+  })
+);
 
 const series = computed(
   (): {
     name: string;
     type: string;
     data: { x: string; y: number }[];
-  }[] => {
-    return [
-      {
-        name: t("revenue"),
-        type: "column",
-        data: [...epochs.value]
-          // Duplicate and order from old to new.
-          .sort((x, y) => x.round - y.round)
-          .map((epoch) => ({
-            x: getDate(epoch),
-            y: epoch.totalAmountDollars,
-          })),
-      },
-      {
-        name: `$/${vlAssetSymbol(protocol.value)}`,
-        type: "line",
-        data: [...epochs.value]
-          // Duplicate and order from old to new.
-          .sort((x, y) => x.round - y.round)
-          .map((epoch) => ({
-            x: getDate(epoch),
-            y: epoch.dollarPerVlAsset,
-          })),
-      },
-    ];
-  }
+  }[] => [
+    {
+      name: t("revenue"),
+      type: "column",
+      data: [...epochs.value]
+        // Duplicate and order from old to new.
+        .sort((x, y) => x.round - y.round)
+        .map((epoch) => ({
+          x: getDate(epoch),
+          y: epoch.totalAmountDollars,
+        })),
+    },
+    {
+      name: `$/${vlAssetSymbol(protocol.value)}`,
+      type: "line",
+      data: [...epochs.value]
+        // Duplicate and order from old to new.
+        .sort((x, y) => x.round - y.round)
+        .map((epoch) => ({
+          x: getDate(epoch),
+          y: epoch.dollarPerVlAsset,
+        })),
+    },
+  ]
 );
 </script>
 

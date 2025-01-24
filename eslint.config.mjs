@@ -53,6 +53,7 @@ export default [
         },
       ],
 
+      "arrow-body-style": ["error", "as-needed"],
       "multiline-comment-style": ["error", "starred-block"],
       "no-tabs": "error",
       "max-lines": ["error", 1000],

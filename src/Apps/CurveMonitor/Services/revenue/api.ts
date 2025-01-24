@@ -61,11 +61,10 @@ export async function getCushions(chain: string, options?: Options) {
 
 export async function getDistributions(options?: Options) {
   const host = await getHost(options);
-  const fs = (page: number) => {
-    return fetch<Responses.GetDistributionsResponse>(
+  const fs = (page: number) =>
+    fetch<Responses.GetDistributionsResponse>(
       `${host}/v1/dao/fees/distributions?page=${page}&per_page=100`
     ).then((resp) => resp.distributions.map(Parsers.parseDistribution));
-  };
 
   const distributions = await paginate(fs, 1, 100);
 

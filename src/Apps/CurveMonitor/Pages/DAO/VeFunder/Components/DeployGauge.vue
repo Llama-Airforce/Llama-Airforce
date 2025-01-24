@@ -11,9 +11,7 @@ const deploying = ref(false);
 const receiver = ref("");
 const amount: Ref<number | string> = ref(0);
 
-const receiverPlaceholder = computed((): string => {
-  return MultisigAddress;
-});
+const receiverPlaceholder = MultisigAddress;
 
 const isValid = computed(
   () =>

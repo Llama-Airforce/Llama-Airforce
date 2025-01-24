@@ -229,11 +229,11 @@ export default class SnapshotService extends ServiceBaseHost {
       result: {
         scores: Scores;
       };
-    }>(SNAPSHOT_SCORE_URL, { params }).then((resp) => {
-      return resp.result.scores.map((scores) =>
+    }>(SNAPSHOT_SCORE_URL, { params }).then((resp) =>
+      resp.result.scores.map((scores) =>
         mapKeys(scores, (_, key) => key.toLocaleLowerCase())
-      );
-    });
+      )
+    );
   }
 
   public async getScoresAura(
@@ -268,11 +268,11 @@ export default class SnapshotService extends ServiceBaseHost {
       result: {
         scores: Scores;
       };
-    }>(SNAPSHOT_SCORE_URL, { params }).then((resp) => {
-      return resp.result.scores.map((scores) =>
+    }>(SNAPSHOT_SCORE_URL, { params }).then((resp) =>
+      resp.result.scores.map((scores) =>
         mapKeys(scores, (_, key) => key.toLocaleLowerCase())
-      );
-    });
+      )
+    );
   }
 }
 

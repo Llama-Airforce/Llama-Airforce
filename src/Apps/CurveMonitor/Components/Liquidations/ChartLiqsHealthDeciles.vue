@@ -6,8 +6,8 @@ const { deciles } = defineProps<{
   deciles: LiqHealthDecile[];
 }>();
 
-const options = computed(() => {
-  return createChartStyles({
+const options = computed(() =>
+  createChartStyles({
     chart: {
       type: "bar",
       animations: {
@@ -58,8 +58,8 @@ const options = computed(() => {
         return data.join("");
       },
     },
-  });
-});
+  })
+);
 
 const categories = computed((): string[] => deciles.map((x) => x.decile));
 

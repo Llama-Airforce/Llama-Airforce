@@ -25,11 +25,11 @@ const types = ref<TransactionType[]>([
   TransactionType.Remove,
 ]);
 
-const columns = computed(() => {
-  return time
+const columns = computed(() =>
+  time
     ? ["Type", "Block", "Tx", "Trader", "Assets", "Time"]
-    : ["Type", "Tx", "Trader", "Assets"];
-});
+    : ["Type", "Tx", "Trader", "Assets"]
+);
 
 const rows = computed(() =>
   (txs ?? [])
@@ -51,7 +51,7 @@ const rows = computed(() =>
 const rowsPerPage = 10;
 const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
 
-const getAssetsString = (tx: TransactionDetail): string => {
+const getAssetsString = (tx: TransactionDetail) => {
   if (tx.transaction_type === TransactionType.Swap) {
     // TODO: make generic for multiple coins.
     const coinIn = tx.coins_leaving_wallet[0];

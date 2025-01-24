@@ -45,7 +45,7 @@ const columns = computed(() => [
 
 const { sorting, onSort } = useSort<typeof columns.value>("total");
 
-const isSupported = computed((): boolean => epoch?.platform !== "hh");
+const isSupported = computed(() => epoch?.platform !== "hh");
 
 const bribedOrdered = computed(() =>
   bribed.value.orderBy((bribed) => {
@@ -62,11 +62,11 @@ const bribedOrdered = computed(() =>
   }, sorting.value.order)
 );
 
-const bribedAmount = computed((): number => {
-  return bribedOrdered.value.reduce((acc, x) => acc + x.amountDollars, 0);
-});
+const bribedAmount = computed(() =>
+  bribedOrdered.value.reduce((acc, x) => acc + x.amountDollars, 0)
+);
 
-const personalDollarPerVlAsset = computed((): number | null => {
+const personalDollarPerVlAsset = computed(() => {
   const vlAsset = bribedOrdered.value.reduce(
     (acc, x) => acc + x.amountDollars / x.dollarPerVlAsset,
     0

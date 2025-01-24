@@ -30,9 +30,7 @@ const rows = computed(() =>
 const { data: rowsRaw, isFetching: isLoadingCushions } =
   useQueryCushions(networkChain);
 
-const linkAddress = (addr: string): string => {
-  return `https://etherscan.io/address/${addr}`;
-};
+const linkAddress = (addr: string) => `https://etherscan.io/address/${addr}`;
 </script>
 
 <template>
