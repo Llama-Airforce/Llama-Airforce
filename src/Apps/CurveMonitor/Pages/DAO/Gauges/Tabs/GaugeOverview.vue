@@ -151,7 +151,7 @@ function scanUrl(chain: Chain) {
         :href="`https://etherscan.io/tx/${gauge.creationTx}`"
         @click.stop
       >
-        {{ new Date(gauge.creationDate * 1000).toLocaleDateString() }}
+        {{ gauge.creationDate.toLocaleDateString() }}
       </a>
     </KPI>
 

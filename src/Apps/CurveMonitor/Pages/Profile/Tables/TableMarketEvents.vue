@@ -40,7 +40,7 @@ const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
 const rows = computed(() =>
   (data.value?.events ?? [])
-    .orderBy((x) => x.timestamp, sorting.value.order)
+    .orderBy((x) => x.timestamp.getTime(), sorting.value.order)
     .take(100)
 );
 
@@ -105,7 +105,7 @@ function scanUrl(chain: Chain) {
             :href="`https://${scanUrl(chain)}/tx/${item.txHash}`"
             @click.stop
           >
-            {{ new Date(item.timestamp * 1000).toLocaleDateString() }}
+            {{ item.timestamp.toLocaleDateString() }}
           </a>
         </div>
       </template>

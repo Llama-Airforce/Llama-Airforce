@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 
 type Tvl = {
-  timestamp: number;
+  timestamp: Date;
   tvl: number;
 };
 
@@ -45,7 +45,7 @@ function createSeries() {
 
   const newSerie = tvl
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.tvl,
     }))
     .uniqWith((x, y) => x.time === y.time)

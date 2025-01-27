@@ -39,7 +39,7 @@ function createSeries() {
 
   const newSerie = losses
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.pctLossMedian,
     }))
     .uniqWith((x, y) => x.time === y.time)

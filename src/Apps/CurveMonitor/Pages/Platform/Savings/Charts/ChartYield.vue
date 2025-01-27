@@ -39,7 +39,7 @@ function createSeries() {
 
   const newSeries = data.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: c.apyProjected,
     }))
     .uniqWith((x, y) => x.time === y.time)

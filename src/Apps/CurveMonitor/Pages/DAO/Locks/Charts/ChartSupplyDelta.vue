@@ -55,7 +55,7 @@ function createSeries() {
 
   const newDeltasSerie = supply.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.veCrvTotal,
     }))
     .uniqWith((x, y) => x.time === y.time)

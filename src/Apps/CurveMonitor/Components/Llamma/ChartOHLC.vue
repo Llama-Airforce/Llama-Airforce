@@ -71,7 +71,7 @@ function createSeries() {
   const invertMultiplier = invert.value ? -1 : 1;
   const newOHLCSerie = ohlc
     .map((c) => ({
-      time: c.time as UTCTimestamp,
+      time: c.time.getUTCTimestamp(),
       open: Math.pow(c.open, invertMultiplier),
       high: Math.pow(c.high, invertMultiplier),
       low: Math.pow(c.low, invertMultiplier),
@@ -89,7 +89,7 @@ function createSeries() {
   // Price Oracle
   const newOracleSerie = ohlc
     .map((x) => ({
-      time: x.time as UTCTimestamp,
+      time: x.time.getUTCTimestamp(),
       value: Math.pow(x.priceOracle, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)

@@ -18,7 +18,7 @@ const rows = computed(() =>
     .orderBy((x) => {
       switch (sorting.value.column) {
         case "timestamp":
-          return x.timestamp;
+          return x.timestamp.getTime();
         case "weight":
           return x.weight;
       }
@@ -46,7 +46,7 @@ const rows = computed(() =>
             target="_blank"
             :href="`https://etherscan.io/tx/${item.txHash}`"
           >
-            {{ new Date(item.timestamp * 1000).toLocaleDateString() }}
+            {{ item.timestamp.toLocaleDateString() }}
           </a>
         </div>
 

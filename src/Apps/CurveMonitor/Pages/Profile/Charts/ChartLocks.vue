@@ -57,7 +57,7 @@ function createSeries() {
 
   const newLocksSeries = data.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: Number(x.amount) / 10 ** 18,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -65,7 +65,7 @@ function createSeries() {
 
   const newTotalSeries = data.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: Number(x.lockedBalance) / 10 ** 18,
     }))
     .uniqWith((x, y) => x.time === y.time)

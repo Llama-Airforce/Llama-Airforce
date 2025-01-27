@@ -72,7 +72,7 @@ const type = (x: LlammaEvent) =>
             :href="`https://etherscan.io/tx/${event.txHash}`"
             @click.stop
           >
-            {{ relativeTime(event.timestamp) }}
+            {{ relativeTime(event.timestamp.getUTCTimestamp()) }}
           </a>
         </div>
       </template>

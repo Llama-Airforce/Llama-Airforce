@@ -80,7 +80,7 @@ function createSeries() {
 
   const newBorrowApySerie = snapshots.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: c.borrowApy,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -88,7 +88,7 @@ function createSeries() {
 
   const newLendApySerie = snapshots.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: c.lendApy,
     }))
     .uniqWith((x, y) => x.time === y.time)

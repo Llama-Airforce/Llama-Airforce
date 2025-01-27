@@ -54,10 +54,10 @@ function createSeries() {
   }
 
   const newSupplySerie = data
-    .groupBy((x) => x.timestamp)
+    .groupBy((x) => x.timestamp.getTime())
     .entries()
     .map(([, x]) => ({
-      time: x[0].timestamp as UTCTimestamp,
+      time: x[0].timestamp.getUTCTimestamp(),
       value: x.reduce((acc, y) => acc + y.supply, 0),
       debt: x.find((y) => y.market === "Keepers debt")?.supply ?? 0,
     }))

@@ -38,7 +38,7 @@ function createSeries() {
 
   const newDistributionsSeries = distributions
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.feesUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)

@@ -8,6 +8,8 @@
  * https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_sortby-and-_orderby
  */
 
+import type { UTCTimestamp } from "lightweight-charts";
+
 /**
  * Represents a grouped object with key-value pairs.
  * The reason this exists is because we want to chain
@@ -133,6 +135,10 @@ declare global {
      */
     difference(...arrays: T[][]): T[];
   }
+
+  interface Date {
+    getUTCTimestamp(): UTCTimestamp;
+  }
 }
 
 Array.prototype.take = function <T>(this: T[], n: number) {
@@ -231,6 +237,10 @@ Array.prototype.maxBy = function <T>(this: T[], iteratee: (item: T) => number) {
 Array.prototype.difference = function <T>(this: T[], ...arrays: T[][]) {
   const otherSet = new Set(arrays.flat());
   return this.filter((x) => !otherSet.has(x));
+};
+
+Date.prototype.getUTCTimestamp = function () {
+  return (this.getTime() / 1000) as UTCTimestamp;
 };
 
 export {};

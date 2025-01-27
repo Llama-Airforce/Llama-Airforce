@@ -38,7 +38,7 @@ function createSeries() {
 
   const newLoansSeries = snapshots.value
     .map((v) => ({
-      time: v.timestamp as UTCTimestamp,
+      time: v.timestamp.getUTCTimestamp(),
       value: v.nLoans,
     }))
     .uniqWith((x, y) => x.time === y.time)

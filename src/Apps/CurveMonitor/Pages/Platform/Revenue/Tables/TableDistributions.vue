@@ -17,7 +17,7 @@ const rows = computed(() =>
   distributions.orderBy((distribution) => {
     switch (sorting.value.column) {
       case "timestamp":
-        return distribution.timestamp;
+        return distribution.timestamp.getTime();
       case "fees":
         return distribution.feesUsd;
     }
@@ -25,9 +25,8 @@ const rows = computed(() =>
 );
 
 // Formatters
-function formatDate(epoch: number): string {
-  const date = new Date(epoch * 1000); // Convert seconds to milliseconds
-  return date.toLocaleDateString("en-US", {
+function formatDate(epoch: Date): string {
+  return epoch.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",

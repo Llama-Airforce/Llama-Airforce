@@ -43,7 +43,7 @@ const rows = computed(() =>
         case "weight":
           return Number(x.weight);
         case "creation":
-          return x.creationDate;
+          return x.creationDate.getTime();
       }
     }, sorting.value.order)
 );
@@ -171,7 +171,7 @@ const onSelect = async (newGauge: (typeof gauges.value)[number]) => {
               :href="`https://etherscan.io/tx/${item.creationTx}`"
               @click.stop
             >
-              {{ new Date(item.creationDate * 1000).toLocaleDateString() }}
+              {{ item.creationDate.toLocaleDateString() }}
             </a>
           </div>
 

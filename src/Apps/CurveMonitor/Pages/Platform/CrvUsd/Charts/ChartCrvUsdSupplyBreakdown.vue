@@ -61,11 +61,11 @@ const options = computed(() =>
 
 const categories = computed(() =>
   data
-    .orderBy((x) => x.timestamp, "asc")
-    .groupBy((x) => x.timestamp)
+    .orderBy((x) => x.timestamp.getTime(), "asc")
+    .groupBy((x) => x.timestamp.getTime())
     .entries()
     .map(([timestamp]) =>
-      new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(undefined, {
+      new Date(parseInt(timestamp, 10)).toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
       })
@@ -80,10 +80,10 @@ const series = computed((): Serie[] =>
     .map(([market, supplyData]) => ({
       name: market,
       data: supplyData
-        .groupBy((s) => s.timestamp)
+        .groupBy((s) => s.timestamp.getTime())
         .entries()
         .map(([timestamp, supplyByTimestamp]) => ({
-          x: new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(),
+          x: new Date(parseInt(timestamp, 10)).toLocaleDateString(),
           y: supplyByTimestamp.reduce((acc, s) => acc + s.supply, 0),
         }))
         .orderBy((s) => s.x, "asc"),
@@ -94,7 +94,7 @@ const max = computed(
   (): number =>
     Math.max(
       ...data
-        .groupBy((x) => x.timestamp)
+        .groupBy((x) => x.timestamp.getTime())
         .entries()
         .map(([, supply]) => supply.reduce((acc, x) => acc + x.supply, 0))
     ) * 1.1

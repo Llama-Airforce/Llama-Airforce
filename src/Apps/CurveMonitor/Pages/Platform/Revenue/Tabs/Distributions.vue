@@ -11,14 +11,14 @@ const totalFees = computed(() => distributions.value.sumBy((x) => x.feesUsd));
 
 const averageWeeklyFees = computed(() =>
   distributions.value
-    .orderBy((x) => x.timestamp, "desc")
+    .orderBy((x) => x.timestamp.getTime(), "desc")
     .take(52)
     .meanBy((x) => x.feesUsd)
 );
 
 const stdDevWeeklyFees = computed(() => {
   const lastYear = distributions.value
-    .orderBy((x) => x.timestamp, "desc")
+    .orderBy((x) => x.timestamp.getTime(), "desc")
     .take(52)
     .map((x) => x.feesUsd);
 

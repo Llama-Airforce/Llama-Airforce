@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 
 type Volume = {
-  timestamp: number;
+  timestamp: Date;
   volume: number;
 };
 
@@ -45,7 +45,7 @@ function createSeries() {
 
   const newSerie = volume
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.volume,
     }))
     .uniqWith((x, y) => x.time === y.time)

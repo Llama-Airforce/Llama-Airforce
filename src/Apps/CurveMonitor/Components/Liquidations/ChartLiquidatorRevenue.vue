@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import type { LiquidationDetails } from "@CM/Services/liquidations";
 
 type Discount = {
-  timestamp: number;
+  timestamp: Date;
   discount: number;
 };
 
@@ -84,7 +84,7 @@ function createSeries() {
 
   const newRevenueSerie = liqs
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.debt,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -99,9 +99,9 @@ function createSeries() {
     newRevenueSerie.length > 0 ? (newRevenueSerie[0].time as number) : 0;
 
   const newDiscountSerie = discounts
-    .filter((x) => x.timestamp >= minTime)
+    .filter((x) => x.timestamp.getUTCTimestamp() >= minTime)
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.discount * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)

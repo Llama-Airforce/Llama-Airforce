@@ -8,7 +8,8 @@ import TableLockers from "./Tables/TableLockers.vue";
 const { isFetching: loadingSupply, data: supply } = useQuerySupply();
 
 const supplyLatest = computed<(typeof supply.value)[number] | undefined>(
-  () => supply.value.orderBy((x) => x.timestamp, "desc")[0] ?? undefined
+  () =>
+    supply.value.orderBy((x) => x.timestamp.getTime(), "desc")[0] ?? undefined
 );
 
 const supplyVeCrv = computed(

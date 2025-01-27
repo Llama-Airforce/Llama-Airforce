@@ -15,7 +15,7 @@ const rows = computed(() =>
   data.value.orderBy((x) => {
     switch (sorting.value.column) {
       case "day":
-        return x.day;
+        return x.day.getTime();
       case "amount":
         return Number(x.amount);
     }
@@ -40,7 +40,7 @@ function getAmount(item: (typeof rows.value)[number]) {
     >
       <template #row="{ item }">
         <div>
-          {{ new Date(item.day * 1000).toLocaleDateString() }}
+          {{ item.day.toLocaleDateString() }}
         </div>
 
         <div

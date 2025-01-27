@@ -4,7 +4,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 
 type Equity = {
-  timestamp: number;
+  timestamp: Date;
   equity: number;
 };
 
@@ -50,7 +50,7 @@ function createSeries() {
 
   const newEquitySerie = equity
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.equity,
     }))
     .uniqWith((x, y) => x.time === y.time)

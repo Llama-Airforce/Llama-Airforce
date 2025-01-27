@@ -61,11 +61,11 @@ const options = computed(() =>
 
 const categories = computed((): string[] =>
   liqs
-    .orderBy((x) => x.timestamp, "asc")
-    .groupBy((x) => x.timestamp)
+    .orderBy((x) => x.timestamp.getTime(), "asc")
+    .groupBy((x) => x.timestamp.getTime())
     .entries()
     .map(([timestamp]) =>
-      new Date(parseInt(timestamp, 10) * 1000).toLocaleDateString(undefined, {
+      new Date(parseInt(timestamp, 10)).toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
       })
@@ -77,14 +77,14 @@ const series = computed((): Serie[] => [
   {
     name: "Self liquidations",
     data: Object.values(liqs).map((s) => ({
-      x: new Date(s.timestamp * 1000).toLocaleDateString(),
+      x: s.timestamp.toLocaleDateString(),
       y: s.selfCount,
     })),
   },
   {
     name: "Hard liquidations",
     data: Object.values(liqs).map((s) => ({
-      x: new Date(s.timestamp * 1000).toLocaleDateString(),
+      x: s.timestamp.toLocaleDateString(),
       y: s.hardCount,
     })),
   },
@@ -94,7 +94,7 @@ const max = computed(
   (): number =>
     Math.max(
       ...liqs
-        .groupBy((x) => x.timestamp)
+        .groupBy((x) => x.timestamp.getTime())
         .entries()
         .map(([, supply]) =>
           supply.reduce((acc, x) => acc + x.selfCount + x.hardCount, 0)

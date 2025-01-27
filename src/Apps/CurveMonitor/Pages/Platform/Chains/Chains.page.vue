@@ -68,13 +68,13 @@ function filterAndSum<T extends Activity>(
   return activities
     .filter((x) => (chain === "all" ? true : x.chain === chain))
     .filter((x) => (type === "all" ? true : x.type === type))
-    .groupBy((x) => x.timestamp)
+    .groupBy((x) => x.timestamp.getTime())
     .entries()
     .map(([timestamp, xs]) => {
       const sum = xs.reduce((acc, x) => acc + selector(x), 0);
 
       return {
-        timestamp: Number(timestamp),
+        timestamp: Number(timestamp) / 1000,
         count: sum,
       };
     });

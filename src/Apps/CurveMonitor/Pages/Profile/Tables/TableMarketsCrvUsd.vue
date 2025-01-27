@@ -81,13 +81,8 @@ const values = computed(() => rows.value.map((x) => x.controller));
           :address="item.collateral"
         />
 
-        <div>
-          {{ item.collateral }}
-        </div>
-
-        <div class="end">
-          {{ new Date(item.snapshotLast * 1000).toLocaleDateString() }}
-        </div>
+        <div>{{ item.collateral }}</div>
+        <div class="end">{{ item.snapshotLast.toLocaleDateString() }}</div>
       </template>
     </Table>
 

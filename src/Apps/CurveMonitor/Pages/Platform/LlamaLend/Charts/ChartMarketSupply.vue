@@ -96,7 +96,7 @@ function createSeries() {
 
   const newSupplySerie = snapshots.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: c.totalAssetsUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -104,7 +104,7 @@ function createSeries() {
 
   const newDebtSerie = snapshots.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: c.totalDebtUsd,
     }))
     .uniqWith((x, y) => x.time === y.time)

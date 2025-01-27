@@ -77,7 +77,7 @@ function createSeries() {
 
   const newBorrowedSerie = data.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: "borrowed" in x ? x.borrowed : x.stablecoin,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -85,7 +85,7 @@ function createSeries() {
 
   const newCollateralSerie = data.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.collateral,
     }))
     .uniqWith((x, y) => x.time === y.time)

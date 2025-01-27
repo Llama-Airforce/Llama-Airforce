@@ -62,10 +62,10 @@ export function useQueryKeeperPrices(keepers: Ref<Api.Keeper[]>) {
       const prices = (await Promise.all(promises)).flat();
 
       const result = prices
-        .groupBy((x) => x.time)
+        .groupBy((x) => x.time.getTime())
         .entries()
         .map(([time, x]) => ({
-          timestamp: Number(time),
+          timestamp: Number(time) / 1000,
           ...Object.fromEntries(x.map((y) => [y.coin, y.price])),
         }));
 

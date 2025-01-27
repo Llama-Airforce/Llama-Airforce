@@ -35,7 +35,7 @@ const calldata = computed(() => {
       <TableRow>
         <div>Date</div>
         <div>
-          {{ new Date(data.timestamp * 1000).toLocaleDateString() }}
+          {{ data.timestamp.toLocaleDateString() }}
         </div>
       </TableRow>
 

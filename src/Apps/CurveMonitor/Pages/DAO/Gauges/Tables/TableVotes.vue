@@ -33,7 +33,7 @@ const rows = computed(() =>
     .orderBy((x) => {
       switch (sorting.value.column) {
         case "time":
-          return x.timestamp;
+          return x.timestamp.getTime();
         case "weight":
           return x.weight;
         case "block":
@@ -101,7 +101,7 @@ const { page, rowsPage, onPage } = usePagination(rows, rowsPerPage);
             :href="`https://etherscan.io/tx/${item.tx}`"
             @click.stop
           >
-            {{ new Date(item.timestamp * 1000).toLocaleDateString() }}
+            {{ item.timestamp.toLocaleDateString() }}
           </a>
         </div>
       </template>

@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 
 type CollateralRatio = {
-  timestamp: number;
+  timestamp: Date;
   ratio: number;
 };
 
@@ -46,7 +46,7 @@ function createSeries() {
 
   const newSerie = ratios
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.ratio * 100,
     }))
     .uniqWith((x, y) => x.time === y.time)

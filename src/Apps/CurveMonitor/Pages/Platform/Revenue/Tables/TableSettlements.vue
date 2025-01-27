@@ -31,7 +31,7 @@ const rows = computed(() =>
       case "profitPct":
         return profitPct(settlement);
       case "timestamp":
-        return settlement.timestamp;
+        return settlement.timestamp.getTime();
     }
   }, sorting.value.order)
 );
@@ -145,7 +145,7 @@ function symbol(settlement: CowSwapSettlement) {
         </div>
 
         <div class="end">
-          {{ relativeTime(item.timestamp) }}
+          {{ relativeTime(item.timestamp.getUTCTimestamp()) }}
         </div>
 
         <IconExpander :expanded />

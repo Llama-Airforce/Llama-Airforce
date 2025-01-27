@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import type { SoftLiqRatio } from "@CM/Services/liquidations";
 
 type PriceOracle = {
-  timestamp: number;
+  timestamp: Date;
   priceOracle: number;
 };
 
@@ -82,19 +82,19 @@ function createSeries() {
 
   const newProportionSerie = ratios
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.proportion,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
   const minTime =
-    newProportionSerie.length > 0 ? (newProportionSerie[0].time as number) : 0;
+    newProportionSerie.length > 0 ? newProportionSerie[0].time : 0;
 
   const newPriceSerie = pricesOracle
-    .filter((x) => x.timestamp >= minTime)
+    .filter((x) => x.timestamp.getUTCTimestamp() >= minTime)
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: x.priceOracle,
     }))
     .uniqWith((x, y) => x.time === y.time)

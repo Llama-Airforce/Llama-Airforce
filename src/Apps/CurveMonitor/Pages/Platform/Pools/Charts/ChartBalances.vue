@@ -3,7 +3,7 @@ import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWFullscreen } from "@CM/Components/";
 
 type Balance = {
-  timestamp: number;
+  timestamp: Date;
   balance: number;
   tokenPrice: number;
 };
@@ -119,7 +119,7 @@ function createSeriesUnstacked() {
 
     const newSerie = bs
       .map((x) => ({
-        time: x.timestamp as UTCTimestamp,
+        time: x.timestamp.getUTCTimestamp(),
         value: toDollars ? x.balance * x.tokenPrice : x.balance,
       }))
       .uniqWith((x, y) => x.time === y.time)
@@ -151,7 +151,7 @@ function createSeriesStacked(normalize: boolean) {
         balance: toDollars ? x.balance * x.tokenPrice : x.balance,
       }))
     )
-    .groupBy((x) => x.timestamp)
+    .groupBy((x) => x.timestamp.getTime())
     .entries()
     // One stacked datapoint is basically all points at a certain time.
     .map(([time, values]) => {
@@ -164,7 +164,7 @@ function createSeriesStacked(normalize: boolean) {
       );
 
       return {
-        time: Number(time) as UTCTimestamp,
+        time: (Number(time) / 1000) as UTCTimestamp,
         values: calculatedValues,
       };
     })

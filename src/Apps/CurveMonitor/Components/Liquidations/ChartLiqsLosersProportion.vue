@@ -39,7 +39,7 @@ function createSeries() {
 
   const newSerie = losses
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value:
         x.numTotalUsers > 0
           ? (100 * x.numUsersWithLosses) / x.numTotalUsers

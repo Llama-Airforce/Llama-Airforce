@@ -86,7 +86,7 @@ function createSeries() {
   const denom = denomDollars.value;
   const newCollateralSerie = snapshots.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: denom ? c.collateralBalanceUsd : c.collateralBalance,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -94,7 +94,7 @@ function createSeries() {
 
   const newBorrowedSerie = snapshots.value
     .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
+      time: c.timestamp.getUTCTimestamp(),
       value: denom ? c.borrowedBalanceUsd : c.borrowedBalance,
     }))
     .uniqWith((x, y) => x.time === y.time)

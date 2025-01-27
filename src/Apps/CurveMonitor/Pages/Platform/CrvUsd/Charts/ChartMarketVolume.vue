@@ -49,7 +49,7 @@ function createSeries() {
 
   const newSerie = (ohlc.value ?? [])
     .map((x) => ({
-      time: x.time as UTCTimestamp,
+      time: x.time.getUTCTimestamp(),
       value: x.volume,
     }))
     .uniqWith((x, y) => x.time === y.time)

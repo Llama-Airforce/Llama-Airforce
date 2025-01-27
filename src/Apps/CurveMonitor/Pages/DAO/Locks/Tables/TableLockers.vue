@@ -17,11 +17,11 @@ const rows = computed(() =>
   data.value.orderBy((x) => {
     switch (sorting.value.column) {
       case "weight":
-        return Number(x.weight) / 10 ** 18;
+        return Number(x.weight);
       case "ratio":
         return x.weightRatio;
       case "unlock":
-        return x.unlockTime;
+        return x.unlockTime.getTime();
     }
   }, sorting.value.order)
 );
@@ -78,7 +78,7 @@ async function onSelect(row: (typeof data.value)[number]) {
         </div>
 
         <div class="end">
-          {{ new Date(item.unlockTime * 1000).toLocaleDateString() }}
+          {{ item.unlockTime.toLocaleDateString() }}
         </div>
 
         <IconExpander />

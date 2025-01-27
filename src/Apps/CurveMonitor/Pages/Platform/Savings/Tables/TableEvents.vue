@@ -67,7 +67,7 @@ const { relativeTime } = useRelativeTime();
             :href="`https://etherscan.io/tx/${event.txHash}`"
             @click.stop
           >
-            {{ relativeTime(event.timestamp) }}
+            {{ relativeTime(event.timestamp.getUTCTimestamp()) }}
           </a>
         </div>
       </template>

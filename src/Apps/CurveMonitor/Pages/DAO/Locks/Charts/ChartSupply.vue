@@ -101,7 +101,7 @@ function createSeries() {
 
   const newCrvSerie = supply.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: Number(x.crvSupply) / 10 ** 18,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -109,7 +109,7 @@ function createSeries() {
 
   const newCircSerie = supply.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: Number(x.circulatingSupply) / 10 ** 18,
     }))
     .uniqWith((x, y) => x.time === y.time)
@@ -117,7 +117,7 @@ function createSeries() {
 
   const newVeCrvSerie = supply.value
     .map((x) => ({
-      time: x.timestamp as UTCTimestamp,
+      time: x.timestamp.getUTCTimestamp(),
       value: Number(x.veCrvTotal) / 10 ** 18,
     }))
     .uniqWith((x, y) => x.time === y.time)

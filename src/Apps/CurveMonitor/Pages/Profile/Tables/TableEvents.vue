@@ -81,7 +81,7 @@ function scanUrl(chain: Chain) {
         </div>
 
         <div class="end">
-          {{ new Date(item.snapshotLast * 1000).toLocaleDateString() }}
+          {{ item.snapshotLast.toLocaleDateString() }}
         </div>
       </template>
     </Table>

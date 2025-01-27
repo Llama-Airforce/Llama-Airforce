@@ -18,11 +18,11 @@ const rows = computed(() =>
     .orderBy((x) => {
       switch (sorting.value.column) {
         case "timestamp":
-          return x.timestamp;
+          return x.timestamp.getTime();
         case "amount":
-          return Number(x.amount) / 10 ** 18;
+          return Number(x.amount);
         case "unlock":
-          return Number(x.unlockTime) / 10 ** 18;
+          return x.unlockTime.getTime();
       }
     }, sorting.value.order)
     .take(100)
@@ -48,7 +48,7 @@ const rows = computed(() =>
             target="_blank"
             :href="`https://etherscan.io/tx/${item.txHash}`"
           >
-            {{ new Date(item.timestamp * 1000).toLocaleDateString() }}
+            {{ item.timestamp.toLocaleDateString() }}
           </a>
         </div>
 
@@ -66,7 +66,7 @@ const rows = computed(() =>
         </div>
 
         <div class="end">
-          {{ new Date(item.unlockTime * 1000).toLocaleDateString() }}
+          {{ item.unlockTime.toLocaleDateString() }}
         </div>
       </template>
     </Table>

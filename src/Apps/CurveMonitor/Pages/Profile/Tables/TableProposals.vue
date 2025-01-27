@@ -22,9 +22,9 @@ const rows = computed(() =>
     .orderBy((x) => {
       switch (sorting.value.column) {
         case "timestamp":
-          return x.proposal.timestamp;
+          return x.proposal.timestamp.getTime();
         case "weight":
-          return Number(x.weight) / 10 ** 18;
+          return Number(x.weight);
       }
     }, sorting.value.order)
     .take(100)
@@ -64,7 +64,7 @@ async function onSelect({ proposal }: (typeof rows.value)[number]) {
             :href="`https://etherscan.io/tx/${txHash}`"
             @click.stop
           >
-            {{ new Date(proposal.timestamp * 1000).toLocaleDateString() }}
+            {{ proposal.timestamp.toLocaleDateString() }}
           </a>
         </div>
 

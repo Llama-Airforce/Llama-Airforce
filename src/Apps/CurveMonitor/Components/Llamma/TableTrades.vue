@@ -96,7 +96,7 @@ const round = (x: number) =>
             :href="`https://etherscan.io/tx/${trade.txHash}`"
             @click.stop
           >
-            {{ relativeTime(trade.timestamp) }}
+            {{ relativeTime(trade.timestamp.getUTCTimestamp()) }}
           </a>
         </div>
       </template>

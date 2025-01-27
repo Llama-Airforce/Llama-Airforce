@@ -89,15 +89,15 @@ const options = computed(() => {
   );
 });
 
-function feesPerTimestamp(xs: { timestamp: number; feesUsd: number }[]) {
+function feesPerTimestamp(xs: { timestamp: Date; feesUsd: number }[]) {
   return xs
-    .groupBy((x) => x.timestamp)
+    .groupBy((x) => x.timestamp.getTime())
     .entries()
     .map(([timestamp, xs]) => {
       const sum = xs.reduce((acc, x) => acc + x.feesUsd, 0);
 
       return {
-        timestamp: Number(timestamp),
+        timestamp: Number(timestamp) / 1000,
         feesUsd: sum,
       };
     })
