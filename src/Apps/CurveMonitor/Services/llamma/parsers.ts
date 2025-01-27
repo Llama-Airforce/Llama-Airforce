@@ -1,3 +1,4 @@
+import { toUTC } from "../timestamp";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 
@@ -19,7 +20,7 @@ export const parseEvents = (
       }
     : null,
   blockNumber: x.block_number,
-  timestamp: x.timestamp,
+  timestamp: toUTC(x.timestamp),
   txHash: x.transaction_hash,
 });
 
@@ -43,14 +44,14 @@ export const parseTrades = (
   feeX: x.fee_x,
   feeY: x.fee_y,
   blockNumber: x.block_number,
-  timestamp: x.timestamp,
+  timestamp: toUTC(x.timestamp),
   txHash: x.transaction_hash,
 });
 
 export const parseOHLC = (
   x: Responses.GetLlammaOHLCResponse["data"][number]
 ): Models.LlammaOHLC => ({
-  time: x.time,
+  time: toUTC(x.time),
   open: x.open,
   close: x.close,
   high: x.high,

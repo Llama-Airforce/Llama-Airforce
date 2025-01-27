@@ -43,7 +43,7 @@ export type LlammaTrade = {
 };
 
 export type LlammaOHLC = {
-  time: number;
+  time: Date;
   open: number;
   close: number;
   high: number;
