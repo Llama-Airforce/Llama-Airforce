@@ -5,10 +5,12 @@ import * as Api from "@CM/Services/pools";
 export function useQueryPools(chain: Ref<Chain | undefined>) {
   return useQuery({
     queryKey: ["curve-pools", chain] as const,
-    queryFn: async ({ queryKey: [, chain] }) =>
-      Api.getPools(chain!, 1, 9999, {
-        host: useHost(),
-      }),
+    queryFn: async ({ queryKey: [, chain] }) => {
+      const host = await useHost();
+      return Api.getPools(chain!, 1, 9999, {
+        host,
+      });
+    },
     placeholderData: keepPreviousData,
     enabled: computed(() => !!chain.value),
   });

@@ -4,7 +4,7 @@ import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getSupportedChains(options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetSupportedChainsResponse>(
     `${host}/v1/chains/`
   );
@@ -13,7 +13,7 @@ export async function getSupportedChains(options?: Options) {
 }
 
 export async function getChainInfo(chain: Chain, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetChainInfoResponse>(
     `${host}/v1/chains/${chain}?page=1&per_page=1`
   );
@@ -22,7 +22,7 @@ export async function getChainInfo(chain: Chain, options?: Options) {
 }
 
 export async function getTxs(options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetTransactionsResponse>(
     `${host}/v1/chains/activity/transactions`
   );
@@ -31,7 +31,7 @@ export async function getTxs(options?: Options) {
 }
 
 export async function getUsers(options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUsersResponse>(
     `${host}/v1/chains/activity/users`
   );

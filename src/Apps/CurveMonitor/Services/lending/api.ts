@@ -11,7 +11,7 @@ export async function getLoanDistribution(
   controller: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetLoanDistributionResponse>(
     `${host}/v1/${endpoint}/markets/${chain}/${controller}/loans/distribution`
   );

@@ -11,7 +11,7 @@ export async function getSoftLiqRatios(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetSoftLiqRatiosResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/soft_liquidation_ratio`
   );
@@ -25,7 +25,7 @@ export async function getLiqsDetailed(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetLiqsDetailedResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/history/detailed`
   );
@@ -39,7 +39,7 @@ export async function getLiqsAggregate(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetLiqsAggregateResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/history/aggregated`
   );
@@ -53,7 +53,7 @@ export async function getLiqOverview(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetLiqOverviewResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/overview?fetch_on_chain=true`
   );
@@ -67,7 +67,7 @@ export async function getLiqLosses(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetLiqLossesResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/losses/history`
   );
@@ -81,7 +81,7 @@ export async function getLiqHealthDeciles(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetLiqHealthDecilesResponse>(
     `${host}/v1/${endpoint}/liquidations/${chain}/${marketAddr}/health/distribution`
   );

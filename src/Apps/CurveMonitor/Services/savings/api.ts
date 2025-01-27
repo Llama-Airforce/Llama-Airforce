@@ -4,7 +4,7 @@ import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getStatistics(options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetStatisticsResponse>(
     `${host}/v1/crvusd/savings/statistics`
   );
@@ -13,7 +13,7 @@ export async function getStatistics(options?: Options) {
 }
 
 export async function getEvents(page: number, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetEventsResponse>(
     `${host}/v1/crvusd/savings/events?page=${page}&per_page=10`
   );
@@ -25,7 +25,7 @@ export async function getEvents(page: number, options?: Options) {
 }
 
 export async function getYield(options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
 
   const end = Math.floor(new Date().getTime() / 1000);
   const start = end - 10 * 24 * 60 * 60; // Subtract 1 month worth of seconds.
@@ -38,7 +38,7 @@ export async function getYield(options?: Options) {
 }
 
 export async function getRevenue(page: number, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetRevenueResponse>(
     `${host}/v1/crvusd/savings/revenue${page}&per_page=100`
   );

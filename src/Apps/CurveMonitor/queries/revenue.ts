@@ -58,10 +58,12 @@ export function useQueryCowSwapSettlements() {
 export function useQueryCrvUsdWeekly() {
   return useQuery({
     queryKey: ["curve-revenue-crvusd-weekly"],
-    queryFn: () =>
-      Api.getCrvUsdWeekly({
-        host: useHost(),
-      }),
+    queryFn: async () => {
+      const host = await useHost();
+      return Api.getCrvUsdWeekly({
+        host,
+      });
+    },
     ...initEmptyArray(),
   });
 }
@@ -69,10 +71,12 @@ export function useQueryCrvUsdWeekly() {
 export function useQueryPoolsWeekly() {
   return useQuery({
     queryKey: ["curve-revenue-pools-weekly"],
-    queryFn: () =>
-      Api.getPoolsWeekly({
-        host: useHost(),
-      }),
+    queryFn: async () => {
+      const host = await useHost();
+      return Api.getPoolsWeekly({
+        host,
+      });
+    },
     ...initEmptyArray(),
   });
 }
@@ -80,10 +84,12 @@ export function useQueryPoolsWeekly() {
 export function useQueryFeesCollected() {
   return useQuery({
     queryKey: ["curve-revenue-fees-collected"],
-    queryFn: () =>
-      Api.getFeesCollected({
-        host: useHost(),
-      }),
+    queryFn: async () => {
+      const host = await useHost();
+      return Api.getFeesCollected({
+        host,
+      });
+    },
     ...initEmptyArray(),
   });
 }
@@ -91,10 +97,12 @@ export function useQueryFeesCollected() {
 export function useQueryFeesStaged() {
   return useQuery({
     queryKey: ["curve-revenue-fees-staged"],
-    queryFn: () =>
-      Api.getFeesStaged({
-        host: useHost(),
-      }),
+    queryFn: async () => {
+      const host = await useHost();
+      return Api.getFeesStaged({
+        host,
+      });
+    },
     ...initEmptyArray(),
   });
 }

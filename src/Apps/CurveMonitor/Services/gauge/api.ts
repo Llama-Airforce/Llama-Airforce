@@ -4,7 +4,7 @@ import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getGauges(options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetGaugesResponse>(
     `${host}/v1/dao/gauges/overview`
   );
@@ -13,7 +13,7 @@ export async function getGauges(options?: Options) {
 }
 
 export async function getGauge(gaugeAddress: string, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetGaugeResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/metadata`
   );
@@ -22,7 +22,7 @@ export async function getGauge(gaugeAddress: string, options?: Options) {
 }
 
 export async function getVotes(gaugeAddress: string, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetVotesResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/votes`
   );
@@ -34,7 +34,7 @@ export async function getWeightHistory(
   gaugeAddress: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetWeightHistoryResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/weight_history`
   );
@@ -43,7 +43,7 @@ export async function getWeightHistory(
 }
 
 export async function getDeployment(gaugeAddress: string, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetDeploymentResponse>(
     `${host}/v1/dao/gauges/${gaugeAddress}/deployment`
   );
@@ -52,7 +52,7 @@ export async function getDeployment(gaugeAddress: string, options?: Options) {
 }
 
 export async function getUserGaugeVotes(user: string, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserGaugeVotesResponse>(
     `${host}/v1/dao/gauges/votes/user/${user}`
   );

@@ -4,7 +4,7 @@ import type * as Responses from "./responses";
 import * as Parsers from "./parsers";
 
 export async function getChains(options?: Options): Promise<Chain[]> {
-  const host = await getHost(options);
+  const host = getHost(options);
 
   return fetch<Responses.GetChainsResponse>(`${host}/v1/lending/chains`).then(
     (resp) => resp.data
@@ -12,7 +12,7 @@ export async function getChains(options?: Options): Promise<Chain[]> {
 }
 
 export async function getMarkets(chain: Chain, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetMarketsResponse>(
     `${host}/v1/lending/markets/${chain}?fetch_on_chain=true&page=1&per_page=100`
   );
@@ -25,7 +25,7 @@ export async function getSnapshots(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetSnapshotsResponse>(
     `${host}/v1/lending/markets/${chain}/${marketController}/snapshots?fetch_on_chain=true&agg=day`
   );
@@ -38,7 +38,7 @@ export async function getUserMarkets(
   chain: Chain,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserMarketsResponse>(
     `${host}/v1/lending/users/${chain}/${userAddr}?page=1&per_page=100`
   );
@@ -52,7 +52,7 @@ export async function getUserMarketStats(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserMarketStatsResponse>(
     `${host}/v1/lending/users/${chain}/${userAddr}/${marketController}/stats?page=1&per_page=100`
   );
@@ -66,7 +66,7 @@ export async function getUserMarketSnapshots(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserMarketSnapshotsResponse>(
     `${host}/v1/lending/users/${chain}/${userAddr}/${marketController}/snapshots?page=1&per_page=100`
   );
@@ -80,7 +80,7 @@ export async function getUserMarketCollateralEvents(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserCollateralEventsResponse>(
     `${host}/v1/lending/collateral_events/${chain}/${marketController}/${userAddr}`
   );

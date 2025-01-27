@@ -10,7 +10,7 @@ export async function getOHLC(
   tokenRef: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
 
   const range = 120 * 60 * 1000;
   const end = Math.floor(new Date().getTime() / 1000);

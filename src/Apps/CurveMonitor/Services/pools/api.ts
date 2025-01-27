@@ -9,7 +9,7 @@ export async function getPools(
   perPage: number = 9999,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetPoolsResponse>(
     `${host}/v1/chains/${chain}?page=${page}&per_page=${perPage}`
   );
@@ -26,7 +26,7 @@ export async function getPool(
   poolAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetPoolResponse>(
     `${host}/v1/pools/${chain}/${poolAddr}`
   );
@@ -39,7 +39,7 @@ export async function getVolume(
   poolAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
 
   const range = 120 * 60 * 1000;
   const end = Math.floor(new Date().getTime() / 1000);
@@ -60,7 +60,7 @@ export async function getTvl(
   poolAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
 
   const range = 120 * 60 * 1000;
   const end = Math.floor(new Date().getTime() / 1000);

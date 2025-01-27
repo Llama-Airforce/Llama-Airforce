@@ -8,7 +8,7 @@ export async function getMarkets(
   page: number,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetMarketsResponse>(
     `${host}/v1/crvusd/markets/${chain}?fetch_on_chain=true&page=${page}&per_page=10`
   );
@@ -21,7 +21,7 @@ export async function getSnapshots(
   marketAddr: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetSnapshotsResponse>(
     `${host}/v1/crvusd/markets/${chain}/${marketAddr}/snapshots?fetch_on_chain=true&agg=day`
   );
@@ -30,7 +30,7 @@ export async function getSnapshots(
 }
 
 export async function getCrvUsdSupply(chain: Chain, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetSupplyResponse>(
     `${host}/v1/crvusd/markets/${chain}/supply`
   );
@@ -39,7 +39,7 @@ export async function getCrvUsdSupply(chain: Chain, options?: Options) {
 }
 
 export async function getKeepers(chain: Chain, options?: Options) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetKeepersResponse>(
     `${host}/v1/crvusd/pegkeepers/${chain}`
   );
@@ -52,7 +52,7 @@ export async function getUserMarkets(
   chain: Chain,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserMarketsResponse>(
     `${host}/v1/crvusd/users/${chain}/${userAddr}?page=1&per_page=100`
   );
@@ -66,7 +66,7 @@ export async function getUserMarketStats(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserMarketStatsResponse>(
     `${host}/v1/crvusd/users/${chain}/${userAddr}/${marketController}/stats?page=1&per_page=100`
   );
@@ -80,7 +80,7 @@ export async function getUserMarketSnapshots(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserMarketSnapshotsResponse>(
     `${host}/v1/crvusd/users/${chain}/${userAddr}/${marketController}/snapshots?page=1&per_page=100`
   );
@@ -94,7 +94,7 @@ export async function getUserMarketCollateralEvents(
   marketController: string,
   options?: Options
 ) {
-  const host = await getHost(options);
+  const host = getHost(options);
   const resp = await fetch<Responses.GetUserCollateralEventsResponse>(
     `${host}/v1/crvusd/collateral_events/${chain}/${marketController}/${userAddr}`
   );
