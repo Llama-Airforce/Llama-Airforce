@@ -9,12 +9,12 @@ export type VotesOverview = {
 };
 
 export type LocksDaily = {
-  day: number;
+  day: Date;
   amount: bigint;
 };
 
 export type UserLock = {
-  timestamp: number;
+  timestamp: Date;
   amount: bigint;
   unlockTime: number;
   lockType: "CREATE_LOCK" | "INCREASE_LOCK_AMOUNT" | "INCREASE_UNLOCK_TIME";
@@ -23,7 +23,7 @@ export type UserLock = {
 };
 
 export type Supply = {
-  timestamp: number;
+  timestamp: Date;
   veCrvTotal: bigint;
   crvEscrowed: bigint;
   crvSupply: bigint;
@@ -42,5 +42,5 @@ export type Locker = {
   locked: bigint;
   weight: bigint;
   weightRatio: number;
-  unlockTime: number;
+  unlockTime: Date;
 };

@@ -21,7 +21,7 @@ export const activityTypes = [
 export type ActivityType = (typeof activityTypes)[number];
 
 export type Activity = {
-  timestamp: number;
+  timestamp: Date;
   chain: Chain;
   type: ActivityType;
 };

@@ -18,7 +18,7 @@ export const proposalStatusses = [
 export type ProposalStatus = (typeof proposalStatusses)[number];
 
 export type Proposal = {
-  timestamp: number;
+  timestamp: Date;
   id: number;
   type: ProposalType;
   metadata: string;

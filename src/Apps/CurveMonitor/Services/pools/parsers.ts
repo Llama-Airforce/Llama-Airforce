@@ -1,3 +1,4 @@
+import { toUTC } from "../timestamp";
 import type * as Responses from "./responses";
 import type * as Models from "./models";
 
@@ -37,7 +38,7 @@ export const parsePool = (
 export const parseVolume = (
   x: Responses.GetVolumeResponse["data"][number]
 ): Models.Volume => ({
-  timestamp: x.timestamp,
+  timestamp: toUTC(x.timestamp),
   volume: x.volume,
   fees: x.fees,
 });
@@ -45,7 +46,7 @@ export const parseVolume = (
 export const parseTvl = (
   x: Responses.GetTvlResponse["data"][number]
 ): Models.Tvl => ({
-  timestamp: x.timestamp,
+  timestamp: toUTC(x.timestamp),
   tvlUSD: x.tvl_usd ?? 0,
   balances: [...x.balances],
   tokenPrices: [...x.token_prices],
