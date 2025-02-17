@@ -23,6 +23,10 @@ export const menu: Menu = {
           label: "Pools",
         },
         {
+          to: "/platform/oracles",
+          label: "Oracles",
+        },
+        {
           to: "/platform/revenue",
           label: "Revenue",
         },

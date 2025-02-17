@@ -1,0 +1,111 @@
+<script setup lang="ts">
+import { useQueryOracles } from "@CM/queries/oracles";
+
+const { isFetching: loading, data } = useQueryOracles();
+
+const { relativeTime } = useRelativeTime();
+
+async function copy(value: string) {
+  notify({ text: `Copied ${value}`, type: "success", duration: 5000 });
+  await navigator.clipboard.writeText(value);
+}
+</script>
+
+<template>
+  <Card
+    title="Oracles"
+    :loading
+  >
+    <template #actions>
+      Last Recorded Block: {{ data?.lastRecordedBlock }}
+    </template>
+
+    <Table
+      :loading
+      :rows="data?.oracles ?? []"
+      :columns="[
+        'Chain',
+        'Address',
+        { label: 'Last Block', align: 'end' },
+        'Block Hash',
+        'Parent Hash',
+        'State Root',
+        { label: 'Time', align: 'end' },
+      ]"
+    >
+      <template
+        #row="{
+          item: {
+            chain,
+            address,
+            lastConfirmedBlockNumber,
+            blockHeader: { hashBlock, hashParent, stateRoot, timestamp },
+          },
+        }"
+      >
+        <div class="icon">
+          <img
+            v-if="iconChain(chain)"
+            :src="iconChain(chain)"
+          />
+          <div
+            v-else
+            class="spacer"
+          ></div>
+          {{ chain }}
+        </div>
+
+        <div>
+          <a @click="copy(address)">{{ addressShort(address, 12) }}</a>
+        </div>
+
+        <div class="end">{{ lastConfirmedBlockNumber }}</div>
+
+        <div>
+          <a @click="copy(hashBlock)">{{ addressShort(hashBlock, 12) }}</a>
+        </div>
+
+        <div>
+          <a @click="copy(hashParent)">{{ addressShort(hashParent, 12) }}</a>
+        </div>
+
+        <div>
+          <a @click="copy(stateRoot)">{{ addressShort(stateRoot, 12) }}</a>
+        </div>
+
+        <div class="end">
+          {{ relativeTime(timestamp.getTime()) }}
+        </div>
+      </template>
+    </Table>
+  </Card>
+</template>
+
+<style scoped>
+.table {
+  --columns-data: 10rem minmax(12ch, 1fr) 5rem 1fr 1fr 1fr 6rem;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  gap: 2ch;
+  text-transform: capitalize;
+
+  img {
+    width: 26px;
+    aspect-ratio: 1;
+    max-width: 100%;
+    object-fit: scale-down;
+    border-radius: 50%;
+  }
+
+  .spacer {
+    min-width: 26px;
+  }
+}
+</style>
