@@ -186,7 +186,7 @@ const { data: canExecute, refetch: refetchCanExecute } = useReadContract({
   functionName: "canExecute",
   args: [BigInt(proposal.id)],
   query: {
-    enabled: computed(() => executable.value && showVote.value),
+    enabled: computed(() => executable.value),
     initialData: false,
     initialDataUpdatedAt: 0,
   },
