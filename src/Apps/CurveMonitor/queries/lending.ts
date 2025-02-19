@@ -1,5 +1,5 @@
-import type { Chain } from "@CM/Services";
-import * as Api from "@CM/Services/lending";
+import type { Chain } from "@curvefi/prices-api";
+import * as Api from "@curvefi/prices-api/lending";
 
 export function useQueryLoanDistribution(
   endpoint: Ref<Api.Endpoint>,

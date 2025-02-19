@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "@curvefi/prices-api";
 import { useQueryCushions } from "@CM/queries/revenue";
 import { useQueryChainsSupported } from "@CM/queries/chains";
 

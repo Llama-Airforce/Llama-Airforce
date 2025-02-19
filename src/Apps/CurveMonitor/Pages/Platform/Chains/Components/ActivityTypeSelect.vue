@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type ActivityType, activityTypes } from "@CM/Services/chains";
+import { type ActivityType, activityTypes } from "@curvefi/prices-api/chains";
 
 const emit = defineEmits<{
   select: [type: ActivityType | "all"];

@@ -1,5 +1,5 @@
 import { keepPreviousData } from "@tanstack/vue-query";
-import * as Api from "@CM/Services/savings";
+import * as Api from "@curvefi/prices-api/savings";
 
 function initEmptyArray() {
   return {

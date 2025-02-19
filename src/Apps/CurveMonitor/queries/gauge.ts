@@ -1,4 +1,4 @@
-import * as Api from "@CM/Services/gauge";
+import * as Api from "@curvefi/prices-api/gauge";
 
 function initEmptyArray() {
   return {

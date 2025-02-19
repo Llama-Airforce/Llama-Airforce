@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type ProposalType, proposalTypes } from "@CM/Services/proposal";
+import { type ProposalType, proposalTypes } from "@curvefi/prices-api/proposal";
 
 const emit = defineEmits<{
   select: [type: ProposalType];

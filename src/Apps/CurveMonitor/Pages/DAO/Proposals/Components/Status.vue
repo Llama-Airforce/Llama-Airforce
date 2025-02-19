@@ -5,7 +5,7 @@ import {
   hasWon,
   hasReachedQuorum,
   hasReachedSupport,
-} from "@CM/Services/proposal";
+} from "@curvefi/prices-api/proposal";
 
 const { proposal } = defineProps<{
   proposal: Proposal;

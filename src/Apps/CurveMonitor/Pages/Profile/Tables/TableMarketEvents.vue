@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "@curvefi/prices-api";
 import { useQueryUserMarketCollateralEvents as useQueryEventsCrvUsd } from "@CM/queries/crvusd";
 import { useQueryUserMarketCollateralEvents as useQueryEventsLending } from "@CM/queries/llamalend";
 

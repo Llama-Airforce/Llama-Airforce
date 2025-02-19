@@ -62,7 +62,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
 
         <TokenIcon
           chain="ethereum"
-          :address="item.tokenCollateral.address"
+          :address="item.collateralToken.address"
         />
 
         <div>{{ item.name }}</div>
@@ -88,7 +88,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="item.collateralUsd"
+            :value="item.collateralAmountUsd"
             :precision="decimals"
           />
         </div>
@@ -130,7 +130,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.collateralUsd, 0)"
+            :value="rows.reduce((acc, x) => acc + x.collateralAmountUsd, 0)"
             :precision="decimals"
           />
         </div>

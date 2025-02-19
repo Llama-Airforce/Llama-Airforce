@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/crvusd";
+import type { Chain } from "@curvefi/prices-api";
+import type { Market } from "@curvefi/prices-api/crvusd";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
 import {
   useQueryOHLC,
@@ -17,14 +17,14 @@ const llamma = computed(() => market?.llamma);
 
 // Data
 const { isFetching: loadingOHLC, data: ohlc } = useQueryOHLC(
-  ref("crvusd"),
+  "crvusd",
   llamma,
   toRef(() => chain)
 );
 
 const pageTrades = ref(1);
 const { isFetching: loadingTrades, data: trades } = useQueryTrades(
-  ref("crvusd"),
+  "crvusd",
   llamma,
   toRef(() => chain),
   pageTrades
@@ -32,7 +32,7 @@ const { isFetching: loadingTrades, data: trades } = useQueryTrades(
 
 const pageEvents = ref(1);
 const { isFetching: loadingEvents, data: events } = useQueryEvents(
-  ref("crvusd"),
+  "crvusd",
   llamma,
   toRef(() => chain),
   pageEvents

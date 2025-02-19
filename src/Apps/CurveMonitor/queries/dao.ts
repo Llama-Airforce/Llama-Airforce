@@ -1,4 +1,4 @@
-import * as Api from "@CM/Services/dao";
+import * as Api from "@curvefi/prices-api/dao";
 
 function initEmptyArray() {
   return {
@@ -34,7 +34,7 @@ export function useQueryUserLocks(user: Ref<string | undefined>) {
 export function useQueryLockers(top = 20) {
   return useQuery({
     queryKey: ["dao-lockers", top] as const,
-    queryFn: () => Api.getLockers(top),
+    queryFn: () => Api.getLockersTop(top),
     ...initEmptyArray(),
   });
 }

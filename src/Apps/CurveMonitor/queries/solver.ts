@@ -1,5 +1,5 @@
-import type { Address } from "@CM/Services";
-import * as Api from "@CM/Services/solver";
+import type { Address } from "@curvefi/prices-api";
+import * as Api from "@curvefi/prices-api/solver";
 
 const API_URL = "https://api.cow.fi";
 

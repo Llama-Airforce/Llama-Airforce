@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import { type Market, tvl } from "@CM/Services/llamalend";
+import type { Chain } from "@curvefi/prices-api";
+import { type Market, tvl } from "@curvefi/prices-api/llamalend";
 import { useQuerySnapshots } from "@CM/queries/llamalend";
 import {
   ChartMarketSupply,

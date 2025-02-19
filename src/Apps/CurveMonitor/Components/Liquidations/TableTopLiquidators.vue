@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LiquidationDetails } from "@CM/Services/liquidations";
+import type { LiquidationDetails } from "@curvefi/prices-api/liquidations";
 
 const { liqs } = defineProps<{
   liqs: LiquidationDetails[];

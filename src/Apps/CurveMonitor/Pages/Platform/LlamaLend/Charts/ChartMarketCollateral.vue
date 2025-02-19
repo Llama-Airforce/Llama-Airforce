@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { Chain } from "@curvefi/prices-api";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { Chain } from "@/Types/Chain";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQuerySnapshots } from "@CM/queries/llamalend";
 
@@ -19,10 +19,10 @@ const { isFetching: loading, data: snapshots } = useQuerySnapshots(
 const theme = useTheme();
 
 const symbolCollateral = computed(() =>
-  market ? market.tokenCollateral.symbol : "?"
+  market ? market.collateralToken.symbol : "?"
 );
 const symbolBorrowed = computed(() =>
-  market ? market.tokenBorrowed.symbol : "?"
+  market ? market.borrowedToken.symbol : "?"
 );
 
 const { items } = useLegend(() => [

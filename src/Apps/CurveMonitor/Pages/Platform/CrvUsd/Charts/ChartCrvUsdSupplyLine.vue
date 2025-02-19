@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { CrvUsdSupply } from "@curvefi/prices-api/crvusd";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { CrvUsdSupply } from "@CM/Services/crvusd";
 
 const { data = [] } = defineProps<{
   data: CrvUsdSupply[];

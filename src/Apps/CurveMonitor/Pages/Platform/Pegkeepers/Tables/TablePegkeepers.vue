@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Keeper } from "@CM/Services/crvusd";
+import type { Keeper } from "@curvefi/prices-api/crvusd";
 import { useQueryKeepers } from "@CM/queries/crvusd";
 import { useQueryPoolMultiple } from "@CM/queries/pools";
 

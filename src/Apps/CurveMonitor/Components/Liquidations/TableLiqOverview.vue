@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LiqOverview } from "@CM/Services/liquidations";
+import type { LiqOverview } from "@curvefi/prices-api/liquidations";
 
 const { overview } = defineProps<{
   overview: LiqOverview | undefined;

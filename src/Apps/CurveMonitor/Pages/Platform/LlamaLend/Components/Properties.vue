@@ -1,7 +1,7 @@
 <!-- eslint-disable @typescript-eslint/no-unnecessary-condition -->
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/llamalend";
+import type { Chain } from "@curvefi/prices-api";
+import type { Market } from "@curvefi/prices-api/llamalend";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;
@@ -10,14 +10,14 @@ const { market, chain } = defineProps<{
 
 const collateral = computed(() => ({
   type: "token",
-  symbol: market?.tokenCollateral?.symbol ?? "?",
-  address: market?.tokenCollateral?.address ?? "?",
+  symbol: market?.collateralToken?.symbol ?? "?",
+  address: market?.collateralToken?.address ?? "?",
 }));
 
 const borrowed = computed(() => ({
   type: "token",
-  symbol: market?.tokenBorrowed?.symbol ?? "?",
-  address: market?.tokenBorrowed?.address ?? "?",
+  symbol: market?.borrowedToken?.symbol ?? "?",
+  address: market?.borrowedToken?.address ?? "?",
 }));
 
 const linkAddress = (addr: string) => `https://etherscan.io/address/${addr}`;

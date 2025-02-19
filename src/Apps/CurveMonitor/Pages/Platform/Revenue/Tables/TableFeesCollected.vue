@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FeesCollected } from "@CM/Services/revenue";
+import type { FeesCollected } from "@curvefi/prices-api/revenue";
 
 const { fees } = defineProps<{
   fees: FeesCollected[];

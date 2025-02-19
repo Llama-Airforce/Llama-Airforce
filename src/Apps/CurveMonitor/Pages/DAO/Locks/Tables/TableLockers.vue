@@ -21,7 +21,7 @@ const rows = computed(() =>
       case "ratio":
         return x.weightRatio;
       case "unlock":
-        return x.unlockTime.getTime();
+        return x.unlockTime?.getTime() ?? 0;
     }
   }, sorting.value.order)
 );
@@ -78,7 +78,7 @@ async function onSelect(row: (typeof data.value)[number]) {
         </div>
 
         <div class="end">
-          {{ item.unlockTime.toLocaleDateString() }}
+          {{ item.unlockTime?.toLocaleDateString() ?? "?" }}
         </div>
 
         <IconExpander />

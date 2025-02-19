@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Market } from "@CM/Services/crvusd";
+import type { Market } from "@curvefi/prices-api/crvusd";
 
 const { market } = defineProps<{
   market: Market | undefined;
@@ -12,7 +12,7 @@ const addresses = computed(() => [
   },
   {
     description: "Factory",
-    address: market?.factory,
+    address: market?.factoryAddress,
   },
   {
     description: "Llamma",

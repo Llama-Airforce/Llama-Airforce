@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LlammaEvent } from "@CM/Services/llamma";
+import type { LlammaEvent } from "@curvefi/prices-api/llamma";
 
 const { events, count } = defineProps<{
   events: LlammaEvent[];

@@ -4,8 +4,8 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import { isChain } from "@/Types/Chain";
-import type * as Responses from "@CM/Services/pools/responses";
+import { isChain } from "@curvefi/prices-api";
+import type { GetPoolsResponse } from "@curvefi/prices-api/pools";
 
 const path = "/:chain";
 
@@ -23,7 +23,7 @@ const app = new Hono().get(path, async (c) => {
       const res = await fetch(
         `https://prices.curve.fi/v1/chains/${chain}?page=${page}&per_page=${perPage}`
       );
-      const data = (await res.json()) as Responses.GetPoolsResponse;
+      const data = (await res.json()) as GetPoolsResponse;
 
       return data;
     } catch (error) {

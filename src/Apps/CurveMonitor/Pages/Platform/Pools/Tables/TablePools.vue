@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import type { Pool } from "@CM/Services/pools";
+import type { Chain } from "@curvefi/prices-api";
+import type { Pool } from "@curvefi/prices-api/pools";
 
 const { pools } = defineProps<{
   chain: Chain;

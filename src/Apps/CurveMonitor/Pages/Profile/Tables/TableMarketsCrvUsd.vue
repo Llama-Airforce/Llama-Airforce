@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "@curvefi/prices-api";
 import { useQueryUserMarkets } from "@CM/queries/crvusd";
 
 const { user } = defineProps<{ user: string | undefined }>();

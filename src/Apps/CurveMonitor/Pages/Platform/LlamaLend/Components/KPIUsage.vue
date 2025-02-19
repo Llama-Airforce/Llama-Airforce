@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Market } from "@CM/Services/llamalend";
+import type { Market } from "@curvefi/prices-api/llamalend";
 
 const { market } = defineProps<{
   market: Market | undefined;
@@ -11,8 +11,8 @@ const totalCollateralUsd = computed(
 
 const collateralLabel = computed(() => {
   const collateral = "Collateral";
-  const symbolCollateral = market?.tokenCollateral.symbol ?? "?";
-  const symbolBorrowed = market?.tokenBorrowed.symbol ?? "?";
+  const symbolCollateral = market?.collateralToken.symbol ?? "?";
+  const symbolBorrowed = market?.borrowedToken.symbol ?? "?";
 
   return `${collateral} (${symbolCollateral} / ${symbolBorrowed})`;
 });
@@ -64,7 +64,7 @@ const utilRate = computed(() => {
 
     <KPI
       style="grid-area: kpi2"
-      :label="'Borrowed' + ` (${market?.tokenBorrowed.symbol ?? '?'})`"
+      :label="'Borrowed' + ` (${market?.borrowedToken.symbol ?? '?'})`"
       :has-value="!!market"
     >
       <div class="two-sides">
@@ -85,7 +85,7 @@ const utilRate = computed(() => {
 
     <KPI
       style="grid-area: kpi3"
-      :label="'Supplied' + ` (${market?.tokenBorrowed.symbol ?? '?'})`"
+      :label="'Supplied' + ` (${market?.collateralToken.symbol ?? '?'})`"
       :has-value="!!market"
     >
       <div class="two-sides">

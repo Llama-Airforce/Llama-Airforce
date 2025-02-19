@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { LlammaOHLC } from "@curvefi/prices-api/llamma";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { LlammaOHLC } from "@CM/Services/llamma";
 
 const { ohlc } = defineProps<{
   ohlc: LlammaOHLC[];
@@ -90,7 +90,7 @@ function createSeries() {
   const newOracleSerie = ohlc
     .map((x) => ({
       time: x.time.getUTCTimestamp(),
-      value: Math.pow(x.priceOracle, invertMultiplier),
+      value: Math.pow(x.oraclePrice, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");

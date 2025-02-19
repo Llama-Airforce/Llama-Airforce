@@ -1,4 +1,4 @@
-import * as Api from "@CM/Services/oracles";
+import * as Api from "@curvefi/prices-api/oracles";
 
 export function useQueryOracles() {
   return useQuery({

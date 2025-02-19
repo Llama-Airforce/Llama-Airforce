@@ -4,7 +4,7 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import type * as Responses from "@CM/Services/revenue/responses";
+import type { GetFeesStagedResponse } from "@curvefi/prices-api/revenue";
 
 const path = "/";
 
@@ -12,7 +12,7 @@ const app = new Hono().get(path, async (c) => {
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch("https://prices.curve.fi/v1/dao/fees/staged");
-      const data = (await res.json()) as Responses.GetFeesStagedResponse;
+      const data = (await res.json()) as GetFeesStagedResponse;
 
       return data;
     } catch (error) {

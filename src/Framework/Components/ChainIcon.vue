@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Chain } from "@curvefi/prices-api";
+
 type Chains = Chain | "gnosis";
 
 const { chain = "ethereum" } = defineProps<{

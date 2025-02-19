@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Gauge } from "@CM/Services/gauge";
+import type { Gauge } from "@curvefi/prices-api/gauge";
 import TableVotes from "../Tables/TableVotes.vue";
 
 const { gauge } = defineProps<{

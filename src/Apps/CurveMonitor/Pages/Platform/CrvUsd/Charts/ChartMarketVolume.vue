@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { Chain } from "@curvefi/prices-api";
+import type { Market } from "@curvefi/prices-api/crvusd";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { Chain } from "@/Types/Chain";
-import type { Market } from "@CM/Services/crvusd";
 import { useQueryOHLC } from "@CM/queries/llamma";
 
 const { market, chain } = defineProps<{
@@ -10,9 +10,8 @@ const { market, chain } = defineProps<{
 }>();
 
 // Data
-type Endpoint = Parameters<typeof useQueryOHLC>[0]["value"];
 const { isFetching: loading, data: ohlc } = useQueryOHLC(
-  toRef<Endpoint>("crvusd"),
+  "crvusd",
   computed(() => market?.llamma),
   toRef(() => chain)
 );

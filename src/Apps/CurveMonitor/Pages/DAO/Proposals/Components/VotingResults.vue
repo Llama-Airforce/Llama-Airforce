@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Proposal } from "@CM/Services/proposal";
+import type { Proposal } from "@curvefi/prices-api/proposal";
 
 const MIN_WIDTH = 4;
 

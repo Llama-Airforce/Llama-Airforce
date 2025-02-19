@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import type { Gauge } from "@CM/Services/gauge";
+import type { Chain } from "@curvefi/prices-api";
+import type { Gauge } from "@curvefi/prices-api/gauge";
 import TableDeployment from "../Tables/TableDeployment.vue";
 import ChartWeightHistory from "../Charts/ChartWeightHistory.vue";
 

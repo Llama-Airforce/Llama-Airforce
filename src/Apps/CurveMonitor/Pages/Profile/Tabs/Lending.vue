@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "@curvefi/prices-api";
 import TableMarketsLending from "../Tables/TableMarketsLending.vue";
 import TableMarketEvents from "../Tables/TableMarketEvents.vue";
 import ChartSnapshots from "../Charts/ChartSnapshots.vue";

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "@curvefi/prices-api";
+import type { Market, MarketPair } from "@curvefi/prices-api/llamalend";
 import { useQueryMarkets, useQueryChains } from "@CM/queries/llamalend";
-import type { Market, MarketPair } from "@CM/Services/llamalend";
 import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
 
 const chainParam = useRouteParams<Chain | undefined | "">("chain");
@@ -33,9 +33,9 @@ const marketPairs = computed((): MarketPair[] => {
   const markets = (marketsRaw.value ?? [])
     .map((market) => ({
       market,
-      isLong: stables.includes(market.tokenBorrowed.symbol.toLocaleLowerCase()),
+      isLong: stables.includes(market.borrowedToken.symbol.toLocaleLowerCase()),
       isShort: stables.includes(
-        market.tokenCollateral.symbol.toLocaleLowerCase()
+        market.collateralToken.symbol.toLocaleLowerCase()
       ),
     }))
     // For now we only care about markets with a specific stable link.
@@ -50,8 +50,8 @@ const marketPairs = computed((): MarketPair[] => {
 
     const counterpart = markets.find(
       (m) =>
-        m.market.tokenBorrowed.address === market.tokenCollateral.address &&
-        m.market.tokenCollateral.address === market.tokenBorrowed.address
+        m.market.borrowedToken.address === market.collateralToken.address &&
+        m.market.collateralToken.address === market.borrowedToken.address
     );
 
     if (counterpart) {

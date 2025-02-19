@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Distribution } from "@CM/Services/revenue";
+import type { Distribution } from "@curvefi/prices-api/revenue";
 
 const { distributions } = defineProps<{
   distributions: Distribution[];

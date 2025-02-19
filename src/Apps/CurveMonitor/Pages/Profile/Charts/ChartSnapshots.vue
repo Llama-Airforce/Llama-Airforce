@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
+import type { Chain } from "@curvefi/prices-api";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsCrvUsd } from "@CM/queries/crvusd";

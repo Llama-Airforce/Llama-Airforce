@@ -1,5 +1,5 @@
-import type { Chain } from "@CM/Services";
-import * as Api from "@CM/Services/liquidations";
+import type { Chain } from "@curvefi/prices-api";
+import * as Api from "@curvefi/prices-api/liquidations";
 
 function initEmptyArray() {
   return {

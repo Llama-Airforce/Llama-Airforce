@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import type { LlammaTrade } from "@CM/Services/llamma";
+import type { Chain } from "@curvefi/prices-api";
+import type { LlammaTrade } from "@curvefi/prices-api/llamma";
 
 const { trades, count, chain } = defineProps<{
   trades: LlammaTrade[];

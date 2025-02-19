@@ -1,6 +1,6 @@
-import type { Chain } from "@CM/Services";
-import * as ApiOHLC from "@CM/Services/ohlc";
-import * as Api from "@CM/Services/crvusd";
+import type { Chain } from "@curvefi/prices-api";
+import * as ApiOHLC from "@curvefi/prices-api/ohlc";
+import * as Api from "@curvefi/prices-api/crvusd";
 
 function initEmptyArray() {
   return {
@@ -79,7 +79,7 @@ export function useQueryKeeperPrices(keepers: Ref<Api.Keeper[]>) {
 export function useQueryMarkets() {
   return useQuery({
     queryKey: ["crvusd-markets"],
-    queryFn: () => Api.getMarkets("ethereum", 1),
+    queryFn: () => Api.getMarkets("ethereum", { page: 1 }),
     ...initEmptyArray(),
   });
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { SoftLiqRatio } from "@curvefi/prices-api/liquidations";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import type { SoftLiqRatio } from "@CM/Services/liquidations";
 
 type PriceOracle = {
   timestamp: Date;

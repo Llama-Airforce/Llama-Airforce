@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Market } from "@CM/Services/llamalend";
+import type { Market } from "@curvefi/prices-api/llamalend";
 
 const { market } = defineProps<{
   market: Market | undefined;

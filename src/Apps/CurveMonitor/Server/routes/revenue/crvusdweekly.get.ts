@@ -4,7 +4,7 @@ import {
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import type * as Responses from "@CM/Services/revenue/responses";
+import type { GetCrvUsdWeeklyResponse } from "@curvefi/prices-api/revenue";
 
 const path = "/";
 
@@ -16,7 +16,7 @@ const app = new Hono().get(path, async (c) => {
       const res = await fetch(
         `https://prices.curve.fi/v1/dao/fees/crvusd/weekly?start=${start}`
       );
-      const data = (await res.json()) as Responses.GetCrvUsdWeeklyResponse;
+      const data = (await res.json()) as GetCrvUsdWeeklyResponse;
 
       return data;
     } catch (error) {

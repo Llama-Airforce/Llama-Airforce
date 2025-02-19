@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { ProposalType, ProposalStatus } from "@CM/Services/proposal";
+import type {
+  ProposalType,
+  ProposalStatus,
+} from "@curvefi/prices-api/proposal";
 import { useQueryProposals } from "@CM/queries/proposal";
 import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
 import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";

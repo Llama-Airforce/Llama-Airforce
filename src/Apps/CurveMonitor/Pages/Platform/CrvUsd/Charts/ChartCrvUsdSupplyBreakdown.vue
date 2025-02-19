@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { CrvUsdSupply } from "@curvefi/prices-api/crvusd";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import type { CrvUsdSupply } from "@CM/Services/crvusd";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 

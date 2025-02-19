@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Proposal, ProposalDetails } from "@CM/Services/proposal";
+import type { Proposal, ProposalDetails } from "@curvefi/prices-api/proposal";
 
 const { proposal, proposalDetails } = defineProps<{
   proposal: Proposal;

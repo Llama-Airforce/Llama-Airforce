@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import type { Chain } from "@/Types/Chain";
-import { type Market, type MarketPair, tvl } from "@CM/Services/llamalend";
+import type { Chain } from "@curvefi/prices-api";
+import {
+  type Market,
+  type MarketPair,
+  tvl,
+} from "@curvefi/prices-api/llamalend";
 
 type MarketType = "long" | "short";
 
@@ -65,8 +69,8 @@ function name(market: Market) {
 
 const tokenIcon = (market: Market) =>
   type.value === "long"
-    ? market.tokenCollateral.address
-    : market.tokenBorrowed.address;
+    ? market.collateralToken.address
+    : market.borrowedToken.address;
 </script>
 
 <template>
