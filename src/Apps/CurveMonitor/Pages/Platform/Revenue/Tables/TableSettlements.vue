@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CowSwapSettlement } from "@curvefi/prices-api/revenue";
-import SettlementDetails from "@CM/Pages/Platform/Revenue/Components/SettlementDetails.vue";
+import SettlementDetails from "../Components/SettlementDetails.vue";
 
 const { settlements } = defineProps<{
   settlements: CowSwapSettlement[];

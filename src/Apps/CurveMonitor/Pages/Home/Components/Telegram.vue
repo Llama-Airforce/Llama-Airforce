@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TelegramModal from "@CM/Pages/Home/Components/TelegramModal.vue";
+import TelegramModal from "./TelegramModal.vue";
 
 const showModal = ref(false);
 </script>

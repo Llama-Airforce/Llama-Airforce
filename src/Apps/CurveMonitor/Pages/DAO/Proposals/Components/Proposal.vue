@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Proposal } from "@curvefi/prices-api/proposal";
-import ProposalSummary from "@CM/Pages/DAO/Proposals/Components/ProposalSummary.vue";
-import ProposalDetails from "@CM/Pages/DAO/Proposals/Components/ProposalDetails.vue";
+import ProposalSummary from "./ProposalSummary.vue";
+import ProposalDetails from "./ProposalDetails.vue";
 
 const { proposal, initExpanded = false } = defineProps<{
   proposal: Proposal;

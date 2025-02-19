@@ -2,7 +2,7 @@
 import type { Chain } from "@curvefi/prices-api";
 import type { Market, MarketPair } from "@curvefi/prices-api/llamalend";
 import { useQueryMarkets, useQueryChains } from "@CM/queries/llamalend";
-import { TableMarkets } from "@CM/Pages/Platform/LlamaLend/Tables";
+import { TableMarkets } from "./Tables";
 
 const chainParam = useRouteParams<Chain | undefined | "">("chain");
 const chain = computed({

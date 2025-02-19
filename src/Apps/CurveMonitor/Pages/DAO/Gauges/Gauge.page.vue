@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQueryGauge } from "@CM/queries/gauge";
-import GaugeOverview from "@CM/Pages/DAO/Gauges/Tabs/GaugeOverview.vue";
-import Votes from "@CM/Pages/DAO/Gauges/Tabs/Votes.vue";
+import GaugeOverview from "./Tabs/GaugeOverview.vue";
+import Votes from "./Tabs/Votes.vue";
 
 const gaugeAddr = useRouteParams<string>("gaugeAddr");
 const { isFetching: loading, data: gauge } = useQueryGauge(gaugeAddr);

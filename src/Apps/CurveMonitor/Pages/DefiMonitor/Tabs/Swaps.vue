@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TableSwaps from "@CM/Pages/DefiMonitor/Tables/TableSwaps.vue";
+import TableSwaps from "../Tables/TableSwaps.vue";
 </script>
 
 <template>

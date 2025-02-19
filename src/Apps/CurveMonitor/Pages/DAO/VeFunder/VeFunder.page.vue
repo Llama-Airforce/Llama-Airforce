@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DeployGauge from "@CM/Pages/DAO/VeFunder/Components/DeployGauge.vue";
-import GaugeVote from "@CM/Pages/DAO/VeFunder/Components/GaugeVote.vue";
+import DeployGauge from "./Components/DeployGauge.vue";
+import GaugeVote from "./Components/GaugeVote.vue";
 
 const gauge = ref("");
 

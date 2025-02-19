@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
 import { useQueryMarkets } from "@CM/queries/llamalend";
-import MarketOverview from "@CM/Pages/Platform/LlamaLend/Tabs/MarketOverview.vue";
-import Trading from "@CM/Pages/Platform/LlamaLend/Tabs/Trading.vue";
-import Liquidations from "@CM/Pages/Platform/LlamaLend/Tabs/Liquidations.vue";
+import MarketOverview from "./Tabs/MarketOverview.vue";
+import Trading from "./Tabs/Trading.vue";
+import Liquidations from "./Tabs/Liquidations.vue";
 
 // Markets
 const chain = useRouteParams<Chain>("chain");

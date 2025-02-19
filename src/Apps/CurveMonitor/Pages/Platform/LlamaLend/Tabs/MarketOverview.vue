@@ -2,18 +2,14 @@
 import type { Chain } from "@curvefi/prices-api";
 import { type Market, tvl } from "@curvefi/prices-api/llamalend";
 import { useQuerySnapshots } from "@CM/queries/llamalend";
+import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
 import {
   ChartMarketSupply,
   ChartMarketCollateral,
   ChartMarketLoans,
   ChartMarketRates,
-} from "@CM/Pages/Platform/LlamaLend/Charts";
-import {
-  KPIUsage,
-  Addresses,
-  Properties,
-} from "@CM/Pages/Platform/LlamaLend/Components";
-import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
+} from "../Charts";
+import { KPIUsage, Addresses, Properties } from "../Components";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

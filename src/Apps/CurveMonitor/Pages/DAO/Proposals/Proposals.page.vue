@@ -4,8 +4,8 @@ import type {
   ProposalStatus,
 } from "@curvefi/prices-api/proposal";
 import { useQueryProposals } from "@CM/queries/proposal";
-import ProposalComponent from "@CM/Pages/DAO/Proposals/Components/Proposal.vue";
-import ProposalTypeSelect from "@CM/Pages/DAO/Proposals/Components/ProposalTypeSelect.vue";
+import ProposalComponent from "./Components/Proposal.vue";
+import ProposalTypeSelect from "./Components/ProposalTypeSelect.vue";
 
 const tabActive = ref(0);
 

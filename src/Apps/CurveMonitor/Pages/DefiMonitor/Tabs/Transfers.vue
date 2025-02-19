@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TableTransfers from "@CM/Pages/DefiMonitor/Tables/TableTransfers.vue";
+import TableTransfers from "../Tables/TableTransfers.vue";
 </script>
 
 <template>

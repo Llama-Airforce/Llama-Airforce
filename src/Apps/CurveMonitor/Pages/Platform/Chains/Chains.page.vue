@@ -7,8 +7,8 @@ import {
   ChartUsers,
   ChartRankingChains,
   ChartRankingTypes,
-} from "@CM/Pages/Platform/Chains/Charts";
-import { ActivityTypeSelect } from "@CM/Pages/Platform/Chains/Components";
+} from "./Charts";
+import { ActivityTypeSelect } from "./Components";
 
 // Chain selection
 const chainParam = useRouteParams<Chain | "all" | undefined | "">("chain");

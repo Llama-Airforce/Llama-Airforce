@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useQueryCrvUsdSupply } from "@CM/queries/crvusd";
-import {
-  ChartCrvUsdSupplyLine,
-  ChartCrvUsdSupplyBreakdown,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
+import { ChartCrvUsdSupplyLine, ChartCrvUsdSupplyBreakdown } from "./";
 
 type ChartType = "line" | "breakdown";
 

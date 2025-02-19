@@ -6,8 +6,8 @@ import {
   ChartMarketLoans,
   ChartMarketRates,
   ChartMarketAvailableCap,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
-import { Properties, Addresses } from "@CM/Pages/Platform/CrvUsd/Components";
+} from "../Charts";
+import { Properties, Addresses } from "../Components";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

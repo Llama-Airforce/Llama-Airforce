@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useQueryMarkets } from "@CM/queries/crvusd";
-import MarketOverview from "@CM/Pages/Platform/CrvUsd/Tabs/MarketOverview.vue";
-import Liquidations from "@CM/Pages/Platform/CrvUsd/Tabs/Liquidations.vue";
-import Trading from "@CM/Pages/Platform/CrvUsd/Tabs/Trading.vue";
+import MarketOverview from "./Tabs/MarketOverview.vue";
+import Liquidations from "./Tabs/Liquidations.vue";
+import Trading from "./Tabs/Trading.vue";
 
 // Market
 const marketAddr = useRouteParams<string>("marketAddr");
