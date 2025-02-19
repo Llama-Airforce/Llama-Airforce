@@ -6,12 +6,14 @@ declare module "vue-router" {
 }
 
 import Home from "@HA/Pages/Home/Home.page.vue";
-import Code from "@HA/Pages/Code.page.vue";
-import NotFound from "@HA/Pages/NotFound.page.vue";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
-  { path: "/code", component: Code },
+  { path: "/code", component: () => import("@HA/Pages/Code.page.vue") },
 
-  { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@HA/Pages/NotFound.page.vue"),
+  },
 ];

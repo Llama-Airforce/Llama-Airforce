@@ -6,46 +6,16 @@ declare module "vue-router" {
 }
 
 import Home from "@CM/Pages/Home/Home.page.vue";
-import Code from "@CM/Pages/Code.page.vue";
-import API from "@CM/Pages/API.page.vue";
-import NotFound from "@CM/Pages/NotFound.page.vue";
-
-import Profile from "@CM/Pages/Profile/Profile.page.vue";
-
-import Chains from "@CM/Pages/Platform/Chains/Chains.page.vue";
-import Pools from "@CM/Pages/Platform/Pools/Pools.page.vue";
-import Pool from "@CM/Pages/Platform/Pools/Pool.page.vue";
-import Revenue from "@CM/Pages/Platform/Revenue/Revenue.page.vue";
-
-import CrvUsd from "@CM/Pages/Platform/CrvUsd/CrvUsd.page.vue";
-import CrvUsdMarket from "@CM/Pages/Platform/CrvUsd/Market.page.vue";
-
-import LlamaLend from "@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue";
-import LlamaLendMarket from "@CM/Pages/Platform/LlamaLend/Market.page.vue";
-
-import Oracles from "@CM/Pages/Platform/Oracles/Oracles.page.vue";
-
-import Savings from "@CM/Pages/Platform/Savings/Savings.page.vue";
-import Sandwiches from "@CM/Pages/Platform/Sandwiches/Sandwiches.page.vue";
-
-import Gauges from "@CM/Pages/DAO/Gauges/Gauges.page.vue";
-import Gauge from "@CM/Pages/DAO/Gauges/Gauge.page.vue";
-import Proposals from "@CM/Pages/DAO/Proposals/Proposals.page.vue";
-import Proposal from "@CM/Pages/DAO/Proposals/Proposal.page.vue";
-import Locks from "@CM/Pages/DAO/Locks/Locks.page.vue";
-import VeFunder from "@CM/Pages/DAO/VeFunder/VeFunder.page.vue";
-
-import DefiMonitor from "@CM/Pages/DefiMonitor/DefiMonitor.page.vue";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
-  { path: "/code", component: Code },
-  { path: "/api", component: API },
+  { path: "/code", component: () => import("@CM/Pages/Code.page.vue") },
+  { path: "/api", component: () => import("@CM/Pages/API.page.vue") },
 
   {
     path: "/profile/:tab?",
     name: "profile",
-    component: Profile,
+    component: () => import("@CM/Pages/Profile/Profile.page.vue"),
     props: (route) => ({
       user: route.query.user || "",
       chain: route.query.chain || "",
@@ -60,7 +30,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "chains/:chain?/:type?",
         name: "chains",
-        component: Chains,
+        component: () => import("@CM/Pages/Platform/Chains/Chains.page.vue"),
       },
 
       {
@@ -71,12 +41,12 @@ export const routes: RouteRecordRaw[] = [
           {
             path: ":chain?",
             name: "pools",
-            component: Pools,
+            component: () => import("@CM/Pages/Platform/Pools/Pools.page.vue"),
           },
           {
             path: ":chain/:poolAddr/:tab?",
             name: "poolspool",
-            component: Pool,
+            component: () => import("@CM/Pages/Platform/Pools/Pool.page.vue"),
           },
         ],
       },
@@ -84,13 +54,13 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "oracles",
         name: "oracles",
-        component: Oracles,
+        component: () => import("@CM/Pages/Platform/Oracles/Oracles.page.vue"),
       },
 
       {
         path: "revenue/:tab?",
         name: "revenue",
-        component: Revenue,
+        component: () => import("@CM/Pages/Platform/Revenue/Revenue.page.vue"),
       },
 
       {
@@ -101,12 +71,14 @@ export const routes: RouteRecordRaw[] = [
           {
             path: "",
             name: "crvusd-overview",
-            component: CrvUsd,
+            component: () =>
+              import("@CM/Pages/Platform/CrvUsd/CrvUsd.page.vue"),
           },
           {
             path: "market/:marketAddr/:tab?",
             name: "crvusdmarket",
-            component: CrvUsdMarket,
+            component: () =>
+              import("@CM/Pages/Platform/CrvUsd/Market.page.vue"),
           },
         ],
       },
@@ -119,24 +91,27 @@ export const routes: RouteRecordRaw[] = [
           {
             path: ":chain?",
             name: "llamalend",
-            component: LlamaLend,
+            component: () =>
+              import("@CM/Pages/Platform/LlamaLend/LlamaLend.page.vue"),
           },
           {
             path: ":chain/:marketAddr/:tab?",
             name: "llamalendmarket",
-            component: LlamaLendMarket,
+            component: () =>
+              import("@CM/Pages/Platform/LlamaLend/Market.page.vue"),
           },
         ],
       },
 
       {
         path: "savings",
-        component: Savings,
+        component: () => import("@CM/Pages/Platform/Savings/Savings.page.vue"),
       },
 
       {
         path: "sandwiches",
-        component: Sandwiches,
+        component: () =>
+          import("@CM/Pages/Platform/Sandwiches/Sandwiches.page.vue"),
       },
     ],
   },
@@ -149,32 +124,32 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "gauges",
         name: "gauges",
-        component: Gauges,
+        component: () => import("@CM/Pages/DAO/Gauges/Gauges.page.vue"),
         meta: { crumbs: true },
       },
       {
         path: "gauge/:gaugeAddr/:tab?",
         name: "gauge",
-        component: Gauge,
+        component: () => import("@CM/Pages/DAO/Gauges/Gauge.page.vue"),
         meta: { crumbs: true },
       },
       {
         path: "proposals",
         name: "proposals",
-        component: Proposals,
+        component: () => import("@CM/Pages/DAO/Proposals/Proposals.page.vue"),
       },
       {
         path: "proposal/:proposalType/:proposalId",
         name: "proposal",
-        component: Proposal,
+        component: () => import("@CM/Pages/DAO/Proposals/Proposal.page.vue"),
       },
       {
         path: "locks",
-        component: Locks,
+        component: () => import("@CM/Pages/DAO/Locks/Locks.page.vue"),
       },
       {
         path: "vefunder",
-        component: VeFunder,
+        component: () => import("@CM/Pages/DAO/VeFunder/VeFunder.page.vue"),
       },
     ],
   },
@@ -182,8 +157,12 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/defimonitor/:tab?",
     name: "defimonitor",
-    component: DefiMonitor,
+    component: () => import("@CM/Pages/DefiMonitor/DefiMonitor.page.vue"),
   },
 
-  { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@CM/Pages/NotFound.page.vue"),
+  },
 ];

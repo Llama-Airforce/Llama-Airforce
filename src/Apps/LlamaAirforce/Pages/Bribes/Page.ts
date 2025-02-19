@@ -1,8 +1,5 @@
 import type { Page } from "@LAF/Pages/Page";
 
-import BribesRounds from "@LAF/Pages/Bribes/Rounds/Rounds.page.vue";
-import BribesOverview from "@LAF/Pages/Bribes/Overview/Overview.page.vue";
-
 import menuHeader from "@/Assets/Menu/votium.png";
 
 import { ChartNoAxesColumn, BookOpen } from "lucide-vue-next";
@@ -14,24 +11,24 @@ export const pageBribesRoutes = [
   {
     path: "/bribes/rounds/:platform?/:protocol?/:round?",
     name: "rounds",
-    component: BribesRounds,
+    component: () => import("@LAF/Pages/Bribes/Rounds/Rounds.page.vue"),
   },
   {
     path: "/bribes/overview/:platform?/:protocol?",
     name: "overview",
-    component: BribesOverview,
+    component: () => import("@LAF/Pages/Bribes/Overview/Overview.page.vue"),
   },
 
   { path: "/incentives", redirect: { name: "rounds-incentives" } },
   {
     path: "/incentives/rounds/:platform?/:protocol?/:round?",
     name: "rounds-incentives",
-    component: BribesRounds,
+    component: () => import("@LAF/Pages/Bribes/Rounds/Rounds.page.vue"),
   },
   {
     path: "/incentives/overview/:platform?/:protocol?",
     name: "overview-incentives",
-    component: BribesOverview,
+    component: () => import("@LAF/Pages/Bribes/Overview/Overview.page.vue"),
   },
 ];
 

@@ -5,135 +5,107 @@ declare module "vue-router" {
   }
 }
 
-import Colors from "@CB/Recipes/ColorsRecipe.vue";
-import Socket from "@CB/Recipes/SocketRecipe.vue";
-
-import AsyncValue from "@CB/RecipesComponents/AsyncValueRecipe.vue";
-import Blockie from "@CB/RecipesComponents/BlockieRecipe.vue";
-import Breadcrumb from "@CB/RecipesComponents/BreadcrumbRecipe.vue";
-import Button from "@CB/RecipesComponents/ButtonRecipe.vue";
-import ButtonToggle from "@CB/RecipesComponents/ButtonToggleRecipe.vue";
-import Card from "@CB/RecipesComponents/CardRecipe.vue";
-import ChartTV from "@CB/RecipesComponents/ChartTVRecipe.vue";
-import Checkbox from "@CB/RecipesComponents/CheckboxRecipe.vue";
-import Table from "@CB/RecipesComponents/TableRecipe.vue";
-import InputAddress from "@CB/RecipesComponents/InputAddressRecipe.vue";
-import InputText from "@CB/RecipesComponents/InputTextRecipe.vue";
-import InputNumber from "@CB/RecipesComponents/InputNumberRecipe.vue";
-import Legend from "@CB/RecipesComponents/LegendRecipe.vue";
-import Modal from "@CB/RecipesComponents/ModalRecipe.vue";
-import Pagination from "@CB/RecipesComponents/PaginationRecipe.vue";
-import RadioButton from "@CB/RecipesComponents/RadioButtonRecipe.vue";
-import Select from "@CB/RecipesComponents/SelectRecipe.vue";
-import Slider from "@CB/RecipesComponents/SliderRecipe.vue";
-import Spinner from "@CB/RecipesComponents/SpinnerRecipe.vue";
-import Swagger from "@CB/RecipesComponents/SwaggerRecipe.vue";
-import Tabs from "@CB/RecipesComponents/TabsRecipe.vue";
-import Tooltip from "@CB/RecipesComponents/TooltipRecipe.vue";
-
-import UseApprove from "@CB/RecipesComposables/UseApproveRecipe.vue";
-
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: { name: "colors" } },
   {
     path: "/colors",
     name: "colors",
-    component: Colors,
+    component: () => import("@CB/Recipes/ColorsRecipe.vue"),
   },
   {
     path: "/socket",
-    component: Socket,
+    component: () => import("@CB/Recipes/SocketRecipe.vue"),
   },
   {
     path: "/components",
     children: [
       {
         path: "async-value",
-        component: AsyncValue,
+        component: () => import("@CB/RecipesComponents/AsyncValueRecipe.vue"),
       },
       {
         path: "blockie",
-        component: Blockie,
+        component: () => import("@CB/RecipesComponents/BlockieRecipe.vue"),
       },
       {
         path: "breadcrumb",
-        component: Breadcrumb,
+        component: () => import("@CB/RecipesComponents/BreadcrumbRecipe.vue"),
       },
       {
         path: "button",
-        component: Button,
+        component: () => import("@CB/RecipesComponents/ButtonRecipe.vue"),
       },
       {
         path: "toggle-button",
-        component: ButtonToggle,
+        component: () => import("@CB/RecipesComponents/ButtonToggleRecipe.vue"),
       },
       {
         path: "card",
-        component: Card,
+        component: () => import("@CB/RecipesComponents/CardRecipe.vue"),
       },
       {
         path: "chart-tv",
-        component: ChartTV,
+        component: () => import("@CB/RecipesComponents/ChartTVRecipe.vue"),
       },
       {
         path: "checkbox",
-        component: Checkbox,
+        component: () => import("@CB/RecipesComponents/CheckboxRecipe.vue"),
       },
       {
         path: "table",
-        component: Table,
+        component: () => import("@CB/RecipesComponents/TableRecipe.vue"),
       },
       {
         path: "input-address",
-        component: InputAddress,
+        component: () => import("@CB/RecipesComponents/InputAddressRecipe.vue"),
       },
       {
         path: "input-text",
-        component: InputText,
+        component: () => import("@CB/RecipesComponents/InputTextRecipe.vue"),
       },
       {
         path: "input-number",
-        component: InputNumber,
+        component: () => import("@CB/RecipesComponents/InputNumberRecipe.vue"),
       },
       {
         path: "legend",
-        component: Legend,
+        component: () => import("@CB/RecipesComponents/LegendRecipe.vue"),
       },
       {
         path: "modal",
-        component: Modal,
+        component: () => import("@CB/RecipesComponents/ModalRecipe.vue"),
       },
       {
         path: "pagination",
-        component: Pagination,
+        component: () => import("@CB/RecipesComponents/PaginationRecipe.vue"),
       },
       {
         path: "radio-button",
-        component: RadioButton,
+        component: () => import("@CB/RecipesComponents/RadioButtonRecipe.vue"),
       },
       {
         path: "select",
-        component: Select,
+        component: () => import("@CB/RecipesComponents/SelectRecipe.vue"),
       },
       {
         path: "slider",
-        component: Slider,
+        component: () => import("@CB/RecipesComponents/SliderRecipe.vue"),
       },
       {
         path: "spinner",
-        component: Spinner,
+        component: () => import("@CB/RecipesComponents/SpinnerRecipe.vue"),
       },
       {
         path: "swagger",
-        component: Swagger,
+        component: () => import("@CB/RecipesComponents/SwaggerRecipe.vue"),
       },
       {
         path: "tabs",
-        component: Tabs,
+        component: () => import("@CB/RecipesComponents/TabsRecipe.vue"),
       },
       {
         path: "tooltip",
-        component: Tooltip,
+        component: () => import("@CB/RecipesComponents/TooltipRecipe.vue"),
       },
     ],
   },
@@ -142,7 +114,7 @@ export const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "use-approve",
-        component: UseApprove,
+        component: () => import("@CB/RecipesComposables/UseApproveRecipe.vue"),
       },
     ],
   },
