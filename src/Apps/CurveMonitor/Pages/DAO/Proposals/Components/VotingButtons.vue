@@ -59,7 +59,20 @@ const votingPowerNumber = computed(() =>
 );
 
 const isVoteOpen = computed(() => getStatus(proposal) === "active");
-const executable = computed(() => getStatus(proposal) === "passed");
+const votingContract = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
+  switch (proposal.type) {
+    case "ownership":
+      return CurveVotingAddressOwnership;
+    case "parameter":
+      return CurveVotingAddressParameter;
+    default:
+      return null;
+  }
+});
+const executable = computed(
+  () => !!votingContract.value && getStatus(proposal) === "passed"
+);
 
 // Methods
 const getCursorPosition = (): number => {
@@ -147,20 +160,22 @@ const validate = () => {
 // Data
 const { data: veCrvAddress } = useReadContract({
   abi: abiVoting,
-  address: CurveVotingAddress,
+  address: votingContract.value!,
   functionName: "token",
   query: {
-    enabled: showVote,
+    enabled: computed(() => showVote.value && !!votingContract.value),
   },
 });
 
 const { data: voterState } = useReadContract({
   abi: abiVoting,
-  address: CurveVotingAddress,
+  address: votingContract.value!,
   functionName: "getVoterState",
   args: computed(() => [BigInt(proposal.id), address.value!] as const),
   query: {
-    enabled: computed(() => !!address.value && showVote.value),
+    enabled: computed(
+      () => !!address.value && showVote.value && !!votingContract.value
+    ),
     initialData: 0,
     initialDataUpdatedAt: 0,
   },
@@ -182,11 +197,11 @@ const { data: votingPower } = useReadContract({
 
 const { data: canExecute, refetch: refetchCanExecute } = useReadContract({
   abi: abiVoting,
-  address: CurveVotingAddress,
+  address: votingContract.value!,
   functionName: "canExecute",
   args: [BigInt(proposal.id)],
   query: {
-    enabled: computed(() => executable.value),
+    enabled: computed(() => executable.value && !!votingContract.value),
     initialData: false,
     initialDataUpdatedAt: 0,
   },
@@ -194,10 +209,10 @@ const { data: canExecute, refetch: refetchCanExecute } = useReadContract({
 
 const { data: pctBase } = useReadContract({
   abi: abiVoting,
-  address: CurveVotingAddress,
+  address: votingContract.value!,
   functionName: "PCT_BASE",
   query: {
-    enabled: showVote,
+    enabled: computed(() => showVote.value && !!votingContract.value),
   },
 });
 
@@ -223,13 +238,23 @@ function vote() {
     return;
   }
 
+  if (!votingContract.value) {
+    notify({
+      text: prettyError(
+        "Missing voting contract address, not ownership or parameter vote?"
+      ),
+      type: "error",
+    });
+    return;
+  }
+
   const decimals = BigInt(Math.log10(Number(pctBase.value)));
   const yea = numToBigNumber(yeaPct.value / 100, decimals);
   const nay = pctBase.value - yea;
 
   writeContractVote({
     abi: abiVoting,
-    address: CurveVotingAddress,
+    address: votingContract.value,
     functionName: "votePct",
     args: [BigInt(proposal.id), yea, nay, false] as const,
   });
@@ -264,7 +289,7 @@ const executing = computed(
 function execute() {
   writeContractExecute({
     abi: abiVoting,
-    address: CurveVotingAddress,
+    address: votingContract.value!,
     functionName: "executeVote",
     args: [BigInt(proposal.id)],
   });

@@ -203,7 +203,10 @@ export const veFunderGaugeController =
   "0x2f50d538606fa9edd2b11e2446beb18c9d5846bb";
 
 // Curve
-export const CurveVotingAddress = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
+export const CurveVotingAddressOwnership =
+  "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
+export const CurveVotingAddressParameter =
+  "0xbcff8b0b9419b9a88c44546519b1e909cf330399";
 
 // Prisma
 export const PrismaVotingAddress = "0xc53baaaa8595a7a2e7fee71db7291b939f696734";
