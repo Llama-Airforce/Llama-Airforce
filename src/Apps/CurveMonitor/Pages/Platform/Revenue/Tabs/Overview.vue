@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ChartBreakdown from "@CM/Pages/Platform/Revenue/Charts/ChartBreakdown.vue";
+import ChartBreakdown from "../Charts/ChartBreakdown.vue";
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import TableDistributions from "@CM/Pages/Platform/Revenue/Tables/TableDistributions.vue";
-import ChartDistributions from "@CM/Pages/Platform/Revenue/Charts/ChartDistributions.vue";
-import ChartDistributionsDelta from "@CM/Pages/Platform/Revenue/Charts/ChartDistributionsDelta.vue";
 import { useQueryDistributions } from "@CM/queries/revenue";
+import TableDistributions from "../Tables/TableDistributions.vue";
+import ChartDistributions from "../Charts/ChartDistributions.vue";
+import ChartDistributionsDelta from "../Charts/ChartDistributionsDelta.vue";
 
 const { isFetching: loading, data: distributions } = useQueryDistributions();
 

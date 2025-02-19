@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TableFeesCollected from "@CM/Pages/Platform/Revenue/Tables/TableFeesCollected.vue";
-import TableFeesStaged from "@CM/Pages/Platform/Revenue/Tables/TableFeesStaged.vue";
 import { useQueryFeesCollected, useQueryFeesStaged } from "@CM/queries/revenue";
+import TableFeesCollected from "../Tables/TableFeesCollected.vue";
+import TableFeesStaged from "../Tables/TableFeesStaged.vue";
 
 const { isFetching: loadingCollected, data: feesCollected } =
   useQueryFeesCollected();
