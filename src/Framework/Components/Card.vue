@@ -20,7 +20,7 @@ const {
   loading?: boolean | null;
 }>();
 
-const slots = useSlots();
+const slots = useSlots() as Record<string, unknown>;
 
 const hasTitle = computed(() => title || slots["title"]);
 const hasActions = computed(() => slots["actions"]);

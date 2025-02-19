@@ -28,7 +28,8 @@ const expandable = computed((): boolean => {
   const slot = slots["row-details"];
 
   if (slot) {
-    const children = slot({})[0]?.children;
+    const slotContent = slot({}) as Array<{ children?: unknown }>;
+    const children = slotContent[0]?.children;
     if (children) {
       return Array.isArray(children) && children.length > 0;
     }

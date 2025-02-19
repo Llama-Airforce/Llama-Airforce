@@ -14,7 +14,7 @@
     "noUnusedParameters": true,
 
     /* Module Resolution Options */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "baseUrl": ".",
     "verbatimModuleSyntax": true,
