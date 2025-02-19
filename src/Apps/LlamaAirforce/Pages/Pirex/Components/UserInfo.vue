@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Rewards from "@LAF/Pages/Pirex/Components/Rewards.vue";
-import RedemptionsUser from "@LAF/Pages/Pirex/Components/RedemptionsUser.vue";
+import Rewards from "./Rewards.vue";
+import RedemptionsUser from "./RedemptionsUser.vue";
 
 const tabs = ["rewards", "redemptions"] as const;
 type Tabs = (typeof tabs)[number];

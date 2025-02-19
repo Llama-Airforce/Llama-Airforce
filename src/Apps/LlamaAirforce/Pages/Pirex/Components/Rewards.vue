@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useQueryPrices } from "@/Services/PriceQuery";
-import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
 import {
   type Claim,
   calculateFuturesRewards,
   calculateSnapshotRewards,
   sumRewards,
-} from "@LAF/Pages/Pirex/Services";
-import { useQueryRewards } from "@LAF/Pages/Pirex/Services/Queries";
-import ModalClaim from "@LAF/Pages/Pirex/Components/ModalClaim.vue";
+} from "../Services";
+import { useQueryRewards } from "../Services/Queries";
+import RewardsTable from "./Components/RewardsTable.vue";
+import ModalClaim from "./Components/ModalClaim.vue";
 
 const showClaims = ref(false);
 

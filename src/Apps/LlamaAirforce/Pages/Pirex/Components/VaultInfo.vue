@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Strategy from "@LAF/Pages/Pirex/Components/Strategy.vue";
-import Fees from "@LAF/Pages/Pirex/Components/Fees.vue";
-import Audits from "@LAF/Pages/Pirex/Components/Audits.vue";
+import Strategy from "./Strategy.vue";
+import Fees from "./Fees.vue";
+import Audits from "./Audits.vue";
 
 const tabs = ["strategy", "fees", "audits"] as const;
 type Tabs = (typeof tabs)[number];

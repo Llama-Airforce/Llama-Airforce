@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import type { Address } from "@/Types/Address";
-import type { Epoch, BribedPersonal } from "@LAF/Pages/Bribes/Models";
+import type { Epoch, BribedPersonal } from "../../Models";
 import SnapshotService, {
   type Scores,
   type Delegation,
-} from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
-import AuraService from "@LAF/Pages/Bribes/Rounds/Services/AuraService";
+} from "../Services/SnapshotService";
+import AuraService from "../Services/AuraService";
 import {
   getBribedPersonal,
   getVoteDistribution,
   prioritizeDelegates,
-} from "@LAF/Pages/Bribes/Util/EpochHelper";
-import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
+} from "../../Util/EpochHelper";
+import { vlAssetSymbol } from "../../Util/ProtocolHelper";
+import { useBribesStore } from "../../Store";
 
 const snapshotService = new SnapshotService(useHost());
 const auraService = new AuraService();

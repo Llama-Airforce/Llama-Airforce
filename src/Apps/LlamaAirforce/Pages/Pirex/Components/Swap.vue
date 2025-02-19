@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ModalSwap from "@LAF/Pages/Pirex/Components/ModalSwap.vue";
+import ModalSwap from "./ModalSwap.vue";
 
 const showSwap = ref(false);
 </script>

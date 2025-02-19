@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { colors } from "@/Styles/ChartTheme";
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import { getDate } from "@LAF/Pages/Bribes/Util/EpochHelper";
-import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
-import type { Overview } from "@LAF/Pages/Bribes/Models";
+import { useBribesStore } from "../../Store";
+import { getDate } from "../../Util/EpochHelper";
+import { vlAssetSymbol } from "../../Util/ProtocolHelper";
+import type { Overview } from "../../Models";
 
 const { t } = useI18n();
 

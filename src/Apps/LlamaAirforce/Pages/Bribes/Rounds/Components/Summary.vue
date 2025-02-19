@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import type { Epoch } from "@LAF/Pages/Bribes/Models";
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
+import type { Epoch } from "../../Models";
+import { useBribesStore } from "../../Store";
 import {
   dollarPerVlAsset as dollarPerVlAssetFunc,
   totalAmountDollars as totalAmountDollarsFunc,
   getDate,
   getDateRaw,
   getLink,
-} from "@LAF/Pages/Bribes/Util/EpochHelper";
-
-import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
+} from "../../Util/EpochHelper";
+import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 
 const { t } = useI18n();
 

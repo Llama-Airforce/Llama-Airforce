@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ClearCacheButton from "@LAF/Pages/Debug/Components/ClearCacheButton.vue";
+import ClearCacheButton from "./Components/ClearCacheButton.vue";
 </script>
 
 <template>

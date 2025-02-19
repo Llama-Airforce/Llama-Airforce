@@ -10,11 +10,11 @@ import { uCvxDepositZaps, uCvxWithdrawZaps } from "@Pounders/Zaps";
 import type { ZapsFactories } from "@Pounders/Models";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
 
-import VaultInfo from "@LAF/Pages/Pirex/Components/VaultInfo.vue";
-import UserInfo from "@LAF/Pages/Pirex/Components/UserInfo.vue";
+import VaultInfo from "./Components/VaultInfo.vue";
+import UserInfo from "./Components/UserInfo.vue";
 
-import RedemptionsInit from "@LAF/Pages/Pirex/Components/RedemptionsInit.vue";
-import Swap from "@LAF/Pages/Pirex/Components/Swap.vue";
+import RedemptionsInit from "./Components/RedemptionsInit.vue";
+import Swap from "./Components/Swap.vue";
 
 const unionService = new UnionService(useHost());
 const priceService = new PriceService(useHost());

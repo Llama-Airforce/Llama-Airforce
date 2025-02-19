@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import type { EpochOverview, Overview } from "@LAF/Pages/Bribes/Models";
-import { vlAssetSymbol } from "@LAF/Pages/Bribes/Util/ProtocolHelper";
+import { useBribesStore } from "../../Store";
+import type { EpochOverview, Overview } from "../../Models";
+import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 
 const { t } = useI18n();
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Redemption } from "@LAF/Pages/Pirex/Services";
+import type { Redemption } from "../Services";
 
 const { redemptions } = defineProps<{
   redemptions: Redemption[];

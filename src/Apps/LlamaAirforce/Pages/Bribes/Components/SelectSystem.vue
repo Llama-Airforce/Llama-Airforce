@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import type { Protocol, Platform } from "@LAF/Pages/Bribes/Models";
+import { useBribesStore } from "../Store";
+import type { Protocol, Platform } from "../Models";
 
 const { t } = useI18n();
 

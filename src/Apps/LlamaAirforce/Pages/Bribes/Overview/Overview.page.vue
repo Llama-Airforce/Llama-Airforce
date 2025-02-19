@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import SelectSystem from "@LAF/Pages/Bribes/Components/SelectSystem.vue";
-import ChartBribesRevenue from "@LAF/Pages/Bribes/Overview/Components/ChartBribesRevenue.vue";
-import TableRounds from "@LAF/Pages/Bribes/Overview/Components/TableRounds.vue";
-import Summary from "@LAF/Pages/Bribes/Overview/Components/Summary.vue";
-import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
-import type {
-  OverviewId,
-  Product,
-  Platform,
-  Protocol,
-} from "@LAF/Pages/Bribes/Models";
-import DashboardService from "@LAF/Pages/Bribes/Services/DashboardService";
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
+import SelectSystem from "./Components/SelectSystem.vue";
+import ChartBribesRevenue from "./Components/ChartBribesRevenue.vue";
+import TableRounds from "./Components/TableRounds.vue";
+import Summary from ".Summary.vue";
+import { isPlatform, isProtocol } from "../Models";
+import type { OverviewId, Product, Platform, Protocol } from "../Models";
+import DashboardService from "../Services/DashboardService";
+import { useBribesStore } from "../Store";
 
 const dashboardService = new DashboardService(useHost());
 

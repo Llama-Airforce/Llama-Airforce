@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ModalRedemptionsInit from "@LAF/Pages/Pirex/Components/ModalRedemptionsInit.vue";
+import ModalRedemptionsInit from "./Components/ModalRedemptionsInit.vue";
 
 const showRedemptionsInit = ref(false);
 </script>

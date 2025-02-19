@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import SelectSystem from "@LAF/Pages/Bribes/Components/SelectSystem.vue";
-import Summary from "@LAF/Pages/Bribes/Rounds/Components/Summary.vue";
-import TableBribed from "@LAF/Pages/Bribes/Rounds/Components/TableBribed.vue";
-import TablePersonal from "@LAF/Pages/Bribes/Rounds/Components/TablePersonal.vue";
-import ChartBribesRound from "@LAF/Pages/Bribes/Rounds/Components/ChartBribesRound.vue";
-import type { Platform, Protocol, Product } from "@LAF/Pages/Bribes/Models";
-import { isPlatform, isProtocol } from "@LAF/Pages/Bribes/Models";
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
-import AuraBribesService from "@LAF/Pages/Bribes/Services/AuraBribesService";
-import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
+import SelectSystem from "../Components/SelectSystem.vue";
+import Summary from "../Components/Summary.vue";
+import TableBribed from "../Components/TableBribed.vue";
+import TablePersonal from "../Components/TablePersonal.vue";
+import ChartBribesRound from "../Components/ChartBribesRound.vue";
+import type { Platform, Protocol, Product } from "../Models";
+import { isPlatform, isProtocol } from "../Models";
+import { useBribesStore } from "../Store";
+import AuraBribesService from "../Services/AuraBribesService";
+import BribesService from "../Services/BribesService";
 
 let isInitializing = false;
 

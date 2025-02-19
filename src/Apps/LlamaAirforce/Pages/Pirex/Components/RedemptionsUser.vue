@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { RedemptionPending } from "@LAF/Pages/Pirex/Services";
-import { useQueryRedemptions } from "@LAF/Pages/Pirex/Services/Queries";
-import RedemptionsUserTable from "@LAF/Pages/Pirex/Components/RedemptionsUserTable.vue";
+import type { RedemptionPending } from "../Services";
+import { useQueryRedemptions } from "../Services/Queries";
+import RedemptionsUserTable from "./Components/RedemptionsUserTable.vue";
 
 const { address } = useAccount();
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import type { Epoch } from "@LAF/Pages/Bribes/Models";
-import { useBribesStore } from "@LAF/Pages/Bribes/Store";
+import type { Epoch } from "../../Models";
+import { useBribesStore } from "../../Store";
 
 type Serie = { name: string; data: number[] };
 

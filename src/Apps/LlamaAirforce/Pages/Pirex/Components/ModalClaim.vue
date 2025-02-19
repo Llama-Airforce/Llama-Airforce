@@ -10,8 +10,8 @@ import {
   calculateSnapshotRewards,
   calculateFuturesRewards,
   isSnapshotReward,
-} from "@LAF/Pages/Pirex/Services";
-import RewardsTable from "@LAF/Pages/Pirex/Components/RewardsTable.vue";
+} from "../Services";
+import RewardsTable from "./RewardsTable.vue";
 import useApproveForAll from "../Composables/UseApprovalForAll";
 
 const emit = defineEmits<{

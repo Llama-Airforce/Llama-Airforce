@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
 import { abi } from "@/ABI/Union/Pirex";
-import type { RedemptionPending } from "@LAF/Pages/Pirex/Services";
+import type { RedemptionPending } from "../Services";
 
 const { redemptions } = defineProps<{
   redemptions: RedemptionPending[];
