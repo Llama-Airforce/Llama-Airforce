@@ -3,8 +3,8 @@
 import type { Address } from "@/Types/Address";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWFullscreen } from "@CM/Components/";
-import { useQueryPoolVolume } from "@CM/Services/monitor/mev/queries";
-import type { DurationType } from "@CM/Services/monitor/socketMonitorCurve";
+import { useQueryPoolVolume } from "@CM/monitor/mev/queries";
+import type { DurationType } from "@CM/monitor/socketMonitorCurve";
 import SelectDuration from "../Components/SelectDuration.vue";
 
 const { pool } = defineProps<{ pool: Address }>();

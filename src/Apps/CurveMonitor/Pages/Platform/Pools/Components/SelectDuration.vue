@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DurationType } from "@CM/Services/monitor/socketMonitorCurve";
+import type { DurationType } from "@CM/monitor/socketMonitorCurve";
 
 const { duration = { value: 1, unit: "month" } } = defineProps<{
   duration: DurationType;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
-import { useQueryLabels } from "@CM/Services/monitor/mev/queries";
+import { useQueryLabels } from "@CM/monitor/mev/queries";
 
 const { data: labelsRaw, isFetching: loading } = useQueryLabels();
 

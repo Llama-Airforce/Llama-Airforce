@@ -1,7 +1,7 @@
 div
 <script setup lang="ts">
-import { useQuerySandwiches } from "@CM/Services/monitor/mev/queries";
-import type { SandwichDetail } from "@CM/Services/monitor/socketMonitorCurve";
+import { useQuerySandwiches } from "@CM/monitor/mev/queries";
+import type { SandwichDetail } from "@CM/monitor/socketMonitorCurve";
 import Transactions from "./Transactions.vue";
 
 const swsPerPage = 10;
