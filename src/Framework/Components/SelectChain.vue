@@ -59,17 +59,16 @@ const onChainSelect = (option: ChainInfo): void => {
     :selected="chainSelected"
     @select="onChainSelect"
   >
-    <template #option="{ option }">
+    <template #option="{ option: { chain, ...option } }">
       <div class="option">
-        <img
-          v-if="iconChain(option.chain)"
-          :src="iconChain(option.chain)"
+        <ChainIcon
+          v-if="chain !== 'all'"
+          :chain
         />
         <div
           v-else
           class="empty"
         ></div>
-
         <div class="label">{{ label(option) }}</div>
       </div>
     </template>
@@ -84,8 +83,6 @@ const onChainSelect = (option: ChainInfo): void => {
   img,
   .empty {
     width: 20px;
-    height: 20px;
-    object-fit: scale-down;
   }
 
   > .label {

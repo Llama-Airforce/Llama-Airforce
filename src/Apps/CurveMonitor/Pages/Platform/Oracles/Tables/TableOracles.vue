@@ -44,14 +44,7 @@ async function copy(value: string) {
         }"
       >
         <div class="icon">
-          <img
-            v-if="iconChain(chain)"
-            :src="iconChain(chain)"
-          />
-          <div
-            v-else
-            class="spacer"
-          ></div>
+          <ChainIcon :chain />
           {{ chain }}
         </div>
 
@@ -98,14 +91,6 @@ a:hover {
 
   img {
     width: 26px;
-    aspect-ratio: 1;
-    max-width: 100%;
-    object-fit: scale-down;
-    border-radius: 50%;
-  }
-
-  .spacer {
-    min-width: 26px;
   }
 }
 </style>

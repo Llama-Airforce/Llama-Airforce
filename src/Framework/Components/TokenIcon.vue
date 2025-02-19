@@ -9,7 +9,6 @@ const {
   clickable?: boolean;
 }>();
 
-// Icon
 const icon = ref("");
 
 function getIcon(tokenAddress: string) {
@@ -30,7 +29,6 @@ watch(
   { immediate: true }
 );
 
-// Link
 const link = computed(() => {
   switch (chain) {
     case "arbitrum":
