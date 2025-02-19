@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import TableOracles from "./Tables/TableOracles.vue";
+import TableOracles from "../Tables/TableOracles.vue";
 </script>
 
 <template>
-  <div class="dashboard">
+  <div class="dashboard-grid">
     <TableOracles style="grid-area: oracles" />
   </div>
 </template>
 
 <style scoped>
-.dashboard {
-  max-width: calc(1920px - 18.125rem);
+.dashboard-grid {
+  margin: var(--dashboard-gap) 0;
 
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-areas:
-    "oracles oracles";
+  grid-template-areas: "oracles oracles";
 }
 </style>

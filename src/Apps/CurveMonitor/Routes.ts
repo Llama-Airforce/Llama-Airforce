@@ -50,9 +50,10 @@ export const routes: RouteRecordRaw[] = [
       },
 
       {
-        path: "oracles",
-        name: "oracles",
-        component: () => import("@CM/Pages/Platform/Oracles/Oracles.page.vue"),
+        path: "cross-chain/:tab?",
+        name: "cross-chain",
+        component: () =>
+          import("@CM/Pages/Platform/CrossChain/CrossChain.page.vue"),
       },
 
       {

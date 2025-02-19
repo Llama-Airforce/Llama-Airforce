@@ -23,8 +23,8 @@ export const menu: Menu = {
           label: "Pools",
         },
         {
-          to: "/platform/oracles",
-          label: "Oracles",
+          to: "/platform/cross-chain",
+          label: "Cross-Chain",
         },
         {
           to: "/platform/revenue",
