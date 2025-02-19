@@ -1,7 +1,5 @@
-import Home from "@LAF/Pages/Home.page.vue";
-
 export const routes = [
-  { path: "/", component: Home },
+  { path: "/", component: () => import("@LAF/Pages/Home.page.vue") },
 
   { path: "/code", component: () => import("@LAF/Pages/Code.page.vue") },
   {

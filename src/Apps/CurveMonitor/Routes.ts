@@ -5,10 +5,8 @@ declare module "vue-router" {
   }
 }
 
-import Home from "@CM/Pages/Home/Home.page.vue";
-
 export const routes: RouteRecordRaw[] = [
-  { path: "/", component: Home },
+  { path: "/", component: () => import("@CM/Pages/Home/Home.page.vue") },
   { path: "/code", component: () => import("@CM/Pages/Code.page.vue") },
   { path: "/api", component: () => import("@CM/Pages/API.page.vue") },
 
