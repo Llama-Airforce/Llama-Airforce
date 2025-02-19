@@ -5,4 +5,3 @@ export { default as ChartMarketAvailableCap } from "./ChartMarketAvailableCap.vu
 export { default as ChartMarketLoans } from "./ChartMarketLoans.vue";
 export { default as ChartMarketRates } from "./ChartMarketRates.vue";
 export { default as ChartMarketVolume } from "./ChartMarketVolume.vue";
-export { default as ChartKeeperPrices } from "./ChartKeeperPrices.vue";

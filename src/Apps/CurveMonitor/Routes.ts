@@ -103,6 +103,12 @@ export const routes: RouteRecordRaw[] = [
       },
 
       {
+        path: "pegkeepers",
+        component: () =>
+          import("@CM/Pages/Platform/Pegkeepers/Pegkeepers.page.vue"),
+      },
+
+      {
         path: "savings",
         component: () => import("@CM/Pages/Platform/Savings/Savings.page.vue"),
       },

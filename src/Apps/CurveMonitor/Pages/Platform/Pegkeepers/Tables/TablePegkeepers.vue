@@ -187,6 +187,8 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
 }
 
 .pegkeepers-table {
-  --columns-data: 26px minmax(7rem, 1fr) repeat(4, 12ch);
+  --col-width: 11ch;
+  --columns-data: 26px minmax(7rem, 1fr)
+    repeat(4, minmax(var(--col-width), 0.75fr));
 }
 </style>

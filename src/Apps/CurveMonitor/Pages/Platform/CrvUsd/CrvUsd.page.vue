@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import {
-  TableMarkets,
-  TablePegkeepers,
-} from "@CM/Pages/Platform/CrvUsd/Tables";
-import {
-  ChartKeeperPrices,
-  ChartCrvUsdSupply,
-} from "@CM/Pages/Platform/CrvUsd/Charts";
+import { TableMarkets } from "@CM/Pages/Platform/CrvUsd/Tables";
+import { ChartCrvUsdSupply } from "@CM/Pages/Platform/CrvUsd/Charts";
 import type { Market } from "@CM/Services/crvusd";
 
 const { crumbs } = storeToRefs(useBreadcrumbStore());
@@ -40,18 +34,11 @@ const onMarketSelect = async (newMarket: Market) => {
 <template>
   <div class="dashboard">
     <TableMarkets
-      style="grid-column: 1 / -1"
+      style="grid-area: table"
       @select="onMarketSelect"
     />
 
-    <div class="col">
-      <TablePegkeepers />
-    </div>
-
-    <div class="col">
-      <ChartCrvUsdSupply />
-      <ChartKeeperPrices />
-    </div>
+    <ChartCrvUsdSupply style="grid-area: chart" />
   </div>
 </template>
 
@@ -59,32 +46,9 @@ const onMarketSelect = async (newMarket: Market) => {
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 
-  grid-template-columns: 5fr 4fr;
-
-  > .col {
-    display: flex;
-    flex-direction: column;
-    gap: var(--dashboard-gap);
-
-    .card {
-      flex-grow: 0;
-    }
-  }
-
-  .row {
-    display: flex;
-    gap: var(--dashboard-gap);
-
-    @media only screen and (max-width: 1280px) {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  & > * {
-    max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "table"
+    "chart";
 }
 </style>

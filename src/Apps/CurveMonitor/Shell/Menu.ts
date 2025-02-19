@@ -39,6 +39,10 @@ export const menu: Menu = {
           label: "Lending",
         },
         {
+          to: "/platform/pegkeepers",
+          label: "Pegkeepers",
+        },
+        {
           to: "/platform/savings",
           label: "Savings",
         },
