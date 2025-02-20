@@ -5,7 +5,7 @@ import vueDevTools from "vite-plugin-vue-devtools";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import type { App } from "../../Framework/Apps";
+import type { App } from "../../Types/Apps";
 import { autoImport, vueImport } from "../../vite.base";
 
 export default defineConfig(() => {

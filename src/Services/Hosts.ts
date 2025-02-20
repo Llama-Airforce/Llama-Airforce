@@ -6,8 +6,6 @@ export const hosts: Record<App, string | undefined> = {
   ha: "https://api.hippo.army",
   cb: undefined,
   cm: "https://api2.curvemonitor.com",
-  pm: undefined,
-  "pm-lrt": undefined,
 };
 
 // Development server ports.
@@ -16,6 +14,4 @@ export const ports: Record<App, number | undefined> = {
   ha: 3002,
   cb: undefined,
   cm: 3001,
-  pm: undefined,
-  "pm-lrt": undefined,
 };
