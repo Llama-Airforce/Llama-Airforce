@@ -1,5 +1,5 @@
 import { getAddress } from "viem";
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { paginate } from "@/Utils/Pagination";
 import { mapKeys } from "@/Utils/Object";
 import { ServiceBaseHost } from "@/Services";

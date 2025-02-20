@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import type { ZapWithdraw } from "@Pounders/Models";
 

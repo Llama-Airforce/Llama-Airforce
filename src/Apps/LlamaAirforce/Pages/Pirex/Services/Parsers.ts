@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import type * as ApiTypes from "@LAF/Pages/Pirex/Services/ApiTypes";
 import type * as Models from "@LAF/Pages/Pirex/Services/Models";
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { abi as abiLPxCvx } from "@/ABI/Union/PirexLPxCvx";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
 

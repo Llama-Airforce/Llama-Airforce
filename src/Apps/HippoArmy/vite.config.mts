@@ -4,7 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import type { App } from "../../Types/Apps";
+import type { App } from "../../types/apps";
 import { autoImport, vueImport } from "../../vite.base";
 
 export default defineConfig(() => {

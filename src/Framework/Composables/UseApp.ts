@@ -1,4 +1,4 @@
-import { type App, apps } from "@/Types/Apps";
+import { type App, apps } from "@/types/apps";
 
 export function useApp() {
   const app = import.meta.env.VITE_APP as App | undefined;

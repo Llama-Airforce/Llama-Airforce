@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
 

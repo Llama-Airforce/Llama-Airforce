@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
 import { maxApprove } from "@/Utils/Wallet";

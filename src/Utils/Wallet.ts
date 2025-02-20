@@ -1,5 +1,5 @@
 import { maxUint256, erc20Abi as abiERC20 } from "viem";
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 
 export function addressShort(address?: string, digits = 6): string {
   if (!address) {

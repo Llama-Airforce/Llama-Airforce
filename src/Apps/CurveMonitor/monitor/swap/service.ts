@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { createObservable } from "@/Services/Socket";
 import type {
   SocketMonitorDefi,

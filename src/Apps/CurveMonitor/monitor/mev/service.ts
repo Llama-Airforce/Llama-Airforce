@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { emitAndListen } from "@/Services/Socket";
 import type {
   DurationInput,

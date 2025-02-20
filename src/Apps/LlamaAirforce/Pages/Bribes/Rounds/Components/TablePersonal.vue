@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import type { Epoch, BribedPersonal } from "../../Models";
 import SnapshotService, {
   type Scores,

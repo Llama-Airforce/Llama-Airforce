@@ -6,7 +6,7 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import type { App } from "../../Types/Apps";
+import type { App } from "../../types/apps";
 import { autoImport, vueImport } from "../../vite.base";
 
 export default defineConfig(({ mode }) => {

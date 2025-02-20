@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { useSocketMonitorDefi } from "../socketMonitorDefi";
 import {
   type CleanedTransfer,

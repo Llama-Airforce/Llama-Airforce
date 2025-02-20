@@ -1,4 +1,4 @@
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
 import { maxApprove } from "@/Utils/Wallet";
 import { PriceService } from "@/Services";

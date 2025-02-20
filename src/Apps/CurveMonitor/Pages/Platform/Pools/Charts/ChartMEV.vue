@@ -1,6 +1,6 @@
 <!-- eslint-disable indent -->
 <script setup lang="ts">
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWFullscreen } from "@CM/components";
 import { useQueryPoolVolume } from "@CM/monitor/mev/queries";

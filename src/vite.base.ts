@@ -89,7 +89,7 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     },
   ],
   dirs: [
-    "../../Types/**",
+    "../../types/**",
     "../../Utils/**",
     "../../Framework/Composables/**",
     "../../Framework/Monitor/**",

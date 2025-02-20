@@ -1,5 +1,5 @@
 import { erc20Abi as abi, maxUint256 } from "viem";
-import type { Address } from "@/Types/Address";
+import type { Address } from "@/types/address";
 
 /** Options for the approval process */
 type ApproveOptions = {
