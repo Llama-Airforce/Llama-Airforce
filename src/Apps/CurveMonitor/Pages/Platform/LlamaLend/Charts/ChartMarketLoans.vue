@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 import { useQuerySnapshots } from "@CM/queries/llamalend";
 
 const { market, chain } = defineProps<{

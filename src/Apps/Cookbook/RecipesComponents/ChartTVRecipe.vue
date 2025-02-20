@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import Recipe from "@CB/Recipe.vue";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import {
-  BtnChartLWExport,
-  BtnChartLWFullscreen,
-} from "@/Apps/CurveMonitor/Components/";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 
 type Tvl = {
   timestamp: number;

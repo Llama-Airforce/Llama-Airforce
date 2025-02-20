@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWFullscreen } from "@CM/Components/";
+import { BtnChartLWFullscreen } from "@CM/components";
 
 type Balance = {
   timestamp: Date;

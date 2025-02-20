@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/Components/";
+import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 
 type Tvl = {
   timestamp: Date;

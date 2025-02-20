@@ -18,8 +18,8 @@ import {
   ChartLiquidatorRevenue,
   TableTopLiquidators,
   TableLiqOverview,
-} from "@CM/Components/Liquidations";
-import { ChartCollateralRatio } from "@CM/Components/Lending";
+} from "@CM/components/liquidations";
+import { ChartCollateralRatio } from "@CM/components/lending";
 
 const { market, chain } = defineProps<{
   market: Parameters<typeof useQuerySnapshots>[0]["value"];

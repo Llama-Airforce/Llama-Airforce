@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
 import type { Market } from "@curvefi/prices-api/crvusd";
-import { ChartOHLC, TableTrades, TableEvents } from "@CM/Components/Llamma";
+import { ChartOHLC, TableTrades, TableEvents } from "@CM/components/llamma";
 import {
   useQueryOHLC,
   useQueryEvents,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LiquidationAggregate } from "@curvefi/prices-api/liquidations";
-import { ChartLiqsValue, ChartLiqsCount } from "@CM/Components/Liquidations";
+import { ChartLiqsValue, ChartLiqsCount } from "@CM/components/liquidations";
 
 type ChartType = "count" | "value";
 

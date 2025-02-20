@@ -2,7 +2,7 @@
 import type { Chain } from "@curvefi/prices-api";
 import { type Market, tvl } from "@curvefi/prices-api/llamalend";
 import { useQuerySnapshots } from "@CM/queries/llamalend";
-import { ChartCollateralRatio, ChartEquity } from "@CM/Components/Lending";
+import { ChartCollateralRatio, ChartEquity } from "@CM/components/lending";
 import {
   ChartMarketSupply,
   ChartMarketCollateral,

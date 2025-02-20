@@ -19,7 +19,7 @@ import {
   ChartLiquidatorRevenue,
   TableTopLiquidators,
   TableLiqOverview,
-} from "@CM/Components/Liquidations";
+} from "@CM/components/liquidations";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;
