@@ -2,7 +2,7 @@
 import Navigation from "@/Framework/Monitor/Shell/Navigation.vue";
 import Top from "./Top.vue";
 import Bottom from "./Bottom.vue";
-import { menu } from "./Menu";
+import { menu } from "./menu";
 
 const emit = defineEmits<{
   navigated: [];
