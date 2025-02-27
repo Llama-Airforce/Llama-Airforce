@@ -18,11 +18,12 @@ const proposalLink = computed(
   () => `/dao/proposal/${proposal.type}/${proposal.id}`
 );
 
-// Methods
 const proposalToClipboard = async () => {
   await navigator.clipboard.writeText(
     `${window.location.origin}/#/dao/proposal/${proposal.type}/${proposal.id}`
   );
+
+  notify({ text: `Copied url for proposal ${proposal.id}`, type: "success" });
 };
 </script>
 
@@ -35,17 +36,19 @@ const proposalToClipboard = async () => {
       class="title"
       :class="{ 'no-title': !proposal.metadata }"
     >
-      <router-link
+      <span
         class="id"
-        :to="proposalLink"
-        @click="proposalToClipboard"
+        @click.stop="proposalToClipboard"
       >
         <LucideLink /> {{ proposal.id }}
-      </router-link>
+      </span>
 
-      <div class="metadata">
+      <router-link
+        class="metadata"
+        :to="proposalLink"
+      >
         {{ proposal.metadata || "< No Title >" }}
-      </div>
+      </router-link>
     </div>
 
     <div class="row">
@@ -110,6 +113,13 @@ const proposalToClipboard = async () => {
       text-overflow: ellipsis;
 
       font-size: 1.125rem;
+
+      color: var(--c-text);
+
+      &:hover {
+        background: unset;
+        text-decoration: underline;
+      }
     }
 
     > .id {
@@ -118,10 +128,7 @@ const proposalToClipboard = async () => {
       gap: 1ch;
 
       color: var(--c-lvl6);
-
-      &:hover {
-        background: unset;
-      }
+      cursor: pointer;
 
       .lucide {
         width: 0.75rem;
