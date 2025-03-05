@@ -20,7 +20,7 @@ const proposalLink = computed(
 
 const proposalToClipboard = async () => {
   await navigator.clipboard.writeText(
-    `${window.location.origin}/#/dao/proposal/${proposal.type}/${proposal.id}`
+    `${window.location.origin}/dao/proposal/${proposal.type}/${proposal.id}`
   );
 
   notify({ text: `Copied url for proposal ${proposal.id}`, type: "success" });
