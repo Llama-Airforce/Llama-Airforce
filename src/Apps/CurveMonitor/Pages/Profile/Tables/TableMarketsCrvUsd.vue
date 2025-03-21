@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
-import { useQueryUserMarkets } from "@CM/queries/crvusd";
+import { useQueryMarkets, useQueryUserMarkets } from "@CM/queries/crvusd";
 
 const { user } = defineProps<{ user: string | undefined }>();
 
@@ -8,9 +8,16 @@ const { user } = defineProps<{ user: string | undefined }>();
 const chain = useRouteQuery<Chain>("chain", "ethereum");
 const chains: Chain[] = ["ethereum", "arbitrum"];
 
-const { isFetching: loading, data } = useQueryUserMarkets(
-  toRef(() => user),
-  chain
+const { isFetching: loadingUserMarkets, data: userMarkets } =
+  useQueryUserMarkets(
+    toRef(() => user),
+    chain
+  );
+
+const { isFetching: loadingMarkets, data: markets } = useQueryMarkets();
+
+const loading = computed(
+  () => loadingUserMarkets.value || loadingMarkets.value
 );
 
 const columns = [
@@ -28,7 +35,7 @@ const columns = [
 const { sorting, onSort } = useSort<typeof columns>("last_update");
 
 const rows = computed(() =>
-  data.value.orderBy((x) => {
+  userMarkets.value.orderBy((x) => {
     switch (sorting.value.column) {
       case "collateral":
         return x.collateral;
@@ -37,6 +44,13 @@ const rows = computed(() =>
     }
   }, sorting.value.order)
 );
+
+function getCollateralIcon(userMarket: (typeof userMarkets.value)[number]) {
+  return (
+    markets.value.find((market) => market.address === userMarket.controller)
+      ?.collateralToken.address ?? ""
+  );
+}
 
 // Selection
 const selected = useRouteQuery<string | undefined>("controller", undefined);
@@ -78,7 +92,7 @@ const values = computed(() => rows.value.map((x) => x.controller));
 
         <TokenIcon
           chain="ethereum"
-          :address="item.collateral"
+          :address="getCollateralIcon(item)"
         />
 
         <div>{{ item.collateral }}</div>
