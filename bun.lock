@@ -5,13 +5,13 @@
       "name": "llama-airforce",
       "dependencies": {
         "@cowprotocol/widget-lib": "0.18.0",
-        "@curvefi/prices-api": "0.0.2",
+        "@curvefi/prices-api": "1.0.2",
         "@kyvg/vue3-notification": "^3.4.1",
         "@tanstack/vue-query": "5.69.0",
         "@vueuse/core": "13.0.0",
         "@vueuse/router": "13.0.0",
         "@wagmi/vue": "0.1.7",
-        "apexcharts": "4.4.0",
+        "apexcharts": "^4.5.0",
         "ethereum-blockies-base64": "^1.0.2",
         "hono": "4.7.5",
         "lightweight-charts": "4.2.2",
@@ -157,7 +157,7 @@
 
     "@cowprotocol/widget-lib": ["@cowprotocol/widget-lib@0.18.0", "", { "dependencies": { "@cowprotocol/events": "^1.5.0", "@cowprotocol/iframe-transport": "^1.1.0" } }, "sha512-uv4FBAqnoTEPwF7x7g1X65owuMRKfSoFSiDx3BRPvBBCIN3tvRMeOC9ZFlBEiJT677YnS4JWLItOIwQbwKxFrg=="],
 
-    "@curvefi/prices-api": ["@curvefi/prices-api@0.0.2", "", { "peerDependencies": { "typescript": "*" } }, "sha512-nULBnVpObEOl2vrtpqMiLcbKLfqaHZDg2nXAfirLc9MQjuw5hGeX32lyrAe6a2ebteZhC7APg80PqVXLMs3i1Q=="],
+    "@curvefi/prices-api": ["@curvefi/prices-api@1.0.2", "", { "peerDependencies": { "typescript": "*" } }, "sha512-AIFpB0sO9yqmIIGBoKJaff6PPqsJk8DZCIRI3GGwrmwA+arQnXB40mP87X77R9yZNFSejDNV+W95fjcb5Zy15Q=="],
 
     "@ecies/ciphers": ["@ecies/ciphers@0.2.3", "", { "peerDependencies": { "@noble/ciphers": "^1.0.0" } }, "sha512-tapn6XhOueMwht3E2UzY0ZZjYokdaw9XtL9kEyjhQ/Fb9vL9xTFbOaI+fV0AWvTpYu4BNloC6getKW6NtSg4mA=="],
 
@@ -663,7 +663,7 @@
 
     "anymatch": ["anymatch@3.1.3", "", { "dependencies": { "normalize-path": "^3.0.0", "picomatch": "^2.0.4" } }, "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw=="],
 
-    "apexcharts": ["apexcharts@4.4.0", "", { "dependencies": { "@svgdotjs/svg.draggable.js": "^3.0.4", "@svgdotjs/svg.filter.js": "^3.0.8", "@svgdotjs/svg.js": "^3.2.4", "@svgdotjs/svg.resize.js": "^2.0.2", "@svgdotjs/svg.select.js": "^4.0.1", "@yr/monotone-cubic-spline": "^1.0.3" } }, "sha512-JGsHeQEKDlQh1rob8aBai9/HKvXIpbZ83TnobKZAcdOELf+oQZaxZyAnbbldr6PPBdCgG2zzzLaP1dtEsJxzWw=="],
+    "apexcharts": ["apexcharts@4.5.0", "", { "dependencies": { "@svgdotjs/svg.draggable.js": "^3.0.4", "@svgdotjs/svg.filter.js": "^3.0.8", "@svgdotjs/svg.js": "^3.2.4", "@svgdotjs/svg.resize.js": "^2.0.2", "@svgdotjs/svg.select.js": "^4.0.1", "@yr/monotone-cubic-spline": "^1.0.3" } }, "sha512-E7ZkrVqPNBUWy/Rmg8DEIqHNBmElzICE/oxOX5Ekvs2ICQUOK/VkEkMH09JGJu+O/EA0NL31hxlmF+wrwrSLaQ=="],
 
     "argparse": ["argparse@2.0.1", "", {}, "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q=="],
 
