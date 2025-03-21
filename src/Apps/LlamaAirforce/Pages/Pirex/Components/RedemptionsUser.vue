@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { RedemptionPending } from "../Services";
 import { useQueryRedemptions } from "../Services/Queries";
-import RedemptionsUserTable from "./Components/RedemptionsUserTable.vue";
+import RedemptionsUserTable from "./RedemptionsUserTable.vue";
 
 const { address } = useAccount();
 

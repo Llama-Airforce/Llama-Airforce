@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import SelectSystem from "../Components/SelectSystem.vue";
-import Summary from "../Components/Summary.vue";
-import TableBribed from "../Components/TableBribed.vue";
-import TablePersonal from "../Components/TablePersonal.vue";
-import ChartBribesRound from "../Components/ChartBribesRound.vue";
+import Summary from "./Components/Summary.vue";
+import TableBribed from "./Components/TableBribed.vue";
+import TablePersonal from "./Components/TablePersonal.vue";
+import ChartBribesRound from "./Components/ChartBribesRound.vue";
 import type { Platform, Protocol, Product } from "../Models";
 import { isPlatform, isProtocol } from "../Models";
 import { useBribesStore } from "../Store";
