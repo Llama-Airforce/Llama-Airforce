@@ -12,7 +12,7 @@ import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 
 const { t } = useI18n();
 
-const { rounds = [], epoch } = defineProps<{
+const { rounds, epoch } = defineProps<{
   rounds: number[];
   epoch?: Epoch;
 }>();

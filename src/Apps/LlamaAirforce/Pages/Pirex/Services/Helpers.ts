@@ -8,8 +8,8 @@ import type {
   RewardFutures,
 } from "@LAF/Pages/Pirex/Services";
 
-function calculateRewards<T extends SnapshotReward | FuturesReward>(
-  rewards: T[],
+function calculateRewards(
+  rewards: (SnapshotReward | FuturesReward)[],
   prices: Record<Address, Price | undefined>,
   type: "snapshot" | "futures"
 ): Reward[] {
