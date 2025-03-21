@@ -10,6 +10,7 @@ import {
   injected,
   walletConnect as walletConnectConnector,
 } from "@wagmi/connectors";
+import { useAccount as useAccountWagmi } from "@wagmi/vue";
 
 // Alternative: https://eth.llamarpc.com
 let rpc: string | undefined = "http://localhost:8545";
@@ -36,3 +37,12 @@ export const walletConnect = walletConnectConnector({
     themeMode: "dark",
   },
 });
+
+/**
+ * The return type of account.address from wagmi is Ref<string> instead of Ref<`0x${string}`>.
+ * This function re-exports useAccount with the correct Address type.
+ */
+export function useAccount() {
+  const account = useAccountWagmi();
+  return { ...account, address: account.address as Ref<Address | undefined> };
+}

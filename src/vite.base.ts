@@ -25,7 +25,6 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     { viem: ["getAddress", "isAddress", "getContract"] },
     {
       "@wagmi/vue": [
-        "useAccount",
         "useConnectors",
         "useConnect",
         "useDisconnect",
@@ -45,6 +44,10 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
         "writeContract",
         "waitForTransactionReceipt",
       ],
+    },
+    {
+      from: "@/Utils/Wagmi",
+      imports: ["getAccount"],
     },
     { from: "@wagmi/core", imports: ["Config"], type: true },
     // Charting
