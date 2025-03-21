@@ -1,13 +1,12 @@
-import type { Address } from "@/types/address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvxClaim";
-import { maxApprove } from "@/Utils/Wallet";
+import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
+import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 import { PriceService } from "@/Services";
+import type { Address } from "@/types/address";
+import { maxApprove } from "@/Utils/Wallet";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { calcMinAmountOut, claim } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
-
-import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
-import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 export function uCvxClaimZaps(
   getConfig: () => Config,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LlammaOHLC } from "@curvefi/prices-api/llamma";
 import createChartOptions from "@/Styles/ChartStylesLW";
+import type { LlammaOHLC } from "@curvefi/prices-api/llamma";
 
 const { ohlc } = defineProps<{
   ohlc: LlammaOHLC[];

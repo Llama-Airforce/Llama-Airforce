@@ -1,13 +1,12 @@
-import type { Address } from "@/types/address";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
-import { maxApprove } from "@/Utils/Wallet";
+import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 import { PriceService } from "@/Services";
+import type { Address } from "@/types/address";
+import { maxApprove } from "@/Utils/Wallet";
 import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
 import { getUCvxPrice } from "@Pounders/Zaps/UCvx/PriceHelper";
-
-import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 export function uCvxWithdrawZaps(
   getConfig: () => Config,

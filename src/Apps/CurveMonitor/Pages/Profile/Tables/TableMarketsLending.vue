@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
 import { useQueryMarkets, useQueryUserMarkets } from "@CM/queries/llamalend";
+import type { Chain } from "@curvefi/prices-api";
 
 const { user } = defineProps<{ user: string | undefined }>();
 

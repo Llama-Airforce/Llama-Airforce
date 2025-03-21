@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useQueryTxs, useQueryUsers } from "@CM/queries/chains";
 import type { Chain } from "@curvefi/prices-api";
 import type { Activity, ActivityType } from "@curvefi/prices-api/chains";
-import { useQueryTxs, useQueryUsers } from "@CM/queries/chains";
 import {
   ChartTxs,
   ChartUsers,

@@ -1,8 +1,7 @@
-import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
-import type { ZapWithdraw } from "@Pounders/Models";
-
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
+import type { Address } from "@/types/address";
+import type { ZapWithdraw } from "@Pounders/Models";
 
 export function uFxsWithdrawZaps(
   getConfig: () => Config,

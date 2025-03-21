@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { OHLC } from "@curvefi/prices-api/ohlc";
 import createChartStyles from "@/Styles/ChartStylesLW";
+import type { OHLC } from "@curvefi/prices-api/ohlc";
 
 const { ohlc } = defineProps<{
   ohlc: OHLC[];

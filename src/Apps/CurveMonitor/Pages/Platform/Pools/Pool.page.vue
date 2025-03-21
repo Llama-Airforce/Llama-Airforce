@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
 import { useQueryPool } from "@CM/queries/pools";
-import PoolOverview from "./Tabs/PoolOverview.vue";
+import type { Chain } from "@curvefi/prices-api";
 import MEV from "./Tabs/MEV.vue";
+import PoolOverview from "./Tabs/PoolOverview.vue";
 
 // Markets
 const chain = useRouteParams<Chain>("chain");

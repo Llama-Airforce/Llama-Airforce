@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
 import type { Gauge } from "@curvefi/prices-api/gauge";
-import TableDeployment from "../Tables/TableDeployment.vue";
 import ChartWeightHistory from "../Charts/ChartWeightHistory.vue";
+import TableDeployment from "../Tables/TableDeployment.vue";
 
 const { gauge } = defineProps<{
   gauge: Gauge | undefined;

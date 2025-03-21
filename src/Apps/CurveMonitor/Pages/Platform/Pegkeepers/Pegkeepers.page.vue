@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { TablePegkeepers } from "./Tables";
 import { ChartKeeperPrices } from "./Charts";
+import { TablePegkeepers } from "./Tables";
 </script>
 
 <template>

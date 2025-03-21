@@ -1,11 +1,10 @@
-import type { Address } from "@/types/address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUPrismaClaim";
+import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
+import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
+import type { Address } from "@/types/address";
 import { maxApprove } from "@/Utils/Wallet";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
-
-import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
-import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 export function uPrismaClaimZaps(
   getConfig: () => Config,

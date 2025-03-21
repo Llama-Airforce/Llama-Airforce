@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { useBribesStore } from "../Store";
+import aura from "@/Assets/Icons/Tokens/aura.png";
+import crv from "@/Assets/Icons/Tokens/crv.svg";
+import fxn from "@/Assets/Icons/Tokens/fxn.svg";
+import prisma from "@/Assets/Icons/Tokens/prisma.svg";
+import redacted from "@/Assets/Icons/Tokens/redacted.png";
+import votium from "@/Assets/Icons/Tokens/votium.png";
 import type { Protocol, Platform } from "../Models";
+import { useBribesStore } from "../Store";
 
 const { t } = useI18n();
 
@@ -24,9 +30,6 @@ const emit = defineEmits<{
 
 const store = useBribesStore();
 
-import votium from "@/Assets/Icons/Tokens/votium.png";
-import redacted from "@/Assets/Icons/Tokens/redacted.png";
-
 const platforms = computed((): PlatformInfo[] => [
   { platform: "votium", label: "Votium", logo: votium },
   { platform: "hh", label: "Hidden Hand", logo: redacted },
@@ -43,11 +46,6 @@ const protocol = computed(
     protocols.value.find((p) => p.protocol === store.protocol) ??
     protocols.value[0]
 );
-
-import crv from "@/Assets/Icons/Tokens/crv.svg";
-import prisma from "@/Assets/Icons/Tokens/prisma.svg";
-import fxn from "@/Assets/Icons/Tokens/fxn.svg";
-import aura from "@/Assets/Icons/Tokens/aura.png";
 
 const protocols = computed((): ProtocolInfo[] => [
   { protocol: "cvx-crv", label: "Curve", logo: crv },

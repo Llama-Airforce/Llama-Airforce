@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
-import TableMarketsLending from "../Tables/TableMarketsLending.vue";
-import TableMarketEvents from "../Tables/TableMarketEvents.vue";
 import ChartSnapshots from "../Charts/ChartSnapshots.vue";
+import TableMarketEvents from "../Tables/TableMarketEvents.vue";
+import TableMarketsLending from "../Tables/TableMarketsLending.vue";
 
 const { address } = useAccount();
 const user = useRouteQuery<string>("user", address.value ?? "");

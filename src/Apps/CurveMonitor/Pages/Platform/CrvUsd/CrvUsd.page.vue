@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Market } from "@curvefi/prices-api/crvusd";
-import { TableMarkets } from "./Tables";
 import { ChartCrvUsdSupply } from "./Charts";
+import { TableMarkets } from "./Tables";
 
 const { crumbs } = storeToRefs(useBreadcrumbStore());
 crumbs.value = [

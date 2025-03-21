@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
-import type { Theme } from "@/Styles/Theme";
 import { colors } from "@/Styles/ChartTheme";
-import Header from "@LAF/Shell/Header.vue";
-import Footer from "@LAF/Shell/Footer.vue";
-import MenuDesktop from "@LAF/Shell/MenuDesktop.vue";
+import type { Theme } from "@/Styles/Theme";
 import Announcement from "@LAF/Components/Announcement.vue";
+import Footer from "@LAF/Shell/Footer.vue";
+import Header from "@LAF/Shell/Header.vue";
+import MenuDesktop from "@LAF/Shell/MenuDesktop.vue";
+import { VueQueryDevtools } from "@tanstack/vue-query-devtools";
 
 import "@/Styles/Themes/LAF/Dark.css";
 

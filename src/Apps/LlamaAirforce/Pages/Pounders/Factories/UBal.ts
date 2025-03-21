@@ -1,10 +1,9 @@
 import { abi } from "@/ABI/Union/UnionVault";
+import logo from "@/Assets/Icons/Tokens/aurabal.png";
+import type FlyerService from "@/Services/FlyerService";
 import { getAuraBalApy } from "@/Utils/Apy";
 import { getAuraBalPrice } from "@/Utils/Price";
-import type FlyerService from "@/Services/FlyerService";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
-
-import logo from "@/Assets/Icons/Tokens/aurabal.png";
 
 export default function createBalPounder(
   config: Config,

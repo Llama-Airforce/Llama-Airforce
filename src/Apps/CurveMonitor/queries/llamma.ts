@@ -1,6 +1,6 @@
-import { keepPreviousData } from "@tanstack/vue-query";
 import type { Chain, Address } from "@curvefi/prices-api";
 import * as Api from "@curvefi/prices-api/llamma";
+import { keepPreviousData } from "@tanstack/vue-query";
 
 export function useQueryEvents(
   endpoint: Api.Endpoint,

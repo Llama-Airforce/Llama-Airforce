@@ -1,14 +1,13 @@
-import type { Address } from "@/types/address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsClaim";
-import { maxApprove } from "@/Utils/Wallet";
-import { PriceService } from "@/Services";
-import { getCvxFxsPrice } from "@/Utils/Price";
-import type { Airdrop, ZapClaim } from "@Pounders/Models";
-import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
-import { claim, calcMinAmountOut } from "@Pounders/Zaps/Helpers";
-
 import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
 import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
+import { PriceService } from "@/Services";
+import type { Address } from "@/types/address";
+import { getCvxFxsPrice } from "@/Utils/Price";
+import { maxApprove } from "@/Utils/Wallet";
+import type { Airdrop, ZapClaim } from "@Pounders/Models";
+import { claim, calcMinAmountOut } from "@Pounders/Zaps/Helpers";
+import { getUFxsPrice } from "@Pounders/Zaps/UFxs/PriceHelper";
 
 export function uFxsClaimZaps(
   getConfig: () => Config,

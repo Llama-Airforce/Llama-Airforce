@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
-import { useQueryCushions } from "@CM/queries/revenue";
 import { useQueryChainsSupported } from "@CM/queries/chains";
+import { useQueryCushions } from "@CM/queries/revenue";
+import type { Chain } from "@curvefi/prices-api";
 
 const search = ref("");
 const loading = computed(

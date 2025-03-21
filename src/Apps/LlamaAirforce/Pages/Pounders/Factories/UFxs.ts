@@ -1,10 +1,9 @@
 import { abi } from "@/ABI/Union/UnionVault";
+import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
+import type { PriceService } from "@/Services";
 import { getCvxFxsApy } from "@/Utils/Apy";
 import { getCvxFxsPrice } from "@/Utils/Price";
-import type { PriceService } from "@/Services";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
-
-import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
 
 export default function createFxsPounder(
   config: Config,

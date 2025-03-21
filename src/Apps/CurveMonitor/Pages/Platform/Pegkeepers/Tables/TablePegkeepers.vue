@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Keeper } from "@curvefi/prices-api/crvusd";
 import { useQueryKeepers } from "@CM/queries/crvusd";
 import { useQueryPoolMultiple } from "@CM/queries/pools";
+import type { Keeper } from "@curvefi/prices-api/crvusd";
 
 const search = ref("");
 

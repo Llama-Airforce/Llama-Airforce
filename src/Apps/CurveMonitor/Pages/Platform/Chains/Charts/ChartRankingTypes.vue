@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Activity } from "@curvefi/prices-api/chains";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
+import type { Activity } from "@curvefi/prices-api/chains";
 
 type ActivityValue = Omit<Activity, "timestamp"> & {
   value: number;

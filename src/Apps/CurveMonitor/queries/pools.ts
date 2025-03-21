@@ -1,6 +1,6 @@
-import { useQuery, keepPreviousData } from "@tanstack/vue-query";
 import type { Chain } from "@curvefi/prices-api";
 import * as Api from "@curvefi/prices-api/pools";
+import { useQuery, keepPreviousData } from "@tanstack/vue-query";
 
 export function useQueryPools(chain: Ref<Chain | undefined>) {
   return useQuery({

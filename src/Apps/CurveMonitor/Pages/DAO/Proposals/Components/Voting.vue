@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Proposal } from "@curvefi/prices-api/proposal";
-import VotingResults from "./VotingResults.vue";
-import VotingQuorum from "./VotingQuorum.vue";
 import VotingButtons from "./VotingButtons.vue";
+import VotingQuorum from "./VotingQuorum.vue";
+import VotingResults from "./VotingResults.vue";
 
 const { proposal } = defineProps<{
   proposal: Proposal;

@@ -1,8 +1,7 @@
+import { ChartNoAxesColumn, BookOpen } from "lucide-vue-next";
+import menuHeader from "@/Assets/Menu/votium.png";
 import type { Page } from "@LAF/Pages/Page";
 
-import menuHeader from "@/Assets/Menu/votium.png";
-
-import { ChartNoAxesColumn, BookOpen } from "lucide-vue-next";
 
 export const pageBribesRoutes = [
   { path: "/votium", redirect: { name: "rounds-incentives" } },

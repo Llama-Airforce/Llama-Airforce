@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/vue-query";
 import type { Address } from "@/types/address";
 import PirexService from "@LAF/Pages/Pirex/Services";
+import { useQuery } from "@tanstack/vue-query";
 
 const service = new PirexService(useHost());
 

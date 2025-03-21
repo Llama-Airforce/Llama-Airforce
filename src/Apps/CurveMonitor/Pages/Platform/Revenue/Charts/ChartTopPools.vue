@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { useQueryTopPools } from "@CM/queries/revenue";
+import type { Chain } from "@curvefi/prices-api";
 
 const chain = ref<Chain>("ethereum");
 

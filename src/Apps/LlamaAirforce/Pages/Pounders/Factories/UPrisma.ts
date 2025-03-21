@@ -1,10 +1,9 @@
 import { abi } from "@/ABI/Union/UnionVault";
+import logo from "@/Assets/Icons/Tokens/prisma.svg";
+import type { PriceService } from "@/Services";
 import { getCvxPrismaApy } from "@/Utils/Apy";
 import { getCvxPrismaPrice } from "@/Utils/Price";
-import type { PriceService } from "@/Services";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
-
-import logo from "@/Assets/Icons/Tokens/prisma.svg";
 
 export default function createPrismaPounder(
   config: Config,

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "lint": "cd ../../../ && eslint \"src/Apps/LlamaAirforce/**/*.{ts,vue}\"",
+    "lint:fix": "cd ../../../ && eslint --fix \"src/Apps/LlamaAirforce/**/*.{ts,vue}\"",
     "dev": "bun --cwd=../../../ --bun vite src/Apps/LlamaAirforce",
     "dev:server": "bun --cwd=../../../ --hot src/Apps/LlamaAirforce/Server/main.ts",
     "build": "bun --cwd=../../../ --bun vite build src/Apps/LlamaAirforce",

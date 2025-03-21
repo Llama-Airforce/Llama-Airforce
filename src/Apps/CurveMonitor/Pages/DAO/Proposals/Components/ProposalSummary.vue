@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Proposal } from "@curvefi/prices-api/proposal";
+import Date from "./Date.vue";
+import Proposer from "./Proposer.vue";
 import Status from "./Status.vue";
 import Type from "./Type.vue";
-import Proposer from "./Proposer.vue";
-import Date from "./Date.vue";
 
 const { proposal } = defineProps<{
   proposal: Proposal;

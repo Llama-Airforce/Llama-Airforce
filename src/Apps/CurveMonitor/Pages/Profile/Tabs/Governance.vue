@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import ChartLocks from "../Charts/ChartLocks.vue";
-
-import TableLocks from "../Tables/TableLocks.vue";
 import TableGauges from "../Tables/TableGauges.vue";
+import TableLocks from "../Tables/TableLocks.vue";
 import TableProposals from "../Tables/TableProposals.vue";
 
 const { address } = useAccount();

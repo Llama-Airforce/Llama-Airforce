@@ -1,3 +1,4 @@
+import { HTTPException } from "hono/http-exception";
 import {
   type Container,
   type ItemDefinition,
@@ -6,7 +7,6 @@ import {
   type Resource,
   CosmosClient,
 } from "@azure/cosmos";
-import { HTTPException } from "hono/http-exception";
 import { env } from "@LAF/Server/helpers/env";
 
 /** Cached database instance. */

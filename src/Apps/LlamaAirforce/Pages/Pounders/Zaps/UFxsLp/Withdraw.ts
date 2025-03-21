@@ -1,13 +1,12 @@
-import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUFxsLp";
+import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
+import { PriceService } from "@/Services";
+import type { Address } from "@/types/address";
+import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Utils/Price";
 import { maxApprove } from "@/Utils/Wallet";
 import type { ZapWithdraw } from "@Pounders/Models";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
-import { PriceService } from "@/Services";
-import { getCvxFxsLpPrice, getCvxFxsPrice } from "@/Utils/Price";
-
-import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 // eslint-disable-next-line max-lines-per-function
 export function uFxsLpWithdrawZaps(

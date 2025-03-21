@@ -1,8 +1,8 @@
+import logoSCrvUsd from "@/Assets/Icons/Tokens/scrvusd.webp";
 import type { Address } from "@/types/address";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
 
-import logoSCrvUsd from "@/Assets/Icons/Tokens/scrvusd.webp";
 
 export function sCrvUsdClaimZaps(
   getConfig: () => Config,

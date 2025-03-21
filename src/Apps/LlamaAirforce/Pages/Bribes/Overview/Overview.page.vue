@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import SelectSystem from "../Components/SelectSystem.vue";
-import ChartBribesRevenue from "./Components/ChartBribesRevenue.vue";
-import TableRounds from "./Components/TableRounds.vue";
-import Summary from "./Components/Summary.vue";
 import { isPlatform, isProtocol } from "../Models";
 import type { OverviewId, Product, Platform, Protocol } from "../Models";
 import DashboardService from "../Services/DashboardService";
 import { useBribesStore } from "../Store";
+import ChartBribesRevenue from "./Components/ChartBribesRevenue.vue";
+import Summary from "./Components/Summary.vue";
+import TableRounds from "./Components/TableRounds.vue";
 
 const dashboardService = new DashboardService(useHost());
 

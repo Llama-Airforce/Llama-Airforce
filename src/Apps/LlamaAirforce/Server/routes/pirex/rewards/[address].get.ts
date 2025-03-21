@@ -1,10 +1,10 @@
+import { type Address, isAddress } from "viem";
 import {
   Hono,
   HTTPException,
   type HonoResultOutput,
   cache,
 } from "@/Framework/Hono";
-import { type Address, isAddress } from "viem";
 
 type SnapshotReward = {
   address: Address;

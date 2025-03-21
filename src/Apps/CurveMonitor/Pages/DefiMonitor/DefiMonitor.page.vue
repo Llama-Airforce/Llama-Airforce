@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Transfers from "./Tabs/Transfers.vue";
-import Swaps from "./Tabs/Swaps.vue";
 import CrvUsd from "./Tabs/CrvUsd.vue";
+import Swaps from "./Tabs/Swaps.vue";
+import Transfers from "./Tabs/Transfers.vue";
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(

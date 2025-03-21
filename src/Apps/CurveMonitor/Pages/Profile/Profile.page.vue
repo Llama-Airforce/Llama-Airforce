@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Lending from "./Tabs/Lending.vue";
 import CrvUsd from "./Tabs/CrvUsd.vue";
 import Governance from "./Tabs/Governance.vue";
+import Lending from "./Tabs/Lending.vue";
 
 // Tabs
 const isMounted = useMounted();

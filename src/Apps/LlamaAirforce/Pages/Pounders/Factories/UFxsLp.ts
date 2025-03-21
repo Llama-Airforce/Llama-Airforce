@@ -1,12 +1,11 @@
-import { abi } from "@/ABI/Union/UnionVault";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
-import { getCvxFxsLpApy } from "@/Utils/Apy";
-import { getCvxFxsLpPrice } from "@/Utils/Price";
-import { bigNumToNumber } from "@/Utils/Number";
-import type { PriceService } from "@/Services";
-import type { VaultUnion, Pounder } from "@Pounders/Models";
-
+import { abi } from "@/ABI/Union/UnionVault";
 import logo from "@/Assets/Icons/Tokens/cvxfxs.png";
+import type { PriceService } from "@/Services";
+import { getCvxFxsLpApy } from "@/Utils/Apy";
+import { bigNumToNumber } from "@/Utils/Number";
+import { getCvxFxsLpPrice } from "@/Utils/Price";
+import type { VaultUnion, Pounder } from "@Pounders/Models";
 
 export default function createFxsLpPounder(
   config: Config,

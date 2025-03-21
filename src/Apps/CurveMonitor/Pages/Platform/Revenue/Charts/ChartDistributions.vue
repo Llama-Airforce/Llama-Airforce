@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Distribution } from "@curvefi/prices-api/revenue";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
+import type { Distribution } from "@curvefi/prices-api/revenue";
 
 const { distributions } = defineProps<{
   distributions: Distribution[];

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { createChartStyles } from "@/Styles/ChartStylesApex";
 import { colors } from "@/Styles/ChartTheme";
+import type { Overview } from "../../Models";
 import { useBribesStore } from "../../Store";
 import { getDate } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
-import type { Overview } from "../../Models";
 
 const { t } = useI18n();
 

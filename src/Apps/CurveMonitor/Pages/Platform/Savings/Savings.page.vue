@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useQueryStatistics } from "@CM/queries/savings";
-import TableEvents from "./Tables/TableEvents.vue";
-import ChartYield from "./Charts/ChartYield.vue";
 import ChartTVL from "./Charts/ChartTVL.vue";
+import ChartYield from "./Charts/ChartYield.vue";
+import TableEvents from "./Tables/TableEvents.vue";
 
 const { data: stats } = useQueryStatistics();
 </script>

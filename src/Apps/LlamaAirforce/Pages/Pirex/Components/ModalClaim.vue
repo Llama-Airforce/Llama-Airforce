@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { Address } from "@/types/address";
 import { abi } from "@/ABI/Union/Pirex";
 import type { Price } from "@/Services";
+import type { Address } from "@/types/address";
+import useApproveForAll from "../Composables/UseApprovalForAll";
 import {
   type SnapshotReward,
   type FuturesReward,
@@ -12,7 +13,6 @@ import {
   isSnapshotReward,
 } from "../Services";
 import RewardsTable from "./RewardsTable.vue";
-import useApproveForAll from "../Composables/UseApprovalForAll";
 
 const emit = defineEmits<{
   close: [];

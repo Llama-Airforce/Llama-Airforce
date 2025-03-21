@@ -1,12 +1,6 @@
 import type { Address } from "@/types/address";
 import { notEmpty } from "@/Utils/Array";
 import type {
-  Delegation,
-  Proposal as SnapshotProposal,
-  Scores,
-  Vote,
-} from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
-import type {
   Bribed,
   BribedPersonal,
   VoteDistribution,
@@ -15,6 +9,12 @@ import type {
   Proposal,
   ProposalId,
 } from "@LAF/Pages/Bribes/Models";
+import type {
+  Delegation,
+  Proposal as SnapshotProposal,
+  Scores,
+  Vote,
+} from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
 
 export function totalAmountDollars(epoch: Epoch): number {
   return epoch.bribes.reduce((acc, cur) => acc + cur.amountDollars, 0);

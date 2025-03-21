@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { PriceService } from "@/Services";
-import UnionService from "@LAF/Services/UnionService";
+import FlyerService from "@/Services/FlyerService";
 import Documentation from "@LAF/Components/Documentation.vue";
+import UnionService from "@LAF/Services/UnionService";
 import Migrations from "@Pounders/Components/Migrations/Migrations.vue";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
-import { useUnionStore } from "@Pounders/Store";
+import { useClaim } from "@Pounders/Composables/UseClaim";
+import * as pounderFactories from "@Pounders/Factories";
 import type { ZapsFactories } from "@Pounders/Models";
 import { create as createPounderState } from "@Pounders/Models/PounderState";
-import FlyerService from "@/Services/FlyerService";
-import * as pounderFactories from "@Pounders/Factories";
+import { useUnionStore } from "@Pounders/Store";
 import * as zaps from "@Pounders/Zaps";
-import { useClaim } from "@Pounders/Composables/UseClaim";
 
 const { t } = useI18n();
 

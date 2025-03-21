@@ -1,5 +1,5 @@
-import type { Address } from "@/types/address";
 import { ServiceBase } from "@/Services";
+import type { Address } from "@/types/address";
 
 const THEGRAPH_URL = "https://api.thegraph.com/subgraphs/name/aurafinance/aura";
 

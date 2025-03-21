@@ -1,15 +1,4 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
-import type { Market } from "@curvefi/prices-api/llamalend";
-import { useQuerySnapshots } from "@CM/queries/llamalend";
-import {
-  useQuerySoftLiqRatios,
-  useQueryLiqsAggregate,
-  useQueryLiqsDetailed,
-  useQueryLiqOverview,
-  useQueryLiqLosses,
-  useQueryLiqHealthDeciles,
-} from "@CM/queries/liquidations";
 import {
   ChartLiqs,
   ChartLiqsSoftLiqRatio,
@@ -20,6 +9,17 @@ import {
   TableTopLiquidators,
   TableLiqOverview,
 } from "@CM/components/liquidations";
+import {
+  useQuerySoftLiqRatios,
+  useQueryLiqsAggregate,
+  useQueryLiqsDetailed,
+  useQueryLiqOverview,
+  useQueryLiqLosses,
+  useQueryLiqHealthDeciles,
+} from "@CM/queries/liquidations";
+import { useQuerySnapshots } from "@CM/queries/llamalend";
+import type { Chain } from "@curvefi/prices-api";
+import type { Market } from "@curvefi/prices-api/llamalend";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

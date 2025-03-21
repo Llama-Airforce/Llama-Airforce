@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
-import type { Pool } from "@curvefi/prices-api/pools";
 import { useQueryChainInfo } from "@CM/queries/chains";
 import { useQueryPools } from "@CM/queries/pools";
+import type { Chain } from "@curvefi/prices-api";
+import type { Pool } from "@curvefi/prices-api/pools";
 import TablePools from "./Tables/TablePools.vue";
 
 const chains: Chain[] = ["ethereum", "arbitrum"];

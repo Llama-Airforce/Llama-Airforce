@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useQueryMarkets, useQueryChains } from "@CM/queries/llamalend";
 import type { Chain } from "@curvefi/prices-api";
 import type { Market, MarketPair } from "@curvefi/prices-api/llamalend";
-import { useQueryMarkets, useQueryChains } from "@CM/queries/llamalend";
 import { TableMarkets } from "./Tables";
 
 const chainParam = useRouteParams<Chain | undefined | "">("chain");

@@ -1,10 +1,9 @@
+import { abi } from "@/ABI/Union/UnionVault";
+import logo from "@/Assets/Icons/Tokens/crv.svg";
+import type { PriceService } from "@/Services";
 import { getCvxCrvApy } from "@/Utils/Apy";
 import { getCvxCrvPrice } from "@/Utils/Price";
-import { abi } from "@/ABI/Union/UnionVault";
-import type { PriceService } from "@/Services";
 import type { VaultUnion, Pounder } from "@Pounders/Models";
-
-import logo from "@/Assets/Icons/Tokens/crv.svg";
 
 export default function createCrvPounder(
   config: Config,

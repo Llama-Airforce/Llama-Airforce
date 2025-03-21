@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
-import type { Market } from "@curvefi/prices-api/llamalend";
 import { ChartOHLC, TableTrades, TableEvents } from "@CM/components/llamma";
 import {
   useQueryOHLC,
   useQueryEvents,
   useQueryTrades,
 } from "@CM/queries/llamma";
+import type { Chain } from "@curvefi/prices-api";
+import type { Market } from "@curvefi/prices-api/llamalend";
 
 const { market, chain } = defineProps<{
   market: Market | undefined;

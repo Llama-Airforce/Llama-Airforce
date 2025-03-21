@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { EpochOverview, Overview } from "../../Models";
 import { useBribesStore } from "../../Store";
 import { getDate, getDateRaw, getLink } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
-import type { EpochOverview, Overview } from "../../Models";
 
 const { t } = useI18n();
 

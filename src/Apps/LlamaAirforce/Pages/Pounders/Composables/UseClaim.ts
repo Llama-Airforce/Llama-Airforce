@@ -1,5 +1,5 @@
-import type { Address } from "@/types/address";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
+import type { Address } from "@/types/address";
 import type UnionService from "@LAF/Services/UnionService";
 import type { AirdropId } from "@LAF/Services/UnionService";
 import { getDistributor } from "@Pounders/Models";

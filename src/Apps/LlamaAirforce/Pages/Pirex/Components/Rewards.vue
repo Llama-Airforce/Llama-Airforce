@@ -7,8 +7,8 @@ import {
   sumRewards,
 } from "../Services";
 import { useQueryRewards } from "../Services/Queries";
-import RewardsTable from "./RewardsTable.vue";
 import ModalClaim from "./ModalClaim.vue";
+import RewardsTable from "./RewardsTable.vue";
 
 const showClaims = ref(false);
 

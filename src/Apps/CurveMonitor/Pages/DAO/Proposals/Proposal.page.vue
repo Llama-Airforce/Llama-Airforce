@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ProposalType } from "@curvefi/prices-api/proposal";
 import { useQueryProposal } from "@CM/queries/proposal";
+import type { ProposalType } from "@curvefi/prices-api/proposal";
 import ProposalComponent from "./Components/Proposal.vue";
 
 const proposalId = useRouteParams("proposalId", 0, { transform: Number });

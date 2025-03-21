@@ -1,10 +1,9 @@
-import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
+import type { Address } from "@/types/address";
 import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
-
-import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 export function uCrvDepositZaps(
   getConfig: () => Config,

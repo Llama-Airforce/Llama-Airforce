@@ -1,6 +1,6 @@
 import type { Chain } from "@curvefi/prices-api";
-import * as ApiOHLC from "@curvefi/prices-api/ohlc";
 import * as Api from "@curvefi/prices-api/crvusd";
+import * as ApiOHLC from "@curvefi/prices-api/ohlc";
 
 function initEmptyArray() {
   return {

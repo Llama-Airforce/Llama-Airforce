@@ -1,11 +1,10 @@
-import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
 import { abi as abiZapsMigrate } from "@/ABI/Union/ZapsUPrismaConvexMigration";
+import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
+import type { Address } from "@/types/address";
 import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
-
-import logoPRISMA from "@/Assets/Icons/Tokens/prisma.svg";
 
 export function uPrismaDepositZaps(
   getConfig: () => Config,

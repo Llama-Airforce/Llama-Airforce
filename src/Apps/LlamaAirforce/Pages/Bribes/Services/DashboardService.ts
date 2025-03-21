@@ -1,11 +1,11 @@
 import { ServiceBaseHost } from "@/Services";
-import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
-import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 import type {
   Overview,
   OverviewId,
   DashboardResponse,
 } from "@LAF/Pages/Bribes/Models";
+import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
+import { getMergeWithHiddenHands } from "@LAF/Pages/Bribes/Util/AuraHelper";
 
 export default class DashboardService extends ServiceBaseHost {
   private auraService: AuraService;

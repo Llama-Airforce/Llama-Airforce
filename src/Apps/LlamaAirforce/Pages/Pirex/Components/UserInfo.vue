@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Rewards from "./Rewards.vue";
 import RedemptionsUser from "./RedemptionsUser.vue";
+import Rewards from "./Rewards.vue";
 
 const tabs = ["rewards", "redemptions"] as const;
 type Tabs = (typeof tabs)[number];

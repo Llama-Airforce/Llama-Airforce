@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import LabelsWorstRelative from "./Components/LabelsWorstRelative.vue";
 import LabelsWorstAbsolute from "./Components/LabelsWorstAbsolute.vue";
+import LabelsWorstRelative from "./Components/LabelsWorstRelative.vue";
 import Sandwiches from "./Components/Sandwiches.vue";
 </script>
 

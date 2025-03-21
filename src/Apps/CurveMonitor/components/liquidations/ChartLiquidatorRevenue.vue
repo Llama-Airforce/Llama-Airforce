@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LiquidationDetails } from "@curvefi/prices-api/liquidations";
 import createChartOptions from "@/Styles/ChartStylesLW";
+import type { LiquidationDetails } from "@curvefi/prices-api/liquidations";
 
 type Discount = {
   timestamp: Date;

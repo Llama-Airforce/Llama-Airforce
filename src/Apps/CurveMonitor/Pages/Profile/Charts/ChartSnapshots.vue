@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsCrvUsd } from "@CM/queries/crvusd";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsLending } from "@CM/queries/llamalend";
+import type { Chain } from "@curvefi/prices-api";
 
 export type Serie = "borrowed" | "collateral";
 const serie = ref<Serie>("borrowed");

@@ -2,8 +2,8 @@
 import { mainnet } from "viem/chains";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
-import RedemptionsTableInit from "./RedemptionsInitTable.vue";
 import type { Redemption } from "../Services";
+import RedemptionsTableInit from "./RedemptionsInitTable.vue";
 
 const emit = defineEmits<{
   close: [];

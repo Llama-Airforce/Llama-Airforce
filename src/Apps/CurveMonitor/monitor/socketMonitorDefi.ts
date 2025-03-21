@@ -1,6 +1,6 @@
 import type { Socket } from "socket.io-client";
-import type { GeneralErc20TokenSpecificBlockSummary } from "./transfer";
 import type { GeneralSwapAddressSpecificBlockSummary } from "./swap";
+import type { GeneralErc20TokenSpecificBlockSummary } from "./transfer";
 
 export type ClientToServerEvents = {
   disconnectFromGeneralErc20Livestream: (tokenAddress: string) => void;

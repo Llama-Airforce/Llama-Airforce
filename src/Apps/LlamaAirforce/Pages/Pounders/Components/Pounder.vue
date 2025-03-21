@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useUnionStore } from "@Pounders/Store";
-import type { PounderId } from "@Pounders/Models";
-import PounderSummary from "@Pounders/Components/PounderSummary.vue";
 import PounderDetails from "@Pounders/Components/PounderDetails.vue";
+import PounderSummary from "@Pounders/Components/PounderSummary.vue";
+import type { PounderId } from "@Pounders/Models";
+import { useUnionStore } from "@Pounders/Store";
 
 const { pounderId } = defineProps<{
   pounderId: PounderId;

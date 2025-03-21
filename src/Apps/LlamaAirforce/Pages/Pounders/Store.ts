@@ -1,4 +1,5 @@
 import type { Address } from "@/types/address";
+import type { Claim } from "@LAF/Services/UnionService";
 import type {
   PounderId,
   Pounder,
@@ -8,7 +9,6 @@ import type {
   ZapsFactories,
 } from "@Pounders/Models";
 import { getVirtualPrice } from "@Pounders/Models";
-import type { Claim } from "@LAF/Services/UnionService";
 
 type PounderStore = {
   pounder: Pounder<Vault>;

@@ -111,6 +111,29 @@ export default [
       semi: "error",
 
       "import/no-unresolved": "off",
+      "import/order": [
+        "warn",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
+          pathGroups: [
+            // This will make all @-prefixed external imports come after non-@ imports
+            { pattern: "@*/**", group: "external", position: "after" },
+          ],
+          pathGroupsExcludedImportTypes: [], // Make sure pathGroups aren't ignored by anything
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+          "newlines-between": "never",
+        },
+      ],
 
       "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/no-unused-expressions": "error",

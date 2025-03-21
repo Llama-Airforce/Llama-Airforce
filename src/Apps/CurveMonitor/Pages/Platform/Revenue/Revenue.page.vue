@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Overview from "./Tabs/Overview.vue";
-import Distributions from "./Tabs/Distributions.vue";
 import Cushions from "./Tabs/Cushions.vue";
-import Settlements from "./Tabs/Settlements.vue";
+import Distributions from "./Tabs/Distributions.vue";
 import Harvesting from "./Tabs/Harvesting.vue";
+import Overview from "./Tabs/Overview.vue";
+import Settlements from "./Tabs/Settlements.vue";
 
 const { tabActive, tabActiveIndex } = useTabNavigation(
   ["overview", "distributions", "cushions", "settlements", "harvesting"],

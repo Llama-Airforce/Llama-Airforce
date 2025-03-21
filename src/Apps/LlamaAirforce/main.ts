@@ -1,20 +1,17 @@
 import { createI18n } from "vue-i18n";
 import type { RouteRecordRaw } from "vue-router";
-import { safe } from "@wagmi/connectors";
+import { walletConnect } from "@/Utils/Wagmi";
 import App from "@LAF/App.vue";
-import { routes as routesBase } from "@LAF/Routes";
-
 import { pageBribes, pageBribesRoutes } from "@LAF/Pages/Bribes/Page";
+import type { Page } from "@LAF/Pages/Page";
+import { usePageStore } from "@LAF/Pages/PageStore";
 import { pagePirex, pagePirexRoutes } from "@LAF/Pages/Pirex/Page";
 import { pagePounders, pagePoundersRoutes } from "@LAF/Pages/Pounders/Page";
 import { pageUnion, pageUnionRoutes } from "@LAF/Pages/Union/Page";
-
-import { usePageStore } from "@LAF/Pages/PageStore";
-import type { Page } from "@LAF/Pages/Page";
-
-import { setup } from "../setup";
-import { walletConnect } from "@/Utils/Wagmi";
+import { routes as routesBase } from "@LAF/Routes";
+import { safe } from "@wagmi/connectors";
 import { coinbaseWallet } from "@wagmi/vue/connectors";
+import { setup } from "../setup";
 
 // Configure pages.
 const pages: Page[] = [];

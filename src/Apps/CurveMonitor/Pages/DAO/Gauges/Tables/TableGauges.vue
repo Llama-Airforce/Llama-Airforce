@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
 import { useQueryGauges } from "@CM/queries/gauge";
+import type { Chain } from "@curvefi/prices-api";
 
 const { isFetching: loading, data: gauges } = useQueryGauges();
 

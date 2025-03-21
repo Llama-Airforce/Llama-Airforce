@@ -1,5 +1,5 @@
-import type { Address } from "@/types/address";
 import { createObservable } from "@/Services/Socket";
+import type { Address } from "@/types/address";
 import type {
   SocketMonitorDefi,
   ServerToClientEvents,

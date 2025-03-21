@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "lint": "cd ../../../ && eslint \"src/Apps/HippoArmy/**/*.{ts,vue}\"",
+    "lint:fix": "cd ../../../ && eslint --fix \"src/Apps/HippoArmy/**/*.{ts,vue}\"",
     "dev": "bun --cwd=../../../ --bun vite src/Apps/HippoArmy",
     "dev:server": "bun --cwd=../../../ --hot src/Apps/HippoArmy/Server/main.ts",
     "build": "bun --cwd=../../../ --bun vite build src/Apps/HippoArmy",

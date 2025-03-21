@@ -1,7 +1,7 @@
 import { ServiceBaseHost } from "@/Services";
 import type { EpochId, EpochOverview, Product } from "@LAF/Pages/Bribes/Models";
-import type { Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 import type { Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
+import type { Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 
 export default class BribesService extends ServiceBaseHost {
   public async rounds(product: Partial<Product>): Promise<RoundsResponse> {

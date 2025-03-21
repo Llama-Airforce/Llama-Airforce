@@ -1,6 +1,6 @@
 import { abi as abiUnionVaultPirex } from "@/ABI/Union/UnionVaultPirex";
-import { getPxCvxPrice } from "@/Utils/Price";
 import type { PriceService } from "@/Services";
+import { getPxCvxPrice } from "@/Utils/Price";
 import { getVirtualPrice } from "@Pounders/Models/Pounder";
 
 export async function getUCvxPrice(priceService: PriceService, config: Config) {

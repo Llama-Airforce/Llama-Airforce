@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { useUnionStore } from "@Pounders/Store";
-import UnionService from "@LAF/Services/UnionService";
 import { PriceService } from "@/Services";
 import FlyerService from "@/Services/FlyerService";
-import { useClaim } from "@Pounders/Composables/UseClaim";
-import { create as createPounderState } from "@Pounders/Models/PounderState";
-import { createCvxPounder } from "@Pounders/Factories";
-import { uCvxDepositZaps, uCvxWithdrawZaps } from "@Pounders/Zaps";
-import type { ZapsFactories } from "@Pounders/Models";
+import UnionService from "@LAF/Services/UnionService";
 import PounderComponent from "@Pounders/Components/Pounder.vue";
-
-import VaultInfo from "./Components/VaultInfo.vue";
-import UserInfo from "./Components/UserInfo.vue";
-
+import { useClaim } from "@Pounders/Composables/UseClaim";
+import { createCvxPounder } from "@Pounders/Factories";
+import type { ZapsFactories } from "@Pounders/Models";
+import { create as createPounderState } from "@Pounders/Models/PounderState";
+import { useUnionStore } from "@Pounders/Store";
+import { uCvxDepositZaps, uCvxWithdrawZaps } from "@Pounders/Zaps";
 import RedemptionsInit from "./Components/RedemptionsInit.vue";
 import Swap from "./Components/Swap.vue";
+import UserInfo from "./Components/UserInfo.vue";
+import VaultInfo from "./Components/VaultInfo.vue";
 
 const unionService = new UnionService(useHost());
 const priceService = new PriceService(useHost());

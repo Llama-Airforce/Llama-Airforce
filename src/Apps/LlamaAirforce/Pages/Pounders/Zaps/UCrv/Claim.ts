@@ -1,11 +1,10 @@
-import type { Address } from "@/types/address";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCrvClaim";
+import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
+import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
+import type { Address } from "@/types/address";
 import { maxApprove } from "@/Utils/Wallet";
 import type { Airdrop, ZapClaim } from "@Pounders/Models";
 import { claim } from "@Pounders/Zaps/Helpers";
-
-import logoAirforce from "@/Assets/Icons/Tokens/airforce.png";
-import logoCRV from "@/Assets/Icons/Tokens/crv.svg";
 
 export function uCrvClaimZaps(
   getConfig: () => Config,

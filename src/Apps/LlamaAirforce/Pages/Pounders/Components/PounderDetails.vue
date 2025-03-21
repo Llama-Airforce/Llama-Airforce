@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
 import { abi as abiMerkle } from "@/ABI/Union/MerkleDistributor2";
+import cow from "@/Assets/Icons/Tokens/cow.webp";
+import ModalCowSwap from "@Pounders/Components/ModalCowSwap.vue";
+import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 import PounderInput from "@Pounders/Components/PounderInput.vue";
 import SelectZap from "@Pounders/Components/SelectZap.vue";
-import { useUnionStore } from "@Pounders/Store";
 import type { PounderId, Zap, ZapWithdraw, ZapDeposit } from "@Pounders/Models";
-import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
-import ModalCowSwap from "@Pounders/Components/ModalCowSwap.vue";
-
-import cow from "@/Assets/Icons/Tokens/cow.webp";
+import { useUnionStore } from "@Pounders/Store";
 
 const { t } = useI18n();
 

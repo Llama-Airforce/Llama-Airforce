@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Swap } from "@Pounders/Models";
 import CowSwap from "@LAF/Components/CowSwap.vue";
+import type { Swap } from "@Pounders/Models";
 
 const { t } = useI18n();
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Strategy from "./Strategy.vue";
-import Fees from "./Fees.vue";
 import Audits from "./Audits.vue";
+import Fees from "./Fees.vue";
+import Strategy from "./Strategy.vue";
 
 const tabs = ["strategy", "fees", "audits"] as const;
 type Tabs = (typeof tabs)[number];

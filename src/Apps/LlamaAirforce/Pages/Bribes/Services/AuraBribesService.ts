@@ -1,9 +1,9 @@
 import type { EpochId } from "@LAF/Pages/Bribes/Models";
-import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 import AuraService from "@LAF/Pages/Bribes/Services/AuraService";
+import BribesService from "@LAF/Pages/Bribes/Services/BribesService";
 import { AuraConstants } from "@LAF/Pages/Bribes/Util/AuraHelper";
-import type { Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 import type { Result as EpochResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/[round].get";
+import type { Result as RoundsResponse } from "@LAF/Server/routes/bribes/[platform]/[protocol]/rounds.get";
 
 export default class AuraBribesService extends BribesService {
   private auraService: AuraService;

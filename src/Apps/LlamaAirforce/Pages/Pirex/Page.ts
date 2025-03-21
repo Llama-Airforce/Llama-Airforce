@@ -1,6 +1,6 @@
+import menuHeader from "@/Assets/Menu/pirex.webp";
 import type { Page } from "@LAF/Pages/Page";
 
-import menuHeader from "@/Assets/Menu/pirex.webp";
 
 export const pagePirexRoutes = [
   {

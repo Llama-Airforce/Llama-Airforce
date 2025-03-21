@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import Articles from "./Components/Articles.vue";
 import KPIs from "./Components/KPIs.vue";
 import Telegram from "./Components/Telegram.vue";
-import Articles from "./Components/Articles.vue";
 </script>
 
 <template>

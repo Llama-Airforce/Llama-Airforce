@@ -1,4 +1,5 @@
 import type { Socket } from "socket.io-client";
+import { TransactionType } from "@CM/phil/src/models/TransactionType";
 import type {
   LabelRankingShort,
   LabelRankingExtended,
@@ -7,9 +8,7 @@ import type {
   DurationInput,
   IntervalInput,
 } from "@CM/phil/src/utils/Interfaces";
-
 import type { SandwichDetail } from "@CM/phil/src/utils/postgresTables/readFunctions/SandwichDetail";
-import { TransactionType } from "@CM/phil/src/models/TransactionType";
 
 interface AggregatedVolumeData {
   interval_start: Date;

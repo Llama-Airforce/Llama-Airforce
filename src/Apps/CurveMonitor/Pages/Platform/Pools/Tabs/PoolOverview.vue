@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import { useQueryOHLC } from "@CM/queries/ohlc";
+import { useQueryVolume, useQueryTvl } from "@CM/queries/pools";
 import type { Chain } from "@curvefi/prices-api";
 import type { Pool } from "@curvefi/prices-api/pools";
-import { useQueryVolume, useQueryTvl } from "@CM/queries/pools";
-import { useQueryOHLC } from "@CM/queries/ohlc";
 import ChartBalances from "../Charts/ChartBalances.vue";
+import ChartPrice from "../Charts/ChartPrice.vue";
 import ChartTvl from "../Charts/ChartTvl.vue";
 import ChartVolume from "../Charts/ChartVolume.vue";
-import ChartPrice from "../Charts/ChartPrice.vue";
 
 const { pool, chain } = defineProps<{
   pool: Pool | undefined;

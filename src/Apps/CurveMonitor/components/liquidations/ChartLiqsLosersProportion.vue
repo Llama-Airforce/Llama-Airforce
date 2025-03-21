@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LiqLosses } from "@curvefi/prices-api/liquidations";
 import createChartOptions from "@/Styles/ChartStylesLW";
+import type { LiqLosses } from "@curvefi/prices-api/liquidations";
 
 const { losses } = defineProps<{
   losses: LiqLosses[];

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LiquidationAggregate } from "@curvefi/prices-api/liquidations";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
+import type { LiquidationAggregate } from "@curvefi/prices-api/liquidations";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 

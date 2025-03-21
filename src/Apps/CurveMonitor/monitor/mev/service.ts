@@ -1,5 +1,5 @@
-import type { Address } from "@/types/address";
 import { emitAndListen } from "@/Services/Socket";
+import type { Address } from "@/types/address";
 import type {
   DurationInput,
   IntervalInput,

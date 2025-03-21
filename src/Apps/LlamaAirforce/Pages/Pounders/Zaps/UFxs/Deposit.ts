@@ -1,10 +1,9 @@
-import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
+import type { Address } from "@/types/address";
 import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
-
-import logoFXS from "@/Assets/Icons/Tokens/fxs.png";
 
 export function uFxsDepositZaps(
   getConfig: () => Config,

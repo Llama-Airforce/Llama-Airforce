@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useUnionStore } from "@Pounders/Store";
-import { type PounderId, type Fees, getFees } from "@Pounders/Models";
-import Pool from "@Pounders/Components/Pool.vue";
-import Balance from "@Pounders/Components/Balance.vue";
 import Apy from "@Pounders/Components/Apy.vue";
+import Balance from "@Pounders/Components/Balance.vue";
+import Pool from "@Pounders/Components/Pool.vue";
 import Tvl from "@Pounders/Components/Tvl.vue";
+import { type PounderId, type Fees, getFees } from "@Pounders/Models";
+import { useUnionStore } from "@Pounders/Store";
 
 const { pounderId } = defineProps<{
   pounderId: PounderId;

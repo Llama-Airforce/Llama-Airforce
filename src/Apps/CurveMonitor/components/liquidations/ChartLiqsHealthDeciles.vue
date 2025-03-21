@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LiqHealthDecile } from "@curvefi/prices-api/liquidations";
 import { createChartStyles } from "@/Styles/ChartStylesApex";
+import type { LiqHealthDecile } from "@curvefi/prices-api/liquidations";
 
 const { deciles } = defineProps<{
   deciles: LiqHealthDecile[];

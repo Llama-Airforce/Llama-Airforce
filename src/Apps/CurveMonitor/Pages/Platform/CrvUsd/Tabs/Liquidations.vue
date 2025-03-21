@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import type { Chain } from "@curvefi/prices-api";
-import { useQuerySnapshots } from "@CM/queries/crvusd";
-import {
-  useQueryLiqOverview,
-  useQueryLiqsAggregate,
-  useQueryLiqsDetailed,
-  useQueryLiqHealthDeciles,
-  useQueryLiqLosses,
-  useQuerySoftLiqRatios,
-} from "@CM/queries/liquidations";
+import { ChartCollateralRatio } from "@CM/components/lending";
 import {
   ChartLiqs,
   ChartLiqsSoftLiqRatio,
@@ -19,7 +10,16 @@ import {
   TableTopLiquidators,
   TableLiqOverview,
 } from "@CM/components/liquidations";
-import { ChartCollateralRatio } from "@CM/components/lending";
+import { useQuerySnapshots } from "@CM/queries/crvusd";
+import {
+  useQueryLiqOverview,
+  useQueryLiqsAggregate,
+  useQueryLiqsDetailed,
+  useQueryLiqHealthDeciles,
+  useQueryLiqLosses,
+  useQuerySoftLiqRatios,
+} from "@CM/queries/liquidations";
+import type { Chain } from "@curvefi/prices-api";
 
 const { market, chain } = defineProps<{
   market: Parameters<typeof useQuerySnapshots>[0]["value"];

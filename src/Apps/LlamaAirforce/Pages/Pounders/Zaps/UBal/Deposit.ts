@@ -1,10 +1,9 @@
-import type { Address } from "@/types/address";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import logoAuraBAL from "@/Assets/Icons/Tokens/aurabal.png";
+import type { Address } from "@/types/address";
 import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import { getBalance, getDecimals } from "@Pounders/Zaps/Helpers";
-
-import logoAuraBAL from "@/Assets/Icons/Tokens/aurabal.png";
 
 export function uBalDepositZaps(
   getConfig: () => Config,

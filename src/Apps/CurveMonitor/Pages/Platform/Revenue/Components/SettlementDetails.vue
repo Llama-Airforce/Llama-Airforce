@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CowSwapSettlement } from "@curvefi/prices-api/revenue";
 import { useQuerySolverCompetition } from "@CM/queries/solver";
+import type { CowSwapSettlement } from "@curvefi/prices-api/revenue";
 
 const { settlement } = defineProps<{
   settlement: CowSwapSettlement;

@@ -1,8 +1,8 @@
 import { getAddress } from "viem";
-import type { Address } from "@/types/address";
-import { paginate } from "@/Utils/Pagination";
-import { mapKeys } from "@/Utils/Object";
 import { ServiceBaseHost } from "@/Services";
+import type { Address } from "@/types/address";
+import { mapKeys } from "@/Utils/Object";
+import { paginate } from "@/Utils/Pagination";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
 import type { Result as DelegationsResponse } from "@LAF/Server/routes/delegations.post";
 

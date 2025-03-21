@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import { type Proposal, getStatus } from "@curvefi/prices-api/proposal";
 import { abi as abiVeCRV } from "@/ABI/Curve/VeCRV";
 import { abi as abiVoting } from "@/ABI/Curve/VotingCurve";
+import { type Proposal, getStatus } from "@curvefi/prices-api/proposal";
 
 const { proposal } = defineProps<{
   proposal: Proposal;

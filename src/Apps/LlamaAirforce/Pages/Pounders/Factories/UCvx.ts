@@ -1,11 +1,10 @@
 import { abi } from "@/ABI/Union/UnionVaultPirex";
+import logo from "@/Assets/Icons/Tokens/cvx.svg";
+import type { PriceService } from "@/Services";
+import type FlyerService from "@/Services/FlyerService";
 import { getCvxApy } from "@/Utils/Apy";
 import { getPxCvxPrice } from "@/Utils/Price";
-import type { PriceService } from "@/Services";
 import type { VaultPirex, Pounder } from "@Pounders/Models";
-import type FlyerService from "@/Services/FlyerService";
-
-import logo from "@/Assets/Icons/Tokens/cvx.svg";
 
 export default function createCvxPounder(
   config: Config,

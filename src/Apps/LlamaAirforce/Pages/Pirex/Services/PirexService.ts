@@ -1,5 +1,5 @@
-import type { Address } from "@/types/address";
 import { ServiceBaseHost } from "@/Services";
+import type { Address } from "@/types/address";
 import type * as ApiTypes from "@LAF/Pages/Pirex/Services/ApiTypes";
 import * as Parsers from "@LAF/Pages/Pirex/Services/Parsers";
 

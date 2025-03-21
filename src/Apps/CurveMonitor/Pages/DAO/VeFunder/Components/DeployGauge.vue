@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
-import type { Address } from "@/types/address";
 import { abi } from "@/ABI/veFunder/GaugeFactory";
+import type { Address } from "@/types/address";
 
 const emit = defineEmits<{
   gauge: [gauge: Address];

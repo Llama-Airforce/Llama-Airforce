@@ -1,7 +1,10 @@
-import type { Address } from "@/types/address";
+import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { abi as abiVaultPirex } from "@/ABI/Union/UnionVaultPirex";
 import { abi as abiZaps } from "@/ABI/Union/ZapsUCvx";
-import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
+import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
+import { PriceService } from "@/Services";
+import type { Address } from "@/types/address";
+import { getPxCvxPrice } from "@/Utils/Price";
 import { maxApprove } from "@/Utils/Wallet";
 import type { ZapDeposit } from "@Pounders/Models";
 import {
@@ -9,10 +12,6 @@ import {
   getDecimals,
   calcMinAmountOut,
 } from "@Pounders/Zaps/Helpers";
-import { PriceService } from "@/Services";
-import { getPxCvxPrice } from "@/Utils/Price";
-
-import logoCVX from "@/Assets/Icons/Tokens/cvx.svg";
 
 async function shouldLock(config: Config, input: bigint): Promise<boolean> {
   const dy = await readContract(config, {
