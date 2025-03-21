@@ -3,7 +3,7 @@ const fullscreen = ref(false);
 
 const { chart, target = null } = defineProps<{
   chart: IChartApi | undefined;
-  target: ComponentPublicInstance | null;
+  target?: ComponentPublicInstance | null;
 }>();
 
 // Fullscreen

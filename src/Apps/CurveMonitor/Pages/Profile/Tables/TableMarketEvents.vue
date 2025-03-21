@@ -3,12 +3,7 @@ import type { Chain } from "@curvefi/prices-api";
 import { useQueryUserMarketCollateralEvents as useQueryEventsCrvUsd } from "@CM/queries/crvusd";
 import { useQueryUserMarketCollateralEvents as useQueryEventsLending } from "@CM/queries/llamalend";
 
-const {
-  type,
-  user,
-  chain = "ethereum",
-  controller,
-} = defineProps<{
+const { type, user, chain, controller } = defineProps<{
   type: "lending" | "crvusd";
   user: string | undefined;
   chain: Chain | undefined;
@@ -102,7 +97,7 @@ function scanUrl(chain: Chain) {
           <a
             class="font-mono"
             target="_blank"
-            :href="`https://${scanUrl(chain)}/tx/${item.txHash}`"
+            :href="`https://${scanUrl(chain ?? 'ethereum')}/tx/${item.txHash}`"
             @click.stop
           >
             {{ item.timestamp.toLocaleDateString() }}

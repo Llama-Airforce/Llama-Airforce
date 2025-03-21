@@ -2,7 +2,7 @@
 import type { CrvUsdSupply } from "@curvefi/prices-api/crvusd";
 import createChartOptions from "@/Styles/ChartStylesLW";
 
-const { data = [] } = defineProps<{
+const { data } = defineProps<{
   data: CrvUsdSupply[];
 }>();
 

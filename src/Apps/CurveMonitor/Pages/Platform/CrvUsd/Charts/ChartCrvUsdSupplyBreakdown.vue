@@ -4,7 +4,7 @@ import { createChartStyles } from "@/Styles/ChartStylesApex";
 
 type Serie = { name: string; data: { x: string; y: number }[] };
 
-const { data = [] } = defineProps<{
+const { data } = defineProps<{
   data: CrvUsdSupply[];
 }>();
 

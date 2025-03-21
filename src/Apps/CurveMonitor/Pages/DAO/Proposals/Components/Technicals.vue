@@ -3,7 +3,7 @@ import type { Proposal } from "@curvefi/prices-api/proposal";
 import { useQueryProposal } from "@CM/queries/proposal";
 import Voters from "./Voters.vue";
 
-const { proposal, expanded = false } = defineProps<{
+const { proposal, expanded } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
 }>();

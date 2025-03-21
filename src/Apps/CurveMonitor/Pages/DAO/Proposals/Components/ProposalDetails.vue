@@ -3,7 +3,7 @@ import type { Proposal } from "@curvefi/prices-api/proposal";
 import Voting from "./Voting.vue";
 import Technicals from "./Technicals.vue";
 
-const { proposal, expanded = false } = defineProps<{
+const { proposal, expanded } = defineProps<{
   proposal: Proposal;
   expanded: boolean;
 }>();

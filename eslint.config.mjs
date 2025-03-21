@@ -39,6 +39,13 @@ export default [
 
       globals: {
         ...autoImportConfig.globals,
+        document: true,
+        window: true,
+        setTimeout: true,
+        clearInterval: true,
+        setInterval: true,
+        navigator: true,
+        fetch: true,
       },
     },
 

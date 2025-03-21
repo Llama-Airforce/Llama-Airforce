@@ -2,7 +2,7 @@
 import type { DurationType } from "@CM/monitor/socketMonitorCurve";
 
 const { duration = { value: 1, unit: "month" } } = defineProps<{
-  duration: DurationType;
+  duration?: DurationType;
 }>();
 
 const emit = defineEmits<{

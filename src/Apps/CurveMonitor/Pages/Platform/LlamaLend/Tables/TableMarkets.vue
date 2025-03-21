@@ -8,11 +8,7 @@ import {
 
 type MarketType = "long" | "short";
 
-const {
-  pairs = [],
-  loading,
-  chain,
-} = defineProps<{
+const { pairs, loading, chain } = defineProps<{
   pairs: MarketPair[];
   loading: boolean;
   chain: Chain;
