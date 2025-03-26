@@ -3,7 +3,7 @@ import type { App } from "@/types/apps";
 // Default API host endpoints for apps.
 export const hosts: Record<App, string | undefined> = {
   laf: "https://api.llama.airforce",
-  ha: "https://api.hippo.army",
+  ha: "https://api2.hippo.army",
   cb: undefined,
   cm: "https://api2.curvemonitor.com",
 };
