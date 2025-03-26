@@ -70,12 +70,16 @@ function createSeries() {
   // OHLC
   const invertMultiplier = invert.value ? -1 : 1;
   const newOHLCSerie = ohlc
+    .filter(
+      (x) =>
+        x.open !== null && x.high !== null && x.low !== null && x.close !== null
+    )
     .map((c) => ({
       time: c.time.getUTCTimestamp(),
-      open: Math.pow(c.open, invertMultiplier),
-      high: Math.pow(c.high, invertMultiplier),
-      low: Math.pow(c.low, invertMultiplier),
-      close: Math.pow(c.close, invertMultiplier),
+      open: Math.pow(c.open!, invertMultiplier),
+      high: Math.pow(c.high!, invertMultiplier),
+      low: Math.pow(c.low!, invertMultiplier),
+      close: Math.pow(c.close!, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
@@ -88,9 +92,10 @@ function createSeries() {
 
   // Price Oracle
   const newOracleSerie = ohlc
+    .filter((x) => x.oraclePrice !== null)
     .map((x) => ({
       time: x.time.getUTCTimestamp(),
-      value: Math.pow(x.oraclePrice, invertMultiplier),
+      value: Math.pow(x.oraclePrice!, invertMultiplier),
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
