@@ -1,0 +1,41 @@
+<script setup lang="ts">
+import ChartProjections from "./charts/ChartProjections.vue";
+import ChartSupplyDistribution from "./charts/ChartSupplyDistribution.vue";
+import KPIs from "./components/KPIs.vue";
+import TableVesting from "./tables/TableVesting.vue";
+</script>
+
+<template>
+  <div class="dashboard">
+    <DashboardHeader
+      style="grid-area: header"
+      title="Vesting"
+      description="Token vesting, distribution, and circulating supply metrics"
+    />
+
+    <KPIs style="grid-area: highlights" />
+
+    <ChartProjections style="grid-area: projections" />
+    <ChartSupplyDistribution style="grid-area: supply" />
+
+    <TableVesting style="grid-area: table" />
+  </div>
+</template>
+
+<style scoped>
+.dashboard {
+  max-width: calc(1920px - 18.125rem);
+
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-areas:
+    "header header"
+    "highlights highlights"
+    "projections supply"
+    "table table";
+
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>

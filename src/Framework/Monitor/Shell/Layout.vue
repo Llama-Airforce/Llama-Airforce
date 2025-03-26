@@ -8,6 +8,7 @@ const { onCrumb } = useBreadcrumbStore();
 <template>
   <div class="root">
     <notifications
+      dangerously-set-inner-html
       :width="600"
       :duration="-1"
     />

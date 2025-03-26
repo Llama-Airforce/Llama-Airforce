@@ -19,7 +19,7 @@ const isActive = (crumb: Crumb): boolean => {
   return crumb.hint ?? idMatch;
 };
 
-const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
+const isFirst = (crumb: Crumb): boolean => crumbs.at(0)?.id === crumb.id;
 </script>
 
 <template>
@@ -31,6 +31,8 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
       v-for="crumb in crumbs"
       :key="crumb.id"
     >
+      <LucideChevronRight v-if="!isFirst(crumb)" />
+
       <component
         :is="isActive(crumb) ? 'span' : 'a'"
         :class="{ active: isActive(crumb), hint: crumb.hint }"
@@ -38,8 +40,6 @@ const isLast = (crumb: Crumb): boolean => crumbs.at(-1)?.id === crumb.id;
       >
         {{ crumb.label }}
       </component>
-
-      <LucideChevronRight v-if="!isLast(crumb)" />
     </li>
   </TransitionGroup>
 </template>

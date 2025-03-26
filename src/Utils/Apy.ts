@@ -2,9 +2,8 @@ import { type Address, type PublicClient, getContract } from "viem";
 import { abi as abiCvxCrvUtil } from "@/ABI/Convex/CvxCrvUtilities";
 import { abi as abiCvxFxsUtil } from "@/ABI/Convex/CvxFxsRewards";
 import { abi as abiCvxPrismaUtil } from "@/ABI/Convex/CvxPrismaRewards";
-import { bigNumToNumber, numToBigNumber } from "@/Utils/Number";
-import { toRecord } from "@/Utils/Array";
-import { getCvxFxsPrice, getCvxPrismaPrice, getPrice } from "@/Utils/Price";
+import type { PriceService } from "@/Services";
+import type FlyerService from "@/Services/FlyerService";
 import {
   CvxAddress,
   CvxCrvAddress,
@@ -17,8 +16,10 @@ import {
   UCrvStrategyAddress,
   UCrvStrategyAddressV2,
 } from "@/Utils/Addresses";
-import { fetchType, type PriceService } from "@/Services";
-import type FlyerService from "@/Services/FlyerService";
+import { toRecord } from "@/Utils/Array";
+import { bigNumToNumber, numToBigNumber } from "@/Utils/Number";
+import { getCvxFxsPrice, getCvxPrismaPrice, getPrice } from "@/Utils/Price";
+import { fetchJson } from "./fetch";
 
 /**
  * Assumes weekly compounding. Apr is a [0, 100] percentage.
@@ -174,7 +175,7 @@ export function getCvxFxsLpApy(): Promise<number> {
       }
     } }`;
 
-  return fetchType<PoolResponse>(SUBGRAPH_URL_CONVEX, { query }).then(
+  return fetchJson<PoolResponse>(SUBGRAPH_URL_CONVEX, { query }).then(
     (resp) => {
       const baseApr = parseFloat(resp.data.pools[0].snapshots[0].baseApr);
       const crvApr = parseFloat(resp.data.pools[0].snapshots[0].crvApr);

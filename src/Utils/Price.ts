@@ -9,7 +9,8 @@ import { abi as abiCurveV1 } from "@/ABI/Curve/CurveV1FactoryPool";
 import { abi as abiCurveV2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { abi as abiCurveV6 } from "@/ABI/Curve/CurveV6FactoryPool";
 import { abi as abiCvxCrv } from "@/ABI/Curve/CvxCrvFactoryPool";
-import { bigNumToNumber, numToBigNumber } from "@/Utils/Number";
+import type { PriceService } from "@/Services";
+import type FlyerService from "@/Services/FlyerService";
 import {
   CvxAddress,
   LPxCvxFactoryAddress,
@@ -23,8 +24,7 @@ import {
   CvxFxsFactoryAddress,
   CvxFxsFactoryERC20Address,
 } from "@/Utils/Addresses";
-import type { PriceService } from "@/Services";
-import type FlyerService from "@/Services/FlyerService";
+import { bigNumToNumber, numToBigNumber } from "@/Utils/Number";
 
 type CurveV1FactoryPool = GetContractReturnType<
   typeof abiCurveV1,

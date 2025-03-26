@@ -4,8 +4,10 @@ import {
   ColorType,
   LineStyle,
 } from "lightweight-charts";
-import { deepMerge } from "@/Utils/Object";
 import type { Theme } from "@/Styles/Theme";
+import { deepMerge } from "@/Utils/Object";
+
+export const DEFAULT_MIN_HEIGHT = 300;
 
 const createDefault = (
   chartRef: HTMLElement,
@@ -15,7 +17,7 @@ const createDefault = (
 
   return {
     width: chartRef.clientWidth,
-    height: chartRef.clientHeight || 300,
+    height: chartRef.clientHeight || DEFAULT_MIN_HEIGHT,
     rightPriceScale: {
       borderVisible: false,
       scaleMargins: {
