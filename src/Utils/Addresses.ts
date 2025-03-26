@@ -158,6 +158,9 @@ export const MkUsdAddress = "0x4591dbff62656e7859afe5e45f6f47d3669fbb28";
 export const UltraAddress = "0x35282d87011f87508d457f08252bc5bfa52e10a0";
 export const CrvUsdAddress = "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e";
 export const SCrvUsdAddress = "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367";
+export const RsupAddress = "0x419905009e4656fdc02418c7df35b1e61ed5f726";
+export const ReUsdAddress = "0x57ab1e0003f623289cd798b1824be09a793e4bec";
+export const SFrxUsdAddress = "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6";
 
 export const PxCvxAddress = "0xbce0cf87f513102f22232436cca2ca49e815c3ac";
 export const UPxCvxAddress = "0x7a3d81cfc5a942abe9ec656eff818f7dab4e0fe1";

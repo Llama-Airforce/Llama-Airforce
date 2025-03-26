@@ -1,4 +1,8 @@
 import {
+  injected,
+  walletConnect as walletConnectConnector,
+} from "@wagmi/connectors";
+import {
   createConfig as createConfigWagmi,
   fallback,
   http,
@@ -6,10 +10,6 @@ import {
 } from "@wagmi/core";
 import { mainnet } from "@wagmi/core/chains";
 import type { CreateConnectorFn } from "@wagmi/vue";
-import {
-  injected,
-  walletConnect as walletConnectConnector,
-} from "@wagmi/connectors";
 import { useAccount as useAccountWagmi } from "@wagmi/vue";
 
 // Alternative: https://eth.llamarpc.com

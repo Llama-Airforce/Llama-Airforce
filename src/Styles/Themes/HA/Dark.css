@@ -3,22 +3,22 @@
   color-scheme: dark;
 
   --c-text: #ffffff;
-  --c-text-invert: black;
-  --c-lvl0: #1a1a1a;
-  --c-lvl1: #292929;
-  --c-lvl2: #3c3c3c;
-  --c-lvl3: #535353;
-  --c-lvl4: #6a6a6a;
-  --c-lvl5: #949494;
-  --c-lvl6: #aea8af;
-  --c-red: hsl(0, 90%, 66%);
-  --c-green: hsl(123, 90%, 66%);
-  --c-blue: hsl(230, 90%, 66%);
-  --c-yellow: hsl(58, 90%, 66%);
-  --c-purple: hsl(278, 90%, 66%);
-  --c-primary: hsl(230, 90%, 66%);
-  --c-card-special-1: hsl(230, 90%, 66%);
-  --c-card-special-2: hsl(278, 90%, 66%);
+  --c-text-invert: #111629;
+  --c-lvl0: #111629;
+  --c-lvl1: #1b2237;
+  --c-lvl2: #1d2544;
+  --c-lvl3: #272f52;
+  --c-lvl4: #323a56;
+  --c-lvl5: #6473a4;
+  --c-lvl6: #ccd4df;
+  --c-red: #e84d4d;
+  --c-green: #0eaa6b;
+  --c-blue: #0372ff;
+  --c-yellow: #dea026;
+  --c-purple: #794dec;
+  --c-primary: #0372ff;
+  --c-card-special-1: #6473a4;
+  --c-card-special-2: #424c6c;
 
   --border-radius: 4px;
   --border-thickness: 0px;
@@ -32,4 +32,10 @@
   --input-box-shadow: 0;
   --options-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
   --tooltip-box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+
+  --header-background: #262c40;
+
+  body {
+    background-color: #262c40;
+  }
 }

@@ -5,7 +5,9 @@ import {
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
+import { prettifyError, ZodError } from "zod";
 import { createConfig as createConfigWagmi } from "@/Utils/Wagmi";
+// eslint-disable-next-line import/no-named-as-default
 import Notifications, { notify } from "@kyvg/vue3-notification";
 import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import { hashFn } from "@wagmi/core/query";
@@ -62,8 +64,13 @@ export function setup(
           return;
         }
 
+        const text =
+          error instanceof ZodError
+            ? "<br /><br />" + prettifyError(error).replace(/\n/g, "<br />")
+            : error.message;
+
         notify({
-          text: `Failed querying ${query.queryHash} >>> ${error.message}`,
+          text: `Failed querying ${query.queryHash} >>> ${text}`,
           type: "error",
         });
       },

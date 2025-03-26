@@ -11,14 +11,14 @@
   --c-lvl4: #d8d8d8;
   --c-lvl5: #6e6e77;
   --c-lvl6: #212124;
-  --c-red: hsl(7, 95%, 54%);
-  --c-green: hsl(122, 95%, 35%);
-  --c-blue: hsl(209, 95%, 54%);
-  --c-yellow: hsl(39, 95%, 54%);
-  --c-purple: hsl(284, 95%, 54%);
-  --c-primary: #5baefb;
-  --c-card-special-1: #7ebffc;
-  --c-card-special-2: #42a1fa;
+  --c-red: #e84d4d;
+  --c-green: #0eaa6b;
+  --c-blue: #0372ff;
+  --c-yellow: #dea026;
+  --c-purple: #794dec;
+  --c-primary: #0372ff;
+  --c-card-special-1: #6473a4;
+  --c-card-special-2: #424c6c;
 
   --c-chart-green: #05c70c;
   --c-chart-blue: #5baefb;
@@ -43,9 +43,9 @@
     background-color: transparent;
     background-image: linear-gradient(
       to top left,
-      hsla(163, 84%, 70%, 0.4),
-      hsla(48, 94%, 60%, 0.4),
-      hsla(348, 70%, 55%, 0.4)
+      rgba(38, 233, 154, 0.2),
+      rgba(3, 114, 255, 0.2),
+      rgba(111, 20, 255, 0.2)
     );
     background-repeat: no-repeat;
     background-attachment: fixed;
