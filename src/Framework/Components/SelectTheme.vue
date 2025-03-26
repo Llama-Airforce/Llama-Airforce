@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { useStorage } from "@vueuse/core";
-
 import chad from "@/Assets/Icons/chad.png";
+import { useStorage } from "@vueuse/core";
 
 const STORAGE_THEME = "theme";
 
 const { themes = ["dark"], direction = "down" } = defineProps<{
-  themes: string[];
+  themes?: string[];
   direction?: "up" | "down";
 }>();
 

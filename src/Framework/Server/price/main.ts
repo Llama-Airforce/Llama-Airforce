@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-
 import priceCoins from "./routes/[addresses].get";
 
 // Apps

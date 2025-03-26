@@ -6,9 +6,9 @@ import type {
   WhitespaceData,
   Time,
 } from "lightweight-charts";
+import type { StackedAreaData } from "./Data";
 import { type StackedAreaSeriesOptions, defaultOptions } from "./Options";
 import { StackedAreaSeriesRenderer } from "./Renderer";
-import type { StackedAreaData } from "./Data";
 
 export class StackedAreaSeries<TData extends StackedAreaData>
   implements ICustomSeriesPaneView<Time, TData, StackedAreaSeriesOptions>

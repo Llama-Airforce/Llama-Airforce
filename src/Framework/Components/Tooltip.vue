@@ -23,7 +23,7 @@ let hideTimeout: ReturnType<typeof setTimeout> | undefined;
 
 function showTooltip() {
   if (hideTimeout) {
-    clearTimeout(hideTimeout);
+    window.clearTimeout(hideTimeout);
     hideTimeout = undefined;
   }
 
@@ -32,7 +32,7 @@ function showTooltip() {
 
 function hideTooltip() {
   if (hideTimeout) {
-    clearTimeout(hideTimeout);
+    window.clearTimeout(hideTimeout);
   }
 
   hideTimeout = setTimeout(() => {

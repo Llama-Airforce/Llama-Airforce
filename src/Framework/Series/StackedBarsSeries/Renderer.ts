@@ -9,13 +9,13 @@ import type {
   PriceToCoordinateConverter,
   Time,
 } from "lightweight-charts";
-import type { StackedBarsData } from "./Data";
-import type { StackedBarsSeriesOptions } from "./Options";
 import {
   type ColumnPosition,
   calculateColumnPositionsInPlace,
 } from "../Helpers/Columns";
 import { positionsBox } from "../Helpers/Positions";
+import type { StackedBarsData } from "./Data";
+import type { StackedBarsSeriesOptions } from "./Options";
 
 type StackedBarsBarItem = {
   x: number;

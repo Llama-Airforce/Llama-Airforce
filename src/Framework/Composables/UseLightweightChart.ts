@@ -8,8 +8,8 @@ import type {
   SeriesOptionsCommon,
 } from "lightweight-charts";
 import type { StackedAreaSeriesPartialOptions } from "../Series/StackedAreaSeries/Options";
-import type { StackedBarsSeriesPartialOptions } from "../Series/StackedBarsSeries/Options";
 import { StackedAreaSeries } from "../Series/StackedAreaSeries/StackedAreaSeries";
+import type { StackedBarsSeriesPartialOptions } from "../Series/StackedBarsSeries/Options";
 import { StackedBarsSeries } from "../Series/StackedBarsSeries/StackedBarsSeries";
 
 // Custom series are not supported to their ambiguity, but we support more specific ones

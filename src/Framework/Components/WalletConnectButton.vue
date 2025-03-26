@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import coinbase from "@/Assets/Icons/Wallets/coinbase.webp";
 import injected from "@/Assets/Icons/Wallets/injected.webp";
 import rabby from "@/Assets/Icons/Wallets/rabby.svg";
-import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
-import coinbase from "@/Assets/Icons/Wallets/coinbase.webp";
 import safe from "@/Assets/Icons/Wallets/safe.webp";
+import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
 
 const { connect } = useConnect();
 
@@ -60,9 +60,7 @@ function onConnect(connector: Connector) {
   showConnectors.value = false;
 }
 
-function onClearCache() {
-  console.log("nothing to do yet");
-}
+function onClearCache() {}
 </script>
 
 <template>

@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/vue-query";
-import type { Address } from "@/types/address";
 import PriceService, { type Price } from "@/Services/PriceService";
+import type { Address } from "@/types/address";
+import { useQuery } from "@tanstack/vue-query";
 
 const service = new PriceService(useHost());
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { expanded = true } = defineProps<{
-  expanded: boolean;
+  expanded?: boolean;
 }>();
 </script>
 

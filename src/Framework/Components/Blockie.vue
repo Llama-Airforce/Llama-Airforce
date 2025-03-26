@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { isAddress, getAddress } from "viem";
 import createIcon from "ethereum-blockies-base64";
-
+import { isAddress, getAddress } from "viem";
 import question from "@/Assets/Icons/question.png";
 
 type Size = "small" | "medium" | "large" | "huge";

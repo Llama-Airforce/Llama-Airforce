@@ -15,8 +15,9 @@ const app = new Hono().get(path, async (c) => {
     throw new HTTPException(400, { message: "Missing addresses parameter" });
   }
 
+  const isValidAddress = (address: string): boolean => isAddress(address);
   const addresses = addressParam.split(",");
-  const invalidAddress = addresses.find((address) => !isAddress(address));
+  const invalidAddress = addresses.find((address) => !isValidAddress(address));
   if (invalidAddress) {
     throw new HTTPException(400, {
       message: `Invalid address: ${invalidAddress}`,

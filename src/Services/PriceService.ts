@@ -1,5 +1,5 @@
-import { ServiceBaseHost } from "@/Services/ServiceBase";
 import type { Result } from "@/Framework/Server/price/routes/[addresses].get";
+import { ServiceBaseHost } from "@/Services/ServiceBase";
 
 export type Price = Result[string];
 

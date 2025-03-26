@@ -1,10 +1,10 @@
-import { uniqueId } from "@/Utils/UniqueId";
 import {
   type Observable,
   type Subscription,
   BehaviorSubject,
   filter,
 } from "rxjs";
+import { uniqueId } from "@/Utils/UniqueId";
 
 /** Options for useQueryRx function */
 type UseQueryRxOptions<T, U = T> = {

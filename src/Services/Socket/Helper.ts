@@ -1,5 +1,5 @@
-import type { Socket } from "socket.io-client";
 import { type Subscriber, Observable, share } from "rxjs";
+import type { Socket } from "socket.io-client";
 
 /**
  * Represents a map of socket event names to their corresponding event handler functions

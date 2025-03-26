@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { expanded = false } = defineProps<{ expanded: boolean }>();
+const { expanded = false } = defineProps<{
+  expanded?: boolean;
+}>();
 </script>
 
 <template>

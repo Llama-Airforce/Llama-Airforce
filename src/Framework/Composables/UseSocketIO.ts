@@ -1,5 +1,5 @@
-import type { ShallowRef } from "vue";
 import { io, type Socket } from "socket.io-client";
+import type { ShallowRef } from "vue";
 
 type SocketOptions = {
   url: string | (() => string);

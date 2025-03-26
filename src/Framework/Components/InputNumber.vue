@@ -9,8 +9,8 @@ const {
   max = Infinity,
   decimals = 12,
 } = defineProps<{
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   decimals?: number;
 }>();
 
@@ -64,6 +64,7 @@ input {
   /* Firefox */
   input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
   }
 }
 </style>

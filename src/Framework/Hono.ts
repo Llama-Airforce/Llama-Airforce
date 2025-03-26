@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import type { Env, Schema } from "hono";
-import type { JSONObject, JSONArray } from "hono/utils/types";
 import { HTTPException } from "hono/http-exception";
+import type { JSONObject, JSONArray } from "hono/utils/types";
 import { LRUCache } from "lru-cache";
 
 // Re-exports for better importing experience in handlers.
