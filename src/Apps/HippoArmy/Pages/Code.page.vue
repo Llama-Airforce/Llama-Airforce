@@ -27,7 +27,7 @@ const apis: API[] = [
   },
   {
     name: "Hippo Army Python API",
-    url: "https://api-py.hippo.army/feeds-docs",
+    url: "https://api.hippo.army/feeds-docs",
     description: "Back-end API (Python) for Hippo Army",
   },
 ];
