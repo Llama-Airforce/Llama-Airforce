@@ -28,7 +28,8 @@
     "vue": "3.5.13",
     "vue-i18n": "11.1.2",
     "vue-router": "4.5.0",
-    "vue3-apexcharts": "^1.8.0"
+    "vue3-apexcharts": "^1.8.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@azure/cosmos": "4.3.0",
