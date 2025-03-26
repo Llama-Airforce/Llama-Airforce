@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Navigation from "@/Framework/Monitor/Shell/Navigation.vue";
 import Bottom from "./Bottom.vue";
-import { menu } from "./Menu";
+import { menu } from "./menu";
 import Top from "./Top.vue";
 
 const emit = defineEmits<{
