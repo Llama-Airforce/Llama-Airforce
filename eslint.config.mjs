@@ -76,13 +76,6 @@ export default [
 
       "max-params": ["error", 7],
 
-      "newline-per-chained-call": [
-        "error",
-        {
-          ignoreChainWithDepth: 3,
-        },
-      ],
-
       "prefer-const": "error",
 
       complexity: [
@@ -106,6 +99,7 @@ export default [
       "no-useless-escape": "off",
       "array-callback-return": "error",
       "default-case": "off",
+      "newline-per-chained-call": "off",
       eqeqeq: "error",
       radix: "error",
       semi: "error",
