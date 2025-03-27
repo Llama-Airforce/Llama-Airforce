@@ -1,15 +1,15 @@
+import { createPinia } from "pinia";
 import { createApp, type Plugin } from "vue";
 import {
   createRouter,
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
-import { createPinia } from "pinia";
-import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
+import { createConfig as createConfigWagmi } from "@/Utils/Wagmi";
 import Notifications, { notify } from "@kyvg/vue3-notification";
+import { VueQueryPlugin, QueryClient, QueryCache } from "@tanstack/vue-query";
 import { hashFn } from "@wagmi/core/query";
 import { type CreateConnectorFn, WagmiPlugin } from "@wagmi/vue";
-import { createConfig as createConfigWagmi } from "@/Utils/Wagmi";
 import "@/Utils/llamadash";
 import "@/Styles/Util.css";
 import "@/Styles/Themes/Base.css";
