@@ -13,7 +13,7 @@ const {
   showSymbol = true,
   showZero = false,
 } = defineProps<{
-  value?: number | null | undefined;
+  value?: number | string | null | undefined;
   type?: "dollar" | "percentage";
   precision?: number | ((x: number) => number);
   showUnit?: boolean;
@@ -23,8 +23,11 @@ const {
 
 const rod = ref("|");
 
-// Getters
 const presentation = computed((): string => {
+  if (typeof value === "string") {
+    return value;
+  }
+
   if (value === Infinity) {
     return "∞";
   }
@@ -53,7 +56,7 @@ const presentation = computed((): string => {
 });
 
 const unit = computed((): string => {
-  if (precision === Infinity || !type) {
+  if (precision === Infinity || !type || typeof value === "string") {
     return "";
   }
 
@@ -64,7 +67,6 @@ const unit = computed((): string => {
   return unitF(value);
 });
 
-// Watches
 watch(
   () => value,
   (newValue): void => {
