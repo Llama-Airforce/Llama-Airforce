@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 import type { Distribution } from "@curvefi/prices-api/revenue";
 
 const { distributions } = defineProps<{
