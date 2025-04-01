@@ -35,7 +35,6 @@ export function mapKeys<
       ...acc,
       [mapper(value as T[keyof T], key as keyof T)]: value as T[keyof T],
     }),
-    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
     {} as Record<U, T[keyof T]>
   );
 }

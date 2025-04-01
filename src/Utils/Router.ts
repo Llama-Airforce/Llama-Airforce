@@ -6,7 +6,7 @@ export function subIsActive(
 ): boolean {
   const paths = Array.isArray(input) ? input : [input];
 
-  return paths.some((path) => {
-    return route.path.startsWith(path); // current path starts with this path string
-  });
+  return paths.some(
+    (path) => route.path.startsWith(path) // current path starts with this path string
+  );
 }

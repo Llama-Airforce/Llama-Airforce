@@ -84,3 +84,5 @@ export { overviewResponse, pairsResponse };
 
 export type OverviewResponse = z.infer<typeof overviewResponse>;
 export type PairsResponse = z.infer<typeof pairsResponse>;
+
+export type Pair = PairsResponse["pairs"][number];

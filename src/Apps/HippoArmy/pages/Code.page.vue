@@ -22,13 +22,8 @@ const repositories: Repository[] = [
 const apis: API[] = [
   {
     name: "Hippo Army API",
-    url: "https://api.hippo.army",
-    description: "Back-end API for Hippo Army",
-  },
-  {
-    name: "Hippo Army Python API",
     url: "https://api.hippo.army/feeds-docs",
-    description: "Back-end API (Python) for Hippo Army",
+    description: "Back-end API for Hippo Army",
   },
 ];
 </script>

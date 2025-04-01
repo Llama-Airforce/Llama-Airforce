@@ -25,17 +25,15 @@ const transformBaseEvent = (data: z.infer<typeof baseEventData>) => ({
   owner: data.owner,
 });
 
-// Deposit event schema
 const depositEventData = baseEventData
   .refine((data) => data.event_type === "deposit", {
     message: "Expected deposit event type",
   })
   .transform(transformBaseEvent);
 
-// Withdraw event schema
 const withdrawEventData = baseEventData
   .extend({
-    receiver: userData, // Add withdraw-specific field
+    receiver: userData,
   })
   .refine((data) => data.event_type === "withdraw", {
     message: "Expected withdraw event type",
@@ -83,7 +81,127 @@ const cooldownQueueResponse = z
     entries: data.entries,
   }));
 
-export { eventsResponse, cooldownQueueResponse };
+const aprHistoryEntry = z
+  .object({
+    timestamp: z.number(),
+    token_address: z.string(),
+    token_symbol: z.string(),
+    apr: z.string(),
+  })
+  .transform((data) => ({
+    timestamp: toDate(data.timestamp),
+    tokenAddress: data.token_address as Address,
+    tokenSymbol: data.token_symbol,
+    apr: parseFloat(data.apr),
+  }));
+
+const aprHistoryResponse = z
+  .object({
+    snapshots: z.array(aprHistoryEntry),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((data) => ({
+    snapshots: data.snapshots,
+    count: data.count,
+    page: data.page,
+    totalPages: data.total_pages,
+  }));
+
+const tvlHistoryEntry = z
+  .object({
+    timestamp: z.number(),
+    tvl: z.string(),
+  })
+  .transform((data) => ({
+    timestamp: toDate(data.timestamp),
+    tvl: parseFloat(data.tvl),
+  }));
+
+const tvlHistoryResponse = z
+  .object({
+    data: z.array(tvlHistoryEntry),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((data) => ({
+    data: data.data,
+    count: data.count,
+    page: data.page,
+    totalPages: data.total_pages,
+  }));
+
+const userPosition = z
+  .object({
+    address: z.string(),
+    label: z.string().nullable(),
+    ens: z.string().nullable(),
+    position_value: z.string(),
+  })
+  .transform((data) => ({
+    address: data.address as Address,
+    label: data.label,
+    ens: data.ens,
+    positionValue: parseFloat(data.position_value),
+  }));
+
+const topUsersResponse = z
+  .object({
+    total_tvl: z.string(),
+    top_users_tvl: z.string(),
+    others_tvl: z.string(),
+    users: z.array(userPosition),
+  })
+  .transform((data) => ({
+    totalTvl: parseFloat(data.total_tvl),
+    topUsersTvl: parseFloat(data.top_users_tvl),
+    othersTvl: parseFloat(data.others_tvl),
+    users: data.users,
+  }));
+
+const histogramBin = z
+  .object({
+    min_value: z.string(),
+    max_value: z.string(),
+    count: z.number(),
+  })
+  .transform((data) => ({
+    minValue: parseFloat(data.min_value),
+    maxValue: parseFloat(data.max_value),
+    count: data.count,
+  }));
+
+const positionHistogramResponse = z
+  .object({
+    bins: z.array(histogramBin),
+    total_users: z.number(),
+  })
+  .transform((data) => ({
+    bins: data.bins,
+    totalUsers: data.total_users,
+  }));
+
+export {
+  eventsResponse,
+  cooldownQueueResponse,
+  aprHistoryResponse,
+  tvlHistoryResponse,
+  topUsersResponse,
+  positionHistogramResponse,
+};
 
 export type EventsResponse = z.infer<typeof eventsResponse>;
 export type CooldownQueueResponse = z.infer<typeof cooldownQueueResponse>;
+export type AprHistoryResponse = z.infer<typeof aprHistoryResponse>;
+export type TvlHistoryResponse = z.infer<typeof tvlHistoryResponse>;
+export type TopUsersResponse = z.infer<typeof topUsersResponse>;
+export type PositionHistogramResponse = z.infer<
+  typeof positionHistogramResponse
+>;
+
+export type Event = EventsResponse["events"][number];
+export type TopUser = TopUsersResponse["users"][number];
+export type Cooldown = CooldownQueueResponse["entries"][number];
+export type Bin = PositionHistogramResponse["bins"][number];

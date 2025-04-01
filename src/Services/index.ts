@@ -13,3 +13,5 @@ export * from "./ServiceBase";
 export * from "./Socket/Models";
 export * from "./Socket/CurvePriceService";
 export * from "./Socket/CurveVolumeService";
+
+export { fetchText } from "../Utils/fetch";

@@ -1,18 +1,22 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import KPIs from "./components/KPIs.vue";
+</script>
 
 <template>
   <div class="dashboard">
     <div class="description">
       <span class="title">Hippo Army</span>
-      <span class="tag">Invading your portobello with Hippo analytics.</span>
+      <span class="tag">Resupplying your portobello with hippo analytics.</span>
     </div>
 
     <img
       class="hippo"
-      src="@/Assets/hippo-transparant.png"
+      src="@/Assets/hippo-ghibli.png"
     />
 
-    <div class="highlights"></div>
+    <div class="highlights">
+      <KPIs />
+    </div>
   </div>
 </template>
 

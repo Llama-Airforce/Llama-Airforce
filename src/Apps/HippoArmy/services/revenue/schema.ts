@@ -36,3 +36,5 @@ const distributionsResponse = z
 export { distributionsResponse };
 
 export type DistributionsResponse = z.infer<typeof distributionsResponse>;
+
+export type Distribution = DistributionsResponse["distributions"][number];

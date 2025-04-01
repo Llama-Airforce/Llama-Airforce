@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Address } from "@/types/address";
 import { toDate } from "@/Utils/timestamp";
 import { userData } from "../schema";
 
@@ -13,6 +14,18 @@ const eventType = z.enum([
   "repay_with_collateral",
 ]);
 
+const rewardData = z
+  .object({
+    token_address: z.string(),
+    token_symbol: z.string(),
+    apr: z.string(),
+  })
+  .transform((data) => ({
+    tokenAddress: data.token_address as Address,
+    tokenSymbol: data.token_symbol,
+    apr: parseFloat(data.apr),
+  }));
+
 const snapshotData = z
   .object({
     date_timestamp: z.number(),
@@ -26,6 +39,9 @@ const snapshotData = z
     interest_rate: z.string(),
     claimable_fees: z.string(),
     claimable_other_fees: z.string(),
+    borrow_cost_apr: z.string(),
+    base_apr: z.string(),
+    rewards: z.array(rewardData),
   })
   .transform((data) => ({
     time: toDate(data.date_timestamp),
@@ -39,6 +55,9 @@ const snapshotData = z
     interestRate: parseFloat(data.interest_rate),
     claimableFees: parseFloat(data.claimable_fees),
     claimableOtherFees: parseFloat(data.claimable_other_fees),
+    aprBorrowCost: parseFloat(data.borrow_cost_apr),
+    aprBase: parseFloat(data.base_apr),
+    rewards: data.rewards,
   }));
 
 const snapshotsResponse = z
@@ -170,3 +189,8 @@ export type SnapshotsResponse = z.infer<typeof snapshotsResponse>;
 export type CollateralEventsResponse = z.infer<typeof collateralEventsResponse>;
 export type RedemptionsResponse = z.infer<typeof redemptionsResponse>;
 export type LiquidationsResponse = z.infer<typeof liquidationsResponse>;
+
+export type Snapshot = SnapshotsResponse["snapshots"][number];
+export type CollateralEvent = CollateralEventsResponse["events"][number];
+export type Redemption = RedemptionsResponse["events"][number];
+export type Liquidation = LiquidationsResponse["events"][number];

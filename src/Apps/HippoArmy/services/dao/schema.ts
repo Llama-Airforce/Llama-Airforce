@@ -107,3 +107,7 @@ export const proposalVotesResponse = z
 
 export type ProposalsResponse = z.infer<typeof proposalsResponse>;
 export type ProposalVotesResponse = z.infer<typeof proposalVotesResponse>;
+
+export type Proposal = ProposalsResponse["proposals"][number];
+export type ProposalStatus = Proposal["status"];
+export type ProposalVote = ProposalVotesResponse["votes"][number];
