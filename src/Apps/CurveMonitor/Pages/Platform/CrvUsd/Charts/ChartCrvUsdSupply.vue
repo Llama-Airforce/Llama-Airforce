@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 import { useQueryCrvUsdSupply } from "@CM/queries/crvusd";
 
 export type Period = "7d" | "1m" | "3m" | "6m" | "1y";

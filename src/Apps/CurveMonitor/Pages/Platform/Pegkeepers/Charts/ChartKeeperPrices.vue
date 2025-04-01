@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { AutoscaleInfo } from "lightweight-charts";
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 import { useQueryKeepers, useQueryKeeperPrices } from "@CM/queries/crvusd";
 import type { PoolPrice } from "@curvefi/prices-api/crvusd";
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
-import { BtnChartLWExport, BtnChartLWFullscreen } from "@CM/components";
 import { useQuerySupply } from "@CM/queries/dao";
 
 export type Period = "1m" | "3m" | "6m" | "1y";

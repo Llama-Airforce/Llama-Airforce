@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import createChartOptions from "@/Styles/ChartStylesLW";
 import type { Address } from "@/types/address";
-import { BtnChartLWFullscreen } from "@CM/components";
 import { useQueryPoolVolume } from "@CM/monitor/mev/queries";
 import type { DurationType } from "@CM/monitor/socketMonitorCurve";
 import SelectDuration from "../Components/SelectDuration.vue";
