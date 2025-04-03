@@ -9,10 +9,12 @@ function initEmptyArray() {
   };
 }
 
-export function useQueryCrvUsdSupply() {
+export function useQueryCrvUsdSupply(days: number | Ref<number> = 30) {
+  const daysValue = computed(() => unref(days));
+
   return useQuery({
-    queryKey: ["crvusd-supply"],
-    queryFn: () => Api.getCrvUsdSupply("ethereum"),
+    queryKey: ["crvusd-supply", daysValue] as const,
+    queryFn: () => Api.getCrvUsdSupply("ethereum", daysValue.value),
     ...initEmptyArray(),
   });
 }
