@@ -113,6 +113,18 @@ function createSeries() {
   }
 
   chart.value.timeScale().fitContent();
+
+  // Add marker for March 20, 2025
+  const resupplyDate = new Date(2025, 2, 20); // Month is 0-indexed, so 2 = March
+  series.supply.setMarkers([
+    {
+      time: resupplyDate.getUTCTimestamp(),
+      position: "aboveBar",
+      color: theme.value.colors.red,
+      shape: "arrowDown",
+      text: "Resupply Launch",
+    },
+  ]);
 }
 
 function formatter(y: number) {
