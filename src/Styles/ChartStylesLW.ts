@@ -70,3 +70,50 @@ export default function createChartOptions(
       return options ? deepMerge(_default, toRef(options).value) : _default;
     });
 }
+
+/**
+ * Creates an area series configuration for a lightweight chart
+ *
+ * @param name Unique identifier for the series
+ * @param color Reactive color reference for the series
+ * @param formatter Custom formatter for data values or predefined format type.
+ * Can be a custom function or one of: "price", "percent", "volume"
+ * @param minMove Minimal step of price change (e.g. 0.01 for 2 decimal places)
+ * @param precision Number of decimal places for formatted values
+ * @returns Configuration object for an area series
+ */
+export function createAreaSerie<T extends string>({
+  name,
+  color,
+  formatter,
+  minMove,
+  precision,
+}: {
+  name: T;
+  color: Ref<string>;
+  formatter?: ((x: number) => string) | "price" | "percent" | "volume";
+  minMove?: number;
+  precision?: number;
+}) {
+  const options = computed<AreaSeriesPartialOptions>(() => ({
+    priceFormat: {
+      type: typeof formatter !== "function" ? formatter ?? "custom" : "custom",
+      formatter: typeof formatter === "function" ? formatter : undefined,
+      minMove,
+      precision,
+    },
+    lineWidth: 2,
+    lineType: LineType.WithSteps,
+    lineColor: color.value,
+    topColor: `${color.value}44`,
+    bottomColor: `${color.value}00`,
+    lastValueVisible: false,
+    priceLineVisible: false,
+  }));
+
+  return {
+    type: "Area",
+    name,
+    options,
+  } as const;
+}

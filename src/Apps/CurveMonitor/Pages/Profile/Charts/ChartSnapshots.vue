@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsCrvUsd } from "@CM/queries/crvusd";
 import { useQueryUserMarketSnapshots as useQuerySnapshotsLending } from "@CM/queries/llamalend";
 import type { Chain } from "@curvefi/prices-api";
@@ -35,34 +35,16 @@ const card = useTemplateRef("card");
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
-    {
-      type: "Area",
+    createAreaSerie({
       name: "borrowed" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceFormat: {
-          type: "volume",
-        },
-        priceLineVisible: false,
-      })),
-    },
-    {
-      type: "Area",
+      color: computed(() => theme.value.colors.blue),
+      formatter: "volume",
+    }),
+    createAreaSerie({
       name: "collateral" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceFormat: {
-          type: "volume",
-        },
-        priceLineVisible: false,
-      })),
-    },
+      color: computed(() => theme.value.colors.blue),
+      formatter: "volume",
+    }),
   ],
 });
 

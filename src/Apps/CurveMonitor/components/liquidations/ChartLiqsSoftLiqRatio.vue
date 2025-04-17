@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import type { SoftLiqRatio } from "@curvefi/prices-api/liquidations";
 
 type PriceOracle = {
@@ -36,42 +36,17 @@ const { chart, series } = useLightweightChart({
     },
   }),
   series: [
-    {
-      type: "Area",
+    createAreaSerie({
       name: "price" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (x: number) => `$${round(x, 2, "dollar")}${unit(x)}`,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.yellow,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })),
-    },
-    {
-      type: "Area",
+      color: computed(() => theme.value.colors.yellow),
+      formatter: (x: number) => `$${round(x, 2, "dollar")}${unit(x)}`,
+    }),
+    createAreaSerie({
       name: "ratio" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (x: number): string => `${round(x, 0, "percentage")}%`,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.blue,
-        priceScaleId: "left",
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })),
-    },
-  ],
+      color: computed(() => theme.value.colors.blue),
+      formatter: (x: number): string => `${round(x, 0, "percentage")}%`,
+    }),
+  ] as const,
 });
 
 watchEffect(createSeries);

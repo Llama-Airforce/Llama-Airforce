@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useQueryWeightHistory } from "@CM/queries/gauge";
 
 const { gaugeAddress } = defineProps<{
@@ -17,23 +17,11 @@ const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
-  series: {
-    type: "Area",
+  series: createAreaSerie({
     name: "weight" as const,
-    options: computed<AreaSeriesPartialOptions>(() => ({
-      priceFormat: {
-        type: "custom",
-        formatter: (y: number) => round(y, 1),
-      },
-      lineWidth: 2,
-      lineType: LineType.WithSteps,
-      lineColor: theme.value.colors.blue,
-      topColor: "rgb(32, 129, 240, 0.2)",
-      bottomColor: "rgba(32, 129, 240, 0)",
-      lastValueVisible: false,
-      priceLineVisible: false,
-    })),
-  },
+    color: computed(() => theme.value.colors.blue),
+    formatter: (y: number) => round(y, 1),
+  }),
 });
 
 watchEffect(createSeries);

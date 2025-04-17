@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useQuerySnapshots } from "@CM/queries/crvusd";
 
 const { market } = defineProps<{
@@ -18,23 +18,11 @@ const avgLength = ref<number | null>(null);
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
-    {
-      type: "Area",
+    createAreaSerie({
       name: "rates" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "custom",
-          formatter,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })),
-    },
+      color: computed(() => theme.value.colors.blue),
+      formatter,
+    }),
     {
       type: "Line",
       name: "ema" as const,

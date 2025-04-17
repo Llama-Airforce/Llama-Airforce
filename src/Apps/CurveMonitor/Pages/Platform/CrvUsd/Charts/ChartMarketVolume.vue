@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useQueryOHLC } from "@CM/queries/llamma";
 import type { Chain } from "@curvefi/prices-api";
 import type { Market } from "@curvefi/prices-api/crvusd";
@@ -21,23 +21,11 @@ const theme = useTheme();
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
-  series: {
-    type: "Area",
+  series: createAreaSerie({
     name: "volume" as const,
-    options: computed<AreaSeriesPartialOptions>(() => ({
-      priceFormat: {
-        type: "custom",
-        formatter: (y: number) => `$${round(y, 0, "dollar")}${unit(y)}`,
-      },
-      lineWidth: 2,
-      lineType: LineType.WithSteps,
-      lineColor: theme.value.colors.blue,
-      topColor: "rgb(32, 129, 240, 0.2)",
-      bottomColor: "rgba(32, 129, 240, 0)",
-      lastValueVisible: false,
-      priceLineVisible: false,
-    })),
-  },
+    color: computed(() => theme.value.colors.blue),
+    formatter: (y: number) => `$${round(y, 0, "dollar")}${unit(y)}`,
+  }),
 });
 
 watchEffect(createSeries);

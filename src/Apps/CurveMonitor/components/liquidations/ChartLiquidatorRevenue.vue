@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import type { LiquidationDetails } from "@curvefi/prices-api/liquidations";
 
 type Discount = {
@@ -36,43 +36,20 @@ const { chart, series } = useLightweightChart({
     },
   }),
   series: [
-    {
-      type: "Area",
+    createAreaSerie({
       name: "revenue" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "price",
-          precision: 0,
-          minMove: 1,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })),
-    },
-    {
-      type: "Area",
+      color: computed(() => theme.value.colors.blue),
+      formatter: "price",
+      precision: 0,
+      minMove: 1,
+    }),
+    createAreaSerie({
       name: "discount" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "percent",
-          precision: 6,
-          minMove: 0.000001,
-        },
-        lineWidth: 2,
-        lineType: LineType.WithSteps,
-        lineColor: theme.value.colors.yellow,
-        priceScaleId: "left",
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceLineVisible: false,
-      })),
-    },
+      color: computed(() => theme.value.colors.yellow),
+      formatter: "percent",
+      precision: 6,
+      minMove: 0.000001,
+    }),
   ],
 });
 

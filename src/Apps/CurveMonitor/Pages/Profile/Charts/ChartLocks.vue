@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useQueryUserLocks } from "@CM/queries/dao";
 
 export type Type = "locks" | "total";
@@ -29,20 +29,11 @@ const { chart, series } = useLightweightChart({
         priceLineVisible: false,
       })),
     },
-    {
-      type: "Area",
+    createAreaSerie({
       name: "total" as const,
-      options: computed<AreaSeriesPartialOptions>(() => ({
-        lineColor: theme.value.colors.blue,
-        topColor: "rgb(32, 129, 240, 0.2)",
-        bottomColor: "rgba(32, 129, 240, 0)",
-        lastValueVisible: false,
-        priceFormat: {
-          type: "volume",
-        },
-        priceLineVisible: false,
-      })),
-    },
+      color: computed(() => theme.value.colors.blue),
+      formatter: "volume",
+    }),
   ],
 });
 

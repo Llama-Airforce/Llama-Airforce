@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import type { LiqLosses } from "@curvefi/prices-api/liquidations";
 
 const { losses } = defineProps<{
@@ -11,24 +11,12 @@ const theme = useTheme();
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
-  series: {
-    type: "Area",
+  series: createAreaSerie({
     name: "losses" as const,
-    options: computed<AreaSeriesPartialOptions>(() => ({
-      priceFormat: {
-        type: "custom",
-        formatter: (x: number) => `${round(x, 0, "percentage")}%`,
-        minMove: 0.1,
-      },
-      lineWidth: 2,
-      lineType: LineType.WithSteps,
-      lineColor: theme.value.colors.blue,
-      topColor: "rgb(32, 129, 240, 0.2)",
-      bottomColor: "rgba(32, 129, 240, 0)",
-      lastValueVisible: false,
-      priceLineVisible: false,
-    })),
-  },
+    color: computed(() => theme.value.colors.blue),
+    formatter: (x: number) => `${round(x, 0, "percentage")}%`,
+    minMove: 0.01,
+  }),
 });
 
 watchEffect(createSeries);
