@@ -22,9 +22,7 @@ const { address } = useAccount();
 const store = useUnionStore();
 
 const poundersUnion = computed(() =>
-  [store.pounders.ucrv, store.pounders.ucvx, store.pounders.uprisma].filter(
-    notEmpty
-  )
+  [store.pounders.ucrv, store.pounders.ucvx].filter(notEmpty)
 );
 
 const poundersDeprecated = computed(() =>
@@ -33,6 +31,7 @@ const poundersDeprecated = computed(() =>
     store.pounders.ufxs,
     store.pounders.ufxslp,
     store.pounders.ucrv2,
+    store.pounders.uprisma,
   ].filter(notEmpty)
 );
 
