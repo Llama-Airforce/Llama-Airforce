@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createChartOptions, { createAreaSeries } from "@/Styles/ChartStylesLW";
+import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import Recipe from "@CB/Recipe.vue";
 
 type Tvl = {
@@ -26,11 +26,11 @@ const chartRefLine: TemplateRef = useTemplateRef("chartRefLine");
 const { chart: chartLine, series: seriesLine } = useLightweightChart({
   createChartOptions: createChartOptions(),
   chartRef: chartRefLine,
-  series: createAreaSeries(
-    "tvl",
-    computed(() => theme.value.colors.blue),
-    (y: number) => `$${round(y, 1, "dollar")}${unit(y)}`
-  ),
+  series: createAreaSerie({
+    name: "tvl" as const,
+    color: computed(() => theme.value.colors.blue),
+    formatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}`,
+  }),
 });
 
 const cardBar = useTemplateRef("cardBar");
