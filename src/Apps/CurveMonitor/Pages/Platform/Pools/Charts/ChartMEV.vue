@@ -65,8 +65,8 @@ const { items, toggles, disabled } = useLegend(() => [
 ]);
 
 // Data
-const timeDuration = ref<DurationType>({ value: 1, unit: "month" });
-const timeInterval = ref<DurationType>({ value: 1, unit: "day" });
+const timeDuration = ref<DurationType>({ value: 1, unit: "week" });
+const timeInterval = ref<DurationType>({ value: 1, unit: "hour" });
 
 const { isFetching: loading, data } = useQueryPoolVolume(
   toRef(() => pool),
