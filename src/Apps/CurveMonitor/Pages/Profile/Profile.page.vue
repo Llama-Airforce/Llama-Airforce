@@ -5,7 +5,7 @@ import Lending from "./Tabs/Lending.vue";
 
 // Tabs
 const isMounted = useMounted();
-const router = useRouter();
+const { query } = useRoute();
 const { tabActive, tabActiveIndex } = useTabNavigation(
   ["lending", "crvusd", "governance"],
   "profile",
@@ -13,7 +13,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   {
     beforeNavigate: () => {
       if (isMounted.value) {
-        delete router.currentRoute.value.query.controller;
+        delete query.controller;
       }
     },
   }
