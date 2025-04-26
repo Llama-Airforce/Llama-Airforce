@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FetchError } from "@/Utils/fetch";
 import type {
   pagination,
   pairId,
@@ -6,7 +7,6 @@ import type {
   userAddress,
 } from "../services/schema";
 import * as Api from "../services/user";
-import { FetchError } from "@/Utils/fetch";
 
 type OptionalPairId = Partial<{
   [K in keyof typeof pairId]: z.infer<(typeof pairId)[K]>;
