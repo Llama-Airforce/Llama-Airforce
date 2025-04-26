@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { useSnapshots } from "@HA/queries/user";
 import ChartCollateralRatio from "../charts/ChartCollateralRatio.vue";
+import { useParams } from "../composables/useParams";
 import TableHoldings from "../tables/TableHoldings.vue";
 
-const { address } = useAccount();
-const user = useRouteQuery<string>("user", address.value ?? "");
-const pairId = useRouteQuery<number | undefined>("pairId", undefined, {
-  transform: Number,
-});
+const { user, pairId } = useParams();
 
 const { data: snapshots, isFetching: loading } = useSnapshots(
   computed(() => ({
-    user_address: user.value,
+    user_address: user.value!,
     pair_id: pairId.value,
   }))
 );

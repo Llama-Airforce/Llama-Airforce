@@ -2,17 +2,14 @@
 import { usePairsEthereum } from "@HA/queries/protocols";
 import { usePositions } from "@HA/queries/user";
 import { pairName } from "@HA/util";
+import { useParams } from "../composables/useParams";
+
+const { user, pairId } = useParams();
 
 // User
-const { address } = useAccount();
-const user = useRouteQuery<string | undefined>("user", address.value);
 const inputAddressRef = useTemplateRef("inputAddress");
 const inputValue = ref(user.value ?? "");
 let initialized = false;
-
-const pairId = useRouteQuery<number | undefined>("pairId", undefined, {
-  transform: Number,
-});
 
 const { query } = useRoute();
 
@@ -35,6 +32,7 @@ function onNewUser(address: string | undefined) {
 }
 
 // Sync wallet changes to user after initial load
+const { address } = useAccount();
 whenever(address, (address) => {
   if (!initialized && !!user.value) {
     initialized = true;

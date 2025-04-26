@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useParams } from "./composables/useParams";
 import TablePairs from "./tables/TablePairs.vue";
 import Analytics from "./tabs/Analytics.vue";
 import Holdings from "./tabs/Holdings.vue";
@@ -20,9 +21,7 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
   }
 );
 
-const pairId = useRouteQuery<number | undefined>("pairId", undefined, {
-  transform: Number,
-});
+const { pairId } = useParams();
 </script>
 
 <template>
