@@ -65,8 +65,8 @@ const onChange = (evt: Event): void => {
 
     height: calc(1.125rem - var(--border-thickness));
     width: calc(1.125rem - var(--border-thickness));
-    background-color: var(--c-lvl2);
-    border: solid var(--border-thickness) var(--c-lvl4);
+    background-color: var(--c-lvl4);
+    border: solid var(--border-thickness) var(--c-lvl6);
     border-radius: 50%;
 
     transition: all 0.2s ease-in-out;
@@ -88,11 +88,11 @@ const onChange = (evt: Event): void => {
 
   &:hover input ~ .radio-mark {
     background-color: hsl(
-      from var(--c-lvl2) h s calc(l + 6 * var(--color-scheme-dark))
+      from var(--c-lvl4) h s calc(l + 6 * var(--color-scheme-dark))
     );
 
     border-color: hsl(
-      from var(--c-lvl4) h s calc(l + 6 * var(--color-scheme-dark))
+      from var(--c-lvl6) h s calc(l + 6 * var(--color-scheme-dark))
     );
   }
 
