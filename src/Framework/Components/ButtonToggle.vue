@@ -4,19 +4,12 @@ const modelValue = defineModel<boolean>({ default: false });
 const emit = defineEmits<{
   change: [toggled: boolean];
 }>();
-
-// Events
-const onClick = (): void => {
-  const newValue = !modelValue.value;
-  modelValue.value = newValue;
-  emit("change", newValue);
-};
 </script>
 
 <template>
   <Button
     :class="{ toggled: modelValue }"
-    @click="onClick"
+    @click="emit('change', !modelValue)"
   >
     <slot></slot>
   </Button>
