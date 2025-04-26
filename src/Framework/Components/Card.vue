@@ -160,6 +160,12 @@ const stackActions = computed(() => width.value <= 1280);
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+
+      /** When tabs are used directly in the title we shrink it down even more to fit the normal card title size */
+      &:has(.tab-view):deep(.tab-header) {
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        font-size: 1rem;
+      }
     }
   }
 
