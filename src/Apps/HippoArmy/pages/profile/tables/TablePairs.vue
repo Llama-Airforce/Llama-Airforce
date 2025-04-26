@@ -209,6 +209,7 @@ const values = computed(() => rows.value.map((x) => x.pairId));
 
   <NoData
     v-if="!loading && !pairId && rows.length > 0"
+    class="select-pair"
     message="Select a pair to view user analytics"
   />
 </template>
@@ -217,6 +218,10 @@ const values = computed(() => rows.value.map((x) => x.pairId));
 .table {
   --columns-data: 1rem calc(1 * (26px + 1ch)) minmax(12ch, 1fr)
     minmax(6rem, 0.25fr) minmax(6rem, 0.25fr) minmax(6rem, 0.25fr) 10rem;
+}
+
+.select-pair {
+  margin-top: var(--dashboard-gap);
 }
 
 .token {
@@ -233,13 +238,9 @@ const values = computed(() => rows.value.map((x) => x.pairId));
   }
 }
 
-.card {
-  margin-bottom: var(--dashboard-gap);
-
-  &:deep(.card-title) {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
+.card:deep(.card-title) {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 </style>
