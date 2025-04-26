@@ -216,6 +216,10 @@ const stackActions = computed(() => width.value <= 1280);
       overflow-x: clip;
     }
 
+    &:has(> .spinner.loading) {
+      min-height: 5rem;
+    }
+
     > .spinner {
       position: absolute;
       inset: 0;
