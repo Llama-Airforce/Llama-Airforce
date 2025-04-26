@@ -156,7 +156,7 @@ const tokenIcon = (market: Market) =>
     </Table>
 
     <NoData
-      v-else
+      v-else-if="!loading"
       :message="`There are no ${type} markets for ${chain}`"
     />
   </Card>
