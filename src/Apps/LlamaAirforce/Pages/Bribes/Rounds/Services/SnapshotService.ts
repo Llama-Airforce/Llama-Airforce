@@ -157,23 +157,72 @@ export default class SnapshotService extends ServiceBaseHost {
       );
     };
 
-    return paginate(fs).then((votes) => {
-      /*
-       * Fix for HiddenHand fucking up their vote in Aura round 21.
-       * It was added later manually, hence we hardcode this vote in.
-       * https://snapshot.org/#/aurafinance.eth/proposal/0x051e501623ca3f97d1131b04ae55201ed0f4226c523ac9acebc96a7c4c5c823d
-       */
-      const hardcodeHHVote =
-        proposal ===
-          "0xdf8a01486bd5e3a8c11b161f2a43f7295b0cd4ff257d5de95e485512287157b3" &&
-        voters.includes("0x3cde8fa1c73afe0828f672d197e082463c2ac8e2");
+    return paginate(fs)
+      .then((votes) => {
+        /*
+         * Fix for HiddenHand fucking up their vote in Aura round 21.
+         * It was added later manually, hence we hardcode this vote in.
+         * https://snapshot.org/#/aurafinance.eth/proposal/0x051e501623ca3f97d1131b04ae55201ed0f4226c523ac9acebc96a7c4c5c823d
+         */
+        const hardcodeHHVote =
+          proposal ===
+            "0xdf8a01486bd5e3a8c11b161f2a43f7295b0cd4ff257d5de95e485512287157b3" &&
+          voters.includes("0x3cde8fa1c73afe0828f672d197e082463c2ac8e2");
 
-      if (hardcodeHHVote) {
-        votes.push(HH_VOTE);
-      }
+        if (hardcodeHHVote) {
+          votes.push(HH_VOTE);
+        }
 
-      return votes;
-    });
+        return votes;
+      })
+      .then(async (votes) => {
+        /**
+         * Fix for Curve API fucking up which resulted in the proposal missing all sidechain gauges
+         * Tommy was able to snapshot the old vote and we going to try and aggregate back in the old and the new.
+         * Basically the way we're doing it, when we grab the votes from snapshot they are in this format (but an array).
+         * So just cycling through this list and if the voter is not in the results,
+         * their entry gets pushed into the votes before checking scores
+         */
+        if (
+          proposal !==
+          "0x3016b4856269e94064a8ddd5bd6d229a03f08471c011b6fa4ddbccd225b4e6aa"
+        ) {
+          return votes;
+        }
+
+        console.log(
+          "HOTFIX: round 95 of cvxcrv, patching in hardcoded votes from deleted proposal"
+        );
+        const { votes: votesOld } = await import("../Hotfix/crv-95");
+
+        const oldVotesArray = Object.values(votesOld);
+        console.log(
+          `Adding ${oldVotesArray.length} hardcoded votes from deleted proposal`
+        );
+
+        // Create a map of existing voters for quick lookup
+        const existingVoters = new Set(
+          votes.map((vote) => vote.voter.toLowerCase())
+        );
+
+        // Add votes from old proposal that aren't already in the current votes
+        let count = 0;
+        for (const oldVote of oldVotesArray) {
+          const voterAddress = oldVote.voter.toLowerCase() as Address;
+          if (!existingVoters.has(voterAddress)) {
+            count++;
+            votes.push({
+              id: oldVote.id,
+              voter: voterAddress,
+              choice: oldVote.choice,
+            });
+          }
+        }
+
+        console.log(`Replaced ${count} votes`);
+
+        return votes;
+      });
   }
 
   public async getScores(
