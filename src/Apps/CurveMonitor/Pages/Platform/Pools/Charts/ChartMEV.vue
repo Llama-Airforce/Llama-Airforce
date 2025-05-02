@@ -99,7 +99,7 @@ const { chart, series } = useLightweightChart({
       })),
     },
     {
-      type: "Line" as const,
+      type: LineSeries,
       name: "volume" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {

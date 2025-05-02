@@ -22,7 +22,7 @@ const { chart, series } = useLightweightChart({
   }),
   series: [
     {
-      type: "Candlestick",
+      type: CandlestickSeries,
       name: "ohlc" as const,
       options: computed<CandlestickSeriesPartialOptions>(() => {
         const { colors } = theme.value;
@@ -43,7 +43,7 @@ const { chart, series } = useLightweightChart({
       }),
     },
     {
-      type: "Line",
+      type: LineSeries,
       name: "oracle" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {

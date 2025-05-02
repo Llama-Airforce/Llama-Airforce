@@ -1,6 +1,5 @@
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-
 import type AutoImport from "unplugin-auto-import/vite";
 import type Components from "unplugin-vue-components/vite";
 
@@ -53,7 +52,18 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
     // Charting
     {
       from: "lightweight-charts",
-      imports: ["LineType", "LineStyle", "ColorType", "CrosshairMode"],
+      imports: [
+        "LineSeries",
+        "LineType",
+        "LineStyle",
+        "AreaSeries",
+        "BarSeries",
+        "BaselineSeries",
+        "CandlestickSeries",
+        "HistogramSeries",
+        "ColorType",
+        "CrosshairMode",
+      ],
       type: false,
     },
     {
@@ -63,30 +73,43 @@ export const autoImport: Parameters<typeof AutoImport>[0] = {
         "ISeriesApi",
         "UTCTimestamp",
         "LineData",
+        "LineSeriesPartialOptions",
+        "AreaData",
+        "AreaSeriesPartialOptions",
+        "BarData",
+        "BarSeriesPartialOptions",
+        "BaselineData",
+        "BaselineSeriesPartialOptions",
         "CandlestickData",
         "CandlestickSeriesPartialOptions",
         "HistogramData",
         "HistogramSeriesPartialOptions",
-        "AreaSeriesPartialOptions",
-        "LineSeriesPartialOptions",
       ],
       type: true,
+    },
+    {
+      from: "@/Framework/Series/StackedAreaSeries/StackedAreaSeries",
+      imports: ["StackedAreaSeries"],
     },
     {
       from: "@/Framework/Series/StackedAreaSeries",
       imports: [
+        "StackedAreaData",
         "StackedAreaSeriesOptions",
         "StackedAreaSeriesPartialOptions",
-        "StackedAreaData",
       ],
       type: true,
     },
     {
+      from: "@/Framework/Series/StackedBarsSeries/StackedBarsSeries",
+      imports: ["StackedBarsSeries"],
+    },
+    {
       from: "@/Framework/Series/StackedBarsSeries",
       imports: [
+        "StackedBarsData",
         "StackedBarsSeriesOptions",
         "StackedBarsSeriesPartialOptions",
-        "StackedBarsData",
       ],
       type: true,
     },

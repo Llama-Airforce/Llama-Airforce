@@ -2,9 +2,9 @@
 import createChartStyles from "@/Styles/ChartStylesLW";
 import type { OHLC } from "@curvefi/prices-api/ohlc";
 
-const { ohlc, minMove } = defineProps<{
+const { ohlc, minMove = undefined } = defineProps<{
   ohlc: OHLC[];
-  minMove?: number;
+  minMove?: number | undefined;
 }>();
 
 // Chart
@@ -17,7 +17,7 @@ let min = 0;
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartStyles(),
   series: {
-    type: "Candlestick",
+    type: CandlestickSeries,
     name: "ohlc" as const,
     options: computed<CandlestickSeriesPartialOptions>(() => {
       const { colors } = theme.value;

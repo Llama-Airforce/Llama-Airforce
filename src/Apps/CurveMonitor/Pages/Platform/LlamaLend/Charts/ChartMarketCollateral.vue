@@ -46,7 +46,7 @@ const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
     {
-      type: "Line",
+      type: LineSeries,
       name: "collateral" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
@@ -60,7 +60,7 @@ const { chart, series } = useLightweightChart({
       })),
     },
     {
-      type: "Line",
+      type: LineSeries,
       name: "borrowed" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {

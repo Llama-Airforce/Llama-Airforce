@@ -49,7 +49,7 @@ const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
     ...balances.map(({ symbol }, i) => ({
-      type: "Line" as const,
+      type: LineSeries,
       name: symbol,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {

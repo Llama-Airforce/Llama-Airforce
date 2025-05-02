@@ -44,7 +44,7 @@ const card = useTemplateRef("card");
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: coins.map((coin, i) => ({
-    type: "Line",
+    type: LineSeries,
     name: coin,
     options: computed<LineSeriesPartialOptions>(() => ({
       priceFormat: {
@@ -59,7 +59,7 @@ const { chart, series } = useLightweightChart({
       autoscaleInfoProvider: (original: () => AutoscaleInfo | null) => {
         const res = original();
 
-        if (res !== null) {
+        if (res !== null && res.priceRange) {
           res.priceRange.minValue = Math.max(0.98, res.priceRange.minValue);
           res.priceRange.maxValue = Math.min(1.02, res.priceRange.maxValue);
         }

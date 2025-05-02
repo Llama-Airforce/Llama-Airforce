@@ -14,7 +14,7 @@ const card = useTemplateRef("card");
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: {
-    type: "Histogram",
+    type: HistogramSeries,
     name: "distributions" as const,
     options: computed<HistogramSeriesPartialOptions>(() => ({
       priceFormat: {

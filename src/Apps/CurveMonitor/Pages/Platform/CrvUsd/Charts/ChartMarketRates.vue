@@ -24,7 +24,7 @@ const { chart, series } = useLightweightChart({
       formatter,
     }),
     {
-      type: "Line",
+      type: LineSeries,
       name: "ema" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {

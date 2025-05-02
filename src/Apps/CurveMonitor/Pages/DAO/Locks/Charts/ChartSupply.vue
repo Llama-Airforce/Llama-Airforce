@@ -45,7 +45,7 @@ const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
     {
-      type: "Line",
+      type: LineSeries,
       name: "crv" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
@@ -60,7 +60,7 @@ const { chart, series } = useLightweightChart({
       })),
     },
     {
-      type: "Line",
+      type: LineSeries,
       name: "circ" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
@@ -75,7 +75,7 @@ const { chart, series } = useLightweightChart({
       })),
     },
     {
-      type: "Line",
+      type: LineSeries,
       name: "vecrv" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {

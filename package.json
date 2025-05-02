@@ -17,7 +17,7 @@
     "apexcharts": "4.7.0",
     "ethereum-blockies-base64": "^1.0.2",
     "hono": "^4.7.8",
-    "lightweight-charts": "4.2.2",
+    "lightweight-charts": "5.0.6",
     "lru-cache": "^11.1.0",
     "lucide-vue-next": "^0.507.0",
     "pinia": "^3.0.2",

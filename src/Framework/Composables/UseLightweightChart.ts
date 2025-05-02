@@ -4,79 +4,93 @@ import type {
   ChartOptions,
   SeriesType as SeriesTypeOriginal,
   ISeriesApi,
-  SeriesPartialOptionsMap,
-  SeriesOptionsCommon,
+  SeriesPartialOptionsMap as SeriesPartialOptionsMapOriginal,
+  SeriesDefinition as SeriesDefinitionOriginal,
 } from "lightweight-charts";
-import type { StackedAreaSeriesPartialOptions } from "../Series/StackedAreaSeries/Options";
-import { StackedAreaSeries } from "../Series/StackedAreaSeries/StackedAreaSeries";
-import type { StackedBarsSeriesPartialOptions } from "../Series/StackedBarsSeries/Options";
-import { StackedBarsSeries } from "../Series/StackedBarsSeries/StackedBarsSeries";
 
-// Custom series are not supported to their ambiguity, but we support more specific ones
+// We extend the original types with our own custom series types.
 type SeriesTypeCustom = "StackedArea" | "StackedBars";
-type SeriesType = Exclude<SeriesTypeOriginal, "Custom"> | SeriesTypeCustom;
-
-/** Map any custom SeriesType extension to 'Custom' so it maps to a key of ISeriesApi */
-type SeriesApiType<T extends SeriesType> = T extends SeriesTypeCustom
-  ? "Custom"
-  : T;
+type SeriesType = SeriesTypeOriginal | SeriesTypeCustom;
 
 /** The default options map extended with our own custom types */
-type SeriesOptions = SeriesPartialOptionsMap & {
+type SeriesPartialOptionsMap = SeriesPartialOptionsMapOriginal & {
   StackedArea: StackedAreaSeriesPartialOptions;
   StackedBars: StackedBarsSeriesPartialOptions;
 };
 
+type SeriesDefinition<T extends SeriesType> = T extends SeriesTypeOriginal
+  ? SeriesDefinitionOriginal<T>
+  : SeriesDefinitionOriginal<"Custom">;
+
 /**
  * Defines a series for the chart
- * @template T - The type of series (e.g., 'Line', 'Candlestick', 'Area', 'StackedArea')
+ * @template T - The type of series (e.g., LineSeries, CandlestickSeries, AreaSeries, 'StackedArea')
  * @property {string} name - Unique identifier for the series
- * @property {T} type - The type of series
- * @property {Ref<SeriesOptions[T]>} options - Reactive options for the series
+ * @property {T} type - The type of series (can be a SeriesDefinition or a custom series type)
+ * @property {ComputedRef<SeriesPartialOptionsMap[T]>} options - Reactive options for the series
  *
  * @example
  * const lineSeries: Serie<'Line'> = {
  *   name: 'price',
- *   type: 'Line',
- *   options: ref({ color: 'blue' })
+ *   type: LineSeries,
+ *   options: computed(() => ({ color: 'blue' }))
  * };
  */
 type Serie<T extends SeriesType> = {
   name: string;
-  type: T;
-  options: Ref<SeriesOptions[T]>;
+  type: SeriesDefinition<T> | SeriesTypeCustom;
+  options: ComputedRef<SeriesPartialOptionsMap[T]>;
 };
 
 /** Represents a single series or an array of series for the chart */
 type Series = MaybeArray<Serie<SeriesType>>;
 
+type ExtractSeriesType<T> = T extends SeriesTypeCustom
+  ? "Custom"
+  : T extends { type: infer U }
+  ? U extends SeriesTypeOriginal
+    ? U
+    : "Custom"
+  : "Custom";
+
 /**
  * Maps series names to their API instances
  * @template T - Series type (single series or array of series)
  *
- * Provides type-safe access to series instances after chart creation
+ * Provides type-safe access to series instances after chart creation.
+ * Each series is mapped by its name to the corresponding ISeriesApi instance.
+ * Custom series types are mapped to 'Custom' API type.
  *
  * @example
- * const series = {
- *   price: { type: 'Line' as const, options: ref({}) },
- *   volume: { type: 'Area' as const, options: ref({}) }
- * };
- * type ChartSeries = SeriesMap<typeof series>;
- * // ChartSeries will be:
+ * // Define series with const assertions for type safety
+ * const series = [
+ *   {
+ *     name: 'price' as const,
+ *     type: LineSeries,
+ *     options: computed(() => ({ color: theme.value.colors.green }))
+ *   },
+ *   {
+ *     name: 'stacked' as const,
+ *     type: 'StackedArea',
+ *     options: computed(() => ({ colors: [{ line: 'red', area: 'rgba(255,0,0,0.2)' }] }))
+ *   }
+ * ];
+ *
+ * // The resulting SeriesMap type will be:
  * // {
  * //   price: ISeriesApi<'Line'> | undefined;
- * //   volume: ISeriesApi<'Area'> | undefined;
+ * //   stacked: ISeriesApi<'Custom'> | undefined;
  * // }
  */
 type SeriesMap<T extends Series> = {
   [K in Flatten<T>["name"]]:
-    | ISeriesApi<SeriesApiType<Flatten<T>["type"]>>
+    | ISeriesApi<ExtractSeriesType<Flatten<T>["type"]>>
     | undefined;
 };
 
 /**
  * Options for the useLightweightChart composable
- * @template T - SerieDef or SerieDefs
+ * @template T - Series or array of Series
  */
 type Options<T extends Series> = {
   /** Function to create reactive chart options */
@@ -94,33 +108,38 @@ type Options<T extends Series> = {
  * @template T - Series type (single or array)
  * @param options - Chart configuration object
  * @returns Object with:
- *   - chartRef: Ref to chart container element
  *   - chart: Ref to chart instance
+ *   - chartRef: Ref to chart container element
  *   - series: Object mapping series names to API instances
  *
  * @example
- * const { chartRef, chart, series } = useLightweightChart({
- *   createChartOptions: (chartRef) => computed(() => ({
- *     height: chartRef.clientHeight,
- *   })),
+ * const { chart, series } = useLightweightChart({
+ *   createChartOptions: createChartOptions(),
  *   series: [
  *     {
- *       name: 'volume' as const,
- *       type: 'Area',
+ *       name: 'price' as const,
+ *       type: LineSeries,
  *       options: computed(() => ({
+ *         color: theme.value.colors.green,
+ *         lineWidth: 2,
  *         priceFormat: {
  *           type: 'custom',
- *           formatter: (y: number) => `$${y.toFixed(2)}`,
+ *           formatter: (x: number) => `$${x.toFixed(2)}`,
  *         },
- *         lineWidth: 2,
+ *       })),
+ *     },
+ *     {
+ *       name: 'volume' as const,
+ *       type: AreaSeries,
+ *       options: computed(() => ({
  *         lineColor: theme.value.colors.blue,
  *         topColor: 'rgba(32, 129, 240, 0.2)',
  *         bottomColor: 'rgba(32, 129, 240, 0)',
  *       })),
  *     },
  *     {
- *       name: 'price' as const,
- *       type: 'Line',
+ *       name: 'stacked' as const,
+ *       type: 'StackedArea',
  *       options: computed(() => ({
  *         color: theme.value.colors.green,
  *       })),
@@ -159,7 +178,16 @@ export function useLightweightChart<T extends Series>(options: Options<T>) {
 
     // Create series
     for (const serieDef of seriesArray) {
-      const serie = createSerie(chart.value, serieDef);
+      const serie =
+        serieDef.type === "StackedArea" || serieDef.type === "StackedBars"
+          ? chart.value.addCustomSeries(
+              serieDef.type === "StackedArea"
+                ? new StackedAreaSeries()
+                : new StackedBarsSeries(),
+              serieDef.options.value
+            )
+          : chart.value.addSeries(serieDef.type, serieDef.options.value);
+
       series[serieDef.name as keyof typeof series] =
         serie as SeriesMap<T>[keyof SeriesMap<T>];
     }
@@ -197,35 +225,10 @@ export function useLightweightChart<T extends Series>(options: Options<T>) {
       const serie = series[name as keyof SeriesMap<T>];
 
       // Cast options to the common denominator between custom and native series.
-      serie?.applyOptions(newOptions as SeriesOptionsCommon);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+      (serie as any)?.applyOptions(newOptions);
     });
   }
 
   return { chart, chartRef, series };
-}
-
-/**
- * Creates a new series on the given chart.
- *
- * @param {IChartApi} chart - The chart instance to add the series to.
- * @param {Serie<SeriesType>} param1 - An object containing the type of series and its options.
- * @returns {ISeriesApi<SeriesType>} The created series instance.
- */
-function createSerie(chart: IChartApi, { type, options }: Serie<SeriesType>) {
-  const serieFactories: {
-    [K in SeriesType]: (
-      options: SeriesOptions[K]
-    ) => ISeriesApi<SeriesApiType<K>>;
-  } = {
-    Area: chart.addAreaSeries.bind(chart),
-    Bar: chart.addBarSeries.bind(chart),
-    Baseline: chart.addBaselineSeries.bind(chart),
-    Line: chart.addLineSeries.bind(chart),
-    Candlestick: chart.addCandlestickSeries.bind(chart),
-    Histogram: chart.addHistogramSeries.bind(chart),
-    StackedArea: chart.addCustomSeries.bind(chart, new StackedAreaSeries()),
-    StackedBars: chart.addCustomSeries.bind(chart, new StackedBarsSeries()),
-  };
-
-  return serieFactories[type](options.value as SeriesOptionsCommon);
 }

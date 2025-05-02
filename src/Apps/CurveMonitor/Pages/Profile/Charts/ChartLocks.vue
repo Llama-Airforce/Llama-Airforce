@@ -18,7 +18,7 @@ const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
     {
-      type: "Histogram",
+      type: HistogramSeries,
       name: "locks" as const,
       options: computed<HistogramSeriesPartialOptions>(() => ({
         color: theme.value.colors.yellow,

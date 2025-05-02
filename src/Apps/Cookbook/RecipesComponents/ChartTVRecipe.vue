@@ -39,7 +39,7 @@ const { chart: chartBar, series: seriesBar } = useLightweightChart({
   createChartOptions: createChartOptions(),
   chartRef: chartRefBar,
   series: {
-    type: "Histogram",
+    type: HistogramSeries,
     name: "tvl" as const,
     options: computed<HistogramSeriesPartialOptions>(() => ({
       priceFormat: {

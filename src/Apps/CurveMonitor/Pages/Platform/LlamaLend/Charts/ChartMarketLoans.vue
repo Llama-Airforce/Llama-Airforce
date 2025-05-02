@@ -22,7 +22,7 @@ const card = useTemplateRef("card");
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: {
-    type: "Histogram",
+    type: HistogramSeries,
     name: "loans" as const,
     options: computed<HistogramSeriesPartialOptions>(() => ({
       color: theme.value.colors.yellow,

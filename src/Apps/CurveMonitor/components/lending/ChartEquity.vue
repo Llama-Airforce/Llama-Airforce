@@ -19,7 +19,7 @@ const card = useTemplateRef("card");
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: {
-    type: "Baseline",
+    type: BaselineSeries,
     name: "equity" as const,
     options: computed<BaselineSeriesPartialOptions>(() => {
       const { colors } = theme.value;

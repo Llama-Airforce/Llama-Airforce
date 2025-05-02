@@ -7,7 +7,7 @@ import type {
   ICustomSeriesPaneRenderer,
   PaneRendererCustomData,
   PriceToCoordinateConverter,
-  Range,
+  IRange,
   Time,
 } from "lightweight-charts";
 import type { StackedAreaData } from "./Data";
@@ -116,7 +116,7 @@ export class StackedAreaSeriesRenderer<TData extends StackedAreaData>
 
   _createLinePaths(
     bars: StackedAreaBarItem[],
-    visibleRange: Range<number>,
+    visibleRange: IRange<number>,
     renderingScope: BitmapCoordinatesRenderingScope,
     zeroY: number
   ) {

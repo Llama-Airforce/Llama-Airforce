@@ -114,7 +114,7 @@ export function createAreaSerie<T extends string>({
   }));
 
   return {
-    type: "Area",
+    type: AreaSeries,
     name,
     options,
   } as const;

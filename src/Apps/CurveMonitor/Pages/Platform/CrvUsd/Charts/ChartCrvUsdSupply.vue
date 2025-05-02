@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { createSeriesMarkers } from "lightweight-charts";
 import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useQueryCrvUsdSupply } from "@CM/queries/crvusd";
 
@@ -52,7 +53,7 @@ const { chart, series } = useLightweightChart({
       formatter,
     }),
     {
-      type: "Line",
+      type: LineSeries,
       name: "debt" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
         priceFormat: {
@@ -103,7 +104,7 @@ function createSeries() {
 
   // Add marker for March 20, 2025
   const resupplyDate = new Date(Date.UTC(2025, 2, 20));
-  series.supply.setMarkers([
+  createSeriesMarkers(series.supply, [
     {
       time: resupplyDate.getUTCTimestamp(),
       position: "aboveBar",
