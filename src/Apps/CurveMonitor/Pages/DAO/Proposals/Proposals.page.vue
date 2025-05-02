@@ -15,7 +15,7 @@ const pageDebounced = refDebounced(page, 200);
 const proposalSearch = ref("");
 const proposalSearchDebounced = refDebounced(proposalSearch, 300);
 
-const proposalType = ref<ProposalType>("all");
+const proposalType = ref<ProposalType | "all">("all");
 
 const proposalStatus = computed((): ProposalStatus => {
   switch (tabActive.value) {
