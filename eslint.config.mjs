@@ -196,6 +196,8 @@ export default [
           alphabetical: false,
         },
       ],
+      // Turned off, because for some reason it required optional properties to have a default value when destructuring?
+      "vue/require-default-prop": "off",
     },
   },
 ];
