@@ -5,7 +5,7 @@
       "name": "llama-airforce",
       "dependencies": {
         "@cowprotocol/widget-lib": "0.18.0",
-        "@curvefi/prices-api": "^1.1.1",
+        "@curvefi/prices-api": "^1.1.3",
         "@kyvg/vue3-notification": "^3.4.1",
         "@tanstack/vue-query": "^5.76.0",
         "@vueuse/core": "^13.1.0",
@@ -158,7 +158,7 @@
 
     "@cowprotocol/widget-lib": ["@cowprotocol/widget-lib@0.18.0", "", { "dependencies": { "@cowprotocol/events": "^1.5.0", "@cowprotocol/iframe-transport": "^1.1.0" } }, "sha512-uv4FBAqnoTEPwF7x7g1X65owuMRKfSoFSiDx3BRPvBBCIN3tvRMeOC9ZFlBEiJT677YnS4JWLItOIwQbwKxFrg=="],
 
-    "@curvefi/prices-api": ["@curvefi/prices-api@1.1.1", "", { "peerDependencies": { "typescript": "*" } }, "sha512-xSFbah11SUAmUaxpP40A9IFk7GwRaM4kywnzJY12SVlMG9siW2hsRjVkNQub4JtW/jFfHn2/6p0GpZe2jSbFfQ=="],
+    "@curvefi/prices-api": ["@curvefi/prices-api@1.1.3", "", { "peerDependencies": { "typescript": "*" } }, "sha512-dcPnZKYVf53QpCXbEdg+eYVxGZHhXL08bCGCouDiSsmewoLt+XXM/zGb0/zy745cMR8LtyKSW6OTWQ+rmTE2fg=="],
 
     "@ecies/ciphers": ["@ecies/ciphers@0.2.3", "", { "peerDependencies": { "@noble/ciphers": "^1.0.0" } }, "sha512-tapn6XhOueMwht3E2UzY0ZZjYokdaw9XtL9kEyjhQ/Fb9vL9xTFbOaI+fV0AWvTpYu4BNloC6getKW6NtSg4mA=="],
 

@@ -6,8 +6,8 @@ const emit = defineEmits<{
 }>();
 
 // Select
-const types = [...proposalTypes].filter((x) => x !== "other");
-const type = ref<ProposalType>("all");
+const types = [...proposalTypes];
+const type = ref<ProposalType>("ownership");
 
 const onTypeSelect = (option: ProposalType): void => {
   type.value = option;

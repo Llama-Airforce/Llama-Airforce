@@ -29,7 +29,7 @@ export function useQueryProposals(
   return useQuery({
     queryKey: ["proposals", page, search, type, status] as const,
     queryFn: ({ queryKey: [, page, search, type, status] }) =>
-      Api.getProposals(page, search, type, status),
+      Api.getProposals(page, undefined, search, type, status),
     placeholderData: keepPreviousData,
   });
 }

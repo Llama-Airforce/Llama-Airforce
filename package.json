@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@cowprotocol/widget-lib": "0.18.0",
-    "@curvefi/prices-api": "^1.1.1",
+    "@curvefi/prices-api": "^1.1.3",
     "@kyvg/vue3-notification": "^3.4.1",
     "@tanstack/vue-query": "^5.76.0",
     "@vueuse/core": "^13.1.0",
