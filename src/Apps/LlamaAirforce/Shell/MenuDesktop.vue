@@ -50,7 +50,7 @@ const hasMenu = computed(
 
       <div class="bottom">
         <LlamaNFT />
-        <SelectLanguage />
+        <SelectLanguage direction="up" />
         <Wallet
           v-if="hasMenu"
           :label-please-connect="t('please-connect')"
