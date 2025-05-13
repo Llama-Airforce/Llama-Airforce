@@ -60,7 +60,6 @@ const votingPowerNumber = computed(() =>
 
 const isVoteOpen = computed(() => getStatus(proposal) === "active");
 const votingContract = computed(() => {
-  // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
   switch (proposal.type) {
     case "ownership":
       return CurveVotingAddressOwnership;
