@@ -2,8 +2,9 @@
 import type { Epoch } from "../../Models";
 import { useBribesStore } from "../../Store";
 import {
-  dollarPerVlAsset as dollarPerVlAssetFunc,
-  totalAmountDollars as totalAmountDollarsFunc,
+  dollarPerVlAsset,
+  totalAmountDollars,
+  totalAmountBribed,
   getDate,
   getDateRaw,
   getLink,
@@ -28,15 +29,6 @@ const { product } = storeToRefs(useBribesStore());
 const countdownString = ref("");
 const roundsOrdered = computed(() => rounds.orderBy((x) => x, "desc"));
 const voteLink = computed(() => (epoch ? getLink(epoch, epoch.proposal) : ""));
-
-const dollarPerVlAsset = computed(() =>
-  epoch ? dollarPerVlAssetFunc(epoch) : undefined
-);
-
-const totalAmountDollars = computed(() =>
-  epoch ? totalAmountDollarsFunc(epoch) : undefined
-);
-
 const date = computed(() => (epoch ? getDate(epoch) : ""));
 
 const isFinished = computed(() =>
@@ -80,12 +72,36 @@ const onRoundSelect = (round: number): void => {
     <KPI v-else />
 
     <KPI
-      :label="'$/' + vlAssetSymbol(product?.protocol)"
-      :has-value="!!dollarPerVlAsset"
+      :label="t('votes')"
+      :has-value="!!epoch"
     >
       <AsyncValue
         type="dollar"
-        :value="dollarPerVlAsset"
+        :value="epoch ? totalAmountBribed(epoch) : undefined"
+        :precision="2"
+        :show-symbol="false"
+      />
+      CVX
+    </KPI>
+
+    <KPI
+      :label="t('total')"
+      :has-value="!!epoch"
+    >
+      <AsyncValue
+        type="dollar"
+        :value="epoch ? totalAmountDollars(epoch) : undefined"
+        :precision="2"
+      />
+    </KPI>
+
+    <KPI
+      :label="'$/' + vlAssetSymbol(product?.protocol)"
+      :has-value="!!epoch"
+    >
+      <AsyncValue
+        type="dollar"
+        :value="epoch ? dollarPerVlAsset(epoch) : undefined"
         :precision="5"
       />
     </KPI>
@@ -109,32 +125,21 @@ const onRoundSelect = (round: number): void => {
         </a>
       </template>
     </KPI>
-
-    <KPI
-      :label="t('total')"
-      :has-value="!!totalAmountDollars"
-    >
-      <AsyncValue
-        type="dollar"
-        :value="totalAmountDollars"
-        :precision="2"
-      />
-    </KPI>
   </div>
 </template>
 
 <style scoped>
 .summary {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 1.5rem;
 
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 
     > .select {
       grid-row: 1;
-      grid-column: 1 / span 3;
+      grid-column: 1 / span 4;
     }
   }
 
@@ -159,14 +164,17 @@ en:
   deadline: Deadline
   voting-ended: Voting Ended
   total: Total
+  votes: Votes
 fr:
   round-number: Numéro de tour
   deadline: Date limite
   voting-ended: Vote terminé
   total: Total
+  votes: Votes
 zh:
   round-number: 轮次编号
   deadline: 截止日期
   voting-ended: 投票结束
   total: 总计
+  votes: 投票
 </i18n>
