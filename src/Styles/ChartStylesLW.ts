@@ -3,6 +3,7 @@ import {
   type DeepPartial,
   ColorType,
   LineStyle,
+  type AutoscaleInfo,
 } from "lightweight-charts";
 import type { Theme } from "@/Styles/Theme";
 import { deepMerge } from "@/Utils/Object";
@@ -90,12 +91,14 @@ export function createAreaSerie<T extends string>({
   formatter,
   minMove,
   precision,
+  autoscaleInfoProvider,
 }: {
   name: T;
   color: Ref<string>;
   formatter?: ((x: number) => string) | "price" | "percent" | "volume";
   minMove?: number;
   precision?: number;
+  autoscaleInfoProvider?: () => AutoscaleInfo | null;
 }) {
   const options = computed<AreaSeriesPartialOptions>(() => ({
     priceFormat: {
@@ -111,6 +114,7 @@ export function createAreaSerie<T extends string>({
     bottomColor: `${color.value}00`,
     lastValueVisible: false,
     priceLineVisible: false,
+    autoscaleInfoProvider,
   }));
 
   return {

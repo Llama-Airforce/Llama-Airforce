@@ -157,6 +157,11 @@ const callData = computed(() => {
       }
     }
 
+    .calldata {
+      white-space: pre;
+      text-wrap: auto;
+    }
+
     .calldata,
     .voters {
       max-height: 20rem;

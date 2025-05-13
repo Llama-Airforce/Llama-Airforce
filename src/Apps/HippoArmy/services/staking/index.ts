@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { fetchJson as fetch, addQueryString } from "@/Utils/fetch";
 import { getHost, type Options } from "..";
-import { chain, pagination, timerange } from "../schema";
+import { chain, pagination, timerange, address } from "../schema";
 import * as Schema from "./schema";
 
 const getEventsParams = z.object({
@@ -130,4 +130,48 @@ export async function getPositionHist(
   );
 
   return Schema.positionHistogramResponse.parse(data);
+}
+
+const getVotingWeightHistoryParams = z.object({
+  ...chain,
+  ...address,
+});
+
+export async function getVotingWeightHistory(
+  params: z.infer<typeof getVotingWeightHistoryParams>,
+  options?: Options
+) {
+  const host = getHost(options);
+  const { chain, address } = getVotingWeightHistoryParams.parse(params);
+
+  const data = await fetch(
+    `${host}/v1/staking/${chain}/user/${address}/voting_weight_history`,
+    undefined,
+    options?.signal
+  );
+
+  return Schema.votingWeightHistoryResponse.parse(data);
+}
+
+const getDistributionHistoryParams = z.object({
+  ...chain,
+  ...timerange,
+  ...pagination,
+});
+
+export async function getDistributionHistory(
+  params: z.infer<typeof getDistributionHistoryParams>,
+  options?: Options
+) {
+  const host = getHost(options);
+  const { chain, ...validParams } = getDistributionHistoryParams.parse(params);
+  const queryString = addQueryString(validParams);
+
+  const data = await fetch(
+    `${host}/v1/staking/${chain}/distribution_history${queryString}`,
+    undefined,
+    options?.signal
+  );
+
+  return Schema.distributionHistoryResponse.parse(data);
 }

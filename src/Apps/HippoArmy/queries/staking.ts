@@ -84,11 +84,29 @@ export function useTopUsers(
   });
 }
 
-export function useQueryPositionHist(
+export function usePositionHist(
   params: MaybeRefOrGetter<Parameters<typeof Api.getPositionHist>[0]>
 ) {
   return useQuery({
     queryKey: ["staking-position-hist", params] as const,
     queryFn: () => Api.getPositionHist(toValue(params)),
+  });
+}
+
+export function useVotingWeightHistory(
+  params: MaybeRefOrGetter<Parameters<typeof Api.getVotingWeightHistory>[0]>
+) {
+  return useQuery({
+    queryKey: ["staking-voting-weight-hist", params] as const,
+    queryFn: () => Api.getVotingWeightHistory(toValue(params)),
+  });
+}
+
+export function useDistributionHistory(
+  params: MaybeRefOrGetter<Parameters<typeof Api.getDistributionHistory>[0]>
+) {
+  return useQuery({
+    queryKey: ["staking-distribution-hist", params] as const,
+    queryFn: () => Api.getDistributionHistory(toValue(params)),
   });
 }

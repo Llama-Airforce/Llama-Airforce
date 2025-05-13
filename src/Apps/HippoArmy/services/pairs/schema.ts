@@ -60,7 +60,7 @@ const snapshotData = z
     rewards: data.rewards,
   }));
 
-const snapshotsResponse = z
+export const snapshotsResponse = z
   .object({
     snapshots: z.array(snapshotData),
     count: z.number(),
@@ -92,7 +92,7 @@ const collateralEventData = z
     debtChange: parseFloat(data.debt_change),
   }));
 
-const collateralEventsResponse = z
+export const collateralEventsResponse = z
   .object({
     events: z.array(collateralEventData),
     count: z.number(),
@@ -128,7 +128,7 @@ const redemptionData = z
     debtReduction: parseFloat(data.debt_reduction),
   }));
 
-const redemptionsResponse = z
+export const redemptionsResponse = z
   .object({
     events: z.array(redemptionData),
     count: z.number(),
@@ -164,7 +164,7 @@ const liquidationData = z
     amountLiquidatorToRepay: parseFloat(data.amount_liquidator_to_repay),
   }));
 
-const liquidationsResponse = z
+export const liquidationsResponse = z
   .object({
     events: z.array(liquidationData),
     count: z.number(),
@@ -177,13 +177,6 @@ const liquidationsResponse = z
     page: data.page,
     totalPages: data.total_pages,
   }));
-
-export {
-  snapshotsResponse,
-  collateralEventsResponse,
-  redemptionsResponse,
-  liquidationsResponse,
-};
 
 export type SnapshotsResponse = z.infer<typeof snapshotsResponse>;
 export type CollateralEventsResponse = z.infer<typeof collateralEventsResponse>;

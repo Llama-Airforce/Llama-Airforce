@@ -32,7 +32,7 @@ const callData = computed(() =>
   <div class="technicals">
     <div class="technical">
       <div class="heading">Description</div>
-      <div class="description">DESCRIPTION TODO</div>
+      <div class="description">{{ proposal.description }}</div>
     </div>
 
     <div class="technical">
@@ -139,6 +139,11 @@ const callData = computed(() =>
       &.expandedVoters {
         transform: rotate(180deg);
       }
+    }
+
+    .calldata {
+      white-space: pre;
+      text-wrap: auto;
     }
 
     .calldata,

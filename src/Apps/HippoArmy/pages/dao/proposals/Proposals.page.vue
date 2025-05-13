@@ -40,7 +40,9 @@ const { isFetching: loading, data } = useProposals(
 const count = computed(() => data.value?.length ?? 0);
 const proposals = computed(() =>
   (data.value ?? [])
-    .filter((x) => x.status === proposalStatus.value)
+    .filter(
+      (x) => proposalStatus.value === "all" || x.status === proposalStatus.value
+    )
     .orderBy((x) => x.createdAt.getDate(), "desc")
 );
 </script>

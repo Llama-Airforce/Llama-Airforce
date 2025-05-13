@@ -29,6 +29,7 @@ const proposalData = z
   .object({
     proposal_id: z.number(),
     on_chain_id: z.number(),
+    description: z.string(),
     creator: z.string(),
     creator_ens: z.string().nullable(),
     creator_label: z.string().nullable(),
@@ -47,12 +48,14 @@ const proposalData = z
   .transform((data) => ({
     proposalId: data.proposal_id,
     onChainId: data.on_chain_id,
+    description: data.description,
     creator: data.creator as Address,
     creatorEns: data.creator_ens,
     creatorLabel: data.creator_label,
     status: data.status,
     epoch: data.epoch,
     createdAt: toDate(data.created_at),
+    end: new Date(toDate(data.created_at).getTime() + 7 * 24 * 60 * 60 * 1000),
     quorumWeight: data.quorum_weight,
     executionTx: data.execution_tx as Address | null,
     cancellationTx: data.cancellation_tx,
@@ -74,6 +77,8 @@ export const proposalsResponse = z
     page: data.page,
     count: data.count,
   }));
+
+export const proposalResponse = proposalData;
 
 const voteData = z
   .object({

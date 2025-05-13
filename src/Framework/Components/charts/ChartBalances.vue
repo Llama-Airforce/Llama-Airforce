@@ -12,8 +12,14 @@ type Balances = {
   balances: Balance[];
 }[];
 
-const { balances } = defineProps<{
+const {
+  balances,
+  title,
+  showDollars = true,
+} = defineProps<{
   balances: Balances;
+  title?: string;
+  showDollars?: boolean;
 }>();
 
 const theme = useTheme();
@@ -114,7 +120,7 @@ function createSeriesUnstacked() {
       continue;
     }
 
-    const toDollars = dollars.value;
+    const toDollars = showDollars && dollars.value;
 
     const newSerie = bs
       .map((x) => ({
@@ -135,7 +141,7 @@ function createSeriesStacked(normalize: boolean) {
     return;
   }
 
-  const toDollars = dollars.value;
+  const toDollars = showDollars && dollars.value;
 
   const newSerie = [...balances.values()]
     // Don't render disabled symbols.
@@ -180,7 +186,7 @@ function createSeriesStacked(normalize: boolean) {
   <Card
     ref="card"
     class="stack-actions"
-    title="Balances"
+    :title="title ?? 'Balances'"
   >
     <template #actions>
       <div style="display: flex">
@@ -194,7 +200,7 @@ function createSeriesStacked(normalize: boolean) {
           </template>
         </Select>
 
-        <Tooltip>
+        <Tooltip v-if="showDollars">
           <template #trigger>
             <ButtonToggle
               style="margin-right: 1rem"

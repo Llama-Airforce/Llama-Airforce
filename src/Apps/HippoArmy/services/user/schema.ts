@@ -27,7 +27,7 @@ const snapshotData = z
     redemptionLost: parseFloat(data.redemption_lost),
   }));
 
-const snapshotsResponse = z
+export const snapshotsResponse = z
   .object({
     snapshots: z.array(snapshotData),
     count: z.number(),
@@ -61,7 +61,7 @@ const positionData = z
     active: data.active,
   }));
 
-const positionsResponse = z
+export const positionsResponse = z
   .object({
     active: z.array(positionData),
     historical: z.array(positionData),
@@ -74,8 +74,6 @@ const positionsResponse = z
     totalActive: data.total_active,
     totalHistorical: data.total_historical,
   }));
-
-export { snapshotsResponse, positionsResponse };
 
 export type SnapshotsResponse = z.infer<typeof snapshotsResponse>;
 export type PositionsResponse = z.infer<typeof positionsResponse>;

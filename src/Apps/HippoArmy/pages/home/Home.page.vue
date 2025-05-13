@@ -1,13 +1,60 @@
 <script setup lang="ts">
-import { usePairsEthereum } from "@HA/queries/protocols";
+import ChartBalances from "@/Framework/Components/charts/ChartBalances.vue";
+import { DEFAULT_MIN_HEIGHT } from "@/Styles/ChartStylesLW";
+import { useHistory, usePairsEthereum } from "@HA/queries/protocols";
 import { useStableOHLC } from "@HA/queries/stablecoin";
+import type { History } from "@HA/services/protocols/schema";
 import ChartPrice from "./charts/ChartPrice.vue";
 import KPIs from "./components/KPIs.vue";
 
-const { isFetching: loadingPrice, data: price } = useStableOHLC();
-
 // Prefetching protocol overview data which we suspect is the most visited page
 usePairsEthereum();
+
+const { isFetching: loadingPrice, data: price } = useStableOHLC();
+const { isFetching: loadingHistory, data: history } = useHistory({
+  chain: "ethereum",
+});
+
+type NumericHistoryKey<T extends keyof History> = T extends keyof History
+  ? History[T] extends number
+    ? T
+    : never
+  : never;
+
+const createBalances = <T extends keyof History>(
+  valueKey: NumericHistoryKey<T>
+) =>
+  (history.value?.snapshots ?? [])
+    // Transform into a data structure ChartBalances accepts
+    .map((x) => ({
+      symbol: x.name,
+      balances: [
+        {
+          timestamp: x.timestamp,
+          balance: x[valueKey],
+          tokenPrice: 1,
+        },
+      ],
+    }))
+    // Group by protocol
+    .groupBy((x) => x.symbol)
+    .entries()
+    // For each protocol, sum the values of each respective timestamp
+    .map(([symbol, items]) => ({
+      symbol,
+      balances: items
+        .flatMap((x) => x.balances)
+        .groupBy((x) => x.timestamp.getTime())
+        .entries()
+        .map(([, values]) => ({
+          timestamp: values[0].timestamp,
+          balance: values.reduce((sum, v) => sum + v.balance, 0),
+          tokenPrice: values[0].tokenPrice,
+        })),
+    }));
+
+const balancesUnderlying = computed(() => createBalances("totalUnderlying"));
+const balancesDebt = computed(() => createBalances("totalDebt"));
 </script>
 
 <template>
@@ -26,11 +73,41 @@ usePairsEthereum();
       <KPIs />
     </div>
 
-    <ChartPrice
-      style="grid-area: price"
-      :price
-      :loading="loadingPrice"
-    />
+    <div class="dashboard-grid charts">
+      <ChartPrice
+        style="grid-area: price"
+        :price
+        :loading="loadingPrice"
+      />
+
+      <ChartBalances
+        v-if="!loadingHistory"
+        style="grid-area: underlying"
+        title="TVL"
+        :balances="balancesUnderlying"
+        :show-dollars="false"
+      />
+      <Card
+        v-else
+        loading
+        title="TVL"
+        :style="`grid-area: underlying; min-height: ${DEFAULT_MIN_HEIGHT}`"
+      />
+
+      <ChartBalances
+        v-if="!loadingHistory"
+        style="grid-area: debt"
+        title="Debt"
+        :balances="balancesDebt"
+        :show-dollars="false"
+      />
+      <Card
+        v-else
+        loading
+        title="Debt"
+        :style="`grid-area: debt; min-height: ${DEFAULT_MIN_HEIGHT}`"
+      />
+    </div>
   </div>
 </template>
 
@@ -43,7 +120,7 @@ usePairsEthereum();
   grid-template-areas:
     "description hippo"
     "highlights hippo"
-    "price price";
+    "charts charts";
 
   gap: calc(3 * var(--dashboard-gap));
 
@@ -55,7 +132,7 @@ usePairsEthereum();
     grid-template-areas:
       "description description"
       "highlights highlights"
-      "price price";
+      "charts charts";
 
     > .description {
       justify-content: center;
@@ -136,6 +213,20 @@ usePairsEthereum();
 
     @media only screen and (max-width: 600px) {
       max-height: 150px;
+    }
+  }
+
+  > .charts {
+    grid-area: charts;
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "price price"
+      "underlying debt";
+
+    @media only screen and (max-width: 1280px) {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

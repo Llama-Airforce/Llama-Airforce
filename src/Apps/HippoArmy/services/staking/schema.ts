@@ -23,7 +23,7 @@ const eventData = z
     account: data.account,
   }));
 
-const eventsResponse = z
+export const eventsResponse = z
   .object({
     events: z.array(eventData),
     count: z.number(),
@@ -55,7 +55,7 @@ const cooldownQueueEntry = z
     txHash: data.tx_hash as Address,
   }));
 
-const cooldownQueueResponse = z
+export const cooldownQueueResponse = z
   .object({
     entries: z.array(cooldownQueueEntry),
   })
@@ -77,7 +77,7 @@ const aprHistoryEntry = z
     apr: parseFloat(data.apr),
   }));
 
-const aprHistoryResponse = z
+export const aprHistoryResponse = z
   .object({
     snapshots: z.array(aprHistoryEntry),
     count: z.number(),
@@ -103,7 +103,7 @@ const tvlHistoryEntry = z
     tvlUsd: parseFloat(data.tvl_usd),
   }));
 
-const tvlHistoryResponse = z
+export const tvlHistoryResponse = z
   .object({
     data: z.array(tvlHistoryEntry),
     count: z.number(),
@@ -133,7 +133,7 @@ const userPosition = z
     positionValueUsd: parseFloat(data.position_value_usd),
   }));
 
-const topUsersResponse = z
+export const topUsersResponse = z
   .object({
     total_tvl: z.string(),
     total_tvl_usd: z.string(),
@@ -165,7 +165,7 @@ const histogramBin = z
     count: data.count,
   }));
 
-const positionHistogramResponse = z
+export const positionHistogramResponse = z
   .object({
     bins: z.array(histogramBin),
     total_users: z.number(),
@@ -175,14 +175,73 @@ const positionHistogramResponse = z
     totalUsers: data.total_users,
   }));
 
-export {
-  eventsResponse,
-  cooldownQueueResponse,
-  aprHistoryResponse,
-  tvlHistoryResponse,
-  topUsersResponse,
-  positionHistogramResponse,
-};
+const weightData = z
+  .object({
+    epoch: z.number(),
+    timestamp: z.number(),
+    weight: z.string(),
+    relative_weight: z.string(),
+  })
+  .transform((data) => ({
+    epoch: data.epoch,
+    timestamp: toDate(data.timestamp),
+    weight: parseFloat(data.weight),
+    weightRelative: parseFloat(data.relative_weight),
+  }));
+
+export const votingWeightHistoryResponse = z
+  .object({
+    address: z.string(),
+    weights: z.array(weightData),
+  })
+  .transform((data) => ({
+    adress: data.address as Address,
+    weights: data.weights,
+  }));
+
+const distributionHistoryData = z
+  .object({
+    timestamp: z.number(),
+    total_staked: z.string(),
+    cooldown_amount: z.string(),
+    cooldown_percentage: z.string(),
+    regular_staked_amount: z.string(),
+    regular_staked_percentage: z.string(),
+    perma_staked_amount: z.string(),
+    perma_staked_percentage: z.string(),
+    cooldown_percentage_excluding_perma: z.string(),
+    regular_staked_percentage_excluding_perma: z.string(),
+  })
+  .transform((data) => ({
+    timestamp: toDate(data.timestamp),
+    totalStaked: parseFloat(data.total_staked),
+    cooldownAmount: parseFloat(data.cooldown_amount),
+    cooldownPercentage: parseFloat(data.cooldown_percentage),
+    regularStakedAmount: parseFloat(data.regular_staked_amount),
+    regularStakedPercentage: parseFloat(data.regular_staked_percentage),
+    permaStakedAmount: parseFloat(data.perma_staked_amount),
+    permaStakedPercentage: parseFloat(data.perma_staked_percentage),
+    cooldownPercentageExcludingPerma: parseFloat(
+      data.cooldown_percentage_excluding_perma
+    ),
+    regularStakedPercentageExcludingPerma: parseFloat(
+      data.regular_staked_percentage_excluding_perma
+    ),
+  }));
+
+export const distributionHistoryResponse = z
+  .object({
+    data: z.array(distributionHistoryData),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((data) => ({
+    data: data.data,
+    count: data.count,
+    page: data.page,
+    totalPages: data.total_pages,
+  }));
 
 export type EventsResponse = z.infer<typeof eventsResponse>;
 export type CooldownQueueResponse = z.infer<typeof cooldownQueueResponse>;
@@ -192,8 +251,16 @@ export type TopUsersResponse = z.infer<typeof topUsersResponse>;
 export type PositionHistogramResponse = z.infer<
   typeof positionHistogramResponse
 >;
+export type VotingWeightHistoryResponse = z.infer<
+  typeof votingWeightHistoryResponse
+>;
+export type DistributionHistoryResponse = z.infer<
+  typeof distributionHistoryResponse
+>;
 
 export type Event = EventsResponse["events"][number];
 export type TopUser = TopUsersResponse["users"][number];
 export type Cooldown = CooldownQueueResponse["entries"][number];
 export type Bin = PositionHistogramResponse["bins"][number];
+export type VotingWeight = VotingWeightHistoryResponse["weights"][number];
+export type Distribution = DistributionHistoryResponse["data"][number];

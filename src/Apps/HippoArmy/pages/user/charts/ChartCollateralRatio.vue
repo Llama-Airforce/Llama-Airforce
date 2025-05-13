@@ -18,6 +18,7 @@ const { chart, series } = useLightweightChart({
     name: "collateralRatio" as const,
     color: computed(() => theme.value.colors.purple),
     formatter: "percent",
+    precision: 1,
   }),
 });
 
@@ -32,7 +33,7 @@ function createSeries() {
   const newCollateralRatioSerie = snapshots
     .map((x) => ({
       time: x.time.getUTCTimestamp(),
-      value: x.collateralRatio / 100,
+      value: Math.min(500, x.collateralRatio * 100),
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
@@ -45,7 +46,7 @@ function createSeries() {
 <template>
   <Card
     ref="card"
-    title="Collateral Ratio History"
+    title="Collateral Ratio"
     :loading
   >
     <template #actions>

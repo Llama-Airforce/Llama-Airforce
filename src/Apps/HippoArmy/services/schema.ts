@@ -29,8 +29,14 @@ export const chain = {
   chain: z.string(),
 };
 
+const addressValidator = z.string().regex(/^0x[a-fA-F0-9]{40}$/);
+
 export const userAddress = {
-  user_address: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  user_address: addressValidator,
+};
+
+export const address = {
+  address: addressValidator,
 };
 
 export const userData = z

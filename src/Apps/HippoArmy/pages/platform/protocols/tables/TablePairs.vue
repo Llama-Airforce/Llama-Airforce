@@ -35,7 +35,7 @@ const pairsProcessed = computed(() =>
       case "name":
         return pairName(pair.name);
       case "tvl":
-        return pair.totalCollateral;
+        return pair.totalUnderlying;
       case "rate":
         return pair.interestRate;
       case "util":
@@ -103,19 +103,19 @@ const onPairSelect = async (newPair: (typeof pairsProcessed.value)[number]) => {
           <AsyncValue
             show-zero
             type="dollar"
-            :value="pair.totalCollateral / 10 ** 21"
+            :value="pair.totalUnderlying"
             :precision="2"
             :show-symbol="false"
           />
 
-          {{ pair.tokenUnderlying.symbol }}
+          {{ pair.tokenPairUnderyling.symbol }}
         </div>
 
         <div class="end">
           <AsyncValue
             show-zero
             type="percentage"
-            :value="pair.interestRate / 10 ** 8"
+            :value="pair.aprBorrowCost"
             :precision="2"
           />
         </div>

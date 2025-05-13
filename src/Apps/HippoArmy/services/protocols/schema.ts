@@ -22,7 +22,7 @@ const overviewData = z
     totalDebt: parseFloat(data.total_debt),
   }));
 
-const overviewResponse = z
+export const overviewResponse = z
   .object({
     protocols: z.array(overviewData),
     count: z.number(),
@@ -112,7 +112,7 @@ const pairData = z
     tokenPairUnderyling: data.pair_underlying_token,
   }));
 
-const pairsResponse = z
+export const pairsResponse = z
   .object({
     pairs: z.array(pairData),
     count: z.number(),
@@ -126,9 +126,74 @@ const pairsResponse = z
     totalPages: data.total_pages,
   }));
 
-export { overviewResponse, pairsResponse };
+const priceData = z
+  .object({
+    crvusd_price: z.string(),
+    frxusd_price: z.string(),
+    block_number: z.number(),
+    block_timestamp: z.number(),
+  })
+  .transform((data) => ({
+    crvusd: parseFloat(data.crvusd_price),
+    frxusd: parseFloat(data.frxusd_price),
+    blockNumber: data.block_number,
+    timestamp: toDate(data.block_timestamp),
+  }));
+
+export const oraclePricesResponse = z
+  .object({
+    prices: z.array(priceData),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((data) => ({
+    prices: data.prices,
+    count: data.count,
+    page: data.page,
+    totalPages: data.total_pages,
+  }));
+
+const historyData = z
+  .object({
+    name: z.string(),
+    protocol_id: z.number(),
+    pairs_count: z.number(),
+    active_positions_count: z.number(),
+    total_collateral: z.string(),
+    total_underlying: z.string(),
+    total_debt: z.string(),
+    timestamp: z.number(),
+  })
+  .transform((data) => ({
+    timestamp: toDate(data.timestamp),
+    name: data.name,
+    protocolId: data.protocol_id,
+    pairsCount: data.pairs_count,
+    totalCollateral: parseFloat(data.total_collateral),
+    totalUnderlying: parseFloat(data.total_underlying),
+    totalDebt: parseFloat(data.total_debt),
+  }));
+
+export const historyResponse = z
+  .object({
+    snapshots: z.array(historyData),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((data) => ({
+    snapshots: data.snapshots,
+    count: data.count,
+    page: data.page,
+    totalPages: data.total_pages,
+  }));
 
 export type OverviewResponse = z.infer<typeof overviewResponse>;
 export type PairsResponse = z.infer<typeof pairsResponse>;
+export type OraclesPricesResponse = z.infer<typeof oraclePricesResponse>;
+export type HistoryResponse = z.infer<typeof historyResponse>;
 
 export type Pair = PairsResponse["pairs"][number];
+export type OraclePrice = OraclesPricesResponse["prices"][number];
+export type History = HistoryResponse["snapshots"][number];

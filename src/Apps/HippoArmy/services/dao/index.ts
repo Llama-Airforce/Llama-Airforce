@@ -27,6 +27,26 @@ export async function getProposals(
   return Schema.proposalsResponse.parse(data);
 }
 
+const getProposalParams = z.object({
+  ...proposalId,
+});
+
+export async function getProposal(
+  params: z.infer<typeof getProposalParams>,
+  options?: Options
+) {
+  const host = getHost(options);
+  const { proposal_id } = getProposalParams.parse(params);
+
+  const data = await fetch(
+    `${host}/v1/dao/proposals/${proposal_id}/details`,
+    undefined,
+    options?.signal
+  );
+
+  return Schema.proposalResponse.parse(data);
+}
+
 const getProposalVotesParams = z.object({
   ...proposalId,
   ...pagination,

@@ -43,7 +43,7 @@ const withdrawEventData = baseEventData
     receiver: data.receiver,
   }));
 
-const eventsResponse = z
+export const eventsResponse = z
   .object({
     events: z.array(z.union([depositEventData, withdrawEventData])),
     count: z.number(),
@@ -73,7 +73,7 @@ const cooldownQueueEntry = z
     txHash: data.tx_hash as Address,
   }));
 
-const cooldownQueueResponse = z
+export const cooldownQueueResponse = z
   .object({
     entries: z.array(cooldownQueueEntry),
   })
@@ -95,7 +95,7 @@ const aprHistoryEntry = z
     apr: parseFloat(data.apr),
   }));
 
-const aprHistoryResponse = z
+export const aprHistoryResponse = z
   .object({
     snapshots: z.array(aprHistoryEntry),
     count: z.number(),
@@ -119,7 +119,7 @@ const tvlHistoryEntry = z
     tvl: parseFloat(data.tvl),
   }));
 
-const tvlHistoryResponse = z
+export const tvlHistoryResponse = z
   .object({
     data: z.array(tvlHistoryEntry),
     count: z.number(),
@@ -147,7 +147,7 @@ const userPosition = z
     positionValue: parseFloat(data.position_value),
   }));
 
-const topUsersResponse = z
+export const topUsersResponse = z
   .object({
     total_tvl: z.string(),
     top_users_tvl: z.string(),
@@ -173,7 +173,7 @@ const histogramBin = z
     count: data.count,
   }));
 
-const positionHistogramResponse = z
+export const positionHistogramResponse = z
   .object({
     bins: z.array(histogramBin),
     total_users: z.number(),
@@ -183,14 +183,37 @@ const positionHistogramResponse = z
     totalUsers: data.total_users,
   }));
 
-export {
-  eventsResponse,
-  cooldownQueueResponse,
-  aprHistoryResponse,
-  tvlHistoryResponse,
-  topUsersResponse,
-  positionHistogramResponse,
-};
+const distributionHistoryData = z
+  .object({
+    timestamp: z.number(),
+    total_staked: z.string(),
+    cooldown_amount: z.string(),
+    cooldown_percentage: z.string(),
+    active_staked_amount: z.string(),
+    active_staked_percentage: z.string(),
+  })
+  .transform((data) => ({
+    timestamp: toDate(data.timestamp),
+    totalStaked: parseFloat(data.total_staked),
+    cooldownAmount: parseFloat(data.cooldown_amount),
+    cooldownPercentage: parseFloat(data.cooldown_percentage),
+    activeStakedAmount: parseFloat(data.active_staked_amount),
+    activeStakedPercentage: parseFloat(data.active_staked_percentage),
+  }));
+
+export const distributionHistoryResponse = z
+  .object({
+    data: z.array(distributionHistoryData),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((data) => ({
+    data: data.data,
+    count: data.count,
+    page: data.page,
+    totalPages: data.total_pages,
+  }));
 
 export type EventsResponse = z.infer<typeof eventsResponse>;
 export type CooldownQueueResponse = z.infer<typeof cooldownQueueResponse>;
@@ -200,8 +223,12 @@ export type TopUsersResponse = z.infer<typeof topUsersResponse>;
 export type PositionHistogramResponse = z.infer<
   typeof positionHistogramResponse
 >;
+export type DistributionHistoryResponse = z.infer<
+  typeof distributionHistoryResponse
+>;
 
 export type Event = EventsResponse["events"][number];
 export type TopUser = TopUsersResponse["users"][number];
 export type Cooldown = CooldownQueueResponse["entries"][number];
 export type Bin = PositionHistogramResponse["bins"][number];
+export type Distribution = DistributionHistoryResponse["data"][number];

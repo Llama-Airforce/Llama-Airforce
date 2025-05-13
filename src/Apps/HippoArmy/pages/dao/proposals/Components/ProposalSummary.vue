@@ -47,7 +47,7 @@ const proposalToClipboard = async () => {
         class="metadata"
         :to="proposalLink"
       >
-        {{ proposal.creatorLabel || "< No Title >" }}
+        {{ proposal.description || "< No Title >" }}
       </router-link>
     </div>
 
@@ -65,6 +65,12 @@ const proposalToClipboard = async () => {
       <Date
         class="item"
         type="start"
+        :proposal
+      />
+
+      <Date
+        class="item"
+        type="end"
         :proposal
       />
 

@@ -72,3 +72,21 @@ export function usePairsEthereum() {
     pending: computed(() => result.value.pending),
   };
 }
+
+export function useOraclePrices(
+  params: MaybeRefOrGetter<Parameters<typeof Api.getOraclePrices>[0]>
+) {
+  return useQuery({
+    queryKey: ["protocols-oracle-prices", params] as const,
+    queryFn: () => Api.getOraclePrices(toValue(params)),
+  });
+}
+
+export function useHistory(
+  params: MaybeRefOrGetter<Parameters<typeof Api.getHistory>[0]>
+) {
+  return useQuery({
+    queryKey: ["protocols-history", params] as const,
+    queryFn: () => Api.getHistory(toValue(params)),
+  });
+}

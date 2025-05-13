@@ -131,3 +131,26 @@ export async function getPositionHist(
 
   return Schema.positionHistogramResponse.parse(data);
 }
+
+const getDistributionHistoryParams = z.object({
+  ...chain,
+  ...timerange,
+  ...pagination,
+});
+
+export async function getDistributionHistory(
+  params: z.infer<typeof getDistributionHistoryParams>,
+  options?: Options
+) {
+  const host = getHost(options);
+  const { chain, ...validParams } = getDistributionHistoryParams.parse(params);
+  const queryString = addQueryString(validParams);
+
+  const data = await fetch(
+    `${host}/v1/insurance/${chain}/insurance_pool_distribution_history${queryString}`,
+    undefined,
+    options?.signal
+  );
+
+  return Schema.distributionHistoryResponse.parse(data);
+}

@@ -3,6 +3,7 @@ import { useSnapshots } from "@HA/queries/pairs";
 import type { Pair } from "@HA/services/protocols/schema";
 import ChartApr from "../charts/ChartApr.vue";
 import ChartTvl from "../charts/ChartTvl.vue";
+import OverviewKPIs from "../components/OverviewKPIs.vue";
 
 const { pair } = defineProps<{
   pair: Pair;
@@ -17,7 +18,7 @@ const { isFetching: loading, data: snapshots } = useSnapshots(
 const tvl = computed(() =>
   (snapshots.value ?? []).map((x) => ({
     timestamp: x.time,
-    tvl: x.totalCollateral / 10 ** 21,
+    tvl: x.totalUnderlying,
   }))
 );
 
@@ -31,55 +32,10 @@ const apr = computed(() =>
 
 <template>
   <div class="dashboard-grid">
-    <div
-      class="kpis"
+    <OverviewKPIs
       style="grid-area: kpis"
-    >
-      <KPI
-        label="Positions"
-        :has-value="!!pair"
-      >
-        <AsyncValue
-          :precision="0"
-          :value="pair?.activePositionsCount"
-        />
-      </KPI>
-
-      <KPI
-        label="TVL"
-        :has-value="!!pair"
-      >
-        <AsyncValue
-          type="dollar"
-          :precision="2"
-          :value="pair?.totalCollateral && pair.totalCollateral / 10 ** 21"
-          :show-symbol="false"
-        />
-        {{ pair.tokenUnderlying.symbol }}
-      </KPI>
-
-      <KPI
-        label="Interest Rate"
-        :has-value="!!pair"
-      >
-        <AsyncValue
-          type="percentage"
-          :precision="2"
-          :value="pair?.interestRate && pair.interestRate / 10 ** 8"
-        />
-      </KPI>
-
-      <KPI
-        label="Utilization Rate"
-        :has-value="!!pair"
-      >
-        <AsyncValue
-          type="percentage"
-          :precision="2"
-          :value="pair?.utilizationRate"
-        />
-      </KPI>
-    </div>
+      :pair
+    />
 
     <ChartTvl
       style="grid-area: tvl"
@@ -108,11 +64,5 @@ const apr = computed(() =>
     display: flex;
     flex-direction: column;
   }
-}
-
-.kpis {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--dashboard-gap);
 }
 </style>

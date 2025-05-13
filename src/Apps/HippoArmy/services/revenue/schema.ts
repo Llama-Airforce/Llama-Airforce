@@ -19,7 +19,7 @@ const distributionData = z
     amount: parseFloat(data.amount),
   }));
 
-const distributionsResponse = z
+export const distributionsResponse = z
   .object({
     distributions: z.array(distributionData),
     count: z.number(),
@@ -32,8 +32,6 @@ const distributionsResponse = z
     page: data.page,
     totalPages: data.total_pages,
   }));
-
-export { distributionsResponse };
 
 export type DistributionsResponse = z.infer<typeof distributionsResponse>;
 

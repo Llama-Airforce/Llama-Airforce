@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useOverview } from "@HA/queries/protocols";
+import { useOverview, useHistory } from "@HA/queries/protocols";
+import ChartTvl from "../charts/ChartTvl.vue";
 import TablePairs from "../tables/TablePairs.vue";
 
 const { protocol } = defineProps<{
@@ -15,10 +16,29 @@ const protocolData = computed(() =>
     (x) => x.name.toLocaleLowerCase() === protocol
   )
 );
+
+const { isFetching: loadingHistory, data: history } = useHistory({
+  chain: "ethereum",
+});
+
+const historyGrouped = computed(() =>
+  (history.value?.snapshots ?? [])
+    .filter((x) => x.name.toLocaleLowerCase() === protocol)
+    .groupBy((x) => x.timestamp.getTime())
+    .entries()
+);
+
+const tvl = computed(() =>
+  historyGrouped.value.flatMap(([, items]) => ({
+    timestamp: items[0].timestamp,
+    underlying: items.reduce((sum, x) => sum + x.totalUnderlying, 0),
+    debt: items.reduce((sum, x) => sum + x.totalDebt, 0),
+  }))
+);
 </script>
 
 <template>
-  <div class="dashboard-grid">
+  <div class="dashboard-grid root">
     <div class="kpis">
       <KPI
         label="Pairs"
@@ -58,11 +78,19 @@ const protocolData = computed(() =>
     </div>
 
     <TablePairs :protocol-name="protocolData?.name" />
+
+    <div class="dashboard-grid charts">
+      <ChartTvl
+        style="grid-area: chart-tvl"
+        :tvl
+        :loading="loadingHistory"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
-.dashboard-grid {
+.root {
   margin: var(--dashboard-gap) 0;
 }
 
@@ -70,5 +98,15 @@ const protocolData = computed(() =>
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--dashboard-gap);
+}
+
+.charts {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "chart-tvl";
+
+  @media only screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

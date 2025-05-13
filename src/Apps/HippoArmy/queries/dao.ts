@@ -19,6 +19,15 @@ export function useProposals(
   });
 }
 
+export function useProposal(
+  params: MaybeRefOrGetter<Parameters<typeof Api.getProposal>[0]>
+) {
+  return useQuery({
+    queryKey: ["dao-proposal", params] as const,
+    queryFn: () => Api.getProposal(toValue(params)),
+  });
+}
+
 export function useProposalVotes(
   params: MaybeRefOrGetter<
     Omit<Parameters<typeof Api.getProposalVotes>[0], keyof typeof pagination>

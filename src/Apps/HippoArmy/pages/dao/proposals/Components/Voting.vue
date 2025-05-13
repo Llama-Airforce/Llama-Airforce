@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { ProposalVote } from "@HA/services/dao/schema";
+import type { Proposal, ProposalVote } from "@HA/services/dao/schema";
+import VotingQuorum from "./VotingQuorum.vue";
 import VotingResults from "./VotingResults.vue";
 
 const { votes } = defineProps<{
+  proposal: Proposal;
   votes: ProposalVote[];
 }>();
 </script>
@@ -10,6 +12,7 @@ const { votes } = defineProps<{
 <template>
   <div class="voting">
     <VotingResults :votes />
+    <VotingQuorum :proposal />
   </div>
 </template>
 

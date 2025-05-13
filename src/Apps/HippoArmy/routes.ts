@@ -11,9 +11,9 @@ export const routes: RouteRecordRaw[] = [
   { path: "/api", component: () => import("@HA/pages/API.page.vue") },
 
   {
-    path: "/profile/:tab?",
-    name: "profile",
-    component: () => import("@HA/pages/profile/Profile.page.vue"),
+    path: "/user/:tab?",
+    name: "user",
+    component: () => import("@HA/pages/user/User.page.vue"),
     props: (route) => ({
       user: route.query.user || "",
     }),
@@ -66,6 +66,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "proposal/:proposalId",
         name: "proposal",
+        meta: { crumbs: true },
         component: () => import("@HA/pages/dao/proposals/Proposal.page.vue"),
       },
       {

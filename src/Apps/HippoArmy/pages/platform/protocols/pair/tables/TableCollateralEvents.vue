@@ -80,7 +80,7 @@ const type = (x: CollateralEvent) => {
             <AsyncValue
               type="dollar"
               :value="event.debtChange / 10 ** 18"
-              :precision="4"
+              :precision="2"
               :show-symbol="false"
             />
             {{ pair.tokenDebt.symbol }}
@@ -95,7 +95,7 @@ const type = (x: CollateralEvent) => {
             <AsyncValue
               type="dollar"
               :value="event.collateralChange / 10 ** 18"
-              :precision="4"
+              :precision="2"
               :show-symbol="false"
             />
             {{ pair.tokenCollateral.symbol }}

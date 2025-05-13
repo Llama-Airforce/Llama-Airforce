@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
+import createChartOptions from "@/Styles/ChartStylesLW";
 import type { Snapshot } from "@HA/services/user/schema";
-
-export type Serie = "collateral" | "debt";
-const serie = ref<Serie>("collateral");
 
 const { snapshots, user, loading } = defineProps<{
   snapshots: Snapshot[];
@@ -13,36 +10,59 @@ const { snapshots, user, loading } = defineProps<{
 
 const hasData = computed(() => snapshots.length > 0);
 
-// Chart
+// Legend
 const theme = useTheme();
+
+const { items, toggles, disabled } = useLegend(() => {
+  const { green, red } = theme.value.colors;
+
+  return [
+    { id: "underlying", label: "Underlying", color: green, togglable: true },
+    { id: "debt", label: "Debt", color: red, togglable: true },
+  ];
+});
+
+// Chart
 const card = useTemplateRef("card");
 
 const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(),
   series: [
-    createAreaSerie({
-      name: "collateral" as const,
-      color: computed(() => theme.value.colors.green),
-      formatter: "volume",
-    }),
-    createAreaSerie({
+    {
+      type: LineSeries,
+      name: "underlying" as const,
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: { type: "volume" },
+        lineWidth: 2,
+        color: theme.value.colors.green,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
+    },
+    {
+      type: LineSeries,
       name: "debt" as const,
-      color: computed(() => theme.value.colors.red),
-      formatter: "volume",
-    }),
+      options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: { type: "volume" },
+        lineWidth: 2,
+        color: theme.value.colors.red,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
+    },
   ],
 });
 
 watchEffect(createSeries);
 function createSeries() {
-  if (!chart.value || !series.collateral || !series.debt) {
+  if (!chart.value || !series.underlying || !series.debt) {
     return;
   }
 
-  const newCollateralSerie = snapshots
+  const newUnderlyingSerie = snapshots
     .map((x) => ({
       time: x.time.getUTCTimestamp(),
-      value: x.collateral / 10 ** 22,
+      value: x.underlying,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
@@ -55,11 +75,11 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  series.collateral.setData(newCollateralSerie);
+  series.underlying.setData(newUnderlyingSerie);
   series.debt.setData(newDebtSerie);
 
-  series.collateral.applyOptions({ visible: serie.value === "collateral" });
-  series.debt.applyOptions({ visible: serie.value === "debt" });
+  series.underlying.applyOptions({ visible: toggles.underlying.value });
+  series.debt.applyOptions({ visible: toggles.debt.value });
 
   chart.value.timeScale().fitContent();
 }
@@ -68,7 +88,7 @@ function createSeries() {
 <template>
   <Card
     ref="card"
-    title="User Position History"
+    title="Position"
     :loading
   >
     <template #actions>
@@ -89,24 +109,12 @@ function createSeries() {
     </template>
 
     <template #actions-secondary>
-      <div
+      <Legend
         v-if="hasData"
-        class="button-group"
-      >
-        <ButtonToggle
-          :model-value="serie === 'collateral'"
-          @click="serie = 'collateral'"
-        >
-          Collateral
-        </ButtonToggle>
-
-        <ButtonToggle
-          :model-value="serie === 'debt'"
-          @click="serie = 'debt'"
-        >
-          Debt
-        </ButtonToggle>
-      </div>
+        :items
+        :disabled
+        @toggle="toggles[$event].value = !toggles[$event].value"
+      />
     </template>
 
     <div

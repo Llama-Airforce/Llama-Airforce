@@ -11,7 +11,7 @@ const decimalTimeSeries = z
     timestamp: toDate(data.timestamp),
   }));
 
-const redemptionsResponse = z
+export const redemptionsResponse = z
   .object({
     total_allocation: z.string(),
     claim_count: z.number(),
@@ -27,7 +27,7 @@ const redemptionsResponse = z
     totalRedeemed: parseFloat(data.total_redeemed),
   }));
 
-const projectionResponse = z
+export const projectionResponse = z
   .object({
     projection: z.array(decimalTimeSeries),
     total_vested: z.string(),
@@ -41,7 +41,7 @@ const projectionResponse = z
     time: toDate(data.current_timestamp),
   }));
 
-const airdropResponse = z
+export const airdropResponse = z
   .object({
     total_allocation: z.string(),
     claim_count: z.number(),
@@ -55,7 +55,7 @@ const airdropResponse = z
     history: data.history,
   }));
 
-const supplyResponse = z
+export const supplyResponse = z
   .object({
     total_supply: z.string(),
     perma_staked: z.string(),
@@ -74,13 +74,6 @@ const supplyResponse = z
     licensingVesting: parseFloat(data.licensing_vesting),
     circulatingSupply: parseFloat(data.circulating_supply),
   }));
-
-export {
-  redemptionsResponse,
-  projectionResponse,
-  airdropResponse,
-  supplyResponse,
-};
 
 export type RedemptionsResponse = z.infer<typeof redemptionsResponse>;
 export type ProjectionResponse = z.infer<typeof projectionResponse>;

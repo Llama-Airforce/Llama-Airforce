@@ -92,3 +92,12 @@ export function useQueryPositionHist(
     queryFn: () => Api.getPositionHist(toValue(params)),
   });
 }
+
+export function useDistributionHistory(
+  params: MaybeRefOrGetter<Parameters<typeof Api.getDistributionHistory>[0]>
+) {
+  return useQuery({
+    queryKey: ["insurance-distribution-hist", params] as const,
+    queryFn: () => Api.getDistributionHistory(toValue(params)),
+  });
+}

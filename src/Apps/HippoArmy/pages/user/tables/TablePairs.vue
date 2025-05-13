@@ -60,7 +60,7 @@ const columns = [
     sort: true,
     align: "end",
   } as const,
-  { id: "underlying", label: "Collateral", sort: true, align: "end" } as const,
+  { id: "underlying", label: "Underlying", sort: true, align: "end" } as const,
   { id: "debt", label: "Debt", sort: true, align: "end" } as const,
   {
     id: "lastUpdated",
@@ -77,12 +77,12 @@ const hasHistorical = computed(
 );
 const tabActiveIndex = ref(0);
 
+const pairsActive = computed(() => pairs.value?.active ?? []);
+const pairsHistorical = computed(() => pairs.value?.historical ?? []);
+
 const rows = computed(() =>
-  (
-    (tabActiveIndex.value === 0
-      ? pairs.value?.active
-      : pairs.value?.historical) ?? []
-  )
+  (tabActiveIndex.value === 0 ? pairsActive.value : pairsHistorical.value)
+
     .orderBy((x) => {
       switch (sorting.value.column) {
         case "pairName":
@@ -97,13 +97,30 @@ const rows = computed(() =>
           return x.lastSnapshotDate.getTime();
       }
     }, sorting.value.order)
-    .map((x) => ({
-      ...x,
-      tokenPairCollateral: allPairs.value.find(
-        (pair) => pair.name === x.pairName
-      )?.tokenPairCollateral,
-    }))
+    .map((x) => {
+      const pair = allPairs.value.find((pair) => pair.name === x.pairName);
+
+      return {
+        ...x,
+        tokenPairCollateral: pair?.tokenPairCollateral,
+        tokenPairUnderlying: pair?.tokenPairUnderyling,
+      };
+    })
 );
+
+watchEffect(() => {
+  if (pairId.value === undefined) {
+    return;
+  }
+
+  if (pairsActive.value.map((x) => x.pairId).includes(pairId.value)) {
+    tabActiveIndex.value = 0;
+  } else if (
+    pairsHistorical.value.map((x) => x.pairId).includes(pairId.value)
+  ) {
+    tabActiveIndex.value = 1;
+  }
+});
 
 // Selection
 const selected = useRouteQuery<number | undefined>("pairId", undefined, {
@@ -172,12 +189,17 @@ const values = computed(() => rows.value.map((x) => x.pairId));
           />
         </div>
 
-        <div class="end">
+        <div
+          class="end"
+          style="display: flex; gap: 1ch"
+        >
           <AsyncValue
             type="dollar"
             :value="item.underlying"
+            :show-symbol="false"
             :precision="2"
           />
+          {{ item.tokenPairUnderlying?.symbol }}
         </div>
 
         <div class="end">

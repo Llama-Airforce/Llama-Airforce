@@ -4,8 +4,8 @@ export const menu: Menu = {
   titleRoute: "/",
   items: [
     {
-      label: "Profile",
-      to: "/profile",
+      label: "User",
+      to: "/user",
     },
     {
       label: "Platform",

@@ -36,7 +36,7 @@ const percentageNo = computed(() => (weightNo.value / total.value) * 100);
             :show-symbol="false"
           />
 
-          <span>&nbsp;veCRV</span>
+          <span>&nbsp;RSUP</span>
         </div>
 
         <div class="right">
@@ -70,7 +70,7 @@ const percentageNo = computed(() => (weightNo.value / total.value) * 100);
             :precision="0"
             :show-symbol="false"
           />
-          <span>&nbsp;veCRV</span>
+          <span>&nbsp;RSUP</span>
         </div>
 
         <div class="right">

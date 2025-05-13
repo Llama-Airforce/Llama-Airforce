@@ -21,7 +21,10 @@ const { data: votes } = useProposalVotes({
         :votes="votes ?? []"
       />
 
-      <Voting :votes="votes ?? []" />
+      <Voting
+        :proposal
+        :votes="votes ?? []"
+      />
     </div>
   </div>
 </template>

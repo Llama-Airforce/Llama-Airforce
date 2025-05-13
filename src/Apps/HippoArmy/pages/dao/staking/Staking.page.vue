@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import ChartCooldowns from "@HA/components/charts/ChartCooldowns.vue";
 import {
   useAprHistory,
   useCooldownQueue,
+  useDistributionHistory,
   useEvents,
-  useQueryPositionHist,
+  usePositionHist,
   useTopUsers,
   useTvlHistory,
 } from "@HA/queries/staking";
@@ -52,15 +54,53 @@ const { isFetching: loadingTopUsers, data: topUsers } = useTopUsers(
   }))
 );
 
-const { isFetching: loadingCooldowns, data: cooldowns } = useCooldownQueue(
+const { isFetching: loadingCooldowns, data: cooldownQueue } = useCooldownQueue(
   toRef(() => ({
     chain: "ethereum",
   }))
 );
 
-const { isFetching: loadingBins, data: bins } = useQueryPositionHist(
+const { isFetching: loadingBins, data: bins } = usePositionHist(
   toRef(() => ({
     chain: "ethereum",
+  }))
+);
+
+const { isFetching: loadingHistory, data: history } = useDistributionHistory(
+  toRef(() => ({
+    chain: "ethereum",
+  }))
+);
+
+const balancesStaked = computed(() => {
+  const data = history.value?.data ?? [];
+  if (data.length === 0) return [];
+
+  return [
+    {
+      symbol: "Regular staked",
+      balances: data.map((x) => ({
+        timestamp: x.timestamp,
+        balance: x.regularStakedAmount,
+        tokenPrice: 1,
+      })),
+    },
+    {
+      symbol: "Perma staked",
+      balances: data.map((x) => ({
+        timestamp: x.timestamp,
+        balance: x.permaStakedAmount,
+        tokenPrice: 1,
+      })),
+    },
+  ];
+});
+
+const cooldowns = computed(() =>
+  (history.value?.data ?? []).map((x) => ({
+    timestamp: x.timestamp,
+    amount: x.cooldownAmount,
+    percentage: x.cooldownPercentage,
   }))
 );
 </script>
@@ -93,22 +133,42 @@ const { isFetching: loadingBins, data: bins } = useQueryPositionHist(
       @page="pageEvents = $event"
     />
 
+    <ChartBalances
+      v-if="!loadingHistory"
+      style="grid-area: chart-staked"
+      title="Staked"
+      :balances="balancesStaked"
+      :show-dollars="false"
+    />
+    <Card
+      v-else
+      loading
+      title="Staked"
+      :style="`grid-area: chart-staked; min-height: 610px`"
+    />
+
     <TableTopUsers
       style="grid-area: top-users"
       :top-users="topUsers?.users ?? []"
       :loading="loadingTopUsers"
     />
 
-    <TableCooldowns
-      style="grid-area: cooldowns"
-      :cooldowns="cooldowns?.entries ?? []"
-      :loading="loadingCooldowns"
-    />
-
     <ChartPositions
       style="grid-area: positions"
       :bins="bins?.bins ?? []"
       :loading="loadingBins"
+    />
+
+    <TableCooldowns
+      style="grid-area: cooldowns"
+      :cooldowns="cooldownQueue?.entries ?? []"
+      :loading="loadingCooldowns"
+    />
+
+    <ChartCooldowns
+      style="grid-area: chart-cooldowns"
+      :cooldowns
+      :loading="loadingHistory"
     />
   </div>
 </template>
@@ -124,8 +184,9 @@ const { isFetching: loadingBins, data: bins } = useQueryPositionHist(
   grid-template-areas:
     "header header header header header header"
     "apr apr apr tvl tvl tvl"
-    "events events events cooldowns cooldowns cooldowns"
-    "top-users top-users positions positions positions positions";
+    "events events events chart-staked chart-staked chart-staked"
+    "top-users top-users positions positions positions positions"
+    "cooldowns cooldowns chart-cooldowns chart-cooldowns chart-cooldowns chart-cooldowns";
 
   @media only screen and (max-width: 1280px) {
     display: flex;

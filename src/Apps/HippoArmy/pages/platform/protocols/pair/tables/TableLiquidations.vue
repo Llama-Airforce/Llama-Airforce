@@ -43,7 +43,7 @@ const { relativeTime } = useRelativeTime();
         'Liquidator',
         { label: 'Shares liquidated', align: 'end' },
         { label: 'Collat for liquidator', align: 'end' },
-        { label: 'Amount to repay', align: 'end' },
+        { label: 'Amount to repay (reUSD)', align: 'end' },
         { label: 'Time', align: 'end' },
       ]"
     >
@@ -71,7 +71,7 @@ const { relativeTime } = useRelativeTime();
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="event.sharesLiquidated"
+            :value="event.sharesLiquidated / 10 ** 18"
             :precision="2"
             :show-symbol="false"
           />
@@ -80,7 +80,7 @@ const { relativeTime } = useRelativeTime();
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="event.collateralForLiquidator"
+            :value="event.collateralForLiquidator / 10 ** 18"
             :precision="2"
             :show-symbol="false"
           />
@@ -89,7 +89,7 @@ const { relativeTime } = useRelativeTime();
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="event.amountLiquidatorToRepay"
+            :value="event.amountLiquidatorToRepay / 10 ** 18"
             :precision="2"
             :show-symbol="false"
           />
