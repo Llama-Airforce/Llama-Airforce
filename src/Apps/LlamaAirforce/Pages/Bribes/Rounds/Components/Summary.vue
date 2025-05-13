@@ -111,7 +111,7 @@ const onRoundSelect = (round: number): void => {
     </KPI>
 
     <KPI
-      label="Total"
+      :label="t('total')"
       :has-value="!!totalAmountDollars"
     >
       <AsyncValue
@@ -153,8 +153,20 @@ const onRoundSelect = (round: number): void => {
 }
 </style>
 
-<i18n lang="yaml" locale="en">
-round-number: Round Number
-deadline: Deadline
-voting-ended: Voting Ended
+<i18n lang="yaml">
+en:
+  round-number: Round Number
+  deadline: Deadline
+  voting-ended: Voting Ended
+  total: Total
+fr:
+  round-number: Numéro de tour
+  deadline: Date limite
+  voting-ended: Vote terminé
+  total: Total
+zh:
+  round-number: 轮次编号
+  deadline: 截止日期
+  voting-ended: 投票结束
+  total: 总计
 </i18n>
