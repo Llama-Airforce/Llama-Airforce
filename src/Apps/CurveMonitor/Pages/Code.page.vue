@@ -68,7 +68,7 @@ const repositories: Repository[] = [
 const apis: API[] = [
   {
     name: "Curve Prices API",
-    url: "https://prices.curve.fi/feeds-docs",
+    url: "https://prices.curve.finance/feeds-docs",
     description: "Curve utility API co-developed by CurveMonitor",
   },
   {

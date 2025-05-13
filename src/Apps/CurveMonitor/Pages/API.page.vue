@@ -5,5 +5,5 @@ const Swagger = defineAsyncComponent(
 </script>
 
 <template>
-  <Swagger url="https://prices.curve.fi/feeds-docs/openapi.json" />
+  <Swagger url="https://prices.curve.finance/feeds-docs/openapi.json" />
 </template>

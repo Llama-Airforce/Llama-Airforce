@@ -16,7 +16,7 @@ function getIcon(chain: Chains) {
 }
 
 const onIconError = () => {
-  icon.value = "https://lend.curve.fi/images/default-crypto.png";
+  icon.value = "https://curve.finance/images/default-crypto.png";
 };
 
 watch(

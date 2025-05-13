@@ -10,7 +10,7 @@ export function useStableOHLC() {
       const { start, end } = getTimeRange({ daysRange: 90 });
 
       const url =
-        `https://prices.curve.fi/v1/usd_price` +
+        `https://prices.curve.finance/v1/usd_price` +
         `/ethereum` +
         `/${ReUsdAddress}` +
         `/history?` +

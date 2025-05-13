@@ -14,7 +14,7 @@ const app = new Hono().get(path, async (c) => {
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
-        `https://prices.curve.fi/v1/dao/fees/crvusd/weekly?start=${start}`
+        `https://prices.curve.finance/v1/dao/fees/crvusd/weekly?start=${start}`
       );
       const data = (await res.json()) as GetCrvUsdWeeklyResponse;
 

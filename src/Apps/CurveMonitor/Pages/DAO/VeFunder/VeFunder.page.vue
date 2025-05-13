@@ -35,7 +35,7 @@ const onGauge = (newGauge: string): void => {
             <li>
               New gauge votes must have a vote on the governance forum
               <a
-                href="https://gov.curve.fi/"
+                href="https://gov.curve.finance/"
                 target="_blank"
               >
                 at this address

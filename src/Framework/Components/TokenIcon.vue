@@ -18,7 +18,7 @@ function getIcon(tokenAddress: string) {
 }
 
 const onIconError = () => {
-  icon.value = "https://curve.fi/images/default-crypto.png";
+  icon.value = "https://curve.finance/images/default-crypto.png";
 };
 
 watch(

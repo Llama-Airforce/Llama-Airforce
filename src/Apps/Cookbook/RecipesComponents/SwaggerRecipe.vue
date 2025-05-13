@@ -6,7 +6,7 @@ import Recipe from "@CB/Recipe.vue";
   <div class="dashboard">
     <Recipe title="Swagger">
       <template #example>
-        <Swagger url="https://prices.curve.fi/feeds-docs/openapi.json" />
+        <Swagger url="https://prices.curve.finance/feeds-docs/openapi.json" />
       </template>
     </Recipe>
   </div>

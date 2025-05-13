@@ -11,7 +11,9 @@ const path = "/";
 const app = new Hono().get(path, async (c) => {
   const data = await cache(c.req.url, async () => {
     try {
-      const res = await fetch("https://prices.curve.fi/v1/dao/fees/collected");
+      const res = await fetch(
+        "https://prices.curve.finance/v1/dao/fees/collected"
+      );
       const data = (await res.json()) as GetFeesCollectedResponse;
 
       return data;

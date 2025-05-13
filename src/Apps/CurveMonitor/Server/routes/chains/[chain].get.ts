@@ -19,7 +19,7 @@ const app = new Hono().get(path, async (c) => {
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
-        `https://prices.curve.fi/v1/chains/${chain}?page=1&per_page=9999`
+        `https://prices.curve.finance/v1/chains/${chain}?page=1&per_page=9999`
       );
       const data = (await res.json()) as GetPoolsResponse;
 
