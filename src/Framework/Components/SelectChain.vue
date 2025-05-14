@@ -39,6 +39,7 @@ const chainInfos = computed(() =>
     { chain: "base" as const, label: "Base" },
     { chain: "polygon" as const, label: "Polygon" },
     { chain: "fraxtal" as const, label: "Fraxtal" },
+    { chain: "sonic" as const, label: "Sonic" },
   ].filter((chainInfo) => chains.includes(chainInfo.chain as Chain))
 );
 
