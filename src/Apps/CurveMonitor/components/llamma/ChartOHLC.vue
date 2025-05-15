@@ -100,9 +100,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  if (newOracleSerie.length > 0) {
-    series.oracle.setData(newOracleSerie);
-  }
+  series.oracle.setData(newOracleSerie);
 
   // Hide or show the oracle series based on the newOracle value
   series.oracle.applyOptions({

@@ -80,17 +80,15 @@ function createSeries() {
     // Don't render disabled coins. But keep the serie so colors don't get mixed up.
     series[coin]?.applyOptions({ visible: toggles[coin].value });
 
-    const newLineSerie = (prices.value as PoolPrice[])
-      .map((x) => ({
-        time: x.timestamp as UTCTimestamp,
-        value: x[coin],
-      }))
-      .uniqWith((x, y) => x.time === y.time)
-      .orderBy((c) => c.time, "asc");
-
-    if (newLineSerie.length > 0) {
-      series[coin]?.setData(newLineSerie);
-    }
+    series[coin]?.setData(
+      (prices.value as PoolPrice[])
+        .map((x) => ({
+          time: x.timestamp as UTCTimestamp,
+          value: x[coin],
+        }))
+        .uniqWith((x, y) => x.time === y.time)
+        .orderBy((c) => c.time, "asc")
+    );
   }
 
   chart.value.timeScale().fitContent();

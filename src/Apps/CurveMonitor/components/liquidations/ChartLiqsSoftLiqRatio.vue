@@ -75,13 +75,8 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  if (newPriceSerie.length > 0) {
-    series.price.setData(newPriceSerie);
-  }
-
-  if (newProportionSerie.length > 0) {
-    series.ratio.setData(newProportionSerie);
-  }
+  series.price.setData(newPriceSerie);
+  series.ratio.setData(newProportionSerie);
 
   chart.value.timeScale().fitContent();
 }

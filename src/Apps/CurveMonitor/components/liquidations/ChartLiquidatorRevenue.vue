@@ -84,13 +84,8 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  if (newRevenueSerie.length > 0) {
-    series.revenue.setData(newRevenueSerie);
-  }
-
-  if (newDiscountSerie.length > 0) {
-    series.discount.setData(newDiscountSerie);
-  }
+  series.revenue.setData(newRevenueSerie);
+  series.discount.setData(newDiscountSerie);
 
   chart.value.timeScale().fitContent();
 }

@@ -30,15 +30,15 @@ function createSeries() {
     return;
   }
 
-  const newTxsSerie = users
-    .map((c) => ({
-      time: c.timestamp as UTCTimestamp,
-      value: c.count,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.users.setData(newTxsSerie);
+  series.users.setData(
+    users
+      .map((c) => ({
+        time: c.timestamp as UTCTimestamp,
+        value: c.count,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   chart.value.timeScale().fitContent();
 }

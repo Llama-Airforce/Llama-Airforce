@@ -47,17 +47,15 @@ function createSeries() {
     return;
   }
 
-  const newEquitySerie = equity
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.equity,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  if (newEquitySerie.length > 0) {
-    series.equity.setData(newEquitySerie);
-  }
+  series.equity.setData(
+    equity
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.equity,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   chart.value.timeScale().fitContent();
 }

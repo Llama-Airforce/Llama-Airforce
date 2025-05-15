@@ -79,24 +79,25 @@ function createSeries() {
     return;
   }
 
-  const newAmountSerie = cooldowns
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.amount,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.amount.setData(
+    cooldowns
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.amount,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newPercentageSerie = cooldowns
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.percentage,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.amount.setData(newAmountSerie);
-  series.percentage.setData(newPercentageSerie);
+  series.percentage.setData(
+    cooldowns
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.percentage,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   series.amount.applyOptions({ visible: toggles.amount.value });
   series.percentage.applyOptions({ visible: toggles.percentage.value });

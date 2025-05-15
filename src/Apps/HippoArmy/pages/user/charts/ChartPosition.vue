@@ -59,24 +59,25 @@ function createSeries() {
     return;
   }
 
-  const newUnderlyingSerie = snapshots
-    .map((x) => ({
-      time: x.time.getUTCTimestamp(),
-      value: x.underlying,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.underlying.setData(
+    snapshots
+      .map((x) => ({
+        time: x.time.getUTCTimestamp(),
+        value: x.underlying,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newDebtSerie = snapshots
-    .map((x) => ({
-      time: x.time.getUTCTimestamp(),
-      value: x.debt,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.underlying.setData(newUnderlyingSerie);
-  series.debt.setData(newDebtSerie);
+  series.debt.setData(
+    snapshots
+      .map((x) => ({
+        time: x.time.getUTCTimestamp(),
+        value: x.debt,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   series.underlying.applyOptions({ visible: toggles.underlying.value });
   series.debt.applyOptions({ visible: toggles.debt.value });

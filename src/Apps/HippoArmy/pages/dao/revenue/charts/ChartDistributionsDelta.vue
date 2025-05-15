@@ -37,32 +37,31 @@ function createSeries() {
 
   const { colors } = theme.value;
 
-  const newDistributionsSeries = distributions
-    .map((x) => ({
-      time: x.blockTime.getUTCTimestamp(),
-      value: x.amount,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .takeRight(53) // Take 53 weeks to calculate 52 deltas
-    .reduce<HistogramData[]>((acc, curr, index, array) => {
-      if (index === 0) return acc;
+  series.deltas.setData(
+    distributions
+      .map((x) => ({
+        time: x.blockTime.getUTCTimestamp(),
+        value: x.amount,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+      .takeRight(53) // Take 53 weeks to calculate 52 deltas
+      .reduce<HistogramData[]>((acc, curr, index, array) => {
+        if (index === 0) return acc;
 
-      const value = curr.value - array[index - 1].value;
-      const color = value < 0 ? colors.red : colors.green;
+        const value = curr.value - array[index - 1].value;
+        const color = value < 0 ? colors.red : colors.green;
 
-      acc.push({
-        time: curr.time,
-        value,
-        color,
-      });
-      return acc;
-    }, []);
+        acc.push({
+          time: curr.time,
+          value,
+          color,
+        });
+        return acc;
+      }, [])
+  );
 
-  if (newDistributionsSeries.length > 0) {
-    series.deltas.setData(newDistributionsSeries);
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 </script>
 

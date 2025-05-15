@@ -64,24 +64,25 @@ function createSeries() {
     return;
   }
 
-  const newUnderlyingSerie = tvl
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.underlying,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.underlying.setData(
+    tvl
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.underlying,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newDebtSerie = tvl
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.debt,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.underlying.setData(newUnderlyingSerie);
-  series.debt.setData(newDebtSerie);
+  series.debt.setData(
+    tvl
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.debt,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   series.underlying.applyOptions({ visible: toggles.underlying.value });
   series.debt.applyOptions({ visible: toggles.debt.value });

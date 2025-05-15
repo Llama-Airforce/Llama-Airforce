@@ -29,18 +29,16 @@ function createSeries() {
     return;
   }
 
-  const newAvailSerie = snapshots.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.borrowable,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .dropWhile((x) => x.value === 0);
-
-  if (newAvailSerie.length > 0) {
-    series.available.setData(newAvailSerie);
-  }
+  series.available.setData(
+    snapshots.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.borrowable,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+      .dropWhile((x) => x.value === 0)
+  );
 
   chart.value.timeScale().fitContent();
 }

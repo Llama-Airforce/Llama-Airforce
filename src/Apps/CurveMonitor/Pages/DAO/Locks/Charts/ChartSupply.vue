@@ -98,33 +98,35 @@ function createSeries() {
     return;
   }
 
-  const newCrvSerie = supply.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: Number(x.crvSupply) / 10 ** 18,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((x) => x.time, "asc");
+  series.crv.setData(
+    supply.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: Number(x.crvSupply) / 10 ** 18,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((x) => x.time, "asc")
+  );
 
-  const newCircSerie = supply.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: Number(x.circulatingSupply) / 10 ** 18,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((x) => x.time, "asc");
+  series.circ.setData(
+    supply.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: Number(x.circulatingSupply) / 10 ** 18,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((x) => x.time, "asc")
+  );
 
-  const newVeCrvSerie = supply.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: Number(x.veCrvTotal) / 10 ** 18,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((x) => x.time, "asc");
-
-  series.crv.setData(newCrvSerie);
-  series.circ.setData(newCircSerie);
-  series.vecrv.setData(newVeCrvSerie);
+  series.vecrv.setData(
+    supply.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: Number(x.veCrvTotal) / 10 ** 18,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((x) => x.time, "asc")
+  );
 
   series.crv.applyOptions({ visible: toggles.crv.value });
   series.circ.applyOptions({ visible: toggles.circ.value });

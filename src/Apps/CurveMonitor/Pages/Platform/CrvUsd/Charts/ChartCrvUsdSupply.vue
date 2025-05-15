@@ -92,13 +92,8 @@ function createSeries() {
     value: x.value - x.debt,
   }));
 
-  if (newSupplySerie.length > 0) {
-    series.supply.setData(newSupplySerie);
-  }
-
-  if (newDebtSerie.length > 0) {
-    series.debt.setData(newDebtSerie);
-  }
+  series.supply.setData(newSupplySerie);
+  series.debt.setData(newDebtSerie);
 
   chart.value.timeScale().fitContent();
 

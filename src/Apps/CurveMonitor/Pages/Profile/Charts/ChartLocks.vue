@@ -45,24 +45,25 @@ function createSeries() {
     return;
   }
 
-  const newLocksSeries = data.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: Number(x.amount) / 10 ** 18,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.locks.setData(
+    data.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: Number(x.amount) / 10 ** 18,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newTotalSeries = data.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: Number(x.lockedBalance) / 10 ** 18,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.locks.setData(newLocksSeries);
-  series.total.setData(newTotalSeries);
+  series.total.setData(
+    data.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: Number(x.lockedBalance) / 10 ** 18,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   series.locks.applyOptions({ visible: type.value === "locks" });
   series.total.applyOptions({ visible: type.value === "total" });

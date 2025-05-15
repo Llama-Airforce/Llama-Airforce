@@ -83,35 +83,28 @@ function createSeries() {
   }
 
   const denom = denomDollars.value;
-  const newCollateralSerie = snapshots.value
-    .map((c) => ({
-      time: c.timestamp.getUTCTimestamp(),
-      value: denom ? c.collateralBalanceUsd : c.collateralBalance,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
 
-  const newBorrowedSerie = snapshots.value
-    .map((c) => ({
-      time: c.timestamp.getUTCTimestamp(),
-      value: denom ? c.borrowedBalanceUsd : c.borrowedBalance,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.collateral.setData(
+    snapshots.value
+      .map((c) => ({
+        time: c.timestamp.getUTCTimestamp(),
+        value: denom ? c.collateralBalanceUsd : c.collateralBalance,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  // Borrow APY serie
-  if (newCollateralSerie.length > 0) {
-    series.collateral.setData(newCollateralSerie);
-  }
+  series.borrowed.setData(
+    snapshots.value
+      .map((c) => ({
+        time: c.timestamp.getUTCTimestamp(),
+        value: denom ? c.borrowedBalanceUsd : c.borrowedBalance,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  // Lend APY serie
-  if (newBorrowedSerie.length > 0) {
-    series.borrowed.setData(newBorrowedSerie);
-  }
-
-  if (newCollateralSerie.length > 0 || newBorrowedSerie.length > 0) {
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 
 function formatter(x: number) {

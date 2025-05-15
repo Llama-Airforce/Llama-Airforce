@@ -52,31 +52,30 @@ function createSeries() {
 
   const { colors } = theme.value;
 
-  const newDeltasSerie = supply.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.veCrvTotal,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .reduce<HistogramData[]>((acc, curr, index, array) => {
-      if (index === 0) return acc;
+  series.deltas.setData(
+    supply.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.veCrvTotal,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+      .reduce<HistogramData[]>((acc, curr, index, array) => {
+        if (index === 0) return acc;
 
-      const value = curr.value - array[index - 1].value;
-      const color = value < 0 ? colors.red : colors.green;
+        const value = curr.value - array[index - 1].value;
+        const color = value < 0 ? colors.red : colors.green;
 
-      acc.push({
-        time: curr.time,
-        value: Number(value) / 10 ** 18,
-        color,
-      });
-      return acc;
-    }, []);
+        acc.push({
+          time: curr.time,
+          value: Number(value) / 10 ** 18,
+          color,
+        });
+        return acc;
+      }, [])
+  );
 
-  if (newDeltasSerie.length > 0) {
-    series.deltas.setData(newDeltasSerie);
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 </script>
 

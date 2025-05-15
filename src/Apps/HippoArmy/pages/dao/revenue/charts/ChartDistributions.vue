@@ -35,19 +35,18 @@ function createSeries() {
     return;
   }
 
-  const newDistributionsSeries = distributions
-    .map((x) => ({
-      time: x.blockTime.getUTCTimestamp(),
-      value: x.amount,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc")
-    .takeRight(52);
+  series.distributions.setData(
+    distributions
+      .map((x) => ({
+        time: x.blockTime.getUTCTimestamp(),
+        value: x.amount,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+      .takeRight(52)
+  );
 
-  if (newDistributionsSeries.length > 0) {
-    series.distributions.setData(newDistributionsSeries);
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 </script>
 

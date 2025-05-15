@@ -58,11 +58,9 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  if (newOHLCSerie.length > 0) {
-    series.ohlc.setData(newOHLCSerie);
-    min = Math.min(...newOHLCSerie.map((c) => c.low));
-    max = Math.max(...newOHLCSerie.map((c) => c.high));
-  }
+  series.ohlc.setData(newOHLCSerie);
+  min = Math.min(...newOHLCSerie.map((c) => c.low));
+  max = Math.max(...newOHLCSerie.map((c) => c.high));
 
   chart.value.timeScale().fitContent();
 }

@@ -30,15 +30,16 @@ function createSeries() {
     return;
   }
 
-  const newCollateralRatioSerie = snapshots
-    .map((x) => ({
-      time: x.time.getUTCTimestamp(),
-      value: Math.min(500, x.collateralRatio * 100),
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.collateralRatio.setData(
+    snapshots
+      .map((x) => ({
+        time: x.time.getUTCTimestamp(),
+        value: Math.min(500, x.collateralRatio * 100),
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  series.collateralRatio.setData(newCollateralRatioSerie);
   chart.value.timeScale().fitContent();
 }
 </script>

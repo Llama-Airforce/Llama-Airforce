@@ -64,24 +64,25 @@ function createSeries() {
     return;
   }
 
-  const newRsupSerie = tvl
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.tvl,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.rsup.setData(
+    tvl
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.tvl,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newDollarsSerie = tvl
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.tvlUsd,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.rsup.setData(newRsupSerie);
-  series.dollars.setData(newDollarsSerie);
+  series.dollars.setData(
+    tvl
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.tvlUsd,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   series.rsup.applyOptions({ visible: toggles.rsup.value });
   series.dollars.applyOptions({ visible: toggles.dollars.value });

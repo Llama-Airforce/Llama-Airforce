@@ -65,16 +65,10 @@ function createSeries() {
     value: x[0],
   }));
 
-  // EMA rates serie.
-  if (newRatesEMASerie.length > 0) {
-    series.ema.setData(newRatesEMASerie);
-  }
+  series.ema.setData(newRatesEMASerie);
+  series.rates.setData(newRatesSerie);
 
-  // Normal rates serie.
-  if (newRatesSerie.length > 0) {
-    series.rates.setData(newRatesSerie);
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 
 function formatter(x: number) {

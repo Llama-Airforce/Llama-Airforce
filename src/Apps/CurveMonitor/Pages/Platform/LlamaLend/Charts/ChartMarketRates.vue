@@ -77,35 +77,27 @@ function createSeries() {
     return;
   }
 
-  const newBorrowApySerie = snapshots.value
-    .map((c) => ({
-      time: c.timestamp.getUTCTimestamp(),
-      value: c.borrowApy,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.borrowApy.setData(
+    snapshots.value
+      .map((c) => ({
+        time: c.timestamp.getUTCTimestamp(),
+        value: c.borrowApy,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newLendApySerie = snapshots.value
-    .map((c) => ({
-      time: c.timestamp.getUTCTimestamp(),
-      value: c.lendApy,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.lendApy.setData(
+    snapshots.value
+      .map((c) => ({
+        time: c.timestamp.getUTCTimestamp(),
+        value: c.lendApy,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  // Borrow APY serie
-  if (newBorrowApySerie.length > 0) {
-    series.borrowApy.setData(newBorrowApySerie);
-  }
-
-  // Lend APY serie
-  if (newLendApySerie.length > 0) {
-    series.lendApy.setData(newLendApySerie);
-  }
-
-  if (newBorrowApySerie.length > 0 || newLendApySerie.length > 0) {
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 
 function formatter(x: number): string {

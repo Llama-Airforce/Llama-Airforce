@@ -36,18 +36,17 @@ function createSeries() {
     return;
   }
 
-  const newLoansSeries = snapshots.value
-    .map((v) => ({
-      time: v.timestamp.getUTCTimestamp(),
-      value: v.nLoans,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.loans.setData(
+    snapshots.value
+      .map((v) => ({
+        time: v.timestamp.getUTCTimestamp(),
+        value: v.nLoans,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  if (newLoansSeries.length > 0) {
-    series.loans.setData(newLoansSeries);
-    chart.value.timeScale().fitContent();
-  }
+  chart.value.timeScale().fitContent();
 }
 </script>
 

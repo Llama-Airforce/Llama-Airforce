@@ -56,24 +56,25 @@ function createSeries() {
     return;
   }
 
-  const newBorrowedSerie = data.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: "borrowed" in x ? x.borrowed : x.stablecoin,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
+  series.borrowed.setData(
+    data.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: "borrowed" in x ? x.borrowed : x.stablecoin,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
-  const newCollateralSerie = data.value
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.collateral,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.borrowed.setData(newBorrowedSerie);
-  series.collateral.setData(newCollateralSerie);
+  series.collateral.setData(
+    data.value
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.collateral,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   series.borrowed.applyOptions({ visible: serie.value === "borrowed" });
   series.collateral.applyOptions({ visible: serie.value === "collateral" });
