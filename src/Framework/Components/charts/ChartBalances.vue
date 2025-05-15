@@ -73,10 +73,6 @@ const { chart, series } = useLightweightChart({
       type: "StackedArea",
       name: "stacked" as const,
       options: computed<StackedAreaSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (y: number) => `${round(y, 1, "dollar")}${unit(y)}`,
-        },
         // Color array is based directly on toggled legend items to maintain consistent colors
         colors: items.value
           .map((item, i) => ({ item, i }))

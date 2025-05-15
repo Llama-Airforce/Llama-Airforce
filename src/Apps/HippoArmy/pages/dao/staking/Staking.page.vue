@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ChartCooldowns from "@HA/components/charts/ChartCooldowns.vue";
+import { DEFAULT_MIN_HEIGHT } from "@/Styles/ChartStylesLW";
 import {
   useAprHistory,
   useCooldownQueue,
@@ -78,10 +78,18 @@ const balancesStaked = computed(() => {
 
   return [
     {
+      symbol: "In cooldown",
+      balances: data.map((x) => ({
+        timestamp: x.timestamp,
+        balance: x.cooldownAmount,
+        tokenPrice: 1,
+      })),
+    },
+    {
       symbol: "Regular staked",
       balances: data.map((x) => ({
         timestamp: x.timestamp,
-        balance: x.regularStakedAmount,
+        balance: x.regularStakedAmount - x.cooldownAmount,
         tokenPrice: 1,
       })),
     },
@@ -95,14 +103,6 @@ const balancesStaked = computed(() => {
     },
   ];
 });
-
-const cooldowns = computed(() =>
-  (history.value?.data ?? []).map((x) => ({
-    timestamp: x.timestamp,
-    amount: x.cooldownAmount,
-    percentage: x.cooldownPercentage,
-  }))
-);
 </script>
 
 <template>
@@ -133,6 +133,12 @@ const cooldowns = computed(() =>
       @page="pageEvents = $event"
     />
 
+    <TableCooldowns
+      style="grid-area: cooldowns"
+      :cooldowns="cooldownQueue?.entries ?? []"
+      :loading="loadingCooldowns"
+    />
+
     <ChartBalances
       v-if="!loadingHistory"
       style="grid-area: chart-staked"
@@ -144,7 +150,7 @@ const cooldowns = computed(() =>
       v-else
       loading
       title="Staked"
-      :style="`grid-area: chart-staked; min-height: 610px`"
+      :style="`grid-area: chart-staked; min-height: ${DEFAULT_MIN_HEIGHT}`"
     />
 
     <TableTopUsers
@@ -157,18 +163,6 @@ const cooldowns = computed(() =>
       style="grid-area: positions"
       :bins="bins?.bins ?? []"
       :loading="loadingBins"
-    />
-
-    <TableCooldowns
-      style="grid-area: cooldowns"
-      :cooldowns="cooldownQueue?.entries ?? []"
-      :loading="loadingCooldowns"
-    />
-
-    <ChartCooldowns
-      style="grid-area: chart-cooldowns"
-      :cooldowns
-      :loading="loadingHistory"
     />
   </div>
 </template>
@@ -184,9 +178,9 @@ const cooldowns = computed(() =>
   grid-template-areas:
     "header header header header header header"
     "apr apr apr tvl tvl tvl"
-    "events events events chart-staked chart-staked chart-staked"
-    "top-users top-users positions positions positions positions"
-    "cooldowns cooldowns chart-cooldowns chart-cooldowns chart-cooldowns chart-cooldowns";
+    "chart-staked chart-staked chart-staked chart-staked chart-staked chart-staked"
+    "events events events cooldowns cooldowns cooldowns"
+    "top-users top-users positions positions positions positions";
 
   @media only screen and (max-width: 1280px) {
     display: flex;
