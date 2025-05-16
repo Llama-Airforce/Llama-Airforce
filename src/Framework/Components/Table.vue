@@ -168,6 +168,7 @@ const selectable = computed(() => !!instance?.vnode.props?.[`onSelect`]);
       <slot
         name="row"
         :item="row"
+        :idx="i"
         :expanded="expanded.includes(row)"
       ></slot>
 

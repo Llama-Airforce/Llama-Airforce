@@ -18,37 +18,35 @@ watch(pageDebounced, (page) => {
 
 const { relativeTime } = useRelativeTime();
 
-// Format start and end dates for the period
-function formatPeriodStart(date: Date): string {
-  // Create a new date to avoid modifying the original
-  const dateWithOffset = new Date(date);
-  // Add 4 days offset to the date
-  dateWithOffset.setDate(date.getDate() + 4);
+const periodDuration = 7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds (7 days * 24 hours * 60 minutes * 60 seconds * 1000 ms)
 
-  // Calculate the start of the week (Sunday) with the offset applied
-  const startOfWeek = new Date(dateWithOffset);
-  startOfWeek.setDate(dateWithOffset.getDate() - dateWithOffset.getDay());
+// Calculate period dates based on 7-week periods starting from March 20, 2025
+function getPeriodStart(index: number): Date {
+  // First period start date: March 20, 2025 (UTC)
+  const firstPeriodStart = new Date(Date.UTC(2025, 2, 20)); // Month is 0-indexed (2 = March)
 
-  const startMonth = startOfWeek.toLocaleString("default", { month: "short" });
-  return `${startMonth} ${startOfWeek.getDate()}`;
+  // Add index * periodDuration to the first period start date
+  const periodStart = new Date(
+    firstPeriodStart.getTime() + index * periodDuration
+  );
+
+  return periodStart;
 }
 
-function formatPeriodEnd(date: Date): string {
-  // Create a new date to avoid modifying the original
-  const dateWithOffset = new Date(date);
-  // Add 4 days offset to the date
-  dateWithOffset.setDate(date.getDate() + 4);
+function getPeriodEnd(index: number): Date {
+  // Get the start date using the existing formatPeriodStart function
+  const periodStart = getPeriodStart(index);
 
-  // Calculate the start of the week (Sunday) with the offset applied
-  const startOfWeek = new Date(dateWithOffset);
-  startOfWeek.setDate(dateWithOffset.getDate() - dateWithOffset.getDay());
+  // Add 1 week to get the end date
+  const periodEnd = new Date(periodStart);
+  periodEnd.setDate(periodStart.getDate() + 7); // Add 1 week (7 days)
 
-  // Calculate the end of the week (7 days from start minus 2 days)
-  const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 4); // 6 - 2 = 4 days after start
+  return periodEnd;
+}
 
-  const endMonth = endOfWeek.toLocaleString("default", { month: "short" });
-  return `${endMonth} ${endOfWeek.getDate()}`;
+function formatDate(date: Date) {
+  const endMonth = date.toLocaleString("default", { month: "short" });
+  return `${endMonth} ${date.getDate()}`;
 }
 </script>
 
@@ -71,7 +69,7 @@ function formatPeriodEnd(date: Date): string {
         { label: 'Time', align: 'end' },
       ]"
     >
-      <template #row="{ item: event }">
+      <template #row="{ item: event, idx }">
         <div>
           <a
             target="_blank"
@@ -79,9 +77,13 @@ function formatPeriodEnd(date: Date): string {
             @click.stop
           >
             <div class="period">
-              <span>{{ formatPeriodStart(event.blockTime) }}</span>
+              <span>
+                {{ formatDate(getPeriodStart(distributions.length - idx - 1)) }}
+              </span>
               <LucideChevronRight class="chevron" />
-              <span>{{ formatPeriodEnd(event.blockTime) }}</span>
+              <span>
+                {{ formatDate(getPeriodEnd(distributions.length - idx - 1)) }}
+              </span>
             </div>
           </a>
         </div>
