@@ -58,10 +58,6 @@ const { chart, series } = useLightweightChart({
       type: LineSeries,
       name: symbol,
       options: computed<LineSeriesPartialOptions>(() => ({
-        priceFormat: {
-          type: "custom",
-          formatter: (y: number) => `${round(y, 1, "dollar")}${unit(y)}`,
-        },
         lineWidth: 2,
         lineType: LineType.WithSteps,
         color: theme.value.colorsArray[i],
@@ -86,6 +82,22 @@ const { chart, series } = useLightweightChart({
       })),
     },
   ],
+});
+
+// Custom rendered charts don't support custom priceFormat, so we gotta change it for the chart itself.
+watchEffect(() => {
+  if (!chart.value) {
+    return;
+  }
+
+  chart.value.applyOptions({
+    localization: {
+      priceFormatter:
+        type.value === "100%"
+          ? (y: number) => `${round(y, 0, "percentage")}%`
+          : (y: number) => `${round(y, 1, "dollar")}${unit(y)}`,
+    },
+  });
 });
 
 watchEffect(createSeries);
