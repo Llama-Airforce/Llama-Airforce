@@ -24,8 +24,8 @@ const { chart, series } = useLightweightChart({
     minMove: 0.001,
     autoscaleInfoProvider: () => ({
       priceRange: {
-        minValue: Math.min(Math.max(...price.map((x) => x.price)), 1.05),
-        maxValue: Math.max(Math.min(...price.map((x) => x.price)), 0.95),
+        minValue: Math.max(Math.min(...price.map((x) => x.price)), 0.95),
+        maxValue: Math.min(Math.max(...price.map((x) => x.price)), 1.05),
       },
     }),
   }),
