@@ -9,7 +9,6 @@ import {
   useTvlHistory,
   useDistributionHistory,
 } from "@HA/queries/insurance";
-import ChartApr from "./charts/ChartApr.vue";
 import ChartPositions from "./charts/ChartPositions.vue";
 import ChartTvl from "./charts/ChartTvl.vue";
 import TableCooldowns from "./tables/TableCooldowns.vue";
@@ -20,11 +19,19 @@ const { isFetching: loadingApr, data: aprData } = useAprHistory({
   chain: "ethereum",
 });
 
-const apr = computed(() =>
-  (aprData.value ?? []).map((x) => ({
-    timestamp: x.timestamp,
-    apr: x.apr,
-  }))
+const balancesApr = computed(() =>
+  (aprData.value ?? [])
+    .groupBy((x) => x.tokenAddress)
+    .entries()
+    .orderBy(([, data]) => data[0].tokenSymbol, "desc")
+    .map(([, data]) => ({
+      symbol: data[0].tokenSymbol,
+      balances: data.map((x) => ({
+        timestamp: x.timestamp,
+        balance: x.apr,
+        tokenPrice: 1,
+      })),
+    }))
 );
 
 const { isFetching: loadingTvl, data: tvlData } = useTvlHistory({
@@ -104,10 +111,19 @@ const balancesStaked = computed(() => {
       description="Insurance pool metrics for Resupply including APR, TVL and positions"
     />
 
-    <ChartApr
+    <ChartBalances
+      v-if="!loadingApr"
       style="grid-area: apr"
-      :apr
+      title="APR"
+      :balances="balancesApr"
       :loading="loadingApr"
+      :show-dollars="false"
+    />
+    <Card
+      v-else
+      loading
+      title="APR"
+      :style="`grid-area: apr; min-height: ${DEFAULT_MIN_HEIGHT}`"
     />
 
     <ChartTvl
