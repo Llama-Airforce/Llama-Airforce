@@ -222,3 +222,4 @@ export const CvxCrvUtilities = "0xadd2f542f9ff06405fabf8cae4a74bd0fe29c673";
 export const CvxFxsStaking = "0x49b4d1df40442f0c31b1bbaea3ede7c38e37e31a";
 export const CvxPrismaStaking = "0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108";
 export const TheLlamas = "0xe127ce638293fa123be79c25782a5652581db234";
+export const TheLlamasLocker = "0x99c3f30bbc9137f6e917b03c74aed8a4309b3e1b";
