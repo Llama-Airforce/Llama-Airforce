@@ -23,6 +23,12 @@ const columns = [
   "",
   { id: "name", label: "Name", sort: true } as const,
   { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
+  {
+    id: "baseReward",
+    label: "Base Reward Rate",
+    sort: true,
+    align: "end",
+  } as const,
   { id: "borrowRate", label: "Borrow Rate", sort: true, align: "end" } as const,
   { id: "util", label: "Util", sort: true, align: "end" } as const,
 ];
@@ -36,6 +42,8 @@ const pairsProcessed = computed(() =>
         return pairName(pair.name);
       case "tvl":
         return pair.totalUnderlying;
+      case "baseReward":
+        return pair.aprBase;
       case "borrowRate":
         return pair.aprBorrowCost;
       case "util":
@@ -115,6 +123,15 @@ const onPairSelect = async (newPair: (typeof pairsProcessed.value)[number]) => {
           <AsyncValue
             show-zero
             type="percentage"
+            :value="pair.aprBase"
+            :precision="2"
+          />
+        </div>
+
+        <div class="end">
+          <AsyncValue
+            show-zero
+            type="percentage"
             :value="pair.aprBorrowCost"
             :precision="2"
           />
@@ -138,7 +155,7 @@ const onPairSelect = async (newPair: (typeof pairsProcessed.value)[number]) => {
   --col-width: 13ch;
   --columns-data: 1rem calc(1 * (26px + 1ch)) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
-    minmax(var(--col-width), 0.5fr);
+    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.5fr);
 }
 
 .token {

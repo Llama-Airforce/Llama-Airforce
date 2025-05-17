@@ -45,14 +45,22 @@ const { pair } = defineProps<{
     </KPI>
 
     <KPI
-      label="Borrow Rate"
+      label="Borrow Rate / Base Reward Rate"
       :has-value="!!pair"
     >
-      <AsyncValue
-        type="percentage"
-        :precision="2"
-        :value="pair?.aprBorrowCost"
-      />
+      <div class="two-sides">
+        <AsyncValue
+          type="percentage"
+          :precision="2"
+          :value="pair?.aprBorrowCost"
+        />
+
+        <AsyncValue
+          type="percentage"
+          :precision="2"
+          :value="pair?.aprBase"
+        />
+      </div>
     </KPI>
 
     <KPI
@@ -73,5 +81,12 @@ const { pair } = defineProps<{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--dashboard-gap);
+}
+
+.two-sides {
+  flex-grow: 1;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
 }
 </style>
