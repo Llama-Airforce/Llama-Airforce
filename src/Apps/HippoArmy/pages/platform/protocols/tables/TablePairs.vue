@@ -23,7 +23,7 @@ const columns = [
   "",
   { id: "name", label: "Name", sort: true } as const,
   { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
-  { id: "rate", label: "Interest Rate", sort: true, align: "end" } as const,
+  { id: "borrowRate", label: "Borrow Rate", sort: true, align: "end" } as const,
   { id: "util", label: "Util", sort: true, align: "end" } as const,
 ];
 
@@ -36,8 +36,8 @@ const pairsProcessed = computed(() =>
         return pairName(pair.name);
       case "tvl":
         return pair.totalUnderlying;
-      case "rate":
-        return pair.interestRate;
+      case "borrowRate":
+        return pair.aprBorrowCost;
       case "util":
         return pair.utilizationRate;
     }

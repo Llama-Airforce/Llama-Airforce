@@ -45,7 +45,7 @@ const { pair } = defineProps<{
     </KPI>
 
     <KPI
-      label="Interest Rate"
+      label="Borrow Rate"
       :has-value="!!pair"
     >
       <AsyncValue
