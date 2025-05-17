@@ -18,7 +18,7 @@ const rows = computed((): Liquidator[] =>
     .map(([liquidator, xs]) => ({
       liquidator,
       count: xs.length,
-      value: xs.reduce((acc, x) => acc + x.collateralReceivedUsd, 0),
+      value: xs.sumBy((x) => x.collateralReceivedUsd),
     }))
     .orderBy((x) => x.value, "desc")
     .take(5)

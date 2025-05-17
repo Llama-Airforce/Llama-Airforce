@@ -18,7 +18,7 @@ const recordEarningsLabel = computed((): string =>
 );
 
 const totalRevenue = computed((): number =>
-  epochs.value.reduce((acc, epoch) => acc + epoch.totalAmountDollars, 0)
+  epochs.value.sumBy((epoch) => epoch.totalAmountDollars)
 );
 
 const rewardPerDollarBribe = computed(

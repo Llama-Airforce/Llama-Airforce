@@ -141,7 +141,7 @@ const tokenIcon = (market: Market) =>
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.filter(market => market).map(market => market!).reduce((acc, x) => acc + tvl(x), 0)"
+            :value="rows.filter(market => market).map(market => market!).sumBy(tvl)"
           />
         </div>
         <div class="end">
@@ -149,7 +149,7 @@ const tokenIcon = (market: Market) =>
             rows
               .filter((market) => market)
               .map((market) => market!)
-              .reduce((acc, x) => acc + x.nLoans, 0)
+              .sumBy((x) => x.nLoans)
           }}
         </div>
       </template>

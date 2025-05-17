@@ -70,14 +70,10 @@ function filterAndSum<T extends Activity>(
     .filter((x) => (type === "all" ? true : x.type === type))
     .groupBy((x) => x.timestamp.getTime())
     .entries()
-    .map(([timestamp, xs]) => {
-      const sum = xs.reduce((acc, x) => acc + selector(x), 0);
-
-      return {
-        timestamp: Number(timestamp) / 1000,
-        count: sum,
-      };
-    });
+    .map(([timestamp, xs]) => ({
+      timestamp: Number(timestamp) / 1000,
+      count: xs.sumBy(selector),
+    }));
 }
 
 const txs = computed(() =>
@@ -98,7 +94,7 @@ function calculateAverage(activities: { timestamp: number; count: number }[]) {
     (activity) => activity.timestamp >= sevenDaysAgo
   );
 
-  const total = lastSevenDaysActivities.reduce((acc, x) => acc + x.count, 0);
+  const total = lastSevenDaysActivities.sumBy((x) => x.count);
 
   return Math.round(total / daysBetween);
 }

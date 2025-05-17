@@ -12,9 +12,7 @@ const { pair } = defineProps<{
       <div class="value-tooltip">
         <AsyncValue
           type="percentage"
-          :value="
-            pair.aprBase + pair.rewards.reduce((acc, x) => acc + x.apr, 0)
-          "
+          :value="pair.aprBase + pair.rewards.sumBy((x) => x.apr)"
           :precision="2"
         />
       </div>

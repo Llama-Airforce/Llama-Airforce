@@ -48,7 +48,7 @@ const createBalances = <T extends keyof History>(
         .entries()
         .map(([, values]) => ({
           timestamp: values[0].timestamp,
-          balance: values.reduce((sum, v) => sum + v.balance, 0),
+          balance: values.sumBy((x) => x.balance),
           tokenPrice: values[0].tokenPrice,
         })),
     }));

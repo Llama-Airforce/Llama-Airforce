@@ -93,14 +93,10 @@ function feesPerTimestamp(xs: { timestamp: Date; feesUsd: number }[]) {
   return xs
     .groupBy((x) => x.timestamp.getTime())
     .entries()
-    .map(([timestamp, xs]) => {
-      const sum = xs.reduce((acc, x) => acc + x.feesUsd, 0);
-
-      return {
-        timestamp: Number(timestamp) / 1000,
-        feesUsd: sum,
-      };
-    })
+    .map(([timestamp, xs]) => ({
+      timestamp: Number(timestamp) / 1000,
+      feesUsd: xs.sumBy((x) => x.feesUsd),
+    }))
     .orderBy((x) => x.timestamp, "asc");
 }
 

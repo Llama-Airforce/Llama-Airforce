@@ -115,13 +115,13 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         <div></div>
         <div></div>
         <div></div>
-        <div class="end">{{ rows.reduce((acc, x) => acc + x.loans, 0) }}</div>
+        <div class="end">{{ rows.sumBy((x) => x.loans) }}</div>
         <div></div>
 
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.borrowed, 0)"
+            :value="rows.sumBy((x) => x.borrowed)"
             :precision="decimals"
             :show-symbol="false"
           />
@@ -130,7 +130,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.collateralAmountUsd, 0)"
+            :value="rows.sumBy((x) => x.collateralAmountUsd)"
             :precision="decimals"
           />
         </div>
@@ -138,7 +138,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.fees.pending, 0)"
+            :value="rows.sumBy((x) => x.fees.pending)"
             :precision="decimals"
           />
         </div>
@@ -147,7 +147,7 @@ const decimals = (x: number): number => (x >= 1_000_000 ? 2 : 0);
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.fees.collected, 0)"
+            :value="rows.sumBy((x) => x.fees.collected)"
             :precision="decimals"
           />
         </div>

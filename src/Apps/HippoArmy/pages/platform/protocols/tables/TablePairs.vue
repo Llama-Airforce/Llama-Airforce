@@ -44,7 +44,7 @@ const pairsProcessed = computed(() =>
       case "tvl":
         return pair.totalUnderlying;
       case "rewardRate":
-        return pair.aprBase + pair.rewards.reduce((acc, x) => acc + x.apr, 0);
+        return pair.aprBase + pair.rewards.sumBy((x) => x.apr);
       case "borrowRate":
         return pair.aprBorrowCost;
       case "util":

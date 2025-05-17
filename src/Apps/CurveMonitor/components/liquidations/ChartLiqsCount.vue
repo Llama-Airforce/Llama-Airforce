@@ -96,9 +96,7 @@ const max = computed(
       ...liqs
         .groupBy((x) => x.timestamp.getTime())
         .entries()
-        .map(([, supply]) =>
-          supply.reduce((acc, x) => acc + x.selfCount + x.hardCount, 0)
-        )
+        .map(([, supply]) => supply.sumBy((x) => x.selfCount + x.hardCount))
     ) * 1.1
 );
 

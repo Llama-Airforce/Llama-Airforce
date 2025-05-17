@@ -168,9 +168,7 @@ function createSeriesStacked(normalize: boolean) {
     .entries()
     // One stacked datapoint is basically all points at a certain time.
     .map(([time, values]) => {
-      const total = normalize
-        ? values.reduce((sum, v) => sum + v.balance, 0) || 1
-        : 1;
+      const total = normalize ? values.sumBy((x) => x.balance) || 1 : 1;
 
       const calculatedValues = values.map((x) =>
         normalize ? (x.balance / total) * 100 : x.balance

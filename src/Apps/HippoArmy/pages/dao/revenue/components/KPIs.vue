@@ -6,7 +6,7 @@ const { data } = useDistributions(chain);
 
 const totalFees = computed(() => {
   if (!data.value?.distributions) return null;
-  return data.value.distributions.reduce((sum, d) => sum + d.amount, 0);
+  return data.value.distributions.sumBy((x) => x.amount);
 });
 
 const averageWeeklyFees = computed(() => {
@@ -15,7 +15,7 @@ const averageWeeklyFees = computed(() => {
 
   const lastYear = data.value.distributions.slice(0, 52);
 
-  return lastYear.reduce((sum, d) => sum + d.amount, 0) / lastYear.length;
+  return lastYear.sumBy((x) => x.amount) / lastYear.length;
 });
 
 const stdDevWeeklyFees = computed(() => {
@@ -24,11 +24,9 @@ const stdDevWeeklyFees = computed(() => {
 
   const lastYear = data.value.distributions.slice(0, 52).map((d) => d.amount);
 
-  const avg = lastYear.reduce((sum, val) => sum + val, 0) / lastYear.length;
+  const avg = lastYear.sumBy((x) => x) / lastYear.length;
   const squareDiffs = lastYear.map((val) => Math.pow(val - avg, 2));
-  return Math.sqrt(
-    squareDiffs.reduce((sum, val) => sum + val, 0) / (lastYear.length - 1)
-  );
+  return Math.sqrt(squareDiffs.sumBy((x) => x) / (lastYear.length - 1));
 });
 </script>
 

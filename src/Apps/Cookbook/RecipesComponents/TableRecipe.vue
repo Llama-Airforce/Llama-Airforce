@@ -126,7 +126,7 @@ const onCheckManual = (round: Round) => {
             <div class="end">
               <AsyncValue
                 type="dollar"
-                :value="rows.reduce((acc, x) => acc + x.value * 10000, 0)"
+                :value="rows.sumBy((x) => x.value * 10000)"
                 :precision="2"
               />
             </div>

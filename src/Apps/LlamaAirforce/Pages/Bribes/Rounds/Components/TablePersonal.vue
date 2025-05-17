@@ -63,7 +63,7 @@ const bribedOrdered = computed(() =>
 );
 
 const bribedAmount = computed(() =>
-  bribedOrdered.value.reduce((acc, x) => acc + x.amountDollars, 0)
+  bribedOrdered.value.sumBy((x) => x.amountDollars)
 );
 
 const personalDollarPerVlAsset = computed(() => {

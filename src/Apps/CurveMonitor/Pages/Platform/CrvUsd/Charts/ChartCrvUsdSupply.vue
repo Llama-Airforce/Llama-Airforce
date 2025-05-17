@@ -81,7 +81,7 @@ function createSeries() {
     .entries()
     .map(([, x]) => ({
       time: x[0].timestamp.getUTCTimestamp(),
-      value: x.reduce((acc, y) => acc + y.supply, 0),
+      value: x.sumBy((y) => y.supply),
       debt: x.find((y) => y.market === "Keepers debt")?.supply ?? 0,
     }))
     .uniqWith((x, y) => x.time === y.time)

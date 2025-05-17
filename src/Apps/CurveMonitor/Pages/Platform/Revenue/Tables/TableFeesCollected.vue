@@ -79,7 +79,7 @@ const rows = computed(() =>
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.amountUsd, 0)"
+            :value="rows.sumBy((x) => x.amountUsd)"
             :precision="2"
           />
         </div>

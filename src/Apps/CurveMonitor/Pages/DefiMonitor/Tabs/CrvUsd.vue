@@ -13,7 +13,7 @@ const transferBlocks = computed(() =>
     .map(([, txs]) => ({
       blockNumber: txs[0].blockNumber,
       blockUnixTime: txs[0].blockUnixtime,
-      amount: txs.reduce((acc, x) => acc + x.parsedAmount, 0),
+      amount: txs.sumBy((x) => x.parsedAmount),
       count: txs.length,
     }))
     .orderBy((x) => x.blockNumber, "desc")

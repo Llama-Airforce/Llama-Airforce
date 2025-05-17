@@ -8,10 +8,8 @@ const { votes } = defineProps<{
 }>();
 
 // Methods
-const weightYes = computed(() =>
-  votes.reduce((acc, x) => acc + x.weightYes, 0)
-);
-const weightNo = computed(() => votes.reduce((acc, x) => acc + x.weightNo, 0));
+const weightYes = computed(() => votes.sumBy((x) => x.weightYes));
+const weightNo = computed(() => votes.sumBy((x) => x.weightNo));
 const total = computed(() => weightYes.value + weightNo.value);
 
 const percentageYes = computed(() => (weightYes.value / total.value) * 100);

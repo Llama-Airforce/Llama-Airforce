@@ -112,7 +112,7 @@ const totalBorrowed = (type: "long" | "short") =>
   marketPairsFiltered.value
     .map((market) => (type === "long" ? market.long : market.short))
     .filter((market) => !!market)
-    .reduce((acc, market) => acc + market.totalDebtUsd, 0);
+    .sumBy((market) => market.totalDebtUsd);
 
 const totalUtilRate = (type: "long" | "short") => {
   const totals = marketPairsFiltered.value

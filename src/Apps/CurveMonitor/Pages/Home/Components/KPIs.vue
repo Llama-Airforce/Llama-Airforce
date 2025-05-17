@@ -4,9 +4,7 @@ import { useQueryChainInfo } from "@CM/queries/chains";
 import { useQueryMarkets } from "@CM/queries/crvusd";
 
 const { data: markets } = useQueryMarkets();
-const borrowed = computed(() =>
-  markets.value.reduce((acc, x) => acc + x.borrowed, 0)
-);
+const borrowed = computed(() => markets.value.sumBy((x) => x.borrowed));
 
 const { data: chainInfo } = useQueryChainInfo(ref("ethereum"));
 const tvl = computed(() => chainInfo.value?.total.tvl ?? 0);

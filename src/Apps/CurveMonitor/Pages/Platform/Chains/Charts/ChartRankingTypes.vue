@@ -32,14 +32,10 @@ function getData(xs: ActivityValue[]) {
   return xs
     .groupBy((x) => x.type)
     .entries()
-    .map(([type, xs]) => {
-      const sum = xs.reduce((acc, x) => acc + x.value, 0);
-
-      return {
-        type: type as ActivityValue["type"],
-        count: sum,
-      };
-    })
+    .map(([type, xs]) => ({
+      type: type as ActivityValue["type"],
+      count: xs.sumBy((x) => x.value),
+    }))
     .orderBy((x) => x.count, "desc");
 }
 

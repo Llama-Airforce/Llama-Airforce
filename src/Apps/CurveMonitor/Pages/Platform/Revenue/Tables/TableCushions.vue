@@ -88,7 +88,7 @@ const linkAddress = (addr: string) => `https://etherscan.io/address/${addr}`;
         <div class="end">
           <AsyncValue
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.usdValue, 0)"
+            :value="rows.sumBy((x) => x.usdValue)"
             :precision="2"
           />
         </div>

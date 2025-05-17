@@ -42,8 +42,7 @@ const balancesApr = computed(() => {
     .entries()
     .filter(
       ([, data]) =>
-        data.length > 0 &&
-        data.reduce((sum, x) => sum + x.apr, 0) / data.length >= 1
+        data.length > 0 && data.sumBy((x) => x.apr) / data.length >= 1
     )
     .map(([, data]) => ({
       symbol: data[0].tokenSymbol,

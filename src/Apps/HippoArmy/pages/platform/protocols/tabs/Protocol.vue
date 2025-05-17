@@ -31,8 +31,8 @@ const historyGrouped = computed(() =>
 const tvl = computed(() =>
   historyGrouped.value.flatMap(([, items]) => ({
     timestamp: items[0].timestamp,
-    underlying: items.reduce((sum, x) => sum + x.totalUnderlying, 0),
-    debt: items.reduce((sum, x) => sum + x.totalDebt, 0),
+    underlying: items.sumBy((x) => x.totalUnderlying),
+    debt: items.sumBy((x) => x.totalDebt),
   }))
 );
 </script>

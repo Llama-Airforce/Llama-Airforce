@@ -88,7 +88,7 @@ const average = (data: number[], n = 7): number[] =>
 
     // Slice the portion of the array for the n-day average and compute its average
     const slice = data.slice(start, end);
-    const average = slice.reduce((acc, value) => acc + value, 0) / slice.length;
+    const average = slice.sumBy((value) => value) / slice.length;
 
     return average;
   });

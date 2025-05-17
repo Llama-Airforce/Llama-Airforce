@@ -44,7 +44,7 @@ const bribed = computed((): Bribed[] => {
       case "vlasset":
         return b.dollarPerVlAsset;
       case "total":
-        return b.amountDollars.reduce((acc, x) => acc + x, 0);
+        return b.amountDollars.sumBy((x) => x);
     }
   }, sorting.value.order);
 });
@@ -53,7 +53,7 @@ const bribed = computed((): Bribed[] => {
 const pool = (bribed: Bribed): string => bribed.pool;
 
 const amountDollars = (bribed: Bribed): number =>
-  bribed.amountDollars.reduce((acc, cur) => acc + cur, 0);
+  bribed.amountDollars.sumBy((x) => x);
 
 const dollarPerVlAsset = (bribed: Bribed): number => bribed.dollarPerVlAsset;
 

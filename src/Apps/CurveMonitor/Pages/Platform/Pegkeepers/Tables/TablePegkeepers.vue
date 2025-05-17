@@ -144,7 +144,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.totalDebt, 0)"
+            :value="rows.sumBy((x) => x.totalDebt)"
             :precision="decimals"
           />
         </div>
@@ -153,7 +153,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.tvlUsd, 0)"
+            :value="rows.sumBy((x) => +x.tvlUsd)"
             :precision="decimals"
           />
         </div>
@@ -162,7 +162,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.tradingVolume24h, 0)"
+            :value="rows.sumBy((x) => x.tradingVolume24h)"
             :precision="decimals"
           />
         </div>
@@ -171,7 +171,7 @@ const tokenAddress = (x: (typeof rowsRaw.value)[number]) =>
           <AsyncValue
             show-zero
             type="dollar"
-            :value="rows.reduce((acc, x) => acc + x.totalProfit, 0)"
+            :value="rows.sumBy((x) => x.totalProfit)"
             :precision="decimals"
           />
         </div>
