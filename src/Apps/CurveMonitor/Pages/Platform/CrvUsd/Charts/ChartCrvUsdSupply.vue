@@ -76,7 +76,7 @@ function createSeries() {
     return;
   }
 
-  const newSupplySerie = data.value
+  const dataSupply = data.value
     .groupBy((x) => x.timestamp.getTime())
     .entries()
     .map(([, x]) => ({
@@ -87,13 +87,13 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newDebtSerie = newSupplySerie.map((x) => ({
+  const dataDebt = dataSupply.map((x) => ({
     time: x.time,
     value: x.value - x.debt,
   }));
 
-  series.supply.setData(newSupplySerie);
-  series.debt.setData(newDebtSerie);
+  series.supply.setData(dataSupply);
+  series.debt.setData(dataDebt);
 
   chart.value.timeScale().fitContent();
 

@@ -31,17 +31,15 @@ function createSeries() {
     return;
   }
 
-  const newSerie = apr
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.apr,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  if (newSerie.length > 0) {
-    series.apr.setData(newSerie);
-  }
+  series.apr.setData(
+    apr
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.apr,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   chart.value.timeScale().fitContent();
 }

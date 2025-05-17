@@ -47,7 +47,7 @@ function createSeries() {
     return;
   }
 
-  const newRatesSerie = snapshots.value
+  const dataRates = snapshots.value
     .map((c) => ({
       time: c.timestamp.getUTCTimestamp(),
       value: c.rate,
@@ -56,17 +56,17 @@ function createSeries() {
     .orderBy((c) => c.time, "asc");
 
   const averages = average(
-    newRatesSerie.map((x) => x.value),
+    dataRates.map((x) => x.value),
     avgLength.value ?? 31
   );
 
-  const newRatesEMASerie = averages.zip(newRatesSerie).map((x) => ({
+  const dataEMA = averages.zip(dataRates).map((x) => ({
     time: x[1].time,
     value: x[0],
   }));
 
-  series.ema.setData(newRatesEMASerie);
-  series.rates.setData(newRatesSerie);
+  series.ema.setData(dataEMA);
+  series.rates.setData(dataRates);
 
   chart.value.timeScale().fitContent();
 }

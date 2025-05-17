@@ -59,7 +59,7 @@ function createSeries() {
     return;
   }
 
-  const newRevenueSerie = liqs
+  const dataRevenue = liqs
     .map((x) => ({
       time: x.timestamp.getUTCTimestamp(),
       value: x.debt,
@@ -72,20 +72,19 @@ function createSeries() {
       return acc;
     }, []);
 
-  const minTime =
-    newRevenueSerie.length > 0 ? (newRevenueSerie[0].time as number) : 0;
+  series.revenue.setData(dataRevenue);
 
-  const newDiscountSerie = discounts
-    .filter((x) => x.timestamp.getUTCTimestamp() >= minTime)
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.discount * 100,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.revenue.setData(newRevenueSerie);
-  series.discount.setData(newDiscountSerie);
+  const minTime = dataRevenue.length > 0 ? (dataRevenue[0].time as number) : 0;
+  series.discount.setData(
+    discounts
+      .filter((x) => x.timestamp.getUTCTimestamp() >= minTime)
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.discount * 100,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   chart.value.timeScale().fitContent();
 }

@@ -69,7 +69,7 @@ function createSeries() {
 
   // OHLC
   const invertMultiplier = invert.value ? -1 : 1;
-  const newOHLCSerie = ohlc
+  const dataOHLC = ohlc
     .filter(
       (x) =>
         x.open !== null && x.high !== null && x.low !== null && x.close !== null
@@ -84,23 +84,23 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  if (newOHLCSerie.length > 0) {
-    series.ohlc.setData(newOHLCSerie);
-    min = Math.min(...newOHLCSerie.map((c) => c.low));
-    max = Math.max(...newOHLCSerie.map((c) => c.high));
+  if (dataOHLC.length > 0) {
+    series.ohlc.setData(dataOHLC);
+    min = Math.min(...dataOHLC.map((c) => c.low));
+    max = Math.max(...dataOHLC.map((c) => c.high));
   }
 
   // Price Oracle
-  const newOracleSerie = ohlc
-    .filter((x) => x.oraclePrice !== null)
-    .map((x) => ({
-      time: x.time.getUTCTimestamp(),
-      value: Math.pow(x.oraclePrice!, invertMultiplier),
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.oracle.setData(newOracleSerie);
+  series.oracle.setData(
+    ohlc
+      .filter((x) => x.oraclePrice !== null)
+      .map((x) => ({
+        time: x.time.getUTCTimestamp(),
+        value: Math.pow(x.oraclePrice!, invertMultiplier),
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   // Hide or show the oracle series based on the newOracle value
   series.oracle.applyOptions({

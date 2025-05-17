@@ -93,7 +93,7 @@ function createSeries() {
     return;
   }
 
-  const newSupplySerie = snapshots.value
+  const dataSupply = snapshots.value
     .map((c) => ({
       time: c.timestamp.getUTCTimestamp(),
       value: c.totalAssetsUsd,
@@ -101,7 +101,7 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newDebtSerie = snapshots.value
+  const dataDebt = snapshots.value
     .map((c) => ({
       time: c.timestamp.getUTCTimestamp(),
       value: c.totalDebtUsd,
@@ -109,8 +109,8 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const newUtilSerie = newSupplySerie
-    .zip(newDebtSerie)
+  const dataUtil = dataSupply
+    .zip(dataDebt)
     .map(([supply, debt]) => ({
       time: debt.time,
       value: supply.value > 0 ? debt.value / supply.value : 0,
@@ -118,9 +118,9 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  series.supply.setData(newSupplySerie);
-  series.debt.setData(newDebtSerie);
-  series.util.setData(newUtilSerie);
+  series.supply.setData(dataSupply);
+  series.debt.setData(dataDebt);
+  series.util.setData(dataUtil);
 
   series.util.applyOptions({ visible: toggles.util.value });
 

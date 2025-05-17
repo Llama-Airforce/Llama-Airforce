@@ -55,7 +55,7 @@ function createSeries() {
     return;
   }
 
-  const newProportionSerie = ratios
+  const dataProportion = ratios
     .map((x) => ({
       time: x.timestamp.getUTCTimestamp(),
       value: x.proportion,
@@ -63,20 +63,19 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  const minTime =
-    newProportionSerie.length > 0 ? newProportionSerie[0].time : 0;
+  series.ratio.setData(dataProportion);
 
-  const newPriceSerie = pricesOracle
-    .filter((x) => x.timestamp.getUTCTimestamp() >= minTime)
-    .map((x) => ({
-      time: x.timestamp.getUTCTimestamp(),
-      value: x.priceOracle,
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  series.price.setData(newPriceSerie);
-  series.ratio.setData(newProportionSerie);
+  const minTime = dataProportion.length > 0 ? dataProportion[0].time : 0;
+  series.price.setData(
+    pricesOracle
+      .filter((x) => x.timestamp.getUTCTimestamp() >= minTime)
+      .map((x) => ({
+        time: x.timestamp.getUTCTimestamp(),
+        value: x.priceOracle,
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   chart.value.timeScale().fitContent();
 }

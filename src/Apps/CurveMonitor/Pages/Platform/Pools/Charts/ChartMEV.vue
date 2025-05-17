@@ -122,7 +122,7 @@ function createSeries() {
     return;
   }
 
-  const newVolumeSerie = disabled.value.includes("total")
+  const dataVolume = disabled.value.includes("total")
     ? []
     : data.value
         .map((x) => ({
@@ -132,33 +132,31 @@ function createSeries() {
         .uniqWith((x, y) => x.time === y.time)
         .orderBy((c) => c.time, "asc");
 
-  if (newVolumeSerie.length > 1) {
-    series.volume.setData(newVolumeSerie);
+  if (dataVolume.length > 1) {
+    series.volume.setData(dataVolume);
     series.volume.applyOptions({ visible: true });
   } else {
     series.volume.applyOptions({ visible: false });
   }
 
-  const newDataSerie = data.value
-    .map((x) => ({
-      time: x.interval_start_unixtime as UTCTimestamp,
-      values: [
-        ...(!disabled.value.includes("atomic") ? [x.atomicArbVolume] : []),
-        ...(!disabled.value.includes("cexdex") ? [x.cexDexArbVolume] : []),
-        ...(!disabled.value.includes("within")
-          ? [x.sandwichVolume_LossWithin]
-          : []),
-        ...(!disabled.value.includes("outside")
-          ? [x.sandwichVolume_LossOutside]
-          : []),
-      ],
-    }))
-    .uniqWith((x, y) => x.time === y.time)
-    .orderBy((c) => c.time, "asc");
-
-  if (newDataSerie.length > 0) {
-    series.data.setData(newDataSerie);
-  }
+  series.data.setData(
+    data.value
+      .map((x) => ({
+        time: x.interval_start_unixtime as UTCTimestamp,
+        values: [
+          ...(!disabled.value.includes("atomic") ? [x.atomicArbVolume] : []),
+          ...(!disabled.value.includes("cexdex") ? [x.cexDexArbVolume] : []),
+          ...(!disabled.value.includes("within")
+            ? [x.sandwichVolume_LossWithin]
+            : []),
+          ...(!disabled.value.includes("outside")
+            ? [x.sandwichVolume_LossOutside]
+            : []),
+        ],
+      }))
+      .uniqWith((x, y) => x.time === y.time)
+      .orderBy((c) => c.time, "asc")
+  );
 
   chart.value.timeScale().fitContent();
 }

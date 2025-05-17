@@ -47,7 +47,7 @@ function createSeries() {
 
   // OHLC
   const invertMultiplier = invert.value ? -1 : 1;
-  const newOHLCSerie = ohlc
+  const data = ohlc
     .map((c) => ({
       time: c.time.getUTCTimestamp(),
       open: Math.pow(c.open, invertMultiplier),
@@ -58,9 +58,9 @@ function createSeries() {
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");
 
-  series.ohlc.setData(newOHLCSerie);
-  min = Math.min(...newOHLCSerie.map((c) => c.low));
-  max = Math.max(...newOHLCSerie.map((c) => c.high));
+  series.ohlc.setData(data);
+  min = Math.min(...data.map((c) => c.low));
+  max = Math.max(...data.map((c) => c.high));
 
   chart.value.timeScale().fitContent();
 }
