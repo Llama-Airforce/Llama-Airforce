@@ -20,7 +20,7 @@ const { chart, series } = useLightweightChart({
   series: createAreaSerie({
     name: "apr" as const,
     color: computed(() => theme.value.colors.blue),
-    formatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}`,
+    formatter: (y: number) => `${round(y, 0, "percentage")}%`,
     minMove: 0.01,
   }),
 });
