@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { usePairs } from "@HA/queries/protocols";
 import { pairName } from "@HA/util";
+import TooltipApr from "../pair/components/TooltipApr.vue";
 
 const { protocolName } = defineProps<{
   protocolName?: string;
@@ -24,8 +25,8 @@ const columns = [
   { id: "name", label: "Name", sort: true } as const,
   { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
   {
-    id: "baseReward",
-    label: "Base Reward Rate",
+    id: "rewardRate",
+    label: "Reward Rate",
     sort: true,
     align: "end",
   } as const,
@@ -42,8 +43,8 @@ const pairsProcessed = computed(() =>
         return pairName(pair.name);
       case "tvl":
         return pair.totalUnderlying;
-      case "baseReward":
-        return pair.aprBase;
+      case "rewardRate":
+        return pair.aprBase + pair.rewards.reduce((acc, x) => acc + x.apr, 0);
       case "borrowRate":
         return pair.aprBorrowCost;
       case "util":
@@ -120,12 +121,7 @@ const onPairSelect = async (newPair: (typeof pairsProcessed.value)[number]) => {
         </div>
 
         <div class="end">
-          <AsyncValue
-            show-zero
-            type="percentage"
-            :value="pair.aprBase"
-            :precision="2"
-          />
+          <TooltipApr :pair />
         </div>
 
         <div class="end">

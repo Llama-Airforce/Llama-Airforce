@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Pair } from "@HA/services/protocols/schema";
+import TooltipApr from "./TooltipApr.vue";
 
 const { pair } = defineProps<{
   pair: Pair;
@@ -45,7 +46,7 @@ const { pair } = defineProps<{
     </KPI>
 
     <KPI
-      label="Borrow Rate / Base Reward Rate"
+      label="Borrow Rate / Reward Rate"
       :has-value="!!pair"
     >
       <div class="two-sides">
@@ -55,11 +56,7 @@ const { pair } = defineProps<{
           :value="pair?.aprBorrowCost"
         />
 
-        <AsyncValue
-          type="percentage"
-          :precision="2"
-          :value="pair?.aprBase"
-        />
+        <TooltipApr :pair />
       </div>
     </KPI>
 
