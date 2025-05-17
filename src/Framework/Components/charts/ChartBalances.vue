@@ -16,10 +16,12 @@ const {
   balances,
   title,
   showDollars = true,
+  chartType = "area",
 } = defineProps<{
   balances: Balances;
   title?: string;
   showDollars?: boolean;
+  chartType?: "area" | "bars";
 }>();
 
 const theme = useTheme();
@@ -67,7 +69,7 @@ const { chart, series } = useLightweightChart({
     })),
     {
       type: "StackedArea",
-      name: "stacked" as const,
+      name: "stackedArea" as const,
       options: computed<StackedAreaSeriesPartialOptions>(() => ({
         // Color array is based directly on toggled legend items to maintain consistent colors
         colors: items.value
@@ -76,6 +78,21 @@ const { chart, series } = useLightweightChart({
           .map(({ i }) => i)
           .map((i) => theme.value.colorsArray[i])
           .map((x) => ({ line: x, area: x + "15" })),
+        lineWidth: 2,
+        lastValueVisible: false,
+        priceLineVisible: false,
+      })),
+    },
+    {
+      type: "StackedBars",
+      name: "stackedBars" as const,
+      options: computed<StackedBarsSeriesPartialOptions>(() => ({
+        // Color array is based directly on toggled legend items to maintain consistent colors
+        colors: items.value
+          .map((item, i) => ({ item, i }))
+          .filter(({ item }) => !disabled.value.includes(item.id))
+          .map(({ i }) => i)
+          .map((i) => theme.value.colorsArray[i]),
         lineWidth: 2,
         lastValueVisible: false,
         priceLineVisible: false,
@@ -145,7 +162,7 @@ function createSeriesUnstacked() {
 }
 
 function createSeriesStacked(normalize: boolean) {
-  if (!series.stacked) {
+  if (!series.stackedArea || !series.stackedBars) {
     return;
   }
 
@@ -183,7 +200,13 @@ function createSeriesStacked(normalize: boolean) {
     .orderBy((c) => c.time, "asc");
 
   if (newSerie.length > 0) {
-    series.stacked.setData(newSerie);
+    if (chartType === "area") {
+      series.stackedArea.setData(newSerie);
+      series.stackedBars.setData([]);
+    } else {
+      series.stackedArea.setData([]);
+      series.stackedBars.setData(newSerie);
+    }
   }
 }
 </script>

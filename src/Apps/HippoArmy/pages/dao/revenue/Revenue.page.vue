@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { DEFAULT_MIN_HEIGHT } from "@/Styles/ChartStylesLW";
 import { useDistributions } from "@HA/queries/revenue";
-import ChartDistributions from "./charts/ChartDistributions.vue";
 import ChartDistributionsDelta from "./charts/ChartDistributionsDelta.vue";
 import KPIs from "./components/KPIs.vue";
 import TableDistributions from "./tables/TableDistributions.vue";
@@ -71,28 +70,11 @@ const balancesBreakdown = computed(() => {
 
     <KPIs style="grid-area: kpis" />
 
-    <ChartDistributions
-      style="grid-area: chart"
-      :distributions="data?.distributions ?? []"
-    />
-
-    <ChartDistributionsDelta
-      style="grid-area: delta"
-      :distributions="data?.distributions ?? []"
-    />
-
-    <TableDistributions
-      style="grid-area: table"
-      :distributions="data?.distributions ?? []"
-      :count="data?.count ?? 0"
-      :loading
-      @page="page = $event"
-    />
-
     <ChartBalances
       v-if="!loading"
-      style="grid-area: chart-breakdown"
+      style="grid-area: chart"
       title="Breakdown"
+      chart-type="bars"
       :balances="balancesBreakdown"
       :show-dollars="false"
     >
@@ -115,7 +97,20 @@ const balancesBreakdown = computed(() => {
       v-else
       loading
       title="Breakdown"
-      :style="`grid-area: chart-breakdown; min-height: ${DEFAULT_MIN_HEIGHT}`"
+      :style="`grid-area: chart; min-height: ${DEFAULT_MIN_HEIGHT}`"
+    />
+
+    <ChartDistributionsDelta
+      style="grid-area: delta"
+      :distributions="data?.distributions ?? []"
+    />
+
+    <TableDistributions
+      style="grid-area: table"
+      :distributions="data?.distributions ?? []"
+      :count="data?.count ?? 0"
+      :loading
+      @page="page = $event"
     />
   </div>
 </template>
@@ -129,8 +124,7 @@ const balancesBreakdown = computed(() => {
     "header header header"
     "kpis kpis kpis"
     "table chart chart"
-    "table delta delta"
-    "table chart-breakdown chart-breakdown";
+    "table delta delta";
 
   @media only screen and (max-width: 1280px) {
     display: flex;
