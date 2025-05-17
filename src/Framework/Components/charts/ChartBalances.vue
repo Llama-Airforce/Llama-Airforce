@@ -197,7 +197,9 @@ function createSeriesStacked(normalize: boolean) {
     :title="title ?? 'Balances'"
   >
     <template #actions>
-      <div style="display: flex">
+      <div class="actions">
+        <slot name="actions"></slot>
+
         <Select
           :options="typeOptions"
           :selected="typeOptions.find((x) => x.id === type) ?? typeOptions[0]"
@@ -211,7 +213,6 @@ function createSeriesStacked(normalize: boolean) {
         <Tooltip v-if="showDollars">
           <template #trigger>
             <ButtonToggle
-              style="margin-right: 1rem"
               :model-value="dollars"
               @click="dollars = !dollars"
             >
@@ -255,7 +256,12 @@ function createSeriesStacked(normalize: boolean) {
 .select {
   z-index: 2;
   width: 10rem;
-  margin-right: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .chart {
