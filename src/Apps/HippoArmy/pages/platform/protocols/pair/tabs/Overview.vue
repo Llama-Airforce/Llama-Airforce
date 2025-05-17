@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { DEFAULT_MIN_HEIGHT } from "@/Styles/ChartStylesLW";
 import { useSnapshots } from "@HA/queries/pairs";
 import type { Pair } from "@HA/services/protocols/schema";
-import ChartApr from "../charts/ChartApr.vue";
 import ChartTvl from "../charts/ChartTvl.vue";
 import OverviewKPIs from "../components/OverviewKPIs.vue";
 
@@ -22,12 +22,38 @@ const tvl = computed(() =>
   }))
 );
 
-const apr = computed(() =>
-  (snapshots.value ?? []).map((x) => ({
+const balancesApr = computed(() => {
+  const data = (snapshots.value ?? []).filter((x) => x.rewards.length > 0);
+
+  const baseApr = data.map((x) => ({
     timestamp: x.time,
     apr: x.aprBase,
-  }))
-);
+    tokenAddress: "0x0" as Address,
+    tokenSymbol: "Base APR",
+  }));
+
+  const rewards = data.flatMap((x) =>
+    x.rewards.map((y) => ({ ...y, timestamp: x.time }))
+  );
+
+  return baseApr
+    .concat(rewards)
+    .groupBy((x) => x.tokenAddress)
+    .entries()
+    .filter(
+      ([, data]) =>
+        data.length > 0 &&
+        data.reduce((sum, x) => sum + x.apr, 0) / data.length >= 1
+    )
+    .map(([, data]) => ({
+      symbol: data[0].tokenSymbol,
+      balances: data.map((x) => ({
+        timestamp: x.timestamp,
+        balance: x.apr,
+        tokenPrice: 1,
+      })),
+    }));
+});
 </script>
 
 <template>
@@ -43,10 +69,18 @@ const apr = computed(() =>
       :loading
     />
 
-    <ChartApr
+    <ChartBalances
+      v-if="!loading"
       style="grid-area: apr"
-      :apr
-      :loading
+      title="APR"
+      :balances="balancesApr"
+      :show-dollars="false"
+    />
+    <Card
+      v-else
+      loading
+      title="APR"
+      :style="`grid-area: apr; min-height: ${DEFAULT_MIN_HEIGHT}`"
     />
   </div>
 </template>
