@@ -40,7 +40,7 @@ const proposalToClipboard = async () => {
         class="id"
         @click.stop="proposalToClipboard"
       >
-        <LucideLink /> {{ proposal.proposalId }}
+        <LucideLink /> {{ proposal.onChainId }}
       </span>
 
       <router-link
