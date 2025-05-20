@@ -186,7 +186,7 @@ const you = (address: string) => address === walletAddress.value;
     }
 
     > .vote {
-      grid-template-columns: 1fr 4rem 4rem;
+      grid-template-columns: 1fr 5rem 4rem;
 
       > .amount,
       > .percentage {
@@ -201,7 +201,7 @@ const you = (address: string) => address === walletAddress.value;
     }
 
     > .vote {
-      grid-template-columns: 4rem 4rem 1fr;
+      grid-template-columns: 4rem 5rem 1fr;
 
       > .address {
         justify-content: end;
