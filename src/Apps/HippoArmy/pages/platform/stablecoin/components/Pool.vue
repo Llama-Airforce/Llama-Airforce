@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import {
-  useOHLC,
   usePool,
   usePoolTvl,
   usePoolVolume,
 } from "@/Apps/HippoArmy/queries/stablecoin";
 import ChartBalances from "@/Framework/Components/charts/ChartBalances.vue";
-import ChartPrice from "@/Framework/Components/charts/ChartPrice.vue";
 import ChartTvl from "@/Framework/Components/charts/ChartTvl.vue";
 import ChartVolume from "@/Framework/Components/charts/ChartVolume.vue";
 import { DEFAULT_MIN_HEIGHT } from "@/Styles/ChartStylesLW";
+import { useOraclePrices } from "@HA/queries/protocols";
+import type { OraclePrice } from "@HA/services/protocols/schema";
+import ChartPrice from "../charts/ChartPrice.vue";
 
 type Pool = "scrvusd" | "sfrxusd";
 
@@ -28,23 +29,23 @@ const poolAddress = computed(() => {
   }
 });
 
-const referenceToken = computed(() => {
-  switch (pool) {
-    case "scrvusd":
-      return SCrvUsdAddress;
-    case "sfrxusd":
-      return SFrxUsdAddress;
-    default:
-      throw new Error(`Unknown pool: ${pool as string}`);
-  }
-});
-
-const { isFetching: loadingOHLC, data: ohlc } = useOHLC(
-  toRef(() => "ethereum"),
-  poolAddress,
-  referenceToken,
-  toRef(() => ReUsdAddress)
+const { isFetching: loadingPrices, data: pricesData } = useOraclePrices(
+  toRef(() => ({
+    chain: "ethereum",
+  }))
 );
+
+const prices = computed(() => {
+  const getPrice =
+    pool === "scrvusd"
+      ? (x: OraclePrice) => x.crvusd
+      : (x: OraclePrice) => x.frxusd;
+
+  return (pricesData.value?.prices ?? []).map((x) => ({
+    timestamp: x.timestamp,
+    price: getPrice(x),
+  }));
+});
 
 const { isFetching: loadingVolume, data: volumeRaw } = usePoolVolume(
   toRef(() => "ethereum"),
@@ -103,8 +104,8 @@ const loadingBalances = computed(() => loadingPool.value || loadingTvl.value);
 
   <ChartPrice
     :style="`grid-area: price-${pool}`"
-    :ohlc
-    :loading="loadingOHLC"
+    :prices
+    :loading="loadingPrices"
     :min-move="0.001"
   />
 
