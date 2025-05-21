@@ -4,9 +4,14 @@ import ChartPrice from "@/Framework/Components/charts/ChartPrice.vue";
 import ChartTvl from "@/Framework/Components/charts/ChartTvl.vue";
 import ChartVolume from "@/Framework/Components/charts/ChartVolume.vue";
 import { useQueryOHLC } from "@CM/queries/ohlc";
-import { useQueryVolume, useQueryTvl } from "@CM/queries/pools";
+import {
+  useQueryVolume,
+  useQueryTvl,
+  useQuerySnapshots,
+} from "@CM/queries/pools";
 import type { Chain } from "@curvefi/prices-api";
 import type { Pool } from "@curvefi/prices-api/pools";
+import ChartRevenueParameters from "../Charts/ChartRevenueParameters.vue";
 
 const { pool, chain } = defineProps<{
   pool: Pool | undefined;
@@ -31,6 +36,11 @@ const { isFetching: loadingVolume, data: volumeRaw } = useQueryVolume(
 );
 
 const { isFetching: loadingTvl, data: tvlRaw } = useQueryTvl(
+  toRef(() => chain),
+  poolAddr
+);
+
+const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
   toRef(() => chain),
   poolAddr
 );
@@ -63,6 +73,33 @@ const balances = computed(() => {
     })),
   }));
 });
+
+const loadingParameters = computed(
+  () => loadingSnapshots.value || loadingVolume.value
+);
+
+const parameters = computed(() =>
+  [...snapshots.value, ...volumeRaw.value]
+    .groupBy((item) => item.timestamp.getTime())
+    .entries()
+    .filter(([, items]) => items.length === 2)
+    .map(([, items]) => {
+      const timestamp = items[0].timestamp;
+      const snapshot = items.find((item) => "a" in item);
+      const offpegFeeMultiplier = snapshot?.offpegFeeMultiplier ?? 0;
+      const a = snapshot?.a ?? 0;
+      const fee = snapshot?.fee ?? 0;
+      const revenue = items.find((item) => "volume" in item)?.fees ?? 0;
+
+      return {
+        timestamp,
+        revenue,
+        a,
+        fee,
+        offpegFeeMultiplier,
+      };
+    })
+);
 </script>
 
 <template>
@@ -139,6 +176,12 @@ const balances = computed(() => {
       :balances
       :loading="loadingTvl"
     />
+
+    <ChartRevenueParameters
+      style="grid-area: parameters"
+      :snapshots="parameters"
+      :loading="loadingParameters"
+    />
   </div>
 </template>
 
@@ -150,7 +193,8 @@ const balances = computed(() => {
   grid-template-areas:
     "kpi1 kpi2 kpi3 kpi4"
     "price price tvl tvl"
-    "volume volume balances balances";
+    "volume volume balances balances"
+    "parameters parameters parameters parameters";
 
   @media only screen and (max-width: 1280px) {
     grid-template-columns: repeat(2, 1fr);
@@ -160,7 +204,8 @@ const balances = computed(() => {
       "price price"
       "volume volume"
       "tvl tvl"
-      "balances balances";
+      "balances balances"
+      "parameters parameters";
   }
 
   .tokens {
