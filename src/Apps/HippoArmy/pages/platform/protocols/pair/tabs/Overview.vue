@@ -49,8 +49,9 @@ const balancesApr = computed(() => {
     .groupBy((x) => x.tokenAddress)
     .entries()
     .filter(
-      ([, data]) =>
-        data.length > 0 && data.sumBy((x) => x.apr) / data.length >= 1
+      ([tokenAddress, data]) =>
+        tokenAddress === "0x0" ||
+        (data.length > 0 && data.sumBy((x) => x.apr) / data.length >= 1)
     )
     .map(([, data]) => ({
       symbol: data[0].tokenSymbol,
