@@ -2,6 +2,7 @@
 import { DEFAULT_MIN_HEIGHT } from "@/Styles/ChartStylesLW";
 import { useSnapshots } from "@HA/queries/pairs";
 import type { Pair } from "@HA/services/protocols/schema";
+import ChartBorrowCostApr from "../charts/ChartBorrowCostApr.vue";
 import ChartTvl from "../charts/ChartTvl.vue";
 import OverviewKPIs from "../components/OverviewKPIs.vue";
 
@@ -19,6 +20,13 @@ const tvl = computed(() =>
   (snapshots.value ?? []).map((x) => ({
     timestamp: x.time,
     tvl: x.totalUnderlying,
+  }))
+);
+
+const borrowCostApr = computed(() =>
+  (snapshots.value ?? []).map((x) => ({
+    timestamp: x.time,
+    apr: x.aprBorrowCost,
   }))
 );
 
@@ -62,12 +70,6 @@ const balancesApr = computed(() => {
       :pair
     />
 
-    <ChartTvl
-      style="grid-area: tvl"
-      :tvl
-      :loading
-    />
-
     <ChartBalances
       v-if="!loading"
       style="grid-area: apr"
@@ -81,6 +83,18 @@ const balancesApr = computed(() => {
       title="APR"
       :style="`grid-area: apr; min-height: ${DEFAULT_MIN_HEIGHT}`"
     />
+
+    <ChartBorrowCostApr
+      style="grid-area: borrow-cost-apr"
+      :apr="borrowCostApr"
+      :loading
+    />
+
+    <ChartTvl
+      style="grid-area: tvl"
+      :tvl
+      :loading
+    />
   </div>
 </template>
 
@@ -91,7 +105,8 @@ const balancesApr = computed(() => {
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas:
     "kpis kpis"
-    "tvl apr";
+    "apr tvl"
+    "borrow-cost-apr .";
 
   @media only screen and (max-width: 1280px) {
     display: flex;
