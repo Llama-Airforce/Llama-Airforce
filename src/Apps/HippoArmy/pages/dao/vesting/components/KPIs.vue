@@ -51,7 +51,7 @@ const totalClaimPercentage = computed(() => {
         :precision="2"
         :show-symbol="false"
       />
-      reUSD
+      RSUP
     </KPI>
 
     <KPI
@@ -64,7 +64,7 @@ const totalClaimPercentage = computed(() => {
         :precision="2"
         :show-symbol="false"
       />
-      reUSD
+      RSUP
     </KPI>
 
     <KPI
@@ -88,7 +88,7 @@ const totalClaimPercentage = computed(() => {
         :precision="2"
         :show-symbol="false"
       />
-      reUSD
+      RSUP
     </KPI>
   </div>
 </template>
