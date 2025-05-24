@@ -42,7 +42,10 @@ const { chart, series } = useLightweightChart({
   createChartOptions: createChartOptions(
     computed(() => ({
       leftPriceScale: {
-        visible: toggles.a.value || toggles.offpegFeeMultiplier.value,
+        visible:
+          toggles.a.value ||
+          toggles.fee.value ||
+          toggles.offpegFeeMultiplier.value,
       },
     }))
   ),
@@ -98,6 +101,11 @@ const { chart, series } = useLightweightChart({
       type: LineSeries,
       name: "offpegFeeMultiplier" as const,
       options: computed<LineSeriesPartialOptions>(() => ({
+        priceFormat: {
+          type: "custom",
+          formatter: (x: number) => `${Math.round(x)}`,
+          minMove: 1,
+        },
         priceScaleId: "left",
         lineWidth: 2,
         color: theme.value.colors.purple,
