@@ -152,7 +152,7 @@ function createSeries() {
     snapshots
       .map((x) => ({
         time: x.timestamp.getUTCTimestamp(),
-        value: x.fee,
+        value: x.fee / 1e4,
       }))
       .uniqWith((x, y) => x.time === y.time)
       .orderBy((x) => x.time, "asc")
@@ -162,7 +162,7 @@ function createSeries() {
     snapshots
       .map((x) => ({
         time: x.timestamp.getUTCTimestamp(),
-        value: x.offpegFeeMultiplier,
+        value: x.offpegFeeMultiplier / 1e10,
       }))
       .uniqWith((x, y) => x.time === y.time)
       .orderBy((x) => x.time, "asc")
