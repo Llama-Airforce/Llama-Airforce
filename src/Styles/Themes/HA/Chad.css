@@ -1,0 +1,46 @@
+:root[data-theme="chad"] {
+  --color-scheme-dark: -1;
+  color-scheme: light dark;
+
+  --c-text: black;
+  --c-text-invert: #ffffff;
+  --c-lvl0: #e6e4f6;
+  --c-lvl1: #f4f4f6;
+  --c-lvl2: #d9d8df;
+  --c-lvl3: #e3e3e8;
+  --c-lvl4: #a1a1a1;
+  --c-lvl5: #7d7d86;
+  --c-lvl6: #212124;
+  --c-red: hsl(7, 95%, 54%);
+  --c-green: hsl(122, 95%, 35%);
+  --c-blue: hsl(209, 95%, 54%);
+  --c-yellow: hsl(39, 95%, 54%);
+  --c-purple: hsl(284, 95%, 54%);
+  --c-primary: #9d93dc;
+  --c-card-special-1: hsl(209, 95%, 54%);
+  --c-card-special-2: hsl(284, 95%, 54%);
+
+  --c-chart-green: #05c70c;
+  --c-chart-text: #333333;
+
+  --border-radius: 0px;
+  --border-thickness: 2px;
+
+  --table-border-aggregation: calc(var(--border-thickness) + 1px) solid
+    var(--c-primary);
+
+  --container-box-shadow: 0 0 0 0;
+
+  --select-box-shadow: 3px 3px 0 #0d0a1f;
+  --input-box-shadow: inset 0.5px 0.5px 0 0.5px;
+  --options-box-shadow: 3px 3px 0 #0d0a1f;
+  --tooltip-box-shadow: 0;
+
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 14px;
+  }
+}

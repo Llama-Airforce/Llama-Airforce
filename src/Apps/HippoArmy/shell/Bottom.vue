@@ -44,7 +44,7 @@ const router = useRouter();
       style="grid-area: themes"
       direction="up"
       class="themes"
-      :themes="['dark', 'light']"
+      :themes="['dark', 'light', 'chad']"
     />
 
     <Wallet

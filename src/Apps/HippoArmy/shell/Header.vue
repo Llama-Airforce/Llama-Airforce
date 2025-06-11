@@ -16,7 +16,7 @@ const { crumbs, show } = storeToRefs(useBreadcrumbStore());
 
     <SelectTheme
       class="themes"
-      :themes="['dark', 'light']"
+      :themes="['dark', 'light', 'chad']"
     />
 
     <Wallet class="lvl2" />

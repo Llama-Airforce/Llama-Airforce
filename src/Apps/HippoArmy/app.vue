@@ -6,6 +6,7 @@ import Navigation from "@HA/shell/Navigation.vue";
 
 import "@/Styles/Themes/HA/Dark.css";
 import "@/Styles/Themes/HA/Light.css";
+import "@/Styles/Themes/HA/Chad.css";
 
 // Theme
 const theme = computed<Theme>(() => ({
