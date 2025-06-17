@@ -2,26 +2,20 @@ import { z } from "zod";
 import type { Address } from "@/types/address";
 
 export const timerange = {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   start: z.number().int().positive().optional(),
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   end: z.number().int().positive().optional(),
 };
 
 export const pagination = {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   per_page: z.number().int().positive().optional(),
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   page: z.number().int().positive().optional(),
 };
 
 export const proposalId = {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   proposal_id: z.number().int().positive(),
 };
 
 export const pairId = {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   pair_id: z.number().int().positive(),
 };
 

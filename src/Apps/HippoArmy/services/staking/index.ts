@@ -111,7 +111,6 @@ export async function getTopUsers(
 
 const getPositionHistParams = z.object({
   ...chain,
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   bin_count: z.number().int().positive().optional(),
 });
 
