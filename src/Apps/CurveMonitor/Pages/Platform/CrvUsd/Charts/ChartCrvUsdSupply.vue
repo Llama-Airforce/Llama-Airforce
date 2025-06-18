@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { createSeriesMarkers } from "lightweight-charts";
-import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
+import createChartOptions, {
+  createAreaSerie,
+  createSerieMarkers,
+} from "@/Styles/ChartStylesLW";
 import { useQueryCrvUsdSupply } from "@CM/queries/crvusd";
 
 export type Period = "7d" | "1m" | "3m" | "6m" | "1y";
@@ -98,16 +100,15 @@ function createSeries() {
   chart.value.timeScale().fitContent();
 
   // Add marker for March 20, 2025
-  const resupplyDate = new Date(Date.UTC(2025, 2, 20));
-  createSeriesMarkers(series.supply, [
-    {
-      time: resupplyDate.getUTCTimestamp(),
-      position: "aboveBar",
-      color: theme.value.colors.red,
-      shape: "arrowDown",
-      text: "Resupply Launch",
-    },
-  ]);
+  const marker = {
+    time: new Date(Date.UTC(2025, 2, 20)).getUTCTimestamp(),
+    position: "aboveBar",
+    color: theme.value.colors.red,
+    shape: "arrowDown",
+    text: "Resupply Launch",
+  } as const;
+
+  createSerieMarkers(series.supply, [marker]);
 }
 
 function formatter(y: number) {

@@ -4,6 +4,11 @@ import {
   ColorType,
   LineStyle,
   type AutoscaleInfo,
+  createSeriesMarkers,
+  type ISeriesApi,
+  type SeriesMarker,
+  type Time,
+  type UTCTimestamp,
 } from "lightweight-charts";
 import type { Theme } from "@/Styles/Theme";
 import { deepMerge } from "@/Utils/Object";
@@ -122,4 +127,38 @@ export function createAreaSerie<T extends string>({
     name,
     options,
   } as const;
+}
+
+type Markers = ReturnType<typeof createSeriesMarkers<Time>>;
+const markersMap = new WeakMap<ISeriesApi<"Area" | "Line">, Markers>();
+
+/**
+ * Creates and manages series markers for a chart series within the visible time range
+ *
+ * @param serie The chart series (Area or Line type) to add markers to
+ * @param markers Array of markers with timestamps to be displayed on the series
+ */
+export function createSerieMarkers(
+  serie: ISeriesApi<"Area" | "Line">,
+  markers: SeriesMarker<UTCTimestamp>[]
+) {
+  const times = serie
+    .data()
+    .map((x) => x.time as UTCTimestamp)
+    .uniq();
+
+  // Reset markets first if already present to make sure we start with a clean slate.
+  const existingMarkers = markersMap.get(serie);
+  if (existingMarkers) {
+    existingMarkers.setMarkers([]);
+    existingMarkers.detach();
+  }
+
+  const markersInRange = markers.filter(
+    (marker) =>
+      !times.length || (times[0] <= marker.time && marker.time <= times.at(-1)!)
+  );
+
+  const newMarkers = createSeriesMarkers(serie, markersInRange);
+  markersMap.set(serie, newMarkers);
 }
