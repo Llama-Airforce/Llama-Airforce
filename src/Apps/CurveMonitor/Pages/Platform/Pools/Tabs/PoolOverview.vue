@@ -4,11 +4,7 @@ import ChartPrice from "@/Framework/Components/charts/ChartPrice.vue";
 import ChartTvl from "@/Framework/Components/charts/ChartTvl.vue";
 import ChartVolume from "@/Framework/Components/charts/ChartVolume.vue";
 import { useQueryOHLC } from "@CM/queries/ohlc";
-import {
-  useQueryVolume,
-  useQueryTvl,
-  useQuerySnapshots,
-} from "@CM/queries/pools";
+import { useQueryVolume, useQueryTvl } from "@CM/queries/pools";
 import type { Chain } from "@curvefi/prices-api";
 import type { Pool } from "@curvefi/prices-api/pools";
 import ChartRevenueParameters from "../Charts/ChartRevenueParameters.vue";
@@ -36,11 +32,6 @@ const { isFetching: loadingVolume, data: volumeRaw } = useQueryVolume(
 );
 
 const { isFetching: loadingTvl, data: tvlRaw } = useQueryTvl(
-  toRef(() => chain),
-  poolAddr
-);
-
-const { isFetching: loadingSnapshots, data: snapshots } = useQuerySnapshots(
   toRef(() => chain),
   poolAddr
 );
@@ -73,33 +64,6 @@ const balances = computed(() => {
     })),
   }));
 });
-
-const loadingParameters = computed(
-  () => loadingSnapshots.value || loadingVolume.value
-);
-
-const parameters = computed(() =>
-  [...snapshots.value, ...volumeRaw.value]
-    .groupBy((item) => item.timestamp.getTime())
-    .entries()
-    .filter(([, items]) => items.length === 2)
-    .map(([, items]) => {
-      const timestamp = items[0].timestamp;
-      const snapshot = items.find((item) => "a" in item);
-      const offpegFeeMultiplier = snapshot?.offpegFeeMultiplier ?? 0;
-      const a = snapshot?.a ?? 0;
-      const fee = snapshot?.fee ?? 0;
-      const revenue = items.find((item) => "volume" in item)?.fees ?? 0;
-
-      return {
-        timestamp,
-        revenue,
-        a,
-        fee,
-        offpegFeeMultiplier,
-      };
-    })
-);
 </script>
 
 <template>
@@ -179,8 +143,8 @@ const parameters = computed(() =>
 
     <ChartRevenueParameters
       style="grid-area: parameters"
-      :snapshots="parameters"
-      :loading="loadingParameters"
+      :pool
+      :chain
     />
   </div>
 </template>

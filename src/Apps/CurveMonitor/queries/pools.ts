@@ -43,14 +43,37 @@ export function useQueryPoolMultiple(
   });
 }
 
+export async function getVolume2(
+  chain: Chain,
+  poolAddr: string,
+  daysRange: number,
+  options?: Options
+) {
+  const host = getHost(options);
+
+  const { start, end } = getTimeRange({ daysRange });
+
+  const resp = await fetch<Api.GetVolumeResponse>(
+    `${host}/v1/volume/usd/${chain}/${poolAddr}?` +
+      `interval=day&` +
+      `start=${start}&` +
+      `end=${end}`
+  );
+
+  return resp.data.map(Api.parseVolume);
+}
+
 export function useQueryVolume(
   chain: Ref<Chain | undefined>,
-  poolAddr: Ref<string | undefined>
+  poolAddr: Ref<string | undefined>,
+  days: number | Ref<number> = 90
 ) {
+  const daysValue = computed(() => unref(days));
+
   return useQuery({
-    queryKey: ["curve-pool-volume", poolAddr] as const,
+    queryKey: ["curve-pool-volume", poolAddr, daysValue] as const,
     queryFn: async ({ queryKey: [, poolAddr] }) =>
-      Api.getVolume(chain.value!, poolAddr!),
+      getVolume2(chain.value!, poolAddr!, daysValue.value),
     enabled: computed(() => !!chain.value && !!poolAddr.value),
     initialData: [],
     initialDataUpdatedAt: 0,
@@ -146,11 +169,12 @@ export const parseSnapshot = (
 export async function getSnapshots(
   chain: Chain,
   poolAddr: string,
+  daysRange: number,
   options?: Options
 ) {
   const host = getHost(options);
 
-  const { start, end } = getTimeRange({ daysRange: 90 });
+  const { start, end } = getTimeRange({ daysRange });
 
   const resp = await fetch<GetSnapshotsResponse>(
     `${host}/v1/snapshots/${chain}/${poolAddr}?` +
@@ -163,12 +187,15 @@ export async function getSnapshots(
 
 export function useQuerySnapshots(
   chain: Ref<Chain | undefined>,
-  poolAddr: Ref<string | undefined>
+  poolAddr: Ref<string | undefined>,
+  days: number | Ref<number> = 90
 ) {
+  const daysValue = computed(() => unref(days));
+
   return useQuery({
-    queryKey: ["curve-pool-snapshots", poolAddr] as const,
+    queryKey: ["curve-pool-snapshots", poolAddr, daysValue] as const,
     queryFn: async ({ queryKey: [, poolAddr] }) =>
-      getSnapshots(chain.value!, poolAddr!),
+      getSnapshots(chain.value!, poolAddr!, daysValue.value),
     enabled: computed(() => !!chain.value && !!poolAddr.value),
     initialData: [],
     initialDataUpdatedAt: 0,
