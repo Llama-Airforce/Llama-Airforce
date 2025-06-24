@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v4";
 import { fetchJson as fetch, addQueryString } from "@/Utils/fetch";
 import { getHost, type Options } from "..";
 import { pagination, pairId, timerange } from "../schema";

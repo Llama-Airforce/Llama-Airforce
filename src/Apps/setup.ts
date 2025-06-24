@@ -5,7 +5,7 @@ import {
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
-import { prettifyError, ZodError } from "zod";
+import { prettifyError, ZodError } from "zod/v4";
 import { createConfig as createConfigWagmi } from "@/Utils/Wagmi";
 // eslint-disable-next-line import/no-named-as-default
 import Notifications, { notify } from "@kyvg/vue3-notification";
