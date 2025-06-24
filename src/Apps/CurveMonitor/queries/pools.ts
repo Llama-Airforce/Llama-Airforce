@@ -177,7 +177,7 @@ export async function getSnapshots(
   const { start, end } = getTimeRange({ daysRange });
 
   const resp = await fetch<GetSnapshotsResponse>(
-    `${host}/v1/snapshots/${chain}/${poolAddr}?` +
+    `${host}/v1/snapshots/${chain}/${poolAddr}?unit=day&` +
       `start=${start}&` +
       `end=${end}`
   );
