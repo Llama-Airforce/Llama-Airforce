@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ChartProjections from "./charts/ChartProjections.vue";
+import ChartSupplyCirculating from "./charts/ChartSupplyCirculating.vue";
 import ChartSupplyDistribution from "./charts/ChartSupplyDistribution.vue";
 import KPIs from "./components/KPIs.vue";
 import TableVesting from "./tables/TableVesting.vue";
@@ -15,8 +16,10 @@ import TableVesting from "./tables/TableVesting.vue";
 
     <KPIs style="grid-area: highlights" />
 
+    <ChartSupplyDistribution style="grid-area: supply-distribution" />
+    <ChartSupplyCirculating style="grid-area: supply-circulating" />
+
     <ChartProjections style="grid-area: projections" />
-    <ChartSupplyDistribution style="grid-area: supply" />
 
     <TableVesting style="grid-area: table" />
   </div>
@@ -26,11 +29,12 @@ import TableVesting from "./tables/TableVesting.vue";
 .dashboard {
   max-width: calc(1920px - 18.125rem);
 
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
     "header header"
     "highlights highlights"
-    "projections supply"
+    "supply-distribution supply-circulating"
+    "projections projections"
     "table table";
 
   @media only screen and (max-width: 1280px) {

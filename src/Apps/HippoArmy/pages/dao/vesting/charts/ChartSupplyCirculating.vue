@@ -8,23 +8,25 @@ const theme = useTheme();
 const supplyData = computed(() => {
   if (!supply.value) return [];
 
+  const nonOther = [
+    supply.value.cooldownStaked,
+    supply.value.effectivePermaStaked,
+    supply.value.totalStaked - supply.value.effectivePermaStaked,
+    supply.value.lpBalance,
+  ];
+
   return [
-    supply.value.circulatingSupply,
-    supply.value.permaStaked,
-    supply.value.redemptionVesting,
-    supply.value.airdropVesting,
-    supply.value.treasuryVesting,
-    supply.value.licensingVesting,
+    ...nonOther,
+    supply.value.circulatingSupply - nonOther.sumBy((x) => x),
   ];
 });
 
 const supplyLabels = [
-  "Circulating Supply",
-  "Perma Staked",
-  "Redemption Vesting",
-  "Airdrop Vesting",
-  "Treasury Vesting",
-  "Licensing Vesting",
+  "Staking cooldown",
+  "Perma staked",
+  "Normal staked",
+  "LP balance",
+  "Other",
 ];
 
 const supplyOptions = computed(() => ({
@@ -37,7 +39,6 @@ const supplyOptions = computed(() => ({
     `${theme.value.colorsArray[1]}88`, // yellow
     `${theme.value.colorsArray[3]}88`, // red
     `${theme.value.colorsArray[4]}88`, // purple
-    `${theme.value.colorsArray[0]}aa`, // blue variant
   ],
   labels: supplyLabels,
   legend: {
@@ -56,7 +57,7 @@ const supplyOptions = computed(() => ({
 <template>
   <Card
     ref="supplyCard"
-    title="Token Supply Distribution"
+    title="Token Supply Circulating"
   >
     <ChartApex
       :options="supplyOptions"
