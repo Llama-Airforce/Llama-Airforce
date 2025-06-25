@@ -59,20 +59,28 @@ export const supplyResponse = z
   .object({
     total_supply: z.string(),
     perma_staked: z.string(),
+    total_staked: z.string(),
+    effective_perma_staked: z.string(),
+    cooldown_staked: z.string(),
     airdrop_vesting: z.string(),
     redemption_vesting: z.string(),
     treasury_vesting: z.string(),
     licensing_vesting: z.string(),
     circulating_supply: z.string(),
+    lp_balance: z.string(),
   })
   .transform((data) => ({
     totalSupply: parseFloat(data.total_supply),
     permaStaked: parseFloat(data.perma_staked),
+    totalStaked: parseFloat(data.total_staked),
+    effectivePermaStaked: parseFloat(data.effective_perma_staked),
+    cooldownStaked: parseFloat(data.cooldown_staked),
     airdropVesting: parseFloat(data.airdrop_vesting),
     redemptionVesting: parseFloat(data.redemption_vesting),
     treasuryVesting: parseFloat(data.treasury_vesting),
     licensingVesting: parseFloat(data.licensing_vesting),
     circulatingSupply: parseFloat(data.circulating_supply),
+    lpBalance: parseFloat(data.lp_balance),
   }));
 
 export type RedemptionsResponse = z.infer<typeof redemptionsResponse>;
