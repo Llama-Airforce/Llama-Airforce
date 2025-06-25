@@ -206,7 +206,7 @@ function createSeries() {
     parameters.value
       .map((x) => ({
         time: x.timestamp.getUTCTimestamp(),
-        value: x.fee / 1e4,
+        value: x.fee / 1e8,
       }))
       .uniqWith((x, y) => x.time === y.time)
       .orderBy((x) => x.time, "asc")
