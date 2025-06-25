@@ -69,6 +69,7 @@ const parameters = computed(() =>
 
 // Legend
 const theme = useTheme();
+const avgLength = ref<number | null>(null);
 
 const { items, toggles, disabled } = useLegend(() => {
   const { blue, yellow, green, purple } = theme.value.colors;
@@ -182,15 +183,27 @@ function createSeries() {
     return;
   }
 
-  series.revenue.setData(
-    parameters.value
-      .map((x) => ({
-        time: x.timestamp.getUTCTimestamp(),
-        value: x.revenue,
-      }))
-      .uniqWith((x, y) => x.time === y.time)
-      .orderBy((x) => x.time, "asc")
-  );
+  let revenue = parameters.value
+    .map((x) => ({
+      time: x.timestamp.getUTCTimestamp(),
+      value: x.revenue,
+    }))
+    .uniqWith((x, y) => x.time === y.time)
+    .orderBy((x) => x.time, "asc");
+
+  if (avgLength.value && avgLength.value > 0) {
+    const avgValues = average(
+      revenue.map((x) => x.value),
+      avgLength.value
+    );
+
+    revenue = revenue.map((x, i) => ({
+      time: x.time,
+      value: avgValues[i],
+    }));
+  }
+
+  series.revenue.setData(revenue);
 
   series.a.setData(
     parameters.value
@@ -231,6 +244,25 @@ function createSeries() {
 
   chart.value.timeScale().fitContent();
 }
+
+/**
+ * Normal non-weighted N sized average.
+ * let values: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+ * output: [1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7]
+ */
+function average(data: number[], n = 7): number[] {
+  return data.map((_x, i) => {
+    // Start from the current index and go back (n - 1) more days (total n days)
+    const start = Math.max(i - (n - 1), 0);
+    const end = i + 1;
+
+    // Slice the portion of the array for the n-day average and compute its average
+    const slice = data.slice(start, end);
+    const average = slice.sumBy((value) => value) / slice.length;
+
+    return average;
+  });
+}
 </script>
 
 <template>
@@ -242,6 +274,14 @@ function createSeries() {
   >
     <template #actions>
       <div style="display: flex">
+        <InputNumber
+          v-model="avgLength"
+          class="avg-span"
+          placeholder="Rev avg (days)"
+          :min="1"
+          :max="Infinity"
+        />
+
         <BtnChartLWExport
           filename="parameters_and_fees"
           :series
@@ -313,5 +353,9 @@ function createSeries() {
   display: flex;
   gap: 2rem;
   justify-content: space-between;
+}
+
+.avg-span {
+  width: 8rem;
 }
 </style>
