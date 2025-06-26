@@ -67,7 +67,7 @@ async function copy(value: string) {
         </div>
 
         <div class="end">
-          {{ relativeTime(timestamp.getTime()) }}
+          {{ relativeTime(timestamp.getUTCTimestamp()) }}
         </div>
       </template>
     </Table>
