@@ -1,12 +1,16 @@
 <script setup lang="ts">
 const modelValue = defineModel<boolean>({ required: true });
 
+const { readonly = false } = defineProps<{ readonly?: boolean }>();
+
 const emit = defineEmits<{
   change: [checked: boolean];
 }>();
 
 // Events
 const onChange = (evt: Event): void => {
+  if (readonly) return;
+
   const checked = (evt.target as HTMLInputElement).checked;
   modelValue.value = checked;
   emit("change", checked);
@@ -14,10 +18,14 @@ const onChange = (evt: Event): void => {
 </script>
 
 <template>
-  <label class="checkbox">
+  <label
+    class="checkbox"
+    :class="{ readonly }"
+  >
     <input
       type="checkbox"
       :checked="modelValue"
+      :disabled="readonly"
       @change="onChange"
     />
 
@@ -121,6 +129,20 @@ const onChange = (evt: Event): void => {
 
     &:empty {
       display: none;
+    }
+  }
+
+  &.readonly {
+    cursor: default;
+
+    &:hover input ~ .checkmark {
+      background-color: var(--c-lvl2);
+      border-color: var(--c-lvl4);
+    }
+
+    input:checked:hover ~ .checkmark {
+      background-color: var(--c-primary);
+      border-color: var(--c-primary);
     }
   }
 }
