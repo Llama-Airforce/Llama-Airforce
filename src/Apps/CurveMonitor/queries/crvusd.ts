@@ -1,4 +1,5 @@
-import type { Chain } from "@curvefi/prices-api";
+import { fetchJson as fetch } from "@/Utils/fetch";
+import { getHost, type Chain, type Options } from "@curvefi/prices-api";
 import * as Api from "@curvefi/prices-api/crvusd";
 import * as ApiOHLC from "@curvefi/prices-api/ohlc";
 
@@ -163,5 +164,82 @@ export function useQueryUserMarketCollateralEvents(
     queryFn: ({ queryKey: [, user, chain, market] }) =>
       Api.getUserMarketCollateralEvents(user!, chain!, market!),
     enabled: computed(() => !!user.value && !!chain.value && !!market.value),
+  });
+}
+
+type GetMarketAllUsersResponse = {
+  page: number;
+  per_page: number;
+  count: number;
+  data: {
+    user: string;
+    first: string;
+    last: string;
+    debt: string;
+    health: string;
+    health_full: string;
+    loss: string;
+    stablecoin: string;
+    soft_liquidation: boolean;
+  }[];
+};
+
+export type MarketUser = {
+  user: Address;
+  first: Date;
+  last: Date;
+  debt: number;
+  health: number;
+  healthFull: number;
+  loss: number;
+  stablecoin: number;
+  softLiquidation: boolean;
+};
+
+export const parseMarketUsers = (
+  x: GetMarketAllUsersResponse["data"][number]
+): MarketUser => ({
+  user: x.user as Address,
+  first: toDate(x.first),
+  last: toDate(x.last),
+  debt: parseFloat(x.debt),
+  health: parseFloat(x.health),
+  healthFull: parseFloat(x.health_full),
+  loss: parseFloat(x.loss),
+  stablecoin: parseFloat(x.stablecoin),
+  softLiquidation: x.soft_liquidation,
+});
+
+export async function getMarketAllUsers(
+  chain: Chain,
+  market: string,
+  params: {
+    page?: number;
+    per_page?: number;
+  },
+  options?: Options
+) {
+  const host = getHost(options);
+
+  const resp = await fetch<GetMarketAllUsersResponse>(
+    `${host}/v1/crvusd/users/${chain}/${market}/users${addQueryString(params)}`
+  );
+
+  return resp.data.map(parseMarketUsers);
+}
+
+export function useQueryMarketAllUsers(
+  chain: Ref<Chain | undefined>,
+  market: Ref<string | undefined>
+) {
+  return useQuery({
+    queryKey: [
+      "crvusd-market-all-users",
+      computed(() => chain.value),
+      computed(() => market.value),
+    ] as const,
+    queryFn: ({ queryKey: [, chain, market] }) =>
+      getMarketAllUsers(chain!, market!, { per_page: 1000 }),
+    enabled: computed(() => !!chain.value && !!market.value),
   });
 }

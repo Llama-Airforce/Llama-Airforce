@@ -4,6 +4,7 @@ import type { Chain } from "@curvefi/prices-api";
 import Liquidations from "./Tabs/Liquidations.vue";
 import MarketOverview from "./Tabs/MarketOverview.vue";
 import Trading from "./Tabs/Trading.vue";
+import Users from "./Tabs/Users.vue";
 
 // Markets
 const chain = useRouteParams<Chain>("chain");
@@ -38,7 +39,7 @@ watch(
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "trading", "liquidations"],
+  ["overview", "trading", "liquidations", "users"],
   "llamalendmarket",
   () => ({
     chain: chain.value,
@@ -80,6 +81,16 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 'liquidations'"
+            :market
+            :chain
+          />
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Users">
+        <KeepAlive>
+          <Users
+            v-if="tabActive === 'users'"
             :market
             :chain
           />

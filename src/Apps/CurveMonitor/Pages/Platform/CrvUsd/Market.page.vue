@@ -3,6 +3,7 @@ import { useQueryMarkets } from "@CM/queries/crvusd";
 import Liquidations from "./Tabs/Liquidations.vue";
 import MarketOverview from "./Tabs/MarketOverview.vue";
 import Trading from "./Tabs/Trading.vue";
+import Users from "./Tabs/Users.vue";
 
 // Market
 const marketAddr = useRouteParams<string>("marketAddr");
@@ -33,7 +34,7 @@ watch(
 
 // Tabs
 const { tabActive, tabActiveIndex } = useTabNavigation(
-  ["overview", "trading", "liquidations"],
+  ["overview", "trading", "liquidations", "users"],
   "crvusdmarket",
   () => ({
     marketAddr: marketAddr.value,
@@ -74,6 +75,16 @@ const { tabActive, tabActiveIndex } = useTabNavigation(
         <KeepAlive>
           <Liquidations
             v-if="tabActive === 'liquidations'"
+            chain="ethereum"
+            :market
+          />
+        </KeepAlive>
+      </TabItem>
+
+      <TabItem header="Users">
+        <KeepAlive>
+          <Users
+            v-if="tabActive === 'users'"
             chain="ethereum"
             :market
           />
