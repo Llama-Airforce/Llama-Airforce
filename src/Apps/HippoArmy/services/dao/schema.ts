@@ -44,6 +44,7 @@ const proposalData = z
     weight_no: z.number(),
     voters_count: z.number(),
     creation_tx_hash: z.string(),
+    voting_period: z.number(),
   })
   .transform((data) => ({
     proposalId: data.proposal_id,
@@ -55,7 +56,9 @@ const proposalData = z
     status: data.status,
     epoch: data.epoch,
     createdAt: toDate(data.created_at),
-    end: new Date(toDate(data.created_at).getTime() + 7 * 24 * 60 * 60 * 1000),
+    end: new Date(
+      toDate(data.created_at).getTime() + data.voting_period * 1000
+    ),
     quorumWeight: data.quorum_weight,
     executionTx: data.execution_tx as Address | null,
     cancellationTx: data.cancellation_tx,
