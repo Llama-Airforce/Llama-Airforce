@@ -6,11 +6,9 @@ import {
   useEvents,
   useQueryPositionHist,
   useTopUsers,
-  useTvlHistory,
   useDistributionHistory,
 } from "@HA/queries/insurance";
 import ChartPositions from "./charts/ChartPositions.vue";
-import ChartTvl from "./charts/ChartTvl.vue";
 import TableCooldowns from "./tables/TableCooldowns.vue";
 import TableEvents from "./tables/TableEvents.vue";
 import TableTopUsers from "./tables/TableTopUsers.vue";
@@ -32,17 +30,6 @@ const balancesApr = computed(() =>
         tokenPrice: 1,
       })),
     }))
-);
-
-const { isFetching: loadingTvl, data: tvlData } = useTvlHistory({
-  chain: "ethereum",
-});
-
-const tvl = computed(() =>
-  (tvlData.value ?? []).map((x) => ({
-    timestamp: x.timestamp,
-    tvl: x.tvl,
-  }))
 );
 
 const pageEvents = ref(1);
@@ -126,12 +113,6 @@ const balancesStaked = computed(() => {
       :style="`grid-area: apr; min-height: ${DEFAULT_MIN_HEIGHT}`"
     />
 
-    <ChartTvl
-      style="grid-area: tvl"
-      :tvl
-      :loading="loadingTvl"
-    />
-
     <TableEvents
       style="grid-area: events"
       :events="events?.events ?? []"
@@ -149,7 +130,7 @@ const balancesStaked = computed(() => {
     <ChartBalances
       v-if="!loadingHistory"
       style="grid-area: chart-staked"
-      title="Staked"
+      title="Staked (reUSD)"
       :balances="balancesStaked"
       :show-dollars="false"
     />
@@ -184,8 +165,7 @@ const balancesStaked = computed(() => {
 
   grid-template-areas:
     "header header header header header header"
-    "apr apr apr tvl tvl tvl"
-    "chart-staked chart-staked chart-staked chart-staked chart-staked chart-staked"
+    "apr apr apr chart-staked chart-staked chart-staked"
     "events events events cooldowns cooldowns cooldowns"
     "top-users top-users positions positions positions positions";
 
