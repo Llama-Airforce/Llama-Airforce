@@ -43,7 +43,7 @@ const proposals = computed(() =>
     .filter(
       (x) => proposalStatus.value === "all" || x.status === proposalStatus.value
     )
-    .orderBy((x) => x.createdAt.getDate(), "desc")
+    .orderBy((x) => x.createdAt.getTime(), "desc")
 );
 </script>
 
