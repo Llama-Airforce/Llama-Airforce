@@ -1,6 +1,9 @@
-import { getAddress } from "viem";
+import { getAddress, type HttpTransport, type PublicClient } from "viem";
+import type { mainnet } from "viem/chains";
+import { abi as abiStrategy } from "@/ABI/Convex/SnapshotStrategy";
 import { ServiceBaseHost } from "@/Services";
 import type { Address } from "@/types/address";
+import { chunk } from "@/Utils/Array";
 import { mapKeys } from "@/Utils/Object";
 import { paginate } from "@/Utils/Pagination";
 import type { ProposalId, Protocol } from "@LAF/Pages/Bribes/Models";
@@ -283,6 +286,51 @@ export default class SnapshotService extends ServiceBaseHost {
         mapKeys(scores, (_, key) => key.toLocaleLowerCase())
       )
     );
+  }
+
+  public async getScoresCvxOnChain(
+    client: PublicClient<HttpTransport, typeof mainnet>,
+    blockNumber: number,
+    voters: Address[]
+  ): Promise<Record<Address, number>> {
+    // Convert the array of voters into chunks of a certain size.
+    const chunks = chunk(voters, 100);
+
+    // Collect the score of each voter.
+    const scores: Record<Address, number> = {};
+
+    for (const chunk of chunks) {
+      // eslint-disable-next-line no-await-in-loop
+      const multicallResults = await client.multicall({
+        contracts: chunk.map((voter) => ({
+          address: "0x81768695e9fdda232491bec5b21fd1bc1116f917",
+          abi: abiStrategy,
+          functionName: "balanceOf",
+          args: [voter],
+        })),
+        blockNumber: BigInt(blockNumber),
+      });
+
+      for (let i = 0; i < chunk.length; i++) {
+        const voter = chunk[i];
+        const { result: score } = multicallResults[i];
+        if (score !== undefined && score > 0n) {
+          scores[voter] = Number(score) / 10 ** 18;
+        }
+      }
+    }
+
+    const scoresArray = Object.entries(scores).uniqWith(
+      (a, b) => a[0] === b[0]
+    );
+
+    console.log(
+      `On-chain proposal score verification returns ${
+        Object.keys(scoresArray).length
+      } members worth ${scoresArray.sumBy((x) => x[1])} vlAsset`
+    );
+
+    return Object.fromEntries(scoresArray);
   }
 
   public async getScoresAura(
