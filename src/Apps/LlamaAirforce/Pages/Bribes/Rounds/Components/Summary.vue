@@ -131,17 +131,8 @@ const onRoundSelect = (round: number): void => {
 <style scoped>
 .summary {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 1.5rem;
-
-  @media only screen and (max-width: 1280px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-
-    > .select {
-      grid-row: 1;
-      grid-column: 1 / span 4;
-    }
-  }
 
   .option {
     font-size: 1.25rem;
