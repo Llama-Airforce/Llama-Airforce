@@ -16,6 +16,7 @@ const columns = [
   "",
   "",
   { id: "name", label: "Name", sort: true } as const,
+  { id: "baseApr", label: "Base APR", sort: true, align: "end" } as const,
   { id: "fees", label: "Fees (24h)", sort: true, align: "end" } as const,
   { id: "volume", label: "Volume (24h)", sort: true, align: "end" } as const,
   { id: "tvl", label: "TVL", sort: true, align: "end" } as const,
@@ -29,6 +30,8 @@ const poolsFiltered = computed(() =>
     switch (sorting.value.column) {
       case "name":
         return pool.name;
+      case "baseApr":
+        return pool.baseDailyApr;
       case "fees":
         return pool.tradingFee24h;
       case "volume":
@@ -85,6 +88,15 @@ function utilRate(pool: Pool) {
         <div class="end">
           <AsyncValue
             show-zero
+            type="percentage"
+            :value="pool.baseDailyApr"
+            :precision="2"
+          />
+        </div>
+
+        <div class="end">
+          <AsyncValue
+            show-zero
             type="dollar"
             :value="pool.tradingFee24h"
             :precision="2"
@@ -127,7 +139,8 @@ function utilRate(pool: Pool) {
   --col-width: 11ch;
   --columns-data: 1rem calc(4 * (26px + 1ch)) minmax(var(--col-width), 0.75fr)
     minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
-    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.5fr);
+    minmax(var(--col-width), 0.75fr) minmax(var(--col-width), 0.75fr)
+    minmax(var(--col-width), 0.5fr);
 
   .tokens {
     display: grid;
