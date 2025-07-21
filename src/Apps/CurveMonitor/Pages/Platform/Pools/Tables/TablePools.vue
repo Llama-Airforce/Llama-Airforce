@@ -89,7 +89,7 @@ function utilRate(pool: Pool) {
           <AsyncValue
             show-zero
             type="percentage"
-            :value="pool.baseDailyApr"
+            :value="pool.baseDailyApr * 100"
             :precision="2"
           />
         </div>
