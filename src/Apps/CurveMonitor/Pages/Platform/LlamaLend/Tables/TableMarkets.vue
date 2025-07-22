@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import type { Chain } from "@curvefi/prices-api";
-import {
-  type Market,
-  type MarketPair,
-  tvl,
-} from "@curvefi/prices-api/llamalend";
+import { type Market, tvl } from "@curvefi/prices-api/llamalend";
 
+type MarketPair = { long?: Market; short?: Market };
 type MarketType = "long" | "short";
 
 const { pairs, loading, chain } = defineProps<{
