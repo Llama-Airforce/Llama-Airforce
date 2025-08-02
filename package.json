@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "typecheck": "vue-tsc --noEmit",
+    "lint": "bun run lint:framework && bun run --cwd src/Apps/Cookbook lint && bun run --cwd src/Apps/CurveMonitor lint && bun run --cwd src/Apps/HippoArmy lint && bun run --cwd src/Apps/LlamaAirforce lint",
     "lint:framework": "eslint \"src/{Framework,Services,Wallet,Util}/**/*.{ts,vue}\"",
     "deploy": "bun Deploy.ts"
   },

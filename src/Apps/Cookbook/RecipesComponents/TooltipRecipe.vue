@@ -30,7 +30,7 @@ const eventHandler = `const onTooltipShow = (isShown: boolean) => {
 };`;
 
 const onTooltipShow = (isShown: boolean) => {
-  console.log("Tooltip visibility changed:", isShown);
+  window.console.log("Tooltip visibility changed:", isShown);
 };
 </script>
 

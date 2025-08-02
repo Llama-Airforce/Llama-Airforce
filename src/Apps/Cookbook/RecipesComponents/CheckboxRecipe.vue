@@ -29,7 +29,7 @@ const checkboxEvent2 = `const onCheckboxChange = (checked: boolean) => {
 };`;
 
 const onCheckboxChange = (checked: boolean) => {
-  console.log("Checkbox state changed:", checked);
+  window.console.log("Checkbox state changed:", checked);
 };
 </script>
 

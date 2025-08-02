@@ -45,7 +45,7 @@ const btnClick1 = `<Button @click="showAlert('You clicked me!')">
 const btnClick2 = `const showAlert = (msg: string) => alert(msg);`;
 
 const showAlert = (msg: string) => {
-  alert(msg);
+  window.alert(msg);
 };
 </script>
 

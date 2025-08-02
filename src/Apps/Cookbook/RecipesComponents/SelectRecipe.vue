@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Recipe from "@CB/Recipe.vue";
 import why from "@/Assets/Icons/why.png";
+import Recipe from "@CB/Recipe.vue";
 
 type SelectOption = {
   label: string;

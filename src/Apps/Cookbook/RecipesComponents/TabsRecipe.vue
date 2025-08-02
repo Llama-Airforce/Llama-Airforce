@@ -3,7 +3,7 @@ import Recipe from "@CB/Recipe.vue";
 
 const onTabChange = (event: { index: number }) => {
   tabActive.value = event.index;
-  console.log("Tab changed:", event);
+  window.console.log("Tab changed:", event);
 };
 
 const tabActive = ref(0);

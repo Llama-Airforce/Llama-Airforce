@@ -1,10 +1,9 @@
 import { createI18n } from "vue-i18n";
-import { safe } from "@wagmi/connectors";
+import { walletConnect } from "@/Utils/Wagmi";
 import App from "@CB/App.vue";
 import { routes } from "@CB/Routes";
-
+import { safe } from "@wagmi/connectors";
 import { setup } from "../setup";
-import { walletConnect } from "@/Utils/Wagmi";
 
 const { app } = setup(App, {
   extraWagmiConnectors: [walletConnect, safe()],

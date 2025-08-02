@@ -5,7 +5,7 @@ const darkMode = ref(false);
 const notifications = ref(true);
 
 const toggleDarkMode = (value: boolean) => {
-  console.log(`Switching to ${value ? "dark" : "light"} mode`);
+  window.console.log(`Switching to ${value ? "dark" : "light"} mode`);
 };
 
 const darkModeExample = `<ButtonToggle v-model="darkMode" @change="toggleDarkMode">

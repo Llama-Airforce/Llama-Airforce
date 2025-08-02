@@ -4,7 +4,7 @@ import Recipe from "@CB/Recipe.vue";
 const openModal = ref(false);
 
 const onYes = () => {
-  alert("You clicked yes!");
+  window.alert("You clicked yes!");
   openModal.value = false;
 };
 

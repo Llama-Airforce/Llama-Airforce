@@ -67,7 +67,7 @@ const radioEvent2 = `const onRadioChange = (value: (typeof values)[number]) => {
 };`;
 
 const onRadioChange = (value: (typeof values)[number]) => {
-  console.log(`Radio button state changed: ${value}`);
+  window.console.log(`Radio button state changed: ${value}`);
 };
 </script>
 
