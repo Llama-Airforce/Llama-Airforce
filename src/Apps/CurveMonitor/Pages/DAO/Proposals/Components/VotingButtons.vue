@@ -127,7 +127,7 @@ const onEdit = (event: Event) => {
 
 const validate = () => {
   if (editor.value) {
-    const inputValue = editor.value.textContent ?? "";
+    const inputValue = editor.value.textContent || "";
     const cursorPosition = getCursorPosition();
 
     // Check if input value is a decimal number or ends with a dot
