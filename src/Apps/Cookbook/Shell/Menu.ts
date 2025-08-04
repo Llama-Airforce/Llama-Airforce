@@ -115,5 +115,15 @@ export const menu: Menu = {
         },
       ],
     },
+    {
+      label: "Util",
+      initCollapsed: true,
+      children: [
+        {
+          to: "/util/block-height",
+          label: "Block height",
+        },
+      ],
+    },
   ],
 };

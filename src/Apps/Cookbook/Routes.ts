@@ -118,4 +118,13 @@ export const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: "/util",
+    children: [
+      {
+        path: "block-height",
+        component: () => import("@CB/RecipesUtil/BlockHeight.vue"),
+      },
+    ],
+  },
 ];
