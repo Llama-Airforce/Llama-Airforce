@@ -47,8 +47,7 @@ const config = useConfig();
 async function createVote() {
   const ARAGON_OWNERSHIP_VOTING = "0xe478de485ad2fe566d49342cbd03e49ed7db3356";
   const ARAGON_OWNERSHIP_AGENT = "0x40907540d8a6c65c637785e8f8b742ae6b0b9968";
-  const zeroPad = (num: string, places: number) =>
-    String(num).padStart(places, "0");
+  const zeroPad = (num: string, places: number) => num.padStart(places, "0");
 
   const call_data = encodeFunctionData({
     abi: abiGauge,

@@ -33,7 +33,7 @@ function createSeries() {
   const newSerie = data.value
     .map((x) => ({
       time: x.epoch as UTCTimestamp,
-      value: Number(x.weight) / 10 ** 18,
+      value: x.weight / 10 ** 18,
     }))
     .uniqWith((x, y) => x.time === y.time)
     .orderBy((c) => c.time, "asc");

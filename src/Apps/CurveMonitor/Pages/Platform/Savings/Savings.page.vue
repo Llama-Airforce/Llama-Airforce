@@ -11,12 +11,12 @@ const { data: stats } = useQueryStatistics();
   <div class="dashboard">
     <KPI
       style="grid-area: kpi1"
-      label="APR (Projected)"
+      label="APY (Projected)"
       :has-value="!!stats"
     >
       <AsyncValue
         type="percentage"
-        :value="stats?.aprProjected"
+        :value="stats?.apyProjected"
       />
     </KPI>
 

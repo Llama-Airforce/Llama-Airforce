@@ -29,7 +29,7 @@ const { needsApprove } = useApprove(
   UnionCrvVaultAddressV1,
   address,
   ZapsUCrvAddressV2,
-  computed(() => BigInt(balance.value)),
+  balance,
   { maxApprove: false }
 );
 
