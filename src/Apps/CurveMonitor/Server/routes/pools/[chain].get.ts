@@ -11,8 +11,6 @@ const path = "/:chain";
 
 const app = new Hono().get(path, async (c) => {
   const chain = c.req.param("chain");
-  const page = c.req.query("page") ?? "1";
-  const perPage = c.req.query("per_page") ?? "9999";
 
   if (!isChain(chain)) {
     throw new HTTPException(400, { message: "Invalid chain" });
@@ -21,7 +19,7 @@ const app = new Hono().get(path, async (c) => {
   const data = await cache(c.req.url, async () => {
     try {
       const res = await fetch(
-        `https://prices.curve.finance/v1/chains/${chain}?page=${page}&per_page=${perPage}`
+        `https://prices.curve.finance/v1/chains/${chain}`
       );
       const data = (await res.json()) as GetPoolsResponse;
 

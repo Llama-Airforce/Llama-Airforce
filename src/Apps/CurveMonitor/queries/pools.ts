@@ -8,7 +8,7 @@ export function useQueryPools(chain: Ref<Chain | undefined>) {
     queryKey: ["curve-pools", chain] as const,
     queryFn: async ({ queryKey: [, chain] }) => {
       const host = await useHost();
-      return Api.getPools(chain!, 1, 9999, {
+      return Api.getPools(chain!, {
         host,
       });
     },
