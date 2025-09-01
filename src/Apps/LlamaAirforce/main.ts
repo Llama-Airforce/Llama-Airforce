@@ -32,7 +32,11 @@ routes.push(...pageBribesRoutes);
 routes.push(...pagePirexRoutes);
 
 const { app } = setup(App, {
-  extraWagmiConnectors: [walletConnect, coinbaseWallet(), safe()],
+  extraWagmiConnectors: [
+    walletConnect,
+    coinbaseWallet({ preference: { options: "all", telemetry: false } }),
+    safe(),
+  ],
   plugins: [
     createI18n({
       legacy: false,
