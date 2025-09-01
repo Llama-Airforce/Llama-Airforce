@@ -43,7 +43,7 @@ const stdDevWeeklyFees = computed(() => {
 
     <KPI
       style="grid-area: kpi2"
-      label="Average (1y)"
+      label="Average weekly fees (1y)"
       :has-value="distributions.length > 0"
     >
       <AsyncValue

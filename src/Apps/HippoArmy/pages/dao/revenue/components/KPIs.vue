@@ -46,7 +46,7 @@ const stdDevWeeklyFees = computed(() => {
     </KPI>
 
     <KPI
-      label="Average (1y)"
+      label="Average weekly fees (1y)"
       :has-value="!!averageWeeklyFees"
     >
       <AsyncValue
