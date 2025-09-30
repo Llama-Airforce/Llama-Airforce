@@ -303,7 +303,7 @@ export default class SnapshotService extends ServiceBaseHost {
       // eslint-disable-next-line no-await-in-loop
       const multicallResults = await client.multicall({
         contracts: chunk.map((voter) => ({
-          address: "0x81768695e9fdda232491bec5b21fd1bc1116f917",
+          address: "0x81768695e9fdda232491bec5b21fd1bc1116f917" as Address,
           abi: abiStrategy,
           functionName: "balanceOf",
           args: [voter],
