@@ -18,6 +18,8 @@ import {
   DistributorUCvxAddress,
   DistributorSCrvUsdAddress,
   SCrvUsdAddress,
+  SReUsdAddress,
+  DistributorSReUsdAddress,
 } from "@/Utils/Addresses";
 import { bigNumToNumber } from "@/Utils/Number";
 import {
@@ -26,6 +28,7 @@ import {
   getCvxPrismaPrice,
   getPxCvxPrice,
   getCrvUsdPrice,
+  getReUsdPrice,
 } from "@/Utils/Price";
 import type { AirdropId, Claim } from "@LAF/Services/UnionService";
 import { type Swap, getVirtualPrice } from "@Pounders/Models";
@@ -72,6 +75,12 @@ export type AirdropSCrvUsd = Airdrop & {
   utkn: "scrvUSD";
 };
 
+export type AirdropSReUsd = Airdrop & {
+  id: "sreusd";
+  tkn: "reUSD";
+  utkn: "sreUSD";
+};
+
 export function isAirdropUCrv(airdrop: Airdrop): airdrop is AirdropUCrv {
   return airdrop.tkn === "cvxCRV" && airdrop.utkn === "uCRV";
 }
@@ -90,6 +99,10 @@ export function isAirdropUCvx(airdrop: Airdrop): airdrop is AirdropUCvx {
 
 export function isAirdropSCrvUsd(airdrop: Airdrop): airdrop is AirdropSCrvUsd {
   return airdrop.tkn === "crvUSD" && airdrop.utkn === "scrvUSD";
+}
+
+export function isAirdropSReUsd(airdrop: Airdrop): airdrop is AirdropSReUsd {
+  return airdrop.tkn === "reUSD" && airdrop.utkn === "sreUSD";
 }
 
 export async function uCrvAirdrop(
@@ -263,6 +276,41 @@ export async function sCrvUsdAirdrop(
     swap: {
       buy: "USDC",
       sell: "CRVUSD",
+    },
+  };
+}
+
+export async function sReUsdAirdrop(
+  client: PublicClient,
+  priceService: PriceService,
+  claim: Claim | undefined
+): Promise<AirdropSReUsd> {
+  const reUsdPrice = await getReUsdPrice(priceService);
+
+  const sreusd = getContract({
+    abi: abiERC4626,
+    address: SReUsdAddress,
+    client,
+  });
+  const virtualPrice = await getVirtualPrice(sreusd);
+
+  claim = claim ?? { index: 0, amount: "0x0", proof: [] };
+  const amount = BigInt(claim.amount);
+  const amountAsset = virtualPrice * bigNumToNumber(amount, 18n);
+  const amountDollar = amountAsset * reUsdPrice;
+
+  return {
+    id: "sreusd",
+    tkn: "reUSD",
+    utkn: "sreUSD",
+    claim,
+    amount,
+    amountAsset,
+    amountDollar,
+    distributorAddress: DistributorSReUsdAddress,
+    swap: {
+      buy: "USDC",
+      sell: "reUSD",
     },
   };
 }

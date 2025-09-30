@@ -64,6 +64,10 @@ export function getCrvUsdPrice(priceService: PriceService): Promise<number> {
   return getPrice(priceService, CrvUsdAddress);
 }
 
+export function getReUsdPrice(priceService: PriceService): Promise<number> {
+  return getPrice(priceService, ReUsdAddress);
+}
+
 export function getCvxPrice(priceService: PriceService): Promise<number> {
   return getPrice(priceService, CvxAddress);
 }
