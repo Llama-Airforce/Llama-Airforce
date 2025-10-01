@@ -24,3 +24,5 @@ export { uPrismaWithdrawZaps } from "./UPrisma/Withdraw";
 export { uPrismaClaimZaps } from "./UPrisma/Claim";
 
 export { sCrvUsdClaimZaps } from "./SCrvUsd/Claim";
+
+export { sReUsdClaimZaps } from "./SReUsd/Claim";
