@@ -81,29 +81,13 @@ export type AirdropSReUsd = Airdrop & {
   utkn: "sreUSD";
 };
 
-export function isAirdropUCrv(airdrop: Airdrop): airdrop is AirdropUCrv {
-  return airdrop.tkn === "cvxCRV" && airdrop.utkn === "uCRV";
-}
-
-export function isAirdropUFxs(airdrop: Airdrop): airdrop is AirdropUFxs {
-  return airdrop.tkn === "cvxFXS" && airdrop.utkn === "uFXS";
-}
-
-export function isAirdropUPrisma(airdrop: Airdrop): airdrop is AirdropUPrisma {
-  return airdrop.tkn === "cvxPRISMA" && airdrop.utkn === "uPRISMA";
-}
-
-export function isAirdropUCvx(airdrop: Airdrop): airdrop is AirdropUCvx {
-  return airdrop.tkn === "pxCVX" && airdrop.utkn === "uCVX";
-}
-
-export function isAirdropSCrvUsd(airdrop: Airdrop): airdrop is AirdropSCrvUsd {
-  return airdrop.tkn === "crvUSD" && airdrop.utkn === "scrvUSD";
-}
-
-export function isAirdropSReUsd(airdrop: Airdrop): airdrop is AirdropSReUsd {
-  return airdrop.tkn === "reUSD" && airdrop.utkn === "sreUSD";
-}
+export type Airdrops =
+  | AirdropUCrv
+  | AirdropUFxs
+  | AirdropUPrisma
+  | AirdropUCvx
+  | AirdropSCrvUsd
+  | AirdropSReUsd;
 
 export async function uCrvAirdrop(
   client: PublicClient,
