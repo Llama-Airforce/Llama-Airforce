@@ -28,13 +28,9 @@ const chainInfos = computed(() =>
   [
     ...(all ? [{ chain: "all" as const, label: "All Chains" }] : []),
     { chain: "ethereum" as const, label: "Ethereum" },
-    { chain: "avalanche" as const, label: "Avalanche" },
     { chain: "arbitrum" as const, label: "Arbitrum" },
     { chain: "fantom" as const, label: "Fantom" },
     { chain: "xdai" as const, label: "Gnosis (xDai)" },
-    { chain: "harmony" as const, label: "Harmony" },
-    { chain: "moonbeam" as const, label: "Moonbeam" },
-    { chain: "matic" as const, label: "Polygon" },
     { chain: "optimism" as const, label: "Optimism" },
     { chain: "base" as const, label: "Base" },
     { chain: "polygon" as const, label: "Polygon" },

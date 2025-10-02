@@ -53,7 +53,7 @@ function getCollateralIcon(userMarket: (typeof userMarkets.value)[number]) {
 }
 
 // Selection
-const selected = useRouteQuery<string | undefined>("controller", undefined);
+const selected = useRouteQuery<Address | undefined>("controller", undefined);
 const values = computed(() => rows.value.map((x) => x.controller));
 </script>
 

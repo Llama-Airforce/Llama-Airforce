@@ -150,9 +150,10 @@ export function useQueryUserMarketSnapshots(
 }
 
 export function useQueryUserMarketCollateralEvents(
-  user: Ref<string | undefined>,
+  user: Ref<Address | undefined>,
   chain: Ref<Chain | undefined>,
-  market: Ref<string | undefined>
+  market: Ref<string | undefined>,
+  enabled: Ref<boolean | undefined>
 ) {
   return useQuery({
     queryKey: [
@@ -162,8 +163,14 @@ export function useQueryUserMarketCollateralEvents(
       computed(() => market.value),
     ] as const,
     queryFn: ({ queryKey: [, user, chain, market] }) =>
-      Api.getUserMarketCollateralEvents(user!, chain!, market!),
-    enabled: computed(() => !!user.value && !!chain.value && !!market.value),
+      Api.getUserMarketCollateralEvents(user, chain!, market!),
+    enabled: computed(
+      () =>
+        !!user.value &&
+        !!chain.value &&
+        !!market.value &&
+        (enabled.value ?? true)
+    ),
   });
 }
 

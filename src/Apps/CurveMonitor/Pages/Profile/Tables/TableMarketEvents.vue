@@ -2,6 +2,7 @@
 import { useQueryUserMarketCollateralEvents as useQueryEventsCrvUsd } from "@CM/queries/crvusd";
 import { useQueryUserMarketCollateralEvents as useQueryEventsLending } from "@CM/queries/llamalend";
 import type { Chain } from "@curvefi/prices-api";
+import type { UserCollateralEvent } from "@curvefi/prices-api/lending";
 
 const { type, user, chain, controller } = defineProps<{
   type: "lending" | "crvusd";
@@ -10,18 +11,21 @@ const { type, user, chain, controller } = defineProps<{
   controller: string | undefined;
 }>();
 
-const { isFetching: loading, data } =
-  type === "lending"
-    ? useQueryEventsLending(
-        toRef(() => user),
-        toRef(() => chain),
-        toRef(() => controller)
-      )
-    : useQueryEventsCrvUsd(
-        toRef(() => user),
-        toRef(() => chain),
-        toRef(() => controller)
-      );
+const { isFetching: loadingLending, data: dataLending } = useQueryEventsLending(
+  toRef(() => user),
+  toRef(() => chain),
+  toRef(() => controller),
+  toRef(() => type === "lending")
+);
+
+const { isFetching: loadingCrvUsd, data: dataCrvUsd } = useQueryEventsCrvUsd(
+  toRef(() => user as Address),
+  toRef(() => chain),
+  toRef(() => controller),
+  toRef(() => type !== "lending")
+);
+
+const loading = computed(() => loadingLending.value || loadingCrvUsd.value);
 
 const columns = [
   { id: "type", label: "Type", sort: false } as const,
@@ -33,11 +37,15 @@ const columns = [
 
 const { sorting, onSort } = useSort<typeof columns>("timestamp");
 
-const rows = computed(() =>
-  (data.value?.events ?? [])
+const rows = computed(() => {
+  const events = ((type === "lending"
+    ? dataLending.value?.events
+    : dataCrvUsd.value?.events) ?? []) as Omit<UserCollateralEvent, "user">[];
+
+  return events
     .orderBy((x) => x.timestamp.getTime(), sorting.value.order)
-    .take(100)
-);
+    .take(100);
+});
 
 function scanUrl(chain: Chain) {
   // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
