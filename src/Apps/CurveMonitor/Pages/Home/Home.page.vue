@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useStableOHLC } from "../../queries/crvusd";
+import ChartPrice from "./charts/ChartPrice.vue";
 import Articles from "./Components/Articles.vue";
 import KPIs from "./Components/KPIs.vue";
 import Telegram from "./Components/Telegram.vue";
+
+const { isFetching: loadingPrice, data: price } = useStableOHLC();
 </script>
 
 <template>
@@ -23,6 +27,12 @@ import Telegram from "./Components/Telegram.vue";
       <Telegram />
     </div>
 
+    <ChartPrice
+      style="grid-area: crvusd-price"
+      :price
+      :loading="loadingPrice"
+    />
+
     <Articles style="grid-area: articles" />
   </div>
 </template>
@@ -35,6 +45,7 @@ import Telegram from "./Components/Telegram.vue";
   grid-template-areas:
     "description llama"
     "highlights llama"
+    "crvusd-price crvusd-price"
     "articles articles";
 
   gap: calc(3 * var(--dashboard-gap));
@@ -47,6 +58,7 @@ import Telegram from "./Components/Telegram.vue";
     grid-template-areas:
       "description description"
       "highlights highlights"
+      "crvusd-price crvusd-price"
       "articles articles";
 
     > .description {

@@ -250,3 +250,36 @@ export function useQueryMarketAllUsers(
     enabled: computed(() => !!chain.value && !!market.value),
   });
 }
+
+export function useStableOHLC() {
+  return useQuery({
+    queryKey: ["crvusd-price-history"] as const,
+    queryFn: async () => {
+      const { start, end } = getTimeRange({ daysRange: 90 });
+
+      const url =
+        `https://prices.curve.finance/v1/usd_price` +
+        `/ethereum` +
+        `/${CrvUsdAddress}` +
+        `/history?` +
+        `interval=day&` +
+        `start=${start}&` +
+        `end=${end}`;
+
+      const resp = await fetchJson<{
+        address: string;
+        data: {
+          price: number;
+          timestamp: string;
+        }[];
+      }>(url);
+
+      return resp.data.map((x) => ({
+        price: x.price,
+        timestamp: toDate(x.timestamp),
+      }));
+    },
+    initialData: [],
+    initialDataUpdatedAt: 0,
+  });
+}
