@@ -9,7 +9,7 @@ import type { GetPoolsWeeklyResponse } from "@curvefi/prices-api/revenue";
 const path = "/";
 
 const app = new Hono().get(path, async (c) => {
-  const start = c.req.query("start") ?? "1704063600";
+  const start = c.req.query("start") ?? "1735650000";
 
   const data = await cache(c.req.url, async () => {
     try {
