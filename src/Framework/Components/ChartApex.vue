@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { ApexOptions } from "apexcharts";
+
 const VueApexCharts = defineAsyncComponent(() => import("vue3-apexcharts"));
 
 const { options, series } = defineProps<{
-  options: unknown;
+  options: ApexOptions | undefined;
   series: unknown;
 }>();
 </script>

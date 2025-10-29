@@ -29,7 +29,7 @@ const supplyLabels = [
 
 const supplyOptions = computed(() => ({
   chart: {
-    type: "pie",
+    type: "pie" as const,
   },
   colors: [
     `${theme.value.colorsArray[0]}88`, // blue
