@@ -43,8 +43,10 @@ export const DistributorUFxsAddress =
 
 export const DistributorUCvxAddressV1 =
   "0x27a11054b62c29c166f3fab2b0ac708043b0cb49";
-export const DistributorUCvxAddress =
+export const DistributorUCvxAddressV2 =
   "0x6788234f40931ca615b0d221c1afbf0ec07afcc5";
+export const DistributorUCvxAddress =
+  "0x9dA701a9b76E0dd136d3508cb60A4c436Dda25e4";
 
 export const DistributorUPrismaAddress =
   "0xf09320ed7db384cab7fce9ea9947436a806754d3";
