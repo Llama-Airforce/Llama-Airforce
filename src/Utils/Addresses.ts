@@ -142,8 +142,10 @@ export const ZapsUCvxAddressV1 = "0x6753f23905f15376429e6f0c381fcc4862e48222";
 export const ZapsUCvxAddress = "0xb192908e533fc64109a20ee7d056175a24f17a55";
 export const ZapsUCvxClaimAddressV1 =
   "0x49a8056440065900a3a21b33594815aa0fb6e6b8";
-export const ZapsUCvxClaimAddress =
+export const ZapsUCvxClaimAddressV2 =
   "0xa1fdfcab1c53e6f80439462f7f394c1f2ba65981";
+export const ZapsUCvxClaimAddress =
+  "0x783c13b94123ccdcc5d597deb93a69983e1d4a51";
 export const ZapsUCvxPirexClaimsAddress =
   "0xed41c3402c4b62777939b7334b4d3d2407517ff9";
 
