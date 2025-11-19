@@ -11,7 +11,6 @@ import dashboard from "@LAF/Server/routes/dashboard/[id].get";
 import delegations from "@LAF/Server/routes/delegations.post";
 import pirexFutures from "@LAF/Server/routes/pirex/futures/[address].get";
 import pirexRedemptions from "@LAF/Server/routes/pirex/redemptions/[address].get";
-import pirexRewards from "@LAF/Server/routes/pirex/rewards/[address].get";
 
 envCheck();
 
@@ -32,7 +31,6 @@ bribes.route("/", bribesPPRound);
 // Pirex
 pirex.route("/", pirexFutures);
 pirex.route("/", pirexRedemptions);
-pirex.route("/", pirexRewards);
 
 // Root
 const allowedOrigins = [

@@ -14,8 +14,11 @@ const showClaims = ref(false);
 
 const { address } = useAccount();
 
-const { data: rewardsRaw, isFetching: snapshotsLoading } =
-  useQueryRewards(address);
+const config = useConfig();
+const { data: rewardsRaw, isFetching: snapshotsLoading } = useQueryRewards(
+  () => config,
+  address
+);
 
 // Filter rewards claimed by the front-end.
 const claimed = ref([] as Claim[]);
@@ -87,13 +90,10 @@ function onClaimed(claims: Claim[]) {
     </div>
 
     <div
-      v-if="rewards.length > 0"
+      v-if="rewards.length > 0 && !loading"
       class="right"
     >
-      <RewardsTable
-        :rewards
-        :loading
-      />
+      <RewardsTable :rewards />
 
       <Button
         class="primary"
@@ -101,6 +101,13 @@ function onClaimed(claims: Claim[]) {
       >
         Show Claims
       </Button>
+    </div>
+
+    <div
+      v-else-if="loading"
+      class="right no-data"
+    >
+      Loading rewards for {{ addressShort(address) }}
     </div>
 
     <div

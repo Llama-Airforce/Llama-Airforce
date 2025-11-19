@@ -4,23 +4,6 @@ import type * as ApiTypes from "@LAF/Pages/Pirex/Services/ApiTypes";
 import * as Parsers from "@LAF/Pages/Pirex/Services/Parsers";
 
 export default class PirexService extends ServiceBaseHost {
-  public async getRewards(address: Address) {
-    const host = await this.getHost();
-
-    const resp = await this.fetch<ApiTypes.GetRewardsResponse>(
-      `${host}/pirex/rewards/${address}`
-    );
-
-    return {
-      snapshotRewards: resp.snapshotRewards
-        .flat()
-        .flatMap((x) => Parsers.parseSnapshotRewards(x)),
-      futuresRewards: resp.futuresRewards
-        .flat()
-        .flatMap((x) => Parsers.parseFuturesRewards(x)),
-    };
-  }
-
   public async getRedemptions(address: Address) {
     const host = await this.getHost();
 

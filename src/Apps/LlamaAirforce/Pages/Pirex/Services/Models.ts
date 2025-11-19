@@ -1,18 +1,9 @@
 import type { Address } from "@/types/address";
+import type { getPirexRewards } from "./PirexRewards";
 
-export type SnapshotReward = {
-  address: Address;
-  rewardAmount: bigint;
-  rewardIndex: number;
-  isClaimed: boolean;
-  epoch: number;
-};
-
-export type FuturesReward = {
-  address: Address;
-  rewardAmount: bigint;
-  epoch: number;
-};
+type PirexReward = Awaited<ReturnType<typeof getPirexRewards>>;
+export type SnapshotReward = PirexReward["snapshotRewards"][number];
+export type FuturesReward = PirexReward["futuresRewards"][number];
 
 export type Claim = {
   epoch: number;
