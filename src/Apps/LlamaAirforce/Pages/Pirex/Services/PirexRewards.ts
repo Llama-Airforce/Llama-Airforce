@@ -53,30 +53,32 @@ export async function getPirexRewards(
     return { snapshotRewards: [], futuresRewards: [], paginationDone: true };
   }
 
-  const epochData = await readContracts(config, {
-    contracts: pirexEpochs.map((epoch) => ({
-      address: PxCvxAddress,
-      abi: abiPxCvx,
-      functionName: "getEpoch" as const,
-      args: [epoch],
-    })),
-    allowFailure: false,
-  });
+  const epochData = (
+    await readContracts(config, {
+      contracts: pirexEpochs.map((epoch) => ({
+        address: PxCvxAddress,
+        abi: abiPxCvx,
+        functionName: "getEpoch" as const,
+        args: [epoch],
+      })),
+      allowFailure: false,
+    })
+  ).filter((x) => x[0] !== 0n); // Filter out epochs that are not yet initialized
 
   const futuresDataRaw = await readContracts(config, {
-    contracts: pirexEpochs
+    contracts: epochData
       .map((epoch) => [
         {
           address: RPxCvxAddress as Address,
           abi: abiPirexRPxCvx,
           functionName: "balanceOf" as const,
-          args: [address, epoch],
+          args: [address, epoch[0]],
         },
         {
           address: RPxCvxAddress as Address,
           abi: abiPirexRPxCvx,
           functionName: "totalSupply" as const,
-          args: [epoch],
+          args: [epoch[0]],
         },
       ])
       .flat(),

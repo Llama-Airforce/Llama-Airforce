@@ -178,7 +178,7 @@ const { execute: claimFutures, isExecuting: claimingFutures } =
     <Card title="Convex Rewards">
       <div class="epochs">
         <div class="headers">
-          <div>Epoch</div>
+          <div>Epoch (Start Date)</div>
           <div>Total Claimable</div>
         </div>
 
