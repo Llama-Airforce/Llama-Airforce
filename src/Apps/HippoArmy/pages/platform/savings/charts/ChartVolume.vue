@@ -2,7 +2,9 @@
 import createChartOptions from "@/Styles/ChartStylesLW";
 import { useVolumeHistory } from "@HA/queries/savings";
 
-const { isFetching: loading, data } = useVolumeHistory(toRef(() => ({ chain: "ethereum" })));
+const { isFetching: loading, data } = useVolumeHistory(
+  toRef(() => ({ chain: "ethereum" }))
+);
 
 const theme = useTheme();
 const card = useTemplateRef("card");
@@ -14,7 +16,10 @@ const { chart, series } = useLightweightChart({
       type: HistogramSeries,
       name: "deposits" as const,
       options: computed<HistogramSeriesPartialOptions>(() => ({
-        priceFormat: { type: "custom", formatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}` },
+        priceFormat: {
+          type: "custom",
+          formatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}`,
+        },
         color: theme.value.colors.green,
         lastValueVisible: false,
         priceLineVisible: false,
@@ -24,7 +29,10 @@ const { chart, series } = useLightweightChart({
       type: HistogramSeries,
       name: "withdrawals" as const,
       options: computed<HistogramSeriesPartialOptions>(() => ({
-        priceFormat: { type: "custom", formatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}` },
+        priceFormat: {
+          type: "custom",
+          formatter: (y: number) => `$${round(y, 1, "dollar")}${unit(y)}`,
+        },
         color: theme.value.colors.red,
         lastValueVisible: false,
         priceLineVisible: false,
@@ -32,12 +40,6 @@ const { chart, series } = useLightweightChart({
     },
   ],
 });
-
-function floorToDay(ts: number) {
-  const d = new Date(ts * 1000);
-  d.setUTCHours(0, 0, 0, 0);
-  return Math.floor(d.getTime() / 1000);
-}
 
 watchEffect(createSeries);
 function createSeries() {
@@ -49,7 +51,10 @@ function createSeries() {
     .filter((x) => x.value > 0)
     .orderBy((x) => x.time, "asc");
   const withdrawals = rows
-    .map((r) => ({ time: r.timestamp.getUTCTimestamp(), value: -r.withdrawUsd }))
+    .map((r) => ({
+      time: r.timestamp.getUTCTimestamp(),
+      value: -r.withdrawUsd,
+    }))
     .filter((x) => x.value < 0)
     .orderBy((x) => x.time, "asc");
 
@@ -61,13 +66,26 @@ function createSeries() {
 </script>
 
 <template>
-  <Card ref="card" title="Volume" :loading>
+  <Card
+    ref="card"
+    title="Volume"
+    :loading
+  >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport filename="volume" :series />
-        <BtnChartLWFullscreen :chart :target="card" />
+        <BtnChartLWExport
+          filename="volume"
+          :series
+        />
+        <BtnChartLWFullscreen
+          :chart
+          :target="card"
+        />
       </div>
     </template>
-    <div ref="chartRef" class="chart"></div>
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
   </Card>
 </template>

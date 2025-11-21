@@ -26,21 +26,48 @@ export type StatsResponse = z.infer<typeof statsResponse>;
 
 const aprHistoryEntry = z
   .object({ date_timestamp: z.number(), avg_apr: z.string() })
-  .transform((d) => ({ timestamp: toDate(d.date_timestamp), apr: parseFloat(d.avg_apr) }));
+  .transform((d) => ({
+    timestamp: toDate(d.date_timestamp),
+    apr: parseFloat(d.avg_apr),
+  }));
 
 export const aprHistoryResponse = z
-  .object({ data: z.array(aprHistoryEntry), count: z.number(), page: z.number(), total_pages: z.number() })
-  .transform((d) => ({ data: d.data, count: d.count, page: d.page, totalPages: d.total_pages }));
+  .object({
+    data: z.array(aprHistoryEntry),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((d) => ({
+    data: d.data,
+    count: d.count,
+    page: d.page,
+    totalPages: d.total_pages,
+  }));
 
 export type AprHistoryResponse = z.infer<typeof aprHistoryResponse>;
 
 const tvlHistoryEntry = z
   .object({ date_timestamp: z.number(), tvl: z.string(), tvl_usd: z.string() })
-  .transform((d) => ({ timestamp: toDate(d.date_timestamp), tvl: parseFloat(d.tvl), tvlUsd: parseFloat(d.tvl_usd) }));
+  .transform((d) => ({
+    timestamp: toDate(d.date_timestamp),
+    tvl: parseFloat(d.tvl),
+    tvlUsd: parseFloat(d.tvl_usd),
+  }));
 
 export const tvlHistoryResponse = z
-  .object({ data: z.array(tvlHistoryEntry), count: z.number(), page: z.number(), total_pages: z.number() })
-  .transform((d) => ({ data: d.data, count: d.count, page: d.page, totalPages: d.total_pages }));
+  .object({
+    data: z.array(tvlHistoryEntry),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((d) => ({
+    data: d.data,
+    count: d.count,
+    page: d.page,
+    totalPages: d.total_pages,
+  }));
 
 export type TvlHistoryResponse = z.infer<typeof tvlHistoryResponse>;
 
@@ -61,8 +88,18 @@ const volumeHistoryEntry = z
   }));
 
 export const volumeHistoryResponse = z
-  .object({ data: z.array(volumeHistoryEntry), count: z.number(), page: z.number(), total_pages: z.number() })
-  .transform((d) => ({ data: d.data, count: d.count, page: d.page, totalPages: d.total_pages }));
+  .object({
+    data: z.array(volumeHistoryEntry),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((d) => ({
+    data: d.data,
+    count: d.count,
+    page: d.page,
+    totalPages: d.total_pages,
+  }));
 
 export type VolumeHistoryResponse = z.infer<typeof volumeHistoryResponse>;
 
@@ -74,9 +111,28 @@ const eventData = z
     block_timestamp: z.number(),
     tx_hash: z.string(),
     block_number: z.number(),
-    user: z.object({ address: z.string(), label: z.string().nullable(), ens: z.string().nullable(), perma_staker: z.boolean() }),
-    sender: z.object({ address: z.string(), label: z.string().nullable(), ens: z.string().nullable(), perma_staker: z.boolean() }).nullable(),
-    receiver: z.object({ address: z.string(), label: z.string().nullable(), ens: z.string().nullable(), perma_staker: z.boolean() }).nullable(),
+    user: z.object({
+      address: z.string(),
+      label: z.string().nullable(),
+      ens: z.string().nullable(),
+      perma_staker: z.boolean(),
+    }),
+    sender: z
+      .object({
+        address: z.string(),
+        label: z.string().nullable(),
+        ens: z.string().nullable(),
+        perma_staker: z.boolean(),
+      })
+      .nullable(),
+    receiver: z
+      .object({
+        address: z.string(),
+        label: z.string().nullable(),
+        ens: z.string().nullable(),
+        perma_staker: z.boolean(),
+      })
+      .nullable(),
   })
   .transform((e) => ({
     type: e.event_type.toLowerCase() as "transfer" | "deposit" | "withdraw",
@@ -91,14 +147,38 @@ const eventData = z
   }));
 
 export const eventsResponse = z
-  .object({ events: z.array(eventData), count: z.number(), page: z.number(), total_pages: z.number() })
-  .transform((d) => ({ events: d.events, count: d.count, page: d.page, totalPages: d.total_pages }));
+  .object({
+    events: z.array(eventData),
+    count: z.number(),
+    page: z.number(),
+    total_pages: z.number(),
+  })
+  .transform((d) => ({
+    events: d.events,
+    count: d.count,
+    page: d.page,
+    totalPages: d.total_pages,
+  }));
 
 export type EventsResponse = z.infer<typeof eventsResponse>;
 
 const savingsTopUser = z
-  .object({ address: z.string(), label: z.string().nullable(), ens: z.string().nullable(), current_shares: z.string(), current_assets: z.string(), percentage: z.string() })
-  .transform((u) => ({ address: u.address as Address, label: u.label, ens: u.ens, currentShares: parseFloat(u.current_shares), currentAssets: parseFloat(u.current_assets), percentage: parseFloat(u.percentage) }));
+  .object({
+    address: z.string(),
+    label: z.string().nullable(),
+    ens: z.string().nullable(),
+    current_shares: z.string(),
+    current_assets: z.string(),
+    percentage: z.string(),
+  })
+  .transform((u) => ({
+    address: u.address as Address,
+    label: u.label,
+    ens: u.ens,
+    currentShares: parseFloat(u.current_shares),
+    currentAssets: parseFloat(u.current_assets),
+    percentage: parseFloat(u.percentage),
+  }));
 
 export const topUsersResponse = z
   .object({

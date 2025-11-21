@@ -2,7 +2,9 @@
 import createChartOptions, { createAreaSerie } from "@/Styles/ChartStylesLW";
 import { useAprHistory } from "@HA/queries/savings";
 
-const { isFetching: loading, data } = useAprHistory(toRef(() => ({ chain: "ethereum" })));
+const { isFetching: loading, data } = useAprHistory(
+  toRef(() => ({ chain: "ethereum" }))
+);
 
 const theme = useTheme();
 const card = useTemplateRef("card");
@@ -33,13 +35,26 @@ function createSeries() {
 </script>
 
 <template>
-  <Card ref="card" title="APR" :loading>
+  <Card
+    ref="card"
+    title="APR"
+    :loading
+  >
     <template #actions>
       <div style="display: flex">
-        <BtnChartLWExport filename="apr" :series />
-        <BtnChartLWFullscreen :chart :target="card" />
+        <BtnChartLWExport
+          filename="apr"
+          :series
+        />
+        <BtnChartLWFullscreen
+          :chart
+          :target="card"
+        />
       </div>
     </template>
-    <div ref="chartRef" class="chart"></div>
+    <div
+      ref="chartRef"
+      class="chart"
+    ></div>
   </Card>
 </template>
