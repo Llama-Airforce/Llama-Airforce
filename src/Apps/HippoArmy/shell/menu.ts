@@ -22,6 +22,10 @@ export const menu: Menu = {
           label: "Insurance",
           to: "/platform/insurance",
         },
+        {
+          label: "Savings",
+          to: "/platform/savings",
+        },
       ],
     },
     {

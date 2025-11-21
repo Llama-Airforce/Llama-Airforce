@@ -18,5 +18,7 @@ export type Options = {
  * @example
  * const host = getHost() // "https://api.hippo.army"
  */
-export const getHost = (options?: Options): Required<Options>["host"] =>
-  options?.host ?? "https://api.hippo.army";
+export const getHost = (options?: Options): Required<Options>["host"] => {
+  const override = typeof window !== "undefined" ? localStorage.getItem("ha_api_host") ?? undefined : undefined;
+  return options?.host ?? override ?? "https://api.hippo.army";
+};
