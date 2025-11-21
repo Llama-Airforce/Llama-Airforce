@@ -51,6 +51,11 @@ export const routes: RouteRecordRaw[] = [
         component: () =>
           import("@HA/pages/platform/insurance/Insurance.page.vue"),
       },
+      {
+        path: "savings",
+        name: "savings",
+        component: () => import("@HA/pages/platform/savings/Savings.page.vue"),
+      },
     ],
   },
 
