@@ -13,6 +13,7 @@ import RedemptionsInit from "./Components/RedemptionsInit.vue";
 import Swap from "./Components/Swap.vue";
 import UserInfo from "./Components/UserInfo.vue";
 import VaultInfo from "./Components/VaultInfo.vue";
+import Wrap from "./Components/Wrap.vue";
 
 const unionService = new UnionService(useHost());
 const priceService = new PriceService(useHost());
@@ -41,13 +42,13 @@ function createUCvxPounder() {
       uCvxDepositZaps(
         () => config,
         () => address.value,
-        getInput
+        getInput,
       ),
     createZapsWithdrawal: (getInput: () => bigint | undefined) =>
       uCvxWithdrawZaps(
         () => config,
         () => address.value,
-        getInput
+        getInput,
       ),
   };
 
@@ -95,6 +96,7 @@ function createUCvxPounder() {
     >
       <RedemptionsInit />
       <Swap />
+      <Wrap />
     </div>
   </div>
 </template>
