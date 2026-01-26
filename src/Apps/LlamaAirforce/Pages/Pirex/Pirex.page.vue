@@ -96,7 +96,7 @@ function createUCvxPounder() {
     >
       <RedemptionsInit />
       <Swap />
-      <Wrap />
+      <Wrap v-if="isConnected" />
     </div>
   </div>
 </template>
