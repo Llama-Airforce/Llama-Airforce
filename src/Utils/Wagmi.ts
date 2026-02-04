@@ -24,7 +24,8 @@ export function createConfig(connectorsExtra: CreateConnectorFn[] = []) {
       [mainnet.id]: fallback([
         http(rpc, { batch: { wait: 100 } }),
         unstable_connector(injected),
-        http("https://eth.llamarpc.com", { batch: { wait: 200 } }),
+        //http("https://eth.llamarpc.com", { batch: { wait: 200 } }),
+        http("https://1rpc.io/eth", { batch: { wait: 200 } }),
       ]),
     },
   });
