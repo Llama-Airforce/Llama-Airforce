@@ -66,19 +66,19 @@ export async function getPirexRewards(
   ).filter((x) => x[0] !== 0n); // Filter out epochs that are not yet initialized
 
   const futuresDataRaw = await readContracts(config, {
-    contracts: epochData
+    contracts: pirexEpochs
       .map((epoch) => [
         {
           address: RPxCvxAddress as Address,
           abi: abiPirexRPxCvx,
           functionName: "balanceOf" as const,
-          args: [address, epoch[0]],
+          args: [address, epoch],
         },
         {
           address: RPxCvxAddress as Address,
           abi: abiPirexRPxCvx,
           functionName: "totalSupply" as const,
-          args: [epoch[0]],
+          args: [epoch],
         },
       ])
       .flat(),
