@@ -17,7 +17,7 @@ const extractAddress = (epochReward: readonly Address[]) =>
   epochReward.reduce<Address[]>(
     (memo, rewardAddress) =>
       [...memo, rewardAddress.substring(0, 42)] as Address[],
-    []
+    [],
   );
 
 // eslint-disable-next-line max-lines-per-function
@@ -25,7 +25,7 @@ export async function getPirexRewards(
   config: Config,
   address: Address,
   page: number,
-  pageSize: number = 25
+  pageSize: number = 25,
 ) {
   const client = getPublicClient(config);
   if (!client) throw Error("Cannot create public viem client");
@@ -45,7 +45,7 @@ export async function getPirexRewards(
     .map(
       (_, i) =>
         PIREX_CONVEX_FIRST_EPOCH +
-        BigInt(i + page * pageSize) * PIREX_EPOCH_SECONDS
+        BigInt(i + page * pageSize) * PIREX_EPOCH_SECONDS,
     )
     .filter((epoch) => epoch <= currentEpoch);
 
@@ -53,17 +53,18 @@ export async function getPirexRewards(
     return { snapshotRewards: [], futuresRewards: [], paginationDone: true };
   }
 
-  const epochData = (
-    await readContracts(config, {
-      contracts: pirexEpochs.map((epoch) => ({
-        address: PxCvxAddress,
-        abi: abiPxCvx,
-        functionName: "getEpoch" as const,
-        args: [epoch],
-      })),
-      allowFailure: false,
-    })
-  ).filter((x) => x[0] !== 0n); // Filter out epochs that are not yet initialized
+  const epochDataRaw = await readContracts(config, {
+    contracts: pirexEpochs.map((epoch) => ({
+      address: PxCvxAddress,
+      abi: abiPxCvx,
+      functionName: "getEpoch" as const,
+      args: [epoch],
+    })),
+    allowFailure: false,
+  });
+
+  // Filter out epochs that are not yet initialized
+  const epochData = epochDataRaw.filter((x) => x[0] !== 0n);
 
   const futuresDataRaw = await readContracts(config, {
     contracts: pirexEpochs
@@ -84,7 +85,9 @@ export async function getPirexRewards(
       .flat(),
     allowFailure: false,
   });
-  const futuresData = chunk(futuresDataRaw, 2);
+  const futuresData = chunk(futuresDataRaw, 2).filter(
+    (_, i) => epochDataRaw[i][0] !== 0n,
+  ); // mirror the same filter;
 
   const balanceDataRaw = await readContracts(config, {
     contracts: epochData
@@ -122,7 +125,7 @@ export async function getPirexRewards(
         // eslint-disable-next-line no-bitwise
         (parseFloat(rewardsBitmap.toString()) & (1 << rewardIndex)) !== 0,
       ],
-      []
+      [],
     );
 
     const snapshotRewardAmount = epochData[i][2].reduce<bigint[]>(
@@ -130,13 +133,13 @@ export async function getPirexRewards(
         ...memo,
         (snapshotReward * userBalanceAtSnapshot) / totalSupplyAtSnapshot,
       ],
-      []
+      [],
     );
 
     const addresses = extractAddress(epochData[i][1]);
     const rewardIndices = epochData[i][1].reduce<number[]>(
       (memo, _, rewardIndex) => [...memo, rewardIndex],
-      []
+      [],
     );
 
     return addresses.map((address, j) => ({
@@ -150,7 +153,7 @@ export async function getPirexRewards(
 
   const snapshotRewards = snapshotRewardsRaw
     .map((epoch) =>
-      epoch.filter((reward) => !reward.isClaimed && reward.rewardAmount !== 0n)
+      epoch.filter((reward) => !reward.isClaimed && reward.rewardAmount !== 0n),
     )
     .filter((data) => data.length !== 0)
     .flat();
@@ -163,7 +166,7 @@ export async function getPirexRewards(
         ...memo,
         (snapshotReward * tokenBalance) / (totalSupply || 1n),
       ],
-      []
+      [],
     );
     const addresses = extractAddress(epochData[i][1]);
 
