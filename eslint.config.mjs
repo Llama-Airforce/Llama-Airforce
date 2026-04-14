@@ -97,6 +97,7 @@ export default [
       "no-unneeded-ternary": "error",
       "no-useless-constructor": "off",
       "no-useless-escape": "off",
+      "no-useless-assignment": "off",
       "array-callback-return": "error",
       "default-case": "off",
       "newline-per-chained-call": "off",
