@@ -6,7 +6,6 @@
     "sourceMap": true,
 
     /* Strict Type-Checking Options */
-    "strict": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUncheckedSideEffectImports": true,
@@ -16,18 +15,17 @@
     /* Module Resolution Options */
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "baseUrl": ".",
     "verbatimModuleSyntax": true,
 
     /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "paths": {
-      "@/*": ["src/*"],
-      "@CB/*": ["src/Apps/Cookbook/*"],
-      "@CM/*": ["src/Apps/CurveMonitor/*"],
-      "@LAF/*": ["src/Apps/LlamaAirforce/*"],
-      "@HA/*": ["src/Apps/HippoArmy/*"],
-      "@Union/*": ["src/Apps/LlamaAirforce/Pages/Union/*"],
-      "@Pounders/*": ["src/Apps/LlamaAirforce/Pages/Pounders/*"]
+      "@/*": ["./src/*"],
+      "@CB/*": ["./src/Apps/Cookbook/*"],
+      "@CM/*": ["./src/Apps/CurveMonitor/*"],
+      "@LAF/*": ["./src/Apps/LlamaAirforce/*"],
+      "@HA/*": ["./src/Apps/HippoArmy/*"],
+      "@Union/*": ["./src/Apps/LlamaAirforce/Pages/Union/*"],
+      "@Pounders/*": ["./src/Apps/LlamaAirforce/Pages/Pounders/*"]
     },
 
     /* Other */

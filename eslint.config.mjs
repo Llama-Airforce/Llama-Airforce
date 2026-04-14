@@ -14,7 +14,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const autoImportConfig = JSON.parse(
-  readFileSync(resolve(__dirname, ".eslintrc-auto-import.json"), "utf8")
+  readFileSync(resolve(__dirname, ".eslintrc-auto-import.json"), "utf8"),
 );
 
 export default [
@@ -134,6 +134,7 @@ export default [
       "@typescript-eslint/no-extra-parens": ["off"],
       "@typescript-eslint/no-unnecessary-type-assertion": "error",
       "@typescript-eslint/no-useless-constructor": "error",
+      "@typescript-eslint/no-useless-default-assignment": "off", // should be on but doesn't work nice with vue optional props?
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-indexed-object-style": "off",
