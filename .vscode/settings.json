@@ -1,5 +1,6 @@
 {
   "vitest.disableWorkspaceWarning": true,
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "npm.packageManager": "bun"
+  "npm.packageManager": "bun",
+  "prettier.trailingComma": "none"
 }
