@@ -4,7 +4,12 @@ import { useQueryCrvUsdWeekly, useQueryPoolsWeekly } from "@CM/queries/revenue";
 
 type Serie = {
   name: string;
-  data: { x: string; y: number }[];
+  data: number[];
+};
+
+type YearOption = {
+  id: number;
+  label: string;
 };
 
 const theme = useTheme();
@@ -44,11 +49,17 @@ const options = computed(() => {
         animations: {
           enabled: false,
         },
+        toolbar: {
+          show: false,
+        },
+        zoom: {
+          enabled: false,
+        },
       },
       xaxis: {
         categories: categories.value,
         labels: {
-          formatter: (x: string): string => x,
+          formatter: (x: string): string => formatTimestamp(x),
           rotate: 0,
         },
         axisBorder: {
@@ -83,24 +94,43 @@ const options = computed(() => {
       tooltip: {
         followCursor: false,
         enabled: true,
+        x: {
+          formatter: (x: number): string => formatTimestamp(x, true),
+        },
       },
     },
     ref({ colors, colorsArray })
   );
 });
 
+function toUtcDateTimestamp(timestamp: Date) {
+  return (
+    Date.UTC(
+      timestamp.getUTCFullYear(),
+      timestamp.getUTCMonth(),
+      timestamp.getUTCDate()
+    ) / 1000
+  );
+}
+
 function feesPerTimestamp(xs: { timestamp: Date; feesUsd: number }[]) {
   return xs
-    .groupBy((x) => x.timestamp.getTime())
+    .groupBy((x) => toUtcDateTimestamp(x.timestamp))
     .entries()
     .map(([timestamp, xs]) => ({
-      timestamp: Number(timestamp) / 1000,
+      timestamp: Number(timestamp),
       feesUsd: xs.sumBy((x) => x.feesUsd),
     }))
     .orderBy((x) => x.timestamp, "asc");
 }
 
-const timestamps = computed((): number[] => {
+const timestamps = computed((): number[] =>
+  allTimestamps.value.filter(
+    (timestamp) => !year.value || getUtcYear(timestamp) === year.value
+  )
+);
+
+const allTimestamps = computed((): number[] => {
   const feesCrvUsd = feesPerTimestamp(crvUsd.value);
   const feesPools = feesPerTimestamp(pools.value);
 
@@ -114,29 +144,53 @@ const timestamps = computed((): number[] => {
         numLabels: feeCategories.length,
       }))
       .orderBy((x) => x.timestamp, "asc")
-      // We want to start at the first occurance of both crvUSD and pools data.
+      // We want to start at the first occurrence of both crvUSD and pools data.
       .dropWhile((x) => x.numLabels < 2)
       .map((x) => x.timestamp)
   );
 });
 
-function toCategory(timestamp: number) {
-  return new Date(timestamp * 1000).toLocaleDateString(undefined, {
-    day: "2-digit",
-    month: "short",
-  });
-}
-
-const categories = computed(() =>
-  timestamps.value.map((timestamp) => toCategory(timestamp))
+const yearOptions = computed((): YearOption[] =>
+  allTimestamps.value
+    .map((timestamp) => getUtcYear(timestamp))
+    .uniq()
+    .orderBy((x) => x, "desc")
+    .map((year) => ({
+      id: year,
+      label: year.toString(),
+    }))
 );
+
+// Filters
+const year = ref<number>();
+
+const selectedYear = computed(
+  (): YearOption =>
+    yearOptions.value.find((x) => x.id === year.value) ??
+    yearOptions.value[0]
+);
+
+watchEffect(() => {
+  if (yearOptions.value.length === 0) {
+    return;
+  }
+
+  if (!yearOptions.value.some((x) => x.id === year.value)) {
+    year.value = yearOptions.value[0].id;
+  }
+});
+
+const categories = computed(() => timestamps.value);
 
 const series = computed((): Serie[] => {
   function toDataPoints(xs: typeof crvUsd.value | typeof pools.value) {
-    return feesPerTimestamp(xs).map((x) => ({
-      x: toCategory(x.timestamp),
-      y: x.feesUsd,
-    }));
+    const feesByTimestamp = new Map(
+      feesPerTimestamp(xs).map((x) => [x.timestamp, x.feesUsd])
+    );
+
+    return timestamps.value.map(
+      (timestamp) => feesByTimestamp.get(timestamp) ?? 0
+    );
   }
 
   const feesCrvUsd = {
@@ -151,6 +205,28 @@ const series = computed((): Serie[] => {
 
   return [feesCrvUsd, feesPools];
 });
+
+function formatTimestamp(timestamp: number | string, includeYear = false) {
+  const value = Number(timestamp);
+
+  if (!Number.isFinite(value)) {
+    return timestamp.toString();
+  }
+
+  return toCategory(value, includeYear);
+}
+
+function toCategory(timestamp: number, includeYear = false) {
+  return new Date(timestamp * 1000).toLocaleDateString(undefined, {
+    day: "2-digit",
+    month: "short",
+    ...(includeYear ? { year: "numeric" } : {}),
+  });
+}
+
+function getUtcYear(timestamp: number) {
+  return new Date(timestamp * 1000).getUTCFullYear();
+}
 </script>
 
 <template>
@@ -160,6 +236,20 @@ const series = computed((): Serie[] => {
   >
     <template #actions-secondary>
       <Legend :items />
+    </template>
+
+    <template #actions>
+      <Select
+        v-if="yearOptions.length > 0"
+        class="year-select"
+        :options="yearOptions"
+        :selected="selectedYear"
+        @select="year = $event.id"
+      >
+        <template #option="{ option }">
+          {{ option.label }}
+        </template>
+      </Select>
     </template>
 
     <ChartApex
@@ -178,5 +268,10 @@ const series = computed((): Serie[] => {
       border-bottom: 0;
     }
   }
+}
+
+.year-select {
+  width: 6rem;
+  z-index: 2;
 }
 </style>
