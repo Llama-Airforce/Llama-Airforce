@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUCrvV2";
+import { useTokenBalance } from "@/Framework/Composables/UseTokenBalance";
 
 const { t } = useI18n();
 
 const { address } = useAccount();
 
-const { data: balanceInfo } = useBalance({
+const { data: balanceInfo } = useTokenBalance({
   address,
   token: UnionCrvVaultAddressV1,
 });

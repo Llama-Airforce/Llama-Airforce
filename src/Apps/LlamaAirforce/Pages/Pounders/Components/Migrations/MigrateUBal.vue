@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiVault } from "@/ABI/Union/UnionVault";
+import { useTokenBalance } from "@/Framework/Composables/UseTokenBalance";
 
 const { t } = useI18n();
 
@@ -28,18 +29,17 @@ const canMigrate = computed(() => {
 
 const migrating = ref(false);
 
-const { data: balanceUBalInfo, refetch: refetchBalanceUBal } = useBalance({
+const { data: balanceUBalInfo, refetch: refetchBalanceUBal } = useTokenBalance({
   address,
   token: UnionBalVaultAddressV1,
 });
 const balanceUBal = computed(() => balanceUBalInfo.value?.value ?? 0n);
 
-const { data: balanceAuraBalInfo, refetch: refetchBalanceAuraBal } = useBalance(
-  {
+const { data: balanceAuraBalInfo, refetch: refetchBalanceAuraBal } =
+  useTokenBalance({
     address,
     token: AuraBalAddress,
-  }
-);
+  });
 const balanceAuraBal = computed(() => balanceAuraBalInfo.value?.value ?? 0n);
 
 // Events

@@ -2,6 +2,7 @@
 import { mainnet } from "viem/chains";
 import { abi as abiVlCvx } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiPirex } from "@/ABI/Union/Pirex";
+import { useTokenBalance } from "@/Framework/Composables/UseTokenBalance";
 import type { Redemption } from "../Services";
 import RedemptionsTableInit from "./RedemptionsInitTable.vue";
 
@@ -100,7 +101,7 @@ const redemptions = computedAsync(async () => {
 const pxCvxAddress = PxCvxAddress;
 const { address } = useAccount();
 
-const { data: balanceInfo, refetch: refetchBalance } = useBalance({
+const { data: balanceInfo, refetch: refetchBalance } = useTokenBalance({
   address,
   token: PxCvxAddress,
 });

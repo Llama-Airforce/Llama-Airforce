@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { formatEther } from "viem";
 import { abi as abiLPxCvx } from "@/ABI/Union/PirexLPxCvx";
+import { useTokenBalance } from "@/Framework/Composables/UseTokenBalance";
 
 // Balances
 const { address } = useAccount();
 
-const { data: balancePxCvx, refetch: refetchPxCvx } = useBalance({
+const { data: balancePxCvx, refetch: refetchPxCvx } = useTokenBalance({
   address,
   token: PxCvxAddress,
 });
 
-const { data: balanceLPxCvx, refetch: refetchLPxCvx } = useBalance({
+const { data: balanceLPxCvx, refetch: refetchLPxCvx } = useTokenBalance({
   address,
   token: LPxCvxAddress,
 });

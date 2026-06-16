@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { erc20Abi as abiERC20 } from "viem";
 import { abi as abiMigration } from "@/ABI/Union/ZapsUFxs";
+import { useTokenBalance } from "@/Framework/Composables/UseTokenBalance";
 import { PriceService } from "@/Services";
 import ModalSlippage from "@Pounders/Components/ModalSlippage.vue";
 import { calcMinAmountOut } from "@Pounders/Zaps/Helpers";
@@ -12,7 +13,7 @@ const priceService = new PriceService(useHost());
 
 const { address } = useAccount();
 
-const { data: balanceInfo } = useBalance({
+const { data: balanceInfo } = useTokenBalance({
   address,
   token: UnionFxsVaultAddressV1,
 });

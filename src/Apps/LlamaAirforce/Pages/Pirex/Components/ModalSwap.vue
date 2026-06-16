@@ -2,6 +2,7 @@
 import { mainnet } from "viem/chains";
 import { abi as abiCurve2 } from "@/ABI/Curve/CurveV2FactoryPool";
 import { abi as abiLPxCvx } from "@/ABI/Union/PirexLPxCvx";
+import { useTokenBalance } from "@/Framework/Composables/UseTokenBalance";
 import type { Address } from "@/types/address";
 
 const { t } = useI18n();
@@ -28,12 +29,12 @@ const { address } = useAccount();
 const tokens = [
   {
     address: PxCvxAddress as Address,
-    symbol: "pxCVX",
+    symbol: "pxCVX"
   },
   {
     address: CvxAddress as Address,
-    symbol: "CVX",
-  },
+    symbol: "CVX"
+  }
 ];
 const token = ref(tokens[0]);
 const swapInfo = computed(() => {
@@ -43,9 +44,9 @@ const swapInfo = computed(() => {
   return { from, to };
 });
 
-const { data: balanceInfo, refetch: refetchBalance } = useBalance({
+const { data: balanceInfo, refetch: refetchBalance } = useTokenBalance({
   address,
-  token: computed(() => swapInfo.value.from.address),
+  token: computed(() => swapInfo.value.from.address)
 });
 const balance = computed(() => balanceInfo.value?.value ?? 0n);
 const balanceNum = computed(() => bigNumToNumber(balance.value, 18n));
@@ -89,7 +90,7 @@ const { data: getDy } = useReadContract({
     const indexTo = indexFrom === 1n ? 0n : 1n;
 
     return [indexFrom, indexTo, getDyInput.value] as const;
-  }),
+  })
 });
 
 const discount = computed(() => {
@@ -131,8 +132,8 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
         balanceSwapBigInt.value,
         minAmountOut.value,
         BigInt(indexFrom),
-        BigInt(indexTo),
-      ] as const,
+        BigInt(indexTo)
+      ] as const
     });
   },
   {
@@ -140,7 +141,7 @@ const { execute: swap, isExecuting: isSwapping } = useExecuteContract(
     onSuccess: () => {
       void refetchBalance();
       balanceSwap.value = null;
-    },
+    }
   }
 );
 </script>
