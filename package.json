@@ -8,13 +8,17 @@
     "deploy": "bun Deploy.ts"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "4.3.7",
     "@cowprotocol/widget-lib": "0.20.0",
     "@curvefi/prices-api": "1.1.19",
     "@kyvg/vue3-notification": "3.4.2",
+    "@safe-global/safe-apps-provider": "0.18.6",
+    "@safe-global/safe-apps-sdk": "9.1.0",
     "@tanstack/vue-query": "5.101.0",
     "@vueuse/core": "14.0.0",
     "@vueuse/router": "14.0.0",
     "@wagmi/vue": "0.5.17",
+    "@walletconnect/ethereum-provider": "2.23.9",
     "apexcharts": "5.3.6",
     "ethereum-blockies-base64": "1.0.2",
     "hono": "4.10.6",
