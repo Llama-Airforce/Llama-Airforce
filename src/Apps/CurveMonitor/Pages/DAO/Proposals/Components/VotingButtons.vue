@@ -162,8 +162,8 @@ const { data: veCrvAddress } = useReadContract({
   address: votingContract.value!,
   functionName: "token",
   query: {
-    enabled: computed(() => showVote.value && !!votingContract.value),
-  },
+    enabled: computed(() => showVote.value && !!votingContract.value)
+  }
 });
 
 const { data: voterState } = useReadContract({
@@ -176,8 +176,8 @@ const { data: voterState } = useReadContract({
       () => !!address.value && showVote.value && !!votingContract.value
     ),
     initialData: 0,
-    initialDataUpdatedAt: 0,
-  },
+    initialDataUpdatedAt: 0
+  }
 });
 
 const { data: votingPower } = useReadContract({
@@ -190,8 +190,8 @@ const { data: votingPower } = useReadContract({
       () => !!veCrvAddress.value && !!address.value && showVote.value
     ),
     initialData: 0n,
-    initialDataUpdatedAt: 0,
-  },
+    initialDataUpdatedAt: 0
+  }
 });
 
 const { data: canExecute, refetch: refetchCanExecute } = useReadContract({
@@ -202,8 +202,8 @@ const { data: canExecute, refetch: refetchCanExecute } = useReadContract({
   query: {
     enabled: computed(() => executable.value && !!votingContract.value),
     initialData: false,
-    initialDataUpdatedAt: 0,
-  },
+    initialDataUpdatedAt: 0
+  }
 });
 
 const { data: pctBase } = useReadContract({
@@ -211,24 +211,21 @@ const { data: pctBase } = useReadContract({
   address: votingContract.value!,
   functionName: "PCT_BASE",
   query: {
-    enabled: computed(() => showVote.value && !!votingContract.value),
-  },
+    enabled: computed(() => showVote.value && !!votingContract.value)
+  }
 });
 
 // Voting
-const {
-  data: hashVote,
-  error: errorVote,
-  isPending: isPendingVote,
-  writeContract: writeContractVote,
-} = useWriteContract();
+const writeContractVote = useWriteContract();
 
 const { isLoading: isConfirmingVote, isSuccess: isConfirmedVote } =
   useWaitForTransactionReceipt({
-    hash: hashVote,
+    hash: writeContractVote.data
   });
 
-const voting = computed(() => isPendingVote.value || isConfirmingVote.value);
+const voting = computed(
+  () => writeContractVote.isPending.value || isConfirmingVote.value
+);
 
 function vote() {
   // PCT_BASE = 10 ** 18; // 0% = 0; 1% = 10^16; 100% = 10^18
@@ -242,7 +239,7 @@ function vote() {
       text: prettyError(
         "Missing voting contract address, not ownership or parameter vote?"
       ),
-      type: "error",
+      type: "error"
     });
     return;
   }
@@ -251,16 +248,16 @@ function vote() {
   const yea = numToBigNumber(yeaPct.value / 100, decimals);
   const nay = pctBase.value - yea;
 
-  writeContractVote({
+  writeContractVote.mutate({
     abi: abiVoting,
     address: votingContract.value,
     functionName: "votePct",
-    args: [BigInt(proposal.id), yea, nay, false] as const,
+    args: [BigInt(proposal.id), yea, nay, false] as const
   });
 }
 
 // Notifications
-whenever(errorVote, (error) => {
+whenever(writeContractVote.error, (error) => {
   notify({ text: prettyError(error), type: "error" });
 });
 
@@ -269,35 +266,30 @@ whenever(isConfirmedVote, () => {
 });
 
 // Execute
-const {
-  data: hashExecute,
-  error: errorExecute,
-  isPending: isPendingExecute,
-  writeContract: writeContractExecute,
-} = useWriteContract();
+const writeContractExecute = useWriteContract();
 
 const { isLoading: isConfirmingExecute, isSuccess: isConfirmedExecute } =
   useWaitForTransactionReceipt({
-    hash: hashExecute,
+    hash: writeContractExecute.data
   });
 
 const executing = computed(
-  () => isPendingExecute.value || isConfirmingExecute.value
+  () => writeContractExecute.isPending.value || isConfirmingExecute.value
 );
 
 function execute() {
-  writeContractExecute({
+  writeContractExecute.mutate({
     abi: abiVoting,
     address: votingContract.value!,
     functionName: "executeVote",
-    args: [BigInt(proposal.id)],
+    args: [BigInt(proposal.id)]
   });
 
   void refetchCanExecute();
 }
 
 // Notifications
-whenever(errorExecute, (errorExecute) => {
+whenever(writeContractExecute.error, (errorExecute) => {
   notify({ text: prettyError(errorExecute), type: "error" });
 });
 

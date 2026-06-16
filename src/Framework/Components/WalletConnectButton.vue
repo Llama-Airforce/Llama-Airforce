@@ -5,14 +5,14 @@ import rabby from "@/Assets/Icons/Wallets/rabby.svg";
 import safe from "@/Assets/Icons/Wallets/safe.webp";
 import walletconnect from "@/Assets/Icons/Wallets/walletconnect.webp";
 
-const { connect } = useConnect();
+const connect = useConnect();
 
 const connectors = useConnectors();
 const connectorsSupport = [
   "injected",
   "walletConnect",
   "coinbaseWalletSDK",
-  "safe",
+  "safe"
 ];
 const connectorsFiltered = computed(() =>
   connectors.value.filter((x) => connectorsSupport.includes(x.id))
@@ -48,12 +48,12 @@ function name(connector: Connector) {
 }
 
 function onConnect(connector: Connector) {
-  connect(
+  connect.mutate(
     { connector },
     {
       onError: (err) => {
         notify({ text: prettyError(err), type: "error" });
-      },
+      }
     }
   );
 

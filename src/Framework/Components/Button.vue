@@ -8,7 +8,7 @@ const emit = defineEmits<{
 }>();
 
 const { chainId: chainIdCurrent } = useAccount();
-const { switchChain } = useSwitchChain();
+const switchChain = useSwitchChain();
 
 // Events
 const onClick = (evt: Event) => {
@@ -21,7 +21,7 @@ const onClick = (evt: Event) => {
     }
 
     if (chainIdCurrent.value !== chainId) {
-      switchChain({ chainId });
+      switchChain.mutate({ chainId });
     }
   }
 

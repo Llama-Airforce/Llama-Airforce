@@ -5,25 +5,25 @@ const { labelPleaseConnect } = defineProps<{
   labelPleaseConnect?: string;
 }>();
 
-const { disconnect } = useDisconnect();
+const disconnect = useDisconnect();
 const { isConnected, chainId, address } = useAccount();
-const { switchChain } = useSwitchChain();
+const switchChain = useSwitchChain();
 const connectors = useConnectors();
 
 const supportedNetwork = computed(() => chainId.value === mainnet.id);
 
 const changeNetwork = () => {
-  switchChain({ chainId: mainnet.id });
+  switchChain.mutate({ chainId: mainnet.id });
 };
 
 function onDisconnect() {
   for (const connector of connectors.value) {
-    disconnect(
+    disconnect.mutate(
       { connector },
       {
         onError: (err) => {
           notify({ text: prettyError(err), type: "error" });
-        },
+        }
       }
     );
   }

@@ -41,19 +41,21 @@ export function useExecuteContract<T extends unknown[]>(
     successMessage,
     onError,
     onSuccess,
-    showSuccess = true,
+    showSuccess = true
   } = options ?? {};
 
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  const writeContract = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({ hash });
+    useWaitForTransactionReceipt({ hash: writeContract.data });
 
-  const isExecuting = computed(() => isPending.value || isConfirming.value);
+  const isExecuting = computed(
+    () => writeContract.isPending.value || isConfirming.value
+  );
 
   const execute = (...args: T) => {
     try {
-      executeWrite(writeContract, ...args);
+      executeWrite(writeContract.mutate, ...args);
     } catch (error) {
       notify({ text: prettyError(error), type: "error" });
 
@@ -63,7 +65,7 @@ export function useExecuteContract<T extends unknown[]>(
     }
   };
 
-  whenever(error, (error) => {
+  whenever(writeContract.error, (error) => {
     notify({ text: prettyError(error), type: "error" });
     onError?.(error);
   });
@@ -74,8 +76,8 @@ export function useExecuteContract<T extends unknown[]>(
         text:
           typeof successMessage === "function"
             ? successMessage()
-            : successMessage ?? "Transaction has been successfully processed",
-        type: "success",
+            : (successMessage ?? "Transaction has been successfully processed"),
+        type: "success"
       });
     }
 
@@ -84,6 +86,6 @@ export function useExecuteContract<T extends unknown[]>(
 
   return {
     execute,
-    isExecuting,
+    isExecuting
   };
 }

@@ -8,12 +8,12 @@ const { address } = useAccount();
 
 const { data: balancePxCvx, refetch: refetchPxCvx } = useTokenBalance({
   address,
-  token: PxCvxAddress,
+  token: PxCvxAddress
 });
 
 const { data: balanceLPxCvx, refetch: refetchLPxCvx } = useTokenBalance({
   address,
-  token: LPxCvxAddress,
+  token: LPxCvxAddress
 });
 
 const { needsApprove, approve, isApproving } = useApprove(
@@ -21,52 +21,43 @@ const { needsApprove, approve, isApproving } = useApprove(
   address,
   LPxCvxAddress,
   computed(() => balancePxCvx.value?.value ?? 0n),
-  { maxApprove: false },
+  { maxApprove: false }
 );
 
 // Wrapping and unwrapping
-const {
-  data: hashWrapOrUnwrap,
-  error: errorWrapOrUnwrap,
-  isPending: isPendingWrapOrUnwrap,
-  writeContract: writeWrapOrUnwrap,
-} = useWriteContract();
+const writeWrapOrUnwrap = useWriteContract();
 
 const {
   isLoading: isConfirmingWrapOrUnwrap,
-  isSuccess: isConfirmedWrapOrUnwrap,
+  isSuccess: isConfirmedWrapOrUnwrap
 } = useWaitForTransactionReceipt({
-  hash: hashWrapOrUnwrap,
+  hash: writeWrapOrUnwrap.data
 });
 
 const isExecuting = computed(
-  () => isPendingWrapOrUnwrap.value || isConfirmingWrapOrUnwrap.value,
+  () => writeWrapOrUnwrap.isPending.value || isConfirmingWrapOrUnwrap.value
 );
 
 function wrap() {
-  writeWrapOrUnwrap({
+  writeWrapOrUnwrap.mutate({
     abi: abiLPxCvx,
     address: LPxCvxAddress,
     functionName: "wrap",
-    args: [balancePxCvx.value?.value ?? 0n] as const,
+    args: [balancePxCvx.value?.value ?? 0n] as const
   });
 }
 
 function unwrap() {
-  writeWrapOrUnwrap({
+  writeWrapOrUnwrap.mutate({
     abi: abiLPxCvx,
     address: LPxCvxAddress,
     functionName: "unwrap",
-    args: [balanceLPxCvx.value?.value ?? 0n] as const,
+    args: [balanceLPxCvx.value?.value ?? 0n] as const
   });
 }
 
 // Notifications
-whenever(errorWrapOrUnwrap, (errorExecute) => {
-  notify({ text: prettyError(errorExecute), type: "error" });
-});
-
-whenever(errorWrapOrUnwrap, (errorExecute) => {
+whenever(writeWrapOrUnwrap.error, (errorExecute) => {
   notify({ text: prettyError(errorExecute), type: "error" });
 });
 
