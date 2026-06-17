@@ -24,7 +24,7 @@ export function createConfig(connectorsExtra: CreateConnectorFn[] = []) {
       [mainnet.id]: fallback([
         http(
           "https://lb.drpc.live/ethereum/AsF9NEW0hENUh9kTq89_Fwwsh-D2iFMR8IjtqhnKxixj",
-          { batch: { wait: 200 } }
+          { batch: { wait: 200, batchSize: 3 } }
         ),
         unstable_connector(injected),
         //http("https://eth.llamarpc.com", { batch: { wait: 200 } }),
