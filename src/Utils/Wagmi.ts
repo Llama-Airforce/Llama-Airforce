@@ -22,9 +22,13 @@ export function createConfig(connectorsExtra: CreateConnectorFn[] = []) {
     connectors: [injected(), ...connectorsExtra],
     transports: {
       [mainnet.id]: fallback([
-        http(rpc, { batch: { wait: 100 } }),
+        http(
+          "https://lb.drpc.live/ethereum/AsF9NEW0hENUh9kTq89_Fwwsh-D2iFMR8IjtqhnKxixj",
+          { batch: { wait: 200 } }
+        ),
         unstable_connector(injected),
         //http("https://eth.llamarpc.com", { batch: { wait: 200 } }),
+        http(rpc, { batch: { wait: 200 } }),
         http("https://1rpc.io/eth", { batch: { wait: 200 } })
       ])
     }
