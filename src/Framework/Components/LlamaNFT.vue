@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { mainnet } from "viem/chains";
+import { abi as lockerAbi } from "@/ABI/TheLlamas/LlamaLocker";
 import { abi } from "@/ABI/Tokens/TheLlamas";
 
 const { address, chainId } = useAccount();
@@ -16,13 +17,25 @@ const { data: tokens } = useReadContract({
   },
 });
 
+const { data: locks } = useReadContract({
+  abi: lockerAbi,
+  address: TheLlamasLocker,
+  functionName: "getLocksByOwner",
+  args: computed(() => [address.value!] as const),
+  query: {
+    enabled: computed(() => !!address.value && chainId.value === mainnet.id),
+  },
+});
+
+const llamaId = computed(() => tokens.value?.[0] ?? locks.value?.[0]?.tokenId ?? 0n);
+  
 const { data: tokenUri } = useReadContract({
   abi,
   address: TheLlamas,
   functionName: "tokenURI",
-  args: computed(() => [tokens.value?.[0] ?? 0n] as const),
+  args: computed(() => [llamaId.value] as const),
   query: {
-    enabled: computed(() => (tokens.value?.length ?? 0) > 0),
+    enabled: computed(() => llamaId.value > 0n)
   },
 });
 
