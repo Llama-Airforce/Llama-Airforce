@@ -9,10 +9,14 @@ import {
 } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 import AuraService from "../Services/AuraService";
+import OnchainVotingService, {
+  isOnchainVotingProtocol,
+} from "../Services/OnchainVotingService";
 import SnapshotService, {
   type Scores,
   type Delegation,
 } from "../Services/SnapshotService";
+import { getVoteSource } from "../../Util/VoteSource";
 
 const snapshotService = new SnapshotService(useHost());
 const auraService = new AuraService();
@@ -25,6 +29,15 @@ const { epoch } = defineProps<{
 
 const { protocol } = storeToRefs(useBribesStore());
 const { isConnected, address } = useAccount();
+const config = useConfig();
+const client = computed(() => getPublicClient(config));
+const voteSource = computed(() => (epoch ? getVoteSource(epoch) : "snapshot"));
+const isOnchain = computed(
+  () =>
+    !!epoch &&
+    voteSource.value === "convex-onchain" &&
+    isOnchainVotingProtocol(epoch.protocol)
+);
 
 const columns = computed(() => [
   { id: "percentage" as const, label: "%", sort: true as const },
@@ -76,6 +89,10 @@ const personalDollarPerVlAsset = computed(() => {
 });
 
 const bribed = computed(() => {
+  if (isOnchain.value) {
+    return onchainBribed.value;
+  }
+
   if (
     !epoch ||
     !proposal.value ||
@@ -112,19 +129,64 @@ const bribed = computed(() => {
 
 const loading = computed(
   () =>
-    loadingProposal.value ||
-    loadingDelegations.value ||
-    loadingVotes.value ||
-    loadingScores.value
+    (isOnchain.value
+      ? loadingOnchain.value
+      : loadingProposal.value ||
+        loadingDelegations.value ||
+        loadingVotes.value ||
+        loadingScores.value)
 );
 
 // Data
+const { isFetching: loadingOnchain, data: onchainBribed } = useQuery({
+  queryKey: [
+    "bribes-personal-onchain",
+    computed(() => epoch?.protocol),
+    computed(() => epoch?.proposal),
+    address,
+  ] as const,
+  queryFn: async ({ queryKey: [, , , voter] }) => {
+    if (
+      !isOnchain.value ||
+      !epoch ||
+      !voter ||
+      !isOnchainVotingProtocol(epoch.protocol)
+    ) {
+      return [];
+    }
+
+    const publicClient = client.value;
+    if (!publicClient) {
+      return [];
+    }
+
+    const service = new OnchainVotingService(publicClient);
+    const member = voter.toLocaleLowerCase() as Address;
+    const distribution = await service.getMemberDistribution(
+      epoch.protocol,
+      epoch,
+      member
+    );
+
+    return distribution
+      ? getBribedPersonal(epoch, distribution.distribution)
+      : [];
+  },
+  enabled: computed(() => isOnchain.value && isConnected.value),
+  initialData: [] as BribedPersonal[],
+  initialDataUpdatedAt: 0,
+});
+
 const { isFetching: loadingProposal, data: proposal } = useQuery({
   queryKey: [
     "bribes-personal-proposal",
     computed(() => epoch?.proposal),
   ] as const,
   queryFn: ({ queryKey: [, proposal] }) => {
+    if (isOnchain.value) {
+      return null;
+    }
+
     if (proposal) {
       return snapshotService.getProposal(proposal);
     }
@@ -140,7 +202,7 @@ const { isFetching: loadingDelegations, data: delegations } = useQuery({
     address,
   ] as const,
   queryFn: ({ queryKey: [, snapshot, voter] }) => {
-    if (!snapshot || !voter) {
+    if (isOnchain.value || !snapshot || !voter) {
       return [];
     }
 
@@ -167,7 +229,7 @@ const { isFetching: loadingVotes, data: votes } = useQuery({
     computed(() => delegations.value.map((x) => x.delegate)),
   ] as const,
   queryFn: ({ queryKey: [, proposal, voter, delegates] }) => {
-    if (!proposal || !voter) {
+    if (isOnchain.value || !proposal || !voter) {
       return [];
     }
 
@@ -184,7 +246,7 @@ const { isFetching: loadingScores, data: scores } = useQuery({
     address,
   ] as const,
   queryFn: ({ queryKey: [, snapshot, voter] }) => {
-    if (!snapshot || !voter || !protocol.value) {
+    if (isOnchain.value || !snapshot || !voter || !protocol.value) {
       return [];
     }
 

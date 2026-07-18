@@ -1,5 +1,12 @@
 export const abi = [
   {
+    inputs: [{ internalType: "uint256", name: "_time", type: "uint256" }],
+    name: "findEpochId",
+    outputs: [{ internalType: "uint256", name: "epoch", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "address", name: "_user", type: "address" }],
     name: "lockedBalances",
     outputs: [

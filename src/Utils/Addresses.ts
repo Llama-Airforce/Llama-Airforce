@@ -9,6 +9,24 @@ export const VotiumRegistryAddress =
 export const SnapshotRegistryAddress =
   "0x469788fe6e9e9681c6ebf3bf78e7fd26fc015446";
 
+// Convex on-chain voting
+export const ConvexCoreAddress =
+  "0xCC07e8BA6bc8aeb18C4AE110C3Da9c7Dce4A3e74";
+export const ConvexVotingRegistryAddress =
+  "0x6C3a56ea7c2DA4ee2876DbDa437173B28f001c34";
+export const ConvexGaugeDelegationAddress =
+  "0xb8270eef1319173dE9f5033FED442F638ff1607d";
+export const ConvexGaugeVoteHelperAddress =
+  "0x76C484F67898EA978aa874dc7B32e648380FB9b1";
+export const ConvexCurveGaugeVotingAddress =
+  "0x21F304a9DF75E087A035B4c5792bD4e6BB7AF8aF";
+export const ConvexCurveGaugeRegistryAddress =
+  "0x96b24E0534B0cA31D8523D4be4904747Fd579D95";
+export const ConvexFxGaugeVotingAddress =
+  "0xC3701a7696Cd41a4E3e107B8A7b897A3aFB4c50a";
+export const ConvexFxGaugeRegistryAddress =
+  "0xC2F99261d84D1665Df7e50F46813497A737AfB20";
+
 // Union
 export const MultisigAddress = "0x9bc7c6ad7e7cf3a6fcb58fb21e27752ac1e53f99";
 export const TreasuryAddress = "0xaef6ea60f6443bad046e825c1d2b0c0b5ebc1f16";

@@ -6,7 +6,7 @@ import {
   totalAmountDollars,
   totalAmountBribed,
   getDate,
-  getDateRaw,
+  getFinishedDateRaw,
   getLink,
 } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
@@ -32,7 +32,7 @@ const voteLink = computed(() => (epoch ? getLink(epoch, epoch.proposal) : ""));
 const date = computed(() => (epoch ? getDate(epoch) : ""));
 
 const isFinished = computed(() =>
-  epoch ? new Date().getTime() > getDateRaw(epoch).getTime() : false
+  epoch ? new Date().getTime() > getFinishedDateRaw(epoch).getTime() : false
 );
 
 // Watches
@@ -43,7 +43,7 @@ watch(
 
     if (epoch) {
       countdownTimer = setInterval(() => {
-        countdownString.value = countdown(getDateRaw(epoch));
+        countdownString.value = countdown(getFinishedDateRaw(epoch));
       });
     }
   }
