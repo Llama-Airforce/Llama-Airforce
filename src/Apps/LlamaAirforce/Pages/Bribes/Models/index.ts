@@ -1,6 +1,6 @@
 export type { Bribe } from "./Bribe";
 export type { Bribed, BribedPersonal, VoteDistribution } from "./Bribed";
-export type { ProposalId, Proposal, Epoch } from "./Epoch";
+export type { ProposalId, Proposal, VoteSource, Epoch } from "./Epoch";
 export type { EpochOverview } from "./EpochOverview";
 export type { OverviewId, Overview } from "./Overview";
 
