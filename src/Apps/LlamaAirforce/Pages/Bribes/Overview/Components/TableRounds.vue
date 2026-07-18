@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { EpochOverview, Overview } from "../../Models";
 import { useBribesStore } from "../../Store";
-import { getDate, getDateRaw, getLink } from "../../Util/EpochHelper";
+import { getDate, getFinishedDateRaw, getLink } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 
 const { t } = useI18n();
@@ -61,7 +61,7 @@ const totalAmountDollars = (epoch: EpochOverview): number =>
 const date = (epoch: EpochOverview): string => getDate(epoch);
 
 const isFinished = (epoch: EpochOverview): boolean =>
-  new Date() > getDateRaw(epoch);
+  new Date() > getFinishedDateRaw(epoch);
 
 // Events
 const onSelected = async (epoch: EpochOverview): Promise<void> => {
