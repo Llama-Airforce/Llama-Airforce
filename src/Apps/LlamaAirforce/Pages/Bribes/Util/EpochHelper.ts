@@ -1,4 +1,8 @@
 import type { Address } from "@/types/address";
+import {
+  ConvexCurveGaugeVotingAddress,
+  ConvexFxGaugeVotingAddress,
+} from "@/Utils/Addresses";
 import { notEmpty } from "@/Utils/Array";
 import type {
   Bribed,
@@ -8,6 +12,7 @@ import type {
   Epoch,
   Proposal,
   ProposalId,
+  VoteSource,
 } from "@LAF/Pages/Bribes/Models";
 import type {
   Delegation,
@@ -15,6 +20,8 @@ import type {
   Scores,
   Vote,
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
+
+export const ONCHAIN_GAUGE_VOTING_OVERTIME_SECONDS = 10 * 60;
 
 export function totalAmountDollars(epoch: Epoch): number {
   return epoch.bribes.reduce((acc, cur) => acc + cur.amountDollars, 0);
@@ -32,11 +39,35 @@ export function getDateRaw(proposal: Proposal): Date {
   return new Date(proposal.end * 1000);
 }
 
+export function getFinishedDateRaw(proposal: Proposal): Date {
+  const overtimeSeconds =
+    proposal.voteSource === "convex-onchain"
+      ? ONCHAIN_GAUGE_VOTING_OVERTIME_SECONDS
+      : 0;
+
+  return new Date((proposal.end + overtimeSeconds) * 1000);
+}
+
 export function getDate(proposal: Proposal): string {
   return getDateRaw(proposal).toLocaleDateString();
 }
 
-export function getLink(epoch: EpochId, proposal: ProposalId): string {
+export function getLink(
+  epoch: EpochId & { voteSource?: VoteSource },
+  proposal: ProposalId
+): string {
+  if (epoch.voteSource === "convex-onchain") {
+    switch (epoch.protocol) {
+      case "cvx-crv":
+        return `https://etherscan.io/address/${ConvexCurveGaugeVotingAddress}`;
+      case "cvx-fxn":
+        return `https://etherscan.io/address/${ConvexFxGaugeVotingAddress}`;
+      case "cvx-prisma":
+      case "aura-bal":
+        break;
+    }
+  }
+
   switch (epoch.protocol) {
     case "cvx-crv":
     case "cvx-prisma":
@@ -74,7 +105,7 @@ export function getBribed(epoch: Epoch): Bribed[] {
         dollarPerVlAsset,
       };
     })
-    .filter((x) => x.amountDollarsTotal > 100);
+    .filter((x) => x.vlAsset > 0 && x.amountDollarsTotal > 100);
 }
 
 /** Calculate by how much a voter got bribed by. */

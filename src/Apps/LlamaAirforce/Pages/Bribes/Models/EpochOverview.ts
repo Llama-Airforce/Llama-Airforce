@@ -1,11 +1,12 @@
-import type { EpochId } from "@LAF/Pages/Bribes/Models";
+import type { EpochId, VoteSource } from "@LAF/Pages/Bribes/Models";
 
 export type ProposalId = string;
 
 export type EpochOverview = EpochId & {
-  /** The snapshot proposal ID, like QmacSRTG62rnvAyBuNY3cVbCtBHGV8PuGRoL32Dm6MPy5y */
+  /** The Snapshot proposal ID or Convex on-chain proposal index. */
   proposal: ProposalId;
   end: number;
+  voteSource?: VoteSource;
 
   totalAmountDollars: number;
   dollarPerVlAsset: number;
