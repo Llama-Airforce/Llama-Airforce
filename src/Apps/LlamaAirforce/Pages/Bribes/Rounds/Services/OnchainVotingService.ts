@@ -47,12 +47,31 @@ export type OnchainVote = {
   effectiveWeight: bigint;
 };
 
+/** A single vote a member's weight ended up in. */
+export type OnchainDistributionLeg = {
+  /** The address whose gauge choices were used: the member or their delegate. */
+  voteAddress: Address;
+  weight: bigint;
+  distribution: VoteDistribution;
+};
+
 export type OnchainMemberDistribution = {
   member: Address;
+  /** The member when they cast their own vote, their delegate otherwise. */
   voteAddress: Address;
+  /** Set whenever part of the member's weight was used by their delegate's vote. */
   delegate?: Address;
   vlAsset: number;
   distribution: VoteDistribution;
+  /** Two legs when the member's weight is split over their own and their delegate's vote. */
+  legs: OnchainDistributionLeg[];
+};
+
+type DelegatedContribution = {
+  member: Address;
+  delegate: Address;
+  vote: OnchainVote;
+  weight: bigint;
 };
 
 const PAGE_SIZE = 100;
@@ -311,45 +330,11 @@ export default class OnchainVotingService {
     epoch: Epoch,
     member: Address
   ): Promise<OnchainMemberDistribution | undefined> {
-    const proposal = await this.getProposal(protocol, epoch.proposal);
-    await this.validateProposal(
-      protocol,
-      epoch.round,
-      proposal,
-      epoch.sourceRound ?? epoch.round
-    );
-    const directVotes = await this.getVotes(protocol, epoch.proposal, [member]);
-    const directVote = directVotes[member];
-    if (directVote.voted && directVote.baseWeight > 0n) {
-      return toMemberDistribution(epoch, member, member, directVote.baseWeight, directVote);
-    }
-
-    const delegates = await this.getDelegatesAtEpoch([member], proposal.epoch);
-    const delegate = delegates[member];
-    if (!delegate) {
-      return undefined;
-    }
-
-    const delegateVotes = await this.getVotes(protocol, epoch.proposal, [
-      delegate,
+    const [distribution] = await this.getMemberDistributions(protocol, epoch, [
+      member,
     ]);
-    const delegateVote = delegateVotes[delegate];
-    if (!delegateVote.voted) {
-      return undefined;
-    }
 
-    const weights = await this.getContributingWeights(
-      protocol,
-      epoch.proposal,
-      delegate,
-      [member]
-    );
-    const memberWeight = weights[member];
-    if (!memberWeight || memberWeight <= 0n) {
-      return undefined;
-    }
-
-    return toMemberDistribution(epoch, member, delegate, memberWeight, delegateVote);
+    return distribution;
   }
 
   public async getMemberDistributions(
@@ -364,29 +349,19 @@ export default class OnchainVotingService {
       proposal,
       epoch.sourceRound ?? epoch.round
     );
-    const directVotes = await this.getVotes(protocol, epoch.proposal, members);
-    const distributions: OnchainMemberDistribution[] = [];
-    const delegatedMembers: Address[] = [];
 
-    for (const member of members) {
-      const vote = directVotes[member];
-      if (vote.voted && vote.baseWeight > 0n) {
-        distributions.push(
-          toMemberDistribution(epoch, member, member, vote.baseWeight, vote)
-        );
-      } else {
-        delegatedMembers.push(member);
-      }
-    }
-
-    const delegates = await this.getDelegatesAtEpoch(
-      delegatedMembers,
-      proposal.epoch
-    );
-    const delegateGroups = delegatedMembers.reduce<Record<Address, Address[]>>(
+    /*
+     * Delegated weight is looked up for every member, including members that cast
+     * a vote themselves. Relocking an expired lock and syncing mid-round splits a
+     * member's weight between their own vote (the weight recorded when they voted)
+     * and their delegate's vote (the synced delta), so treating the two as mutually
+     * exclusive silently drops the delta.
+     */
+    const delegates = await this.getDelegatesAtEpoch(members, proposal.epoch);
+    const delegateGroups = members.reduce<Record<Address, Address[]>>(
       (acc, member) => {
         const delegate = delegates[member];
-        if (!delegate) {
+        if (!delegate || delegate === member) {
           return acc;
         }
 
@@ -395,16 +370,20 @@ export default class OnchainVotingService {
       },
       {}
     );
-    const delegateVotes = await this.getVotes(
-      protocol,
-      epoch.proposal,
-      Object.keys(delegateGroups) as Address[]
-    );
 
-    const delegatedDistributions = await Promise.all(
+    const delegateAddresses = Object.keys(delegateGroups) as Address[];
+    const votes = await this.getVotes(protocol, epoch.proposal, [
+      ...new Set([...members, ...delegateAddresses]),
+    ]);
+
+    const contributions = await Promise.all(
       (Object.entries(delegateGroups) as [Address, Address[]][]).map(
         async ([delegate, users]) => {
-          const delegateVote = delegateVotes[delegate];
+          /*
+           * getContributingWeights reports a delegator's full weight when the
+           * delegate never voted, so the delegate's vote has to be checked here.
+           */
+          const delegateVote = votes[delegate];
           if (!delegateVote.voted) {
             return [];
           }
@@ -416,27 +395,33 @@ export default class OnchainVotingService {
             users
           );
 
-          return users
-            .map((member) => {
-              const memberWeight = weights[member];
-              if (!memberWeight || memberWeight <= 0n) {
-                return undefined;
-              }
-
-              return toMemberDistribution(
-                epoch,
-                member,
-                delegate,
-                memberWeight,
-                delegateVote
-              );
-            })
-            .filter((distribution) => distribution !== undefined);
+          return users.map<DelegatedContribution>((member) => ({
+            member,
+            delegate,
+            vote: delegateVote,
+            weight: weights[member] ?? 0n,
+          }));
         }
       )
     );
 
-    return [...distributions, ...delegatedDistributions.flat()];
+    const contributionByMember = Object.assign(
+      {},
+      ...contributions
+        .flat()
+        .map((contribution) => ({ [contribution.member]: contribution }))
+    ) as Record<Address, DelegatedContribution | undefined>;
+
+    return members
+      .map((member) =>
+        toMemberDistribution(
+          epoch,
+          member,
+          votes[member],
+          contributionByMember[member]
+        )
+      )
+      .filter((distribution) => distribution !== undefined);
   }
 }
 
@@ -455,20 +440,82 @@ function toAddress(address: string): Address {
 function toMemberDistribution(
   epoch: Epoch,
   member: Address,
-  voteAddress: Address,
-  memberWeight: bigint,
-  vote: OnchainVote
-): OnchainMemberDistribution {
-  const distribution = getVoteDistribution(epoch, memberWeight, vote);
-  const vlAsset = toVlAsset(memberWeight);
+  ownVote: OnchainVote | undefined,
+  contribution: DelegatedContribution | undefined
+): OnchainMemberDistribution | undefined {
+  const legs: OnchainDistributionLeg[] = [];
+
+  /*
+   * Only the member's own locked weight (baseWeight); weight delegated to them
+   * (adjustedWeight) is claimed by their delegators through getContributingWeights.
+   */
+  if (ownVote?.voted && ownVote.baseWeight > 0n) {
+    legs.push(toDistributionLeg(epoch, member, ownVote.baseWeight, ownVote));
+  }
+
+  let delegate: Address | undefined;
+  if (contribution && contribution.weight > 0n) {
+    delegate = contribution.delegate;
+    legs.push(
+      toDistributionLeg(
+        epoch,
+        delegate,
+        contribution.weight,
+        contribution.vote
+      )
+    );
+  }
+
+  if (legs.length === 0) {
+    return undefined;
+  }
+
+  const weight = legs.reduce((acc, leg) => acc + leg.weight, 0n);
 
   return {
     member,
-    voteAddress,
-    delegate: voteAddress === member ? undefined : voteAddress,
-    vlAsset,
-    distribution,
+    voteAddress: legs[0].voteAddress,
+    delegate,
+    vlAsset: toVlAsset(weight),
+    distribution: mergeDistributions(legs, weight),
+    legs,
   };
+}
+
+function toDistributionLeg(
+  epoch: Pick<Epoch, "bribes">,
+  voteAddress: Address,
+  weight: bigint,
+  vote: OnchainVote
+): OnchainDistributionLeg {
+  return {
+    voteAddress,
+    weight,
+    distribution: getVoteDistribution(epoch, weight, vote),
+  };
+}
+
+function mergeDistributions(
+  legs: OnchainDistributionLeg[],
+  totalWeight: bigint
+): VoteDistribution {
+  const merged: VoteDistribution = {};
+
+  for (const leg of legs) {
+    // Percentages are relative to a leg's own weight, so rescale to the total.
+    const share = Number(leg.weight) / Number(totalWeight);
+
+    for (const [pool, allocation] of Object.entries(leg.distribution)) {
+      if (!(pool in merged)) {
+        merged[pool] = { vlAsset: 0, percentage: 0 };
+      }
+
+      merged[pool].vlAsset += allocation.vlAsset;
+      merged[pool].percentage += allocation.percentage * share;
+    }
+  }
+
+  return merged;
 }
 
 export function getVoteDistribution(
