@@ -1,8 +1,4 @@
 import type { Address } from "@/types/address";
-import {
-  ConvexCurveGaugeVotingAddress,
-  ConvexFxGaugeVotingAddress
-} from "@/Utils/Addresses";
 import { notEmpty } from "@/Utils/Array";
 import type {
   Bribed,
@@ -58,10 +54,11 @@ export function getLink(
 ): string {
   if (epoch.voteSource === "convex-onchain") {
     switch (epoch.protocol) {
+      // TODO: actually link to the correct round
       case "cvx-crv":
-        return `https://etherscan.io/address/${ConvexCurveGaugeVotingAddress}`;
+        return `https://www.convexfinance.com/vote/weights/curve`;
       case "cvx-fxn":
-        return `https://etherscan.io/address/${ConvexFxGaugeVotingAddress}`;
+        return `https://www.convexfinance.com/vote/weights/fx`;
       case "cvx-prisma":
       case "aura-bal":
         break;
