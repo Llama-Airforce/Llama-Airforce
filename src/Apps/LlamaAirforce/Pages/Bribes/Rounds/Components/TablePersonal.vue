@@ -5,16 +5,16 @@ import { useBribesStore } from "../../Store";
 import {
   getBribedPersonal,
   getVoteDistribution,
-  prioritizeDelegates,
+  prioritizeDelegates
 } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 import AuraService from "../Services/AuraService";
 import OnchainVotingService, {
-  isOnchainVotingProtocol,
+  isOnchainVotingProtocol
 } from "../Services/OnchainVotingService";
 import SnapshotService, {
   type Scores,
-  type Delegation,
+  type Delegation
 } from "../Services/SnapshotService";
 import { getVoteSource } from "../../Util/VoteSource";
 
@@ -46,14 +46,14 @@ const columns = computed(() => [
     id: "vlasset" as const,
     label: `$/${vlAssetSymbol(protocol.value)}`,
     sort: true as const,
-    align: "end" as const,
+    align: "end" as const
   },
   {
     id: "total" as const,
     label: t("total"),
     sort: true as const,
-    align: "end" as const,
-  },
+    align: "end" as const
+  }
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("total");
@@ -127,14 +127,13 @@ const bribed = computed(() => {
   return getBribedPersonal(epoch, distribution);
 });
 
-const loading = computed(
-  () =>
-    (isOnchain.value
-      ? loadingOnchain.value
-      : loadingProposal.value ||
-        loadingDelegations.value ||
-        loadingVotes.value ||
-        loadingScores.value)
+const loading = computed(() =>
+  isOnchain.value
+    ? loadingOnchain.value
+    : loadingProposal.value ||
+      loadingDelegations.value ||
+      loadingVotes.value ||
+      loadingScores.value
 );
 
 // Data
@@ -143,7 +142,7 @@ const { isFetching: loadingOnchain, data: onchainBribed } = useQuery({
     "bribes-personal-onchain",
     computed(() => epoch?.protocol),
     computed(() => epoch?.proposal),
-    address,
+    address
   ] as const,
   queryFn: async ({ queryKey: [, , , voter] }) => {
     if (
@@ -174,13 +173,13 @@ const { isFetching: loadingOnchain, data: onchainBribed } = useQuery({
   },
   enabled: computed(() => isOnchain.value && isConnected.value),
   initialData: [] as BribedPersonal[],
-  initialDataUpdatedAt: 0,
+  initialDataUpdatedAt: 0
 });
 
 const { isFetching: loadingProposal, data: proposal } = useQuery({
   queryKey: [
     "bribes-personal-proposal",
-    computed(() => epoch?.proposal),
+    computed(() => epoch?.proposal)
   ] as const,
   queryFn: ({ queryKey: [, proposal] }) => {
     if (isOnchain.value) {
@@ -192,14 +191,14 @@ const { isFetching: loadingProposal, data: proposal } = useQuery({
     }
 
     return null;
-  },
+  }
 });
 
 const { isFetching: loadingDelegations, data: delegations } = useQuery({
   queryKey: [
     "bribes-personal-delegations",
     computed(() => proposal.value?.snapshot),
-    address,
+    address
   ] as const,
   queryFn: ({ queryKey: [, snapshot, voter] }) => {
     if (isOnchain.value || !snapshot || !voter) {
@@ -213,12 +212,12 @@ const { isFetching: loadingDelegations, data: delegations } = useQuery({
     else {
       return snapshotService.getDelegations(block, {
         delegators: [voter],
-        space: "cvx.eth",
+        space: "cvx.eth"
       });
     }
   },
   initialData: [] as Delegation[],
-  initialDataUpdatedAt: 0,
+  initialDataUpdatedAt: 0
 });
 
 const { isFetching: loadingVotes, data: votes } = useQuery({
@@ -226,7 +225,7 @@ const { isFetching: loadingVotes, data: votes } = useQuery({
     "bribes-personal-votes",
     computed(() => epoch?.proposal),
     address,
-    computed(() => delegations.value.map((x) => x.delegate)),
+    computed(() => delegations.value.map((x) => x.delegate))
   ] as const,
   queryFn: ({ queryKey: [, proposal, voter, delegates] }) => {
     if (isOnchain.value || !proposal || !voter) {
@@ -236,14 +235,14 @@ const { isFetching: loadingVotes, data: votes } = useQuery({
     return snapshotService.getVotes(proposal, [voter, ...delegates]);
   },
   initialData: [],
-  initialDataUpdatedAt: 0,
+  initialDataUpdatedAt: 0
 });
 
 const { isFetching: loadingScores, data: scores } = useQuery({
   queryKey: [
     "bribes-personal-scores",
     computed(() => proposal.value?.snapshot),
-    address,
+    address
   ] as const,
   queryFn: ({ queryKey: [, snapshot, voter] }) => {
     if (isOnchain.value || !snapshot || !voter || !protocol.value) {
@@ -255,7 +254,7 @@ const { isFetching: loadingScores, data: scores } = useQuery({
     return snapshotService.getScores(protocol.value, block, [voter]);
   },
   initialData: {} as Scores,
-  initialDataUpdatedAt: 0,
+  initialDataUpdatedAt: 0
 });
 
 // Methods

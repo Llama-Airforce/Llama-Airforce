@@ -5,9 +5,7 @@ const VOTIUM_EPOCH_SECONDS = 86400 * 14;
 const VOTIUM_CVX_CRV_FIRST_CURVE_EPOCH = 1348;
 const VOTIUM_CVX_FXN_CURVE_EPOCH_OFFSET = 65;
 
-export function getVoteSource(
-  epoch: Pick<Epoch, "voteSource">
-): VoteSource {
+export function getVoteSource(epoch: Pick<Epoch, "voteSource">): VoteSource {
   return epoch.voteSource ?? "snapshot";
 }
 

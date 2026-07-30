@@ -4,7 +4,7 @@ export const abi = [
     name: "findEpochId",
     outputs: [{ internalType: "uint256", name: "epoch", type: "uint256" }],
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     inputs: [{ internalType: "address", name: "_user", type: "address" }],
@@ -17,14 +17,14 @@ export const abi = [
         components: [
           { internalType: "uint112", name: "amount", type: "uint112" },
           { internalType: "uint112", name: "boosted", type: "uint112" },
-          { internalType: "uint32", name: "unlockTime", type: "uint32" },
+          { internalType: "uint32", name: "unlockTime", type: "uint32" }
         ],
         internalType: "struct CvxLockerV2.LockedBalance[]",
         name: "lockData",
-        type: "tuple[]",
-      },
+        type: "tuple[]"
+      }
     ],
     stateMutability: "view",
-    type: "function",
-  },
+    type: "function"
+  }
 ] as const;

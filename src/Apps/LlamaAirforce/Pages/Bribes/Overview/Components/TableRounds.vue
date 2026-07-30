@@ -21,14 +21,14 @@ const columns = computed(() => [
     id: "vlasset" as const,
     label: `$/${vlAssetSymbol(protocol.value)}`,
     sort: true as const,
-    align: "end" as const,
+    align: "end" as const
   },
   {
     id: "total" as const,
     label: t("total"),
     sort: true as const,
-    align: "end" as const,
-  },
+    align: "end" as const
+  }
 ]);
 
 const { sorting, onSort } = useSort<typeof columns.value>("deadline");
@@ -67,7 +67,7 @@ const isFinished = (epoch: EpochOverview): boolean =>
 const onSelected = async (epoch: EpochOverview): Promise<void> => {
   await router.push({
     name: "rounds-incentives",
-    params: { round: epoch.round },
+    params: { round: epoch.round }
   });
 };
 </script>

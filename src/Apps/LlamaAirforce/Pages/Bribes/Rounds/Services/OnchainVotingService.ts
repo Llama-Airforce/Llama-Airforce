@@ -11,13 +11,13 @@ import {
   ConvexFxGaugeVotingAddress,
   ConvexGaugeDelegationAddress,
   ConvexGaugeVoteHelperAddress,
-  VlCvxAddress,
+  VlCvxAddress
 } from "@/Utils/Addresses";
 import type {
   Epoch,
   ProposalId,
   Protocol,
-  VoteDistribution,
+  VoteDistribution
 } from "@LAF/Pages/Bribes/Models";
 import { getVotiumRoundTimestamp } from "@LAF/Pages/Bribes/Util/VoteSource";
 
@@ -25,7 +25,7 @@ export type OnchainVotingProtocol = Extract<Protocol, "cvx-crv" | "cvx-fxn">;
 
 const UNKNOWN_POOL_IDS = new Set([
   "0x0",
-  "0x0000000000000000000000000000000000000000",
+  "0x0000000000000000000000000000000000000000"
 ]);
 
 export type OnchainProposal = {
@@ -82,7 +82,7 @@ type RawVote = readonly [
   readonly bigint[],
   boolean,
   bigint,
-  bigint,
+  bigint
 ];
 
 export function isOnchainVotingProtocol(
@@ -114,7 +114,7 @@ export default class OnchainVotingService {
       address: getOnchainGaugeVotingAddress(protocol),
       abi: abiGaugeVotePlatform,
       functionName: "proposals",
-      args: [proposalIndex],
+      args: [proposalIndex]
     })) as RawProposal;
     const epochBigInt = BigInt(epoch);
 
@@ -124,7 +124,7 @@ export default class OnchainVotingService {
       end: Number(endTime),
       epoch: epochBigInt,
       snapshot: epochBigInt.toString(),
-      choices: [],
+      choices: []
     };
   }
 
@@ -136,7 +136,7 @@ export default class OnchainVotingService {
       address: getOnchainGaugeVotingAddress(protocol),
       abi: abiGaugeVotePlatform,
       functionName: "isFinalized",
-      args: [toProposalIndex(proposalId)],
+      args: [toProposalIndex(proposalId)]
     });
   }
 
@@ -161,7 +161,7 @@ export default class OnchainVotingService {
       address: VlCvxAddress,
       abi: abiCvxLockerV2,
       functionName: "findEpochId",
-      args: [BigInt(getVotiumRoundTimestamp(protocol, sourceRound))],
+      args: [BigInt(getVotiumRoundTimestamp(protocol, sourceRound))]
     });
 
     const previousExpectedEpoch = expectedEpoch - 1n;
@@ -194,7 +194,7 @@ export default class OnchainVotingService {
       address: votingAddress,
       abi: abiGaugeVotePlatform,
       functionName: "getVoterCount",
-      args: [proposalIndex],
+      args: [proposalIndex]
     });
 
     const indices = Array.from({ length: Number(voterCount) }, (_, i) =>
@@ -208,8 +208,8 @@ export default class OnchainVotingService {
             address: votingAddress,
             abi: abiGaugeVotePlatform,
             functionName: "getVoterAtIndex",
-            args: [proposalIndex, index],
-          })),
+            args: [proposalIndex, index]
+          }))
         })) as unknown as readonly string[];
 
         return results.map((address) => toAddress(address));
@@ -234,8 +234,8 @@ export default class OnchainVotingService {
             address: votingAddress,
             abi: abiGaugeVotePlatform,
             functionName: "getVote",
-            args: [proposalIndex, voter],
-          })),
+            args: [proposalIndex, voter]
+          }))
         })) as unknown as readonly RawVote[];
 
         return votersChunk.reduce<Record<Address, OnchainVote>>(
@@ -249,7 +249,7 @@ export default class OnchainVotingService {
               voted,
               baseWeight,
               adjustedWeight,
-              effectiveWeight: baseWeight + adjustedWeight,
+              effectiveWeight: baseWeight + adjustedWeight
             };
 
             return acc;
@@ -274,8 +274,8 @@ export default class OnchainVotingService {
             address: ConvexGaugeDelegationAddress as Address,
             abi: abiGaugeDelegation,
             functionName: "getDelegateAtEpoch",
-            args: [user, epoch],
-          })),
+            args: [user, epoch]
+          }))
         })) as readonly string[];
 
         return usersChunk.reduce<Record<Address, Address | undefined>>(
@@ -311,7 +311,7 @@ export default class OnchainVotingService {
           address: ConvexGaugeVoteHelperAddress,
           abi: abiGaugeVoteHelper,
           functionName: "getContributingWeights",
-          args: [proposalIndex, delegate, usersChunk, votingAddress],
+          args: [proposalIndex, delegate, usersChunk, votingAddress]
         });
 
         return usersChunk.reduce<Record<Address, bigint>>((acc, user, i) => {
@@ -331,7 +331,7 @@ export default class OnchainVotingService {
     member: Address
   ): Promise<OnchainMemberDistribution | undefined> {
     const [distribution] = await this.getMemberDistributions(protocol, epoch, [
-      member,
+      member
     ]);
 
     return distribution;
@@ -373,7 +373,7 @@ export default class OnchainVotingService {
 
     const delegateAddresses = Object.keys(delegateGroups) as Address[];
     const votes = await this.getVotes(protocol, epoch.proposal, [
-      ...new Set([...members, ...delegateAddresses]),
+      ...new Set([...members, ...delegateAddresses])
     ]);
 
     const contributions = await Promise.all(
@@ -399,7 +399,7 @@ export default class OnchainVotingService {
             member,
             delegate,
             vote: delegateVote,
-            weight: weights[member] ?? 0n,
+            weight: weights[member] ?? 0n
           }));
         }
       )
@@ -457,12 +457,7 @@ function toMemberDistribution(
   if (contribution && contribution.weight > 0n) {
     delegate = contribution.delegate;
     legs.push(
-      toDistributionLeg(
-        epoch,
-        delegate,
-        contribution.weight,
-        contribution.vote
-      )
+      toDistributionLeg(epoch, delegate, contribution.weight, contribution.vote)
     );
   }
 
@@ -478,7 +473,7 @@ function toMemberDistribution(
     delegate,
     vlAsset: toVlAsset(weight),
     distribution: mergeDistributions(legs, weight),
-    legs,
+    legs
   };
 }
 
@@ -491,7 +486,7 @@ function toDistributionLeg(
   return {
     voteAddress,
     weight,
-    distribution: getVoteDistribution(epoch, weight, vote),
+    distribution: getVoteDistribution(epoch, weight, vote)
   };
 }
 
