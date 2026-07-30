@@ -16,7 +16,6 @@ import SnapshotService, {
   type Scores,
   type Delegation
 } from "../Services/SnapshotService";
-import { getVoteSource } from "../../Util/VoteSource";
 
 const snapshotService = new SnapshotService(useHost());
 const auraService = new AuraService();
@@ -31,7 +30,7 @@ const { protocol } = storeToRefs(useBribesStore());
 const { isConnected, address } = useAccount();
 const config = useConfig();
 const client = computed(() => getPublicClient(config));
-const voteSource = computed(() => (epoch ? getVoteSource(epoch) : "snapshot"));
+const voteSource = computed(() => epoch?.voteSource ?? "snapshot");
 const isOnchain = computed(
   () =>
     !!epoch &&
