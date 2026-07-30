@@ -19,7 +19,6 @@ import type {
   Protocol,
   VoteDistribution
 } from "@LAF/Pages/Bribes/Models";
-import { getVotiumRoundTimestamp } from "@LAF/Pages/Bribes/Util/VoteSource";
 
 export type OnchainVotingProtocol = Extract<Protocol, "cvx-crv" | "cvx-fxn">;
 
@@ -100,6 +99,23 @@ export function getOnchainGaugeVotingAddress(
     case "cvx-fxn":
       return ConvexFxGaugeVotingAddress;
   }
+}
+
+type ConvexOnchainProtocol = Extract<Protocol, "cvx-crv" | "cvx-fxn">;
+const VOTIUM_EPOCH_SECONDS = 86400 * 14;
+const VOTIUM_CVX_CRV_FIRST_CURVE_EPOCH = 1348;
+const VOTIUM_CVX_FXN_CURVE_EPOCH_OFFSET = 65;
+
+export function getVotiumRoundTimestamp(
+  protocol: ConvexOnchainProtocol,
+  round: number
+): number {
+  const curveEpoch =
+    VOTIUM_CVX_CRV_FIRST_CURVE_EPOCH +
+    round +
+    (protocol === "cvx-fxn" ? VOTIUM_CVX_FXN_CURVE_EPOCH_OFFSET : 0);
+
+  return curveEpoch * VOTIUM_EPOCH_SECONDS;
 }
 
 export default class OnchainVotingService {
