@@ -41,5 +41,12 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function"
+  },
+  {
+    inputs: [{ internalType: "address", name: "_delegate", type: "address" }],
+    name: "setDelegate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function"
   }
 ] as const;
