@@ -1,11 +1,9 @@
-import { formatUnits, zeroAddress } from "viem";
-import type { PublicClient } from "viem";
+import { formatUnits, zeroAddress, type PublicClient } from "viem";
 import { abi as abiCvxLockerV2 } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiGaugeDelegation } from "@/ABI/Convex/GaugeDelegation";
 import { abi as abiGaugeVoteHelper } from "@/ABI/Convex/GaugeVoteHelper";
 import { abi as abiGaugeVotePlatform } from "@/ABI/Convex/GaugeVotePlatform";
 import type { Address } from "@/types/address";
-import { chunk } from "@/Utils/Array";
 import {
   ConvexCurveGaugeVotingAddress,
   ConvexFxGaugeVotingAddress,
@@ -13,6 +11,7 @@ import {
   ConvexGaugeVoteHelperAddress,
   VlCvxAddress
 } from "@/Utils/Addresses";
+import { chunk } from "@/Utils/Array";
 import type {
   Epoch,
   ProposalId,
