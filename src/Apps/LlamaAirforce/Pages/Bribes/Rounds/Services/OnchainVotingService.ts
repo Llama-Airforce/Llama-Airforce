@@ -144,18 +144,6 @@ export default class OnchainVotingService {
     };
   }
 
-  public async isFinalized(
-    protocol: OnchainVotingProtocol,
-    proposalId: ProposalId
-  ): Promise<boolean> {
-    return this.client.readContract({
-      address: getOnchainGaugeVotingAddress(protocol),
-      abi: abiGaugeVotePlatform,
-      functionName: "isFinalized",
-      args: [toProposalIndex(proposalId)]
-    });
-  }
-
   public async validateProposal(
     protocol: OnchainVotingProtocol,
     round: number,
@@ -187,13 +175,6 @@ export default class OnchainVotingService {
     ) {
       throw new Error(
         `On-chain voting proposal ${proposal.id} for ${protocol} ${roundLabel} has vlCVX epoch ${proposal.epoch}, expected ${expectedEpoch} or ${previousExpectedEpoch}`
-      );
-    }
-
-    const isFinalized = await this.isFinalized(protocol, proposal.id);
-    if (!isFinalized) {
-      throw new Error(
-        `On-chain voting proposal ${proposal.id} for ${protocol} ${roundLabel} is not finalized`
       );
     }
 
