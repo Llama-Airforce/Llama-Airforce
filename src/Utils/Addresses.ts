@@ -18,11 +18,11 @@ export const ConvexGaugeDelegationAddress =
 export const ConvexGaugeVoteHelperAddress =
   "0x76C484F67898EA978aa874dc7B32e648380FB9b1";
 export const ConvexCurveGaugeVotingAddress =
-  "0x21F304a9DF75E087A035B4c5792bD4e6BB7AF8aF";
+  "0x64D9B5AC386B70af9EDCD20A58cE9262D2EAC278";
 export const ConvexCurveGaugeRegistryAddress =
   "0x96b24E0534B0cA31D8523D4be4904747Fd579D95";
 export const ConvexFxGaugeVotingAddress =
-  "0xC3701a7696Cd41a4E3e107B8A7b897A3aFB4c50a";
+  "0xDcEa673B021f1f431E7D0Ec70a63bF8DcB6d44E6";
 export const ConvexFxGaugeRegistryAddress =
   "0xC2F99261d84D1665Df7e50F46813497A737AfB20";
 
