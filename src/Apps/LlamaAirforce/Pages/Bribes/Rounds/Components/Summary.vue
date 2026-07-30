@@ -7,7 +7,7 @@ import {
   totalAmountBribed,
   getDate,
   getFinishedDateRaw,
-  getLink,
+  getLink
 } from "../../Util/EpochHelper";
 import { vlAssetSymbol } from "../../Util/ProtocolHelper";
 

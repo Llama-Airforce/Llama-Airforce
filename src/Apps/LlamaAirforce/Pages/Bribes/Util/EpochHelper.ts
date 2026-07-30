@@ -1,7 +1,7 @@
 import type { Address } from "@/types/address";
 import {
   ConvexCurveGaugeVotingAddress,
-  ConvexFxGaugeVotingAddress,
+  ConvexFxGaugeVotingAddress
 } from "@/Utils/Addresses";
 import { notEmpty } from "@/Utils/Array";
 import type {
@@ -12,13 +12,13 @@ import type {
   Epoch,
   Proposal,
   ProposalId,
-  VoteSource,
+  VoteSource
 } from "@LAF/Pages/Bribes/Models";
 import type {
   Delegation,
   Proposal as SnapshotProposal,
   Scores,
-  Vote,
+  Vote
 } from "@LAF/Pages/Bribes/Rounds/Services/SnapshotService";
 
 export const ONCHAIN_GAUGE_VOTING_OVERTIME_SECONDS = 10 * 60;
@@ -102,7 +102,7 @@ export function getBribed(epoch: Epoch): Bribed[] {
         amountDollars,
         amountDollarsTotal,
         maxPerVote,
-        dollarPerVlAsset,
+        dollarPerVlAsset
       };
     })
     .filter((x) => x.vlAsset > 0 && x.amountDollarsTotal > 100);
@@ -158,7 +158,7 @@ export function getBribedPersonal(
         pool: bribed.pool,
         dollarPerVlAsset,
         amountDollars,
-        percentage: allocation.percentage,
+        percentage: allocation.percentage
       };
     })
     .filter((x): x is BribedPersonal => x !== undefined)
@@ -226,7 +226,7 @@ export function getVoteDistribution(
       const scoreWeighted = voteWeight * scoreNormalized;
       distribution[pool] = {
         vlAsset: scoreWeighted,
-        percentage: scoreNormalized * 100,
+        percentage: scoreNormalized * 100
       };
     }
   }

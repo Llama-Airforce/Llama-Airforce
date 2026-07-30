@@ -10,8 +10,7 @@ export const SnapshotRegistryAddress =
   "0x469788fe6e9e9681c6ebf3bf78e7fd26fc015446";
 
 // Convex on-chain voting
-export const ConvexCoreAddress =
-  "0xCC07e8BA6bc8aeb18C4AE110C3Da9c7Dce4A3e74";
+export const ConvexCoreAddress = "0xCC07e8BA6bc8aeb18C4AE110C3Da9c7Dce4A3e74";
 export const ConvexVotingRegistryAddress =
   "0x6C3a56ea7c2DA4ee2876DbDa437173B28f001c34";
 export const ConvexGaugeDelegationAddress =
@@ -42,7 +41,7 @@ export const UnionAddresses: Address[] = [
   "0x7a7f79c5706716bae853c1b96e36538c7eaa4925",
   "0x853dcbf4dd00dbc6a70002ff87be3671ac966067",
   "0xce45e2e9a1ca8ba9a311bf862606b890c1f5d988",
-  "0xd52ca71aafa4d2590aac1e35e3005242dd31e5ed",
+  "0xd52ca71aafa4d2590aac1e35e3005242dd31e5ed"
 ];
 export const AssetRegistryAddress =
   "0xcfa23b8f9062369b21049b9f4a4ce79d640d1873";

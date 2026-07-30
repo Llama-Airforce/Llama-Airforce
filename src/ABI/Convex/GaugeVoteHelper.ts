@@ -7,12 +7,14 @@ export const abi = [
       {
         internalType: "contract GaugeVotePlatform",
         name: "_gaugePlatform",
-        type: "address",
-      },
+        type: "address"
+      }
     ],
     name: "getContributingWeights",
-    outputs: [{ internalType: "uint256[]", name: "weights", type: "uint256[]" }],
+    outputs: [
+      { internalType: "uint256[]", name: "weights", type: "uint256[]" }
+    ],
     stateMutability: "view",
-    type: "function",
-  },
+    type: "function"
+  }
 ] as const;
