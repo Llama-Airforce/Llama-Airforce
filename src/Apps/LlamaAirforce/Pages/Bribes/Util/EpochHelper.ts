@@ -102,7 +102,7 @@ export function getBribed(epoch: Epoch): Bribed[] {
         dollarPerVlAsset
       };
     })
-    .filter((x) => x.vlAsset > 0 && x.amountDollarsTotal > 100);
+    .filter((x) => x.vlAsset > 0 && x.amountDollarsTotal > 10);
 }
 
 /** Calculate by how much a voter got bribed by. */
