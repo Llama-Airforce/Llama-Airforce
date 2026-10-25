@@ -89,7 +89,7 @@ const personalDollarPerVlAsset = computed(() => {
 
 const bribed = computed(() => {
   if (isOnchain.value) {
-    return onchainBribed.value;
+    return errorOnchain.value ? [] : onchainBribed.value;
   }
 
   if (
@@ -136,7 +136,11 @@ const loading = computed(() =>
 );
 
 // Data
-const { isFetching: loadingOnchain, data: onchainBribed } = useQuery({
+const {
+  isFetching: loadingOnchain,
+  isError: errorOnchain,
+  data: onchainBribed
+} = useQuery({
   queryKey: [
     "bribes-personal-onchain",
     computed(() => epoch?.protocol),
@@ -348,6 +352,9 @@ const percentage = (bribed: BribedPersonal): number => bribed.percentage;
       <WalletConnectButton v-if="!isConnected && isSupported" />
       <span v-else-if="loading">
         {{ t("loading") }} {{ addressShort(address) }}
+      </span>
+      <span v-else-if="isOnchain && errorOnchain">
+        Personal rewards are unavailable
       </span>
       <span v-else>There's no personal rewards yet</span>
     </div>

@@ -3,13 +3,16 @@ import { abi as abiCvxLockerV2 } from "@/ABI/Convex/CvxLockerV2";
 import { abi as abiGaugeDelegation } from "@/ABI/Convex/GaugeDelegation";
 import { abi as abiGaugeVoteHelper } from "@/ABI/Convex/GaugeVoteHelper";
 import { abi as abiGaugeVotePlatform } from "@/ABI/Convex/GaugeVotePlatform";
+import { abi as abiOptOutRegistry } from "@/ABI/Registries/VotiumOptOutRegistry";
 import type { Address } from "@/types/address";
 import {
   ConvexCurveGaugeVotingAddress,
   ConvexFxGaugeVotingAddress,
   ConvexGaugeDelegationAddress,
   ConvexGaugeVoteHelperAddress,
-  VlCvxAddress
+  VlCvxAddress,
+  VotiumCurveOptOutRegistryAddress,
+  VotiumFxOptOutRegistryAddress
 } from "@/Utils/Addresses";
 import { chunk } from "@/Utils/Array";
 import type {
@@ -59,9 +62,10 @@ export type OnchainMemberDistribution = {
   voteAddress: Address;
   /** Set whenever part of the member's weight was used by their delegate's vote. */
   delegate?: Address;
+  /** Reward-eligible weight after opt-out deductions. */
   vlAsset: number;
   distribution: VoteDistribution;
-  /** Two legs when the member's weight is split over their own and their delegate's vote. */
+  /** Gross contributions, before opt-outs, from the member and their delegate. */
   legs: OnchainDistributionLeg[];
 };
 
@@ -71,6 +75,9 @@ type DelegatedContribution = {
   vote: OnchainVote;
   weight: bigint;
 };
+
+/** Deductions are per member per gauge address. */
+type MemberDeductions = Record<Address, Record<Address, bigint>>;
 
 const PAGE_SIZE = 100;
 
@@ -333,6 +340,7 @@ export default class OnchainVotingService {
     return distribution;
   }
 
+  // eslint-disable-next-line max-lines-per-function
   public async getMemberDistributions(
     protocol: OnchainVotingProtocol,
     epoch: Epoch,
@@ -408,7 +416,7 @@ export default class OnchainVotingService {
         .map((contribution) => ({ [contribution.member]: contribution }))
     ) as Record<Address, DelegatedContribution | undefined>;
 
-    return members
+    const distributions = members
       .map((member) =>
         toMemberDistribution(
           epoch,
@@ -418,7 +426,168 @@ export default class OnchainVotingService {
         )
       )
       .filter((distribution) => distribution !== undefined);
+
+    const poolByGauge = getPoolByGauge(epoch);
+    const deductions = await this.getOptOutDeductions(
+      protocol,
+      proposal.epoch,
+      Object.keys(poolByGauge) as Address[],
+      distributions.map((distribution) => distribution.member)
+    );
+
+    return distributions.map((distribution) =>
+      applyDeductions(
+        distribution,
+        votes,
+        poolByGauge,
+        deductions[distribution.member] ?? {}
+      )
+    );
   }
+
+  private async getOptOutDeductions(
+    protocol: OnchainVotingProtocol,
+    epoch: bigint,
+    gauges: Address[],
+    members: Address[]
+  ): Promise<MemberDeductions> {
+    if (gauges.length === 0 || members.length === 0) {
+      return {};
+    }
+
+    const registry: Address =
+      protocol === "cvx-crv"
+        ? VotiumCurveOptOutRegistryAddress
+        : VotiumFxOptOutRegistryAddress;
+
+    const deployEpoch = await this.client.readContract({
+      address: registry,
+      abi: abiOptOutRegistry,
+      functionName: "deployEpoch"
+    });
+
+    if (epoch < BigInt(deployEpoch)) {
+      return {};
+    }
+
+    const pairs = members.flatMap((member) =>
+      gauges.map((gauge) => ({ member, gauge }))
+    );
+
+    const batches = await Promise.all(
+      chunk(pairs, PAGE_SIZE).map(async (pairs) => {
+        const excluded = await this.client.multicall({
+          allowFailure: false,
+          contracts: pairs.map(({ member, gauge }) => ({
+            address: registry,
+            abi: abiOptOutRegistry,
+            functionName: "isOptedOutAtEpoch" as const,
+            args: [gauge, member, epoch] as const
+          }))
+        });
+
+        const optedOut = pairs.filter((_, i) => excluded[i]);
+        if (optedOut.length === 0) {
+          return [];
+        }
+
+        const weights = await this.client.multicall({
+          allowFailure: false,
+          contracts: optedOut.map(({ member, gauge }) => ({
+            address: registry,
+            abi: abiOptOutRegistry,
+            functionName: "withheldWeightForUsers" as const,
+            args: [gauge, epoch, [member]] as const
+          }))
+        });
+        return optedOut.map((pair, i) => ({ ...pair, weight: weights[i] }));
+      })
+    );
+
+    return batches
+      .flat()
+      .reduce<MemberDeductions>((acc, { member, gauge, weight }) => {
+        acc[member] ??= {};
+        acc[member][gauge] = weight;
+        if (weight > 0n) {
+          console.log(
+            `Opt-out withholding for ${member}, gauge ${gauge}, ${protocol} epoch ${epoch.toString()}: ${formatUnits(weight, 18)} vlCVX`
+          );
+        }
+        return acc;
+      }, {});
+  }
+}
+
+function applyDeductions(
+  member: OnchainMemberDistribution,
+  votes: Record<Address, OnchainVote>,
+  poolByGauge: Record<string, string>,
+  deductions: Record<string, bigint>
+): OnchainMemberDistribution {
+  const withheldTotal = Object.values(deductions).reduce(
+    (sum, weight) => sum + weight,
+    0n
+  );
+
+  if (withheldTotal === 0n) {
+    return member;
+  }
+
+  const grossByGauge: Record<string, bigint> = {};
+  for (const leg of member.legs) {
+    const vote = votes[leg.voteAddress];
+    const total = vote.weights.reduce((sum, weight) => sum + weight, 0n);
+    if (total <= 0n) {
+      continue;
+    }
+
+    // The registry sums duplicate gauge entries before flooring each leg.
+    const shares = vote.gauges.reduce<Record<string, bigint>>(
+      (acc, gauge, i) => {
+        const key = toAddress(gauge);
+        acc[key] = (acc[key] ?? 0n) + vote.weights[i];
+        return acc;
+      },
+      {}
+    );
+    for (const [gauge, share] of Object.entries(shares)) {
+      grossByGauge[gauge] =
+        (grossByGauge[gauge] ?? 0n) + (leg.weight * share) / total;
+    }
+  }
+
+  const netByPool: Record<string, bigint> = {};
+  for (const [gauge, pool] of Object.entries(poolByGauge)) {
+    const gross = grossByGauge[gauge] ?? 0n;
+    const withheld = deductions[gauge] ?? 0n;
+    if (withheld > gross) {
+      throw new Error(
+        `Opt-out weight ${withheld.toString()} exceeds gauge weight ${gross.toString()} for ${member.member}, gauge ${gauge}`
+      );
+    }
+    netByPool[pool] = (netByPool[pool] ?? 0n) + gross - withheld;
+  }
+
+  // Retain unbribed weight in the denominator, just as the original distribution does.
+  const eligible =
+    member.legs.reduce((sum, leg) => sum + leg.weight, 0n) - withheldTotal;
+
+  return {
+    ...member,
+    vlAsset: toVlAsset(eligible),
+    distribution: Object.fromEntries(
+      Object.entries(netByPool)
+        .filter(([, weight]) => weight > 0n)
+        .map(([pool, weight]) => [
+          pool,
+          {
+            vlAsset: toVlAsset(weight),
+            percentage: (Number(weight) / Number(eligible)) * 100
+          }
+        ])
+    )
+  };
 }
 
 function toProposalIndex(proposalId: ProposalId): bigint {

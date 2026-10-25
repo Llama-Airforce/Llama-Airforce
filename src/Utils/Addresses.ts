@@ -5,6 +5,11 @@ export const VotiumAddress = "0xde1e6a7ed0ad3f61d531a8a78e83ccddbd6e0c49";
 export const VotiumRegistryAddress =
   "0x92e6e43f99809df84ed2d533e1fd8017eb966ee2";
 
+export const VotiumCurveOptOutRegistryAddress =
+  "0x5A5c248B39702E1A35bB854858B4Ae729D9c4405";
+export const VotiumFxOptOutRegistryAddress =
+  "0x42dC5034C0699e98e2e5c0106B913c42810a618e";
+
 // Snapshot
 export const SnapshotRegistryAddress =
   "0x469788fe6e9e9681c6ebf3bf78e7fd26fc015446";
