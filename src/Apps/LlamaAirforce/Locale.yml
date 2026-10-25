@@ -62,7 +62,7 @@ en:
   no-lock: You have not locked any CVX yet. Are you sure want to join the Union?
   join: Join the Union
   joining: Joining ...
-  already-forwarded: Already forwarded to another address
+  already-forwarded: Already forwarded to another address. Clear here to cancel it.
   forwarding-in-progress: Address forwarding expiration in progress
   joined: You've succesfully joined the Union, welcome comrade!
   left: You're succesfully left the Union. Goodbye comrade!
@@ -148,7 +148,7 @@ zh:
   no-lock: 你还没有锁定任何CVX，您确定想要加入Union会员嘛？
   join: 加入Union
   joining: 正在加入 ...
-  already-forwarded: 已经转发给另外一个地址
+  already-forwarded: 已经转发给另外一个地址。点击此处取消。
   forwarding-in-progress: 地址转发即将过期
   joined: 你成功加入了联盟，欢迎你，同志！
   left: 你已成功脱离联盟。再见了，同志
@@ -240,7 +240,7 @@ fr:
   no-lock: Vous n'avez verrouillé aucun CVX pour l'instant. Êtes-vous sûr de vouloir rejoindre l'Union?
   join: Rejoindre l'Union
   joining: Adhésion en cours...
-  already-forwarded: Déjà transféré à une autre adresse
+  already-forwarded: Déjà transféré à une autre adresse. Cliquez ici pour annuler.
   forwarding-in-progress: Expiration de la redirection d'adresse en cours
   joined: Vous avez réussi à rejoindre l'Union, bienvenue camarade !
   left: Vous avez réussi à quitter l'Union. Au revoir camarade !
