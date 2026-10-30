@@ -36,6 +36,7 @@ pirex.route("/", pirexRedemptions);
 const allowedOrigins = [
   /^http:\/\/localhost(:\d+)?$/,
   /^https:\/\/(.*\.)?llama\.airforce$/,
+  /^https:\/\/votium\.app$/
 ];
 
 app.use(cors(allowedOrigins));
@@ -50,5 +51,5 @@ app.route("/price", price);
 
 export default {
   port: 3000,
-  fetch: app.fetch,
+  fetch: app.fetch
 };
